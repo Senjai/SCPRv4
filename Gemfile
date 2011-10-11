@@ -8,8 +8,10 @@ gem 'mysql2'
 # in production environments by default.
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"
+  gem "compass", :git => 'https://github.com/chriseppstein/compass.git', :branch => 'master'
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
+  gem 'oily_png'
 end
 
 gem 'jquery-rails'

@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-RailsMercer::Application.load_tasks
+Scprv4::Application.load_tasks
