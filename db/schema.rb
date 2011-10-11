@@ -938,21 +938,21 @@ ActiveRecord::Schema.define(:version => 20111010230906) do
   create_table "rails_assethost_contentasset", :id => false, :force => true do |t|
     t.integer "id",                                 :default => 0,  :null => false
     t.integer "content_id",                                         :null => false
-    t.string  "content_type", :limit => 20,                         :null => false
+    t.string  "content_type",                                       :null => false
     t.integer "asset_order",                        :default => 99, :null => false
     t.integer "asset_id",                                           :null => false
     t.text    "caption",      :limit => 2147483647,                 :null => false
   end
 
   create_table "rails_content_map", :id => false, :force => true do |t|
-    t.integer "id",                       :null => false
-    t.string  "class_name", :limit => 20, :null => false
+    t.integer "id",         :null => false
+    t.string  "class_name", :null => false
   end
 
   create_table "rails_media_link", :id => false, :force => true do |t|
     t.integer "id",                          :default => 0,  :null => false
     t.integer "content_id",                                  :null => false
-    t.string  "content_type", :limit => 20,                  :null => false
+    t.string  "content_type",                                :null => false
     t.string  "title",        :limit => 150, :default => "", :null => false
     t.string  "link",         :limit => 300,                 :null => false
     t.string  "link_type",    :limit => 10,                  :null => false
@@ -962,7 +962,7 @@ ActiveRecord::Schema.define(:version => 20111010230906) do
   create_table "rails_media_uploadedaudio", :id => false, :force => true do |t|
     t.integer "id",                                   :default => 0, :null => false
     t.integer "content_id",                                          :null => false
-    t.string  "content_type",   :limit => 20,                        :null => false
+    t.string  "content_type",                                        :null => false
     t.string  "mp3_file",       :limit => 100,                       :null => false
     t.text    "description",    :limit => 2147483647,                :null => false
     t.string  "source",         :limit => 150,                       :null => false
