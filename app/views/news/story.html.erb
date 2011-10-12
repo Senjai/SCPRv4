@@ -1,5 +1,5 @@
 <h1><%= @story.headline %></h1>
-<h4><%= byline @story %></h4>
+<h4><%= smart_date @story %> | <%= byline @story %></h4>
 
 <%= render_asset @story, "story" %>
 

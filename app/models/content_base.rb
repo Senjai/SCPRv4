@@ -31,4 +31,10 @@ class ContentBase < ActiveRecord::Base
   def byline_elements
     ["KPCC"]
   end
+  
+  #----------
+  
+  def public_datetime
+    self.published_at
+  end
 end

@@ -23,6 +23,24 @@ module ApplicationHelper
   
   #----------
   
+  def smart_date(content)
+    if !content || !content.respond_to?("public_datetime")
+      return ""
+    end
+    
+    if content.public_datetime == Date.today()
+      if content.public_datetime.is_a? DateTime
+        return content.public_datetime.strftime("%l:%M%P")
+      else
+        return "Today"
+      end
+    else
+      return content.public_datetime.strftime("%b %e, %Y")
+    end
+  end
+  
+  #----------
+  
   def byline(content,links = true)
     if !content || !content.respond_to?("byline_elements")
       return ""
