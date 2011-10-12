@@ -1,0 +1,5 @@
+<h1><%= @show.title %></h1>
+
+<%= render :partial => "episode", :object => @show.episodes.published.first %>
+
+<h3>

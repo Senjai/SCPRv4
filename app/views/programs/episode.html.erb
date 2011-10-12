@@ -1,0 +1,9 @@
+<h1><%= @episode.title %></h1>
+
+<%= render_asset @episode, "lead" %>
+
+<ul>
+<% for s in @episode.segments %>
+	<li><%= link_to s.title, s.link_path(@episode) %></li>
+<% end %>
+</ul>

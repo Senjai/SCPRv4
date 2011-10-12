@@ -33,7 +33,7 @@ class ContentBase < ActiveRecord::Base
   end
   
   #----------
-  
+    
   def public_datetime
     self.published_at
   end

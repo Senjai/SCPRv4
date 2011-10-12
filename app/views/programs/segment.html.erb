@@ -1,0 +1,7 @@
+<h2><%= @episode.title %></h2>
+<h1><%= @segment.title %></h1>
+
+<%= render_asset @segment, "segment" %>
+
+<%= simple_format @segment.lede %>
+<%= simple_format @segment.body %>
