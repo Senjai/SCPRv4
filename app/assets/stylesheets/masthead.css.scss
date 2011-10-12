@@ -1,0 +1,108 @@
+// KPCC logo image
+.logo h1 {
+	line-height:20px;
+	margin:24px 0;
+}
+
+// Pledge Now button
+.pledge {
+	@include background-image(linear-gradient(#00b9f3 45%, #0098c7 55%));
+	@include border-radius(4px);
+	@include font-heading(600, 13px);
+	@include ie-inline-block();
+	a {
+		background:transparent url(image_path('icons/pledge-heart.png')) no-repeat 7px 2px;
+		color:$white;
+		@include ie-inline-block();
+		padding:1px 8px 1px 34px;
+		text-shadow: 0px -1px 0px #016d8e;
+		&:hover {text-decoration:none;}
+	}
+} 
+.pledge, nav.utils {
+	margin:10px 0;
+}
+nav.utils ul {
+	@include text-utility();
+	display:block;
+	float:right;
+	li {
+		@include nav-horiz();
+		border-right:1px solid #e9e9e9;
+		a {
+			display:block;
+		}
+	}
+	li.social {
+		a {
+			@include ie-inline-block();
+		}
+		img { 
+			margin-left:5px;
+			vertical-align:text-top;
+		}
+	}
+}
+
+// Main Navbar
+.nav-primary {
+	@include background-image(linear-gradient(#7f7f7f, #616161));
+	background-color:#7f7f7f;
+	height:36px;
+	ul li.listen-live {
+		@include background-image(linear-gradient(#cb5f1d, #9b4816));
+		background-color:#cb5f1d;
+		&:hover {
+			@include background-image(linear-gradient(lighten(#cb5f1d, 8%), lighten(#9b4816, 8%)));
+		}
+		a {
+			background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+			padding-left:33px;
+			padding-right:22px;
+			&:hover {
+				background-color:transparent;
+				color:$white;
+			}
+		}
+	}
+	ul li {
+		border-right:1px solid #9e9e9e;
+	}
+	ul li a {	
+		@include font-navigation(normal, 16px);
+		color:#fff;
+		padding:8px 24px;
+		text-transform:uppercase;
+		&:hover {
+			background-color:$white;
+			color:$blueDark;
+		}
+	}
+	form {float:right;margin-right:8px;}
+	form fieldset {
+		margin:0;
+		padding:0;
+		label {
+			display:none;
+		}
+		input.search {
+			@include border-radius(20px);
+			margin-top:3px;
+			padding:0 8px;
+			width: 160px;
+			&:focus {
+				outline: none;
+			    border-color:#999;
+				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+			    @include box-shadow($shadow);
+			}
+		}
+		input.submit {
+			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+			width:20px;
+			height:20px;
+			text-indent:-9999px;
+			border:0;
+		}
+	}
+}

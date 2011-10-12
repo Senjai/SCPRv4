@@ -197,21 +197,11 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
     t.integer  "content_type_id",                                    :null => false
     t.integer  "object_id",                                          :null => false
     t.integer  "action",                                             :null => false
-    t.datetime "fire_at",         :default => '2011-09-20 15:15:06', :null => false
+    t.datetime "fire_at",         :default => '2011-09-09 09:43:52', :null => false
     t.boolean  "has_fired",       :default => false,                 :null => false
   end
 
   add_index "contentbase_contentalarm", ["content_type_id"], :name => "contentbase_contentalarm_e4470c6e"
-
-  create_table "contentbase_contentshell", :force => true do |t|
-    t.integer  "comment_count",                       :default => 0,                     :null => false
-    t.string   "headline",      :limit => 200,                                           :null => false
-    t.string   "url",           :limit => 200,                                           :null => false
-    t.string   "byline",        :limit => 200,                                           :null => false
-    t.text     "lede",          :limit => 2147483647,                                    :null => false
-    t.datetime "published_at",                        :default => '2011-10-06 15:47:43', :null => false
-    t.string   "site",          :limit => 20
-  end
 
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
@@ -609,6 +599,56 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
 
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
+  create_table "mailchimp_campaign", :force => true do |t|
+    t.text     "content",         :limit => 2147483647, :null => false
+    t.datetime "sent_date",                             :null => false
+    t.string   "name",                                  :null => false
+    t.string   "campaign_id",     :limit => 50,         :null => false
+    t.integer  "object_id"
+    t.integer  "content_type_id"
+    t.text     "extra_info",      :limit => 2147483647
+  end
+
+  add_index "mailchimp_campaign", ["content_type_id"], :name => "mailchimp_campaign_e4470c6e"
+
+  create_table "mailchimp_queue", :force => true do |t|
+    t.text    "type_opts",                  :limit => 2147483647,                    :null => false
+    t.boolean "segment_options_all",                              :default => false, :null => false
+    t.text    "contents",                   :limit => 2147483647,                    :null => false
+    t.string  "subject",                                                             :null => false
+    t.string  "campaign_type",              :limit => 50,                            :null => false
+    t.boolean "authenticate",                                     :default => false, :null => false
+    t.string  "title"
+    t.string  "from_email",                 :limit => 75,                            :null => false
+    t.boolean "segment_options",                                  :default => false, :null => false
+    t.string  "list_id",                    :limit => 50,                            :null => false
+    t.boolean "auto_tweet",                                       :default => false, :null => false
+    t.string  "from_name",                                                           :null => false
+    t.string  "folder_id",                  :limit => 50
+    t.boolean "generate_text",                                    :default => false, :null => false
+    t.string  "to_email",                   :limit => 75,                            :null => false
+    t.boolean "tracking_text_clicks",                             :default => false, :null => false
+    t.boolean "auto_footer",                                      :default => false, :null => false
+    t.boolean "tracking_html_clicks",                             :default => true,  :null => false
+    t.string  "google_analytics",           :limit => 100
+    t.text    "segment_options_conditions", :limit => 2147483647,                    :null => false
+    t.integer "template_id",                                                         :null => false
+    t.boolean "tracking_opens",                                   :default => true,  :null => false
+    t.integer "object_id"
+    t.integer "content_type_id"
+    t.boolean "locked",                                           :default => false, :null => false
+    t.text    "extra_info",                 :limit => 2147483647
+  end
+
+  add_index "mailchimp_queue", ["content_type_id"], :name => "mailchimp_queue_e4470c6e"
+
+  create_table "mailchimp_reciever", :force => true do |t|
+    t.integer "campaign_id",               :null => false
+    t.string  "email",       :limit => 75, :null => false
+  end
+
+  add_index "mailchimp_reciever", ["campaign_id"], :name => "mailchimp_reciever_8fd46b1a"
+
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
     t.string   "title",         :limit => 140,        :null => false
@@ -621,14 +661,14 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
     t.integer "enco_number",                 :null => false
     t.string  "url",          :limit => 250, :null => false
     t.date    "publish_date",                :null => false
-    t.string  "notes",        :limit => 100
+    t.string  "notes",        :limit => 100, :null => false
     t.integer "size"
   end
 
   create_table "media_image", :force => true do |t|
-    t.text     "caption",    :limit => 2147483647, :null => false
-    t.string   "credit",     :limit => 150,        :null => false
-    t.datetime "created_at",                       :null => false
+    t.text     "caption",    :limit => 2147483647,                                    :null => false
+    t.string   "credit",     :limit => 150,                                           :null => false
+    t.datetime "created_at",                       :default => '2011-09-16 16:51:57', :null => false
   end
 
   create_table "media_imageinstance", :force => true do |t|
@@ -640,16 +680,16 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
   add_index "media_imageinstance", ["instance_of_id"], :name => "media_imageinstance_29b6bd08"
 
   create_table "media_link", :force => true do |t|
-    t.string  "title",           :limit => 150, :default => "", :null => false
-    t.string  "link",            :limit => 300,                 :null => false
-    t.string  "link_type",       :limit => 10,                  :null => false
-    t.string  "sort_order",      :limit => 2,   :default => "", :null => false
-    t.integer "content_type_id",                                :null => false
-    t.integer "object_id",                                      :null => false
+    t.string  "title",           :limit => 150,                        :null => false
+    t.string  "link",            :limit => 200,                        :null => false
+    t.string  "link_type",       :limit => 10,  :default => "website", :null => false
+    t.string  "sort_order",      :limit => 2,                          :null => false
+    t.integer "content_type_id",                                       :null => false
+    t.integer "object_id",                                             :null => false
   end
 
   add_index "media_link", ["content_type_id", "object_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
-  add_index "media_link", ["content_type_id"], :name => "media_link_content_type_id"
+  add_index "media_link", ["content_type_id"], :name => "media_link_e4470c6e"
 
   create_table "media_programaudio", :force => true do |t|
     t.string "name",         :limit => 140, :null => false
@@ -660,17 +700,17 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
   end
 
   create_table "media_uploadedaudio", :force => true do |t|
-    t.string  "mp3_file",        :limit => 100,        :null => false
-    t.text    "description",     :limit => 2147483647, :null => false
-    t.string  "source",          :limit => 150,        :null => false
-    t.boolean "allow_download",                        :null => false
-    t.string  "sort_order",      :limit => 2,          :null => false
-    t.integer "content_type_id",                       :null => false
-    t.integer "object_id",                             :null => false
+    t.string  "mp3_file",        :limit => 100,                            :null => false
+    t.text    "description",     :limit => 2147483647,                     :null => false
+    t.string  "source",          :limit => 150,        :default => "KPCC", :null => false
+    t.boolean "allow_download",                        :default => true,   :null => false
+    t.string  "sort_order",      :limit => 2,                              :null => false
+    t.integer "content_type_id",                                           :null => false
+    t.integer "object_id",                                                 :null => false
   end
 
   add_index "media_uploadedaudio", ["content_type_id", "object_id"], :name => "media_uploadedaudio_content_type_id_229fd3799cc99e4f"
-  add_index "media_uploadedaudio", ["content_type_id"], :name => "media_uploadedaudio_content_type_id"
+  add_index "media_uploadedaudio", ["content_type_id"], :name => "media_uploadedaudio_e4470c6e"
 
   create_table "news_category", :force => true do |t|
     t.string  "category",           :limit => 50,                    :null => false
@@ -713,12 +753,12 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
     t.datetime "published_at",                                                :null => false
     t.string   "editing_status",        :limit => 1,                          :null => false
     t.boolean  "is_published",                                                :null => false
-    t.string   "source",                :limit => 20
     t.string   "story_asset_scheme",    :limit => 10
     t.string   "extra_asset_scheme",    :limit => 10
     t.string   "lead_asset_scheme",     :limit => 10
     t.integer  "status",                                                      :null => false
     t.integer  "comment_count",                                               :null => false
+    t.string   "source",                :limit => 20
   end
 
   add_index "news_story", ["primary_reporter_id"], :name => "news_story_kpcc_reporter_id"
@@ -801,16 +841,12 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
     t.string   "title",        :limit => 140,                        :null => false
     t.text     "summary",      :limit => 2147483647,                 :null => false
     t.string   "url",          :limit => 250,        :default => "", :null => false
-    t.string   "mp3_url",      :limit => 250
-    t.integer  "mp3_size"
+    t.string   "mp3_url",      :limit => 250,                        :null => false
+    t.integer  "mp3_size",                                           :null => false
     t.datetime "published_at",                                       :null => false
-    t.integer  "story_id"
-    t.integer  "encoaudio_id"
   end
 
   add_index "podcasts_news", ["category_id"], :name => "podcasts_news_category_id"
-  add_index "podcasts_news", ["encoaudio_id"], :name => "podcasts_news_220021d6"
-  add_index "podcasts_news", ["story_id"], :name => "podcasts_news_f5ae222e"
 
   create_table "podcasts_show", :force => true do |t|
     t.string  "slug",        :limit => 40,                            :null => false
@@ -848,10 +884,8 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
     t.string  "keywords",    :limit => 200,                           :null => false
     t.string  "duration",    :limit => 10,                            :null => false
     t.boolean "is_listed",                         :default => false, :null => false
-    t.integer "category_id"
   end
 
-  add_index "podcasts_topic", ["category_id"], :name => "podcasts_topic_42dc49bc"
   add_index "podcasts_topic", ["slug"], :name => "slug", :unique => true
 
   create_table "podcasts_topic_categories", :force => true do |t|
@@ -958,24 +992,24 @@ ActiveRecord::Schema.define(:version => 20111012183836) do
   end
 
   create_table "rails_media_link", :id => false, :force => true do |t|
-    t.integer "id",                          :default => 0,  :null => false
-    t.integer "content_id",                                  :null => false
-    t.string  "content_type",                                :null => false
-    t.string  "title",        :limit => 150, :default => "", :null => false
-    t.string  "link",         :limit => 300,                 :null => false
-    t.string  "link_type",    :limit => 10,                  :null => false
-    t.string  "sort_order",   :limit => 2,   :default => "", :null => false
+    t.integer "id",                          :default => 0,         :null => false
+    t.integer "content_id",                                         :null => false
+    t.string  "content_type",                                       :null => false
+    t.string  "title",        :limit => 150,                        :null => false
+    t.string  "link",         :limit => 200,                        :null => false
+    t.string  "link_type",    :limit => 10,  :default => "website", :null => false
+    t.string  "sort_order",   :limit => 2,                          :null => false
   end
 
   create_table "rails_media_uploadedaudio", :id => false, :force => true do |t|
-    t.integer "id",                                   :default => 0, :null => false
-    t.integer "content_id",                                          :null => false
-    t.string  "content_type",                                        :null => false
-    t.string  "mp3_file",       :limit => 100,                       :null => false
-    t.text    "description",    :limit => 2147483647,                :null => false
-    t.string  "source",         :limit => 150,                       :null => false
-    t.boolean "allow_download",                                      :null => false
-    t.string  "sort_order",     :limit => 2,                         :null => false
+    t.integer "id",                                   :default => 0,      :null => false
+    t.integer "content_id",                                               :null => false
+    t.string  "content_type",                                             :null => false
+    t.string  "mp3_file",       :limit => 100,                            :null => false
+    t.text    "description",    :limit => 2147483647,                     :null => false
+    t.string  "source",         :limit => 150,        :default => "KPCC", :null => false
+    t.boolean "allow_download",                       :default => true,   :null => false
+    t.string  "sort_order",     :limit => 2,                              :null => false
   end
 
   create_table "schedule_program", :force => true do |t|

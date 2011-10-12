@@ -70,6 +70,11 @@ h6 {
 	@include font-headline();
 }
 
+// standard-sized utility text
+@mixin text-utility {
+	@include font-sans-serif(normal, 11px, 16px);
+}
+
 
 // COLORS
 // ------

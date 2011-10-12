@@ -22,6 +22,7 @@ $green:             #46a546;
 $red:               #9d261d;
 $yellow:            #ffc40d;
 $orange:            #f37a00;
+$orangeDark:        #b24401;
 $pink:              #c3325f;
 $purple:            #7a43b6;
 
@@ -29,12 +30,20 @@ $purple:            #7a43b6;
 $basefont:          14px;
 $baseline:          20px;
 
-// Griditude
-$gridColumns:       12;
-$gridColumnWidth:   53px;
-$gridGutterWidth:   30px;
-$siteWidth:         ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 1));
-$columnOffset: 1;
+// Clearfix for clearing floats like a boss h5bp.com/q
+@mixin clearfix {
+  zoom: 1;
+	&:before, &:after {
+    display: table;
+    content: "";
+	}
+	&:after {
+    clear: both;
+	}
+}
+.clearfix {
+	@include clearfix
+}
 
 // Color Scheme
 $baseColor:         $orange;                  // Set a base color
@@ -54,8 +63,18 @@ $analog2:           spin($baseColor, -22);
 
 // mixin for getting IE to respect inline-block
 @mixin ie-inline-block() {
+	display:inline-block;
 	zoom:1;
 	*display:inline;
+}
+
+// Turn an unordered list into a basic horizontal nav
+@mixin nav-horiz() {
+	display: block;
+    float: left;
+    padding: 0 10px;
+    position: relative;
+	list-style-type:none;
 }
 
 // Padded containers for when you need it
@@ -67,21 +86,6 @@ $analog2:           spin($baseColor, -22);
 }
 .inner-container {
 	@include box-padding(0px, 20px);
-}
-
-// Clearfix for clearing floats like a boss h5bp.com/q
-@mixin clearfix {
-  zoom: 1;
-	&:before, &:after {
-    display: table;
-    content: "";
-	}
-	&:after {
-    clear: both;
-	}
-}
-.clearfix {
-	@include clearfix
 }
 
 // Center-align a block level element
@@ -120,8 +124,17 @@ $analog2:           spin($baseColor, -22);
 @mixin font-headline() {
   font-family: "proxima-nova-condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-@mixin font-heading() {
+@mixin font-navigation($weight: normal, $size: 18px, $lineHeight: 20px) {
+  font-family: "proxima-nova-condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lineHeight;
+}
+@mixin font-heading($weight: bold, $size: 14px, $lineHeight: 20px) {
   font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lineHeight;
 }
 @mixin font-sans-serif($weight: normal, $size: 14px, $lineHeight: 20px) {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -140,30 +153,6 @@ $analog2:           spin($baseColor, -22);
   font-size: $size;
   font-weight: $weight;
   line-height: $lineHeight;
-}
-
-// Grid System
-.container {
-  width: $siteWidth;
-  margin: 0 auto;
-  @extend .clearfix;
-}
-@mixin columns($columnSpan: 1) {
-  float: left;
-  width: ($gridColumnWidth * $columnSpan) + ($gridGutterWidth * ($columnSpan - 1));
-  margin-right: $gridGutterWidth;
-  &:last-child {
-    margin-right: 0;
-  }
-}
-@mixin offsetMath($extraSpace: 40px) {
-  margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace !important;
-}
-@mixin offset($columnOffset: 1) {
-  @include offsetMath(40px);
-  &:first-child {
-   	@include offsetMath(20px);
-  }
 }
 
 // Border Radius
@@ -249,7 +238,9 @@ a {
   }
   @include transition(.1s linear all);
   &.primary,
-  &.danger {
+  &.danger,
+  &.success,
+  &.info {
     color: #fff;
     &:hover {
       color: #fff;
@@ -260,6 +251,20 @@ a {
 	background-color:$blueDark;
 	&:hover {
 		@include btnColor($blue, darken($blueDark, 10%));
+	}
+  }
+  &.success {
+    @include btnColor(#62c462, #57a957);
+	background-color:#57a957;
+	&:hover {
+		@include btnColor(#62c462, darken(#57a957, 10%));
+	}
+  }
+  &.info {
+    @include btnColor(#5bc0de, #339bb9);
+	background-color:#339bb9;
+	&:hover {
+		@include btnColor(#5bc0de, darken(#339bb9, 10%));
 	}
   }
   &.danger {
@@ -304,6 +309,11 @@ input[type=submit].btn {
   	padding: 0;
   	border: 0;
   }
+}
+// Super jank hack for removing border-radius from IE9 so we can keep filter gradients on alerts and buttons
+:root .alert-message,
+:root .btn {
+  border-radius: 0 \0;
 }
 
 
