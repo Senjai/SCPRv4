@@ -2,6 +2,10 @@ Scprv4::Application.routes.draw do
   
   match '/about/people/staff/:name' => 'people#bio', :as => :bio
 
+  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry", :as => :blog_entry  
+  match '/blogs/:blog/' => 'blogs#show', :as => :blog
+  match '/blogs/' => 'blogs#index', :as => :blogs
+
   match '/programs/:show/:year/:month/:day/:id/:slug/' => "programs#segment", :as => :segment  
   match '/programs/:show/:year/:month/:day/' => "programs#episode", :as => :episode
   match '/programs/:show/' => 'programs#show', :as => :program
