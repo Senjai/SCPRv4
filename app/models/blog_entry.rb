@@ -18,6 +18,21 @@ class BlogEntry < ContentBase
     self.title
   end
   
+  def lede(l=240)
+    lede = self.content
+    if lede.length > l
+      lede = /^(.{#{l}}\w*)\W/.match(lede)
+      
+      if lede
+        lede = "#{lede[1]}..."
+      else
+        lede = self.content
+      end
+    end
+    
+    return lede
+  end
+  
   #----------
   
   def link_path

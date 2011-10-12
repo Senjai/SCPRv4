@@ -1,4 +1,39 @@
 module ApplicationHelper  
+  
+  def render_content(content,context)
+    if !content
+      return ''
+    end
+    
+    html = ''
+    
+    [content].flatten.each do |c|
+      if c.respond_to?(:content) && c.content.is_a?(ContentBase)
+        c = c.content
+      end
+      
+      # break up our content type
+      types = c.class::CONTENT_TYPE.split("/")
+
+      # set up our template precendence
+      tmplt_opts = [
+        [types[0],types[1],context].join("/"),
+        [types[0],context].join("/"),
+        ['default',context].join("/")
+      ]
+
+      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }
+      
+      Rails.logger.debug "calling partial #{partial} for #{c}"
+
+      html << render(:partial => "shared/content/#{partial}", :object => c, :as => :content)
+    end
+    
+    return html.html_safe
+  end
+  
+  #----------
+  
   def render_asset(content,context)
     # short circuit if it's obvious we're getting nowhere
     if !content || !content.respond_to?("assets") || !content.assets.any?
@@ -18,7 +53,7 @@ module ApplicationHelper
     
     partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/assets"],true) }
 
-    render :partial => "shared/assets/#{partial}", :object => content.assets, :as => :assets
+    render :partial => "shared/assets/#{partial}", :object => content.assets, :as => :assets, :locals => { :content => content }
   end
   
   #----------
