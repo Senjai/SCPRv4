@@ -15,18 +15,30 @@ class NewsStory < ContentBase
   
   #----------
   
+  def link_path
+    Rails.application.routes.url_helpers.news_story_path(
+      :year => self.published_at.year, 
+      :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :id => self.id,
+      :slug => self.slug
+    )
+  end
+  
+  #----------
+  
   def byline_elements
     bylines = []
     
-    if self.primary_reporter
+    if self.primary_reporter && self.primary_reporter != ""
       bylines << self.primary_reporter
     end
 
-    if self.secondary_reporter
+    if self.secondary_reporter && self.secondary_reporter != ""
       bylines << self.primary_reporter
     end
     
-    if !self.primary_reporter && !self.secondary_reporter
+    if !self.primary_reporter && !self.secondary_reporter && self.byline != ""
       bylines << self.byline
     end
     

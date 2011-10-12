@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111010230906) do
+ActiveRecord::Schema.define(:version => 20111012183836) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -947,6 +947,14 @@ ActiveRecord::Schema.define(:version => 20111010230906) do
   create_table "rails_content_map", :id => false, :force => true do |t|
     t.integer "id",         :null => false
     t.string  "class_name", :null => false
+  end
+
+  create_table "rails_layout_homepagecontent", :id => false, :force => true do |t|
+    t.integer "id",           :default => 0,  :null => false
+    t.integer "homepage_id",                  :null => false
+    t.integer "content_id",                   :null => false
+    t.string  "content_type",                 :null => false
+    t.integer "position",     :default => 99, :null => false
   end
 
   create_table "rails_media_link", :id => false, :force => true do |t|

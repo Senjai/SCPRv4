@@ -1,0 +1,7 @@
+<h1>Home Page</h1>
+
+<ul>
+<% for c in @homepage.content %>
+	<li><%= link_to c.content.headline, c.content.link_path %></li>
+<% end %>
+</ul>

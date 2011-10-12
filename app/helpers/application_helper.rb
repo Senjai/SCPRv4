@@ -57,7 +57,7 @@ module ApplicationHelper
         end
       end
     end
-    
+        
     if bylines.length > 1
       return [bylines[0..-2].join(" & "),bylines[-1]].join(" | ").html_safe
     else
