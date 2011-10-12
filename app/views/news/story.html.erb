@@ -1,4 +1,7 @@
 <h1><%= @story.headline %></h1>
+<h4><%= byline @story %></h4>
+
+<%= render_asset @story, "story" %>
 
 <%= simple_format @story.lede %>
 <%= simple_format @story.body %>

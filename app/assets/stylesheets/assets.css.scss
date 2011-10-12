@@ -1,0 +1,22 @@
+.contentasset {
+    h4 {
+       text-align: right;
+       font-size: 11px;
+       line-height: $basefont;
+       font-weight: normal;
+       margin-top: 0;
+       margin-bottom: $basefont;
+       color: #777;
+    }
+    
+    p {
+        color: #777;
+    }
+}
+
+.contentasset.caR {
+    display: inline;
+    float: right;
+    margin-left: $gridGutterWidth;
+    margin-bottom: $gridGutterWidth;
+}

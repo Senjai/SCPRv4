@@ -18,7 +18,7 @@ class ContentBase < ActiveRecord::Base
   }
 
   # All ContentBase objects have assets and alarms
-  has_many :content_assets, :as => :content
+  has_many :assets, :class_name => "ContentAsset", :as => :content
     
   #----------
   
@@ -26,4 +26,9 @@ class ContentBase < ActiveRecord::Base
     return [self.class::CONTENT_TYPE,self.id].join(":")
   end
 
+  #----------
+  
+  def byline_elements
+    ["KPCC"]
+  end
 end

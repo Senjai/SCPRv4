@@ -9,15 +9,17 @@
 @import "compass/css3/opacity";
 @import "compass/css3/images";
 @import "compass/utilities/sprites/base";
-@import "reset.css.scss";
-@import "base.css.scss";
-@import "type.css.scss";
-@import "grids.css.scss";
-@import "patterns.css.scss";
-@import "forms.css.scss";
-@import "tables.css.scss";
+@import "base/reset.css.scss";
+@import "base/base.css.scss";
+@import "base/type.css.scss";
+@import "base/grids.css.scss";
+@import "base/patterns.css.scss";
+@import "base/forms.css.scss";
+@import "base/tables.css.scss";
 
 //Section-Specific Stylesheets
-@import "minimal.css.scss";
-@import "slider.css.scss";
+@import "base/minimal.css.scss";
+@import "base/slider.css.scss";
+
+@import "assets.css.scss";
 
