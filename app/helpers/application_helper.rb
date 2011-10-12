@@ -1,5 +1,15 @@
 module ApplicationHelper  
   
+  # render_content takes a ContentBase object and a context, and renders 
+  # using the most specific version of that context it can find.
+  # 
+  # For instance, if your content is a "news/story" and your context is 
+  # "lead", render_content will try:
+  # 
+  # * shared/content/news/story/lead
+  # * shared/content/news/lead
+  # * shared/content/default/lead
+  
   def render_content(content,context)
     if !content
       return ''
@@ -33,6 +43,18 @@ module ApplicationHelper
   end
   
   #----------
+  
+  # render_asset takes a ContentBase object and a context, and renders using 
+  # an optional context_asset_scheme attribute on the object.  
+  #
+  # For example, given a context of "story", render_asset will check for a 
+  # story_asset_scheme attribute on the object.  If found (let's assume with a 
+  # value of "wide"), it will try to render:
+  #
+  # * shared/assets/story/wide
+  # * shared/assets/default/wide
+  # * shared/assets/story/default
+  # * shared/assets/default/default
   
   def render_asset(content,context)
     # short circuit if it's obvious we're getting nowhere
