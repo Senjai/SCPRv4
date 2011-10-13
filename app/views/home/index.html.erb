@@ -1,18 +1,23 @@
-<h1>Home Page</h1>
-
+<div class="container">
 <div class="row">
-	<div class="span4 column">
+    <div class="span12">
+    	<h1>Home Page</h1>
+    </div>
+</div>
+<div class="row">
+	<div class="span4">
 		<%= render_content @homepage.content[0], "lead" %>
 		<%= render_content @homepage.content[1..-1], "offlead" %>
 	</div>
-	<div class="span4 column">
+	<div class="span4">
 		<ul>
 		<% for c in @homepage.content %>
 			<li><%= link_to c.content.headline, c.content.link_path %></li>
 		<% end %>
 		</ul>
 	</div>
-	<div class="span4 column">
+	<div class="span4">
 		<h3><%= link_to "Programs", programs_path() %>
 	</div>
+</div>
 </div>

@@ -1,16 +1,15 @@
 .contentasset {
-    h4 {
+    img {max-width:100%;}
+	h4 {
        text-align: right;
-       font-size: 11px;
-       line-height: $basefont;
-       font-weight: normal;
+	   @include font-sans-serif(normal, 10px, 14px);
        margin-top: 0;
        margin-bottom: $basefont;
-       color: #777;
+       color: #999;
     }
-    
     p {
         color: #777;
+		@include font-sans-serif(normal, 11px, 14px);
     }
 }
 

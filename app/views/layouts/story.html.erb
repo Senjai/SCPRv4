@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SCPRv4</title>
+  <title>KPCC</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
+  <%= render "shared/header/header_js" %>
+
+
   <%= csrf_meta_tags %>
 </head>
 <body>
-	
-<div class="topbar">
-	<div class="fill">
-		<div class="container">
-			<h3><%= link_to image_tag("kpcc-logo-sm.png"), "/" %></h3>
-		</div>
-	</div>
-</div>
+<!-- MASTHEAD-->
+<%= render "shared/masthead" %>
 
 <div class="container">
 	<div class="row">
-		<div class="span8 columns">
-
-<%= yield %>
+		<div class="span2">
+			Left Rail
 		</div>
-		<div class="span4 columns">
-			Sidebar
+		<div class="span6">
+			<%= yield %>
+		</div>
+		<div class="span4">
+			<%= render "shared/widgets/oas_position1" %>
 		</div>
 	</div>
 </div>
