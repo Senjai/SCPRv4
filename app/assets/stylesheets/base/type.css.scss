@@ -7,7 +7,7 @@
 // ---------
 p {
   @include font-serif(normal,$basefont,$baseline);
-  margin-bottom: $baseline / 2;
+  margin-bottom: 18px;
   small {
     font-size: $basefont - 2;
     color: $grayLight;
@@ -68,6 +68,7 @@ h6 {
 // Headline styles
 .story-headline {
 	@include font-headline();
+	margin-bottom:0;
 }
 
 // standard-sized utility text

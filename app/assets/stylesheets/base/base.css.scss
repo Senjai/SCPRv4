@@ -3,7 +3,7 @@
 
 // Links
 $linkColor:         #007fa6;
-$linkColorHover:    darken($linkColor, 10);
+$linkColorHover:    lighten($linkColor, 10);
 
 // Grays
 $black:             #000;
@@ -28,7 +28,7 @@ $purple:            #7a43b6;
 
 // Baseline grid
 $basefont:          14px;
-$baseline:          20px;
+$baseline:          21px;
 
 // Clearfix for clearing floats like a boss h5bp.com/q
 @mixin clearfix {
@@ -121,8 +121,11 @@ $analog2:           spin($baseColor, -22);
   font-weight: $weight;
   line-height: $lineHeight;
 }
-@mixin font-headline() {
+@mixin font-headline($weight: bold, $size: 30px, $lineHeight: 32px) {
   font-family: "proxima-nova-condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lineHeight;
 }
 @mixin font-navigation($weight: normal, $size: 18px, $lineHeight: 20px) {
   font-family: "proxima-nova-condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;

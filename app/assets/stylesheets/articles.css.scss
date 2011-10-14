@@ -1,0 +1,13 @@
+.storytitle {
+	border-bottom:1px solid $grayLighter;
+	margin-bottom:$baseline;
+}
+.byline {
+	color:$gray;
+	@include text-utility();
+	margin-top:($baseline / 4);
+	a {
+		color:$gray;
+		font-weight:bold;
+	}
+}

@@ -167,14 +167,16 @@ hr.carved {
 	background-position:0 3px;
 	padding-left:32px;
 }
-li.comment {
-	background-image:url(image_path('icons/comment.png'));
-}
-li.membership {
-	background-image:url(image_path('icons/cogs.png'));
-}
-li.futures {
-	background-image:url(image_path('icons/chemical.png'));
+body.minimal {
+	li.comment {
+		background-image:url(image_path('icons/comment.png'));
+	}
+	li.membership {
+		background-image:url(image_path('icons/cogs.png'));
+	}
+	li.futures {
+		background-image:url(image_path('icons/chemical.png'));
+	}
 }
 .floating-shadow {
 	background:transparent url(image_path('floating-shadow.png')) no-repeat center bottom;

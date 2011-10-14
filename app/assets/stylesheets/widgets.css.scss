@@ -1,0 +1,42 @@
+//sidebar styling mixin
+@mixin sidebar-widget {
+	border-top:1px solid $grayLighter;
+	margin-bottom:$baseline;
+}
+
+
+// Sharing Tools
+.sharing-tools {
+	@include font-sans-serif(normal, 12px);
+}
+
+// Comments styling
+.comments {
+	border-top:1px solid $grayLighter;
+}
+
+
+// ****** SIDEBAR STYLES ******
+
+//sidebar widget
+#sidebar .widget {
+	@include sidebar-widget();
+}
+
+// Ad units
+.ad {
+	padding:$baseline 0;
+	text-align:center;
+	p {
+		small {@include font-sans-serif(normal, 9px, 0px);}
+		a {color:#999;}
+	}
+}
+
+// Sidebar article listings
+.widget ol {
+	border-top:1px solid $grayLighter;
+	li {
+		border-bottom:1px solid $grayLighter;
+	}
+}

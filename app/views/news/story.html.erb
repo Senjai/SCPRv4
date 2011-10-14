@@ -1,7 +1,11 @@
+<% content_for :headline do %>
 <h1 class="story-headline"><%= @story.headline %></h1>
-<h4>by <%= byline @story %> | <%= smart_date @story %></h4>
+<p class="byline"><%= byline @story %> <span class="pipe">|</span> <%= smart_date @story %></p>
+<% end %>
 
+<% content_for :body do %>
 <%= render_asset @story, "story" %>
 
 <%= simple_format @story.lede %>
 <%= simple_format @story.body %>
+<% end %>

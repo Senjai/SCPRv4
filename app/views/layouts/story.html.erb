@@ -15,14 +15,25 @@
 
 <div class="container">
 	<div class="row">
-		<div class="span2">
-			Left Rail
+		<div class="span8">
+			<div class="storytitle">
+				<%= yield :headline %>
+			</div>
+			<div class="row">
+				<div class="span6">
+					<%= yield :body %>
+				</div>
+				<div class="span2">
+					<%= render "shared/widgets/sharing_tools", :ad_id => 'x01' %>
+				</div>
+			</div>
+			<%= render "shared/comments" %>
 		</div>
-		<div class="span6">
-			<%= yield %>
-		</div>
-		<div class="span4">
-			<%= render "shared/widgets/oas_position1" %>
+		<div id ="sidebar" class="span4">
+			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
+			<%= render "shared/widgets/most_popular" %>
+			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 		</div>
 	</div>
 </div>
