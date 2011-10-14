@@ -21,6 +21,11 @@ module ApplicationHelper
       if c.respond_to?(:content) && c.content.is_a?(ContentBase)
         c = c.content
       end
+
+      # if we're caching, add content to the objects list
+      if defined? @COBJECTS
+        @COBJECTS << c
+      end
       
       # break up our content type
       types = c.class::CONTENT_TYPE.split("/")

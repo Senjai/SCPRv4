@@ -6,8 +6,10 @@
 </div>
 <div class="row">
 	<div class="span4">
-		<%= render_content @homepage.content[0], "lead" %>
-		<%= render_content @homepage.content[1..-1], "offlead" %>
+		<%= content_cache("home_leads") do %>
+			<%= render_content @homepage.content[0], "lead" %>
+			<%= render_content @homepage.content[1..-1], "offlead" %>
+		<% end %>		
 	</div>
 	<div class="span4">
 		<ul>
