@@ -1,6 +1,7 @@
 .storytitle {
-	border-bottom:1px solid $grayLighter;
+	border-top:1px solid $grayLighter;
 	margin-bottom:$baseline;
+	padding-top:($baseline / 2);
 }
 .byline {
 	color:$gray;

@@ -416,7 +416,8 @@ footer {
 // -----------
 .breadcrumb {
   margin: 0 0 $baseline;
-  padding: 7px 14px;
+  padding: 7px 0px;
+  @include font-sans-serif();
   font-size:($basefont * .75);
   li {
     display: inline;

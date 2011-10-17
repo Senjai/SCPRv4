@@ -85,7 +85,7 @@ $analog2:           spin($baseColor, -22);
 	padding-bottom: $vertical;
 }
 .inner-container {
-	@include box-padding(0px, 20px);
+	@include box-padding(10px, 10px);
 }
 
 // Center-align a block level element

@@ -1,11 +1,15 @@
 <% content_for :headline do %>
-<h1 class="story-headline"><%= @story.headline %></h1>
-<p class="byline"><%= byline @story %> <span class="pipe">|</span> <%= smart_date @story %></p>
+<article>
+	<h1 class="story-headline"><%= @story.headline %></h1>
+	<p class="byline"><%= byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
 <% end %>
 
-<% content_for :body do %>
-<%= render_asset @story, "story" %>
+	<% content_for :body do %>
+	<%= render_asset @story, "story" %>
 
-<%= simple_format @story.lede %>
-<%= simple_format @story.body %>
+	<%= render "shared/audio/story_audio" %>
+
+	<%= simple_format @story.lede %>
+	<%= simple_format @story.body %>
+	</article>
 <% end %>

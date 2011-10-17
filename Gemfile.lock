@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/SCPR/redis-content-store.git
+  revision: 16cbc964222df553450d0b03b4d1fa888e714440
+  specs:
+    redis-content-store (0.1.0)
+      redis-store
+
+GIT
   remote: https://github.com/chriseppstein/compass.git
   revision: ebb2e42acc8a49cd77a712e955cb349fe07f89ee
   branch: master
@@ -7,12 +14,6 @@ GIT
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
-
-PATH
-  remote: /Users/eric/projects/redis-content-store
-  specs:
-    redis-content-store (0.1.0)
-      redis-store
 
 GEM
   remote: http://rubygems.org/
