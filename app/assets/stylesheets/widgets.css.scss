@@ -5,6 +5,26 @@
 	border-top:1px solid $grayLighter;
 	margin-bottom:$baseline;
 }
+@mixin story-sidebar-widget {
+	@include font-sans-serif(normal, 12px);
+}
+
+// Story Sidebar 
+#story-sidebar {
+	h5 {
+		border-top:1px double $grayLighter;
+		color:$orangeDark;
+		font-size:12px;
+		font-weight:normal;
+		line-height:$baseline;
+		padding:($baseline / 8) 0;
+		text-transform:uppercase;	
+	}
+	hr {
+		border-bottom:2px solid $grayLighter;
+		margin-bottom:3px;
+	}
+}
 
 // Story Audio Widget
 .story-audio {
@@ -52,7 +72,10 @@
 
 // Sharing Tools
 .sharing-tools {
-	@include font-sans-serif(normal, 12px);
+	@include story-sidebar-widget();
+	ul li{
+		@include nav-horiz()
+	}
 }
 
 //Author Info
@@ -77,7 +100,7 @@ figure.video {
 // Related Articles
 .related-articles {
 	h6 {
-		color:$grayDark;
+		color:$orangeDark;
 		
 	}
 }

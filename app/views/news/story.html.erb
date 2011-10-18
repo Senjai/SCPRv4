@@ -1,5 +1,4 @@
 <% content_for :headline do %>
-<article>
 	<h1 class="story-headline"><%= @story.headline %></h1>
 	<p class="byline"><%= byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
 <% end %>
@@ -9,5 +8,4 @@
 	<%= simple_format @story.lede %>
 	<%= simple_format @story.body %>
 	<%= render "shared/widgets/author_info" %>
-	</article>
 <% end %>

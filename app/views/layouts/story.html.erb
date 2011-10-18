@@ -13,31 +13,27 @@
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
 
-<div class="container">
+<div id="main" class="container">
 	<div class="row">
-		<div class="span8 storytitle">
+		<article class="span8 storytitle">
 			<div class="row">
-				<div class="span2">
-					<h5 style="color:#999;font-size:24px;font-weight:normal;">Local</h5>
-				</div>
-				<div class="span6">
+				<div class="span8">
+					<%= render "shared/widgets/sharing_tools" %>
 					<%= yield :headline %>
 				</div>
 			</div>
 			<div class="row">
-				<div id="story-sidebar" class="span2">
-					<%= render "shared/audio/story_audio" %>
-					<%= render "shared/widgets/sharing_tools" %>
-					<%= render "shared/widgets/story_media" %>
-				</div>
 				<div class="span6">
 					<%= yield :body %>
 					<%= render "shared/widgets/related_articles" %>
 				</div>
-				
+				<div id="story-sidebar" class="span2">
+					<%= render "shared/audio/story_audio" %>
+					<%= render "shared/widgets/story_media" %>
+				</div>
 			</div>
 			<%= render "shared/comments" %>
-		</div>
+		</article>
 		<div id ="sidebar" class="span4">
 			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
 			<%= render "shared/widgets/most_popular" %>

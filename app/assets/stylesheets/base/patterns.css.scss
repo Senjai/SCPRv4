@@ -416,21 +416,26 @@ footer {
 // -----------
 .breadcrumb {
   margin: 0 0 $baseline;
-  padding: 7px 0px;
+  padding:0px;
   @include font-sans-serif();
   font-size:($basefont * .75);
   li {
     display: inline;
   }
+  .active {
+	font-weight:bold;
+	text-transform:uppercase;
+  }
   .divider {
-    padding: 0 3px;
+    padding: 0 2px;
     color: $grayLight;
   }
-  a {
+  a, .active a {
+    color: $orangeDark;
   }
-  .active a {
-    color: $grayDark;
-  }
+  a:hover {
+	color:$orange;
+}
 }
 
 // Common tab and pill styles
