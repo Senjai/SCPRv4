@@ -1,5 +1,5 @@
 class Asset < ActiveResource::Base
-  self.site = "http://a.scpr.org/api/"
+  self.site = "http://#{AssetHost[:server]}/api/"
   self.element_name = 'asset'
   self.include_root_in_json = false
   
@@ -30,7 +30,7 @@ class Asset < ActiveResource::Base
   #----------
 
   class << self
-      @@auth_token = 'droQQ2LcESKeGPzldQr7'
+      @@auth_token = AssetHost[:token]
             
       #----------
 
