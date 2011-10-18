@@ -15,20 +15,26 @@
 
 <div class="container">
 	<div class="row">
-		<div class="span8">
-			<div class="storytitle">
-				<%= yield :headline %>
+		<div class="span8 storytitle">
+			<div class="row">
+				<div class="span2">
+					<h5 style="color:#999;font-size:24px;font-weight:normal;">Local</h5>
+				</div>
+				<div class="span6">
+					<%= yield :headline %>
+				</div>
 			</div>
 			<div class="row">
+				<div id="story-sidebar" class="span2">
+					<%= render "shared/audio/story_audio" %>
+					<%= render "shared/widgets/sharing_tools" %>
+					<%= render "shared/widgets/story_media" %>
+				</div>
 				<div class="span6">
 					<%= yield :body %>
 					<%= render "shared/widgets/related_articles" %>
 				</div>
-				<div id="story-" class="span2">
-					<%= render "shared/widgets/sharing_tools" %>
-					<%= render "shared/widgets/author_info" %>
-					<%= render "shared/widgets/story_media" %>
-				</div>
+				
 			</div>
 			<%= render "shared/comments" %>
 		</div>

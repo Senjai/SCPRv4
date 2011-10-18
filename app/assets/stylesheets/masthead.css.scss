@@ -44,6 +44,269 @@ nav.utils ul {
 	}
 }
 
+// Main Navbar Black
+.nav-primary {
+	@include background-image(linear-gradient($nearBlack, $black));
+	background-color:#7f7f7f;
+	height:36px;
+	ul li.listen-live {
+		@include background-image(linear-gradient(#cb5f1d, #9b4816));
+		background-color:#cb5f1d;
+		&:hover {
+			@include background-image(linear-gradient(lighten(#cb5f1d, 8%), lighten(#9b4816, 8%)));
+		}
+		a {
+			background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+			padding-left:33px;
+			padding-right:22px;
+			&:hover {
+				background-color:transparent;
+				color:$white;
+			}
+		}
+	}
+	ul li {
+		border-right:1px solid $grayDark;
+	}
+	ul li a {	
+		@include font-navigation(normal, 16px);
+		color:$nearWhite;
+		padding:8px 24px;
+		text-transform:uppercase;
+		&:hover {
+			background-color:$white;
+			color:$blueDark;
+		}
+	}
+	form {float:right;margin-right:8px;}
+	form fieldset {
+		margin:0;
+		padding:0;
+		label {
+			display:none;
+		}
+		input.search {
+			@include border-radius(20px);
+			margin-top:3px;
+			padding:0 8px;
+			width: 160px;
+			&:focus {
+				outline: none;
+			    border-color:#999;
+				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+			    @include box-shadow($shadow);
+			}
+		}
+		input.submit {
+			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+			width:20px;
+			height:20px;
+			text-indent:-9999px;
+			border:0;
+		}
+	}
+}
+
+
+/*
+// Main Navbar Light
+.nav-primary {
+	@include background-image(linear-gradient(darken($nearWhite, 10%), darken($nearWhite, 30%)));
+	background-color:#7f7f7f;
+	height:36px;
+	ul li.listen-live {
+		@include background-image(linear-gradient(lighten(#cb5f1d, 8%), lighten(#9b4816, 8%)));
+		background-color:#cb5f1d;
+		&:hover {
+			@include background-image(linear-gradient(lighten(#cb5f1d, 8%), lighten(#9b4816, 8%)));
+		}
+		a {
+			background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+			color:$white;
+			padding-left:33px;
+			padding-right:22px;
+			&:hover {
+				background-color:transparent;
+				color:$white;
+			}
+		}
+	}
+	ul li {
+		border-right:1px solid $grayLighter;
+	}
+	ul li a {	
+		@include font-navigation(normal, 16px);
+		color:$nearBlack;
+		padding:8px 24px;
+		text-transform:uppercase;
+		&:hover {
+			background-color:$white;
+			color:$blueDark;
+		}
+	}
+	form {float:right;margin-right:8px;}
+	form fieldset {
+		margin:0;
+		padding:0;
+		label {
+			display:none;
+		}
+		input.search {
+			@include border-radius(20px);
+			margin-top:3px;
+			padding:0 8px;
+			width: 160px;
+			&:focus {
+				outline: none;
+			    border-color:#999;
+				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+			    @include box-shadow($shadow);
+			}
+		}
+		input.submit {
+			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+			width:20px;
+			height:20px;
+			text-indent:-9999px;
+			border:0;
+		}
+	}
+}
+*/
+
+/*
+// Main Navbar White
+.nav-primary {
+	border:1px solid $grayLighter;
+	height:36px;
+	ul li.listen-live {
+		&:hover {
+			@include background-image(linear-gradient(lighten(#cb5f1d, 8%), lighten(#9b4816, 8%)));
+		}
+		a {
+			background:url(image_path('icons/antenna-orange.png')) no-repeat 8px 4px;
+			color:#cb5f1d;
+			padding-left:33px;
+			padding-right:22px;
+			&:hover {
+				background-color:transparent;
+				color:$white;
+			}
+		}
+	}
+	ul li {
+	//	border-right:1px solid $grayLighter;
+	}
+	ul li a {	
+		@include font-heading(600, 14px);
+		color:$grayDark;
+		padding:8px 24px;
+		text-transform:uppercase;
+		&:hover {
+			background-color:$white;
+			color:$blueDark;
+		}
+	}
+	form {float:right;margin-right:8px;}
+	form fieldset {
+		margin:0;
+		padding:0;
+		label {
+			display:none;
+		}
+		input.search {
+			@include border-radius(20px);
+			margin-top:3px;
+			padding:0 8px;
+			width: 160px;
+			&:focus {
+				outline: none;
+			    border-color:#999;
+				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+			    @include box-shadow($shadow);
+			}
+		}
+		input.submit {
+			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+			width:20px;
+			height:20px;
+			text-indent:-9999px;
+			border:0;
+		}
+	}
+}
+*/
+
+/*
+// Main Navbar Lighter
+.nav-primary {
+	@include background-image(linear-gradient(darken($nearWhite, 10%) 1%, $nearWhite 2%, $grayLighter 98%, darken($grayLighter, 10%) 100%));
+	background-color:#7f7f7f;
+	height:36px;
+	border-left:1px solid #cb5f1d;
+	border-right:1px solid darken($nearWhite, 10%);
+	ul li.listen-live {
+		@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
+		background-color:#cb5f1d;
+		&:hover {
+			@include background-image(linear-gradient(#cb5f1d, #9b4816));
+		}
+		a {
+			background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+			color:$white;
+			padding-left:33px;
+			padding-right:22px;
+			&:hover {
+				background-color:transparent;
+				color:$white;
+			}
+		}
+	}
+	ul li {
+	//	border-right:1px solid $grayLighter;
+	}
+	ul li a {	
+		@include font-navigation(600, 16px);
+		color:$grayDark;
+		padding:8px 24px;
+		text-transform:uppercase;
+		&:hover {
+			background-color:$white;
+			color:$blueDark;
+		}
+	}
+	form {float:right;margin-right:8px;}
+	form fieldset {
+		margin:0;
+		padding:0;
+		label {
+			display:none;
+		}
+		input.search {
+			@include border-radius(20px);
+			margin-top:3px;
+			padding:0 8px;
+			width: 160px;
+			&:focus {
+				outline: none;
+			    border-color:#999;
+				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+			    @include box-shadow($shadow);
+			}
+		}
+		input.submit {
+			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+			width:20px;
+			height:20px;
+			text-indent:-9999px;
+			border:0;
+		}
+	}
+}
+*/
+
+
+/*
 // Main Navbar
 .nav-primary {
 	@include background-image(linear-gradient(#7f7f7f, #616161));
@@ -106,3 +369,5 @@ nav.utils ul {
 		}
 	}
 }
+
+*/

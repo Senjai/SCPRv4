@@ -6,6 +6,7 @@
 	$gridGutterWidth:   30px;
 	$siteWidth:         ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * $gridColumns);
 	$columnOffset: 1;
+	$extraSpace: ($gridGutterWidth * 2);
 	
 	// Grid System
 	.container {
@@ -18,13 +19,13 @@
 	  width: ($gridColumnWidth * $columnSpan) + ($gridGutterWidth * ($columnSpan - 1));
 	  margin-left: $gridGutterWidth;
 	}
-	@mixin offsetMath($extraSpace: 40px) {
-	  margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace !important;
+	@mixin offsetMath() {
+	  margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace;
 	}
 	@mixin offset($columnOffset: 1) {
-	  @include offsetMath(40px);
+	  margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace;
 	  &:first-child {
-	   	@include offsetMath(20px);
+	  	margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace;
 	  }
 	}
 	

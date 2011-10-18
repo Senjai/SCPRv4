@@ -6,10 +6,8 @@
 
 	<% content_for :body do %>
 	<%= render_asset @story, "story" %>
-
-	<%= render "shared/audio/story_audio" %>
-
 	<%= simple_format @story.lede %>
 	<%= simple_format @story.body %>
+	<%= render "shared/widgets/author_info" %>
 	</article>
 <% end %>
