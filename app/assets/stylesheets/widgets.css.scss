@@ -15,7 +15,6 @@
 		border-top:1px double $grayLighter;
 		color:$orangeDark;
 		font-size:12px;
-		font-weight:normal;
 		line-height:$baseline;
 		padding:($baseline / 8) 0;
 		text-transform:uppercase;	
@@ -44,7 +43,9 @@
 	.audio-content {
 		float:left;
 		h4 {
-			@include font-headline(600, 16px, 34px);
+			background:transparent url(image_path('icons/listen-headphones.png')) no-repeat left top;
+			@include font-headline(600, 15px, 34px);
+			padding-left:36px;
 			span {
 				font-size:12px;
 				font-weight:normal;
@@ -73,8 +74,34 @@
 // Sharing Tools
 .sharing-tools {
 	@include story-sidebar-widget();
+	margin-bottom:$baseline;
+	h5 {
+		color:$gray;
+		display:block;
+		float:left;
+		@include font-sans-serif(bold, 11px, 20px);
+		margin-right:20px;
+		text-transform:uppercase;
+	}
 	ul li{
-		@include nav-horiz()
+		@include nav-horiz();
+		background:transparent no-repeat left top;
+		font-size:11px;
+		margin-right:10px;
+		padding-left:20px;
+		&.facebook {
+			background-image:url(image_path('icons/share-facebook.png'));
+		}
+		&.twitter {
+			background-image:url(image_path('icons/share-twitter.png'));
+		}
+		&.print {
+			background-image:url(image_path('icons/share-print.png'));
+		}
+		&.email {
+			background-image:url(image_path('icons/share-email.png'));
+		}
+		a {color:$nearBlack;}
 	}
 }
 
