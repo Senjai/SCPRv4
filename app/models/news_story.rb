@@ -29,19 +29,7 @@ class NewsStory < ContentBase
   
   def byline_elements
     bylines = []
-    
-    if self.primary_reporter && self.primary_reporter != ""
-      bylines << self.primary_reporter
-    end
-
-    if self.secondary_reporter && self.secondary_reporter != ""
-      bylines << self.primary_reporter
-    end
-    
-    if !self.primary_reporter && !self.secondary_reporter && self.byline != ""
-      bylines << self.byline
-    end
-    
+        
     if self.news_agency
       bylines << self.news_agency
     end
