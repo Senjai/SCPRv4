@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>89.3 KPCC</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= render "shared/header/header_js" %>
+
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<!-- MASTHEAD-->
+<%= render "shared/masthead" %>
+
+<div id="main" class="container">
+	<div class="row">
+		<section class="span8">
+			<%= yield %>
+		</section>
+		<div id ="sidebar" class="span4">
+			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
+			<%= render "shared/widgets/most_popular" %>
+			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

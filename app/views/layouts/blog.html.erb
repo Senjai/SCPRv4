@@ -17,25 +17,17 @@
 	<div class="row">
 		<article class="span8 storytitle">
 			<div class="row">
-				<div class="span8">
+				<div class="span2">
 					<%= render "shared/widgets/story_tools", :cssClass => '' %>
-					<%= yield :headline %>
 				</div>
-			</div>
-			<div class="row">
 				<div class="span6">
-					<%= yield :body %>
+					<%= yield %>
 					<%= render "shared/widgets/related_articles" %>
 					<%= render "shared/widgets/pij_query" %>
 					<%= render "shared/widgets/story_tools", :cssClass => 'bottom' %>
 					<%= render "shared/widgets/author_info" %>
 				</div>
-				<div id="story-sidebar" class="span2">
-					<%= render "shared/audio/story_audio" %>
-					<%= render "shared/widgets/story_media" %>
-				</div>
 			</div>
-			<%= render "shared/widgets/content_carousel" %>
 			<%= render "shared/comments" %>
 		</article>
 		<div id ="sidebar" class="span4 storytitle">

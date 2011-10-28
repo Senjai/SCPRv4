@@ -4,7 +4,7 @@
        text-align: right;
 	   @include font-sans-serif(normal, 10px, 14px);
        margin-top: 0;
-       margin-bottom: $basefont;
+       margin-bottom: $baseline / 4;
        color: #999;
     }
     p {

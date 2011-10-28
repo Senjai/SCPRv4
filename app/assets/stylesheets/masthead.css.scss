@@ -253,6 +253,7 @@ nav.utils ul {
 	@include background-image(linear-gradient(darken($nearWhite, 10%) 1%, $nearWhite 2%, $grayLighter 98%, darken($grayLighter, 10%) 100%));
 	background-color:#7f7f7f;
 	height:36px;
+	position:relative;
 	border-left:1px solid #cb5f1d;
 	border-right:1px solid darken($nearWhite, 10%);
 	ul li.listen-live {
@@ -282,7 +283,9 @@ nav.utils ul {
 		text-transform:uppercase;
 		&:hover {
 			background-color:$white;
-			color:$blueDark;
+			color:$orangeDark;
+			$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
+			@include box-shadow($nav-shadow);
 		}
 	}
 	form {float:right;margin-right:8px;}
@@ -311,6 +314,15 @@ nav.utils ul {
 			text-indent:-9999px;
 			border:0;
 		}
+	}
+	.section-mega {
+		background-color:$white;
+		width:100%;
+		height:$baseline * 9;
+		position:absolute;
+		top:36px;
+		$mega-shadow:0 2px 3px lighten($gray, 10%);
+		@include box-shadow($mega-shadow);
 	}
 }
 

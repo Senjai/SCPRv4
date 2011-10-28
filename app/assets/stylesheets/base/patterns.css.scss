@@ -460,14 +460,17 @@ footer {
   padding-left:3%;
   li {
     a {
-      margin-bottom: -1px;
+	  color:$gray;
+      font-size:12px;
+	  margin-bottom: -1px;
       margin-right: 2px;
       padding: 0 15px;
-      line-height: ($baseline * 2) - 1;
-      @include border-radius(3px 3px 0 0);
+      line-height: ($baseline * 1.5) - 1;
       &:hover {
         background-color: $grayLighter;
         border-bottom: 1px solid $grayLight;
+		color:$nearBlack;
+		text-decoration:none;
       }
     }
     &.active a {
@@ -475,7 +478,7 @@ footer {
       padding: 0 14px;
       border: 1px solid #ccc;
       border-bottom: 0;
-      color: $gray;
+      color: $orangeDark;
     }
   }
 }

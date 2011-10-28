@@ -11,13 +11,8 @@
 
 // Story Sidebar 
 #story-sidebar {
-	h5 {
-		border-top:1px double $grayLighter;
-		color:$orangeDark;
-		font-size:12px;
-		line-height:$baseline;
-		padding:($baseline / 8) 0;
-		text-transform:uppercase;	
+	.widget {
+		@include sidebar-widget();
 	}
 	hr {
 		border-bottom:2px solid $grayLighter;
@@ -44,7 +39,8 @@
 		float:left;
 		h4 {
 			background:transparent url(image_path('icons/listen-headphones.png')) no-repeat left top;
-			@include font-headline(600, 15px, 34px);
+			@include font-headline(600);
+			font-size:15px;
 			padding-left:36px;
 			span {
 				font-size:12px;
@@ -54,6 +50,10 @@
 			}
 		}
 	}
+	.duration {
+		@include ie-inline-block();
+		padding-top:6px;
+	}
 	ul.audio-tools {
 		float:right;
 		@include font-sans-serif(normal, 11px, 18px);
@@ -62,7 +62,7 @@
 			@include nav-horiz();
 			a {
 				color:$gray;
-				line-height:34px;
+				line-height:24px;
 				&:hover {
 					color:$grayDark;
 				}
@@ -76,7 +76,7 @@
 	@include story-sidebar-widget();
 	margin-bottom:$baseline;
 	h5 {
-		color:$gray;
+		color:$orangeDark;
 		display:block;
 		float:left;
 		@include font-sans-serif(bold, 11px, 20px);
@@ -87,19 +87,22 @@
 		@include nav-horiz();
 		background:transparent no-repeat left top;
 		font-size:11px;
-		margin-right:10px;
+		margin-right:14px;
 		padding-left:20px;
 		&.facebook {
 			background-image:url(image_path('icons/share-facebook.png'));
+			background-position:1px 2px;
 		}
 		&.twitter {
 			background-image:url(image_path('icons/share-twitter.png'));
 		}
 		&.print {
 			background-image:url(image_path('icons/share-print.png'));
+			background-position:0 1px;
 		}
 		&.email {
 			background-image:url(image_path('icons/share-email.png'));
+			background-position:0 3px;
 		}
 		a {color:$nearBlack;}
 	}
@@ -107,20 +110,73 @@
 
 //Author Info
 .author-info {
+	margin-bottom:$baseline;
+	h6 {
+		font-weight:normal;
+		line-height:1em;
+		margin-bottom:10px;
+		text-transform:none;
+		a {
+			color:$nearBlack;
+		}
+	}
 	img {
 		float:left;
 		margin-bottom:10px;
 		margin-right:10px;
 	}
 	p {
-		@include font-sans-serif(normal, 11px, 14px)
+		@include font-sans-serif(normal, 11px, 14px);
+		&.brief-bio {
+		}
+	}
+	ul {margin:0;}
+	li {
+		@include nav-horiz();
+		@include font-sans-serif(normal, 11px);
+		padding-left:0;
+		padding-right:20px;
 	}
 }
 
 // Multimedia Article Sidebar
-figure.video {
-	img {
-		max-width:100%;
+.story-media {
+	padding-top:$baseline / 2;
+	figure.video {
+		a {
+			display:block;
+			position:relative;
+			span.play {
+				background:transparent url(image_path('icons/video-play-btn-sm.png')) no-repeat 0 0;
+				width:44px;
+				height:29px;
+				opacity:0.7;
+				position:absolute;
+				bottom:12px;
+				left:6px;
+			}
+			&:hover span.play {
+				opacity:1;
+			}
+		}
+		img {
+			max-width:100%;
+		}
+	}
+	h5 {
+		color:$orangeDark;
+		font-size:12px;
+		line-height:$baseline / 2;
+		padding:($baseline / 8) 0;
+		text-transform:uppercase;	
+	}
+	h4 {
+		line-height: 18px;
+		font-weight: 500;
+		font-size: 15px;
+		a {
+			color:$grayDark;
+		}
 	}
 }
 
@@ -131,10 +187,126 @@ figure.video {
 		
 	}
 }
+.bottom {
+	// background-color:$nearWhite;
+	border-top:2px solid $grayLight;
+	border-bottom:1px solid $grayLighter;
+	padding:($baseline / 2) 0;
+}
+
+// PIJ Query
+.pij-query {
+	h6 {
+	background:transparent url(image_path('icons/pij-query.png')) no-repeat 0 14px;
+	padding-left:30px;
+	small {
+		@include font-sans-serif(normal, 11px);
+		text-transform:none;
+	}
+	}
+}
+
+// Content Carousel
+.content_carousel {
+	border-top:1px solid $grayLight;
+	.section-head { 
+		border-bottom:1px solid $grayLight;
+		margin-bottom:$baseline / 2;
+		position:relative;
+		h3 {
+	        line-height:$baseline * 1.5;
+		}
+		nav {
+			position:absolute;
+			top:4px;
+			right:0;
+			z-index:2;
+			a {
+				background:transparent url(image_path('icons/carousel-btns.png')) no-repeat;
+				display:block;
+				float:left;
+				margin:0 8px;
+				text-indent: -9999px;
+				width:22px;
+				height:22px;
+				&.prev {
+					background-position:0 0;
+					&:hover {
+						background-position:-62px 0;
+					}
+				}
+				&.prev.disabled {
+					background-position:0 0;
+				}
+				&.next {
+					background-position:-32px 0;
+					&:hover {
+						background-position:-94px 0;
+					}
+				}
+				&.next.disabled {
+					background-position:-32px 0;
+				}
+				&.disabled {
+					opacity:0.5;
+				}
+			}
+		}	
+	}
+}
+ul.carousel {
+	margin:0;
+}
+.carousel li {
+	display:block;
+	float:left;
+	height:200px;
+	margin:0 11px;
+	text-align:center;
+	width:160px;
+	a { 
+		display:block;
+	}
+	img {
+		width:140px;
+		height:140px;
+	}
+	p {
+		@include font-sans-serif(bold, 12px);
+		line-height:16px;
+		margin:0 auto;
+		width:140px;
+	}
+}
+
+.carousel-page {
+	margin:0 auto 8px auto;
+	text-align:center;
+	width:57px;
+	a {
+		background:transparent url(image_path('icons/carousel-btns.png')) no-repeat -41px -27px;
+		display: block;
+		float: left;
+		margin:0 3px;
+		opacity:0.5;
+		width: 13px;
+		height: 13px;
+		text-indent: -9999px;
+		&:hover {
+			opacity:1;
+		}
+		&.selected {
+			background-position:-19px -27px;
+			&:hover {
+				opacity:0.5;
+			}
+		}
+	}
+}
 
 // Comments styling
 .comments {
-	border-top:1px solid $grayLighter;
+	border-top:1px solid $grayLight;
 }
 
 
@@ -155,16 +327,61 @@ figure.video {
 		a {color:#999;}
 	}
 }
+#sidebar .ad:first-child {
+	border-top:0;
+	padding-top:0;
+}
 
 // Sidebar article listings
 .widget ol {
-	border-top:1px solid $grayLighter;
 	margin:0;
 	padding:0;
 	li {
-		border-bottom:1px solid $nearWhite;
 		font-size:13px;
-		list-style-position:inside;
+		list-style-type:none;
 		padding:($baseline / 4) 0;
+	}
+}
+
+// Most Popular
+.popular li {
+	@include clearfix();
+	display:block;
+	height:$baseline * 2;
+	margin-bottom:$baseline / 4;
+	position:relative;
+	a {
+		display:block;
+		float:left;
+		font-weight:bold;
+		padding:$baseline / 2;
+		padding-top:0;
+		position:relative;
+		width:270px;
+		z-index:4;
+		&:hover {
+			text-decoration:none;
+		}
+	}
+	.count {
+		@include background-image(linear-gradient(#fff, $nearWhite));
+		@include border-radius(4px);
+		@include font-headline();
+		border:1px solid $grayLighter;
+		color:$gray;
+		display:block;
+		float:right;
+		font-size:14px;
+		font-weight:bold;
+		position:relative;
+		white-space:nowrap;
+		width:42px;
+		height:42px;
+		z-index:3;
+		span {
+			position:absolute;
+			left:8px;
+			top:4px;
+		}
 	}
 }

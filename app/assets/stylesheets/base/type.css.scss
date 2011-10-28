@@ -60,8 +60,7 @@ h5 {
   font-size: 14px;
 }
 h6 {
-  font-size: 13px;
-  color: $gray;
+  font-size: 14px;
   text-transform: uppercase;
 }
 
@@ -69,6 +68,12 @@ h6 {
 .story-headline {
 	@include font-headline();
 	margin-bottom:0;
+	a {
+		color:$nearBlack;
+		&:hover{
+			color:$linkColorHover;
+		}
+	}
 }
 
 // standard-sized utility text

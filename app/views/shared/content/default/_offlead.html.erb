@@ -1,6 +1,5 @@
 <div class="cbase offlead">
-	<h1><%= link_to content.headline, content.link_path %></h1>
-	<h4><%= smart_date content %> | <%= byline content %> | <%= content.comment_count.pluralize("Comment") %></h4>
+	<h3 class="story-headline"><%= link_to content.headline, content.link_path %></h3>
 	<%= render_asset(content,"offlead") %>
 
 	<p><%= strip_tags content.lede %></p>
