@@ -21,8 +21,13 @@
 	    		        <a href=""><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="" /></a>
 	    		    </li>
 					<li><a href="">Membership</a></li>
-	    		    <li><a href="">Login</a></li>
-	    		    <li><a href="">Register</a></li>
+					<% if current_user %>
+						<li>Hi <%= current_user.nickname %></li>
+						<li><a href="">Log Out</a></li>
+					<% else %>
+		    		    <li><a href="">Login</a></li>
+		    		    <li><a href="">Register</a></li>					
+					<% end %>
 	    		</ul>
 	    	</nav>
 		</div>

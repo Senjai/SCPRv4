@@ -106,24 +106,55 @@ module ApplicationHelper
   def byline(content,links = true)
     if !content || !content.respond_to?("byline_elements")
       return ""
-    end
+    end    
     
-    bylines = content.byline_elements.flatten.compact
+    authors = [ [],[],[] ]
+    
+    # 1) break bylines up by role
+    content.bylines.each { |b| authors[b.role] << b }
 
-    if links
-      bylines = bylines.collect do |b|
-        if b.is_a? Bio
-          (link_to b.name, bio_path(b.slugged_name))
+    names = []
+    [0,1].each do |i|
+      # 2) now sort each list by last name, first name
+      authors[i] = authors[i].sort { |a,b| 
+        aN = (a.user ? a.user.name : a.name).split(' ').reverse.join('')
+        bN = (b.user ? b.user.name : b.name).split(' ').reverse.join('')
+
+        aN <=> bN
+      }
+      
+      # 3) go through each list and add links where needed
+      newr = []
+      authors[i].each do |b|
+        if links && b.user
+          newr << link_to(b.user.name, bio_path(b.user.slugged_name))
+        elsif b.user
+          newr << b.user.name
         else
-          b
+          newr << b.name
         end
       end
+      
+      authors[i] = newr
+      
+      # 4) join the linked / unlinked names
+      
+      if authors[i].length == 1
+        names << authors[i][0]
+      elsif authors[i].length > 1
+        names << [ authors[i].pop,authors[i].join(", ") ].reverse.join(' and ')
+      end
     end
-        
-    if bylines.length > 1
-      return [bylines[0..-2].join(" & "),bylines[-1]].join(" | ").html_safe
+    
+    # 5) add on any byline elements
+    if content.byline_elements.length > 0
+      if authors[0].length == 0 and authors[1].length == 0
+        return content.byline_elements.join(" | ").html_safe
+      else
+        return [names.join(" with "), content.byline_elements.join(" | ")].join(" | ").html_safe
+      end
     else
-      return bylines[0]
+      return names.join(" with ").html_safe
     end
   end
 end
