@@ -1,6 +1,6 @@
 <h2><%= @blog.name %></h2>
 <h1><%= @entry.title %></h1>
 
-<h4><%= smart_date @entry %> | <%= byline @entry %></h4>
+<h4><%= smart_date @entry %> | <%= render_byline @entry %></h4>
 
 <%= raw @entry.content %>

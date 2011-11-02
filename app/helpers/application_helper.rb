@@ -103,7 +103,7 @@ module ApplicationHelper
   
   #----------
   
-  def byline(content,links = true)
+  def render_byline(content,links = true)
     if !content || !content.respond_to?("byline_elements")
       return ""
     end    
