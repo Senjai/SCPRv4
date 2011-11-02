@@ -6,7 +6,7 @@
 
 <% content_for :body do %>
 <h1 class="story-headline"><%= @entry.title %></h1>
-<p class="byline"><%= byline @entry %></p>
+<p class="byline"><%= render_byline @entry %></p>
 <%= render_asset @entry, "blog" %>
 
 <%= raw @entry.content %>

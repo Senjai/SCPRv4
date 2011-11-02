@@ -24,16 +24,10 @@
 			</div>
 			<div class="row">
 				<div class="span6">
-					<%= yield :body %>
-					<%= render "shared/widgets/related_articles" %>
-					<%= render "shared/widgets/pij_query" %>
-					<%= render "shared/widgets/story_tools", :cssClass => 'bottom' %>
-					<%= render "shared/widgets/author_info" %>
+					<%= yield %>
 				</div>
 				<div id="story-sidebar" class="span2">
-					<%= render "shared/widgets/comment_count", :cssClass => '' %>
-					<%= render "shared/audio/story_audio" %>
-					<%= render "shared/widgets/story_media" %>
+					<%= yield :storybar %>
 				</div>
 			</div>
 			<%= render "shared/widgets/content_carousel" %>
