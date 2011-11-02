@@ -1,0 +1,22 @@
+#blog-masthead {
+	height:147px;
+ 	h2 {
+		color:$black;
+		font-size:28px;
+		font-weight:200;
+	}
+	span.orange {
+		color:$orange;
+	}
+	span.blue {
+		color:$linkColorHover;
+	}
+}
+// Blog Entry Date Styling
+.date {
+	p {
+		color:$gray;
+		@include font-sans-serif(bold, 11px);
+		text-align:right;
+	}
+}

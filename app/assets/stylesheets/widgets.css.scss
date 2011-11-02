@@ -106,18 +106,44 @@
 		}
 		a {color:$nearBlack;}
 	}
+	&.side {
+		h5 {
+			float:right;
+			margin-right:0;
+		}
+		ul li {
+			background-position:right top;
+			display:block;
+			float:right;
+			margin:4px 0;
+			padding:0 26px;
+			&.facebook {
+				background-position:right 3px;
+			}
+			&.twitter {
+				background-position:right 2px;
+			}
+			&.print {
+				background-position:right 3px;
+			}
+			&.email {
+				background-position:right 4px;
+			}
+		}
+	}
 }
 
 //Author Info
 .author-info {
 	margin-bottom:$baseline;
 	h6 {
-		font-weight:normal;
+		@include font-sans-serif();
+		font-weight:bold;
 		line-height:1em;
 		margin-bottom:10px;
 		text-transform:none;
 		a {
-			color:$nearBlack;
+			color:$grayDark;
 		}
 	}
 	img {
@@ -136,6 +162,38 @@
 		@include font-sans-serif(normal, 11px);
 		padding-left:0;
 		padding-right:20px;
+	}
+}
+// About Blog Widget
+.blog-about {
+	border-top:1px solid $grayLighter;
+	h6 {
+		color:$orangeDark;
+	}
+	p, ul {
+		@include font-sans-serif(normal, 12px, 16px);
+	}
+}
+
+// Blog/Program Host Widget
+.host {
+	border-top:1px solid $grayLighter;
+	img {
+		float:left;
+		margin-right:18px;
+	}
+	h6.host-name {
+		@include font-sans-serif();
+		font-weight:bold;
+		line-height:1em;
+		margin-bottom:10px;
+		text-transform:none;
+		a {
+			color:$grayDark;
+		}
+	}
+	p, ul {
+		@include font-sans-serif(normal, 12px, 16px);
 	}
 }
 
@@ -198,6 +256,7 @@
 .pij-query {
 	h6 {
 	background:transparent url(image_path('icons/pij-query.png')) no-repeat 0 14px;
+	color:$grayDark;
 	padding-left:30px;
 	small {
 		@include font-sans-serif(normal, 11px);
@@ -303,10 +362,45 @@ ul.carousel {
 		}
 	}
 }
+//Comment Count Widget 
+.comment-count {
+	border-top:1px solid $grayLight;
+	margin-bottom:$baseline;
+	h4 {
+		background:url(image_path('icons/comment-count.png')) no-repeat 0 0;
+		color:$grayDark;
+		font-size:16px;
+		font-weight:600;
+		height:20px;
+		line-height:1;
+		margin-bottom:$baseline / 2;
+		opacity:0.85;
+		padding-left:28px;
+
+	}
+	a {
+		@include font-sans-serif(normal, 11px);
+		display:block;
+		padding-left:28px;
+	}
+	&.side {
+		text-align:right;
+		.inner-container {
+			padding-right:0;
+		}
+		h4 {
+			@include ie-inline-block();
+		}
+	}
+}
 
 // Comments styling
 .comments {
 	border-top:1px solid $grayLight;
+	h3.head {
+		background:url(image_path('icons/comment-count.png')) no-repeat 0 10px;
+		padding-left:28px;
+	}
 }
 
 
@@ -368,7 +462,7 @@ ul.carousel {
 		@include border-radius(4px);
 		@include font-headline();
 		border:1px solid $grayLighter;
-		color:$gray;
+		color:$grayDark;
 		display:block;
 		float:right;
 		font-size:14px;

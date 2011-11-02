@@ -15,24 +15,35 @@
 
 <div id="main" class="container">
 	<div class="row">
-		<article class="span8 storytitle">
+		<article class="span8">
 			<div class="row">
-				<div class="span2">
-					<%= render "shared/widgets/story_tools", :cssClass => '' %>
-				</div>
-				<div class="span6">
-					<%= yield %>
-					<%= render "shared/widgets/related_articles" %>
-					<%= render "shared/widgets/pij_query" %>
-					<%= render "shared/widgets/story_tools", :cssClass => 'bottom' %>
-					<%= render "shared/widgets/author_info" %>
+				<div class="span2">&nbsp;</div>
+				<div id="blog-masthead" class="span6">
+					<%= image_tag("blogs/debord_report.png") %> 
+				<!--	<h2>The <span class="blue">DeBord Report</span></h2> -->
 				</div>
 			</div>
-			<%= render "shared/comments" %>
+			<div class="row">
+				<div class="span8 storytitle">
+					<div class="row">
+						<div class="span2">
+							<%= yield :entrydate %>
+							<%= render "shared/widgets/story_tools", :cssClass => 'side' %>
+							<%= render "shared/widgets/comment_count", :cssClass => 'side' %>
+						</div>
+						<div class="span6">
+							<%= yield :body %>
+							<%= render "shared/widgets/story_tools", :cssClass => 'bottom' %>
+							<%= render "shared/comments" %>
+						</div>
+					</div>
+				</div>
+			</div>
 		</article>
-		<div id ="sidebar" class="span4 storytitle">
+		<div id ="sidebar" class="span4">
 			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
-			<%= render "shared/widgets/most_popular" %>
+			<%= render "shared/widgets/blog_about" %>
+			<%= render "shared/widgets/host" %>
 			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
 			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 		</div>

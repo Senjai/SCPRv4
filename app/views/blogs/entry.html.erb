@@ -1,6 +1,13 @@
-<h2><%= @blog.name %></h2>
-<h1><%= @entry.title %></h1>
+<% content_for :entrydate do %>
+<div class="date">
+	<p><%= smart_date @entry %></p>
+</div>
+<% end %>
 
-<h4><%= smart_date @entry %> | <%= byline @entry %></h4>
+<% content_for :body do %>
+<h1 class="story-headline"><%= @entry.title %></h1>
+<p class="byline"><%= byline @entry %></p>
+<%= render_asset @entry, "blog" %>
 
 <%= raw @entry.content %>
+<% end %>
