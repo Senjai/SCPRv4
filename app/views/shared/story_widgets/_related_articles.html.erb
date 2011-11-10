@@ -1,0 +1,19 @@
+<aside class="related-articles">
+	<h6>More Related to This Story</h6>
+	<% if @story.brels.any? || @story.frels.any? %>
+	<ul>
+		<% for c in @story.frels.normal.sorted %>
+	    <li>
+			<%= link_to c.content.headline, c.content.link_path %>
+			<br/><%= smart_date c.content %>
+	    </li>
+		<% end %>
+		<% for c in @story.brels.notiein.sorted %>
+	    <li>
+			<%= link_to c.related.headline, c.related.link_path %>
+			<br/><%= smart_date c.related %>
+	    </li>
+		<% end %>
+	</ul>
+	<% end %>
+</aside>

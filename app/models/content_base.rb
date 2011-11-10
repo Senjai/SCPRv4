@@ -20,9 +20,12 @@ class ContentBase < ActiveRecord::Base
   # All ContentBase objects have assets and alarms
   has_many :assets, :class_name => "ContentAsset", :as => :content
   has_many :bylines, :class_name => "ContentByline", :as => :content
-    
-  #----------
   
+  has_many :brels, :class_name => "Related", :as => :content
+  has_many :frels, :class_name => "Related", :as => :related
+
+  #----------
+    
   def obj_key
     return [self.class::CONTENT_TYPE,self.id].join(":")
   end
