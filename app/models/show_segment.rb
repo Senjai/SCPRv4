@@ -5,9 +5,26 @@ class ShowSegment < ContentBase
   
   belongs_to :show, :class_name => "KpccProgram"
   
+  has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id" 
+  has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
+  
   #----------
   
-  def link_path(episode)
+  def public_datetime(episode=nil)
+    if !episode
+      episode = self.episodes.first
+    end
+
+    return episode.air_date
+  end
+  
+  #----------
+  
+  def link_path(episode=nil)
+    if !episode
+      episode = self.episodes.first
+    end
+    
     Rails.application.routes.url_helpers.segment_path(
       :show => self.show.slug,
       :year => episode.air_date.year, 
