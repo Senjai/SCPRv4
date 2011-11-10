@@ -27,7 +27,13 @@
 					<%= yield %>
 				</div>
 				<div id="story-sidebar" class="span2">
+<<<<<<< HEAD
+					<%= render "shared/widgets/comment_count", :cssClass => '' %>
+					<%= render "shared/audio/story_audio" %>
+					<%= render "shared/widgets/story_media" %>
+=======
 					<%= yield :storybar %>
+>>>>>>> ff5b41eb8d30912ea1400422d4a6595ba5e11324
 				</div>
 			</div>
 			<%= render "shared/widgets/content_carousel" %>
@@ -37,9 +43,7 @@
 			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
 			<%= render "shared/widgets/most_popular" %>
 			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
-			<%= render "shared/widgets/recent_videos" %>
 			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
-			<%= render "shared/widgets/promo_mobile" %>
 		</div>
 	</div>
 </div>

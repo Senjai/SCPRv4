@@ -11,6 +11,8 @@ Scprv4::Application.routes.draw do
   match '/programs/:show/' => 'programs#show', :as => :program
   match '/programs/' => 'programs#index', :as => :programs
   
+  match '/videos/' => 'videos#index', :as => :videos
+  
   match '/news/:year/:month/:day/:id/:slug' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   
   match '/' => "home#index", :as => :home

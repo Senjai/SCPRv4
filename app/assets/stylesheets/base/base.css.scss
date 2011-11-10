@@ -353,3 +353,8 @@ input[type=submit].btn {
 	@include background;
 	@include border;
 }
+
+.divider {
+	background:url(image_path('mega-divider.png')) repeat-y right top;
+	margin-right:-15px;
+}

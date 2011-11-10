@@ -9,25 +9,21 @@
 
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="dark-theme" id="multimedia">
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
 
 <div id="main" class="container">
 	<div class="row">
-		<div class="span12">
-			<%= render "shared/hot_topics" %>
-		</div>
+		<div class="span2">&nbsp;</div>
+		<article class="span8">
+			<%= yield %>
+			<%= render "shared/comments", :cssClass => 'multimedia muted' %>
+		</article>
+		<div class="span2">&nbsp;</div>
 	</div>
 	<div class="row">
-		<section class="span8">
-			<%= yield %>
-		</section>
-		<div id ="sidebar" class="span4">
-			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
-			<%= render "shared/widgets/most_popular" %>
-			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
-			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+		<div id ="sidebar" class="span12">
 		</div>
 	</div>
 </div>

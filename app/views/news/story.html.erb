@@ -14,6 +14,7 @@
 <%= render :partial => "shared/story_widgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 
 <% content_for :storybar do %>
+	<%= render "shared/widgets/comment_count", :cssClass => 'right-side' %>
 	<%= render "shared/audio/story_audio" %>
 	<%= render "shared/widgets/story_media" %>
 <% end %>

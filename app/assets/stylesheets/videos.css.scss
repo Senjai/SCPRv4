@@ -1,0 +1,20 @@
+#multimedia {
+	.video {
+		-webkit-transition: box-shadow linear 0.2s;
+		-moz-transition: box-shadow linear 0.2s;
+		transition: box-shadow linear 0.2s;
+		@include box-shadow(none);
+		margin:$baseline 5px;
+		width:720px;
+		height:405px;
+		&:hover {
+			-webkit-transition: box-shadow linear 0.2s;
+			-moz-transition: box-shadow linear 0.2s;
+			transition: box-shadow linear 0.2s;
+			@include box-shadow(0 0 12px $gray);
+		}
+	}
+	p.description {
+		margin-top:$baseline / 2;
+	}
+}

@@ -1,12 +1,18 @@
 /* ********* WIDGET MIXINS ********** */
 //sidebar styling mixin
 @mixin sidebar-widget {
-	@include font-sans-serif();
 	border-top:1px solid $grayLighter;
 	margin-bottom:$baseline;
 }
 @mixin story-sidebar-widget {
 	@include font-sans-serif(normal, 12px);
+}
+
+// Right Rail Sidebar
+#sidebar {
+	h6 {
+		line-height:$baseline * 2;
+	}
 }
 
 // Story Sidebar 
@@ -96,6 +102,10 @@
 		&.twitter {
 			background-image:url(image_path('icons/share-twitter.png'));
 		}
+		&.plus {
+			background-image:url(image_path('icons/share-plus.png'));
+			background-position:0 2px;
+		}
 		&.print {
 			background-image:url(image_path('icons/share-print.png'));
 			background-position:0 1px;
@@ -123,12 +133,23 @@
 			&.twitter {
 				background-position:right 2px;
 			}
+			&.plus {
+				background-position:right 3px;
+			}
 			&.print {
 				background-position:right 3px;
 			}
 			&.email {
 				background-position:right 4px;
 			}
+		}
+	}
+	&.multimedia {
+		a {
+			color:$gray;
+		}
+		.print {
+			display:none;
 		}
 	}
 }
@@ -237,6 +258,18 @@
 		}
 	}
 }
+// Prev-Next Widget 
+.next-prev {
+	ul {
+		@include clearfix();
+		margin:0;
+		li {
+			@include nav-horiz();
+			padding:0;
+			width:50%;
+		}
+	}
+}
 
 // Related Articles
 .related-articles {
@@ -255,7 +288,7 @@
 // PIJ Query
 .pij-query {
 	h6 {
-	background:transparent url(image_path('icons/pij-query.png')) no-repeat 0 14px;
+	background:transparent url(image_path('icons/pij-query.png')) no-repeat 0 4px;
 	color:$grayDark;
 	padding-left:30px;
 	small {
@@ -383,10 +416,19 @@ ul.carousel {
 		display:block;
 		padding-left:28px;
 	}
-	&.side {
+	&.left-side {
 		text-align:right;
 		.inner-container {
 			padding-right:0;
+		}
+		h4 {
+			@include ie-inline-block();
+		}
+	}
+	&.right-side {
+		text-align:left;
+		.inner-container {
+			padding-left:0;
 		}
 		h4 {
 			@include ie-inline-block();
@@ -438,6 +480,9 @@ ul.carousel {
 }
 
 // Most Popular
+.tabs {
+	@include font-sans-serif();
+}
 .popular li {
 	@include clearfix();
 	display:block;
@@ -447,15 +492,11 @@ ul.carousel {
 	a {
 		display:block;
 		float:left;
-		font-weight:bold;
 		padding:$baseline / 2;
 		padding-top:0;
 		position:relative;
 		width:270px;
 		z-index:4;
-		&:hover {
-			text-decoration:none;
-		}
 	}
 	.count {
 		@include background-image(linear-gradient(#fff, $nearWhite));
@@ -477,5 +518,24 @@ ul.carousel {
 			left:8px;
 			top:4px;
 		}
+	}
+}
+
+// Recent Posts
+.recent-posts {
+
+}
+
+// Mobile App Promo
+.promo-mobile {
+	background:url(image_path('mobile/ad-bg.jpg')) no-repeat left bottom;
+	border-bottom:1px solid $grayLighter;
+	height:190px;
+	position:relative;
+	h4 {margin-top:6px;}
+	a {
+		position:absolute;
+		top:40px;
+		left:120px;
 	}
 }

@@ -25,7 +25,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10000;
+  z-index: 1000;
   overflow: visible;
 
   // gradient is applied to it's own element because overflow visible is not honored by ie when filter is present

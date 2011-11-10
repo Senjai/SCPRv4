@@ -1,4 +1,26 @@
 // #Main Body Content
 #main {
-	margin-top:$baseline;
+	margin-top:1px;
+}
+
+// Trending Bar
+.trending {
+	border-bottom:1px solid $grayLighter;
+	margin-bottom:$baseline;
+	padding:4px;
+	h6 {
+		@include ie-inline-block();
+		float:left;
+		font-size:13px;
+		font-weight:normal;
+		line-height:1.8em;
+		margin-right:10px;
+	}
+	ul li {
+		@include nav-horiz();
+		a {
+			color:$grayDark;
+			@include font-sans-serif(normal, 12px, 18px);
+		}
+	}
 }

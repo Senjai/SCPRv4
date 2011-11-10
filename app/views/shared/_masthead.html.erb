@@ -1,7 +1,7 @@
 <header id="masthead">
 	<div class="container">
 		<div class="row">
-    		<div class="logo span6">
+    		<div class="logo span5">
 		        <h1>
 		            <a href="/">
 		            	<%= image_tag "logo-masthead.png" %>
@@ -13,14 +13,14 @@
 					<a href="">Pledge Now</a>
 				</div>
 			</div>
-		    <nav class="utils span4">
+		    <nav class="utils span5">
 				<ul class="nav secondary-nav clearfix">
 					<li class="social">Follow us
 	    		        
 						<a href=""><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="" /></a>
 	    		        <a href=""><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="" /></a>
 	    		    </li>
-					<li><a href="">Membership</a></li>
+					<li><a href="">Become a Source</a></li>
 					<% if current_user %>
 						<li>Hi <%= current_user.nickname %></li>
 						<li><a href="">Log Out</a></li>
@@ -35,24 +35,12 @@
 			<nav class="nav-primary topbar span12">
 				<nav class="sections clearfix">
 					<ul>
-					    <li class="listen-live">
-					        <a href="">Listen Live</a>
-					    </li>
-					    <li class="mega">
-					        <a href=""><span>News</span></a>
-					    </li>
-					    <li class="mega">
-					        <a href=""><span>Arts &amp; Life</span></a>
-					    </li>
-					    <li class="mega">
-					        <a href=""><span>Programs</span></a>
-					    </li>
-					    <li class="mega">
-					        <a href=""><span>Events</span></a>
-					    </li>
-						<li class="mega">
-					        <a href=""><span>Support Us</span></a>
-					    </li>
+					    <li class="listen-live"><a href="#">Listen Live</a></li>
+					    <li class="mega"><a href="#" data-section="news-mega"><span>News</span></a></li>
+					    <li class="mega"><a href="#" data-section="arts-mega"><span>Arts &amp; Life</span></a></li>
+					    <li class="mega"><a href="#" data-section="programs-mega"><span>Programs</span></a></li>
+					    <li class="mega"><a href="#" data-section="events-mega"><span>Events</span></a></li>
+						<li class="mega"><a href="#" data-section="support-mega"><span>Support Us</span></a></li>
 					</ul>
 					<form action="" class="search" method="post">
 						<fieldset>
@@ -64,115 +52,190 @@
 						</fieldset>
 					</form>
 				</nav>
-				<nav class="section-mega clearfix" style="display:none;">
-					<div class="categories">
-						<div class="inner-container clearfix">
-						<h6>Categories</h6>
-						<ul>
-						    <li>
-						        <a href="">Local</a>
-						    </li>
-						    <li>
-						        <a href="">U.S.</a>
-						    </li>
-						    <li>
-						        <a href="">World</a>
-						    </li>
-						    <li>
-						        <a href="">Politics</a>
-						    </li>
-						    <li>
-						        <a href="">Economy</a>
-						    </li>
-						    <li>
-						        <a href="">Environment</a>
-						    </li>
-						    <li>
-						        <a href="">Law</a>
-						    </li>
-						    <li>
-						        <a href="">Education</a>
-						    </li>
-						</ul>
-						<ul class="content-types">
-						    <li>
-						        <a href="">Video</a>
-						    </li>
-						    <li>
-						        <a href="">Blogs</a>
-						    </li>
-						</ul>
+				<nav id="news-mega" class="section-mega clearfix" style="display:none;">
+					<div class="row">
+						<div class="categories span3">
+							<div class="inner-container clearfix">
+							<h6>Categories</h6>
+							<ul>
+							    <li><a href="">Local</a></li>
+							    <li><a href="">U.S.</a></li>
+							    <li><a href="">World</a></li>
+							    <li><a href="">Politics</a></li>
+							    <li><a href="">Economy</a></li>
+							    <li><a href="">Environment</a></li>
+							    <li><a href="">Law</a></li>
+							    <li><a href="">Education</a></li>
+							</ul>
+							<ul class="content-types">
+							    <li class="videos"><a href="/videos/">Videos</a></li>
+							    <li><a href="">Blogs</a></li>
+							</ul>
+							</div>
 						</div>
-					</div>
-					<div class="topics">
-						<div class="inner-container clearfix">
-						<h6>Hot Topics</h6>
-						<ul>
-						    <li>
-						        <a href="">San Onofre</a>
-						    </li>
-						    <li>
-						        <a href="">Dodgers Sale</a>
-						    </li>
-						    <li>
-						        <a href="">New Gmail</a>
-						    </li>
-						    <li>
-						        <a href="">Steve Jobs</a>
-						    </li>
-						    <li>
-						        <a href="">Magic Castle</a>
-						    </li>
-						</ul>
+						<div class="featured span4">
+							<div class="inner-container clearfix">
+							<h6>In Case You Missed It</h6>
+							<ul>
+								<li>
+						            <a href="">
+						                <img src="http://a.scpr.org/i/0c3c581db41c47c8f9853608ccc82add/4395-lsquare.jpg" alt="" />
+						                <p>Brown outlaws cell phones in state prisons</p>
+						            </a>
+						        </li>
+						        <li>
+						            <a href="">
+						                <img src="http://a.scpr.org/i/82cdb32d3ad6aa566ccac40f9c3c1cc0/7286-lsquare.jpg" alt="" />
+						                <p>Feds order CA medical pot shops to shut down</p>
+						            </a>
+						        </li>
+							</ul>
+							</div>
 						</div>
-					</div>
-					<div class="featured">
-						<div class="inner-container clearfix">
-						<h6>Featured Stories</h6>
-						<ul>
-							<li>
-					            <a href="">
-					                <img src="http://a.scpr.org/i/0c3c581db41c47c8f9853608ccc82add/4395-lsquare.jpg" alt="" />
-					                <p>Brown outlaws cell phones in state prisons</p>
-					            </a>
-					        </li>
-					        <li>
-					            <a href="">
-					                <img src="http://a.scpr.org/i/82cdb32d3ad6aa566ccac40f9c3c1cc0/7286-lsquare.jpg" alt="" />
-					                <p>Feds order CA medical pot shops to shut down</p>
-					            </a>
-					        </li>
-						</ul>
+						<div class="blogs span5">
+							<div class="inner-container clearfix">
+								<h6>From Our Blogs</h6>			
+								<ul>
+						            <li>
+						                <p class="entry-title"><a href="http://multiamerican.scpr.org/jp/was-it-cholera-that-killed-the-irish-immigrants-of-duffys-cut-or-something-uglier/">Was it cholera that killed the Irish immigrants of Duffy’s Cut, or something uglier?</a></p>
+						            </li>
+						            <li>
+						                <p class="entry-title"><a href="/blogs/newmedia/2011/11/04/3744/warrior-screening-nick-nolte/">'Warrior' screening with Nick Nolte</a></p>
+						            </li>
+						            <li>
+						                <p class="entry-title"><a href="/blogs/offramp/2011/11/04/3743/drained-echo-park-lake-seen-gary-leonard/">A near-empty Echo Park Lake, as seen by Gary Leonard</a></p>
+						            </li>
+						            <li>
+						                <p class="entry-title"><a href="http://multiamerican.scpr.org/2011/11/five-american-muslims-on-racial-ethnic-profiling-this-is-my-country-i-feel-insulted/">Five American Muslims on racial-ethnic profiling: ‘This is my country. I feel insulted.’</a></p>
+						            </li>
+						    	</ul>
+							</div>
 						</div>
 					</div>
 				</nav>
+				<nav id="arts-mega" class="section-mega clearfix" style="display:none;">
+						<div class="row">
+							<div class="categories span3">
+								<div class="inner-container clearfix">
+								<h6>Categories</h6>
+								<ul>
+								    <li><a href="">Books</a></li>
+								    <li><a href="">Film</a></li>
+								    <li><a href="">Music</a></li>
+								    <li><a href="">Pop Culture</a></li>
+								    <li><a href="">Art &amp; Design</a></li>
+								    <li><a href="">Food</a></li>
+								    <li><a href="">Living</a></li>
+								    <li><a href="">Science</a></li>
+									<li><a href="">Technology</a></li>					
+								</ul>
+								</div>
+							</div>
+							<div class="featured span4">
+								<div class="inner-container clearfix">
+								<h6>In Case You Missed It</h6>
+								<ul>
+									<li>
+							            <a href="#">
+							                <img src="http://a.scpr.org/i/c8fc1840445ccde7d34d8242e3fe0ce7/27725-thumb.jpg" alt="" />
+							                <p>Eddie Murphy out as Oscars host</p>
+							            </a>
+							        </li>
+							        <li>
+							            <a href="#">
+							                <img src="http://a.scpr.org/i/3b2eb009e09394dcaf7129379b38c8c7/27506-thumb.jpg" alt="" />
+							                <p>Judge rules against Getty over 13th century Armenian Bible</p>
+							            </a>
+							        </li>
+								</ul>
+								</div>
+							</div>
+							<div class="blogs span5">
+								<div class="inner-container clearfix">
+									<h6>From Our Blogs</h6>			
+									<ul>
+							            <li>
+							                <p class="entry-title"><a href="#">Google+ goes corporate, launching branded pages - including the Muppets</a></p>
+							            </li>
+							            <li>
+							                <p class="entry-title"><a href="#">Remembering rapper Heavy D, dead at 44</a></p>
+							            </li>
+							            <li>
+							                <p class="entry-title"><a href="#">Van Dyke Parks &amp; Inara George at the Getty: Anything but Standard Time</a></p>
+							            </li>
+							            <li>
+							                <p class="entry-title"><a href="#">'Warrior' screening with Nick Nolte</a></p>
+							            </li>
+							    	</ul>
+								</div>
+							</div>
+						</div>
+					</nav>
+				<nav id="programs-mega" class="section-mega clearfix" style="display:none;">
+					<div class="row">
+						<div class="programs span3">
+							<div class="inner-container clearfix">
+							<h6>KPCC Programs</h6>
+							<ul>
+							    <li><a href="#">The Madeleine Brand Show</a></li>
+							    <li><a href="#">AirTalk</a></li>
+							    <li><a href="#">Patt Morrison</a></li>
+							    <li><a href="#">Off-Ramp</a></li>					
+							</ul>
+							<ul>
+							    <li><a href="#">Programs A-Z</a></li>
+							    <li><a href="#">Podcasts</a></li>				
+							</ul>
+							</div>
+						</div>
+						<div class="featured span4">
+							<div class="inner-container clearfix">
+							<h6>In Case You Missed It</h6>
+							<ul>
+								<li>
+						            <a href="#">
+						                <img src="http://a.scpr.org/i/c8fc1840445ccde7d34d8242e3fe0ce7/27725-thumb.jpg" alt="" />
+						                <p>Eddie Murphy out as Oscars host</p>
+						            </a>
+						        </li>
+						        <li>
+						            <a href="#">
+						                <img src="http://a.scpr.org/i/3b2eb009e09394dcaf7129379b38c8c7/27506-thumb.jpg" alt="" />
+						                <p>Judge rules against Getty over 13th century Armenian Bible</p>
+						            </a>
+						        </li>
+							</ul>
+							</div>
+						</div>
+						<div class="blogs span5">
+							<div class="inner-container clearfix">
+								<h6>From Our Blogs</h6>			
+								<ul>
+						            <li>
+						                <p class="entry-title"><a href="#">Google+ goes corporate, launching branded pages - including the Muppets</a></p>
+						            </li>
+						            <li>
+						                <p class="entry-title"><a href="#">Remembering rapper Heavy D, dead at 44</a></p>
+						            </li>
+						            <li>
+						                <p class="entry-title"><a href="#">Van Dyke Parks &amp; Inara George at the Getty: Anything but Standard Time</a></p>
+						            </li>
+						            <li>
+						                <p class="entry-title"><a href="#">'Warrior' screening with Nick Nolte</a></p>
+						            </li>
+						    	</ul>
+							</div>
+						</div>
+					</div>
+				</nav>
+				<nav id="events-mega" class="section-mega clearfix" style="display:none;">
+					<h3>Events mega menu goes here</h3>
+				</nav>
+				<nav id="support-mega" class="section-mega clearfix" style="display:none;">
+					<h3>Support mega menu goes here</h3>
+				</nav>
 			</nav>
 		</div>
-		<!--
-		<nav class="topics">
-			<h6>Trending Topics</h6>
-			<ul>
-			    <li>
-			        <a href=""></a>
-			    </li>
-			    <li>
-			        <a href=""></a>
-			    </li>
-			    <li>
-			        <a href=""></a>
-			    </li>
-			    <li>
-			        <a href=""></a>
-			    </li>
-			    <li>
-			        <a href=""></a>
-			    </li>
-			    <li>
-			        <a href=""></a>
-			    </li>
-			</ul>
-		</nav>
-		-->
 	</div>
 </header>
 

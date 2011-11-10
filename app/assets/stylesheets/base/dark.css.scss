@@ -1,0 +1,137 @@
+/* DARK THEME FOR VIDEO SECTIONS & OTHER PLACES WHERE THE FOCUS IS ON VISUAL CONTENT */
+.dark-theme {
+	color:$gray;
+	
+	// DEFINE FOCUS TRANSITIONS
+	.muted {
+		-webkit-transition: opacity linear 0.2s;
+		-moz-transition: opacity linear 0.2s;
+		transition: opacity linear 0.2s;
+		filter: alpha(opacity=40);
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+		opacity:0.4;
+		&:hover {
+			-webkit-transition: opacity linear 0.2s;
+			-moz-transition: opacity linear 0.2s;
+			transition: opacity linear 0.2s;
+			filter: alpha(opacity=100);
+			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+			opacity:1;
+		}
+	}
+	
+	// MASTHEAD
+	// Logo
+	background:lighten($black, 10%);
+	.logo h1 {
+		&:after {
+			content: url(image_path('video-masthead.png'));
+			margin-left:8px;
+		}
+		a {
+			background:url(image_path('logo-masthead-dark.png')) no-repeat 0 0;
+			img {
+				visibility:hidden;
+			}
+		}
+	}
+	// Site Utilities
+	nav.utils ul li {
+		border-right:1px solid $grayDark;
+		a {
+			color:$gray;
+		}
+	}
+	// Site Nav
+	.nav-primary {
+		@include background-image(linear-gradient(darken($nearBlack, 5%), $black));
+		background-color:#7f7f7f;
+		border:1px solid $black;
+		border-left:1px solid lighten($black, 18%);
+		border-top:1px solid lighten($black, 18%);
+		.sections ul li.listen-live {
+			@include background-image(linear-gradient(darken($grayDark, 8%), darken($nearBlack, 10%)));
+			background-color:darken($grayDark, 5%);
+			&:hover {
+				@include background-image(linear-gradient(darken(#cb5f1d, 5%), darken(#9b4816, 5%)));
+			}
+			a {
+				background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+				opacity:0.7;
+				padding-left:33px;
+				padding-right:22px;
+				&:hover {
+					background-color:transparent;
+					color:$white;
+					opacity:1;
+				}
+			}
+		}
+		.sections ul li a {	
+			color:$gray;
+			&:hover {
+				background-color:darken($nearBlack, 3%);
+				color:$white;
+				$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
+				@include box-shadow($nav-shadow);
+			}
+		}
+		form fieldset {
+			input.search {
+				background-color:$nearBlack;
+				border:1px solid $black;
+				color:$nearWhite;
+				&:focus {
+				    border-color:$grayDark;
+					$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+				    @include box-shadow($shadow);
+				}
+			}
+			input:-moz-placeholder {color: darken($gray, 10%);}
+			input::-webkit-input-placeholder {color: darken($gray, 10%);}
+			input.submit {
+				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+			}
+		}
+		.section-mega {
+			background-color:darken($nearBlack, 3%);
+			$mega-shadow:0 5px 6px $black;
+			@include box-shadow($mega-shadow);
+			h6 {
+				color:$white;
+			}
+			ul li a {
+				color:$gray;
+			}
+			.categories, .featured {
+				background:url(image_path('mega-divider-dark.png')) no-repeat right 10px;
+			}
+			.categories {
+				ul.content-types {
+					li.videos {
+						background-image:none;
+						padding-left:0;
+					}
+				}
+			}
+			.blogs {
+				li {
+					border-bottom:1px solid $grayDark;
+				}
+			}
+		}
+	}
+	
+	// MAIN BODY
+	// Headlines & Body Copy
+	.story-headline {
+		color:$grayLight;
+	} 
+
+	
+	// Comments
+	.comments {
+		border-top:1px solid $nearBlack;
+	}
+	
+}

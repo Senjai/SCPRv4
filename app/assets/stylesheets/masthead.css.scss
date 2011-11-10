@@ -53,70 +53,6 @@ nav.utils ul {
 		}
 	}
 }
-/*
-// Main Navbar Black
-.nav-primary {
-	@include background-image(linear-gradient($nearBlack, $black));
-	background-color:#7f7f7f;
-	height:36px;
-	ul li.listen-live {
-		@include background-image(linear-gradient(#cb5f1d, #9b4816));
-		background-color:#cb5f1d;
-		&:hover {
-			@include background-image(linear-gradient(lighten(#cb5f1d, 8%), lighten(#9b4816, 8%)));
-		}
-		a {
-			background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
-			padding-left:33px;
-			padding-right:22px;
-			&:hover {
-				background-color:transparent;
-				color:$white;
-			}
-		}
-	}
-	ul li {
-		border-right:1px solid $grayDark;
-	}
-	ul li a {	
-		@include font-navigation(normal, 16px);
-		color:$nearWhite;
-		padding:8px 24px;
-		text-transform:uppercase;
-		&:hover {
-			background-color:$white;
-			color:$blueDark;
-		}
-	}
-	form {float:right;margin-right:8px;}
-	form fieldset {
-		margin:0;
-		padding:0;
-		label {
-			display:none;
-		}
-		input.search {
-			@include border-radius(20px);
-			margin-top:3px;
-			padding:0 8px;
-			width: 160px;
-			&:focus {
-				outline: none;
-			    border-color:#999;
-				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
-			    @include box-shadow($shadow);
-			}
-		}
-		input.submit {
-			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
-			width:20px;
-			height:20px;
-			text-indent:-9999px;
-			border:0;
-		}
-	}
-}
-*/
 
 /*
 // Main Navbar Light
@@ -270,6 +206,8 @@ nav.utils ul {
 			&:hover {
 				background-color:transparent;
 				color:$white;
+				$no-shadow: none;
+				@include box-shadow($no-shadow);
 			}
 		}
 	}
@@ -315,7 +253,7 @@ nav.utils ul {
 	.section-mega {
 		background-color:$white;
 		width:100%;
-		height:$baseline * 9;
+		height:$baseline * 10;
 		position:absolute;
 		top:36px;
 		$mega-shadow:0 2px 3px lighten($gray, 10%);
@@ -323,44 +261,69 @@ nav.utils ul {
 		h6 {
 			color:$orangeDark;
 			font-size:11px;
+			line-height:1.3em;
 		}
 		ul li a {
-			color:$linkColor;
+			color:$nearBlack;
 			@include font-sans-serif(bold, 12px);
-			text-transform:uppercase;
+			&:hover {
+				text-decoration:underline;
+			}
 		}
-		.inner-container {
-			padding-top:0;
+		.categories, .featured, .blogs {
+			height:$baseline * 10;
 		}
-		.categories, .topics {
-			border-right:1px solid $grayLighter;
-			float:left;
-			height:100%;
-			width:25%;
+		.categories, .featured {
+			background:url(image_path('mega-divider.png')) no-repeat right 10px;
+		}
+		.categories {
 			ul li {
 				float:left;
 				width:50%;
 				a {
 					padding:3px;
+					text-transform:uppercase;
+				}
+			}
+			ul.content-types {
+				margin-top:$baseline * 2;
+				li.videos {
+					@include ie-inline-block();
+					background:url(image_path('icons/videos.png')) no-repeat left top;
+					padding-left:22px;
+					a {
+					}
 				}
 			}
 		}
 		.featured {
-			float:left;
-			width:49%;
 			@include clearfix();
 			ul li {
-				float:left;
-				width:50%;
+				a {
+					@include clearfix();
+				}
+				p {
+					@include font-sans-serif(bold, 12px);
+					margin-left:75px;
+				}
 			}
 			img {
-				width:100px;
-				height:100px;
+				float:left;
+				width:65px;
+				height:65px;
+				margin-right:12px;
 			}
 		}
-		.topics {
-			ul li a {
-				font-weight:normal;
+		.blogs {
+			li {
+				border-bottom:1px solid $nearWhite;
+				float:none;
+			}
+			p {
+				margin-bottom:0;
+				a {
+					padding:6px 4px;
+				}
 			}
 		}
 	}

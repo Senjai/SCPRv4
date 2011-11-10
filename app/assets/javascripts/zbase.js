@@ -7,10 +7,12 @@ jQuery(document).ready(function() {
 	// Stubbed out simple hover behavior for megamenus in primary nav
 	$(".mega a").hover(
 		function(){
-			$(".section-mega").show();
+			var sectionContext = '#' + $(this).attr("data-section");
+			$(sectionContext).show();
 		},
 		function(){
-			$(".section-mega").hide();
+			var sectionContext = '#' + $(this).attr("data-section");
+			$(sectionContext).hide();
 		}
 	);
 	
@@ -46,6 +48,8 @@ jQuery(document).ready(function() {
 			'speedIn'		:	300, 
 			'speedOut'		:	200, 
 			'overlayShow'	:	true,
-			'overlayOpacity' :  0.7,
+			'overlayOpacity' :  0.8,
+			'overlayColor'	: 	'#000',
+			'padding'		: 	0
 		});
 });
