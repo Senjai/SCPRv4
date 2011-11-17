@@ -1,7 +1,9 @@
 //= require scprbase
+//= require underscore
 
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui-1.8.16.custom
 
 //= require jquery.carouFredSel-5.1.0
 //= require jquery.easing.1.3

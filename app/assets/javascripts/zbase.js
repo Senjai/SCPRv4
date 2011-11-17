@@ -1,8 +1,8 @@
 jQuery(document).ready(function() {
 	
-	// *** Temporary workaround to remove hardcoded image widths and heights from assethost images ***
-	$(".contentasset img").removeAttr("height").removeAttr("width");
-	$(".contentasset").removeAttr("style");
+	// Temporary workaround to remove hardcoded image widths and heights from assethost images
+	//$(".contentasset img").removeAttr("height").removeAttr("width");
+	//$(".contentasset").removeAttr("style");
 	
 	// *** Stubbed out simple hover behavior for megamenus in primary nav ***
 	$(".mega a").hover(
