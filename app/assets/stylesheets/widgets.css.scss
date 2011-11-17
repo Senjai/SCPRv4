@@ -11,6 +11,7 @@
 // Right Rail Sidebar
 #sidebar {
 	h6 {
+		font-size:16px;
 		line-height:$baseline * 2;
 	}
 }
@@ -40,6 +41,9 @@
 		height:34px;
 		margin-right:10px;
 		text-indent:-9999px;
+		&:hover {
+			background-position:0 -36px;
+		}
 	}
 	.audio-content {
 		float:left;
@@ -47,6 +51,7 @@
 			background:transparent url(image_path('icons/listen-headphones.png')) no-repeat left top;
 			@include font-headline(600);
 			font-size:15px;
+			margin-bottom:12px;
 			padding-left:36px;
 			span {
 				font-size:12px;
@@ -76,6 +81,138 @@
 		}
 	}
 }
+// Audio Bar
+.audio-bar {
+	&.bar-inactive {
+		bottom:$baseline * -3.5;
+	}
+	&.bar-active {
+		bottom:0;
+	}
+	background-color:#fff;
+	height:$baseline * 3;
+	position:fixed;
+	z-index:1000;
+	$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
+	@include box-shadow($nav-shadow);
+	.jp-gui {
+		border-right:1px solid $grayLighter;
+		width:400px;
+		float:left;
+	}
+	.jp-title {
+		border-right:1px solid $grayLighter;
+		width:650px;
+		float:left;
+		p {
+			@include font-sans-serif(bold, 16px);
+			padding:20px;
+			span {
+				@include ie-inline-block();
+				margin-right:$baseline / 2;
+				color:$orangeDark;
+				font-size:12px;
+				text-transform:uppercase;
+			}
+		}
+	}
+	.jp-controls {
+		float:left;
+		height:$baseline * 3;
+		width:100px;
+		margin:0;
+		padding:0 6px;
+		li {
+			@include nav-horiz();
+			padding:0 6px;
+		}
+	}
+	.jp-play, .jp-pause, .jp-rw, .jp-ff, .jp-volume {
+		background-image:url(image_path('audio-controls.png'));
+		background-repeat:no-repeat;
+		display:block;
+		text-indent:-9999px;
+	}
+	.jp-rw, .jp-ff {
+		width:18px;
+		height:11px;
+		margin-top:25px;
+		opacity:0.6;
+	}
+	.jp-rw:hover, .jp-ff:hover, .jp-volume:hover {
+		opacity:1;
+	}
+	.jp-rw {
+		background-position:-97px -17px;
+	}
+	.jp-ff {
+		background-position:-125px -17px;
+	}
+	.jp-play, .jp-pause {
+		margin-top:10px;
+		width:42px;
+		height:42px;
+	}
+	.jp-play {
+		background-position:0 0;
+	}
+	.jp-play:hover {
+		background-position:0 -45px;
+	}
+	.jp-pause {
+		background-position: -48px 0;
+		width:42px;
+		height:42px;
+	}
+	.jp-pause:hover {
+		background-position:-49px -45px;
+	}
+	.jp-volume {
+		background-position: -147px -10px;
+		margin-top:18px;
+		opacity:0.6;
+		width:25px;
+		height:25px;
+	}
+	.jp-volume.active {
+		background-position: -174px -10px;
+	}
+	.jp-bar {
+		width:200px;
+		float:left;
+		margin-right:7px;
+	}
+	.jp-progress {
+		float:left;
+		width:285px;
+		.jp-current-time, .jp-duration {
+			@include font-sans-serif(normal, 11px);
+			color:$nearBlack;
+			width:35px;
+			float:left;
+			margin-top:20px;
+		}
+		.jp-seek-bar {
+			background-color:#e0e0e0;
+			height:8px;
+			margin-top:26px;
+			@include border-radius(6px);
+			@include box-shadow(inset 0 1px 0 rgba(0,0,0,.35));
+			.jp-play-bar {
+				@include background-image(linear-gradient(rgba(0,0,0,.35), #03b9f2 5%, darken(#03b9f2, 8%)));
+				background-color:#03b9f2;
+				width:50%;
+				height:8px;
+				@include border-radius(6px);
+			}
+		}
+	}
+	.bar-close a {
+		@include font-sans-serif(normal, 11px);
+		color:$grayLight;
+	}
+}
+
 
 // Sharing Tools
 .sharing-tools {
@@ -297,6 +434,9 @@
 	}
 	}
 }
+
+// Recent Videos
+
 
 // Content Carousel
 .content_carousel {

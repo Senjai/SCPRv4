@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111024233656) do
+ActiveRecord::Schema.define(:version => 20111109202113) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -114,15 +114,18 @@ ActiveRecord::Schema.define(:version => 20111024233656) do
   add_index "bios_award", ["reporter_id"], :name => "bios_award_reporter_id"
 
   create_table "bios_bio", :force => true do |t|
-    t.integer "user_id",                                            :null => false
-    t.string  "name",         :limit => 200,                        :null => false
-    t.string  "last_name",    :limit => 100,        :default => "", :null => false
-    t.string  "slugged_name", :limit => 50,         :default => "", :null => false
-    t.text    "bio",          :limit => 2147483647,                 :null => false
-    t.string  "title",        :limit => 200,        :default => "", :null => false
-    t.string  "email",        :limit => 200,                        :null => false
-    t.boolean "is_public",                                          :null => false
-    t.string  "feed_url",     :limit => 200,        :default => "", :null => false
+    t.integer "user_id",                                     :null => false
+    t.string  "name",         :limit => 200,                 :null => false
+    t.string  "last_name",    :limit => 100, :default => "", :null => false
+    t.string  "slugged_name", :limit => 50,  :default => "", :null => false
+    t.string  "bio",          :limit => 200,                 :null => false
+    t.string  "title",        :limit => 200, :default => "", :null => false
+    t.string  "email",        :limit => 200,                 :null => false
+    t.boolean "is_public",                                   :null => false
+    t.string  "feed_url",     :limit => 200, :default => "", :null => false
+    t.string  "twitter",      :limit => 30,                  :null => false
+    t.integer "asset_id"
+    t.string  "short_bio",    :limit => 200,                 :null => false
   end
 
   add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true
@@ -710,6 +713,17 @@ ActiveRecord::Schema.define(:version => 20111024233656) do
     t.string "notes",        :limit => 100, :null => false
   end
 
+  create_table "media_related", :force => true do |t|
+    t.integer "content_type_id",                    :null => false
+    t.integer "object_id",                          :null => false
+    t.integer "rel_content_type_id",                :null => false
+    t.integer "rel_object_id",                      :null => false
+    t.integer "flag",                :default => 0, :null => false
+  end
+
+  add_index "media_related", ["content_type_id"], :name => "media_related_e4470c6e"
+  add_index "media_related", ["rel_content_type_id"], :name => "media_related_76fb6e42"
+
   create_table "media_uploadedaudio", :force => true do |t|
     t.string  "mp3_file",        :limit => 100,        :null => false
     t.text    "description",     :limit => 2147483647, :null => false
@@ -753,7 +767,7 @@ ActiveRecord::Schema.define(:version => 20111024233656) do
     t.integer  "primary_reporter_id"
     t.integer  "secondary_reporter_id"
     t.string   "byline",                :limit => 50,                         :null => false
-    t.string   "news_agency",           :limit => 50,                         :null => false
+    t.string   "news_agency",           :limit => 50
     t.text     "lede",                  :limit => 2147483647,                 :null => false
     t.text     "body",                  :limit => 2147483647,                 :null => false
     t.text     "first_graf",            :limit => 2147483647,                 :null => false
@@ -1025,6 +1039,15 @@ ActiveRecord::Schema.define(:version => 20111024233656) do
     t.string  "link",         :limit => 300,                 :null => false
     t.string  "link_type",    :limit => 10,                  :null => false
     t.string  "sort_order",   :limit => 2,   :default => "", :null => false
+  end
+
+  create_table "rails_media_related", :id => false, :force => true do |t|
+    t.integer "id",           :default => 0, :null => false
+    t.integer "content_id",                  :null => false
+    t.string  "content_type"
+    t.integer "related_id",                  :null => false
+    t.string  "related_type"
+    t.integer "flag",         :default => 0, :null => false
   end
 
   create_table "rails_media_uploadedaudio", :id => false, :force => true do |t|
