@@ -1,32 +1,29 @@
 <nav id="most-popular" class="widget">   
 	<h6>Most Popular</h6>
 	<ul class="tabs">
-	    <li class="active"><a href="#">Viewed</a></li>
-	    <li><a href="">Shared</a></li>
-	    <li><a href="">Discussed</a></li>
+	    <li><a href="#pop_tab1">Viewed</a></li>
+	    <li><a href="#pop_tab2">Discussed</a></li>
+	    <li><a href="#pop_tab3">Shared</a></li>
 	</ul>
-	<div class="popular">
-	    <ol>
-	    	<li>
-				<a href="http://www.scpr.org/news/2011/10/12/29375/scott-dekraai-seal-beach-shooting-eight-killed/" onclick="_gaq.push(['_trackEvent', 'Popular Box', 'Most Viewed', '8 dead, 1 critical in worst shooting in OC history'])">8 dead, 1 critical in worst shooting in OC history</a>
-				<div class="count"><span>1178</span></div>
-			</li>
-	        <li>
-				<a href="http://www.scpr.org/news/2011/10/13/29383/scott-dekraai-seal-beach-shooter/" onclick="_gaq.push(['_trackEvent', 'Popular Box', 'Most Viewed', 'Court records: Scott Dekraai had PTSD, accused of abuse'])">Court records: Scott Dekraai had PTSD, accused of abuse</a>
-				<div class="count"><span>898</span></div>
-			</li>
-	        <li>
-				<a href="http://www.scpr.org/programs/airtalk/2011/10/12/20997/the-poem-that-changed-the-world/" onclick="_gaq.push(['_trackEvent', 'Popular Box', 'Most Viewed', 'The poem that changed the world'])">The poem that changed the world</a>
-				<div class="count"><span>722</span></div>
-			</li>
-	        <li>
-				<a href="http://www.scpr.org/news/2011/10/13/29383/troubled-background-seal-beach-salon-shooter-dekra/" onclick="_gaq.push(['_trackEvent', 'Popular Box', 'Most Viewed', 'Troubled portrait of Seal Beach shooting suspect Dekraai emerges'])">Troubled portrait of Seal Beach shooting suspect Dekraai emerges</a>
-				<div class="count"><span>500</span></div>
-			</li>
-	        <li>
-				<a href="http://www.scpr.org/blogs/environment/2011/10/11/3602/what-you-can-and-cant-recycle-los-angeles/" onclick="_gaq.push(['_trackEvent', 'Popular Box', 'Most Viewed', 'What you can and can’t recycle in Los Angeles'])">What you can and can’t recycle in Los Angeles</a>
-				<div class="count"><span>389</span></div>
-			</li>
-		</ol>  
+	<div class="popular" id="pop_tab1">
+		<% if popular = ActionController::Base.cache_store.read("widget/popular_viewed") %>
+	        <%= popular %>
+	    <% else %>
+	        <p>The most viewed content widget has an error and will refresh momentarily.</p>
+	    <% end %>
+	</div>
+	<div id="pop_tab2">
+		<% if discussed = ActionController::Base.cache_store.read("widget/popular_discussed") %>
+	        <%= discussed %>
+	    <% else %>
+	        <p>The most discussed content widget has an error and will refresh momentarily.</p>
+	    <% end %>    
+	</div>
+	<div id="pop_tab3">
+		<p>Shared</p>
 	</div>
 </nav>
+
+<% content_for :footerjss do %>
+	var popTab = $("#most-popular").tabs({selected:0})
+<% end %>

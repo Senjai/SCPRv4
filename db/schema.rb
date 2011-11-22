@@ -217,6 +217,16 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
   add_index "contentbase_contentbyline", ["content_type_id"], :name => "contentbase_contentbyline_e4470c6e"
   add_index "contentbase_contentbyline", ["user_id"], :name => "contentbase_contentbyline_fbfc09f1"
 
+  create_table "contentbase_contentshell", :force => true do |t|
+    t.integer  "comment_count",                       :default => 0,                     :null => false
+    t.string   "headline",      :limit => 200,                                           :null => false
+    t.string   "url",           :limit => 200,                                           :null => false
+    t.string   "byline",        :limit => 200,                                           :null => false
+    t.text     "lede",          :limit => 2147483647,                                    :null => false
+    t.datetime "published_at",                        :default => '2011-10-06 15:47:43', :null => false
+    t.string   "site",          :limit => 20
+  end
+
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
     t.integer  "user_id",                               :null => false
@@ -612,56 +622,6 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
   end
 
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
-
-  create_table "mailchimp_campaign", :force => true do |t|
-    t.text     "content",         :limit => 2147483647, :null => false
-    t.datetime "sent_date",                             :null => false
-    t.string   "name",                                  :null => false
-    t.string   "campaign_id",     :limit => 50,         :null => false
-    t.integer  "object_id"
-    t.integer  "content_type_id"
-    t.text     "extra_info",      :limit => 2147483647
-  end
-
-  add_index "mailchimp_campaign", ["content_type_id"], :name => "mailchimp_campaign_e4470c6e"
-
-  create_table "mailchimp_queue", :force => true do |t|
-    t.text    "type_opts",                  :limit => 2147483647,                    :null => false
-    t.boolean "segment_options_all",                              :default => false, :null => false
-    t.text    "contents",                   :limit => 2147483647,                    :null => false
-    t.string  "subject",                                                             :null => false
-    t.string  "campaign_type",              :limit => 50,                            :null => false
-    t.boolean "authenticate",                                     :default => false, :null => false
-    t.string  "title"
-    t.string  "from_email",                 :limit => 75,                            :null => false
-    t.boolean "segment_options",                                  :default => false, :null => false
-    t.string  "list_id",                    :limit => 50,                            :null => false
-    t.boolean "auto_tweet",                                       :default => false, :null => false
-    t.string  "from_name",                                                           :null => false
-    t.string  "folder_id",                  :limit => 50
-    t.boolean "generate_text",                                    :default => false, :null => false
-    t.string  "to_email",                   :limit => 75,                            :null => false
-    t.boolean "tracking_text_clicks",                             :default => false, :null => false
-    t.boolean "auto_footer",                                      :default => false, :null => false
-    t.boolean "tracking_html_clicks",                             :default => true,  :null => false
-    t.string  "google_analytics",           :limit => 100
-    t.text    "segment_options_conditions", :limit => 2147483647,                    :null => false
-    t.integer "template_id",                                                         :null => false
-    t.boolean "tracking_opens",                                   :default => true,  :null => false
-    t.integer "object_id"
-    t.integer "content_type_id"
-    t.boolean "locked",                                           :default => false, :null => false
-    t.text    "extra_info",                 :limit => 2147483647
-  end
-
-  add_index "mailchimp_queue", ["content_type_id"], :name => "mailchimp_queue_e4470c6e"
-
-  create_table "mailchimp_reciever", :force => true do |t|
-    t.integer "campaign_id",               :null => false
-    t.string  "email",       :limit => 75, :null => false
-  end
-
-  add_index "mailchimp_reciever", ["campaign_id"], :name => "mailchimp_reciever_8fd46b1a"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false

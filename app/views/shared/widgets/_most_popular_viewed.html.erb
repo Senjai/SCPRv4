@@ -1,0 +1,8 @@
+<ol>
+	<% for c in @content %>
+	<li>
+		<%= link_to c.headline, c.link_path, :onclick => "_gaq.push(['_trackEvent', 'Popular Box', 'Most Viewed', '<%= c.obj_key %> :: <%= c.title %>')" %>
+		<div class="count"><span>1234</span></div>
+	</li>
+	<% end %>
+</ol>

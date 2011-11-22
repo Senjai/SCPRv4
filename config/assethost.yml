@@ -1,5 +1,5 @@
 development:
-    server: a.scpr.org
+    server: assethostscpr.dev
     token: droQQ2LcESKeGPzldQr7
 
 production:
