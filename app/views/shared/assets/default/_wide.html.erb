@@ -1,3 +1,4 @@
+<% content_for :headline do %>
 <div class="contentasset caW" style="width:<%= assets[0].asset.sizes.eight.width %>px">
 	<%= assets[0].asset.tag(:eight) %>
 	<h4><%= assets[0].asset.owner %></h4>
@@ -6,3 +7,4 @@
 		<p><%= assets[0].caption %></p>
 	<% end %>
 </div>
+<% end %>

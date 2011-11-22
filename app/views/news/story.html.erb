@@ -1,8 +1,15 @@
 <% content_for :headline do %>
 	<h1 class="story-headline"><%= @story.headline %></h1>
 	<p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
-	<%= render_asset @story, "story" %>
 <% end %>
+
+<%= render_asset @story, "story" %>
+
+<div class="storytools" style="width: 160px;float: right;clear:right;margin-right: -190px">
+	<%= render "shared/widgets/comment_count", :cssClass => 'right-side' %>
+	<%= render "shared/audio/story_audio" %>
+	<%= render "shared/story_widgets/sidebar_media" %>
+</div>
 
 <%= simple_format @story.lede %>
 <%= simple_format @story.body %>
@@ -16,7 +23,4 @@
 <%= render :partial => "shared/story_widgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 
 <% content_for :storybar do %>
-	<%= render "shared/widgets/comment_count", :cssClass => 'right-side' %>
-	<%= render "shared/audio/story_audio" %>
-	<%= render "shared/story_widgets/sidebar_media" %>
 <% end %>
