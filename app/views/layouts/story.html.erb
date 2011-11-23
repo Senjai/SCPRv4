@@ -16,7 +16,6 @@
 		<article class="span8 storytitle">
 			<div class="row">
 				<div class="span8">
-					<%= render "shared/widgets/story_tools", :cssClass => '' %>
 					<%= yield :headline %>
 				</div>
 			</div>
@@ -25,8 +24,7 @@
 					<%= yield %>
 				</div>
 			</div>
-			<%= render "shared/widgets/content_carousel" %>
-			<%= render "shared/comments", :cssClass => '' %>
+			<%= yield :postcontent %>
 		</article>
 		<div id ="sidebar" class="span4 storytitle">
 			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
