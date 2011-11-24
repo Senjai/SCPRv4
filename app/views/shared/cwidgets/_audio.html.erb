@@ -1,14 +1,16 @@
-<aside class="story-audio">
-	<div class="inner-container clearfix">
-		<div class="audio-content">
-			<h4>Listen to the Story</h4>
+<% if content.audio.any? %>
+	<aside class="story-audio">
+		<div class="inner-container clearfix">
+			<div class="audio-content">
+				<h4>Listen to the Story</h4>
+			</div>
+			<a href="<%= content.audio.first.url %>" class="play-btn">Play Audio</a>
+			<span class="duration">[X min XX sec]</span>
+			<ul class="audio-tools">
+			    <li>
+			        <a href="<%= content.audio.first.url %>">Download</a>
+			    </li>
+			</ul>
 		</div>
-		<a href="http://media.scpr.org/audio/features/20111011_features1490.mp3" class="play-btn">Play Audio</a>
-		<span class="duration">[5 min 29 sec]</span>
-		<ul class="audio-tools">
-		    <li>
-		        <a href="">Download</a>
-		    </li>
-		</ul>
-	</div>
-</aside>
+	</aside>
+<% end %>

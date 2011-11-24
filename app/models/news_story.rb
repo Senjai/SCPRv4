@@ -10,8 +10,11 @@ class NewsStory < ContentBase
   belongs_to :primary_reporter, :class_name => "Bio"
   belongs_to :secondary_reporter, :class_name => "Bio"  
   
-  belongs_to :enco_audio, :foreign_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
+  belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
   has_many :uploaded_audio, :as => "content"
+  
+  has_many :story_categories, :foreign_key => 'story_id'
+  has_many :categories, :through => :story_categories
   
   #----------
   
