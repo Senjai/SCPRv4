@@ -4,8 +4,8 @@ gem 'rails', '3.1.0'
 
 gem 'mysql2'
 
-gem 'redis-content-store', :path => "/Users/eric/projects/redis-content-store"
-#gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
+# gem 'redis-content-store', :path => "/Users/eric/projects/redis-content-store"
+gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
 
 gem 'jquery-rails'
 
