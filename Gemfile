@@ -9,8 +9,7 @@ gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.gi
 
 gem 'jquery-rails'
 
-# Use unicorn as the web server
-# gem 'unicorn'
+gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git', :branch => "rails3"
 
 # Deploy with Capistrano
 gem 'capistrano'
