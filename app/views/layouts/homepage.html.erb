@@ -14,11 +14,6 @@
 </div>
 <div id="main" class="container">
 	<div class="row">
-		<div class="span12">
-			<%= render "shared/hot_topics" %>
-		</div>
-	</div>
-	<div class="row">
 		<section class="span8">
 			<%= yield %>
 		</section>
@@ -26,7 +21,7 @@
 		<div id="sidebar-top" class="span4">
 			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
 			<hr/>
-			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+			<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
 			<%= render "shared/widgets/facebook" %>
 			<%= render "shared/widgets/most_popular" %>			
 		</div>
