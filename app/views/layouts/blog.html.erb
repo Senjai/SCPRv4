@@ -2,9 +2,9 @@
 <html>
 <head>
   <title>89.3 KPCC</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
   <%= render "shared/header/header_js" %>
-
-
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -26,15 +26,9 @@
 					<div class="row">
 						<div class="span2">
 							<%= yield :entrydate %>
-							<%= render "shared/widgets/story_tools", :cssClass => 'side' %>
-							<%= render "shared/widgets/comment_count", :cssClass => 'left-side' %>
 						</div>
 						<div class="span6">
 							<%= yield :body %>
-
-							<%= render "shared/widgets/story_tools", :cssClass => 'bottom' %>
-							<%= render "shared/widgets/next_prev" %>
-							<%= render "shared/comments", :cssClass => '' %>
 						</div>
 					</div>
 				</div>
