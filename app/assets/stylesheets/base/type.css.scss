@@ -18,7 +18,7 @@ p {
 // HEADINGS
 // --------
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, h7 {
   font-weight: bold;
   @include font-heading();
   color: $nearBlack;
@@ -63,6 +63,10 @@ h6 {
   color:#B24401;
   font-size: 14px;
   text-transform: uppercase;
+}
+h7 {
+  color:#B24401;
+  font-size: 12px;
 }
 
 // Headline styles

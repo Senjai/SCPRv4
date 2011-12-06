@@ -24,3 +24,262 @@
 		}
 	}
 }
+
+// Broadcast Bar
+#broadcast-bar-container {
+	background:$grayBackground;
+	border:1px solid $white;
+	outline:1px solid $grayBorder;
+	height:46px;
+	margin:30px 0 25px 0;
+	width:100%;
+}
+section.broadcastbar {
+	margin:$margin-center;
+	width:1112px;
+	ul {
+		list-style:none outside none;
+		margin:0 0 0 -15px;
+		li {
+			display:inline;
+			&.on-air img {
+				float:left;
+				padding:13px 0 0 0;
+			}
+			&.showhost img {
+				float:right;
+				margin:-25px 2px 0 0;
+				position:absolute;
+			}
+			&.on-now {
+				float:left;
+				margin:0 0 0 90px;
+				padding:8px 0 0 0;
+			}
+			&.active-show-title {
+				@include font-heading($weight:normal, $size:1.5em);
+				color:$orangeDark;
+				padding:0 0 0 85px;
+			}
+			&.show-status {
+				@include font-sans-serif($weight:bold, $size:1.05em);
+				color:$grayAlt;
+				padding:0 0 0 5px;
+			}
+			&.show-summary {
+				@include font-sans-serif($weight:normal, $size:0.95em);
+				color:$grayAlt;
+				padding:0 0 0 5px;
+			}
+			&.join-conversation {
+				padding:0 0 0 12px;
+				a {
+					@include font-sans-serif($weight:bold, $size:1em);
+					background:url("broadcast-bar/comment-icon.png") no-repeat scroll transparent;	
+					color:$linkColor;
+					padding:0 18px;
+				}
+			}
+			&.up-next img {
+				padding:8px 0 0 60px;
+			}
+			&.upnext-show-title {
+				@include font-heading($weight:normal, $size:1.5em);
+				color:$orangeDark;
+			}
+			&.show-time {
+				@include font-sans-serif($weight:normal, $size:1.05em);
+				color:$gray;
+				padding:0 0 0 5px;
+			}	
+		}
+	}
+}
+
+// Join Conversation
+.join-conversation-container {
+	margin:0 0 0 30px;
+	section.join_conversation {
+		background-color:$grayBackground;
+		h6 {
+			color:$black;
+			padding:5px 0 0 10px;	
+		}
+		blockquote {
+			@include font-serif($size:1.1em, $lineHeight:25px);
+			background:url("join-conversation-blockquote.png") no-repeat scroll 2% 50% transparent;		
+			border:0 none;
+			font-style:italic;
+			margin:5px 0 0 0;
+			padding:0 25px 0 55px;
+		}
+		p.quotee {
+			@include font-sans-serif($size:0.85em);
+			color:$grayLight;
+			padding:5px 25px 10px 55px;
+			a {
+				color:$gray;
+			}
+		}
+	}
+}
+
+// More Headlines
+.headlines {
+	ul {
+		list-style-image:url("more-headlines-li.png");
+		li {
+			margin:5px 0 0 -10px;
+			a {
+				@include font-headline($weight:lighter);
+				color:$grayAlt;
+				font-size:1.05em;
+			}
+		}
+	}
+}
+
+// Events at the Forum
+section.events-forum {
+	border-left:1px solid $grayLighter;
+	padding:0 0 0 10px;
+	h6 {
+		padding-left:5px;
+	}
+	div.events-content {
+		margin:10px 0 0 0;
+		p.event-title {
+			@include font-headline($weight:lighter);
+			font-size:1.2em;
+			margin:0;
+		}
+		p.event-date {
+			@include font-serif($size:0.90em);
+			background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
+			color:$linkColor;
+			padding:10px 0 0 0;
+			a {
+				padding:0 0 0 28px;
+			}
+		}
+		img {
+			float:left;
+			padding:0 15px 0 5px;			
+		}
+	}
+}
+
+// Cbase H3 - Applies styling to first headline - activated by jQuery
+.first-headline {
+	font-size:30px;
+	line-height:30px;
+}
+
+// More News
+section.more-news-container {
+	margin:0 !important;
+	width:770px !important;
+	div.more-news {
+		border-right:1px solid $grayLighter;
+		padding:0 10px 0 0;
+		section.more-news-title {
+			background:url("section-headline-background.png") repeat-x;
+			height:35px;
+			h6 {	
+				color:$grayAlt;
+				float:left;
+				font-size:18px;
+				padding:4px 0 0 8px;
+				text-transform:none;
+			}
+			span {
+				@include font-sans-serif($size:0.85em);
+				float:right;
+				padding:8px 8px 0 0;
+			}
+		}
+		section.more-news-content {
+			float:left;
+			margin:10px 0 0 0;
+			width:425px;
+			p.story-title {
+				@include font-headline($weight:bold);
+				font-size:1.2em;
+				margin:0;
+				a {
+					color:$grayAlt;
+				}
+			}
+			p.story-content {
+				font-size:13px;
+				line-height:18px;
+				padding:10px 0 0 0;
+			}
+			img {
+				float:left;
+				padding:0 25px 0 0;			
+			}
+			ul {
+				list-style-image:url("more-headlines-li.png");
+				li {
+					margin:5px 0 0 -10px;
+					a {
+						@include font-headline($weight:lighter);
+						color:$grayAlt;
+						font-size:1.05em;
+					}
+				}
+			}
+		}
+		div.related-content {
+			border-left:1px solid $grayLighter;
+			margin:5px 0 0 0;
+			padding:0 0 0 15px;
+			h6 {
+				font-size:0.90em;
+				padding:5px 3px 5px 0;
+			}
+			img.segment {
+				padding:10px 0 0 0;
+			}
+			span.caption {
+				@include font-headline($weight:lighter);
+				color:$grayAlt;
+				font-size:1.1em;
+			}
+			blockquote {
+				@include font-headline($weight:lighter);
+				border:0 none;
+				font-size:1.5em;
+				font-style:italic;
+				line-height:23px;
+				margin:10px 0 5px 0;
+				padding:0;
+			}
+			div.comments-quotee {
+				@include font-sans-serif($size:0.85em);
+				background:url("more-news-quotee-icon.png") no-repeat scroll 60% 0 transparent;
+				color:$grayLight;
+				height:35px;
+				padding:20px 0 0 20px;
+			}
+		}
+	}
+}
+
+
+// Sidebar
+div#sidebar-top {
+	hr {
+		margin:0 0 10px 0;
+	}
+}
+div#sidebar-bottom {
+	margin:0 0 0 20px;
+	hr {
+		margin:0 0 10px 0;
+	}
+	h6 {
+		margin:0 0 10px 0;
+	}	
+}

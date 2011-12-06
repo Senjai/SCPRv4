@@ -8,7 +8,10 @@
 <body>
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
-
+<!-- BROADCAST BAR -->
+<div id="broadcast-bar-container">
+	<%= render "shared/broadcast_bar" %>
+</div>
 <div id="main" class="container">
 	<div class="row">
 		<div class="span12">
@@ -19,14 +22,40 @@
 		<section class="span8">
 			<%= yield %>
 		</section>
-		<div id ="sidebar" class="span4">
+
+		<div id="sidebar-top" class="span4">
 			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
-			<%= render "shared/widgets/most_popular" %>
-			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+			<hr/>
 			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+			<%= render "shared/widgets/facebook" %>
+			<%= render "shared/widgets/most_popular" %>			
 		</div>
 	</div>
+	<div class="row">
+		<%= render "shared/cwidgets/content_carousel" %>
+	</div>
+	<div class="row">
+		<section class="span8 more-news-container">
+			<%= render :partial => 'shared/cwidgets/more_news_video', :layout => 'shared/cwidgets/more_news' %>
+			<%= render :partial => 'shared/cwidgets/more_news_segment', :layout => 'shared/cwidgets/more_news' %>		
+			<%= render :partial => 'shared/cwidgets/more_news_quote', :layout => 'shared/cwidgets/more_news' %>
+			<%= render :partial => 'shared/cwidgets/more_news_video', :layout => 'shared/cwidgets/more_news' %>
+			<%= render :partial => 'shared/cwidgets/more_news_quote', :layout => 'shared/cwidgets/more_news' %>
+		</section>
+		<div id="sidebar-bottom" class="span4">
+			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+			<hr/>
+			<%= render "shared/widgets/recent_videos" %>			
+			<hr/>
+			<%= render "shared/widgets/oas", :ad_id => 'x04' %>
+			<hr/>
+			<%= render "shared/widgets/promo_mobile" %>
+		</div>
+	</div>
+	<br class="clearfix" />	
+	</div>
 </div>
-
+<!-- Makes the first offlead H3 bigger than the others -->
+<script>$(".offleads h3.story-headline a:eq(0)").addClass("first-headline");</script>
 </body>
 </html>

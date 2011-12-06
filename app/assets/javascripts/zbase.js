@@ -21,17 +21,17 @@ jQuery(document).ready(function() {
 			circular	: false,
 			infinite	: false,
 			auto 		: false,
-			items : 4,
+			items : 6,
 			prev : {
 				button		: "#carousel_prev",
 				key			: "left",
-				items		: 4,
+				items		: 6,
 				duration	: 600
 			},
 			next : {
 				button		: "#carousel_next",
 				key			: "right",
-				items		: 4,
+				items		: 6,
 				duration	: 600
 			},
 			pagination : {
