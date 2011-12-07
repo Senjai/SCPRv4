@@ -8,11 +8,10 @@ gem 'mysql2'
 gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
 
 gem 'jquery-rails'
-
 gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git', :branch => "rails3"
-
-# Deploy with Capistrano
 gem 'capistrano'
+gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
+gem 'thinking-sphinx', '2.0.10'
 
 # Gems used only for assets and not required
 # in production environments by default.

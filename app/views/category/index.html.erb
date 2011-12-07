@@ -1,11 +1,11 @@
 <h1><%= @category.category %></h1>
 
-<% links = will_paginate(@stories, :previous_label => "« Newer Stories", :next_label => "Older Stories »", :params => {:action => 'index'}) %>
+<% links = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »", :params => {:action => 'index'}) %>
 
 <%= links %>
 
-<% for s in @stories %>
-	<%= render_content s, "thumbnail" %>
+<% for c in @content %>
+	<%= render_content c.content, "thumbnail" %>
 <% end %>
 
 <%= links %>
