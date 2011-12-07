@@ -23,6 +23,7 @@
 	// MASTHEAD
 	// Logo
 	background:lighten($black, 10%);
+	@include background-image(linear-gradient(lighten($black, 10%), $black));
 	.logo h1 {
 		&:after {
 			content: url(image_path('video-masthead.png'));
