@@ -44,5 +44,10 @@ module Scprv4
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    Disqussion.configure do |disq|
+      disq.api_key    = "n5QMkXRJa76bdBYruPhtYDvKe6wx7Vo0MqKlCypJdnh7lj6FNnFt1Lr9XAtpU2oe"
+      disq.api_secret = "YsiHTacdYNGWn2tzaMKSptmJcA5jM3t0ScazSws2yDMHJJZJamkDC3a3249gfmQR"
+    end
   end
 end

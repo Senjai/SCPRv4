@@ -6,8 +6,8 @@ class BlogEntry < ContentBase
   belongs_to :blog
   belongs_to :author, :class_name => "Bio"
   
-  scope :published, where(:status => ContentBase::STATUS_LIVE).order("published_at desc")
-  
+  scope :published, where(:status => STATUS_LIVE)
+    
   #----------
   
   def byline_elements
