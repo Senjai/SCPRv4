@@ -6,6 +6,6 @@
 		<%= smart_date content %> | <%= render_byline content %> | <%= content.comment_count.pluralize("Comment") %>
 	</h4>
 
-	<p><%=h strip_tags truncate(content.lede, :length => 200, :separator => '.') %></p>
+	<p><%=h truncate(strip_tags(content.lede), :length => 200, :separator => '.') %></p>
 </div>
-<hr/>
+

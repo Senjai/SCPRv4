@@ -1,21 +1,29 @@
 <div class="row">
-	<div class="span3">
+	<div class="span4 offleads">
 		<%= render_content @homepage.content[1..-1], "offlead" %>
 	</div>
-	<div class="span5">
+	<div class="span4">
 		<%= content_cache("home_leads") do %>
 			<%= render_content @homepage.content[0], "lead" %>
 		<% end %>	
-		<h6>More Headlines</h6>
-		<ul>
-		<% for c in @homepage.content %>
-			<li><%= link_to c.content.headline, c.content.link_path %></li>
-		<% end %>
-		</ul>	
 	</div>
 </div>
 <div class="row">
-	<div class="span8">
-		<h3><%= link_to "Programs", programs_path() %>
+	<div class="join-conversation-container">
+		<%= render "shared/widgets/join_conversation" %>
 	</div>
+	<div class="span4">
+		<div class="headlines">
+			<h6>More Headlines</h6>
+			<ul>
+			<% for c in @homepage.content %>
+				<li><%= link_to c.content.headline, c.content.link_path %></li>
+			<% end %>
+			</ul>
+		</div>
+	</div>
+	<div class="span4">
+		<%= render "shared/widgets/events_at_the_forum" %>	
+	</div>	
+
 </div>

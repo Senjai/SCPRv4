@@ -489,11 +489,17 @@
 // Content Carousel
 .content_carousel {
 	border-top:1px solid $grayLight;
+	margin-left:30px;
+	width:1111px;
+	hr {
+		border-color:$graydarkHR;
+	}
 	.section-head { 
 		border-bottom:1px solid $grayLight;
-		margin-bottom:$baseline / 2;
+		margin-bottom:$baseline / 1;
 		position:relative;
 		h3 {
+			color:$orangeDark;
 	        line-height:$baseline * 1.5;
 		}
 		nav {
@@ -552,7 +558,9 @@ ul.carousel {
 		height:140px;
 	}
 	p {
-		@include font-sans-serif(bold, 12px);
+		@include font-headline($weight:lighter);
+		color:$grayAlt;
+		font-size:1.05em;
 		line-height:16px;
 		margin:0 auto;
 		width:140px;
@@ -730,3 +738,21 @@ ul.carousel {
 
 .ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 .ui-tabs .ui-tabs-hide { display: none !important; }
+
+// Facebook
+.facebook_like_1 p {
+	@include font-heading($size:1.1em);
+	background:url("facebook/facebook_icon.gif") no-repeat scroll 1% 10% transparent;
+	color:$facebookBlue;
+	line-height:25px;
+	padding:0 0 0 30px;
+	a {
+		color:$facebookBlue;
+	}
+}
+.facebook_like_2 {
+	padding:0 0 0 30px;
+}
+section.facebook .row .span2 {
+	width:198px;
+}
