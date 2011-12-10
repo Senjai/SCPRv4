@@ -20,7 +20,6 @@
 						<a href=""><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="" /></a>
 	    		        <a href=""><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="" /></a>
 	    		    </li>
-					<li><a href="">Become a Source</a></li>
 					<% if current_user %>
 						<li>Hi <%= current_user.nickname %></li>
 						<li><a href="">Log Out</a></li>
@@ -42,12 +41,12 @@
 					    <li class="mega"><a href="#" data-section="events-mega"><span>Events</span></a></li>
 						<li class="mega"><a href="#" data-section="support-mega"><span>Support Us</span></a></li>
 					</ul>
-					<form action="" class="search" method="post">
+					<form action="/search/" class="search" method="get">
 						<fieldset>
 						    <label>Search:</label>
 						    <div class="inputs">
-						        <input type="text" name="Search" placeholder="Search" class="search" />
-						        <input type="submit" name="Submit" value="Submit" class="submit" />
+						        <input type="text" name="q" placeholder="Search" class="search" />
+						        <input type="submit" value="Submit" id="submit" class="submit" />
 						    </div>
 						</fieldset>
 					</form>
@@ -58,14 +57,17 @@
 							<div class="inner-container clearfix">
 							<h6>Categories</h6>
 							<ul>
-							    <li><a href="">Local</a></li>
-							    <li><a href="">U.S.</a></li>
-							    <li><a href="">World</a></li>
-							    <li><a href="">Politics</a></li>
-							    <li><a href="">Economy</a></li>
-							    <li><a href="">Environment</a></li>
-							    <li><a href="">Law</a></li>
-							    <li><a href="">Education</a></li>
+							    <li><a href="/news/local/">Local</a></li>
+							    <li><a href="/news/state/">State</a></li>
+							    <li><a href="/news/world/">World</a></li>
+							    <li><a href="/news/politics/">Politics</a></li>
+							    <li><a href="/news/science/">Science</a></li>
+							</ul>
+							<ul class="right">
+							    <li><a href="/news/money/">Money</a></li>
+							    <li><a href="/news/crime-safety/">Crime &amp; Safety</a></li>
+							    <li><a href="/news/education/">Education</a></li>
+							    <li><a href="/news/health/">Health</a></li>
 							</ul>
 							<ul class="content-types">
 							    <li class="videos"><a href="/videos/">Videos</a></li>
@@ -119,15 +121,14 @@
 								<div class="inner-container clearfix">
 								<h6>Categories</h6>
 								<ul>
-								    <li><a href="">Books</a></li>
-								    <li><a href="">Film</a></li>
-								    <li><a href="">Music</a></li>
-								    <li><a href="">Pop Culture</a></li>
-								    <li><a href="">Art &amp; Design</a></li>
-								    <li><a href="">Food</a></li>
-								    <li><a href="">Living</a></li>
-								    <li><a href="">Science</a></li>
-									<li><a href="">Technology</a></li>					
+								    <li><a href="/arts-life/books/">Books</a></li>
+								    <li><a href="/arts-life/film/">Film</a></li>
+								    <li><a href="/arts-life/culture/">Culture</a></li>	
+								</ul>
+								<ul class="right">
+								    <li><a href="/arts-life/arts/">Arts</a></li>
+								    <li><a href="/arts-life/music/">Music</a></li>
+								    <li><a href="/arts-life/food/">Food</a></li>	
 								</ul>
 								</div>
 							</div>

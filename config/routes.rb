@@ -24,6 +24,8 @@ Scprv4::Application.routes.draw do
   
   match '/videos/' => 'videos#index', :as => :videos
   
+  match '/search/' => 'search#index', :as => :search
+  
   match '/news/:year/:month/:day/:id/:slug' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   
   match '/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new, :defaults => { :page => 1 }

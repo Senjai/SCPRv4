@@ -1,0 +1,38 @@
+<h2>Search Results</h2>
+<div id="search-area">
+  <input type="text" id="query_input"/>
+  <span class="help-text">Search results automatically appear below as you type</span>
+</div>
+
+<div class="hr"></div>
+
+<div id="results"></div>
+
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+  google.load('search', '1');
+
+  function onLoad() {
+	
+    // Create a Custom Search control that uses a CSE restricted to code.google.com
+    // Change the customSearchId string to the ID of your own Custom Search engine.
+    var customSearchControl = new google.search.CustomSearchControl('001021908144703713078:fob566vxk8i');
+
+    // Set drawing options to use my text box as input instead of having the library create one.
+    var options = new google.search.DrawOptions();
+    options.setInput(document.getElementById('query_input'));
+    options.setAutoComplete(true);
+    // Draw the control in content div
+    customSearchControl.draw('results', options);
+	
+	query = document.location.search.substring(3)
+	if (query != ""){
+		customSearchControl.execute(decodeURIComponent(query.replace(/\+/g,  " ")));
+	}
+	
+  }
+
+  google.setOnLoadCallback(onLoad);
+
+</script>

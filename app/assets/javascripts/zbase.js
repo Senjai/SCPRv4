@@ -15,6 +15,18 @@ jQuery(document).ready(function() {
 			$(sectionContext).hide();
 		}
 	);
+	$(".section-mega").hover(
+		function(){
+			$(this).show();
+			var tabContext = $(this).attr("id");
+			$("a[data-section='"+tabContext+"']").addClass("hover");
+		},
+		function(){
+			$(this).hide();
+			var tabContext = $(this).attr("id");
+			$("a[data-section='"+tabContext+"']").removeClass("hover");
+		}
+	);
 	
 	// *** Instantiate carousel for article rotator ***
 	$(".carousel").carouFredSel({

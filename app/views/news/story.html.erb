@@ -1,7 +1,7 @@
 <% content_for :headline do %>
 	<%= render "shared/cwidgets/social_tools", :cssClass => '', :content => @story %>
 	<h1 class="story-headline"><%= @story.headline %></h1>
-	<p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
+	<p class="byline">By <%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
 <% end %>
 
 <%= render_asset @story, "story" %>

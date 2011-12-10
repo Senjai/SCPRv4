@@ -4,20 +4,31 @@
   <title>89.3 KPCC</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
-  <script type="text/javascript" src="http://use.typekit.com/mhc7oxs.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <%= render "shared/header/header_js" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<!-- MASTHEAD-->
-<%= render "shared/masthead" %>
+	<!-- MASTHEAD-->
+	<%= render "shared/masthead" %>
 
-<div id="main" role="main">
-	<%= yield %>
-</div>
-<footer>
-	
-</footer>
+	<div id="main" class="container">
+		<div class="row">
+			<article class="span8 storytitle">
+				<%= yield %>
+			</article>
+			<div id ="sidebar" class="span4 storytitle">
+				<%= render "shared/widgets/oas", :ad_id => 'x01' %>
+				<%= render "shared/widgets/most_popular" %>
+				<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+				<%= render "shared/widgets/recent_videos" %>
+				<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+				<%= render "shared/widgets/promo_mobile" %>
+			</div>
+		</div>
+		<%= render "shared/audio/inpage_audio_player" %>
+	</div>
+
+	<%= render :partial => "shared/footer/footer_js" %>
 </body>
 </html>
 

@@ -21,7 +21,7 @@ class NewsStory < ContentBase
     indexes body
     has category.id, :as => :category
     has published_at
-    where "status = #{STATUS_LIVE}"
+    where "news_story.status = #{STATUS_LIVE}"
   end
   
   scope :published, where(:status => STATUS_LIVE)

@@ -216,7 +216,7 @@ nav.utils ul {
 		color:$grayDark;
 		padding:8px 24px;
 		text-transform:uppercase;
-		&:hover {
+		&:hover, &.hover {
 			background-color:$white;
 			color:$orangeDark;
 			$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
@@ -277,12 +277,22 @@ nav.utils ul {
 			background:url(image_path('mega-divider.png')) no-repeat right 10px;
 		}
 		.categories {
-			ul li {
+			ul {
+				display:block;
 				float:left;
-				width:50%;
-				a {
-					padding:3px;
-					text-transform:uppercase;
+				margin-right:0;
+				width:48%;
+				&.right {
+					margin-left:2%;
+				}
+				li {
+					display:block;
+					width:100%;
+					a {
+						display:block;
+						padding:3px;
+						text-transform:uppercase;
+					}
 				}
 			}
 			ul.content-types {
