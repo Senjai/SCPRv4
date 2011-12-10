@@ -1,0 +1,11 @@
+<div class="cbase thumbnail">
+	<%= render_asset(content,"offlead") %>
+
+	<h3 class="story-headline"><%= link_to content.headline, content.link_path %></h3>
+	<h4><%= smart_date content %> | <%= render_byline content %></h4>
+
+	<p><%= strip_tags content.lede %></p>
+</div>
+
+<br class="clear: both"/>
+<hr/>
