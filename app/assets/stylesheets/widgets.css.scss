@@ -639,6 +639,9 @@ ul.carousel {
 		background:url(image_path('icons/comment-count.png')) no-repeat 0 4px;
 		padding-left:28px;
 	}
+	.dsq-comment-text, .dsq-comment-header {
+		color:$nearBlack;
+	}
 }
 
 
@@ -653,6 +656,9 @@ ul.carousel {
 .ad {
 	padding-top:$baseline;
 	text-align:center;
+	&:first-child {
+		padding-top:0;
+	}
 	p {
 		margin-bottom:0;
 		small {@include font-sans-serif(normal, 9px, 0px);}

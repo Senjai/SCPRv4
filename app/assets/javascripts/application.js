@@ -1,6 +1,7 @@
 //= require scprbase
 //= require underscore
 
+//= require modernizr.custom.45510
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui-1.8.16.custom

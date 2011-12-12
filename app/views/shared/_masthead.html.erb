@@ -16,16 +16,16 @@
 		    <nav class="utils span5">
 				<ul class="nav secondary-nav clearfix">
 					<li class="social">Follow us
-	    		        
-						<a href=""><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="" /></a>
-	    		        <a href=""><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="" /></a>
+						<a href="http://facebook.com/kpccfm"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
+	    		        <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
+						<a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
 	    		    </li>
 					<% if current_user %>
-						<li>Hi <%= current_user.nickname %></li>
-						<li><a href="">Log Out</a></li>
+						<li>Hi <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
+						<li><a href="/accounts/logout/">Log Out</a></li>
 					<% else %>
-		    		    <li><a href="">Login</a></li>
-		    		    <li><a href="">Register</a></li>					
+		    		    <li><a href="/accounts/login/">Login</a></li>
+		    		    <li><a href="/accounts/register/">Register</a></li>					
 					<% end %>
 	    		</ul>
 	    	</nav>
@@ -34,7 +34,7 @@
 			<nav class="nav-primary topbar span12">
 				<nav class="sections clearfix">
 					<ul>
-					    <li class="listen-live"><a href="#">Listen Live</a></li>
+					    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>
 					    <li class="mega"><a href="#" data-section="news-mega"><span>News</span></a></li>
 					    <li class="mega"><a href="#" data-section="arts-mega"><span>Arts &amp; Life</span></a></li>
 					    <li class="mega"><a href="#" data-section="programs-mega"><span>Programs</span></a></li>
@@ -121,14 +121,13 @@
 								<div class="inner-container clearfix">
 								<h6>Categories</h6>
 								<ul>
-								    <li><a href="/arts-life/books/">Books</a></li>
+								    <li><a href="/arts-life/books/">LA Culture</a></li>
 								    <li><a href="/arts-life/film/">Film</a></li>
-								    <li><a href="/arts-life/culture/">Culture</a></li>	
+								    <li><a href="/arts-life/culture/">Living</a></li>	
 								</ul>
 								<ul class="right">
 								    <li><a href="/arts-life/arts/">Arts</a></li>
-								    <li><a href="/arts-life/music/">Music</a></li>
-								    <li><a href="/arts-life/food/">Food</a></li>	
+								    <li><a href="/arts-life/music/">Music</a></li>	
 								</ul>
 								</div>
 							</div>

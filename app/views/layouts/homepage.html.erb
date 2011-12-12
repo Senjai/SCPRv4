@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<%= render "shared/cwidgets/content_carousel" %>
+		<%= render "shared/cwidgets/missed_it_carousel" %>
 	</div>
 	<div class="row">
 		<section class="span8 more-news-container">
@@ -48,6 +48,8 @@
 	<br class="clearfix" />	
 	</div>
 </div>
+<%= render :partial => "shared/footer" %>
+<%= render :partial => "shared/footer/footer_js" %>
 <!-- Makes the first offlead H3 bigger than the others -->
 <script>$(".offleads h3.story-headline a:eq(0)").addClass("first-headline");</script>
 </body>
