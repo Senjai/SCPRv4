@@ -10,6 +10,12 @@ class ShowSegment < ContentBase
   
   #----------
   
+  def canFeature?
+    self.assets.any? ? true : false
+  end
+  
+  #----------
+  
   def public_datetime(episode=nil)
     if !episode
       episode = self.episodes.first

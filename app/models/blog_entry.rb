@@ -10,6 +10,12 @@ class BlogEntry < ContentBase
     
   #----------
   
+  def canFeature?
+    self.blog_asset_scheme == "slideshow" ? true : false
+  end
+  
+  #----------
+  
   def byline_elements
     [self.author]
   end

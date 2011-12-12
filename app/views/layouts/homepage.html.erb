@@ -27,9 +27,6 @@
 		</div>
 	</div>
 	<div class="row">
-		<%= render "shared/cwidgets/missed_it_carousel" %>
-	</div>
-	<div class="row">
 		<section class="span8 more-news-container">
 			<% for s in @sections[0..4] %>
 				<%= render :partial => "shared/sections/more_news", :object => s, :as => :section %>
