@@ -1,18 +1,20 @@
 <div class="blog-about">
-	<h6>About The DeBord Report</h6>
+	<h6>About the blog: <%= @blog.name %></h6>
 	<div class="row">
 		<div class="span2 divider">
 			<ul>
-			    <li class="twitter">
+		   <!-- <li class="twitter">
 			        <a href="">Follow The DeBord Report on Twitter</a>
-			    </li>
+			    </li> 
+			-->
 			    <li class="rss">
-			        <a href="">Subscribe to RSS Feed</a>
+					<%= link_to "Subscribe to RSS Feed", @blog.feed_url %>
+			        <a href=""></a>
 			    </li>
 			</ul>
 		</div>
 		<div class="span2">
-			<p>Your guide to the issues and events that affect California's economic status and your own. Hosted by Matthew DeBord.</p>
+			<p><%= @blog.description %></p>
 		</div>
 	</div>
 </div>

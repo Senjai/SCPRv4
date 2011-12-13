@@ -1,0 +1,11 @@
+<nav class="recent-posts widget">
+	<h6>Recent Posts</h6>
+	<ul>
+		<% for entry in @entries %>
+	    <li>
+	        <p><%= link_to entry.title, entry.link_path %></p>
+			<span class="date-posted"><%= smart_date entry.published_at %></span>
+	    </li>
+		<% end %>
+	</ul>
+</nav>

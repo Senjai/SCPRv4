@@ -17,8 +17,7 @@
 			<div class="row">
 				<div class="span2">&nbsp;</div>
 				<div id="blog-masthead" class="span6">
-				<!--	<%= image_tag("blogs/debord_report.png") %> -->
-					<h2>The <span class="blue">DeBord Report</span></h2> 
+					<h2><span class="blue"><%= link_to @blog.name, blog_path(@blog.slug) %></span></h2>
 				</div>
 			</div>
 			<div class="row">
@@ -37,9 +36,8 @@
 		<div id ="sidebar" class="span4">
 			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
 			<%= render "shared/widgets/blog_about" %>
-			<%= render "shared/widgets/host" %>
+			<%= render :partial => "shared/cwidgets/recent_posts" %>
 			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
-			<%= render "shared/widgets/recent_posts" %>
 			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 		</div>
 	</div>
