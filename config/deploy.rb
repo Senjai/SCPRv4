@@ -11,6 +11,7 @@ set :deploy_via, :remote_cache
 set :deploy_to, "/web/scprv4"
 set :rails_env, :production
 set :user, "scprv4"
+set :use_sudo, false
 
 role :app, "scprdev.org"
 role :web, "scprdev.org", :asset_host_syncher => true
@@ -38,9 +39,9 @@ namespace :bdv4 do
   end
 end
 
-task :before_update_code, :roles => [:app] do
-  thinking_sphinx.stop
-end
+#task :before_update_code, :roles => [:app] do
+#  thinking_sphinx.stop
+#end
 
 task :after_update_code, :roles => [:app] do
   #symlink_sphinx_indexes
