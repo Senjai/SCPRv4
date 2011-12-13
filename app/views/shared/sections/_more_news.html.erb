@@ -1,21 +1,17 @@
 <div class="span8 more-news">
 	<section class="more-news-title">
-		<h6><%= section[0].category.category %></h6><span><a href="" alt="More">More</a></span>
+		<h6><%= section[:section].category %></h6><span><a href="" alt="More">More</a></span>
 	</section>
 	<section class="more-news-content">
-		<%= render_content section[0], "sec_lead" %>
+		<%= render_content section[:top], "sec_lead" %>
 		
-		<% if section.length > 1 %>
 		<ul class="additional-stories">
-			<% for c in section[1..4] %>
+			<% for c in section[:more][0..2] %>
 			<li><%= link_to c.headline, c.link_path %></li>
 			<% end %>
 		</ul>
-		<% end %>
 	</section>
 	<div class="related-content span3">
-		<h6>From the Comments</h6>
-		<blockquote>“My father had me at 56 and as an older father he was ready for fatherhood, he provided me with the wisdom his life experiences provided him.”</blockquote>
-		<div class="comments-quotee">-- Addie Lasch</div>	
+		<%= render_content section[:right], "sec_right" %>
 	</div>
 </div>

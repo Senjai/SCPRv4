@@ -1,7 +1,7 @@
 class CategoryConstraint
-  def initialize
+  def initialize(news = false)
     # load up category list
-    @cats = Category.all.map { |c| c.slug }
+    @cats = Category.where(:is_news => news).all.map { |c| c.slug }
   end
   
   def matches?(request)
@@ -27,8 +27,9 @@ Scprv4::Application.routes.draw do
   match '/search/' => 'search#index', :as => :search
   
   match '/news/:year/:month/:day/:id/:slug' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
-  
-  match '/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new, :defaults => { :page => 1 }
+
+  match '/arts/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new(false), :defaults => { :page => 1 }  
+  match '/news/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new(true), :defaults => { :page => 1 }
   
   match '/' => "home#index", :as => :home
 end

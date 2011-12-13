@@ -28,6 +28,12 @@ class NewsStory < ContentBase
   
   #----------
   
+  def canFeature?
+    self.story_asset_scheme == "slideshow" ? true : false
+  end
+  
+  #----------
+  
   def link_path
     Rails.application.routes.url_helpers.news_story_path(
       :year => self.published_at.year, 

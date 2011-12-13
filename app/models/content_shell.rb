@@ -6,6 +6,10 @@ class ContentShell < ContentBase
 
   #----------
   
+  def canFeature?
+    self.assets.any? ? true : false
+  end
+  
   def link_path
     self.url
   end

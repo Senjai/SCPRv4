@@ -1,6 +1,6 @@
 <div class="cbase offlead">
 	<h3 class="story-headline"><%= link_to content.headline, content.link_path %></h3>
-	<%= render_asset(content,"offlead") %>
+	<h4><%= render_byline content %></h4>
 
 	<p><%= strip_tags content.lede %></p>
 </div>

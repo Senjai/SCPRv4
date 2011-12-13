@@ -53,6 +53,12 @@ class ContentBase < ActiveRecord::Base
   def obj_key
     return [self.class::CONTENT_TYPE,self.id].join(":")
   end
+  
+  #----------
+  
+  def canFeature?
+    false
+  end
 
   #----------
   
