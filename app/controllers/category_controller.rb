@@ -1,5 +1,5 @@
 class CategoryController < ApplicationController
-  layout "homepage"
+  layout "application"
   
   def index
     @category = Category.find_by_slug(params[:category])
