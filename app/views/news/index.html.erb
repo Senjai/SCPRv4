@@ -1,0 +1,9 @@
+<h1>Latest News</h1>
+
+<% links = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »", :params => {:action => 'index'}) %>
+
+<%= links %>
+
+<%= render_content @content.to_a, "offlead" %>
+
+<%= links %>
