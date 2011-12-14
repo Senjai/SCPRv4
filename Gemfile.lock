@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/redis-content-store.git
-  revision: 16cbc964222df553450d0b03b4d1fa888e714440
+  revision: cca98616d350812617b972f0ed521ac1f9fe7994
   specs:
     redis-content-store (0.1.0)
       redis-store

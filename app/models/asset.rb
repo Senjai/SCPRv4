@@ -3,6 +3,10 @@ class Asset < ActiveResource::Base
   self.element_name = 'asset'
   self.include_root_in_json = false
   
+  def obj_key
+    "asset/#{self.id}"
+  end
+  
   def tag(size)
     if !self.tags
       return nil

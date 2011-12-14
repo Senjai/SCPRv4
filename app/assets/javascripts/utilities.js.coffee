@@ -63,4 +63,4 @@ class scpr.Cookie
         return null
 
     @unset: (name) ->
-        bdv4.Cookie.set name, '', -1
+        scpr.Cookie.set name, '', -1

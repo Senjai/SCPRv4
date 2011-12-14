@@ -1,12 +1,13 @@
 <div class="row">
-	<div class="span4 offleads">
-		<%= render_content @homepage.content[1..-1], "offlead" %>
-	</div>
-	<div class="span4">
-		<%= content_cache("home_leads") do %>
+	<%= content_cache("home_leads") do %>
+		<% register_content("layout/homepage") %>
+		<div class="span4 offleads">
+			<%= render_content @homepage.content[1..-1], "offlead" %>
+		</div>
+		<div class="span4">
 			<%= render_content @homepage.content[0], "lead" %>
-		<% end %>	
-	</div>
+		</div>
+	<% end %>	
 </div>
 <div class="row">
 	<div class="join-conversation-container">
