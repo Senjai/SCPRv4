@@ -1,4 +1,5 @@
 class BlogsController < ApplicationController
+  require 'will_paginate/array'
   layout "blog"
   
   def index
@@ -8,7 +9,8 @@ class BlogsController < ApplicationController
   
   def show
     @blog = Blog.where(:slug => params[:blog]).first
-    @entries = @blog.entries.published.all.last(5).reverse
+    @entries = @blog.entries.published.all.reverse.paginate(:page => params[:page], :per_page => 5)
+    render :layout => "bloglanding"
   end
   
   def entry
