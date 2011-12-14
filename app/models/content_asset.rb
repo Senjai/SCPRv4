@@ -3,6 +3,9 @@ class ContentAsset < ActiveRecord::Base
   
   belongs_to :content, :polymorphic => true
   #belongs_to :asset
+  
+  @@loaded = false
+  
     
   #----------
   
@@ -14,14 +17,18 @@ class ContentAsset < ActiveRecord::Base
     key = "asset/#{self.content&&self.content.obj_key}-#{self.asset_id}"
     
     # otherwise, check for cache
-    if @_asset = ActionController::Base.cache_store.read_entry(key,{})
+    Rails.logger.debug("CA loaded is #{@@loaded}")
+    if @@loaded && a = Rails.cache.read(key)
+      @_asset = a
       return @_asset
     else
       # load
       @_asset = Asset.find(self.asset_id)
 
       # write cache that can be expired by content or asset
-      ActionController::Base.cache_store.write_entry(key,@_asset,:objects => [self.content,@_asset])
+      Rails.cache.write(key,@_asset,:objects => [self.content,@_asset])
+      
+      @@loaded = true
       
       return @_asset
     end
