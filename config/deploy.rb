@@ -32,21 +32,12 @@ namespace :deploy do
   end
 end
 
-namespace :bdv4 do  
-  desc "Link tmp/cache from shared"
-  task :link_cache, :roles => :web do
-    run "ln -s #{deploy_to}/shared/cache #{deploy_to}/current/tmp/cache"
-  end
-end
-
 #task :before_update_code, :roles => [:app] do
 #  thinking_sphinx.stop
 #end
 
-task :after_update_code, :roles => [:app] do
+#task :after_update_code, :roles => [:app] do
   #symlink_sphinx_indexes
-  thinking_sphinx.configure
-  thinking_sphinx.start
-end
-
-after "deploy:symlink", "bdv4:link_cache"
+#  thinking_sphinx.configure
+#  thinking_sphinx.start
+#end
