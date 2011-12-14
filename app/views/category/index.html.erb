@@ -2,8 +2,6 @@
 
 <% links = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »", :params => {:action => 'index'}) %>
 
-<%= links %>
-
 <% for c in @content %>
 	<%= render_content c, "thumbnail" %>
 <% end %>

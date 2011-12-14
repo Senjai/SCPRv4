@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= @entry.title %> - <%= @blog.name %> | 89.3 KPCC</title>
+  <title><%= @blog.name %> | 89.3 KPCC</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= render "shared/header/header_js" %>
@@ -11,7 +11,7 @@
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
 
-<div id="main" class="container">
+<div id="main" class="container blog-landing">
 	<div class="row">
 		<article class="span8">
 			<div class="row">
@@ -22,12 +22,26 @@
 			</div>
 			<div class="row">
 				<div class="span8 storytitle">
-					<div class="row">
-						<div class="span2">
-							<%= yield :entrydate %>
+					<% for entry in @entries %>
+						<div class="row entry">
+							<div class="span2">
+								<div class="date">
+									<p><%= smart_date entry %></p>
+									<%= render "shared/cwidgets/social_tools", :cssClass => 'side', :content => entry %>
+									<%= render "shared/cwidgets/comment_count", :cssClass => 'left-side', :content => entry %>
+								</div>
+							</div>
+							<div class="span6">
+								<h1 class="story-headline"><%= link_to entry.title, entry.link_path %></h1>
+								<p class="byline"><%= render_byline entry %></p>
+								<%= render_asset entry, "blog" %>
+								<%= raw entry.content %>
+							</div>
 						</div>
-						<div class="span6">
-							<%= yield :body %>
+					<% end %>
+					<div class="row">
+						<div class="span6 offset2 blog-pag">
+							<%= will_paginate @entries, :page_links => false %>
 						</div>
 					</div>
 				</div>

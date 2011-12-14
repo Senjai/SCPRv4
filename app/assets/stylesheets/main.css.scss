@@ -168,6 +168,10 @@ section.events-forum {
 		}
 	}
 }
+.top-half {
+	border-bottom:1px solid $grayLight;
+	margin-bottom:$baseline;
+}
 
 // Cbase H3 - Applies styling to first headline - activated by jQuery
 .first-headline {
@@ -181,7 +185,7 @@ section.more-news-container {
 	width:770px !important;
 	div.more-news {
 		border-right:1px solid $grayLighter;
-		padding:0 10px 0 0;
+		padding:0 10px ($baseline / 2) 0;
 		section.more-news-title {
 			background:url("section-headline-background.png") repeat-x;
 			height:35px;
@@ -201,7 +205,7 @@ section.more-news-container {
 		section.more-news-content {
 			float:left;
 			margin:10px 0 0 0;
-			width:425px;
+			width:445px;
 			p.story-title {
 				@include font-headline($weight:bold);
 				font-size:1.2em;
@@ -217,7 +221,7 @@ section.more-news-container {
 			}
 			img {
 				float:left;
-				padding:0 25px 0 0;			
+				padding:0 25px 18px 0;			
 			}
 			ul {
 				list-style-image:url("more-headlines-li.png");
@@ -233,7 +237,7 @@ section.more-news-container {
 		}
 		div.related-content {
 			border-left:1px solid $grayLighter;
-			margin:5px 0 0 0;
+			margin:10px 0 0 0;
 			padding:0 0 0 15px;
 			h6 {
 				font-size:0.90em;
@@ -242,10 +246,21 @@ section.more-news-container {
 			img.segment {
 				padding:10px 0 0 0;
 			}
+			.contentasset {
+				a {
+					display:block;
+					max-height:170px;
+					overflow:hidden;
+				}
+			}
 			span.caption {
 				@include font-headline($weight:lighter);
 				color:$grayAlt;
+				display:block;
 				font-size:1.1em;
+				a {
+					color:$grayAlt;
+				}
 			}
 			blockquote {
 				@include font-headline($weight:lighter);

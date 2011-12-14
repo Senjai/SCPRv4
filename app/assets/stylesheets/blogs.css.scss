@@ -12,6 +12,30 @@
 		color:$linkColorHover;
 	}
 }
+.blog-pag {
+	.next_page {
+		float:right;
+	}
+}
+.blog-landing {
+	.entry {
+		padding-top:$baseline / 2;
+		&:first-child {
+			.span6 {
+				border:none;
+			}
+			.span6, .span2 {
+				padding-top:0;
+			}
+		}
+		.span6 {
+		border-top:1px solid $grayLighter;
+		}
+		.span6, .span2 {
+			padding-top:$baseline / 2;
+		}
+	}
+}
 // Blog Entry Date Styling
 .date {
 	p {

@@ -39,6 +39,14 @@ class BlogEntry < ContentBase
     return lede
   end
   
+  def previous
+    self.class.first(:conditions => ["published_at < ? and blog_id = ?", self.published_at, self.blog_id], :limit => 1, :order => "published_at desc")
+  end
+
+  def next
+    self.class.first(:conditions => ["published_at > ? and blog_id = ?", self.published_at, self.blog_id], :limit => 1, :order => "published_at asc")
+  end
+  
   #----------
   
   def link_path

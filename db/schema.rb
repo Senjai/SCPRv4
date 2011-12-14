@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109202113) do
+ActiveRecord::Schema.define(:version => 20111207193506) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -114,18 +114,18 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
   add_index "bios_award", ["reporter_id"], :name => "bios_award_reporter_id"
 
   create_table "bios_bio", :force => true do |t|
-    t.integer "user_id",                                     :null => false
-    t.string  "name",         :limit => 200,                 :null => false
-    t.string  "last_name",    :limit => 100, :default => "", :null => false
-    t.string  "slugged_name", :limit => 50,  :default => "", :null => false
-    t.string  "bio",          :limit => 200,                 :null => false
-    t.string  "title",        :limit => 200, :default => "", :null => false
-    t.string  "email",        :limit => 200,                 :null => false
-    t.boolean "is_public",                                   :null => false
-    t.string  "feed_url",     :limit => 200, :default => "", :null => false
-    t.string  "twitter",      :limit => 30,                  :null => false
+    t.integer "user_id",                                            :null => false
+    t.string  "name",         :limit => 200,                        :null => false
+    t.string  "last_name",    :limit => 100,        :default => "", :null => false
+    t.string  "slugged_name", :limit => 50,         :default => "", :null => false
+    t.text    "bio",          :limit => 2147483647,                 :null => false
+    t.string  "title",        :limit => 200,        :default => "", :null => false
+    t.string  "email",        :limit => 200,                        :null => false
+    t.boolean "is_public",                                          :null => false
+    t.string  "feed_url",     :limit => 200,        :default => "", :null => false
+    t.string  "twitter",      :limit => 30,                         :null => false
     t.integer "asset_id"
-    t.string  "short_bio",    :limit => 200,                 :null => false
+    t.string  "short_bio",    :limit => 200,                        :null => false
   end
 
   add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true
@@ -174,7 +174,7 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
     t.string   "title",             :limit => 140,                        :null => false
     t.string   "slug",              :limit => 50,                         :null => false
     t.text     "content",           :limit => 2147483647,                 :null => false
-    t.integer  "author_id",                                               :null => false
+    t.integer  "author_id"
     t.integer  "blog_id",                                                 :null => false
     t.string   "blog_slug",         :limit => 50,         :default => "", :null => false
     t.datetime "published_at",                                            :null => false
@@ -195,6 +195,14 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
 
   add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
+
+  create_table "contentbase_category", :force => true do |t|
+    t.string  "category", :limit => 50,                   :null => false
+    t.string  "slug",     :limit => 50,                   :null => false
+    t.boolean "is_news",                :default => true, :null => false
+  end
+
+  add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
     t.integer  "content_type_id",                                    :null => false
@@ -217,14 +225,24 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
   add_index "contentbase_contentbyline", ["content_type_id"], :name => "contentbase_contentbyline_e4470c6e"
   add_index "contentbase_contentbyline", ["user_id"], :name => "contentbase_contentbyline_fbfc09f1"
 
+  create_table "contentbase_contentcategory", :force => true do |t|
+    t.integer "category_id",     :null => false
+    t.integer "content_type_id", :null => false
+    t.integer "object_id",       :null => false
+  end
+
+  add_index "contentbase_contentcategory", ["category_id"], :name => "contentbase_contentcategory_42dc49bc"
+  add_index "contentbase_contentcategory", ["content_type_id"], :name => "contentbase_contentcategory_e4470c6e"
+
   create_table "contentbase_contentshell", :force => true do |t|
     t.integer  "comment_count",                       :default => 0,                     :null => false
     t.string   "headline",      :limit => 200,                                           :null => false
-    t.string   "url",           :limit => 200,                                           :null => false
-    t.string   "byline",        :limit => 200,                                           :null => false
+    t.string   "byline",        :limit => 50,                                            :null => false
+    t.string   "site",          :limit => 50,         :default => "KPCC",                :null => false
     t.text     "lede",          :limit => 2147483647,                                    :null => false
-    t.datetime "published_at",                        :default => '2011-10-06 15:47:43', :null => false
-    t.string   "site",          :limit => 20
+    t.string   "url",           :limit => 150,                                           :null => false
+    t.integer  "status",                              :default => 0,                     :null => false
+    t.datetime "pub_at",                              :default => '2011-11-21 11:07:11', :null => false
   end
 
   create_table "django_admin_log", :force => true do |t|
@@ -623,6 +641,56 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
 
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
+  create_table "mailchimp_campaign", :force => true do |t|
+    t.text     "content",         :limit => 2147483647, :null => false
+    t.datetime "sent_date",                             :null => false
+    t.string   "name",                                  :null => false
+    t.string   "campaign_id",     :limit => 50,         :null => false
+    t.integer  "object_id"
+    t.integer  "content_type_id"
+    t.text     "extra_info",      :limit => 2147483647
+  end
+
+  add_index "mailchimp_campaign", ["content_type_id"], :name => "mailchimp_campaign_e4470c6e"
+
+  create_table "mailchimp_queue", :force => true do |t|
+    t.text    "type_opts",                  :limit => 2147483647,                    :null => false
+    t.boolean "segment_options_all",                              :default => false, :null => false
+    t.text    "contents",                   :limit => 2147483647,                    :null => false
+    t.string  "subject",                                                             :null => false
+    t.string  "campaign_type",              :limit => 50,                            :null => false
+    t.boolean "authenticate",                                     :default => false, :null => false
+    t.string  "title"
+    t.string  "from_email",                 :limit => 75,                            :null => false
+    t.boolean "segment_options",                                  :default => false, :null => false
+    t.string  "list_id",                    :limit => 50,                            :null => false
+    t.boolean "auto_tweet",                                       :default => false, :null => false
+    t.string  "from_name",                                                           :null => false
+    t.string  "folder_id",                  :limit => 50
+    t.boolean "generate_text",                                    :default => false, :null => false
+    t.string  "to_email",                   :limit => 75,                            :null => false
+    t.boolean "tracking_text_clicks",                             :default => false, :null => false
+    t.boolean "auto_footer",                                      :default => false, :null => false
+    t.boolean "tracking_html_clicks",                             :default => true,  :null => false
+    t.string  "google_analytics",           :limit => 100
+    t.text    "segment_options_conditions", :limit => 2147483647,                    :null => false
+    t.integer "template_id",                                                         :null => false
+    t.boolean "tracking_opens",                                   :default => true,  :null => false
+    t.integer "object_id"
+    t.integer "content_type_id"
+    t.boolean "locked",                                           :default => false, :null => false
+    t.text    "extra_info",                 :limit => 2147483647
+  end
+
+  add_index "mailchimp_queue", ["content_type_id"], :name => "mailchimp_queue_e4470c6e"
+
+  create_table "mailchimp_reciever", :force => true do |t|
+    t.integer "campaign_id",               :null => false
+    t.string  "email",       :limit => 75, :null => false
+  end
+
+  add_index "mailchimp_reciever", ["campaign_id"], :name => "mailchimp_reciever_8fd46b1a"
+
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
     t.string   "title",         :limit => 140,        :null => false
@@ -983,6 +1051,15 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
     t.integer "role",                       :default => 0, :null => false
   end
 
+  create_table "rails_contentbase_contentcategory", :id => false, :force => true do |t|
+    t.integer  "id",                        :default => 0, :null => false
+    t.integer  "category_id",                              :null => false
+    t.integer  "content_id",                               :null => false
+    t.string   "content_type"
+    t.integer  "status",       :limit => 8
+    t.datetime "pub_date"
+  end
+
   create_table "rails_layout_homepagecontent", :id => false, :force => true do |t|
     t.integer "id",           :default => 0,  :null => false
     t.integer "homepage_id",                  :null => false
@@ -1230,6 +1307,7 @@ ActiveRecord::Schema.define(:version => 20111109202113) do
     t.string  "lastname",   :limit => 50
     t.string  "location",   :limit => 120
     t.string  "image_file", :limit => 100
+    t.string  "email",      :limit => 75
   end
 
   add_index "users_userprofile", ["nickname"], :name => "nickname", :unique => true

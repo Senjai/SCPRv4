@@ -1,0 +1,13 @@
+<nav class="next-prev">
+	<h4>More From <%= @blog.name %></h4>
+	<ul>
+	    <li class="prev">
+	        <p><%= link_to(@entry.previous.title, @entry.previous.link_path) if @entry.previous %></p>
+			<h6>← Previous</h6>
+	    </li>
+	    <li class="next">
+	        <p><%= link_to(@entry.next.title, @entry.next.link_path) if @entry.next %></p>
+	<h6>Next →</h6>
+	    </li>
+	</ul>
+</nav>

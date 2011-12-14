@@ -330,6 +330,11 @@
 	}
 	p, ul {
 		@include font-sans-serif(normal, 12px, 16px);
+		margin-bottom:0;
+	}
+	.divider {
+		background-position:200px top;
+		margin-bottom:$baseline;
 	}
 }
 
@@ -397,13 +402,30 @@
 }
 // Prev-Next Widget 
 .next-prev {
+	margin-top:$baseline * -1/2;
 	ul {
 		@include clearfix();
-		margin:0;
+		margin:0 0 ($baseline / 2) 0;
 		li {
 			@include nav-horiz();
 			padding:0;
-			width:50%;
+			width:49%;
+			&:first-child {
+				border-right:1px solid $grayLighter;
+			}
+			&.next p {
+				text-align:right;
+			}
+			&.next h6 {
+				text-align:right;
+			}
+			h6 {
+				color:$grayLight;
+			}
+			a {
+				display:block;
+				padding:10px;
+			}
 		}
 	}
 }
@@ -635,9 +657,17 @@ ul.carousel {
 // Comments styling
 .comments {
 	border-top:1px solid $grayLight;
+	padding-top:$baseline /2;
 	h3.head {
 		background:url(image_path('icons/comment-count.png')) no-repeat 0 4px;
 		padding-left:28px;
+	}
+	#dsq-content {
+		h3 {
+			border-bottom:1px solid $grayLighter;
+			color:$orangeDark;
+			font-size:1em;
+		}
 	}
 	.dsq-comment-text, .dsq-comment-header {
 		color:$nearBlack;
@@ -725,7 +755,11 @@ ul.carousel {
 
 // Recent Posts
 .recent-posts {
-
+	a {
+		color:$grayAlt;
+		@include font-headline(lighter);
+		font-size:1.05em;
+	}
 }
 
 // Mobile App Promo
