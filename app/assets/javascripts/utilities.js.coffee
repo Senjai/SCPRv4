@@ -33,7 +33,51 @@ class scpr.ActiveContent
         # set a cookie
         if @options.cookie
             scpr.Cookie.set(@options.cookie,idx+1,86400)
+        
+#----------
+        
+class scpr.BetaToggle
+    DefaultOptions:
+        cookie: "scprbeta"
+        el: "#beta-button"
+        onText: "Take me to the beta"
+        offText: "Get me out of the beta!"
+    
+    constructor: (options) ->
+        @options = _(_({}).extend(this.DefaultOptions)).extend( options || {} )
+        
+        @current = if scpr.Cookie.get(@options.cookie) == "true" then true else false
+
+        $ => 
+            # attach click handler for cookie toggling
+            $(@options.el).click (e) =>
+                if @current
+                    # opt out
+                    console.log "opt out!"
+                    scpr.Cookie.unset(@options.cookie)
+                    @current = false
+                else
+                    # opt in
+                    console.log "opt in!"
+                    scpr.Cookie.set(@options.cookie,true)
+                    @current = true
+                
+                @setText()
             
+                return false
+                
+            @setText()
+
+    setText: ->
+        if @current
+            $(@options.el).text @options.offText
+        else
+            $(@options.el).text @options.onText
+
+        
+    
+#----------        
+
 ###
  cookie code originally from prototype-tidbits
  http://livepipe.net/projects/prototype_tidbits/

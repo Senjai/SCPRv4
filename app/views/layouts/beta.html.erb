@@ -22,7 +22,8 @@
 
 	<script type="text/javascript" src="http://use.typekit.com/mhc7oxs.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-	<script src="http://media.scpr.org/assets/scripts/modernizr-2.0.custom.js"></script>
+	
+	<%= javascript_include_tag :application %>
 
 <!-- b:extra_head -->
 
@@ -60,7 +61,7 @@
 			<li><strong style="color:#b24401;">Be gentle, she's still a newborn.</strong> There's still lots of work to be done to polish up and refine the site. You're certain to see things here and there that don't look or work right.</li>
 			<li><strong style="color:#b24401;">Tell us what you think.</strong>We love feedback. Come talk to us, send us emails, or use the feedback button at the bottom of every page.</li>
 		</ul>
-			<p><a href="#" class="btn primary">Take me to the beta</a></p>
+			<p><a href="#" class="btn primary" id="beta-button">Configuring</a></p>
 	</div>
 </div>
 <div class="simple floating-shadow"></div>
@@ -85,9 +86,9 @@
   </footer>
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script src="http://media.scpr.org/assets/scripts/jquery.easing.1.3.js"></script>
-<script src="http://media.scpr.org/assets/scripts/common.v7.js"></script>
+<script type="text/javascript">
+	var beta = new scpr.BetaToggle()
+</script>
 
 </body>
 </html>
