@@ -39,6 +39,9 @@ nav.utils ul {
 	li {
 		@include nav-horiz();
 		border-right:1px solid #e9e9e9;
+		&:last-child {
+			border-right:none;
+		}
 		a {
 			display:block;
 		}
@@ -143,7 +146,7 @@ nav.utils ul {
 		.categories, .featured, .blogs {
 			height:$baseline * 10;
 		}
-		.categories, .featured {
+		.categories, .featured, .kpcc-programs, .events-nav, .events-forum {
 			background:url(image_path('mega-divider.png')) no-repeat right 10px;
 		}
 		.categories {
@@ -197,7 +200,8 @@ nav.utils ul {
 					@include clearfix();
 				}
 				p {
-					@include font-sans-serif(bold, 12px);
+					@include font-headline(600);
+					font-size:15px;
 					margin-left:75px;
 				}
 			}
@@ -208,7 +212,7 @@ nav.utils ul {
 				margin-right:12px;
 			}
 		}
-		.blogs {
+		.blogs, .events-sponsored {
 			li {
 				border-bottom:1px solid $nearWhite;
 				float:none;
@@ -216,15 +220,136 @@ nav.utils ul {
 			p {
 				margin-bottom:0;
 				a {
+					@include font-headline(600);
+					font-size:14px;
 					padding:6px 4px;
 					span {
 						color:$grayLight;
-						font-size:11px;
-						font-weight:normal;
+						@include font-sans-serif(normal, 11px);
 						margin-left:4px;
 						text-transform:uppercase;
 						@include ie-inline-block();
 					}
+				}
+			}
+		}
+		.kpcc-programs {
+			ul {
+				margin:0;
+				width:48%;
+				&.first {
+					border-right:1px solid $grayLighter;
+					padding-right:10px;
+				}
+				&:last-child {
+					margin-left:10px;
+				}
+				li {
+					background:url(image_path('broadcast-bar/madeleine-brand-sm.png')) no-repeat left 12px;
+					padding:0;
+					&:first-child {
+						border-bottom:1px solid $grayLighter;
+					}
+					&:hover {
+						background-color:$nearWhite;
+					}
+					&.airtalk {
+						background-image:url(image_path('broadcast-bar/larry-airtalk-sm.png'));
+					}
+					&.patt {
+						background-image:url(image_path('broadcast-bar/patt-morrison-sm.png'));
+					}
+					&.offramp {
+						background-image:url(image_path('broadcast-bar/john-offramp-sm.png'));
+					}
+					a {
+						padding:15px 0 15px 78px;
+						&:hover {
+							text-decoration:none;
+						}
+						h4 {
+							color:$orangeDark;
+							font-weight:600;
+						}
+						p {
+							@include font-sans-serif(normal, 11px, 16px);
+							margin-bottom:0;
+						}
+					}
+				}
+			}
+		}
+		.all-programs {
+			ul {
+				li {
+					float:none;
+					width:100%;
+					a {
+						padding:5px 5px 5px 0;
+					}
+				}
+			}
+		}
+		.events-nav.categories {
+			ul {
+				width:100%;
+				li {
+					float:none;
+				}
+			}
+		}
+		.events-forum {
+			border-left:none;
+			padding:0;
+			.inner-container {
+				padding-left:0;
+				.events-content {
+					@include clearfix();
+					margin-bottom:$baseline;
+					.event-title, .event-date {
+						margin-left:90px;
+					}
+					.event-title {
+						font-size:15px;
+						a, a:hover {
+							color:$grayAlt;
+						}
+						a:hover {
+							text-decoration:underline;
+						}
+					}
+					.event-date {
+						background-position:left 10px;
+						padding-left:28px;
+					}
+				}
+			}
+		}
+		.events-sponsored {
+			.inner-container {
+				padding-left:0;
+			}
+			li {
+				border-bottom:none;
+				line-height:11px;
+				margin-bottom:$baseline / 2;
+			}
+			.event-title {
+				a {
+					padding:4px 0 0 0;
+				}
+			}
+			.event-date {
+				color:$linkColor;
+				font-size:11px;
+			}
+			p.more a {
+				color:$grayAlt;
+				@include font-sans-serif(bold, 11px);
+				padding:6px 0;
+				text-transform:uppercase;
+				&:hover {
+					text-decoration:underline;
 				}
 			}
 		}

@@ -64,10 +64,6 @@ h6 {
   font-size: 14px;
   text-transform: uppercase;
 }
-h7 {
-  color:#B24401;
-  font-size: 12px;
-}
 
 // Headline styles
 .story-headline {
@@ -75,9 +71,6 @@ h7 {
 	margin-bottom:0;
 	a {
 		color:$nearBlack;
-		&:hover{
-			color:$linkColorHover;
-		}
 	}
 }
 

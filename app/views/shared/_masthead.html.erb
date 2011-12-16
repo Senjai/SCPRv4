@@ -182,63 +182,102 @@
 				</nav>
 				<nav id="programs-mega" class="section-mega clearfix" style="display:none;">
 					<div class="row">
-						<div class="programs span3">
+						<div class="kpcc-programs span9">
 							<div class="inner-container clearfix">
 							<h6>KPCC Programs</h6>
-							<ul>
-							    <li><a href="/programs/madeleine-brand/">The Madeleine Brand Show</a></li>
-							    <li><a href="/programs/airtalk/">AirTalk</a></li>
-							    <li><a href="/programs/patt-morrison/">Patt Morrison</a></li>
-							    <li><a href="/programs/offramp/">Off-Ramp</a></li>					
+							<ul class="first">
+							    <li class="tmbs">
+							        <a href="/programs/madeleine-brand/">
+							        	<h4>The Madeleine Brand Show</h4>
+							        	<p>Join Madeleine Brand for a conversational and witty look at the cultural issues people are buzzing about.</p>
+									</a>
+							    </li>
+							    <li class="airtalk">
+									<a href="/programs/airtalk/">
+							        	<h4>AirTalk</h4>
+							        	<p>Join host Larry Mantle weekdays for lively and in-depth discussions of city news, politics, the arts, and more.</p>
+									</a>
+							    </li>
 							</ul>
+							<ul>
+							    <li class="patt">
+							        <a href="/programs/patt-morrison/">
+							        	<h4>Patt Morrison</h4>
+							        	<p>Innovative discussions of local politics and culture, as well as global news as it affects Southern California.</p>
+									</a>
+							    </li>
+							    <li class="offramp">
+									<a href="/programs/offramp/">
+							        	<h4>Off-Ramp</h4>
+							        	<p>A lively weekly look at Southern California through the eyes and ears of radio veteran John Rabe.</p>
+									</a>
+							    </li>
+							</ul>
+							</div>
+						</div>
+						<div class="all-programs span3">
+							<div class="inner-container clearfix">
+							<h6>All Programs</h6>
 							<ul>
 							    <li><a href="/programs/">Programs A-Z</a></li>
-							    <li><a href="/podcasts/">Podcasts</a></li>				
+							    <li><a href="/schedule/">Program Schedule</a></li>
+								<li><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>	
+							    <li><a href="/podcasts/">Podcasts</a></li>	
 							</ul>
-							</div>
-						</div>
-						<div class="featured span4">
-							<div class="inner-container clearfix">
-							<h6>In Case You Missed It</h6>
-							<ul>
-								<li>
-						            <a href="#">
-						                <img src="http://a.scpr.org/i/c8fc1840445ccde7d34d8242e3fe0ce7/27725-thumb.jpg" alt="" />
-						                <p>Eddie Murphy out as Oscars host</p>
-						            </a>
-						        </li>
-						        <li>
-						            <a href="#">
-						                <img src="http://a.scpr.org/i/3b2eb009e09394dcaf7129379b38c8c7/27506-thumb.jpg" alt="" />
-						                <p>Judge rules against Getty over 13th century Armenian Bible</p>
-						            </a>
-						        </li>
-							</ul>
-							</div>
-						</div>
-						<div class="blogs span5">
-							<div class="inner-container clearfix">
-								<h6>From Our Blogs</h6>			
-								<ul>
-						            <li>
-						                <p class="entry-title"><a href="#">Google+ goes corporate, launching branded pages - including the Muppets</a></p>
-						            </li>
-						            <li>
-						                <p class="entry-title"><a href="#">Remembering rapper Heavy D, dead at 44</a></p>
-						            </li>
-						            <li>
-						                <p class="entry-title"><a href="#">Van Dyke Parks &amp; Inara George at the Getty: Anything but Standard Time</a></p>
-						            </li>
-						            <li>
-						                <p class="entry-title"><a href="#">'Warrior' screening with Nick Nolte</a></p>
-						            </li>
-						    	</ul>
 							</div>
 						</div>
 					</div>
 				</nav>
 				<nav id="events-mega" class="section-mega clearfix" style="display:none;">
-					<h3>Events mega menu goes here</h3>
+					<div class="row">
+						<div class="categories events-nav span3">
+							<div class="inner-container clearfix">
+							<h6>The Crawford Family Forum</h6>
+							<ul>
+							    <li><a href="/arts/books/">Upcoming Events</a></li>
+							    <li><a href="/arts/film/">Past Events</a></li>
+							    <li><a href="/arts/culture/">Directions to the Forum</a></li>	
+							    <li><a href="/arts/arts/">Partner With Us</a></li>
+							    <li><a href="/arts/music/">Contact the Forum</a></li>	
+							</ul>
+							</div>
+						</div>
+						<div class="events-forum span6">
+							<div class="inner-container clearfix">
+							<h6>Upcoming Crawford Family Forum Events</h6>
+							<div class="events-content">
+								<%= image_tag("events-forum-thumb-1.jpg", :alt => '') %>	
+								<p class="event-title"><a href="">Venture Capital in Southern California: Catching Up and Going Beyond</a></p>
+								<p class="event-date">Wednesday, November 30</p>
+							</div>
+							<div class="events-content">
+								<%= image_tag("events-forum-thumb-2.jpg", :alt => '') %>	
+								<p class="event-title"><a href="">Venture Capital in Southern California: Catching Up and Going Beyond</a></p>
+								<p class="event-date">Tuesday, December 6</p>
+							</div>
+							</div>
+						</div>
+						<div class="events-sponsored span3">
+							<div class="inner-container clearfix">
+								<h6>Sponsored Events</h6>			
+								<ul>
+						            <li>
+						                <p class="event-title"><a href="#">Music Center Holiday Sing-Along</a></p>
+										<span class="event-date">Wednesday, November 30</span>
+						            </li>
+						            <li>
+						                <p class="event-title"><a href="#">Whisker Wonderland Adoption Event</a></p>
+										<span class="event-date">Wednesday, November 30</span>
+						            </li>
+									<li>
+						                <p class="event-title"><a href="#">L.A. Rebellion: Creating a New Black Cinema</a></p>
+										<span class="event-date">Wednesday, November 30</span>
+						            </li>
+						    	</ul>
+								<p class="more"><a href="/events/sponsored/">View more events</a></p>
+							</div>
+						</div>
+					</div>
 				</nav>
 				<nav id="support-mega" class="section-mega clearfix" style="display:none;">
 					<h3>Support mega menu goes here</h3>

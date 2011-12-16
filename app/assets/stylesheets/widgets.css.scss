@@ -240,8 +240,8 @@
 			background-image:url(image_path('icons/share-twitter.png'));
 		}
 		&.plus {
-			background-image:url(image_path('icons/share-plus.png'));
-			background-position:0 2px;
+			color:$nearBlack;
+			padding-left:0;
 		}
 		&.print {
 			background-image:url(image_path('icons/share-print.png'));
@@ -271,7 +271,7 @@
 				background-position:right 2px;
 			}
 			&.plus {
-				background-position:right 3px;
+				display:none;
 			}
 			&.print {
 				background-position:right 3px;
@@ -508,20 +508,26 @@
 	}
 }
 
-// Content Carousel
-.content_carousel {
-	border-top:1px solid $grayLight;
+// In Case You Missed It Carousel
+#missed-it {
 	margin-left:30px;
 	width:1111px;
 	hr {
 		border-color:$graydarkHR;
 	}
+	h3 {
+		color:$orangeDark;
+	}
+}
+
+// Content Carousel
+.content_carousel {
+	border-top:1px solid $grayLight;
 	.section-head { 
 		border-bottom:1px solid $grayLight;
 		margin-bottom:$baseline / 1;
 		position:relative;
 		h3 {
-			color:$orangeDark;
 	        line-height:$baseline * 1.5;
 		}
 		nav {
@@ -755,10 +761,20 @@ ul.carousel {
 
 // Recent Posts
 .recent-posts {
-	a {
-		color:$grayAlt;
-		@include font-headline(lighter);
-		font-size:1.05em;
+	li {
+		list-style-image:url("more-headlines-li.png");
+		margin-bottom:$baseline / 2;
+		p {
+			margin-bottom:0;
+		}
+		.date-posted {
+			@include font-sans-serif(normal, 11px);
+		}
+		a {
+			color:$grayAlt;
+			@include font-headline(lighter);
+			font-size:1.05em;
+		}
 	}
 }
 

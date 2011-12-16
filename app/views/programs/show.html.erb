@@ -1,5 +1,12 @@
-<h1><%= @show.title %></h1>
+
+
+
+<div class="show-header">
+	<h1 class="<%= @show.slug %>"><%= @show.title %></h1>
+	<p><%=raw @show.teaser %></p>
+	<p class="show-time"><%= @show.airtime %></p>
+</div>
 
 <%= render :partial => "episode", :object => @show.episodes.published.first %>
 
-<h3>
+<%= render :partial => "upcoming", :object => @show.episodes.published.first %>

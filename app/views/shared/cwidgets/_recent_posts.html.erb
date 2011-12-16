@@ -4,7 +4,7 @@
 		<% for entry in @entries %>
 	    <li>
 	        <p><%= link_to entry.title, entry.link_path %></p>
-			<span class="date-posted"><%= smart_date entry.published_at %></span>
+			<span class="date-posted"><%= smart_date entry %></span>
 	    </li>
 		<% end %>
 	</ul>

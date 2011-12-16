@@ -140,20 +140,20 @@ section.broadcastbar {
 }
 
 // Events at the Forum
-section.events-forum {
+.events-forum {
 	border-left:1px solid $grayLighter;
 	padding:0 0 0 10px;
 	h6 {
 		padding-left:5px;
 	}
-	div.events-content {
+	.events-content {
 		margin:10px 0 0 0;
-		p.event-title {
+		.event-title {
 			@include font-headline($weight:lighter);
 			font-size:1.2em;
 			margin:0;
 		}
-		p.event-date {
+		.event-date {
 			@include font-serif($size:0.90em);
 			background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
 			color:$linkColor;
@@ -205,6 +205,7 @@ section.more-news-container {
 		section.more-news-content {
 			float:left;
 			margin:10px 0 0 0;
+			padding-right:10px;
 			width:445px;
 			p.story-title {
 				@include font-headline($weight:bold);

@@ -7,6 +7,15 @@
 			<li>
 				<h4><%= link_to p.name, blog_path(p.slug) %></h4>
 				<p><%= p.description %></p>
+				<h6>Recent Posts</h6>
+				<ul>
+				<% for e in p.entries.published.all.reverse[0..4] %>
+					<li>
+						<p><%= link_to e.headline, e.link_path %></p>
+						<span class="date-posted"><%= smart_date e %></span>
+					</li>
+				<% end %>
+				</ul>
 			</li>
 		<% end %>
 		</ul>

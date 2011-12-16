@@ -1,8 +1,13 @@
 <h3><%= @show.title %></h3>
 <h2><%= @episode.title %></h2>
-<h1><%= @segment.title %></h1>
+
+<%= render "shared/cwidgets/social_tools", :cssClass => '', :content => @segment %>
+<h1 class="story-headline"><%= @segment.title %></h1>
 
 <%= render_asset @segment, "segment" %>
 
 <%= simple_format @segment.lede %>
 <%= simple_format @segment.body %>
+
+<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @story %>
+<%= render "shared/cwidgets/comments", :cssClass => '', :content => @segment %>

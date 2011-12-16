@@ -1,13 +1,17 @@
 <section class="broadcastbar">
 	<ul>
-		<li class="on-air"><%= image_tag("broadcast-bar/onair.png", :alt => 'On Air') %></li>
-		<li class="showhost"><%= image_tag("broadcast-bar/larry-airtalk.png", :alt => 'Larry Mantle') %></li>
-		<li class="active-show-title">AirTalk:</li>
-		<li class="show-status">On Now:</li>
-		<li class="show-summary">Students protest rate hikes, support Occupy movement</li>
-		<li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li>
-		<li class="up-next"><%= image_tag("broadcast-bar/upnext.png", :alt => 'On Air') %></li>	
-		<li class="upnext-show-title">The World</li>
-		<li class="show-time">12-1pm</li>			
+		<% for o in @onnow %>
+			<li class="on-air"><%= image_tag("broadcast-bar/onair.png", :alt => 'On Air') %></li>
+			<li class="active-show-title <%= o.program %>"><%= o.program %></li>
+			<li class="show-time"><%= o.start_time.strftime("%l %P") %> - <%= o.end_time.strftime("%l %P") %></li>
+			<!-- <li class="show-status">On Now:</li> -->
+			<li class="show-summary"></li>
+			<!-- <li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li> -->
+		<% end %>
+		<% for u in @upnext %>
+			<li class="up-next"><%= image_tag("broadcast-bar/upnext.png", :alt => 'On Air') %></li>	
+			<li class="upnext-show-title"><%= u.program %></li>
+			<li class="show-time"><%= u.start_time.strftime("%l %P") %> - <%= u.end_time.strftime("%l %P") %></li>	
+		<% end %>		
 	</ul>
 </section>

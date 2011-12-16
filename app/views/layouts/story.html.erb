@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>89.3 KPCC</title>
+  <title><%= @story.headline %> | 89.3 KPCC</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= render "shared/header/header_js" %>
@@ -30,7 +30,7 @@
 			<%= render "shared/widgets/oas", :ad_id => 'x01' %>
 			<%= render "shared/widgets/most_popular" %>
 			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
-			<%= render "shared/widgets/recent_videos" %>
+			<%= render "shared/widgets/newsletter_subscribe" %>
 			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 			<%= render "shared/widgets/promo_mobile" %>
 		</div>

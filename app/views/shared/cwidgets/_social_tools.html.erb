@@ -1,10 +1,60 @@
+<script type="text/javascript">
+	(function() {
+
+	var url = 'http%3A%2F%2Fscpr.org' + '<%=u request.fullpath %>';
+	var fburl = 'http://scpr.org' + '<%= request.fullpath %>' + '/';
+
+	jQuery.getJSON("http://urls.api.twitter.com/1/urls/count.json?url="+url+"&callback=?", function(data) {
+	jQuery('.sharing-tools span.twitter-count').html(data.count);
+	});
+
+	}());
+	
+	(function($){
+		$.fn.fblikecount = function(options){
+			var defaults = {
+				baseUrl: 'http://graph.facebook.com/?ids='
+			};
+			var options = $.extend(defaults, options);
+			var count = 0;
+			return this.each(function(){
+				var $this = $(this);
+				$this.hide();
+				var objLink = $(this).attr('title');
+				if(objLink.indexOf('http') === 0){
+					$.getJSON(defaults.baseUrl + objLink + '&callback=?', function(json){
+						if(json[objLink] && json[objLink].shares){
+							$this.html(json[objLink].shares);
+							$this.show();
+						}
+					});				
+				}
+			});
+		}
+	})(jQuery);
+	
+	jQuery(document).ready(function() {
+		$('span.fb-count').fblikecount();	
+	});
+</script>
+
 <div class="sharing-tools <%= cssClass %> clearfix">
 	<h5>Share this story:</h5>
 	<ul>
-	    <li class="facebook"><a href="">Facebook <span class="count">(15)</span></a></li>
-	    <li class="twitter"><a href="">Twitter <span class="count">(5)</span></a></li>
-		<li class="plus"><a href="">Google+ <span class="count">(2)</span></a></li>
-	    <li class="email"><a href="">Email</a></li>
-		<li class="print"><a href="">Print</a></li>
+	    <li class="facebook"><a href="javascript:void(0)" onclick="open_social_popup('http://www.facebook.com/sharer.php?u=http%3A%2F%2Fscpr.org<%=u request.fullpath %>');">Facebook (<span class="fb-count" title="http://scpr.org<%= request.fullpath %>/"></span>)</a></li>
+	    <li class="twitter"><a href="javascript:void(0)" onclick="open_social_popup('https://twitter.com/intent/tweet?url=http%3A%2F%2Fscpr.org<%=u request.fullpath %>&text=Via+%40kpcc');">Twitter (<span class="twitter-count"></span>)</a></li>
+		<li class="plus"><!-- Place this tag where you want the +1 button to render -->
+		<g:plusone size="small" annotation="none"></g:plusone>
+
+		<!-- Place this render call where appropriate -->
+		<script type="text/javascript">
+		  (function() {
+		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		    po.src = 'https://apis.google.com/js/plusone.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		  })();
+		</script>Google+</li>
+	    <!-- <li class="email"><a href="">Email</a></li> -->
+		<li class="print"><a href="javascript:window.print()">Print</a></li>
 	</ul>
 </div>
