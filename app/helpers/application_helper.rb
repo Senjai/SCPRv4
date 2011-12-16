@@ -9,6 +9,7 @@ module ApplicationHelper
   # * shared/content/news/story/lead
   # * shared/content/news/lead
   # * shared/content/default/lead
+
   
   def render_content(content,context)
     if !content

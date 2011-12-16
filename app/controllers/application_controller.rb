@@ -3,7 +3,13 @@ class ApplicationController < ActionController::Base
   
   before_filter :check_session
   
+  before_filter :masthead_content
+  
   helper_method :current_user
+  
+  def masthead_content
+    @events = Event.where("is_published = ? AND starts_at > ? AND etype != ? AND etype != ?", 1, Time.now, "spon", "pick").order("starts_at ASC").limit(2)
+  end
   
   def current_user
     @current_user
