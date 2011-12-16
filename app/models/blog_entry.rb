@@ -17,7 +17,7 @@ class BlogEntry < ContentBase
   #----------
   
   def byline_elements
-    [self.author]
+    []
   end
   
   def headline
