@@ -38,7 +38,7 @@ class HomeController < ApplicationController
     # run a query for each section 
     Category.all.each do |cat|
       content = ThinkingSphinx.search '',
-        :classes    => [NewsStory,BlogEntry,ContentShell,ShowSegment],
+        :classes    => [NewsStory],
         :page       => 1,
         :per_page   => 12,
         :order      => :published_at,
