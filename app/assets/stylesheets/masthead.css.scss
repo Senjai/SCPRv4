@@ -35,7 +35,7 @@ header#masthead {
 		@include font-heading(600, 13px);
 		@include ie-inline-block();
 		left:132px;
-		margin-left:30px !important;
+		margin-left:30px;
 		position:absolute;
 		top:15px;
 		a {
@@ -382,6 +382,22 @@ nav.utils ul {
 				&:hover {
 					text-decoration:underline;
 				}
+			}
+		}
+	}
+}
+#support-mega {
+	.pledge-container {
+		background:none;
+		.pledge {
+			position:relative;
+			margin-left:0;
+			left:0;
+			top:0;
+			a {
+				background-position:8px 8px;
+				font-weight:bold;
+				padding:6px 9px 7px 34px;
 			}
 		}
 	}

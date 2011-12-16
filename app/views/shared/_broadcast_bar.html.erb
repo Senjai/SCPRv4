@@ -1,4 +1,5 @@
 <section class="broadcastbar">
+	<div class="left">
 	<ul>
 		<% for o in @onnow %>
 			<li class="on-air"><%= image_tag("broadcast-bar/onair.png", :alt => 'On Air') %></li>
@@ -8,10 +9,15 @@
 			<li class="show-summary"></li>
 			<!-- <li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li> -->
 		<% end %>
+	</ul>
+	</div>
+	<div class="right">
+	<ul>
 		<% for u in @upnext %>
 			<li class="up-next"><%= image_tag("broadcast-bar/upnext.png", :alt => 'On Air') %></li>	
 			<li class="upnext-show-title"><%= u.program %></li>
 			<li class="show-time"><%= u.start_time.strftime("%l %P") %> - <%= u.end_time.strftime("%l %P") %></li>	
 		<% end %>		
 	</ul>
+	</div>
 </section>

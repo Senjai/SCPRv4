@@ -37,14 +37,22 @@
 section.broadcastbar {
 	margin:$margin-center;
 	width:1112px;
+	@include clearfix();
+	.left {float:left;}
+	.right {float:right;
+		margin-right:20px;}
 	ul {
 		list-style:none outside none;
 		margin:0 0 0 -15px;
 		li {
-			display:inline;
+			@include ie-inline-block();
+			&.on-air {
+				position:relative;
+			}
 			&.on-air img {
-				float:left;
-				padding:13px 0 0 0;
+				position:absolute;
+				left:0;
+				top:0;
 			}
 			&.showhost img {
 				float:right;
@@ -59,7 +67,7 @@ section.broadcastbar {
 			&.active-show-title {
 				@include font-heading($weight:normal, $size:1.5em);
 				color:$orangeDark;
-				padding:0 0 0 85px;
+				padding-left:10px;
 			}
 			&.show-status {
 				@include font-sans-serif($weight:bold, $size:1.05em);
