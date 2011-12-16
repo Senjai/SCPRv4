@@ -6,9 +6,7 @@ class HomeController < ApplicationController
     
     citems = @homepage.content.collect { |c| c.content }
 
-    # -- Broadcast Bar -- #
-    Time.zone = "Pacific Time (US & Canada)"
-    
+    # -- Broadcast Bar -- #    
     @onnow = Schedule.where("day = ? AND start_time <= ?", Date.today.wday, Time.now.to_s(:time)).limit(1)
     @upnext = Schedule.where("day = ? AND end_time < ?", Date.today.wday, Time.now.to_s(:time)).order("day DESC, start_time DESC").limit(1)
         
