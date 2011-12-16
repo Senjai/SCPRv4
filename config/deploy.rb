@@ -13,9 +13,9 @@ set :rails_env, :production
 set :user, "scprv4"
 set :use_sudo, false
 
-role :app, "scprdev.org"
-role :web, "scprdev.org", :asset_host_syncher => true
-role :db,  "scprdev.org", :primary => true
+role :app, "web1.scpr.org", "web2.scpr.org"
+role :web, "web1.scpr.org", "web2.scpr.org"
+role :db,  "web2.scpr.org", :primary => true
 role :sphinx, "media.scpr.org"
 
 namespace :deploy do
