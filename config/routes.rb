@@ -32,6 +32,7 @@ Scprv4::Application.routes.draw do
   match '/news/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new(true), :defaults => { :page => 1 }
   
   match '/news/' => 'news#index', :as => :latest_news
+  match '/arts/' => 'news#arts', :as => :latest_arts
   
   match '/' => "home#index", :as => :home
 end
