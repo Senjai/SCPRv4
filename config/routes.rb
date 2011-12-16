@@ -35,4 +35,5 @@ Scprv4::Application.routes.draw do
   match '/arts/' => 'news#arts', :as => :latest_arts
   
   match '/' => "home#index", :as => :home
+  match '/beta/' => "home#beta", :as => :beta
 end

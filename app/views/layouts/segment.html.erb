@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= render "shared/header/header_js" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<!-- MASTHEAD-->
+	<%= render "shared/masthead" %>
+
+	<div id="main" class="container segment">
+		<div class="row">
+			<article class="span8">
+				<div class="row">
+					<div id="blog-masthead" class="span8">
+						<% @PAGE_TITLE = @segment.title %>
+						<h2><span class="blue"><%= link_to @show.title, program_path(@show.slug) %></span></h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span8 storytitle">
+						<%= render "shared/cwidgets/social_tools", :cssClass => '', :content => @segment %>
+						<h6><%= @episode.title %></h6>
+						<h1 class="story-headline"><%= @segment.title %></h1>
+						<p class="byline">By <%= render_byline @segment %> <span class="pipe">|</span> <time pubdate><%= smart_date @segment %></time></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span6" style="padding-right: 190px">
+						<%= render_asset @segment, "segment" %>
+
+						<div class="storybar" style="width: 160px;float: right;clear:right;margin-right: -190px">
+							<%= render "shared/cwidgets/comment_count", :cssClass => 'right-side', :content => @segment %>
+							<%= render "shared/cwidgets/audio", :content => @segment %>
+						</div>
+						<div class="story-body">
+							<%= simple_format @segment.lede %>
+							<%= simple_format @segment.body %>
+						</div>
+
+						<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @segment %>
+					</div>
+				</div>
+				<%= render "shared/cwidgets/comments", :cssClass => '', :content => @segment %>
+			</article>
+			<div id ="sidebar" class="span4 storytitle">
+				<%= render "shared/widgets/oas", :ad_id => 'x01' %>
+				<%= render "shared/widgets/most_popular" %>
+				<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+				<%= render "shared/widgets/newsletter_subscribe" %>
+				<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+				<%= render "shared/widgets/promo_mobile" %>
+			</div>
+		</div>
+		<%= render "shared/audio/inpage_audio_player" %>
+	</div>
+	
+	<%= render :partial => "shared/footer" %>
+	<%= render :partial => "shared/footer/footer_js" %>
+</body>
+</html>
+

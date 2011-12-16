@@ -13,7 +13,13 @@
 
 	<div id="main" class="container">
 		<div class="row">
-			<article class="span8">
+			<div class="row">
+				<div id="blog-masthead" class="span8">
+					<% @PAGE_TITLE = @episode.title %>
+					<h2><span class="blue"><%= link_to @show.title, program_path(@show.slug) %></span></h2>
+				</div>
+			</div>
+			<article class="span8 storytitle">
 				<%= yield %>
 			</article>
 			<div id ="sidebar" class="span4 storytitle">
