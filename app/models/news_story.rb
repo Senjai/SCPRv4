@@ -9,19 +9,16 @@ class NewsStory < ContentBase
   belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
   has_many :uploaded_audio, :as => "content"
   
-  has_one :content_category, :as => "content"
-  has_one :category, :through => :content_category
-  
   has_many :story_categories, :foreign_key => 'story_id'
   has_many :categories, :through => :story_categories
     
   define_index do
-    indexes title
+    indexes headline
     indexes lede
     indexes body
     has category.id, :as => :category
     has published_at
-    where "news_story.status = #{STATUS_LIVE}"
+    where "status = #{STATUS_LIVE}"
   end
   
   scope :published, where(:status => STATUS_LIVE)

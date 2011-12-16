@@ -7,6 +7,15 @@ class BlogEntry < ContentBase
   belongs_to :author, :class_name => "Bio"
   
   scope :published, where(:status => STATUS_LIVE)
+  
+  define_index do
+    indexes title
+    indexes blog
+    has category.id, :as => :category
+    has published_at
+    where "status = #{STATUS_LIVE}"
+  end
+  
     
   #----------
   

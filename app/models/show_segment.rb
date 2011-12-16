@@ -8,6 +8,15 @@ class ShowSegment < ContentBase
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id" 
   has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
   
+  define_index do
+    indexes title
+    indexes lede
+    indexes body
+    has category.id, :as => :category
+    has created_at, :as => :published_at
+    where "status = #{STATUS_LIVE}"
+  end
+  
   #----------
   
   def canFeature?

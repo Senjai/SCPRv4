@@ -3,6 +3,15 @@ class ContentShell < ContentBase
   
   CONTENT_TYPE = "contentbase/shell"
   CONTENT_TYPE_ID = 115
+  
+  define_index do
+    indexes headline
+    indexes lede
+    has category.id, :as => :category
+    has pub_at, :as => :published_at
+    where "status = #{STATUS_LIVE}"
+  end
+  
 
   #----------
   
