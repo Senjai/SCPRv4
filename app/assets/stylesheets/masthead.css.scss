@@ -1,6 +1,13 @@
 // Masthead container
 header#masthead {
 	margin-bottom:$baseline;
+	div.container {
+		div.row {
+			nav.span5 {
+				width:321px !important;
+			}
+		}
+	}
 }
 
 // Set a min-height on the Hero pencil so that top and bottom margins are respected even when we don't have a hero to display
@@ -11,15 +18,35 @@ header#masthead {
 // KPCC logo image
 .logo h1 {
 	line-height:20px;
-	margin:24px 0;
+	margin:16px 0;
 }
 
 // Pledge Now button
 // Pledge
 .pledge-container {
-	background:url("pledge-container-bg.jpg") no-repeat;
+	background:url("pledge-container-bg.jpg") no-repeat bottom;
 	height:72px;
 	width:286px !important;
+	position:relative;
+	// Pledge Now button
+	.pledge {
+		@include background-image(linear-gradient(#00b9f3 45%, #0098c7 55%));
+		@include border-radius(4px);
+		@include font-heading(600, 13px);
+		@include ie-inline-block();
+		left:132px;
+		margin-left:30px !important;
+		position:absolute;
+		top:15px;
+		a {
+			background:transparent url(image_path('icons/pledge-heart.png')) no-repeat 7px 2px;
+			color:$white;
+			@include ie-inline-block();
+			padding:1px 8px 1px 34px;
+			text-shadow: 0px -1px 0px #016d8e;
+			&:hover {text-decoration:none;}
+		}
+	}
 	img {
 		margin:0 0 15px 0;
 	}
@@ -30,25 +57,6 @@ header#masthead {
 		@include font-heading($size:10px, $weight:bold);
 		float:right;
 		margin-top:-25px;
-	}
-}
-// Pledge Now button
-.pledge {
-	@include background-image(linear-gradient(#00b9f3 45%, #0098c7 55%));
-	@include border-radius(4px);
-	@include font-heading(600, 13px);
-	@include ie-inline-block();
-	left:825px;
-	margin-left:30px !important;
-	position:absolute;
-	top:15px;
-	a {
-		background:transparent url(image_path('icons/pledge-heart.png')) no-repeat 7px 2px;
-		color:$white;
-		@include ie-inline-block();
-		padding:1px 8px 1px 34px;
-		text-shadow: 0px -1px 0px #016d8e;
-		&:hover {text-decoration:none;}
 	}
 }
 
