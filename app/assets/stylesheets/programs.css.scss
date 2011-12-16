@@ -1,0 +1,38 @@
+#featured-programs {
+	h4 {
+		color:$orangeDark;
+		font-weight:600;
+	}
+	a {
+		color:$grayAlt;
+		&:hover {
+			text-decoration:none;
+		}
+	}
+	li {
+		background:url(image_path('broadcast-bar/madeleine-brand.png')) no-repeat left bottom;
+		min-height:60px;
+		padding-left:100px;
+		&:hover {
+			background-color:$nearWhite;
+		}
+		&.airtalk {
+			background-image:url(image_path('broadcast-bar/larry-airtalk.png'));
+		}
+		&.patt {
+			background-image:url(image_path('broadcast-bar/patt-morrison.png'));
+		}
+		&.offramp {
+			background-image:url(image_path('broadcast-bar/john-offramp.png'));
+		}
+		p {
+			margin-bottom:0;
+		}
+	}
+}
+
+.segment {
+	.storytitle {
+		margin-bottom:0;
+	}
+}

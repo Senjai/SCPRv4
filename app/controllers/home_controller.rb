@@ -122,4 +122,8 @@ class HomeController < ApplicationController
       end
     end
   end
+
+  def beta
+    render :layout => "beta"
+  end
 end

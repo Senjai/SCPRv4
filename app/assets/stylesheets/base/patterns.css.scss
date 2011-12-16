@@ -529,6 +529,29 @@ footer {
 	}	
 }
 
+// Lists
+// --------
+.list-basic {
+	margin-left:0;
+	border-top:1px solid $grayLighter;
+	li {
+		list-style-type:none;
+		border-bottom:1px solid $grayLighter;
+		a{
+			display:block;
+			padding:8px 4px;
+		}
+	}
+}
+.list-blocks {
+	margin-left:0;
+	border-top:1px solid $grayLighter;
+	li {
+		list-style-type:none;
+		border-bottom:1px solid $grayLighter;
+		padding:8px 14px;
+	}
+}
 
 
 // PAGINATION
