@@ -16,6 +16,7 @@ set :use_sudo, false
 role :app, "scprdev.org"
 role :web, "scprdev.org", :asset_host_syncher => true
 role :db,  "scprdev.org", :primary => true
+role :sphinx, "media.scpr.org"
 
 namespace :deploy do
   task :start, :roles => :app do
@@ -29,6 +30,17 @@ namespace :deploy do
   desc "Restart Application"
   task :restart, :roles => :app do
     run "touch #{current_release}/tmp/restart.txt"
+  end
+end
+
+namespace :remote_ts do
+  task :start, :roles => :sphinx do
+    thinking_sphinx.configure
+    thinking_sphinx.start
+  end
+  
+  task :stop, :roles => :sphinx do
+    thinking_sphinx.stop
   end
 end
 
