@@ -9,7 +9,7 @@
 				<p><%= p.description %></p>
 				<h6>Recent Posts</h6>
 				<ul>
-				<% for e in p.entries.published.all.reverse[0..4] %>
+				<% for e in p.entries.published.first(5) %>
 					<li>
 						<p><%= link_to e.headline, e.link_path %></p>
 						<span class="date-posted"><%= smart_date e %></span>
