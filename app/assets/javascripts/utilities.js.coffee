@@ -40,7 +40,8 @@ class scpr.BetaToggle
     DefaultOptions:
         cookie: "scprbeta"
         el: "#beta-button"
-        onText: "Take me to the beta"
+        homeEl: "#beta-home"
+        onText: "Opt me in to the beta!"
         offText: "Get me out of the beta!"
     
     constructor: (options) ->
@@ -63,6 +64,9 @@ class scpr.BetaToggle
                     @current = true
                 
                 @setText()
+                
+                # show the home page link
+                $(@options.homeEl).show()
             
                 return false
                 
