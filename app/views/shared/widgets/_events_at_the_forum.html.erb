@@ -1,5 +1,8 @@
 <section class="events-forum">
 	<h6>Events at the Forum</h6>
+	<% for e in @events[0..1] %>
+		<%= e.title %>
+	<% end %>
 	<div class="events-content">
 		<%= image_tag("events-forum-thumb-1.jpg", :alt => '') %>	
 		<p class="event-title">Venture Capital in Southern California: Catching Up and Going Beyond</p>

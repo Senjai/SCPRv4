@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111207193506) do
+ActiveRecord::Schema.define(:version => 20111216064852) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -1058,6 +1058,35 @@ ActiveRecord::Schema.define(:version => 20111207193506) do
     t.string   "content_type"
     t.integer  "status",       :limit => 8
     t.datetime "pub_date"
+  end
+
+  create_table "rails_events_event", :id => false, :force => true do |t|
+    t.integer  "id",                                        :default => 0,     :null => false
+    t.string   "title",               :limit => 140,                           :null => false
+    t.string   "slug",                :limit => 50,                            :null => false
+    t.text     "description",         :limit => 2147483647,                    :null => false
+    t.string   "etype",               :limit => 4,                             :null => false
+    t.string   "sponsor",             :limit => 140,                           :null => false
+    t.string   "sponsor_link",        :limit => 200,                           :null => false
+    t.datetime "starts_at",                                                    :null => false
+    t.datetime "ends_at"
+    t.boolean  "is_all_day",                                                   :null => false
+    t.string   "location_name",       :limit => 140,                           :null => false
+    t.string   "location_link",       :limit => 200,                           :null => false
+    t.string   "rsvp_link",           :limit => 200,                           :null => false
+    t.boolean  "show_map",                                                     :null => false
+    t.string   "address_1",           :limit => 140,                           :null => false
+    t.string   "address_2",           :limit => 140,                           :null => false
+    t.string   "city",                :limit => 140,                           :null => false
+    t.string   "state",               :limit => 2
+    t.integer  "zip_code"
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "modified_at",                                                  :null => false
+    t.boolean  "kpcc_event",                                :default => false, :null => false
+    t.string   "for_program",         :limit => 20,         :default => "",    :null => false
+    t.text     "archive_description", :limit => 2147483647,                    :null => false
+    t.string   "audio",               :limit => 100,        :default => "",    :null => false
+    t.boolean  "is_published",                                                 :null => false
   end
 
   create_table "rails_layout_homepagecontent", :id => false, :force => true do |t|

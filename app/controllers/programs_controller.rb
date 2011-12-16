@@ -18,6 +18,7 @@ class ProgramsController < ApplicationController
     
     date = Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)
     @episode = @show.episodes.where(:air_date => date).first
+    @upcoming = @show.episodes.first
   end
   
   #----------

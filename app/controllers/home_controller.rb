@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     # -- Broadcast Bar -- #
     Time.zone = "Pacific Time (US & Canada)"
     
-    @onnow = Schedule.where("day = ? AND start_time <= ? AND end_time >= ?", Date.today.wday, Time.now.to_s(:time), Time.now.to_s(:time)).limit(1)
+    @onnow = Schedule.where("day = ? AND start_time <= ?", Date.today.wday, Time.now.to_s(:time)).limit(1)
     @upnext = Schedule.where("day = ? AND end_time < ?", Date.today.wday, Time.now.to_s(:time)).order("day DESC, start_time DESC").limit(1)
         
     # -- More Headlines -- #
@@ -30,7 +30,7 @@ class HomeController < ApplicationController
     end
     
     # -- Latest Events  -- #
-   # @events = Event.where("is_published = ?", 1).order("starts_at DESC").limit(4)
+    @events = Event.where("is_published = ? AND starts_at > ? AND etype != ? AND etype != ?", 1, Time.now, "spon", "pick").order("starts_at ASC").limit(4)
     
     
     # -- Section Rules -- #

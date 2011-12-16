@@ -88,36 +88,6 @@ jQuery(document).ready(function() {
 			'padding'		: 	0
 	});
 	
-	// *** Stubbed out code for in-page audio player ***
-	// Clicking on a story audio link invokes the player
-	$(".play-btn").click(
-		function(){
-			$(".audio-bar").animate({bottom:0}, 1000);
-			$("#jquery_jplayer_1").jPlayer("play");
-			return false;
-		}
-	);
-	// Close audio bar
-	$(".bar-close").click(
-		function(){
-			$(".audio-bar").animate({bottom:-70}, 300);
-			$("#jquery_jplayer_1").jPlayer("stop");
-			return false;
-		}
-	);
-	// Instance of jPlayer 
-	$("#jquery_jplayer_1").jPlayer({
-	        ready: function () {
-	          $(this).jPlayer("setMedia", {
-	            m4a: "http://media.scpr.org/audio/features/20111011_features1490.mp3"
-	          });
-	        },
-	        swfPath: "/flash",
-	        supplied: "m4a"
-	      });
-	
-	$(".jp-ff").jPlayer("playHead", 10);
-	// Toggle volume slider
 	
 });
 

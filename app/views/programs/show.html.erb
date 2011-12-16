@@ -1,6 +1,3 @@
-
-
-
 <div class="show-header">
 	<h1 class="<%= @show.slug %>"><%= @show.title %></h1>
 	<p><%=raw @show.teaser %></p>
@@ -9,4 +6,4 @@
 
 <%= render :partial => "episode", :object => @show.episodes.published.first %>
 
-<%= render :partial => "upcoming", :object => @show.episodes.published.first %>
+<%= render :partial => "upcoming" %>
