@@ -34,6 +34,7 @@ header#masthead {
 		@include border-radius(4px);
 		@include font-heading(600, 13px);
 		@include ie-inline-block();
+		background-color:#0098c7;
 		left:132px;
 		margin-left:30px;
 		position:absolute;
@@ -91,7 +92,7 @@ nav.utils ul {
 // Main Navbar Light
 .nav-primary {
 	@include background-image(linear-gradient(darken($nearWhite, 10%) 1%, $nearWhite 2%, $grayLighter 98%, darken($grayLighter, 10%) 100%));
-	background-color:#7f7f7f;
+	background-color:darken($grayLighter, 10%);
 	height:36px;
 	position:relative;
 	border-left:1px solid #cb5f1d;
@@ -160,6 +161,7 @@ nav.utils ul {
 		height:$baseline * 10;
 		position:absolute;
 		top:36px;
+		left:0;
 		$mega-shadow:0 2px 3px lighten($gray, 10%);
 		@include box-shadow($mega-shadow);
 		h6 {
