@@ -23,6 +23,10 @@ class ShowSegment < ContentBase
     self.title
   end
   
+  def byline_elements
+    [self.show.title]
+  end
+  
   #----------
   
   def canFeature?
