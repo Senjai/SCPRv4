@@ -19,6 +19,12 @@ class ShowSegment < ContentBase
   
   #----------
   
+  def headline
+    self.title
+  end
+  
+  #----------
+  
   def canFeature?
     self.assets.any? ? true : false
   end
