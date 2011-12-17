@@ -48,6 +48,7 @@ section.broadcastbar {
 			@include ie-inline-block();
 			&.on-air {
 				position:relative;
+				
 			}
 			&.on-air img {
 				position:absolute;
