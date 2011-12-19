@@ -13,6 +13,7 @@ gem 'capistrano'
 gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
 gem 'thinking-sphinx', '2.0.10'
 
+gem 'therubyracer'
 gem 'newrelic_rpm'
 
 # Gems used only for assets and not required
