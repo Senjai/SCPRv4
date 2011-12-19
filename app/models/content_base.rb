@@ -18,10 +18,10 @@ class ContentBase < ActiveRecord::Base
   }
   
   CONTENT_CLASSES = {
-    #'news/story'    => NewsStory,
-    #'shows/segment' => ShowSegment,
-    #'shows/episode' => ShowEpisode,
-    #'blogs/entry'   => BlogEntry
+    'news/story'    => "NewsStory",
+    'shows/segment' => "ShowSegment",
+    'shows/episode' => "ShowEpisode",
+    'blogs/entry'   => "BlogEntry"
   }
 
   # All ContentBase objects have assets and alarms
@@ -44,7 +44,7 @@ class ContentBase < ActiveRecord::Base
     
     if $~
       if CONTENT_CLASSES[ $~[1] ]
-        return CONTENT_CLASSES[ $~[1] ].find($~[2])
+        return CONTENT_CLASSES[ $~[1] ].constantize.find($~[2])
       end
     end
     
