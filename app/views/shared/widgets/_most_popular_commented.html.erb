@@ -1,0 +1,8 @@
+<ol>
+	<% for c in content[0..4] %>
+	<li>
+		<a href="<%= c[1].link_path %>" onclick="_gaq.push(['_trackEvent', 'Popular Box', 'Most Commented', '<%= c[1].obj_key %> :: <%= c[1].headline %>')"><%= c[1].headline %></a>
+		<!-- div class="count"><span><%= c[0] %></span></div -->
+	</li>
+	<% end %>
+</ol>
