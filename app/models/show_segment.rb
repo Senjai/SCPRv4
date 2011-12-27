@@ -13,6 +13,7 @@ class ShowSegment < ContentBase
     indexes lede
     indexes body
     has category.id, :as => :category
+    has category.is_news, :as => :category_is_news
     has created_at, :as => :published_at
     where "status = #{STATUS_LIVE}"
   end
@@ -56,7 +57,8 @@ class ShowSegment < ContentBase
       :month => episode.air_date.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :day => episode.air_date.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
       :id => self.id,
-      :slug => self.slug
+      :slug => self.slug,
+      :trailing_slash => true
     )
   end
 end

@@ -1,0 +1,64 @@
+<div class="row">
+	<div class="categories span3">
+		<div class="inner-container clearfix">
+		<h6>Categories</h6>
+		<ul>
+		    <li><a href="/news/local/">Local</a></li>
+		    <li><a href="/news/california/">State</a></li>
+		    <li><a href="/news/world/">World</a></li>
+		    <li><a href="/news/politics/">Politics</a></li>
+		    <li><a href="/news/environment/">Eco/Sci</a></li>
+		</ul>
+		<ul class="right">
+		    <li><a href="/news/money/">Money</a></li>
+		    <li><a href="/news/crime/">Crime &amp; Safety</a></li>
+		    <li><a href="/news/education/">Education</a></li>
+		    <li><a href="/news/health/">Health</a></li>
+		</ul>
+		<ul class="content-types">
+		    <!--
+		    <li class="videos"><a href="/videos/">Videos</a></li>	
+		    -->
+		    <li><a href="/blogs/">Blogs</a></li>
+			<li><a href="/network/">Become a Source</a></li>
+		</ul>
+		</div>
+	</div>
+	<div class="featured span4">
+		<div class="inner-container clearfix">
+		<h6>Latest News</h6>
+		<% content_cache("mega_news_latest") do %>
+			<% register_content("contentbase:new") %>
+			<ul>
+			<% for c in get_latest_news[0..1] do %>
+				<li>
+					<a href="<%= c.link_path %>">
+					<%= render_asset(c,"thumb") %>
+					<p><%= c.headline %></p>
+					</a>
+				</li>
+			<% end %>
+			</ul>
+		<% end %>
+		</div>
+	</div>
+	<div class="blogs span5">
+		<div class="inner-container clearfix">
+			<h6>From Our Blogs</h6>			
+			<ul>
+	            <li>
+	                <p class="entry-title"><a href="http://multiamerican.scpr.org/jp/was-it-cholera-that-killed-the-irish-immigrants-of-duffys-cut-or-something-uglier/">Was it cholera that killed the Irish immigrants of Duffy’s Cut, or something uglier? <span class="blog-name">Multi-American</span></a></p>
+	            </li>
+	            <li>
+	                <p class="entry-title"><a href="/blogs/newmedia/2011/11/04/3744/warrior-screening-nick-nolte/">'Warrior' screening with Nick Nolte <span class="blog-name">DeBord Report</span></a></p>
+	            </li>
+	            <li>
+	                <p class="entry-title"><a href="/blogs/offramp/2011/11/04/3743/drained-echo-park-lake-seen-gary-leonard/">A near-empty Echo Park Lake, as seen by Gary Leonard <span class="blog-name">Off-Ramp</span></a></p>
+	            </li>
+	            <li>
+	                <p class="entry-title"><a href="http://multiamerican.scpr.org/2011/11/five-american-muslims-on-racial-ethnic-profiling-this-is-my-country-i-feel-insulted/">Five American Muslims on racial-ethnic profiling: ‘This is my country. I feel insulted.’ <span class="blog-name">Multi-American</span></a></p>
+	            </li>
+	    	</ul>
+		</div>
+	</div>
+</div>

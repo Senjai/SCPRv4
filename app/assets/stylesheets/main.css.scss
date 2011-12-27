@@ -167,7 +167,7 @@ section.broadcastbar {
 			@include font-serif($size:0.90em);
 			background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
 			color:$linkColor;
-			padding:10px 0 0 0;
+			margin:10px 0 0 20px;
 			a {
 				padding:0 0 0 28px;
 			}
@@ -178,6 +178,19 @@ section.broadcastbar {
 		}
 	}
 }
+
+#events-mega {
+    .events-content {
+        img {
+            float: left;
+           width: 65px;
+           height: 65px;
+           margin-right: 12px;
+        }
+    }
+}
+
+
 .top-half {
 	border-bottom:1px solid $grayLight;
 	margin-bottom:$baseline;

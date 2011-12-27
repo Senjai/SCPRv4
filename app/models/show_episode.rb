@@ -10,7 +10,7 @@ class ShowEpisode < ContentBase
   
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc")
   scope :upcoming, where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc")
-  
+    
   #----------
   
   def link_path

@@ -12,6 +12,7 @@ class BlogEntry < ContentBase
     indexes title
     indexes blog
     has category.id, :as => :category
+    has category.is_news, :as => :category_is_news
     has published_at
     where "status = #{STATUS_LIVE}"
   end
@@ -65,7 +66,8 @@ class BlogEntry < ContentBase
       :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
       :id => self.id,
-      :slug => self.slug
+      :slug => self.slug,
+      :trailing_slash => true
     )
     
   end

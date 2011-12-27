@@ -1,10 +1,10 @@
 <section class="events-forum">
 	<h6>Events at the Forum</h6>
-	<% for e in @events[0..1] %>
+	<% for e in @g_upcoming_events_forum.first(2) %>
 		<div class="events-content">
-			<%= image_tag("events-forum-thumb-1.jpg", :alt => '') %>	
+			<%= render_asset e, "thumb" %>
 			<p class="event-title"><%= e.title %></p>
-			<p class="event-date"><a href=""><%= e.starts_at.strftime("%B %d, %Y") %></a></p>
+			<p class="event-date"><a href="<%= e.link_path %>"><%= e.starts_at.strftime("%B %d, %Y") %></a></p>
 		</div>
 	<% end %>
 </section>

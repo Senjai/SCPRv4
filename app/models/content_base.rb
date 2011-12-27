@@ -20,8 +20,9 @@ class ContentBase < ActiveRecord::Base
   CONTENT_CLASSES = {
     'news/story'    => "NewsStory",
     'shows/segment' => "ShowSegment",
-    'shows/episode' => "ShowEpisode",
-    'blogs/entry'   => "BlogEntry"
+    #'shows/episode' => "ShowEpisode",
+    'blogs/entry'   => "BlogEntry",
+    'contentbase/shell' => "ContentShell"
   }
 
   # All ContentBase objects have assets and alarms
@@ -36,6 +37,12 @@ class ContentBase < ActiveRecord::Base
   has_one :content_category, :as => "content"
   has_one :category, :through => :content_category
     
+  #----------
+  
+  def self.content_classes
+    self::CONTENT_CLASSES.collect {|k,v| v.constantize }
+  end
+  
   #----------
     
   def self.obj_by_key(key)

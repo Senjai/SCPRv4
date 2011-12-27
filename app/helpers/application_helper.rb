@@ -158,4 +158,32 @@ module ApplicationHelper
       return names.join(" with ").html_safe
     end
   end
+  
+  #----------
+  
+  def get_latest_arts
+    content = ThinkingSphinx.search '',
+      :classes    => ContentBase.content_classes,
+      :page       => 1,
+      :per_page   => 12,
+      :order      => :published_at,
+      :sort_mode  => :desc,
+      :with       => { :category_is_news => false }
+      
+    return content    
+  end
+  
+  #----------
+  
+  def get_latest_news
+    content = ThinkingSphinx.search '',
+      :classes    => ContentBase.content_classes,
+      :page       => 1,
+      :per_page   => 12,
+      :order      => :published_at,
+      :sort_mode  => :desc,
+      :with       => { :category_is_news => true }
+      
+    return content
+  end
 end
