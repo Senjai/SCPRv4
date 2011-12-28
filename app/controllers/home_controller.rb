@@ -13,9 +13,10 @@ class HomeController < ApplicationController
     # -- More Headlines -- #
     
     @headlines = []
+    Rails.logger.debug "running with content classes: #{ContentBase.content_classes}"
     ThinkingSphinx.search(
       '',
-      :classes    => [NewsStory],
+      :classes    => ContentBase.content_classes,
       :page       => 1,
       :per_page   => 12,
       :order      => :published_at,
@@ -38,7 +39,7 @@ class HomeController < ApplicationController
     # run a query for each section 
     Category.all.each do |cat|
       content = ThinkingSphinx.search '',
-        :classes    => [NewsStory],
+        :classes    => ContentBase.content_classes,
         :page       => 1,
         :per_page   => 12,
         :order      => :published_at,
@@ -57,9 +58,11 @@ class HomeController < ApplicationController
           next
         end
         
+        ctime = c.public_datetime.is_a?(Date) ? c.public_datetime.to_time : c.public_datetime
+        
         # if we're still here, weigh this content for sorting
-        if !sorttime || c.public_datetime > sorttime
-          sorttime = c.public_datetime
+        if !sorttime || ctime > sorttime
+          sorttime = ctime
         end
         
         # does this content have an asset?

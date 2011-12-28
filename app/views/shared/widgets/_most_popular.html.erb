@@ -13,7 +13,7 @@
 	    <% end %>
 	</div>
 	<div id="pop_tab2">
-		<% if discussed = ActionController::Base.cache_store.read("widget/popular_discussed") %>
+		<% if discussed = ActionController::Base.cache_store.read("widget/popular_commented") %>
 	        <%= discussed %>
 	    <% else %>
 	        <p>The most discussed content widget has an error and will refresh momentarily.</p>

@@ -1,0 +1,52 @@
+
+<div class="row">
+	<div class="categories events-nav span3">
+		<div class="inner-container clearfix">
+		<h6>The Crawford Family Forum</h6>
+		<ul>
+		    <li><a href="/events/forum/">Upcoming Events</a></li>
+		    <li><a href="/events/forum/archive/">Past Events</a></li>
+		    <li><a href="/forum/directions/">Directions to the Forum</a></li>	
+		    <li><a href="/forum/space/">Partner With Us</a></li>
+		    <li><a href="/forum/contact/">Contact the Forum</a></li>	
+		</ul>
+		</div>
+	</div>
+	<div class="events-forum span6">
+
+		<div class="inner-container clearfix">
+		<h6>Upcoming Crawford Family Forum Events</h6>
+		
+		<% for e in @g_upcoming_events_forum.first(2) %>
+			<div class="events-content">
+				<a href="<%= e.link_path %>">
+				<%= render_asset e, "thumb" %>
+				<p class="event-title"><%= e.title %></p>
+				<p class="event-date"><%= e.starts_at.strftime("%B %d, %Y") %></p>
+				</a>
+			</div>
+		<% end %>
+		
+		</div>
+	</div>
+	<div class="events-sponsored span3">
+		<div class="inner-container clearfix">
+			<h6>Sponsored Events</h6>			
+			<ul>
+	            <li>
+	                <p class="event-title"><a href="#">Music Center Holiday Sing-Along</a></p>
+					<span class="event-date">Wednesday, November 30</span>
+	            </li>
+	            <li>
+	                <p class="event-title"><a href="#">Whisker Wonderland Adoption Event</a></p>
+					<span class="event-date">Wednesday, November 30</span>
+	            </li>
+				<li>
+	                <p class="event-title"><a href="#">L.A. Rebellion: Creating a New Black Cinema</a></p>
+					<span class="event-date">Wednesday, November 30</span>
+	            </li>
+	    	</ul>
+			<p class="more"><a href="/events/sponsored/">View more events</a></p>
+		</div>
+	</div>
+</div>

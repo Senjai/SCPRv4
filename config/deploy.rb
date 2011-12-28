@@ -42,6 +42,10 @@ namespace :remote_ts do
   task :stop, :roles => :sphinx do
     thinking_sphinx.stop
   end
+  
+  task :index, :roles => :sphinx do 
+    thinking_sphinx.index
+  end
 end
 
 #task :before_update_code, :roles => [:app] do

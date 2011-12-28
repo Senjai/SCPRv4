@@ -22,6 +22,9 @@ Scprv4::Application.routes.draw do
   match '/programs/:show/' => 'programs#show', :as => :program
   match '/programs/' => 'programs#index', :as => :programs
   
+  match '/events/:year/:month/:day/:slug/' => 'events#show', :as => :event
+  match '/events/' => 'events#index', :as => :events
+  
   match '/videos/' => 'videos#index', :as => :videos
   
   match '/search/' => 'search#index', :as => :search

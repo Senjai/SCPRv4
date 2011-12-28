@@ -8,6 +8,7 @@ class ContentShell < ContentBase
     indexes headline
     indexes lede
     has category.id, :as => :category
+    has category.is_news, :as => :category_is_news
     has pub_at, :as => :published_at
     where "status = #{STATUS_LIVE}"
   end
