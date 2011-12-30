@@ -7,8 +7,9 @@ class Event < ActiveRecord::Base
   #----------
   
   scope :published, where(:is_published => true)
-  
-  scope :upcoming_forum, where("starts_at > ? AND etype != ? AND etype != ?", Time.now, "spon", "pick").order("starts_at ASC")
+  scope :upcoming, lambda { where("starts_at > ?", Time.now) }
+  scope :forum, where("etype != ? AND etype != ?", "spon", "pick").order("starts_at ASC")
+  scope :sponsored, where("etype = ?", "spon")
   
   #----------
 

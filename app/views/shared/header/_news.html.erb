@@ -46,18 +46,18 @@
 		<div class="inner-container clearfix">
 			<h6>From Our Blogs</h6>			
 			<ul>
-	            <li>
-	                <p class="entry-title"><a href="http://multiamerican.scpr.org/jp/was-it-cholera-that-killed-the-irish-immigrants-of-duffys-cut-or-something-uglier/">Was it cholera that killed the Irish immigrants of Duffy’s Cut, or something uglier? <span class="blog-name">Multi-American</span></a></p>
-	            </li>
-	            <li>
-	                <p class="entry-title"><a href="/blogs/newmedia/2011/11/04/3744/warrior-screening-nick-nolte/">'Warrior' screening with Nick Nolte <span class="blog-name">DeBord Report</span></a></p>
-	            </li>
-	            <li>
-	                <p class="entry-title"><a href="/blogs/offramp/2011/11/04/3743/drained-echo-park-lake-seen-gary-leonard/">A near-empty Echo Park Lake, as seen by Gary Leonard <span class="blog-name">Off-Ramp</span></a></p>
-	            </li>
-	            <li>
-	                <p class="entry-title"><a href="http://multiamerican.scpr.org/2011/11/five-american-muslims-on-racial-ethnic-profiling-this-is-my-country-i-feel-insulted/">Five American Muslims on racial-ethnic profiling: ‘This is my country. I feel insulted.’ <span class="blog-name">Multi-American</span></a></p>
-	            </li>
+				<% content_cache("mega_news_blogs") do %>
+					<% register_content("blogs/entry:new") %>
+					
+					<% for e in @g_latest_blogs_news.limit(4) do %>
+						<li><p class="entry-title">
+							<a href="<%= e.link_path %>">
+								<%= e.headline %>
+								<span class="blog-name"><%= e.blog.name %></span>
+							</a>
+						</p></li>
+					<% end %>
+				<% end %>
 	    	</ul>
 		</div>
 	</div>

@@ -148,11 +148,14 @@ module ApplicationHelper
     end
     
     # 5) add on any byline elements
-    if content.byline_elements.length > 0
+    
+    byels = content.byline_elements.collect { |e| e && e != '' ? e : nil }.compact
+    
+    if byels.length > 0
       if authors[0].length == 0 and authors[1].length == 0
-        return content.byline_elements.join(" | ").html_safe
+        return byels.join(" | ").html_safe
       else
-        return [names.join(" with "), content.byline_elements.join(" | ")].join(" | ").html_safe
+        return [names.join(" with "), byels.join(" | ")].join(" | ").html_safe
       end
     else
       return names.join(" with ").html_safe

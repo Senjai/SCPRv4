@@ -1,6 +1,7 @@
 <div class="span8 more-news">
 	<section class="more-news-title">
-		<h6><%= section[:section].category %></h6><span><a href="" alt="More">More</a></span>
+		<h6><%= link_to section[:section].category, section[:section].link_path %></h6>
+		<span><%= link_to "More", section[:section].link_path %></span>
 	</section>
 	<section class="more-news-content">
 		<%= render_content section[:top], "sec_lead" %>

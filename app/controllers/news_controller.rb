@@ -39,7 +39,9 @@ class NewsController < ApplicationController
   def story
     @story = NewsStory.find(params[:id])
     
-    if request.env['PATH_INFO'] != @story.link_path
+    Rails.logger.debug "PATH_INFO is #{request.env['PATH_INFO']}"
+    
+    if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @story.link_path
       redirect_to @story.link_path and return
     end
     
