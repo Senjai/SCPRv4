@@ -60,7 +60,7 @@ class scpr.BetaToggle
                 else
                     # opt in
                     console.log "opt in!"
-                    scpr.Cookie.set(@options.cookie,true)
+                    scpr.Cookie.set(@options.cookie,true,86400*30)
                     @current = true
                 
                 @setText()
