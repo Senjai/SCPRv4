@@ -12,7 +12,7 @@
 	        <p>The most viewed content widget has an error and will refresh momentarily.</p>
 	    <% end %>
 	</div>
-	<div id="pop_tab2">
+	<div class="popular" id="pop_tab2">
 		<% if discussed = ActionController::Base.cache_store.read("widget/popular_commented") %>
 	        <%= discussed %>
 	    <% else %>

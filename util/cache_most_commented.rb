@@ -14,7 +14,26 @@ Disqussion::Client.threads.listPopular(:forum => "kpcc",:interval => "1d").respo
   # find content object
   begin
     cobj = ContentBase.obj_by_key(p.identifiers[0])
-    content << [0,cobj]
+    
+    # now we work around disqus' stupid inability to give us the number of 
+    # comments inside our interval by going in, grabbing all comments, and 
+    # computing it on our own
+    # FIXME: This will break if there are over 100 comments on the thread in this period
+    
+    t = Disqussion::Client.posts.list(
+      :thread => p.id,
+      :forum => "kpcc",
+      :limit => 100, 
+      :since => (Time.now - 86400).to_i,
+      :order => "asc")
+    
+    count = 0
+    
+    if t.response
+      count = t.response.size
+    end
+    
+    content << [count,cobj]
   rescue
     next
   end
