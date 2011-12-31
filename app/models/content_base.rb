@@ -77,6 +77,18 @@ class ContentBase < ActiveRecord::Base
   end
   
   #----------
+  
+  def headline
+    self[:headline]
+  end
+  
+  def first_asset_square
+    if self.assets.any?
+      self.assets.first.asset.tag(:lsquare)
+    end
+  end
+  
+  #----------
     
   def public_datetime
     self.published_at
