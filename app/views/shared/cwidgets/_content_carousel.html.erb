@@ -1,84 +1,21 @@
-<div class="content_carousel">
-	<div class="section-head">
-		<h3>More in Science</h3>
-		<nav>
-			<a class="prev" id="carousel_prev" href="#"><span>prev</span></a>
-			<a class="next" id="carousel_next" href="#"><span>next</span></a>
-		</nav>
+<% if content.category %>
+	<div class="content_carousel">
+		<div class="section-head">
+			<h3>More in <%= content.category.category %></h3>
+			<nav>
+				<a class="prev" id="sec_carousel_prev" href="#"><span>prev</span></a>
+				<a class="next" id="sec_carousel_next" href="#"><span>next</span></a>
+			</nav>
+		</div>
+		<ul class="carousel clearfix" id="sec_carousel">
+			
+		</ul>
+		<div class="carousel-page clearfix" id="sec_carousel_pag"></div>
 	</div>
-    <ul class="carousel clearfix">
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/a8833925a4ef1c1638b4c7a460c62f6c/26391-lsquare.jpg" alt="" />
-                <p>Bipartisan support for China tariffs likely</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/02598fd09b309975c32b81e54b874235/26421-lsquare.jpg" alt="" />
-                <p>10 arrested at LA bank as protests spread</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/0c3c581db41c47c8f9853608ccc82add/4395-lsquare.jpg" alt="" />
-                <p>Brown outlaws cell phones in state prisons</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/82cdb32d3ad6aa566ccac40f9c3c1cc0/7286-lsquare.jpg" alt="" />
-                <p>Feds order CA medical pot shops to shut down</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/e8acc90979f78cf3da7a2766f18f9be4/26411-lsquare.jpg" alt="" />
-                <p>3,000 pounds of meth seized at LAX</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/863a12bdc37025012a11a670427c0c22/2961-lsquare.jpg" alt="" />
-                <p>Feds to California: Shut down pot dispensaries</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/cca25d15c5f30f5f6bbfd192b517c49a/26380-lsquare.jpg" alt="" />
-                <p>John Wayne auction attracts diehards</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/cf6d8261758700d849792496c99ba30c/26382-lsquare.jpg" alt="" />
-                <p>Occupy LA faces the rain and the City Council</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/6ddb3330de58a65d170514795d92429b/26389-lsquare.jpg" alt="" />
-                <p>Prosecutors show lineup of Jackson's drugs</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/0fa5586a695a0bc0e09e7bdd1685e87f/26395-lsquare.jpg" alt="" />
-                <p>immigrant domestic violence program in SF</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/8e3fc3e04e278edf85664d1bce36521f/9220-lsquare.jpg" alt="" />
-                <p>San Quentin prison guard arrested on drug charges</p>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <img src="http://a.scpr.org/i/a76d551780204c65fe287de5decd7f3b/26371-lsquare.jpg" alt="" />
-                <p>Jobs' Arab-American background and adoption</p>
-            </a>
-        </li>
-    </ul>
-	<div class="carousel-page clearfix" id="carousel_pag"></div>
-</div>
+	
+	<% content_for :footerjss do %>
+		var secCarousel = new scpr.SectionCarousel(
+			<%= raw content.category.content(1,4).to_json(:only => [:id],:methods => [:headline,:obj_key,:first_asset_square,:link_path]) %>
+		)
+	<% end %>
+<% end %>

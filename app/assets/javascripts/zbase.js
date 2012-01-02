@@ -27,55 +27,7 @@ jQuery(document).ready(function() {
 			$("a[data-section='"+tabContext+"']").removeClass("hover");
 		}
 	);
-	
-	// *** Instantiate carousel for article rotator ***
-	$(".carousel").carouFredSel({
-			circular	: false,
-			infinite	: false,
-			auto 		: false,
-			items : 4,
-			prev : {
-				button		: "#carousel_prev",
-				key			: "left",
-				items		: 4,
-				duration	: 600
-			},
-			next : {
-				button		: "#carousel_next",
-				key			: "right",
-				items		: 4,
-				duration	: 600
-			},
-			pagination : {
-				container	: "#carousel_pag",
-				keys		: true,
-				duration	: 600
-			}				
-	});
-	$("#missed-it").carouFredSel({
-			circular	: false,
-			infinite	: false,
-			auto 		: false,
-			items : 6,
-			prev : {
-				button		: "#carousel_prev",
-				key			: "left",
-				items		: 6,
-				duration	: 600
-			},
-			next : {
-				button		: "#carousel_next",
-				key			: "right",
-				items		: 6,
-				duration	: 600
-			},
-			pagination : {
-				container	: "#carousel_pag",
-				keys		: true,
-				duration	: 600
-			}				
-	});
-	
+		
 	// *** Stubbed out Fancybox code for video lightboxes ***
 	$("a.video-link").fancybox({
 			'transitionIn'	:	'elastic',

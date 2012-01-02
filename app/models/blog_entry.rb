@@ -37,7 +37,7 @@ class BlogEntry < ContentBase
   def lede(l=240)
     lede = self.content
     if lede.length > l
-      lede = /^(.{#{l}}\w*)\W/.match(lede)
+      lede = /^(.{#{l}}\w*)\W/.match(ActionController::Base.helpers.strip_tags(lede))
       
       if lede
         lede = "#{lede[1]}..."
