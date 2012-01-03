@@ -5,11 +5,18 @@
 	p {
 		font-size:13px;
 		line-height:18px;
-		padding:10px 0 0 0;
+		padding:10px 0;
+		margin: 0;
 	}
 	h4 {
 		color:$gray;
 		@include font-sans-serif(normal, 11px);
+	}
+	
+	a.comment_link {
+	    @include font-sans-serif(normal, 11px);
+	    margin-bottom: 10px;
+	    // FIXME: need to include icon
 	}
 }
 .cbase.lead {

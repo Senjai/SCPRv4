@@ -1,0 +1,17 @@
+<div class="row">
+	<%= content_cache("home_leads") do %>
+		<% register_content("layout/homepage") %>
+		<div class="span5">
+			<%= render_content @homepage.content[0], "lead5" %>
+		</div>
+		<div class="span3">
+			<%= render_content @homepage.content[1..-1], "offlead" %>
+		</div>
+	<% end %>	
+</div>
+
+<% content_for :conversation_slot do %>
+	<div class="join-conversation-container">
+		<%= render "shared/widgets/join_conversation" %>
+	</div>
+<% end %>

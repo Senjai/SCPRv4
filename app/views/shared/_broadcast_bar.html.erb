@@ -2,8 +2,10 @@
 	<div class="left">
 	<ul>
 		<% o = Schedule.on_now %>
-			<li class="on-air"><%= image_tag("broadcast-bar/onair.png", :alt => 'On Air') %></li>
-			<li class="active-show-title <%= o.program %>"><%= o.program %></li>
+			<li class="active-show-title <%= o.program %>">
+				<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
+			<%= o.program %>
+			</li>
 			<li class="show-time"><%= o.start_time.strftime("%l %P") %> - <%= o.end_time.strftime("%l %P") %></li>
 			<!-- <li class="show-status">On Now:</li> -->
 			<li class="show-summary"></li>
@@ -13,8 +15,10 @@
 	<div class="right">
 	<ul>
 		<% u = o.up_next %>
-			<li class="up-next"><%= image_tag("broadcast-bar/upnext.png", :alt => 'On Air') %></li>	
-			<li class="upnext-show-title"><%= u.program %></li>
+			<li class="upnext-show-title">
+				<%= image_tag("broadcast-bar/upnext.png", :size => "66x21", :alt => 'Up Next', :style => "margin-bottom: -3px") %>
+				<%= u.program %>
+			</li>
 			<li class="show-time"><%= u.start_time.strftime("%l %P") %> - <%= u.end_time.strftime("%l %P") %></li>	
 	</ul>
 	</div>

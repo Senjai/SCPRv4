@@ -11,7 +11,8 @@ module ApplicationHelper
   # * shared/content/default/lead
 
   
-  def render_content(content,context)
+  def render_content(content,context,options={})
+    
     if !content
       return ''
     end
@@ -41,8 +42,8 @@ module ApplicationHelper
       partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }
       
       Rails.logger.debug "calling partial #{partial} for #{c}"
-
-      html << render(:partial => "shared/content/#{partial}", :object => c, :as => :content)
+      
+      html << render(options.merge({:partial => "shared/content/#{partial}", :object => c, :as => :content}))
     end
     
     return html.html_safe
@@ -86,19 +87,27 @@ module ApplicationHelper
   
   #----------
   
-  def smart_date(content)
+  def smart_date(content,options={})
+    options = {
+      :today_template => "%-I:%M%P",
+      :template       => "%b %e, %Y"
+    }.merge(options)
+    
     if !content || !content.respond_to?("public_datetime")
       return ""
     end
     
-    if content.public_datetime == Date.today()
-      if content.public_datetime.is_a? DateTime
-        return content.public_datetime.strftime("%l:%M%P")
+    if content.public_datetime.to_date == Date.today()
+      if content.public_datetime.is_a? Time
+        return content.public_datetime.strftime(options[:today_template])          
       else
         return "Today"
       end
+    elsif options && options[:today]
+      # we only want a date if it is today's date, so return nothing
+      return ''
     else
-      return content.public_datetime.strftime("%b %e, %Y")
+      return content.public_datetime.strftime(options[:template])
     end
   end
   
