@@ -4,29 +4,6 @@ jQuery(document).ready(function() {
 	//$(".contentasset img").removeAttr("height").removeAttr("width");
 	//$(".contentasset").removeAttr("style");
 	
-	// *** Stubbed out simple hover behavior for megamenus in primary nav ***
-	$(".mega a").hover(
-		function(){
-			var sectionContext = '#' + $(this).attr("data-section");
-			$(sectionContext).show();
-		},
-		function(){
-			var sectionContext = '#' + $(this).attr("data-section");
-			$(sectionContext).hide();
-		}
-	);
-	$(".section-mega").hover(
-		function(){
-			$(this).show();
-			var tabContext = $(this).attr("id");
-			$("a[data-section='"+tabContext+"']").addClass("hover");
-		},
-		function(){
-			$(this).hide();
-			var tabContext = $(this).attr("id");
-			$("a[data-section='"+tabContext+"']").removeClass("hover");
-		}
-	);
 		
 	// *** Stubbed out Fancybox code for video lightboxes ***
 	$("a.video-link").fancybox({

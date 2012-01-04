@@ -1,10 +1,9 @@
-<div class="cbase offlead">
+<div class="cbase offlead clearfix">
 	<h3 class="story-headline"><%= link_to content.headline, content.link_path %></h3>
-	<h4><%= render_byline content %></h4>
+	<h4><%= render_byline content %> <%= smart_date content, :today => true, :today_template => "| %-I:%M%P" %></h4>
 
 	<p><%= strip_tags content.lede %></p>
+	
+	<%= link_to ( content.comment_count? ? "Comment (#{content.comment_count})" : "Comment on this story" ), content.link_path + "#comments", :class => "comment_link" %>
 </div>
-
-
-<br class="clear: both"/>
 <hr/>
