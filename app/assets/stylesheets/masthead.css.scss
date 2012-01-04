@@ -158,7 +158,7 @@ nav.utils ul {
 	.section-mega {
 		background-color:$white;
 		width:100%;
-		height:$baseline * 10;
+		min-height:$baseline * 10;
 		position:absolute;
 		top:36px;
 		left:0;
@@ -177,7 +177,7 @@ nav.utils ul {
 			}
 		}
 		.categories, .featured, .blogs {
-			height:$baseline * 10;
+			min-height:$baseline * 10;
 		}
 		.categories, .featured, .kpcc-programs, .events-nav, .events-forum {
 			background:url(image_path('mega-divider.png')) no-repeat right 10px;
@@ -339,20 +339,23 @@ nav.utils ul {
 				.events-content {
 					@include clearfix();
 					margin-bottom:$baseline;
+					a {
+						color:$grayAlt;
+						&:hover .event-title {
+							text-decoration:underline;
+						}
+					}
 					.event-title, .event-date {
-						margin-left:90px;
+						margin-left:97px;
 					}
 					.event-title {
 						font-size:15px;
 						a, a:hover {
 							color:$grayAlt;
 						}
-						a:hover {
-							text-decoration:underline;
-						}
 					}
 					.event-date {
-						background-position:left 10px;
+						background-position:left top;
 						padding-left:28px;
 					}
 				}

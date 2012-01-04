@@ -158,7 +158,7 @@ section.broadcastbar {
 		@include clearfix();
 		margin:10px 0;
 		.event-title {
-			@include font-headline($weight:lighter);
+			@include font-headline($weight:normal);
 			font-size:1.2em;
 			margin:0;
 		}

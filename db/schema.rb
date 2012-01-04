@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216064852) do
+ActiveRecord::Schema.define(:version => 20111227003217) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(:version => 20111216064852) do
   end
 
   add_index "contentbase_contentcategory", ["category_id"], :name => "contentbase_contentcategory_42dc49bc"
+  add_index "contentbase_contentcategory", ["content_type_id", "object_id"], :name => "content_key", :unique => true
   add_index "contentbase_contentcategory", ["content_type_id"], :name => "contentbase_contentcategory_e4470c6e"
 
   create_table "contentbase_contentshell", :force => true do |t|
@@ -1052,12 +1053,10 @@ ActiveRecord::Schema.define(:version => 20111216064852) do
   end
 
   create_table "rails_contentbase_contentcategory", :id => false, :force => true do |t|
-    t.integer  "id",                        :default => 0, :null => false
-    t.integer  "category_id",                              :null => false
-    t.integer  "content_id",                               :null => false
-    t.string   "content_type"
-    t.integer  "status",       :limit => 8
-    t.datetime "pub_date"
+    t.integer "id",           :default => 0, :null => false
+    t.integer "category_id",                 :null => false
+    t.integer "content_id",                  :null => false
+    t.string  "content_type"
   end
 
   create_table "rails_events_event", :id => false, :force => true do |t|

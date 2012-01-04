@@ -578,11 +578,12 @@ ul.carousel {
 .carousel li {
 	display:block;
 	float:left;
-	height:200px;
+	min-height:200px;
 	margin:0 11px;
 	text-align:center;
 	width:160px;
 	a { 
+		color:$grayAlt;
 		display:block;
 	}
 	img {

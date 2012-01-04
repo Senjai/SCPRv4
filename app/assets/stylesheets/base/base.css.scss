@@ -368,3 +368,8 @@ input[type=submit].btn {
 
 // Margins & Padding
 $margin-center:             0 auto;
+
+// Constrain width of 3rd party embeds in articles
+.span6 object, .span6 embed, .span6 iframe {
+	max-width:100%;
+}
