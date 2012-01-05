@@ -16,7 +16,9 @@
 	a.comment_link {
 	    @include font-sans-serif(normal, 11px);
 	    margin-bottom: 10px;
-	    // FIXME: need to include icon
+	    background: url(image_path('icons/comment-count-sm.png')) no-repeat top left;
+	    padding-left: 14px;
+	    margin-left: 4px;
 	}
 }
 .cbase.lead {
