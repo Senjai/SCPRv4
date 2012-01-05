@@ -5,17 +5,12 @@
 <% links = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »", :params => {:action => @cat_action }) %>
 
 <% if @content.current_page == 1 %>
-	<div class="row">
-		<div class="span5">
-			<%= render_content @content[0], "lead5" %>
-		</div>
-		<div class="span3">
-			<%= render_content @content[1..2], "offlead" %>
-		</div>
-	</div>
+	<%= render_content @content[0], "twocol" %>
 	
 	<hr/>
-	
+
+	<%= render_content @content[1..2], "offlead_asset" %>			
+			
 	<%= render_content @content[3..-1], "thumbnail" %>
 <% else %>
 	<%= links %>

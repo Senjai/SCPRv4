@@ -7,7 +7,7 @@ class CategoryController < ApplicationController
     @content = ThinkingSphinx.search '',
       :classes    => [NewsStory,BlogEntry,ContentShell,ShowSegment],
       :page       => params[:page],
-      :per_page   => 15,
+      :per_page   => 10,
       :order      => :published_at,
       :sort_mode  => :desc,
       :with       => { :category => @category.id }   
@@ -23,7 +23,7 @@ class CategoryController < ApplicationController
     @content = ThinkingSphinx.search '',
       :classes    => [NewsStory,BlogEntry,ContentShell,ShowSegment],
       :page       => params[:page],
-      :per_page   => 15,
+      :per_page   => 10,
       :order      => :published_at,
       :sort_mode  => :desc,
       :with       => { :category => @category.id }    
