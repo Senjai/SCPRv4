@@ -180,7 +180,8 @@ module ApplicationHelper
       :per_page   => 12,
       :order      => :published_at,
       :sort_mode  => :desc,
-      :with       => { :category_is_news => false }
+      :with       => { :category_is_news => false },
+      :without    => { :category => '' }
       
     return content    
   end
