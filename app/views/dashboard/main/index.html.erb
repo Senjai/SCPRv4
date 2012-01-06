@@ -7,6 +7,7 @@
 <div class="row">
 	<div class="span4">
 		<h2>News Story: Missing Category</h2>
+		<p><%= @stories.count() %> of <%= @baseline.count() %> stories published in the period</p>
 		<ul>
 		<% for s in @stories %>
 			<li>
@@ -21,6 +22,7 @@
 	</div>
 	<div class="span4">
 		<h2>News Story: No Assets</h2>
+		<p><%= @no_assets.count() %> of <%= @baseline.count() %> stories published in the period</p>
 		<ul>
 			<% for s in @no_assets %>
 				<li>
