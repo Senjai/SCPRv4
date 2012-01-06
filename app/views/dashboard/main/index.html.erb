@@ -1,0 +1,22 @@
+<%
+	@PAGE_TITLE = "Dashboard"
+%>
+
+<h1>Debugging Dashboard</h1>
+
+<div class="row">
+	<div class="span4">
+		<h2>Missing Category</h2>
+		<ul>
+		<% for s in @stories %>
+			<li>
+				<%= link_to s.headline, s.link_path %>
+				(<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
+				<br/>&mdash; <%= smart_date s %> 
+				<br/>&mdash; <%= render_byline s, false %>
+				<br/>
+			</li>
+		<% end %>
+		</ul>
+	</div>
+</div>

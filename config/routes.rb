@@ -10,6 +10,10 @@ class CategoryConstraint
 end
 
 Scprv4::Application.routes.draw do
+    
+  namespace :dashboard do
+    match '/' => 'main#index', :as => :home
+  end
   
   match '/about/people/staff/:name' => 'people#bio', :as => :bio
 
