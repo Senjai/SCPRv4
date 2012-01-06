@@ -9,6 +9,10 @@ class Dashboard::MainController < ApplicationController
     ).where(
       "`rails_contentbase_contentcategory`.id is null"
     ).order("published_at desc")
+    
+    @no_assets = NewsStory.published.this_week.joins(
+      "left join `rails_assethost_contentasset` on `rails_assethost_contentasset`.content_id = news_story.id and `rails_assethost_contentasset`.content_type = 'NewsStory'"
+    ).where("rails_assethost_contentasset.id is null").order("published_at desc")
   end
   
 end

@@ -9,9 +9,6 @@ class NewsStory < ContentBase
   belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
   has_many :uploaded_audio, :as => "content"
   
-  has_many :story_categories, :foreign_key => 'story_id'
-  has_many :categories, :through => :story_categories
-    
   define_index do
     indexes headline
     indexes lede
@@ -23,6 +20,7 @@ class NewsStory < ContentBase
   end
   
   scope :published, where(:status => STATUS_LIVE)
+  scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   #----------
   
