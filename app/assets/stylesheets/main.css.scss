@@ -60,10 +60,10 @@ section.broadcastbar {
 				left:0;
 				top:0;
 			}
-			&.showhost img {
-				float:right;
-				margin:-25px 2px 0 0;
-				position:absolute;
+			.bbar_headshot {
+			    position: relative;
+			    top: -37px;
+				margin-bottom: -52px;
 			}
 			&.on-now {
 				float:left;

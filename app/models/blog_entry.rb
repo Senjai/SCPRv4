@@ -35,18 +35,22 @@ class BlogEntry < ContentBase
   end
   
   def lede(l=240)
-    lede = self.content
-    if lede.length > l
-      lede = /^(.{#{l}}\w*)\W/.match(ActionController::Base.helpers.strip_tags(lede))
-      
-      if lede
-        lede = "#{lede[1]}..."
-      else
-        lede = self.content
-      end
-    end
+    # first test if the first paragraph is an acceptable length
+    fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.content).gsub("&nbsp;"," ").gsub(/\r/,''))
     
-    return lede
+    if fp && fp[1].length < l
+      # cool, return this
+      return fp[1]
+    else
+      # try shortening this paragraph
+      short = /^(.{#{l}}\w*)\W/.match(fp[1])
+      
+      if short
+        return "#{short[1]}..."
+      else
+        return fp[1]
+      end
+    end    
   end
   
   def previous

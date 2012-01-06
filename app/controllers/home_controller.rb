@@ -12,15 +12,17 @@ class HomeController < ApplicationController
         
     # -- More Headlines -- #
     
-    @headlines = []
-    Rails.logger.debug "running with content classes: #{ContentBase.content_classes}"
+    # Anything with a news category is eligible
+    
+    @headlines = []    
     ThinkingSphinx.search(
       '',
       :classes    => ContentBase.content_classes,
       :page       => 1,
       :per_page   => 12,
       :order      => :published_at,
-      :sort_mode  => :desc
+      :sort_mode  => :desc,
+      :without    => { :category => '' } 
     ).each do |c|
       # only include content that is not in the homepage
       if !citems.include? c

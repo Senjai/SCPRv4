@@ -4,9 +4,19 @@
 		<% o = Schedule.on_now %>
 			<li class="active-show-title <%= o.program %>">
 				<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
-			<%= o.program %>
+				<% if o.programme %>
+				<a href="<%= program_path(o.programme.slug) %>">
+					<% if o.programme.is_a? KpccProgram %>
+						<%= image_tag "broadcast-bar/headshots/#{o.programme.slug}.png", :size => "90x70", :alt => o.programme.title, :class => "bbar_headshot" %>
+					<% end %>
+				<% end %>
+				<%= o.program %>
+				<% if o.programme %></a><% end %>
 			</li>
-			<li class="show-time"><%= o.start_time.strftime("%l %P") %> - <%= o.end_time.strftime("%l %P") %></li>
+			<li class="show-time">
+				<%= o.start_time.strftime(o.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
+				 - <%= o.end_time.strftime(o.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
+			</li>
 			<!-- <li class="show-status">On Now:</li> -->
 			<li class="show-summary"></li>
 			<!-- <li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li> -->
@@ -19,7 +29,10 @@
 				<%= image_tag("broadcast-bar/upnext.png", :size => "66x21", :alt => 'Up Next', :style => "margin-bottom: -3px") %>
 				<%= u.program %>
 			</li>
-			<li class="show-time"><%= u.start_time.strftime("%l %P") %> - <%= u.end_time.strftime("%l %P") %></li>	
+			<li class="show-time">
+				<%= u.start_time.strftime(u.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
+				 - <%= u.end_time.strftime(u.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
+			</li>	
 	</ul>
 	</div>
 </section>

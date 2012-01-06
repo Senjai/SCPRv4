@@ -1,8 +1,8 @@
 class Schedule < ActiveRecord::Base
   set_table_name 'schedule_program'
 
-  belongs_to :kpcc_program, :class_name => "KpccProgram", :polymorphic => true
-  belongs_to :other_program, :class_name => "OtherProgram", :polymorphic => true
+  belongs_to :kpcc_program, :class_name => "KpccProgram"
+  belongs_to :other_program, :class_name => "OtherProgram"
 
   def self.on_now
     # find program matching today's week day and current time

@@ -4,16 +4,19 @@ class scpr.MegaMenu
     DefaultOptions:
         finder: "#megamenu .mega a"
         attr:   "data-section"
+        hidden: []
         
     #----------
         
-    constructor: (items,options) ->
+    constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend( options || {} )
         
-        @sections = {}
+        @sections = []
         
         # master control for animations
         @expanded = 0
+        
+        @hidden = _(@options.hidden).map (el) -> $(el)
                 
         $(@options.finder).each (idx,el) =>
             # for each section link, attach mouseover / mouseout listeners
@@ -24,26 +27,32 @@ class scpr.MegaMenu
                     drop: $("##{el.attr(@options.attr)}")
                     score: 0
                     selected: false
-                    func: _.debounce (=> @_score(sec)), 50
+                    func: _.debounce (=> @_score(sec)), 100
                     
                 # stash a copy
-                @sections[ el.attr(@options.attr) ] = sec
+                @sections.push = sec
                 
                 el.mouseover =>                     
                     sec.score += 1
-                    sec.func()
+                    #sec.func()
+                    @_score(sec)
+                    @expanded += 1
 
                 el.mouseout =>                 
                     sec.score -= 1
                     sec.func()
+                    @expanded -= 1
                 
                 sec.drop.mouseover => 
                     sec.score += 1
-                    sec.func()
+                    #sec.func()
+                    @_score(sec)
+                    @expanded += 1
 
                 sec.drop.mouseout =>
                     sec.score -= 1
                     sec.func()
+                    @expanded -= 1
                     
     _score: (sec) ->
         console.log "_score for #{sec.drop.attr('id')}: #{sec.score} (master: #{@expanded})"
@@ -53,17 +62,26 @@ class scpr.MegaMenu
             sec.item.addClass("hover")
             
             if @expanded
+                # hide all other sections
+                _(@sections).each (k,v) -> v.drop.hide()
+                
                 sec.drop.show()
             else
-                sec.drop.fadeIn(100)
-                
+                # anything that should be hidden during displays?
+                _(@hidden).each (el) -> el.hide()
+            
+                sec.drop.fadeIn 100
+                                
         else if sec.score == 0 && sec.selected
             # hide section
             sec.selected = false
             sec.item.removeClass("hover")
             
-            if @expanded == 1
-                @expanded -= 1
-                sec.drop.fadeOut("fast")
-            else
+            if @expanded
                 sec.drop.hide()
+            else
+                sec.drop.fadeOut("fast")
+                # anything that should be hidden during displays?
+                _(@hidden).each (el) -> el.show()
+                
+            

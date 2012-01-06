@@ -235,7 +235,10 @@ nav.utils ul {
 				p {
 					@include font-headline(600);
 					font-size:15px;
-					margin-left:75px;
+					padding-left:75px;
+					background: url(image_path('fallback-img.png')) no-repeat left top;
+					min-height: 65px;
+					margin-bottom: 0;
 				}
 			}
 			img {

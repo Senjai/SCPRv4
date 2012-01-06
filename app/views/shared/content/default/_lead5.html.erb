@@ -8,6 +8,6 @@
 		<%= link_to ( content.comment_count? ? "Comment (#{content.comment_count})" : "Comment on this story" ), content.link_path + "#comments", :class => "comment_link" %>
 	</h4>
 
-	<p><%=h truncate(strip_tags(content.lede), :length => 200, :separator => '.') %></p>
+	<p><%=h strip_tags(content.lede) %></p>
 </div>
 

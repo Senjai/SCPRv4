@@ -10,6 +10,10 @@ class CategoryConstraint
 end
 
 Scprv4::Application.routes.draw do
+    
+  namespace :dashboard do
+    match '/' => 'main#index', :as => :home
+  end
   
   match '/about/people/staff/:name' => 'people#bio', :as => :bio
 
@@ -31,8 +35,8 @@ Scprv4::Application.routes.draw do
   
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
 
-  match '/arts/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new(false), :defaults => { :page => 1 }, :as => :arts_section
-  match '/news/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new(true), :defaults => { :page => 1 }, :as => :news_section
+  match '/arts/:category(/:page)' => "category#arts", :constraints => CategoryConstraint.new(false), :defaults => { :page => 1 }, :as => :arts_section
+  match '/news/:category(/:page)' => "category#news", :constraints => CategoryConstraint.new(true), :defaults => { :page => 1 }, :as => :news_section
   
   match '/news/' => 'news#index', :as => :latest_news
   match '/arts/' => 'news#arts', :as => :latest_arts

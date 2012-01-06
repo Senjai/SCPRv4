@@ -1,0 +1,38 @@
+<%
+	@PAGE_TITLE = "Dashboard"
+%>
+
+<h1>Debugging Dashboard</h1>
+
+<div class="row">
+	<div class="span4">
+		<h2>News Story: Missing Category</h2>
+		<p><%= @stories.count() %> of <%= @baseline.count() %> stories published in the period</p>
+		<ul>
+		<% for s in @stories %>
+			<li>
+				<%= link_to s.headline, s.link_path %>
+				(<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
+				<br/>&mdash; <%= smart_date s %> 
+				<br/>&mdash; <%= render_byline s, false %>
+				<br/>
+			</li>
+		<% end %>
+		</ul>
+	</div>
+	<div class="span4">
+		<h2>News Story: No Assets</h2>
+		<p><%= @no_assets.count() %> of <%= @baseline.count() %> stories published in the period</p>
+		<ul>
+			<% for s in @no_assets %>
+				<li>
+					<%= link_to s.headline, s.link_path %>
+					(<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
+					<br/>&mdash; <%= smart_date s %> 
+					<br/>&mdash; <%= render_byline s, false %>
+					<br/>
+				</li>
+			<% end %>			
+		</ul>
+	</div>
+</div>

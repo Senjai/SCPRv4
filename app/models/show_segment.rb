@@ -51,6 +51,13 @@ class ShowSegment < ContentBase
       episode = self.episodes.first
     end
     
+    # if we still don't have an episode, we've got a problem
+    # FIXME: We desperately need to launch episode-independent segment publishing
+    
+    if !episode
+      return ''
+    end
+    
     Rails.application.routes.url_helpers.segment_path(
       :show => self.show.slug,
       :year => episode.air_date.year, 

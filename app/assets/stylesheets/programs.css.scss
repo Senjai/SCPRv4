@@ -10,20 +10,23 @@
 		}
 	}
 	li {
-		background:url(image_path('broadcast-bar/madeleine-brand.png')) no-repeat left bottom;
+		background:url(image_path('broadcast-bar/logo-mark-sm.png')) no-repeat left bottom;
 		min-height:60px;
 		padding-left:100px;
 		&:hover {
 			background-color:$nearWhite;
 		}
+		&.madeleine-brand {
+		    background-image :url(image_path('broadcast-bar/headshots/madeleine-brand.png'));
+		}
 		&.airtalk {
-			background-image:url(image_path('broadcast-bar/larry-airtalk.png'));
+			background-image:url(image_path('broadcast-bar/headshots/airtalk.png'));
 		}
 		&.patt {
-			background-image:url(image_path('broadcast-bar/patt-morrison.png'));
+			background-image:url(image_path('broadcast-bar/headshots/patt-morrison.png'));
 		}
 		&.offramp {
-			background-image:url(image_path('broadcast-bar/john-offramp.png'));
+			background-image:url(image_path('broadcast-bar/headshots/offramp.png'));
 		}
 		p {
 			margin-bottom:0;
