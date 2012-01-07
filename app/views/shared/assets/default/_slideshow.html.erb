@@ -6,10 +6,10 @@
 		$.getScript("http://<%= AssetHost[:server] %>/assets/slideshow.js",function(){
 			var w = $("#asset_slideshow").width()
 			
-			var slides = new AssetHost.Slideshow({
+			ahSlides = new AssetHost.Slideshow({
 				imgwidth: w,
 				imgheight: <%= assets.first.asset.sizes.eight.height %>,
-				assets: <%= raw assets.collect { |a| { :caption => a.caption, :credit => a.asset.owner, :normal => a.asset.urls.eight, :full => a.asset.urls.full } }.to_json %>,
+				assets: <%= raw assets.to_json %>,
 				el: "#asset_slideshow"
 			})
 		})
