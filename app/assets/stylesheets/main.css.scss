@@ -31,7 +31,7 @@
 	border:1px solid $white;
 	outline:1px solid $grayBorder;
 	height:46px;
-	margin:30px 0 25px 0;
+	margin:15px 0 25px 0;
 	width:100%;
 }
 section.broadcastbar {
@@ -70,7 +70,7 @@ section.broadcastbar {
 				margin:0 0 0 90px;
 				padding:8px 0 0 0;
 			}
-			&.active-show-title {
+			&.active-show-title,  .active-show-title a {
 				@include font-heading($weight:normal, $size:1.5em);
 				color:$orangeDark;
 			}
@@ -96,7 +96,7 @@ section.broadcastbar {
 			&.up-next img {
 				padding:8px 0 0 60px;
 			}
-			&.upnext-show-title {			    
+			&.upnext-show-title, .upnext-show-title a {			    
 				@include font-heading($weight:normal, $size:1.5em);
 				color:$orangeDark;
 			}
