@@ -1,19 +1,22 @@
 <% @PAGE_TITLE = [@blog.name,@entry.headline].join(" : ")%>
+
 <% content_for :entrydate do %>
-<div class="date">
-	<p><%= smart_date @entry %></p>
-</div>
-<%= render "shared/cwidgets/social_tools", :cssClass => 'side', :content => @entry %>
-<%= render "shared/cwidgets/comment_count", :cssClass => 'left-side', :content => @entry %>
+	<div class="date">
+		<p><%= smart_date @entry %></p>
+	</div>
+	<%= render "shared/cwidgets/social_tools", :cssClass => 'side', :content => @entry %>
+	<%= render "shared/cwidgets/comment_count", :cssClass => 'left-side', :content => @entry %>
 <% end %>
 
 <% content_for :body do %>
-<h1 class="story-headline"><%= @entry.title %></h1>
-<p class="byline"><%= render_byline @entry %></p>
-<%= render_asset @entry, "blog" %>
+	<h1 class="story-headline"><%= @entry.title %></h1>
+	<p class="byline"><%= render_byline @entry %></p>
+	<%= render_asset @entry, "blog" %>
 
-<%= raw @entry.content %>
-<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @entry %>
-<%= render "shared/cwidgets/next_prev" %>
-<%= render "shared/cwidgets/comments", :cssClass => '', :content => @entry %>
+	<%= raw @entry.content %>
+	<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @entry %>
+	<%= render "shared/cwidgets/next_prev" %>
+	<%= render "shared/cwidgets/comments", :cssClass => '', :content => @entry %>
 <% end %>
+
+<%= render "shared/cwidgets/track_page", :content => @entry %>

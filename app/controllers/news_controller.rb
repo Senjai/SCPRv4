@@ -1,5 +1,5 @@
 class NewsController < ApplicationController
-  layout "story"
+  layout "news"
 
   def index
     # build list of news categories    
