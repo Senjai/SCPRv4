@@ -15,7 +15,7 @@
 	
 	<% content_for :footerjss do %>
 		var secCarousel = new scpr.SectionCarousel(
-			<%= raw content.category.content(1,4).to_json(:only => [:id],:methods => [:headline,:obj_key,:first_asset_square,:link_path]) %>
+			<%= raw content.category.content(1,4,content).to_json(:only => [:id],:methods => [:headline,:obj_key,:first_asset_square,:link_path]) %>
 		)
 	<% end %>
 <% end %>

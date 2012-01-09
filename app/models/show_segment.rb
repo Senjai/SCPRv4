@@ -15,6 +15,7 @@ class ShowSegment < ContentBase
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has created_at, :as => :published_at
+    has "CRC32(CONCAT('shows/segment:',shows_segment.id))", :type => :integer, :as => :obj_key
     where "status = #{STATUS_LIVE}"
   end
   

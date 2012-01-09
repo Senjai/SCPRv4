@@ -16,6 +16,7 @@ class NewsStory < ContentBase
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
+    has "CRC32(CONCAT('news/story:',news_story.id))", :type => :integer, :as => :obj_key
     where "status = #{STATUS_LIVE}"
   end
   

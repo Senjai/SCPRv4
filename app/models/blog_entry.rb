@@ -14,6 +14,7 @@ class BlogEntry < ContentBase
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
+    has "CRC32(CONCAT('blogs/entry:',blogs_entry.id))", :type => :integer, :as => :obj_key
     where "status = #{STATUS_LIVE}"
   end
   

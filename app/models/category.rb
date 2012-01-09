@@ -6,14 +6,21 @@ class Category < ActiveRecord::Base
 
   #----------
 
-  def content(page=1,per_page=10)
-    ThinkingSphinx.search '',
+  def content(page=1,per_page=10,without_obj=nil)
+    args = {
       :classes    => ContentBase.content_classes,
       :page       => page,
       :per_page   => per_page,
       :order      => :published_at,
       :sort_mode  => :desc,
-      :with       => { :category => self.id }
+      :with       => { :category => self.id }      
+    }
+    
+    if without_obj && without_obj.respond_to?("obj_key")
+      args[:without] = { :obj_key => without_obj.obj_key.to_crc32 }
+    end
+    
+    ThinkingSphinx.search '', args
   end
   
   #----------
