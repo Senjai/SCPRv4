@@ -14,25 +14,16 @@ class HomeController < ApplicationController
     
     # Anything with a news category is eligible
     
-    @headlines = []    
-    ThinkingSphinx.search(
+    @headlines = ThinkingSphinx.search(
       '',
       :classes    => ContentBase.content_classes,
       :page       => 1,
       :per_page   => 12,
       :order      => :published_at,
       :sort_mode  => :desc,
-      :without    => { :category => '' } 
-    ).each do |c|
-      # only include content that is not in the homepage
-      if !citems.include? c
-        @headlines << c
-      end
-    end
-    
-    # -- Latest Events  -- #
-    @events = Event.where("is_published = ? AND starts_at > ? AND etype != ? AND etype != ?", 1, Time.now, "spon", "pick").order("starts_at ASC").limit(4)
-    
+      :without    => { :category => '' },
+      :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } }
+    )
     
     # -- Section Rules -- #
     
@@ -46,7 +37,8 @@ class HomeController < ApplicationController
         :per_page   => 12,
         :order      => :published_at,
         :sort_mode  => :desc,
-        :with       => { :category => cat.id }
+        :with       => { :category => cat.id },
+        :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } }
       
       top = nil
       right = nil
@@ -54,11 +46,6 @@ class HomeController < ApplicationController
       sorttime = nil
       
       content.each do |c|
-        # first, rule out content that is in the homepage
-        if citems.include? c
-          # pass...
-          next
-        end
         
         ctime = c.public_datetime.is_a?(Date) ? c.public_datetime.to_time : c.public_datetime
         
