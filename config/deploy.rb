@@ -1,5 +1,6 @@
 require "bundler/capistrano"
 require 'thinking_sphinx/deploy/capistrano'
+require 'new_relic/recipes'
 
 set :application, "scprv4"
 set :scm, :git
@@ -47,6 +48,8 @@ namespace :remote_ts do
     thinking_sphinx.index
   end
 end
+
+after "deploy:update", "newrelic:notice_deployment"
 
 #task :before_update_code, :roles => [:app] do
 #  thinking_sphinx.stop
