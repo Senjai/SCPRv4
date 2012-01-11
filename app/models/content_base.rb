@@ -43,6 +43,17 @@ class ContentBase < ActiveRecord::Base
     self::CONTENT_CLASSES.collect {|k,v| v.constantize }
   end
   
+  def self.get_model_for_obj_key(key)
+    # convert key from "app/model:id" to AppModel.find(id)
+    key =~ /([^:]+):(\d+)/
+    
+    if $~
+      if CONTENT_CLASSES[ $~[1] ]
+        return CONTENT_CLASSES[ $~[1] ].constantize
+      end
+    end
+  end
+  
   #----------
     
   def self.obj_by_key(key)
@@ -82,6 +93,8 @@ class ContentBase < ActiveRecord::Base
     self[:headline]
   end
   
+  #----------
+  
   def first_asset_square
     if self.assets.any?
       self.assets.first.asset.tag(:lsquare)
@@ -93,6 +106,8 @@ class ContentBase < ActiveRecord::Base
   def public_datetime
     self.published_at
   end
+  
+  #----------
   
   def audio
     @audio ||= self._get_audio()

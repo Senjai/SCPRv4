@@ -12,9 +12,7 @@
 		<div class="headlines">
 			<h6>More Headlines</h6>
 			<ul>
-			<% for c in @headlines[0..5] %>
-				<li><%= link_to c.headline, c.link_path %></li>
-			<% end %>
+				<%= ActionController::Base.cache_store.read("home/headlines") %>
 			</ul>
 		</div>
 	</div>

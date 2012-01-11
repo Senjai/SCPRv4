@@ -29,9 +29,7 @@
 	</div>
 	<div class="row">
 		<section class="span8 more-news-container">
-			<% for s in @sections[0..4] %>
-				<%= render :partial => "shared/sections/more_news", :object => s, :as => :section %>
-			<% end %>
+			<%= ActionController::Base.cache_store.read("home/sections") %>
 		</section>
 		<div id="sidebar-bottom" class="span4">
 			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
