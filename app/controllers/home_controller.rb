@@ -1,4 +1,4 @@
-class HomeController < ApplicationController
+class HomeController < ApplicationController  
   layout "homepage"
   
   def index
@@ -132,6 +132,10 @@ class HomeController < ApplicationController
       "home/sections",
       view.render(:partial => "home/cached/sections", :object => @sections)
     )
-    
+  end
+  
+  class << self
+    include NewRelic::Agent::Instrumentation::ControllerInstrumentation
+    add_transaction_tracer :_cache_homepage, :category => :task
   end
 end
