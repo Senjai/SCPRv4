@@ -101,7 +101,7 @@ module ApplicationHelper
       if content.public_datetime.is_a? Time
         return content.public_datetime.strftime(options[:today_template])          
       else
-        return "Today"
+        return "| Today"
       end
     elsif options && options[:today]
       # we only want a date if it is today's date, so return nothing
@@ -168,6 +168,31 @@ module ApplicationHelper
       end
     else
       return names.join(" with ").html_safe
+    end
+  end
+  
+  #----------
+  
+  def featured_comment(opts)
+    opts = { :style => "default", :bucket => nil }.merge(opts||{})
+    
+    Rails.logger.debug "opts is #{opts}"
+    
+    comment = nil
+    
+    if opts[:bucket]
+      bucket = FeaturedCommentBucket.find(opts[:bucket])
+      comment = bucket.comments.published.first()
+    else
+      comment = FeaturedComment.published.first()
+    end
+    
+    if comment
+      #begin
+        return render(:partial => "shared/featured_comment/#{opts[:style]}", :object => comment, :as => :comment)
+      #rescue
+      #  return render(:partial => "shared/featured_comment/default", :object => comment, :as => :comment)          
+      #end
     end
   end
   

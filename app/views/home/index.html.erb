@@ -8,6 +8,7 @@
 
 <div class="row">
 	<%= yield :conversation_slot %>
+	
 	<div class="span4">
 		<div class="headlines">
 			<h6>More Headlines</h6>
@@ -19,5 +20,8 @@
 	<div class="span4">
 		<%= render "shared/widgets/events_at_the_forum" %>	
 	</div>	
-
 </div>
+
+<% content_for :lower do %>
+	<%= ActionController::Base.cache_store.read("home/sections") %>
+<% end %>

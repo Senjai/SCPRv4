@@ -29,7 +29,7 @@
 	</div>
 	<div class="row">
 		<section class="span8 more-news-container">
-			<%= ActionController::Base.cache_store.read("home/sections") %>
+			<%= yield :lower %>
 		</section>
 		<div id="sidebar-bottom" class="span4">
 			<%= render "shared/widgets/oas", :ad_id => 'x02' %>

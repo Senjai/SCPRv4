@@ -12,6 +12,7 @@
 
 <% content_for :conversation_slot do %>
 	<div class="join-conversation-container">
-		<%= render "shared/widgets/join_conversation" %>
+		<hr/>
+		<%= featured_comment :bucket => nil, :style => "home" %>
 	</div>
 <% end %>
