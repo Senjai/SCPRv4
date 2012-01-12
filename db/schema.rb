@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111227003217) do
+ActiveRecord::Schema.define(:version => 20120111225707) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20111227003217) do
     t.string  "feed_url",    :limit => 200,        :default => "",    :null => false
     t.boolean "is_remote",                                            :null => false
     t.string  "custom_url",  :limit => 140,                           :null => false
+    t.boolean "is_news",                                              :null => false
   end
 
   add_index "blogs_blog", ["name"], :name => "name", :unique => true
@@ -197,11 +198,13 @@ ActiveRecord::Schema.define(:version => 20111227003217) do
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
 
   create_table "contentbase_category", :force => true do |t|
-    t.string  "category", :limit => 50,                   :null => false
-    t.string  "slug",     :limit => 50,                   :null => false
-    t.boolean "is_news",                :default => true, :null => false
+    t.string  "category",          :limit => 50,                   :null => false
+    t.string  "slug",              :limit => 50,                   :null => false
+    t.boolean "is_news",                         :default => true, :null => false
+    t.integer "comment_bucket_id"
   end
 
+  add_index "contentbase_category", ["comment_bucket_id"], :name => "contentbase_category_36c0cbca"
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
@@ -222,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20111227003217) do
     t.integer "role",                          :default => 0, :null => false
   end
 
+  add_index "contentbase_contentbyline", ["content_type_id", "object_id"], :name => "content_key"
   add_index "contentbase_contentbyline", ["content_type_id"], :name => "contentbase_contentbyline_e4470c6e"
   add_index "contentbase_contentbyline", ["user_id"], :name => "contentbase_contentbyline_fbfc09f1"
 
@@ -244,6 +248,23 @@ ActiveRecord::Schema.define(:version => 20111227003217) do
     t.string   "url",           :limit => 150,                                           :null => false
     t.integer  "status",                              :default => 0,                     :null => false
     t.datetime "pub_at",                              :default => '2011-11-21 11:07:11', :null => false
+  end
+
+  create_table "contentbase_featuredcomment", :force => true do |t|
+    t.integer  "bucket_id",                                                                :null => false
+    t.integer  "content_type_id",                                                          :null => false
+    t.integer  "object_id",                                                                :null => false
+    t.integer  "status",                                :default => 0,                     :null => false
+    t.datetime "published_at",                          :default => '2012-01-12 00:07:58', :null => false
+    t.string   "username",        :limit => 50,                                            :null => false
+    t.text     "excerpt",         :limit => 2147483647,                                    :null => false
+  end
+
+  add_index "contentbase_featuredcomment", ["bucket_id"], :name => "contentbase_featuredcomment_25ef9024"
+  add_index "contentbase_featuredcomment", ["content_type_id"], :name => "contentbase_featuredcomment_e4470c6e"
+
+  create_table "contentbase_featuredcommentbucket", :force => true do |t|
+    t.string "title", :limit => 50, :null => false
   end
 
   create_table "django_admin_log", :force => true do |t|
@@ -1057,6 +1078,17 @@ ActiveRecord::Schema.define(:version => 20111227003217) do
     t.integer "category_id",                 :null => false
     t.integer "content_id",                  :null => false
     t.string  "content_type"
+  end
+
+  create_table "rails_contentbase_featuredcomment", :id => false, :force => true do |t|
+    t.integer  "id",                                 :default => 0,                     :null => false
+    t.integer  "bucket_id",                                                             :null => false
+    t.integer  "status",                             :default => 0,                     :null => false
+    t.datetime "published_at",                       :default => '2012-01-12 00:07:58', :null => false
+    t.string   "username",     :limit => 50,                                            :null => false
+    t.text     "excerpt",      :limit => 2147483647,                                    :null => false
+    t.integer  "content_id",                                                            :null => false
+    t.string   "content_type"
   end
 
   create_table "rails_events_event", :id => false, :force => true do |t|

@@ -327,8 +327,8 @@ footer {
 	@include gradientBar(#EE5F5B, #C43C35); 
   }
   &.warning {
-    @include gradientBar(#fceec1, #eedc94); 
-	p, li {color:$grayDark;text-shadow:none;}
+    @include gradientBar(lighten(#fceec1, 10%), lighten(#eedc94, 10%)); 
+	p, li {color:$grayDark;font-size:13px;text-shadow:none;}
   }
   &.success {
     @include gradientBar(#62C462, #57a957); 
