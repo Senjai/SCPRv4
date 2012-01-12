@@ -31,6 +31,7 @@
 			<% register_content("contentbase:new") %>
 			<ul>
 			<% for c in get_latest_news[0..1] do %>
+				<% register_content(c) %>
 				<li>
 					<a href="<%= c.link_path %>">
 					<%= render_asset(c,"thumb") %>
@@ -50,6 +51,7 @@
 					<% register_content("blogs/entry:new") %>
 					
 					<% for e in @g_latest_blogs_news.limit(4) do %>
+						<% register_content(e) %>
 						<li><p class="entry-title">
 							<a href="<%= e.link_path %>">
 								<%= e.headline %>
