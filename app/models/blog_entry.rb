@@ -10,12 +10,13 @@ class BlogEntry < ContentBase
   
   define_index do
     indexes title
-    indexes blog
+    indexes content
+    has blog.id, :as => :blog
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
     has "CRC32(CONCAT('blogs/entry:',blogs_entry.id))", :type => :integer, :as => :obj_key
-    where "status = #{STATUS_LIVE}"
+    where "blogs_entry.status = #{STATUS_LIVE} and blogs_blog.is_active = 1"
   end
   
     
