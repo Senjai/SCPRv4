@@ -22,7 +22,7 @@ class ContentBase < ActiveRecord::Base
     'shows/segment' => "ShowSegment",
     #'shows/episode' => "ShowEpisode",
     'blogs/entry'   => "BlogEntry",
-    'contentbase/shell' => "ContentShell"
+    'content/shell' => "ContentShell"
   }
 
   # All ContentBase objects have assets and alarms
