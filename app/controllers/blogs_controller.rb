@@ -20,7 +20,10 @@ class BlogsController < ApplicationController
   
   def entry
     @entry = @blog.entries.published.find(params[:id])
-    @entries = @blog.entries.published.last(5).reverse
+    @entries = @blog.entries.published.paginate(
+      :page => params[:page],
+      :per_page => 5
+    )
   end
   
   protected
