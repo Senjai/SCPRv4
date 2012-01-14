@@ -47,7 +47,7 @@ class HomepageWorker
   
   def log(msg)
     if verbose
-      puts "*** #{msg}"
+      $stderr.puts "*** #{msg}"
     end
   end
 end
