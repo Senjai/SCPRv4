@@ -12,7 +12,6 @@
 	<%= render "shared/cwidgets/audio", :content => @story %>
 </div>
 
-<%= simple_format @story.lede, {}, :sanitize => false %>
 <%= simple_format @story.body, {}, :sanitize => false %>
 
 <%= render "shared/cwidgets/related_articles", :content => @story %>

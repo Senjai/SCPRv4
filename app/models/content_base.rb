@@ -94,6 +94,42 @@ class ContentBase < ActiveRecord::Base
   end
   
   #----------
+
+  def short_headline
+    self._short_headline? ? self._short_headline : self.headline
+  end
+  
+  #----------
+  
+  def teaser
+    if self._teaser?
+      return self._teaser
+    end
+    
+    # -- cut down body to get teaser -- #
+    
+    l = 180    
+    
+    # first test if the first paragraph is an acceptable length
+    fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,''))
+    
+    if fp && fp[1].length < l
+      # cool, return this
+      return fp[1]
+    else
+      # try shortening this paragraph
+      short = /^(.{#{l}}\w*)\W/.match(fp[1])
+      
+      if short
+        return "#{short[1]}..."
+      else
+        return fp[1]
+      end
+    end    
+    
+  end
+
+  #----------
   
   def first_asset_square
     if self.assets.any?

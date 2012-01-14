@@ -36,25 +36,10 @@ class BlogEntry < ContentBase
     self.title
   end
   
-  def lede(l=240)
-    # first test if the first paragraph is an acceptable length
-    fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.content).gsub("&nbsp;"," ").gsub(/\r/,''))
-    
-    if fp && fp[1].length < l
-      # cool, return this
-      return fp[1]
-    else
-      # try shortening this paragraph
-      short = /^(.{#{l}}\w*)\W/.match(fp[1])
-      
-      if short
-        return "#{short[1]}..."
-      else
-        return fp[1]
-      end
-    end    
+  def body
+    return self.content
   end
-  
+    
   def previous
     self.class.published.first(:conditions => ["published_at < ? and blog_id = ?", self.published_at, self.blog_id], :limit => 1, :order => "published_at desc")
   end

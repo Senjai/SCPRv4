@@ -55,7 +55,6 @@ class scpr.MegaMenu
                     @expanded -= 1
                     
     _score: (sec) ->
-        console.log "_score for #{sec.drop.attr('id')}: #{sec.score} (master: #{@expanded})"
         if sec.score > 0 && !sec.selected
             # show section
             sec.selected = true

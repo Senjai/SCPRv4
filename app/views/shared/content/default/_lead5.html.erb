@@ -1,13 +1,13 @@
 <div class="cbase lead">
 	<%= render_asset(content,"lead5") %>
 
-	<h1 class="story-headline"><%= link_to content.headline, content.link_path %></h1>
+	<h1 class="story-headline"><%= link_to content.short_headline, content.link_path %></h1>
 	<h4>
 		<%= render_byline content %> | <%= smart_date content %> 
 		
 		<%= link_to ( content.comment_count? ? "Comment (#{content.comment_count})" : "Comment on this story" ), content.link_path + "#comments", :class => "comment_link" %>
 	</h4>
 
-	<p><%=h strip_tags(content.lede) %></p>
+	<p><%=h strip_tags(content.teaser) %></p>
 </div>
 
