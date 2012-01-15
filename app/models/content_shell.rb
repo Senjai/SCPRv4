@@ -17,6 +17,14 @@ class ContentShell < ContentBase
 
   #----------
   
+  def _short_headline
+    self.headline
+  end
+  
+  def _short_headline?
+    true
+  end
+  
   def canFeature?
     self.assets.any? ? true : false
   end
