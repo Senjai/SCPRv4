@@ -144,7 +144,7 @@ class HomeController < ApplicationController
         :with       => { :category => sec[:section].id, :is_slideshow => true }
         
       if content
-        if content.first.public_datetime > now - 1
+        if content.first.public_datetime > now - 5
           sec[:right] = content.first
           next
         end
@@ -161,7 +161,7 @@ class HomeController < ApplicationController
         :with       => { :category => sec[:section].id }
         
       if segments
-        if segments.first.public_datetime > now - 1
+        if segments.first.public_datetime > now - 2
           sec[:right] = segments.first
           next
         end
