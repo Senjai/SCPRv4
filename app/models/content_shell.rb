@@ -11,6 +11,7 @@ class ContentShell < ContentBase
     has category.is_news, :as => :category_is_news
     has pub_at, :as => :published_at
     has "CRC32(CONCAT('content/shell:',contentbase_contentshell.id))", :type => :integer, :as => :obj_key
+    has "0", :as => :is_slideshow, :type => :boolean
     where "status = #{STATUS_LIVE}"
   end
   
@@ -23,10 +24,6 @@ class ContentShell < ContentBase
   
   def _short_headline?
     true
-  end
-  
-  def canFeature?
-    self.assets.any? ? true : false
   end
   
   def link_path

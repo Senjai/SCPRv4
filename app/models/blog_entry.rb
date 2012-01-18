@@ -2,6 +2,7 @@ class BlogEntry < ContentBase
   set_table_name "blogs_entry"
   
   CONTENT_TYPE = "blogs/entry"
+  PRIMARY_ASSET_SCHEME = :blog_asset_scheme
   
   belongs_to :blog
   belongs_to :author, :class_name => "Bio"
@@ -16,16 +17,10 @@ class BlogEntry < ContentBase
     has category.is_news, :as => :category_is_news
     has published_at
     has "CRC32(CONCAT('blogs/entry:',blogs_entry.id))", :type => :integer, :as => :obj_key
+    has "(blogs_entry.blog_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
     where "blogs_entry.status = #{STATUS_LIVE} and blogs_blog.is_active = 1"
   end
-  
     
-  #----------
-  
-  def canFeature?
-    self.blog_asset_scheme == "slideshow" ? true : false
-  end
-  
   #----------
   
   def byline_elements

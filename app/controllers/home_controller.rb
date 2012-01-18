@@ -78,14 +78,13 @@ class HomeController < ApplicationController
       content = ThinkingSphinx.search '',
         :classes    => ContentBase.content_classes,
         :page       => 1,
-        :per_page   => 12,
+        :per_page   => 5,
         :order      => :published_at,
         :sort_mode  => :desc,
         :with       => { :category => cat.id },
         :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } }
       
       top = nil
-      right = nil
       more = []
       sorttime = nil
       
@@ -104,12 +103,6 @@ class HomeController < ApplicationController
           next
         end
         
-        # if a slideshow or segment, potential right feature
-        if !right && c.canFeature?
-          right = c
-          next
-        end
-        
         # finally, just drop it in the more bucket
         more << c
       end  
@@ -118,7 +111,7 @@ class HomeController < ApplicationController
       @sections << {
         :section  => cat,
         :top      => top,
-        :right    => right,
+        :right    => nil,
         :more     => more,
         :sorttime => sorttime
       }      
@@ -126,6 +119,55 @@ class HomeController < ApplicationController
     
     # now sort sections by the sorttime
     @sections.sort_by! {|s| s[:sorttime] }.reverse!
+    
+    now = DateTime.now()
+    
+    # so we need to figure out what goes in the right feature for each section
+    @sections[0..4].each do |sec|
+      # -- first look for featured comments -- #
+      
+      featured = sec[:section].comment_bucket.comments.published.where( "published_at > ?", now - 1 )
+      
+      if featured.any?
+        sec[:right] = featured.first
+        next
+      end
+      
+      # -- now try slideshows -- #
+      
+      content = ThinkingSphinx.search '',
+        :classes    => ContentBase.content_classes,
+        :page       => 1,
+        :per_page   => 1,
+        :order      => :published_at,
+        :sort_mode  => :desc,
+        :with       => { :category => sec[:section].id, :is_slideshow => true }
+        
+      if content
+        if content.first.public_datetime > now - 1
+          sec[:right] = content.first
+          next
+        end
+      end
+      
+      # -- segment in the last two days? -- #
+      
+      segments = ThinkingSphinx.search '',
+        :classes    => [ShowSegment],
+        :page       => 1,
+        :per_page   => 1,
+        :order      => :published_at,
+        :sort_mode  => :desc,
+        :with       => { :category => sec[:section].id }
+        
+      if segments
+        if segments.first.public_datetime > now - 1
+          sec[:right] = segments.first
+          next
+        end
+      end
+      
+    end
     
     # render and cache
     Rails.cache.write(

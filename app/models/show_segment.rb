@@ -2,6 +2,7 @@ class ShowSegment < ContentBase
   set_table_name 'shows_segment'
   
   CONTENT_TYPE = "shows/segment"
+  PRIMARY_ASSET_SCHEME = :segment_asset_scheme
   
   belongs_to :show, :class_name => "KpccProgram"
   
@@ -16,6 +17,7 @@ class ShowSegment < ContentBase
     has category.is_news, :as => :category_is_news
     has created_at, :as => :published_at
     has "CRC32(CONCAT('shows/segment:',shows_segment.id))", :type => :integer, :as => :obj_key
+    has "(shows_segment.segment_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
     where "status = #{STATUS_LIVE}"
   end
   

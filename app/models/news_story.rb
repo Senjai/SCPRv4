@@ -3,6 +3,8 @@ class NewsStory < ContentBase
   
   CONTENT_TYPE = 'news/story'
   CONTENT_TYPE_ID = 15
+  
+  PRIMARY_ASSET_SCHEME = :story_asset_scheme
     
   has_many :links, :as => "content"
   
@@ -17,17 +19,12 @@ class NewsStory < ContentBase
     has category.is_news, :as => :category_is_news
     has published_at
     has "CRC32(CONCAT('news/story:',news_story.id))", :type => :integer, :as => :obj_key
+    has "(news_story.story_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
     where "status = #{STATUS_LIVE}"
   end
   
   scope :published, where(:status => STATUS_LIVE)
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
-  
-  #----------
-  
-  def canFeature?
-    self.story_asset_scheme == "slideshow" ? true : false
-  end
   
   #----------
   
