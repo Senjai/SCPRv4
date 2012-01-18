@@ -1,0 +1,44 @@
+<% @PAGE_TITLE = "Section Dashboard" %>
+
+<h1><%= @PAGE_TITLE %></h1>
+
+<% for sec in @sections %>
+	<div class="row">
+		<h2><%= sec[:section].category %></h2>
+		<div class="span2">
+			<b>Latest Content:</b>
+			<% for c in sec[:content] %>
+				<p><%= link_to c.obj_key, c.link_path %><br/><%= time_ago_in_words c.public_datetime %></p>
+			<% end %>
+		</div>
+		<div class="span2">
+			<b>Featured Comment:</b>
+			<% if sec[:featured] %>
+			<p>
+				<%= sec[:featured].content.obj_key %>
+				<br/><%= time_ago_in_words sec[:featured].published_at %>
+			</p>
+			<% else %>
+				<p><i>None</i></p>
+			<% end %>
+		</div>
+		<div class="span2">
+			<b>Slideshow:</b>
+			<% if sec[:slideshow] %>
+			<p>
+				<%= link_to sec[:slideshow].obj_key, sec[:slideshow].link_path %>
+				<br/><%= time_ago_in_words sec[:slideshow].public_datetime %>
+				(<%= sec[:slideshow].assets.count %> assets)
+				
+			</p>
+			<% end %>
+		</div>
+		<div class="span2">
+			<b>Segment:</b>
+			<% if sec[:segment] %>
+				<%= link_to sec[:segment].obj_key, sec[:segment].link_path %>
+				<br/><%= time_ago_in_words sec[:segment].public_datetime %>
+			<% end %>
+		</div>
+	</div>
+<% end %>

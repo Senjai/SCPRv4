@@ -12,6 +12,7 @@ end
 Scprv4::Application.routes.draw do
     
   namespace :dashboard do
+    match '/sections' => 'main#sections', :as => :sections
     match '/' => 'main#index', :as => :home
   end
   
