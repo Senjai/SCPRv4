@@ -124,13 +124,19 @@ class HomeController < ApplicationController
     
     # so we need to figure out what goes in the right feature for each section
     @sections[0..4].each do |sec|
+      candidates = []
+      
       # -- first look for featured comments -- #
       
       featured = sec[:section].comment_bucket.comments.published.where( "published_at > ?", now - 1 )
       
       if featured.any?
-        sec[:right] = featured.first
-        next
+        # Initial score:  20
+        # Decay rate:     0.05
+        candidates << {
+          :content  => featured.first,
+          :score    => 20 * Math.exp( -0.05 * ((Time.now - featured.first.published_at) / 3600) )
+        }        
       end
       
       # -- now try slideshows -- #
@@ -144,10 +150,14 @@ class HomeController < ApplicationController
         :with       => { :category => sec[:section].id, :is_slideshow => true }
         
       if content
-        if content.first.public_datetime > now - 5
-          sec[:right] = content.first
-          next
-        end
+        # Initial score:  5 + number of slides
+        # Decay rate:     0.01
+        slideshow = content.first
+        
+        candidates << {
+          :content  => slideshow,
+          :score    => (5 + slideshow.assets.length) * Math.exp( -0.01 * ((Time.now - (slideshow.public_datetime.is_a?(Date) ? slideshow.public_datetime.to_time : slideshow.public_datetime)) / 3600) )
+        }
       end
       
       # -- segment in the last two days? -- #
@@ -161,12 +171,20 @@ class HomeController < ApplicationController
         :with       => { :category => sec[:section].id }
         
       if segments
-        if segments.first.public_datetime > now - 2
-          sec[:right] = segments.first
-          next
-        end
+        # Initial score:  10
+        # Decay rate:     0.02  
+        seg = segments.first
+        
+        candidates << {
+          :content  => seg,
+          :score    => 10 * Math.exp(-0.02 * ((Time.now - seg.public_datetime.to_time) / 3600) )
+        }
       end
       
+      if candidates.any?
+        candidates.sort_by! {|c| -c[:score] }
+        sec[:right] = candidates[0][:content]
+      end
     end
     
     # render and cache

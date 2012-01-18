@@ -58,6 +58,7 @@ class Dashboard::MainController < ApplicationController
       
       if featured.any?
         sec[:featured] = featured.first
+        sec[:featured_score] = 20 * Math.exp( -0.05 * ((Time.now - sec[:featured].published_at) / 3600) )
       end
       
       # -- now try slideshows -- #
@@ -70,8 +71,9 @@ class Dashboard::MainController < ApplicationController
         :sort_mode  => :desc,
         :with       => { :category => sec[:section].id, :is_slideshow => true }
         
-      if content
+      if content.any?
         sec[:slideshow] = content.first
+        sec[:slideshow_score] = (5 + sec[:slideshow].assets.length) * Math.exp( -0.01 * ((Time.now - (sec[:slideshow].public_datetime.is_a?(Date) ? sec[:slideshow].public_datetime.to_time : sec[:slideshow].public_datetime)) / 3600) )
       end
 
       # -- segment in the last two days? -- #
@@ -84,8 +86,9 @@ class Dashboard::MainController < ApplicationController
         :sort_mode  => :desc,
         :with       => { :category => sec[:section].id }
         
-      if segments
+      if segments.any?
         sec[:segment] = segments.first
+        sec[:segment_score] = 10 * Math.exp(-0.02 * ((Time.now - sec[:segment].public_datetime.to_time) / 3600) )
       end      
       
       # assemble section object

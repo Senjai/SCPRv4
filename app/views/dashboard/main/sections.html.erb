@@ -17,6 +17,7 @@
 			<p>
 				<%= sec[:featured].content.obj_key %>
 				<br/><%= time_ago_in_words sec[:featured].published_at %>
+				<br/>Score: <%= sec[:featured_score] %>
 			</p>
 			<% else %>
 				<p><i>None</i></p>
@@ -29,6 +30,7 @@
 				<%= link_to sec[:slideshow].obj_key, sec[:slideshow].link_path %>
 				<br/><%= time_ago_in_words sec[:slideshow].public_datetime %>
 				(<%= sec[:slideshow].assets.count %> assets)
+				<br/>Score: <%= sec[:slideshow_score] %>
 				
 			</p>
 			<% end %>
@@ -38,6 +40,8 @@
 			<% if sec[:segment] %>
 				<%= link_to sec[:segment].obj_key, sec[:segment].link_path %>
 				<br/><%= time_ago_in_words sec[:segment].public_datetime %>
+				<br/>Score: <%= sec[:segment_score] %>
+				
 			<% end %>
 		</div>
 	</div>
