@@ -2,47 +2,45 @@
 
 <h1><%= @PAGE_TITLE %></h1>
 
+<h2>Homepage Content:</h2>
+
+<div class="row">
+<% for c in @homepage.content %>
+	<div class="span2">
+		<p><%= link_to c.content.obj_key, c.content.link_path %><br/><%= time_ago_in_words c.content.public_datetime %></p>
+	</div>
+<% end %>
+</div>
+
 <% for sec in @sections %>
+	<h2><%= sec[:section].category %></h2>
 	<div class="row">
-		<h2><%= sec[:section].category %></h2>
 		<div class="span2">
 			<b>Latest Content:</b>
 			<% for c in sec[:content] %>
 				<p><%= link_to c.obj_key, c.link_path %><br/><%= time_ago_in_words c.public_datetime %></p>
 			<% end %>
 		</div>
-		<div class="span2">
-			<b>Featured Comment:</b>
-			<% if sec[:featured] %>
-			<p>
-				<%= sec[:featured].content.obj_key %>
-				<br/><%= time_ago_in_words sec[:featured].published_at %>
-				<br/>Score: <%= sec[:featured_score] %>
-			</p>
-			<% else %>
-				<p><i>None</i></p>
-			<% end %>
-		</div>
-		<div class="span2">
-			<b>Slideshow:</b>
-			<% if sec[:slideshow] %>
-			<p>
-				<%= link_to sec[:slideshow].obj_key, sec[:slideshow].link_path %>
-				<br/><%= time_ago_in_words sec[:slideshow].public_datetime %>
-				(<%= sec[:slideshow].assets.count %> assets)
-				<br/>Score: <%= sec[:slideshow_score] %>
-				
-			</p>
-			<% end %>
-		</div>
-		<div class="span2">
-			<b>Segment:</b>
-			<% if sec[:segment] %>
-				<%= link_to sec[:segment].obj_key, sec[:segment].link_path %>
-				<br/><%= time_ago_in_words sec[:segment].public_datetime %>
-				<br/>Score: <%= sec[:segment_score] %>
-				
-			<% end %>
-		</div>
+		<% for cc in sec[:candidates][0..2] %>
+			<div class="span2">
+				<b><%= cc[:content].class %> (<%= cc[:metric].to_s %>)</b>
+				<% if cc[:metric] == :comment %>
+					<p>
+						<%= link_to cc[:content].content.obj_key, cc[:content].content.link_path %>
+						<br/><%= time_ago_in_words cc[:content].published_at %>
+						<br/>Score: <%= number_with_precision cc[:score], :precision => 5 %>
+					</p>
+				<% else %>
+					<p>
+						<%= link_to cc[:content].obj_key, cc[:content].link_path %>
+						<br/><%= time_ago_in_words cc[:content].public_datetime %>
+						<br/>Score: <%= number_with_precision cc[:score], :precision => 5 %> 
+						<% if cc[:metric] == :slideshow %>
+							<br/>(<%= cc[:content].assets.count %> assets)
+						<% end %>
+					</p>				
+				<% end %>
+			</div>
+		<% end %>
 	</div>
 <% end %>
