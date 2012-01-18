@@ -1,5 +1,12 @@
 namespace :scprv4 do 
   
+  desc "Clear events cache"
+  task :clear_events => [ :environment ] do 
+    Rails.cache.delete("views/mega_events_upcoming")
+  end
+  
+  #----------
+  
   desc "Start a Homepage listener"
   task :homepage => [ :environment ] do 
     require 'homepage_worker'
