@@ -1,8 +1,8 @@
 <section class="join_conversation">
 	<h6>Join the Conversation</h6>
 	<blockquote>
-	“<%= comment.excerpt %>”
+	<%= link_to '“'+comment.excerpt+'”', comment.content.link_path %>
 	</blockquote>
-	<p class="quotee">from <%= link_to comment.content.headline, comment.content.link_path + "#comments" %></p>
+	<p class="quotee">from <%= link_to comment.content.headline, comment.content.link_path %></p>
 </section>
 <hr/>
