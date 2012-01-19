@@ -5,7 +5,7 @@ class CategoryController < ApplicationController
     @category = Category.find_by_slug(params[:category])
     
     @content = ThinkingSphinx.search '',
-      :classes    => [NewsStory,BlogEntry,ContentShell,ShowSegment],
+      :classes    => ContentBase.content_classes,
       :page       => params[:page],
       :per_page   => 10,
       :order      => :published_at,
@@ -21,7 +21,7 @@ class CategoryController < ApplicationController
     @category = Category.find_by_slug(params[:category])
     
     @content = ThinkingSphinx.search '',
-      :classes    => [NewsStory,BlogEntry,ContentShell,ShowSegment],
+      :classes    => ContentBase.content_classes,
       :page       => params[:page],
       :per_page   => 10,
       :order      => :published_at,

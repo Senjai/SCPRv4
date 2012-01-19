@@ -5,7 +5,7 @@ class NewsController < ApplicationController
     # build list of news categories    
     @content = ThinkingSphinx.search(
       '',
-      :classes    => [NewsStory],
+      :classes    => ContentBase.content_classes,
       :page       => params[:page] || 1,
       :per_page   => 12,
       :order      => :published_at,
@@ -23,7 +23,7 @@ class NewsController < ApplicationController
     # build list of news categories    
     @content = ThinkingSphinx.search(
       '',
-      :classes    => [NewsStory],
+      :classes    => ContentBase.content_classes,
       :page       => params[:page] || 1,
       :per_page   => 12,
       :order      => :published_at,
