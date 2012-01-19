@@ -27,8 +27,21 @@ class HomepageWorker
         self.log("got message!")
         obj = JSON.load(message)
         self.log("message is from #{obj['key']}!")
-        HomeController._cache_homepage(obj['key'])
-        self.log("completed homepage caching... back to listening")
+        
+        if obj["key"] =~ /:new$/
+          # these are keys like "contentbase:new" and "news/story:new"
+          # we'll just filter them out for now
+          next
+        end
+        
+        # cache the homepage when new content is published, or published 
+        # content is updated and saved
+        
+        if obj['action'] == 'publish' || obj['action'] == 'unpublish' || obj['status'] == ContentBase::STATUS_LIVE
+          self.log("triggering caching based on action '#{obj['action']}' and status '#{obj['status']}'")
+          HomeController._cache_homepage(obj['key'])
+          self.log("completed homepage caching... back to listening")
+        end
       end
       
       on.unsubscribe do |channel,subscriptions|
