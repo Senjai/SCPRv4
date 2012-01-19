@@ -11,7 +11,6 @@
   _gaq.push(['_setDomainName', 'none']); 
   _gaq.push(['_setAllowHash', 'false']);
   _gaq.push(['_setAllowLinker', true]);
-  _gaq.push(['_trackPageview']);
   // Set Custom Variable to track Beta traffic 
   _gaq.push(['_setCustomVar',
       3,                   	// Set var slot to #3
@@ -20,6 +19,9 @@
       3                    	// page-level scope
    ]);
    // End Custom Variable
+
+  // track page view
+  _gaq.push(['_trackPageview']);
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
