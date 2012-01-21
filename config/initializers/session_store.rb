@@ -5,6 +5,10 @@ class JSONVerifier < ActiveSupport::MessageVerifier
     raise InvalidSignature if signed_message.blank?
 
     data, digest = signed_message.split("--")
+    
+    # FIXME -- This is a temporary fix for old session data
+    data.gsub!("%3D","=")
+    
     if data.present? && digest.present? && secure_compare(digest, generate_digest(data))
       Rails.logger.debug("initial session data is #{data}")
       
