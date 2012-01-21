@@ -3,11 +3,20 @@ class ApplicationController < ActionController::Base
   
   before_filter :check_session, :set_up_finders
   
+  #----------
+  
   helper_method :current_user
+  helper_method :admin_user
   
   def current_user
     @current_user
   end
+  
+  def admin_user
+    @admin_user
+  end
+  
+  #----------
   
   private
   
@@ -20,11 +29,25 @@ class ApplicationController < ActionController::Base
     @g_latest_blogs_arts = BlogEntry.published.joins(:blog).where("blogs_blog.is_news = false").order("published_at desc")
   end
   
+  #----------
+  
   def check_session
-    if session[:user_id]
-      @current_user = UserProfile.find(session[:user_id])
+    if session['_auth_user_id']
+      begin
+        @admin_user = AdminUser.active.find(session['_auth_user_id'])
+      rescue
+        @admin_user = nil
+        session['_auth_user_id'] = nil
+      end
     end
-  rescue
-    @current_user = nil
+    
+    if session[:user_id]
+      begin
+        @current_user = UserProfile.find(session[:user_id])
+      rescue
+        @current_user = nil
+        session[:user_id] = nil
+      end
+    end
   end
 end
