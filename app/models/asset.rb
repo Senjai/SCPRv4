@@ -37,11 +37,6 @@ class Asset < ActiveResource::Base
       @@auth_token = AssetHost[:token]
             
       #----------
-
-      #def find(*arguments)
-      #  arguments = append_auth_token_to_params(*arguments)
-      #  super(*arguments)
-      #end
             
       def element_path(id, prefix_options = {}, query_options = nil)
         super(id, *apply_auth_token(prefix_options, query_options))
@@ -50,14 +45,6 @@ class Asset < ActiveResource::Base
       def collection_path(prefix_options = {}, query_options = nil)
         super(*apply_auth_token(prefix_options, query_options))
       end
-
-      #def append_auth_token_to_params(*arguments)
-      #  opts = arguments.last.is_a?(Hash) ? arguments.pop : {}
-      #  opts = opts.has_key?(:params) ? opts : opts.merge(:params => {}) 
-      #  opts[:params] = opts[:params].merge(:auth_token => @@auth_token)
-      #  arguments << opts
-      #  arguments
-      #end
       
       def apply_auth_token(prefix_options, query_options)
             if query_options

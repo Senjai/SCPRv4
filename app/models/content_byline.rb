@@ -1,5 +1,5 @@
 class ContentByline < ActiveRecord::Base
-  set_table_name "rails_contentbase_contentbyline"
+  self.table_name =  "rails_contentbase_contentbyline"
   
   ROLE_PRIMARY = 0
   ROLE_SECONDARY = 1

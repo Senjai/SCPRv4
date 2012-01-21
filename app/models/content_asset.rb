@@ -1,5 +1,5 @@
 class ContentAsset < ActiveRecord::Base
-  set_table_name "rails_assethost_contentasset"
+  self.table_name =  "rails_assethost_contentasset"
   
   belongs_to :content, :polymorphic => true
   #belongs_to :asset

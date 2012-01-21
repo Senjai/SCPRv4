@@ -87,6 +87,22 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
+  def admin_path
+    if self.class.const_defined? :ADMIN_PREFIX
+      return "/admin/#{self.class::ADMIN_PREFIX}/#{self.id}"
+    else
+      self.obj_key() =~ /(\w+)\/(\w+):(\d+)/
+      
+      if $~
+        return "/admin/#{$~[1]}/#{$~[2]}/#{self.id}"
+      else
+        return ''
+      end
+    end
+  end
+  
+  #----------
+  
   def byline_elements
     ["KPCC"]
   end

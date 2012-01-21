@@ -1,5 +1,5 @@
 class Related < ActiveRecord::Base
-  set_table_name 'rails_media_related'
+  self.table_name =  'rails_media_related'
   
   belongs_to :content, :polymorphic => true
   belongs_to :related, :polymorphic => true

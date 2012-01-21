@@ -1,5 +1,5 @@
 class FeaturedComment < ActiveRecord::Base
-  set_table_name 'rails_contentbase_featuredcomment'
+  self.table_name =  'rails_contentbase_featuredcomment'
   
   belongs_to :content, :polymorphic => true
   

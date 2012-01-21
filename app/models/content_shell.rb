@@ -1,8 +1,9 @@
 class ContentShell < ContentBase
-  set_table_name "contentbase_contentshell"
+  self.table_name =  "contentbase_contentshell"
   
   CONTENT_TYPE = "content/shell"
   CONTENT_TYPE_ID = 115
+  ADMIN_PREFIX = "contentbase/contentshell"
   
   define_index do
     indexes headline
@@ -15,6 +16,7 @@ class ContentShell < ContentBase
     where "status = #{STATUS_LIVE}"
   end
   
+  scope :published, where(:status => STATUS_LIVE).order("pub_at asc")
 
   #----------
   

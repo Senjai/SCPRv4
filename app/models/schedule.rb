@@ -1,5 +1,5 @@
 class Schedule < ActiveRecord::Base
-  set_table_name 'schedule_program'
+  self.table_name =  'schedule_program'
 
   belongs_to :kpcc_program, :class_name => "KpccProgram"
   belongs_to :other_program, :class_name => "OtherProgram"

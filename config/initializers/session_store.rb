@@ -6,7 +6,9 @@ class JSONVerifier < ActiveSupport::MessageVerifier
 
     data, digest = signed_message.split("--")
     if data.present? && digest.present? && secure_compare(digest, generate_digest(data))
-      ActiveSupport::JSON.decode(ActiveSupport::Base64.decode64(data))
+      Rails.logger.debug("initial session data is #{data}")
+      
+      ActiveSupport::JSON.decode(Base64.decode64(data))
     else
       raise InvalidSignature
     end
@@ -19,7 +21,7 @@ class JSONVerifier < ActiveSupport::MessageVerifier
       value['_session_expiry'] = (Time.now() + 30*86400).strftime("%s")
     end
     
-    data = ActiveSupport::Base64.encode64s(ActiveSupport::JSON.encode(value))
+    data = Base64.encode64(ActiveSupport::JSON.encode(value))
     "#{data}--#{generate_digest(data)}"
   end
 end

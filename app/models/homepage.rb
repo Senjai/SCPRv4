@@ -1,5 +1,5 @@
 class Homepage < ActiveRecord::Base
-  set_table_name "layout_homepage"
+  self.table_name =  "layout_homepage"
   
   has_many :content, :class_name => "HomepageContent", :order => "position asc"
   

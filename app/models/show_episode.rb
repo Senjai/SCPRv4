@@ -1,5 +1,5 @@
 class ShowEpisode < ContentBase
-  set_table_name "shows_episode"
+  self.table_name =  "shows_episode"
   
   CONTENT_TYPE = 'shows/episode'
   

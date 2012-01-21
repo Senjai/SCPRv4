@@ -1,5 +1,5 @@
 class NewsStory < ContentBase
-  set_table_name 'news_story'
+  self.table_name =  'news_story'
   
   CONTENT_TYPE = 'news/story'
   CONTENT_TYPE_ID = 15

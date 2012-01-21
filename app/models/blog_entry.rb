@@ -1,5 +1,5 @@
 class BlogEntry < ContentBase
-  set_table_name "blogs_entry"
+  self.table_name =  "blogs_entry"
   
   CONTENT_TYPE = "blogs/entry"
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme

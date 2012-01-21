@@ -1,5 +1,5 @@
 class ShowSegment < ContentBase
-  set_table_name 'shows_segment'
+  self.table_name =  'shows_segment'
   
   CONTENT_TYPE = "shows/segment"
   PRIMARY_ASSET_SCHEME = :segment_asset_scheme
