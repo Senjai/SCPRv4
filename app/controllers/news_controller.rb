@@ -37,7 +37,13 @@ class NewsController < ApplicationController
   #----------
 
   def story
-    @story = NewsStory.find(params[:id])
+    begin
+      @story = NewsStory.published.find(params[:id])
+    rescue
+      # if this story doesn't exist or hasn't been published, send them to the home page
+      redirect_to home_path and return
+    end
+    
     
     #Rails.logger.debug "PATH_INFO is #{request.env['PATH_INFO']}"
     

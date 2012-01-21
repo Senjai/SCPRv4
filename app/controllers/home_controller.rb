@@ -3,13 +3,6 @@ class HomeController < ApplicationController
   
   def index
     @homepage = Homepage.published.first
-    
-    citems = @homepage.content.collect { |c| c.content }
-
-    # -- Broadcast Bar -- #    
-    @onnow = Schedule.where("day = ? AND start_time <= ?", Date.today.wday, Time.now.to_s(:time)).limit(1)
-    @upnext = Schedule.where("day = ? AND end_time < ?", Date.today.wday, Time.now.to_s(:time)).order("day DESC, start_time DESC").limit(1)
-            
   end
   
   #----------
@@ -46,12 +39,11 @@ class HomeController < ApplicationController
     
     # get scored content from homepage
     @homepage = Homepage.published.first
-    
     scored_content = @homepage.scored_content    
         
     # write cache...
     Rails.cache.write(
-      "home/headlines",
+      "home/headlines", 
       view.render(:partial => "home/cached/headlines", :object => scored_content[:headlines])
     )
     
