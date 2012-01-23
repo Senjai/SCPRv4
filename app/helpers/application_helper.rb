@@ -23,6 +23,13 @@ module ApplicationHelper
       if c.respond_to?(:content) && c.content.is_a?(ContentBase)
         c = c.content
       end
+      
+      # if this isn't a contentbase object, assume it is broken and move on
+      if !c.is_a?(ContentBase)
+        next
+        
+        # FIXME: Should we also be raising a notification?
+      end
 
       # if we're caching, add content to the objects list
       if defined? @COBJECTS
@@ -174,20 +181,30 @@ module ApplicationHelper
   #----------
   
   def featured_comment(opts)
-    opts = { :style => "default", :bucket => nil }.merge(opts||{})
+    opts = { :style => "default", :bucket => nil, :comment => nil }.merge(opts||{})
     
     Rails.logger.debug "opts is #{opts}"
     
     comment = nil
     
-    if opts[:bucket]
+    if opts[:comment]
+      if opts[:comment].is_a?(FeaturedComment)
+        comment = opts[:comment]
+      else
+        begin
+          comment = FeaturedComment.find(opts[:comment])
+        rescue
+          return ''
+        end
+      end
+    elsif opts[:bucket]
       bucket = FeaturedCommentBucket.find(opts[:bucket])
       comment = bucket.comments.published.first()
     else
       comment = FeaturedComment.published.first()
     end
     
-    if comment
+    if comment && comment.content
       #begin
         return render(:partial => "shared/featured_comment/#{opts[:style]}", :object => comment, :as => :comment)
       #rescue

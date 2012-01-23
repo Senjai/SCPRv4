@@ -10,7 +10,7 @@ class Homepage < ActiveRecord::Base
   def scored_content
     # -- Homepage Items -- #
     
-    citems = self.content.collect { |c| c.content }
+    citems = self.content.collect { |c| c.content || nil }.compact
 
     # -- More Headlines -- #
     
@@ -90,7 +90,7 @@ class Homepage < ActiveRecord::Base
         # Decay rate:     0.05
         candidates << {
           :content  => featured.first,
-          :score    => 20 * Math.exp( -0.05 * ((Time.now - featured.first.published_at) / 3600) ),
+          :score    => 20 * Math.exp( -0.04 * ((Time.now - featured.first.published_at) / 3600) ),
           :metric   => :comment
         }        
       end

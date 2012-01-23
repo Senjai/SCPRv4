@@ -7,6 +7,13 @@ namespace :scprv4 do
   
   #----------
   
+  desc "Cache homepage one time"
+  task :homepage_once => [ :environment ] do 
+    HomeController._cache_homepage
+  end
+  
+  #----------
+  
   desc "Start a Homepage listener"
   task :homepage => [ :environment ] do 
     require 'homepage_worker'
