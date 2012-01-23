@@ -35,6 +35,7 @@ Scprv4::Application.routes.draw do
   match '/search/' => 'search#index', :as => :search
   
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
+  match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
 
   match '/arts/:category(/:page)' => "category#arts", :constraints => CategoryConstraint.new(false), :defaults => { :page => 1 }, :as => :arts_section
   match '/news/:category(/:page)' => "category#news", :constraints => CategoryConstraint.new(true), :defaults => { :page => 1 }, :as => :news_section
