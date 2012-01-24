@@ -43,6 +43,8 @@ Scprv4::Application.routes.draw do
   match '/news/' => 'news#index', :as => :latest_news
   match '/arts/' => 'news#arts', :as => :latest_arts
   
+  match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
+  
   match '/' => "home#index", :as => :home
   match '/beta/' => "home#beta", :as => :beta
 end

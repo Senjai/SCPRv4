@@ -103,6 +103,12 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
+  def remote_link_path
+    "http://www.scpr.org#{self.link_path}"
+  end
+  
+  #----------
+  
   def byline_elements
     ["KPCC"]
   end

@@ -32,6 +32,10 @@ class ContentShell < ContentBase
     self.url
   end
   
+  def body
+    self._teaser
+  end
+  
   #----------
   
   def byline_elements

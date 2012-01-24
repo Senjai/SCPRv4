@@ -1,0 +1,15 @@
+<%= assets.first.asset.tag(:lead) %>
+
+<%
+	caption = ''
+
+	if assets.first.caption
+		caption << assets.first.caption
+	end
+	
+	if assets.first.asset.owner
+		caption << "  Credit: #{assets.first.asset.owner}"
+	end
+%>
+
+<%= simple_format "<i>#{caption}</i>" %>
