@@ -13,6 +13,7 @@ Scprv4::Application.routes.draw do
     
   namespace :dashboard do
     match '/sections' => 'main#sections', :as => :sections
+    match '/listen_live' => 'main#listen', :as => :listen
     match '/' => 'main#index', :as => :home
   end
   

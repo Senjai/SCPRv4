@@ -1,0 +1,22 @@
+<h1>Listen Live Test</h1>
+
+<style>
+	#llui button {
+		padding: 16px;
+		border: 1px solid #ff0;
+		border-radius: 8px
+	}
+</style>
+<div id="llui">
+	<div id="llplayer"></div>
+
+	<button id="llplay" style="padding: 16px;border: 1px solid #ff0;border-radius: 8px">Play</button>
+
+	<hr/>
+
+	<button id="lltop">Go to Top of the Hour</button>	
+</div>
+
+<% content_for :footerjss do %>
+	var llPlayer = new scpr.ListenLive()
+<% end %>

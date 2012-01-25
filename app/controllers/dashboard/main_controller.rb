@@ -27,4 +27,10 @@ class Dashboard::MainController < ApplicationController
     @sections = scored_content[:sections]
   end
   
+  #----------
+  
+  def listen
+    
+  end
+  
 end
