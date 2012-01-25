@@ -5,7 +5,7 @@ class scpr.ListenLive
         playerEl:   "#llplayer"
         playBtn:    "#llplay"
         rewind:     "http://scprdev.org:8000/rewind.mp3"
-        offset:     1
+        offset:     2
         
     constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend options || {}
@@ -17,7 +17,7 @@ class scpr.ListenLive
             swfPath: "/flash"
             supplied: "mp3"
             solution: "html,flash"
-            errorAlerts: true
+            errorAlerts: false
             ready: (evt) =>
                 console.log "in jPlayer ready"
                 @offsetTo @options.offset
@@ -46,6 +46,13 @@ class scpr.ListenLive
                 console.log "playing..."
                 @playing = true
                     
+        $("#llnow").on "click", (evt) =>
+            @offsetTo 2
+
+            if !@playing
+                @player.jPlayer "play"
+                @playing = true
+            
         $("#lltop").on "click", (evt) =>
             now = new Date
             topoff = (now.getMinutes() * 60) + now.getSeconds()
