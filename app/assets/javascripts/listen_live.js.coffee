@@ -56,6 +56,25 @@ class scpr.ListenLive
             if !@playing
                 @player.jPlayer "play"
                 @playing = true
+                
+        $("#llbottom").on "click", (evt) =>
+            now = new Date
+            
+            offsecs = null
+            
+            if now.getMinutes() >= 30
+                # bottom of this hour
+                offsecs = ( now.getMinutes() - 30 ) * 60 + now.getSeconds()
+            else
+                # bottom of the last hour
+                offsecs = ( now.getMinutes() + 30 ) * 60 + now.getSeconds()
+                
+            console.log "bottom of the hour offset: ", offsecs
+            @offsetTo offsecs
+            
+            if !@playing
+                @player.jPlayer "play"
+                @playing = true
                     
     offsetTo: (i) ->
         i = Number(i)
