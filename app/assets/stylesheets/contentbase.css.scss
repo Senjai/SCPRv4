@@ -5,7 +5,7 @@
 	p {
 		font-size:13px;
 		line-height:18px;
-		padding:10px 0;
+		padding:5px 0;
 		margin: 0;
 	}
 	h4 {
@@ -29,6 +29,11 @@
 }
 
 .cbase.offlead {
+	&:last-child {
+		hr {
+			display:none;
+		}
+	}
     h3 {
         font-weight:600;
 		margin-bottom: 0;

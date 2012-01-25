@@ -108,7 +108,12 @@ section.broadcastbar {
 		}
 	}
 }
-
+.offleads hr {
+	margin: 1px 0 12px;
+	&:last-child {
+		display:none;
+	}
+}
 // Join Conversation
 .join-conversation-container {
 	margin:0 0 0 30px;
