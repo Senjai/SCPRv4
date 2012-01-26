@@ -1,0 +1,19 @@
+<div class="row entry">
+	<div class="span8">
+		<div class="row">
+			<div class="span2">
+				<div class="date">
+					<p><%= smart_date entry %></p>
+				</div>
+				<%= render "shared/cwidgets/social_tools", :cssClass => 'side', :content => entry %>
+				<%= render "shared/cwidgets/comment_count", :cssClass => 'left-side', :content => entry %>
+			</div>
+			<div class="span6">
+				<h1 class="story-headline"><%= link_to entry.title, entry.link_path %></h1>
+				<p class="byline"><%= render_byline entry %></p>
+				<%= render_asset entry, "blog" %>
+				<%= raw entry.content %>
+			</div>
+		</div>
+	</div>
+</div>

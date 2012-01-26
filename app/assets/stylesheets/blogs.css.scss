@@ -1,5 +1,8 @@
-#blog-masthead {
+.blog-masthead {
 	height:47px;
+	border-bottom: 1px solid $grayLighter;
+	margin-bottom: $baseline / 2;
+	
  	h2 {
 		color:$black;
 		font-size:28px;
@@ -12,6 +15,7 @@
 		color:$linkColorHover;
 	}
 }
+
 .blog-pag {
 	.next_page {
 		float:right;

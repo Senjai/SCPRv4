@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
   require 'will_paginate/array'
-  layout "blog"
+  layout "content_8_4"
   
   before_filter :load_blog, :except => [:index]
   
@@ -14,8 +14,6 @@ class BlogsController < ApplicationController
       :page => params[:page],
       :per_page => 5
     )
-
-    render :layout => "bloglanding"
   end
   
   def entry
