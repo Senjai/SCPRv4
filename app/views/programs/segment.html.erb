@@ -1,5 +1,7 @@
 <% @PAGE_TITLE = [@segment.headline,@program.title].join(" | ") %>
 
+<%= render_content @segment, "opengraph" %>
+
 <%= render "shared/cwidgets/social_tools", :cssClass => '', :content => @segment %>
 
 <% if @segment.episodes.any? %>
