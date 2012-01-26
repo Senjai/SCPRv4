@@ -1,0 +1,34 @@
+<% content_for :program_content do %>
+	<% @PAGE_TITLE = [@segment.headline,@program.title].join(" | ") %>
+	
+	<%= render "shared/cwidgets/social_tools", :cssClass => '', :content => @segment %>
+	
+	<% if @segment.episodes.any? %>
+		<h6><%= link_to @segment.episodes.first.title, @segment.episodes.first.link_path %></h6>
+	<% end %>
+	
+	<h1 class="story-headline"><%= @segment.headline %></h1>
+	
+	<p class="byline">By <%= render_byline @segment %> <span class="pipe">|</span> <time pubdate><%= smart_date @segment %></time></p>
+	
+	<div class="row">
+		<div class="span6" style="padding-right: 190px">
+			<%= render_asset @segment, "segment" %>
+
+			<div class="storybar" style="width: 160px;float: right;clear:right;margin-right: -190px">
+				<%= render "shared/cwidgets/comment_count", :cssClass => 'right-side', :content => @segment %>
+				<%= render "shared/cwidgets/audio", :content => @segment %>
+			</div>
+			<div class="story-body">
+				<%= simple_format @segment.body %>
+			</div>
+			
+			<br style="clear:both"/>
+			<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @segment %>
+		</div>
+	</div>
+	<%= render "shared/cwidgets/comments", :cssClass => '', :content => @segment %>
+	
+<% end %>
+
+<%= render :file => "layouts/content/program" %>

@@ -9,6 +9,8 @@ class ShowSegment < ContentBase
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id" 
   has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
   
+  scope :published, where(:status => STATUS_LIVE).order("id desc")
+  
   define_index do
     indexes title
     indexes lede

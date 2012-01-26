@@ -13,7 +13,7 @@ class NewsController < ApplicationController
       :with => { :category => Category.where(:is_news => true).all.map { |c| c.id } }
     )
     
-    render :layout => "application"
+    #render :layout => "application"
     
   end
   
@@ -31,7 +31,7 @@ class NewsController < ApplicationController
       :with => { :category => Category.where(:is_news => false).all.map { |c| c.id } }
     )
     
-    render :layout => "application"    
+    #render :layout => "application"    
   end
   
   #----------
@@ -43,9 +43,6 @@ class NewsController < ApplicationController
       # if this story doesn't exist or hasn't been published, send them to the home page
       redirect_to home_path and return
     end
-    
-    
-    #Rails.logger.debug "PATH_INFO is #{request.env['PATH_INFO']}"
     
     if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @story.link_path
       redirect_to @story.link_path and return
@@ -62,11 +59,7 @@ class NewsController < ApplicationController
     
     stories = NewsStory.published.where("published_at > ? and published_at < ? and slug = ?",date,(date+1),params[:slug])
     
-    if stories.any?
-      redirect_to stories.first.link_path, :permanent => true
-    else
-      redirect_to home_path
-    end
+    redirect_to stories.any? ? stories.first.link_path : home_path, :permanent => true
   rescue
     redirect_to home_path    
   end

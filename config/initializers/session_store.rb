@@ -6,9 +6,7 @@ class JSONVerifier < ActiveSupport::MessageVerifier
 
     data, digest = signed_message.split("--")
     
-    if data.present? && digest.present? && secure_compare(digest, generate_digest(data))
-      Rails.logger.debug("initial session data is #{data}")
-      
+    if data.present? && digest.present? && secure_compare(digest, generate_digest(data))      
       ActiveSupport::JSON.decode(Base64.decode64(data.gsub('%3D','=')))
     else
       raise InvalidSignature

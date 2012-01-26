@@ -1,9 +1,12 @@
-<div class="show-header">
-	<h1 class="<%= @show.slug %>"><%= @show.title %></h1>
-	<p><%=raw @show.teaser %></p>
-	<p class="show-time"><%= @show.airtime %></p>
-</div>
+<% content_for :program_content do %>
+	<div class="show-header">
+		<p><%=raw @program.teaser %></p>
+		<p class="show-time"><%= @program.airtime %></p>
+	</div>
 
-<%= render :partial => "episode", :object => @show.episodes.published.first %>
+	<%= render :partial => "episode", :object => @program.episodes.published.first %>
 
-<%= render :partial => "upcoming" %>
+	<%= render :partial => "upcoming", :object => @program.episodes.upcoming.first %>
+<% end %>
+
+<%= render :file => "layouts/content/program" %>

@@ -1,9 +1,14 @@
-<h1><%= @episode.title %></h1>
+<% content_for :program_content do %>
+	<% @PAGE_TITLE = [@episode.title,@program.title].join(" | ") %>
+	<h1><%= @episode.title %></h1>
 
-<%= render_asset @episode, "lead" %>
+	<%= render_asset @episode, "lead" %>
 
-<ul>
-<% for s in @episode.segments %>
-	<li><%= link_to s.title, s.link_path(@episode) %></li>
+	<ul>
+	<% for s in @episode.segments %>
+		<li><%= link_to s.title, s.link_path(@episode) %></li>
+	<% end %>
+	</ul>
 <% end %>
-</ul>
+
+<%= render :file => "layouts/content/program" %>
