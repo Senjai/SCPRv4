@@ -7,6 +7,11 @@ class BlogEntry < ContentBase
   belongs_to :blog
   belongs_to :author, :class_name => "Bio"
   
+  has_many :tagged, :class_name => "TaggedContent", :as => :content
+  has_many :tags, :through => :tagged
+  
+  default_scope includes(:bylines)
+    
   scope :published, where(:status => STATUS_LIVE)
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   

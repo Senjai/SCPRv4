@@ -3,5 +3,7 @@ class Blog < ActiveRecord::Base
   
   has_many :entries, :order => 'published_at desc', :class_name => "BlogEntry"
   
+  has_many :tags, :through => :entries
+  
   scope :active, where(:is_active => true)
 end
