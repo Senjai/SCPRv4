@@ -1,6 +1,4 @@
-class CategoryController < ApplicationController
-  layout "content_8_4"
-  
+class CategoryController < ApplicationController  
   def arts
     @category = Category.find_by_slug(params[:category])
     

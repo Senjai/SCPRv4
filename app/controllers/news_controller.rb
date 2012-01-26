@@ -11,8 +11,7 @@ class NewsController < ApplicationController
       :with => { :category => Category.where(:is_news => true).all.map { |c| c.id } }
     )
     
-    #render :layout => "application"
-    
+    render :layout => "application"
   end
   
   #----------
@@ -29,7 +28,7 @@ class NewsController < ApplicationController
       :with => { :category => Category.where(:is_news => false).all.map { |c| c.id } }
     )
     
-    #render :layout => "application"    
+    render :layout => "application"    
   end
   
   #----------
