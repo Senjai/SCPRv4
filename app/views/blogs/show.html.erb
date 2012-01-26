@@ -1,15 +1,11 @@
 <% @PAGE_TITLE = @blog.name %>
 
-<% content_for :blog_content do %>
-	<div class="blog-landing">
-	<%= render :partial => "entry", :collection => @entries, :as => :entry %>
-	</div>
-	
-	<div class="row">
-		<div class="span6 offset2 blog-pag">
-			<%= will_paginate @entries, :page_links => false %>
-		</div>
-	</div>
-<% end %>
+<div class="blog-landing">
+<%= render :partial => "entry", :collection => @entries, :as => :entry %>
+</div>
 
-<%= render :file => "layouts/content/blog" %>
+<div class="row">
+	<div class="span6 offset2 blog-pag">
+		<%= will_paginate @entries, :page_links => false %>
+	</div>
+</div>

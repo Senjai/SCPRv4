@@ -1,6 +1,5 @@
 class BlogsController < ApplicationController
   require 'will_paginate/array'
-  layout "content_8_4"
   
   before_filter :load_blog, :except => [:index]
   

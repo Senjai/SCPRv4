@@ -1,0 +1,15 @@
+<% content_for :content do %>
+	<div class="row">
+		<div class="span8">
+			<%= yield :headline %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6" style="padding-right: 190px">
+			<%= content_for?(:news_content) ? yield(:news_content) : yield %>
+		</div>
+	</div>
+	<%= yield :postcontent %>
+<% end %>
+
+<%= render :template => "layouts/application" %>

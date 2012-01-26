@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
-  <%= render "shared/header/header_js" %>
-  <%= csrf_meta_tags %>
+	<title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
+	<%= render "shared/header/header_js" %>
+	<%= render "shared/header/opengraph" %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
-	<!-- MASTHEAD-->
-	<%= render "shared/masthead" %>
+<!-- MASTHEAD-->
+<%= render "shared/masthead" %>
 
-	<div id="main" class="container">
-		<div class="row">
-			<article class="span8 storytitle">
-				<%= yield %>
-			</article>
-			<div id ="sidebar" class="span4 storytitle">
+<div id="main" class="container">
+	<div class="row">
+		<article class="span8">
+			<%= content_for?(:content) ? yield(:content) : yield %>
+		</article>
+		<div id ="sidebar" class="span4">
+			<% if content_for?(:sidebar) %> 
+				<%= yield(:sidebar) %>
+			<% else %>
 				<div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div>
+
+				<%= yield :sidebartop %>
+
+				<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
 				<%= render "shared/widgets/most_popular" %>
 				<%= render "shared/widgets/oas", :ad_id => 'x02' %>
 				<%= render "shared/widgets/newsletter_subscribe" %>
 				<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 				<%= render "shared/widgets/promo_mobile" %>
-			</div>
+			<% end %>
 		</div>
-		<%= render "shared/audio/inpage_audio_player" %>
 	</div>
-	<%= render :partial => "shared/footer" %>
-	<%= render :partial => "shared/footer/footer_js" %>
+	<%= render "shared/audio/inpage_audio_player" %>
+</div>
+<%= render :partial => "shared/footer" %>
+<%= render :partial => "shared/footer/footer_js" %>
+
 </body>
 </html>
-

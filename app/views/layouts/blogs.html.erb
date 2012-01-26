@@ -1,0 +1,21 @@
+<% content_for :content do %>
+	<div class="row">
+		<div class="span8 blog-masthead">
+			<div class="row">
+				<div class="span2">&nbsp;</div>
+				<div class="span6">
+					<h2><span class="blue"><%= link_to @blog.name, blog_path(@blog.slug) %></span></h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%= content_for?(:blog_content) ? yield(:blog_content) : yield %>
+<% end %>
+
+<% content_for :sidebartop do %>
+	<%= render "shared/widgets/blog_about" %>
+	<%= render :partial => "shared/cwidgets/recent_posts" %>
+<% end %>
+
+<%= render :template => "layouts/application" %>

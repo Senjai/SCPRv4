@@ -1,6 +1,4 @@
-class ProgramsController < ApplicationController
-  layout "content_8_4"
-  
+class ProgramsController < ApplicationController  
   before_filter :load_program, :except => [:index]
   before_filter :require_kpcc_program, :only => [:episode,:segment]
   

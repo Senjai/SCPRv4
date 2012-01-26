@@ -1,0 +1,16 @@
+<% content_for :content do %>
+	<div class="row">
+		<div class="span8 blog-masthead">
+			<div class="row">
+				<div class="span2">&nbsp;</div>
+				<div class="span6">
+					<h2><span class="blue"><%= link_to @program.title, program_path(@program.slug) %></span></h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%= content_for?(:program_content) ? yield(:program_content) : yield %>
+<% end %>
+
+<%= render :template => "layouts/application" %>

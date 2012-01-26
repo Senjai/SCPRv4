@@ -1,12 +1,8 @@
-<% content_for :program_content do %>
-	<div class="show-header">
-		<p><%=raw @program.teaser %></p>
-		<p class="show-time"><%= @program.airtime %></p>
-	</div>
+<div class="show-header">
+	<p><%=raw @program.teaser %></p>
+	<p class="show-time"><%= @program.airtime %></p>
+</div>
 
-	<%= render :partial => "episode", :object => @program.episodes.published.first %>
+<%= render :partial => "episode", :object => @program.episodes.published.first %>
 
-	<%= render :partial => "upcoming", :object => @program.episodes.upcoming.first %>
-<% end %>
-
-<%= render :file => "layouts/content/program" %>
+<%= render :partial => "upcoming", :object => @program.episodes.upcoming.first %>

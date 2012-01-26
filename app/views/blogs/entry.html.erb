@@ -1,17 +1,15 @@
 <% @PAGE_TITLE = [@blog.name,@entry.headline].join(" : ")%>
 
-<% content_for :blog_content do %>
-	<%= render :partial => "entry", :object => @entry %>
+<%= render :partial => "entry", :object => @entry %>
 
-	<div class="row">
-		<div class="span2">&nbsp;</div>
-		<div class="span6">
-			<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @entry %>
-			<%= render "shared/cwidgets/next_prev" %>
-			<%= render "shared/cwidgets/comments", :cssClass => '', :content => @entry %>	
-		</div>
-<% end %>
+<div class="row">
+	<div class="span2">&nbsp;</div>
+	<div class="span6">
+		<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @entry %>
+		<%= render "shared/cwidgets/next_prev" %>
+		<%= render "shared/cwidgets/comments", :cssClass => '', :content => @entry %>	
+	</div>
+</div>
 
 <%= render "shared/cwidgets/track_page", :content => @entry %>
 
-<%= render :file => "layouts/content/blog" %>
