@@ -35,4 +35,20 @@
 			<% end %>			
 		</ul>
 	</div>
+	
+	<div class="span4">
+		<h2>Blog Entry (w/ News Category): No Assets</h2>
+		<p><%= @blog_no_assets.count() %> entries published in the period</p>
+		<ul>
+			<% for s in @blog_no_assets %>
+				<li>
+					<%= link_to s.headline, s.link_path %>
+					(<%= link_to "Open in Admin", "/admin/blogs/entry/#{s.id}/", :target => :blank %>)
+					<br/>&mdash; <%= smart_date s %> 
+					<br/>&mdash; <%= render_byline s, false %>
+					<br/>
+				</li>
+			<% end %>			
+		</ul>
+	</div>
 </div>

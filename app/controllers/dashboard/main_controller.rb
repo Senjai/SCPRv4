@@ -11,10 +11,15 @@ class Dashboard::MainController < ApplicationController
       "`rails_contentbase_contentcategory`.id is null"
     ).order("published_at desc")
     
-    # and news stories published in the last seven days with no assets
     @no_assets = @baseline.joins(
       "left join `rails_assethost_contentasset` on `rails_assethost_contentasset`.content_id = news_story.id and `rails_assethost_contentasset`.content_type = 'NewsStory'"
     ).where("rails_assethost_contentasset.id is null").order("published_at desc")
+    
+    @blog_no_assets = BlogEntry.published.this_week.joins(
+      "left join rails_contentbase_contentcategory on `rails_contentbase_contentcategory`.`content_id` = `blogs_entry`.`id` AND `rails_contentbase_contentcategory`.`content_type` = 'BlogEntry'"
+    ).joins(
+      "left join `rails_assethost_contentasset` on `rails_assethost_contentasset`.content_id = blogs_entry.id and `rails_assethost_contentasset`.content_type = 'BlogEntry'"
+    ).where("`rails_contentbase_contentcategory`.id is not null").where("rails_assethost_contentasset.id is null").order("published_at desc")
   end
 
   #----------

@@ -8,6 +8,7 @@ class BlogEntry < ContentBase
   belongs_to :author, :class_name => "Bio"
   
   scope :published, where(:status => STATUS_LIVE)
+  scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   define_index do
     indexes title
