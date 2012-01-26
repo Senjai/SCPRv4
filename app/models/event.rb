@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
   self.table_name =  'rails_events_event'
-  set_primary_key :id
+  self.primary_key = :id
 
   has_many :assets, :class_name => "ContentAsset", :as => :content
   
