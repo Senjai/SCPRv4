@@ -44,7 +44,6 @@ class scpr.SectionCarousel
 		for i in items
 			tag = $ "<li/>"
 			tag.html _.template @_template, i
-			console.log "Built tag html of ", tag.html
 			@el.append tag
 		
 		# -- instantiate our carousel -- #

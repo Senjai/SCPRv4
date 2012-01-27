@@ -14,6 +14,26 @@
 		</div>
 	</aside>
 	
+	<% if content.audio.length > 1 %>
+		<% for a in content.audio[1..-1] %>
+			<aside class="story-audio">
+				<div class="inner-container clearfix">
+					<div class="audio-content">
+						<h4>Extra Audio</h4>
+						<p><%= a.description %></p>
+					</div>
+					<a href="<%= a.url %>" class="play-btn" title="<%= h content.headline %>">Play Audio</a>
+					<!-- span class="duration">[X min XX sec]</span -->
+					<ul class="audio-tools">
+					    <li>
+					        <a href="<%= a.url %>">Download</a>
+					    </li>
+					</ul>
+				</div>
+			</aside>
+		<% end %>
+	<% end %>
+	
 	<% content_for :footerjss do %>
 		var scA = new scpr.Audio()
 	<% end %>

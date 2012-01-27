@@ -2,43 +2,119 @@
 
 class scpr.Audio
     DefaultOptions:
-        playEl: "#jquery_jplayer_1"
-        titleEl: "#jplayer1_title"
+        playEl:         "#jquery_jplayer_1"
+        titleEl:        "#jplayer1_title"
+        widgetClass:    ".story-audio"
+        playBtn:        "a.play-btn"
+        audioBar:       ".audio-bar"
     
     constructor: (options) ->
-        @options = _(_({}).extend(this.DefaultOptions)).extend( options || {} )
+        @options = _(_({}).extend(@DefaultOptions)).extend( options || {} )
 
         # instantiate jPlayer on playEl
         @player = $(@options.playEl).jPlayer
             swfPath: "/flash"
             supplied: "mp3"
-
-        # register play button click handler
-        $("a.play-btn").click (e) =>
-            # get the audio file path from the href
-            mp3 = $(e.target).attr("href")
-            title = $(e.target).attr("title")
             
-            # add the audio into jplayer
-            @player.jPlayer "setMedia", mp3:mp3
+        @audiobar = $(@options.audioBar)
+        
+        @widgets = []
+        @playing = false
+        @active = null
+        
+        # find our audio widgets
+        $(@options.widgetClass).each (idx,el) =>
+            # find a play button
+            btn = $(@options.playBtn,el)
             
-            # set the title
-            $(@options.titleEl).text title
-            
-            # animate the bar
-            $(".audio-bar").animate {bottom:0}, 1000
-            
-            # and hit play
-            @player.jPlayer "play"
-            
-            return false            
-            
+            if btn
+                # get the audio file path from the href
+                mp3 = $(btn).attr("href")
+                title = $(btn).attr("title")
+                
+                console.log "#{@widgets.length}: #{mp3}", btn
+                
+                # take the URL out of the href
+                $(btn).attr "href", "javascript:void(0);"
+                
+                widget = new Audio.PlayWidget
+                    player:     @
+                    widget:     el
+                    playBtn:    btn
+                    mp3:        mp3
+                    title:      title
+                    
+                @widgets.push widget
+        
+        console.log "found #{@widgets.length} widgets."
+        
         # register listener to close audio bar
         $(".bar-close").click =>
-            $(".audio-bar").animate {bottom:-70}, 300
-            $("#jquery_jplayer_1").jPlayer "stop"
-            return false;             
-
-        #$(".jp-ff").jPlayer("playHead", 10);
-        #// Toggle volume slider
+            @audiobar.animate {bottom:-70}, 300
+            @player.jPlayer "stop"
+            return false
+    
+    #----------
         
+    play: (widget) ->
+        if @playing && @active == widget
+            console.log("pause/play")
+            
+            if @playing == 1
+                @player.jPlayer "pause"
+                @playing = 2
+            else
+                @player.jPlayer "play"
+                @playing = 1
+
+            return true
+        
+        if @playing
+            console.log "stopping existing play."
+            # tell the player to stop
+            @player.jPlayer "stop"
+            
+            # and tell the widget that it stopped
+            @active?.stop()
+        
+        # set our new mp3
+        console.log "setting mp3 to ", widget.options.mp3
+        @player.jPlayer "setMedia", mp3:widget.options.mp3
+        $(@options.titleEl).text widget.options.title
+        
+        # animate the bar
+        @audiobar.animate {bottom:0}, 1000
+        
+        # and hit play
+        @player.jPlayer "play"
+        
+        @playing = 1
+        
+        widget.play()
+        @active = widget
+    
+    #----------
+        
+    stop: () ->
+        if @playing
+            @player.jPlayer "stop"
+            @active?.stop()
+            @playing = false
+               
+    #----------
+     
+    class @PlayWidget
+        constructor: (options) ->
+            @options = options
+            @player = @options.player
+            
+            # register click handler on play button
+            @options.playBtn.on "click", (e) =>
+                @player.play @
+                return false
+        
+        play: () ->
+            # ...
+                
+        stop: () ->
+            # ...        
