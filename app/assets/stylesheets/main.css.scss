@@ -70,9 +70,12 @@ section.broadcastbar {
 				margin:0 0 0 90px;
 				padding:8px 0 0 0;
 			}
-			&.active-show-title,  .active-show-title a {
+			&.active-show-title {
 				@include font-heading($weight:normal, $size:1.5em);
 				color:$orangeDark;
+				a {
+					color:$orangeDark;
+				}
 			}
 			&.show-status {
 				@include font-sans-serif($weight:bold, $size:1.05em);

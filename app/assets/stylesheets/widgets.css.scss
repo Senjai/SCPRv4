@@ -65,10 +65,14 @@
 		@include ie-inline-block();
 		padding-top:6px;
 	}
+	p {
+		@include font-sans-serif(normal, 11px, 15px);
+		color: $gray;
+	}
 	ul.audio-tools {
 		float:right;
 		@include font-sans-serif(normal, 11px, 18px);
-		margin:0;
+		margin: 6px 0 0 0;
 		li {
 			@include nav-horiz();
 			a {
