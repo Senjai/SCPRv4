@@ -12,7 +12,13 @@ class HomepageWorker
     self.log("Got redis connection at #{@redis}")
     
     # initialize Python for mercer caching
-    RubyPython.start()
+    # FIXME: Hardcoding production python path for now, but this should be fixed
+    if Rails.env == "production"
+      RubyPython.start(:python_exe => "/usr/local/python2.7.2/bin/python")
+    else
+      RubyPython.start()      
+    end
+    
     @pickle = RubyPython.import("cPickle")
   end
   
