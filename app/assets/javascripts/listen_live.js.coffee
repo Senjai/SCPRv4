@@ -48,6 +48,7 @@ class scpr.ListenLive
                 @bufferUI.on "click", (e) =>
                     offset = Math.round (1 - e.offsetX / @bufferUI.width() ) * @serverBuffer
                     @offsetTo offset
+                    @_displayBuffer()
                 
             @io.on "timecheck", (data) =>
                 @_displayBuffer data
@@ -55,18 +56,20 @@ class scpr.ListenLive
     #----------
     
     _displayBuffer: (data) ->
-        @serverBuffer = data.buffered
+        if data
+            @serverBuffer = data.buffered
+            @serverTime = new Date(data.time)
+
+            # set times
+            $("#llServerTime").text String(@serverTime)
         
         # set buffer bar
         if @offset == 0
             $("#llBuffBar").width("100%")
         else        
-            perc = 100 - (@offset / data.buffered * 100)
+            perc = 100 - (@offset / @serverBuffer * 100)
             $("#llBuffBar").width("#{ perc }%")
             
-        # set times
-        @serverTime = new Date(data.time)
-        $("#llServerTime").text String(@serverTime)
         $("#llPlayTime").text String(new Date(Number(@serverTime) - @offset*1000))
     
     #----------
