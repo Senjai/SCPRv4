@@ -74,7 +74,7 @@ class scpr.ListenLive
     _setUpPlayer: ->  
         $(@options.playerEl).append $ "<div/>", id:@options.playerId, text:"Flash player failed to load."
                
-        swfobject.embedSWF "/assets/flash/streammachine.swf",
+        swfobject.embedSWF "/assets-flash/streammachine.swf",
             @options.playerId,
             8,
             8,

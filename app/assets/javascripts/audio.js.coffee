@@ -13,7 +13,7 @@ class scpr.Audio
 
         # instantiate jPlayer on playEl
         @player = $(@options.playEl).jPlayer
-            swfPath: "/flash"
+            swfPath: "/assets-flash"
             supplied: "mp3"
             
         @audiobar = $(@options.audioBar)
