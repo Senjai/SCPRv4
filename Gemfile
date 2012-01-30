@@ -33,5 +33,5 @@ group :test do
 end
 
 group :worker do
-  gem 'rubypython'
+  gem 'rubypython', :git => "git://github.com/halostatue/rubypython.git"
 end

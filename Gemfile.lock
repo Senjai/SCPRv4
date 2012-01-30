@@ -27,6 +27,14 @@ GIT
       sass (~> 3.1)
 
 GIT
+  remote: git://github.com/halostatue/rubypython.git
+  revision: c23abf33f451569d456e2ea4158d16f799ebb0cb
+  specs:
+    rubypython (0.6.0)
+      blankslate (>= 2.1.2.3)
+      ffi (~> 1.0.7)
+
+GIT
   remote: git://github.com/mislav/will_paginate.git
   revision: a2648e77294806e0e46395e0d3076adf9bee00a0
   branch: rails3
@@ -158,9 +166,6 @@ GEM
     redis-store (1.0.0.1)
       redis (~> 2.2.1)
     riddle (1.5.1)
-    rubypython (0.5.3)
-      blankslate (>= 2.1.2.3)
-      ffi (~> 1.0.7)
     sass (3.1.12)
     sass-rails (3.2.3)
       railties (~> 3.2.0.beta)
@@ -203,7 +208,7 @@ DEPENDENCIES
   oily_png
   rails (= 3.2.0)
   redis-content-store!
-  rubypython
+  rubypython!
   sass-rails (~> 3.2.3)
   therubyracer
   thinking-sphinx (= 2.0.10)
