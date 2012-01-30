@@ -1,0 +1,7 @@
+<style><%= JST["t_listen/style"]() %></style>
+<div class="progress" id="llBuffProgress">
+	<div id="llBuffBar" class="bar" style="width:100%"></div>
+</div>
+
+<p><b>Server Time:</b> <span id="llServerTime"></span></p>
+<p><b>Playhead:</b> <span id="llPlayTime"></span></p>

@@ -1,88 +1,128 @@
 #= require scprbase
 
+#= require_directory ./t_listen/
+#= require swfobject
+
 class scpr.ListenLive
     DefaultOptions:
         playerEl:   "#llplayer"
         playBtn:    "#llplay"
-        rewind:     "http://scprdev.org:8000/rewind.mp3"
+        playerId:   "#llplayDiv"
+        rewind:     "http://localhost:8080/rewind.mp3"
         offset:     2
+        socketJS:   "http://localhost:8080/socket.io/socket.io.js"
+        host:       "http://localhost:8080/"
         
     constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend options || {}
         
-        @playing = false
-        @offset = null
+        if window.LLINIT == true
+            console.log "tried to init a second ListenLive"
+            return false
+        else
+            console.log "setting LLINIT to true"
+            window.LLINIT = true
+            
         
-        @player = $(@options.playerEl).jPlayer
-            swfPath: "/flash"
-            supplied: "mp3"
-            solution: "html,flash"
-            errorAlerts: false
-            ready: (evt) =>
-                console.log "in jPlayer ready"
-                @offsetTo @options.offset
+        @playing = false
+        @started = 0
+        @offset = 0
+        @serverBuffer = 0
+        
+        @bufferUI = $ "<div/>", 
+            id: "llBufferUI"
+            html: JST["t_listen/buffer"]
+                        
+        $(@options.playerEl).html @bufferUI
                 
+        $.getScript @options.socketJS, =>
+            # set up the socket
+            @io = io.connect @options.host
+            
+            @io.on "ready", (data) =>
+                console.log "got ready with ", data
+                                
+                @_displayBuffer data
+                @_setUpPlayer()
+                
+                @bufferUI.on "click", (e) =>
+                    offset = Math.round (1 - e.offsetX / @bufferUI.width() ) * @serverBuffer
+                    @offsetTo offset
+                
+            @io.on "timecheck", (data) =>
+                @_displayBuffer data
+                
+    #----------
+    
+    _displayBuffer: (data) ->
+        @serverBuffer = data.buffered
+        
+        # set buffer bar
+        if @offset == 0
+            $("#llBuffBar").width("100%")
+        else        
+            perc = 100 - (@offset / data.buffered * 100)
+            $("#llBuffBar").width("#{ perc }%")
+            
+        # set times
+        @serverTime = new Date(data.time)
+        $("#llServerTime").text String(@serverTime)
+        $("#llPlayTime").text String(new Date(Number(@serverTime) - @offset*1000))
+    
+    #----------
+                            
+    _setUpPlayer: ->  
+        $(@options.playerEl).append $ "<div/>", id:@options.playerId, text:"Flash player failed to load."
+               
+        swfobject.embedSWF "/assets/flash/streammachine.swf",
+            @options.playerId,
+            8,
+            8,
+            "9",
+            "/swf/expressInstall.swf",
+            { stream:"#{@options.rewind}?socket=#{@io.socket.sessionid}" },
+            { wmode: "transparent" }, {}, (e) => @audio = e.ref
+                            
         @playBtn = $(@options.playBtn)
-            
-        @player.on $.jPlayer.event.waiting, (evt) => 
-            console.log "got waiting"
-            @playBtn.text "Loading"
-            
-        @player.on $.jPlayer.event.playing, (evt) =>
-            console.log "got playing"
-            @playBtn.text "Playing at -#{@offset}"
-            
-        @player.on "stop", (evt) =>
-            @playBtn.text "Play"
-            
+                
         # register a click handler on the play button
         @playBtn.on "click", (evt) =>
             if @playing
-                @player.jPlayer "stop"
+                #@audio.pause()
                 console.log "stopping..."
                 @playing = false
             else              
-                @player.jPlayer "play"
+                @audio.play()
                 console.log "playing..."
                 @playing = true
-                    
+                
         $("#llnow").on "click", (evt) =>
-            @offsetTo 2
+            @offsetTo 1
 
-            if !@playing
-                @player.jPlayer "play"
-                @playing = true
-            
         $("#lltop").on "click", (evt) =>
             now = new Date
             topoff = (now.getMinutes() * 60) + now.getSeconds()
-            
+        
             console.log "top of hour was at offset ", topoff
             @offsetTo topoff
-            
-            if !@playing
-                @player.jPlayer "play"
-                @playing = true
-                
+                    
         $("#llbottom").on "click", (evt) =>
             now = new Date
-            
+        
             offsecs = null
-            
+        
             if now.getMinutes() >= 30
                 # bottom of this hour
                 offsecs = ( now.getMinutes() - 30 ) * 60 + now.getSeconds()
             else
                 # bottom of the last hour
                 offsecs = ( now.getMinutes() + 30 ) * 60 + now.getSeconds()
-                
+            
             console.log "bottom of the hour offset: ", offsecs
             @offsetTo offsecs
-            
-            if !@playing
-                @player.jPlayer "play"
-                @playing = true
-                    
+   
+    #----------
+                            
     offsetTo: (i) ->
         i = Number(i)
         
@@ -93,15 +133,14 @@ class scpr.ListenLive
         # don't switch if this is already our offset
         if i == @offset
             return true
-            
-        # if we're playing already, stop
-        if @playing
-            @player.jPlayer "stop"
-            
-        # set our audio URL
-        console.log "setting media to #{@options.rewind}?off=#{i}"
-        @player.jPlayer "setMedia", mp3:"#{@options.rewind}?off=#{i}"
-        @offset = i
+                        
+        @io.emit("offset",i)
         
-        if @playing
-            @player.jPlayer "play"
+        # we need to seek to the end of the file
+        @audio.seekToEnd()
+        @audio.play()
+                
+        # note our status
+        @started = Number(new Date) / 1000
+        @offset = i
+        @playing = true
