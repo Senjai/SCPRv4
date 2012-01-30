@@ -8,10 +8,10 @@ class scpr.ListenLive
         playerEl:   "#llplayer"
         playBtn:    "#llplay"
         playerId:   "#llplayDiv"
-        rewind:     "http://localhost:8080/rewind.mp3"
+        rewind:     "http://scprdev.org:8000/rewind.mp3"
         offset:     2
-        socketJS:   "http://localhost:8080/socket.io/socket.io.js"
-        host:       "http://localhost:8080/"
+        socketJS:   "http://scprdev.org:8000/socket.io/socket.io.js"
+        host:       "http://scprdev.org:8000/"
         
     constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend options || {}
