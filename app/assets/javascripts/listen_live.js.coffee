@@ -8,10 +8,13 @@ class scpr.ListenLive
         playerEl:   "#llplayer"
         playBtn:    "#llplay"
         playerId:   "#llplayDiv"
-        rewind:     "http://scprdev.org:8000/rewind.mp3"
-        offset:     2
-        socketJS:   "http://scprdev.org:8000/socket.io/socket.io.js"
-        host:       "http://scprdev.org:8000/"
+        #rewind:     "http://scprdev.org:8000/rewind.mp3"
+        #socketJS:   "http://scprdev.org:8000/socket.io/socket.io.js"
+        #host:       "http://scprdev.org:8000/"
+        rewind:     "http://localhost:8080/rewind.mp3"
+        socketJS:   "http://localhost:8080/socket.io/socket.io.js"
+        host:       "http://localhost:8080/"
+        
         
     constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend options || {}
@@ -48,12 +51,12 @@ class scpr.ListenLive
                 @bufferUI.on "click", (e) =>
                     offset = Math.round (1 - e.offsetX / @bufferUI.width() ) * @serverBuffer
                     @offsetTo offset
-                
+                                    
             @io.on "timecheck", (data) =>
                 @_displayBuffer data
                 
     #----------
-    
+        
     _displayBuffer: (data) ->
         @serverBuffer = data.buffered
         
@@ -68,6 +71,9 @@ class scpr.ListenLive
         @serverTime = new Date(data.time)
         $("#llServerTime").text String(@serverTime)
         $("#llPlayTime").text String(new Date(Number(@serverTime) - @offset*1000))
+        
+        if @audio
+            $("#llBuffLen").text @audio.getBufferedTime()
     
     #----------
                             
@@ -134,8 +140,11 @@ class scpr.ListenLive
         if i == @offset
             return true
                         
-        @io.emit("offset",i)
-        
+        @io.emit "offset", i, (i) =>
+            console.log "got offset back from server of ", i
+            if @offset != i
+                @offset = Math.round(i)
+                        
         # we need to seek to the end of the file
         @audio.seekToEnd()
         @audio.play()

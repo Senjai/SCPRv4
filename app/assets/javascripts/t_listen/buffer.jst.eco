@@ -5,3 +5,4 @@
 
 <p><b>Server Time:</b> <span id="llServerTime"></span></p>
 <p><b>Playhead:</b> <span id="llPlayTime"></span></p>
+<p><b>Buffer Size:</b> <span id="llBuffLen"></span></p>
