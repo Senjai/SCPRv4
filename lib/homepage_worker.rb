@@ -1,3 +1,5 @@
+require "rubypython"
+
 class HomepageWorker
   
   attr_accessor :verbose
@@ -5,11 +7,19 @@ class HomepageWorker
   #----------
   
   def initialize
-    # do nothing?
-    
     # grab redis information from cache
     @redis = Redis.connect :url => (Rails.cache.instance_variable_get :@data).id
     self.log("Got redis connection at #{@redis}")
+    
+    # initialize Python for mercer caching
+    # FIXME: Hardcoding production python path for now, but this should be fixed
+    if Rails.env == "production"
+      RubyPython.start(:python_exe => "/usr/local/python2.7.2/bin/python")
+    else
+      RubyPython.start()      
+    end
+    
+    @pickle = RubyPython.import("cPickle")
   end
   
   #----------
@@ -39,7 +49,7 @@ class HomepageWorker
         
         if obj['key'] == "layout/homepage" || obj['action'] == 'publish' || obj['action'] == 'unpublish' || obj['status'] == ContentBase::STATUS_LIVE
           self.log("triggering caching based on action '#{obj['action']}' and status '#{obj['status']}'")
-          HomeController._cache_homepage(obj['key'])
+          HomeController._cache_homepage(obj['key'],@pickle)
           self.log("completed homepage caching... back to listening")
         end
       end

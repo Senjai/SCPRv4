@@ -13,7 +13,7 @@ class HomeController < ApplicationController
   
   #----------
   
-  def self._cache_homepage(obj_key=nil)
+  def self._cache_homepage(obj_key=nil,pickle=nil)
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  
     
     class << view  
@@ -52,6 +52,17 @@ class HomeController < ApplicationController
       "home/sections",
       view.render(:partial => "home/cached/sections", :object => scored_content[:sections])
     )
+    
+    # if we're passed a pickle object, also perform mercer headlines caching
+    if pickle
+      #headlines = Homepage.mercer_headlines
+      
+      (Rails.cache.instance_variable_get :@data).set(
+        ':1:hsection:headlines',
+        pickle.dumps( view.render(:partial => "home/cached/mercer/headlines", :object => scored_content[:headlines]) ),
+        :raw => true
+      )
+    end
   end
   
   class << self

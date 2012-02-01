@@ -8,12 +8,12 @@ class scpr.ListenLive
         playerEl:   "#llplayer"
         playBtn:    "#llplay"
         playerId:   "#llplayDiv"
-        #rewind:     "http://scprdev.org:8000/rewind.mp3"
-        #socketJS:   "http://scprdev.org:8000/socket.io/socket.io.js"
-        #host:       "http://scprdev.org:8000/"
-        rewind:     "http://localhost:8080/rewind.mp3"
-        socketJS:   "http://localhost:8080/socket.io/socket.io.js"
-        host:       "http://localhost:8080/"
+        rewind:     "http://scprdev.org:8000/rewind.mp3"
+        socketJS:   "http://scprdev.org:8000/socket.io/socket.io.js"
+        host:       "http://scprdev.org:8000/"
+        #rewind:     "http://localhost:8080/rewind.mp3"
+        #socketJS:   "http://localhost:8080/socket.io/socket.io.js"
+        #host:       "http://localhost:8080/"
         
         
     constructor: (options) ->
@@ -51,25 +51,28 @@ class scpr.ListenLive
                 @bufferUI.on "click", (e) =>
                     offset = Math.round (1 - e.offsetX / @bufferUI.width() ) * @serverBuffer
                     @offsetTo offset
-                                    
+                    @_displayBuffer()
+                
             @io.on "timecheck", (data) =>
                 @_displayBuffer data
                 
     #----------
         
     _displayBuffer: (data) ->
-        @serverBuffer = data.buffered
+        if data
+            @serverBuffer = data.buffered
+            @serverTime = new Date(data.time)
+
+            # set times
+            $("#llServerTime").text String(@serverTime)
         
         # set buffer bar
         if @offset == 0
             $("#llBuffBar").width("100%")
         else        
-            perc = 100 - (@offset / data.buffered * 100)
+            perc = 100 - (@offset / @serverBuffer * 100)
             $("#llBuffBar").width("#{ perc }%")
             
-        # set times
-        @serverTime = new Date(data.time)
-        $("#llServerTime").text String(@serverTime)
         $("#llPlayTime").text String(new Date(Number(@serverTime) - @offset*1000))
         
         if @audio
