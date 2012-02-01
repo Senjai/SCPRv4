@@ -51,7 +51,6 @@ class scpr.ListenLive
                 @bufferUI.on "click", (e) =>
                     offset = Math.round (1 - e.offsetX / @bufferUI.width() ) * @serverBuffer
                     @offsetTo offset
-                    @_displayBuffer()
                 
             @io.on "timecheck", (data) =>
                 @_displayBuffer data
@@ -96,8 +95,10 @@ class scpr.ListenLive
                 
         # register a click handler on the play button
         @playBtn.on "click", (evt) =>
+            
+            
             if @playing
-                #@audio.pause()
+                @audio.stop()
                 console.log "stopping..."
                 @playing = false
             else              
@@ -149,10 +150,13 @@ class scpr.ListenLive
                 @offset = Math.round(i)
                         
         # we need to seek to the end of the file
-        @audio.seekToEnd()
+        if @playing
+            @audio.seekToEnd()
+            
         @audio.play()
                 
         # note our status
         @started = Number(new Date) / 1000
         @offset = i
+        @_displayBuffer()
         @playing = true
