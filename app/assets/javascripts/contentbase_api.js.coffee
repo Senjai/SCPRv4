@@ -98,8 +98,14 @@ class scpr.ContentBaseAPI
             @options = _(_({}).extend(@DefaultOptions)).extend options || {}
             
             @cbapi = new ContentBaseAPI()
-            
+                                        
             $ =>
+                @el = $(@options.el)
+                
+                if !_(@el).first()
+                    console.log "Element invalid."
+                    return false
+                
                 # read in existing django-admin forms
                 @parser = new ContentBaseAPI.DjangoAdminParser 
                     key:        @options.key
@@ -116,18 +122,50 @@ class scpr.ContentBaseAPI
             
                 # wipe out the element contents and render our content
                 @view = new ContentBaseAPI.ContentView collection:@contents
-                $(@options.el)?.html @view.render().el
                 
-                $(@options.el)?.on "dragenter", (evt) => @_dropDragEnter evt
-                $(@options.el)?.on "dragover", (evt) => @_dropDragOver evt
-                $(@options.el)?.on "drop", (evt) => @_dropDrop evt
+                @form = $ "<div/>"
+                @drop = $ "<div/>"
+                                
+                @el.html @drop
+                @drop.html @view.render().el
+                @el.append @form
                 
-                $(@options.el)?.show()
+                @contents.on "all", => 
+                    i = 0
+                    
+                    @objects = @contents.map (m) =>
+                        [type,id] = @objKeyToDjango m.get('obj_key')
+                        
+                        console.log "converted #{m.get('obj_key')} into ", type, id
+                        
+                        obj = 
+                            content_type: type
+                            object_id: id
+                            position: i
+                            
+                        i++
+                        
+                        return obj
+                        
+                    console.log "building form from ", @objects
+                        
+                    @form.html @parser.constructForm(@objects)
+                
+                @el.on "dragenter", (evt) => @_dropDragEnter evt
+                @el.on "dragover", (evt) => @_dropDragOver evt
+                @el.on "drop", (evt) => @_dropDrop evt
+                
+                @el.show()
             
         #----------
             
         djangoToObjKey: (type,id) ->
             "#{ ContentBaseAPI.DjangoToContentType[type] }:#{id}"
+            
+        objKeyToDjango: (obj_key) ->
+            [ctype,id] = obj_key.split(":")
+            
+            return [ContentBaseAPI.ContentTypeToDjango[ctype],id]
 
         #----------
         
