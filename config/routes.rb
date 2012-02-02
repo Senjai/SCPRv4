@@ -14,6 +14,17 @@ Scprv4::Application.routes.draw do
   namespace :dashboard do
     match '/sections' => 'main#sections', :as => :sections
     match '/listen_live' => 'main#listen', :as => :listen
+    
+    # ContentBase API
+    match '/api/content/', :controller => 'api/content', :action => 'options', :constraints => {:method => 'OPTIONS'}
+    namespace :api do
+      resources :content, :id => /[\w\/\%]+(?:\:|%3A)\d+/ do
+        collection do
+          get :by_url
+        end
+      end
+    end
+    
     match '/' => 'main#index', :as => :home
   end
   

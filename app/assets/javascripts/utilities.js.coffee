@@ -28,7 +28,7 @@ class scpr.SectionCarousel
 	_template:
 		"""
 		<a href="<%= link_path %>">
-			<%= first_asset_square %>
+			<%= asset %>
 			<p><%= headline %></p>
 		</a>
 		"""

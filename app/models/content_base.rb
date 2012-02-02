@@ -1,4 +1,6 @@
 class ContentBase < ActiveRecord::Base
+  include ApplicationHelper
+  
   self.abstract_class = true
   
   STATUS_KILLED   = -1
@@ -23,6 +25,16 @@ class ContentBase < ActiveRecord::Base
     #'shows/episode' => "ShowEpisode",
     'blogs/entry'   => "BlogEntry",
     'content/shell' => "ContentShell"
+  }
+  
+  CONTENT_MATCHES = {
+    %r{^/news/\d+/\d\d/\d\d/(\d+)/.*}                => 'news/story',
+    %r{^/admin/news/story/(\d+)/}                    => 'news/story',
+    %r{^/blogs/[-_\w]+/\d+/\d\d/\d\d/(\d+)/.*}       => 'blogs/entry',
+    %r{^/admin/blogs/entry/(\d+)/}                   => 'blogs/entry',
+    %r{^/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'shows/segment',
+    %r{^/admin/shows/segment/(\d+)/}                 => 'shows/segment',
+    %r{^/admin/contentbase/contentshell/(\d+)/}      => 'content/shell'
   }
 
   # All ContentBase objects have assets and alarms
@@ -62,7 +74,11 @@ class ContentBase < ActiveRecord::Base
     
     if $~
       if CONTENT_CLASSES[ $~[1] ]
-        return CONTENT_CLASSES[ $~[1] ].constantize.find($~[2])
+        begin
+          return CONTENT_CLASSES[ $~[1] ].constantize.find($~[2])
+        rescue
+          return nil
+        end
       end
     end
     
@@ -70,9 +86,51 @@ class ContentBase < ActiveRecord::Base
   end
   
   #----------
+  
+  def self.obj_by_url(url)
+    begin
+      u = URI.parse(url)
+    rescue URI::InvalidURIError
+      return nil
+    end
+    
+    key = nil
+    CONTENT_MATCHES.detect do |k,v|
+      if u.path =~ k
+        key = [v,$~[1]].join(":")
+      end
+    end
+    
+    puts "key is #{key}"
+    
+    if key
+      # now make sure that content exists
+      return self.obj_by_key(key)
+    else
+      return nil
+    end
+  end
+  
+  #----------
     
   def obj_key
     return [self.class::CONTENT_TYPE,self.id].join(":")
+  end
+  
+  #----------
+  
+  def as_json(*args)
+    {
+      :obj_key        => self.obj_key,
+      :headline       => self.headline,
+      :short_headline => self.short_headline,
+      :teaser         => self.teaser,
+      :asset          => self.assets.any? ? self.first_asset_square : nil,
+      :byline         => render_byline(self,false),
+      :published_at   => self.published_at,
+      :link_path      => self.link_path,
+      :status         => self.status
+    }
   end
   
   #----------
