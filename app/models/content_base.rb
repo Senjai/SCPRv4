@@ -121,6 +121,7 @@ class ContentBase < ActiveRecord::Base
   
   def as_json(*args)
     {
+      :id             => self.obj_key,
       :obj_key        => self.obj_key,
       :headline       => self.headline,
       :short_headline => self.short_headline,

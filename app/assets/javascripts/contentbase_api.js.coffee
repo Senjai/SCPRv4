@@ -4,6 +4,8 @@
 #= require backbone
 #= require jquery-ui-1.8.17.sortable_w_effects
 
+#= require t_cbase/style
+
 class scpr.ContentBaseAPI
     DefaultOptions:
         api_path: "http://scprv4.dev/dashboard/api"
@@ -48,7 +50,7 @@ class scpr.ContentBaseAPI
     class ContentBaseAPI.ContentDropZone
         DefaultOptions:
             key: "contents"
-            fields: ['content_type','object_id']
+            fields: ['content_type','object_id','position']
             order_key: 'position'
             autofill: null
             del_key: 'DELETE'
@@ -65,6 +67,8 @@ class scpr.ContentBaseAPI
                 if !_(@el).first()
                     console.log "Element invalid."
                     return false
+                    
+                console.log "form html was ", @el.clone()
 
                 # read in existing django-admin forms
                 @parser = new ContentBaseAPI.DjangoAdminParser 
@@ -80,38 +84,55 @@ class scpr.ContentBaseAPI
                 @contents = new ContentBaseAPI.ContentCollection()
 
                 if @objects.length > 0
-                    @contents.fetch data:{ids:(o.obj_key || @djangoToObjKey(o.content_type,o.object_id) for o in @objects)}
-
+                    @contents.fetch 
+                        data: 
+                            ids: (o.obj_key || @djangoToObjKey(o.content_type,o.object_id) for o in @objects)
+                        silent: true
+                        success: =>
+                            console.log "collection fetch success"
+                            # if we're doing ordering, add the ORDER attribute
+                            if @options.order_key
+                                _(@objects).each (o) => 
+                                    id = o.obj_key || @djangoToObjKey(o.content_type,o.object_id)
+                                    @contents.get(id)?.set { ORDER:o[@options.order_key] }, silent:true
+                                    console.log "set ORDER:#{o[@options.order_key]} for #{id}"
+                                
+                                console.log "done setting order"
+                                @contents.sort()
+                            else
+                                @contents.trigger("reset")
+                    
                 # wipe out the element contents and render our content
                 @view = new ContentBaseAPI.ContentsView collection:@contents
 
+                @style = $ "<style/>", text:JST['t_cbase/style']()
                 @form = $ "<div/>"
                 @drop = $ "<div/>"
 
-                @el.html @drop
+                @el.html @style
+                @el.append @drop
                 @drop.html @view.render().el
                 @el.append @form
 
                 @contents.on "all", => 
-                    i = 0
-
                     @objects = @contents.map (m) =>
                         [type,id] = @objKeyToDjango m.get('obj_key')
 
                         console.log "converted #{m.get('obj_key')} into ", type, id
 
-                        obj = 
-                            content_type: type
-                            object_id: id
-                            position: i
+                        obj = content_type:type, object_id:id
 
-                        i++
+                        if @options.order_key
+                            obj[@options.order_key] = String m.get("ORDER")
 
                         return obj
 
                     console.log "building form from ", @objects
 
                     @form.html @parser.constructForm(@objects)
+                    
+                console.log "calling constructForm with ", @objects
+                @form.html @parser.constructForm(@objects)
 
                 @el.on "dragenter", (evt) => @_dropDragEnter evt
                 @el.on "dragover", (evt) => @_dropDragOver evt
@@ -157,16 +178,14 @@ class scpr.ContentBaseAPI
             # check if this is a content URL
             @cbapi.content_by_url uri, (c) =>
                 if c
+                    c.set ORDER:@contents.length
                     @contents.add(c)
+                    @el.effect "highlight"
                 else
-                    $(@options.el)?.animate {"background-color":"#fcc"},
-                        duration: "fast",
-                        complete: $(@options.el).animate({"background-color":"#fff"},duration:"fast")
+                    @el.effect "shake"
         
     #----------
-    
-    
-            
+
     @Content: Backbone.Model.extend
         urlRoot: "#{scpr.API_ROOT}/content/"
         
@@ -194,22 +213,58 @@ class scpr.ContentBaseAPI
         
         template:
             """
+            <%= asset %>
+            <button class="delete">Delete</button>
             <i>(<%= obj_key %>)</i>
             <h3><%= headline %></h3>
             <p><%= teaser %></p>
+            <br style="clear:both"/>
             """
+            
+        events:
+            'click button.delete': '_delete'
             
         initialize: ->
             @model.on "change", @render()
             
+            @del_confirm = false
+            @del_timeout = null
+            
+        _delete: (evt) ->
+                console.log "delete evt is ", evt
+                
+                if @del_confirm
+                    # delete
+                    console.log "confirm is set. should delete", @model
+                    clearTimeout @del_timeout
+                    
+                    # remove our model...
+                    _.defer => @model.collection.remove @model
+                else
+                    target = $(evt.target)
+                    target.text "Really Delete?"
+                    @del_confirm = true
+                    
+                    # set a reset timeout
+                    @del_timeout = setTimeout =>
+                        target.text "Delete"
+                        @del_confirm = false
+                        @del_timeout = null
+                        console.log "reset confirm on delete button", target
+                    , 2000
+                
+                false
+                        
         render: ->
             @$el.html _.template @template, @model.toJSON()
+            @$el.attr "data-objkey", @model.id 
+            @
             
     #----------
     
     @ContentsView: Backbone.View.extend            
         tagName: "ul"
-        className: "contentsView"
+        className: "cbaseView"
         
         initialize: ->
             @_views = {}
@@ -222,8 +277,8 @@ class scpr.ContentBaseAPI
                 console.log "remove event from ", f
                 @collection.sort()
 
-            @collection.bind 'reset', (f) => 
-                console.log "reset event from ", f                    
+            @collection.bind 'reset', => 
+                console.log "reset event"
                 _(@_views).each (av) => $(av.el).detach()
                 @_views = {}
                 @render()
@@ -235,13 +290,14 @@ class scpr.ContentBaseAPI
                 @_views[f.cid] ?= new ContentBaseAPI.ContentView model:f
 
             # make sure all of our view elements are added
-            $(@el).append( _(@_views).map (v) -> v.el )
+            @$el.append( _(@_views).map (v) -> v.el )
 
-            $( @el ).sortable
+            @$el.sortable
                 update: (evt,ui) => 
+                    console.log "evt is ", evt, ui
                     _(@el.children).each (li,idx) => 
-                        @collection.get(id).attributes.ORDER = idx
-                        console.log("set idx for #{id} to #{idx}")
+                        console.log("set idx for #{$(li).attr("data-objkey")} to #{idx}")
+                        @collection.get( $(li).attr("data-objkey") ).attributes.ORDER = idx
                     @collection.sort()
 
             @
@@ -283,6 +339,8 @@ class scpr.ContentBaseAPI
                         
                         @objects.push obj
                         
+                        i++
+                        
             console.log "objects is ", @objects
                     
         #----------
@@ -295,7 +353,7 @@ class scpr.ContentBaseAPI
                 type:   "hidden", 
                 name:   "#{@options.key}-TOTAL_FORMS", 
                 id:     "id_#{@options.key}-TOTAL_FORMS",
-                value:  newobj.length
+                value:  if newobj.length > @ids.length then newobj.length else @ids.length
 
             div.append $ "<input/>", 
                 type:   "hidden", 
@@ -336,19 +394,19 @@ class scpr.ContentBaseAPI
                     id:     "id_#{@options.key}-#{i}-id",
                     value:  id
 
-                for f in @options.fields
-                    div.append $ "<input/>",
-                        type:   "hidden", 
-                        name:   "#{@options.key}-#{i}-#{f}", 
-                        id:     "id_#{@options.key}-#{i}-#{f}",
-                        value:  ""
+                #for f in @options.fields
+                #    div.append $ "<input/>",
+                #        type:   "hidden", 
+                #        name:   "#{@options.key}-#{i}-#{f}", 
+                #        id:     "id_#{@options.key}-#{i}-#{f}",
+                #        value:  ""
 
-                _(@options.autofill).each (v,f) =>
-                    div.append $ "<input/>",
-                        type:   "hidden", 
-                        name:   "#{@options.key}-#{i}-#{f}", 
-                        id:     "id_#{@options.key}-#{i}-#{f}",
-                        value:  ""
+                #_(@options.autofill).each (v,f) =>
+                #    div.append $ "<input/>",
+                #        type:   "hidden", 
+                #        name:   "#{@options.key}-#{i}-#{f}", 
+                #        id:     "id_#{@options.key}-#{i}-#{f}",
+                #        value:  ""
                         
                 if @options.del_key
                     div.append $ "<input/>",
