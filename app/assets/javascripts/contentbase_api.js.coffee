@@ -108,12 +108,14 @@ class scpr.ContentBaseAPI
                 @style = $ "<style/>", text:JST['t_cbase/style']()
                 @form = $ "<div/>"
                 @drop = $ "<div/>"
+                
 
                 @el.html @style
                 @el.append @drop
                 @drop.html @view.render().el
                 @el.append @form
-
+                @_buildInputForm()
+                
                 @contents.on "all", => 
                     @objects = @contents.map (m) =>
                         [type,id] = @objKeyToDjango m.get('obj_key')
@@ -140,6 +142,32 @@ class scpr.ContentBaseAPI
 
                 @el.show()
 
+        #----------
+        
+        _buildInputForm: ->
+            template = 
+                """
+                <div class="cbaseURLInput">
+                    <b style="margin: 16px">Content URL:</b>
+                    <input id="cbaseURLInputIn" style="width: 60%;"/>
+                    <button class="importURL">Get Content</button>
+                    <br style="clear:both;"/>
+                </div>
+                """
+            
+            @inputForm = _.template template
+            @el.append @inputForm
+            
+            input = $("#cbaseURLInputIn",@inputForm)
+            
+            console.log "button is ", $("button",@inputForm), input
+            
+            $("button",@inputForm).on "click", (evt) =>
+                #console.log "val is ", input.val(), @_tryToImport
+                @_tryToImport input.val()
+                input.val("")
+                false
+        
         #----------
 
         djangoToObjKey: (type,id) ->
@@ -174,7 +202,16 @@ class scpr.ContentBaseAPI
 
             uri = evt.dataTransfer.getData 'text/uri-list'
             console.log "uri-list is ", uri
-
+            
+            @_tryToImport(uri)
+        
+        #----------
+    
+        _tryToImport: (uri) ->
+            if !uri
+                @el.effect "shake", "fast"
+                return false
+        
             # check if this is a content URL
             @cbapi.content_by_url uri, (c) =>
                 if c
@@ -182,8 +219,8 @@ class scpr.ContentBaseAPI
                     @contents.add(c)
                     @el.effect "highlight"
                 else
-                    @el.effect "shake"
-        
+                    @el.effect "shake", "fast"
+    
     #----------
 
     @Content: Backbone.Model.extend
