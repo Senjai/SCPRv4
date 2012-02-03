@@ -253,8 +253,16 @@ class scpr.ContentBaseAPI
             <%= asset %>
             <button class="delete">Delete</button>
             <i>(<%= obj_key %>)</i>
-            <h3><%= headline %></h3>
+            <h3>H: <%= headline %></h3>
+            <h3>SH: <%= short_headline %></h3>
+            <h4><%= byline %></h4>
             <p><%= teaser %></p>
+            <i>
+                SH Length: <%= short_headline.length %>
+                &mdash; Teaser Length: <%= teaser.length %>
+                <% if(Number(status) == 5) { %>&mdash; <a href="<%= link_path %>" target="_new">View Live</a><% }; %>
+                &mdash; <a href="<%= admin_path %>" target="_new">View in Admin</a>
+            </i>
             <br style="clear:both"/>
             """
             

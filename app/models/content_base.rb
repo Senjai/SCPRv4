@@ -130,6 +130,7 @@ class ContentBase < ActiveRecord::Base
       :byline         => render_byline(self,false),
       :published_at   => self.published_at,
       :link_path      => self.link_path,
+      :admin_path     => self.admin_path,
       :status         => self.status
     }
   end

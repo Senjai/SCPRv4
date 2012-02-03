@@ -1,7 +1,6 @@
 ul.cbaseView {
     margin: 0;
     padding: 0;
-    min-height: 100px;
     
     li {
         list-style-type: none;
@@ -9,14 +8,29 @@ ul.cbaseView {
         background: #fff;
         padding: 4px;
         margin: 2px 0;
+        padding-left: 120px;
     }
     
     img {
         float: left;
-        margin: 0 8px 8px 0;
+        margin-left: -120px;
         width: 100px;
         height: 100px;
         clear: both;
+    }
+    
+    h3 {
+        color: #222;
+        margin-top: 0;
+    }
+    
+    h4 {
+        color: #999;
+    }
+    
+    p {
+        font-size: 14px;
+        padding-top: 12px;
     }
     
     button.delete {
