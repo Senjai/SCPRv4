@@ -28,12 +28,18 @@ class ContentShell < ContentBase
     true
   end
   
+  def body
+    self._teaser
+  end
+  
+  #----------
+  
   def link_path
     self.url
   end
   
-  def body
-    self._teaser
+  def remote_link_path
+    self.url
   end
   
   #----------
