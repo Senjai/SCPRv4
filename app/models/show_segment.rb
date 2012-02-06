@@ -18,6 +18,7 @@ class ShowSegment < ContentBase
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
+    has "1", :as => :is_source_kpcc, :type => :boolean
     has "CRC32(CONCAT('shows/segment:',shows_segment.id))", :type => :integer, :as => :obj_key
     has "(shows_segment.segment_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
     where "status = #{STATUS_LIVE}"

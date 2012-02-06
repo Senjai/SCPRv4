@@ -15,6 +15,7 @@ class FeedsController < ApplicationController
       :per_page   => 15,
       :order      => :published_at,
       :sort_mode  => :desc,
+      :with       => { :is_source_kpcc => true },
       :without    => { :category => '' }
     )
     
