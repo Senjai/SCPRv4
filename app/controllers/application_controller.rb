@@ -16,6 +16,14 @@ class ApplicationController < ActionController::Base
     @admin_user
   end
   
+  def require_admin
+    if @admin_user
+      return true
+    else
+      redirect_to '/admin/' and return
+    end
+  end
+  
   #----------
   
   private
