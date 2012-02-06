@@ -39,3 +39,24 @@ ul.cbaseView {
         padding: 8px;
     }
 }
+
+ul.cbaseList {
+    margin: 0;
+    padding: 0;
+    
+    li {
+       list-style-type: none;
+       padding: 4px;
+       margin: 2px 0;
+       padding-left: 40px;
+       border-bottom: 2px solid #ddd;
+    }
+    
+    img {
+        float: left;
+        margin-left: -40px;
+        width: 36px;
+        height: 36px;
+        clear: both;
+    }
+}

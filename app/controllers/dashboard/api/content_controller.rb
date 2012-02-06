@@ -46,6 +46,21 @@ class Dashboard::Api::ContentController < ApplicationController
   
   #----------
   
+  def recent
+    contents = ThinkingSphinx.search(
+      '',
+      :classes    => ContentBase.content_classes,
+      :page       => 1,
+      :per_page   => 20,
+      :order      => :published_at,
+      :sort_mode  => :desc,
+    )
+    
+    render :json => contents.as_json
+  end
+  
+  #----------
+  
   private
   def set_access_control_headers 
     headers['Access-Control-Allow-Origin'] = request.env['HTTP_ORIGIN'] || "*"

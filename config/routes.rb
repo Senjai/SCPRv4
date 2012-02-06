@@ -21,6 +21,7 @@ Scprv4::Application.routes.draw do
       resources :content, :id => /[\w\/\%]+(?:\:|%3A)\d+/ do
         collection do
           get :by_url
+          get :recent
         end
       end
     end

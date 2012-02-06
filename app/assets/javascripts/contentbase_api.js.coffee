@@ -3,6 +3,7 @@
 #= require underscore
 #= require backbone
 #= require jquery-ui-1.8.17.sortable_w_effects
+#= require strftime
 
 #= require t_cbase/style
 
@@ -33,6 +34,7 @@ class scpr.ContentBaseAPI
             url: "#{scpr.API_ROOT}/content/by_url?id=#{encodeURIComponent(url)}"
             params: { id:url }
             xhrFields: { withCredentials:true }
+            dataType: "json"
             success: (r) =>
                 console.log "got success of ", r
                 cb? new ContentBaseAPI.Content r
@@ -44,6 +46,54 @@ class scpr.ContentBaseAPI
     
     buildContentDropZone: (args) ->
         new ContentBaseAPI.ContentDropZone args
+    
+    #----------
+    
+    @smart_date: (date) ->
+        to = new Date()
+        from = new Date(date)
+
+        if to.getISODate() == from.getISODate()
+            # today.  just h:mm
+            return strftime "%l:%M%p", from
+        else if ( Number(to) - Number(from) ) < (86400 * 7)
+            return strftime "%a, %l:%M%p", from 
+        else
+            return strftime "%b %e, %l:%M%p", from
+    
+    #----------
+    
+    @time_ago_in_words: (date) ->
+        to = Number(new Date())
+        from = Number(new Date(date))
+                
+        seconds_ago = Math.floor (to  - from) / 1000
+        minutes_ago = Math.floor seconds_ago / 60
+
+        if minutes_ago == 0
+            return "about #{seconds_ago} seconds"
+        else if minutes_ago == 1
+            return "about a minute"
+        else if minutes_ago < 55
+            return "about #{minutes_ago} minutes"
+        else if minutes_ago < 90
+            return "about an hour"
+        else
+            hours_ago = Math.round minutes_ago / 60
+            
+            if minutes_ago < (60 * 18)
+                return "about #{hours_ago} hours"
+            else if minutes_ago < (60 * 36)
+                return "about a day"
+            else
+                days_ago = Math.round minutes_ago / 1440
+                
+                if minutes_ago < (60 * 24 * 24)
+                    return "about #{days_ago} days"
+                else if minutes_ago < (60 * 24 * 48)
+                    return "about a month"
+                else
+                    return from.getISODate()        
     
     #----------
 
@@ -222,7 +272,7 @@ class scpr.ContentBaseAPI
                     @el.effect "shake", "fast"
     
     #----------
-
+    
     @Content: Backbone.Model.extend
         urlRoot: "#{scpr.API_ROOT}/content/"
         
@@ -250,12 +300,12 @@ class scpr.ContentBaseAPI
         
         template:
             """
-            <%= asset %>
+            <%= asset || "" %>
             <button class="delete">Delete</button>
             <i>(<%= obj_key %>)</i>
             <h3>H: <%= headline %></h3>
             <h3>SH: <%= short_headline %></h3>
-            <h4><%= byline %></h4>
+            <h4><%= byline %> &mdash; <%= published_at %></h4>
             <p><%= teaser %></p>
             <i>
                 SH Length: <%= short_headline.length %>
@@ -301,7 +351,10 @@ class scpr.ContentBaseAPI
                 false
                         
         render: ->
-            @$el.html _.template @template, @model.toJSON()
+            console.log "rendering #{@model.id}"
+            @$el.html _.template @template, _.extend @model.toJSON(), 
+                published_at:ContentBaseAPI.smart_date(@model.get("published_at"))
+            
             @$el.attr "data-objkey", @model.id 
             @
             
@@ -311,6 +364,92 @@ class scpr.ContentBaseAPI
         tagName: "ul"
         className: "cbaseView"
         
+        initialize: ->
+            @_views = {}
+
+            @collection.bind 'all', => 
+                console.log "rebuilding views on event"
+                _(@_views).each (av) => $(av.el).detach()
+                @$el.html ""
+                @_views = {}
+                @render()
+            
+        render: ->
+            # set up views for each collection member
+            @collection.each (f) => 
+                console.log "calling render for ", f
+                # create a view unless one exists
+                @_views[f.cid] ?= new ContentBaseAPI.ContentView model:f
+
+            # make sure all of our view elements are added
+            @$el.append( _(@_views).map (v) -> v.el )
+
+            @$el.sortable
+                update: (evt,ui) => 
+                    console.log "evt is ", evt, ui
+                    _(@el.children).each (li,idx) => 
+                        console.log("set idx for #{$(li).attr("data-objkey")} to #{idx}")
+                        @collection.get( $(li).attr("data-objkey") ).attributes.ORDER = idx
+                    @collection.sort()
+
+            @
+            
+    #----------
+    
+    class ContentBaseAPI.ContentList
+        DefaultOptions:
+            el: null
+            function: "recent"
+        
+        constructor: (options) ->
+            @options = _(_({}).extend(@DefaultOptions)).extend options || {}
+            
+            @el = $(@options.el)
+    
+            if !_(@el).first()
+                console.log "Element invalid."
+                return false
+            
+            # create our collection via the given API function
+            @contents = new ContentBaseAPI.ContentCollection()
+            @contents.fetch url:"#{@contents.url}/#{@options.function}",success: =>
+                # set up our view 
+                @view = new ContentBaseAPI.ListViewList collection:@contents
+                @el.html @view.render().el
+    
+    #----------
+    
+    @ListViewContent: Backbone.View.extend
+        tagName: "li"
+        
+        template:
+            """
+            <a href="<%= link_path %>" target="_new">
+                <%= asset %>
+                <%= headline %>
+            </a>
+            <br/><%= byline %>
+            <br/><%= obj_key %> &mdash; <%= published_at %>
+            &mdash; <a href="<%= admin_path %>" target="_new">Admin</a>
+            """
+        
+        initialize: ->
+            @model.on "change", @render()
+            
+        render: ->
+            @$el.html _.template @template, _.extend @model.toJSON(), 
+                published_at:ContentBaseAPI.smart_date(@model.get("published_at"))
+                
+            @$el.attr "data-objkey", @model.id 
+            @
+            
+    
+    #----------
+
+    @ListViewList: Backbone.View.extend
+        tagName: "ul"
+        className: "cbaseList"
+            
         initialize: ->
             @_views = {}
 
@@ -327,25 +466,17 @@ class scpr.ContentBaseAPI
                 _(@_views).each (av) => $(av.el).detach()
                 @_views = {}
                 @render()
-            
+
         render: ->
             # set up views for each collection member
             @collection.each (f) => 
                 # create a view unless one exists
-                @_views[f.cid] ?= new ContentBaseAPI.ContentView model:f
+                @_views[f.cid] ?= new ContentBaseAPI.ListViewContent model:f
 
             # make sure all of our view elements are added
             @$el.append( _(@_views).map (v) -> v.el )
 
-            @$el.sortable
-                update: (evt,ui) => 
-                    console.log "evt is ", evt, ui
-                    _(@el.children).each (li,idx) => 
-                        console.log("set idx for #{$(li).attr("data-objkey")} to #{idx}")
-                        @collection.get( $(li).attr("data-objkey") ).attributes.ORDER = idx
-                    @collection.sort()
-
-            @
+            return @
             
     #----------
     
