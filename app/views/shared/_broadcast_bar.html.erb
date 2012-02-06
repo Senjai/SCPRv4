@@ -1,5 +1,6 @@
 <% o = Schedule.on_now %>
-<div id="broadcast-bar-container" class="<%= o.programme.is_a?(KpccProgram) ? "headshot" : "" %>">
+<div id="broadcast-bar-outer-container" class="<%= o.programme.is_a?(KpccProgram) ? "headshot" : "" %>">
+<div id="broadcast-bar-inner-container">
 <section class="broadcastbar">
 	<div class="left">
 	<ul>
@@ -37,4 +38,5 @@
 	</ul>
 	</div>
 </section>
+</div>
 </div>
