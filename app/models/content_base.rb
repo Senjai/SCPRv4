@@ -154,7 +154,7 @@ class ContentBase < ActiveRecord::Base
       self.obj_key() =~ /(\w+)\/(\w+):(\d+)/
       
       if $~
-        return "/admin/#{$~[1]}/#{$~[2]}/#{self.id}"
+        return "/admin/#{$~[1]}/#{$~[2]}/#{self.id}/"
       else
         return ''
       end
