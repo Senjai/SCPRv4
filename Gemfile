@@ -21,10 +21,14 @@ gem 'newrelic_rpm'
 group :assets do
   gem "eco"
   gem 'sass-rails', "  ~> 3.2.3"
-  gem "compass", :git => 'git://github.com/chriseppstein/compass.git', :branch => 'master'
+  gem "compass-rails"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'uglifier', '>= 1.0.3'
   gem 'oily_png'
+end
+
+group :test, :development do 
+	gem "rspec-rails"
 end
 
 group :test do
@@ -33,5 +37,5 @@ group :test do
 end
 
 group :worker do
-  gem 'rubypython', :git => "git://github.com/halostatue/rubypython.git"
+  gem 'rubypython'
 end
