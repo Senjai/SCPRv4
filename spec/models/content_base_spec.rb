@@ -37,6 +37,11 @@ describe ContentBase do
         obj.byline_elements.is_a?(Array).should == true        
       end
       
+      it "can generate a link_path" do
+        obj = c.published.order("RAND()").first
+        obj.link_path.should_not == false
+      end
+      
     end
   end
 end
