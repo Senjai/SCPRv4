@@ -2,7 +2,7 @@
 
 <h1><%= @category.category %></h1>
 
-<% links = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »", :params => {:action => @cat_action }) %>
+<% links = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
 
 <% if @content.current_page == 1 %>
 	<%= render_content @content[0], "twocol" %>
