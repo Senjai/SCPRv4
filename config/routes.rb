@@ -52,10 +52,10 @@ Scprv4::Application.routes.draw do
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
 
-  match '/:category(/:page)' => "category#news", :constraints => CategoryConstraint.new, :defaults => { :page => 1 }, :as => :section
+  match '/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new, :defaults => { :page => 1 }, :as => :section
   
-  match '/news/' => 'news#index', :as => :latest_news
-  match '/arts-life/' => 'news#arts', :as => :latest_arts
+  match '/news/' => 'category#news', :as => :latest_news
+  match '/arts-life/' => 'category#arts', :as => :latest_arts
   
   match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
   
