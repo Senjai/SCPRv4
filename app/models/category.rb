@@ -28,16 +28,9 @@ class Category < ActiveRecord::Base
   #----------
 
   def link_path
-    if self.is_news
-      Rails.application.routes.url_helpers.news_section_path(
-        :category => self.slug,
-        :trailing_slash => true
-      )
-    else
-      Rails.application.routes.url_helpers.arts_section_path(
-        :category => self.slug,
-        :trailing_slash => true
-      )      
-    end
+    Rails.application.routes.url_helpers.section_path(
+      :category => self.slug,
+      :trailing_slash => true
+    )
   end
 end
