@@ -19,6 +19,15 @@ role :web, "web1.scpr.org", "web2.scpr.org"
 role :db,  "web2.scpr.org", :primary => true
 role :sphinx, "media.scpr.org"
 
+task :staging do
+  set :rails_env, :scprdev
+
+  role :app, "scprdev.org"
+  role :web, "scprdev.org"
+  role :db,  "scprdev.org", :primary => true
+  role :sphinx, "scprdev.org"  
+end
+
 namespace :deploy do
   task :start, :roles => :app do
     run "touch #{current_release}/tmp/restart.txt"

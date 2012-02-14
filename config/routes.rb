@@ -1,7 +1,7 @@
 class CategoryConstraint
-  def initialize(news = false)
+  def initialize
     # load up category list
-    @cats = Category.where(:is_news => news).all.map { |c| c.slug }
+    @cats = Category.all.map { |c| c.slug }
   end
   
   def matches?(request)
@@ -52,11 +52,10 @@ Scprv4::Application.routes.draw do
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
 
-  match '/arts/:category(/:page)' => "category#arts", :constraints => CategoryConstraint.new(false), :defaults => { :page => 1 }, :as => :arts_section
-  match '/news/:category(/:page)' => "category#news", :constraints => CategoryConstraint.new(true), :defaults => { :page => 1 }, :as => :news_section
+  match '/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new, :defaults => { :page => 1 }, :as => :section
   
-  match '/news/' => 'news#index', :as => :latest_news
-  match '/arts/' => 'news#arts', :as => :latest_arts
+  match '/news/' => 'category#news', :as => :latest_news
+  match '/arts-life/' => 'category#arts', :as => :latest_arts
   
   match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
   

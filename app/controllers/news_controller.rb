@@ -1,37 +1,4 @@
 class NewsController < ApplicationController
-  def index
-    # build list of news categories    
-    @content = ThinkingSphinx.search(
-      '',
-      :classes    => ContentBase.content_classes,
-      :page       => params[:page] || 1,
-      :per_page   => 12,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with => { :category => Category.where(:is_news => true).all.map { |c| c.id } }
-    )
-    
-    render :layout => "application"
-  end
-  
-  #----------
-  
-  def arts
-    # build list of news categories    
-    @content = ThinkingSphinx.search(
-      '',
-      :classes    => ContentBase.content_classes,
-      :page       => params[:page] || 1,
-      :per_page   => 12,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with => { :category => Category.where(:is_news => false).all.map { |c| c.id } }
-    )
-    
-    render :layout => "application"    
-  end
-  
-  #----------
 
   def story
     begin

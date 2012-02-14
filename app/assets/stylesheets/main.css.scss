@@ -82,6 +82,8 @@ section.broadcastbar {
 				color:$orangeDark;
 				a {
 					color:$orangeDark;
+					font-weight:600;
+					text-shadow:1px 1px 0px #fff;
 				}
 			}
 			&.show-status {
@@ -107,12 +109,14 @@ section.broadcastbar {
 				padding:8px 0 0 60px;
 			}
 			&.upnext-show-title, .upnext-show-title a {			    
-				@include font-heading($weight:normal, $size:1.5em);
+				@include font-heading($weight:600, $size:1.5em);
 				color:$orangeDark;
+				text-shadow:1px 1px 0px #fff;
 			}
 			&.show-time {
-				@include font-sans-serif($weight:normal, $size:1.05em);
+				@include font-sans-serif($weight:normal, $size:0.9em);
 				color:$gray;
+				letter-spacing:-0.15em;
 				padding:0 0 0 5px;
 			}	
 		}
