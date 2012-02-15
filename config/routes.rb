@@ -13,7 +13,7 @@ Scprv4::Application.routes.draw do
     
   namespace :dashboard do
     match '/sections' => 'main#sections', :as => :sections
-    match '/listen_live' => 'main#listen', :as => :listen
+    match '/listen_live(/:current)' => 'main#listen', :as => :listen
     
     # ContentBase API
     match '/api/content/', :controller => 'api/content', :action => 'options', :constraints => {:method => 'OPTIONS'}
