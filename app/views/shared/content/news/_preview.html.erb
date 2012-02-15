@@ -1,0 +1,6 @@
+<h1 class="story-headline"><%= content.headline %></h1>
+<p class="byline">By <%= render_byline content %> <span class="pipe">|</span> <time pubdate><%= smart_date content %></time></p>
+
+<%= render_asset content, "story" %>
+
+<%= simple_format content.body, {}, :sanitize => false %>

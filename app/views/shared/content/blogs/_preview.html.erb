@@ -1,0 +1,6 @@
+<div class="span6">
+	<h1 class="story-headline"><%= content.title %></h1>
+	<p class="byline"><%= render_byline content %></p>
+	<%= render_asset content, "blog" %>
+	<%= raw content.content %>
+</div>
