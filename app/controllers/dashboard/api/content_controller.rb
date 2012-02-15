@@ -3,6 +3,7 @@ class Dashboard::Api::ContentController < ApplicationController
   
   before_filter :require_admin
   before_filter :set_access_control_headers
+  skip_before_filter :verify_authenticity_token, :only=>[:preview]
   
   def options
     head :ok
@@ -46,7 +47,7 @@ class Dashboard::Api::ContentController < ApplicationController
     end
     
     if @content
-      render "preview.js"
+      render "preview.js", :status => 200
     else
       render :text => "Not Found", :status => :not_found      
     end

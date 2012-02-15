@@ -25,7 +25,7 @@ Scprv4::Application.routes.draw do
         end
         
         member do
-          get :preview
+          post :preview
         end
       end
     end
