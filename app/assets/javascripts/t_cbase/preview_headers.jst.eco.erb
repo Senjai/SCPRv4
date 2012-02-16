@@ -1,5 +1,5 @@
-<%= javascript_include_tag "http://#{Rails.application.config.scpr.host}/assets/application.js" %>
-<%= stylesheet_link_tag    "http://#{Rails.application.config.scpr.host}/assets/application.css" %>
+<script type="text/javascript" src="http://<%= Rails.application.config.scpr.host %>/assets/application.js"></script>
+<link rel="stylesheet" href="http://<%= Rails.application.config.scpr.host %>/assets/application.css" media="screen" type="text/css"/>
 
 <script type="text/javascript" src="http://<%= AssetHost[:server] %>/assets/client.js"></script>
 <script type="text/javascript">ahClient = new AssetHost.Client()</script>
