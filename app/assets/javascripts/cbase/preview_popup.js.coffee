@@ -7,7 +7,6 @@ class scpr.ContentBaseAPI.PreviewPopup
     DefaultOptions:
         el: "#cbPreviewButton"
         map: []
-        css: "http://www.scpr.org/assets/application.css"
         
     constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend options || {}
@@ -15,10 +14,6 @@ class scpr.ContentBaseAPI.PreviewPopup
         @cbapi = @options.cbapi || new ContentBaseAPI()
                     
         @_init = false
-        
-        # -- create hidden element for dimensioning -- #
-        @hidden = $ "<div/>", style:"position:absolute; top:-10000px; width:0px; height:0px;"
-        $('body').append @hidden
         
         @shell = null
         @frame = null
@@ -52,11 +47,12 @@ class scpr.ContentBaseAPI.PreviewPopup
                     
                     # if there isn't already a popup window, create one
                     if !@_init
-                        @_createFrame()
-
-                    @content.html r.preview
-                        
-                    @shell.modal("show")
+                        @_createFrame =>
+                            @content.html r.preview
+                            @shell.modal("show")
+                    else
+                        @content.html r.preview
+                        @shell.modal("show")
                 error: (r) =>
                     console.log "got error of ", r
                     #cb? null
@@ -66,7 +62,7 @@ class scpr.ContentBaseAPI.PreviewPopup
             
     #----------
                     
-    _createFrame: ->
+    _createFrame: (cb) ->
         # inject our css
         @style = $ "<style/>", text:JST['t_cbase/style']()
         $("head").append @style
@@ -75,18 +71,25 @@ class scpr.ContentBaseAPI.PreviewPopup
         height = $(window).height() - 100
         width = 770
         
-        @shell = $ "<iframe/>", class:"modal fade", style:"width:#{width}px;height:#{height}px;margin: -#{height/2}px 0 0 -#{width/2}px;padding: 20px"
+        @shell = $ "<iframe/>", 
+            class:  "modal fade", 
+            style:  "width:#{width}px;height:#{height}px;margin: -#{height/2}px 0 0 -#{width/2}px;padding: 20px"
+            
         $("body").append @shell
         
         # dig in to get the new document
         @frame = @shell[0].contentWindow.document
+        
         @frame.open()
+        @frame.write JST['t_cbase/preview_headers']()
         @frame.close()
         
-        @content = $ "<div/>"
-        $("head", $ @frame).html JST['t_cbase/preview_headers']()
+        @shell[0].contentWindow.onload = =>    
+            @f$ = @shell[0].contentWindow.$
             
-        #$("body", $ @frame).css margin:"20px"
-        $("body", $ @frame).append @content
+            @content = @f$ "<div/>"
+            @f$("body").append @content
+
+            cb?()
         
         @_init = true

@@ -1,9 +1,10 @@
 <% host = Rails.env == "production" ? "www.scpr.org" : "scprv4.dev" %>
-<%= stylesheet_link_tag    "http://#{host}/assets/application.css" %>
 <%= javascript_include_tag "http://#{host}/assets/application.js" %>
+<%= stylesheet_link_tag    "http://#{host}/assets/application.css" %>
 
 <script type="text/javascript" src="http://<%= AssetHost[:server] %>/assets/client.js"></script>
 <script type="text/javascript">ahClient = new AssetHost.Client()</script>
 
 <script type="text/javascript" src="http://use.typekit.com/mhc7oxs.js"></script>
+
 <script type="text/javascript">try{Typekit.load();}catch(e){console.log("typekit error ", e)}</script>
