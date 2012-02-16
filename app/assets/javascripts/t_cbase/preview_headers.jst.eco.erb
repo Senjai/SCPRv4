@@ -1,6 +1,5 @@
-<% host = Rails.env == "production" ? "www.scpr.org" : "scprv4.dev" %>
-<%= javascript_include_tag "http://#{host}/assets/application.js" %>
-<%= stylesheet_link_tag    "http://#{host}/assets/application.css" %>
+<%= javascript_include_tag "http://#{Rails.application.config.scpr.host}/assets/application.js" %>
+<%= stylesheet_link_tag    "http://#{Rails.application.config.scpr.host}/assets/application.css" %>
 
 <script type="text/javascript" src="http://<%= AssetHost[:server] %>/assets/client.js"></script>
 <script type="text/javascript">ahClient = new AssetHost.Client()</script>
