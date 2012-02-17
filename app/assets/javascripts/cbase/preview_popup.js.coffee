@@ -60,6 +60,9 @@ class scpr.ContentBaseAPI.PreviewPopup
             # cancel click bubbling
             false
             
+        # make sure our click element is visible
+        $(@options.el).show()
+            
     #----------
                     
     _createFrame: (cb) ->
