@@ -23,6 +23,10 @@ Scprv4::Application.routes.draw do
           get :by_url
           get :recent
         end
+        
+        member do
+          post :preview
+        end
       end
     end
     

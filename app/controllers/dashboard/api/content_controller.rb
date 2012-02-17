@@ -1,7 +1,9 @@
 class Dashboard::Api::ContentController < ApplicationController
+  include ApplicationHelper
   
   before_filter :require_admin
   before_filter :set_access_control_headers
+  skip_before_filter :verify_authenticity_token, :only=>[:preview]
   
   def options
     head :ok
@@ -29,6 +31,25 @@ class Dashboard::Api::ContentController < ApplicationController
       render :json => content.as_json
     else
       render :text => "Not Found", :status => :not_found
+    end
+  end
+  
+  #----------
+  
+  def preview
+    # is this valid content?
+    @content = ContentBase.obj_by_key(params[:id])
+    
+    [:headline, :_short_headline, :_teaser, :body, :content].each do |f|
+      if params[ f ]
+        @content[ f ] = params[ f ]
+      end
+    end
+    
+    if @content
+      render "preview.js", :status => 200
+    else
+      render :text => "Not Found", :status => :not_found      
     end
   end
   
