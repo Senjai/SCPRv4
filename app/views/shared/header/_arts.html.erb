@@ -27,7 +27,7 @@
 		<% content_cache("mega_arts_latest") do %>
 			<% register_content("contentbase:new") %>
 			<ul>
-			<% for c in get_latest_arts[0..1] do %>
+			<% for c in get_latest_arts do %>
 				<% register_content(c) %>
 				<li>
 					<a href="<%= c.link_path %>">

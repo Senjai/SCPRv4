@@ -1,22 +1,47 @@
-<article>
+<% player_options = {
+	src: "http://c.brightcove.com/services/viewer/federated_f9?isVid=1&isUI=1",
+	name: "flashObj",
+	width: "720", 
+	height: "405",
+	params: {
+		bgcolor: "#000000", 
+		flashVars: "videoId=#{@video.id}&playerID=1456553483001&playerKey=AQ~~,AAAAmtVKbGE~,pW41hkPiaotk7M2LC0HZ3RTjdL1UaDYv&domain=embed&dynamicStreaming=true",
+		base: "http://admin.brightcove.com",
+		seamlesstabbing: "false",
+		allowFullScreen: "true",
+		swLiveConnect: "true",
+		allowScriptAccess: "always"
+		}	
+	}
+	
+	img_replace = false # Just for demonstration purposes
+%>
+
+<article>	
 	<section class="video">
-	<!--
-		<object id="flashObj" width="720" height="405" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,47,0">
-			<param name="movie" value="http://c.brightcove.com/services/viewer/federated_f9?isVid=1&isUI=1" />
-			<param name="bgcolor" value="#000000" />
-			<param name="flashVars" value="videoId=1441481477001&playerID=673439679001&playerKey=AQ~~,AAAAmtVKbGE~,pW41hkPiaotk7M2LC0HZ3RTjdL1UaDYv&domain=embed&dynamicStreaming=true" />
-			<param name="base" value="http://admin.brightcove.com" />
-			<param name="seamlesstabbing" value="false" />
-			<param name="allowFullScreen" value="true" />
-			<param name="swLiveConnect" value="true" />
-			<param name="allowScriptAccess" value="always" />
-			<embed src="http://c.brightcove.com/services/viewer/federated_f9?isVid=1&isUI=1" bgcolor="#000000" flashVars="videoId=1255457560001&playerID=673439679001&playerKey=AQ~~,AAAAmtVKbGE~,pW41hkPiaotk7M2LC0HZ3RTjdL1UaDYv&domain=embed&dynamicStreaming=true" base="http://admin.brightcove.com" name="flashObj" wmode="transparent" width="720" height="405" seamlesstabbing="false" type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" swLiveConnect="true" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></embed>
-		</object>
-	-->
-	<%= @video.tags.eight.html_safe %>
+		<% unless img_replace %>
+			<object id="flashObj" width="<%= player_options[:width] %>" height="<%= player_options[:height] %>" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,47,0">
+				<param name="movie" value="<%= player_options[:src] %>" />
+				<% player_options[:params].map do |name, value| %>
+					<param name="<%=name%>" value="<%=value%>">
+				<% end %>
+				<embed 	src="<%= player_options[:src] %>" 
+						flashVars="<%= player_options[:params][:flashVars] %>" 
+						width="<%= player_options[:width] %>" 
+						height="<%= player_options[:height] %>" 
+						name="<%= player_options[:name] %>" 
+						<% player_options[:params].map do |name, value| %>
+							<%=name%>="<%=value%>"
+						<% end %>
+						wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash">
+					</embed>
+			</object>
+		<% end %>
+		
+		<%= @video.tag(:eight) if img_replace %>
 	</section>
-	<h1 class="story-headline"><%= @video.title %></h1>
+	<h1 class="story-headline">Video Title</h1>
 	<p class="byline"><a href="#">Julie Platner</a> | KPCC <span class="pipe">|</span> <time pubdate="">Oct 11, 2011</time></p>
-	<p class="description"><%= @video.caption %></p>
+	<p class="description">Video Caption</p>
 	<%= render "shared/cwidgets/social_tools", :cssClass => 'multimedia muted' %>
 </article>

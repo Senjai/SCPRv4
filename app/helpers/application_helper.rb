@@ -215,7 +215,7 @@ module ApplicationHelper
   
   #----------
   
-  def get_latest_arts
+  def get_latest_arts(limit=2)
     begin
       ThinkingSphinx.search '',
         :classes    => ContentBase.content_classes,
@@ -224,7 +224,8 @@ module ApplicationHelper
         :order      => :published_at,
         :sort_mode  => :desc,
         :with       => { :category_is_news => false },
-        :without    => { :category => '' }
+        :without    => { :category => '' },
+        limit: limit
     rescue Riddle::ConnectionError # If Sphinx is not running.
       return "Arts currently unavailable."
     end
@@ -232,7 +233,7 @@ module ApplicationHelper
   
   #----------
   
-  def get_latest_news
+  def get_latest_news(limit=2)
     begin
       ThinkingSphinx.search '',
         :classes    => ContentBase.content_classes,
@@ -240,9 +241,40 @@ module ApplicationHelper
         :per_page   => 12,
         :order      => :published_at,
         :sort_mode  => :desc,
-        :with       => { :category_is_news => true }
+        :with       => { :category_is_news => true },
+        limit: limit
     rescue Riddle::ConnectionError # If Sphinx is not running.
       return "News currently unavailable."
     end
+  end
+  
+  def any_to_list?(records, options={}, &block)
+    if records.present?
+      block_given? ? capture(&block) : true
+    else
+      if block_given?
+        options[:title] ||= records.class.to_s.titleize.pluralize
+        options[:message] ||= "There are currently no #{options[:title]}"
+      else
+        return false
+      end
+    end
+  end
+  
+  def pretty_date(date, options={})
+    format = options[:format].to_s
+    case format
+      when "numbers"
+        formatted = date.strftime("%m-%e-%y") # 10-11-11
+      when "full"
+        formatted = date.strftime("%B #{date.day.ordinalize}, %Y") # October 11th, 2011
+      when "custom"
+        formatted = date.strftime(options[:with])
+      end
+    formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
+  end
+  
+  def byline(bylines)
+    bylines.present? ? bylines.map { |b| b.user.name }.to_sentence : "KPCC"
   end
 end

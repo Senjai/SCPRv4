@@ -9,6 +9,25 @@ FactoryGirl.define do
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
   end
   
+  factory :byline, class: "ContentByline" do # TODO: Make a "content" factory so we don't have to fake the content fields
+    role 0
+    user
+    content_type_id 15
+  end
+  
+  factory :user, class: "Bio" do
+    bio "This is a bio"
+    short_bio "Short!"
+    email "email@kpcc.org"
+    is_public true
+    last_name "Ricker"
+    name "Bryan Ricker"
+    slugged_name "bryan-ricker"
+    title "Rails Developer"
+    twitter "@kpcc"
+    user_id 1
+  end
+  
   factory :news_story do
     primary_reporter
     seconday_reporter

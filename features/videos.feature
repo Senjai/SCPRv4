@@ -6,4 +6,5 @@ Feature: Videos
 Scenario: Display a single video with valid url
 	Given there is 1 video
 	When I go to that video's page
-	Then the video should be loaded
+	Then I should see that video's thumbnail
+	And the video's information should be loaded
