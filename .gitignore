@@ -6,3 +6,4 @@ config/development.sphinx.conf
 log/
 tmp/
 .sass-cache/
+.DS_Store

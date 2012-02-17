@@ -216,29 +216,33 @@ module ApplicationHelper
   #----------
   
   def get_latest_arts
-    content = ThinkingSphinx.search '',
-      :classes    => ContentBase.content_classes,
-      :page       => 1,
-      :per_page   => 12,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with       => { :category_is_news => false },
-      :without    => { :category => '' }
-      
-    return content    
+    begin
+      ThinkingSphinx.search '',
+        :classes    => ContentBase.content_classes,
+        :page       => 1,
+        :per_page   => 12,
+        :order      => :published_at,
+        :sort_mode  => :desc,
+        :with       => { :category_is_news => false },
+        :without    => { :category => '' }
+    rescue Riddle::ConnectionError # If Sphinx is not running.
+      return "Arts currently unavailable."
+    end
   end
   
   #----------
   
   def get_latest_news
-    content = ThinkingSphinx.search '',
-      :classes    => ContentBase.content_classes,
-      :page       => 1,
-      :per_page   => 12,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with       => { :category_is_news => true }
-      
-    return content
+    begin
+      ThinkingSphinx.search '',
+        :classes    => ContentBase.content_classes,
+        :page       => 1,
+        :per_page   => 12,
+        :order      => :published_at,
+        :sort_mode  => :desc,
+        :with       => { :category_is_news => true }
+    rescue Riddle::ConnectionError # If Sphinx is not running.
+      return "News currently unavailable."
+    end
   end
 end

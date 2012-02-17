@@ -1,3 +1,4 @@
+<% content ||= nil %>
 <div id="comments" class="comments <%= cssClass %>">
 	<h3 class="head">Comments</h3>
 	<!-- disqus comments -->
@@ -7,8 +8,8 @@
 	    var disqus_shortname = 'kpcc'; // required: replace example with your forum shortname
 
 	    // The following are highly recommended additional parameters. Remove the slashes in front to use.
-	    var disqus_identifier = '<%= content.obj_key %>';
-	    var disqus_url = '<%= content.link_path %>';
+	    var disqus_identifier = '<%= content ? content.obj_key : nil %>';
+	    var disqus_url = '<%= content ? content.link_path : nil %>';
 
 	    /* * * DON'T EDIT BELOW THIS LINE * * */
 	    (function() {

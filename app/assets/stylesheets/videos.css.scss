@@ -5,8 +5,8 @@
 		transition: box-shadow linear 0.2s;
 		@include box-shadow(none);
 		margin:$baseline 5px;
-		width:720px;
-		height:405px;
+		width:730px;
+		height:411px;
 		&:hover {
 			-webkit-transition: box-shadow linear 0.2s;
 			-moz-transition: box-shadow linear 0.2s;

@@ -8,7 +8,7 @@ gem 'mysql2'
 gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
 
 gem 'jquery-rails'
-gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git', :branch => "rails3"
+gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git'
 gem 'capistrano'
 gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
 gem 'thinking-sphinx', '2.0.10'
@@ -29,11 +29,20 @@ end
 
 group :test, :development do 
 	gem "rspec-rails"
+	gem 'guard-rspec'
+	gem 'guard-cucumber'
+	gem 'rb-fsevent', require: false
 end
 
 group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
+#  # Pretty printed test output
+#  gem 'turn', :require => false
+  gem 'cucumber-rails'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+#  gem 'launchy'
+  gem 'capybara'
+  gem 'webrat'
 end
 
 group :worker do
