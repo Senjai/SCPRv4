@@ -1,11 +1,4 @@
 <%= any_to_list? @video_shells, title: "Videos" do %>
-	<article>
-			<section class="video">
-				<%= Asset.find(@featured.assets.first.asset_id).tags.eight.html_safe %>
-			</section>
-			<h1 class="story-headline"><%= @featured.headline %></h1>
-			<p class="byline"><%= byline @featured.bylines %> <span class="pipe">|</span> <time pubdate=""><%= pretty_date @featured.published_at %></time></p>
-			<p class="description"><%= @featured.body %></p>
-			<%= render "shared/cwidgets/social_tools", :cssClass => 'multimedia muted' %>
-	</article>
+	List of Videos
 <% end %>
+

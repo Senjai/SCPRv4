@@ -263,18 +263,16 @@ module ApplicationHelper
   
   def pretty_date(date, options={})
     format = options[:format].to_s
+    default = "%b %e, %Y"
     case format
       when "numbers"
         formatted = date.strftime("%m-%e-%y") # 10-11-11
       when "full"
         formatted = date.strftime("%B #{date.day.ordinalize}, %Y") # October 11th, 2011
       when "custom"
-        formatted = date.strftime(options[:with])
+        formatted = date.strftime(options[:with] || default)
+      else
+        formatted = date.strftime(default) # Oct 11, 2011
       end
-    formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
-  end
-  
-  def byline(bylines)
-    bylines.present? ? bylines.map { |b| b.user.name }.to_sentence : "KPCC"
   end
 end

@@ -5,6 +5,7 @@
 		transition: box-shadow linear 0.2s;
 		@include box-shadow(none);
 		margin:$baseline 5px;
+		padding-top: 30px;
 		width:730px;
 		height:411px;
 		&:hover {
@@ -16,6 +17,20 @@
 	}
 	p.description {
 		margin-top:$baseline / 2;
+	}
+	button {
+		width: 175px;
+		background: #000;
+		border: 1px solid #444;
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		padding: 10px 7px 10px 30px;
+		color: #444;
+		font-family: "Proximina Nova", Helvetica, sans-serif;
+		text-transform: uppercase;
+		font-size: .8em;
+		letter-spacing: 1px;
 	}
 }
 

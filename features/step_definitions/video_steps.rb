@@ -7,13 +7,20 @@ Given /^there (?:is|are) (\d+) videos?$/ do |num|
 end
 
 When /^I go to that video's page$/ do
-  visit video_path @video_shell
+  # visit video_path @video_shell
+  pending # Need a factory for `asset`
 end
 
-Then /^I should see that video's thumbnail$/ do
+When /^I go to the video index page$/ do
   pending # express the regexp above with the code you wish you had
 end
 
-Then /^the video's information should be loaded$/ do
+Then /^I should see the latest video featured$/ do
   pending # express the regexp above with the code you wish you had
+end
+
+Then /^I should see that video's information$/ do
+  page.should have_content @video_shell.headline
+  page.should have_content @video_shell.body
+  page.should have_content helper.render_byline @video_shell
 end

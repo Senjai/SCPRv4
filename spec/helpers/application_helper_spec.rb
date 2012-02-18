@@ -21,6 +21,10 @@ describe ApplicationHelper do
     it "accepts a custom format" do
       helper.pretty_date(@date, format: :custom, with: "%D").should eq @date.strftime("%D")
     end
+    
+    it "returns the default if custom format is passed but no `with` option" do
+      helper.pretty_date(@date, format: :custom).should eq @date.strftime("%b %e, %Y")
+    end
   end
   
   describe "#any_to_list?" do
@@ -50,16 +54,7 @@ describe ApplicationHelper do
     end
   end
   
-  describe "#byline" do
-    it "returns a comma-separated list of bylines if they exist" do
-      pending
-      # bylines = create_list :byline, 2
-      # helper.byline(bylines).should eq "<a href=\"#\">Name 1</a>, <a href=\"#\">Name 2</a>"
-    end
-    
-    it "returns `KPCC` if no bylines exist" do
-      bylines = []
-      helper.byline(bylines).should eq "KPCC"
-    end
+  describe "#render_byline" do
+    pending # TODO: Write tests for this
   end
 end

@@ -3,6 +3,7 @@ db/*.sqlite3
 db/sphinx/
 config/database.yml
 config/development.sphinx.conf
+config/test.sphinx.conf
 log/
 tmp/
 .sass-cache/

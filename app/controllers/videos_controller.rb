@@ -2,17 +2,19 @@ class VideosController < ApplicationController
   layout "video"
   
   def index
+    # This is going to handle the pop-up
     @video_shells = VideoShell.order("published_at desc").limit(10)
-    @featured = @video_shells.first
+    render layout: false # last
   end
   
   def show
-    @video_shell = VideoShell.find_by_id(params[:id])
-    # @video = Asset.find(@video_shell.asset.asset_id)
-    @video = Asset.find(31492)
-    
-    rescue
+    # This is the main video page
+    begin
+      @video = params[:id] ? VideoShell.find(params[:id]) : VideoShell.order("published_at desc").last
+      @asset = Asset.find(@video.assets.first.asset_id)
+    rescue ActiveRecord::RecordNotFound
       redirect_to videos_path
+    end
   end
   
 end
