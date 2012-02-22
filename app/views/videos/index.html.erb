@@ -1,4 +1,4 @@
-<%= any_to_list? @video_shells, title: "Videos" do %>
-	List of Videos
+<%= any_to_list? @videos, title: "Videos" do %>
+	<%= render partial: 'video_thumb', collection: @videos %>
 <% end %>
 

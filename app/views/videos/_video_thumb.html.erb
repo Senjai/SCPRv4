@@ -1,0 +1,5 @@
+<% @asset = Asset.find(video_thumb.assets.first.asset_id) %>
+<li>
+	<%= @asset.tags.three.html_safe %>
+	<div class="title"><%= video_thumb.short_headline %></div>
+</li>

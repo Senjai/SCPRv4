@@ -5,9 +5,10 @@
 		transition: box-shadow linear 0.2s;
 		@include box-shadow(none);
 		margin:$baseline 5px;
-		padding-top: 30px;
+		margin-top: 30px;
 		width:730px;
 		height:411px;
+		position: relative;
 		&:hover {
 			-webkit-transition: box-shadow linear 0.2s;
 			-moz-transition: box-shadow linear 0.2s;
@@ -18,9 +19,9 @@
 	p.description {
 		margin-top:$baseline / 2;
 	}
-	button {
+	button.browse-all-videos {
 		width: 175px;
-		background: #000;
+		background: #000 url(image_path('browse-all-default.png')) no-repeat left center;
 		border: 1px solid #444;
 		border-radius: 3px;
 		-moz-border-radius: 3px;
@@ -31,6 +32,57 @@
 		text-transform: uppercase;
 		font-size: .8em;
 		letter-spacing: 1px;
+		opacity: 0.5;
+	}
+	.videos-overlay {
+		display: none;
+		position: relative;
+		width: 1107px;
+		height: 655px;
+		background: url(image_path('overlay-top.png')) no-repeat left top;
+		padding: 17px 0 0 0;
+		z-index: 10;
+		.grid {
+			background: #3d3d3d;
+			padding: 10px;
+			margin: 0px;
+			border: 1px solid #494848;
+			border-top: none;
+			height: 642px;
+			width: 1085px;
+			position: relative;
+			text-align: center;
+			display: block;
+			.arrow {
+				height: 642px;
+				position: absolute;
+				width: 60px;
+				line-height: 642px; /* hack to get the arrows vertically centered */
+				&.left {
+					left: 0;
+				}
+				&.right {
+					right: 0;
+				}
+			}
+			ul {
+				list-style: none;
+				padding: 0;
+				width: 1010px;
+				overflow: hidden;
+				float: left;
+				li {
+					list-style: none;
+					display: inline-block;
+					width: 30%;
+					padding: 10px;
+					img {
+						max-height: 143px;
+						overflow: hidden;
+					}
+				}
+			}
+		}
 	}
 }
 

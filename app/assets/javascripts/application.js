@@ -14,6 +14,7 @@
 //= require jquery.jplayer.min
 
 //= require audio
+//= require video
 //= require listen_live
 //= require megamenu
 //= require utilities

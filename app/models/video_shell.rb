@@ -8,7 +8,8 @@ class VideoShell < ContentBase
   validates :headline, presence: true
   validates :body, presence: true
   
-  scope :published, where(status: STATUS_LIVE) 
+  scope :published, where(status: STATUS_LIVE)
+  scope :recent_first, order("published_at desc")
   
   define_index do
     indexes headline
