@@ -74,10 +74,15 @@
 					margin-bottom:0;
 					li {
 						@include nav-horiz();
+						color:$grayLight;
 						margin-top: 15px;
+						text-shadow:0 1px 0 #000;
 						&:first-child {
 							padding-left:0;
 							margin-top:8px;
+						}
+						&.bullet {
+							background:url(image_path('bullet-light.png')) no-repeat right 8px;
 						}
 						a {
 							display:block;
