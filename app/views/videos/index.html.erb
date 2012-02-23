@@ -1,4 +1,1 @@
-<%= any_to_list? @videos, title: "Videos" do %>
-	<%= render partial: 'video_thumb', collection: @videos %>
-<% end %>
-
+<%= render partial: 'video', locals: { video: @video, asset: @asset }%>

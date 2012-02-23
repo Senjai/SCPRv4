@@ -35,54 +35,66 @@
 		opacity: 0.5;
 	}
 	.videos-overlay {
-		display: none;
+		display: none; /* So it doesn't show on page-load */
 		position: relative;
 		width: 1107px;
 		height: 655px;
-		background: url(image_path('overlay-top.png')) no-repeat left top;
-		padding: 17px 0 0 0;
-		z-index: 10;
-		.grid {
+		background: url(image_path('overlay-top.png')) no-repeat left top; /* Arrow at the top */
+		padding: 17px 0 0 0; /* pull the main box down so the arrow will show */
+		z-index: 10; /* Just to be sure it's in front */
+		
+		button.arrow {
+			position: absolute;
+			top: 300px;		
+			width: 48px;
+			height: 48px;
+			border-radius: 7px;
+			-moz-border-radius: 7px;
+			-webkit-border-radius: 7px;
+			opacity: .5;
+			&.left {
+				left: 5px;
+				background: url(image_path('overlay-prev.png')) no-repeat left top;
+			}
+			&.right {
+				right: 5px;
+				background: url(image_path('overlay-next.png')) no-repeat left top;
+			}
+		}
+		
+		ul {
 			background: #3d3d3d;
-			padding: 10px;
+			padding: 10px 60px;
 			margin: 0px;
 			border: 1px solid #494848;
 			border-top: none;
-			height: 642px;
-			width: 1085px;
-			position: relative;
 			text-align: center;
-			display: block;
-			.arrow {
-				height: 642px;
-				position: absolute;
-				width: 60px;
-				line-height: 642px; /* hack to get the arrows vertically centered */
-				&.left {
-					left: 0;
-				}
-				&.right {
-					right: 0;
-				}
+			display: inline-block;
+			width: 985px;
+			height: 642px;
+			li {
+				width: 30%;
+				padding: 10px;
 			}
-			ul {
-				list-style: none;
-				padding: 0;
-				width: 1010px;
-				overflow: hidden;
-				float: left;
-				li {
-					list-style: none;
-					display: inline-block;
-					width: 30%;
-					padding: 10px;
-					img {
-						max-height: 143px;
-						overflow: hidden;
-					}
-				}
-			}
-		}
+		} /* ul */
+	} /* .videos-overlay */
+} /* #multimedia */
+
+li {
+	list-style: none;
+	display: inline-block;
+	img {
+		max-height: 143px;
+		overflow: hidden;
+	}
+}
+
+ul.latest-videos {
+	text-align: center;
+	width: 100%;
+	height: 300px;
+	li {
+		padding: 0 10px;
 	}
 }
 

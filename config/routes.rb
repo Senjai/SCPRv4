@@ -45,7 +45,9 @@ Scprv4::Application.routes.draw do
   match '/events/:year/:month/:day/:slug/' => 'events#show', :as => :event
   match '/events/' => 'events#index', :as => :events
   
-  resources :videos, only: [:index, :show]
+  resources :videos, only: [:index, :show] do
+    match 'list', on: :collection, defaults: { format: :js }
+  end
   
   match '/search/' => 'search#index', :as => :search
   

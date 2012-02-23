@@ -22,4 +22,8 @@ class VideoShell < ContentBase
     has "0", :as => :is_slideshow, :type => :boolean
     where "status = #{STATUS_LIVE}"
   end
+  
+  def link_path # OPTIMIZE Dry this method up across ContentBase subclasses
+    Rails.application.routes.url_helpers.video_path(self, trailing_slash: true)
+  end
 end

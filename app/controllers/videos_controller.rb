@@ -3,19 +3,26 @@ class VideosController < ApplicationController
   respond_to :html, :json, :js
   
   def index
-    # This is going to handle the pop-up
-    @videos = VideoShell.recent_first.published.limit(9)
-    respond_with @videos
-  end
-  
-  def show
-    # This is the main video page
+    @latest_videos = VideoShell.recent_first.published.limit(4)
     begin
-      @video = params[:id] ? VideoShell.find(params[:id]) : @videos.first
+      @video = VideoShell.published.recent_first.first
       @asset = Asset.find(@video.assets.first.asset_id)
-    rescue ActiveRecord::RecordNotFound
+    rescue
       redirect_to videos_path
     end
   end
   
+  def show
+    begin
+      @video = VideoShell.find(params[:id])
+      @asset = Asset.find(@video.assets.first.asset_id)
+    rescue
+      redirect_to videos_path
+    end
+  end
+  
+  def list
+    @videos = VideoShell.recent_first.published.paginate(page: params[:page], per_page: 9)
+    respond_with @videos
+  end
 end
