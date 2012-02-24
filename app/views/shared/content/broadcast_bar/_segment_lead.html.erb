@@ -1,0 +1,3 @@
+<%= render_asset segment, "thumb" %>
+<h4 class="headline"><%= link_to segment.short_headline, segment.link_path %> <%= link_to ( segment.comment_count? ? "Comment (#{segment.comment_count})" : "Comment on this story" ), segment.link_path + "#comments", :class => "comment_link" %></h4>
+<p><%= segment.teaser %></p>

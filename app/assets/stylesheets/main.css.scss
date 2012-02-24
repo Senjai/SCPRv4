@@ -84,6 +84,13 @@ section.broadcastbar {
 					color:$orangeDark;
 					font-weight:600;
 					text-shadow:1px 1px 0px #fff;
+					&.true {
+						background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 9px;
+						padding-right:15px;
+						&:hover {
+							background-position:right -35px;
+						}
+					}
 				}
 			}
 			&.show-status {
@@ -95,6 +102,102 @@ section.broadcastbar {
 				@include font-sans-serif($weight:normal, $size:0.95em);
 				color:$grayAlt;
 				padding:0 0 0 5px;
+				position:relative;
+				.episode-guide {
+					@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
+					background-color:$grayBackground;
+					border:1px solid #bfbfbf;
+					display:block;
+					position:absolute;
+					width:650px;
+					min-height:300px;
+					left:-220px;
+					top:27px;
+					&.hidden {
+						display:none;
+					}
+					.inner-container {
+						padding:20px 25px;
+					}
+					.arrow-up {
+						background:url(image_path('broadcast-bar/episode-modal-arrow-up.png')) no-repeat;
+						width:28px;
+						height:12px;
+						position:absolute;
+						left:70px;
+						top:-12px;
+					}
+					.more {
+						position:absolute;
+						right:25px;
+						top:20px;
+						a {
+							background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
+							font-size:11px;
+							padding-bottom:2px;
+							padding-right:17px;
+						}
+					}
+					.modal-close {
+						background:url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
+						cursor:pointer;
+						width:16px;
+						height:15px;
+						opacity:0.8;
+						position:absolute;
+						right:18px;
+						bottom:15px;
+						&:hover {
+							opacity:1.0;
+						}
+					}
+					h6 {
+						margin-bottom:$baseline/2;
+						a {
+							color:$orangeDark;
+						}
+					}
+					ul.cbase {
+						li {
+							list-style-image:url(image_path('mega-divider.png'));
+							margin-bottom:$baseline / 2;
+							&.lead {
+								list-style-image:none;
+							}
+							a.comment_link {
+								margin-left:0;
+							}
+						}
+						margin-left:80px;
+						img {
+							float:left;
+							margin-left:-80px;
+							width:58px;
+							height:58px;
+						}
+						h4 {
+							font-size:18px;
+							font-weight:bold;
+						}
+						h5 {
+							font-size:15px;
+						}
+						p {
+							color:$nearBlack;
+							font-size:13px;
+							line-height:18px;
+						}
+						.headline {
+							@include font-headline(600);
+							a {
+								color:$nearBlack;
+								}
+							a.comment_link {
+								color:$linkColor;
+							}
+						}
+					}
+				}
 			}
 			&.join-conversation {
 				padding:0 0 0 12px;
