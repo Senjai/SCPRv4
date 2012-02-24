@@ -1,1 +1,9 @@
-$('.videos-overlay ul').html("<%= escape_javascript(render partial: 'video_thumb', collection: @videos) %>");
+<%# Handles the Modal pop-up %>
+<% if any_to_list? @videos %>
+	$('.videos-overlay ul').html("<%= escape_javascript(render partial: 'video_thumb', collection: @videos) %>");
+	$('.videos-overlay .pagination').html("Page <%= "#{params[:page].to_i} of #{@videos.total_pages}" %>");
+	$('.arrow.right').attr("data-page", "<%= @videos.next_page %>");
+	$('.arrow.left').attr("data-page", "<%= @videos.previous_page %>");
+<% else %>
+	$('.videos-overlay ul').html("There are currently no videos");
+<% end %>

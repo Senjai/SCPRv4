@@ -1,3 +1,4 @@
+<%# Small video for Modal/"Latest Videos" strip at the bottom %>
 <% @asset = Asset.find(video_thumb.assets.first.asset_id) %>
 <li>
 	<%= link_to @asset.tags.three.html_safe, video_path(video_thumb) %>

@@ -1,1 +1,4 @@
-<%= render partial: 'video', locals: { video: @video, asset: @asset }%>
+<%# This page automatically loads the most recent VideoShell and features it %>
+<%= any_to_list? @video, title: "Videos" do %>
+	<%= render partial: 'video', locals: { video: @video, asset: @asset }%>
+<% end %>

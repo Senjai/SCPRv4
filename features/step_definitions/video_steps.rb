@@ -7,12 +7,11 @@ Given /^there (?:is|are) (\d+) videos?$/ do |num|
 end
 
 When /^I go to that video's page$/ do
-  # visit video_path @video_shell
-  pending # Need a factory for `asset`
+  visit video_path @video_shell
 end
 
 When /^I go to the video index page$/ do
-  pending # express the regexp above with the code you wish you had
+  visit videos_path
 end
 
 Then /^I should see the latest video featured$/ do
