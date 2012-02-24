@@ -8,3 +8,5 @@ log/
 tmp/
 .sass-cache/
 .DS_Store
+config/sphinx.yml
+config/environments/development.rb
