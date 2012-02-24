@@ -5,6 +5,7 @@
 # files.
 
 require 'cucumber/rails'
+require 'cucumber/rspec/doubles'
 include FactoryGirl::Syntax::Methods
 require 'cucumber/thinking_sphinx/external_world'
 Cucumber::ThinkingSphinx::ExternalWorld.new

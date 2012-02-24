@@ -1,20 +1,23 @@
-#multimedia {
-	.video {
+@mixin video-effects {
+	-webkit-transition: box-shadow linear 0.2s;
+	-moz-transition: box-shadow linear 0.2s;
+	transition: box-shadow linear 0.2s;
+	@include box-shadow(none);
+	&:hover {
 		-webkit-transition: box-shadow linear 0.2s;
 		-moz-transition: box-shadow linear 0.2s;
 		transition: box-shadow linear 0.2s;
-		@include box-shadow(none);
+		@include box-shadow(0 0 12px $gray);
+	}
+}
+#multimedia {
+	.video {
 		margin:$baseline 5px;
-		margin-top: 30px;
+		margin-top: 30px; /* Make room for the button */
 		width:730px;
 		height:411px;
 		position: relative;
-		&:hover {
-			-webkit-transition: box-shadow linear 0.2s;
-			-moz-transition: box-shadow linear 0.2s;
-			transition: box-shadow linear 0.2s;
-			@include box-shadow(0 0 12px $gray);
-		}
+		@include video-effects;
 	}
 	p.description {
 		margin-top:$baseline / 2;
@@ -29,10 +32,8 @@
 		-webkit-border-radius: 3px;
 		padding: 8px 7px 8px 30px;
 		color: #444;
-		font-family: "proxima-nova", Helvetica, sans-serif;
+		@include font-heading(normal, 12px);
 		text-transform: uppercase;
-		font-size: .8em;
-		letter-spacing: 1px;
 		opacity: 0.5;
 		text-align: center;
 	}
@@ -70,45 +71,50 @@
 			position: absolute;
 			bottom: 0;
 			text-align: center;
+			@include font-sans-serif(bold, 12px);
+			color: $black;
+			text-shadow: 0 1px #666;
 		}
 		
 		ul {
 			background: #3d3d3d;
 			padding: 10px 60px;
-			margin: 0px;
 			border: 1px solid #494848;
 			border-top: none;
-			text-align: center;
 			display: inline-block;
 			width: 985px;
 			height: 622px;
 			li {
 				width: 30%;
-				padding: 10px;
 			}
 		} /* ul */
 	} /* .videos-overlay */
 } /* #multimedia */
 
-li {
+ul {
+	margin: 0px;
+	text-align: center;
+	color: #808080;
+	@include font-heading;
+}
+
+li.video-thumb {
 	list-style: none;
 	display: inline-block;
+	padding: 10px;
 	img {
 		max-height: 143px;
 		overflow: hidden;
+		@include video-effects;
 	}
 }
 
 div.latest-videos {
-	border-top: 1px solid #111;
-	padding-top: 20px;
-}
-
-ul.latest-videos {
-	text-align: center;
-	width: 100%;
-	li {
-		padding: 0 10px;
+	border-top:1px solid $nearBlack;
+	margin-top: 20px;
+	padding-top: 10px;
+	ul {
+		width: 100%;
 	}
 }
 

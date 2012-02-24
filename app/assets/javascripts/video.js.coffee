@@ -2,9 +2,9 @@
 #= require spin.js
 
 # OPTIMIZE this file a little more
-# TODO: Modal doesn't go away on body click unless you hover over it first.
-# TODO: Button animation needs some tweaking
-# TODO: Real pagination
+# FIXME: Modal doesn't go away on body click unless you hover over it first.
+# FIXME: Right nav button doesn't load until after the videos are fetched if the modal is opened quickly after page load 
+# TODO: Button animation needs some tweaking (border color starts on white when fading out)
 
 class scpr.VideoPage
     DefaultOptions:
@@ -28,15 +28,12 @@ class scpr.VideoPage
     constructor: (options) ->
         @opts = _(_({}).extend(@DefaultOptions)).extend options||{}
         @clickShouldHide = false
-        console.log "We are on a video page."
-        
-        # Load the most recent videos when this class is initiated, so that the modal has videos ready to go
-        # @getVideos()
+        that = @
     
         # When you hover on and off the button, do some fancy things with opacity.
         $(@opts.button).hover(
-          => @fadeButton("in")
-          => @fadeButton()
+          => @fadeButton(@opts.button, "in")
+          => @fadeButton(@opts.button, "out")
         )
     
         # This is the easiest way to tell if the cursor is in the overlay or not
@@ -45,21 +42,15 @@ class scpr.VideoPage
           => @clickShouldHide = true
         )
 
-        # Nav button functionality
-        $(@opts.nav.button).hover(
-          ->
-            unless $(this).attr("data-page") is ""
-                $(this).css("cursor", "pointer")
-                $(this).animate({opacity: 1}, "fast")
-          ->
-            $(this).css("cursor", "default")
-            $(this).animate({opacity: .5}, "fast")
-        )
-
-        $(@opts.nav.right).live "click", => 
-            @getVideos($(this).attr("data-page")) unless $(this).attr("data-page") is ""
-        $(@opts.nav.left).live "click", => 
-            @getVideos($(this).attr("data-page")) unless $(this).attr("data-page") is ""
+        # Nav button hover functionality
+        for button in $(that.opts.nav.button)
+            $(button).on
+                click: ->
+                    that.getVideos($(this).attr("data-page")) unless $(this).attr("data-page") is ""
+                mouseenter: ->
+                    that.fadeButton(button, "in") unless $(this).attr("data-page") is ""
+                mouseleave: ->
+                    that.fadeButton(button, "out")
 
         # When you click the button, show the modal
         $(@opts.button).click => @showModal()
@@ -93,19 +84,12 @@ class scpr.VideoPage
                 console.log "Finished request. Status: #{status}"
         }
 
-    fadeArrow: (direction="out") ->
-        if direction is "in"
-            this.css("cursor", "pointer")
-            this.animate({opacity: 1}, "fast")
-        else
-            $(this).css("cursor", "default")
-            $(this).animate({opacity: .5}, "slow")
-
-    fadeButton: (dir="out") ->
+    fadeButton: (button, dir) ->
+            b = $(button)
             cursor = if dir is "in" then "pointer" else "default"
             opacity = if dir is "in" then 1 else 0.5
-            $(@opts.button).css("cursor", cursor)
-            $(@opts.button).animate({opacity: opacity}, "fast") if $(@opts.overlay).css('display') is 'none'
+            b.css("cursor", cursor)
+            b.animate({opacity: opacity}, "fast") if ($(@opts.overlay).css('display') is 'none' and b.hasClass("browse-all-videos")) or b.hasClass('arrow')
         
     showModal: =>
         @getVideos() if !$(@opts.overlay + " ul>li").length # Get videos only if the modal hasn't been opened yet

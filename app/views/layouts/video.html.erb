@@ -22,15 +22,13 @@
 				<div class="pagination">&nbsp;</div>
 			</div>
 		</div>
-		<article class="span8">
+		<div class="span8">
 			<%= yield %>
-		</article>
-		<div class="span12">
 			<%= render partial: "shared/cwidgets/comments", locals: { cssClass: 'multimedia muted', content: @video } %>
-			<div class="multimedia latest-videos">
+			<div class="multimedia latest-videos muted">
 				<h3 class="head">Latest Videos</h3>
 				<ul class="latest-videos">
-					<%= render partial: 'video_thumb', collection: @latest_videos %>
+					<%= render partial: 'video_thumb', collection: @latest_videos, locals: { size: "small" } %>
 				</ul>
 			</div>
 		</div>

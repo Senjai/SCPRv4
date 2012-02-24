@@ -35,12 +35,12 @@ group :test, :development do
 end
 
 group :test do
-#  # Pretty printed test output
-#  gem 'turn', :require => false
+#  gem 'turn', :require => false # Pretty printed test output
   gem 'cucumber-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
-#  gem 'launchy'
+  gem 'mocha' # cross-framework mocking
+#  gem 'launchy' # currently incompatible with rails 3.2
   gem 'capybara'
   gem 'webrat'
 end
