@@ -762,8 +762,11 @@ ul.carousel {
 		z-index:3;
 		span {
 			position:absolute;
-			left:8px;
+			left:0;
 			top:4px;
+			display:block;
+			width:43px;
+			text-align:center;
 		}
 	}
 }

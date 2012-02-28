@@ -22,6 +22,21 @@ header#masthead {
 }
 
 // Pledge Now button
+.pledge {
+	@include background-image(linear-gradient(#00b9f3 45%, #0098c7 55%));
+	@include border-radius(4px);
+	@include font-heading(600, 13px);
+	@include ie-inline-block();
+	background-color:#0098c7;
+	a {
+		background:transparent url(image_path('icons/pledge-heart.png')) no-repeat 7px 2px;
+		color:$white;
+		@include ie-inline-block();
+		padding:1px 8px 1px 34px;
+		text-shadow: 0px -1px 0px #016d8e;
+		&:hover {text-decoration:none;}
+	}
+}
 // Pledge
 .pledge-container {
 	background:url("pledge-container-bg.jpg") no-repeat bottom;
@@ -30,23 +45,10 @@ header#masthead {
 	position:relative;
 	// Pledge Now button
 	.pledge {
-		@include background-image(linear-gradient(#00b9f3 45%, #0098c7 55%));
-		@include border-radius(4px);
-		@include font-heading(600, 13px);
-		@include ie-inline-block();
-		background-color:#0098c7;
 		left:132px;
 		margin-left:30px;
 		position:absolute;
 		top:15px;
-		a {
-			background:transparent url(image_path('icons/pledge-heart.png')) no-repeat 7px 2px;
-			color:$white;
-			@include ie-inline-block();
-			padding:1px 8px 1px 34px;
-			text-shadow: 0px -1px 0px #016d8e;
-			&:hover {text-decoration:none;}
-		}
 	}
 	img {
 		margin:0 0 15px 0;
@@ -252,6 +254,9 @@ nav.utils ul {
 			li {
 				border-bottom:1px solid $nearWhite;
 				float:none;
+				&:last-child {
+					border-bottom:none;
+				}
 			}
 			p {
 				margin-bottom:0;
