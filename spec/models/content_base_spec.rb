@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# FIXME: Add factories to these specs so they'll pass
 describe ContentBase do
 #  ContentBase.content_classes.each do |c|
 #    describe c do

@@ -54,26 +54,26 @@ FactoryGirl.define do
   
   factory :category do
     trait :is_news do 
-      category 'Local'
-      slug 'local'
+      sequence(:category) { |n| "Local #{n}" }
+      sequence(:slug) { |n| "local-#{n}" }
       is_news '1'
-      comment_bucket_id 1
+      sequence(:comment_bucket_id)
     end
     
     trait :is_not_news do
-      category "Culture"
-      slug "culture"
+      sequence(:category) { |n| "Culture #{n}" }
+      sequence(:slug) { |n| "culture-#{n}" }
       is_news 0
-      comment_bucket_id 10
+      sequence(:comment_bucket_id)
     end
     
     factory :category_news, traits: [:is_news]
     factory :category_not_news, traits: [:is_not_news]
   end
   
-  # factory :content_category do
-  #   category
-  # end
+ # factory :content_category do
+ #   category
+ # end
   
   ### ContentBase Classes
   ##### NOTE: The name of the factory should eq ClassName.to_s.underscore.to_sym, i.e. NewsStory = :news_story
@@ -87,10 +87,7 @@ FactoryGirl.define do
     body "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet non congue libero commodo. Vestibulum dolor nibh, eleifend eu suscipit eget, egestas sed diam. Proin cursus rutrum nibh eget consequat. Donec viverra augue sed nisl ultrices venenatis id eget quam. Cras id dui a magna tristique fermentum in sit amet lacus. Curabitur urna metus, mattis vel mollis quis, placerat vitae turpis.
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
     
-    ignore do
-      asset_count 1
-    end
-    
+    ignore { asset_count 1 }
     after_create do |video_shell, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: video_shell)
     end
@@ -111,6 +108,11 @@ FactoryGirl.define do
     status 5
     byline "Local Byline"
     comment_count 1
+    
+    ignore { asset_count 1 }
+    after_create do |news_story, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: news_story)
+    end
   end
   
   factory :show_segment do
@@ -128,6 +130,11 @@ FactoryGirl.define do
     comment_count 1
     _short_headline "Short Headline"
     sequence(:published_at) { |n| Time.now + 60*n }
+    
+    ignore { asset_count 1 }
+    after_create do |show_segment, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: show_segment)
+    end
   end
   
   factory :blog_entry do
@@ -143,6 +150,11 @@ FactoryGirl.define do
     is_published 1 # Do we need this? It's currently a required field in the DB
     comment_count 1
     sequence(:published_at) { |n| Time.now + 60*n }
+    
+    ignore { asset_count 1 }
+    after_create do |blog_entry, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: blog_entry)
+    end
   end
   
   factory :content_shell do
@@ -155,5 +167,10 @@ FactoryGirl.define do
     url "http://blogdowntown.com/2011/11/6494-green-paint-welcomes-cyclists-to-a-reprioritized"
     status 5
     sequence(:pub_at) { |n| Time.now + 60*n } # TODO Replace `pub_at` with `published_at` for consistency 
+    
+    ignore { asset_count 1 }
+    after_create do |content_shell, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: content_shell)
+    end
   end
 end

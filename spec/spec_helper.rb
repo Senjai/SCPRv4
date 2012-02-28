@@ -12,6 +12,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'rspec/autorun'
   require 'thinking_sphinx/test'
+  require 'database_cleaner'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -41,32 +42,25 @@ Spork.prefork do
     config.include FactoryGirl::Syntax::Methods
     config.include ContentBaseHelpers # This should probably go in Spork.each_run, otherwise I'll have to reload Spork whenever I change it.
     
-    config.before(:suite) do
+    config.before :suite do
       DatabaseCleaner.strategy = :truncation
-      DatabaseCleaner.clean_with(:truncation)
-    end
-
-    config.before(:all) do
-      ThinkingSphinx::Test.start
-      ThinkingSphinx::Test.index
-    end
-
-    config.before(:each) do
-      DatabaseCleaner.start
-    end
-
-    config.after(:each) do
       DatabaseCleaner.clean
     end
 
-    config.after(:all) do
-      ThinkingSphinx::Test.stop
+    config.before :each do
+      DatabaseCleaner.start
     end
+    
+    config.after :each do
+      DatabaseCleaner.clean
+    end
+    
   end
 end
 
 Spork.each_run do
   FactoryGirl.reload
+  DatabaseCleaner.clean
 end
 
 # --- Instructions ---

@@ -1,4 +1,5 @@
 module ContentBaseHelpers
+  
   def make_content # Creates 5 of each ContentBase subclass for helping with Sphinx tests
     ContentBase.content_classes.each do |klass|
       FactoryGirl.create_list klass.to_s.underscore.to_sym, 15

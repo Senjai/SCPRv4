@@ -1,9 +1,16 @@
 require 'spec_helper'
 
 describe VideoShell do
-  it "responds to category" do
-    @video = create_list :video_shell, 3
-    @video.any? { |v| v.category == nil }.should be_false
+  describe "associations" do
+    it "responds to category" do
+      @video = create_list :video_shell, 3
+      @video.any? { |v| v.category == nil }.should be_false
+    end
+  
+    it "has assets" do
+      @video = create_list :video_shell, 3
+      @video.any? { |v| v.assets == nil }.should be_false
+    end
   end
   
   describe "scopes" do

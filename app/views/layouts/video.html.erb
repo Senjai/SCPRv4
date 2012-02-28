@@ -12,13 +12,13 @@
 <div id="main" class="container">
 	<div class="row">
 		<div class="span2">
-			<button class="browse-all-videos">Browse All Videos</button>
+			<button id="browse-all-videos" class="browse-all-videos">Browse All Videos</button>
 			<div class="videos-overlay">
-				<button class="arrow left" data-page="">&nbsp;</button>
+				<button class="arrow left" id="next-page" data-page="">&nbsp;</button>
 				<ul class="videos">
 					<%# This is populated via ajax from videos.js.coffee %>
 				</ul>
-				<button class="arrow right" data-page="">&nbsp;</button>
+				<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
 				<div class="pagination">&nbsp;</div>
 			</div>
 		</div>
