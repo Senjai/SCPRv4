@@ -3,12 +3,7 @@ Feature: Videos
 	An Admin
 	Should be able to post videos to the website
 
-Scenario: Display the latest video
-	Given there are 4 videos
+Scenario: Display the latest video shell
+	Given there are 4 video shells
 	When I go to the video index page
-	Then I should see the latest video featured
-
-Scenario: Display a single video with valid url
-	Given there is 1 video
-	When I go to that video's page
-	Then I should see that video's information
+	Then I should see the most recently published video featured

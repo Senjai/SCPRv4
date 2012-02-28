@@ -1,27 +1,44 @@
 require 'spec_helper'
 
-describe VideoShell do  
-  it "scopes by published" do
-    @published = create_list :video_shell, 3, status: 5
-    @unpublished = create_list :video_shell, 2, status: 3
-    VideoShell.published.count.should eq 3
+describe VideoShell do
+  it "responds to category" do
+    @video = create_list :video_shell, 3
+    @video.any? { |v| v.category == nil }.should be_false
+  end
+  
+  describe "scopes" do
+    it "#published only selects published content" do
+      @published = create_list :video_shell, 3, status: 5
+      @unpublished = create_list :video_shell, 2, status: 3
+      VideoShell.published.count.should eq 3
+    end
+  
+    it "#recent_first orders by published_at descending" do
+      @video_shells = 3.times { |n| create :video_shell, status: 5, published_at: Time.now + 60*n }
+      VideoShell.recent_first.first.should eq VideoShell.order("published_at desc").first
+    end
   end
   
   describe "instance" do # TODO: Move these into ContentBase specs
     it "inherits from ContentBase" do
-      @video = create :video_shell
+      @video = build :video_shell
       @video.should be_a ContentBase
     end
     
+    it "returns a link_path" do
+      @video = create :video_shell
+      @video.link_path.should eq "/videos/#{@video.id}/"
+    end
+      
     describe "#short_headline" do
       it "returns short_headline if defined" do
         short_headline = "Short"
-        @video = create :video_shell, _short_headline: short_headline
+        @video = build :video_shell, _short_headline: short_headline
         @video.short_headline.should eq short_headline
       end
     
       it "returns headline if not defined" do
-        @video = create :video_shell
+        @video = build :video_shell
         @video.short_headline.should eq @video.headline
       end
     end
@@ -29,18 +46,18 @@ describe VideoShell do
     describe "#teaser" do
       it "returns teaser if defined" do
         teaser = "This is a short teaser"
-        @video = create :video_shell, _teaser: teaser
+        @video = build :video_shell, _teaser: teaser
         @video.teaser.should eq teaser
       end
     
       it "creates teaser from long paragraph if not defined" do
-        @video = create :video_shell
+        @video = build :video_shell
         @video.teaser.should eq "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet..."
       end
       
       it "returns the full first paragraph if it's short enough" do
         short_first_paragraph = "This is just a short paragraph."
-        @video = create :video_shell, body: "#{short_first_paragraph}\n And some more!"
+        @video = build :video_shell, body: "#{short_first_paragraph}\n And some more!"
         @video.teaser.should eq short_first_paragraph
       end
     end

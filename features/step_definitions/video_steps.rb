@@ -1,9 +1,7 @@
-Given /^there (?:is|are) (\d+) videos?$/ do |num|
-  if num.to_i == 1
-    @video_shell = create :video_shell
-  else
-    @video_shells = create_list :video_shell, num.to_i
-  end
+Given /^there (?:is|are) (\d+) video shells?$/ do |num|
+  @video_shells = create_list :video_shell, num.to_i
+  @video_shell = @video_shells.first if @video_shells
+  VideoShell.all.count.should eq num.to_i
 end
 
 When /^I go to that video's page$/ do
@@ -14,8 +12,8 @@ When /^I go to the video index page$/ do
   visit videos_path
 end
 
-Then /^I should see the latest video featured$/ do
-  pending # express the regexp above with the code you wish you had
+Then /^I should see the most recently published video featured$/ do
+  page.find("article>h1.story-headline").should have_content VideoShell.published.recent_first.first.headline
 end
 
 Then /^I should see that video's information$/ do

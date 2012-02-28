@@ -193,7 +193,7 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
-  def teaser # TODO: Move "teaser" logic to a helper
+  def teaser
     return self._teaser if self._teaser?
 
     # -- cut down body to get teaser -- #

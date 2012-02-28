@@ -4,8 +4,12 @@ class VideosController < ApplicationController
   respond_to :html, :json, :js
   
   def index
-    @video = VideoShell.published.recent_first.first
-    @asset = Asset.find(@video.assets.first.asset_id) if @video
+    begin
+      @video = VideoShell.published.recent_first.first
+      @asset = Asset.find(@video.assets.first.asset_id) if @video
+    rescue
+      redirect_to root_path
+    end
   end
   
   def show

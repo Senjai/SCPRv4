@@ -1,5 +1,3 @@
-# AssetHost = YAML.load_file("#{Rails.root}/config/assethost.yml")[Rails.env]
-
 module AssetHost
   def self.[](key)
     unless @config

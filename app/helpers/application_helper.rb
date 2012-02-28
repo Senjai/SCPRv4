@@ -215,7 +215,7 @@ module ApplicationHelper
   
   #----------
   
-  def get_latest_arts(limit=2)
+  def get_latest_arts
     begin
       ThinkingSphinx.search '',
         :classes    => ContentBase.content_classes,
@@ -224,8 +224,7 @@ module ApplicationHelper
         :order      => :published_at,
         :sort_mode  => :desc,
         :with       => { :category_is_news => false },
-        :without    => { :category => '' },
-        limit: limit
+        :without    => { :category => '' }
     rescue Riddle::ConnectionError # If Sphinx is not running.
       return "Arts currently unavailable."
     end
@@ -233,7 +232,7 @@ module ApplicationHelper
   
   #----------
   
-  def get_latest_news(limit=2)
+  def get_latest_news
     begin
       ThinkingSphinx.search '',
         :classes    => ContentBase.content_classes,
@@ -241,8 +240,7 @@ module ApplicationHelper
         :per_page   => 12,
         :order      => :published_at,
         :sort_mode  => :desc,
-        :with       => { :category_is_news => true },
-        limit: limit
+        :with       => { :category_is_news => true }
     rescue Riddle::ConnectionError # If Sphinx is not running.
       return "News currently unavailable."
     end
@@ -259,20 +257,5 @@ module ApplicationHelper
         return false
       end
     end
-  end
-  
-  def pretty_date(date, options={})
-    format = options[:format].to_s
-    default = "%b %e, %Y"
-    case format
-      when "numbers"
-        formatted = date.strftime("%m-%e-%y") # 10-11-11
-      when "full"
-        formatted = date.strftime("%B #{date.day.ordinalize}, %Y") # October 11th, 2011
-      when "custom"
-        formatted = date.strftime(options[:with] || default)
-      else
-        formatted = date.strftime(default) # Oct 11, 2011
-      end
   end
 end

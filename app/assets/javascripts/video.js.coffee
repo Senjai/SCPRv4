@@ -45,12 +45,14 @@ class scpr.VideoPage
         # Nav button hover functionality
         for button in $(that.opts.nav.button)
             $(button).on
-                click: ->
-                    that.getVideos($(this).attr("data-page")) unless $(this).attr("data-page") is ""
-                mouseenter: ->
-                    that.fadeButton(button, "in") unless $(this).attr("data-page") is ""
-                mouseleave: ->
-                    that.fadeButton(button, "out")
+                click: (event) =>
+                    page = $(event.target).attr("data-page")
+                    @getVideos(page) unless page is ""
+                mouseenter: (event) =>
+                    unless $(event.target).attr("data-page") is "" 
+                      @fadeButton button, "in"
+                mouseleave: =>
+                    @fadeButton button, "out"
 
         # When you click the button, show the modal
         $(@opts.button).click => @showModal()
