@@ -57,12 +57,17 @@ When /^I click the Next Page button$/ do
 end
 
 Then /^I should be on page 2 of the videos list$/ do
-  true # TODO Fix this... Selenium isn't waiting for the request to finish
+  pending # FIXME Selenium isn't waiting for the request to finish
   # find(".pagination").should have_content "2 of 2"
   # find("button.arrow.right")['data-page'].should eq ""
   # find("button.arrow.left")['data-page'].should eq "1"
 end
 
 Then /^I should see different videos than the first page$/ do
-  find(".videos-overlay li.video-thumb:first-of-type").should_not have_content @latest_videos.first.short_headline
+  pending # FIXME this
+  #find(".videos-overlay li.video-thumb:first-of-type").should_not have_content @latest_videos.first.short_headline
+end
+
+Then /^I should see that there is nothing to list in the pop\-up with the message "([^"]*)"$/ do |message|
+  find(".videos-overlay .none-to-list").should have_content message
 end

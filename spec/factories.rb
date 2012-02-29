@@ -25,7 +25,11 @@ FactoryGirl.define do
     sequence(:user_id) 
   end
 
-  factory :show, class: "KpccProgram" do
+  factory :program do
+
+  end
+  
+  factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
     sequence(:slug) { |n| "show-#{n}" }
     teaser "AirTalk, short teaser, etc."
@@ -35,9 +39,25 @@ FactoryGirl.define do
     air_status "onair"
     podcast_url "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=73329334&uo=6"
     rss_url "http://feeds.scpr.org/kpccAirTalk"
+    sidebar "Sidebar Content"    
     twitter_url "airtalk"
     facebook_url "http://www.facebook.com/KPCC.AirTalk"
     is_segmented 1 
+  end
+  
+  factory :other_program do
+    sequence(:title) { |n| "Other Program #{n}" }
+    sequence(:slug) { |n| "other-program-#{n}" }
+    teaser "Outside Program"
+    description "This is the description for the outside program!"
+    host "Larry Mantle"
+    airtime "Weekdays 10 a.m.-12 p.m."
+    air_status "onair"
+    podcast_url "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=73329334&uo=6"
+    rss_url "http://www.bbc.co.uk/worldservice/news/index.xml"
+    sidebar "Sidebar Content"
+    web_url "http://www.bbc.co.uk/worldservice/"
+    produced_by "BBC"
   end
   
   factory :blog do

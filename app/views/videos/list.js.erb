@@ -5,5 +5,5 @@
 	$('.arrow.right').attr("data-page", "<%= @videos.next_page %>");
 	$('.arrow.left').attr("data-page", "<%= @videos.previous_page %>");
 <% else %>
-	$('.videos-overlay ul').html("There are currently no videos");
+	$('.videos-overlay ul').html("<span class='none-to-list'>There are currently no Videos</span>");
 <% end %>

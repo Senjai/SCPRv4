@@ -9,7 +9,7 @@ describe ApplicationHelper do
     
     it "returns a default message if there are no records and no message is specified" do
       records = []
-      any_to_list?(records) { "Records list" }.should eq "There are currently no Arrays" # fascinating list of arrays
+      any_to_list?(records) { "Records list" }.should eq "<span class='none-to-list'>There are currently no Arrays</span>".html_safe # fascinating list of arrays
     end
     
     it "returns a specified message if there are no records" do
@@ -32,6 +32,7 @@ describe ApplicationHelper do
     before :each do
       make_content
       ThinkingSphinx::Test.start
+      sleep(0.25)
       @arts = get_latest_arts
     end
     
