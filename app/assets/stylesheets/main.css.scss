@@ -127,17 +127,6 @@ section.broadcastbar {
 						left:70px;
 						top:-12px;
 					}
-					.more {
-						position:absolute;
-						right:25px;
-						top:20px;
-						a {
-							background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
-							font-size:11px;
-							padding-bottom:2px;
-							padding-right:17px;
-						}
-					}
 					.modal-close {
 						background:url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
 						cursor:pointer;
@@ -145,8 +134,8 @@ section.broadcastbar {
 						height:15px;
 						opacity:0.8;
 						position:absolute;
-						right:18px;
-						bottom:15px;
+						right:25px;
+						top:20px;
 						&:hover {
 							opacity:1.0;
 						}
@@ -157,6 +146,11 @@ section.broadcastbar {
 							color:$orangeDark;
 						}
 					}
+					img {
+						float:left;
+						width:58px;
+						height:58px;
+					}
 					ul.cbase {
 						li {
 							list-style-image:url(image_path('mega-divider.png'));
@@ -164,17 +158,20 @@ section.broadcastbar {
 							&.lead {
 								list-style-image:none;
 							}
+							&.more {
+								margin-bottom:0;
+								a {
+									background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
+									font-size:11px;
+									padding-bottom:2px;
+									padding-right:17px;
+								}
+							}
 							a.comment_link {
 								margin-left:0;
 							}
 						}
 						margin-left:80px;
-						img {
-							float:left;
-							margin-left:-80px;
-							width:58px;
-							height:58px;
-						}
 						h4 {
 							font-size:18px;
 							font-weight:bold;
