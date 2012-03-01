@@ -16,6 +16,8 @@ gem 'thinking-sphinx', '2.0.10'
 gem 'therubyracer'
 gem 'newrelic_rpm'
 
+gem "ruby-mp3info"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
