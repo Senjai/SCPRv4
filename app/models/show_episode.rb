@@ -13,12 +13,19 @@ class ShowEpisode < ContentBase
     
   #----------
   
+  def headline
+    self.title
+  end
+    
+  #----------
+  
   def link_path
     Rails.application.routes.url_helpers.episode_path(
       :show => self.show.slug,
       :year => self.air_date.year, 
       :month => self.air_date.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.air_date.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }
+      :day => self.air_date.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+      :trailing_slash => true
     )
   end
 end
