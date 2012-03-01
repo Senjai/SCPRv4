@@ -6,4 +6,9 @@ class UploadedAudio < ActiveRecord::Base
   def url
     "http://media.scpr.org/#{self.mp3_file}"
   end
+  
+  def mp3_path
+    Rails.application.config.scpr.media_root ? [Rails.application.config.scpr.media_root,self.mp3_file].join('/') : false
+  end
+  
 end
