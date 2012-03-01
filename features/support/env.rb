@@ -39,6 +39,7 @@ Spork.prefork do
     require 'database_cleaner'
     require 'database_cleaner/cucumber'
     DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean
   rescue NameError
     raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
   end
@@ -73,7 +74,7 @@ end
 Spork.each_run do
   FactoryGirl.reload
   Cucumber::ThinkingSphinx::ExternalWorld.new
-  ThinkingSphinx::Test.index
+  # ThinkingSphinx::Test.index
   DatabaseCleaner.clean
 end
 

@@ -29,6 +29,10 @@ FactoryGirl.define do
 
   end
   
+  factory :episode do
+  
+  end
+  
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
     sequence(:slug) { |n| "show-#{n}" }

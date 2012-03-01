@@ -1,6 +1,20 @@
-<div class="show-header">
-	<p><%=raw @program.teaser %></p>
-	<p class="show-time"><%= @program.airtime %></p>
+<div class="row">
+	<section class="span8 episodes">
+		<article class="span4 current">
+			<div class="header">Current Episode</div>
+			Got Bread, Man? Cottage Food law on Off-Ramp for February 21, 2012
+		</article>
+		<article class="span4 upcoming">
+			<div class="header">Upcoming Episode</div>
+			Tim Robbins on 1984 and more - special Off-Ramp podcast for February 25, 2012
+		</article>
+	</section>
+</div>
+
+<div class="row">
+	<nav class="span8 show">
+		<%= link_to "All", program_path(@program) %><%= link_to "Segments", program_path(@program) %><%= link_to "Blog Posts", program_path(@program) %><%= link_to "Featured Comments", program_path(@program) %><%= link_to "Reading List", program_path(@program) %>
+	</nav>
 </div>
 
 <%= render :partial => "episode", :object => @program.episodes.published.first %>

@@ -64,4 +64,6 @@ Scprv4::Application.routes.draw do
   
   match '/' => "home#index", :as => :home
   match '/beta/' => "home#beta", :as => :beta
+  
+  root to: "home#index"
 end

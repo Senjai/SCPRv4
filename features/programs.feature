@@ -7,3 +7,27 @@ Scenario: No Programs
 	Then I should see that there is nothing to list with the message "There are currently no Local Programs"
 	And I should see that there is nothing to list with the message "There are currently no Outside Programs"
 
+Scenario Outline: View a Featured Program's page
+	Given a program titled "<title>" with slug "<slug>"
+	When I go to the program's page
+	Then I should see the program's information
+	Then I should see a headshot of the program's host
+	
+	Examples:
+		| slug				| title						|
+		| madeleine-brand	| The Madeleine Brand Show	|
+		| airtalk			| Airtalk					|
+		| patt-morrison		| Patt Morrison				|
+		| offramp			| Off-Ramp					|
+		
+Scenario: View a Program's page
+	When I go to a program's page
+	Then I should see the program's information
+
+@javascript
+Scenario: Block Element is clickable
+	When I go to the programs page
+	And I click the area for one of the featured programs
+	Then I should be taken to that program's page
+	
+	

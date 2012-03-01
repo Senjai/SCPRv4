@@ -8,7 +8,7 @@ class VideosController < ApplicationController
       @video = VideoShell.published.recent_first.first
       @asset = Asset.find(@video.assets.first.asset_id) if @video
     rescue
-      redirect_to root_path
+      redirect_to home_path
     end
   end
   
