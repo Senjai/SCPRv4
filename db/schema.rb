@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120111225707) do
+ActiveRecord::Schema.define(:version => 20120301225558) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -32,6 +32,26 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
   end
 
   add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
+
+  create_table "api_users", :force => true do |t|
+    t.string   "name",                 :null => false
+    t.string   "authentication_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "asset_outputs", :force => true do |t|
+    t.integer  "asset_id",                          :null => false
+    t.integer  "output_id",                         :null => false
+    t.string   "fingerprint"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "image_fingerprint", :default => "", :null => false
+  end
+
+  add_index "asset_outputs", ["asset_id", "output_id"], :name => "asset_id", :unique => true
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_type_id",                                       :null => false
@@ -183,6 +203,8 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
     t.integer  "status",                                                  :null => false
     t.string   "blog_asset_scheme", :limit => 10
     t.integer  "comment_count",                                           :null => false
+    t.string   "_short_headline",   :limit => 100
+    t.text     "_teaser",           :limit => 2147483647
   end
 
   add_index "blogs_entry", ["author_id"], :name => "blogs_entry_author_id"
@@ -244,7 +266,7 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
     t.string   "headline",      :limit => 200,                                           :null => false
     t.string   "byline",        :limit => 50,                                            :null => false
     t.string   "site",          :limit => 50,         :default => "KPCC",                :null => false
-    t.text     "lede",          :limit => 2147483647,                                    :null => false
+    t.text     "_teaser",       :limit => 2147483647,                                    :null => false
     t.string   "url",           :limit => 150,                                           :null => false
     t.integer  "status",                              :default => 0,                     :null => false
     t.datetime "pub_at",                              :default => '2011-11-21 11:07:11', :null => false
@@ -255,7 +277,7 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
     t.integer  "content_type_id",                                                          :null => false
     t.integer  "object_id",                                                                :null => false
     t.integer  "status",                                :default => 0,                     :null => false
-    t.datetime "published_at",                          :default => '2012-01-12 00:07:58', :null => false
+    t.datetime "published_at",                          :default => '2012-01-11 12:35:43', :null => false
     t.string   "username",        :limit => 50,                                            :null => false
     t.text     "excerpt",         :limit => 2147483647,                                    :null => false
   end
@@ -266,6 +288,20 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
   create_table "contentbase_featuredcommentbucket", :force => true do |t|
     t.string "title", :limit => 50, :null => false
   end
+
+  create_table "contentbase_misseditbucket", :force => true do |t|
+    t.string "title", :limit => 50, :null => false
+  end
+
+  create_table "contentbase_misseditcontent", :force => true do |t|
+    t.integer "bucket_id",                       :null => false
+    t.integer "content_type_id",                 :null => false
+    t.integer "object_id",                       :null => false
+    t.integer "position",        :default => 99, :null => false
+  end
+
+  add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
+  add_index "contentbase_misseditcontent", ["content_type_id"], :name => "contentbase_misseditcontent_e4470c6e"
 
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
@@ -663,56 +699,6 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
 
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
-  create_table "mailchimp_campaign", :force => true do |t|
-    t.text     "content",         :limit => 2147483647, :null => false
-    t.datetime "sent_date",                             :null => false
-    t.string   "name",                                  :null => false
-    t.string   "campaign_id",     :limit => 50,         :null => false
-    t.integer  "object_id"
-    t.integer  "content_type_id"
-    t.text     "extra_info",      :limit => 2147483647
-  end
-
-  add_index "mailchimp_campaign", ["content_type_id"], :name => "mailchimp_campaign_e4470c6e"
-
-  create_table "mailchimp_queue", :force => true do |t|
-    t.text    "type_opts",                  :limit => 2147483647,                    :null => false
-    t.boolean "segment_options_all",                              :default => false, :null => false
-    t.text    "contents",                   :limit => 2147483647,                    :null => false
-    t.string  "subject",                                                             :null => false
-    t.string  "campaign_type",              :limit => 50,                            :null => false
-    t.boolean "authenticate",                                     :default => false, :null => false
-    t.string  "title"
-    t.string  "from_email",                 :limit => 75,                            :null => false
-    t.boolean "segment_options",                                  :default => false, :null => false
-    t.string  "list_id",                    :limit => 50,                            :null => false
-    t.boolean "auto_tweet",                                       :default => false, :null => false
-    t.string  "from_name",                                                           :null => false
-    t.string  "folder_id",                  :limit => 50
-    t.boolean "generate_text",                                    :default => false, :null => false
-    t.string  "to_email",                   :limit => 75,                            :null => false
-    t.boolean "tracking_text_clicks",                             :default => false, :null => false
-    t.boolean "auto_footer",                                      :default => false, :null => false
-    t.boolean "tracking_html_clicks",                             :default => true,  :null => false
-    t.string  "google_analytics",           :limit => 100
-    t.text    "segment_options_conditions", :limit => 2147483647,                    :null => false
-    t.integer "template_id",                                                         :null => false
-    t.boolean "tracking_opens",                                   :default => true,  :null => false
-    t.integer "object_id"
-    t.integer "content_type_id"
-    t.boolean "locked",                                           :default => false, :null => false
-    t.text    "extra_info",                 :limit => 2147483647
-  end
-
-  add_index "mailchimp_queue", ["content_type_id"], :name => "mailchimp_queue_e4470c6e"
-
-  create_table "mailchimp_reciever", :force => true do |t|
-    t.integer "campaign_id",               :null => false
-    t.string  "email",       :limit => 75, :null => false
-  end
-
-  add_index "mailchimp_reciever", ["campaign_id"], :name => "mailchimp_reciever_8fd46b1a"
-
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
     t.string   "title",         :limit => 140,        :null => false
@@ -727,6 +713,7 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
     t.date    "publish_date",                :null => false
     t.string  "notes",        :limit => 100
     t.integer "size"
+    t.integer "duration"
   end
 
   create_table "media_image", :force => true do |t|
@@ -756,11 +743,12 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
   add_index "media_link", ["content_type_id"], :name => "media_link_content_type_id"
 
   create_table "media_programaudio", :force => true do |t|
-    t.string "name",         :limit => 140, :null => false
-    t.string "slug",         :limit => 50,  :null => false
-    t.string "url",          :limit => 250, :null => false
-    t.date   "publish_date",                :null => false
-    t.string "notes",        :limit => 100, :null => false
+    t.string  "name",         :limit => 140, :null => false
+    t.string  "slug",         :limit => 50,  :null => false
+    t.string  "url",          :limit => 250, :null => false
+    t.date    "publish_date",                :null => false
+    t.string  "notes",        :limit => 100, :null => false
+    t.integer "duration"
   end
 
   create_table "media_related", :force => true do |t|
@@ -782,6 +770,7 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
     t.string  "sort_order",      :limit => 2,          :null => false
     t.integer "content_type_id",                       :null => false
     t.integer "object_id",                             :null => false
+    t.integer "duration"
   end
 
   add_index "media_uploadedaudio", ["content_type_id", "object_id"], :name => "media_uploadedaudio_content_type_id_229fd3799cc99e4f"
@@ -812,31 +801,24 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
   end
 
   create_table "news_story", :force => true do |t|
-    t.string   "headline",              :limit => 200,                        :null => false
-    t.string   "slug",                  :limit => 50,         :default => "", :null => false
-    t.integer  "primary_reporter_id"
-    t.integer  "secondary_reporter_id"
-    t.string   "byline",                :limit => 50,                         :null => false
-    t.string   "news_agency",           :limit => 50
-    t.text     "lede",                  :limit => 2147483647,                 :null => false
-    t.text     "body",                  :limit => 2147483647,                 :null => false
-    t.text     "first_graf",            :limit => 2147483647,                 :null => false
-    t.text     "remaining_grafs",       :limit => 2147483647,                 :null => false
-    t.string   "locale",                :limit => 5,          :default => "", :null => false
+    t.string   "headline",           :limit => 200,                        :null => false
+    t.string   "slug",               :limit => 50,         :default => "", :null => false
+    t.string   "news_agency",        :limit => 50
+    t.text     "_teaser",            :limit => 2147483647,                 :null => false
+    t.text     "body",               :limit => 2147483647,                 :null => false
+    t.string   "locale",             :limit => 5,          :default => "", :null => false
     t.integer  "enco_number"
     t.date     "audio_date"
-    t.datetime "published_at",                                                :null => false
-    t.string   "editing_status",        :limit => 1,                          :null => false
-    t.boolean  "is_published",                                                :null => false
-    t.string   "source",                :limit => 20
-    t.string   "story_asset_scheme",    :limit => 10
-    t.string   "extra_asset_scheme",    :limit => 10
-    t.string   "lead_asset_scheme",     :limit => 10
-    t.integer  "status",                                                      :null => false
-    t.integer  "comment_count",                                               :null => false
+    t.datetime "published_at",                                             :null => false
+    t.string   "source",             :limit => 20
+    t.string   "story_asset_scheme", :limit => 10
+    t.string   "extra_asset_scheme", :limit => 10
+    t.string   "lead_asset_scheme",  :limit => 10
+    t.integer  "status",                                                   :null => false
+    t.integer  "comment_count",                                            :null => false
+    t.string   "_short_headline",    :limit => 100
   end
 
-  add_index "news_story", ["primary_reporter_id"], :name => "news_story_kpcc_reporter_id"
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
 
   create_table "news_storycategories", :force => true do |t|
@@ -927,7 +909,7 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
   add_index "podcasts_news", ["encoaudio_id"], :name => "podcasts_news_220021d6"
   add_index "podcasts_news", ["story_id"], :name => "podcasts_news_f5ae222e"
 
-  create_table "podcasts_show", :force => true do |t|
+  create_table "podcasts_podcast", :force => true do |t|
     t.string  "slug",        :limit => 40,                            :null => false
     t.string  "title",       :limit => 140,                           :null => false
     t.string  "link",        :limit => 250,                           :null => false
@@ -939,9 +921,14 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
     t.string  "keywords",    :limit => 200,                           :null => false
     t.string  "duration",    :limit => 10,                            :null => false
     t.boolean "is_listed",                         :default => false, :null => false
+    t.integer "program_id"
+    t.integer "category_id"
+    t.string  "item_type",   :limit => 10
   end
 
-  add_index "podcasts_show", ["slug"], :name => "slug", :unique => true
+  add_index "podcasts_podcast", ["category_id"], :name => "podcasts_podcast_42dc49bc"
+  add_index "podcasts_podcast", ["program_id"], :name => "podcasts_podcast_7eef53e3"
+  add_index "podcasts_podcast", ["slug"], :name => "slug", :unique => true
 
   create_table "podcasts_show_categories", :force => true do |t|
     t.integer "show_id",     :null => false
@@ -1014,19 +1001,20 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
   end
 
   create_table "programs_kpccprogram", :force => true do |t|
-    t.string  "slug",         :limit => 40,                            :null => false
-    t.string  "title",        :limit => 60,                            :null => false
-    t.text    "teaser",       :limit => 2147483647,                    :null => false
-    t.text    "description",  :limit => 2147483647,                    :null => false
-    t.string  "host",         :limit => 150,        :default => "",    :null => false
-    t.string  "airtime",      :limit => 300,                           :null => false
-    t.string  "air_status",   :limit => 10,                            :null => false
-    t.string  "podcast_url",  :limit => 300,        :default => "",    :null => false
-    t.string  "rss_url",      :limit => 300,        :default => "",    :null => false
-    t.string  "twitter_url",  :limit => 300,        :default => "",    :null => false
-    t.string  "facebook_url", :limit => 300,        :default => "",    :null => false
-    t.text    "sidebar",      :limit => 2147483647,                    :null => false
-    t.boolean "is_segmented",                       :default => false, :null => false
+    t.string  "slug",             :limit => 40,                            :null => false
+    t.string  "title",            :limit => 60,                            :null => false
+    t.text    "teaser",           :limit => 2147483647,                    :null => false
+    t.text    "description",      :limit => 2147483647,                    :null => false
+    t.string  "host",             :limit => 150,        :default => "",    :null => false
+    t.string  "airtime",          :limit => 300,                           :null => false
+    t.string  "air_status",       :limit => 10,                            :null => false
+    t.string  "podcast_url",      :limit => 300,        :default => "",    :null => false
+    t.string  "rss_url",          :limit => 300,        :default => "",    :null => false
+    t.string  "twitter_url",      :limit => 300,        :default => "",    :null => false
+    t.string  "facebook_url",     :limit => 300,        :default => "",    :null => false
+    t.text    "sidebar",          :limit => 2147483647,                    :null => false
+    t.boolean "display_episodes",                       :default => false, :null => false
+    t.boolean "display_segments",                                          :null => false
   end
 
   add_index "programs_kpccprogram", ["slug"], :name => "slug", :unique => true
@@ -1084,7 +1072,7 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
     t.integer  "id",                                 :default => 0,                     :null => false
     t.integer  "bucket_id",                                                             :null => false
     t.integer  "status",                             :default => 0,                     :null => false
-    t.datetime "published_at",                       :default => '2012-01-12 00:07:58', :null => false
+    t.datetime "published_at",                       :default => '2012-01-11 12:35:43', :null => false
     t.string   "username",     :limit => 50,                                            :null => false
     t.text     "excerpt",      :limit => 2147483647,                                    :null => false
     t.integer  "content_id",                                                            :null => false
@@ -1156,6 +1144,14 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
     t.string  "source",         :limit => 150,                       :null => false
     t.boolean "allow_download",                                      :null => false
     t.string  "sort_order",     :limit => 2,                         :null => false
+    t.integer "duration"
+  end
+
+  create_table "rails_taggit_taggeditem", :id => false, :force => true do |t|
+    t.integer "id",           :default => 0, :null => false
+    t.integer "tag_id",                      :null => false
+    t.integer "content_id",                  :null => false
+    t.string  "content_type"
   end
 
   create_table "schedule_program", :force => true do |t|
@@ -1172,16 +1168,13 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
   add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
 
   create_table "shows_episode", :force => true do |t|
-    t.integer  "show_id",                                    :null => false
-    t.date     "air_date",                                   :null => false
-    t.string   "title",                :limit => 140,        :null => false
-    t.text     "short_summary",        :limit => 2147483647, :null => false
-    t.text     "full_summary",         :limit => 2147483647, :null => false
-    t.datetime "published_at",                               :null => false
-    t.boolean  "is_published",                               :null => false
-    t.integer  "status",                                     :null => false
-    t.integer  "comment_count",                              :null => false
-    t.string   "episode_asset_scheme", :limit => 10
+    t.integer  "show_id",                             :null => false
+    t.date     "air_date",                            :null => false
+    t.string   "title",         :limit => 140,        :null => false
+    t.text     "_teaser",       :limit => 2147483647, :null => false
+    t.datetime "published_at",                        :null => false
+    t.integer  "status",                              :null => false
+    t.integer  "comment_count",                       :null => false
   end
 
   add_index "shows_episode", ["show_id"], :name => "shows_episode_show_id"
@@ -1222,23 +1215,22 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
   add_index "shows_rundown", ["segment_id"], :name => "shows_rundown_segment_id"
 
   create_table "shows_segment", :force => true do |t|
-    t.integer  "show_id",                                                       :null => false
-    t.string   "title",                :limit => 200,                           :null => false
-    t.string   "slug",                 :limit => 50,                            :null => false
-    t.text     "lede",                 :limit => 2147483647,                    :null => false
-    t.text     "body",                 :limit => 2147483647,                    :null => false
-    t.integer  "kpcc_reporter_id"
-    t.string   "outside_reporter",     :limit => 75,                            :null => false
-    t.string   "byline",               :limit => 50,                            :null => false
-    t.string   "locale",               :limit => 5,          :default => "",    :null => false
+    t.integer  "show_id",                                                    :null => false
+    t.string   "title",                :limit => 200,                        :null => false
+    t.string   "slug",                 :limit => 50,                         :null => false
+    t.text     "_teaser",              :limit => 2147483647,                 :null => false
+    t.text     "body",                 :limit => 2147483647,                 :null => false
+    t.string   "locale",               :limit => 5,          :default => "", :null => false
     t.datetime "created_at"
-    t.boolean  "is_published",                               :default => false, :null => false
-    t.integer  "status",                                                        :null => false
-    t.integer  "comment_count",                                                 :null => false
+    t.integer  "status",                                                     :null => false
+    t.integer  "comment_count",                                              :null => false
     t.string   "segment_asset_scheme", :limit => 10
+    t.string   "_short_headline",      :limit => 100
+    t.datetime "published_at",                                               :null => false
+    t.integer  "enco_number"
+    t.date     "audio_date",                                                 :null => false
   end
 
-  add_index "shows_segment", ["kpcc_reporter_id"], :name => "shows_segment_kpcc_reporter_id"
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
   add_index "shows_segment", ["slug"], :name => "shows_segment_slug"
 
@@ -1276,25 +1268,6 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
 
   add_index "shows_segmentimageorder", ["image_id"], :name => "shows_imageorder_image_id"
   add_index "shows_segmentimageorder", ["segment_id"], :name => "shows_imageorder_segment_id"
-
-  create_table "shows_series", :force => true do |t|
-    t.integer  "show_id",                                                   :null => false
-    t.date     "air_date",                                                  :null => false
-    t.string   "title",               :limit => 140,                        :null => false
-    t.string   "slug",                :limit => 50,         :default => "", :null => false
-    t.text     "short_summary",       :limit => 2147483647,                 :null => false
-    t.text     "lede",                :limit => 2147483647,                 :null => false
-    t.text     "body",                :limit => 2147483647,                 :null => false
-    t.string   "locale",              :limit => 5,                          :null => false
-    t.integer  "enco_number"
-    t.datetime "published_at",                                              :null => false
-    t.boolean  "is_published",                                              :null => false
-    t.integer  "status",                                                    :null => false
-    t.integer  "comment_count",                                             :null => false
-    t.string   "series_asset_scheme", :limit => 10
-  end
-
-  add_index "shows_series", ["show_id"], :name => "shows_series_show_id"
 
   create_table "shows_seriesimage", :force => true do |t|
     t.text     "caption",    :limit => 2147483647, :null => false
@@ -1358,6 +1331,15 @@ ActiveRecord::Schema.define(:version => 20120111225707) do
 
   create_table "tickets_ticket", :force => true do |t|
     t.boolean "show_link", :null => false
+  end
+
+  create_table "tmp_contentcats", :id => false, :force => true do |t|
+    t.integer  "id",                        :default => 0, :null => false
+    t.integer  "category_id",                              :null => false
+    t.integer  "content_id",                               :null => false
+    t.string   "content_type"
+    t.integer  "status",       :limit => 8
+    t.datetime "pub_date"
   end
 
   create_table "users_userprofile", :force => true do |t|

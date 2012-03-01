@@ -1,5 +1,6 @@
 class UploadedAudio < ActiveRecord::Base
   self.table_name =  'rails_media_uploadedaudio'
+  self.primary_key = :id
   
   belongs_to :content, :polymorphic => true
   
