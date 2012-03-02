@@ -12,11 +12,6 @@ describe BlogEntry do
       @unpublished = create_list :blog_entry, 2, status: 3
       BlogEntry.published.count.should eq 3
     end
-  
-    it "#recent_first orders by published_at descending" do
-      @blog_entries = 3.times { |n| create :blog_entry, status: 5, published_at: Time.now + 60*n }
-      BlogEntry.recent_first.first.should eq BlogEntry.order("published_at desc").first
-    end
   end
   
   describe "instance" do # TODO: Move these into ContentBase specs

@@ -1,13 +1,13 @@
 development:
-    server: assethost.dev
+    server: a.scpr.org
     token: droQQ2LcESKeGPzldQr7
-    
+
 production:
     server: a.scpr.org
     token: droQQ2LcESKeGPzldQr7
     
 test:
-    server: assethost.dev
+    server: a.scpr.org
     token: droQQ2LcESKeGPzldQr7
 
 scprdev:

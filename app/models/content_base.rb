@@ -52,11 +52,6 @@ class ContentBase < ActiveRecord::Base
     
   #----------
   
-  # TODO: Move scope "published" into ContentBase class
-  # scope :published, where(status: STATUS_LIVE)
-  
-  #----------
-  
   def self.content_classes
     self::CONTENT_CLASSES.collect {|k,v| v.constantize }
   end
@@ -194,22 +189,31 @@ class ContentBase < ActiveRecord::Base
   #----------
   
   def teaser
-    return self._teaser if self._teaser?
-
+    if self._teaser?
+      return self._teaser
+    end
+    
     # -- cut down body to get teaser -- #
+    
     l = 180    
-
+    
     # first test if the first paragraph is an acceptable length
     fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,''))
-
+    
     if fp && fp[1].length < l
       # cool, return this
       return fp[1]
     else
       # try shortening this paragraph
       short = /^(.{#{l}}\w*)\W/.match(fp[1])
-      return short ? "#{short[1]}..." : fp[1]
-    end
+      
+      if short
+        return "#{short[1]}..."
+      else
+        return fp[1]
+      end
+    end    
+    
   end
 
   #----------
