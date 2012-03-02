@@ -26,6 +26,11 @@ class PodcastsController < ApplicationController
       # nothing...
     end
     
+    # if we have content, grab 25 items and collect only those with audio
+    if @content
+      @content = @content.first(25).collect { |c| c.audio.any? ? c : nil }.compact
+    end
+    
     Rails.logger.debug "content is #{@content}"
     
     render "podcast.xml"

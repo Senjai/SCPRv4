@@ -8,13 +8,21 @@ class ShowEpisode < ContentBase
   has_one :rundown, :class_name => "ShowRundown", :foreign_key => "episode_id"
   has_many :segments, :through => :rundown, :order => "segment_order asc", :class_name => "ShowSegment", :foreign_key => "segment_id"
   
+  #belongs_to :program_audio, :foreign_key => "publish_date", :primary_key => "publish_date", :conditions => proc { ["slug = ?",self.show.slug] }  
+  
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc")
   scope :upcoming, where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc")
-    
+      
   #----------
   
   def headline
     self.title
+  end
+  
+  #----------
+  
+  def _get_audio
+    ProgramAudio.where(:slug => self.show.slug, :publish_date => self.air_date)
   end
     
   #----------
