@@ -126,6 +126,7 @@ $headShotWidth: 90px;
 		margin: 0;
 		@include font-navigation($size: 13px);
 		color: $gray;
+		min-height: $headShotHeight;
 		.header {
 			@include font-heading($size: 10px, $weight: normal);
 			text-transform: uppercase;
@@ -136,20 +137,128 @@ $headShotWidth: 90px;
 			padding: 0 0 0 14px;
 			border-right: 1px solid $grayLighter;
 			background: url(image_path('icons/arrow-left.png')) no-repeat left;
-			&:hover {
-				cursor: pointer;
-				background-color: $nearWhite;
-			}
 		}
 		&.upcoming {
 			margin: 0;
 			text-align: right;
 			padding: 0 15px 0 0;
 			background: url(image_path('icons/arrow-right.png')) no-repeat right;
-			&:hover {
-				cursor: pointer;
-				background-color: $nearWhite;
-			}
 		}
+		&:hover {
+			cursor: pointer;
+			background-color: $nearWhite;
+		}
+	}
+}
+
+nav.show {
+	background: #f5f5f5;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+	@include font-heading($size: 12px, $weight: 600);
+	padding: 8px 3px 8px 12px;
+	margin: 10px 0;
+	text-transform: uppercase;
+	a {
+		color: #000;
+		padding: 3px 5px;
+		margin: 0 25px;
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		&:first-of-type {
+			margin-left: 0;
+		}
+		&:last-of-type {
+			margin-right: 0;
+		}
+		&:hover {
+			background: #9c9c9c;
+			color: $nearWhite;
+			text-shadow: 0 1px #000;
+			text-decoration: none;
+		}
+	}
+}
+
+.program-about{
+	border-top: 1px solid lighten($gray, 30%);
+	border-bottom: 1px solid $grayLighter;
+	padding: 0 0 5px 0;
+}
+
+a.with-icon {
+	margin-left: 4px;
+	display: block;
+	line-height: 14px;
+	background-repeat: no-repeat;
+	background-position: left 3px;
+	color: lighten($black, 40%);
+	&.twitter {
+		background-image: url(image_path("icons/tiny-twitter.png"));
+	}
+	&.facebook {
+		background-image: url(image_path("icons/tiny-facebook.png"));
+	}
+	&.podcast {
+		background-image: url(image_path("icons/tiny-podcast.png"));
+	}
+	&.rss {
+		background-image: url(image_path("icons/tiny-rss.png"));
+	}
+	&.archive {
+		@include font-heading($size: 12px);
+		background-image: url(image_path("icons/archived.png"));
+		padding-left: 21px;
+	}
+	&:hover {
+		background-color: $nearWhite;
+		text-decoration: none;
+	}
+}
+
+.connect {
+	.title {
+		display: block;
+		@include font-heading($size: 10px, $weight: 600);
+		text-transform: uppercase;
+	}
+	a {
+		@include font-heading($weight: 200, $size: 10px);
+		padding-left: 18px;
+	}
+	margin-bottom: 10px;
+}
+
+.about {
+	min-height: 100px;
+	margin: 0;
+	color: $gray;
+	@include font-sans-serif($size: 10px, $lineHeight: 14px);
+}
+
+.newsletter-subscribe {
+	padding: 5px;
+	form {
+		input.email {
+			padding-left: 30px;
+			background: url(image_path("icons/envelope-open.png")) no-repeat 5px 2px;
+			height: 15px;
+			@include font-sans-serif($size: 10px);
+			display: inline-block;
+		}
+		
+		input[type=submit] {
+			@include font-shorthand($size: 10px, $weight: normal);
+			display: inline-block;
+			padding: 2px 7px 1px 7px;
+			margin: 0 0 0 7px;
+		}
+	}
+}
+
+.missed-it {
+	li {
+		list-style: none;
 	}
 }

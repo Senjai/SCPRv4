@@ -21,13 +21,6 @@ Scenario Outline: View a Featured Program's page
 		| offramp			| Off-Ramp					|
 		
 Scenario: View a Program's page
+	Given there are 2 kpcc programs
 	When I go to a program's page
 	Then I should see the program's information
-
-@javascript
-Scenario: Block Element is clickable
-	When I go to the programs page
-	And I click the area for one of the featured programs
-	Then I should be taken to that program's page
-	
-	

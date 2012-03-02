@@ -1,22 +1,96 @@
+<% content_for :masthead do %>
+	<!-- partial _program_masthead ? -->
+		<div class="span12 program-masthead">
+			<div class="span8">
+				<div class="row">
+					<div class="span4 show-title">
+						<h2><%= link_to @program.title, program_path(@program.slug) %></h2>
+					</div>
+					<div class="span4 show-meta <%= @program.slug %>">
+						<div class="info">
+							<%= @program.airtime %><br />
+							with <%= @program.host %>
+						</div>
+					</div>
+				</div> <!-- .row -->
+			</div> <!-- .span8 -->
+			<div class="span4">
+				<div class="support">
+					Support all the great programming on KPCC, including this show.
+				</div> <!-- .support -->
+			</div>
+		</div> <!-- .program-masthead -->
+	<!-- end _program_masthead -->
+<% end %>
+
+<% content_for :sidebar do %>
+	<div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div>
+	
+	<!-- partial _program_about ? -->
+		<section class="program-about">
+			<h6>About <%= @program.title %></h6>
+			<div class="row">
+				<nav class="span2 connect divider">
+					<span class="title">Stay Connected</span>
+					<%= link_to "Facebook", @program.facebook_url, target: "_blank", class: "facebook with-icon" %>
+					<%= link_to "Twitter", @program.twitter_absolute_url, target: "_blank", class: "twitter with-icon"%>
+					<%= link_to "Podcasts", @program.podcast_url, target: "_blank", class: "podcast with-icon" if @program.podcast_url.present? %>
+					<%= link_to "RSS", @program.rss_url, target: "_blank", class: "rss with-icon" if @program.rss_url.present? %>
+				</nav>
+				<article class="span2 about">
+					<%= @program.teaser.html_safe %>
+				</article>
+			</div>
+			<%= link_to "View Archived Episodes", program_path(@program), class: "archive with-icon" %>
+		</section>
+	<!-- end _program_about -->
+	
+	<!-- partial _newsletter_form ? -->
+		<section class="newsletter-subscribe">
+			<form action="http://scpr.us2.list-manage2.com/subscribe/post?u=5e1e4451f92ffc0fa746da7fa&amp;id=4a625d116f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+			    <input type="text" value="" placeholder="Sign up for our newsletter" name="EMAIL" class="required email" id="mce-EMAIL">
+				<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+				<div id="mce-responses" style="margin:10px 0 0 0;">
+		   			<div class="response" id="mce-error-response" style="display:none"></div>
+		   			<div class="response" id="mce-success-response" style="display:none"></div>
+		   		</div>
+			    </form>
+		</section>
+	<!-- end _newsletter_form -->
+	
+	<!-- partial _missed_it_list ? -->
+		<section class="missed-it">
+			<h6>In Case You Missed It</h6>
+			<ul>
+				<li>
+				</li>
+			</ul>
+		</section>
+	<!-- end _missed_it_list -->	
+	<%# render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
+	<%# render "shared/widgets/most_popular" %>
+	<%# render "shared/widgets/oas", :ad_id => 'x02' %>
+	<%# render "shared/widgets/oas", :ad_id => 'x03' %>
+	<%# render "shared/widgets/promo_mobile" %>
+<% end %>
+
 <div class="row">
 	<section class="span8 episodes">
 		<article class="span4 current">
 			<div class="header">Current Episode</div>
-			Got Bread, Man? Cottage Food law on Off-Ramp for February 21, 2012
+			<%= @program.episodes.published.first.try(:teaser) %>
 		</article>
 		<article class="span4 upcoming">
 			<div class="header">Upcoming Episode</div>
-			Tim Robbins on 1984 and more - special Off-Ramp podcast for February 25, 2012
+			<%= @program.episodes.upcoming.first.try(:teaser) %>
 		</article>
 	</section>
 </div>
+
+
 
 <div class="row">
 	<nav class="span8 show">
 		<%= link_to "All", program_path(@program) %><%= link_to "Segments", program_path(@program) %><%= link_to "Blog Posts", program_path(@program) %><%= link_to "Featured Comments", program_path(@program) %><%= link_to "Reading List", program_path(@program) %>
 	</nav>
 </div>
-
-<%= render :partial => "episode", :object => @program.episodes.published.first %>
-
-<%= render :partial => "upcoming", :object => @program.episodes.upcoming.first %>

@@ -12,6 +12,7 @@
 
 <div id="main" class="container">
 	<div class="row">
+		<%= yield :masthead if content_for? :masthead %>
 		<article class="span8">
 			<%= content_for?(:content) ? yield(:content) : yield %>
 		</article>

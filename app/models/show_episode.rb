@@ -21,4 +21,8 @@ class ShowEpisode < ContentBase
       :day => self.air_date.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }
     )
   end
+  
+  def teaser # ShowEpisode doesn't have a "body" or "_teaser" attribute, so this is overriding the one in ContentBase
+    title # Currently "short_summary" is too long.
+  end
 end
