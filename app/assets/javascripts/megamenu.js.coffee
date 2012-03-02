@@ -4,6 +4,7 @@ class scpr.MegaMenu
     DefaultOptions:
         finder: "#megamenu .mega a"
         attr:   "data-section"
+        bucket: "#megamenu"
         hidden: []
         
     #----------
@@ -17,6 +18,8 @@ class scpr.MegaMenu
         @expanded = 0
         
         @hidden = _(@options.hidden).map (el) -> $(el)
+        
+        @bucket = $ @options.bucket
                 
         $(@options.finder).each (idx,el) =>
             # for each section link, attach mouseover / mouseout listeners
@@ -27,6 +30,7 @@ class scpr.MegaMenu
                     drop: $("##{el.attr(@options.attr)}")
                     score: 0
                     selected: false
+                    positioned: false
                     func: _.debounce (=> @_score(sec)), 100
                     
                 # stash a copy
@@ -59,6 +63,10 @@ class scpr.MegaMenu
             # show section
             sec.selected = true
             sec.item.addClass("hover")
+            
+            if !sec.positioned
+                # move the section into our bucket
+                @bucket.append sec.drop
             
             if @expanded
                 # hide all other sections

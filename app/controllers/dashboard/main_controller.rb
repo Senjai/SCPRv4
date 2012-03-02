@@ -35,7 +35,7 @@ class Dashboard::MainController < ApplicationController
   #----------
   
   def listen
-    
+    @current = params[:current] ? true : false
   end
   
 end

@@ -10,10 +10,12 @@ class BlogEntry < ContentBase
   has_many :tagged, :class_name => "TaggedContent", :as => :content
   has_many :tags, :through => :tagged
   
+  has_many :uploaded_audio, :as => "content"
+  
+  
   default_scope includes(:bylines)
     
   scope :published, where(:status => STATUS_LIVE)
-  scope :recent_first, order("published_at desc")
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   define_index do

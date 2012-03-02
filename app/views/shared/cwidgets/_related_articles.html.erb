@@ -4,13 +4,13 @@
 	<ul>
 		<% for c in content.frels.normal.sorted %>
 	    <li>
-			<%= link_to c.content.headline, c.content.link_path %>
+			<%= link_to c.content.short_headline, c.content.link_path %>
 			<br/><%= smart_date c.content %>
 	    </li>
 		<% end %>
 		<% for c in content.brels.notiein.sorted %>
 	    <li>
-			<%= link_to c.related.headline, c.related.link_path %>
+			<%= link_to c.related.short_headline, c.related.link_path %>
 			<br/><%= smart_date c.related %>
 	    </li>
 		<% end %>

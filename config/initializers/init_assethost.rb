@@ -11,3 +11,4 @@ module AssetHost
     @config[key.to_sym] = value
   end
 end
+

@@ -2,6 +2,8 @@
 db/*.sqlite3
 db/sphinx/
 config/*.sphinx.conf
+config/database.yml
+config/environments/development.rb
 log/
 tmp/
 .sass-cache/

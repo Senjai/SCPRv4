@@ -7,6 +7,10 @@
 
 #= require t_cbase/style
 
+#= require_self
+
+#= require_directory ./cbase/
+
 class scpr.ContentBaseAPI
     DefaultOptions:
         api_path: "http://scprv4.dev/dashboard/api"
@@ -46,6 +50,9 @@ class scpr.ContentBaseAPI
     
     buildContentDropZone: (args) ->
         new ContentBaseAPI.ContentDropZone args
+        
+    enablePreview: (args = {}) ->
+        new ContentBaseAPI.PreviewPopup _(args).extend cbapi:@
     
     #----------
     
@@ -96,7 +103,7 @@ class scpr.ContentBaseAPI
                     return from.getISODate()        
     
     #----------
-
+    
     class ContentBaseAPI.ContentDropZone
         DefaultOptions:
             key: "contents"
@@ -569,20 +576,6 @@ class scpr.ContentBaseAPI
                     name:   "#{@options.key}-#{i}-id", 
                     id:     "id_#{@options.key}-#{i}-id",
                     value:  id
-
-                #for f in @options.fields
-                #    div.append $ "<input/>",
-                #        type:   "hidden", 
-                #        name:   "#{@options.key}-#{i}-#{f}", 
-                #        id:     "id_#{@options.key}-#{i}-#{f}",
-                #        value:  ""
-
-                #_(@options.autofill).each (v,f) =>
-                #    div.append $ "<input/>",
-                #        type:   "hidden", 
-                #        name:   "#{@options.key}-#{i}-#{f}", 
-                #        id:     "id_#{@options.key}-#{i}-#{f}",
-                #        value:  ""
                         
                 if @options.del_key
                     div.append $ "<input/>",

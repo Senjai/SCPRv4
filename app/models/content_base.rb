@@ -39,7 +39,7 @@ class ContentBase < ActiveRecord::Base
   }
 
   # All ContentBase objects have assets and alarms
-  has_many :assets, :class_name => "ContentAsset", :as => :content
+  has_many :assets, :class_name => "ContentAsset", :as => :content, :order => "asset_order asc"
   has_many :bylines, :class_name => "ContentByline", :as => :content
   
   has_many :brels, :class_name => "Related", :as => :content
@@ -50,11 +50,6 @@ class ContentBase < ActiveRecord::Base
   has_one :content_category, :as => "content"
   has_one :category, :through => :content_category
     
-  #----------
-  
-  # TODO: Move scope "published" into ContentBase class
-  # scope :published, where(status: STATUS_LIVE)
-  
   #----------
   
   def self.content_classes
@@ -155,12 +150,12 @@ class ContentBase < ActiveRecord::Base
   
   def admin_path
     if self.class.const_defined? :ADMIN_PREFIX
-      return "/admin/#{self.class::ADMIN_PREFIX}/#{self.id}"
+      return "/admin/#{self.class::ADMIN_PREFIX}/#{self.id}/"
     else
       self.obj_key() =~ /(\w+)\/(\w+):(\d+)/
       
       if $~
-        return "/admin/#{$~[1]}/#{$~[2]}/#{self.id}"
+        return "/admin/#{$~[1]}/#{$~[2]}/#{self.id}/"
       else
         return ''
       end
@@ -194,22 +189,31 @@ class ContentBase < ActiveRecord::Base
   #----------
   
   def teaser
-    return self._teaser if self._teaser?
-
+    if self._teaser?
+      return self._teaser
+    end
+    
     # -- cut down body to get teaser -- #
+    
     l = 180    
-
+    
     # first test if the first paragraph is an acceptable length
     fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,''))
-
+    
     if fp && fp[1].length < l
       # cool, return this
       return fp[1]
     else
       # try shortening this paragraph
       short = /^(.{#{l}}\w*)\W/.match(fp[1])
-      return short ? "#{short[1]}..." : fp[1]
-    end
+      
+      if short
+        return "#{short[1]}..."
+      else
+        return fp[1]
+      end
+    end    
+    
   end
 
   #----------
