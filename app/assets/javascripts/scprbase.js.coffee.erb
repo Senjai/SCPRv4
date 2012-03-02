@@ -3,7 +3,7 @@ SCPRv4: Southern California Public Radio
 ###
 
 scpr ?= {}
-scpr.API_ROOT = "http://<%= Rails.env == "production" ? "www.scpr.org" : "scprv4.dev" %>/dashboard/api"
+scpr.API_ROOT = "http://<%= Rails.application.config.scpr.host %>/dashboard/api"
 
 # stub console.log() for IE
 if !window.console

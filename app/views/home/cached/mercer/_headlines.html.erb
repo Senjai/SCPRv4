@@ -2,7 +2,7 @@
 <h3 style="margin:0 0 5px 0">Latest Headlines</h3>
 <ul>
 <% for c in headlines[0..5] %>
-	<li<% if c.audio.any? %> class="audio"<% end %>><%= link_to c.headline, c.link_path %></li>
+	<li<% if c.audio.any? %> class="audio"<% end %>><%= link_to c.short_headline, c.link_path %></li>
 <% end %>
 </ul>
 <div class="hr"></div>

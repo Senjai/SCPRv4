@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="lead-right">
 	<%= content_cache("home_leads") do %>
 		<% register_content("layout/homepage") %>
 		<div class="span4 offleads">
@@ -12,6 +12,7 @@
 
 <% content_for :conversation_slot do %>
 	<div class="join-conversation-container">
-		<%= render "shared/widgets/join_conversation" %>
+		<hr/>
+		<%= featured_comment :bucket => nil, :style => "home" %>
 	</div>
 <% end %>

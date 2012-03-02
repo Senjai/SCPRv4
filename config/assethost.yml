@@ -9,3 +9,7 @@ production:
 test:
     server: assethost.dev
     token: droQQ2LcESKeGPzldQr7
+
+scprdev:
+    server: a.scpr.org
+    token: droQQ2LcESKeGPzldQr7

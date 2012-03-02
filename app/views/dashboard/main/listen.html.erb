@@ -1,4 +1,4 @@
-<h1>Listen Live Test</h1>
+<h1>Listen Live: <%= @current ? "The Current" : "89.3 KPCC" %></h1>
 
 <style>
 	#llui button {
@@ -22,5 +22,12 @@
 </div>
 
 <% content_for :footerjss do %>
+	<% if @current %>
+		var llPlayer = new scpr.ListenLive({
+			rewind:     "http://scprdev.org:8000/thecurrent.mp3",
+        	host:       "http://scprdev.org:8000/thecurrent"
+        })
+	<% else %>
 	var llPlayer = new scpr.ListenLive();
+	<% end %>
 <% end %>

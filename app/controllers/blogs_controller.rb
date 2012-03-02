@@ -4,7 +4,7 @@ class BlogsController < ApplicationController
   before_filter :load_blog, :except => [:index]
   
   def index
-    @blogs = Blog.active
+    @blogs = Blog.active.order("blogs_blog.name asc")
     render :layout => "application"
   end
   

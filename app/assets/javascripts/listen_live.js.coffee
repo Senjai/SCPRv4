@@ -8,12 +8,12 @@ class scpr.ListenLive
         playerEl:   "#llplayer"
         playBtn:    "#llplay"
         playerId:   "#llplayDiv"
-        rewind:     "http://scprdev.org:8000/rewind.mp3"
+        rewind:     "http://scprdev.org:8000/kpcclive.mp3"
         socketJS:   "http://scprdev.org:8000/socket.io/socket.io.js"
-        host:       "http://scprdev.org:8000/"
-        #rewind:     "http://localhost:8080/rewind.mp3"
-        #socketJS:   "http://localhost:8080/socket.io/socket.io.js"
-        #host:       "http://localhost:8080/"
+        host:       "http://scprdev.org:8000/kpcclive"
+        #rewind:     "http://localhost:8000/kpcclive.mp3"
+        #socketJS:   "http://localhost:8000/socket.io/socket.io.js"
+        #host:       "http://localhost:8000/kpcclive"
         
         
     constructor: (options) ->
