@@ -1,21 +1,120 @@
-#multimedia {
-	.video {
+@mixin video-effects {
+	-webkit-transition: box-shadow linear 0.2s;
+	-moz-transition: box-shadow linear 0.2s;
+	transition: box-shadow linear 0.2s;
+	@include box-shadow(none);
+	&:hover {
 		-webkit-transition: box-shadow linear 0.2s;
 		-moz-transition: box-shadow linear 0.2s;
 		transition: box-shadow linear 0.2s;
-		@include box-shadow(none);
+		@include box-shadow(0 0 12px $gray);
+	}
+}
+#multimedia {
+	.video {
 		margin:$baseline 5px;
-		width:720px;
-		height:405px;
-		&:hover {
-			-webkit-transition: box-shadow linear 0.2s;
-			-moz-transition: box-shadow linear 0.2s;
-			transition: box-shadow linear 0.2s;
-			@include box-shadow(0 0 12px $gray);
-		}
+		margin-top: 30px; /* Make room for the button */
+		width:730px;
+		height:411px;
+		position: relative;
+		@include video-effects;
 	}
 	p.description {
 		margin-top:$baseline / 2;
+	}
+	button.browse-all-videos {
+		display: inline-block;
+		width: 175px;
+		background: #000 url(image_path('browse-all-default.png')) no-repeat left center;
+		border: 1px solid #444;
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		padding: 8px 7px 8px 30px;
+		color: #444;
+		@include font-heading(normal, 12px);
+		text-transform: uppercase;
+		opacity: 0.5;
+		text-align: center;
+	}
+	.videos-overlay {
+		display: none; /* So it doesn't show on page-load */
+		position: relative;
+		width: 1107px;
+		height: 655px;
+		background: url(image_path('overlay-top.png')) no-repeat left top; /* Arrow at the top */
+		padding: 17px 0 0 0; /* pull the main box down so the arrow will show */
+		z-index: 10; /* Just to be sure it's in front */
+		
+		button.arrow {
+			position: absolute;
+			top: 300px;		
+			width: 48px;
+			height: 48px;
+			border-radius: 7px;
+			-moz-border-radius: 7px;
+			-webkit-border-radius: 7px;
+			opacity: .5;
+			&.left {
+				left: 5px;
+				background: url(image_path('overlay-prev.png')) no-repeat left top;
+			}
+			&.right {
+				right: 5px;
+				background: url(image_path('overlay-next.png')) no-repeat left top;
+			}
+		}
+		
+		.pagination {
+			width: 100%;
+			height: 20px;
+			position: absolute;
+			bottom: 0;
+			text-align: center;
+			@include font-sans-serif(bold, 12px);
+			color: $black;
+			text-shadow: 0 1px #666;
+		}
+		
+		ul {
+			background: #3d3d3d;
+			padding: 10px 60px;
+			border: 1px solid #494848;
+			border-top: none;
+			display: inline-block;
+			width: 985px;
+			height: 622px;
+			li {
+				width: 30%;
+			}
+		} /* ul */
+	} /* .videos-overlay */
+} /* #multimedia */
+
+FIXME.ul {
+	margin: 0px;
+	text-align: center;
+	color: #808080;
+	@include font-heading;
+}
+
+li.video-thumb {
+	list-style: none;
+	display: inline-block;
+	padding: 10px;
+	img {
+		max-height: 143px;
+		overflow: hidden;
+		@include video-effects;
+	}
+}
+
+div.latest-videos {
+	border-top:1px solid $nearBlack;
+	margin-top: 20px;
+	padding-top: 10px;
+	ul {
+		width: 100%;
 	}
 }
 
