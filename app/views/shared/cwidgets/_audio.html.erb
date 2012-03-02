@@ -5,7 +5,7 @@
 				<h4>Listen Now</h4>
 			</div>
 			<a href="<%= content.audio.first.url %>" class="play-btn" title="<%= h content.headline %>">Play Audio</a>
-			<!-- span class="duration">[X min XX sec]</span -->
+			<span class="duration">[<%= format_duration content.audio.first.duration %>]</span -->
 			<ul class="audio-tools">
 			    <li>
 			        <a href="<%= content.audio.first.url %>">Download</a>
@@ -23,7 +23,7 @@
 						<p><%= a.description %></p>
 					</div>
 					<a href="<%= a.url %>" class="play-btn" title="<%= h content.headline %>">Play Audio</a>
-					<!-- span class="duration">[X min XX sec]</span -->
+					<span class="duration">[<%= format_duration a.duration %>]</span -->
 					<ul class="audio-tools">
 					    <li>
 					        <a href="<%= a.url %>">Download</a>
@@ -35,6 +35,7 @@
 	<% end %>
 	
 	<% content_for :footerjss do %>
-		var scA = new scpr.Audio()
+		if (!scA)
+			var scA = new scpr.Audio()
 	<% end %>
 <% end %>

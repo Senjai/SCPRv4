@@ -49,9 +49,13 @@ class scpr.Audio
         console.log "found #{@widgets.length} widgets."
         
         # register listener to close audio bar
-        $(".bar-close").click =>
+        $(".bar-close", @audiobar).click =>
             @audiobar.animate {bottom:-70}, 300
             @player.jPlayer "stop"
+            
+            @playing = false
+            @active = null
+            
             return false
     
     #----------
@@ -59,7 +63,7 @@ class scpr.Audio
     play: (widget) ->
         if @playing && @active == widget
             console.log("pause/play")
-            
+                        
             if @playing == 1
                 @player.jPlayer "pause"
                 @playing = 2
