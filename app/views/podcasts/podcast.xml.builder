@@ -28,7 +28,7 @@ xml.rss('version' => "2.0", 'xmlns:itunes' => "http://www.itunes.com/dtds/podcas
         item.link               c.remote_link_path
 
         if c.audio.any?
-          item.enclosure          :url => c.audio[0].url, :length => "", :type => "audio/mpeg"
+          item.enclosure          :url => c.audio[0].url, :length => c.audio[0].size, :type => "audio/mpeg"
           item.itunes :duration,  c.audio.first.duration
         end
       end

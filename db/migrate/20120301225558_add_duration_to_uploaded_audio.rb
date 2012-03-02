@@ -13,7 +13,8 @@ class AddDurationToUploadedAudio < ActiveRecord::Migration
         l.source,
         l.allow_download,
         l.sort_order,
-        l.duration
+        l.duration,
+        l.size
       from 
         media_uploadedaudio as l, 
         rails_content_map as m 
