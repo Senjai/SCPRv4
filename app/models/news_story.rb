@@ -24,7 +24,6 @@ class NewsStory < ContentBase
     where "status = #{STATUS_LIVE}"
   end
   
-  scope :published, where(:status => STATUS_LIVE)
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   #----------

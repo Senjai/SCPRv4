@@ -49,6 +49,8 @@ class ContentBase < ActiveRecord::Base
   
   has_one :content_category, :as => "content"
   has_one :category, :through => :content_category
+  
+  scope :published, where(:status => STATUS_LIVE).order("published_at desc")
     
   #----------
   

@@ -15,7 +15,6 @@ class BlogEntry < ContentBase
   
   default_scope includes(:bylines)
     
-  scope :published, where(:status => STATUS_LIVE)
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   define_index do

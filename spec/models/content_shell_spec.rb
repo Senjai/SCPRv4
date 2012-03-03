@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe NewsStory do
+describe ContentShell do
   it "is alive" do
     true
   end

@@ -9,9 +9,15 @@ describe ContentBase do
       end
       
       it "can limit by published content" do
-        published = create_list c.to_s.underscore.to_sym, 2, status: 5
+        published = create_list c.to_s.underscore.to_sym, 3, status: 5
         unpublished = create_list c.to_s.underscore.to_sym, 2, status: 4
-        c.published.should eq published
+        c.published.count.should eq 3
+      end
+      
+      it "orders published content by published_at (or pub_at) descending" do
+          objects = create_list c.to_s.underscore.to_sym, 3, status: 5
+          c.published.first.should eq objects.last
+          c.published.last.should eq objects.first
       end
       
       it "must return a headline" do

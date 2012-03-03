@@ -9,7 +9,7 @@ When /^I go to that video's page$/ do
 end
 
 Then /^I should see the most recently published video featured$/ do
-  page.find("article>h1.story-headline").should have_content VideoShell.published.recent_first.first.headline
+  page.find("article>h1.story-headline").should have_content VideoShell.published.first.headline
 end
 
 Then /^I should see that video's information$/ do
@@ -31,7 +31,7 @@ Then /^I should see that video featured$/ do
 end
 
 Then /^I should see a section with the (\d+) most recently published videos$/ do |num|
-  @latest_videos = VideoShell.published.recent_first.limit(num.to_i)
+  @latest_videos = VideoShell.published.limit(num.to_i)
   page.find("ul.latest-videos").should have_css "li.video-thumb", count: num.to_i
   find("ul.latest-videos li.video-thumb:first-of-type").should have_content @latest_videos.first.short_headline
   find("ul.latest-videos li.video-thumb:last-of-type").should have_content @latest_videos.last.short_headline
@@ -42,7 +42,7 @@ When /^I click on the Browse All Videos button$/ do
 end
 
 Then /^I should see the (\d+) most recently published videos in the pop\-up$/ do |num|
-  @latest_videos = VideoShell.published.recent_first.limit(num.to_i)
+  @latest_videos = VideoShell.published.limit(num.to_i)
   find(".videos-overlay").should have_css "ul.videos li.video-thumb", count: num.to_i
 end
 

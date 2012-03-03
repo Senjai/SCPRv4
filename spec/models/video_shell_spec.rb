@@ -20,9 +20,9 @@ describe VideoShell do
       VideoShell.published.count.should eq 3
     end
   
-    it "#recent_first orders by published_at descending" do
+    it "#published orders by published_at descending" do
       @video_shells = 3.times { |n| create :video_shell, status: 5, published_at: Time.now + 60*n }
-      VideoShell.recent_first.first.should eq VideoShell.order("published_at desc").first
+      VideoShell.published.first.should eq VideoShell.where(status: ContentBase::STATUS_LIVE).order("published_at desc").first
     end
   end
   

@@ -5,12 +5,9 @@ class VideoShell < ContentBase
   ADMIN_PREFIX = "contentbase/videoshell"
   
   # Validations for the future
-  validates :headline, presence: true
-  validates :body, presence: true
-  
-  scope :published, where(status: STATUS_LIVE)
-  scope :recent_first, order("published_at desc")
-  
+  # validates :headline, presence: true
+  # validates :body, presence: true
+      
   define_index do
     indexes headline
     indexes _teaser
