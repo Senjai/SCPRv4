@@ -34,3 +34,8 @@ end
 When /^I go to a program's page$/ do
   visit program_path @kpcc_program
 end
+
+Then /^I should see a list of segments$/ do
+  pending
+  # page.should have_css ".segment", count: @kpcc_program.segments.count
+end

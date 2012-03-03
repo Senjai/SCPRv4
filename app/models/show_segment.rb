@@ -9,7 +9,7 @@ class ShowSegment < ContentBase
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id" 
   has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
   
-  scope :published, where(:status => STATUS_LIVE).order("id desc")
+  scope :published, where(:status => STATUS_LIVE)
   
   define_index do
     indexes title
@@ -37,7 +37,7 @@ class ShowSegment < ContentBase
   #----------
   
   def canFeature?
-    self.assets.any? ? true : false
+    self.assets.present?
   end
   
   #----------

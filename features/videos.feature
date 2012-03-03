@@ -19,12 +19,12 @@ Scenario: Feature a specific video on the "Show" page
 	Then I should see that video featured
 	
 Scenario: Show 4 most recently published videos on index page
-	Given there are 8 video shells
+	Given there are 5 video shells
 	When I go to the videos page
 	Then I should see a section with the 4 most recently published videos
 	
 Scenario: Show 4 most recently published videos on video show page
-	Given there are 8 video shells
+	Given there are 5 video shells
 	When I go to the page for one of the videos
 	Then I should see a section with the 4 most recently published videos
 

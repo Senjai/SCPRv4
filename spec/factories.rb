@@ -24,14 +24,6 @@ FactoryGirl.define do
     twitter "@kpcc"
     sequence(:user_id) 
   end
-
-  factory :program do
-
-  end
-  
-  factory :episode do
-  
-  end
   
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
@@ -46,7 +38,26 @@ FactoryGirl.define do
     sidebar "Sidebar Content"    
     twitter_url "airtalk"
     facebook_url "http://www.facebook.com/KPCC.AirTalk"
-    is_segmented 1 
+    is_segmented 1
+    
+    ignore { episode_count 0 }
+    ignore { segment_count 0 }
+    after_create do |kpcc_program, eval|
+      FactoryGirl.create_list(:show_episode, eval.episode_count, show: kpcc_program)
+      FactoryGirl.create_list(:show_segment, eval.segment_count, show: kpcc_program)
+    end
+  end
+  
+  factory :show_episode do
+    show
+    air_date Time.now.tomorrow.strftime("%Y-%m-%d")
+    title "AirTalk for May 22, 2009"
+    short_summary "This is a short summary of the show"
+    full_summary "This is a much longer summary of the show"
+    published_at Time.now
+    is_published 1 # Do we need this column?
+    status 5
+    comment_count 0
   end
   
   factory :other_program do
@@ -128,20 +139,20 @@ FactoryGirl.define do
     locale "local"
     sequence(:published_at) { |n| Time.now + 60*n }
     editing_status 2
-    is_published 1
+    is_published 1 # do we need this column?
     status 5
     byline "Local Byline"
     comment_count 1
     
-    ignore { asset_count 1 }
+    ignore { asset_count 0 }
     after_create do |news_story, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: news_story)
     end
   end
   
   factory :show_segment do
-    association :category, factory: :category_not_news
     show
+    association :category, factory: :category_not_news
     sequence(:title) { |n| "Show Segment #{n}" }
     sequence(:slug) { |n| "show-segment-#{n}" }
     byline "KPCC"
@@ -149,13 +160,13 @@ FactoryGirl.define do
     _teaser "This is a teaser for the show segment"
     body "This is a description of the show segment"
     locale "local"
-    is_published 1
+    is_published 1 # do we need this column?
     status 5
     comment_count 1
     _short_headline "Short Headline"
     sequence(:published_at) { |n| Time.now + 60*n }
     
-    ignore { asset_count 1 }
+    ignore { asset_count 0 }
     after_create do |show_segment, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: show_segment)
     end
@@ -175,7 +186,7 @@ FactoryGirl.define do
     comment_count 1
     sequence(:published_at) { |n| Time.now + 60*n }
     
-    ignore { asset_count 1 }
+    ignore { asset_count 0 }
     after_create do |blog_entry, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: blog_entry)
     end
@@ -192,7 +203,7 @@ FactoryGirl.define do
     status 5
     sequence(:pub_at) { |n| Time.now + 60*n } # TODO Replace `pub_at` with `published_at` for consistency 
     
-    ignore { asset_count 1 }
+    ignore { asset_count 0 }
     after_create do |content_shell, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: content_shell)
     end

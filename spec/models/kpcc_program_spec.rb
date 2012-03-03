@@ -45,4 +45,17 @@ describe KpccProgram do
       program.twitter_absolute_url.should eq "http://twitter.com/#{program.twitter_url}"
     end
   end
+  
+  
+  describe "associations" do
+    it "has segments" do
+      program = create :kpcc_program, segment_count: 1
+      program.segments.count.should eq 1
+    end
+
+    it "has episodes" do
+      program = create :kpcc_program, episode_count: 1
+      program.episodes.count.should eq 1
+    end
+  end
 end

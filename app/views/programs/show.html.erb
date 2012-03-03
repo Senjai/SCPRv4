@@ -67,6 +67,7 @@
 			</ul>
 		</section>
 	<!-- end _missed_it_list -->	
+	
 	<%# render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
 	<%# render "shared/widgets/most_popular" %>
 	<%# render "shared/widgets/oas", :ad_id => 'x02' %>
@@ -87,10 +88,16 @@
 	</section>
 </div>
 
-
-
 <div class="row">
 	<nav class="span8 show">
 		<%= link_to "All", program_path(@program) %><%= link_to "Segments", program_path(@program) %><%= link_to "Blog Posts", program_path(@program) %><%= link_to "Featured Comments", program_path(@program) %><%= link_to "Reading List", program_path(@program) %>
 	</nav>
 </div>
+
+<section class="show-segments span8">
+  <% @program.segments.each do |segment| %>
+    <article class="segment">
+      <%= render_asset segment, 'three' %>
+    </article>
+  <% end %>
+</section>

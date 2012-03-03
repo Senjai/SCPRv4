@@ -2,46 +2,47 @@ require 'spec_helper'
 
 describe ContentBase do
   ContentBase.content_classes.each do |c|
-    describe c do
-      it "can load an object" do
-        obj = c.order("RAND()").first
-        obj.is_a?(ContentBase).should == true
+    describe c do      
+      it "inherits from ContentBase" do
+        object = build c.to_s.underscore.to_sym
+        object.is_a?(ContentBase).should be_true
       end
       
-      it "can limit by published content" do 
-        obj = c.published.first
-        obj.is_a?(ContentBase).should == true
+      it "can limit by published content" do
+        published = create_list c.to_s.underscore.to_sym, 2, status: 5
+        unpublished = create_list c.to_s.underscore.to_sym, 2, status: 4
+        c.published.should eq published
       end
       
       it "must return a headline" do
-        obj = c.published.order("RAND()").first
-        obj.headline.should_not == false        
+        object = build c.to_s.underscore.to_sym
+        object.headline.should_not be_nil
       end
       
       it "must return a short_headline" do
-        obj = c.published.order("RAND()").first
-        obj.short_headline.should_not == false        
+        object = build c.to_s.underscore.to_sym
+        object.short_headline.should_not be_nil
       end
       
       it "must return a teaser" do
-        obj = c.published.order("RAND()").first
-        obj.teaser.should_not == false        
+        object = build c.to_s.underscore.to_sym
+        object.teaser.should_not be_nil
       end
       
       it "must have a byline_elements attribute/method" do
-        c.attribute_method?(:byline_elements).should == true        
+        object = build c.to_s.underscore.to_sym
+        object.should respond_to :byline_elements
       end
       
       it "must return byline_elements as an array" do
-        obj = c.published.order("RAND()").first
-        obj.byline_elements.is_a?(Array).should == true        
+        object = build c.to_s.underscore.to_sym
+        object.byline_elements.should be_a Array
       end
       
       it "can generate a link_path" do
-        obj = c.published.order("RAND()").first
-        obj.link_path.should_not == false
+        object = create c.to_s.underscore.to_sym
+        object.link_path.should_not be_nil
       end
-      
     end
   end
 end

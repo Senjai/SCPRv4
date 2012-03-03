@@ -24,3 +24,8 @@ Scenario: View a Program's page
 	Given there are 2 kpcc programs
 	When I go to a program's page
 	Then I should see the program's information
+	
+Scenario: See a program's segments
+	Given there is 1 kpcc program
+	When I go to the program's page
+	Then I should see a list of segments
