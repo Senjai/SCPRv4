@@ -734,16 +734,19 @@ ul.carousel {
 	@include clearfix();
 	display:block;
 	height:$baseline * 2;
+	list-style-image:url("more-headlines-li.png");
 	margin-bottom:$baseline / 4;
 	position:relative;
 	a {
 		display:block;
-		float:left;
 		padding:$baseline / 2;
 		padding-top:0;
 		position:relative;
-		width:270px;
 		z-index:4;
+		@include font-headline($weight:lighter);
+		color:$grayAlt;
+		font-size:1.05em;
+		line-height: 18px;
 	}
 	.count {
 		@include background-image(linear-gradient(#fff, $nearWhite));
