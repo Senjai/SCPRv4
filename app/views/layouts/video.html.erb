@@ -20,20 +20,20 @@
 				</ul>
 				<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
 				<div class="pagination">&nbsp;</div>
-			</div> <!-- .videos-overlay -->
-		</div> <!-- .span2 -->
+			</div>
+		</div>
 		<article class="span8">
 			<%= yield %>
 			<%= render partial: "shared/cwidgets/comments", locals: { cssClass: 'multimedia muted', content: @video } %>
 			<div class="multimedia latest-videos muted">
 				<h3 class="head">Latest Videos</h3>
-				<ul class="latest-videos videos">
+				<ul class="latest-videos">
 					<%= render partial: 'video_thumb', collection: @latest_videos, locals: { size: "small" } %>
 				</ul>
 			</div>
 		</article>
 		<div class="span2">&nbsp;</div>
-	</div> <!-- .row -->
+	</div>
 	<div class="row">
 		<div id ="sidebar" class="span12">
 		</div>
