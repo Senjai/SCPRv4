@@ -8,8 +8,8 @@ class ProgramsController < ApplicationController
     render :layout => "application"
   end
   
-  def show
-    
+  def show # TODO: Add Pagination onto segments, blog posts, etc.
+    @segments = @program.segments.paginate(page: params[:segments_page], per_page: 10)
   end
   
   protected

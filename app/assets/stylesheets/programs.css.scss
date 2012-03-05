@@ -44,12 +44,6 @@ $headShotWidth: 90px;
 	}
 }
 
-.segment {
-	.storytitle {
-		margin-bottom:0;
-	}
-}
-
 .program-masthead {
 	border-bottom: 1px solid $gray;
 	margin-bottom: $baseline / 2;
@@ -157,7 +151,7 @@ nav.show {
 	border-bottom: 1px solid #bfbfbf;
 	@include font-heading($size: 12px, $weight: 600);
 	padding: 8px 3px 8px 12px;
-	margin: 10px 0;
+	margin: 10px 0 25px 0;
 	text-transform: uppercase;
 	a {
 		color: #000;
@@ -258,7 +252,34 @@ a.with-icon {
 }
 
 .missed-it {
+	display: none; /* temporary */
 	li {
 		list-style: none;
+	}
+}
+
+.show-segments.span8 {
+	margin: 0;
+	padding: 0;
+}
+
+.segment {
+	border-bottom: 1px solid $grayLighter;
+	padding: 10px 0;
+	.contentasset {
+		margin-top: 6px;
+		width: 170px;
+		height: 170px;
+		overflow: hidden;
+	}
+	div {
+		display: inline-block;
+	}
+	.info {
+		margin: 0 0 0 8px;
+		width: 547px; /* Need to figure out a way to use the grid here */
+		vertical-align: top;
+	}
+	.interact {
 	}
 }

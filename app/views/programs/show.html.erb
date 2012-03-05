@@ -68,22 +68,22 @@
 		</section>
 	<!-- end _missed_it_list -->	
 	
-	<%# render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
-	<%# render "shared/widgets/most_popular" %>
-	<%# render "shared/widgets/oas", :ad_id => 'x02' %>
-	<%# render "shared/widgets/oas", :ad_id => 'x03' %>
-	<%# render "shared/widgets/promo_mobile" %>
+	<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
+	<%= render "shared/widgets/most_popular" %>
+	<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+	<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+	<%= render "shared/widgets/promo_mobile" %>
 <% end %>
-
+ 
 <div class="row">
 	<section class="span8 episodes">
 		<article class="span4 current">
 			<div class="header">Current Episode</div>
-			<%= @program.episodes.published.first.try(:teaser) %>
+			<%= @program.episodes.published.first.try(:teaser) || @program.teaser %>
 		</article>
 		<article class="span4 upcoming">
 			<div class="header">Upcoming Episode</div>
-			<%= @program.episodes.upcoming.first.try(:teaser) %>
+			<%= @program.episodes.upcoming.first.try(:teaser) || @program.teaser %>
 		</article>
 	</section>
 </div>
@@ -95,9 +95,16 @@
 </div>
 
 <section class="show-segments span8">
-  <% @program.segments.each do |segment| %>
-    <article class="segment">
-      <%= render_asset segment, 'three' %>
-    </article>
-  <% end %>
+	<%= any_to_list? @segments, title: "Segments" do %>
+  		<% @segments.each do |segment| %>
+		    <article class="segment">
+		    	<%= render_asset segment, 'segment' %>
+				<div class="info">
+					<h3><%= link_to segment.title, segment.link_path %></h3>
+					<%= segment.teaser %>
+				</div>
+		    </article>
+		<% end %>
+	<% end %>
+	<%= will_paginate @segments, param_name: :segments_page, previous_label: "&laquo; Newer Stories".html_safe, next_label: "Older Stories &raquo;".html_safe %>
 </section>
