@@ -289,9 +289,12 @@ ActiveRecord::Schema.define(:version => 20120216233635) do
     t.text     "body",            :limit => 2147483647,                                    :null => false
     t.text     "_teaser",         :limit => 2147483647,                                    :null => false
     t.integer  "status",                                :default => 0,                     :null => false
-    t.datetime "published_at",                          :default => '2012-02-16 13:25:12', :null => false
+    t.datetime "published_at",                          :default => '2012-03-02 15:14:07', :null => false
     t.string   "_short_headline", :limit => 100
+    t.string   "slug",            :limit => 50,                                            :null => false
   end
+
+  add_index "contentbase_videoshell", ["slug"], :name => "contentbase_videoshell_a951d5d6"
 
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
