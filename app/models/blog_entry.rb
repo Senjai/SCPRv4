@@ -12,7 +12,6 @@ class BlogEntry < ContentBase
   
   has_many :uploaded_audio, :as => "content"
   
-  
   default_scope includes(:bylines)
     
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }

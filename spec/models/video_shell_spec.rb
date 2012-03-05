@@ -32,9 +32,16 @@ describe VideoShell do
       @video.should be_a ContentBase
     end
     
-    it "returns a link_path" do
-      @video = create :video_shell
-      @video.link_path.should eq "/videos/#{@video.id}/"
+    describe "link_path" do
+      it "returns a link_path" do
+        @video = create :video_shell
+        @video.link_path.should eq "http://scpr.org/videos/#{@video.id}/"
+      end
+    
+      it "is actually a URL" do
+        video = create :video_shell
+        video.link_path.match("http://").should_not be_nil # Is there a better way to check this?
+      end
     end
       
     describe "#short_headline" do

@@ -41,7 +41,7 @@ group :test do
   gem 'mocha' # cross-framework mocking
 #  gem 'launchy' # currently incompatible with rails 3.2
   gem 'capybara' # Acceptance testing
-  gem "spork", "> 0.9.0.rc" # Faster-running tests
+#  gem "spork", "> 0.9.0.rc" # Faster-running tests
 end
 
 group :worker do

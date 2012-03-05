@@ -7,7 +7,7 @@ class VideoShell < ContentBase
   # Validations for the future
   # validates :headline, presence: true
   # validates :body, presence: true
-      
+  
   define_index do
     indexes headline
     indexes _teaser
@@ -21,6 +21,6 @@ class VideoShell < ContentBase
   end
   
   def link_path # OPTIMIZE Dry this method up across ContentBase subclasses?
-    Rails.application.routes.url_helpers.video_path(self, trailing_slash: true)
+    Rails.application.routes.url_helpers.video_url(self, trailing_slash: true)
   end
 end
