@@ -1,9 +1,4 @@
 jQuery(document).ready(function() {
-	
-	// Temporary workaround to remove hardcoded image widths and heights from assethost images
-	//$(".contentasset img").removeAttr("height").removeAttr("width");
-	//$(".contentasset").removeAttr("style");
-	
 		
 	// *** Stubbed out Fancybox code for video lightboxes ***
 	$("a.video-link").fancybox({
@@ -16,7 +11,24 @@ jQuery(document).ready(function() {
 			'overlayColor'	: 	'#000',
 			'padding'		: 	0
 	});
-	
+	// Taggle Episode Modal Visibility
+	$(".broadcastbar .true, .modal-close").click(function() {
+		$(".episode-guide").toggleClass("hidden");
+		$("body").bind(
+	       'click',
+	       function(e){
+	        if(
+	         !jQuery(".episode-guide").hasClass("hidden")
+			 && !jQuery(e.target).is(".episode-guide")
+			 && !jQuery(e.target).closest(".episode-guide").length
+	        ){
+	         jQuery(".episode-guide").addClass("hidden");
+			 return false;
+	        }
+	       }
+	      );
+		return false;
+	});
 	
 });
 

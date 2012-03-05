@@ -65,6 +65,5 @@ class BlogEntry < ContentBase
       :slug => self.slug,
       :trailing_slash => true
     )
-    
   end
 end

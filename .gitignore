@@ -1,9 +1,11 @@
 .bundle
 db/*.sqlite3
 db/sphinx/
+config/*.sphinx.conf
 config/database.yml
-config/development.sphinx.conf
 config/environments/development.rb
 log/
 tmp/
 .sass-cache/
+.DS_Store
+.rvmrc
