@@ -1,14 +1,13 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.2.0'
-
 gem 'mysql2'
 
 #gem 'redis-content-store', :path => "/Users/eric/projects/redis-content-store"
 gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
 
 gem 'jquery-rails'
-gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git', :branch => "rails3"
+gem 'will_paginate'
 gem 'capistrano'
 gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
 gem 'thinking-sphinx', '2.0.10'
@@ -31,11 +30,20 @@ end
 
 group :test, :development do 
 	gem "rspec-rails"
+	gem 'guard-rspec' # Automatically run tests
+	gem 'guard-cucumber' # Automatically run tests
+	gem "guard-spork"
+	gem 'rb-fsevent', require: false # For file-watching on Mac
 end
 
 group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
+  gem 'cucumber-rails' # Integration testing
+  gem 'factory_girl_rails' # Factories for test data
+  gem 'database_cleaner' # Database cleaning strategy
+  gem 'mocha' # cross-framework mocking
+#  gem 'launchy' # currently incompatible with rails 3.2
+  gem 'capybara' # Acceptance testing
+  gem "spork", "> 0.9.0.rc" # Faster-running tests
 end
 
 group :worker do

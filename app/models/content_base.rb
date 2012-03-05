@@ -24,6 +24,7 @@ class ContentBase < ActiveRecord::Base
     'shows/segment' => "ShowSegment",
     #'shows/episode' => "ShowEpisode",
     'blogs/entry'   => "BlogEntry",
+    'video/shell' => "VideoShell",
     'content/shell' => "ContentShell"
   }
   

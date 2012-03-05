@@ -4,7 +4,7 @@
 	$gridColumns:       12;
 	$gridColumnWidth:   65px;
 	$gridGutterWidth:   30px;
-	$siteWidth:         ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * $gridColumns);
+	$siteWidth:         ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 1));
 	$columnOffset: 1;
 	$extraSpace: ($gridGutterWidth * 2);
 	

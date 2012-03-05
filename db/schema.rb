@@ -303,6 +303,19 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
   add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
   add_index "contentbase_misseditcontent", ["content_type_id"], :name => "contentbase_misseditcontent_e4470c6e"
 
+<<<<<<< HEAD
+=======
+  create_table "contentbase_videoshell", :force => true do |t|
+    t.integer  "comment_count",                         :default => 0,                     :null => false
+    t.string   "headline",        :limit => 200,                                           :null => false
+    t.text     "body",            :limit => 2147483647,                                    :null => false
+    t.text     "_teaser",         :limit => 2147483647,                                    :null => false
+    t.integer  "status",                                :default => 0,                     :null => false
+    t.datetime "published_at",                          :default => '2012-02-16 13:25:12', :null => false
+    t.string   "_short_headline", :limit => 100
+  end
+
+>>>>>>> origin/master
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
     t.integer  "user_id",                               :null => false
@@ -801,6 +814,7 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
   end
 
   create_table "news_story", :force => true do |t|
+<<<<<<< HEAD
     t.string   "headline",           :limit => 200,                        :null => false
     t.string   "slug",               :limit => 50,         :default => "", :null => false
     t.string   "news_agency",        :limit => 50
@@ -819,6 +833,34 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.string   "_short_headline",    :limit => 100
   end
 
+=======
+    t.string   "headline",              :limit => 200,                        :null => false
+    t.string   "slug",                  :limit => 50,         :default => "", :null => false
+    t.integer  "primary_reporter_id"
+    t.integer  "secondary_reporter_id"
+    t.string   "byline",                :limit => 50,                         :null => false
+    t.string   "news_agency",           :limit => 50
+    t.text     "_teaser",               :limit => 2147483647,                 :null => false
+    t.text     "body",                  :limit => 2147483647,                 :null => false
+    t.text     "first_graf",            :limit => 2147483647,                 :null => false
+    t.text     "remaining_grafs",       :limit => 2147483647,                 :null => false
+    t.string   "locale",                :limit => 5,          :default => "", :null => false
+    t.integer  "enco_number"
+    t.date     "audio_date"
+    t.datetime "published_at",                                                :null => false
+    t.string   "editing_status",        :limit => 1,                          :null => false
+    t.boolean  "is_published",                                                :null => false
+    t.string   "source",                :limit => 20
+    t.string   "story_asset_scheme",    :limit => 10
+    t.string   "extra_asset_scheme",    :limit => 10
+    t.string   "lead_asset_scheme",     :limit => 10
+    t.integer  "status",                                                      :null => false
+    t.integer  "comment_count",                                               :null => false
+    t.string   "_short_headline",       :limit => 100
+  end
+
+  add_index "news_story", ["primary_reporter_id"], :name => "news_story_kpcc_reporter_id"
+>>>>>>> origin/master
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
 
   create_table "news_storycategories", :force => true do |t|
@@ -1154,6 +1196,13 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.string  "content_type"
   end
 
+  create_table "rails_taggit_taggeditem", :id => false, :force => true do |t|
+    t.integer "id",           :default => 0, :null => false
+    t.integer "tag_id",                      :null => false
+    t.integer "content_id",                  :null => false
+    t.string  "content_type"
+  end
+
   create_table "schedule_program", :force => true do |t|
     t.integer "day",                             :null => false
     t.integer "kpcc_program_id"
@@ -1215,20 +1264,36 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
   add_index "shows_rundown", ["segment_id"], :name => "shows_rundown_segment_id"
 
   create_table "shows_segment", :force => true do |t|
+<<<<<<< HEAD
     t.integer  "show_id",                                                    :null => false
     t.string   "title",                :limit => 200,                        :null => false
     t.string   "slug",                 :limit => 50,                         :null => false
     t.text     "_teaser",              :limit => 2147483647,                 :null => false
     t.text     "body",                 :limit => 2147483647,                 :null => false
     t.string   "locale",               :limit => 5,          :default => "", :null => false
+=======
+    t.integer  "show_id",                                                       :null => false
+    t.string   "title",                :limit => 200,                           :null => false
+    t.string   "slug",                 :limit => 50,                            :null => false
+    t.text     "_teaser",              :limit => 2147483647,                    :null => false
+    t.text     "body",                 :limit => 2147483647,                    :null => false
+    t.integer  "kpcc_reporter_id"
+    t.string   "outside_reporter",     :limit => 75,                            :null => false
+    t.string   "byline",               :limit => 50,                            :null => false
+    t.string   "locale",               :limit => 5,          :default => "",    :null => false
+>>>>>>> origin/master
     t.datetime "created_at"
     t.integer  "status",                                                     :null => false
     t.integer  "comment_count",                                              :null => false
     t.string   "segment_asset_scheme", :limit => 10
     t.string   "_short_headline",      :limit => 100
+<<<<<<< HEAD
     t.datetime "published_at",                                               :null => false
     t.integer  "enco_number"
     t.date     "audio_date",                                                 :null => false
+=======
+    t.datetime "published_at",                                                  :null => false
+>>>>>>> origin/master
   end
 
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
