@@ -3,7 +3,7 @@ class OtherProgram < ActiveRecord::Base
   
   has_many :schedules, :foreign_key => "other_program_id", :class_name => "Schedule"
   
-  def is_segmented
+  def display_segments
     false
   end
 end
