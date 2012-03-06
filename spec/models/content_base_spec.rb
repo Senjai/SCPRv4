@@ -55,9 +55,25 @@ describe ContentBase do
         object.byline_elements.should be_a Array
       end
       
-      it "can generate a link_path" do
-        object = create symbolize(c)
-        object.link_path.should_not be_nil
+      describe "#link_path" do
+        it "can generate a link_path" do
+          object = create symbolize(c)
+          object.link_path.should_not be_nil
+        end
+        
+        it "accepts an options hash" do
+          object = create symbolize(c)
+          object.link_path(anchor: "comments").should_not be_blank
+        end
+        
+        it "merges in an options hash unless it's a ContentShell" do
+          object = create symbolize(c)
+          if c == ContentShell
+            object.link_path(anchor: "comments").match("#comments").should be_nil
+          else  
+            object.link_path(anchor: "comments").match("#comments").should_not be_nil
+          end
+        end
       end
       
       describe "#remote_link_path" do

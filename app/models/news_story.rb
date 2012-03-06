@@ -28,15 +28,15 @@ class NewsStory < ContentBase
   
   #----------
   
-  def link_path
-    Rails.application.routes.url_helpers.news_story_path(
+  def link_path(options={})
+    Rails.application.routes.url_helpers.news_story_path({
       :year => self.published_at.year, 
       :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :id => self.id,
       :slug => self.slug,
       :trailing_slash => true
-    )
+    }.merge! options)
   end
   
   #----------
