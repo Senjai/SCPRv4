@@ -10,8 +10,8 @@
 		    var disqus_shortname = 'kpcc'; // required: replace example with your forum shortname
 
 		    // The following are highly recommended additional parameters. Remove the slashes in front to use.
-		    var disqus_identifier = '<%= content.try(:obj_key) %>';
-		    var disqus_url = '<%= content.try(:link_path) %>';
+		    var disqus_identifier = '<%= content.obj_key %>';
+		    var disqus_url = '<%= content.remote_link_path %>';
 
 		    /* * * DON'T EDIT BELOW THIS LINE * * */
 		    (function() {
