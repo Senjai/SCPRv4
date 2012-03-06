@@ -6,7 +6,6 @@ class VideosController < ApplicationController
   def index
     begin
       @video = VideoShell.published.recent_first.first
-      @asset = Asset.find(@video.assets.first.try(:asset)) rescue nil if @video
     rescue
       redirect_to home_path
     end
@@ -15,7 +14,6 @@ class VideosController < ApplicationController
   def show
     begin
       @video = VideoShell.find(params[:id])
-      @asset = Asset.find(@video.assets.first.asset_id)
     rescue
       redirect_to videos_path
     end

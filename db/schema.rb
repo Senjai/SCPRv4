@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(:version => 20120216233635) do
     t.text     "body",            :limit => 2147483647,                                    :null => false
     t.text     "_teaser",         :limit => 2147483647,                                    :null => false
     t.integer  "status",                                :default => 0,                     :null => false
-    t.datetime "published_at",                          :default => '2012-02-16 13:25:12', :null => false
+    t.datetime "published_at",                          :default => '2012-03-02 15:14:07', :null => false
     t.string   "_short_headline", :limit => 100
     t.string   "slug",            :limit => 50,                                            :null => false
   end
@@ -1044,24 +1044,21 @@ ActiveRecord::Schema.define(:version => 20120216233635) do
   end
 
   create_table "programs_kpccprogram", :force => true do |t|
-    t.string  "slug",             :limit => 40,                            :null => false
-    t.string  "title",            :limit => 60,                            :null => false
-    t.text    "teaser",           :limit => 2147483647,                    :null => false
-    t.text    "description",      :limit => 2147483647,                    :null => false
-    t.string  "host",             :limit => 150,        :default => "",    :null => false
-    t.string  "airtime",          :limit => 300,                           :null => false
-    t.string  "air_status",       :limit => 10,                            :null => false
-    t.string  "podcast_url",      :limit => 300,        :default => "",    :null => false
-    t.string  "rss_url",          :limit => 300,        :default => "",    :null => false
-    t.string  "twitter_url",      :limit => 300,        :default => "",    :null => false
-    t.string  "facebook_url",     :limit => 300,        :default => "",    :null => false
-    t.text    "sidebar",          :limit => 2147483647,                    :null => false
-    t.boolean "display_episodes",                       :default => false, :null => false
-    t.boolean "display_segments",                                          :null => false
-    t.integer "blog_id"
+    t.string  "slug",         :limit => 40,                            :null => false
+    t.string  "title",        :limit => 60,                            :null => false
+    t.text    "teaser",       :limit => 2147483647,                    :null => false
+    t.text    "description",  :limit => 2147483647,                    :null => false
+    t.string  "host",         :limit => 150,        :default => "",    :null => false
+    t.string  "airtime",      :limit => 300,                           :null => false
+    t.string  "air_status",   :limit => 10,                            :null => false
+    t.string  "podcast_url",  :limit => 300,        :default => "",    :null => false
+    t.string  "rss_url",      :limit => 300,        :default => "",    :null => false
+    t.string  "twitter_url",  :limit => 300,        :default => "",    :null => false
+    t.string  "facebook_url", :limit => 300,        :default => "",    :null => false
+    t.text    "sidebar",      :limit => 2147483647,                    :null => false
+    t.boolean "is_segmented",                       :default => false, :null => false
   end
 
-  add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
   add_index "programs_kpccprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_kpccprogram", ["title"], :name => "title", :unique => true
 

@@ -3,15 +3,11 @@
 	<div id="asset_slideshow"></div>
 	<br/>
 	<script type="text/javascript">
-		$.getScript("http://<%= AssetHost[:server] %>/assets/slideshow.js",function(){
-			var w = $("#asset_slideshow").width()
-			
-			ahSlides = new AssetHost.Slideshow({
-				imgwidth: w,
-				imgheight: <%= assets.first.asset.sizes.eight.height %>,
-				assets: <%= raw assets.to_json %>,
-				el: "#asset_slideshow"
-			})
+		ahSlides = new AssetHost.Slideshow({
+			imgwidth: $("#asset_slideshow").width(),
+			imgheight: <%= assets.first.asset.sizes.eight.height %>,
+			assets: <%= raw assets.to_json %>,
+			el: "#asset_slideshow"
 		})
 	</script>
 	

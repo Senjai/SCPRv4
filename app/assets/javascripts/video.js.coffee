@@ -28,7 +28,6 @@ class scpr.VideoPage
     constructor: (options) ->
         @opts = _(_({}).extend(@DefaultOptions)).extend options||{}
         @clickShouldHide = false
-        that = @
     
         # When you hover on and off the button, do some fancy things with opacity.
         $(@opts.button).hover(
@@ -43,7 +42,7 @@ class scpr.VideoPage
         )
 
         # Nav button hover functionality
-        for button in $(that.opts.nav.button)
+        for button in $(@opts.nav.button)
             $(button).on
                 click: (event) =>
                     page = $(event.target).attr("data-page")
@@ -82,7 +81,9 @@ class scpr.VideoPage
             error: (xhr, status, error) -> 
                 $('.videos-overlay ul').html "Error loading videos. Please refresh the page and try again. (#{error})"
             complete: (xhr, status) => 
-                $(@opts.overlay).spin(false)
+                setTimeout ( => 
+                  $(@opts.overlay).spin(false)
+                ), 200 # in case it takes less than 200ms to load the videos
                 console.log "Finished request. Status: #{status}"
         }
 

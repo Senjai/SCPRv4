@@ -38,7 +38,7 @@ FactoryGirl.define do
     sidebar "Sidebar Content"    
     twitter_url "airtalk"
     facebook_url "http://www.facebook.com/KPCC.AirTalk"
-    display_segments 1 
+    is_segmented 1 
     
     ignore { episode_count 0 }
     ignore { segment_count 0 }

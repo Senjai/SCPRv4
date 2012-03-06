@@ -784,7 +784,7 @@ footer {
   float: left;
   margin: 0 0 $baseline $gridGutterWidth;
 }
-.thumbnail {
+.thumbnails .thumbnail {
   display: block;
   padding: 4px;
   line-height: 1;
@@ -792,17 +792,17 @@ footer {
   @include box-shadow(0 1px 1px rgba(0,0,0,.075));
 }
 // Add a hover state for linked versions only
-a.thumbnail:hover {
+.thumbnails a.thumbnail:hover {
   border-color: $linkColor;
   @include box-shadow(0 1px 4px rgba(0,105,214,.25));
 }
 // Images and captions
-.thumbnail > img {
+.thumbnails .thumbnail > img {
   display: block;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-.thumbnail .caption {
+.thumbnails .thumbnail .caption {
   padding: 9px;
 }
