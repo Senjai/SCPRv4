@@ -294,8 +294,8 @@ module ApplicationHelper
   end
   
   def link_to_audio(title, object, options={})
-    options[:id] = "audio-toggler #{options[:id]}"
+    options[:class] = "audio-toggler #{options[:class]}"
     options[:title] ||= object.headline
-    content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio"
+    content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
   end
 end
