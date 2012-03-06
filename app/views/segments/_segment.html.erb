@@ -3,15 +3,14 @@
 		<div class="span2">
 			<%= render_asset segment, 'segment' %>
 		</div>
-		<div class="info span4">
+		<div class="info divider span4">
 			<h3><%= link_to segment.title, segment.link_path %></h3>
+			<p class="byline"><time pubdate=""><%= smart_date segment %></time> <span class="pipe">|</span> <%= render_byline segment %></p>
 			<%= segment.teaser %>
 		</div>
 		<div class="interact span2">
-			<% if segment.audio.present? %>
-				<%= link_to_audio "Listen to the story", segment, class: "inline" %>
-			<% end %>
-			<%= render "shared/cwidgets/comment_count", :cssClass => 'inline', :content => segment %>
+			<%= link_to_audio("Listen to the story", segment, class: "inline") if segment.audio.present? %>
+			<%= comment_count_for segment, class: "inline" %>
 		</div>
 	</div>
 </article>

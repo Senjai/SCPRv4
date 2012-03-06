@@ -643,7 +643,12 @@ ul.carousel {
 		}
 	}
 }
-//Comment Count Widget 
+//Comment Count Widget
+a.comment-count.inline {
+	background: url(image_path('icons/tiny-quotes.png')) no-repeat 2px 2px;
+	padding-left: 18px;
+	border: none;
+}
 .comment-count {
 	border-top:1px solid $grayLight;
 	margin-bottom:$baseline;

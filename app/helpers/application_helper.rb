@@ -298,4 +298,10 @@ module ApplicationHelper
     options[:title] ||= object.headline
     content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
   end
+  
+  def comment_count_for(object, options={})
+    options[:class] = "comment-count #{options[:class]}"
+    link_to "Comments (#{object.comment_count})", object.link_path(anchor: "comments"), options
+  end
+    
 end

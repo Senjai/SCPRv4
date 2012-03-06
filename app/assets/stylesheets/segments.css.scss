@@ -16,7 +16,9 @@
 		display: inline-block;
 	}
 	.info {
+		@include font-shorthand($size: 12px);
 		vertical-align: top;
+		padding-right: 5px;
 	}
 	.interact {
 		@include font-sans-serif($size: 10px);

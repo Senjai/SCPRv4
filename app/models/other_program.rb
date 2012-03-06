@@ -5,7 +5,6 @@ class OtherProgram < ActiveRecord::Base
   
   scope :active, where(:air_status => ['onair','online'])
   
-  
   def display_segments
     false
   end
