@@ -5,7 +5,7 @@ class scpr.Audio
         playEl:         "#jquery_jplayer_1"
         titleEl:        "#jplayer1_title"
         widgetClass:    ".story-audio"
-        playBtn:        "a.play-btn"
+        playBtn:        "#audio-toggler"
         audioBar:       ".audio-bar"
     
     constructor: (options) ->
