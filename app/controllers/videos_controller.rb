@@ -5,7 +5,7 @@ class VideosController < ApplicationController
   
   def index
     begin
-      @video = VideoShell.published.recent_first.first
+      @video = VideoShell.published.first
     rescue
       redirect_to home_path
     end
