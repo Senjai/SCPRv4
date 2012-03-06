@@ -5,8 +5,8 @@ class ProgramsController < ApplicationController
   before_filter :get_kpcc_program, only: [:show, :segment, :episode]
   
   def index
-    @kpcc_programs = KpccProgram.order("title")
-    @other_programs = OtherProgram.order("title")
+    @kpcc_programs = KpccProgram.active.order("title")
+    @other_programs = OtherProgram.active.order("title")
     render :layout => "application"
   end
   
