@@ -41,7 +41,6 @@ describe ContentBase do
         obj = c.published.order("RAND()").first
         obj.link_path.should_not == false
       end
-      
     end
   end
 end

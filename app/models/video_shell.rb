@@ -17,7 +17,7 @@ class VideoShell < ContentBase
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
-    has "CRC32(CONCAT('content/video:',contentbase_contentvideo.id))", :type => :integer, :as => :obj_key
+    has "CRC32(CONCAT('content/video:',contentbase_videoshell.id))", :type => :integer, :as => :obj_key
     has "1", :as => :is_source_kpcc, :type => :boolean
     has "0", :as => :is_slideshow, :type => :boolean
     where "status = #{STATUS_LIVE}"
