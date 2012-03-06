@@ -1,0 +1,16 @@
+<article class="segment-teaser">
+	<div class="row">
+		<div class="info divider span7">
+			<h3><%= link_to entry.title, entry.url %></h3>
+			<p class="byline"><time pubdate=""><%= entry.published %></time></p>
+			<%= entry.summary.html_safe %>
+		</div>
+		<div class="interact span1">
+			<% if entry.enclosure_url.present? %>
+				<div class="story-audio">
+					<%= link_to "Audio", entry.enclosure_url, :class => "audio-toggler play-btn", :title => entry.title %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</article>

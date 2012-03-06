@@ -8,7 +8,9 @@
 				<div class="span4 show-meta <%= @program.slug %>">
 					<div class="info">
 						<%= @program.airtime %><br />
-						with <%= @program.host %>
+						<% if @program.host? %>
+							with <%= @program.host %>
+						<% end %>
 					</div>
 				</div>
 			</div> <!-- .row -->
@@ -26,7 +28,9 @@
 <% end %>
 
 <% content_for :sidebartop do %>
-	<%= render "shared/widgets/program_about", program: @program %>
+	<% if @program.is_a? KpccProgram %>
+		<%= render "shared/widgets/program_about", program: @program %>
+	<% end %>
 <% end %>
 
 <%= render :template => "layouts/application" %>
