@@ -230,7 +230,11 @@ module ApplicationHelper
   
   # Convert a given number of seconds into a human-readable duration. 
   
-  def format_duration(secs)    
+  def format_duration(secs)
+    if !secs
+      return ''
+    end
+    
     [[60, :sec], [60, :min], [24, :hr], [1000, :days]].map{ |count, name|
       if secs > 0
         secs, n = secs.divmod(count)
