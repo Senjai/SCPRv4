@@ -292,4 +292,10 @@ module ApplicationHelper
       @PAGE_TITLE = elements.to_s
     end
   end
+  
+  def link_to_audio(title, object, options={})
+    options[:class] = "play-btn #{options[:class]}"
+    options[:title] ||= object.headline
+    content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio"
+  end
 end

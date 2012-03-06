@@ -633,7 +633,8 @@ ul.carousel {
 	border-top:1px solid $grayLight;
 	margin-bottom:$baseline;
 	h4 {
-		background:url(image_path('icons/comment-count.png')) no-repeat 0 0;
+		background-position: left top;
+		background:url(image_path('icons/comment-count.png')) no-repeat;
 		color:$grayDark;
 		font-size:16px;
 		font-weight:600;
@@ -657,14 +658,19 @@ ul.carousel {
 		h4 {
 			@include ie-inline-block();
 		}
+		&.right-align {
+			h4 {
+				@include ie-inline-block();
+				background-position: right 0;
+				padding-left: 0;
+				padding-right: 28px;
+			}
+		}
 	}
 	&.right-side {
 		text-align:left;
 		.inner-container {
 			padding-left:0;
-		}
-		h4 {
-			@include ie-inline-block();
 		}
 	}
 }

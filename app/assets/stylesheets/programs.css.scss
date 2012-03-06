@@ -263,29 +263,3 @@ a.with-icon {
 		list-style: none;
 	}
 }
-
-.show-segments.span8 {
-	margin: 0;
-	padding: 0;
-}
-
-.segment {
-	border-bottom: 1px solid $grayLighter;
-	padding: 10px 0;
-	.contentasset {
-		margin-top: 6px;
-		width: 170px;
-		height: 170px;
-		overflow: hidden;
-	}
-	div {
-		display: inline-block;
-	}
-	.info {
-		margin: 0 0 0 8px;
-		width: 547px; /* Need to figure out a way to use the grid here */
-		vertical-align: top;
-	}
-	.interact {
-	}
-}

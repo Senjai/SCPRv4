@@ -1,7 +1,18 @@
-<article class="segment">
+<article class="segment-teaser">
 	<%= render_asset segment, 'segment' %>
 	<div class="info">
 		<h3><%= link_to segment.title, segment.link_path %></h3>
 		<%= segment.teaser %>
 	</div>
+	<div class="interact">
+		<% if segment.audio.present? %>
+			<%= link_to_audio "Listen to the story", segment, class: "inline" %>
+		<% end %>
+		<%= render "shared/cwidgets/comment_count", :cssClass => 'inline', :content => segment %>
+	</div>
 </article>
+
+<% content_for :footerjss do %>
+	if (!scA)
+		var scA = new scpr.Audio()
+<% end %>
