@@ -20,6 +20,8 @@ class KpccProgram < ActiveRecord::Base
   has_many :schedules, :foreign_key => "kpcc_program_id", :class_name => "Schedule"
   belongs_to :blog
   
+  scope :active, where(:air_status => ['onair','online'])
+  
   def to_param
     slug
   end

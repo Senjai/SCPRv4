@@ -18,8 +18,8 @@
 	<div class="span4">
 		<h3>Local Programs</h3>
 		<ul class="list-basic">
-			<%= any_to_list? @kpcc_programs, title: "Local Programs" do %>
-				<% @kpcc_programs.each do |program| %>
+			<%= any_to_list? @kpcc_programs.active, title: "Local Programs" do %>
+				<% @kpcc_programs.active.order("title asc").each do |program| %>
 					<li>
 						<%= link_to program.title, program_path(program.slug) %> <%# OPTIMIZE partial? %>
 					</li>
@@ -30,8 +30,8 @@
 	<div class="span4">
 		<h3>Other Programs</h3>
 		<ul class="list-basic">
-			<%= any_to_list? @other_programs, title: "Outside Programs" do %>
-				<% @other_programs.each do |program| %>
+			<%= any_to_list? @other_programs.active, title: "Outside Programs" do %>
+				<% @other_programs.active.order("title asc").each do |program| %>
 					<li>
 						<%= link_to program.title, program_path(program.slug) %> <%# OPTIMIZE partial? %>
 					</li>
