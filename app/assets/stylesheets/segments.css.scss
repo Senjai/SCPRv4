@@ -16,11 +16,10 @@
 		display: inline-block;
 	}
 	.info {
-		margin: 0 0 0 8px;
-		width: 547px; /* Need to figure out a way to use the grid here */
 		vertical-align: top;
 	}
 	.interact {
+		@include font-sans-serif($size: 10px);
 	}
 }
 

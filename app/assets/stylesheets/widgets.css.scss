@@ -33,6 +33,7 @@
 	border-bottom:1px solid $grayLighter;
 	border-top:1px solid $grayLighter;
 	margin-bottom:$baseline;
+
 	a.play-btn {
 		background:transparent url(image_path('media-players/story-audio-play.png')) no-repeat top left;
 		display:block;
@@ -45,6 +46,20 @@
 			background-position:0 -36px;
 		}
 	}
+	
+	&.inline {
+		background: none;
+		border: none;
+		margin: none;
+		display: inline;
+	}
+	
+	a.inline {
+		background: url(image_path('icons/tiny-listen.png')) no-repeat 2px 5px;
+		display: inline-block;
+		padding-left: 17px;
+	}
+	
 	.audio-content {
 		float:left;
 		h4 {
