@@ -14,6 +14,12 @@ class ProgramsController < ApplicationController
   
   def show
     # @program gets set via the before_filter
+    
+    if @program.is_a? KpccProgram
+      render :action => "show"
+    else
+      render :action => "show_external"
+    end
   end
   
   #----------
