@@ -37,6 +37,20 @@
 			}
 		}
 	}
+	.logo #kpcc-fb-like {
+		display:none;
+	}
+	//Pledge Promo 
+	.pledge-container {
+		background:none;
+		img {
+			display:none;
+		}
+		.pledge {
+			left:92px;
+			margin-left:0;
+		}
+	}
 	// Site Utilities
 	nav.utils ul li {
 		border-right:1px solid $grayDark;
@@ -71,7 +85,7 @@
 		}
 		.sections ul li a {	
 			color:$gray;
-			&:hover {
+			&:hover, &.hover {
 				background-color:darken($nearBlack, 3%);
 				color:$white;
 				$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
@@ -105,11 +119,14 @@
 			ul li a {
 				color:$gray;
 			}
-			.categories, .featured {
+			.categories, .featured, .kpcc-programs, .events-nav, .events-forum {
 				background:url(image_path('mega-divider-dark.png')) no-repeat right 10px;
 			}
 			.categories {
 				ul.content-types {
+					li {
+						border-right:1px solid $grayDark;
+					}
 					li.videos {
 						background-image:none;
 						padding-left:0;
@@ -120,6 +137,24 @@
 				li {
 					border-bottom:1px solid $grayDark;
 				}
+			}
+			.kpcc-programs {
+				ul {
+					&.first {
+						border-right:1px solid $grayDark;
+					}
+					li {
+						&:first-child {
+							border-bottom:1px solid $grayDark;
+						}
+						&:hover {
+							background-color:darken($grayDark, 10%);
+						}
+					}
+				}
+			}
+			.events-forum .events-content .event-title { 
+				color:$gray;
 			}
 		}
 	}
@@ -135,5 +170,7 @@
 	.comments {
 		border-top:1px solid $nearBlack;
 	}
-	
+	#site-footer .container {
+		background:url(image_path('footer-arrow-dark.png')) no-repeat 1045px 0;
+	}
 }

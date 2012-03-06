@@ -60,4 +60,5 @@ Scprv4::Application.configure do
   config.active_support.deprecation = :notify
   
   config.scpr.host = "staging.scprdev.org"
+  config.scpr.media_root = "/home/kpcc/media"
 end

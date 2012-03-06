@@ -120,41 +120,29 @@ module ApplicationHelper
   #----------
   
   def render_byline(content,links = true)
-    if !content || !content.respond_to?("byline_elements")
+    if !content || !content.respond_to?(:sorted_bylines)
       return ""
     end    
     
-    authors = [ [],[],[] ]
-    
-    # 1) break bylines up by role
-    content.bylines.each { |b| authors[b.role] << b }
-
+    authors = content.sorted_bylines
+        
+    # go through each list and add links where needed
     names = []
-    [0,1].each do |i|
-      # 2) now sort each list by last name, first name
-      authors[i] = authors[i].sort { |a,b| 
-        aN = (a.user ? a.user.name : a.name).split(' ').reverse.join('')
-        bN = (b.user ? b.user.name : b.name).split(' ').reverse.join('')
-
-        aN <=> bN
-      }
-      
-      # 3) go through each list and add links where needed
-      newr = []
-      authors[i].each do |b|
-        if links && b.user
-          newr << link_to(b.user.name, bio_path(b.user.slugged_name))
-        elsif b.user
-          newr << b.user.name
-        else
-          newr << b.name
-        end
+    (0..1).each do |i|
+      if !authors[i] || !authors[i].any?
+        next
       end
       
-      authors[i] = newr
-      
-      # 4) join the linked / unlinked names
-      
+      authors[i].collect! do |b|
+        if links && b.user
+          link_to(b.user.name, bio_path(b.user.slugged_name))
+        elsif b.user
+          b.user.name
+        else
+          b.name
+        end
+      end
+        
       if authors[i].length == 1
         names << authors[i][0]
       elsif authors[i].length > 1
@@ -162,7 +150,7 @@ module ApplicationHelper
       end
     end
     
-    # 5) add on any byline elements
+    # add on any byline elements
     
     byels = content.byline_elements.collect { |e| e && e != '' ? e : nil }.compact
     
@@ -179,11 +167,37 @@ module ApplicationHelper
   
   #----------
   
+  def render_contributing_byline(content,links=true)
+    if !content || !content.respond_to?(:sorted_bylines)
+      return ""
+    end    
+    
+    authors = content.sorted_bylines
+    
+    if authors[2] && authors[2].any?
+      # go through each list and add links where needed
+      authors[2].collect! do |b|
+        if links && b.user
+          link_to(b.user.name, bio_path(b.user.slugged_name))
+        elsif b.user
+          b.user.name
+        else
+          b.name
+        end
+      end    
+    
+      return "With contributions by #{ authors[2].length == 1 ? authors[2][0] : [ authors[2].pop,authors[2].join(", ") ].reverse.join(' and ') }.".html_safe
+    
+    else
+      return ""
+    end
+  end
+  
+  #----------
+  
   def featured_comment(opts)
     opts = { :style => "default", :bucket => nil, :comment => nil }.merge(opts||{})
-    
-    Rails.logger.debug "opts is #{opts}"
-    
+        
     comment = nil
     
     if opts[:comment]
@@ -210,6 +224,19 @@ module ApplicationHelper
       #  return render(:partial => "shared/featured_comment/default", :object => comment, :as => :comment)          
       #end
     end
+  end
+  
+  #----------
+  
+  # Convert a given number of seconds into a human-readable duration. 
+  
+  def format_duration(secs)    
+    [[60, :sec], [60, :min], [24, :hr], [1000, :days]].map{ |count, name|
+      if secs > 0
+        secs, n = secs.divmod(count)
+        "#{n.to_i} #{name}"
+      end
+    }.compact.reverse.join(' ')
   end
   
   #----------

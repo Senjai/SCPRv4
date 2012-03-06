@@ -203,6 +203,7 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.8.0)
+    ruby-mp3info (0.6.16)
     rubypython (0.5.3)
       blankslate (>= 2.1.2.3)
       ffi (~> 1.0.7)
@@ -267,6 +268,7 @@ DEPENDENCIES
   rb-fsevent
   redis-content-store!
   rspec-rails
+  ruby-mp3info
   rubypython
   sass-rails (~> 3.2.3)
   therubyracer

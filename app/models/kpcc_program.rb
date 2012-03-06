@@ -42,4 +42,5 @@ class KpccProgram < ActiveRecord::Base
   
   # Validation for later
   # validates :slug, uniqueness: true
+
 end

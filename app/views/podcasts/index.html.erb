@@ -1,0 +1,34 @@
+<% @PAGE_TITLE = "Podcasts" %>
+
+<h1>Podcasts</h1>
+
+<div class="row">
+	<div class="span2">
+		<p style="font-style: italic">A podcast is a way for you to "subscribe" to a program and listen to it when and where you want. It's kind of like TiVo for radio, with the added benefit of portability.</p>
+
+		<p style="font-style: italic">Once you've subscribed to a program's podcast, your podcasting application checks on a regular basis for new episodes of the program and makes them available for download to your computer.</p>
+
+	</div>
+	
+	<div class="span6">
+		<% for p in @podcasts %>
+			<h3><%= p.title %></h3>
+			<div class="row">
+				<div class="span1">
+					<img src="<%= p.image_url %>" width=88 height=88/>
+				</div>
+				<div class="span5">
+					<p><%= p.description %></p>
+					<p><a href="<%= p.itunes_url %>">
+						<img src="http://media.scpr.org/assets/images/png-tool-icons/podcasts.png">
+						Subscribe via iTunes™
+					</a>
+					<br/><a href="<%= p.podcast_url %>">
+						<img src="http://media.scpr.org/assets/images/png-tool-icons/rss.png">
+						<%= p.podcast_url %>	
+					</a></p>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

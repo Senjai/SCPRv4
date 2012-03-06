@@ -8,7 +8,10 @@ class ShowSegment < ContentBase
   
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id" 
   has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
-      
+
+  belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
+  has_many :uploaded_audio, :as => "content"
+  
   define_index do
     indexes title
     indexes lede

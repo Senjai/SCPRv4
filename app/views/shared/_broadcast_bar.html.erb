@@ -7,7 +7,7 @@
 		<li class="active-show-title <%= o.program %>">
 			<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
 			<% if o.programme %>
-			<a href="<%= program_path(o.programme.slug) %>" class="<%= o.programme.is_segmented %>">
+			<a href="<%= program_path(o.programme.slug) %>" class="<%= o.programme.display_segments %>">
 				<% if o.programme.is_a? KpccProgram %>
 					<%= image_tag "broadcast-bar/headshots/#{o.programme.slug}.png", :size => "90x70", :alt => o.programme.title, :class => "bbar_headshot" %>
 				<% end %>
@@ -21,7 +21,7 @@
 		</li>
 		<!-- <li class="show-status">On Now:</li> -->
 		<li class="show-summary">
-			<% if o.programme.is_segmented %>
+			<% if o.programme.display_episodes %>
 				<%= render :partial => "shared/content/broadcast_bar/episode_guide", :object => o.programme.episodes.published.first, :as => :episode, :locals => { :program => o.programme } %>
 			<% end %>
 		</li>
