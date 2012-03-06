@@ -37,7 +37,7 @@ FactoryGirl.define do
     rss_url "http://feeds.scpr.org/kpccAirTalk"
     twitter_url "airtalk"
     facebook_url "http://www.facebook.com/KPCC.AirTalk"
-    display_segments 1 
+    is_segmented 1 
   end
   
   factory :blog do
