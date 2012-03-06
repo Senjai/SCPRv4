@@ -12,7 +12,6 @@ module ApplicationHelper
 
   
   def render_content(content,context,options={})
-    
     if !content
       return ''
     end

@@ -1,7 +1,6 @@
 <%# Small video for Modal/"Latest Videos" strip at the bottom %>
 
 <% size ||= "normal" %>
-
 <% asset = video_thumb.assets.first.asset %>
 <li class="video-thumb">
 	<%= link_to (size == "small" ? asset.tags.thumb : asset.tags.three).html_safe, video_path(video_thumb) %>
