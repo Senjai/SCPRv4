@@ -176,10 +176,8 @@ class ContentBase < ActiveRecord::Base
     # 1) break bylines up by role
     self.bylines.each { |b| authors[b.role] << b }
 
-    names = []
     [0,1,2].each do |i|
       if !authors[i].any?
-        names[i] = []
         next
       end
     
@@ -190,17 +188,9 @@ class ContentBase < ActiveRecord::Base
 
         aN <=> bN
       }
-    
-      # 4) join the linked / unlinked names
-    
-      if authors[i].length == 1
-        names[i] = [ authors[i][0] ]
-      elsif authors[i].length > 1
-        names[i] = [ authors[i].pop,authors[i].join(", ") ].reverse.join(' and ')
-      end
     end
   
-    return names
+    return authors
   end
   
   #----------
