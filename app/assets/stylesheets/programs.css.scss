@@ -113,6 +113,16 @@ $headShotWidth: 90px;
 }
 
 .episodes {
+	a.episode-teaser {
+		display: block;
+		&:hover {
+			text-decoration: none;
+			article {
+				background-color: $nearWhite;
+			}
+		}
+	}
+	
 	margin: 0;
 	padding: 0;
 	position: relative;
@@ -137,10 +147,6 @@ $headShotWidth: 90px;
 			text-align: right;
 			padding: 0 15px 0 0;
 			background: url(image_path('icons/arrow-right.png')) no-repeat right;
-		}
-		&:hover {
-			cursor: pointer;
-			background-color: $nearWhite;
 		}
 	}
 }

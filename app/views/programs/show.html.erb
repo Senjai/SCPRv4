@@ -2,14 +2,19 @@
 
 <div class="row">
 	<section class="span8 episodes">
-		<article class="span4 current">
-			<div class="header">Current Episode</div>
-			<%= @program.episodes.published.first.try(:teaser) || @program.teaser %>
-		</article>
-		<article class="span4 upcoming">
-			<div class="header">Upcoming Episode</div>
-			<%= @program.episodes.upcoming.first.try(:teaser) || @program.teaser %>
-		</article>
+		<a href="<%= @program.episodes.published.first.try(:link_path) %>" class="episode-teaser">
+			<article class="span4 current">
+				<div class="header">Current Episode</div>
+				<%= @program.episodes.published.first.try(:teaser) || @program.teaser %>
+			</article>
+		</a>
+		
+		<a href="<%= @program.episodes.upcoming.first.try(:link_path) %>" class="episode-teaser">
+			<article class="span4 upcoming">
+				<div class="header">Upcoming Episode</div>
+				<%= @program.episodes.upcoming.first.try(:teaser) || @program.teaser %>
+			</article>
+		</a>
 	</section>
 </div>
 
