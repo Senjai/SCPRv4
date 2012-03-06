@@ -1,9 +1,11 @@
 <article class="segment-teaser">
 	<div class="row">
-		<div class="span2">
-			<%= render_asset segment, 'segment' %>
-		</div>
-		<div class="info divider span4">
+		<% if segment.assets.present? %>
+			<div class="span2">
+				<%= render_asset segment, 'segment' %>
+			</div>
+		<% end %>
+		<div class="info divider <%= segment.assets.present? ? "span4" : "span6" %>">
 			<h3><%= link_to segment.title, segment.link_path %></h3>
 			<p class="byline"><time pubdate=""><%= smart_date segment %></time> <span class="pipe">|</span> <%= render_byline segment %></p>
 			<%= segment.teaser %>
