@@ -1,7 +1,7 @@
 class PodcastsController < ApplicationController
   
   def index
-    
+    @podcasts = Podcast.order("title asc").listed
   end
   
   #----------
