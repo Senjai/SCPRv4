@@ -6,4 +6,8 @@ class OtherProgram < ActiveRecord::Base
   def display_segments
     false
   end
+  
+  def display_episodes
+    false
+  end
 end
