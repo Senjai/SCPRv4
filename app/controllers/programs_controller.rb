@@ -2,7 +2,7 @@ class ProgramsController < ApplicationController
   before_filter :get_ambiguous_program, except: :index
   before_filter :get_featured_programs, only: :index
   before_filter :get_program_segments, only: :show
-  before_filter :get_kpcc_program, only: [:show, :segment, :episode] # Keep this first
+  before_filter :get_kpcc_program, only: [:show, :segment, :episode]
   
   def index
     @kpcc_programs = KpccProgram.order("title")

@@ -1,4 +1,4 @@
-<% @PAGE_TITLE = [@episode.title,@program.title].join(" | ") %>
+<% page_title [@episode.title,@program.title] %>
 <h1><%= @episode.title %></h1>
 
 <%= render_asset @episode, "lead" %>
