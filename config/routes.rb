@@ -44,8 +44,8 @@ Scprv4::Application.routes.draw do
   match '/blogs/' => 'blogs#index', :as => :blogs
   
   # -- Programs -- #
-  match '/programs/:show/:year/:month/:day/:id/:slug/' => "segments#show", :as => :segment  
-  match '/programs/:show/:year/:month/:day/' => "episodes#show", :as => :episode
+  match '/programs/:show/:year/:month/:day/:id/:slug/' => "programs#segment", :as => :segment  
+  match '/programs/:show/:year/:month/:day/' => "programs#episode", :as => :episode
   match '/programs/:show/' => 'programs#show', :as => :program
   match '/programs/' => 'programs#index', :as => :programs
   

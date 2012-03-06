@@ -26,7 +26,7 @@
 
 <section class="show-segments span8">
 	<%= any_to_list? @segments, title: "Segments" do %>
-  		<%= render partial: 'segments/segment', collection: @segments %>
+  		<%= render partial: 'segment', collection: @segments %>
 	<% end %>
 	<%= will_paginate @segments, param_name: :segments_page, previous_label: "&laquo; Newer Stories".html_safe, next_label: "Older Stories &raquo;".html_safe %>
 </section>

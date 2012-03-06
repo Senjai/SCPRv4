@@ -2,11 +2,25 @@ class ProgramsController < ApplicationController
   before_filter :get_ambiguous_program, except: :index
   before_filter :get_featured_programs, only: :index
   before_filter :get_program_segments, only: :show
+  before_filter :get_kpcc_program, only: [:show, :segment, :episode] # Keep this first
   
   def index
     @kpcc_programs = KpccProgram.order("title")
     @other_programs = OtherProgram.order("title")
     render :layout => "application"
+  end
+  
+  def segment
+    @segment = ShowSegment.published.find(params[:id])
+    
+    # check whether this is the correct URL for the segment
+    if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
+      redirect_to @segment.link_path and return
+    end
+  end
+  
+  def episode
+    @episode = @program.episodes.published.where(air_date: date).first
   end
   
   protected
