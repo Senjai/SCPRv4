@@ -229,6 +229,19 @@ module ApplicationHelper
   
   #----------
   
+  # Convert a given number of seconds into a human-readable duration. 
+  
+  def format_duration(secs)    
+    [[60, :sec], [60, :min], [24, :hr], [1000, :days]].map{ |count, name|
+      if secs > 0
+        secs, n = secs.divmod(count)
+        "#{n.to_i} #{name}"
+      end
+    }.compact.reverse.join(' ')
+  end
+  
+  #----------
+  
   def get_latest_arts
     begin
       ThinkingSphinx.search '',
