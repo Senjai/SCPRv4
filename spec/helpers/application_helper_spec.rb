@@ -89,4 +89,18 @@ describe ApplicationHelper do
   describe "#render_byline" do
     pending # TODO: Write tests for this
   end
+  
+  describe "#page_title" do
+    it "accepts and array and joins them by the default separator" do
+      page_title([1, 2]).should eq "1 | 2"
+    end
+    
+    it "accepts and uses a different separator" do
+      page_title([1, 2], " - ").should eq "1 - 2"
+    end
+    
+    it "Return the first argument as a string if it is not an array" do
+      page_title("Page").should eq "Page"
+    end
+  end
 end

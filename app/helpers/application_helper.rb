@@ -257,4 +257,12 @@ module ApplicationHelper
       end
     end
   end
+  
+  def page_title(elements, separator=" | ")
+    if elements.is_a? Array
+      @PAGE_TITLE = elements.join(separator)
+    else
+      @PAGE_TITLE = elements.to_s
+    end
+  end
 end

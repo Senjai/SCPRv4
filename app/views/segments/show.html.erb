@@ -1,15 +1,13 @@
-<% @PAGE_TITLE = [@segment.headline,@program.title].join(" | ") %>
+<% page_title [@segment.headline, @program.title] %>
 
 <%= render_content @segment, "opengraph" %>
-
 <%= render "shared/cwidgets/social_tools", :cssClass => '', :content => @segment %>
 
-<% if @segment.episodes.any? %>
+<% if @segment.episodes.present? %>
 	<h6><%= link_to @segment.episodes.first.title, @segment.episodes.first.link_path %></h6>
 <% end %>
 
 <h1 class="story-headline"><%= @segment.headline %></h1>
-
 <p class="byline">By <%= render_byline @segment %> <span class="pipe">|</span> <time pubdate><%= smart_date @segment %></time></p>
 
 <div class="row">
