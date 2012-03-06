@@ -12,7 +12,7 @@ class ShowSegment < ContentBase
   belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
   has_many :uploaded_audio, :as => "content"
   
-  scope :published, where(:status => STATUS_LIVE).order("id desc")
+  scope :published, where(:status => STATUS_LIVE).order("published_at desc")
   
   define_index do
     indexes title
