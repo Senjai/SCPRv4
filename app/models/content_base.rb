@@ -170,6 +170,41 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
+  def sorted_bylines
+    authors = [ [],[],[] ]
+  
+    # 1) break bylines up by role
+    self.bylines.each { |b| authors[b.role] << b }
+
+    names = []
+    [0,1,2].each do |i|
+      if !authors[i].any?
+        names[i] = []
+        next
+      end
+    
+      # 2) now sort each list by last name, first name
+      authors[i] = authors[i].sort { |a,b| 
+        aN = (a.user ? a.user.name : a.name).split(' ').reverse.join('')
+        bN = (b.user ? b.user.name : b.name).split(' ').reverse.join('')
+
+        aN <=> bN
+      }
+    
+      # 4) join the linked / unlinked names
+    
+      if authors[i].length == 1
+        names[i] = [ authors[i][0] ]
+      elsif authors[i].length > 1
+        names[i] = [ authors[i].pop,authors[i].join(", ") ].reverse.join(' and ')
+      end
+    end
+  
+    return names
+  end
+  
+  #----------
+  
   def byline_elements
     ["KPCC"]
   end
