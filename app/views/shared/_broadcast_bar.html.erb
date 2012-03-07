@@ -22,7 +22,7 @@
 		<!-- <li class="show-status">On Now:</li> -->
 		<li class="show-summary">
 			<% if o.programme.display_episodes %>
-				<%= render :partial => "shared/content/broadcast_bar/episode_guide", :object => o.programme.episodes.published.first, :as => :episode, :locals => { :program => o.programme } %>
+				<%= render :partial => "shared/broadcast_bar/episode_guide", :object => o.programme.episodes.published.first, :as => :episode, :locals => { :program => o.programme } %>
 			<% end %>
 		</li>
 		<!-- <li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li> -->

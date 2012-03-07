@@ -153,6 +153,7 @@ section.broadcastbar {
 					}
 					ul.cbase {
 						li {
+							display:block;
 							list-style-image:url(image_path('mega-divider.png'));
 							margin-bottom:$baseline / 2;
 							&.lead {
