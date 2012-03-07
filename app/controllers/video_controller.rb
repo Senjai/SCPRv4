@@ -1,4 +1,4 @@
-class VideosController < ApplicationController
+class VideoController < ApplicationController
   layout "video"
   before_filter :get_latest_videos, only: [:index, :show]
   respond_to :html, :json, :js
