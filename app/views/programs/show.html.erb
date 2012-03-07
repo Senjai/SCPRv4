@@ -1,7 +1,7 @@
 <% page_title @program.title %>
 
 <% if @program.display_episodes %>
-	<%= render :partial => "current_episode", :object => @program.episodes.published.first %>
+	<%= render :partial => "current_episode", :object => @program.episodes.published.first if @program.episodes.published.present? %>
 
 	<% if upcoming = @program.episodes.upcoming.first %>
 		<div class="upcoming-episode">

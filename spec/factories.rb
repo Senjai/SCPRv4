@@ -53,10 +53,8 @@ FactoryGirl.define do
     show
     air_date Time.now.tomorrow.strftime("%Y-%m-%d")
     title "AirTalk for May 22, 2009"
-    short_summary "This is a short summary of the show"
-    full_summary "This is a much longer summary of the show"
+    _teaser "This is a short summary of the show"
     published_at Time.now
-    is_published 1 # Do we need this column?
     status 5
     comment_count 0
   end
@@ -119,6 +117,7 @@ FactoryGirl.define do
     association :category, factory: :category_not_news
     sequence(:headline) { |n| "This is a video #{n}" }
     status 5
+    sequence(:slug) { |n| "slug-#{n}" }
     sequence(:published_at) { |n| Time.now + 60*n }
     body "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet non congue libero commodo. Vestibulum dolor nibh, eleifend eu suscipit eget, egestas sed diam. Proin cursus rutrum nibh eget consequat. Donec viverra augue sed nisl ultrices venenatis id eget quam. Cras id dui a magna tristique fermentum in sit amet lacus. Curabitur urna metus, mattis vel mollis quis, placerat vitae turpis.
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
@@ -156,16 +155,15 @@ FactoryGirl.define do
     association :category, factory: :category_not_news
     sequence(:title) { |n| "Show Segment #{n}" }
     sequence(:slug) { |n| "show-segment-#{n}" }
-    byline "KPCC"
-    outside_reporter 1
     _teaser "This is a teaser for the show segment"
     body "This is a description of the show segment"
     locale "local"
-    is_published 1 # do we need this column?
     status 5
     comment_count 1
     _short_headline "Short Headline"
     sequence(:published_at) { |n| Time.now + 60*n }
+    audio_date Time.now
+    enco_number 999
     
     ignore { asset_count 0 }
     after_create do |show_segment, eval|
