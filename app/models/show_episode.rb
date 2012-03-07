@@ -18,7 +18,7 @@ class ShowEpisode < ContentBase
   def headline
     self.title
   end
-  
+
   #----------
   
   def _get_audio

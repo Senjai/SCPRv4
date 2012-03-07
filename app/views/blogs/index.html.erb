@@ -1,4 +1,5 @@
-<% @PAGE_TITLE = "Blogs" %>
+<%= page_title "Blogs" %>
+
 <h1>KPCC Blogs</h1>
 <div class="row">
 	<div class="span8 directory">
@@ -7,7 +8,7 @@
 		<% for p in @blogs.where(:is_news => true) %>
 			<li class="span4">
 				<div class="thumbnail">
-					<h2><%= link_to p.name, blog_path(p.slug) %></h2>
+					<h2><%= link_to p.name, blog_path(p) %></h2>
 					<p class="description"><%= p.description %></p>
 					<hr />
 					<h5>Latest Post</h5>
@@ -25,7 +26,7 @@
 		<% for p in @blogs.where(:is_news => false) %>
 			<li class="span4">
 				<div class="thumbnail">
-					<h2><%= link_to p.name, blog_path(p.slug) %></h2>
+					<h2><%= link_to p.name, blog_path(p) %></h2>
 					<p class="description"><%= p.description %></p>
 					<hr />
 					<h5>Latest Post</h5>
