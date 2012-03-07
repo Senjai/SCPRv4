@@ -13,9 +13,10 @@ class ProgramsController < ApplicationController
   #----------
   
   def show
-    # @program gets set via the before_filter    
+    # @program gets set via the before_filter
     if @program.is_a? KpccProgram
-      @segments = @program.segments.paginate(page: params[:segments_page], per_page: 10)
+      @segments = @program.segments.published.paginate(page: params[:page], per_page: 10)
+      @episodes = @program.episodes.published.paginate(page: params[:page], per_page: 6)
       render :action => "show"
     else
       render :action => "show_external"

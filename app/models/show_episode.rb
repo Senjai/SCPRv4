@@ -36,8 +36,4 @@ class ShowEpisode < ContentBase
       :trailing_slash => true
     }.merge! options)
   end
-  
-  def teaser # ShowEpisode doesn't have a "body" or "_teaser" attribute, so this is overriding the one in ContentBase
-    title # Currently "short_summary" is too long.
-  end
 end

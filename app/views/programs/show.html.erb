@@ -1,40 +1,43 @@
 <% page_title @program.title %>
 
 <% if @program.display_episodes %>
-	<div class="row">
-		<section class="span8 episodes">
-			<a href="<%= @program.episodes.published.first.try(:link_path) %>" class="episode-teaser">
-				<article class="span4 current">
-					<div class="header">Current Episode</div>
-					<%= @program.episodes.published.first.try(:teaser) || @program.teaser.html_safe %>
-				</article>
-			</a>
-		
-			<a href="<%= @program.episodes.upcoming.first.try(:link_path) %>" class="episode-teaser">
-				<article class="span4 upcoming">
-					<div class="header">Upcoming Episode</div>
-					<%= @program.episodes.upcoming.first.try(:teaser) || @program.teaser.html_safe %>
-				</article>
-			</a>
-		</section>
-	</div>
+	<%= render :partial => "current_episode", :object => @program.episodes.published.first %>
+
+	<% if upcoming = @program.episodes.upcoming.first %>
+		<div class="upcoming-episode">
+			<h3><b>Coming Up:</b> <%= upcoming.title %></h3>
+			<p><%= upcoming.teaser %></p>
+		</div>
+	<% end %>	
 <% end %>
 
+<% if @program.display_segments %>
+	<% nav = will_paginate @segments, previous_label: "&laquo; Newer".html_safe, next_label: "Older &raquo;".html_safe %>
+	<section class="show-segments">
+		<h2>Recently on <%= @program.title %></h2>
+		
+		<% if @segments.current_page > 1 %>
+			<%= nav %>
+		<% end %>
+		<%= any_to_list? @segments, title: "Segments" do %>
+			<%= render :partial => "segment", :collection => @segments %>
+		<% end %>
+		
+		<%= nav %>
+	</section>
+	
+<% elsif @program.display_episodes %>	
+	<% nav = will_paginate @episodes, previous_label: "&laquo; Newer".html_safe, next_label: "Older &raquo;".html_safe %>
 
-<div class="row">
-	<nav class="span8 show">
-		<%= link_to "All", program_path(@program) %><%= link_to "Segments", program_path(@program) %><%= link_to "Blog Posts", program_path(@program) %><%= link_to "Featured Comments", program_path(@program) %><%= link_to "Reading List", program_path(@program) %>
-	</nav>
-</div>
+	<section class="show-episodes">
+		<h2>Recently on <%= @program.title %></h2>
+		
+		<% if @episodes.current_page > 1 %>
+			<%= nav %>
+		<% end %>
+		
+		<%= render :partial => "episode", :collection => @episodes %>
 
-<section class="show-segments span8">
-	<%= any_to_list? @segments, title: "Segments" do %>
-  		<%= render partial: 'segment', collection: @segments %>
-	<% end %>
-	<%= will_paginate @segments, param_name: :segments_page, previous_label: "&laquo; Newer Stories".html_safe, next_label: "Older Stories &raquo;".html_safe %>
-</section>
-
-<% content_for :footerjss do %>
-	if (!scA)
-		var scA = new scpr.Audio()
+		<%= nav %>
+	</section>	
 <% end %>

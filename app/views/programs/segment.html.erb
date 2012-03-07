@@ -21,9 +21,11 @@
 	
 		<article class="segment">
 			<h1><%= @segment.headline %></h1>
-			<%= render_asset @segment, "blog" %>
+			<%= render_asset @segment, "segment" %>
 			<div class="story-body">
 				<%= simple_format @segment.body %>
+				
+				<br style="clear: both"/>
 				<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @segment %>
 			</div>
 		</article><!-- article.segment -->
