@@ -12,11 +12,14 @@
 //= require jquery.fancybox.1.3.4
 //= require jquery.mousewheel.3.0.4
 //= require jquery.jplayer.min
+//= require moment
+//= require moment-strftime
 
 //= require audio
 //= require video
 //= require programs
 //= require listen_live
 //= require megamenu
+//= require smart_time
 //= require utilities
 //= require zbase

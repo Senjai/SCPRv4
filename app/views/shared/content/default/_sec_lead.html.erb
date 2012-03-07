@@ -1,4 +1,7 @@
+<article class="cbase offlead">			
 <%= render_asset(content,"thumb") %>
-			
-<p class="story-title"><%= link_to content.short_headline, content.link_path %></p>
+
+<h3><%= link_to content.short_headline, content.link_path %></h3>
+<h4><time class="smarttime" datetime="<%= content.published_at.strftime("%FT%R") %>" data-unixtime="<%= content.published_at.to_i %>"  data-timewindow="24h" data-relativefor="8h"></time></h4>
 <p class="story-content clearfix"><%= h strip_tags(content.teaser) %></p>
+</article>

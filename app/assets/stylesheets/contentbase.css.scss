@@ -20,6 +20,16 @@
 	    padding-left: 14px;
 	    margin-left: 4px;
 	}
+	
+	time {
+	    display: inline-block;
+        @include font-heading();
+        font-weight: normal;
+        font-size: 11px;
+        color: $orangeDark;
+        text-transform: uppercase;
+    }
+    
 }
 .cbase.lead {
     h1 {
@@ -35,8 +45,11 @@
 		}
 	}
     h3 {
-        font-weight:600;
-		margin-bottom: 0;
+		@include font-headline();
+    	margin-bottom:0;
+    	a {
+    		color:$nearBlack;
+    	}
     }
     
     h4 {
@@ -50,6 +63,7 @@
         float: left;
         margin: 8px 12px 12px 0;
     }
+    
 }
 
 .cbase.thumbnail {
