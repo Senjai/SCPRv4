@@ -6,56 +6,33 @@
 			<a href="<%= @program.episodes.published.first.try(:link_path) %>" class="episode-teaser">
 				<article class="span4 current">
 					<div class="header">Current Episode</div>
-					<%= @program.episodes.published.first.try(:teaser) || @program.teaser %>
+					<%= @program.episodes.published.first.try(:teaser) || @program.teaser.html_safe %>
 				</article>
 			</a>
 		
 			<a href="<%= @program.episodes.upcoming.first.try(:link_path) %>" class="episode-teaser">
 				<article class="span4 upcoming">
 					<div class="header">Upcoming Episode</div>
-					<%= @program.episodes.upcoming.first.try(:teaser) || @program.teaser %>
+					<%= @program.episodes.upcoming.first.try(:teaser) || @program.teaser.html_safe %>
 				</article>
 			</a>
 		</section>
 	</div>
 <% end %>
 
-<% if @program.is_a? OtherProgram %>
-	<div class="row">
-		<div class="span6">
-			<%= @program.description.html_safe %>
-		</div>
-		<div class="span2 connect">
-			<%= link_to "Website", @program.web_url, target: "_blank", class: "archive with-icon" if @program.web_url? %>		
-			<%= link_to "RSS Feed", @program.rss_url, target: "_blank", class: "rss with-icon" if @program.rss_url? %>
-			<%= link_to "Podcast", @program.podcast_url, target: "_blank", class: "podcast with-icon" if @program.podcast_url? %>
-		</div>
-	
-	</div>
-<% end %>
 
-<br style="clear: both"/>
-<hr/>
+<div class="row">
+	<nav class="span8 show">
+		<%= link_to "All", program_path(@program) %><%= link_to "Segments", program_path(@program) %><%= link_to "Blog Posts", program_path(@program) %><%= link_to "Featured Comments", program_path(@program) %><%= link_to "Reading List", program_path(@program) %>
+	</nav>
+</div>
 
-<% if @program.podcast_url? && Rails.cache.exist?("ext_program:#{@program.slug}:podcast")%>
-	<h2>Recent</h2>
-	
-	<%= Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
-
-	<br style="clear: both"/>
-	<hr/>
-<% end %>
-
-
-<% if @program.rss_url? && Rails.cache.exist?("ext_program:#{@program.slug}:rss")%>
-	<h2>Latest News</h2>
-	
-	<%= Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
-
-	<br style="clear: both"/>
-	<hr/>
-<% end %>
-
+<section class="show-segments span8">
+	<%= any_to_list? @segments, title: "Segments" do %>
+  		<%= render partial: 'segment', collection: @segments %>
+	<% end %>
+	<%= will_paginate @segments, param_name: :segments_page, previous_label: "&laquo; Newer Stories".html_safe, next_label: "Older Stories &raquo;".html_safe %>
+</section>
 
 <% content_for :footerjss do %>
 	if (!scA)

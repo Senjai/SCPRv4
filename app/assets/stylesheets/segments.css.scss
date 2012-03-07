@@ -16,6 +16,9 @@
 		display: inline-block;
 	}
 	.info {
+		h3 {
+			@include font-heading
+		}
 		@include font-shorthand($size: 12px);
 		vertical-align: top;
 		padding-right: 5px;

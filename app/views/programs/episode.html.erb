@@ -1,10 +1,22 @@
 <% page_title [@episode.title,@program.title] %>
-<h1><%= @episode.title %></h1>
 
-<%= render_asset @episode, "lead" %>
+<div class="row">
+	<header class="span8 episode">
+		<h4><%= @episode.title %></h4>
+		<% if @episode.audio.present? %>
+			<div class="right">
+				<aside class="story-audio inline">
+						<a href="<%= @episode.audio.first.url %>" class="audio-toggler" title="<%= h @episode.headline  %>"
+						<a href="<%= @episode.audio.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>"></a><%= link_to "Listen to this episode", @episode.audio.first.url, class: "audio-toggler" %>
+						<a href="<%= @episode.audio.first.url %>">Download</a>
+				</aside>
+			</div>
+		<% end %>
+	</header>
+</div>
 
-<ul>
-<% for s in @episode.segments %>
-	<li><%= link_to s.title, s.link_path %></li>
-<% end %>
-</ul>
+<section class="show-segments span8">
+	<%= any_to_list? @segments, title: "Segments" do %>
+  		<%= render partial: 'segment', collection: @segments %>
+	<% end %>
+</section>

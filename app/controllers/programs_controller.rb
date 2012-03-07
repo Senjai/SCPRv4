@@ -13,9 +13,9 @@ class ProgramsController < ApplicationController
   #----------
   
   def show
-    # @program gets set via the before_filter
-    
+    # @program gets set via the before_filter    
     if @program.is_a? KpccProgram
+      @segments = @program.segments.paginate(page: params[:segments_page], per_page: 10)
       render :action => "show"
     else
       render :action => "show_external"
@@ -36,7 +36,10 @@ class ProgramsController < ApplicationController
   #----------
   
   def episode
-    @episode = @program.episodes.published.where(air_date: date).first
+    @episode = @program.episodes.published.where(air_date: Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)).first
+    @segments = @episode.segments
+    rescue
+      redirect_to program_path(@program)
   end
   
   protected
@@ -52,15 +55,5 @@ class ProgramsController < ApplicationController
     
     def get_featured_programs
       @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
-    end
-    
-    def date # Might use this more than once?
-      Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)
-    end
-    
-    def get_program_segments
-      @segments = @program.segments.paginate(page: params[:segments_page], per_page: 10)
-      rescue
-        redirect_to programs_path
     end
 end

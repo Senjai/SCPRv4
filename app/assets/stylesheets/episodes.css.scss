@@ -1,0 +1,12 @@
+header.episode {
+	margin-top: 0;
+	h4 {
+		color: $orangeDark;
+		display: inline-block;
+		vertical-align: middle;
+	}
+	
+	.right {
+		float: right; /* Fix this */
+	}
+}
