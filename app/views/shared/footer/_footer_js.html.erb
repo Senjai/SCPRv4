@@ -1,5 +1,10 @@
 <script type="text/javascript">
-	var megaM = new scpr.MegaMenu({hidden:["#oas_x01"]});
+
+	var megaM, smartTime;
+	$(function() {
+		megaM = new scpr.MegaMenu({hidden:["#oas_x01"]});
+		smartTime = new scpr.SmartTime();		
+	})
 	
 	<%= yield :footerjss %>
 </script>

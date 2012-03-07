@@ -1,6 +1,7 @@
 <div class="cbase offlead clearfix">
 	<h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
-	<h4><%= render_byline content %> <%= smart_date content, :today => true, :today_template => "| %-I:%M%P" %></h4>
+	<h4><%= render_byline content %> | <time class="smarttime" datetime="<%= content.published_at.strftime("%FT%R") %>" data-unixtime="<%= content.published_at.to_i %>"  data-timewindow="8h" data-relativefor="8h"/>
+	</h4>
 
 	<p><%= h strip_tags(content.teaser) %></p>
 	

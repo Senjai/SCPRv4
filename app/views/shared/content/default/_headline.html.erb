@@ -1,0 +1,4 @@
+<li>
+	<%= link_to content.short_headline, content.link_path %>
+	<time class="smarttime" datetime="<%= content.published_at.strftime("%FT%R") %>" data-unixtime="<%= content.published_at.to_i %>"  data-timewindow="8h" data-relativefor="8h"/>
+</li>

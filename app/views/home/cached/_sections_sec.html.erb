@@ -6,10 +6,8 @@
 	<section class="more-news-content">
 		<%= render_content section[:content][0], "sec_lead" %>
 		
-		<ul class="additional-stories">
-			<% for c in section[:content][1..3] %>
-			<li><%= link_to c.headline, c.link_path %></li>
-			<% end %>
+		<ul class="additional-stories cbase">
+			<%= render_content section[:content][1..3], "headline" %>
 		</ul>
 	</section>
 	<div class="related-content span3">
