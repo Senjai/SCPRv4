@@ -3,7 +3,7 @@
 
 	<h1 class="story-headline"><%= link_to content.short_headline, content.link_path %></h1>
 	<h4>
-		<time class="smarttime" datetime="<%= content.published_at.strftime("%FT%R") %>" data-unixtime="<%= content.published_at.to_i %>"  data-timewindow="8h" data-relativefor="8h"/>
+		<time class="smarttime" datetime="<%= content.published_at.strftime("%FT%R") %>" data-unixtime="<%= content.published_at.to_i %>"  data-window="8h"/>
 		| <%= render_byline content %> | <%= content.comment_count.pluralize("Comment") %>
 	</h4>
 
