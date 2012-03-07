@@ -15,7 +15,7 @@ class VideosController < ApplicationController
     begin
       @video = VideoShell.find(params[:id])
     rescue
-      redirect_to videos_path
+      redirect_to video_index_path
     end
   end
   

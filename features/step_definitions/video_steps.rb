@@ -19,7 +19,7 @@ Then /^I should see that video's information$/ do
 end
 
 When /^I go to the videos page$/ do
-  visit videos_path
+  visit video_index_path
 end
 
 When /^I go to the page for one of the videos$/ do

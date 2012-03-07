@@ -54,7 +54,7 @@ Scprv4::Application.routes.draw do
   match '/events/' => 'events#index', :as => :events
   
   # -- Videos -- #
-  resources :videos, only: [:index, :show] do
+  resources :video, only: [:index, :show] do
     match 'list', on: :collection, defaults: { format: :js }
   end
   
