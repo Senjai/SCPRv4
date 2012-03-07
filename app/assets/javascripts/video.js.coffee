@@ -66,7 +66,7 @@ class scpr.VideoPage
     getVideos: (page=1) ->
         $.ajax {
             type: "GET"
-            url: "/videos/list"
+            url: "/video/list"
             data: 
                 page: page
             dataType: "script"
