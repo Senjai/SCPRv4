@@ -16,16 +16,16 @@
 <hr/>
 
 <% if @program.podcast_url? && Rails.cache.exist?("ext_program:#{@program.slug}:podcast")%>
-	<h2>Recent</h2>
+
+	<h2>Recently</h2>
 	
 	<%= Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
 
 	<br style="clear: both"/>
 	<hr/>
-<% end %>
 
+<% elsif @program.rss_url? && Rails.cache.exist?("ext_program:#{@program.slug}:rss")%>
 
-<% if @program.rss_url? && Rails.cache.exist?("ext_program:#{@program.slug}:rss")%>
 	<h2>Latest News</h2>
 	
 	<%= Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
