@@ -20,6 +20,10 @@ class VideoShell < ContentBase
     where "status = #{STATUS_LIVE}"
   end
   
+  def to_param
+    "#{id}/#{slug}"
+  end
+  
   def link_path(options={}) # OPTIMIZE Dry this method up across ContentBase subclasses?
     Rails.application.routes.url_helpers.video_path(self, { trailing_slash: true }.merge!(options))
   end

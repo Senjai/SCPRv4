@@ -55,6 +55,7 @@ Scprv4::Application.routes.draw do
   
   # -- Videos -- #
   resources :video, only: [:index, :show] do
+    match ':slug' => "video#show", on: :member
     match 'list', on: :collection, defaults: { format: :js }
   end
   
