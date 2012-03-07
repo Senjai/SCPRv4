@@ -1,8 +1,8 @@
 <div class="show-episode">
 	<div class="row">
-	<% if episode.assets.any? %>
+	<% if episode.assets.present? %>
 		<div class="span2">
-			<%= episode.assets.first.asset.tag(:lsquare) %>
+			<%= render_asset episode, 'lsquare' %>
 		</div>
 	
 		<div class="span6">
