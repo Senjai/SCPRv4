@@ -23,9 +23,7 @@
 	
 	time {
 	    display: inline-block;
-        @include font-heading();
-        font-weight: normal;
-        font-size: 11px;
+        @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;
     }
