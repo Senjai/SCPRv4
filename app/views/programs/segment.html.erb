@@ -4,7 +4,7 @@
 <div class="row">
 	<section class="segment-meta span2">
 		<time pubdate><%= smart_date @segment %></time>
-		<p class="byline">By <%= render_byline @segment %></p>
+		<p class="byline"><%= render_byline @segment %></p>
 		<%= render "shared/cwidgets/social_tools", :cssClass => 'side', :content => @segment %>
 		<%= render "shared/cwidgets/comment_count", :cssClass => 'left-side right-align', :content => @segment %>
 		<%= render "shared/cwidgets/audio", :content => @segment %>

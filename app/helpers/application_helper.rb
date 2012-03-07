@@ -158,10 +158,10 @@ module ApplicationHelper
       if authors[0].length == 0 and authors[1].length == 0
         return byels.join(" | ").html_safe
       else
-        return [names.join(" with "), byels.join(" | ")].join(" | ").html_safe
+        return ("By " + [names.join(" with "), byels.join(" | ")].join(" | ")).html_safe
       end
     else
-      return names.join(" with ").html_safe
+      return ("By " + names.join(" with ")).html_safe
     end
   end
   
