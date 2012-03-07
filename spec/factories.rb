@@ -49,7 +49,7 @@ FactoryGirl.define do
     end
   end
   
-  factory :show_episode do
+  factory :show_episode, aliases: [:episode] do
     show
     air_date Time.now.tomorrow.strftime("%Y-%m-%d")
     title "AirTalk for May 22, 2009"
@@ -57,6 +57,17 @@ FactoryGirl.define do
     published_at Time.now
     status 5
     comment_count 0
+    
+    ignore { asset_count 0 }
+    after_create do |show_episode, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: show_episode)
+    end
+  end
+  
+  factory :show_rundown do
+    episode
+    segment
+    sequence(:segment_order) { |n| n } # TODO Test that segment_order is actually doing something 
   end
   
   factory :other_program do
@@ -150,7 +161,7 @@ FactoryGirl.define do
     end
   end
   
-  factory :show_segment do
+  factory :show_segment, aliases: [:segment] do
     show
     association :category, factory: :category_not_news
     sequence(:title) { |n| "Show Segment #{n}" }

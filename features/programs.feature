@@ -26,6 +26,23 @@ Scenario: View a Program's page
 	Then I should see the program's information
 	
 Scenario: See a program's segments
-	Given there is 1 kpcc program
+	Given there is 1 segment-style kpcc program
+	And the program has 2 segments
 	When I go to the program's page
 	Then I should see a list of segments
+	And I should see each segment's primary asset
+
+Scenario: See an episodic program's episodes
+	Given there is 1 episodic-style kpcc program
+	And the program has 2 episodes
+	When I go to the program's page
+	Then I should see a list of episodes
+	And I should see each episode's primary asset
+	
+Scenario: See an episodic program's current episode
+	Given there is 1 episodic-style kpcc program
+	And the program has 2 episodes
+	And each episode has 2 segments
+	When I go to the program's page
+	Then I should see the current episode's information
+	And I should see a list of the current episode's segments
