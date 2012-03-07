@@ -1,63 +1,33 @@
 <% page_title @program.title %>
 
 <% if @program.display_episodes %>
-	<div class="row">
-		<section class="span8 episodes">
-			<a href="<%= @program.episodes.published.first.try(:link_path) %>" class="episode-teaser">
-				<article class="span4 current">
-					<div class="header">Current Episode</div>
-					<%= @program.episodes.published.first.try(:teaser) || @program.teaser %>
-				</article>
-			</a>
+	<%= render :partial => "current_episode", :object => @program.episodes.published.first %>
+
+	<% if upcoming = @program.episodes.upcoming.first %>
+		<div class="upcoming-episode">
+			<h3><b>Coming Up:</b> <%= upcoming.title %></h3>
+			<p><%= upcoming.teaser %></p>
+		</div>
+	<% end %>	
+<% end %>
+
+<% if @program.display_segments %>
+	<section class="show-segments">
+		<h2>Recently on <%= @program.title %></h2>
 		
-			<a href="<%= @program.episodes.upcoming.first.try(:link_path) %>" class="episode-teaser">
-				<article class="span4 upcoming">
-					<div class="header">Upcoming Episode</div>
-					<%= @program.episodes.upcoming.first.try(:teaser) || @program.teaser %>
-				</article>
-			</a>
-		</section>
-	</div>
-<% end %>
-
-<% if @program.is_a? OtherProgram %>
-	<div class="row">
-		<div class="span6">
-			<%= @program.description.html_safe %>
-		</div>
-		<div class="span2 connect">
-			<%= link_to "Website", @program.web_url, target: "_blank", class: "archive with-icon" if @program.web_url? %>		
-			<%= link_to "RSS Feed", @program.rss_url, target: "_blank", class: "rss with-icon" if @program.rss_url? %>
-			<%= link_to "Podcast", @program.podcast_url, target: "_blank", class: "podcast with-icon" if @program.podcast_url? %>
-		</div>
+		<%= render :partial => "segment", :collection => @segments %>
+		<%= will_paginate @segments, previous_label: "&laquo; Newer".html_safe, next_label: "Older &raquo;".html_safe %>
+	</section>
 	
-	</div>
-<% end %>
+<% elsif @program.display_episodes %>	
 
-<br style="clear: both"/>
-<hr/>
-
-<% if @program.podcast_url? && Rails.cache.exist?("ext_program:#{@program.slug}:podcast")%>
-	<h2>Recent</h2>
-	
-	<%= Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
-
-	<br style="clear: both"/>
-	<hr/>
+	<section class="show-episodes">
+		<h2>Recently on <%= @program.title %></h2>
+		
+		<%= render :partial => "episode", :collection => @episodes %>
+		<%= will_paginate @episodes, previous_label: "&laquo; Newer".html_safe, next_label: "Older &raquo;".html_safe %>
+	</section>	
 <% end %>
 
 
-<% if @program.rss_url? && Rails.cache.exist?("ext_program:#{@program.slug}:rss")%>
-	<h2>Latest News</h2>
-	
-	<%= Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
 
-	<br style="clear: both"/>
-	<hr/>
-<% end %>
-
-
-<% content_for :footerjss do %>
-	if (!scA)
-		var scA = new scpr.Audio()
-<% end %>

@@ -15,6 +15,16 @@ class ProgramsController < ApplicationController
   def show
     # @program gets set via the before_filter
     
+    # if display_segments is set, load up paginated segments
+    if @program.display_segments
+      @segments = @program.segments.published.paginate(page: params[:page], per_page: 10)
+    end
+    
+    # if we use episodes—but only if we don't also show segments—we load paginated episodes
+    if @program.display_episodes && !@program.display_segments
+      @episodes = @program.episodes.published.paginate(page: params[:page], per_page: 6)
+    end
+    
     if @program.is_a? KpccProgram
       render :action => "show"
     else
