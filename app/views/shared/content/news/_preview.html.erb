@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="span8">
 		<h1 class="story-headline"><%= content.headline %></h1>
-		<p class="byline">By <%= render_byline content %> <span class="pipe">|</span> 
+		<p class="byline"><%= render_byline content %> <span class="pipe">|</span> 
 		<time pubdate><%= smart_date content %></time></p>
 		<%= yield :headline %>
 	</div>
