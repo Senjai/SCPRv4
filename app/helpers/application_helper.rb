@@ -297,7 +297,7 @@ module ApplicationHelper
     end
   end
   
-  def link_to_audio(title, object, options={})
+  def link_to_audio(title, object, options={}) # This needs to be more useful
     options[:class] = "audio-toggler #{options[:class]}"
     options[:title] ||= object.headline
     content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
@@ -306,6 +306,10 @@ module ApplicationHelper
   def comment_count_for(object, options={})
     options[:class] = "comment-count #{options[:class]}"
     link_to "Comments (#{object.comment_count})", object.link_path(anchor: "comments"), options
+  end
+  
+  def article_meta_for(object)
+    render 'shared/cwidgets/article_meta', content: object
   end
     
 end

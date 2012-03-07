@@ -2,13 +2,7 @@
 <%= render_content @segment, "opengraph" %>
 
 <div class="row">
-	<section class="segment-meta span2">
-		<time pubdate><%= smart_date @segment %></time>
-		<p class="byline"><%= render_byline @segment %></p>
-		<%= render "shared/cwidgets/social_tools", :cssClass => 'side', :content => @segment %>
-		<%= render "shared/cwidgets/comment_count", :cssClass => 'left-side right-align', :content => @segment %>
-		<%= render "shared/cwidgets/audio", :content => @segment %>
-	</section>
+	<%= article_meta_for @segment %>
 
 	<section class="segment span6">
 		<h5 class="episode-title">
@@ -20,7 +14,7 @@
 		</h6>
 	
 		<article class="segment">
-			<h1><%= @segment.headline %></h1>
+			<h1 class="story-title"><%= @segment.headline %></h1>
 			<%= render_asset @segment, "segment" %>
 			<div class="story-body">
 				<%= simple_format @segment.body %>

@@ -1,0 +1,11 @@
+<% content ||= false %>
+<% if content %>
+	<div class="span2 article-meta">
+		<div class="date">
+			<p><%= smart_date content %></p>
+		</div>
+		<%= render "shared/cwidgets/social_tools", :cssClass => 'side', :content => content %>
+		<%= render "shared/cwidgets/comment_count", :cssClass => 'left-side', :content => content %>
+		<%= render "shared/cwidgets/audio", :content => content %>
+	</div>
+<% end %>
