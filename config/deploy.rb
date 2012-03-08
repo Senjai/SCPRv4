@@ -20,8 +20,9 @@ role :db,  "web2.scpr.org", :primary => true
 role :sphinx, "media.scpr.org"
 
 task :staging do
+  roles.clear
   set :rails_env, :scprdev
-
+  set :branch, "ImplementPodcasts"
   role :app, "scprdev.org"
   role :web, "scprdev.org"
   role :db,  "scprdev.org", :primary => true
