@@ -29,8 +29,8 @@
 	    margin-left: 4px;
 	}
 	
-	time {
-	    display: inline-block;
+	time, .shell-link {
+	    /* display: inline-block; */
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;

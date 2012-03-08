@@ -32,7 +32,7 @@ class ShowSegment < ContentBase
   end
   
   def byline_elements
-    []
+    [self.show.title]
   end
   
   #----------
