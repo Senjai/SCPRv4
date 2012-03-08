@@ -22,7 +22,7 @@ role :sphinx, "media.scpr.org"
 task :staging do
   roles.clear
   set :rails_env, :scprdev
-  set :branch, "ImplementPodcasts"
+  set :branch, "ImplementProgramPages"
   role :app, "scprdev.org"
   role :web, "scprdev.org"
   role :db,  "scprdev.org", :primary => true
