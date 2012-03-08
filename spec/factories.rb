@@ -88,40 +88,27 @@ FactoryGirl.define do
   factory :blog do
     sequence(:name) { |n| "Blog #{n}" }
     sequence(:slug) { |n| "blog-#{n}" }
-    _teaser "This is a blog teaser"
     description "This is a description for this blog."
     head_image "http://media.scpr.org/assets/images/heads/larry_transparent.png"
-    is_active true
-    is_remote false
-    is_news true
+    is_active 1
     feed_url "http://feeds.scpr.org/LarryMantleBlog"
-    custom_url "http://scpr.org" # it's a required field?
-    
-    factory :news_blog do
-      is_news true
-    end
-    
-    factory :non_news_blog do
-      is_news false
-    end
-    
-    factory :remote_blog do
-      is_remote true
-    end
+    is_remote 0
+    is_news 1
+    custom_url "http://multiamerican.scpr.org/" # hax, and it's a required field for some reason.
   end
   
   factory :category do
     trait :is_news do 
       sequence(:category) { |n| "Local #{n}" }
       sequence(:slug) { |n| "local-#{n}" }
-      is_news true
+      is_news '1'
       sequence(:comment_bucket_id)
     end
     
     trait :is_not_news do
       sequence(:category) { |n| "Culture #{n}" }
       sequence(:slug) { |n| "culture-#{n}" }
-      is_news false
+      is_news 0
       sequence(:comment_bucket_id)
     end
     

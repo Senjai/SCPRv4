@@ -5,7 +5,6 @@
 		border-bottom: 1px solid $grayLight;
 	}
 	.thumbnail {
-		margin-bottom: 10px;
 		background:$nearWhite;
 		min-height:180px;
 		padding:$baseline / 2;
@@ -16,6 +15,9 @@
 				color:$black;
 			}
 		}
+		hr {
+			margin-bottom:4px;
+		}
 		h5 {
 			@include font-sans-serif(normal, 11px);
 			color:$gray;
@@ -25,17 +27,18 @@
 			font-size:12px;
 			line-height:14px;
 		}
-		.latest-post {
-			margin: 4px 0 0 0;
-			border-top: 1px solid $grayLighter;
-			padding-top: 4px;
-			a {
-				@include font-headline(500);
-				font-size:16px;
-			}
-			span {
-				display:block;
-				font-size:12px;
+		ul {
+			margin-left:0;
+			li {
+				list-style-type:none;
+				a {
+					@include font-headline(500);
+					font-size:16px;
+				}
+				span {
+					display:block;
+					font-size:12px;
+				}
 			}
 		}
 	}
