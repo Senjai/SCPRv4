@@ -162,7 +162,11 @@ module ApplicationHelper
         return ("By " + [names.join(" with "), byels.join(" | ")].join(" | ")).html_safe
       end
     else
-      return ("By " + names.join(" with ")).html_safe
+      if names.any?
+        return ("By " + names.join(" with ")).html_safe
+      else
+        return ""
+      end
     end
   end
   
