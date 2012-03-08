@@ -41,10 +41,10 @@ class PodcastsController < ApplicationController
     # if we have content, grab 25 items and collect only those with audio
     if @content
       @content = @content.first(25).collect { |c| c.audio.any? ? c : nil }.compact
-    end
-    
-    # we limit podcasts to 15 items
-    @content = @content.first(15)
+
+      # we limit podcasts to 15 items
+      @content = @content.first(15)
+    end    
         
     xml = render_to_string :formats => [:xml]
     
