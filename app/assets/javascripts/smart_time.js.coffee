@@ -7,6 +7,7 @@ class scpr.SmartTime
         finder:             ".smarttime"
         datetime_format:    "%B %d, %I:%M %p"
         date_format:        "%B %d"
+        prefix:             "| "
         relative:           "8h"
         timecut:            "36h"
         window:             null
@@ -74,15 +75,15 @@ class scpr.SmartTime
             # are we doing relative or absolute timing?
             if @relative and now.subtract(@relative...) < @time
                 # relative formatting
-                @$el.text @time.fromNow()
+                @$el.text "" + @options.prefix + @time.fromNow()
                 
             else
                 # absolute formatting
                 if @timecut and now.subtract(@timecut...) > @time
                     # use date-only format
-                    @$el.text @time.strftime @options.date_format
+                    @$el.text "" + @options.prefix + @time.strftime @options.date_format
                 else
                     # use date, time format
-                    @$el.text @time.strftime @options.datetime_format                
+                    @$el.text "" + @options.prefix + @time.strftime @options.datetime_format                
                 
                     
