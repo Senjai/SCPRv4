@@ -15,7 +15,6 @@ class Blog < ActiveRecord::Base
   end
   
   def teaser
-    # _teaser
-    description # temporary patch for staging
+    _teaser
   end
 end
