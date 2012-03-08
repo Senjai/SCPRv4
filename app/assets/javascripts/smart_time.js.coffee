@@ -4,26 +4,35 @@
 
 class scpr.SmartTime
     DefaultOptions:
-        finder:  ".smarttime"
-        abs_format: "%B %d, %I:%M %p"
+        finder:             ".smarttime"
+        datetime_format:    "%B %d, %I:%M %p"
+        date_format:        "%B %d"
+        relative:           "8h"
+        timecut:            "36h"
+        window:             null
             
     constructor: (options) ->
-        @options = _.defaults options||{}, @DefaultOptions        
+        @options = _.defaults options||{}, @DefaultOptions
+        
+        # build some defaults
+        for opt in ['relative','timecut','window']
+            if @options[opt]
+                @options[opt] = ( @options[opt].match /(\d+)\s?(\w+)/)?[1..2].reverse()
 
         # now find our elements
         @elements = _.compact( new SmartTime.Instance(el,@options) for el in $ @options.finder )
-        
 
     #----------
     
     class SmartTime.Instance
         constructor: (el,options) ->
-            @time       = null
-            @window     = null
-            @relative   = null
-            
             @$el = $(el)
             @options = options
+            
+            @time       = null
+            @window     = @options.window
+            @relative   = @options.relative
+            @timecut    = @options.timecut
             
             # -- find our time -- #
             
@@ -43,14 +52,9 @@ class scpr.SmartTime
                 
             # -- look for display limits -- #
             
-            if @$el.attr("data-timewindow")
-                # timewindow provides a window in which we handle display. If we're 
-                # outside the window, we display nothing
-                @window = (@$el.attr("data-timewindow").match /(\d+)\s?(\w+)/)?[1..2].reverse()
-            
-            if @$el.attr("data-relativefor")
-                # set a window for relative times / dates
-                @relative = (@$el.attr("data-relativefor").match /(\d+)\s?(\w+)/)?[1..2].reverse()
+            for opt in ['relative','timecut','window']
+                if @$el.attr("data-#{opt}")
+                    @[opt] = (@$el.attr("data-#{opt}").match /(\d+)\s?(\w+)/)?[1..2].reverse()            
             
             # -- now figure out our display -- #
                 
@@ -59,20 +63,26 @@ class scpr.SmartTime
         #----------
         
         update: ->
+            now = moment()
+            
             # if we have a window, are we inside of it?
-            if @window and moment().subtract(@window...) > @time
+            if @window and now.subtract(@window...) > @time
                 # outside the window...  
                 @$el.text ''
                 return true
                 
             # are we doing relative or absolute timing?
-            if @relative and moment().subtract(@relative...) < @time
+            if @relative and now.subtract(@relative...) < @time
                 # relative formatting
                 @$el.text @time.fromNow()
                 
             else
                 # absolute formatting
-                @$el.text @time.strftime @options.abs_format
-                
+                if @timecut and now.subtract(@timecut...) > @time
+                    # use date-only format
+                    @$el.text @time.strftime @options.date_format
+                else
+                    # use date, time format
+                    @$el.text @time.strftime @options.datetime_format                
                 
                     

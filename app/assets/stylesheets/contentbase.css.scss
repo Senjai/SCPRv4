@@ -11,6 +11,14 @@
 	h4 {
 		color:$gray;
 		@include font-sans-serif(normal, 11px);
+	    line-height: 1.1em;
+        margin-top: 6px;
+        text-transform: uppercase;
+	
+		a {
+	        color: $gray;
+	        font-weight: 600;
+		}
 	}
 	
 	a.comment_link {
@@ -23,9 +31,7 @@
 	
 	time {
 	    display: inline-block;
-        @include font-heading();
-        font-weight: normal;
-        font-size: 11px;
+        @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;
     }
