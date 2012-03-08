@@ -29,7 +29,7 @@
 	    margin-left: 4px;
 	}
 	
-	time {
+	time, .shell-link {
 	    /* display: inline-block; */
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;
