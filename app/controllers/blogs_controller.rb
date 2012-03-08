@@ -4,7 +4,10 @@ class BlogsController < ApplicationController
   before_filter :load_blog, :except => [:index]
   
   def index
-    @blogs = Blog.active.where(:is_remote => false).order("blogs_blog.name asc")
+    @blogs = Blog.active.order("name")
+    @news_blogs = @blogs.local.is_news
+    @non_news_blogs = @blogs.local.is_not_news
+    @remote_blogs = @blogs.remote
     render :layout => "application"
   end
   
