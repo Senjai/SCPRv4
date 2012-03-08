@@ -4,26 +4,26 @@
 <div class="row">
 	<%= article_meta_for @segment %>
 
-	<section class="segment span6">
-		<h5 class="episode-title">
-			<% if @segment.episodes.present? %>
-				<%= link_to @segment.episodes.first.title, @segment.episodes.first.link_path %>
-			<% else %>
-				<%= link_to @program.title, program_path(@program) %>
-			<% end %>
-		</h6>
+		<section class="segment span6">
+			<h5 class="episode-title">
+				<% if @segment.episodes.present? %>
+					<%= link_to @segment.episodes.first.title, @segment.episodes.first.link_path %>
+				<% else %>
+					<%= link_to @program.title, program_path(@program) %>
+				<% end %>
+			</h6>
 	
-		<article class="segment">
-			<h1 class="story-title"><%= @segment.headline %></h1>
-			<%= render_asset @segment, "segment" %>
-			<div class="story-body">
-				<%= simple_format @segment.body %>
+			<article class="segment">
+				<h1 class="story-title"><%= @segment.headline %></h1>
+				<%= render_asset @segment, "segment" %>
+				<div class="story-body">
+					<%= simple_format @segment.body %>
 				
-				<br style="clear: both"/>
-				<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @segment %>
-			</div>
-		</article><!-- article.segment -->
+					<br style="clear: both"/>
+					<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @segment %>
+				</div>
+			</article><!-- article.segment -->
 	
-		<%= render "shared/cwidgets/comments", :cssClass => '', :content => @segment %>
-	</section> <!-- section.segment -->
+			<%= render "shared/cwidgets/comments", :cssClass => '', :content => @segment %>
+		</section> <!-- section.segment -->
 </div>

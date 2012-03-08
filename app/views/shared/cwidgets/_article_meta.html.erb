@@ -1,5 +1,4 @@
-<% content ||= false %>
-<% if content %>
+<% if content ||= nil %>
 	<div class="span2 article-meta">
 		<div class="date">
 			<p><%= smart_date content %></p>
