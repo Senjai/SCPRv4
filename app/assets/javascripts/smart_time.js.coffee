@@ -5,8 +5,8 @@
 class scpr.SmartTime
     DefaultOptions:
         finder:             ".smarttime"
-        datetime_format:    "%B %d, %I:%M %p"
-        date_format:        "%B %d"
+        datetime_format:    "| %B %d, %I:%M %p"
+        date_format:        "| %B %d"
         relative:           "8h"
         timecut:            "36h"
         window:             null

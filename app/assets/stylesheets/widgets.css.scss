@@ -121,7 +121,7 @@
 	}
 	.jp-title {
 		border-right:1px solid $grayLighter;
-		width:650px;
+		width:648px;
 		float:left;
 		p {
 			@include font-sans-serif(bold, 16px);
@@ -230,9 +230,30 @@
 			}
 		}
 	}
-	.bar-close a {
-		@include font-sans-serif(normal, 11px);
-		color:$grayLight;
+	.bar-close {
+		float:left;
+		position:relative;
+		width:60px;
+		a {	
+			color:#fff;
+			@include font-sans-serif(normal, 11px);
+			background:transparent url(image_path('audio-close.png')) no-repeat 19px 20px;
+			display:block;
+			font-size:9px;
+			width:58px;
+			height:58px;
+			opacity:0.8;
+			padding:42px 0 0 2px;
+			position:absolute;
+			left:0;
+			top:0;
+			vertical-align:bottom;
+			&:hover {
+				color:$gray;
+				opacity:1.0;
+				text-decoration:none;
+			}
+		}
 	}
 }
 

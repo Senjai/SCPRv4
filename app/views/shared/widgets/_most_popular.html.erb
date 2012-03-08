@@ -7,14 +7,14 @@
 	</ul>
 	<div class="popular" id="pop_tab1">
 		<% if popular = ActionController::Base.cache_store.read("widget/popular_viewed") %>
-	        <%= popular %>
+	        <%= raw popular %>
 	    <% else %>
 	        <p>The most viewed content widget has an error and will refresh momentarily.</p>
 	    <% end %>
 	</div>
 	<div class="popular" id="pop_tab2">
 		<% if discussed = ActionController::Base.cache_store.read("widget/popular_commented") %>
-	        <%= discussed %>
+	        <%= raw discussed %>
 	    <% else %>
 	        <p>The most discussed content widget has an error and will refresh momentarily.</p>
 	    <% end %>    

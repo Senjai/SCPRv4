@@ -2,7 +2,10 @@
 	<%= render_asset(content,"offlead") %>
 
 	<h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
-	<h4><%= render_byline content %> | <time class="smarttime" datetime="<%= content.published_at.strftime("%FT%R") %>" data-unixtime="<%= content.published_at.to_i %>" data-window=""/></h4>
+	<h4>
+		<%= render_byline content %>
+		<time class="smarttime" datetime="<%= content.published_at.strftime("%FT%R") %>" data-unixtime="<%= content.published_at.to_i %>" data-window=""></time>
+	</h4>
 
 	<p><%= strip_tags content.teaser %></p>
 </div>

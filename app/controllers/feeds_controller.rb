@@ -2,6 +2,13 @@ class FeedsController < ApplicationController
   layout nil
   
   def all_news
+    response.headers["Content-Type"] = 'text/xml'
+    
+    # check if we have a cached podcast.  If so, short-circuit and return it
+    if cache = Rails.cache.fetch("feeds:all_news")
+      render :text => cache, :formats => :xml and return
+    end
+    
     @feed = {
       :title => "All News || 89.3 KPCC",
       :description => "All news from KPCC's reporters, bloggers and shows."
@@ -19,6 +26,8 @@ class FeedsController < ApplicationController
       :without    => { :category => '' }
     )
     
-    render :action => "feed.xml"
+    xml = render_to_string :action => "feed", :formats => :xml
+    Rails.cache.write_entry("feeds:all_news",xml,:objects => [@content,"contentbase:new"].flatten)
+    render :text => xml, :format => :xml    
   end
 end

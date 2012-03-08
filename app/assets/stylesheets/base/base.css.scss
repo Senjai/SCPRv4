@@ -69,6 +69,13 @@ $analog2:           spin($baseColor, -22);
 // ------
 
 // mixin for getting IE to respect inline-block
+@mixin hide-text() {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+// mixin for getting IE to respect inline-block
 @mixin ie-inline-block() {
 	display:inline-block;
 	zoom:1;
