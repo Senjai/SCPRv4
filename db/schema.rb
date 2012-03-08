@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.boolean "is_remote",                                            :null => false
     t.string  "custom_url",  :limit => 140,                           :null => false
     t.boolean "is_news",                                              :null => false
+    t.string  "_teaser",     :limit => 115,                           :null => false
   end
 
   add_index "blogs_blog", ["name"], :name => "name", :unique => true
@@ -198,6 +199,10 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
 
   add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
+
+  create_table "blogs_remoteentry", :force => true do |t|
+    t.integer "comment_count", :default => 0, :null => false
+  end
 
   create_table "contentbase_category", :force => true do |t|
     t.string  "category",          :limit => 50,                   :null => false
@@ -759,6 +764,8 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.integer "duration"
   end
 
+  add_index "media_encoaudio", ["enco_number", "publish_date"], :name => "media_encoaudio_enco_number_6948cf1d7886f6e3_uniq", :unique => true
+
   create_table "media_image", :force => true do |t|
     t.text     "caption",    :limit => 2147483647, :null => false
     t.string   "credit",     :limit => 150,        :null => false
@@ -794,6 +801,8 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.integer "duration"
     t.integer "size"
   end
+
+  add_index "media_programaudio", ["slug", "publish_date"], :name => "media_programaudio_slug_3ba28574ecbcfebe_uniq", :unique => true
 
   create_table "media_related", :force => true do |t|
     t.integer "content_type_id",                    :null => false
@@ -1085,6 +1094,7 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.boolean "display_episodes",                       :default => false, :null => false
     t.boolean "display_segments",                                          :null => false
     t.integer "blog_id"
+    t.string  "video_player",     :limit => 20
   end
 
   add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
