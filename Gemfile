@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.0'
+gem 'rails', '3.2.2'
 gem 'mysql2'
 
-#gem 'redis-content-store', :path => "/Users/eric/projects/redis-content-store"
-gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
+#gem 'redis-content-store', :path => "/Users/eric/projects/scpr/redis-content-store"
+gem 'redis-content-store', "3.2.2", :git => "git://github.com/SCPR/redis-content-store.git"
 
 gem 'jquery-rails'
 gem 'will_paginate'
@@ -21,9 +21,9 @@ gem "ruby-mp3info"
 # in production environments by default.
 group :assets do
   gem "eco"
-  gem 'sass-rails', "  ~> 3.2.3"
+  gem 'sass-rails'
   gem "compass-rails"
-  gem 'coffee-rails', "~> 3.2.1"
+  gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
   gem 'oily_png'
 end
