@@ -1,0 +1,8 @@
+<% if entry ||= nil and blog ||= nil %>
+	<div class="entry simple">
+		<h3><%= link_to entry.title, entry.link_path %></h3>
+		<p class="byline">Via <%= link_to blog.name, blog.is_remote ? blog.custom_url : blog_path(blog) %></p>
+		<p><%= raw entry.try(:summary) || entry.teaser %></p>
+		<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => entry %>
+	</div>
+<% end %>

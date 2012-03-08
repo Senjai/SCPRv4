@@ -88,7 +88,7 @@ FactoryGirl.define do
   factory :blog do
     sequence(:name) { |n| "Blog #{n}" }
     sequence(:slug) { |n| "blog-#{n}" }
-    _teaser "This is a blog teaser"
+    sequence(:_teaser) { |n| "This is the blog #{n} teaser" }
     description "This is a description for this blog."
     head_image "http://media.scpr.org/assets/images/heads/larry_transparent.png"
     is_active true
@@ -107,6 +107,7 @@ FactoryGirl.define do
     
     factory :remote_blog do
       is_remote true
+      feed_url "http://oncentral.org/rss/latest"
     end
   end
   

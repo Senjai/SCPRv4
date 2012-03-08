@@ -36,11 +36,11 @@ class BlogEntry < ContentBase
   end
   
   def headline
-    self.title
+    title
   end
   
   def body
-    return self.content
+    self.content
   end
     
   def previous
@@ -63,5 +63,9 @@ class BlogEntry < ContentBase
       :slug => self.slug,
       :trailing_slash => true
     }.merge! options)
+  end
+  
+  class Feedzirra::Parser::RSSEntry # This is just so we can do "entry.link_path" and not have to care about the type of entry it is
+      element 'url', :as => :link_path
   end
 end

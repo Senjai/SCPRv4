@@ -1,8 +1,3 @@
-Given /^(\d+) blogs?$/ do |num|
-  @blogs = create_list :blog, num.to_i
-  @blog = @blogs[rand(@blogs.length)]
-end
-
 Given /^(\d+) blog entr(?:ies|y)$/ do |num|
   @blog_entries = create_list :blog_entry, num.to_i, blog: @blog
   @blog_entry = @blog_entries[rand(@blog_entries.length)]
