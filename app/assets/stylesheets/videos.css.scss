@@ -109,12 +109,16 @@ li.video-thumb {
 	}
 }
 
-div.latest-videos {
+.latest-videos {
 	border-top:1px solid $nearBlack;
 	margin-top: 20px;
 	padding-top: 10px;
 	ul {
 		width: 100%;
+		li.video-thumb {
+			max-width: 150px;
+			vertical-align: top;
+		}
 	}
 }
 

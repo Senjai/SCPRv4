@@ -27,7 +27,7 @@
 			<%= render partial: "shared/cwidgets/comments", locals: { cssClass: 'multimedia muted', content: @video } %>
 			<div class="multimedia latest-videos muted">
 				<h3 class="head">Latest Videos</h3>
-				<ul class="latest-videos videos">
+				<ul class="videos">
 					<%= render partial: 'video_thumb', collection: @latest_videos, locals: { size: "small" } %>
 				</ul>
 			</div>
