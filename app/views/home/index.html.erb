@@ -13,7 +13,7 @@
 		<div class="headlines">
 			<h6>More Headlines</h6>
 			<ul class="cbase">
-				<%= ActionController::Base.cache_store.read("home/headlines") %>
+				<%= raw Rails.cache.read("home/headlines") %>
 			</ul>
 		</div>
 	</div>
@@ -23,5 +23,5 @@
 </div>
 
 <% content_for :lower do %>
-	<%= ActionController::Base.cache_store.read("home/sections") %>
+	<%= raw Rails.cache.read("home/sections") %>
 <% end %>
