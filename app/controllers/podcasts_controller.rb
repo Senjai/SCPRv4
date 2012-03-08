@@ -15,6 +15,8 @@ class PodcastsController < ApplicationController
       # not valid... 
       render :text => "Invalid podcast slug.", :status => :not_found and return
     end
+    
+    response.headers["Content-Type"] = 'text/xml'
 
     # check if we have a cached podcast.  If so, short-circuit and return it
     if cache = Rails.cache.fetch("podcast:#{@podcast.id}")
