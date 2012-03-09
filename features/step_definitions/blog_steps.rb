@@ -1,16 +1,19 @@
 Given /^(\d+) news blogs?$/ do |num|
   @blogs = create_list :news_blog, num.to_i
   @blog = @blogs[rand(@blogs.length)]
+  @blogs.count.should eq num.to_i
 end
 
 Given /^(\d+) blogs?$/ do |num|
   @blogs = create_list :blog, num.to_i
   @blog = @blogs[rand(@blogs.length)]
+  @blogs.count.should eq num.to_i
 end
 
 Given /^(\d+) remote blogs?$/ do |num|
   @blogs = create_list :remote_blog, num.to_i
   @blog = @blogs[rand(@blogs.length)]
+  @blogs.count.should eq num.to_i
 end
 
 When /^I go to the blogs page$/ do
@@ -34,6 +37,10 @@ Then /^I should see the latest entry for that blog$/ do
   page.find(".thumbnail .latest-post").should have_content @blog.entries.first.title
 end
 
+Then /^I should see the latest entry for that remote blog$/ do
+  page.find(".thumbnail .latest-post").should have_css "a" # Just checking for a link but it's probably okay
+end
+
 Then /^I should see that blog's teaser$/ do
   page.should have_content @blog.teaser
 end
@@ -47,17 +54,11 @@ Then /^I should see the blog's entries listed$/ do
   page.should have_content @blog.entries.first.title
 end
 
-Then /^I should see the remote blog's entries listed$/ do
-  page.should have_css ".entry.simple", count: @blog.entries.count # FIXME: Need to account for pagination
-  page.should have_content @blog.entries.first.title
-end
-
-Given /^the entries for it have been cached$/ do
+Given /^the entry for it has been cached$/ do
   puts @cached = Blog.cache_remote_entries
   @cached.count.should eq @blogs.count
 end
 
-Then /^I should see the latest entries for that blog$/ do # This step fails because of an environment issue, the thing it's testing works though
-  # page.should have_css "ul.remote-entries li", count: @cached.count
-  # page.find("ul.remote-entries li:first-of-type").should have_content @cached.first.title
+Then /^I should see a timestamp for the latest entry$/ do
+  page.should have_css ".latest-post time", count: @blogs.count
 end

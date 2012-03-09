@@ -11,11 +11,12 @@ Scenario: See latest entry for a local blog
 	When I go to the blogs page
 	Then I should see the latest entry for that blog
 	
-Scenario: See latest entries for a remote blog
+Scenario: See latest entry for a remote blog
 	Given 1 remote blog
-	And the entries for it have been cached
+	And the entry for it has been cached
 	When I go to the blogs page
-	Then I should see the latest entries for that blog
+	Then I should see the latest entry for that remote blog
+	And I should see a timestamp for the latest entry
 
 Scenario: Blog Teaser on Blogs Index page
 	Given 1 blog
@@ -28,3 +29,9 @@ Scenario: Local Blog
 	When I go to that blog's page
 	Then I should see the blog's information
 	And I should see the blog's entries listed
+	
+Scenario: See time stamps
+	Given 1 blog
+	And 1 entry for that blog
+	When I go to the blogs page
+	Then I should see a timestamp for the latest entry

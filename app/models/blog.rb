@@ -19,13 +19,18 @@ class Blog < ActiveRecord::Base
   end
   
   def self.cache_remote_entries
+    view = ActionView::Base.new(ActionController::Base.view_paths, {})
+    class << view # So the partial can use the smart_date_js helper
+      include ApplicationHelper
+    end
+    
     success = []
     self.remote.each do |blog|
       if blog.feed_url.present? # No reason to even try if the feed_url is blank
         if feed = Feedzirra::Feed.fetch_and_parse(blog.feed_url) and !feed.is_a?(Fixnum) # Feedzirra returns the response code as a FixNum if something goes wrong.
           success.push blog if Rails.cache.write(
             "remote_blog:#{blog.slug}", 
-             ActionView::Base.new(ActionController::Base.view_paths, {}).render(partial: "blogs/cached/remote_blog_entry", collection: feed.entries.first(1), as: :entry)
+             view.render(partial: "blogs/cached/remote_blog_entry", collection: feed.entries.first(1), as: :entry)
           )
         end
       end

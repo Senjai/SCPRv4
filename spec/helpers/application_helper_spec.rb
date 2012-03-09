@@ -102,5 +102,41 @@ describe ApplicationHelper do
     it "Return the first argument as a string if it is not an array" do
       page_title("Page").should eq "Page"
     end
-  end   
+  end  
+  
+  describe "#smart_date_js" do # These tests could be dryed up
+    it "returns a time tag with all attributes filled in if some sort of Timestamp object is passed in" do
+      [Time, DateTime].each do |datetime|
+        time = datetime.now
+        time.should respond_to(:strftime)
+        smart_date_js(time).should eq content_tag(:time, '', class: "smarttime", "datetime" => time.strftime("%FT%R"), "data-unixtime" => time.to_i)
+      end
+    end
+    
+    it "returns a time tag with all attributes filled in if some sort of content is passed in" do
+      content = create :video_shell # arbitrary object which will respond to published_at
+      content.should respond_to(:published_at)
+      smart_date_js(content).should eq content_tag(:time, '', class: "smarttime", "datetime" => content.published_at.strftime("%FT%R"), "data-unixtime" => content.published_at.to_i)
+    end
+    
+    it "returns nil if passed-in object can't respond to published_at or strftime" do
+      smart_date_js("invalid").should eq nil
+    end
+    
+    it "accepts an optional options hash and merges it into the options for the content_tag" do
+      time = Time.now
+      smart_date_js(time, "data-window" => "8h").should eq content_tag(:time, '', class: "smarttime", "datetime" => time.strftime("%FT%R"), "data-unixtime" => time.to_i, "data-window" => "8h")
+    end
+    
+    it "overrides the default options in the content_tag with any passed-in options" do
+      time = Time.now
+      smart_date_js(time, "datetime" => "new format").should eq content_tag(:time, '', class: "smarttime", "datetime" => "new format", "data-unixtime" => time.to_i)
+    end
+    
+    it "always has smarttime as the class" do
+      time = Time.now
+      smart_date_js(time, class: "newClass").should eq content_tag(:time, '', class: "newClass smarttime", "datetime" => time.strftime("%FT%R"), "data-unixtime" => time.to_i)
+    end
+  end
+
 end
