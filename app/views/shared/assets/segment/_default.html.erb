@@ -1,4 +1,5 @@
-<div class="contentasset caW" style="width:<%= assets[0].asset.sizes.six.width %>px">
+<% vert = ( assets[0].asset.sizes.six.height.to_i > assets[0].asset.sizes.six.width.to_i ) ? true : false %>
+<div class="contentasset <%= vert ? "caR" : "caW" %>" style="width:<%= assets[0].asset.sizes.six.width %>px">
 	<%= assets[0].asset.tag(:six) %>
 	<h4><%= assets[0].asset.owner %></h4>
 	
