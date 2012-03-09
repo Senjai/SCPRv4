@@ -16,9 +16,9 @@
 			</div> <!-- .row -->
 		</div> <!-- .span8 -->
 		<div class="span4">
-			<div class="support">
-				Support all the great programming on KPCC, including this show.
-			</div> <!-- .support -->
+			<a class="support <%= @program.slug %>" href="http://scprcontribute.publicradio.org/">
+				Support all the great programming on KPCC, including <%= @program.title %>.
+			</a> <!-- .support -->
 		</div>
 	</div> <!-- .program-masthead -->
 <% end %>

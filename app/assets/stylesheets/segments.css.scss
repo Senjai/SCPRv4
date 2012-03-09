@@ -16,16 +16,32 @@
 		display: inline-block;
 	}
 	.info {
-		h3 {
-			@include font-heading
-		}
-		@include font-shorthand($size: 12px);
+		@include font-serif($size: 13px);
+		min-height:188px;
 		vertical-align: top;
 		padding-right: 5px;
+		h3 {
+			@include font-headline();
+			font-size:20px;
+			line-height:22px;
+			a {
+				color:$nearBlack;
+			}
+		}
+		.byline {
+			margin-bottom:10px;
+		}
 	}
 	.interact {
-		@include font-sans-serif($size: 10px);
+		@include font-sans-serif($size: 13px);
 		margin-right: 0;
+		.story-audio {
+			display:block;
+			margin-bottom:3px;
+			a {
+				padding-left:19px;
+			}
+		}
 	}
 }
 
@@ -57,10 +73,18 @@ section.segment {
 
 article.segment {
 	display: inline-block;
+	h1.story-title {
+		@include font-headline();
+	}
 }
 
 h5.episode-title {
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: 10px;
 	padding: 0 0 5px 0;
+	a {
+		color:$grayDark;
+		font-size:13px;
+		font-weight:500;
+	}
 }
