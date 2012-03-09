@@ -1,6 +1,13 @@
 require "spec_helper"
 
 describe ShowSegment do
+  describe "link_path" do
+    it "does not override the hard-coded options" do
+      segment = create :show_segment
+      segment.link_path(slug: "wrong").match("wrong").should be_nil
+    end
+  end
+  
   describe "headline" do
     it "is the title" do
       segment = build :show_segment

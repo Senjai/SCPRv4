@@ -20,9 +20,16 @@ describe BlogEntry do
       entry.should be_a ContentBase
     end
     
-    it "returns a link_path" do
-      entry = create :blog_entry
-      entry.should respond_to(:link_path)
+    describe "link_path" do
+      it "returns a link_path" do
+        entry = create :blog_entry
+        entry.should respond_to(:link_path)
+      end
+      
+      it "does not override the hard-coded options" do
+        entry = create :blog_entry
+        entry.link_path(slug: "wrong").match("wrong").should be_nil
+      end
     end
     
     describe "headline" do

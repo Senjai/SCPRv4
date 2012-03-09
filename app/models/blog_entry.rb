@@ -54,7 +54,7 @@ class BlogEntry < ContentBase
   #----------
   
   def link_path(options={})
-    Rails.application.routes.url_helpers.blog_entry_path({
+    Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
       :blog => self.blog.slug,
       :year => self.published_at.year, 
       :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
@@ -62,6 +62,6 @@ class BlogEntry < ContentBase
       :id => self.id,
       :slug => self.slug,
       :trailing_slash => true
-    }.merge! options)
+    }))
   end
 end

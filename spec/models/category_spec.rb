@@ -16,5 +16,10 @@ describe Category do
       category = create :category_news
       category.link_path(anchor: "comments").match("#comments").should_not be_nil
     end
+    
+    it "does not override the hard-coded options" do
+      category = create :category_news
+      category.link_path(category: "wrong").match("wrong").should be_nil
+    end
   end
 end

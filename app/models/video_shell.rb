@@ -25,6 +25,6 @@ class VideoShell < ContentBase
   end
   
   def link_path(options={}) # OPTIMIZE Dry this method up across ContentBase subclasses?
-    Rails.application.routes.url_helpers.video_path(self, { trailing_slash: true }.merge!(options))
+    Rails.application.routes.url_helpers.video_path(self, options.merge!({ trailing_slash: true }))
   end
 end
