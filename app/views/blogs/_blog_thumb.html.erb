@@ -5,7 +5,7 @@
 		<% if entry = blog.entries.published.first %>
 			<div class="latest-post">
 				<h5>Latest Post</h5>
-				<%= link_to entry.title, entry.link_path %> <span class="date-posted"><%= smart_date entry %></span>
+				<%= link_to entry.title, entry.link_path %> <time class="smarttime" datetime="<%= entry.published_at.strftime("%FT%R") %>" data-unixtime="<%= entry.published_at.to_i %>"></time>
 			</div>
 		<% end %>
 	</div>

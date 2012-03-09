@@ -25,7 +25,7 @@ class Blog < ActiveRecord::Base
         if feed = Feedzirra::Feed.fetch_and_parse(blog.feed_url) and !feed.is_a?(Fixnum) # Feedzirra returns the response code as a FixNum if something goes wrong.
           success.push blog if Rails.cache.write(
             "remote_blog:#{blog.slug}", 
-             ActionView::Base.new(ActionController::Base.view_paths, {}).render(partial: "blogs/cached/remote_blog_entry", collection: feed.entries.first(5), as: :entry)
+             ActionView::Base.new(ActionController::Base.view_paths, {}).render(partial: "blogs/cached/remote_blog_entry", collection: feed.entries.first(1), as: :entry)
           )
         end
       end
