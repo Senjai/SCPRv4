@@ -34,7 +34,7 @@
 		color: #bfbfbf;
 		@include font-heading(normal, 12px);
 		text-transform: uppercase;
-		opacity: 1;
+		opacity: 1 !important;
 		text-align: center;
 	}
 	.videos-overlay {
