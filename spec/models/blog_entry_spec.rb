@@ -2,37 +2,36 @@ require 'spec_helper'
 
 describe BlogEntry do
   it "responds to category" do
-    @entry = create_list :blog_entry, 3
-    @entry.any? { |e| e.category == nil }.should be_false
+    entry = create_list :blog_entry, 3
+    entry.any? { |e| e.category == nil }.should be_false
   end
   
   describe "scopes" do
     it "#published only selects published content" do
-      @published = create_list :blog_entry, 3, status: 5
-      @unpublished = create_list :blog_entry, 2, status: 3
+      published = create_list :blog_entry, 3, status: 5
+      unpublished = create_list :blog_entry, 2, status: 3
       BlogEntry.published.count.should eq 3
     end
   end
   
   describe "instance" do # TODO: Move these into ContentBase specs
     it "inherits from ContentBase" do
-      @entry = build :blog_entry
-      @entry.should be_a ContentBase
+      entry = build :blog_entry
+      entry.should be_a ContentBase
     end
     
     it "returns a link_path" do
-      @entry = create :blog_entry
-      @entry.link_path.should eq Rails.application.routes.url_helpers.blog_entry_path(
-        :blog => @entry.blog.slug,
-        :year => @entry.published_at.year, 
-        :month => @entry.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-        :day => @entry.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
-        :id => @entry.id,
-        :slug => @entry.slug,
-        :trailing_slash => true
-      ) # This should be hardcoded in
+      entry = create :blog_entry
+      entry.should respond_to(:link_path)
     end
-      
+    
+    describe "headline" do
+      it "is the title" do
+        entry = build :blog_entry
+        entry.headline.should eq entry.title
+      end
+    end
+    
     describe "#short_headline" do
       it "returns short_headline if defined" do
         short_headline = "Short"
@@ -40,9 +39,9 @@ describe BlogEntry do
         @entry.short_headline.should eq short_headline
       end
     
-      it "returns headline if not defined" do
+      it "returns title if not defined" do
         @entry = build :blog_entry
-        @entry.short_headline.should eq @entry.headline
+        @entry.short_headline.should eq @entry.title
       end
     end
     

@@ -1,30 +1,26 @@
 class BlogsController < ApplicationController
   require 'will_paginate/array'
   
-  before_filter :load_blog, :except => [:index]
+  before_filter :load_blog, :except => :index
+  before_filter :get_entries, except: [:index, :blog_tagged]
   
   def index
-    @blogs = Blog.active.where(:is_remote => false).order("blogs_blog.name asc")
+    @blogs = Blog.active.order("name")
+    @news_blogs = @blogs.local.is_news
+    @non_news_blogs = @blogs.local.is_not_news
+    @remote_blogs = @blogs.remote
     render :layout => "application"
   end
   
   #----------
   
   def show
-    @entries = @blog.entries.published.paginate(
-      :page => params[:page],
-      :per_page => 5
-    )
   end
   
   #----------
   
   def entry
     @entry = @blog.entries.published.find(params[:id])
-    @entries = @blog.entries.published.paginate(
-      :page => params[:page],
-      :per_page => 5
-    )
   end
   
   #----------
@@ -49,9 +45,13 @@ class BlogsController < ApplicationController
   end
   
   protected
-  def load_blog
-    @blog = Blog.find_by_slug(params[:blog])
-  rescue
-    redirect_to blogs_path()
-  end
+    def load_blog
+      unless @blog = Blog.find_by_slug(params[:blog])
+        redirect_to blogs_path
+      end
+    end
+    
+    def get_entries
+      @entries = @blog.entries.published.paginate(page: params[:page], per_page: 5)
+    end
 end

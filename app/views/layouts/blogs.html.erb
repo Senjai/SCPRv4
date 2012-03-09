@@ -15,7 +15,7 @@
 
 <% content_for :sidebartop do %>
 	<%= render "shared/widgets/blog_about" %>
-	<%= render :partial => "blogs/recent_posts" %>
+	<%= recent_posts @entries %>
 <% end %>
 
 <%= render :template => "layouts/application" %>

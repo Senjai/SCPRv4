@@ -1,7 +1,7 @@
-<% @PAGE_TITLE = @blog.name %>
+<% page_title @blog.name %>
 
 <div class="blog-landing">
-<%= render :partial => "entry", :collection => @entries, :as => :entry %>
+	<%= render :partial => "entry", :collection => @entries, :as => :entry %>
 </div>
 
 <div class="row">

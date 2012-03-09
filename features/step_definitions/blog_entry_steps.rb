@@ -1,15 +1,10 @@
-Given /^(\d+) blogs?$/ do |num|
-  @blogs = create_list :blog, num.to_i
-  @blog = @blogs[rand(@blogs.length)]
-end
-
 Given /^(\d+) blog entr(?:ies|y)$/ do |num|
   @blog_entries = create_list :blog_entry, num.to_i, blog: @blog
   @blog_entry = @blog_entries[rand(@blog_entries.length)]
   @blog_entries.count.should eq num.to_i
 end
 
-When /^I go to the blog's page$/ do
+When /^I go to their blog's page$/ do
   visit blog_path @blog
   current_path.should eq blog_path(@blog)
 end

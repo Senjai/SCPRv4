@@ -32,9 +32,9 @@ end
 
 Then /^I should see a section with the (\d+) most recently published videos$/ do |num|
   @latest_videos = VideoShell.published.limit(num.to_i)
-  page.find("ul.latest-videos").should have_css "li.video-thumb", count: num.to_i
-  find("ul.latest-videos li.video-thumb:first-of-type").should have_content @latest_videos.first.short_headline
-  find("ul.latest-videos li.video-thumb:last-of-type").should have_content @latest_videos.last.short_headline
+  page.find(".latest-videos ul").should have_css "li.video-thumb", count: num.to_i
+  find(".latest-videos li.video-thumb:first-of-type").should have_content @latest_videos.first.short_headline
+  find(".latest-videos li.video-thumb:last-of-type").should have_content @latest_videos.last.short_headline
 end
 
 When /^I click on the Browse All Videos button$/ do

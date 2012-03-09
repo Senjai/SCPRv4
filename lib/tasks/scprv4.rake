@@ -7,22 +7,33 @@ namespace :scprv4 do
   
   #----------
   
-  desc "Cache homepage one time"
-  task :homepage_once => [ :environment ] do
-    require 'rubypython'
+  namespace :cache do
+    desc "Cache Remote Blog Entries"
+    task :remote_blogs => :environment do
+      puts "Caching remote blogs..."
+      cached = Blog.cache_remote_entries
+      puts "Done!\n"
+    end
     
-    # load python
-    RubyPython.start()      
-    pickle = RubyPython.import("cPickle")
+    #----------
     
-    HomeController._cache_homepage(nil,pickle)
-  end
-  
-  #----------
-  
-  desc "Cache external programs"
-  task :programs_cache => [ :environment ] do
-    OtherProgram.active.each { |p| p.cache }
+    desc "Cache external programs"
+    task :programs => [ :environment ] do
+      OtherProgram.active.each { |p| p.cache }
+    end
+    
+    #----------
+    
+    desc "Cache homepage one time"
+    task :homepage => [ :environment ] do
+      require 'rubypython'
+    
+      # load python
+      RubyPython.start()      
+      pickle = RubyPython.import("cPickle")
+    
+      HomeController._cache_homepage(nil,pickle)
+    end
   end
   
   #----------

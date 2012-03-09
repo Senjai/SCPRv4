@@ -5,10 +5,10 @@ Background:
 	
 Scenario: View a list of blog entries
 	Given 2 blog entries
-	When I go to the blog's page
+	When I go to their blog's page
 	Then I should see a list of blog entries
 
 Scenario: See the article meta for each entry
 	Given 2 blog entries
-	When I go to the blog's page
+	When I go to their blog's page
 	Then I should see article meta for each entry

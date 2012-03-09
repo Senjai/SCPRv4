@@ -36,11 +36,11 @@ class BlogEntry < ContentBase
   end
   
   def headline
-    self.title
+    title
   end
   
   def body
-    return self.content
+    self.content
   end
     
   def previous

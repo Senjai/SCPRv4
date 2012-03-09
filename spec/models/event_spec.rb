@@ -1,9 +1,7 @@
 require "spec_helper"
 
 describe Event do
-  it "is alive" do # need event factory
-    true
-  end
+  pending # need event factory
 #   describe "#link_path" do
 #     it "can generate a link_path" do
 #       event = create :event
