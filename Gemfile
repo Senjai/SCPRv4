@@ -33,18 +33,15 @@ group :test, :development do
 	gem "rspec-rails"
 	gem 'guard-rspec' # Automatically run tests
 	gem 'guard-cucumber' # Automatically run tests
-	gem "guard-spork"
 	gem 'rb-fsevent', require: false # For file-watching on Mac
 end
 
 group :test do
-  gem 'cucumber-rails', require: false # Integration testing
+  gem 'cucumber-rails', ">= 1.3.0" # Integration testing
   gem 'factory_girl_rails' # Factories for test data
   gem 'database_cleaner' # Database cleaning strategy
   gem 'mocha' # cross-framework mocking
-#  gem 'launchy' # currently incompatible with rails 3.2
-  gem 'capybara' # Acceptance testing
-#  gem "spork", "> 0.9.0.rc" # Faster-running tests
+  gem 'capybara' # Acceptance/Integration testing
 end
 
 group :worker do

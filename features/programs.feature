@@ -36,7 +36,7 @@ Scenario: See an episodic program's episodes
 	Given there is 1 episodic-style kpcc program
 	And the program has 2 episodes
 	When I go to the program's page
-	Then I should see a list of episodes
+	Then I should see a list of older episodes below the current episode
 	And I should see each episode's primary asset
 	
 Scenario: See an episodic program's current episode

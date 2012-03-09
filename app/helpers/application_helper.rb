@@ -126,7 +126,7 @@ module ApplicationHelper
     end
     
     if datetime ||= nil
-      content_tag(:time, '', { class: "#{options[:class] + " " if options[:class]}smarttime", "datetime" => datetime.strftime("%FT%R"), "data-unixtime" => datetime.to_i }.merge!(options.except(:class)))  
+      content_tag(:time, '', { class: "#{options[:class] + " " if options[:class]}smart smarttime", "datetime" => datetime.strftime("%FT%R"), "data-unixtime" => datetime.to_i }.merge!(options.except(:class)))  
     else
       return nil
     end

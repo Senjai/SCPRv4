@@ -65,5 +65,4 @@ end
 
 After do |scenario|
   DatabaseCleaner.clean
-  
 end
