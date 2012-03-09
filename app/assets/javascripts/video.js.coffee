@@ -15,10 +15,10 @@ class scpr.VideoPage
             left: 'button.arrow.left'
             right: 'button.arrow.right' 
         inactive:
-            "background-color": "#000"
-            opacity: 0.5
-            color: "#444"
-            "border-color": "#444"
+            "background-color": "#2e2e2e"
+            opacity: 1
+            color: "#bfbfbf"
+            "border-color": "#808080"
         active:
             "background-color": "#2e2e2e"
             opacity: 1

@@ -25,16 +25,16 @@
 	button.browse-all-videos {
 		display: inline-block;
 		width: 175px;
-		background: #000 url(image_path('browse-all-default.png')) no-repeat left center;
-		border: 1px solid #444;
+		background: #2e2e2e url(image_path('browse-all-default.png')) no-repeat left center;
+		border: 1px solid #808080;
 		border-radius: 3px;
 		-moz-border-radius: 3px;
 		-webkit-border-radius: 3px;
 		padding: 8px 7px 8px 30px;
-		color: #444;
+		color: #bfbfbf;
 		@include font-heading(normal, 12px);
 		text-transform: uppercase;
-		opacity: 0.5;
+		opacity: 1;
 		text-align: center;
 	}
 	.videos-overlay {
