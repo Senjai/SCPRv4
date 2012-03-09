@@ -31,7 +31,7 @@ $headShotWidth: 90px;
 		}
 	}
 	li {
-		background-position: left bottom;
+		background-position: left 6px;
 		min-height:60px;
 		padding-left:100px;
 		&:hover {
@@ -45,10 +45,10 @@ $headShotWidth: 90px;
 }
 
 .program-masthead {
-	border-bottom: 1px solid $gray;
+	border-bottom: 1px solid #a2a2a2;
 	margin-bottom: $baseline / 2;
+	margin-top: $baseline / 2 * -1;
 	padding: 0 0 10px 0;
-	margin: 0;
 	.row {
 		position: relative;
 		min-height: $headShotHeight;
@@ -63,7 +63,7 @@ $headShotWidth: 90px;
 		position: absolute;
 		bottom: 0;
 		text-transform: uppercase;
-		margin-bottom: 10px;
+		margin-bottom: 0;
 		@include font-headline;
 		font-size: 40px;
 		line-height: 30px;
@@ -99,16 +99,22 @@ $headShotWidth: 90px;
 		.support {
 			position: relative;
 			top: 15px; /* hax */
-			left: 25px;
+			left: 14px;
 			height: $headShotHeight - 7px;
 			background: url(image_path('support-banner.png')) no-repeat left top;
-			padding: 7px 0 0 60px;
+			display:block;
+			padding: 9px 9px 0 63px;
 			margin: 0;
-			width: 249px;
-			color: #eee;
-			text-shadow: 0 1px #666;
-			@include font-serif;
+			width: 240px;
+			color: #fff;
+			text-shadow: 0 1px $orangeDark;
+			@include font-slab-headings(300, 13px);
 			overflow-y: hidden;
+			&.madeleine-brand {
+				font-size:11px;
+				line-height:15px;
+				padding-top:14px;
+			}
 		}
 	}
 }
@@ -214,24 +220,25 @@ a.with-icon {
 		background-image: url(image_path("icons/tiny-rss.png"));
 	}
 	&.archive {
-		@include font-heading($size: 12px);
+		@include font-sans-serif($size: 12px, $weight: bold);
 		background-image: url(image_path("icons/archived.png"));
 		padding-left: 21px;
 	}
 	&:hover {
-		background-color: $nearWhite;
-		text-decoration: none;
+		text-decoration: underline;
 	}
 }
 
 .connect {
 	.title {
 		display: block;
-		@include font-heading($size: 10px, $weight: 600);
+		@include font-heading($size: 12px, $weight: 600, $lineHeight: 14px);
+		margin-bottom:5px;
 		text-transform: uppercase;
 	}
 	a {
-		@include font-heading($weight: 200, $size: 10px);
+		@include font-sans-serif($weight: normal, $size: 12px);
+		margin-bottom:2px;
 		padding-left: 18px;
 	}
 	margin-bottom: 10px;
@@ -241,7 +248,7 @@ a.with-icon {
 	min-height: 100px;
 	margin: 0;
 	color: $gray;
-	@include font-sans-serif($size: 10px, $lineHeight: 14px);
+	@include font-sans-serif($size: 12px, $lineHeight: 16px);
 }
 
 .newsletter-subscribe {
@@ -271,31 +278,63 @@ a.with-icon {
 	}
 }
 
-.show-episodes {    
+.show-episodes {  
+	border-top:1px solid $grayLight;
+	margin-top:$baseline;
+	padding-top:$baseline / 2;  
     h2 {
-       font-weight: 400;
        color: $orangeDark;
+		font-size: 18px;
+		font-weight: 600;
     }
 }
 
 .show-episode {
-    margin-top: 18px;
-    
+	border-bottom: 1px solid $grayLighter;
+    margin-top: $baseline;
+	padding-bottom: 16px;
     .span2 img {
        width: 170px;
        height: 170px;
     }
+	h3 {
+		@include font-headline();
+		font-size:20px;
+		a {
+			color: $nearBlack;
+		}
+	}
+	p {
+		font-size:13px;
+		line-height:18px;
+	}
 }
 
 .current-episode {
     h2 {
-       font-weight: 400;
-       margin: 6px 0 12px 0;
+		font-size:18px;
+        font-weight: 600;
+        margin: 6px 0 12px 0;
+		a {
+			color:$nearBlack;
+		}
     }
     
     h3 {
         margin-top: 8px;
     }
+}
+.current-episide-segments {
+	h3 {
+		font-size:16px;
+		font-weight:600;
+	}
+	.cbase {
+		margin-bottom:$baseline / 2;
+		a.comment_link {
+			margin-left:0;
+		}
+	}
 }
 
 .upcoming-episode {

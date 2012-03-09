@@ -1,6 +1,19 @@
-.show-segments.span8 {
-	margin: 0;
-	padding: 0;
+.show-segments {
+	border-top:1px solid $grayLight;
+	margin-top:$baseline;
+	padding-top:$baseline / 2;
+	&.span8 {
+		margin: 0;
+		padding: 0;		
+	}
+	&.episode {
+		border-top:none;
+	}
+	h2 {
+		color:$orangeDark;
+		font-size:18px;
+		font-weight:600;
+	}
 }
 
 .segment-teaser {
@@ -15,17 +28,35 @@
 	div {
 		display: inline-block;
 	}
+	.span2+.info {
+		min-height:188px;
+	}
 	.info {
-		h3 {
-			@include font-heading
-		}
-		@include font-shorthand($size: 12px);
+		@include font-serif($size: 13px);
 		vertical-align: top;
 		padding-right: 5px;
+		h3 {
+			@include font-headline();
+			font-size:20px;
+			line-height:22px;
+			a {
+				color:$nearBlack;
+			}
+		}
+		.byline {
+			margin-bottom:10px;
+		}
 	}
 	.interact {
-		@include font-sans-serif($size: 10px);
+		@include font-sans-serif($size: 11px);
 		margin-right: 0;
+		.story-audio {
+			display:block;
+			margin-bottom:3px;
+			a {
+				padding-left:19px;
+			}
+		}
 	}
 }
 
@@ -57,10 +88,18 @@ section.segment {
 
 article.segment {
 	display: inline-block;
+	h1.story-title {
+		@include font-headline();
+	}
 }
 
 h5.episode-title {
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: 10px;
 	padding: 0 0 5px 0;
+	a {
+		color:$grayDark;
+		font-size:13px;
+		font-weight:500;
+	}
 }

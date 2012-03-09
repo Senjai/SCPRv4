@@ -2,20 +2,26 @@
 
 <div class="row">
 	<header class="span8 episode">
-		<h4><%= @episode.title %></h4>
-		<% if @episode.audio.present? %>
-			<div class="right">
-				<aside class="story-audio inline">
-						<a href="<%= @episode.audio.first.url %>" class="audio-toggler" title="<%= h @episode.headline  %>"
-						<a href="<%= @episode.audio.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>"></a><%= link_to "Listen to this episode", @episode.audio.first.url, class: "audio-toggler" %>
-						<a href="<%= @episode.audio.first.url %>">Download</a>
-				</aside>
-			</div>
-		<% end %>
+		<div class="row">
+		    <div class="span5">
+		    	<h4><%= @episode.title %></h4>
+		    </div>
+		    <div class="span3">
+		    	<% if @episode.audio.present? %>
+					<div class="right">
+						<aside class="story-audio inline">
+								<a href="<%= @episode.audio.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>"></a>
+								<%= link_to "Listen to this episode", @episode.audio.first.url, class: "audio-toggler play-text" %>
+								<a href="<%= @episode.audio.first.url %>" class="download">Download</a>
+						</aside>
+					</div>
+				<% end %>
+		    </div>
+		</div>
 	</header>
 </div>
 
-<section class="show-segments span8">
+<section class="show-segments episode span8">
 	<%= any_to_list? @segments, title: "Segments" do %>
   		<%= render partial: 'segment', collection: @segments %>
 	<% end %>

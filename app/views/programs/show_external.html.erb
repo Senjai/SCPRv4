@@ -19,7 +19,7 @@
 
 	<h2>Recently</h2>
 	
-	<%= Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
+	<%= raw Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
 
 	<br style="clear: both"/>
 	<hr/>
@@ -28,7 +28,7 @@
 
 	<h2>Latest News</h2>
 	
-	<%= Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
+	<%= raw Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
 
 	<br style="clear: both"/>
 	<hr/>
