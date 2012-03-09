@@ -4,5 +4,4 @@ class FeaturedComment < ActiveRecord::Base
   belongs_to :content, :polymorphic => true
   
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("published_at desc")
-  
 end

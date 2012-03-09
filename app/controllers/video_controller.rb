@@ -5,7 +5,7 @@ class VideoController < ApplicationController
   
   def index
     begin
-      @video = VideoShell.published.recent_first.first
+      @video = VideoShell.published.first
     rescue
       redirect_to home_path
     end
@@ -20,13 +20,13 @@ class VideoController < ApplicationController
   end
   
   def list
-    @videos = VideoShell.recent_first.published
+    @videos = VideoShell.published
     @videos = @videos.paginate(page: params[:page], per_page: 9)
     respond_with @videos
   end
   
   protected
   def get_latest_videos
-    @latest_videos = VideoShell.recent_first.published.limit(4)
+    @latest_videos = VideoShell.published.limit(4)
   end
 end

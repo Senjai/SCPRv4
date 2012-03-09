@@ -1,5 +1,6 @@
-<section class="events-forum">
-	<h6>Events at the Crawford Family Forum</h6>
+<% content_cache("events:upcoming_forum") do %>
+	<% register_content "events/event:new" %>
+
 	<% for e in @g_upcoming_events_forum.first(2) %>
 		<div class="events-content">
 			<a href="<%= e.link_path %>">
@@ -9,4 +10,4 @@
 			</a>
 		</div>
 	<% end %>
-</section>
+<% end %>

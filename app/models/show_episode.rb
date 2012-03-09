@@ -18,7 +18,7 @@ class ShowEpisode < ContentBase
   def headline
     self.title
   end
-  
+
   #----------
   
   def _get_audio
@@ -27,13 +27,13 @@ class ShowEpisode < ContentBase
     
   #----------
   
-  def link_path
-    Rails.application.routes.url_helpers.episode_path(
+  def link_path(options={})
+    Rails.application.routes.url_helpers.episode_path({
       :show => self.show.slug,
       :year => self.air_date.year, 
       :month => self.air_date.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :day => self.air_date.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
       :trailing_slash => true
-    )
+    }.merge! options)
   end
 end

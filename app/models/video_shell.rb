@@ -5,11 +5,8 @@ class VideoShell < ContentBase
   ADMIN_PREFIX = "contentbase/videoshell"
   
   # Validations for the future
-  validates :headline, presence: true
-  validates :body, presence: true
-  
-  scope :published, where(status: STATUS_LIVE)
-  scope :recent_first, order("published_at desc")
+  # validates :headline, presence: true
+  # validates :body, presence: true
   
   define_index do
     indexes headline
@@ -23,7 +20,11 @@ class VideoShell < ContentBase
     where "status = #{STATUS_LIVE}"
   end
   
-  def link_path # OPTIMIZE Dry this method up across ContentBase subclasses?
-    Rails.application.routes.url_helpers.video_path(self, trailing_slash: true)
+  def to_param
+    "#{id}/#{slug}"
+  end
+  
+  def link_path(options={}) # OPTIMIZE Dry this method up across ContentBase subclasses?
+    Rails.application.routes.url_helpers.video_path(self, { trailing_slash: true }.merge!(options))
   end
 end

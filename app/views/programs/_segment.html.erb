@@ -1,0 +1,23 @@
+<article class="segment-teaser">
+	<div class="row">
+		<% if segment.assets.present? %>
+			<div class="span2">
+				<%= render_asset segment, 'lsquare' %>
+			</div>
+		<% end %>
+		<div class="info divider <%= segment.assets.present? ? "span4" : "span6" %>">
+			<h3><%= link_to segment.title, segment.link_path %></h3>
+			<p class="byline"><time pubdate=""><%= smart_date segment %></time> <span class="pipe">|</span> <%= render_byline segment %></p>
+			<%= segment.teaser %>
+		</div>
+		<div class="interact span2">
+			<%= link_to_audio("Listen now", segment, class: "inline") if segment.audio.present? %>
+			<%= comment_count_for segment, class: "inline" %>
+		</div>
+	</div>
+</article>
+
+<% content_for :footerjss do %>
+	if (!scA)
+		var scA = new scpr.Audio()
+<% end %>
