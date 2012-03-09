@@ -68,6 +68,15 @@ class Dashboard::Api::ContentController < ApplicationController
   #----------
   
   def recent
+    #response.headers["Content-Type"] = 'text/xml'
+
+    # check if we have a cached podcast.  If so, short-circuit and return it
+    if cache = Rails.cache.fetch("cbaseapi:recent")
+      render :json => cache, :formats => [:xml] and return
+    end
+    
+    # nope -- build a new cache
+    
     contents = ThinkingSphinx.search(
       '',
       :classes    => ContentBase.content_classes,
@@ -76,8 +85,11 @@ class Dashboard::Api::ContentController < ApplicationController
       :order      => :published_at,
       :sort_mode  => :desc,
     )
+        
+    json = contents.to_json
+    Rails.cache.write_entry("cbaseapi:recent", json,:objects => [contents,"contentbase:new"].flatten)
+    render :json => json
     
-    render :json => contents.as_json
   end
   
   #----------
