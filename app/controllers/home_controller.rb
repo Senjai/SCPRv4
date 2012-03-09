@@ -18,6 +18,7 @@ class HomeController < ApplicationController
     
     class << view  
       include ApplicationHelper  
+      include WidgetsHelper
       include Rails.application.routes.url_helpers
     end
     
