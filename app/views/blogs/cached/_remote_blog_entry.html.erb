@@ -1,0 +1,3 @@
+<% if entry ||= nil %>
+	<li><%= link_to entry.title, entry.url %> <p class="byline"><time pubdate=""><%= entry.published %></time></p></li>
+<% end %>

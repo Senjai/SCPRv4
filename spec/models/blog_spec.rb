@@ -22,57 +22,40 @@ describe Blog do
       blog.entries.first.class.should eq BlogEntry
     end
     
-    it "only returns published entries if the blog is local" do
+    it "returns all entries if the blog is local" do
       blog = create :blog
       create_list :blog_entry, 2, blog: blog, status: 0
       create_list :blog_entry, 1, blog: blog, status: 5
-      blog.entries.count.should eq 1
-    end
-    
-    it "returns the remote feed entries if the blog is remote" do
-      blog = create :remote_blog
-      blog.entries.first.class.should eq Feedzirra::Parser::RSSEntry # This is a little too specific for my tastes, I'd like to test functionality regardless of which RSS library we're using
+      blog.entries.count.should eq 3
     end
   end
   
-  describe "all_entries" do
-    it "returns all entries" do
+  describe "cache_remote_entries" do
+    it "does not cache local blogs" do
       blog = create :blog
-      create_list :blog_entry, 2, blog: blog, status: 0
-      blog.all_entries.count.should eq 2
-    end
-  end
-  
-  describe "remote_entries" do
-    it "returns the feed entries" do
-      blog = create :remote_blog
-      blog.remote_entries.count.should eq blog.feed.entries.count
-    end
-  end
-  
-  describe "feed" do # Probably should mock this stuff so it doesn't actually access the feed every time I run tests...
-    describe "with valid url" do
-      it "finds the feed" do
-        blog = build :blog, feed_url: "http://www.oncentral.org/rss/latest/"
-        blog.feed.feed_url.should_not be_blank
-      end
-      
-      it "returns entries" do
-        blog = build :blog, feed_url: "http://www.oncentral.org/rss/latest/"
-        blog.feed.entries.should_not be_blank # This is a poor way to test this, because if the feed is actually blank this will be false. Need to mock it.
-      end
+      Blog.cache_remote_entries.should be_blank
     end
     
-    describe "with invalid url" do
-      it "returns false if the feed url is blank" do
-        blog = build :blog, feed_url: ""
-        blog.feed.should be_false
-      end
+    it "returns the blogs it cached" do
+      blogs = create_list :remote_blog, 2
+      Blog.cache_remote_entries.count.should eq 2
+    end
     
-      it "Returns false if the feed url is not a feed" do
-        blog = build :blog, feed_url: "scpr.org"
-        blog.feed.should be_false
-      end
+    it "creates a cache for each remote blog" do
+      blogs = create_list :remote_blog, 2
+      Blog.cache_remote_entries
+      blogs.each { |blog| Rails.cache.fetch("remote_blog:#{blog.slug}").should_not be_blank }
+    end
+    
+    it "Does not cache if the feed_url isn't found" do
+      blog = create :remote_blog, feed_url: "Invalid URL"
+      Blog.cache_remote_entries.should be_blank
+    end
+    
+    it "responds with all the successful caches" do
+      create :remote_blog
+      create :remote_blog, feed_url: "Invalid"
+      Blog.cache_remote_entries.count.should eq 1 
     end
   end
   

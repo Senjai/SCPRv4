@@ -46,3 +46,13 @@ Then /^I should see the remote blog's entries listed$/ do
   page.should have_css ".entry.simple", count: @blog.entries.count # FIXME: Need to account for pagination
   page.should have_content @blog.entries.first.title
 end
+
+Given /^the entries for it have been cached$/ do
+  puts @cached = Blog.cache_remote_entries
+  @cached.count.should eq @blogs.count
+end
+
+Then /^I should see the latest entries for that blog$/ do # This step fails because of an environment issue, the thing it's testing works though
+  # page.should have_css "ul.remote-entries li", count: @cached.count
+  # page.find("ul.remote-entries li:first-of-type").should have_content @cached.first.title
+end

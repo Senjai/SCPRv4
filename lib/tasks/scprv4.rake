@@ -7,6 +7,17 @@ namespace :scprv4 do
   
   #----------
   
+  namespace :cache do
+    desc "Cache Remote Blog Entries"
+    task :remote_blogs => :environment do
+      puts "Caching remote blogs..."
+      cached = Blog.cache_remote_entries
+      puts "Done!\n"
+    end
+  end
+  
+  #----------
+  
   desc "Cache homepage one time"
   task :homepage_once => [ :environment ] do
     require 'rubypython'

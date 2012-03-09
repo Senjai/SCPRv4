@@ -1,0 +1,14 @@
+<% if blog ||= nil %>
+	<div class="thumbnail">
+		<h2><%= link_to blog.name, blog.custom_url %></h2>
+		<p class="description"><%= blog.teaser %></p>
+		<% if cached_entries = Rails.cache.fetch("remote_blog:#{blog.slug}") %>
+			<div class="latest-post">
+				<h5>Latest Posts</h5>
+				<ul class="remote-entries">
+					<%= cached_entries %>
+				</ul>
+			</div>
+		<% end %>
+	</div>
+<% end %>
