@@ -1,0 +1,12 @@
+<% if blog ||= nil %>
+	<div class="thumbnail">
+		<h2><%= link_to blog.name, blog_path(blog) %></h2>
+		<p class="description"><%= blog.teaser %></p>
+		<% if entry = blog.entries.published.first %>
+			<div class="latest-post">
+				<h5>Latest Post</h5>
+				<%= link_to entry.title, entry.link_path %> <time class="smarttime" datetime="<%= entry.published_at.strftime("%FT%R") %>" data-unixtime="<%= entry.published_at.to_i %>"></time>
+			</div>
+		<% end %>
+	</div>
+<% end %>

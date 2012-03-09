@@ -1,0 +1,3 @@
+<% if entry ||= nil %>
+	<%= link_to entry.title, entry.url %> <time class="smarttime" datetime="<%= entry.published.strftime("%FT%R") %>" data-unixtime="<%= entry.published.to_i %>"></time>
+<% end %>

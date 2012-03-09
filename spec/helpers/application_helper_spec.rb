@@ -102,14 +102,5 @@ describe ApplicationHelper do
     it "Return the first argument as a string if it is not an array" do
       page_title("Page").should eq "Page"
     end
-  end
-  
-  describe "#article_meta_for" do # Should we test this a little more? It's really just a partial that renders a bunch of other partials, so maybe not. 
-    it "renders the article_meta partial" do
-      object = build :show_segment # arbitrary object
-      article_meta_for(object).should_not be_blank
-    end
-  end
-    
-    
+  end   
 end

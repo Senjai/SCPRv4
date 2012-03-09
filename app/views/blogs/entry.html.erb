@@ -1,10 +1,9 @@
 <% 
-	@PAGE_TITLE = [@blog.name,@entry.headline].join(" : ")
+	page_title [@blog.name, @entry.title], " : "
 	@OG_TYPE = "blog"
 %>
 
 <%= render_content @entry, "opengraph" %>
-
 <%= render :partial => "entry", :object => @entry %>
 
 <div class="row">

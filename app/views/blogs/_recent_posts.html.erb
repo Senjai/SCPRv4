@@ -1,11 +1,13 @@
-<nav class="recent-posts widget">
-	<h6>Recent Posts</h6>
-	<ul>
-		<% for entry in @blog.entries.published.first(5) %>
-	    <li>
-	        <p><%= link_to entry.title, entry.link_path %></p>
-			<span class="date-posted"><%= smart_date entry %></span>
-	    </li>
-		<% end %>
-	</ul>
-</nav>
+<% if entries ||= nil %>
+	<nav class="recent-posts widget">
+		<h6>Recent Posts</h6>
+		<ul>
+			<% for entry in entries.first(5) %>
+		    <li>
+		        <p><%= link_to entry.title, entry.link_path %></p>
+				<span class="date-posted"><%= smart_date entry %></span>
+		    </li>
+			<% end %>
+		</ul>
+	</nav>
+<% end %>

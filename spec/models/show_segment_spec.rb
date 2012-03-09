@@ -9,9 +9,9 @@ describe ShowSegment do
   end
 
   describe "byline_elements" do
-    it "is an empty array" do
+    it "is an array with the show's title" do
       segment = build :show_segment
-      segment.byline_elements.should eq []
+      segment.byline_elements.should eq [segment.show.title]
     end
   end 	 	
  	 	
