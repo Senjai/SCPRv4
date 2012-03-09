@@ -25,6 +25,7 @@
 		<article class="span8">
 			<%= yield %>
 			<%= render partial: "shared/cwidgets/comments", locals: { cssClass: 'multimedia muted', content: @video } %>
+
 			<% if any_to_list? @latest_videos %>
 				<div class="multimedia latest-videos muted">
 					<h3 class="head">Latest Videos</h3>
@@ -33,6 +34,7 @@
 					</ul>
 				</div>
 			<% end %>
+
 		</article>
 		<div class="span2">&nbsp;</div>
 	</div> <!-- .row -->
