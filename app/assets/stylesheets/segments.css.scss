@@ -1,6 +1,19 @@
-.show-segments.span8 {
-	margin: 0;
-	padding: 0;
+.show-segments {
+	border-top:1px solid $grayLight;
+	margin-top:$baseline;
+	padding-top:$baseline / 2;
+	&.span8 {
+		margin: 0;
+		padding: 0;		
+	}
+	&.episode {
+		border-top:none;
+	}
+	h2 {
+		color:$orangeDark;
+		font-size:18px;
+		font-weight:600;
+	}
 }
 
 .segment-teaser {
@@ -15,9 +28,11 @@
 	div {
 		display: inline-block;
 	}
+	.span2+.info {
+		min-height:188px;
+	}
 	.info {
 		@include font-serif($size: 13px);
-		min-height:188px;
 		vertical-align: top;
 		padding-right: 5px;
 		h3 {
@@ -33,7 +48,7 @@
 		}
 	}
 	.interact {
-		@include font-sans-serif($size: 13px);
+		@include font-sans-serif($size: 11px);
 		margin-right: 0;
 		.story-audio {
 			display:block;
