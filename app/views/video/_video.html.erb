@@ -1,10 +1,12 @@
 <%# Featured video %>
-<article>
-	<section class="video">
-		<%= video.assets.first.asset.tags.eight.html_safe %>
-	</section>
-	<h1 class="story-headline"><%= video.headline %></h1>
-	<p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= smart_date video %></time></p>
-	<p class="description"><%= video.body %></p>
-	<%= render "shared/cwidgets/social_tools", :cssClass => 'multimedia muted' %>
-</article>
+<% if video ||= nil %>
+	<article>
+		<section class="video">
+			<%= video.assets.first.asset.tags.eight.html_safe %>
+		</section>
+		<h1 class="story-headline"><%= video.headline %></h1>
+		<p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= smart_date video %></time></p>
+		<p class="description"><%= video.body %></p>
+		<%= render "shared/cwidgets/social_tools", :cssClass => 'multimedia muted', path: video_path(video) %>
+	</article>
+<% end %>

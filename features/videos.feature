@@ -12,7 +12,7 @@ Scenario: Feature a specific video on the "Show" page
 	Given there are 2 video shells
 	When I go to the page for one of the videos
 	Then I should see that video featured
-	
+
 Scenario: Show 4 most recently published videos on index page
 	Given there are 8 video shells
 	When I go to the videos page

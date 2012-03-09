@@ -1,4 +1,5 @@
 <%# This page automatically loads the most recent VideoShell and features it %>
+<% @PAGE_TITLE = "Video" %>
 <%= any_to_list? @video, title: "Videos" do %>
 	<%= render partial: 'video', object: @video %>
 <% end %>
