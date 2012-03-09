@@ -1,13 +1,20 @@
 <%= content_cache("episode:#{current_episode.id}:current") do %>
-<div class="current-episode">
-	<h2><%= link_to current_episode.title, current_episode.link_path %></h2>
-	<div class="row">
-		<div class="span4">			
-			<%= render_content current_episode.segments.published, "headlines"%>
-		</div>
-		<div class="span4">
+<div class="current-episode row">
+	<div class="span4">
+		<h2><%= link_to current_episode.title, current_episode.link_path %></h2>
+		
+		<%= simple_format current_episode.teaser %>	
+	</div>
+	<div class="span4">
 			<%= render_asset current_episode, "lead"%>
-		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class="span4">
+		<%= render_content current_episode.segments.published.first(current_episode.segments.published.length/2), "headlines"%>
+	</div>
+	<div class="span4">
+		<%= render_content current_episode.segments.published[current_episode.segments.published.length/2..-1], "headlines"%>		
 	</div>
 </div>
 <% end %>
