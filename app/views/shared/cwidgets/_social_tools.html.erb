@@ -1,8 +1,10 @@
+<% path ||= request.fullpath %>
+
 <script type="text/javascript">
 	(function() {
 
-	var url = 'http%3A%2F%2Fscpr.org' + '<%=u request.fullpath %>';
-	var fburl = 'http://scpr.org' + '<%= request.fullpath %>' + '/';
+	var url = 'http%3A%2F%2Fscpr.org' + '<%=u path %>';
+	var fburl = 'http://scpr.org' + '<%= path %>' + '/';
 
 	jQuery.getJSON("http://urls.api.twitter.com/1/urls/count.json?url="+url+"&callback=?", function(data) {
 	jQuery('.sharing-tools span.twitter-count').html(data.count);
@@ -41,8 +43,8 @@
 <div class="sharing-tools <%= cssClass %> clearfix">
 	<h5>Share this story:</h5>
 	<ul>
-	    <li class="facebook"><a href="javascript:void(0)" onclick="open_social_popup('http://www.facebook.com/sharer.php?u=http%3A%2F%2Fscpr.org<%=u request.fullpath %>');">Facebook (<span class="fb-count" title="http://scpr.org<%= request.fullpath %>/"></span>)</a></li>
-	    <li class="twitter"><a href="javascript:void(0)" onclick="open_social_popup('https://twitter.com/intent/tweet?url=http%3A%2F%2Fscpr.org<%=u request.fullpath %>&text=Via+%40kpcc');">Twitter (<span class="twitter-count"></span>)</a></li>
+	    <li class="facebook"><a href="javascript:void(0)" onclick="open_social_popup('http://www.facebook.com/sharer.php?u=http%3A%2F%2Fscpr.org<%=u path %>');">Facebook (<span class="fb-count" title="http://scpr.org<%= path %>/"></span>)</a></li>
+	    <li class="twitter"><a href="javascript:void(0)" onclick="open_social_popup('https://twitter.com/intent/tweet?url=http%3A%2F%2Fscpr.org<%=u path %>&text=Via+%40kpcc');">Twitter (<span class="twitter-count"></span>)</a></li>
 		<li class="plus"><!-- Place this tag where you want the +1 button to render -->
 		<g:plusone size="small" annotation="none"></g:plusone>
 
