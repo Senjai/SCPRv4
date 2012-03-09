@@ -2,7 +2,7 @@ namespace :scprv4 do
   
   desc "Clear events cache"
   task :clear_events => [ :environment ] do 
-    Rails.cache.delete("views/mega_events_upcoming")
+    Rails.cache.expire_obj("events/event:new")
   end
   
   #----------
