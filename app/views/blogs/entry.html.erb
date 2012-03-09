@@ -4,6 +4,7 @@
 %>
 
 <%= render_content @entry, "opengraph" %>
+
 <%= render :partial => "entry", :object => @entry %>
 
 <div class="row">
@@ -16,7 +17,7 @@
 			</p>
 		<% end %>
 		
-		<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @entry %>
+		<%= social_tools_for @entry, cssClass: "bottom" %>
 		<%= render "shared/cwidgets/next_prev" %>
 		<%= render "shared/cwidgets/comments", :cssClass => '', :content => @entry %>	
 	</div>

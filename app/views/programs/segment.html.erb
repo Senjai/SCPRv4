@@ -20,7 +20,7 @@
 					<%= simple_format @segment.body %>
 				
 					<br style="clear: both"/>
-					<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @segment %>
+					<%= social_tools_for @segment, cssClass: "bottom" %>
 				</div>
 			</article><!-- article.segment -->
 	

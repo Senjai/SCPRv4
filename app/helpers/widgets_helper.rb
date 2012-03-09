@@ -38,12 +38,17 @@ module WidgetsHelper
     link_to "Comments (#{object.comment_count})", object.link_path(anchor: "comments"), options
   end
   
-  def article_meta_for(object)
-    render 'shared/cwidgets/article_meta', content: object
+  def article_meta_for(object, options={})
+    render 'shared/cwidgets/article_meta', { content: object }.merge!(options)
   end
   
-  def recent_posts(entries)
-    render "blogs/recent_posts", entries: entries
+  def recent_posts(entries, options={})
+    render "blogs/recent_posts", { entries: entries }.merge!(options)
   end
+  
+  def social_tools_for(object, options={})
+    options[:path] ||= object.link_path if object.respond_to?(:link_path)
+    render "shared/cwidgets/social_tools", { :content => object, cssClass: "" }.merge!(options)
+	end
   
 end

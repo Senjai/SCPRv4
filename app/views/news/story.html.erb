@@ -1,9 +1,9 @@
-<% @PAGE_TITLE = @story.headline %>
+<% page_title @story.headline %>
 
 <%= render_content @story, "opengraph" %>
 
 <% content_for :headline do %>
-	<%= render "shared/cwidgets/social_tools", :cssClass => '', :content => @story %>
+	<%= social_tools_for @story, cssClass: "bottom" %>
 	<h1 class="story-headline"><%= @story.headline %></h1>
 	<p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
 <% end %>
@@ -23,7 +23,7 @@
 
 <%= render "shared/cwidgets/pij_query", :content => @story %>
 
-<%= render "shared/cwidgets/social_tools", :cssClass => 'bottom', :content => @story %>
+<%= social_tools_for @story, cssClass: "bottom" %>
 
 <%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 

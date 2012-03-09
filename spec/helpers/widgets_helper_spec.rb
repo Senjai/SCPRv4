@@ -19,4 +19,21 @@ describe WidgetsHelper do
   describe "#recent_posts" do
     pending
   end
+  
+  describe "#social_tools_for" do
+    it "renders the partial" do
+      object = create :blog_entry # arbitrary object, should stub?
+      social_tools_for(object).should_not be_blank
+    end
+    
+    it "uses the path passed in" do
+      object = create :blog_entry
+      social_tools_for(object, path: "/some/path").match("/some/path").should_not be_nil
+    end
+    
+    it "uses the cssClass passed in" do
+      object = create :blog_entry
+      social_tools_for(object, cssClass: "someClass").match("someClass").should_not be_nil
+    end
+  end
 end

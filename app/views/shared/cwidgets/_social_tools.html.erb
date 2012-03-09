@@ -1,4 +1,6 @@
-<% path ||= request.fullpath %>
+<% # path priority: 1) "path" local passed into the helper, 2) content.link_path, 3) The current page's path
+	path ||= request.fullpath
+%>
 
 <script type="text/javascript">
 	(function() {

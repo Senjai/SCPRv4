@@ -3,7 +3,7 @@
 		<div class="date">
 			<p><%= smart_date content %></p>
 		</div>
-		<%= render "shared/cwidgets/social_tools", :cssClass => 'side', :content => content %>
+		<%= social_tools_for content, cssClass: "side" %>
 		<%= render "shared/cwidgets/comment_count", :cssClass => 'left-side', :content => content %>
 		<%= render "shared/cwidgets/audio", :content => content %>
 	</div>
