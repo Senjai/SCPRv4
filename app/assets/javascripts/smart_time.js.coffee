@@ -7,7 +7,7 @@ class scpr.SmartTime
         finder:             ".smarttime"
         datetime_format:    "%B %d, %I:%M %p"
         date_format:        "%B %d"
-        prefix:             "| "
+        prefix:             ""
         relative:           "8h"
         timecut:            "36h"
         window:             null
