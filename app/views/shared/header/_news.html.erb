@@ -56,6 +56,7 @@
 							<a href="<%= e.link_path %>">
 								<%= e.headline %>
 								<span class="blog-name"><%= e.blog.name %></span>
+								<time class="smarttime" datetime="<%= e.published_at.strftime("%FT%R") %>" data-unixtime="<%= e.published_at.to_i %>"  data-window="8h"></time>
 							</a>
 						</p></li>
 					<% end %>
