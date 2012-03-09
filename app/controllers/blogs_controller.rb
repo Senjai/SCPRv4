@@ -2,7 +2,7 @@ class BlogsController < ApplicationController
   require 'will_paginate/array'
   
   before_filter :load_blog, :except => :index
-  before_filter :get_entries, except: :index
+  before_filter :get_entries, except: [:index, :blog_tagged]
   
   def index
     @blogs = Blog.active.order("name")
@@ -15,11 +15,6 @@ class BlogsController < ApplicationController
   #----------
   
   def show
-    if @blog.is_remote
-      render :show_remote
-    else
-      render :show
-    end
   end
   
   #----------
@@ -57,6 +52,6 @@ class BlogsController < ApplicationController
     end
     
     def get_entries
-      @entries = @blog.entries.paginate(page: params[:page], per_page: @blog.is_remote ? 20 : 5)
+      @entries = @blog.entries.published.paginate(page: params[:page], per_page: 5)
     end
 end
