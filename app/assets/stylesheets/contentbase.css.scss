@@ -19,6 +19,11 @@
 	        color: $gray;
 	        font-weight: 600;
 		}
+		time {
+			border-left:1px solid $grayLight;
+			margin-left:2px;
+			padding-left:4px;
+		}
 	}
 	
 	a.comment_link {
@@ -34,7 +39,12 @@
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;
+		white-space:nowrap;
     }
+	.shell-link {
+		background:transparent url(image_path('icons/link-offsite.png')) no-repeat right 0;
+		padding:1px 15px 0 0;
+	}
     
 }
 .cbase.lead {
