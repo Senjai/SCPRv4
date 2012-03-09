@@ -34,7 +34,7 @@ module WidgetsHelper
   #----------
   
   def comment_count_for(object, options={})
-    options[:class] = "comment-count #{options[:class]}"
+    options[:class] = "comment_link #{options[:class]}"
     link_to "Comments (#{object.comment_count})", object.link_path(anchor: "comments"), options
   end
   
