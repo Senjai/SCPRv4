@@ -42,11 +42,11 @@ Scprv4::Application.routes.draw do
   match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry", :as => :blog_entry, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/blogs/:blog/(page/:page)' => 'blogs#show', :as => :blog, :constraints => { :page => /\d+/ }
   match '/blogs/' => 'blogs#index', :as => :blogs
-
+  
   # -- Programs -- #
   match '/programs/:show/:year/:month/:day/:id/:slug/' => "programs#segment", :as => :segment  
   match '/programs/:show/:year/:month/:day/' => "programs#episode", :as => :episode
-  match '/programs/:show/' => 'programs#show', :as => :program
+  match '/programs/:show(/page/:page)' => 'programs#show', :as => :program, :constraints => { :page => /\d+/ }
   match '/programs/' => 'programs#index', :as => :programs
   
   # -- Events -- #
@@ -55,6 +55,7 @@ Scprv4::Application.routes.draw do
   
   # -- Videos -- #
   resources :video, only: [:index, :show] do
+    match ':slug' => "video#show", on: :member
     match 'list', on: :collection, defaults: { format: :js }
   end
   
@@ -80,4 +81,6 @@ Scprv4::Application.routes.draw do
   # -- Home -- #
   match '/' => "home#index", :as => :home
   match '/beta/' => "home#beta", :as => :beta
+  
+  root to: "home#index"
 end

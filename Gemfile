@@ -16,6 +16,7 @@ gem 'therubyracer'
 gem 'newrelic_rpm'
 
 gem "ruby-mp3info"
+gem "feedzirra"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -37,13 +38,13 @@ group :test, :development do
 end
 
 group :test do
-  gem 'cucumber-rails' # Integration testing
+  gem 'cucumber-rails', require: false # Integration testing
   gem 'factory_girl_rails' # Factories for test data
   gem 'database_cleaner' # Database cleaning strategy
   gem 'mocha' # cross-framework mocking
 #  gem 'launchy' # currently incompatible with rails 3.2
   gem 'capybara' # Acceptance testing
-  gem "spork", "> 0.9.0.rc" # Faster-running tests
+#  gem "spork", "> 0.9.0.rc" # Faster-running tests
 end
 
 group :worker do

@@ -3,30 +3,14 @@
 <div class="row">
     <div class="span8">
     	<ul id="featured-programs" class="list-blocks">
-		    <li class="madeleine-brand">
-		        <a href="/programs/madeleine-brand/">
-		        	<h4>The Madeleine Brand Show</h4>
-		        	<p>Join Madeleine Brand for a conversational and witty look at the cultural issues people are buzzing about.</p>
-				</a>
-		    </li>
-		    <li class="airtalk">
-				<a href="/programs/airtalk/">
-		        	<h4>AirTalk</h4>
-		        	<p>Join host Larry Mantle weekdays for lively and in-depth discussions of city news, politics, the arts, and more.</p>
-				</a>
-		    </li>
-		    <li class="patt">
-		        <a href="/programs/patt-morrison/">
-		        	<h4>Patt Morrison</h4>
-		        	<p>Innovative discussions of local politics and culture, as well as global news as it affects Southern California.</p>
-				</a>
-		    </li>
-		    <li class="offramp">
-				<a href="/programs/offramp/">
-		        	<h4>Off-Ramp</h4>
-		        	<p>A lively weekly look at Southern California through the eyes and ears of radio veteran John Rabe.</p>
-				</a>
-		    </li>
+			<% @featured_programs.each do |program| %> <%# TODO Need to properly order these %>
+			<a href="<%= program_path(program) %>">
+			    <li class="<%=program.slug%>">
+					<h4><%= program.title %></h4>
+					<p><%= program.teaser.html_safe %></p>
+			    </li>
+			</a>
+			<% end %>
 		</ul>
     </div>
 </div>
@@ -34,17 +18,29 @@
 	<div class="span4">
 		<h3>Local Programs</h3>
 		<ul class="list-basic">
-		<% for p in @kpccprograms %>
-			<li><%= link_to p.title, program_path(p.slug) %></li>
-		<% end %>
+			<%= any_to_list? @kpcc_programs, title: "Local Programs" do %>
+				<% @kpcc_programs.each do |program| %>
+					<li>
+						<%= link_to program.title, program_path(program.slug) %> <%# OPTIMIZE partial? %>
+					</li>
+				<% end %>
+			<% end %>
 		</ul>
 	</div>
 	<div class="span4">
 		<h3>Other Programs</h3>
 		<ul class="list-basic">
-		<% for p in @otherprograms %>
-			<li><%= link_to p.title, program_path(p.slug) %></li>
-		<% end %>
+			<%= any_to_list? @other_programs, title: "Outside Programs" do %>
+				<% @other_programs.each do |program| %>
+					<li>
+						<%= link_to program.title, program_path(program.slug) %> <%# OPTIMIZE partial? %>
+					</li>
+				<% end %>
+			<% end %>
 		</ul>
 	</div>
 </div>
+
+<% content_for :footerjss do %>
+	var programPage = new scpr.ProgramPage();
+<% end %>

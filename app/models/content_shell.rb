@@ -17,7 +17,7 @@ class ContentShell < ContentBase
     where "status = #{STATUS_LIVE}"
   end
   
-  scope :published, where(:status => STATUS_LIVE).order("pub_at asc")
+  scope :published, where(:status => STATUS_LIVE).order("pub_at desc") # Overwriting ContentBase's `published` scope
 
   #----------
   
@@ -35,7 +35,7 @@ class ContentShell < ContentBase
   
   #----------
   
-  def link_path
+  def link_path(options={}) # The options here don't do anything, but it's a safe-guard against `wrong number of arguments` errors.
     self.url
   end
   
