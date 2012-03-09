@@ -15,8 +15,28 @@ class ProgramsController < ApplicationController
   def show
     # @program gets set via the before_filter
     if @program.is_a? KpccProgram
-      @segments = @program.segments.published.paginate(page: params[:page], per_page: 10)
-      @episodes = @program.episodes.published.paginate(page: params[:page], per_page: 6)
+      @segments = @program.segments.published
+      @episodes = @program.episodes.published
+      
+      # depending on what type of show this is, we need to filter some elements out of the 
+      # @segments and @episodes selectors
+      
+      if @program.display_episodes?
+        @current_episode = @program.episodes.published.first
+        
+        if @current_episode
+          # don't return the current episode in the episodes list
+          @episodes = @episodes.where("id != ?",@current_episode.id)
+          
+          if @current_episode.segments.published.any?
+            # don't include the current episodes segments in the segments list
+            @segments = @segments.where("id not in (?)", @current_episode.segments.published.collect(&:id) )
+          end
+        end        
+      end
+      
+      @segments = @segments.paginate(page: params[:page], per_page: 10)
+      @episodes = @episodes.paginate(page: params[:page], per_page: 6)
       render :action => "show"
     else
       render :action => "show_external"

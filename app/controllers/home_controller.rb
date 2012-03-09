@@ -18,6 +18,7 @@ class HomeController < ApplicationController
     
     class << view  
       include ApplicationHelper  
+      include Rails.application.routes.url_helpers
     end
     
     Rails.logger.debug("in _cache_homepage for #{obj_key}")

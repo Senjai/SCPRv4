@@ -19,7 +19,7 @@ class OtherProgram < ActiveRecord::Base
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  
 
     class << view  
-      include ApplicationHelper  
+      include ApplicationHelper
     end
     
     if self.podcast_url?
@@ -30,7 +30,7 @@ class OtherProgram < ActiveRecord::Base
         podcast = nil
       end
       
-      if podcast.present?
+      if podcast.present? && !podcast.is_a?(Fixnum)
         podcast_html = view.render :partial => "programs/cached/podcast_entry", :collection => podcast.entries.first(5), :as => :entry
         Rails.cache.write("ext_program:#{self.slug}:podcast", podcast_html)
       end
@@ -44,7 +44,7 @@ class OtherProgram < ActiveRecord::Base
         rss = nil
       end
       
-      if rss.present?
+      if rss.present? && !rss.is_a?(Fixnum)
         Rails.cache.write(
           "ext_program:#{self.slug}:rss", 
            view.render(:partial => "programs/cached/podcast_entry", :collection => rss.entries.first(5), :as => :entry)
