@@ -76,8 +76,8 @@ Then /^I should see a list of segments$/ do
   page.should have_css ".segment-teaser", count: @kpcc_program.segments.count
 end
 
-Then /^I should see a list of episodes$/ do
-  page.should have_css ".show-episode", count: @kpcc_program.episodes.count
+Then /^I should see a list of older episodes below the current episode$/ do
+  page.should have_css ".show-episode", count: @kpcc_program.episodes.count - 1
 end
 
 Then /^I should see the current episode's information$/ do
@@ -85,5 +85,5 @@ Then /^I should see the current episode's information$/ do
 end
 
 Then /^I should see a list of the current episode's segments$/ do
-  page.find(".current-episode").should have_css(".story-headline", count: @kpcc_program.episodes.published.first.segments.count)
+  page.find(".current-episode-segments").should have_css(".story-headline", count: @kpcc_program.episodes.published.first.segments.count)
 end

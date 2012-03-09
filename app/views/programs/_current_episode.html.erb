@@ -9,7 +9,7 @@
 			<%= render_asset current_episode, "lead"%>
 	</div>
 </div>
-<div class="current-episide-segments row">
+<div class="current-episode-segments row">
 	<% split_num = ( current_episode.segments.published.length.to_f / 2 ).ceil %>
 	<div class="span4">
 		<%= render_content current_episode.segments.published.first(split_num), "seg_headline" %>

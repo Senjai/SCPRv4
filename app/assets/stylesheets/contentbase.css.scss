@@ -41,12 +41,20 @@
         text-transform: uppercase;
 		white-space:nowrap;
     }
+
 	.shell-link {
 		background:transparent url(image_path('icons/link-offsite.png')) no-repeat right 0;
 		padding:1px 15px 0 0;
 	}
-    
 }
+
+time.smart {
+	/* display: inline-block; */
+    @include font-sans-serif(normal, 11px);
+    color: $orangeDark;
+    text-transform: uppercase;
+}
+
 .cbase.lead {
     h1 {
 	  font-size:26px;
