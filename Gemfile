@@ -37,7 +37,7 @@ group :test, :development do
 end
 
 group :test do
-  gem 'cucumber-rails' # Integration testing
+  gem 'cucumber-rails', require: false # Integration testing
   gem 'factory_girl_rails' # Factories for test data
   gem 'database_cleaner' # Database cleaning strategy
   gem 'mocha' # cross-framework mocking
