@@ -1,10 +1,11 @@
-<% if content.audio.any? %>
-	<aside class="story-audio">
+<% cssClass ||= nil %>
+<% if content.audio.present? %>
+	<aside class="story-audio <%= cssClass %>">
 		<div class="inner-container clearfix">
 			<div class="audio-content">
 				<h4>Listen Now</h4>
 			</div>
-			<a href="<%= content.audio.first.url %>" class="play-btn" title="<%= h content.headline %>">Play Audio</a>
+			<a href="<%= content.audio.first.url %>" class="play-btn audio-toggler" title="<%= h content.headline %>"></a>
 			<span class="duration">[<%= format_duration content.audio.first.duration %>]</span -->
 			<ul class="audio-tools">
 			    <li>
@@ -22,7 +23,7 @@
 						<h4>Extra Audio</h4>
 						<p><%= a.description %></p>
 					</div>
-					<a href="<%= a.url %>" class="play-btn" title="<%= h content.headline %>">Play Audio</a>
+					<a href="<%= a.url %>" class="play-btn audio-toggler" title="<%= h content.headline %>"></a>
 					<span class="duration">[<%= format_duration a.duration %>]</span -->
 					<ul class="audio-tools">
 					    <li>

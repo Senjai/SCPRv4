@@ -1,0 +1,66 @@
+.show-segments.span8 {
+	margin: 0;
+	padding: 0;
+}
+
+.segment-teaser {
+	border-bottom: 1px solid $grayLighter;
+	padding: 10px 0;
+	.contentasset {
+		margin-top: 6px;
+		width: 170px;
+		height: 170px;
+		overflow: hidden;
+	}
+	div {
+		display: inline-block;
+	}
+	.info {
+		h3 {
+			@include font-heading
+		}
+		@include font-shorthand($size: 12px);
+		vertical-align: top;
+		padding-right: 5px;
+	}
+	.interact {
+		@include font-sans-serif($size: 10px);
+		margin-right: 0;
+	}
+}
+
+section.segment-meta {
+	margin: 40px 0 0 0;
+	display: inline-block;
+	text-align: right;
+	time {
+		@include font-sans-serif($size: 10px, $weight: bold);
+	}
+	.sharing-tools {
+		margin-top: 20px;
+	}
+	.story-audio {
+		@include font-sans-serif($size: 10px);
+		.inner-container { /* This is because the audio widget as-is doesn't fit very well in the sidebar here */
+			padding: 5px;
+		}
+		.audio-content {
+			margin-top: 5px;
+			margin-right: 5px;
+		}
+	}
+}
+
+section.segment {
+	
+}	
+
+article.segment {
+	display: inline-block;
+}
+
+h5.episode-title {
+	border-bottom: 1px solid $grayLighter;
+	margin-bottom: 10px;
+	padding: 0 0 5px 0;
+}

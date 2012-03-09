@@ -17,14 +17,14 @@ class Event < ActiveRecord::Base
     "events/event:#{self.id}"
   end
 
-  def link_path
-    Rails.application.routes.url_helpers.event_path(
+  def link_path(options={})
+    Rails.application.routes.url_helpers.event_path({
       :year => self.starts_at.year, 
       :month => self.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :day => self.starts_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
       :slug => self.slug,
       :trailing_slash => true
-    )
+    }.merge! options)
     
   end
 end

@@ -24,8 +24,8 @@ FactoryGirl.define do
     twitter "@kpcc"
     sequence(:user_id) 
   end
-
-  factory :show, class: "KpccProgram" do
+  
+  factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
     sequence(:slug) { |n| "show-#{n}" }
     teaser "AirTalk, short teaser, etc."
@@ -35,9 +35,54 @@ FactoryGirl.define do
     air_status "onair"
     podcast_url "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=73329334&uo=6"
     rss_url "http://feeds.scpr.org/kpccAirTalk"
+    sidebar "Sidebar Content"    
     twitter_url "airtalk"
     facebook_url "http://www.facebook.com/KPCC.AirTalk"
-    is_segmented 1 
+    display_segments 1
+    display_episodes 1
+    
+    ignore { episode_count 0 }
+    ignore { segment_count 0 }
+    after_create do |kpcc_program, eval|
+      FactoryGirl.create_list(:show_episode, eval.episode_count, show: kpcc_program)
+      FactoryGirl.create_list(:show_segment, eval.segment_count, show: kpcc_program)
+    end
+  end
+  
+  factory :show_episode, aliases: [:episode] do
+    show
+    air_date Time.now.tomorrow.strftime("%Y-%m-%d")
+    title "AirTalk for May 22, 2009"
+    _teaser "This is a short summary of the show"
+    published_at Time.now
+    status 5
+    comment_count 0
+    
+    ignore { asset_count 0 }
+    after_create do |show_episode, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: show_episode)
+    end
+  end
+  
+  factory :show_rundown do
+    episode
+    segment
+    sequence(:segment_order) { |n| n } # TODO Test that segment_order is actually doing something 
+  end
+  
+  factory :other_program do
+    sequence(:title) { |n| "Other Program #{n}" }
+    sequence(:slug) { |n| "other-program-#{n}" }
+    teaser "Outside Program"
+    description "This is the description for the outside program!"
+    host "Larry Mantle"
+    airtime "Weekdays 10 a.m.-12 p.m."
+    air_status "onair"
+    podcast_url "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=73329334&uo=6"
+    rss_url "http://www.bbc.co.uk/worldservice/news/index.xml"
+    sidebar "Sidebar Content"
+    web_url "http://www.bbc.co.uk/worldservice/"
+    produced_by "BBC"
   end
   
   factory :blog do
@@ -83,6 +128,7 @@ FactoryGirl.define do
     association :category, factory: :category_not_news
     sequence(:headline) { |n| "This is a video #{n}" }
     status 5
+    sequence(:slug) { |n| "slug-#{n}" }
     sequence(:published_at) { |n| Time.now + 60*n }
     body "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet non congue libero commodo. Vestibulum dolor nibh, eleifend eu suscipit eget, egestas sed diam. Proin cursus rutrum nibh eget consequat. Donec viverra augue sed nisl ultrices venenatis id eget quam. Cras id dui a magna tristique fermentum in sit amet lacus. Curabitur urna metus, mattis vel mollis quis, placerat vitae turpis.
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
@@ -104,34 +150,33 @@ FactoryGirl.define do
     locale "local"
     sequence(:published_at) { |n| Time.now + 60*n }
     editing_status 2
-    is_published 1
+    is_published 1 # do we need this column?
     status 5
     byline "Local Byline"
     comment_count 1
     
-    ignore { asset_count 1 }
+    ignore { asset_count 0 }
     after_create do |news_story, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: news_story)
     end
   end
   
-  factory :show_segment do
-    association :category, factory: :category_not_news
+  factory :show_segment, aliases: [:segment] do
     show
+    association :category, factory: :category_not_news
     sequence(:title) { |n| "Show Segment #{n}" }
     sequence(:slug) { |n| "show-segment-#{n}" }
-    byline "KPCC"
-    outside_reporter 1
     _teaser "This is a teaser for the show segment"
     body "This is a description of the show segment"
     locale "local"
-    is_published 1
     status 5
     comment_count 1
     _short_headline "Short Headline"
     sequence(:published_at) { |n| Time.now + 60*n }
+    audio_date Time.now
+    enco_number 999
     
-    ignore { asset_count 1 }
+    ignore { asset_count 0 }
     after_create do |show_segment, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: show_segment)
     end
@@ -151,7 +196,7 @@ FactoryGirl.define do
     comment_count 1
     sequence(:published_at) { |n| Time.now + 60*n }
     
-    ignore { asset_count 1 }
+    ignore { asset_count 0 }
     after_create do |blog_entry, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: blog_entry)
     end
@@ -168,7 +213,7 @@ FactoryGirl.define do
     status 5
     sequence(:pub_at) { |n| Time.now + 60*n } # TODO Replace `pub_at` with `published_at` for consistency 
     
-    ignore { asset_count 1 }
+    ignore { asset_count 0 }
     after_create do |content_shell, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: content_shell)
     end

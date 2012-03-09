@@ -8,11 +8,9 @@ class ShowSegment < ContentBase
   
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id" 
   has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
-  
+
   belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
   has_many :uploaded_audio, :as => "content"
-  
-  scope :published, where(:status => STATUS_LIVE).order("published_at desc")
   
   define_index do
     indexes title
@@ -40,7 +38,7 @@ class ShowSegment < ContentBase
   #----------
   
   def canFeature?
-    self.assets.any? ? true : false
+    self.assets.present?
   end
   
   #----------
@@ -51,8 +49,8 @@ class ShowSegment < ContentBase
   
   #----------
   
-  def link_path
-    Rails.application.routes.url_helpers.segment_path(
+  def link_path(options={})
+    Rails.application.routes.url_helpers.segment_path({
       :show => self.show.slug,
       :year => self.published_at.year, 
       :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
@@ -60,6 +58,6 @@ class ShowSegment < ContentBase
       :id => self.id,
       :slug => self.slug,
       :trailing_slash => true
-    )
+    }.merge! options)
   end
 end

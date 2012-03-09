@@ -33,6 +33,7 @@
 	border-bottom:1px solid $grayLighter;
 	border-top:1px solid $grayLighter;
 	margin-bottom:$baseline;
+
 	a.play-btn {
 		background:transparent url(image_path('media-players/story-audio-play.png')) no-repeat top left;
 		display:block;
@@ -45,6 +46,20 @@
 			background-position:0 -36px;
 		}
 	}
+	
+	&.inline {
+		background: none;
+		border: none;
+		margin: none;
+		display: inline;
+	}
+	
+	a.inline {
+		background: url(image_path('icons/tiny-listen.png')) no-repeat 2px 5px;
+		display: inline-block;
+		padding-left: 17px;
+	}
+	
 	.audio-content {
 		float:left;
 		h4 {
@@ -649,12 +664,18 @@ ul.carousel {
 		}
 	}
 }
-//Comment Count Widget 
+//Comment Count Widget
+a.comment-count.inline {
+	background: url(image_path('icons/tiny-quotes.png')) no-repeat 2px 2px;
+	padding-left: 18px;
+	border: none;
+}
 .comment-count {
 	border-top:1px solid $grayLight;
 	margin-bottom:$baseline;
 	h4 {
-		background:url(image_path('icons/comment-count.png')) no-repeat 0 0;
+		background-position: left top;
+		background:url(image_path('icons/comment-count.png')) no-repeat;
 		color:$grayDark;
 		font-size:16px;
 		font-weight:600;
@@ -678,14 +699,19 @@ ul.carousel {
 		h4 {
 			@include ie-inline-block();
 		}
+		&.right-align {
+			h4 {
+				@include ie-inline-block();
+				background-position: right 0;
+				padding-left: 0;
+				padding-right: 28px;
+			}
+		}
 	}
 	&.right-side {
 		text-align:left;
 		.inner-container {
 			padding-left:0;
-		}
-		h4 {
-			@include ie-inline-block();
 		}
 	}
 }

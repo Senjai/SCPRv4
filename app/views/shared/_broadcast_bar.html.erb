@@ -1,10 +1,10 @@
-<% o = Schedule.on_now %>
+<% if o = Schedule.on_now %>
 <div id="broadcast-bar-outer-container" class="<%= o.programme.is_a?(KpccProgram) ? "headshot" : "" %>">
 <div id="broadcast-bar-inner-container">
 <section class="broadcastbar">
 	<div class="left">
 	<ul>
-		<li class="active-show-title">
+		<li class="active-show-title <%= o.program %>">
 			<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
 			<% if o.programme %>
 			<a href="<%= program_path(o.programme.slug) %>" class="<%= o.programme.display_episodes %>">
@@ -30,7 +30,7 @@
 	</div>
 	<div class="right">
 	<ul>
-		<% u = o.up_next %>
+		<% if u = o.up_next %>
 			<li class="upnext-show-title">
 				<%= image_tag("broadcast-bar/upnext.png", :size => "66x21", :alt => 'Up Next', :style => "margin-bottom: -3px") %>
 				<%= u.program %>
@@ -39,8 +39,10 @@
 				<%= u.start_time.strftime(u.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
 				 - <%= u.end_time.strftime(u.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
 			</li>	
+		<% end %>
 	</ul>
 	</div>
 </section>
 </div>
 </div>
+<% end %>

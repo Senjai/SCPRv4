@@ -20,6 +20,13 @@ namespace :scprv4 do
   
   #----------
   
+  desc "Cache external programs"
+  task :programs_cache => [ :environment ] do
+    OtherProgram.active.each { |p| p.cache }
+  end
+  
+  #----------
+  
   desc "Start a Homepage listener"
   task :homepage => [ :environment ] do 
     require 'homepage_worker'
