@@ -26,4 +26,5 @@ Scenario: Local Blog
 	Given 1 blog
 	And 2 entries for that blog
 	When I go to that blog's page
-	Then I should see the blog's entries listed
+	Then I should see the blog's information
+	And I should see the blog's entries listed

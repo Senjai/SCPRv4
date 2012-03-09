@@ -17,6 +17,11 @@ When /^I go to the blogs page$/ do
   visit blogs_path
 end
 
+Then /^I should see the blog's information$/ do
+  page.find(".blog-masthead h2").should have_content @blog.name
+end
+
+
 Then /^I should see (\d+) blogs? listed in the News section$/ do |num|
   page.find("#news").should have_css ".thumbnail", count: num.to_i
 end

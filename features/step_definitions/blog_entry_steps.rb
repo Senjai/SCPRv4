@@ -4,7 +4,7 @@ Given /^(\d+) blog entr(?:ies|y)$/ do |num|
   @blog_entries.count.should eq num.to_i
 end
 
-When /^I go to the blog's page$/ do
+When /^I go to their blog's page$/ do
   visit blog_path @blog
   current_path.should eq blog_path(@blog)
 end
