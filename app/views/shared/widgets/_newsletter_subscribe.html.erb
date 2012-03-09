@@ -1,37 +1,23 @@
-<% if false # temporarily hiding the big newsletter %>
-<div id="widget newsletter">
-	<div style="float:right; margin:0 0 0 10px;"><a href="http://us2.campaign-archive2.com/home/?u=5e1e4451f92ffc0fa746da7fa&id=4a625d116f"><img src="http://media.scpr.org/assets/images/dc_sidebard.gif"></a></div>
-    <h4>Newsletters</h4>
+<div class="widget newsletter">
+    <h6>Get KPCC in Your Inbox</h6>
     <p>Start your day off right with <em>Daily Connect</em>, KPCC's new morning newsletter.</p>
 
     <!-- Begin MailChimp Signup Form -->
-    <style>
-        div.mce_inline_error{margin: 1em 0 0 0; padding: 1em 0.5em 0.5em 0.5em; background: FFEEEE none repeat scroll 0% 0%; font-weight: bold; float: left; z-index: 1; width: 80%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: FF0000;}
-        #daily-connect li{
-            list-style-type:none;
-        }
-    </style>
     <div id="mc_embed_signup">
-    <form action="http://scpr.us2.list-manage2.com/subscribe/post?u=5e1e4451f92ffc0fa746da7fa&amp;id=4a625d116f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-    	<fieldset>
-
-    <div class="mc-field-group">
-    <label for="mce-EMAIL">Email Address:</label><br/>
-    <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-    </div>
-    		<div id="mce-responses" style="margin:10px 0 0 0;">
-    			<div class="response" id="mce-error-response" style="display:none"></div>
-    			<div class="response" id="mce-success-response" style="display:none"></div>
-    		</div>
-    		<div style="margin:10px 0 0 0"><input type="submit" class="green-button" value="SUBSCRIBE" name="subscribe" id="mc-embedded-subscribe" class="btn"></div>
-    	</fieldset>
-    </form>
+		<form action="http://scpr.us2.list-manage2.com/subscribe/post?u=5e1e4451f92ffc0fa746da7fa&amp;id=4a625d116f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+		    <input type="text" value="" placeholder="Email address" name="EMAIL" class="required email" id="mce-EMAIL">
+			<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+			<div id="mce-responses" style="margin:10px 0 0 0;">
+	   			<div class="response" id="mce-error-response" style="display:none"></div>
+	   			<div class="response" id="mce-success-response" style="display:none"></div>
+	   		</div>
+		</form>
     </div>
     <!--End mc_embed_signup-->
-    <p><a href="/newsletters/">&raquo; Sign up for more Newsletters</a></p>
+    <p><a href="/newsletters/" class="action-link">More Newsletters &raquo;</a></p>
 </div>
-<% end %>
 
+<% if false # temporarily hiding the program-specific newsletter %>
 <!-- new newsletter form -->
 <section class="newsletter-subscribe">
 	<form action="http://scpr.us2.list-manage2.com/subscribe/post?u=5e1e4451f92ffc0fa746da7fa&amp;id=4a625d116f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
@@ -43,3 +29,4 @@
    		</div>
 	</form>
 </section>
+<% end %>
