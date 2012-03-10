@@ -8,7 +8,7 @@ class BlogsController < ApplicationController
     @blogs = Blog.active.order("name")
     @news_blogs = @blogs.local.is_news
     @non_news_blogs = @blogs.local.is_not_news
-    @remote_blogs = @blogs.remote
+    @remote_blogs = Blog.remote.order("name")
     render :layout => "application"
   end
   
