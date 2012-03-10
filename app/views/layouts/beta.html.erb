@@ -93,5 +93,33 @@
 	var beta = new scpr.BetaToggle()
 </script>
 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-624724-1']);
+  _gaq.push(['_setDomainName', 'none']); 
+  _gaq.push(['_setAllowHash', 'false']);
+  _gaq.push(['_setAllowLinker', true]);
+  // Set Custom Variable to track Beta traffic 
+  _gaq.push(['_setCustomVar',
+      3,                   	// Set var slot to #3
+      'Site Version',       
+      'Beta',  				
+      3                    	// page-level scope
+   ]);
+   // End Custom Variable
+
+  // track page view
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
 </body>
 </html>
