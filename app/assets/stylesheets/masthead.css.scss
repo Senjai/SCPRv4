@@ -184,6 +184,9 @@ nav.utils ul {
 			@include font-sans-serif(bold, 12px);
 			&:hover {
 				text-decoration:underline;
+				time {
+					text-decoration:none;
+				}
 			}
 		}
 		.categories, .featured, .blogs {
@@ -272,12 +275,18 @@ nav.utils ul {
 					@include font-headline(600);
 					font-size:14px;
 					padding:6px 4px;
-					span {
+					&:hover {
+						text-decoration:none;
+					}
+					.blog-name {
 						color:$grayLight;
 						@include font-sans-serif(normal, 11px);
 						margin-left:4px;
 						text-transform:uppercase;
 						@include ie-inline-block();
+					}
+					.headline:hover {
+						text-decoration:underline;
 					}
 				}
 			}
