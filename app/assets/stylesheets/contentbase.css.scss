@@ -40,6 +40,11 @@
         color: $orangeDark;
         text-transform: uppercase;
 		white-space:nowrap;
+		
+		&:hover {
+			text-decoration:none;
+		}
+		
     }
 
 	.shell-link {
