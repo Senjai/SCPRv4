@@ -42,7 +42,7 @@
 	<div class="blogs span5">
 		<div class="inner-container clearfix">
 			<h6>From Our Blogs</h6>			
-			<ul>
+			<ul class="cbase">
 				<% content_cache("mega_arts_blogs") do %>
 					<% register_content("blogs/entry:new") %>
 					
@@ -52,6 +52,7 @@
 							<a href="<%= e.link_path %>">
 								<%= e.headline %>
 								<span class="blog-name"><%= e.blog.name %></span>
+								<time class="smarttime" datetime="<%= e.published_at.strftime("%FT%R") %>" data-unixtime="<%= e.published_at.to_i %>"  data-window="8h"></time>
 							</a>
 						</p></li>
 					<% end %>
