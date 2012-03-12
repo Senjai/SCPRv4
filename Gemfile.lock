@@ -139,6 +139,8 @@ GEM
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
     json (1.6.5)
+    launchy (2.0.5)
+      addressable (~> 2.2.6)
     libv8 (3.3.10.4)
     loofah (1.2.0)
       nokogiri (>= 1.4.4)
@@ -271,6 +273,7 @@ DEPENDENCIES
   guard-cucumber
   guard-rspec
   jquery-rails
+  launchy
   mocha
   mysql2
   newrelic_rpm

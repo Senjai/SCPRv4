@@ -34,10 +34,11 @@ group :test, :development do
 	gem 'guard-rspec' # Automatically run tests
 	gem 'guard-cucumber' # Automatically run tests
 	gem 'rb-fsevent', require: false # For file-watching on Mac
+	gem 'launchy'
 end
 
 group :test do
-  gem 'cucumber-rails', ">= 1.3.0" # Integration testing
+  gem 'cucumber-rails', ">= 1.3.0", require: false # Integration testing
   gem 'factory_girl_rails' # Factories for test data
   gem 'database_cleaner' # Database cleaning strategy
   gem 'mocha' # cross-framework mocking
