@@ -49,6 +49,21 @@ FactoryGirl.define do
     end
   end
   
+  factory :other_program do
+    sequence(:title) { |n| "Other Program #{n}" }
+    sequence(:slug) { |n| "other-program-#{n}" }
+    teaser "Outside Program"
+    description "This is the description for the outside program!"
+    host "Larry Mantle"
+    airtime "Weekdays 10 a.m.-12 p.m."
+    air_status "onair"
+    podcast_url "http://www.npr.org/rss/podcast.php?id=510294"
+    rss_url "http://oncentral.org/rss/latest" # This column cannot be null?
+    sidebar "Sidebar Content"
+    web_url "http://www.bbc.co.uk/worldservice/"
+    produced_by "BBC"
+  end
+  
   factory :show_episode, aliases: [:episode] do
     show
     air_date Time.now.tomorrow.strftime("%Y-%m-%d")
@@ -68,21 +83,6 @@ FactoryGirl.define do
     episode
     segment
     sequence(:segment_order) { |n| n } # TODO Test that segment_order is actually doing something 
-  end
-  
-  factory :other_program do
-    sequence(:title) { |n| "Other Program #{n}" }
-    sequence(:slug) { |n| "other-program-#{n}" }
-    teaser "Outside Program"
-    description "This is the description for the outside program!"
-    host "Larry Mantle"
-    airtime "Weekdays 10 a.m.-12 p.m."
-    air_status "onair"
-    podcast_url "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=73329334&uo=6"
-    rss_url "http://www.bbc.co.uk/worldservice/news/index.xml"
-    sidebar "Sidebar Content"
-    web_url "http://www.bbc.co.uk/worldservice/"
-    produced_by "BBC"
   end
   
   factory :blog do

@@ -69,9 +69,9 @@ describe ContentBase do
         it "merges in an options hash unless it's a ContentShell" do
           object = create symbolize(c)
           if c == ContentShell
-            object.link_path(anchor: "comments").match("#comments").should be_nil
+            object.link_path(anchor: "comments").should_not match "#comments"
           else  
-            object.link_path(anchor: "comments").match("#comments").should_not be_nil
+            object.link_path(anchor: "comments").should match "#comments"
           end
         end
       end
@@ -85,9 +85,9 @@ describe ContentBase do
         it "points to scpr.org unless it's a ContentShell" do
           object = create symbolize(c)
           if c == ContentShell
-            object.remote_link_path.match("http://www.scpr.org").should be_nil
+            object.remote_link_path.should_not match "http://www.scpr.org"
           else
-            object.remote_link_path.match("http://www.scpr.org").should_not be_nil
+            object.remote_link_path.should match "http://www.scpr.org"
           end
         end
       end

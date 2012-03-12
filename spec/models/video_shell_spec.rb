@@ -35,7 +35,7 @@ describe VideoShell do
     describe "link_path" do
       it "does not override the hard-coded options" do
         video_shell = create :video_shell
-        video_shell.link_path(trailing_slash: false).match(/\/$/).should_not be_nil
+        video_shell.link_path(trailing_slash: false).should match /\/$/
       end
     end
       

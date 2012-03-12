@@ -28,7 +28,7 @@ describe BlogEntry do
       
       it "does not override the hard-coded options" do
         entry = create :blog_entry
-        entry.link_path(slug: "wrong").match("wrong").should be_nil
+        entry.link_path(slug: "wrong").should_not match "wrong"
       end
     end
     
