@@ -169,6 +169,13 @@
 	// Comments
 	.comments {
 		border-top:1px solid $nearBlack;
+		.dsq-options, #dsq-footer, #dsq-account-dropdown {
+			@include font-sans-serif(normal, 12px);
+		}
+		#dsq-content h3 {
+			border-bottom:1px solid $grayDark;
+		}
+		.dsq-brlink {display:none;}
 	}
 	#site-footer .container {
 		background:url(image_path('footer-arrow-dark.png')) no-repeat 1045px 0;
