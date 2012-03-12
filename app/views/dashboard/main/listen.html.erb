@@ -45,7 +45,7 @@
 <div class="row">
 	<div class="span8" id="llui">
 		<p>
-		<button id="llplay" style="padding: 16px;border: 1px solid #ff0;border-radius: 8px">Play</button>
+		<button id="llplay" style="padding: 16px;border: 1px solid #ff0;border-radius: 8px">Play/Pause</button>
 		<button id="llnow">Go to Live</button>
 		<button id="lltop">Go to Top of the Hour</button>	
 		<button id="llbottom">Go to Bottom of the Hour</button>	
@@ -65,4 +65,29 @@
 			schedule: 	<%= raw @schedule.to_json %>
 		});
 	<% end %>
+<% end %>
+
+<% content_for :sidebar do %>
+	<div style="background-color: #fcc;padding: 8px;border-radius: 4px">
+		<h2>Disclaimer!</h2> 
+		
+		<p>
+			This is just a proof-of-concept demo. It may or may not work for you,
+			and is most likely to work in a recent copy of Chrome, Safari or Firefox.
+		</p>
+		
+		<p>
+			This player is a test of the next-generation streaming server we're 
+			building, which we hope could be a really cool thing for radio. You 
+			can find the code over at 
+			<a href="http://github.com/SCPR/StreamMachine/">github.com/SCPR/StreamMachine</a>.
+		</p>
+		
+		<p>
+			<b>The current demo requires Flash,</b> so don't try to play it on your 
+			iPhone. Feel free to 
+			<a href="http://itunes.apple.com/app/kpcc-radio/id293825085?mt=8">download our iPhone App in the meantime</a>.
+		</p>
+		
+	</div>
 <% end %>
