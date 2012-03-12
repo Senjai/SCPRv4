@@ -16,7 +16,7 @@
 			</div> <!-- .row -->
 		</div> <!-- .span8 -->
 		<div class="span4">
-			<a class="support <%= @program.slug %>" href="http://scprcontribute.publicradio.org/">
+			<a class="support <%= "small" if @program.title.length > 20 %>" href="http://scprcontribute.publicradio.org/">
 				Support all the great programming on KPCC, including <%= @program.title %>.
 			</a> <!-- .support -->
 		</div>

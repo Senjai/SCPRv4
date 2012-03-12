@@ -12,7 +12,9 @@
 #sidebar {
 	h6 {
 		font-size:16px;
-		line-height:$baseline * 2;
+		line-height:$baseline;
+	  	margin-top: 12px;
+	  	margin-bottom: 12px;
 	}
 }
 
