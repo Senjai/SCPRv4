@@ -19,17 +19,14 @@
 
 <p><i><%= render_contributing_byline @story %></i></p>
 
-<%= render "shared/cwidgets/related_articles", :content => @story %>
-
+<%= related_content_for @story %>
 <%= render "shared/cwidgets/pij_query", :content => @story %>
-
 <%= social_tools_for @story, cssClass: "bottom" %>
-
 <%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 
 <% content_for :postcontent do %>
 	<%= render "shared/cwidgets/content_carousel", :content => @story %>
-	<%= render "shared/cwidgets/comments", :cssClass => '', :content => @story %>
+	<%= comments_for @story %>
 <% end %>
 
 <%= render "shared/cwidgets/track_page", :content => @story %>
