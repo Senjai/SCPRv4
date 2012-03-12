@@ -58,7 +58,7 @@ class ProgramsController < ApplicationController
   
   def episode
     @episode = @program.episodes.published.where(air_date: Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)).first
-    @segments = @episode.segments
+    @segments = @episode.segments.published
     rescue
       redirect_to program_path(@program)
   end
