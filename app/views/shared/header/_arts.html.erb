@@ -46,11 +46,11 @@
 				<% content_cache("mega_arts_blogs") do %>
 					<% register_content("blogs/entry:new") %>
 					
-					<% for e in @g_latest_blogs_arts.limit(4) do %>
+					<% for e in @g_latest_blogs_arts.limit(3) do %>
 						<% register_content(e) %>
 						<li><p class="entry-title">
 							<a href="<%= e.link_path %>">
-								<%= e.headline %>
+								<span class="headline"><%= e.headline %></span>
 								<span class="blog-name"><%= e.blog.name %></span>
 								<time class="smarttime" datetime="<%= e.published_at.strftime("%FT%R") %>" data-unixtime="<%= e.published_at.to_i %>"  data-window="8h"></time>
 							</a>

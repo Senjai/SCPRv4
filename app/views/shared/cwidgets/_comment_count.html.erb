@@ -1,6 +1,6 @@
 <div class="comment-count <%= cssClass %>">
 	<div class="inner-container">
-		<h4><span><%= content.comment_count %></span> Comments</h4>
-		<a href="<%= content.link_path %>#comments">Comment on this Story</a>
+		<a href="<%= content.link_path(anchor: 'comments') %>"><h4><span><%= content.comment_count %></span> Comments</h4></a>
+		<a href="<%= content.link_path(anchor: 'comments') %>">Comment on this Story</a>
 	</div>
 </div>
