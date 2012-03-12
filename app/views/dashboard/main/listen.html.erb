@@ -7,19 +7,28 @@
 		border-radius: 8px
 	}
 </style>
-<div id="llui">
-	<div id="llplayer"></div>
 
-	<button id="llplay" style="padding: 16px;border: 1px solid #ff0;border-radius: 8px">Play</button>
+<div class="row">
+	<div class="span3 llschedule">
+		&nbsp;
+	</div>
+	<div class="span5">
+		<div id="llui">
+			<div id="llplayer"></div>
 
-	<hr/>
+			<button id="llplay" style="padding: 16px;border: 1px solid #ff0;border-radius: 8px">Play</button>
 
-	<p>
-	<button id="llnow">Go to Live</button>
-	<button id="lltop">Go to Top of the Hour</button>	
-	<button id="llbottom">Go to Bottom of the Hour</button>	
-	</p>
+			<hr/>
+
+			<p>
+			<button id="llnow">Go to Live</button>
+			<button id="lltop">Go to Top of the Hour</button>	
+			<button id="llbottom">Go to Bottom of the Hour</button>	
+			</p>
+		</div>		
+	</div>
 </div>
+
 
 <% content_for :footerjss do %>
 	<% if @current %>
@@ -28,6 +37,8 @@
         	host:       "http://scprdev.org:8000/thecurrent"
         })
 	<% else %>
-	var llPlayer = new scpr.ListenLive();
+	var llPlayer = new scpr.ListenLive(
+		schedule: 	<%= raw @schedule.to_json %>
+	);
 	<% end %>
 <% end %>
