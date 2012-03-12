@@ -75,7 +75,7 @@ class scpr.MegaMenu
                 sec.drop.show()
             else
                 # anything that should be hidden during displays?
-                _(@hidden).each (el) -> el.hide()
+                _(@hidden).each (el) -> el.css("visibility", "hidden")
             
                 sec.drop.fadeIn 100
                                 
@@ -89,6 +89,6 @@ class scpr.MegaMenu
             else
                 sec.drop.fadeOut("fast")
                 # anything that should be hidden during displays?
-                _(@hidden).each (el) -> el.show()
+                _(@hidden).each (el) -> el.css("visibility", "visible")
                 
             

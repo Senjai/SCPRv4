@@ -46,7 +46,7 @@ class BlogsController < ApplicationController
   
   protected
     def load_blog
-      unless @blog = Blog.find_by_slug(params[:blog])
+      unless @blog = Blog.local.find_by_slug(params[:blog])
         redirect_to blogs_path
       end
     end

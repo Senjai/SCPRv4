@@ -31,8 +31,8 @@ class scpr.VideoPage
     
         # When you hover on and off the button, do some fancy things with opacity.
         $(@opts.button).hover(
-          => @fadeButton(@opts.button, "in")
-          => @fadeButton(@opts.button, "out")
+          => @fadeButton($(@opts.button), "in")
+          => @fadeButton($(@opts.button), "out")
         )
     
         # This is the easiest way to tell if the cursor is in the overlay or not
@@ -49,9 +49,9 @@ class scpr.VideoPage
                     @getVideos(page) unless page is ""
                 mouseenter: (event) =>
                     unless $(event.target).attr("data-page") is "" 
-                      @fadeButton button, "in"
-                mouseleave: =>
-                    @fadeButton button, "out"
+                      @fadeButton $(event.target), "in"
+                mouseleave: (event) =>
+                    @fadeButton $(event.target), "out"
 
         # When you click the button, show the modal
         $(@opts.button).click => @showModal()
@@ -88,7 +88,7 @@ class scpr.VideoPage
         }
 
     fadeButton: (button, dir) ->
-            b = $(button)
+            b = button
             cursor = if dir is "in" then "pointer" else "default"
             opacity = if dir is "in" then 1 else 0.5
             b.css("cursor", cursor)

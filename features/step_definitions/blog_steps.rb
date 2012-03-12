@@ -62,3 +62,7 @@ end
 Then /^I should see a timestamp for the latest entry$/ do
   page.should have_css ".latest-post time", count: @blogs.count
 end
+
+Then /^I should be redirected to the blogs page$/ do
+  current_path.should eq blogs_path
+end

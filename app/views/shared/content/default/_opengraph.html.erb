@@ -4,7 +4,17 @@
 	<meta property="og:description" content="<%= h content.teaser %>">
     <meta property="og:title" content="<%= h content.headline %>">
     <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
-
+	<meta property="og:url" content="<%= content.remote_link_path %>"/>
+	
+	<% if content.is_a?(VideoShell) %>
+	  	<meta property="og:video:width" content="300" />
+	  	<meta property="og:video:height" content="200" />
+		<!--<meta property="og:video" content="http://c.brightcove.com/services/viewer/federated_f9/Add-Publisher-ID?isVid=1&amp;isUI=1&amp;playerKey=&amp;videoId=Add-Video-ID">-->
+	  	<meta property="og:video:type" content="application/x-shockwave-flash"/>
+		<meta property="og:video" content="<%# content.assets.first.asset.native.flvurl %>">
+	  	<meta property="og:video:type" content="video/mp4"/>
+	<% end %>
+	
 	<% if content.assets.any? %>
 		<meta property="og:image" content="<%= content.assets.first.asset.urls.lsquare %>" />
 		<link rel="image_src" href="<%= content.assets.first.asset.urls.lsquare %>" />
