@@ -1,4 +1,5 @@
 <%= content_cache("episode:#{current_episode.id}:current") do %>
+<% register_content current_episode %>
 <div class="current-episode row">
 	<div class="span4">
 		<h2><%= link_to current_episode.title, current_episode.link_path %></h2>
