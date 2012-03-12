@@ -10,10 +10,10 @@ class CategoryConstraint
 end
 
 Scprv4::Application.routes.draw do
+  match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
     
   namespace :dashboard do
     match '/sections' => 'main#sections', :as => :sections
-    match '/listen_live(/:current)' => 'main#listen', :as => :listen
     
     # ContentBase API
     match '/api/content/', :controller => 'api/content', :action => 'options', :constraints => {:method => 'OPTIONS'}

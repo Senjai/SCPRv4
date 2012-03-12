@@ -1,0 +1,11 @@
+<style><%= JST["t_listen/style"]() %></style>
+<h1><%= @show.title %></h1>
+<h3><%= @show.start_time %> - <%= @show.end_time %></h3>
+
+<div class="progress" id="llBuffProgress">
+	<div id="llBuffBar" class="bar" style="width:100%"></div>
+</div>
+
+<p><b>Server Time:</b> <span id="llServerTime"></span></p>
+<p><b>Playhead:</b> <span id="llPlayTime"></span></p>
+<p><b>Buffer Size:</b> <span id="llBuffLen"></span></p>
