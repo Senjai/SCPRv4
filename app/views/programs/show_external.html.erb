@@ -1,4 +1,4 @@
-<% @PAGE_TITLE = @program.title %>
+<% page_title @program.title %>
 
 <div class="row">
 	<div class="span6">
@@ -9,31 +9,25 @@
 		<%= link_to "RSS Feed", @program.rss_url, target: "_blank", class: "rss with-icon" if @program.rss_url? %>
 		<%= link_to "Podcast", @program.podcast_url, target: "_blank", class: "podcast with-icon" if @program.podcast_url? %>
 	</div>
-
 </div>
 
 <br style="clear: both"/>
 <hr/>
 
-<% if @program.podcast_url? && Rails.cache.exist?("ext_program:#{@program.slug}:podcast")%>
-
+<% if @program.podcast_url? && podcast = Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
 	<h2>Recently</h2>
-	
-	<%= raw Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
+	<%= raw podcast %>
 
-	<br style="clear: both"/>
-	<hr/>
-
-<% elsif @program.rss_url? && Rails.cache.exist?("ext_program:#{@program.slug}:rss")%>
-
+<% elsif @program.rss_url? && rss = Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
 	<h2>Latest News</h2>
-	
-	<%= raw Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
+	<%= raw rss %>
 
-	<br style="clear: both"/>
-	<hr/>
+<% else %>
+	<span class="none-to-list">There is currently no feed available for this program.</span>
 <% end %>
 
+<br style="clear: both"/>
+<hr/>
 
 <% content_for :footerjss do %>
 	if (!scA)

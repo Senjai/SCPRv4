@@ -15,12 +15,17 @@ class OtherProgram < ActiveRecord::Base
   
   #----------
   
+  def to_param
+    slug
+  end
+  
   def cache
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  
 
     class << view  
       include ApplicationHelper
     end
+    puts "Attempting to cache feeds for #{self.title}..."
     
     if self.podcast_url?
       begin
@@ -33,6 +38,7 @@ class OtherProgram < ActiveRecord::Base
       if podcast.present? && !podcast.is_a?(Fixnum)
         podcast_html = view.render :partial => "programs/cached/podcast_entry", :collection => podcast.entries.first(5), :as => :entry
         Rails.cache.write("ext_program:#{self.slug}:podcast", podcast_html)
+        puts "Cached Podcast."
       end
     end
     
@@ -49,7 +55,9 @@ class OtherProgram < ActiveRecord::Base
           "ext_program:#{self.slug}:rss", 
            view.render(:partial => "programs/cached/podcast_entry", :collection => rss.entries.first(5), :as => :entry)
         )
-      end      
-    end
+        puts "Cached RSS."
+      end
+    end # rss_url?
+    return podcast.present? || rss.present?
   end
 end

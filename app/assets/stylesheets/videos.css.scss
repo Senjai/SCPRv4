@@ -42,7 +42,9 @@
 		position: relative;
 		width: 1107px;
 		height: 655px;
-		background: url(image_path('overlay-top.png')) no-repeat left top; /* Arrow at the top */
+		background-image: url(image_path('overlay-top.png'));
+		background-repeat: no-repeat; 
+		background-position: left top; /* Arrow at the top */
 		padding: 17px 0 0 0; /* pull the main box down so the arrow will show */
 		z-index: 10; /* Just to be sure it's in front */
 		

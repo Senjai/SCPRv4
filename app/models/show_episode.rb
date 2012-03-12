@@ -26,6 +26,7 @@ class ShowEpisode < ContentBase
   end
     
   #----------
+
   
   def link_path(options={})
     Rails.application.routes.url_helpers.episode_path(options.merge!({
