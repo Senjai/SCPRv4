@@ -2,7 +2,6 @@ class BlogsController < ApplicationController
   require 'will_paginate/array'
   
   before_filter :load_blog, :except => :index
-  before_filter :get_entries, except: [:index, :blog_tagged]
   
   def index
     @blogs = Blog.active.order("name")
@@ -15,6 +14,7 @@ class BlogsController < ApplicationController
   #----------
   
   def show
+    @entries = @blog.entries.published.paginate(page: params[:page], per_page: 5)
   end
   
   #----------
@@ -49,9 +49,5 @@ class BlogsController < ApplicationController
       unless @blog = Blog.local.find_by_slug(params[:blog])
         redirect_to blogs_path
       end
-    end
-    
-    def get_entries
-      @entries = @blog.entries.published.paginate(page: params[:page], per_page: 5)
-    end
+    end    
 end
