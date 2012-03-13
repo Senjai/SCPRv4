@@ -46,19 +46,20 @@ class Schedule < ActiveRecord::Base
     hours = args[:hours] || 4
     
     programs = []
-    dur = 0
 
     # first, get what's on at our start time
     start = self.on_at(time)
-    dur += (start.end_time - start.start_time)
     programs << start
     
+    # now get what's on at our end time
+    pend = self.on_at( time + 60*60*hours )
+    
+    # now get anything in between
     begin 
       s = programs[-1].up_next
-      dur += (s.end_time - s.start_time)
       programs << s
-    end while ( dur < hours * 60 * 60)
-    
+    end until ( s == pend )
+        
     return programs
   end
   
