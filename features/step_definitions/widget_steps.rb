@@ -3,9 +3,11 @@ Then /^I should see a comments section$/ do
 end
 
 Then /^I should see related content$/ do
-  page.should have_css ".related-articles"
+  pending # Need to setup Relation factory
+  #page.should have_css ".related-articles"
 end
 
 Then /^I should see related links$/ do
-  pending
+  pending # Need to setup Link factory
+  #page.should have_css ".releated-links"
 end

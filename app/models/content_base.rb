@@ -45,6 +45,7 @@ class ContentBase < ActiveRecord::Base
   has_many :brels, :class_name => "Related", :as => :content
   has_many :frels, :class_name => "Related", :as => :related
   
+  has_many :related_links, class_name: "Link", as: :content, conditions: "link_type != 'query'"
   has_many :queries, :class_name => "Link", :as => :content, :conditions => { :link_type => "query" }
   
   has_one :content_category, :as => "content"

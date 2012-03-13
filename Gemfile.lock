@@ -232,6 +232,7 @@ GEM
       ffi (~> 1.0)
       multi_json (~> 1.0)
       rubyzip
+    shoulda-matchers (1.0.0)
     sprockets (2.1.2)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -285,6 +286,7 @@ DEPENDENCIES
   ruby-mp3info
   rubypython
   sass-rails
+  shoulda-matchers
   therubyracer
   thinking-sphinx (= 2.0.10)
   uglifier (>= 1.0.3)

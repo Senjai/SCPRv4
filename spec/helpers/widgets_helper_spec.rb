@@ -64,13 +64,19 @@ describe WidgetsHelper do
     pending
   end
   
-  
-  describe "#recent_posts" do
-    it "doesn't render anything if content isn't present" do
-      recent_posts(nil).should be_nil
+  describe "#related_links_for" do
+    it "does not render anything if object is not present" do
+      pending
+    end
+    
+    it "renders the related_links partial" do
+      pending
+    end
+    
+    it "shows the related links for the object" do
+      pending
     end
   end
-  
   
   describe "#comments_for" do
     it "renders the comments partial" do
@@ -84,8 +90,16 @@ describe WidgetsHelper do
 
 
   describe "#related_content_for" do
+    it "does not render anything if object is not present" do
+      pending
+    end
+    
     it "renders the related_articles partial" do
-      
+      pending
+    end
+    
+    it "shows the related content for the object" do
+      pending
     end
   end
   

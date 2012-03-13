@@ -35,8 +35,7 @@ module WidgetsHelper
   
   def comment_count_for(object, options={})
     if object.present?
-      options[:cssClass] ||= ""
-      render('shared/cwidgets/comment_count', { content: object }.merge!(options))
+      render('shared/cwidgets/comment_count', { content: object, cssClass: "" }.merge!(options))
     end
   end
   
@@ -49,17 +48,24 @@ module WidgetsHelper
   
   def comments_for(object, options={})
     if object.present?
-      options[:cssClass] ||= ''
-      render('shared/cwidgets/comments', { content: object }.merge!(options))
+      render('shared/cwidgets/comments', { content: object, cssClass: "" }.merge!(options))
     end
   end
   
   def related_content_for(object, options={})
-    render("shared/cwidgets/related_articles", { content: object }.merge!(options)) if object.present?
+    if object.present?
+      if object.brels.present? or object.frels.present?
+        render("shared/cwidgets/related_articles", { content: object }.merge!(options))
+      end
+    end
   end
   
-  def related_links_for(object, options={})
-    #render "shared/cwidgets/related_links", { content: object }.merge!(options)
+  def related_links_for(object, options={}) # Takes any ContentBase object
+    if object.present?
+      if object.related_links.present?
+        render "shared/cwidgets/related_links", { content: object }.merge!(options)
+      end
+    end
   end
   
   def article_meta_for(object, options={})

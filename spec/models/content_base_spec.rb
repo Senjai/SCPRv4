@@ -12,6 +12,18 @@ describe ContentBase do
         object.is_a?(ContentBase).should be_true
       end
       
+      it "has related_links" do
+        pending
+      end
+      
+      it "has brels" do
+        pending
+      end
+      
+      it "has frels" do
+        pending
+      end
+      
       describe "#published" do
         it "returns an ActiveRecord::Relation" do
           c.published.class.should eq ActiveRecord::Relation

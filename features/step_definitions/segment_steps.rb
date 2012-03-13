@@ -20,7 +20,7 @@ Then /^I should see each segment's primary asset$/ do
 end
 
 Then /^I should see the segment's primary asset$/ do
-  pending # express the regexp above with the code you wish you had
+  page.should have_css ".segment .contentasset img"
 end
 
 Then /^I should see the segment's information$/ do

@@ -34,7 +34,7 @@ group :test, :development do
 	gem 'guard-rspec' # Automatically run tests
 	gem 'guard-cucumber' # Automatically run tests
 	gem 'rb-fsevent', require: false # For file-watching on Mac
-	gem 'launchy'
+	gem 'launchy' # For quick debugging
 end
 
 group :test do
@@ -43,6 +43,7 @@ group :test do
   gem 'database_cleaner' # Database cleaning strategy
   gem 'mocha' # cross-framework mocking
   gem 'capybara' # Acceptance/Integration testing
+  gem 'shoulda-matchers' # For quickly writing common tests
 end
 
 group :worker do

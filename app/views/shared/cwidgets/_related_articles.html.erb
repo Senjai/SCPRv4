@@ -1,5 +1,4 @@
 <aside class="related-articles">
-	<% if content.brels.any? || content.frels.any? %>
 	<h6>More Related to This Story</h6>
 	<ul>
 		<% for c in content.frels.normal.sorted %>
@@ -15,5 +14,4 @@
 	    </li>
 		<% end %>
 	</ul>
-	<% end %>
 </aside>
