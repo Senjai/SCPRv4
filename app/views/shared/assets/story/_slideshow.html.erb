@@ -1,13 +1,13 @@
 <% content_for :headline do %>
 <% if assets.first %>
-	<div id="asset_slideshow"></div>
+	<div id="asset_slideshow_<%= content.id %>"></div>
 	<br/>
 	<script type="text/javascript">
 		ahSlides = new AssetHost.Slideshow({
-			imgwidth: $("#asset_slideshow").width(),
+			imgwidth: $("#asset_slideshow_<%= content.id %>").width(),
 			imgheight: <%= assets.first.asset.sizes.eight.height %>,
 			assets: <%= raw assets.to_json %>,
-			el: "#asset_slideshow"
+			el: "#asset_slideshow_<%= content.id %>"
 		})
 	</script>
 	
