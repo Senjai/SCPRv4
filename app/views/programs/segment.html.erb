@@ -17,7 +17,7 @@
 			<h1 class="story-title"><%= @segment.headline %></h1>
 			<%= render_asset @segment, "segment" %>
 			<div class="story-body">
-				<%= simple_format @segment.body %>
+				<%= simple_format @segment.body, {}, :sanitize => false %>
 			
 				<br style="clear: both"/>
 				<%= social_tools_for @segment, cssClass: "bottom" %>
