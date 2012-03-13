@@ -31,6 +31,11 @@ Then /^I should see that blog's teaser$/ do
   page.should have_content @blog.teaser
 end
 
+Then /^I should see the recent posts widget for that blog$/ do
+  page.should have_css ".recent-posts" 
+  page.should have_css ".recent-posts li", count: @blog.entries.published.limit(5).count
+end
+
 
 #### Routing
 When /^I go to the blogs page$/ do

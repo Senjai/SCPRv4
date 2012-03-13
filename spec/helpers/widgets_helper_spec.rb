@@ -65,9 +65,17 @@ describe WidgetsHelper do
   end
   
   
-  describe "#recent_posts" do
+  describe "#recent_posts_for" do
     it "doesn't render anything if content isn't present" do
-      recent_posts(nil).should be_nil
+      recent_posts_for(nil).should be_nil
+    end
+    
+    it "renders the 5 most recent blog posts for the passed-in blog" do
+      blog = create :blog
+      create_list :blog_entry, 10, blog: blog
+      recent_posts_for(blog).should have_content blog.entries.first.headline
+      recent_posts_for(blog).should have_content blog.entries[4].headline
+      recent_posts_for(blog).should_not have_content blog.entries[5].headline # Roundabout way of checking that only 5 are seen
     end
   end
   
