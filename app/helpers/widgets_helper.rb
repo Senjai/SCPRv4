@@ -66,10 +66,6 @@ module WidgetsHelper
     render('shared/cwidgets/article_meta', { content: object }.merge!(options)) if object.present?
   end
   
-  def recent_posts(entries, options={})
-    render("blogs/recent_posts", { entries: entries }.merge!(options)) if entries.present?
-  end
-  
   def social_tools_for(object, options={})
     if object.present?
       options[:path] ||= object.link_path if object.respond_to?(:link_path)
