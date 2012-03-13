@@ -328,11 +328,13 @@
 		}
 	}
 	&.multimedia {
-		a {
-			color:$gray;
-		}
-		.print {
-			display:none;
+		ul {
+			li.plus, a {
+				color:$gray;
+			}
+			.print {
+				display:none;
+			}
 		}
 	}
 }
@@ -820,7 +822,7 @@ a.comment-count.inline {
 		z-index:4;
 		@include font-headline($weight:lighter);
 		color:$grayAlt;
-		font-size:1.05em;
+		font-size:15px;
 		line-height: 18px;
 	}
 	.count {

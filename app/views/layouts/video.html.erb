@@ -19,7 +19,7 @@
 	<%= yield %>
 	<%= comments_for @video, cssClass: "multimedia muted" %>
 	<% if any_to_list? @latest_videos %>
-		<div class="multimedia latest-videos muted">
+		<div class="multimedia latest-videos">
 			<h3 class="head">Latest Videos</h3>
 			<ul class="videos">
 				<%= render partial: 'video_thumb', collection: @latest_videos, locals: { size: "small" } %>

@@ -19,7 +19,7 @@
 		
 		<%= social_tools_for @entry, cssClass: "bottom" %>
 		<%= render "shared/cwidgets/next_prev" %>
-		<%= render "shared/cwidgets/comments", :cssClass => '', :content => @entry %>	
+		<%= comments_for @entry %>
 	</div>
 </div>
 

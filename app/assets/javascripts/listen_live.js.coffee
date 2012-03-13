@@ -1,4 +1,7 @@
 #= require scprbase
+#= require backbone
+#= require moment
+#= require moment-strftime
 
 #= require_directory ./t_listen/
 #= require swfobject
@@ -7,7 +10,8 @@ class scpr.ListenLive
     DefaultOptions:
         playerEl:   "#llplayer"
         playBtn:    "#llplay"
-        playerId:   "#llplayDiv"
+        playerId:   "llplayDiv"
+        scheduleId: "#llschedule"
         rewind:     "http://scprdev.org:8000/kpcclive.mp3"
         socketJS:   "http://scprdev.org:8000/socket.io/socket.io.js"
         host:       "http://scprdev.org:8000/kpcclive"
@@ -25,18 +29,34 @@ class scpr.ListenLive
         else
             console.log "setting LLINIT to true"
             window.LLINIT = true
-            
         
         @playing = false
         @started = 0
         @offset = 0
         @serverBuffer = 0
         
-        @bufferUI = $ "<div/>", 
-            id: "llBufferUI"
-            html: JST["t_listen/buffer"]
-                        
-        $(@options.playerEl).html @bufferUI
+        @currentShow = null
+        @playerUI = null
+        @audio = null
+        
+        @playUIdiv = $("<div/>")
+        $(@options.playerEl).append(@playUIdiv)
+                
+        # -- build program schedule -- #
+
+        if @options.schedule
+            @schedule = new ListenLive.Schedule @options.schedule
+            @guide = new ListenLive.ProgramGuide collection:@schedule
+            
+            $(@options.scheduleId).html @guide.render().el
+            
+            @schedule.bind "playMe", (m) =>
+                # seek to start time of this show
+                offset = moment().diff m.start, "seconds"
+                console.log "guide click wants to play at ", offset
+                @offsetTo offset
+
+        # -- connect to the rewind server -- #
                 
         $.getScript @options.socketJS, =>
             # set up the socket
@@ -45,43 +65,106 @@ class scpr.ListenLive
             @io.on "ready", (data) =>
                 console.log "got ready with ", data
                                 
-                @_displayBuffer data
+                # set up our audio player at @audio
                 @_setUpPlayer()
                 
-                @bufferUI.on "click", (e) =>
-                    offset = Math.round (1 - e.offsetX / @bufferUI.width() ) * @serverBuffer
-                    @offsetTo offset
+                # update our display
+                @_updateDisplay data
                 
-            @io.on "timecheck", (data) =>
-                @_displayBuffer data
+                # attach our extra buttons
+                @_attachExtraUI()
+                                
+            # each time we get a timecheck from the server, update our play view
+            @io.on "timecheck", (data) => @_updateDisplay data
                 
     #----------
         
-    _displayBuffer: (data) ->
+    _updateDisplay: (data) ->
         if data
-            @serverBuffer = data.buffered
+            # -- stash our times -- #
+        
+            @serverBuffer = Number(data.buffered)
             @serverTime = new Date(data.time)
-
-            # set times
-            $("#llServerTime").text String(@serverTime)
+            @playTime = new Date( Number(@serverTime) - @offset*1000 )
         
-        # set buffer bar
-        if @offset == 0
-            $("#llBuffBar").width("100%")
-        else        
-            perc = 100 - (@offset / @serverBuffer * 100)
-            $("#llBuffBar").width("#{ perc }%")
+        # -- do we have a current show? -- #
+        if @currentShow && @currentShow.isWhatsPlayingAt @playTime
+            # we're good
             
-        $("#llPlayTime").text String(new Date(Number(@serverTime) - @offset*1000))
+        else
+            # if we had a current show, tell it that it is no longer playing
+            @currentShow?.isPlaying(false)
+            
+            # need to figure out what's on and rerender our player
+            @currentShow = @schedule.on_at @playTime
+            @currentShow.isPlaying(true)
+
+            console.log "rendering playerUI with ", show:@currentShow.toJSON()
+            @playerUI = $ "<div/>", 
+                id: "llPlayerUI"
+                html: JST["t_listen/player"]( show:@currentShow.toJSON() )
+
+            @playUIdiv.html @playerUI
+            
+            # enable clicks on the buffer bar
+            llBP = $("#llBuffProgress",@playUIdiv)
+            llBP.on "click", (evt) =>
+                s = @currentShow.start
+                e = @currentShow.end
+                d = e.diff(s)
+                
+                dest    = moment(s).add("ms", d * (evt.offsetX / llBP.width()) )
+                offset  = ( @serverTime - dest.toDate() ) / 1000
+                console.log "request is for ", offset, dest, (evt.offsetX / $(evt.target).width())
+                
+                if offset < 0
+                    offset = 0
+                    
+                @offsetTo offset
+            
+        @_updateTimes()
         
-        if @audio
+        # -- update our guide -- #
+        
+        @guide.render()
+
+    #----------
+        
+    _updateTimes: ->
+        # update the server and play time
+        $("#llServerTime").text String(@serverTime)
+        $("#llPlayTime").text String(@playTime)
+        
+        if @currentShow
+            # set the buffer bar to reflect the current show
+            s = @currentShow.start
+            e = @currentShow.end
+            d = e.diff(s) / 1000
+            c = moment(@playTime).diff(s) / 1000
+
+            perc = Math.round( c / d * 100 ) 
+            
+            #console.log "updateTimes has ", s, e, d, c, perc
+            
+            $("#llBuffBar").width("#{perc}%")
+        else
+            # set buffer bar globally
+            if @offset == 0
+                $("#llBuffBar").width("100%")
+            else        
+                perc = 100 - (@offset / @serverBuffer * 100)
+                $("#llBuffBar").width("#{ perc }%")
+        
+        # show time buffered in the player         
+        if @audio && @audio.getBufferedTime?
             $("#llBuffLen").text @audio.getBufferedTime()
-    
+            
     #----------
                             
     _setUpPlayer: ->  
         $(@options.playerEl).append $ "<div/>", id:@options.playerId, text:"Flash player failed to load."
                
+        # we end up with our flash player available at @audio               
         swfobject.embedSWF "/assets-flash/streammachine.swf",
             @options.playerId,
             8,
@@ -89,14 +172,15 @@ class scpr.ListenLive
             "9",
             "/swf/expressInstall.swf",
             { stream:"#{@options.rewind}?socket=#{@io.socket.sessionid}" },
-            { wmode: "transparent" }, {}, (e) => @audio = e.ref
-                            
+            { wmode: "transparent" }, {}, (e) => console.log "setting up audio with ", e; @audio = e.ref
+    
+    #----------
+     
+    _attachExtraUI: ->     
         @playBtn = $(@options.playBtn)
                 
         # register a click handler on the play button
         @playBtn.on "click", (evt) =>
-            
-            
             if @playing
                 @audio.stop()
                 console.log "stopping..."
@@ -158,5 +242,103 @@ class scpr.ListenLive
         # note our status
         @started = Number(new Date) / 1000
         @offset = i
-        @_displayBuffer()
+        @_updateDisplay()
         @playing = true
+
+    #----------
+
+    @ScheduleShow: Backbone.Model.extend
+        urlRoot: '/api/programs'
+        initialize: ->
+            # parse start and end times
+            @start	= moment 1000 * Number(@attributes['start'])
+            @end 	= moment 1000 * Number(@attributes['end'])
+            
+            @set 
+                start_time: @start.strftime("%I:%M%p")
+                end_time:   @end.strftime("%I:%M%p")
+                
+        isWhatsPlayingAt: (time) ->
+            @start.toDate() < time < @end.toDate()
+            
+        isPlaying: (state) ->
+            @set isPlaying:state
+
+    @Schedule: Backbone.Collection.extend
+        model: ListenLive.ScheduleShow
+        
+        on_at: (time) ->
+            # iterate through models until we get a true result from isWhatsPlayingAt
+            @find (m) -> m.isWhatsPlayingAt time
+
+    #----------
+    
+    @ProgramGuideProgram: Backbone.View.extend
+        tagName: "li"
+        template: 
+            """
+            <b><%= title %></b>
+            <br/><i><%= start_time %> - <%= relative %></i>
+            """
+        
+        initialize: ->
+            @render()
+            @model.bind "change", => @render()
+            
+            @$el.on "click", (evt) => @model.trigger "playMe", @model
+            
+        #----------
+            
+        setClass: (cls) ->
+            for c in ['playing','buffered','future']
+                @$el.removeClass c
+                
+            if cls
+                @$el.addClass cls
+                
+        #----------
+        
+        render: ->
+            # figure out buffer / playing state
+            if @model.get("isPlaying")
+                @setClass "playing"
+            else if @model.start > moment()
+                @setClass "future"
+            else
+                @setClass()
+            
+            reltime = 
+                if @model.start <= moment() <= @model.end                    
+                    "On Now"
+                else if @model.start < moment()                    
+                    "Finished #{@model.end.fromNow()}"
+                else                    
+                    "Starts #{@model.start.fromNow()}"
+            
+            @$el.html _.template @template, _(@model.toJSON()).extend relative:reltime
+            
+            @
+            
+    #----------
+    
+    @ProgramGuide: Backbone.View.extend
+        tagName: "ul"
+        
+        initialize: ->
+            @_views = {}
+            @collection.bind "reset", => 
+                _(@_views).each (a) => $(a.el).detach()
+                @_views = {}
+                @render()
+        
+        render: ->
+            # set up views for each collection member
+            @collection.each (a) => 
+                # create a view unless one exists
+                @_views[a.cid] ?= new ListenLive.ProgramGuideProgram model:a
+                @_views[a.cid].bind "click", (a) => @trigger "click", a
+                
+            # make sure all of our view elements are added
+            @$el.append( _(@_views).map (v) -> v.render().el )
+            
+            @
