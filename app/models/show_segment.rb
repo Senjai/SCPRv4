@@ -14,7 +14,7 @@ class ShowSegment < ContentBase
   
   define_index do
     indexes title
-    indexes lede
+    indexes _teaser
     indexes body
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news

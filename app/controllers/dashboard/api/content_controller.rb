@@ -68,11 +68,9 @@ class Dashboard::Api::ContentController < ApplicationController
   #----------
   
   def recent
-    #response.headers["Content-Type"] = 'text/xml'
-
     # check if we have a cached podcast.  If so, short-circuit and return it
     if cache = Rails.cache.fetch("cbaseapi:recent")
-      render :json => cache, :formats => [:xml] and return
+      render :json => cache and return
     end
     
     # nope -- build a new cache

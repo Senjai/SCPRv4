@@ -11,7 +11,7 @@
 
 		<p><%=h strip_tags(content.teaser) %></p>
 
-		<%= link_to ( content.comment_count? ? "Comment (#{content.comment_count})" : "Comment on this story" ), content.link_path + "#comments", :class => "comment_link" %>
+		<%= comment_count_for content %>
 
 	</div>
 </div>
