@@ -66,8 +66,8 @@ module WidgetsHelper
     render('shared/cwidgets/article_meta', { content: object }.merge!(options)) if object.present?
   end
   
-  def recent_posts_for(blog, options={})
-    render("blogs/recent_posts", { blog: blog }.merge!(options)) if blog.present?
+  def recent_posts(entries, options={})
+    render("blogs/recent_posts", { entries: entries }.merge!(options)) if entries.present?
   end
   
   def social_tools_for(object, options={})

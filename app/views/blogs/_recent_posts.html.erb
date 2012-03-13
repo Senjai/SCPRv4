@@ -1,9 +1,9 @@
-<%= content_cache("blogs:#{blog.slug}:recent") do %>
+<%= content_cache("blogs:#{@blog.slug}:recent") do %>
 	<% register_content "blogs/entry:new" %>
 	<nav class="recent-posts widget">
 		<h6>Recent Posts</h6>
 		<ul>
-			<% for entry in blog.entries.published.first(5) %>
+			<% for entry in @blog.entries.published.first(5) %>
 		    <li>
 				<% register_content entry %>
 		        <p><%= link_to entry.title, entry.link_path %></p>

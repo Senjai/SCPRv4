@@ -34,7 +34,6 @@ Scenario: Local Blog
 	When I go to that blog's page
 	Then I should see the blog's information
 	And I should see the blog's entries listed
-	And I should see the recent posts widget for that blog
 	
 Scenario: See time stamps
 	Given 1 blog
