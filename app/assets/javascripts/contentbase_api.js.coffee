@@ -6,6 +6,7 @@
 #= require strftime
 
 #= require t_cbase/style
+#= require t_cbase/content
 
 #= require_self
 
@@ -17,6 +18,7 @@ class scpr.ContentBaseAPI
         
     @DjangoToContentType:
         15:     'news/story'
+        25:     'shows/episode'
         24:     'shows/segment'
         44:     'blogs/entry'
         115:    'content/shell'
@@ -24,6 +26,7 @@ class scpr.ContentBaseAPI
     @ContentTypeToDjango:
         'news/story':       15
         'shows/segment':    24
+        'shows/episode':    25
         'blogs/entry':      44
         'content/shell':    115
             
@@ -304,24 +307,7 @@ class scpr.ContentBaseAPI
     
     @ContentView: Backbone.View.extend
         tagName: "li"
-        
-        template:
-            """
-            <%= asset || "" %>
-            <button class="delete">Delete</button>
-            <i>(<%= obj_key %>)</i>
-            <h3>H: <%= headline %></h3>
-            <h3>SH: <%= short_headline %></h3>
-            <h4><%= byline %> &mdash; <%= published_at %></h4>
-            <p><%= teaser %></p>
-            <i>
-                SH Length: <%= short_headline.length %>
-                &mdash; Teaser Length: <%= teaser.length %>
-                <% if(Number(status) == 5) { %>&mdash; <a href="<%= link_path %>" target="_new">View Live</a><% }; %>
-                &mdash; <a href="<%= admin_path %>" target="_new">View in Admin</a>
-            </i>
-            <br style="clear:both"/>
-            """
+        template: JST["t_cbase/content"]
             
         events:
             'click button.delete': '_delete'
@@ -359,8 +345,7 @@ class scpr.ContentBaseAPI
                         
         render: ->
             console.log "rendering #{@model.id}"
-            @$el.html _.template @template, _.extend @model.toJSON(), 
-                published_at:ContentBaseAPI.smart_date(@model.get("published_at"))
+            @$el.html @template _.extend @model.toJSON(), published_at:ContentBaseAPI.smart_date(@model.get("published_at"))
             
             @$el.attr "data-objkey", @model.id 
             @

@@ -14,48 +14,48 @@ describe WidgetsHelper do
   end
   
   
-  describe "#comment_count_link_for" do
+  describe "#comment_count_for" do
     it "renders a link to the comments" do
-      comment_count_link_for(object).should match "href"
-      comment_count_link_for(object).should match object.link_path(anchor: "comments")
+      comment_count_for(object).should match "href"
+      comment_count_for(object).should match object.link_path(anchor: "comments")
     end
     
     it "shows the number of comments fort the object" do
       object.comment_count = "10"
-      comment_count_link_for(object).should match /Comments \(10\)/
+      comment_count_for(object).should match /Comments \(10\)/
     end
     
     it "uses the class passed in and appends comment-link" do
-      comment_count_link_for(object, class: "other").should match "comment_link other"
+      comment_count_for(object, class: "other").should match "comment_link other"
     end
       
     it "doesn't render anything if content isn't present" do
-      comment_count_link_for(nil).should be_nil
+      comment_count_for(nil).should be_nil
     end
   end
   
   
-  describe "#comment_count_for" do
+  describe "#comment_widget_for" do
     it "renders the comment_count partial" do
-      comment_count_for(object).should_not be_nil
-      comment_count_for(object).should match "comment-count"
+      comment_widget_for(object).should_not be_nil
+      comment_widget_for(object).should match "comment-count"
     end
     
     it "shows the number of comments" do
       object.comment_count = 13
-      comment_count_for(object).should match "#{object.comment_count}"
+      comment_widget_for(object).should match "#{object.comment_count}"
     end
     
     it "has a link to the comments" do
-      comment_count_for(object).should match object.link_path(anchor: "comments")
+      comment_widget_for(object).should match object.link_path(anchor: "comments")
     end
     
     it "doesn't render anything if object is not present" do
-      comment_count_for(nil).should be_nil
+      comment_widget_for(nil).should be_nil
     end
     
     it "passes in the cssClass" do
-      comment_count_for(object, cssClass: "someclass").should match "someclass"
+      comment_widget_for(object, cssClass: "someclass").should match "someclass"
     end
   end
   

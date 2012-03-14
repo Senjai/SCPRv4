@@ -12,7 +12,7 @@
 		</div>
 		<div class="interact span2">
 			<%= link_to_audio("Listen now", segment, class: "inline") if segment.audio.present? %>
-			<%= comment_count_link_for segment, class: "inline" %>
+			<%= comment_count_for segment, class: "inline" %>
 		</div>
 	</div>
 </article>

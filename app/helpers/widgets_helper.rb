@@ -33,24 +33,30 @@ module WidgetsHelper
   
   #----------
   
-  def comment_count_for(object, options={})
-    if object.present?
+  def comment_widget_for(object, options={})
+    if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
       render('shared/cwidgets/comment_count', { content: object, cssClass: "" }.merge!(options))
     end
   end
   
-  def comment_count_link_for(object, options={})
-    if object.present?
+  #----------
+  
+  def comment_count_for(object, options={})
+    if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
       options[:class] = "comment_link #{options[:class]}"
-      link_to("Comments (#{object.comment_count})", object.link_path(anchor: "comments"), options)
+      link_to( (object.respond_to?(:comment_count) && object.comment_count > 0 ) ? "Comments (#{object.comment_count})" : "Add your comments", object.link_path(anchor: "comments"), options)
     end
   end
   
+  #----------
+  
   def comments_for(object, options={})
-    if object.present?
+    if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
       render('shared/cwidgets/comments', { content: object, cssClass: "" }.merge!(options))
     end
   end
+  
+  #----------
   
   def related_content_for(object, options={})
     if object.present? and object.is_a?(ContentBase)
