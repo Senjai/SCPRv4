@@ -9,7 +9,7 @@ Scenario: View an episode
 	When I go to an episode's page
 	Then I should see a list of that episode's segments
 	And only the published segments should be displayed
-	And the most recently published segment should be on top
+	And the segments should be ordered by the segment order
 	And I should see each segment's primary asset
 	
 Scenario: View an episode with no segments

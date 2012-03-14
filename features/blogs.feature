@@ -41,3 +41,4 @@ Scenario: See time stamps
 	And 1 entry for that blog
 	When I go to the blogs page
 	Then I should see a timestamp for the latest entry
+	

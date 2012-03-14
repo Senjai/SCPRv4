@@ -75,6 +75,13 @@ Then /^I should not see any RSS entries$/ do
 end
 
 
+#### Assertions
+Given /^the program is currently on$/ do
+  schedule = create :schedule, kpcc_program_id: @program.id, program: @program.title
+  Schedule.stub(:on_now) { schedule }
+  Schedule.on_now.programme.should eq @program
+end
+
 #### Utility
 Given /^its feeds are cached$/ do
   @program.cache.should be_true
