@@ -76,21 +76,6 @@ FactoryGirl.define do
     produced_by "BBC"
   end
   
-  factory :show_episode, aliases: [:episode] do
-    show
-    air_date Time.now.tomorrow.strftime("%Y-%m-%d")
-    title "AirTalk for May 22, 2009"
-    _teaser "This is a short summary of the show"
-    published_at Time.now
-    status 5
-    comment_count 0
-    
-    ignore { asset_count 0 }
-    after_create do |show_episode, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: show_episode)
-    end
-  end
-  
   factory :show_rundown do
     episode
     segment
@@ -206,6 +191,27 @@ FactoryGirl.define do
       FactoryGirl.create_list(:link, eval.link_count, content: news_story)
       FactoryGirl.create_list(:brel, eval.brels_count, content: news_story)
       FactoryGirl.create_list(:frel, eval.frels_count, related: news_story)
+    end
+  end
+  
+  factory :show_episode, aliases: [:episode] do
+    show
+    sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
+    title "AirTalk for May 22, 2009"
+    _teaser "This is a short summary of the show"
+    sequence(:published_at) { |n| Time.now + 60*n }
+    status 5
+    comment_count 0
+    
+    ignore { asset_count 0 }
+    ignore { link_count 0 }
+    ignore { brels_count 0 }
+    ignore { frels_count 0 }
+    after_create do |show_episode, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: show_episode)
+      FactoryGirl.create_list(:link, eval.link_count, content: show_episode)
+      FactoryGirl.create_list(:brel, eval.brels_count, content: show_episode)
+      FactoryGirl.create_list(:frel, eval.frels_count, related: show_episode)
     end
   end
   

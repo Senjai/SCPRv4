@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe VideoShell do
+  describe "#published" do
+    it "orders published content by published_at descending" do
+      video_shells = create_list :video_shell, 3, status: 5
+      VideoShell.published.first.should eq video_shells.last
+      VideoShell.published.last.should eq video_shells.first
+    end
+  end
+  
   describe "associations" do
     it "responds to category" do
       @video = create_list :video_shell, 3

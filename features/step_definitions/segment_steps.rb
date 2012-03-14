@@ -6,7 +6,7 @@ end
 
 Given /^(?:each|the) episode has (\d+) segments?$/ do |num|
   @program.episodes.each do |episode|
-    segments = create_list :show_segment, num.to_i, asset_count: 1
+    segments = create_list :show_segment, num.to_i, asset_count: 1, show: @program
     segments.each do |segment|
       create :show_rundown, episode: episode, segment: segment
     end

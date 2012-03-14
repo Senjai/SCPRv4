@@ -7,10 +7,12 @@ describe BlogEntry do
   end
   
   describe "scopes" do
-    it "#published only selects published content" do
-      published = create_list :blog_entry, 3, status: 5
-      unpublished = create_list :blog_entry, 2, status: 3
-      BlogEntry.published.count.should eq 3
+    describe "#published" do    
+      it "orders published content by published_at (or pub_at) descending" do
+        entries = create_list :blog_entry, 3, status: 5
+        BlogEntry.published.first.should eq entries.last
+        BlogEntry.published.last.should eq entries.first
+      end
     end
   end
   

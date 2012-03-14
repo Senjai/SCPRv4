@@ -10,7 +10,7 @@ class ShowEpisode < ContentBase
   
   #belongs_to :program_audio, :foreign_key => "publish_date", :primary_key => "publish_date", :conditions => proc { ["slug = ?",self.show.slug] }  
   
-  scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc")
+  scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
   scope :upcoming, where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc")
   
   define_index do

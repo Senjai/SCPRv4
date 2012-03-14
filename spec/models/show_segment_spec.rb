@@ -39,5 +39,13 @@ describe ShowSegment do
       segment = create :show_segment
       segment.public_datetime.should eq segment.published_at
     end
-  end	
+  end
+  
+  describe "#published" do
+    it "orders published content by published_at descending" do
+      segments = create_list :show_segment, 3, status: 5
+      ShowSegment.published.first.should eq segments.last
+      ShowSegment.published.last.should eq segments.first
+    end
+  end
 end

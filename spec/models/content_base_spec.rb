@@ -35,19 +35,20 @@ describe ContentBase do
       
       describe "#published" do
         it "returns an ActiveRecord::Relation" do
+          create symbolize(c)
           c.published.class.should eq ActiveRecord::Relation
         end
         
+        it "only selects published content" do
+          published = create_list symbolize(c), 3, status: 5
+          unpublished = create_list symbolize(c), 2, status: 3
+          c.published.count.should eq 3
+        end
+
         it "can limit by published content" do
           published = create_list symbolize(c), 3, status: 5
           unpublished = create_list symbolize(c), 2, status: 4
           c.published.count.should eq 3
-        end
-      
-        it "orders published content by published_at (or pub_at) descending" do
-            objects = create_list symbolize(c), 3, status: 5
-            c.published.first.should eq objects.last
-            c.published.last.should eq objects.first
         end
       end
       
