@@ -19,7 +19,7 @@
 
 <p><i><%= render_contributing_byline @story %></i></p>
 
-<%= related_content_for @story %>
+<%= related_for @story %>
 <%= render "shared/cwidgets/pij_query", :content => @story %>
 <%= social_tools_for @story, cssClass: "bottom" %>
 <%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>

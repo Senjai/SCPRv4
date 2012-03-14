@@ -17,6 +17,7 @@
 			</p>
 		<% end %>
 		
+		<%= related_for @entry %>
 		<%= social_tools_for @entry, cssClass: "bottom" %>
 		<%= render "shared/cwidgets/next_prev" %>
 		<%= comments_for @entry %>

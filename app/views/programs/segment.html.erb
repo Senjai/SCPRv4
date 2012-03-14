@@ -20,12 +20,11 @@
 				<%= simple_format @segment.body, {}, :sanitize => false %>
 			
 				<br style="clear: both"/>
-				<%= social_tools_for @segment, cssClass: "bottom" %>
 			</div>
 		</article><!-- article.segment -->
 
-		<%= related_content_for @segment %>
-		<%= related_links_for @segment %>
+		<%= related_for @segment %>
+		<%= social_tools_for @segment, cssClass: "bottom" %>
 		<%= comments_for @segment %>
 	</section> <!-- section.segment -->
 </div>

@@ -58,13 +58,13 @@ module WidgetsHelper
   
   #----------
   
-  def related_content_for(object, options={})
+  def related_for(object, options={})
     if object.present? and object.is_a?(ContentBase)
-      if object.brels.present? or object.frels.present?
-        render("shared/cwidgets/related_articles", { content: object }.merge!(options))
-      end
+      render :partial => "shared/cwidgets/related_content_and_links", :object => object, :as => :content
     end
   end
+  
+  #----------
   
   def related_links_for(object, options={}) # Takes any ContentBase object
     if object.present? and object.is_a?(ContentBase)
