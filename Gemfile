@@ -4,7 +4,7 @@ gem 'rails', '3.2.2'
 gem 'mysql2'
 
 #gem 'redis-content-store', :path => "/Users/eric/projects/scpr/redis-content-store"
-gem 'redis-content-store', "3.2.2", :git => "git://github.com/SCPR/redis-content-store.git"
+gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git", :ref => "e75af913aa8d34b97323c137a6e65ba3672e64e5"
 
 gem 'jquery-rails'
 gem 'will_paginate'

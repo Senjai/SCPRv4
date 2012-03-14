@@ -206,13 +206,9 @@ class ContentBase < ActiveRecord::Base
   def sorted_relations(*lists)
     content = []
     lists.each do |finder|
-      puts "finder is #{finder}"
-      
       # push whichever piece of content isn't us onto the content array
       content << finder.all.collect { |rel| rel.content == self ? rel.related : rel.content }
     end
-    
-    puts "content is #{content}"
     
     # flatten and remove duplicates
     content = content.flatten.compact.uniq
