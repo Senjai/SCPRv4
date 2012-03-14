@@ -5,9 +5,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="span6" style="padding-right: 190px">
-			<%= content_for?(:news_content) ? yield(:news_content) : yield %>
-		</div>
+		<%= content_for?(:news_content) ? yield(:news_content) : yield %>
 	</div>
 	<%= yield :postcontent %>
 <% end %>

@@ -1,3 +1,25 @@
+.storybar {
+	width: 160px;
+	float: right;
+	clear: right;
+}
+
+.storycenter {
+	@extend .offset1;
+	.storybar {
+		margin-left: 12px
+		
+	}
+}
+
+.storyleft {
+	padding-right: 190px;
+	.storybar {
+		margin-right: -190px;
+	}
+	
+}
+
 .storytitle {
 	border-top:1px solid $grayLighter;
 	margin-bottom:$baseline;
