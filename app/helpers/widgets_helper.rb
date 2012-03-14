@@ -53,7 +53,7 @@ module WidgetsHelper
   end
   
   def related_content_for(object, options={})
-    if object.present?
+    if object.present? and object.is_a?(ContentBase)
       if object.brels.present? or object.frels.present?
         render("shared/cwidgets/related_articles", { content: object }.merge!(options))
       end
@@ -61,7 +61,7 @@ module WidgetsHelper
   end
   
   def related_links_for(object, options={}) # Takes any ContentBase object
-    if object.present?
+    if object.present? and object.is_a?(ContentBase)
       if object.related_links.present?
         render "shared/cwidgets/related_links", { content: object }.merge!(options)
       end

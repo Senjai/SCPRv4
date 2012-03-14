@@ -2,12 +2,10 @@ Then /^I should see a comments section$/ do
   page.should have_css "#comments"
 end
 
-Then /^I should see related content$/ do
-  pending # Need to setup Relation factory
-  #page.should have_css ".related-articles"
+Then /^I should see (\d+) related articles$/ do |num|
+  page.should have_css ".related-articles li", count: num.to_i
 end
 
-Then /^I should see related links$/ do
-  pending # Need to setup Link factory
-  #page.should have_css ".releated-links"
+Then /^I should see (\d+) related links$/ do |num|
+  page.should have_css ".related-links li", count: num.to_i
 end

@@ -12,16 +12,25 @@ describe ContentBase do
         object.is_a?(ContentBase).should be_true
       end
       
-      it "has related_links" do
-        pending
-      end
+      describe "associations" do
+        describe "#related_contents" do
+          it "has frels" do
+            object = create symbolize(c), frels_count: 1
+            object.frels.first.related.should eq object
+          end
+          
+          it "has brels" do
+            object = create symbolize(c), brels_count: 1
+            object.brels.first.content.should eq object
+          end
+        end
       
-      it "has brels" do
-        pending
-      end
-      
-      it "has frels" do
-        pending
+        describe "#related_links" do
+          it "has related_links" do
+            object = create symbolize(c), link_count: 1
+            object.related_links.count.should eq 1
+          end
+        end
       end
       
       describe "#published" do
