@@ -64,26 +64,6 @@ describe WidgetsHelper do
     pending
   end
   
-  describe "#related_links_for" do
-    let(:object) { create :show_segment, link_count: 2 }
-    
-    it "does not render anything if object is not present" do
-      related_links_for(nil).should be_nil
-    end
-    
-    it "renders the related_links partial" do
-      related_links_for(object).should match "Related Links"
-    end
-    
-    it "does not render anything if object is not a ContentBase" do
-      related_links_for(create :blog).should be_nil
-    end
-    
-    it "shows the related links for the object" do
-      related_links_for(object).scan(/(?:A Related Link)/).length.should eq 2 # Is there an rspec way to do this?
-    end
-  end
-  
   describe "#comments_for" do
     it "renders the comments partial" do
       comments_for(object).should match 'comments'
@@ -95,30 +75,30 @@ describe WidgetsHelper do
   end
 
 
-  describe "#related_content_for" do
+  describe "#related_for" do
     it "does not render anything if object is not present" do
-      related_content_for(nil).should be_nil
+      related_for(nil).should be_nil
     end
     
     it "does not render anything if the object is not a ContentBase" do
-      related_content_for(create :blog).should be_nil
+      related_for(create :blog).should be_nil
     end
     
     it "does not render anything if the object does not have any relations" do
-      related_content_for(object).should be_nil
+      related_for(object).should be_nil
     end
     
     it "renders the related_articles partial" do
       object_with_related_content = create :show_segment, brels_count: 1, frels_count: 1
       object_with_related_content.brels.should be_present
       object_with_related_content.frels.should be_present
-      related_content_for(object_with_related_content).should_not be_blank
+      related_for(object_with_related_content).should_not be_blank
     end
     
     it "shows the related content for the object" do
       object_with_related_content = create :show_segment, brels_count: 1, frels_count: 1
-      related_content_for(object_with_related_content).should match object_with_related_content.frels.first.content.short_headline
-      related_content_for(object_with_related_content).should match object_with_related_content.brels.first.related.short_headline
+      related_for(object_with_related_content).should match object_with_related_content.frels.first.content.short_headline
+      related_for(object_with_related_content).should match object_with_related_content.brels.first.related.short_headline
     end
   end
   
