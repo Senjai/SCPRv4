@@ -102,7 +102,12 @@ class Schedule < ActiveRecord::Base
     
     if self._date
       stime = self._date.to_time + (self.start_time - self.start_time.to_date.to_time)
-      etime = self._date.to_time + (self.end_time - self.start_time.to_date.to_time)
+      
+      if self.end_time < self.start_time
+        etime = (self._date+1).to_time + (self.end_time - self.start_time.to_date.to_time)        
+      else
+        etime = self._date.to_time + (self.end_time - self.start_time.to_date.to_time)
+      end
     end
     
     {
