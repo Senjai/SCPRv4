@@ -1,4 +1,4 @@
-#### Blog Entry Creation
+#### Setup
 Given /^(\d+) blog entr(?:ies|y)$/ do |num|
   @blog_entries = create_list :blog_entry, num.to_i, blog: @blog
   @blog_entry = @blog_entries[rand(@blog_entries.length)]
@@ -7,6 +7,18 @@ end
 
 Given /^(\d+) entr(?:ies|y) for that blog$/ do |num|
   @entries = create_list :blog_entry, num.to_i, blog: @blog
+end
+
+Given /^the blog entry has (\d+) backward related articles?$/ do |num|
+  @related = create_list :brel, num.to_i, content: @blog_entry
+end
+
+Given /^the blog entry has (\d+) forward related articles?$/ do |num|
+  @related = create_list :frel, num.to_i, related: @blog_entry
+end
+
+Given /^the blog entry has (\d+) related links?$/ do |num| 
+  @links = create_list :link, num.to_i, content: @blog_entry
 end
 
 
@@ -41,6 +53,10 @@ end
 When /^I go to their blog's page$/ do
   visit blog_path @blog
   current_path.should eq blog_path(@blog)
+end
+
+When /^I go to that blog entry's page$/ do
+  visit @blog_entry.link_path
 end
 
 #### Utility

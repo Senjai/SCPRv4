@@ -33,6 +33,20 @@ describe ContentBase do
         end
       end
       
+      describe "sorted_relations" do
+        it "takes a list of frels and brels and returns an array of related records" do
+          object = create symbolize(c), frels_count: 2, brels_count: 2
+          sorted_relations = object.sorted_relations(object.frels.normal, object.brels.normal)
+          sorted_relations.include?(object.frels.first.content).should be_true
+          sorted_relations.include?(object.brels.first.related).should be_true
+        end
+        
+        it "returns a blank array if there are no related objects" do
+          object = create symbolize(c)
+          object.sorted_relations(object.frels.normal, object.brels.notiein).should eq []
+        end
+      end
+      
       describe "#published" do
         it "returns an ActiveRecord::Relation" do
           create symbolize(c)

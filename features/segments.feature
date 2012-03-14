@@ -11,13 +11,10 @@ Scenario: View a segment
 	And I should see a comments section
 	And I should see the segment's primary asset
 	
-Scenario: See related content
+Scenario: See related content and links
 	Given the segment has 2 backward related articles
 	And the segment has 2 forward related articles
+	And the segment has 2 related links
 	When I go to that segment's page
 	Then I should see 4 related articles
-	
-Scenario: See related links
-	Given the segment has 2 related links
-	When I go to that segment's page 
-	Then I should see 2 related links
+	And I should see 2 related links
