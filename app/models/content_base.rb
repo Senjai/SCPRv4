@@ -201,6 +201,28 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
+  # Takes one or more finders for relations and returns one list 
+  # sorted by public_datetime desc and with duplicates removed
+  def sorted_relations(*lists)
+    content = []
+    lists.each do |finder|
+      puts "finder is #{finder}"
+      
+      # push whichever piece of content isn't us onto the content array
+      content << finder.all.collect { |rel| rel.content == self ? rel.related : rel.content }
+    end
+    
+    puts "content is #{content}"
+    
+    # flatten and remove duplicates
+    content = content.flatten.compact.uniq
+    
+    # sort the list and return it
+    return content.sort_by { |c| c.public_datetime }.reverse
+  end
+  
+  #----------
+  
   def byline_elements
     ["KPCC"]
   end

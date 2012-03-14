@@ -1,0 +1,31 @@
+<%= content_cache("related:#{content.obj_key}") do %>
+	<% register_content content %>
+	<% if (rels = content.sorted_relations(content.frels.normal,content.brels.notiein)).any? %>
+		<aside class="related-articles">
+			<h6>More from KPCC</h6>
+			<ul>
+				<% for c in rels %>
+			    <li>
+					<% register_content c %>
+					<%= link_to c.short_headline, c.link_path %>
+					<br/><%= smart_date c %>
+			    </li>
+				<% end %>
+			</ul>
+		</aside>	
+	<% end %>
+	
+	<% if content.related_links.any? %>
+		<aside class="related-links">
+			<h6>Elsewhere on the Web</h6>
+			<ul>
+				<% content.related_links.each do |link| %>
+			    <li>
+					<%= link_to link.title, link.link %> 
+					<br/><i><%= link.domain %></i>
+			    </li>
+				<% end %>
+			</ul>
+		</aside>
+	<% end %>
+<% end %>

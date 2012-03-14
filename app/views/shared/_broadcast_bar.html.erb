@@ -4,7 +4,7 @@
 <section class="broadcastbar">
 	<div class="left">
 	<ul>
-		<li class="active-show-title <%= o.programme.slug %>">
+		<li class="active-show-title">
 			<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
 			<% if o.programme %>
 					<a href="<%= program_path(o.programme.slug) %>" class="<%= o.programme.display_episodes and o.programme.episodes.published.first.segments.published.present? %>">
