@@ -750,7 +750,7 @@ a.comment-count.inline {
 
 // Ad units
 .ad {
-	padding-top:$baseline;
+	padding-top:16px;
 	text-align:center;
 	&:first-child {
 		padding-top:0;
@@ -810,14 +810,12 @@ a.comment-count.inline {
 .popular li {
 	@include clearfix();
 	display:block;
-	height:$baseline * 2;
 	list-style-image:url("more-headlines-li.png");
-	margin-bottom:$baseline / 4;
+	margin-bottom:0;
 	position:relative;
 	a {
 		display:block;
-		padding:$baseline / 2;
-		padding-top:0;
+		padding:0 $baseline / 2 10px;
 		position:relative;
 		z-index:4;
 		@include font-headline($weight:lighter);
