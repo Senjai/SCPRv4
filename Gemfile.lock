@@ -11,7 +11,8 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/redis-content-store.git
-  revision: 7017a9d2e6e6897a9fc1ef8e05f0fe93a4753a4b
+  revision: dcb7843b10afc68a85c105fd58eaa76cf71e250f
+  ref: dcb7843b10afc68a85c105fd58eaa76cf71e250f
   specs:
     redis-content-store (3.2.2)
       redis-activesupport (~> 3.2.2)
@@ -281,7 +282,7 @@ DEPENDENCIES
   oily_png
   rails (= 3.2.2)
   rb-fsevent
-  redis-content-store (= 3.2.2)!
+  redis-content-store!
   rspec-rails
   ruby-mp3info
   rubypython
