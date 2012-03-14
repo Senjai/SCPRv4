@@ -145,21 +145,22 @@ FactoryGirl.define do
   end
   
   factory :event do
-    title "A Very Special Event"
+    sequence(:title) { |n| "A Very Special Event #{n}" }
     sequence(:slug) { |n| "a-very-special-event-#{n}" }
     description "This is a very special event."
-    type "comm"
+    etype "comm" # This is actually "type" in mercer
     sponsor "Patt Morrison"
     sponsor_link "http://oncentral.org"
-    sequence(:starts_at) { Time.now + 60*60*24*n }
-    sequence(:ends_at) { Time.now + 60*60*26*n }
+    sequence(:starts_at) { |n| Time.now + 60*60*24*n }
+    sequence(:ends_at) { |n| Time.now + 60*60*26*n }
     is_all_day 0
     location_name "The Crawford Family Forum"
     location_link "http://www.scpr.org/crawfordfamilyforum"
     rsvp_link "http://kpcc.ticketleap.com/connie-rice/"
     show_map 1
     address_1 "474 South Raymond Avenue"
-    address_2 "Pasadena"
+    address_2 "Second Level" # required column?
+    city "Pasadena"
     state "CA"
     zip_code "91105"
     created_at Time.now
@@ -167,11 +168,12 @@ FactoryGirl.define do
     for_program "airtalk"
     archive_description "This is the description that shows after the event has happened"
     is_published 1
+    
+    ignore { asset_count 0 }
+    after_create do |event, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: event)
+    end
   end
-  
- # factory :content_category do
- #   category
- # end
   
   ### ContentBase Classes
   ##### NOTE: The name of the factory should eq ClassName.to_s.underscore.to_sym, i.e. NewsStory = :news_story

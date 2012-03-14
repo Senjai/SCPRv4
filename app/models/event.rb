@@ -1,22 +1,22 @@
 class Event < ActiveRecord::Base
   self.table_name =  'rails_events_event'
   self.primary_key = :id
-
+  
   has_many :assets, :class_name => "ContentAsset", :as => :content
   
   #----------
-  
+
   scope :published, where(:is_published => true)
-  scope :upcoming, lambda { where("starts_at > ?", Time.now) }
-  scope :forum, where("etype != ? AND etype != ?", "spon", "pick").order("starts_at ASC")
+  scope :upcoming, lambda { where("starts_at > ?", Time.now).order("starts_at") }
+  scope :forum, where("etype != ? AND etype != ?", "spon", "pick")
   scope :sponsored, where("etype = ?", "spon")
   
   #----------
-
+  
   def obj_key
     "events/event:#{self.id}"
   end
-
+  
   def link_path(options={})
     Rails.application.routes.url_helpers.event_path(options.merge!({
       :year => self.starts_at.year, 
