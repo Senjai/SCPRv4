@@ -36,6 +36,9 @@ class Dashboard::MainController < ApplicationController
   
   def listen
     @current = params[:current] ? true : false
+    
+    # grab eight hours worth of schedule, starting six hours ago
+    @schedule = Schedule.at :time => Time.now() - 60*60*4, :hours => 6
   end
   
 end

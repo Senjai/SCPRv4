@@ -5,9 +5,7 @@ class NewsStory < ContentBase
   CONTENT_TYPE_ID = 15
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
-    
-  has_many :links, :as => "content"
-  
+      
   belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
   has_many :uploaded_audio, :as => "content"
   

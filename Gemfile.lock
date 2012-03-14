@@ -11,7 +11,8 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/redis-content-store.git
-  revision: 7017a9d2e6e6897a9fc1ef8e05f0fe93a4753a4b
+  revision: dcb7843b10afc68a85c105fd58eaa76cf71e250f
+  ref: dcb7843b10afc68a85c105fd58eaa76cf71e250f
   specs:
     redis-content-store (3.2.2)
       redis-activesupport (~> 3.2.2)
@@ -139,6 +140,8 @@ GEM
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
     json (1.6.5)
+    launchy (2.0.5)
+      addressable (~> 2.2.6)
     libv8 (3.3.10.4)
     loofah (1.2.0)
       nokogiri (>= 1.4.4)
@@ -230,6 +233,7 @@ GEM
       ffi (~> 1.0)
       multi_json (~> 1.0)
       rubyzip
+    shoulda-matchers (1.0.0)
     sprockets (2.1.2)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -271,17 +275,19 @@ DEPENDENCIES
   guard-cucumber
   guard-rspec
   jquery-rails
+  launchy
   mocha
   mysql2
   newrelic_rpm
   oily_png
   rails (= 3.2.2)
   rb-fsevent
-  redis-content-store (= 3.2.2)!
+  redis-content-store!
   rspec-rails
   ruby-mp3info
   rubypython
   sass-rails
+  shoulda-matchers
   therubyracer
   thinking-sphinx (= 2.0.10)
   uglifier (>= 1.0.3)

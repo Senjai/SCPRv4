@@ -10,8 +10,21 @@ class ShowEpisode < ContentBase
   
   #belongs_to :program_audio, :foreign_key => "publish_date", :primary_key => "publish_date", :conditions => proc { ["slug = ?",self.show.slug] }  
   
-  scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc")
+  scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
   scope :upcoming, where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc")
+  
+  define_index do
+    indexes title
+    indexes _teaser
+    has "''", :as => :category, :type => :integer
+    has "0", :as => :category_is_news, :type => :boolean
+    has published_at
+    has "1", :as => :is_source_kpcc, :type => :boolean
+    has "CRC32(CONCAT('shows/episode:',shows_episode.id))", :type => :integer, :as => :obj_key
+    has "0", :type => :boolean, :as => :is_slideshow
+    where "status = #{STATUS_LIVE}"
+    
+  end
       
   #----------
   
@@ -26,6 +39,7 @@ class ShowEpisode < ContentBase
   end
     
   #----------
+
   
   def link_path(options={})
     Rails.application.routes.url_helpers.episode_path(options.merge!({

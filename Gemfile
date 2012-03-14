@@ -4,7 +4,7 @@ gem 'rails', '3.2.2'
 gem 'mysql2'
 
 #gem 'redis-content-store', :path => "/Users/eric/projects/scpr/redis-content-store"
-gem 'redis-content-store', "3.2.2", :git => "git://github.com/SCPR/redis-content-store.git"
+gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git", :ref => "dcb7843b10afc68a85c105fd58eaa76cf71e250f"
 
 gem 'jquery-rails'
 gem 'will_paginate'
@@ -34,14 +34,16 @@ group :test, :development do
 	gem 'guard-rspec' # Automatically run tests
 	gem 'guard-cucumber' # Automatically run tests
 	gem 'rb-fsevent', require: false # For file-watching on Mac
+	gem 'launchy' # For quick debugging
 end
 
 group :test do
-  gem 'cucumber-rails', ">= 1.3.0" # Integration testing
+  gem 'cucumber-rails', ">= 1.3.0", require: false # Integration testing
   gem 'factory_girl_rails' # Factories for test data
   gem 'database_cleaner' # Database cleaning strategy
   gem 'mocha' # cross-framework mocking
   gem 'capybara' # Acceptance/Integration testing
+  gem 'shoulda-matchers' # For quickly writing common tests
 end
 
 group :worker do

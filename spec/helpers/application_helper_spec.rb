@@ -125,17 +125,17 @@ describe ApplicationHelper do
     
     it "accepts an optional options hash and merges it into the options for the content_tag" do
       time = Time.now
-      smart_date_js(time, "data-window" => "8h").match("data-window").should_not be_nil
+      smart_date_js(time, "data-window" => "8h").should match "data-window"
     end
     
     it "overrides the default options in the content_tag with any passed-in options" do
       time = Time.now
-      smart_date_js(time, "datetime" => "new format").match("datetime=\"new format\"").should_not be_nil
+      smart_date_js(time, "datetime" => "new format").should match "datetime=\"new format\""
     end
     
     it "merges a passed-in class with the required smarttime class" do
       time = Time.now
-      smart_date_js(time, class: "newClass").match("newClass smart smarttime").should_not be_nil
+      smart_date_js(time, class: "newClass").should match "newClass smart smarttime"
     end
   end
 

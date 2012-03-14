@@ -12,21 +12,57 @@ describe ContentBase do
         object.is_a?(ContentBase).should be_true
       end
       
+      describe "associations" do
+        describe "#related_contents" do
+          it "has frels" do
+            object = create symbolize(c), frels_count: 1
+            object.frels.first.related.should eq object
+          end
+          
+          it "has brels" do
+            object = create symbolize(c), brels_count: 1
+            object.brels.first.content.should eq object
+          end
+        end
+      
+        describe "#related_links" do
+          it "has related_links" do
+            object = create symbolize(c), link_count: 1
+            object.related_links.count.should eq 1
+          end
+        end
+      end
+      
+      describe "sorted_relations" do
+        it "takes a list of frels and brels and returns an array of related records" do
+          object = create symbolize(c), frels_count: 2, brels_count: 2
+          sorted_relations = object.sorted_relations(object.frels.normal, object.brels.normal)
+          sorted_relations.include?(object.frels.first.content).should be_true
+          sorted_relations.include?(object.brels.first.related).should be_true
+        end
+        
+        it "returns a blank array if there are no related objects" do
+          object = create symbolize(c)
+          object.sorted_relations(object.frels.normal, object.brels.notiein).should eq []
+        end
+      end
+      
       describe "#published" do
         it "returns an ActiveRecord::Relation" do
+          create symbolize(c)
           c.published.class.should eq ActiveRecord::Relation
         end
         
+        it "only selects published content" do
+          published = create_list symbolize(c), 3, status: 5
+          unpublished = create_list symbolize(c), 2, status: 3
+          c.published.count.should eq 3
+        end
+
         it "can limit by published content" do
           published = create_list symbolize(c), 3, status: 5
           unpublished = create_list symbolize(c), 2, status: 4
           c.published.count.should eq 3
-        end
-      
-        it "orders published content by published_at (or pub_at) descending" do
-            objects = create_list symbolize(c), 3, status: 5
-            c.published.first.should eq objects.last
-            c.published.last.should eq objects.first
         end
       end
       
@@ -69,9 +105,9 @@ describe ContentBase do
         it "merges in an options hash unless it's a ContentShell" do
           object = create symbolize(c)
           if c == ContentShell
-            object.link_path(anchor: "comments").match("#comments").should be_nil
+            object.link_path(anchor: "comments").should_not match "#comments"
           else  
-            object.link_path(anchor: "comments").match("#comments").should_not be_nil
+            object.link_path(anchor: "comments").should match "#comments"
           end
         end
       end
@@ -85,9 +121,9 @@ describe ContentBase do
         it "points to scpr.org unless it's a ContentShell" do
           object = create symbolize(c)
           if c == ContentShell
-            object.remote_link_path.match("http://www.scpr.org").should be_nil
+            object.remote_link_path.should_not match "http://www.scpr.org"
           else
-            object.remote_link_path.match("http://www.scpr.org").should_not be_nil
+            object.remote_link_path.should match "http://www.scpr.org"
           end
         end
       end

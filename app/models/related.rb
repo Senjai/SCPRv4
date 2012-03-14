@@ -20,6 +20,6 @@ class Related < ActiveRecord::Base
   scope :notiein, where("flag != ?",FLAG_TIEIN)
   
   def self.sorted
-    all().sort_by { |r| r.content.public_datetime }.reverse
+    all().sort_by { |r| r.content.public_datetime }
   end
 end

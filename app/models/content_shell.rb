@@ -54,4 +54,10 @@ class ContentShell < ContentBase
   def published_at
     self.pub_at
   end
+  
+  #----------
+  
+  def has_comments?
+    false
+  end
 end

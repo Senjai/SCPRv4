@@ -15,7 +15,7 @@ describe Event do
 #     
 #     it "merges in an options hash" do
 #       event = create :event
-#       event.link_path(anchor: "comments").match("#comments").should_not be_nil
+#       event.link_path(anchor: "comments").should match "#comments"
 #     end
 #   end
 end

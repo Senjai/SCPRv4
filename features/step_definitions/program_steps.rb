@@ -1,89 +1,102 @@
+#### Program Creation
 Given /^there (?:is|are) (\d+) kpcc programs?$/ do |num|
-  @kpcc_programs = create_list :kpcc_program, num.to_i
-  @kpcc_program = @kpcc_programs[rand(num.to_i)]
+  @programs = create_list :kpcc_program, num.to_i
+  @program = @programs[rand(num.to_i)]
   KpccProgram.all.count.should eq num.to_i
 end
 
 Given /^there (?:is|are) (\d+) other programs?$/ do |num|
-  @other_programs = create_list :other_program, num.to_i
-  @other_program = @other_programs[rand(@other_programs.length)]
+  @programs = create_list :other_program, num.to_i
+  @program = @programs[rand(@programs.length)]
   OtherProgram.all.count.should eq num.to_i
 end
 
 Given /^there (?:is|are) (\d+) segment\-style kpcc programs?$/ do |num|
-  @kpcc_programs = create_list :kpcc_program, num.to_i, display_segments: true, display_episodes: false
-  @kpcc_program = @kpcc_programs[rand(num.to_i)]
+  @programs = create_list :kpcc_program, num.to_i, display_segments: true, display_episodes: false
+  @program = @programs[rand(num.to_i)]
   KpccProgram.all.count.should eq num.to_i
 end
 
 Given /^there (?:is|are) (\d+) episodic\-style kpcc programs?$/ do |num|
-  @kpcc_programs = create_list :kpcc_program, num.to_i, display_segments: false, display_episodes: true
-  @kpcc_program = @kpcc_programs[rand(num.to_i)]
+  @programs = create_list :kpcc_program, num.to_i, display_segments: false, display_episodes: true
+  @program = @programs[rand(num.to_i)]
   KpccProgram.all.count.should eq num.to_i
 end
 
-Given /^the program has (\d+) segments?$/ do |num|
-  @segments = create_list :show_segment, num.to_i, show: @kpcc_program, asset_count: 1
-  @segment = @segments[rand(@segments.length)]
-end
-
-Then /^I should see each episode's primary asset$/ do
-  page.should have_css ".show-episode .contentasset img"
-end
-
-Then /^I should see each segment's primary asset$/ do
-  page.should have_css ".segment-teaser .contentasset img"
-end
-
-Given /^the program has (\d+) episodes?$/ do |num|
-  @episodes = create_list :show_episode, num.to_i, show: @kpcc_program, asset_count: 1
-end
-
-Given /^each episode has (\d+) segments?$/ do |num|
-  @kpcc_program.episodes.each do |episode|
-    segments = create_list :show_segment, num.to_i
-    segments.each do |segment|
-      create_list :show_rundown, num.to_i, episode: episode, segment: segment
-    end
-  end
-end
-
-When /^I go to the programs page$/ do
-  visit programs_path
-end
-
 Given /^a program titled "([^"]*)" with slug "([^"]*)"$/ do |title, slug|
-  @kpcc_program = create :kpcc_program, title: title, slug: slug
+  @program = create :kpcc_program, title: title, slug: slug
 end
 
-When /^I go to the program's page$/ do
-  visit program_path @kpcc_program
+Given /^there (?:is|are) (\d+) other programs? with a podcast and no RSS$/ do |num|
+  @programs = create_list :other_program, num.to_i, rss_url: ""
+  @program = @programs[rand(@programs.length)]
+  @program.rss_url.should be_blank
+  @program.podcast_url.should be_present
 end
 
+Given /^there (?:is|are) (\d+) other programs? with an RSS and no podcast$/ do |num|
+  @programs = create_list :other_program, num.to_i, podcast_url: ""
+  @program = @programs[rand(@programs.length)]
+  @program.rss_url.should be_present
+  @program.podcast_url.should be_blank
+end
+
+Given /^there (?:is|are) (\d+) other programs? with no RSS and no podcast$/ do |num|
+  @programs = create_list :other_program, num.to_i, podcast_url: "", rss_url: ""
+  @program = @programs[rand(@programs.length)]
+  @program.rss_url.should be_blank
+  @program.podcast_url.should be_blank
+end
+
+
+#### Finders
 Then /^I should see the program's information$/ do
-  find(".show-title h2").should have_content @kpcc_program.title
+  find(".show-title h2").should have_content @program.title
 end
 
 Then /^I should see a headshot of the program's host$/ do
-  page.should have_xpath("//div[contains(@class, '#{@kpcc_program.slug}')]") # Need to figure out how to actually check for background-image attribute.
+  page.should have_xpath("//div[contains(@class, '#{@program.slug}')]") # Need to figure out how to actually check for background-image attribute.
 end
 
-When /^I go to a program's page$/ do
-  visit program_path @kpcc_program
+Then /^I should see a list of that program's podcast entries$/ do
+  page.should have_css ".segment-teaser" # TODO: Need a better way to test this
 end
 
-Then /^I should see a list of segments$/ do
-  page.should have_css ".segment-teaser", count: @kpcc_program.segments.count
+Then /^I should see a list of that program's RSS entries$/ do
+  page.should have_css ".segment-teaser" # TODO: Need a better way to test this
 end
 
-Then /^I should see a list of older episodes below the current episode$/ do
-  page.should have_css ".show-episode", count: @kpcc_program.episodes.count - 1
+Then /^I should not see any podcast entries$/ do
+  # page.should_not have_content "<h2>Recently</h2>" # TODO: Need a better way to test this
 end
 
-Then /^I should see the current episode's information$/ do
-  page.find(".current-episode").should have_content @kpcc_program.episodes.published.first.headline
+Then /^I should not see any RSS entries$/ do
+  # page.should_not have_content "<h2>Latest News</h2>" # TODO: Need a better way to test this
 end
 
-Then /^I should see a list of the current episode's segments$/ do
-  page.find(".current-episode-segments").should have_css(".story-headline", count: @kpcc_program.episodes.published.first.segments.count)
+
+#### Assertions
+Given /^the program is currently on$/ do
+  schedule = create :schedule, kpcc_program_id: @program.id, program: @program.title
+  Schedule.stub(:on_now) { schedule }
+  Schedule.on_now.programme.should eq @program
+end
+
+#### Utility
+Given /^its feeds are cached$/ do
+  @program.cache.should be_true
+  Rails.cache.fetch("ext_program:#{@program.slug}:podcast").should_not be_blank if @program.podcast_url.present?
+  Rails.cache.fetch("ext_program:#{@program.slug}:rss").should_not be_blank if @program.rss_url.present?
+end
+
+
+#### Routing
+When /^I go to the programs page$/ do
+  visit programs_path
+  current_path.should eq programs_path
+end
+
+When /^I go to (?:the|a) program's page$/ do
+  visit program_path @program
+  current_path.should eq program_path @program
 end

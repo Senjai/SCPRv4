@@ -22,9 +22,9 @@ class ContentBase < ActiveRecord::Base
   CONTENT_CLASSES = {
     'news/story'    => "NewsStory",
     'shows/segment' => "ShowSegment",
-    #'shows/episode' => "ShowEpisode",
+    'shows/episode' => "ShowEpisode",
     'blogs/entry'   => "BlogEntry",
-    'video/shell' => "VideoShell",
+    'video/shell'   => "VideoShell",
     'content/shell' => "ContentShell"
   }
   
@@ -35,6 +35,7 @@ class ContentBase < ActiveRecord::Base
     %r{^/admin/blogs/entry/(\d+)/}                   => 'blogs/entry',
     %r{^/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'shows/segment',
     %r{^/admin/shows/segment/(\d+)/}                 => 'shows/segment',
+    %r{^/admin/shows/episode/(\d+)/}                 => 'shows/episode',
     %r{^/admin/contentbase/contentshell/(\d+)/}      => 'content/shell'
   }
 
@@ -45,6 +46,7 @@ class ContentBase < ActiveRecord::Base
   has_many :brels, :class_name => "Related", :as => :content
   has_many :frels, :class_name => "Related", :as => :related
   
+  has_many :related_links, class_name: "Link", as: :content, conditions: "link_type != 'query'"
   has_many :queries, :class_name => "Link", :as => :content, :conditions => { :link_type => "query" }
   
   has_one :content_category, :as => "content"
@@ -199,8 +201,32 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
+  # Takes one or more finders for relations and returns one list 
+  # sorted by public_datetime desc and with duplicates removed
+  def sorted_relations(*lists)
+    content = []
+    lists.each do |finder|
+      # push whichever piece of content isn't us onto the content array
+      content << finder.all.collect { |rel| rel.content == self ? rel.related : rel.content }
+    end
+    
+    # flatten and remove duplicates
+    content = content.flatten.compact.uniq
+    
+    # sort the list and return it
+    return content.sort_by { |c| c.public_datetime }.reverse
+  end
+  
+  #----------
+  
   def byline_elements
     ["KPCC"]
+  end
+  
+  #----------
+  
+  def has_comments?
+    true
   end
   
   #----------
@@ -213,6 +239,12 @@ class ContentBase < ActiveRecord::Base
 
   def short_headline
     self._short_headline? ? self._short_headline : self.headline
+  end
+  
+  #----------
+  
+  def _short_headline?
+    self.respond_to?(:_short_headline) && self._short_headline.present?
   end
   
   #----------
@@ -232,7 +264,7 @@ class ContentBase < ActiveRecord::Base
     if fp && fp[1].length < l
       # cool, return this
       return fp[1]
-    else
+    elsif fp
       # try shortening this paragraph
       short = /^(.{#{l}}\w*)\W/.match(fp[1])
       
@@ -241,6 +273,8 @@ class ContentBase < ActiveRecord::Base
       else
         return fp[1]
       end
+    else
+      return ''
     end    
     
   end

@@ -6,10 +6,16 @@ FactoryGirl.define do
     sequence(:caption) { |n| "Caption #{n}" } 
   end
   
-  factory :byline, class: "ContentByline" do # TODO: Make a "content" factory so we don't have to fake the content fields
+  factory :byline, class: "ContentByline" do
     role 0
     user
-    content_type_id 15
+  end
+  
+  factory :schedule do # Requires us to pass in kpcc_proram_id or other_program_id and program. There must be a better way to do this.
+    sequence(:day) { |n| (Time.now + 60*60*24*n).day }
+    start_time "00:00:00" # arbitrary
+    end_time "02:00:00" # aribtrary
+    url { "/programs/#{program.underscore}" }
   end
   
   factory :user, class: "Bio", aliases: [:author] do
@@ -25,6 +31,12 @@ FactoryGirl.define do
     sequence(:user_id) 
   end
   
+  factory :link do
+    title "A Related Link"
+    link "http://oncentral.org"
+    link_type "website"
+  end
+    
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
     sequence(:slug) { |n| "show-#{n}" }
@@ -49,27 +61,6 @@ FactoryGirl.define do
     end
   end
   
-  factory :show_episode, aliases: [:episode] do
-    show
-    air_date Time.now.tomorrow.strftime("%Y-%m-%d")
-    title "AirTalk for May 22, 2009"
-    _teaser "This is a short summary of the show"
-    published_at Time.now
-    status 5
-    comment_count 0
-    
-    ignore { asset_count 0 }
-    after_create do |show_episode, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: show_episode)
-    end
-  end
-  
-  factory :show_rundown do
-    episode
-    segment
-    sequence(:segment_order) { |n| n } # TODO Test that segment_order is actually doing something 
-  end
-  
   factory :other_program do
     sequence(:title) { |n| "Other Program #{n}" }
     sequence(:slug) { |n| "other-program-#{n}" }
@@ -78,11 +69,17 @@ FactoryGirl.define do
     host "Larry Mantle"
     airtime "Weekdays 10 a.m.-12 p.m."
     air_status "onair"
-    podcast_url "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=73329334&uo=6"
-    rss_url "http://www.bbc.co.uk/worldservice/news/index.xml"
+    podcast_url "http://www.npr.org/rss/podcast.php?id=510294"
+    rss_url "http://oncentral.org/rss/latest" # This column cannot be null?
     sidebar "Sidebar Content"
     web_url "http://www.bbc.co.uk/worldservice/"
     produced_by "BBC"
+  end
+  
+  factory :show_rundown do
+    episode
+    segment
+    sequence(:segment_order) { |n| n }
   end
   
   factory :blog do
@@ -130,6 +127,16 @@ FactoryGirl.define do
     factory :category_not_news, traits: [:is_not_news]
   end
   
+  factory :related do
+    factory :brel do # "brels" - expects content to be passed in
+      association :related, factory: :show_segment
+    end
+    
+    factory :frel do # "frels" - expects related to be passed in
+      association :content, factory: :show_segment
+    end
+  end
+  
  # factory :content_category do
  #   category
  # end
@@ -148,8 +155,14 @@ FactoryGirl.define do
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
     
     ignore { asset_count 1 }
+    ignore { link_count 0 }
+    ignore { brels_count 0 }
+    ignore { frels_count 0 }
     after_create do |video_shell, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: video_shell)
+      FactoryGirl.create_list(:link, eval.link_count, content: video_shell)
+      FactoryGirl.create_list(:brel, eval.brels_count, content: video_shell)
+      FactoryGirl.create_list(:frel, eval.frels_count, related: video_shell)
     end
   end
   
@@ -164,14 +177,41 @@ FactoryGirl.define do
     locale "local"
     sequence(:published_at) { |n| Time.now + 60*n }
     editing_status 2
-    is_published 1 # do we need this column?
+    is_published 1 # required field by db but not used anymore
     status 5
     byline "Local Byline"
     comment_count 1
     
     ignore { asset_count 0 }
+    ignore { link_count 0 }
+    ignore { brels_count 0 }
+    ignore { frels_count 0 }
     after_create do |news_story, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: news_story)
+      FactoryGirl.create_list(:link, eval.link_count, content: news_story)
+      FactoryGirl.create_list(:brel, eval.brels_count, content: news_story)
+      FactoryGirl.create_list(:frel, eval.frels_count, related: news_story)
+    end
+  end
+  
+  factory :show_episode, aliases: [:episode] do
+    show
+    sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
+    title "AirTalk for May 22, 2009"
+    _teaser "This is a short summary of the show"
+    sequence(:published_at) { |n| Time.now + 60*n }
+    status 5
+    comment_count 0
+    
+    ignore { asset_count 0 }
+    ignore { link_count 0 }
+    ignore { brels_count 0 }
+    ignore { frels_count 0 }
+    after_create do |show_episode, eval|
+      FactoryGirl.create_list(:asset, eval.asset_count, content: show_episode)
+      FactoryGirl.create_list(:link, eval.link_count, content: show_episode)
+      FactoryGirl.create_list(:brel, eval.brels_count, content: show_episode)
+      FactoryGirl.create_list(:frel, eval.frels_count, related: show_episode)
     end
   end
   
@@ -191,8 +231,14 @@ FactoryGirl.define do
     enco_number 999
     
     ignore { asset_count 0 }
+    ignore { link_count 0 }
+    ignore { brels_count 0 }
+    ignore { frels_count 0 }
     after_create do |show_segment, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: show_segment)
+      FactoryGirl.create_list(:link, eval.link_count, content: show_segment)
+      FactoryGirl.create_list(:brel, eval.brels_count, content: show_segment)
+      FactoryGirl.create_list(:frel, eval.frels_count, related: show_segment)
     end
   end
   
@@ -204,15 +250,21 @@ FactoryGirl.define do
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
     author
     blog
-    blog_slug "larry-mantle" # FIXME This should match the entry's blog's slug
+    blog_slug { slug }
     status 5
-    is_published 1 # Do we need this? It's currently a required field in the DB
+    is_published 1 # required field by db but not used anymore
     comment_count 1
     sequence(:published_at) { |n| Time.now + 60*n }
     
     ignore { asset_count 0 }
+    ignore { link_count 0 }
+    ignore { brels_count 0 }
+    ignore { frels_count 0 }
     after_create do |blog_entry, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: blog_entry)
+      FactoryGirl.create_list(:link, eval.link_count, content: blog_entry)
+      FactoryGirl.create_list(:brel, eval.brels_count, content: blog_entry)
+      FactoryGirl.create_list(:frel, eval.frels_count, related: blog_entry)
     end
   end
   
@@ -225,11 +277,17 @@ FactoryGirl.define do
     _teaser "This is a teaser for the content"
     url "http://blogdowntown.com/2011/11/6494-green-paint-welcomes-cyclists-to-a-reprioritized"
     status 5
-    sequence(:pub_at) { |n| Time.now + 60*n } # TODO Replace `pub_at` with `published_at` for consistency 
+    sequence(:pub_at) { |n| Time.now + 60*n }
     
     ignore { asset_count 0 }
+    ignore { link_count 0 }
+    ignore { brels_count 0 }
+    ignore { frels_count 0 }
     after_create do |content_shell, eval|
       FactoryGirl.create_list(:asset, eval.asset_count, content: content_shell)
+      FactoryGirl.create_list(:link, eval.link_count, content: content_shell)
+      FactoryGirl.create_list(:brel, eval.brels_count, content: content_shell)
+      FactoryGirl.create_list(:frel, eval.frels_count, related: content_shell)
     end
   end
 end
