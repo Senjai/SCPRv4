@@ -1,3 +1,10 @@
+def content_base_associations(object, eval)
+  FactoryGirl.create_list(:asset, eval.asset_count, content: object)
+  FactoryGirl.create_list(:link, eval.link_count, content: object)
+  FactoryGirl.create_list(:brel, eval.brels_count, content: object)
+  FactoryGirl.create_list(:frel, eval.frels_count, related: object)
+end
+
 FactoryGirl.define do  
   factory :asset, class: ContentAsset do
     sequence(:id, 1)
@@ -137,6 +144,31 @@ FactoryGirl.define do
     end
   end
   
+  factory :event do
+    title "A Very Special Event"
+    sequence(:slug) { |n| "a-very-special-event-#{n}" }
+    description "This is a very special event."
+    type "comm"
+    sponsor "Patt Morrison"
+    sponsor_link "http://oncentral.org"
+    sequence(:starts_at) { Time.now + 60*60*24*n }
+    sequence(:ends_at) { Time.now + 60*60*26*n }
+    is_all_day 0
+    location_name "The Crawford Family Forum"
+    location_link "http://www.scpr.org/crawfordfamilyforum"
+    rsvp_link "http://kpcc.ticketleap.com/connie-rice/"
+    show_map 1
+    address_1 "474 South Raymond Avenue"
+    address_2 "Pasadena"
+    state "CA"
+    zip_code "91105"
+    created_at Time.now
+    modified_at Time.now
+    for_program "airtalk"
+    archive_description "This is the description that shows after the event has happened"
+    is_published 1
+  end
+  
  # factory :content_category do
  #   category
  # end
@@ -159,10 +191,7 @@ FactoryGirl.define do
     ignore { brels_count 0 }
     ignore { frels_count 0 }
     after_create do |video_shell, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: video_shell)
-      FactoryGirl.create_list(:link, eval.link_count, content: video_shell)
-      FactoryGirl.create_list(:brel, eval.brels_count, content: video_shell)
-      FactoryGirl.create_list(:frel, eval.frels_count, related: video_shell)
+      content_base_associations(video_shell, eval)
     end
   end
   
@@ -187,10 +216,7 @@ FactoryGirl.define do
     ignore { brels_count 0 }
     ignore { frels_count 0 }
     after_create do |news_story, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: news_story)
-      FactoryGirl.create_list(:link, eval.link_count, content: news_story)
-      FactoryGirl.create_list(:brel, eval.brels_count, content: news_story)
-      FactoryGirl.create_list(:frel, eval.frels_count, related: news_story)
+      content_base_associations(news_story, eval)
     end
   end
   
@@ -208,10 +234,7 @@ FactoryGirl.define do
     ignore { brels_count 0 }
     ignore { frels_count 0 }
     after_create do |show_episode, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: show_episode)
-      FactoryGirl.create_list(:link, eval.link_count, content: show_episode)
-      FactoryGirl.create_list(:brel, eval.brels_count, content: show_episode)
-      FactoryGirl.create_list(:frel, eval.frels_count, related: show_episode)
+      content_base_associations(show_episode, eval)
     end
   end
   
@@ -235,10 +258,7 @@ FactoryGirl.define do
     ignore { brels_count 0 }
     ignore { frels_count 0 }
     after_create do |show_segment, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: show_segment)
-      FactoryGirl.create_list(:link, eval.link_count, content: show_segment)
-      FactoryGirl.create_list(:brel, eval.brels_count, content: show_segment)
-      FactoryGirl.create_list(:frel, eval.frels_count, related: show_segment)
+      content_base_associations(show_segment, eval)
     end
   end
   
@@ -261,10 +281,7 @@ FactoryGirl.define do
     ignore { brels_count 0 }
     ignore { frels_count 0 }
     after_create do |blog_entry, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: blog_entry)
-      FactoryGirl.create_list(:link, eval.link_count, content: blog_entry)
-      FactoryGirl.create_list(:brel, eval.brels_count, content: blog_entry)
-      FactoryGirl.create_list(:frel, eval.frels_count, related: blog_entry)
+      content_base_associations(blog_entry, eval)
     end
   end
   
@@ -284,10 +301,7 @@ FactoryGirl.define do
     ignore { brels_count 0 }
     ignore { frels_count 0 }
     after_create do |content_shell, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: content_shell)
-      FactoryGirl.create_list(:link, eval.link_count, content: content_shell)
-      FactoryGirl.create_list(:brel, eval.brels_count, content: content_shell)
-      FactoryGirl.create_list(:frel, eval.frels_count, related: content_shell)
+      content_base_associations(content_shell, eval)
     end
   end
 end
