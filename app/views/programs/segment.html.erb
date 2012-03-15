@@ -14,7 +14,9 @@
 		</h6>
 
 		<article class="segment">
-			<h1 class="story-title"><%= @segment.headline %></h1>
+			<h1 class="story-headline"><%= @segment.headline %></h1>
+			<p class="byline"><%= render_byline @segment %></p>
+			
 			<%= render_asset @segment, "segment" %>
 			<div class="story-body">
 				<%= simple_format @segment.body, {}, :sanitize => false %>
