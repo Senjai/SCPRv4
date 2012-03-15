@@ -1,4 +1,4 @@
-Then /^I should see a comments section$/ do
+Then /^I should see (?:a|the) comments? section$/ do
   page.should have_css "#comments"
 end
 
