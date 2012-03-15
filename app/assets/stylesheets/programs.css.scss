@@ -1,24 +1,6 @@
 $headShotHeight: 70px;
 $headShotWidth: 90px;
 
-/* the following must match the slug of the program */
-.madeleine-brand {
-    background-image: url(image_path('broadcast-bar/headshots/madeleine-brand.png'));
-	background-repeat: no-repeat;
-}
-.airtalk {
-	background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
-	background-repeat: no-repeat;
-}
-.patt-morrison {
-	background-image: url(image_path('broadcast-bar/headshots/patt-morrison.png'));
-	background-repeat: no-repeat;
-}
-.offramp {
-	background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
-	background-repeat: no-repeat;
-}
-
 #featured-programs {
 	h4 {
 		color:$orangeDark;
@@ -45,6 +27,24 @@ $headShotWidth: 90px;
 }
 
 .program-masthead {
+	/* the following must match the slug of the program */
+	.madeleine-brand {
+	    background-image: url(image_path('broadcast-bar/headshots/madeleine-brand.png'));
+		background-repeat: no-repeat;
+	}
+	.airtalk {
+		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
+		background-repeat: no-repeat;
+	}
+	.patt-morrison {
+		background-image: url(image_path('broadcast-bar/headshots/patt-morrison.png'));
+		background-repeat: no-repeat;
+	}
+	.offramp {
+		background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
+		background-repeat: no-repeat;
+	}
+	
 	border-bottom: 1px solid #a2a2a2;
 	margin-bottom: $baseline / 2;
 	margin-top: $baseline / 2 * -1;
