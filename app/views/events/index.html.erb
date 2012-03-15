@@ -1,0 +1,64 @@
+<% page_title "Events" %>
+<h1>KPCC Events</h1>
+
+<div class="row events">
+	<section class="span5 upcoming-events">
+		<h6>Attend an Upcoming Event</h6>
+		<% if @closest_event.present? %>
+			<div class="event closest">
+				<%= render_asset @closest_event, 'lead5' %>
+				<div class="calendar-date"><%= calendar_link @closest_event.starts_at, event: @closest_event, format: :full_day %></div>
+				<h1 class="story-title"><%= link_to @closest_event.title, @closest_event.link_path %></h1>
+			</div>
+		<% end %>
+		
+		<div class="future-events">
+			<%= any_to_list? @future_events, title: "Future Events", message: "There are no events planned for the near future. Check back soon!" do %>
+				<% @future_events.each do |event| %>
+					<article class="event future">
+						<div class="row">
+							<% if event.assets.present? %>
+								<div class="span2">
+									<%= render_asset event, 'lsquare' %>
+								</div>
+							<% end %>
+							<div class="info <%= event.assets.present? ? "span3" : "span5" %>">
+								<div class="calendar-date"><%= calendar_link event.starts_at, event: event, format: :full_day %></div>
+								<h2><%= link_to event.title, event.link_path %></h2>
+								<%= event.description.scan(/(?:\w+ ){15}/).first %>... <%# TODO add a "teaser" column in mercer %>
+							</div>
+						</div> <!-- row -->
+					</article>
+				<% end %>
+			<% end %>
+		</div>
+	</section> <!-- upcoming-events -->
+	
+	<section class="span4 social">
+		<h3>Follow Us on Social Media</h3>
+		<div class="banners">
+			<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook-banner">&nbsp;</a>
+			<a href="http://twitter.com/KPCCforum" class="twitter-banner">&nbsp;</a>
+		</div>
+		<h3 class="twitter-peeker">Tweets from the Crawford Family Forum</h3>
+		<% 5.times do %>
+			<div class="tweet">
+				<%= image_tag "facebook/CFF-twitter.png", class: "tweet-image"%>
+				<div class="tweet-content">
+					<h5>CrawfordFamilyForum</h5>
+					Many thanks to @DylanRatigan and @MattDeBord for a very interesting program!
+				</div>
+			</div>
+		<% end %>
+	</section>
+</div> <!-- .row -->
+
+<% if any_to_list? @past_events %>
+	<section class="row archive-strip">
+		<h3 class="bar">Check Out Events from the Arhive 
+		<%= link_to "View All Past Events", events_path %></h3>
+		<% @past_events.each do |event| %>
+		Past Event
+		<% end %>
+	</section>
+<% end %>

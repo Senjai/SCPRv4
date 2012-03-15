@@ -51,8 +51,9 @@ Scprv4::Application.routes.draw do
   
   # -- Events -- #
   match '/events/:year/:month/:day/:slug/' => 'events#show', :as => :event
+  match '/events/forum/' => 'events#forum', as: :forum_events
   match '/events/' => 'events#index', :as => :events
-  
+
   # -- Videos -- #
   resources :video, only: [:index, :show] do
     match ':slug' => "video#show", on: :member

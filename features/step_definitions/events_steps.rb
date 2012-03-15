@@ -4,6 +4,7 @@ Given /^there (?:is|are) (\d+) upcoming events?$/ do |num|
   @event = @events[rand(@events.length)]
   Event.all.count.should eq num.to_i
   @closest_event = Event.closest
+  @upcoming_events = Event.upcoming
 end
 
 Given /^there are (\d+) unpublished events$/ do |num|
@@ -12,6 +13,13 @@ end
 
 Given /^there are (\d+) past events$/ do |num|
   @past_events = create_list :event, num.to_i, starts_at: 3.hours.ago, ends_at: 2.hours.ago
+  Event.past.count.should eq num.to_i
+end
+
+Given /^each event has (\d+) assets?$/ do |num|
+  @events.each do |event|
+    create :asset, content: event
+  end
 end
 
 
@@ -24,7 +32,7 @@ end
 #### Finders
 Then /^I should see the (\d+) closest events?$/ do |num|
   page.should have_css ".event", count: num.to_i
-  page.first(".event").should have_content Event.published.upcoming.first.title
+  page.first(".event").should have_content Event.upcoming.first.title
 end
 
 Then /^I should see (\d+) upcoming events?$/ do |num|
@@ -45,19 +53,22 @@ end
 
 Then /^I should see the closest event featured$/ do
   page.should have_css ".event.closest"
-  page.find(".event.closest").should have_content Event.published.upcoming.first.title
+  page.find(".event.closest").should have_content Event.upcoming.first.title
 end
 
 Then /^I should see future events listed below the closest event$/ do
-  page.should have_content ".event.future", count: @events - 1
+  page.should have_css ".event.future", count: @events.count - 1
 end
 
 Then /^the closest event should not be in the list of future events$/ do
   page.find(".future-events").should_not have_content @closest_event.title
 end
 
-Then /^I should see the primary asset for each event$/ do
-  pending
+Then /^I should see each event's primary asset$/ do
+  page.should have_css ".upcoming-events .event .contentasset img", count: @upcoming_events.count
 end
 
+Then /^I should see a list of archived events in the archive strip$/ do
+  page.should have_css(".archive-strip .event"), count: @past_events.first(3).count
+end
 

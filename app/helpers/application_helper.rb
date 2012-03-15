@@ -286,4 +286,22 @@ module ApplicationHelper
     options[:title] ||= object.headline
     content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
   end
+  
+  def calendar_link(date, options={})
+    return nil if !date.respond_to?(:strftime)
+    case options[:format].to_s
+      when "numbers"
+        formatted = date.strftime("%m-%e-%y") # 10-11-11
+      when "full_date"
+        formatted = date.strftime("%B #{date.day.ordinalize}, %Y") # October 11th, 2011
+      when "full_day"
+        formatted = date.strftime("%A, %B %e") # Wednesday October 11
+      when "custom"
+        formatted = date.strftime(options[:with])
+      end
+    formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
+    link = options[:event].present? ? options[:event].link_path : events_path
+    return link_to(formatted, link, class: "event-link")
+  end
+
 end

@@ -138,5 +138,44 @@ describe ApplicationHelper do
       smart_date_js(time, class: "newClass").should match "newClass smart smarttime"
     end
   end
+  
+  describe "#calendar_link" do
+    before :each do
+      @date = Time.at(0) # Wednesday, December 31, 1969
+    end
+    
+    it "returns nil if the object doesn't respond to strftime" do
+      calendar_link("string").should be_nil
+    end
+    
+    it "returns the default if a format isn't specified" do
+      calendar_link(@date).should match "Dec 31, 1969"
+    end
+    
+    it "returns a `numbers` format" do
+      calendar_link(@date, format: :numbers).should match "12-31-69"
+    end
+    
+    it "returns a `full-date` format" do
+      calendar_link(@date, format: :full_date).should match "December 31st, 1969"
+    end
+    
+    it "returns a 'full-day' format" do
+      calendar_link(@date, format: :full_day).should match "Wednesday, December 31"
+    end
+    
+    it "accepts a custom format" do
+      calendar_link(@date, format: :custom, with: "%D").should match "12/31/69"
+    end
+    
+    it "uses the event's link_path as the link if an event is provided" do
+      event = create :event
+      calendar_link(@date, event: event).should match event.link_path
+    end
+    
+    it "uses the events_path if no event is provided" do
+      calendar_link(@date).should match events_path
+    end
+  end
 
 end

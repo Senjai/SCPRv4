@@ -76,5 +76,4 @@ module WidgetsHelper
       render "shared/cwidgets/social_tools", { :content => object, cssClass: "" }.merge!(options)
     end
 	end
-  
 end

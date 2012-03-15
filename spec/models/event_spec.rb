@@ -30,6 +30,15 @@ describe Event do
     end
   end
   
+  describe "closest" do
+    it "returns the closest published future event" do
+      events = create_list :event, 5
+      closest = Event.closest
+      closest.should eq Event.upcoming.first
+      closest.should eq events.last
+    end
+  end
+  
   describe "scopes" do
     describe "published" do
       it "only selects published content" do
@@ -48,6 +57,16 @@ describe Event do
         upcoming_events = Event.upcoming
         upcoming_events.count.should eq 1
         upcoming_events.first.should eq future_event
+      end
+    end
+    
+    describe "past" do
+      it "only selects past events" do
+        past_event = create :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
+        future_event = create :event, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now
+        past_events = Event.past
+        past_events.count.should eq 1
+        past_events.first.should eq past_event
       end
     end
     
