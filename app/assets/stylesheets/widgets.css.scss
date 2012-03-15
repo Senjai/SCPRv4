@@ -1,7 +1,7 @@
 /* ********* WIDGET MIXINS ********** */
 //sidebar styling mixin
 @mixin sidebar-widget {
-	border-top:1px solid $grayLighter;
+	border-bottom:1px solid $grayLighter;
 	margin-bottom:$baseline;
 }
 @mixin story-sidebar-widget {
@@ -744,7 +744,7 @@ a.comment-count.inline {
 /* ********* SIDEBAR STYLES ********** */
 
 //sidebar widget
-#sidebar .widget {
+#sidebar .widget, #sidebar-bottom .widget, #sidebar-top .widget {
 	@include sidebar-widget();
 }
 
@@ -768,8 +768,6 @@ a.comment-count.inline {
 
 // Newsletter Subscribe
 .newsletter {
-	border-bottom:1px solid $grayLighter;
-	border-top:1px solid $grayLighter;
 	padding-top:.2em;
 	h6 {
 		margin-bottom:$baseline/2;
@@ -870,10 +868,10 @@ a.comment-count.inline {
 
 // Mobile App Promo
 .promo-mobile {
-	background:url(image_path('mobile/ad-bg.jpg')) no-repeat left bottom;
-	border-bottom:1px solid $grayLighter;
+	background:url(image_path('mobile/ad-bg.jpg')) no-repeat center 80%;
 	height:190px;
 	position:relative;
+	padding-bottom: 15px;
 	h4 {margin-top:6px;}
 	a {
 		position:absolute;

@@ -16,7 +16,7 @@
 		<article class="span8">
 			<%= content_for?(:content) ? yield(:content) : yield %>
 		</article>
-		<div id ="sidebar" class="span4">
+		<div id="sidebar" class="span4">
 			<% if content_for?(:sidebar) %> 
 				<%= yield(:sidebar) %>
 			<% else %>
