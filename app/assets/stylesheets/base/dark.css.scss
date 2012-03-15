@@ -1,7 +1,6 @@
 /* DARK THEME FOR VIDEO SECTIONS & OTHER PLACES WHERE THE FOCUS IS ON VISUAL CONTENT */
-.dark-theme {
-	color:$gray;
-	
+html {height:100%;}
+.dark-theme {	
 	// DEFINE FOCUS TRANSITIONS
 	.muted {
 		-webkit-transition: opacity linear 0.2s;
@@ -22,9 +21,13 @@
 	
 	// MASTHEAD
 	// Logo
-	/* background:lighten($black, 10%);
-	@include background-image(linear-gradient(lighten($black, 10%), $black)); */
+	/* background:lighten($black, 10%); */
 	background: $black;
+	@include background-image(linear-gradient(lighten($black, 13%), $black));
+	background-repeat: no-repeat;
+	color:$gray;
+	margin:0;
+	height:100%;
 	.logo h1 {
 		&:after {
 			content: url(image_path('video-masthead.png'));
@@ -36,6 +39,15 @@
 			img {
 				visibility:hidden;
 			}
+		}
+	}
+	.alert-message.warning {
+		@include background-image(linear-gradient(lighten($nearBlack, 13%), $nearBlack));
+		border:none;
+		border-radius:0;
+		border-bottom:1px solid $black;
+		p {
+			color:$grayLighter;
 		}
 	}
 	.logo #kpcc-fb-like {

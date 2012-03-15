@@ -13,7 +13,7 @@
 #multimedia {
 	.video {
 		margin:$baseline 5px;
-		margin-top: 30px; /* Make room for the button */
+		margin-top: 60px; /* Make room for the button */
 		width:730px;
 		height:411px;
 		position: relative;
@@ -25,17 +25,21 @@
 	button.browse-all-videos {
 		display: inline-block;
 		width: 175px;
-		background: #2e2e2e url(image_path('browse-all-default.png')) no-repeat left center;
-		border: 1px solid #808080;
+		background: #070707 url(image_path('browse-all-default.png')) no-repeat left center;
+		border: 1px solid #505050;
 		border-radius: 3px;
 		-moz-border-radius: 3px;
 		-webkit-border-radius: 3px;
 		padding: 8px 7px 8px 30px;
-		color: #bfbfbf;
+		color: #777777;
 		@include font-heading(normal, 12px);
 		text-transform: uppercase;
 		opacity: 1 !important;
 		text-align: center;
+		&:hover {
+			border-color:$grayLight;
+			color:$grayLight;
+		}
 	}
 	.videos-overlay {
 		display: none; /* So it doesn't show on page-load */
@@ -58,11 +62,11 @@
 			-webkit-border-radius: 7px;
 			opacity: .5;
 			&.left {
-				left: 5px;
+				left: 20px;
 				background: url(image_path('overlay-prev.png')) no-repeat left top;
 			}
 			&.right {
-				right: 5px;
+				right: 20px;
 				background: url(image_path('overlay-next.png')) no-repeat left top;
 			}
 		}
@@ -109,6 +113,10 @@ li.video-thumb {
 		overflow: hidden;
 		@include video-effects;
 	}
+	a {
+		color:$grayLight;
+		display:block;
+	}
 }
 
 .latest-videos {
@@ -120,6 +128,10 @@ li.video-thumb {
 		li.video-thumb {
 			width: 150px;
 			vertical-align: top;
+			img {
+				width:158px;
+				height:88px;
+			}
 		}
 	}
 }

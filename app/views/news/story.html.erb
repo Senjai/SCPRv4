@@ -6,23 +6,28 @@
 	<%= social_tools_for @story, cssClass: "top" %>
 	<h1 class="story-headline"><%= @story.headline %></h1>
 	<p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
+	
+	<hr/>
 <% end %>
 
-<%= render_asset @story, "story" %>
+<div class="span6 <%= @story.story_asset_scheme ? "storycenter" : "storyleft" %>">
+	<%= render_asset @story, "story" %>
 
-<div class="storybar" style="width: 160px;float: right;clear:right;margin-right: -190px">
-	<%= render "shared/cwidgets/comment_count", :cssClass => 'right-side', :content => @story %>
-	<%= render "shared/cwidgets/audio", :content => @story %>
+	<div class="storybar" style="width: 160px;float: right;clear:right;margin-left: 12px">
+		<%= render "shared/cwidgets/comment_count", :cssClass => 'right-side', :content => @story %>
+		<%= render "shared/cwidgets/audio", :content => @story %>
+	</div>
+
+	<%= simple_format @story.body, {}, :sanitize => false %>
+
+	<p><i><%= render_contributing_byline @story %></i></p>
+
+	<%= related_for @story %>
+	<%= render "shared/cwidgets/pij_query", :content => @story %>
+	<%= social_tools_for @story, cssClass: "bottom" %>
+	<%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
+
 </div>
-
-<%= simple_format @story.body, {}, :sanitize => false %>
-
-<p><i><%= render_contributing_byline @story %></i></p>
-
-<%= related_for @story %>
-<%= render "shared/cwidgets/pij_query", :content => @story %>
-<%= social_tools_for @story, cssClass: "bottom" %>
-<%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 
 <% content_for :postcontent do %>
 	<%= render "shared/cwidgets/content_carousel", :content => @story %>

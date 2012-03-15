@@ -17,15 +17,15 @@
 
 <% content_for :content do %>
 	<%= yield %>
-	<%= comments_for @video, cssClass: "multimedia muted" %>
 	<% if any_to_list? @latest_videos %>
 		<div class="multimedia latest-videos">
 			<h3 class="head">Latest Videos</h3>
-			<ul class="videos">
+			<ul class="videos muted">
 				<%= render partial: 'video_thumb', collection: @latest_videos, locals: { size: "small" } %>
 			</ul>
 		</div>
 	<% end %>
+		<%= render partial: "shared/cwidgets/comments", locals: { cssClass: 'multimedia muted', content: @video } %>
 <% end %>
 
 <% content_for :sidebar do %>
