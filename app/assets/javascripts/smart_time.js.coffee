@@ -11,6 +11,7 @@ class scpr.SmartTime
         relative:           "8h"
         timecut:            "36h"
         window:             null
+        class:              "sttime"
             
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
@@ -70,6 +71,7 @@ class scpr.SmartTime
             if @window and now.subtract(@window...) > @time
                 # outside the window...  
                 @$el.text ''
+                @$el.removeClass @options.class if @options.class
                 return true
                 
             # are we doing relative or absolute timing?
@@ -86,4 +88,5 @@ class scpr.SmartTime
                     # use date, time format
                     @$el.text "" + @options.prefix + @time.strftime @options.datetime_format                
                 
-                    
+            @$el.addClass @options.class if @options.class
+      
