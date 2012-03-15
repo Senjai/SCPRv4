@@ -25,7 +25,8 @@
 			</ul>
 		</div>
 	<% end %>
-		<%= render partial: "shared/cwidgets/comments", locals: { cssClass: 'multimedia muted', content: @video } %>
+	
+	<%= comments_for @video, cssClass: 'multimedia muted' %>
 <% end %>
 
 <% content_for :sidebar do %>
