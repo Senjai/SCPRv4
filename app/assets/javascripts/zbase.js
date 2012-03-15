@@ -25,8 +25,3 @@ function open_popup(url) {
         window.open(url, 'pop_up','height=800,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no');
         return false; 
 }
-// Open Social Sharing Windows
-function open_social_popup(url) { 
-        window.open(url, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no');
-        return false; 
-}

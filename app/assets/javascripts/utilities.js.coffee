@@ -14,6 +14,67 @@ class scpr.Track
 		
 #----------
 
+class scpr.SocialTools
+    DefaultOptions:
+        fbfinder:   ".social_fb"
+        twitfinder: ".social_twit"
+        count:      ".count"
+        
+        fburl:      "http://graph.facebook.com/"
+        twiturl:    "http://urls.api.twitter.com/1/urls/count.json"
+        
+    constructor: (options) ->
+        @options = _.defaults options||{}, @DefaultOptions
+                    
+        # look for facebook elements so that we can fetch counts and add functionality
+        @fbelements = ($ el for el in $ @options.fbfinder)
+
+        # look for twitter elements
+        @twit_elements = ($ el for el in $ @options.twitfinder)
+            
+        @_getFbCounts()
+        @_getTwitCounts()
+        
+        # add share functionality on facebook
+        $(@options.fbfinder).on "click", (evt) =>
+            if url = $(evt.target).attr("data-url")
+                fburl = "http://www.facebook.com/sharer.php?u=#{url}"
+                window.open fburl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'                
+        
+        # add share functionality for twitter
+        $(@options.twitfinder).on "click", (evt) =>
+            if url = $(evt.target).attr("data-url")
+                twurl = "https://twitter.com/intent/tweet?url=#{url}&text=Via+%40kpcc"
+                window.open twurl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'
+            
+    #----------
+        
+    _getFbCounts: ->
+        # collect the element urls
+        @ids = (el.attr("data-url") for el in @fbelements)
+            
+        # fire an async request 
+        $.getJSON @options.fburl, { ids: @ids.join(',') }, (res) =>
+            for el in @fbelements
+                if fbobj = res[ el.attr("data-url") ]
+                    count = Number(fbobj.shares||0) + Number(fbobj.likes||0)
+                    $(@options.count,el).text count
+            
+    #----------    
+            
+    _getTwitCounts: ->
+        # twitter url requests have to go off one-by-one
+        _(@twit_elements).each (el,idx) =>
+            # register a global callback for the twitter counter
+            window[ "__scprTwit#{idx}" ] = (res) => 
+                if res?.count
+                    $(@options.count,el).text res.count
+
+            # fire off as a script request, using the callback to set values
+            $.ajax @options.twiturl, dataType: "script", data:{ url: el.attr("data-url"), callback:"__scprTwit#{idx}" }
+            
+#----------
+
 class scpr.SectionCarousel
 	DefaultOptions:
 		el: "#sec_carousel"

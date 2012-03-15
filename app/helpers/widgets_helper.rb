@@ -70,10 +70,11 @@ module WidgetsHelper
     render('shared/cwidgets/article_meta', { content: object }.merge!(options)) if object.present?
   end
   
+  #----------
+  
   def social_tools_for(object, options={})
-    if object.present?
-      options[:path] ||= object.link_path if object.respond_to?(:link_path)
-      render "shared/cwidgets/social_tools", { :content => object, cssClass: "" }.merge!(options)
+    if object.present? and object.is_a?(ContentBase)
+      render "shared/cwidgets/social_tools", content:object, options:{ cssClass: "" }.merge!(options)
     end
 	end
 end

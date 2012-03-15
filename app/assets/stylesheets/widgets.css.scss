@@ -278,12 +278,23 @@
 		font-size:11px;
 		margin-right:8px;
 		padding-left:20px;
+		color:$nearBlack;
 		&.facebook {
 			background-image:url(image_path('icons/share-facebook.png'));
 			background-position:1px 2px;
+			
+			&:hover {
+				cursor: pointer;
+				text-decoration: underline;
+			}
 		}
 		&.twitter {
 			background-image:url(image_path('icons/share-twitter.png'));
+			
+			&:hover {
+				cursor: pointer;
+				text-decoration: underline;
+			}
 		}
 		&.plus {
 			color:$nearBlack;
@@ -297,7 +308,6 @@
 			background-image:url(image_path('icons/share-email.png'));
 			background-position:0 3px;
 		}
-		a {color:$nearBlack;}
 	}
 	&.side {
 		h5 {
