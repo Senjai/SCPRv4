@@ -1,16 +1,4 @@
-jQuery(document).ready(function() {
-		
-	// *** Stubbed out Fancybox code for video lightboxes ***
-	$("a.video-link").fancybox({
-			'transitionIn'	:	'elastic',
-			'transitionOut'	:	'elastic',
-			'speedIn'		:	300, 
-			'speedOut'		:	200, 
-			'overlayShow'	:	true,
-			'overlayOpacity' :  0.8,
-			'overlayColor'	: 	'#000',
-			'padding'		: 	0
-	});
+jQuery(document).ready(function() {	
 	// Taggle Episode Modal Visibility
 	$(".broadcastbar .true, .modal-close").click(function() {
 		$(".episode-guide").toggleClass("hidden");
