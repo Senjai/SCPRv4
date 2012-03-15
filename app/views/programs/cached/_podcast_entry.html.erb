@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="info divider span6">
 			<h3><%= link_to entry.title, entry.url %></h3>
-			<p class="byline"><time pubdate=""><%= entry.published %></time></p>
+			<p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
 			<%= entry.summary.html_safe %>
 		</div>
 		<div class="interact span2">
