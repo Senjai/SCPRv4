@@ -265,8 +265,14 @@ module ApplicationHelper
       block_given? ? capture(&block) : true
     else
       if block_given?
-        options[:title] ||= records.class.to_s.titleize.pluralize
-        options[:message] ||= "<span class='none-to-list'>There are currently no #{options[:title]}</span>".html_safe
+        if options[:message].blank?
+          if options[:title].present?
+            options[:message] = "<span class='none-to-list'>There are currently no #{options[:title]}</span>".html_safe
+          else
+            options[:message] = "<span class='none-to-list'>There is nothing here to list.</span>".html_safe
+          end
+        end
+        return options[:message]
       else
         return false
       end
