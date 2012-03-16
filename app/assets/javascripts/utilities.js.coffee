@@ -67,7 +67,7 @@ class scpr.SocialTools
         _(@twit_elements).each (el,idx) =>
             # register a global callback for the twitter counter
             window[ "__scprTwit#{idx}" ] = (res) => 
-                if res?.count
+                if res?.count?
                     $(@options.count,el).text res.count
 
             # fire off as a script request, using the callback to set values
