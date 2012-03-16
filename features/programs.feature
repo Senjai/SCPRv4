@@ -4,8 +4,17 @@ Scenario: No Programs
 	Given there are 0 kpcc programs
 	And there are 0 other programs
 	When I go to the programs page
-	Then I should see that there is nothing to list with the message "There are currently no Local Programs"
-	And I should see that there is nothing to list with the message "There are currently no Outside Programs"
+	Then I should not see any programs
+
+Scenario: See the featured programs on the index page
+	Given the following programs:
+		| slug				| title						|
+		| madeleine-brand	| The Madeleine Brand Show	|
+		| airtalk			| Airtalk					|
+		| patt-morrison		| Patt Morrison				|
+		| offramp			| Off-Ramp					|
+	When I go to the programs page
+	Then I should see the featured programs in the correct order
 
 Scenario Outline: View a Featured Program's page
 	Given a program titled "<title>" with slug "<slug>"
