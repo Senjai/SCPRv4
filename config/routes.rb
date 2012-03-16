@@ -11,6 +11,11 @@ end
 
 Scprv4::Application.routes.draw do
   match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
+  
+  namespace :api do
+    match '/comments' => 'comments#count', :as => :comment_count
+    match '/' => 'main#index', :as => :home
+  end
     
   namespace :dashboard do
     match '/sections' => 'main#sections', :as => :sections

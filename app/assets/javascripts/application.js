@@ -21,4 +21,5 @@
 //= require megamenu
 //= require smart_time
 //= require utilities
+//= require comment_counts
 //= require zbase
