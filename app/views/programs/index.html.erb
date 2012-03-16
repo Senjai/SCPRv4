@@ -5,7 +5,7 @@
     	<ul id="featured-programs" class="list-blocks">
 			<% @featured_programs.each do |program| %> <%# TODO Need to properly order these %>
 			<a href="<%= program_path(program) %>">
-			    <li class="<%=program.slug%>">
+			    <li class="headshot <%=program.slug%>">
 					<h4><%= program.title %></h4>
 					<p><%= program.teaser.html_safe %></p>
 			    </li>
@@ -15,28 +15,6 @@
     </div>
 </div>
 <div class="row">
-	<div class="span4">
-		<h3>Local Programs</h3>
-		<ul class="list-basic">
-			<%= any_to_list? @kpcc_programs, title: "Local Programs" do %>
-				<% @kpcc_programs.each do |program| %>
-					<li>
-						<%= link_to program.title, program_path(program.slug) %> <%# OPTIMIZE partial? %>
-					</li>
-				<% end %>
-			<% end %>
-		</ul>
-	</div>
-	<div class="span4">
-		<h3>Other Programs</h3>
-		<ul class="list-basic">
-			<%= any_to_list? @other_programs, title: "Outside Programs" do %>
-				<% @other_programs.each do |program| %>
-					<li>
-						<%= link_to program.title, program_path(program.slug) %> <%# OPTIMIZE partial? %>
-					</li>
-				<% end %>
-			<% end %>
-		</ul>
-	</div>
+	<%= render("programs_list", programs: @kpcc_programs, title: "KPCC Programs") if any_to_list? @kpcc_programs %>
+	<%= render("programs_list", programs: @other_programs, title: "Other Programs") if any_to_list? @other_programs %>
 </div>
