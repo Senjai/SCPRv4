@@ -5,7 +5,7 @@
 				<div class="span4 show-title">
 					<h2><%= link_to @program.title, program_path(@program.slug) %></h2>
 				</div>
-				<div class="span4 show-meta <%= @program.slug %>">
+				<div class="span4 show-meta headshot <%= @program.slug %>">
 					<div class="info">
 						<%= @program.airtime %><br />
 						<% if @program.host? %>

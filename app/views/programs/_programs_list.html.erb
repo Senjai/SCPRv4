@@ -1,0 +1,12 @@
+<div class="span4">
+	<h3><%= title %>
+	<ul class="list-basic programs-list">
+		<% programs.each do |program| %>
+			<a href="<%= program_path(program) %>">
+				<li>
+					<%= program.title %>
+				</li>
+			</a>
+		<% end %>
+	</ul>
+</div>

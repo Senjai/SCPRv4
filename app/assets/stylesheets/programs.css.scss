@@ -16,6 +16,7 @@ $headShotWidth: 90px;
 		background-position: left 6px;
 		min-height:60px;
 		padding-left:100px;
+		@include transition(all .25s ease-in-out);
 		&:hover {
 			background-color:$nearWhite;
 			cursor: pointer;
@@ -26,25 +27,43 @@ $headShotWidth: 90px;
 	}
 }
 
-.program-masthead {
-	/* the following must match the slug of the program */
-	.madeleine-brand {
+.programs-list {
+	@include font-serif;
+	a {
+		&:hover {
+			text-decoration: none;
+		}
+		li {
+			@include transition(all .15s ease-in-out);
+			padding: 5px;
+			&:hover {
+				background-color: $nearWhite;
+			}
+		}
+	}
+}
+
+/* the following must match the slug of the program */
+.headshot {
+	&.madeleine-brand {
 	    background-image: url(image_path('broadcast-bar/headshots/madeleine-brand.png'));
 		background-repeat: no-repeat;
 	}
-	.airtalk {
+	&.airtalk {
 		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
 		background-repeat: no-repeat;
 	}
-	.patt-morrison {
+	&.patt-morrison {
 		background-image: url(image_path('broadcast-bar/headshots/patt-morrison.png'));
 		background-repeat: no-repeat;
 	}
-	.offramp {
+	&.offramp {
 		background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
 		background-repeat: no-repeat;
 	}
-	
+}
+
+.program-masthead {
 	border-bottom: 1px solid #a2a2a2;
 	margin-bottom: $baseline / 2;
 	margin-top: $baseline / 2 * -1;
