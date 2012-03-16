@@ -17,6 +17,7 @@ gem 'newrelic_rpm'
 
 gem "ruby-mp3info"
 gem "feedzirra"
+gem "twitter"
 
 # Gems used only for assets and not required
 # in production environments by default.

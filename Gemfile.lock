@@ -154,6 +154,7 @@ GEM
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.0.4)
+    multi_xml (0.2.2)
     multipart-post (1.1.5)
     mysql2 (0.3.11)
     net-scp (1.0.4)
@@ -234,6 +235,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip
     shoulda-matchers (1.0.0)
+    simple_oauth (0.1.5)
     sprockets (2.1.2)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -250,6 +252,13 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    twitter (1.6.0)
+      faraday (~> 0.6.1)
+      faraday_middleware (~> 0.6.3)
+      hashie (~> 1.0.0)
+      multi_json (~> 1.0.0)
+      multi_xml (~> 0.2.0)
+      simple_oauth (~> 0.1.5)
     tzinfo (0.3.32)
     uglifier (1.2.3)
       execjs (>= 0.3.0)
@@ -290,5 +299,6 @@ DEPENDENCIES
   shoulda-matchers
   therubyracer
   thinking-sphinx (= 2.0.10)
+  twitter
   uglifier (>= 1.0.3)
   will_paginate
