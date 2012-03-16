@@ -248,9 +248,10 @@ nav.events {
 		@include font-navigation($size: 14px);
 		color: darken($gray, 20%);
 		padding: 8px;
+		@include transition(all .15s ease-in-out);
 		&:hover {
 			text-decoration: none;
-			background: #eee;
+			background: $nearWhite;
 		}
 	}
 }
@@ -269,20 +270,3 @@ nav.events {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
