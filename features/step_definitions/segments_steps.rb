@@ -28,7 +28,7 @@ end
 
 #### Finders
 Then /^I should see each segment's primary asset$/ do
-  page.should have_css ".segment-teaser .contentasset img"
+  page.should have_css ".segment-teaser .contentasset img" # should put a count on this
 end
 
 Then /^I should see the segment's primary asset$/ do
@@ -36,7 +36,7 @@ Then /^I should see the segment's primary asset$/ do
 end
 
 Then /^I should see the segment's information$/ do
-  page.find("h1.story-title").should have_content @segment.headline
+  page.find("article.segment h1").should have_content @segment.headline
 end
 
 Then /^I should see article meta for the segment$/ do
