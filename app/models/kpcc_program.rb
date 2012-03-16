@@ -10,9 +10,9 @@ class KpccProgram < ActiveRecord::Base
   
   Featured = [
     'madeleine-brand',
+    'airtalk',
     'patt-morrison',
-    'offramp',
-    'airtalk'
+    'offramp'
   ]
   
   has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"

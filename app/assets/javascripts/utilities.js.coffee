@@ -32,8 +32,11 @@ class scpr.SocialTools
         # look for twitter elements
         @twit_elements = ($ el for el in $ @options.twitfinder)
             
-        @_getFbCounts()
-        @_getTwitCounts()
+        if @fbelements.length > 0 
+            @_getFbCounts()
+            
+        if @twit_elements.length > 0
+            @_getTwitCounts()
         
         # add share functionality on facebook
         $(@options.fbfinder).on "click", (evt) =>
@@ -52,7 +55,7 @@ class scpr.SocialTools
     _getFbCounts: ->
         # collect the element urls
         @ids = (el.attr("data-url") for el in @fbelements)
-            
+        
         # fire an async request 
         $.getJSON @options.fburl, { ids: @ids.join(',') }, (res) =>
             for el in @fbelements

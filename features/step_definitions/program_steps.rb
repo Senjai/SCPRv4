@@ -1,4 +1,4 @@
-#### Program Creation
+#### Setup
 Given /^there (?:is|are) (\d+) kpcc programs?$/ do |num|
   @programs = create_list :kpcc_program, num.to_i
   @program = @programs[rand(num.to_i)]
@@ -48,6 +48,14 @@ Given /^there (?:is|are) (\d+) other programs? with no RSS and no podcast$/ do |
   @program.podcast_url.should be_blank
 end
 
+Given /^the following programs:$/ do |table|
+  @programs = []
+  table.hashes.each do |attributes|
+    @programs << create(:kpcc_program, slug: attributes[:slug], title: attributes[:title])
+  end
+  KpccProgram.count.should eq table.hashes.count
+end
+
 
 #### Finders
 Then /^I should see the program's information$/ do
@@ -55,7 +63,7 @@ Then /^I should see the program's information$/ do
 end
 
 Then /^I should see a headshot of the program's host$/ do
-  page.should have_xpath("//div[contains(@class, '#{@program.slug}')]") # Need to figure out how to actually check for background-image attribute.
+  page.should have_xpath("//div[contains(@class, '#{@program.slug}')]") # TODO: Need to figure out how to actually check for background-image attribute.
 end
 
 Then /^I should see a list of that program's podcast entries$/ do
@@ -72,6 +80,17 @@ end
 
 Then /^I should not see any RSS entries$/ do
   # page.should_not have_content "<h2>Latest News</h2>" # TODO: Need a better way to test this
+end
+
+Then /^I should not see any programs$/ do
+  page.should_not have_css ".programs-list"
+  page.should_not have_css "#featured-programs .headshot"
+end
+
+Then /^I should see the featured programs in the correct order$/ do
+  @programs.each do |program|
+    page.find("#featured-programs li.#{program.slug}").should have_content program.title
+  end
 end
 
 
