@@ -10,8 +10,8 @@
 		    	<% if @episode.audio.present? %>
 					<div class="right">
 						<aside class="story-audio inline">
-								<a href="<%= @episode.audio.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>"></a>
-								<%= link_to "Listen to this episode", @episode.audio.first.url, class: "audio-toggler play-text" %>
+								<a href="<%= @episode.audio.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= @episode.audio.first.duration %>"></a>
+								<%= link_to "Listen to this episode", @episode.audio.first.url, :class => "audio-toggler play-text",  "data-duration" => @episode.audio.first.duration %>
 								<a href="<%= @episode.audio.first.url %>" class="download">Download</a>
 						</aside>
 					</div>
