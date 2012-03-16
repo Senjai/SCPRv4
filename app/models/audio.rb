@@ -5,11 +5,11 @@ class Audio < ActiveRecord::Base
   belongs_to :content, :polymorphic => true
   
   def url
-    "http://media.scpr.org/#{self.mp3_file}"
+    "http://media.scpr.org/#{self.mp3}"
   end
   
   def mp3_path
-    Rails.application.config.scpr.media_root ? [Rails.application.config.scpr.media_root,self.mp3_file].join('/') : false
+    Rails.application.config.scpr.media_root ? [Rails.application.config.scpr.media_root,self.mp3].join('/') : false
   end
   
 end
