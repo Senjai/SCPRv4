@@ -26,7 +26,7 @@ a.event-link {
 		margin: 10px 0;
 	}
 	
-	h3 {
+	h3, a.twitter-peeker {
 		@include font-slab-headings($size: 14px, $lineHeight: 18px);
 		text-transform: uppercase;
 	}
@@ -108,11 +108,16 @@ a.event-link {
 		}
 		
 		.twitter-peeker {
+			display: block;
 			height: 41px;
 			margin: 15px 0 10px 0;
 			padding: 10px 80px 7px 5px;
 			background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
 			text-align: center;
+			color: inherit;
+			&:hover {
+				text-decoration: none;
+			}
 		}
 		
 		.tweet {
@@ -196,6 +201,24 @@ a.event-link {
 			}
 			&.last-active {
 				z-index: 9;
+			}
+		}
+	}
+	
+	.movers {
+		position: relative;
+		top: -30px;
+		z-index: 11;
+		text-align: center;
+		width: 100%;
+		.mover {
+			color: $yellow;
+			font-size: 22px;
+			display: inline-block;
+			width: 30px;
+			height: 20px;
+			&:hover {
+				cursor: pointer;
 			}
 		}
 	}

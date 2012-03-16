@@ -9,6 +9,11 @@
 		      	<%= image_tag 'event-headers/hero-3.jpg', alt: "" %>
 		      	<%= image_tag 'event-headers/hero-4.jpg', alt: "" %>
 			</div> <!-- hero -->
+			<div class="movers">
+				<% 4.times do |i| %>
+					<div class="mover to-<%=i%>">+</div>
+				<% end %>
+			</div> <!-- movers -->
 			<div class="hero-container">
 				<div class="cff-logo">&nbsp;</div>
 				<div class="tagline">
@@ -58,9 +63,9 @@
 		<h3>Follow Us on Social Media</h3>
 		<div class="banners">
 			<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook-banner" alt="Follow the Crawford Family Forum on Facebook">&nbsp;</a>
-			<a href="http://twitter.com/KPCCforum" class="twitter-banner" alt="Follow the Crawford Family Forum on Twitter">&nbsp;</a>
+			<a href="http://twitter.com/KPCCForum" class="twitter-banner" alt="Follow the Crawford Family Forum on Twitter">&nbsp;</a>
 		</div>
-		<h3 class="twitter-peeker">Tweets from the Crawford Family Forum</h3>
+		<a class="twitter-peeker well" href="http://twitter.com/KPCCForum">Tweets from the Crawford Family Forum</a>
 		<%# @tweets.each do |tweet| %>
 		<% 5.times do %> <%# This is just so it's not empty in development for now%>
 			<div class="tweet">
@@ -138,9 +143,28 @@
 	</div>
 <% end %>
 <% content_for :footerjss do %>
-	jQuery(document).ready(function() {
-		$('.carousel').carousel({
-			interval: 8000
-		});
+	function slideSwitch() {
+		// Figure out which image is active
+	    var $active = $('#events-header .hero img.active');
+	    if ( $active.length == 0 ) $active = $('#events-header .hero img:last');
+
+		// Figure out which image is next
+	    var $next =  $active.next().length ? $active.next()
+	        : $('#events-header .hero img:first');
+
+		// Start the process by adding the "last-active" class to the current image
+	    $active.addClass('last-active');
+		
+		// Now fade in the next image on top of the last-active image
+	    $next.css({opacity: 0.0})
+	        .addClass('active')
+	        .animate({opacity: 1.0}, 3000, function() {
+				// When it's done fading in, remove the special classes from the old "current" image
+	            $active.removeClass('active last-active');
+	        });
+	}
+	
+	$(document).ready(function() {
+		setInterval( "slideSwitch()", 8000 );
 	});
 <% end %>
