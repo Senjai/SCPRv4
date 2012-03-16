@@ -113,12 +113,16 @@ describe WidgetsHelper do
   
   
   describe "#social_tools_for" do
-    it "renders the partial" do
-      social_tools_for(object).should_not be_blank
+    it "doesn't render anything if the object is blank" do
+      social_tools_for([]).should be_nil
     end
     
-    it "uses the path passed in" do
-      social_tools_for(object, path: "/some/path").should match "/some/path"
+    it "doesn't render anything if the object is not a ContentBase" do
+      social_tools_for(create :blog).should be_nil
+    end
+    
+    it "renders the partial if the object is a ContentBase" do
+      social_tools_for(object).should_not be_blank # object is a blog entry
     end
     
     it "uses the cssClass passed in" do
