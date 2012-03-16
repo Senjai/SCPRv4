@@ -300,8 +300,13 @@ module ApplicationHelper
         formatted = date.strftime(options[:with])
       end
     formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
-    link = options[:event].present? ? options[:event].link_path : events_path
-    return link_to(formatted, link, class: "event-link")
+    options[:class] ||= "event-link"
+    if %w{span div p}.include? options[:wrapper].to_s
+      return content_tag(options[:wrapper].to_sym, formatted, class: options[:class])
+    else
+      link = options[:event].present? ? options[:event].link_path : events_path
+      return link_to(formatted, link, class: options[:class])
+    end
   end
 
 end

@@ -10,22 +10,20 @@
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
 
-<div id="main" class="container">
+<%= yield :masthead if content_for? :masthead %>
+<div id="main" class="container event-headers">
 	<div class="row">
-		<%= yield :masthead if content_for? :masthead %>
 		<div class="span9">
 			<%= yield %>
 		</div>
 		<div id="sidebar" class="span3">
-			<% if content_for?(:sidebar) %> 
-				<%= yield(:sidebar) %>
-			<% else %>
-				Sidebar
-				<!-- default -->
-			<% end %>
+			<%= yield(:sidebar) if content_for? :sidebar %>
 		</div>
 	</div>
+
+	<%= yield(:bottom) if content_for?(:bottom) %>
 </div>
+
 <%= render :partial => "shared/footer" %>
 <%= render :partial => "shared/footer/footer_js" %>
 

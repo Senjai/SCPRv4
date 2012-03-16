@@ -30,6 +30,5 @@ class Event < ActiveRecord::Base
       :slug => self.slug,
       :trailing_slash => true
     }))
-    
   end
 end

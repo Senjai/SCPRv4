@@ -18,10 +18,11 @@ Scenario: Don't show unpublished events
 	Then I should see 2 upcoming events
 	And I should not see any unpublished events
 
-Scenario: Don't show past events on the events page
+Scenario: Don't show past events in the "upcoming" section
 	Given there are 2 upcoming events
 	And there are 2 past events
 	When I go to the events page
+	And I'm looking at the "upcoming events" section
 	Then I should see 2 upcoming events
 	And I should not see any past events
 	

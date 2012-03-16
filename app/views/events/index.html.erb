@@ -1,5 +1,25 @@
 <% page_title "Events" %>
-<h1>KPCC Events</h1>
+
+<% content_for :masthead do %>
+	<header id="events-header">
+		<div class="wrapper">
+			<div class="hero">
+				<%= image_tag 'event-headers/hero-1.jpg', alt: "", class: 'active' %>
+		      	<%= image_tag 'event-headers/hero-2.jpg', alt: "" %>
+		      	<%= image_tag 'event-headers/hero-3.jpg', alt: "" %>
+		      	<%= image_tag 'event-headers/hero-4.jpg', alt: "" %>
+			</div> <!-- hero -->
+			<div class="hero-container">
+				<div class="cff-logo">&nbsp;</div>
+				<div class="tagline">
+		 			<h3>Where the conversation starts</h3>
+		 			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+				</div>
+			</div> <!-- hero-container -->
+		</div> <!-- wrapper -->
+    </header>
+<% end %>
+
 
 <div class="row events">
 	<section class="span5 upcoming-events">
@@ -15,7 +35,7 @@
 		<div class="future-events">
 			<%= any_to_list? @future_events, title: "Future Events", message: "There are no events planned for the near future. Check back soon!" do %>
 				<% @future_events.each do |event| %>
-					<article class="event future">
+					<div class="event future">
 						<div class="row">
 							<% if event.assets.present? %>
 								<div class="span2">
@@ -23,12 +43,12 @@
 								</div>
 							<% end %>
 							<div class="info <%= event.assets.present? ? "span3" : "span5" %>">
-								<div class="calendar-date"><%= calendar_link event.starts_at, event: event, format: :full_day %></div>
-								<h2><%= link_to event.title, event.link_path %></h2>
+								<%= calendar_link event.starts_at, event: event, format: :full_day %>
+								<h2 class="story-title"><%= link_to event.title, event.link_path %></h2>
 								<%= event.description.scan(/(?:\w+ ){15}/).first %>... <%# TODO add a "teaser" column in mercer %>
 							</div>
 						</div> <!-- row -->
-					</article>
+					</div>
 				<% end %>
 			<% end %>
 		</div>
@@ -37,28 +57,90 @@
 	<section class="span4 social">
 		<h3>Follow Us on Social Media</h3>
 		<div class="banners">
-			<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook-banner">&nbsp;</a>
-			<a href="http://twitter.com/KPCCforum" class="twitter-banner">&nbsp;</a>
+			<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook-banner" alt="Follow the Crawford Family Forum on Facebook">&nbsp;</a>
+			<a href="http://twitter.com/KPCCforum" class="twitter-banner" alt="Follow the Crawford Family Forum on Twitter">&nbsp;</a>
 		</div>
 		<h3 class="twitter-peeker">Tweets from the Crawford Family Forum</h3>
-		<% 5.times do %>
+		<%# @tweets.each do |tweet| %>
+		<% 5.times do %> <%# This is just so it's not empty in development for now%>
 			<div class="tweet">
 				<%= image_tag "facebook/CFF-twitter.png", class: "tweet-image"%>
 				<div class="tweet-content">
 					<h5>CrawfordFamilyForum</h5>
-					Many thanks to @DylanRatigan and @MattDeBord for a very interesting program!
+					<%# tweet.text.html_safe %>
+					Thanks to Kim, Brian, and Ted for this evening's program #FacingCrisis
 				</div>
 			</div>
 		<% end %>
 	</section>
 </div> <!-- .row -->
 
+
 <% if any_to_list? @past_events %>
-	<section class="row archive-strip">
-		<h3 class="bar">Check Out Events from the Arhive 
-		<%= link_to "View All Past Events", events_path %></h3>
-		<% @past_events.each do |event| %>
-		Past Event
-		<% end %>
-	</section>
+	<% content_for :bottom do %>
+		<div class="row">
+			<section class="span12 archive-strip">
+				<h3 class="title"><%= link_to "Check out events from the Archive", forum_events_archive_path %></h3>
+				<div class="row past-events">
+					<% @past_events.each do |event| %>
+						<div class="span4">
+							<article class="event past<%= " divider" unless event == @past_events.last %>">
+								<div class="row">
+									<% if event.assets.present? %>
+										<div class="span1">
+											<%= render_asset event, 'thumb' %>
+										</div>
+									<% end %>
+									<div class="info <%= event.assets.present? ? "span3" : "span4" %>">
+										<h4 class="story-title"><%= link_to event.title, event.link_path %></h4>
+										<%= calendar_link event.starts_at, class: "byline", wrapper: "p", format: :full_date %>
+									</div>
+								</div> <!-- row -->
+							</article>
+						</div>
+					<% end %>
+				</div>
+			</section>
+		</div><!-- row -->
+	<% end %>
+<% end %>
+
+
+<% content_for :sidebar do %>
+	<nav class="events">
+		<h4>Crawford Family Forum</h4>
+		<%= link_to "Upcoming Events", events_path %>
+		<%= link_to "Past Events", events_path %>
+		<%= link_to "Directions & Parking", events_path %>
+		<%= link_to "Community Partnerships", events_path %>
+		<%= link_to "About the Crawford Family Forum", events_path %>
+		<%= link_to "Contact Us", events_path %>
+	</nav>
+	
+	<a href="<%= forum_directions_path %>" id="getting-there" class="widget event-headers">
+		<h3>Getting to the <br />Crawford Family Forum</h3>
+		<ul>
+			<li>Directions</li>
+			<li>Parking</li>
+			<li>Public Transit</li>
+		</ul>
+	</a>
+	
+	<div id="community-partnerships" class="widget event-headers">
+		<h3>Community Partnerships</h3>
+		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> <!-- temporary -->
+	</div>
+	
+	<div class="widget event-headers">
+		<br /><br /><br />
+		<div style="text-align: center;">Membership Promo</div>
+		<br /><br /><br /><br /><br /><br /><br /> <!-- temporary -->
+	</div>
+<% end %>
+<% content_for :footerjss do %>
+	jQuery(document).ready(function() {
+		$('.carousel').carousel({
+			interval: 8000
+		});
+	});
 <% end %>

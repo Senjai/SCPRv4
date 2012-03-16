@@ -6,7 +6,7 @@ a.event-link {
 	background: url(image_path("icons/calendar-icon.png")) no-repeat left top;
 }
 
-.events {
+.event-headers	 {
 	h1, h2 {
 		a {
 			color: #000;
@@ -16,12 +16,12 @@ a.event-link {
 		}
 	}
 		
-	h1 {
+	h1.story-title {
 		@include font-navigation($weight: bold, $size: 22px);
 		margin: 10px 0;
 	}
 	
-	h2 {
+	h2.story-title {
 		@include font-navigation($weight: normal, $size: 18px);
 		margin: 10px 0;
 	}
@@ -31,12 +31,21 @@ a.event-link {
 		text-transform: uppercase;
 	}
 	
+	h4.story-title {
+		@include font-navigation($weight: normal, $size: 15px);
+		a {
+			color: #000;
+		}
+	}
+	
 	h6 {
 		@include font-slab-headings($size: 17px, $lineHeight: 18px);
 		text-transform: uppercase;
 		margin-bottom: 10px;
 	}
-	
+}
+
+.events {
 	.upcoming-events {
 		.event {
 			border-bottom: 1px solid $grayLighter;
@@ -70,6 +79,9 @@ a.event-link {
 						color:$nearBlack;
 					}
 				}
+			}
+			&:last-of-type {
+				border-bottom: none;
 			}
 		}
 		.closest {
@@ -113,28 +125,164 @@ a.event-link {
 			}
 			img.tweet-image {
 				display: inline-block;
-				vertical-align: bottom;
+				vertical-align: top;
 				margin-right: 6px;
 			}
 			.tweet-content {
+				vertical-align: top;
 				width: 280px;
 				display: inline-block;
 			}
 		}
 	}
-	
-	.archive-strip {
-		h3.bar {
-			margin-right: 0px;
-			margin-bottom: 10px;
-			padding: 8px 3px 8px 12px;
-			border-top: 1px solid #bfbfbf;
-			margin-top: 10px;
-			a {
-				float: right;
-				text-transform: none;
-				@include font-shorthand($size: 12px);
-			}
+}
+
+.archive-strip {
+	border-bottom: 1px solid $grayLighter;
+	margin-bottom: 20px;
+	.past-events {
+		padding: 15px 0;
+	}
+	h3.title {
+		background:url("section-headline-background.png") repeat-x;
+		height:35px;
+		line-height: 35px;
+		padding-left: 5px;
+		a {
+			
 		}
 	}
 }
+
+
+
+/* FADER */
+
+@mixin opacity-without-inheritance($opacity: 0.6) {
+	/* Cross-browser opacity which doesn't pass down to child elements */
+	background: rgb(0, 0, 0) transparent; /* Fallback for old browsers */
+	background: rgba(0, 0, 0, $opacity); /* RGBa with 0.6 opacity */
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000); /* For IE 5.5 - 7*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)"; /* For IE 8*/
+}
+
+#events-header {
+	position: relative;
+	top: -45px;
+	height: 450px; /* Is there a better way to push the page content down? */
+	min-width:1110px;
+	
+	.wrapper {
+		position: relative;
+	}
+	
+	.hero {
+		position: relative;
+		background-color:#2e2e2e;
+		height:468px;
+		width:100%;
+		overflow: hidden;
+		text-align: center;
+		img {
+			position: absolute;
+			margin: 0 auto;
+			max-width:1500px;
+			width:100%;
+			z-index: 8;
+			opacity: 0.0;
+			&.active {
+				z-index: 10;
+				opacity: 1.0;
+			}
+			&.last-active {
+				z-index: 9;
+			}
+		}
+	}
+	
+	.hero-container {
+		position: absolute;
+		margin:-430px auto 0 420px;
+		z-index: 11; /* Since we're setting z-index on the images for the fading. Highest the images get is 10 */
+		@include opacity-without-inheritance($opacity: 0.4);
+		padding: 20px;
+		height: 180px;
+		width: 523px;
+		text-align: left;
+	}
+	.hero-container .cff-logo {
+		margin: 5px auto;
+		width: 524px;
+		height: 37px;
+		background: url(image_path("event-headers/cff-logo.png"));
+	}
+	.hero-container .tagline {
+	}
+	.hero-container .tagline h3 {
+		color:#00b9f3;
+		font:34px/48px "Museo Slab", sans-serif;
+		font-weight: 500;
+		margin:0;
+		text-shadow:0 1px 0 rgba(0,0,0,0.75);
+	}
+	.hero-container .tagline p {
+		color:#fff;
+		font:18px/21px "Museo Slab", sans-serif;
+		font-weight: normal;
+		margin:0;
+		text-shadow:0 1px 0 rgba(0,0,0,0.75);
+	}
+}
+
+nav.events {
+	margin-bottom: 25px;
+	h4 {
+		font-weight: 400;
+		color: lighten($gray, 30%);
+		border-bottom: 1px solid $grayLighter;
+	}
+	a {
+		display: block;
+		text-transform: uppercase;
+		border-bottom: 1px solid $grayLighter;
+		@include font-navigation($size: 14px);
+		color: darken($gray, 20%);
+		padding: 8px;
+		&:hover {
+			text-decoration: none;
+			background: #eee;
+		}
+	}
+}
+
+#getting-there {
+	display: block;
+	background: url(image_path("cff-building.png")) no-repeat right 98%;
+	&:hover {
+		text-decoration: none;
+	}
+	ul { 
+		margin-top: 20px;
+		@include font-navigation($size: 13px);
+		li {
+			color: darken($gray, 20%);
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

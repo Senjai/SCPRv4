@@ -32,11 +32,11 @@ end
 #### Finders
 Then /^I should see the (\d+) closest events?$/ do |num|
   page.should have_css ".event", count: num.to_i
-  page.first(".event").should have_content Event.upcoming.first.title
+  page.first(".upcoming-events .event").should have_content Event.upcoming.first.title
 end
 
 Then /^I should see (\d+) upcoming events?$/ do |num|
-  page.should have_css ".event", count: num.to_i
+  page.should have_css ".upcoming-events .event", count: num.to_i
 end
 
 Then /^I should not see any unpublished events$/ do

@@ -176,6 +176,20 @@ describe ApplicationHelper do
     it "uses the events_path if no event is provided" do
       calendar_link(@date).should match events_path
     end
+    
+    it "returns a link if no wrapper is specified" do
+      calendar_link(@date).should match /<a /
+    end
+    
+    it "uses the requests wrapper if it is a span, div, or p" do
+      calendar_link(@date, wrapper: "p").should match /<p /
+      calendar_link(@date, wrapper: "div").should match /<div /
+      calendar_link(@date, wrapper: "span").should match /<span /
+    end
+    
+    it "doesn't allow any other tags" do
+      calendar_link(@date, wrapper: "b").should_not match /<b/
+    end
   end
 
 end

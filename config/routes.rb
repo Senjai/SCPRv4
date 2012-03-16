@@ -51,6 +51,8 @@ Scprv4::Application.routes.draw do
   
   # -- Events -- #
   match '/events/:year/:month/:day/:slug/' => 'events#show', :as => :event
+  match '/events/forum/directions' => 'events#directions', as: :forum_directions
+  match '/events/forum/archive' => 'events#archive', as: :forum_events_archive
   match '/events/forum/' => 'events#forum', as: :forum_events
   match '/events/' => 'events#index', :as => :events
 
