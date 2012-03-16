@@ -2,26 +2,24 @@
 
 <% content_for :masthead do %>
 	<header id="events-header">
-		<div class="wrapper">
-			<div class="hero">
-				<%= image_tag 'event-headers/hero-1.jpg', alt: "", class: 'active' %>
-		      	<%= image_tag 'event-headers/hero-2.jpg', alt: "" %>
-		      	<%= image_tag 'event-headers/hero-3.jpg', alt: "" %>
-		      	<%= image_tag 'event-headers/hero-4.jpg', alt: "" %>
-			</div> <!-- hero -->
-			<div class="movers">
-				<% 4.times do |i| %>
-					<div class="mover to-<%=i%>">+</div>
-				<% end %>
-			</div> <!-- movers -->
-			<div class="hero-container">
-				<div class="cff-logo">&nbsp;</div>
-				<div class="tagline">
-		 			<h3>Where the conversation starts</h3>
-		 			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-				</div>
-			</div> <!-- hero-container -->
-		</div> <!-- wrapper -->
+		<div class="hero">
+			<%= image_tag 'event-headers/hero-1.jpg', alt: "", class: 'active', id: "hero-1" %>
+	      	<%= image_tag 'event-headers/hero-2.jpg', alt: "", id: "hero-2" %>
+	      	<%= image_tag 'event-headers/hero-3.jpg', alt: "", id: "hero-3" %>
+	      	<%= image_tag 'event-headers/hero-4.jpg', alt: "", id: "hero-4" %>
+		</div> <!-- hero -->
+		<div class="choosers">
+			<% 4.times do |i| %>
+				<div class="chooser" data-slide="hero-<%=i+1%>">+</div>
+			<% end %>
+		</div> <!-- movers -->
+		<div class="hero-text">
+			<div class="cff-logo">&nbsp;</div>
+			<div class="tagline">
+	 			<h3>Where the conversation starts</h3>
+	 			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+			</div>
+		</div> <!-- hero-text -->
     </header>
 <% end %>
 
@@ -143,14 +141,17 @@
 	</div>
 <% end %>
 <% content_for :footerjss do %>
-	function slideSwitch() {
+	var faderTimeout;
+	function slideSwitch(next) {
+		// Clear the timeout incase we clicked a button in the middle of one
+		clearTimeout(faderTimeout);
+		
 		// Figure out which image is active
 	    var $active = $('#events-header .hero img.active');
-	    if ( $active.length == 0 ) $active = $('#events-header .hero img:last');
-
+	    if ($active.length == 0) $active = $('#events-header .hero img:last');
+		
 		// Figure out which image is next
-	    var $next =  $active.next().length ? $active.next()
-	        : $('#events-header .hero img:first');
+		var $next = next || ($active.next().length ? $active.next() : $('#events-header .hero img:first'));
 
 		// Start the process by adding the "last-active" class to the current image
 	    $active.addClass('last-active');
@@ -158,13 +159,19 @@
 		// Now fade in the next image on top of the last-active image
 	    $next.css({opacity: 0.0})
 	        .addClass('active')
-	        .animate({opacity: 1.0}, 3000, function() {
+	        .animate({opacity: 1.0}, 2000, function() {
 				// When it's done fading in, remove the special classes from the old "current" image
 	            $active.removeClass('active last-active');
 	        });
+			faderTimeout = setTimeout("slideSwitch()", 8000);
 	}
 	
 	$(document).ready(function() {
-		setInterval( "slideSwitch()", 8000 );
+		faderTimeout = setTimeout("slideSwitch()", 8000);
+		$(".chooser").on({
+			click: function() {
+				slideSwitch($("#"+$(this).attr('data-slide')));
+			}
+		});
 	});
 <% end %>

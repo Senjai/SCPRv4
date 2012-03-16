@@ -188,7 +188,7 @@ a.event-link {
 		width:100%;
 		overflow: hidden;
 		text-align: center;
-		img {
+		&>img {
 			position: absolute;
 			margin: 0 auto;
 			max-width:1500px;
@@ -205,13 +205,48 @@ a.event-link {
 		}
 	}
 	
-	.movers {
+	.hero-text {
+		position: relative;
+		margin: 0 auto;
+		left: -290px;
+		top: -430px;
+		z-index: 11; /* Since we're setting z-index on the images for the fading. Highest the images get is 10 */
+		@include opacity-without-inheritance($opacity: 0.4);
+		padding: 20px;
+		height: 180px;
+		width: 523px;
+		text-align: left;
+		.cff-logo {
+			margin: 5px auto;
+			width: 524px;
+			height: 37px;
+			background: url(image_path("event-headers/cff-logo.png"));
+		}
+		.tagline {
+			h3 {
+				color:#00b9f3;
+				font:34px/48px "Museo Slab", sans-serif;
+				font-weight: 500;
+				margin:0;
+				text-shadow:0 1px 0 rgba(0,0,0,0.75);
+			}
+			p {
+				color:#fff;
+				font:18px/21px "Museo Slab", sans-serif;
+				font-weight: normal;
+				margin:0;
+				text-shadow:0 1px 0 rgba(0,0,0,0.75);
+			}
+		}
+	}
+	
+	.choosers {
 		position: relative;
 		top: -30px;
 		z-index: 11;
 		text-align: center;
 		width: 100%;
-		.mover {
+		.chooser {
 			color: $yellow;
 			font-size: 22px;
 			display: inline-block;
@@ -221,39 +256,6 @@ a.event-link {
 				cursor: pointer;
 			}
 		}
-	}
-	
-	.hero-container {
-		position: absolute;
-		margin:-430px auto 0 420px;
-		z-index: 11; /* Since we're setting z-index on the images for the fading. Highest the images get is 10 */
-		@include opacity-without-inheritance($opacity: 0.4);
-		padding: 20px;
-		height: 180px;
-		width: 523px;
-		text-align: left;
-	}
-	.hero-container .cff-logo {
-		margin: 5px auto;
-		width: 524px;
-		height: 37px;
-		background: url(image_path("event-headers/cff-logo.png"));
-	}
-	.hero-container .tagline {
-	}
-	.hero-container .tagline h3 {
-		color:#00b9f3;
-		font:34px/48px "Museo Slab", sans-serif;
-		font-weight: 500;
-		margin:0;
-		text-shadow:0 1px 0 rgba(0,0,0,0.75);
-	}
-	.hero-container .tagline p {
-		color:#fff;
-		font:18px/21px "Museo Slab", sans-serif;
-		font-weight: normal;
-		margin:0;
-		text-shadow:0 1px 0 rgba(0,0,0,0.75);
 	}
 }
 
