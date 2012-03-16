@@ -22,6 +22,9 @@
 			height: 170px;
 			overflow: hidden;
 		}
+		.span2+.info {
+			min-height:188px;
+		}
 	}
 }
 
