@@ -5,7 +5,7 @@
 	p {
 		font-size:13px;
 		line-height:18px;
-		padding:5px 0;
+		padding:5px 0 2px;
 		margin: 0;
 	}
 	h4 {
@@ -30,9 +30,8 @@
 	a.comment_link {
 	    @include font-sans-serif(normal, 11px);
 	    margin-bottom: 10px;
-	    background: url(image_path('icons/comment-count-sm.png')) no-repeat top left;
+	    background: url(image_path('icons/comment-count-sm.png')) no-repeat left 1px;
 	    padding-left: 14px;
-	    margin-left: 4px;
 	}
 	
 	time, .shell-link {

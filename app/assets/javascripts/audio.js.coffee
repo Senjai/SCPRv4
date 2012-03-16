@@ -31,6 +31,7 @@ class scpr.Audio
                 # get the audio file path from the href
                 mp3 = $(btn).attr("href")
                 title = $(btn).attr("title")
+                duration = Number($(btn).attr("data-duration"))
                 
                 console.log "#{@widgets.length}: #{mp3}", btn
                 
@@ -43,6 +44,7 @@ class scpr.Audio
                     playBtn:    btn
                     mp3:        mp3
                     title:      title
+                    duration:	duration
                     
                 @widgets.push widget
         
@@ -85,6 +87,13 @@ class scpr.Audio
         console.log "setting mp3 to ", widget.options.mp3
         @player.jPlayer "setMedia", mp3:widget.options.mp3
         $(@options.titleEl).text widget.options.title
+
+        # should we enable hours?
+        $.jPlayer.timeFormat.showHour = 
+            if widget.options.duration && widget.options.duration > 60*60
+                true
+            else
+                false
         
         # animate the bar
         @audiobar.animate {bottom:0}, 1000
