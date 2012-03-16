@@ -3,6 +3,8 @@ class Audio < ActiveRecord::Base
   self.primary_key = :id
   
   belongs_to :content, :polymorphic => true
+
+  default_scope where("mp3 is not null")
   
   def url
     "http://media.scpr.org/#{self.mp3}"
