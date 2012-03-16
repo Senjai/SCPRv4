@@ -3,28 +3,27 @@ require 'spec_helper'
 describe ApplicationHelper do  
   describe "#any_to_list?" do
     it "returns the block if there are records" do
-      records = (1..5)
-      any_to_list?(records) { "Records list" }.should eq "Records list"
+      any_to_list?(1..5) { "Records list" }.should match "Records list"
     end
     
     it "returns a default message if there are no records and no message is specified" do
-      records = []
-      any_to_list?(records) { "Records list" }.should eq "<span class='none-to-list'>There are currently no Arrays</span>".html_safe # fascinating list of arrays
+      any_to_list?([]) { "Records list" }.should match "There is nothing here to list."
     end
     
     it "returns a specified message if there are no records" do
-      records = []
-      any_to_list?(records, message: "None!") { "Records list" }.should eq "None!"
+      any_to_list?([], message: "None!") { "Records list" }.should match "None!"
+    end
+    
+    it "returns a special message if: no records, no message, title is specified" do
+      any_to_list?([], title: "Events") { "Records list" }.should match "Events"
     end
     
     it "returns true if there are records and no block is given" do
-      records = (1..5)
-      any_to_list?(records).should be_true
+      any_to_list?(1..5).should be_true
     end
     
     it "returns false if there are no records and no block is given" do
-      records = []
-      any_to_list?(records).should be_false
+      any_to_list?([]).should be_false
     end
   end
   
