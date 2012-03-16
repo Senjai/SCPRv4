@@ -219,7 +219,7 @@ section.broadcastbar {
 				color:$gray;
 				letter-spacing:-0.15em;
 				padding:0 0 0 5px;
-			}	
+			}
 		}
 	}
 }
@@ -274,17 +274,16 @@ section.broadcastbar {
 }
 
 // Events at the Forum
-.event-date {
-	@include font-serif($size:0.90em);
-	background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
-	color:$linkColor;
-	margin:10px 0 0 20px;
-	padding-left:112px;
-}
-
 .events-forum {
 	border-left:1px solid $grayLighter;
 	padding:0 0 0 10px;
+	.event-date {
+		@include font-serif($size:0.90em);
+		background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
+		color:$linkColor;
+		margin:10px 0 0 20px;
+		padding-left:112px;
+	}
 	h6 {
 		padding-left:5px;
 	}
