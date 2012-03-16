@@ -2,7 +2,7 @@
 //sidebar styling mixin
 @mixin sidebar-widget {
 	border-bottom:1px solid $grayLighter;
-	margin-bottom:$baseline;
+	margin-bottom:$baseline / 2;
 }
 @mixin story-sidebar-widget {
 	@include font-sans-serif(normal, 12px);
@@ -13,8 +13,7 @@
 	h6 {
 		font-size:16px;
 		line-height:$baseline;
-	  	margin-top: 12px;
-	  	margin-bottom: 12px;
+	  	margin-bottom:$baseline/2;
 	}
 }
 
@@ -388,7 +387,7 @@
 }
 // About Blog Widget
 .blog-about {
-	border-top:1px solid $grayLighter;
+	border-bottom:1px solid $grayLighter;
 	h6 {
 		color:$orangeDark;
 	}
@@ -766,7 +765,6 @@ a.comment-count.inline {
 
 // Ad units
 .ad {
-	padding-top:16px;
 	text-align:center;
 	&:first-child {
 		padding-top:0;
@@ -792,10 +790,14 @@ a.comment-count.inline {
 		color:$grayDark;
 		@include font-sans-serif($size:12px, $weight: bold);
 		line-height:16px;
+		margin-bottom:$baseline / 2;
 		width:240px;
 	}
 	a {
 		text-transform:uppercase ;
+	}
+	form {
+		margin-bottom:$baseline / 2;
 	}
 	input.email {
 		background:url(image_path('icons/newsletter-subscribe.png')) no-repeat 4px 3px;
@@ -888,7 +890,6 @@ a.comment-count.inline {
 	height:190px;
 	position:relative;
 	padding-bottom: 15px;
-	h4 {margin-top:6px;}
 	a {
 		position:absolute;
 		top:40px;
