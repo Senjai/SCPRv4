@@ -260,6 +260,13 @@ module ApplicationHelper
     end
   end
   
+  # any_to_list?: A graceful fail-safe for any Enumerable that might be blank
+  # With block: t will return the block if there are records, or a message if there are no records.
+  # Without block: Behaves the same as `.present?`
+  # Options: 
+  ### wrapper: a tag to use for the wrapper. Pass false if you do not want a wrapper
+  ### title: What to call the records. If you don't pass this or a message, it will return a generic message if there are no records.
+  ### message: Custom message to return if there are no records.
   def any_to_list?(records, options={}, &block)
     if records.present?
       block_given? ? capture(&block) : true
@@ -267,12 +274,14 @@ module ApplicationHelper
       if block_given?
         if options[:message].blank?
           if options[:title].present?
-            options[:message] = "<span class='none-to-list'>There are currently no #{options[:title]}</span>".html_safe
+            options[:message] = "There are currently no #{options[:title]}".html_safe
           else
-            options[:message] = "<span class='none-to-list'>There is nothing here to list.</span>".html_safe
+            options[:message] = "There is nothing here to list.".html_safe
           end
         end
-        return options[:message]
+        return options[:message] if options[:wrapper] == false
+        options[:wrapper] = :span if options[:wrapper].blank? || options[:wrapper] == true
+        return content_tag(options[:wrapper], options[:message], class: "none-to-list")
       else
         return false
       end

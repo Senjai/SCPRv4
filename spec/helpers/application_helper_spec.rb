@@ -25,6 +25,22 @@ describe ApplicationHelper do
     it "returns false if there are no records and no block is given" do
       any_to_list?([]).should be_false
     end
+    
+    it "uses a span wrapper by default" do
+      any_to_list?([]) { "Records List" }.should match "span"
+    end
+    
+    it "uses a span wrapper if wrapper is true" do
+      any_to_list?([], wrapper: true) { "Records List" }.should match "span"
+    end
+        
+    it "uses the wrapper passed in" do
+      any_to_list?([], wrapper: :div) { "Records List" }.should match "div"
+    end
+    
+    it "does not use a wrapper if wrapper is false" do
+      any_to_list?([], wrapper: false, message: "No") { "Records List" }.should eq "No"
+    end
   end
   
   ## get_latest_arts and get_latest_news are very slow because they are making actual API calls... This should be fixed
