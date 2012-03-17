@@ -13,7 +13,6 @@ describe WidgetsHelper do
     end
   end
   
-  
   describe "#comment_count_for" do
     it "renders a link to the comments" do
       comment_count_for(object).should match "href"

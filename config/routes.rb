@@ -54,7 +54,8 @@ Scprv4::Application.routes.draw do
   match '/events/forum/directions' => 'events#directions', as: :forum_directions
   match '/events/forum/archive' => 'events#archive', as: :forum_events_archive
   match '/events/forum/' => 'events#forum', as: :forum_events
-  match '/events/' => 'events#index', :as => :events
+  match '/events/sponsored' => 'events#index', :as => :events_sponsored, defaults: { list: "sponsored" } # legacy
+  match '/events(/list/:list)' => 'events#index', :as => :events, defaults: { list: "all" }
 
   # -- Videos -- #
   resources :video, only: [:index, :show] do

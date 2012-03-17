@@ -59,7 +59,7 @@ end
 
 #### Finders
 Then /^I should see the program's information$/ do
-  find(".show-title h2").should have_content @program.title
+  find(".show-title h1").should have_content @program.title
 end
 
 Then /^I should see a headshot of the program's host$/ do
@@ -67,11 +67,11 @@ Then /^I should see a headshot of the program's host$/ do
 end
 
 Then /^I should see a list of that program's podcast entries$/ do
-  page.should have_css ".segment-teaser" # TODO: Need a better way to test this
+  page.should have_css ".teaser" # TODO: Need a better way to test this
 end
 
 Then /^I should see a list of that program's RSS entries$/ do
-  page.should have_css ".segment-teaser" # TODO: Need a better way to test this
+  page.should have_css ".teaser" # TODO: Need a better way to test this
 end
 
 Then /^I should not see any podcast entries$/ do

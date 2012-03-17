@@ -1,8 +1,8 @@
 def content_base_associations(object, eval)
-  FactoryGirl.create_list(:asset, eval.asset_count, content: object)
-  FactoryGirl.create_list(:link, eval.link_count, content: object)
-  FactoryGirl.create_list(:brel, eval.brels_count, content: object)
-  FactoryGirl.create_list(:frel, eval.frels_count, related: object)
+  FactoryGirl.create_list(:asset, eval.asset_count.to_i, content: object)
+  FactoryGirl.create_list(:link, eval.link_count.to_i, content: object)
+  FactoryGirl.create_list(:brel, eval.brels_count.to_i, content: object)
+  FactoryGirl.create_list(:frel, eval.frels_count.to_i, related: object)
 end
 
 FactoryGirl.define do  
@@ -152,7 +152,7 @@ FactoryGirl.define do
     sponsor "Patt Morrison"
     sponsor_link "http://oncentral.org"
     sequence(:starts_at) { |n| Time.now + 60*60*24*n }
-    sequence(:ends_at) { |n| Time.now + 60*60*26*n }
+    ends_at { starts_at + 60*60*1 }
     is_all_day 0
     location_name "The Crawford Family Forum"
     location_link "http://www.scpr.org/crawfordfamilyforum"
@@ -171,7 +171,7 @@ FactoryGirl.define do
     
     ignore { asset_count 0 }
     after_create do |event, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count, content: event)
+      FactoryGirl.create_list(:asset, eval.asset_count.to_i.to_i, content: event)
     end
   end
   

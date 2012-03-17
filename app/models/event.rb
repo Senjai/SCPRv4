@@ -18,6 +18,12 @@ class Event < ActiveRecord::Base
   
   #----------
   
+  def teaser # TODO Need a teaser column in mercer for events
+    description.blank? ? "#{title} at #{location_name}" : description.scan(/(?:\w+\s)/)[0..20].join(" ") + "..."
+  end
+  
+  #----------
+  
   def obj_key
     "events/event:#{self.id}"
   end

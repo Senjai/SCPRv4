@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'thinking_sphinx/test'
 require 'database_cleaner'
+require 'chronic'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

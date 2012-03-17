@@ -47,7 +47,7 @@ Then /^I should see the (\d+) most recently published videos in the pop\-up$/ do
   find(".videos-overlay").should have_css "ul.videos li.video-thumb", count: num.to_i
 end
 
-Then /^there should be pagination$/ do
+Then /^there should be modal pagination$/ do
   find("button.arrow.right")['data-page'].should eq "2"
   find("button.arrow.left")['data-page'].should eq ""
   find(".pagination").should have_content "1 of 2"

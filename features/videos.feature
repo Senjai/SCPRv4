@@ -39,7 +39,7 @@ Scenario: Show 9 most recently published videos in the modal pop-up
 	When I go to the videos page
 	And I click on the Browse All Videos button
 	Then I should see the 9 most recently published videos in the pop-up
-	And there should be pagination
+	And there should be modal pagination
 	
 	When I click the Next Page button
 	Then I should be on page 2 of the videos list

@@ -1,44 +1,27 @@
 Feature: Events
 
-Scenario: See the closest 4 events on the events page
-	Given there are 6 upcoming events
-	When I go to the events page
-	Then I should see the 4 closest events
+Background:
+	Given the following events:
+	 | title         | etype | starts_at     | is_published |
+	 | A Rad Event   | comm  | tomorrow 2pm  | 1            |
+	 | A Cool Event  | comm  | tomorrow 1pm  | 1            |
+	 | Future Event  | spon  | tomorrow 8pm  | 1            |
+	 | Awesome Event | spon  | tomorrow 8pm  | 1            |
+	 | Event Tile 1  | pick  | tomorrow 11am | 1            |
+	 | Event Title 2 | pick  | tomorrow 11am | 1            |
+	 | Unpub Event   | comm  | tomorrow      | 0            |
+	 | Past event    | comm  | yesterday     | 1            |
+	 | Past event 2  | pick  | yesterday     | 1            |
 
-Scenario: See primary assets for each events
-	Given there are 4 upcoming events
-	And each event has 1 asset
+Scenario: View "All" events list
 	When I go to the events page
-	Then I should see each event's primary asset
+	And I filter by "all"
+	Then I should see a list of 6 upcoming events
+	And I should see 0 past events
+	And I should see 0 unpublished events
 
-Scenario: Don't show unpublished events
-	Given there are 2 upcoming events
-	And there are 2 unpublished events
+Scenario: Pagination
+	Given there are 12 events
 	When I go to the events page
-	Then I should see 2 upcoming events
-	And I should not see any unpublished events
-
-Scenario: Don't show past events in the "upcoming" section
-	Given there are 2 upcoming events
-	And there are 2 past events
-	When I go to the events page
-	And I'm looking at the "upcoming events" section
-	Then I should see 2 upcoming events
-	And I should not see any past events
-	
-Scenario: Feature the closest event
-	Given there are 4 upcoming events
-	When I go to the events page
-	Then I should see the closest event featured
-
-Scenario: List other near-future events below the closest event
-	Given there are 4 upcoming events
-	When I go to the events page
-	Then I should see future events listed below the closest event
-	And the closest event should not be in the list of future events
-	
-Scenario: See past archived events on the bottom of the events page
-	Given there are 4 past events
-	When I go to the events page
-	Then I should see a list of archived events in the archive strip
-	
+	Then I should see 10 events
+	And there should be pagination

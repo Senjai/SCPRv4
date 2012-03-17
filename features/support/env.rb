@@ -4,6 +4,7 @@ require 'cucumber/rspec/doubles'
 include FactoryGirl::Syntax::Methods
 require 'cucumber/thinking_sphinx/external_world'
 require 'thinking_sphinx/test'
+require 'chronic'
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
