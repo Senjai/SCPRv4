@@ -453,3 +453,35 @@ div#sidebar-bottom {
 		margin:0 0 10px 0;
 	}	
 }
+
+// Filters bar (please move this to a more appropriate file)
+nav.filters {
+	background: #f5f5f5;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+	margin: 10px 0;
+	padding: 8px 3px 8px 12px;
+	@include font-heading($size: 12px, $weight: 600);
+	text-transform: uppercase;
+	a {
+		@include border-radius(3px);
+		color: #000;
+		padding: 3px 5px;
+		margin: 0 25px;
+		&:first-of-type {
+			margin-left: 0;
+		}
+		&:last-of-type {
+			margin-right: 0;
+		}
+		&:hover, &.active {
+			background-color: #9c9c9c;
+			color: $nearWhite;
+			text-shadow: 0 1px #000;
+			text-decoration: none;
+		}
+		&.active {
+			background-color: #666;
+		}
+	}
+}

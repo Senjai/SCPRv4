@@ -74,25 +74,14 @@ $headShotWidth: 90px;
 	}
 	
 	.show-title {
-		position: relative;
 		min-height: $headShotHeight;
 	}
 	
- 	h2 {
+	h1.page-title {
 		position: absolute;
 		bottom: 0;
-		text-transform: uppercase;
-		margin-bottom: 0;
-		@include font-headline;
-		font-size: 40px;
 		line-height: 30px;
 		width: 400px;
-		a {
-			color: $black;
-			&:hover {
-				text-decoration: none;
-			}
-		}
 	}
 	
 	.show-meta {
@@ -176,7 +165,7 @@ $headShotWidth: 90px;
 	}
 }
 
-nav.show, header.episode {
+header.episode {
 	background: #f5f5f5;
 	border-bottom: 1px solid #bfbfbf;
 	margin-left: 0px;
@@ -184,32 +173,6 @@ nav.show, header.episode {
 	margin-bottom: 10px;
 	padding: 8px 3px 8px 12px;
 	@include font-heading($size: 12px, $weight: 600);
-}
-
-nav.show {
-	border-top: 1px solid #bfbfbf;
-	margin-top: 10px;
-	text-transform: uppercase;
-	a {
-		color: #000;
-		padding: 3px 5px;
-		margin: 0 25px;
-		border-radius: 3px;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
-		&:first-of-type {
-			margin-left: 0;
-		}
-		&:last-of-type {
-			margin-right: 0;
-		}
-		&:hover {
-			background: #9c9c9c;
-			color: $nearWhite;
-			text-shadow: 0 1px #000;
-			text-decoration: none;
-		}
-	}
 }
 
 .program-about {
