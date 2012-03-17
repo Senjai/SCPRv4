@@ -45,6 +45,7 @@ group :test do
   gem 'mocha' # cross-framework mocking
   gem 'capybara' # Acceptance/Integration testing
   gem 'shoulda-matchers' # For quickly writing common tests
+  gem 'chronic' # useful time parsing from human-readable formats
 end
 
 group :worker do
