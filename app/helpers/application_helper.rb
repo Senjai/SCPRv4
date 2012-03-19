@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include Twitter::Autolink
   
   # render_content takes a ContentBase object and a context, and renders 
   # using the most specific version of that context it can find.
@@ -305,26 +306,23 @@ module ApplicationHelper
     content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
   end
   
-  def calendar_link(date, options={})
+  def format_date(date, options={})
     return nil if !date.respond_to?(:strftime)
+    formatted = date.strftime(options[:with]) if options[:with].present?
     case options[:format].to_s
       when "numbers"
         formatted = date.strftime("%m-%e-%y") # 10-11-11
       when "full_date"
         formatted = date.strftime("%B #{date.day.ordinalize}, %Y") # October 11th, 2011
-      when "full_day"
-        formatted = date.strftime("%A, %B %e") # Wednesday October 11
-      when "custom"
-        formatted = date.strftime(options[:with])
-      end
-    formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
-    options[:class] ||= "event-link"
-    if %w{span div p}.include? options[:wrapper].to_s
-      return content_tag(options[:wrapper].to_sym, formatted, class: options[:class])
-    else
-      link = options[:event].present? ? options[:event].link_path : events_path
-      return link_to(formatted, link, class: options[:class])
+      when "event"
+        formatted = date.strftime("%A, %B %e") # Wednesday, October 11
     end
+    formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
   end
-
+  
+  def event_link(event, options={})
+    return nil if !event.respond_to?(:starts_at)
+    options.reverse_merge!(class: "event-link")
+    return link_to(format_date(event.starts_at, format: :event), event.link_path, options)
+  end
 end

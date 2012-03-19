@@ -154,56 +154,49 @@ describe ApplicationHelper do
     end
   end
   
-  describe "#calendar_link" do
-    before :each do
-      @date = Time.at(0) # Wednesday, December 31, 1969
+  describe "#event_link" do
+    let(:event) { build :event, starts_at: Time.at(0) } # December 31, 1969
+    
+    it "returns nil if the object doesn't respond to starts_at" do
+      event_link("string").should be_nil
     end
     
-    it "returns nil if the object doesn't respond to strftime" do
-      calendar_link("string").should be_nil
-    end
-    
-    it "returns the default if a format isn't specified" do
-      calendar_link(@date).should match "Dec 31, 1969"
-    end
-    
-    it "returns a `numbers` format" do
-      calendar_link(@date, format: :numbers).should match "12-31-69"
-    end
-    
-    it "returns a `full-date` format" do
-      calendar_link(@date, format: :full_date).should match "December 31st, 1969"
-    end
-    
-    it "returns a 'full-day' format" do
-      calendar_link(@date, format: :full_day).should match "Wednesday, December 31"
-    end
-    
-    it "accepts a custom format" do
-      calendar_link(@date, format: :custom, with: "%D").should match "12/31/69"
+    it "returns the 'event' format" do
+      event_link(event).should match "Wednesday, December 31"
     end
     
     it "uses the event's link_path as the link if an event is provided" do
-      event = create :event
-      calendar_link(@date, event: event).should match event.link_path
+      event_link(event).should match event.link_path
     end
     
-    it "uses the events_path if no event is provided" do
-      calendar_link(@date).should match events_path
+    it "takes options" do
+      event_link(event, class: "some-class").should match /some-class/
     end
     
-    it "returns a link if no wrapper is specified" do
-      calendar_link(@date).should match /<a /
+    it "returns a link" do
+      event_link(event).should match /<a /
+    end
+  end
+  
+  describe "#format_date" do
+    before :each do
+      @date = Time.at(0) # December 31, 1969
     end
     
-    it "uses the requests wrapper if it is a span, div, or p" do
-      calendar_link(@date, wrapper: "p").should match /<p /
-      calendar_link(@date, wrapper: "div").should match /<div /
-      calendar_link(@date, wrapper: "span").should match /<span /
+    it "returns a `numbers` format" do
+      format_date(@date, format: :numbers).should match "12-31-69"
     end
     
-    it "doesn't allow any other tags" do
-      calendar_link(@date, wrapper: "b").should_not match /<b/
+    it "returns a `full-date` format" do
+      format_date(@date, format: :full_date).should match "December 31st, 1969"
+    end
+    
+    it "returns a 'event' format" do
+      format_date(@date, format: :event).should match "Wednesday, December 31"
+    end
+    
+    it "accepts a custom format" do
+      format_date(@date, with: "%D").should match "12/31/69"
     end
   end
 
