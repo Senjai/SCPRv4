@@ -95,8 +95,12 @@ class scpr.SocialTools
         if res.counts?
             _(res.counts).each (v) =>
                 if (obj = @disqCache[ v.uid ]) && v.comments
-                    console.log "updating disqus for ", obj
-                    $(@options.count,obj.el).text _.template @options.comments, count:v.comments
+                    c = $(@options.count,obj.el)
+                    
+                    if c.length
+                        $(@options.count,obj.el).text v.comments
+                    else
+                        obj.el.text _.template @options.comments, count:v.comments
                     
             # note our pending request as finished
             @disqPending = false
