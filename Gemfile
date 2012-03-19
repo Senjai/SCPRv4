@@ -30,8 +30,10 @@ group :assets do
   gem 'oily_png'
 end
 
-group :test, :development do 
+group :test, :development do
+  gem 'rspec'
 	gem "rspec-rails"
+	gem 'guard'
 	gem 'guard-rspec' # Automatically run tests
 	gem 'guard-cucumber' # Automatically run tests
 	gem 'rb-fsevent', require: false # For file-watching on Mac
@@ -39,7 +41,9 @@ group :test, :development do
 end
 
 group :test do
-  gem 'cucumber-rails', ">= 1.3.0", require: false # Integration testing
+  gem 'cucumber'
+  gem 'cucumber-rails', '1.3.0', require: false # Integration testing
+  gem 'factory_girl'
   gem 'factory_girl_rails' # Factories for test data
   gem 'database_cleaner' # Database cleaning strategy
   gem 'mocha' # cross-framework mocking
