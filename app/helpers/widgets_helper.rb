@@ -43,9 +43,9 @@ module WidgetsHelper
   
   def comment_count_for(object, options={})
     if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
-      options[:class] = "comment_link commentcountjs #{options[:class]}"
+      options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.obj_key
-      link_to( "Add your comments", object.link_path(anchor: "comments"), options )
+      link_to( "<span class='count'>Add your comments</span>".html_safe, object.link_path(anchor: "comments"), options )
     end
   end
   

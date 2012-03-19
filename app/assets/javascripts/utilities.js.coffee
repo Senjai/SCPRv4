@@ -25,6 +25,9 @@ class scpr.SocialTools
         twiturl:    "http://urls.api.twitter.com/1/urls/count.json"
         disqurl:    "http://kpcc.disqus.com/count.js?q=1&"
         
+        no_comments: "Add your comments"
+        comments:    "Comments (<%= count %>)"
+        
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
                     
@@ -81,14 +84,10 @@ class scpr.SocialTools
         
         _(@disq_elements).each (el,idx) =>
             objkey = el.attr('data-objkey')
-            
             @disqCache.push el:el, objkey:objkey
-            
             keys.push "#{idx}=1,#{encodeURIComponent(objkey)}"
-            
-        console.log "disqus keys is ", keys
-        
-        $.ajax "#{@options.disqurl}#{keys.join(',')}", dataType: "script"
+                    
+        $.ajax "#{@options.disqurl}#{keys.join('&')}", dataType: "script"
         
         @disqPending = true
         
@@ -97,7 +96,7 @@ class scpr.SocialTools
             _(res.counts).each (v) =>
                 if (obj = @disqCache[ v.uid ]) && v.comments
                     console.log "updating disqus for ", obj
-                    $(@options.count,obj.el).text v.comments
+                    $(@options.count,obj.el).text _.template @options.comments, count:v.comments
                     
             # note our pending request as finished
             @disqPending = false
