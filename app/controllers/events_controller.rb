@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
-  layout 'application', except: :forum
-  respond_to :html, :js
+  respond_to :html
   
   def index
     @events = Event.upcoming.paginate(page: params[:page], per_page: 10)
@@ -12,6 +11,10 @@ class EventsController < ApplicationController
     respond_with @events  
   end
   
+  def archive
+    @events = Event.forum.past.paginate(page: params[:page], per_page: 10)
+  end
+  
   def show
     # will handle a single event
   end
@@ -21,8 +24,6 @@ class EventsController < ApplicationController
     @closest_event = @upcoming_events.first
     @future_events = @upcoming_events[1..-1]
     @past_events = Event.past.limit(3)
-    
-    @tweets = Twitter.user_timeline("KPCCForum").first(5) if Rails.env == 'production'
     render layout: 'forum'
   end
 end

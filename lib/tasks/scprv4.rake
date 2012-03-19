@@ -17,6 +17,15 @@ namespace :scprv4 do
     
     #----------
     
+    desc "Cache tweets"
+    task :tweets => :environment do
+      require 'twitter_cacher'
+      include TwitterCacher
+      cache_tweets("KPCCForum", "SCPR")
+    end
+    
+    #----------
+    
     desc "Cache external programs"
     task :programs => [ :environment ] do
       OtherProgram.active.each { |p| p.cache }

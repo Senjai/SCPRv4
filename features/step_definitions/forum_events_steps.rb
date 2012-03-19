@@ -18,6 +18,10 @@ When /^I go to the forum page$/ do
   current_path.should eq forum_events_path
 end
 
+When /^I go to the forum archive page$/ do
+  visit forum_events_archive_path
+end
+
 
 #### Finders
 Then /^I should see the (\d+) closest events?$/ do |num|
@@ -42,3 +46,26 @@ Then /^I should see a list of archived events in the archive strip$/ do
   page.should have_css(".archive-strip .event"), count: Event.forum.past.first(3).count
 end
 
+Then /^I should only see forum events$/ do
+  non_forum_events = Event.all - Event.sponsored.all
+  non_forum.events.each do |event|
+    page.should_not match event.title
+  end
+end
+
+#### Assertions
+Then /^the events should be ordered by "([^"]*)"$/ do |order|
+  pending "Need to figure this one out"
+  # events = Event.order(order)
+  # page.first(".event").should match events.first
+  # page.last(".event").should match events.last
+  # Event.forum.past.order(order).each_with_index do |event, i|
+  #   page.find(".event")[i].should have_content event.title
+  # end
+end
+
+
+#### Actions
+When /^I click on "([^"]*)" in the navigation$/ do |text|
+  page.find("nav.events").click_link(text)
+end

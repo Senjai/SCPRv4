@@ -1,4 +1,9 @@
-<%= any_to_list? events, title: title ||= "Events" do %>
+<% title ||= "Events" %>
+<% cssClass ||= "" %>
+
+<h2><%= title %></h2>
+<%= any_to_list? events, title: title do %>
+<section class="events-list <%= cssClass %>">
 	<% events.each do |event| %>
   		<article class="cbase event teaser event-headers">
 			<div class="row">
@@ -9,9 +14,9 @@
 				<% end %>
 				<div class="info <%= event.assets.present? ? "span6" : "span8" %>">
 					<div class="event-details">
-						<%= calendar_link event.starts_at, event: event, format: :full_day %> 
+						<%= event_link event %> 
 						<% if event.location_name.present? %>
-							<span class="event-location">at <%= "the" if event.location_name.split[0].match(/the/i) %> <%= event.location_name %></span>
+							<span class="event-location"><%= event.location_name %></span>
 						<% end %>
 					</div> <!-- event-details -->
 					<h1 class="story-title"><%= link_to event.title, event.link_path %></h1>

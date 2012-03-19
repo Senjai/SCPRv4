@@ -1,0 +1,17 @@
+<% content_for :content do %>
+	<% if content_for? :event_content %>
+		<%= yield :event_content %>
+	<% elsif content_for? :static_content %>
+		<div class="static-content">
+			<%= yield :static_content %>
+		</div>
+	<% else %>
+		<%= yield %>
+	<% end %>
+<% end %>
+
+<% content_for :sidebartop do %>
+	<%= render 'events/nav' %>
+<% end %>
+
+<%= render :template => "layouts/application" %>

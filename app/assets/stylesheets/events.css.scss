@@ -127,7 +127,7 @@ a.event-link {
 			margin: 12px 0 8px 0;
 			border-bottom: 1px solid $grayLighter;
 			padding-bottom: 5px;
-			@include font-shorthand($size: 12px, $lineHeight: 15px);
+			@include font-sans-serif($size: 12px, $lineHeight: 15px);
 			h5 {
 				@include font-shorthand($size: 12px, $weight: bold);
 			}
@@ -140,6 +140,9 @@ a.event-link {
 				vertical-align: top;
 				width: 280px;
 				display: inline-block;
+			}
+			.byline {
+				font-size: 10px;
 			}
 		}
 	}
@@ -310,5 +313,27 @@ nav.events {
 		li {
 			color: darken($gray, 20%);
 		}
+	}
+}
+
+.static-content {
+	img.left {
+		float: left;
+		margin: 0 10px;
+	}
+	
+	ul.info {
+		background: $nearWhite;
+		border: 1px solid $grayLighter;
+		margin: 5px 0;
+		padding: 15px 15px 5px 20px;
+		li {
+			list-style: none;
+			margin-bottom: 15px;
+		}
+	}
+	
+	.google-map {
+		text-align: center;
 	}
 }

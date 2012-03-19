@@ -11,6 +11,11 @@ Then /^there should be pagination$/ do
   page.should have_css ".pagination"
 end
 
+Then /^I should see static content$/ do
+  page.should have_css ".static-content"
+end
+
+
 #### Routing
 When /^I go to the home page$/ do
   visit home_path

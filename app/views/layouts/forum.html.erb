@@ -9,15 +9,42 @@
 <body class="<%= @BODY_CLASS %>" id="<%= @BODY_ID %>">
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
-
 <%= yield :masthead if content_for? :masthead %>
+
 <div id="main" class="container event-headers">
 	<div class="row">
 		<div class="span9">
 			<%= yield %>
 		</div>
+		
+		<!-- SIDEBAR -->
 		<div id="sidebar" class="span3">
-			<%= yield(:sidebar) if content_for? :sidebar %>
+			<% if !content_for(:sidebar) %>
+				<%= yield :sidebar %>
+			<% else %>
+				<%= render 'events/nav' %>
+
+				<a href="<%= forum_directions_path %>" id="getting-there" class="widget event-headers">
+					<h3>Getting to the <br />Crawford Family Forum</h3>
+					<ul>
+						<li>Directions</li>
+						<li>Parking</li>
+						<li>Public Transit</li>
+					</ul>
+				</a>
+
+				<div id="community-partnerships" class="widget event-headers">
+					<h3>Community Partnerships</h3>
+					<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> <!-- temporary -->
+				</div>
+
+				<div class="widget event-headers">
+					<br /><br /><br />
+					<div style="text-align: center;">Membership Promo</div>
+					<br /><br /><br /><br /><br /><br /><br /> <!-- temporary -->
+				</div>
+			<% end %> <!-- /SIDEBAR -->
+			
 		</div>
 	</div>
 

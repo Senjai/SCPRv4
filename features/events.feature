@@ -20,6 +20,20 @@ Scenario: View "All" events list
 	And I should see 0 past events
 	And I should see 0 unpublished events
 
+Scenario: View "Forum" events list
+	When I go to the events page
+	And I filter by "forum"
+	Then I should see a list of 2 upcoming "forum" events
+	And I should see 0 past events
+	And I should see 0 unpublished events
+
+Scenario: View "Sponsored" events list
+	When I go to the events page
+	And I filter by "sponsored"
+	Then I should see a list of 2 upcoming "sponsored" events
+	And I should see 0 past events
+	And I should see 0 unpublished events
+
 Scenario: Pagination
 	Given there are 12 events
 	When I go to the events page

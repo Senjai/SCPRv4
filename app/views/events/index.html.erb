@@ -5,6 +5,5 @@
 	<%= link_to("All", events_path(list: "all"), id: "all", class: %w{sponsored forum}.include?(params[:list]) ? nil : "active") %><%= link_to("Crawford Family Forum", events_path(list: "forum"), id: "forum", class: params[:list] == "forum" ? "active" : nil) %><%= link_to("Sponsored Events", events_path(list: "sponsored"), id: "sponsored", class: params[:list] == "sponsored" ? "active" : nil) %>
 </nav>
 
-<section id="events-list" class="events-list">
-	<%= render 'events_list', events: @events %>
-</section>
+<%= render 'events_list', events: @events, cssClass: "upcoming-events" %>
+	

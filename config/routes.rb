@@ -49,12 +49,17 @@ Scprv4::Application.routes.draw do
   match '/programs/:show(/page/:page)' => 'programs#show', :as => :program, :constraints => { :page => /\d+/ }
   match '/programs/' => 'programs#index', :as => :programs
   
+  # -- Forum -- #
+  match '/forum/space' => 'events#space', as: :forum_space
+  match '/forum/directions' => 'events#directions', as: :forum_directions
+  match '/forum/contact' => 'events#contact', as: :forum_contact
+  match '/crawfordfamilyforum' => 'events#about', as: :forum_about
+  
   # -- Events -- #
-  match '/events/:year/:month/:day/:slug/' => 'events#show', :as => :event
-  match '/events/forum/directions' => 'events#directions', as: :forum_directions
   match '/events/forum/archive' => 'events#archive', as: :forum_events_archive
   match '/events/forum/' => 'events#forum', as: :forum_events
   match '/events/sponsored' => 'events#index', :as => :events_sponsored, defaults: { list: "sponsored" } # legacy
+  match '/events/:year/:month/:day/:slug/' => 'events#show', :as => :event
   match '/events(/list/:list)' => 'events#index', :as => :events, defaults: { list: "all" }
 
   # -- Videos -- #
