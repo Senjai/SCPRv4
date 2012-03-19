@@ -94,12 +94,12 @@ class scpr.SocialTools
     _displayDisqusCounts: (res) ->
         if res.counts?
             _(res.counts).each (v) =>
-                if (obj = @disqCache[ v.uid ]) && v.comments
+                if (obj = @disqCache[ v.uid ])
                     c = $(@options.count,obj.el)
                     
                     if c.length
                         $(@options.count,obj.el).text v.comments
-                    else
+                    else if v.comments
                         obj.el.text _.template @options.comments, count:v.comments
                     
             # note our pending request as finished
