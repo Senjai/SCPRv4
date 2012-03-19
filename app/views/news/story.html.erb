@@ -10,7 +10,7 @@
 	<hr/>
 <% end %>
 
-<div class="span6 <%= @story.story_asset_scheme ? "storycenter" : "storyleft" %>">
+<div class="span6 <%= @story.story_asset_scheme != '' ? "storycenter" : "storyleft" %>">
 	<%= render_asset @story, "story" %>
 
 	<div class="storybar" style="width: 160px;float: right;clear:right;margin-left: 12px">
