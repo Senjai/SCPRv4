@@ -694,7 +694,7 @@ a.comment-count.inline {
 	margin-bottom:$baseline;
 	h4 {
 		background-position: left top;
-		background:url(image_path('icons/comment-count.png')) no-repeat;
+		background:url(image_path('icons/comment-count.png')) top right no-repeat;
 		color:$grayDark;
 		font-size:16px;
 		font-weight:600;
@@ -702,13 +702,12 @@ a.comment-count.inline {
 		line-height:1;
 		margin-bottom:$baseline / 2;
 		opacity:0.85;
-		padding-left:28px;
-
+		padding-right:28px;
 	}
 	a {
 		@include font-sans-serif(normal, 11px);
 		display:block;
-		padding-left:28px;
+		//padding-left:28px;
 	}
 	&.left-side {
 		text-align:right;
@@ -733,6 +732,12 @@ a.comment-count.inline {
 			padding-left:0;
 		}
 	}
+}
+
+.storybar .comment-count h4 {
+	padding-right: 0;
+	padding-left: 28px;
+	background-position: top left;
 }
 
 // Comments styling
