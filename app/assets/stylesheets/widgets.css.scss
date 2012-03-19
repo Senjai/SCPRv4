@@ -151,7 +151,7 @@
 			padding:0 6px;
 		}
 	}
-	.jp-play, .jp-pause, .jp-rw, .jp-ff, .jp-volume {
+	.jp-play, .jp-pause, .jp-rw, .jp-ff, .jp-mute, .jp-unmute {
 		background-image:url(image_path('audio-controls.png'));
 		background-repeat:no-repeat;
 		display:block;
@@ -163,7 +163,7 @@
 		margin-top:25px;
 		opacity:0.6;
 	}
-	.jp-rw:hover, .jp-ff:hover, .jp-volume:hover {
+	.jp-rw:hover, .jp-ff:hover, .jp-mute:hover, .jp-unmute:hover {
 		opacity:1;
 	}
 	.jp-rw {
@@ -191,14 +191,14 @@
 	.jp-pause:hover {
 		background-position:-49px -45px;
 	}
-	.jp-volume {
+	.jp-mute, .jp-unmute {
 		background-position: -147px -10px;
 		margin-top:18px;
 		opacity:0.6;
 		width:25px;
 		height:25px;
 	}
-	.jp-volume.active {
+	.jp-unmute {
 		background-position: -174px -10px;
 	}
 	.jp-bar {
