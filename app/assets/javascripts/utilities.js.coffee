@@ -18,10 +18,15 @@ class scpr.SocialTools
     DefaultOptions:
         fbfinder:   ".social_fb"
         twitfinder: ".social_twit"
+        disqfinder: ".social_disq"
         count:      ".count"
         
         fburl:      "http://graph.facebook.com/"
         twiturl:    "http://urls.api.twitter.com/1/urls/count.json"
+        disqurl:    "http://kpcc.disqus.com/count.js?q=1&"
+        
+        no_comments: "Add your comments"
+        comments:    "Comments (<%= count %>)"
         
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
@@ -31,12 +36,26 @@ class scpr.SocialTools
 
         # look for twitter elements
         @twit_elements = ($ el for el in $ @options.twitfinder)
+        
+        # look for disqus elements
+        @disq_elements = ($ el for el in $ @options.disqfinder)
+        @disqPending = false
             
         if @fbelements.length > 0 
             @_getFbCounts()
             
         if @twit_elements.length > 0
             @_getTwitCounts()
+            
+        if @disq_elements.length > 0
+            # load in our custom override for disqus' widgets lib
+            window.DISQUSWIDGETS = {
+                displayCount: (res) => @_displayDisqusCounts(res)
+            }
+            
+            @disqCache = []
+            
+            @_getDisqusCounts()
         
         # add share functionality on facebook
         $(@options.fbfinder).on "click", (evt) =>
@@ -50,6 +69,44 @@ class scpr.SocialTools
                 twurl = "https://twitter.com/intent/tweet?url=#{url}&text=Via+%40kpcc"
                 window.open twurl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'
             
+    #----------
+    
+    _getDisqusCounts: ->
+        # fire off a request to disqus 
+        keys = []
+        
+        # clear out the disqCache
+        if @disqPending
+            console.log "cancelled disqus counts because of pending request"
+            return false
+            
+        @disqCache = []
+        
+        _(@disq_elements).each (el,idx) =>
+            objkey = el.attr('data-objkey')
+            @disqCache.push el:el, objkey:objkey
+            keys.push "#{idx}=1,#{encodeURIComponent(objkey)}"
+                    
+        $.ajax "#{@options.disqurl}#{keys.join('&')}", dataType: "script"
+        
+        @disqPending = true
+        
+    _displayDisqusCounts: (res) ->
+        if res.counts?
+            _(res.counts).each (v) =>
+                if (obj = @disqCache[ v.uid ]) && v.comments
+                    c = $(@options.count,obj.el)
+                    
+                    if c.length
+                        $(@options.count,obj.el).text v.comments
+                    else
+                        obj.el.text _.template @options.comments, count:v.comments
+                    
+            # note our pending request as finished
+            @disqPending = false
+            
+            true
+        
     #----------
         
     _getFbCounts: ->

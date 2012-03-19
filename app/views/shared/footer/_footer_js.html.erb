@@ -4,9 +4,9 @@
 	$(function() {
 		megaM = new scpr.MegaMenu({hidden:["#oas_x01"]});
 		smartTime = new scpr.SmartTime();		
-		
 		social = new scpr.SocialTools();
-
+		audio = new scpr.Audio();
+		comments = new scpr.CommentCounts(); comments.update();
 	  
 	   (function() {
 	     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
