@@ -43,8 +43,9 @@ module WidgetsHelper
   
   def comment_count_for(object, options={})
     if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
-      options[:class] = "comment_link #{options[:class]}"
-      link_to( (object.respond_to?(:comment_count) && object.comment_count > 0 ) ? "Comments (#{object.comment_count})" : "Add your comments", object.link_path(anchor: "comments"), options)
+      options[:class] = "comment_link social_disq #{options[:class]}"
+      options["data-objkey"] = object.obj_key
+      link_to( "Add your comments", object.link_path(anchor: "comments"), options )
     end
   end
   
