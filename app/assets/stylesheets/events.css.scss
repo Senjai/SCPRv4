@@ -227,7 +227,7 @@ a.event-link {
 		margin: 0 auto;
 		left: -290px;
 		top: -430px;
-		z-index: 11; /* Since we're setting z-index on the images for the fading. Highest the images get is 10 */
+		z-index: 11; /* Since we're setting z-index on the images for the fading. */
 		@include opacity-without-inheritance($opacity: 0.4);
 		padding: 20px;
 		height: 180px;

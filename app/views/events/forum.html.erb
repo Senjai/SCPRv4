@@ -149,7 +149,10 @@
 
 <% content_for :footerjss do %>
 	var faderTimeout;
-	function slideSwitch(next) {		
+	function slideSwitch(next) {
+		// Immediately complete any animations that are running right now
+		$('#events-header .hero img').stop(true, true);
+		
 		// Figure out which image is active
 	    var $active = $('#events-header .hero img.active');
 	    if ($active.length == 0) $active = $('#events-header .hero img:last');
@@ -169,7 +172,7 @@
 		    $next.css({opacity: 0.0})
 		        .addClass('active')
 		        .animate({opacity: 1.0}, 2000, function() {
-					// When it's done fading in, remove the special classes from the old "current" image
+					// When it's done fading in, remove the special classes from the old image
 		            $active.removeClass('active last-active');
 		        });
 		
