@@ -2,12 +2,15 @@
 	<div class="arrow-up"></div>
 	<div class="modal-close"></div>
 	<div class="inner-container">
-		<h6><%= link_to episode.title, episode.link_path %></h6>
-		<%= render_asset episode, "thumb" %>
-		<ul class="cbase">
-			<li><%= render partial: "shared/broadcast_bar/segment_lead", object: episode.segments.published.first, :as => :segment %></li>		
-			<%= render partial: "shared/broadcast_bar/segment_offlead", collection: episode.segments.published.offset(1), :as => :segment %>
-			<li class="more"><a href="<%= program_path(program.slug) %>">More <%= program.title %></a></li>
-		</ul>
+		<% content_cache("broadcast_bar:episode_guide:#{episode.id}") do %>
+			<% register_content episode %>
+			<h6><%= link_to episode.title, episode.link_path %></h6>
+			<%= render_asset episode, "thumb" %>
+			<ul class="cbase">
+				<li><%= render partial: "shared/broadcast_bar/segment_lead", object: episode.segments.published.first, :as => :segment %></li>		
+				<%= render partial: "shared/broadcast_bar/segment_offlead", collection: episode.segments.published.offset(1), :as => :segment %>
+				<li class="more"><a href="<%= program_path(program.slug) %>">More <%= program.title %></a></li>
+			</ul>
+		<% end %>
 	</div>
 </div>

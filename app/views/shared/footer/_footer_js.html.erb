@@ -6,7 +6,7 @@
 		smartTime = new scpr.SmartTime();		
 		social = new scpr.SocialTools();
 		audio = new scpr.Audio();
-		comments = new scpr.CommentCounts({counts:<%= raw (@COMMENT_OBJS||[]).inject({}) { |h,c| h[c.obj_key] = { :obj_key => c.obj_key, :comments => c.comment_count }; h }.to_json %>});
+		comments = new scpr.CommentCounts(); comments.update();
 	  
 	   (function() {
 	     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
