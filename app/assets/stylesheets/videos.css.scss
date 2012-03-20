@@ -85,12 +85,11 @@
 		}
 		
 		.pagination {
-			position: relative;
-			height: 20px;
+			line-height: 20px;
 			text-align: center;
 			@include font-sans-serif(bold, 12px);
-			color: $gray;
-			text-shadow: 0 1px #666;
+			color: darken($gray, 15%);
+			text-shadow: 0 1px #888;
 		}
 		
 		div.list {
