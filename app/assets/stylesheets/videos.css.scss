@@ -34,11 +34,12 @@
 		color: #777777;
 		@include font-heading(normal, 12px);
 		text-transform: uppercase;
-		opacity: 1 !important;
 		text-align: center;
-		&:hover {
+		@include transition(all 0.15s ease-in-out);
+		&:hover, &.active {
 			border-color:$grayLight;
 			color:$grayLight;
+			cursor: pointer;
 		}
 	}
 	.videos-overlay {
