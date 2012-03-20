@@ -46,7 +46,7 @@ Rails.cache.write("widget/popular_commented",top_traffic)
 
 (Rails.cache.instance_variable_get :@data).set(
   ':1:most_popular:commented',
-  top_traffic,
+  pickle.dumps(top_traffic),
   :raw => true
 )
 
