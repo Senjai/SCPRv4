@@ -71,7 +71,7 @@ class scpr.VideoPage
                     $(@opts.overlay).spin()
                 console.log "Sending Request..."
             error: (xhr, status, error) -> 
-                $('.videos-overlay ul').html "Error loading videos. Please refresh the page and try again. (#{error})"
+                $('.videos-overlay .list').html "Error loading videos. Please refresh the page and try again. (#{error})"
             complete: (xhr, status) => 
                 setTimeout ( => 
                   $(@opts.overlay).spin(false)
