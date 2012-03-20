@@ -1,40 +1,73 @@
-<% @BODY_CLASS = "dark-theme" %>
-<% @BODY_ID = "multimedia" %>
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+	<title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
+	<%= render "shared/header/header_js" %>
+	<%= render "shared/header/opengraph" %>
+	<%= csrf_meta_tags %>
+</head>
+<body class="dark-theme" id="multimedia">
+<!-- MASTHEAD-->
+<%= render "shared/masthead" %>
 
-<% content_for :masthead do %> <%# Not a masthead but it fits in the layout nicely in that spot %>
-	<div class="span2">
-		<button id="browse-all-videos" class="browse-all-videos">Browse All Videos</button>
-		<div class="videos-overlay">
-			<button class="arrow left" id="next-page" data-page="">&nbsp;</button>
-			<ul class="videos">
-				<%# This is populated via ajax from videos.js.coffee %>
-			</ul>
-			<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
+<div id="main" class="container">
+	<div class="videos-overlay">
+		<div class="inner-container">
+			<div class="dark-modal-arrow">&nbsp;</div>
+			<div class="row">
+				<div class="span1">
+					<button class="arrow left" id="next-page" data-page="">&nbsp;</button>
+				</div>
+				<div class="list span10">
+					<%# This is populated via ajax from videos.js.coffee %>
+				</div>
+				<div class="span1">
+					<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
+				</div>
+			</div>
 			<div class="pagination">&nbsp;</div>
-		</div> <!-- .videos-overlay -->
-	</div> <!-- .span2 -->
-<% end %>
-
-<% content_for :content do %>
-	<%= yield %>
-	<% if any_to_list? @latest_videos %>
-		<div class="multimedia latest-videos">
-			<h3 class="head">Latest Videos</h3>
-			<ul class="videos muted">
-				<%= render partial: 'video_thumb', collection: @latest_videos, locals: { size: "small" } %>
-			</ul>
-		</div>
-	<% end %>
+		</div> <!-- inner-container -->
+	</div> <!-- .videos-overlay -->
 	
-	<%= comments_for @video, cssClass: 'multimedia muted' %>
-<% end %>
-
-<% content_for :sidebar do %>
-	&nbsp; <%# This is a hack sort of because a blank string or nil is registered as false in content_for?. %>
-<% end %>
+	<div class="row">
+		<div class="span2">
+			<button id="browse-all-videos" class="browse-all-videos">Browse All Videos</button>
+		</div> <!-- .span2 -->
+		
+		<article class="span8">
+			<%= yield %>
+			
+			<% if any_to_list? @latest_videos %>
+				<div class="multimedia latest-videos">
+					<h3 class="head">Latest Videos</h3>
+					<div class="list muted row">
+						<% @latest_videos.each do |video| %>
+							<% if video.assets.present? %>
+								<div class="video-thumb span2">
+									<a href="<%= video_path(video) %>">
+										<%= video.assets.first.asset.tags.three.html_safe %> <%# TODO use render_asset here %>
+										<span class="title"><%= video.short_headline %></span>
+									</a>
+								</div>
+							<% end %>
+						<% end %>
+					</div>
+				</div>
+			<% end %>
+			<%= comments_for @video, cssClass: 'multimedia muted' %>
+		</article>
+		
+		<div class="span2">
+			&nbsp;
+		</div>
+	</div>
+</div>
 
 <% content_for :footerjss do %>
 	var videoPage = new scpr.VideoPage();
 <% end %>
 
-<%= render :template => "layouts/application" %>
+<%= render :partial => "shared/footer" %>
+<%= render :partial => "shared/footer/footer_js" %>
+</body>
+</html>

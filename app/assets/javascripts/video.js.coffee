@@ -16,24 +16,16 @@ class scpr.VideoPage
             right: 'button.arrow.right' 
         inactive:
             "background-color": "#070707"
-            opacity: 1
             color: "#777777"
             "border-color": "#505050"
         active:
             "background-color": "#2e2e2e"
-            opacity: 1
             color: "#bfbfbf"
             "border-color": "#808080"
         
     constructor: (options) ->
         @opts = _(_({}).extend(@DefaultOptions)).extend options||{}
         @clickShouldHide = false
-    
-        # When you hover on and off the button, do some fancy things with opacity.
-        $(@opts.button).hover(
-          => @fadeButton($(@opts.button), "in")
-          => @fadeButton($(@opts.button), "out")
-        )
     
         # This is the easiest way to tell if the cursor is in the overlay or not
         $(@opts.overlay).hover(
@@ -79,7 +71,7 @@ class scpr.VideoPage
                     $(@opts.overlay).spin()
                 console.log "Sending Request..."
             error: (xhr, status, error) -> 
-                $('.videos-overlay ul').html "Error loading videos. Please refresh the page and try again. (#{error})"
+                $('.videos-overlay .list').html "Error loading videos. Please refresh the page and try again. (#{error})"
             complete: (xhr, status) => 
                 setTimeout ( => 
                   $(@opts.overlay).spin(false)
@@ -88,20 +80,18 @@ class scpr.VideoPage
         }
 
     fadeButton: (button, dir) ->
-            b = button
-            cursor = if dir is "in" then "pointer" else "default"
-            opacity = if dir is "in" then 1 else 0.5
-            b.css("cursor", cursor)
-            b.animate({opacity: opacity}, "fast") if ($(@opts.overlay).css('display') is 'none' and b.hasClass("browse-all-videos")) or b.hasClass('arrow')
+        b = button
+        cursor = if dir is "in" then "pointer" else "default"
+        opacity = if dir is "in" then 1 else 0.5
+        b.css("cursor", cursor)
+        b.animate({opacity: opacity}, "fast")
         
     showModal: =>
         @getVideos() if !$(@opts.overlay + " ul>li").length # Get videos only if the modal hasn't been opened yet
         $(@opts.overlay).show("fast")
-        $(@opts.button).animate(@opts.active, "fast") unless $(@opts.button).hasClass('clicked')
-        $(@opts.button).removeClass('clicked').addClass('clicked')
+        $(@opts.button).addClass("active")
 
     hideModal: =>
         $(@opts.overlay).hide("fast")
         @clickShouldHide = false
-        $(@opts.button).animate(@opts.inactive, "fast")
-        $(@opts.button).removeClass('clicked')
+        $(@opts.button).removeClass("active")

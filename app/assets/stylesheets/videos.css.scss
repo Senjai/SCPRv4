@@ -10,6 +10,7 @@
 		@include box-shadow(0 0 12px $gray);
 	}
 }
+
 #multimedia {
 	.video {
 		margin:$baseline 5px;
@@ -34,80 +35,87 @@
 		color: #777777;
 		@include font-heading(normal, 12px);
 		text-transform: uppercase;
-		opacity: 1 !important;
 		text-align: center;
-		&:hover {
+		@include transition(all 0.15s ease-in-out);
+		&:hover, &.active {
 			border-color:$grayLight;
 			color:$grayLight;
+			cursor: pointer;
 		}
 	}
 	.videos-overlay {
 		display: none; /* So it doesn't show on page-load */
-		position: relative;
-		width: 1107px;
-		height: 655px;
-		background-image: url(image_path('overlay-top.png'));
-		background-repeat: no-repeat; 
-		background-position: left top; /* Arrow at the top */
-		padding: 17px 0 0 0; /* pull the main box down so the arrow will show */
+		position: absolute;
+		margin: 40px 0 0 0; // Top of the arrow
+		min-height: 640px;
 		z-index: 10; /* Just to be sure it's in front */
 		
+		.dark-modal-arrow {
+			position: relative;
+			top: -16px;
+			background: url(image_path('icons/dark-modal-arrow.png')) no-repeat 45px top;
+		}
+		
+		.inner-container {
+			margin-top: 13px; // Top of the modal box
+			@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
+			@include background-image(linear-gradient(#333, #111));
+			border: none;
+			padding: 0;
+		}
+		
 		button.arrow {
-			position: absolute;
+			display: block;
+			position: relative;
 			top: 300px;		
 			width: 48px;
 			height: 48px;
 			border-radius: 7px;
 			-moz-border-radius: 7px;
 			-webkit-border-radius: 7px;
-			opacity: .5;
+			opacity: 0.5;
 			&.left {
 				left: 20px;
 				background: url(image_path('overlay-prev.png')) no-repeat left top;
 			}
 			&.right {
-				right: 20px;
+				right: 5px;
 				background: url(image_path('overlay-next.png')) no-repeat left top;
 			}
 		}
 		
 		.pagination {
-			width: 100%;
-			height: 20px;
-			position: absolute;
-			bottom: 0;
+			line-height: 20px;
 			text-align: center;
 			@include font-sans-serif(bold, 12px);
-			color: $black;
-			text-shadow: 0 1px #666;
+			color: darken($gray, 15%);
+			text-shadow: 0 1px #888;
 		}
 		
-		ul {
-			background: #3d3d3d;
-			padding: 30px 60px 10px 60px;
-			border: 1px solid #494848;
-			border-top: none;
-			display: inline-block;
-			width: 985px;
-			height: 622px;
-			li {
-				width: 30%;
+		div.list {
+			margin-top: 25px;
+			.video-thumb {
+				padding-left: 24px;
 			}
-		} /* ul */
+		}
+
 	} /* .videos-overlay */
 } /* #multimedia */
 
-ul.videos {
-	margin: 0px;
+div.list {
+	@include font-heading;
 	text-align: center;
 	color: #808080;
-	@include font-heading;
 }
 
-li.video-thumb {
-	list-style: none;
-	display: inline-block;
-	padding: 10px;
+.video-thumb {
+	a {
+		&:hover {
+			text-decoration: none;
+		}
+	}
+	margin-top: 10px;
+	margin-bottom: 10px;
 	img {
 		max-height: 143px;
 		overflow: hidden;
@@ -123,16 +131,9 @@ li.video-thumb {
 	border-top:1px solid $nearBlack;
 	margin-top: 20px;
 	padding-top: 10px;
-	ul {
-		width: 100%;
-		li.video-thumb {
-			width: 150px;
-			vertical-align: top;
-			img {
-				width:158px;
-				height:88px;
-			}
-		}
+	img {
+		width:158px;
+		height:88px;
 	}
 }
 

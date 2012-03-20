@@ -36,15 +36,12 @@ Then /^I should see that video featured$/ do
 end
 
 Then /^I should see a section with the (\d+) most recently published videos$/ do |num|
-  @latest_videos = VideoShell.published.limit(num.to_i)
-  page.find(".latest-videos ul").should have_css "li.video-thumb", count: num.to_i
-  find(".latest-videos li.video-thumb:first-of-type").should have_content @latest_videos.first.short_headline
-  find(".latest-videos li.video-thumb:last-of-type").should have_content @latest_videos.last.short_headline
+  page.find(".latest-videos .list").should have_css ".video-thumb", count: num.to_i
 end
 
 Then /^I should see the (\d+) most recently published videos in the pop\-up$/ do |num|
   @latest_videos = VideoShell.published.limit(num.to_i)
-  find(".videos-overlay").should have_css "ul.videos li.video-thumb", count: num.to_i
+  find(".videos-overlay").should have_css ".list .video-thumb", count: num.to_i
 end
 
 Then /^there should be modal pagination$/ do
@@ -68,6 +65,13 @@ Then /^I should be on page 2 of the videos list$/ do
   # find("button.arrow.right")['data-page'].should eq ""
   # find("button.arrow.left")['data-page'].should eq "1"
 end
+
+
+#### Assertions
+Then /^the latest videos section should not have the current video$/ do
+  page.find(".latest-videos").should_not have_content VideoShell.published.first.short_headline
+end
+
 
 
 #### Actions
