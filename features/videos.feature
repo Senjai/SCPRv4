@@ -18,10 +18,11 @@ Scenario: Feature a specific video on the "Show" page
 	When I go to the page for one of the videos
 	Then I should see that video featured
 
-Scenario: Show 4 most recently published videos on index page
+Scenario: Show 4 most recently published videos on index page, except the current video
 	Given there are 5 video shells
 	When I go to the videos page
 	Then I should see a section with the 4 most recently published videos
+	And the latest videos section should not have the current video
 	
 Scenario: Show 4 most recently published videos on video show page
 	Given there are 5 video shells
@@ -32,6 +33,7 @@ Scenario: Comments for a video
 	Given there is 1 video shell
 	When I go to that video's page
 	Then I should see a comments section
+
 
 @javascript
 Scenario: Show 9 most recently published videos in the modal pop-up

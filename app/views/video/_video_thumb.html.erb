@@ -1,10 +1,17 @@
 <%# Small video for Modal/"Latest Videos" strip at the bottom %>
+<% if video_thumb_counter % 3 == 0 %>
+	<div class="row">
+<% end %>
 
-<% size ||= "normal" %>
 <% if video_thumb ||= nil and video_thumb.assets.present? %>
-	<% asset = video_thumb.assets.first.asset %>
-	<li class="video-thumb">
-		<%= link_to (size == "small" ? asset.tags.three : asset.tags.three).html_safe, video_path(video_thumb) %>
-		<a class="title" href=""><%= video_thumb.short_headline %></a>
-	</li>
+	<div class="video-thumb span3">
+		<a href="<%= video_path(video_thumb) %>">
+			<%= video_thumb.assets.first.asset.tags.three.html_safe %> <%# TODO use render_asset here %>
+			<span class="title"><%= video_thumb.short_headline %></span>
+		</a>
+	</div>
+<% end %>
+
+<% if video_thumb_counter % 3 == 2 %>
+	</div>
 <% end %>

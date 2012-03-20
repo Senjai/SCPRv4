@@ -20,30 +20,35 @@ describe WidgetsHelper do
       comment_count_for(object).should match object.link_path(anchor: "comments")
     end
     
-    it "shows the number of comments fort the object" do
-      object.comment_count = "10"
-      comment_count_for(object).should match /Comments \(10\)/
-    end
-    
-    it "uses the class passed in and appends comment-link" do
-      comment_count_for(object, class: "other").should match "comment_link other"
+    it "uses the class passed in and preserves the hard-coded classes" do
+      comment_count = comment_count_for(object, class: "other")
+      comment_count.should match /comment_link/
+      comment_count.should match /social_disq/
+      comment_count.should match /other/
     end
       
     it "doesn't render anything if content isn't present" do
       comment_count_for(nil).should be_nil
+    end
+    
+    it "doesn't render anything if it doesn't respond to has_comments?" do
+      comment_count_for(create :blog).should be_nil
+    end
+    
+    it "doesn't render anything if has_comments? is false" do
+      comment_count_for(create :content_shell).should be_nil
+      blog_entry = create :blog_entry
+      blog_entry.stub(:has_comments?) { false }
+      comment_count_for(blog_entry).should be_nil
     end
   end
   
   
   describe "#comment_widget_for" do
     it "renders the comment_count partial" do
-      comment_widget_for(object).should_not be_nil
-      comment_widget_for(object).should match "comment-count"
-    end
-    
-    it "shows the number of comments" do
-      object.comment_count = 13
-      comment_widget_for(object).should match "#{object.comment_count}"
+      comment_widget = comment_widget_for(object)
+      comment_widget.should_not be_nil
+      comment_widget.should match /comment-count/
     end
     
     it "has a link to the comments" do
@@ -54,8 +59,19 @@ describe WidgetsHelper do
       comment_widget_for(nil).should be_nil
     end
     
+    it "doesn't render anything if it doesn't respond to has_comments?" do
+      comment_widget_for(create :blog).should be_nil
+    end
+    
+    it "doesn't render anything if has_comments? is false" do
+      comment_widget_for(create :content_shell).should be_nil
+      blog_entry = create :blog_entry
+      blog_entry.stub(:has_comments?) { false }
+      comment_widget_for(blog_entry).should be_nil
+    end
+    
     it "passes in the cssClass" do
-      comment_widget_for(object, cssClass: "someclass").should match "someclass"
+      comment_widget_for(object, cssClass: "someclass").should match /someclass/
     end
   end
   
