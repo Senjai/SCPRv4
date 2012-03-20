@@ -27,12 +27,6 @@ class scpr.VideoPage
         @opts = _(_({}).extend(@DefaultOptions)).extend options||{}
         @clickShouldHide = false
     
-        # When you hover on and off the button, do some fancy things with opacity.
-        # $(@opts.button).hover(
-        #   => @fadeButton($(@opts.button), "in")
-        #   => @fadeButton($(@opts.button), "out")
-        # )
-    
         # This is the easiest way to tell if the cursor is in the overlay or not
         $(@opts.overlay).hover(
           => @clickShouldHide = false
@@ -96,11 +90,8 @@ class scpr.VideoPage
         @getVideos() if !$(@opts.overlay + " ul>li").length # Get videos only if the modal hasn't been opened yet
         $(@opts.overlay).show("fast")
         $(@opts.button).addClass("active")
-        #$(@opts.button).removeClass('clicked').addClass('clicked')
 
     hideModal: =>
         $(@opts.overlay).hide("fast")
         @clickShouldHide = false
         $(@opts.button).removeClass("active")
-        #$(@opts.button).animate(@opts.inactive, "fast")
-        #$(@opts.button).removeClass('clicked')
