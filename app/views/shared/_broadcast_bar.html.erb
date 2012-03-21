@@ -1,48 +1,48 @@
 <% if o = Schedule.on_now %>
-<div id="broadcast-bar-outer-container" class="<%= o.programme.is_a?(KpccProgram) ? "headshot" : "" %>">
-<div id="broadcast-bar-inner-container">
-<section class="broadcastbar">
-	<div class="left">
-	<ul>
-		<li class="active-show-title">
-			<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
-			<% if o.programme %>
-					<a href="<%= program_path(o.programme.slug) %>" class="<%= o.programme.display_episodes and o.programme.episodes.published.first.segments.published.present? %>">
-					<% if o.programme.is_a? KpccProgram %>
-						<%= image_tag "broadcast-bar/headshots/#{o.programme.slug}.png", :size => "90x70", :alt => o.programme.title, :class => "bbar_headshot" %>
-					<% end %>
-			<% end %>
-			<%= o.program %>
-			<% if o.programme %></a><% end %>
-		</li>
-		<li class="show-time">
-			<%= o.start_time.strftime(o.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
-			 - <%= o.end_time.strftime(o.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
-		</li>
-		<!-- <li class="show-status">On Now:</li> -->
-		<% if o.programme.display_episodes and o.programme.episodes.published.first.segments.published.present? %>
-			<li class="show-summary">
-				<%= render :partial => "shared/broadcast_bar/episode_guide", :object => o.programme.episodes.published.first, :as => :episode, :locals => { :program => o.programme } %>
-			</li>
-		<% end %>
-		<!-- <li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li> -->
-	</ul>
-	</div>
-	<div class="right">
-	<ul>
-		<% if u = o.up_next %>
-			<li class="upnext-show-title">
-				<%= image_tag("broadcast-bar/upnext.png", :size => "66x21", :alt => 'Up Next', :style => "margin-bottom: -3px") %>
-				<%= u.program %>
+	<div id="broadcast-bar-outer-container" class="<%= "headshot" if o.programme.is_a?(KpccProgram) %>">
+	<div id="broadcast-bar-inner-container">
+	<section class="broadcastbar">
+		<div class="left">
+		<ul>
+			<li class="active-show-title">
+				<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
+				<% if o.programme %>
+						<a href="<%= program_path(o.programme.slug) %>" class="<%= o.show_modal? %>">
+						<% if o.programme.is_a? KpccProgram %>
+							<%= image_tag "broadcast-bar/headshots/#{o.programme.slug}.png", :size => "90x70", :alt => o.programme.title, :class => "bbar_headshot" %>
+						<% end %>
+				<% end %>
+				<%= o.program %>
+				<% if o.programme %></a><% end %>
 			</li>
 			<li class="show-time">
-				<%= u.start_time.strftime(u.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
-				 - <%= u.end_time.strftime(u.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
-			</li>	
-		<% end %>
-	</ul>
+				<%= o.start_time.strftime(o.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
+				 - <%= o.end_time.strftime(o.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
+			</li>
+			<!-- <li class="show-status">On Now:</li> -->
+			<% if o.show_modal? %>
+				<li class="show-summary">
+					<%= render :partial => "shared/broadcast_bar/episode_guide", :object => o.programme.episodes.published.first, :as => :episode, :locals => { :program => o.programme } %>
+				</li>
+			<% end %>
+			<!-- <li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li> -->
+		</ul>
+		</div>
+		<div class="right">
+		<ul>
+			<% if u = o.up_next %>
+				<li class="upnext-show-title">
+					<%= image_tag("broadcast-bar/upnext.png", :size => "66x21", :alt => 'Up Next', :style => "margin-bottom: -3px") %>
+					<%= u.program %>
+				</li>
+				<li class="show-time">
+					<%= u.start_time.strftime(u.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
+					 - <%= u.end_time.strftime(u.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
+				</li>	
+			<% end %>
+		</ul>
+		</div>
+	</section>
 	</div>
-</section>
-</div>
-</div>
+	</div>
 <% end %>

@@ -35,10 +35,10 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.include FactoryGirl::Syntax::Methods
   config.include ContentBaseHelpers
+  DatabaseCleaner.strategy = :transaction
   
   config.before :suite do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean
+    DatabaseCleaner.clean_with :truncation
     FactoryGirl.reload
   end
 

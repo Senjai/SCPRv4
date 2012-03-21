@@ -31,7 +31,7 @@ describe Blog do
   end
   
   describe "cache_remote_entries" do
-    it "does not cache local blogs" do
+    it "does not cache local blogs" do # TODO This takes too long.
       blog = create :blog
       Blog.cache_remote_entries.should be_blank
     end

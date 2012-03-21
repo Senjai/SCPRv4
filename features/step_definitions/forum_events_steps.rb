@@ -5,12 +5,6 @@ Given /^there (?:is|are) (\d+) upcoming forum events?$/ do |num|
   Event.all.count.should eq num.to_i
 end
 
-Given /^each event has (\d+) assets?$/ do |num|
-  @events.each do |event|
-    create :asset, content: event
-  end
-end
-
 
 #### Routing
 When /^I go to the forum page$/ do

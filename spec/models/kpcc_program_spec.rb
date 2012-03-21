@@ -1,6 +1,13 @@
 require "spec_helper"
 
 describe KpccProgram do
+  describe "associations" do
+    it { should have_many :segments }
+    it { should have_many :episodes }
+    it { should have_many :schedules }
+    it { should belong_to :blog }
+  end
+  
   describe "#to_param" do
     it "uses the slug" do
       program = build :kpcc_program
@@ -43,19 +50,6 @@ describe KpccProgram do
     it "appends the twitter domain if twitter_url is only a handle" do
       program = build :kpcc_program, twitter_url: "kpcc"
       program.twitter_absolute_url.should eq "http://twitter.com/#{program.twitter_url}"
-    end
-  end
-  
-  
-  describe "associations" do
-    it "has segments" do
-      program = create :kpcc_program, segment_count: 1
-      program.segments.count.should eq 1
-    end
-
-    it "has episodes" do
-      program = create :kpcc_program, episode_count: 1
-      program.episodes.count.should eq 1
     end
   end
 end

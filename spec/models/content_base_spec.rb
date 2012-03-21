@@ -6,36 +6,15 @@ end
 
 describe ContentBase do
   ContentBase.content_classes.each do |c|
-    describe c do      
+    describe c do
       it "inherits from ContentBase" do
         object = build symbolize(c)
-        object.is_a?(ContentBase).should be_true
-      end
-      
-      describe "associations" do
-        describe "#related_contents" do
-          it "has frels" do
-            object = create symbolize(c), frels_count: 1
-            object.frels.first.related.should eq object
-          end
-          
-          it "has brels" do
-            object = create symbolize(c), brels_count: 1
-            object.brels.first.content.should eq object
-          end
-        end
-      
-        describe "#related_links" do
-          it "has related_links" do
-            object = create symbolize(c), link_count: 1
-            object.related_links.count.should eq 1
-          end
-        end
+        object.should be_a ContentBase
       end
       
       describe "sorted_relations" do
         it "takes a list of frels and brels and returns an array of related records" do
-          object = create symbolize(c), frels_count: 2, brels_count: 2
+          object = create symbolize(c), frel_count: 2, brel_count: 2
           sorted_relations = object.sorted_relations(object.frels.normal, object.brels.normal)
           sorted_relations.include?(object.frels.first.content).should be_true
           sorted_relations.include?(object.brels.first.related).should be_true

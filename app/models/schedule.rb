@@ -117,4 +117,8 @@ class Schedule < ActiveRecord::Base
     }
   end
   
+  def show_modal?
+    programme.display_episodes && programme.episodes.published.first.present? && programme.episodes.published.first.segments.published.present?
+  end
+  
 end

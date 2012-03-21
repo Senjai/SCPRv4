@@ -77,7 +77,3 @@ end
 When /^I go to the events page$/ do
   visit events_path
 end
-
-When /^I go to the event list page for "([^"]*)"$/ do |list|
-  visit events_path(list: list)
-end

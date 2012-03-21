@@ -6,6 +6,22 @@ describe BlogEntry do
     entry.any? { |e| e.category == nil }.should be_false
   end
   
+  describe "associations" do # TODO move this into content_base_spec
+    it { should have_many :assets }
+    it { should have_many :bylines }
+    it { should have_many :brels }
+    it { should have_many :frels }
+    it { should have_many :related_links }
+    it { should have_many :queries }
+    it { should have_one :content_category }
+    it { should have_one(:category).through(:content_category) }
+    it { should belong_to :blog }
+    it { should belong_to :author }
+    it { should have_many :tagged }
+    it { should have_many(:tags).through(:tagged) }
+    it { should have_many :uploaded_audio }
+  end
+  
   describe "scopes" do
     describe "#published" do    
       it "orders published content by published_at (or pub_at) descending" do
@@ -17,11 +33,6 @@ describe BlogEntry do
   end
   
   describe "instance" do # TODO: Move these into ContentBase specs
-    it "inherits from ContentBase" do
-      entry = build :blog_entry
-      entry.should be_a ContentBase
-    end
-    
     describe "link_path" do
       it "returns a link_path" do
         entry = create :blog_entry

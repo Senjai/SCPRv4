@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:npr="http://www.npr.org/rss/" xmlns:nprml="http://api.npr.org/nprml" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title>KQED-FM: KQED's The California Report Podcast</title>
+    <link>http://www.kqed.org/radio/tcr/index.html</link>
+    <description><![CDATA[KQED's statewide radio news program, providing daily coverage of issues, trends and public policy decisions affecting California and its diverse population.]]></description>
+    <copyright>Copyright 2011 KQED</copyright>
+    <generator>NPR API RSS Generator 0.94</generator>
+    <language>en-us</language>
+    <itunes:summary><![CDATA[KQED's statewide radio news program, providing daily coverage of issues, trends and public policy decisions affecting California and its diverse population.]]></itunes:summary>
+    <itunes:subtitle>KQED's statewide radio news program, providing daily coverage of issues, trends and public policy decisions affecting California and its diverse population.</itunes:subtitle>
+    <itunes:keywords>KQED,KQED FM,California Report Daily News,San Francisco,California</itunes:keywords>
+    <itunes:author>KQED-FM</itunes:author>
+    <itunes:owner>
+      <itunes:email>ondemand@kqed.org</itunes:email>
+      <itunes:name>KQED Public Radio</itunes:name>
+    </itunes:owner>
+    <itunes:image href="http://media.npr.org/images/podcasts/primary/icon_510005.jpg"/>
+    <itunes:explicit>no</itunes:explicit>
+    <image>
+      <url>http://media.npr.org/images/podcasts/thumbnail/icon_510005.jpg</url>
+      <title>KQED-FM: KQED's The California Report Podcast</title>
+      <link>http://www.kqed.org/radio/tcr/index.html</link>
+    </image>
+    <lastBuildDate>Tue, 20 Mar 2012 14:02:04 -0400</lastBuildDate>
+    <item>
+      <title>The California Report</title>
+      <description><![CDATA[Education Activist Finances School Tax Measure. Picking Up the Tab For Pipeline Safety. End Music.]]></description>
+      <pubDate>Tue, 20 Mar 2012 14:02:04 -0400</pubDate>
+      <link>http://www.kqed.org/radio/tcr/index.html</link>
+      <guid>http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/149001971/KQED_149001971.mp3</guid>
+      <itunes:summary><![CDATA[Education Activist Finances School Tax Measure. Picking Up the Tab For Pipeline Safety. End Music.]]></itunes:summary>
+      <itunes:keywords>KQED,KQED FM,California Report Daily News,San Francisco,California</itunes:keywords>
+      <itunes:duration>8:39</itunes:duration>
+      <itunes:explicit>no</itunes:explicit>
+      <enclosure url="http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/149001971/KQED_149001971.mp3" length="4158570" type="audio/mpeg"/>
+      <nprml:organization orgId="151" orgAbbr="KQED">
+        <nprml:name>KQED-FM</nprml:name>
+        <nprml:website>http://www.kqed.org/radio/</nprml:website>
+      </nprml:organization>
+    </item>
+    <item>
+      <title>The California Report</title>
+      <description><![CDATA[History Buffs Fight to Save a Frontier Outpost. End Music.]]></description>
+      <pubDate>Mon, 19 Mar 2012 14:28:50 -0400</pubDate>
+      <link>http://www.kqed.org/radio/tcr/index.html</link>
+      <guid>http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/148929750/KQED_148929750.mp3</guid>
+      <itunes:summary><![CDATA[History Buffs Fight to Save a Frontier Outpost. End Music.]]></itunes:summary>
+      <itunes:keywords>KQED,KQED FM,California Report Daily News,San Francisco,California</itunes:keywords>
+      <itunes:duration>8:38</itunes:duration>
+      <itunes:explicit>no</itunes:explicit>
+      <enclosure url="http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/148929750/KQED_148929750.mp3" length="4152092" type="audio/mpeg"/>
+      <nprml:organization orgId="151" orgAbbr="KQED">
+        <nprml:name>KQED-FM</nprml:name>
+        <nprml:website>http://www.kqed.org/radio/</nprml:website>
+      </nprml:organization>
+    </item>
+    <item>
+      <title>The California Report Magazine</title>
+      <description><![CDATA[As big money floods into online entertainment, a growing number of people can make a living off of YouTube — and production companies are cropping up to help them realize the dream. Also, we look at a new series of original plays tackling the topic of hunger.]]></description>
+      <pubDate>Fri, 16 Mar 2012 21:40:18 -0400</pubDate>
+      <link>http://www.kqed.org/radio/tcr/index.html</link>
+      <guid>http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/148791367/KQED_148791367.mp3</guid>
+      <itunes:summary><![CDATA[As big money floods into online entertainment, a growing number of people can make a living off of YouTube — and production companies are cropping up to help them realize the dream. Also, we look at a new series of original plays tackling the topic of hunger.]]></itunes:summary>
+      <itunes:keywords>KQED,KQED FM,California Report Daily News,San Francisco,California</itunes:keywords>
+      <itunes:duration>29:19</itunes:duration>
+      <itunes:explicit>no</itunes:explicit>
+      <enclosure url="http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/148791367/KQED_148791367.mp3" length="14080503" type="audio/mpeg"/>
+      <nprml:organization orgId="151" orgAbbr="KQED">
+        <nprml:name>KQED-FM</nprml:name>
+        <nprml:website>http://www.kqed.org/radio/</nprml:website>
+      </nprml:organization>
+    </item>
+    <item>
+      <title>The California Report</title>
+      <description><![CDATA[PG&E Settles Water Contamination Suit. Students Rise and Shine for California's Academic Decathlon. End Music.]]></description>
+      <pubDate>Fri, 16 Mar 2012 14:01:29 -0400</pubDate>
+      <link>http://www.kqed.org/radio/tcr/index.html</link>
+      <guid>http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/148763545/KQED_148763545.mp3</guid>
+      <itunes:summary><![CDATA[PG&E Settles Water Contamination Suit. Students Rise and Shine for California's Academic Decathlon. End Music.]]></itunes:summary>
+      <itunes:keywords>KQED,KQED FM,California Report Daily News,San Francisco,California</itunes:keywords>
+      <itunes:duration>8:39</itunes:duration>
+      <itunes:explicit>no</itunes:explicit>
+      <enclosure url="http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/148763545/KQED_148763545.mp3" length="4160033" type="audio/mpeg"/>
+      <nprml:organization orgId="151" orgAbbr="KQED">
+        <nprml:name>KQED-FM</nprml:name>
+        <nprml:website>http://www.kqed.org/radio/</nprml:website>
+      </nprml:organization>
+    </item>
+    <item>
+      <title>The California Report</title>
+      <description><![CDATA[Brown Combines Ballot Tax Measures, Hopes for Success. Pot Club Landlords are Facing Heat from Feds. End Music.]]></description>
+      <pubDate>Thu, 15 Mar 2012 12:27:08 -0400</pubDate>
+      <link>http://www.kqed.org/radio/tcr/index.html</link>
+      <guid>http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/148681822/KQED_148681822.mp3</guid>
+      <itunes:summary><![CDATA[Brown Combines Ballot Tax Measures, Hopes for Success. Pot Club Landlords are Facing Heat from Feds. End Music.]]></itunes:summary>
+      <itunes:keywords>KQED,KQED FM,California Report Daily News,San Francisco,California</itunes:keywords>
+      <itunes:duration>8:39</itunes:duration>
+      <itunes:explicit>no</itunes:explicit>
+      <enclosure url="http://podcastdownload.npr.org/anon.npr-podcasts/podcast/151/510005/148681822/KQED_148681822.mp3" length="4159197" type="audio/mpeg"/>
+      <nprml:organization orgId="151" orgAbbr="KQED">
+        <nprml:name>KQED-FM</nprml:name>
+        <nprml:website>http://www.kqed.org/radio/</nprml:website>
+      </nprml:organization>
+    </item>
+  </channel>
+</rss>
+
+
+<!--  Burned on demand at 2012-03-20 21:26:46-->
+
+<!-- LIVE -->

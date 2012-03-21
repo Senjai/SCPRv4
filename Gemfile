@@ -51,6 +51,7 @@ group :test do
   gem 'capybara' # Acceptance/Integration testing
   gem 'shoulda-matchers' # For quickly writing common tests
   gem 'chronic' # useful time parsing from human-readable formats
+  gem 'fakeweb'
 end
 
 group :worker do
