@@ -25,7 +25,7 @@ class scpr.SocialTools
         
         fburl:      "http://graph.facebook.com/"
         twiturl:    "http://urls.api.twitter.com/1/urls/count.json"
-        disqurl:    "http://kpcc.disqussssss.com/count.js?q=1&"
+        disqurl:    "http://kpcc.disqus.com/count.js?q=1&"
         
         no_comments: "Add your comments"
         comments:    "Comments (<%= count %>)"
