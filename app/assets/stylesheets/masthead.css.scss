@@ -78,9 +78,15 @@ nav.utils ul {
 	@include text-utility();
 	display:block;
 	float:right;
+	margin:0;
 	li {
 		@include nav-horiz();
 		border-right:1px solid #e9e9e9;
+		&.username {
+			a {
+				display:inline;
+			}
+		}
 		&:last-child {
 			border-right:none;
 		}
