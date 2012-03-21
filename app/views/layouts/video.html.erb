@@ -4,6 +4,9 @@
 	<title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
 	<%= render "shared/header/header_js" %>
 	<%= render "shared/header/opengraph" %>
+	<script language="JavaScript">
+	  GA_googleAddAttr("section", "video");
+	</script>
 	<%= csrf_meta_tags %>
 </head>
 <body class="dark-theme" id="multimedia">
@@ -12,18 +15,21 @@
 
 <div id="main" class="container">
 	<div class="videos-overlay">
-		<div class="row">
-			<div class="span1">
-				<button class="arrow left" id="next-page" data-page="">&nbsp;</button>
+		<div class="inner-container">
+			<div class="dark-modal-arrow">&nbsp;</div>
+			<div class="row">
+				<div class="span1">
+					<button class="arrow left" id="next-page" data-page="">&nbsp;</button>
+				</div>
+				<div class="list span10">
+					<%# This is populated via ajax from videos.js.coffee %>
+				</div>
+				<div class="span1">
+					<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
+				</div>
 			</div>
-			<div class="list span10">
-				<%# This is populated via ajax from videos.js.coffee %>
-			</div>
-			<div class="span1">
-				<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
-			</div>
-		</div>
-		<div class="pagination">&nbsp;</div>
+			<div class="pagination">&nbsp;</div>
+		</div> <!-- inner-container -->
 	</div> <!-- .videos-overlay -->
 	
 	<div class="row">
