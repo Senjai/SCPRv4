@@ -21,6 +21,8 @@ class scpr.SocialTools
         disqfinder: ".social_disq"
         count:      ".count"
         
+        gaq:         "_gaq"
+        
         fburl:      "http://graph.facebook.com/"
         twiturl:    "http://urls.api.twitter.com/1/urls/count.json"
         disqurl:    "http://kpcc.disqus.com/count.js?q=1&"
@@ -33,13 +35,21 @@ class scpr.SocialTools
                     
         # look for facebook elements so that we can fetch counts and add functionality
         @fbelements = ($ el for el in $ @options.fbfinder)
+        @fbTimeout = null
 
         # look for twitter elements
         @twit_elements = ($ el for el in $ @options.twitfinder)
+        @twitTimeout = null
         
         # look for disqus elements
         @disq_elements = ($ el for el in $ @options.disqfinder)
         @disqPending = false
+        @disqTimeout = null
+        
+        # -- look for google analytics -- #
+        @gaq = null
+        if window[@options.gaq]
+            @gaq = window[@options.gaq]
             
         if @fbelements.length > 0 
             @_getFbCounts()
@@ -89,9 +99,23 @@ class scpr.SocialTools
                     
         $.ajax "#{@options.disqurl}#{keys.join('&')}", dataType: "script"
         
-        @disqPending = true
+        # set a timeout for signalling bad load
+        @disqTimeout = setTimeout (=> @_signalDisqusLoadFailure), 5000
+        @disqPending = Number(new Date)
+        
+        true
         
     _displayDisqusCounts: (res) ->
+        # mark this disqus session as loaded
+        clearTimeout @disqTimeout
+        @disqTimeout = null
+        
+        # how long did the load take?
+        loadtime = Number(new Date) - @disqPending
+        console.log "disqus counts load took #{loadtime/1000} seconds"
+        @gaq?.push ['_trackEvent','SocialTools','Disqus Load','',loadtime,true]
+        
+        # handle comment counts on the page
         if res.counts?
             _(res.counts).each (v) =>
                 if (obj = @disqCache[ v.uid ])
@@ -106,6 +130,10 @@ class scpr.SocialTools
             @disqPending = false
             
             true
+            
+    _signalDisqusLoadFailure: ->
+        console.log "failed to load disqus counts in 5 seconds."
+        @gaq?.push ['_trackEvent','SocialTools','Disqus Failure',String(new Date),0,true]
         
     #----------
         
@@ -113,25 +141,61 @@ class scpr.SocialTools
         # collect the element urls
         @ids = (el.attr("data-url") for el in @fbelements)
         
+        # set a timeout for signalling bad load
+        @fbTimeout = setTimeout (=> @_signalFbLoadFailure), 5000
+        @fbPending = Number(new Date)
+        
         # fire an async request 
         $.getJSON @options.fburl, { ids: @ids.join(',') }, (res) =>
+            # note load success
+            clearTimeout @fbTimeout
+            @fbTimeout = null
+            loadtime = Number(new Date) - @fbPending
+            console.log "fb counts load took #{loadtime/1000} seconds"
+            @gaq?.push ['_trackEvent','SocialTools','Facebook Load','',loadtime,true]
+            
+            # fill in our numbers
             for el in @fbelements
                 if fbobj = res[ el.attr("data-url") ]
                     count = Number(fbobj.shares||0) + Number(fbobj.likes||0)
                     $(@options.count,el).text count
             
+    _signalFbLoadFailure: ->
+        console.log "failed to load facebook counts in 5 seconds."
+        @gaq?.push ['_trackEvent','SocialTools','Facebook Failure',String(new Date),0,true]
+    
     #----------    
             
     _getTwitCounts: ->
+        if @twit_elements?.length
+            # set our failure timeout
+            @twitTimeout = setTimeout (=> @_signalTwitLoadFailure), 5000
+            @twitPending = Number(new Date)
+            
+            @twitCancel = _.once =>
+                clearTimeout @twitTimeout
+                @twitTimeout = null
+                @twitCancel = null
+                loadtime = Number(new Date) - @twitPending
+                console.log "twit counts load took #{loadtime/1000} seconds"
+                @gaq?.push ['_trackEvent','SocialTools','Twitter Load','',loadtime,true]
+                
         # twitter url requests have to go off one-by-one
         _(@twit_elements).each (el,idx) =>
             # register a global callback for the twitter counter
             window[ "__scprTwit#{idx}" ] = (res) => 
+                # we mark twitter as successful when the first function returns
+                @twitCancel?()
+            
                 if res?.count?
                     $(@options.count,el).text res.count
 
             # fire off as a script request, using the callback to set values
             $.ajax @options.twiturl, dataType: "script", data:{ url: el.attr("data-url"), callback:"__scprTwit#{idx}" }
+            
+    _signalTwitLoadFailure: ->
+        console.log "failed to load twitter counts in 5 seconds."
+        @gaq?.push ['_trackEvent','SocialTools','Twitter Failure',String(new Date),0,true]
             
 #----------
 
