@@ -25,7 +25,7 @@ class scpr.SocialTools
         
         fburl:      "http://graph.facebook.com/"
         twiturl:    "http://urls.api.twitter.com/1/urls/count.json"
-        disqurl:    "http://kpcc.disqus.com/count.js?q=1&"
+        disqurl:    "http://kpcc.disqussssss.com/count.js?q=1&"
         
         no_comments: "Add your comments"
         comments:    "Comments (<%= count %>)"
@@ -100,7 +100,7 @@ class scpr.SocialTools
         $.ajax "#{@options.disqurl}#{keys.join('&')}", dataType: "script"
         
         # set a timeout for signalling bad load
-        @disqTimeout = setTimeout (=> @_signalDisqusLoadFailure), 5000
+        @disqTimeout = setTimeout (=> @_signalDisqusLoadFailure()), 5000
         @disqPending = Number(new Date)
         
         true
@@ -142,7 +142,7 @@ class scpr.SocialTools
         @ids = (el.attr("data-url") for el in @fbelements)
         
         # set a timeout for signalling bad load
-        @fbTimeout = setTimeout (=> @_signalFbLoadFailure), 5000
+        @fbTimeout = setTimeout (=> @_signalFbLoadFailure()), 5000
         @fbPending = Number(new Date)
         
         # fire an async request 
@@ -169,7 +169,7 @@ class scpr.SocialTools
     _getTwitCounts: ->
         if @twit_elements?.length
             # set our failure timeout
-            @twitTimeout = setTimeout (=> @_signalTwitLoadFailure), 5000
+            @twitTimeout = setTimeout (=> @_signalTwitLoadFailure()), 5000
             @twitPending = Number(new Date)
             
             @twitCancel = _.once =>
