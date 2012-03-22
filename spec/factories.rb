@@ -361,12 +361,6 @@ end
 
     after_create do |object, evaluator|
       content_base_associations(object, evaluator)
-      # TODO Figure out a way to share this block between all content base factories
-      # FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: object)
-      # FactoryGirl.create_list(:link, evaluator.link_count.to_i, content: object)
-      # FactoryGirl.create_list(:brel, evaluator.brel_count.to_i, content: object, related: create(evaluator.related_factory))
-      # FactoryGirl.create_list(:frel, evaluator.frel_count.to_i, related: object, content: create(evaluator.related_factory))
-      # FactoryGirl.create(:content_category, content: object, category: create(evaluator.category_type)) if evaluator.category_type.present? && evaluator.with_category
     end
   end
 end

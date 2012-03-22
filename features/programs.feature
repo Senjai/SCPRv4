@@ -7,7 +7,7 @@ Scenario: No Programs
 	Then I should not see any programs
 
 Scenario: See the featured programs on the index page
-	Given a kpcc program with the following attributes:
+	Given kpcc programs with the following attributes:
 		| slug				| title						|
 		| madeleine-brand	| The Madeleine Brand Show	|
 		| airtalk			| Airtalk					|
