@@ -2,6 +2,8 @@
 
 # initialize pickle so that we can cache for mercer
 
+require "rubypython"
+
 # FIXME: Hardcoding production python path for now, but this should be fixed
 if Rails.env == "production"
   RubyPython.start(:python_exe => "/usr/local/python2.7.2/bin/python")
