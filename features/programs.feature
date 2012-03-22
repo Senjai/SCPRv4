@@ -43,8 +43,8 @@ Scenario: View an Other Program's page
 
 Scenario: View cached podcast feed for Other Program
 	Given an other program with the following attributes:
-	 | podcast_url         | rss_url |
-	 | http://podcast.fake |         |
+	 | podcast_url                     | rss_url |
+	 | http://oncentral.org/rss/latest |         |
 
 	And the feeds are cached
 	When I go to the program's page
@@ -53,8 +53,8 @@ Scenario: View cached podcast feed for Other Program
 
 Scenario: View cached RSS feed for Other Program
 	Given an other program with the following attributes:
-	 | podcast_url | rss_url         |
-	 |             | http://rss.fake |
+	 | podcast_url | rss_url                         |
+	 |             | http://oncentral.org/rss/latest |
 
 	And the feeds are cached
 	When I go to the program's page
