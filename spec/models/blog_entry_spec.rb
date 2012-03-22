@@ -6,15 +6,7 @@ describe BlogEntry do
     entry.any? { |e| e.category == nil }.should be_false
   end
   
-  describe "associations" do # TODO move this into content_base_spec
-    it { should have_many :assets }
-    it { should have_many :bylines }
-    it { should have_many :brels }
-    it { should have_many :frels }
-    it { should have_many :related_links }
-    it { should have_many :queries }
-    it { should have_one :content_category }
-    it { should have_one(:category).through(:content_category) }
+  describe "associations" do
     it { should belong_to :blog }
     it { should belong_to :author }
     it { should have_many :tagged }

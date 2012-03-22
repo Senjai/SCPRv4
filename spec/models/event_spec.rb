@@ -1,6 +1,12 @@
 require "spec_helper"
 
 describe Event do  
+  describe "associations" do
+    it { should have_many :assets }
+#    it { should belong_to :enco_audio }
+    it { should have_many :uploaded_audio }
+  end
+  
   describe "#link_path" do
     it "can generate a link_path" do
       event = create :event
@@ -90,6 +96,12 @@ describe Event do
         spon_events.count.should eq 1
         spon_events.first.should eq spon_event
       end
+    end
+  end
+  
+  describe "audio" do
+    it "responds to audio" do
+      build(:event).should respond_to :audio
     end
   end
   

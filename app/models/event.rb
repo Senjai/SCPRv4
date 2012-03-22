@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   
   has_many :assets, :class_name => "ContentAsset", :as => :content
   
-  belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
+#  belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
   has_many :uploaded_audio, :as => "content"
   
   #----------
@@ -46,7 +46,7 @@ class Event < ActiveRecord::Base
     @audio ||= self._get_audio()
   end
   
-  def _get_audio
+  def _get_audio # Do we need to check for ENCO audio for Events?
     # check for ENCO Audio
     audio = []
     
