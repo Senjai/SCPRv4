@@ -43,8 +43,8 @@ Scenario: View an Other Program's page
 
 Scenario: View cached podcast feed for Other Program
 	Given an other program with the following attributes:
-	 | podcast_url                    | rss_url |
-	 | http://fakeweb.fake/podcast |         |
+	 | podcast_url         | rss_url |
+	 | http://podcast.fake |         |
 
 	And the feeds are cached
 	When I go to the program's page
@@ -53,8 +53,8 @@ Scenario: View cached podcast feed for Other Program
 
 Scenario: View cached RSS feed for Other Program
 	Given an other program with the following attributes:
-	 | podcast_url | rss_url                   |
-	 |             | http://fakeweb.fake/rss |
+	 | podcast_url | rss_url         |
+	 |             | http://rss.fake |
 
 	And the feeds are cached
 	When I go to the program's page
@@ -80,8 +80,8 @@ Scenario: See a program's segments
 
 Scenario: See an episodic program's episodes
 	Given a kpcc program with the following attributes:
-	 | display_segments | display_episodes | episode_count |
-	 | 0                | 1                | 2             |
+	 | display_segments | display_episodes | episode_count | episode[asset_count] |
+	 | 0                | 1                | 2             | 1                    |
 	
 	When I go to the program's page
 	Then I should see a list of older episodes below the current episode
@@ -89,8 +89,8 @@ Scenario: See an episodic program's episodes
 	
 Scenario: See an episodic program's current episode
 	Given a kpcc program with the following attributes:
-	 | display_segments | display_episodes | episode_count | episode[segment_count] |
-	 | 0                | 1                | 2             | 2                     |
+	 | display_segments | display_episodes | episode_count | episode[segment_count] | episode[asset_count] |
+	 | 0                | 1                | 2             | 2                      | 1                    |
 
 	When I go to the program's page
 	Then I should see the current episode's information

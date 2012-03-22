@@ -1,9 +1,9 @@
-def content_base_associations(object, eval)
-  FactoryGirl.create_list(:asset, eval.asset_count.to_i, content: object)
-  FactoryGirl.create_list(:link, eval.link_count.to_i, content: object)
-  FactoryGirl.create_list(:brel, eval.brel_count.to_i, content: object)
-  FactoryGirl.create_list(:frel, eval.frel_count.to_i, related: object)
-  FactoryGirl.create(:content_category, content: object, category: FactoryGirl.create(eval.category_type)) if eval.category_type.present?
+def content_base_associations(object, evaluator)
+  FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: object)
+  FactoryGirl.create_list(:link, evaluator.link_count.to_i, content: object)
+  FactoryGirl.create_list(:brel, evaluator.brel_count.to_i, content: object)
+  FactoryGirl.create_list(:frel, evaluator.frel_count.to_i, related: object)
+  FactoryGirl.create(:content_category, content: object, category: FactoryGirl.create(evaluator.category_type)) if evaluator.category_type.present? && evaluator.with_category
 end
 
 FactoryGirl.define do
@@ -56,10 +56,9 @@ FactoryGirl.define do
     ignore { episode_count 0 }
     ignore { segment_count 0 }
     
-    after_create do |kpcc_program, eval|
-      FactoryGirl.create_list(:show_segment, eval.segment_count.to_i, eval.segment.merge!(show: kpcc_program))
-      episodes = FactoryGirl.create_list(:show_episode, eval.episode_count.to_i, eval.episode.merge!(show: kpcc_program))
-      episodes.each { |episode| FactoryGirl.create_list(:show_rundown, eval.segment_count.to_i, episode: episode, segment: create(:show_segment, show: kpcc_program)) }
+    after_create do |kpcc_program, evaluator|
+      FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: kpcc_program))
+      FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: kpcc_program))
     end
   end
   
@@ -99,7 +98,7 @@ FactoryGirl.define do
     is_active true
     is_remote false
     is_news true
-    feed_url "http://feeds.scpr.org/LarryMantleBlog"
+    feed_url "http://oncentral.org/rss/latest"
     custom_url "http://scpr.org" # it's a required field?
     
     factory :news_blog do
@@ -144,8 +143,8 @@ FactoryGirl.define do
     is_published 1
     
     ignore { asset_count 0 }
-    after_create do |event, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count.to_i.to_i, content: event)
+    after_create do |event, evaluator|
+      FactoryGirl.create_list(:asset, evaluator.asset_count.to_i.to_i, content: event)
     end
   end
   
@@ -192,16 +191,17 @@ FactoryGirl.define do
   end
 
 # Related #########################################################
-  factory :related do
-    factory :brel do # "brels" - expects content to be passed in
-      association :related, factory: :show_segment
-    end
-
-    factory :frel do # "frels" - expects related to be passed in
-      association :content, factory: :show_segment
-    end
+factory :related_content, class: Related do
+  factory :brel do # "brels" - needs content
+    flag 0
+    related { |brel| brel.association(:content_shell) } #TODO Need to be able to pass in any type of factory here
   end
-  
+
+  factory :frel do # "frels" - needs related
+    flag 0
+    content { |frel| frel.association(:content_shell) } #TODO Need to be able to pass in any type of factory here
+  end
+end
   
 # Link #########################################################
   factory :link do
@@ -224,6 +224,7 @@ FactoryGirl.define do
     ignore { link_count 0 }
     ignore { brel_count 0 }
     ignore { frel_count 0 }
+    ignore { with_category false }
     status 5
   end
   
@@ -241,10 +242,11 @@ FactoryGirl.define do
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
     sequenced_published_at
     
+    ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
-
-    after_create do |video_shell, eval|
-      content_base_associations(video_shell, eval)
+    
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
   
@@ -265,10 +267,11 @@ FactoryGirl.define do
     comment_count 1
     
     sequenced_published_at
+    ignore { related_factory "content_shell" }
     ignore { category_type :category_news }
     
-    after_create do |news_story, eval|
-      content_base_associations(news_story, eval)
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
 
@@ -285,11 +288,12 @@ FactoryGirl.define do
     sequenced_published_at
     
     ignore { segment_count 0 }
+    ignore { related_factory "content_shell" }
     ignore { category_type nil }
     
-    after_create do |show_episode, eval|
-      content_base_associations(show_episode, eval)
-      FactoryGirl.create_list(:show_rundown, eval.segment_count.to_i, episode: show_episode, segment: create(:show_segment))
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
+      FactoryGirl.create_list(:show_rundown, evaluator.segment_count.to_i, episode: object, segment: FactoryGirl.create(:segment, show: object.show))
     end
   end
 
@@ -309,10 +313,11 @@ FactoryGirl.define do
     enco_number 999
 
     sequenced_published_at
+    ignore { related_factory "content_shell" }
     ignore { category_type :category_news }
     
-    after_create do |show_segment, eval|
-      content_base_associations(show_segment, eval)
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
 
@@ -331,10 +336,11 @@ FactoryGirl.define do
     comment_count 1
 
     sequenced_published_at
+    ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
     
-    after_create do |blog_entry, eval|
-      content_base_associations(blog_entry, eval)
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
 
@@ -343,17 +349,24 @@ FactoryGirl.define do
   factory :content_shell do
     content_base
     comment_count 2
-    headline "This is some outside Content"
+    sequence(:headline) { |n| "This is some outside Content #{n}" }
     byline "Some Reporter"
     site "blogdowntown"
-    _teaser "This is a teaser for the content"
+    sequence(:_teaser) { |n| "This is a teaser for the content #{n}" }
     url "http://blogdowntown.com/2011/11/6494-green-paint-welcomes-cyclists-to-a-reprioritized"
     
     sequence(:pub_at) { |n| Time.now + 60*60*n }
+    ignore { related_factory "video_shell" }
     ignore { category_type :category_news }
 
-    after_create do |content_shell, eval|
-      content_base_associations(content_shell, eval)
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
+      # TODO Figure out a way to share this block between all content base factories
+      # FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: object)
+      # FactoryGirl.create_list(:link, evaluator.link_count.to_i, content: object)
+      # FactoryGirl.create_list(:brel, evaluator.brel_count.to_i, content: object, related: create(evaluator.related_factory))
+      # FactoryGirl.create_list(:frel, evaluator.frel_count.to_i, related: object, content: create(evaluator.related_factory))
+      # FactoryGirl.create(:content_category, content: object, category: create(evaluator.category_type)) if evaluator.category_type.present? && evaluator.with_category
     end
   end
 end

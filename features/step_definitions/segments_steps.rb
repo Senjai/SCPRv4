@@ -15,20 +15,16 @@ end
 
 
 #### Finders
-Then /^I should see (?:each|the) segment's primary asset$/ do
-  puts "segments: #{ShowSegment.count}"
-  puts "frels: #{ShowSegment.last.frels.count}"
-  puts "brels: #{ShowSegment.last.brels.count}"
-  puts "links: #{ShowSegment.last.related_links.count}"
+Then /^I should see each segment's primary asset$/ do
   page.should have_css ".teaser .contentasset img", count: ShowSegment.count
+end
+
+Then /^I should see the segment's primary asset$/ do
+  page.should have_css ".segment .contentasset img", count: 1
 end
 
 Then /^I should see the segment's information$/ do
   page.find("article.segment h1").should have_content ShowSegment.last.headline
-end
-
-Then /^I should see article meta for the segment$/ do
-  page.should have_css ".article-meta", count: 1
 end
 
 Then /^I should see a list of that program's segments$/ do
@@ -51,8 +47,8 @@ end
 
 
 #### Routing
-When /^I go to that segment's page$/ do
-  segment = ShowSegment.last
+When /^I go to (?:that|the|a) segment's page$/ do
+  segment = ShowSegment.all[rand(ShowSegment.count)]
   visit segment.link_path
   current_path.should eq segment.link_path
 end

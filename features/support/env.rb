@@ -5,8 +5,8 @@ require 'cucumber/thinking_sphinx/external_world'
 require 'chronic'
 require 'database_cleaner'
 require 'database_cleaner/cucumber'
-require "#{Rails.root}/spec/support/xml_fixtures"
-include XMLFixtures
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+include RemoteStubs
 include FactoryGirl::Syntax::Methods
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
@@ -62,6 +62,6 @@ Before do
   FactoryGirl.reload
 end
 
-After do |scenario|
+After do
   DatabaseCleaner.clean
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe BlogEntry do
   it "responds to category" do
-    entry = create_list :blog_entry, 3
+    entry = create_list :blog_entry, 3, with_category: true
     entry.any? { |e| e.category == nil }.should be_false
   end
   

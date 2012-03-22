@@ -8,7 +8,7 @@ Background:
 Scenario: View a segment
 	When I go to that segment's page
 	Then I should see the segment's information 
-	And I should see article meta for the segment
+	And I should see article meta
 	And I should see a comments section
 	And I should see the segment's primary asset
 	

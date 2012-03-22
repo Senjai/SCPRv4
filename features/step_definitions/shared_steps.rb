@@ -15,6 +15,9 @@ Then /^I should see static content$/ do
   page.should have_css ".static-content"
 end
 
+Then /^I should see article meta$/ do
+  page.should have_css ".article-meta"
+end
 
 #### Routing
 When /^I go to the home page$/ do

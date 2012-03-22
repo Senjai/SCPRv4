@@ -72,8 +72,24 @@ Then /^I should see each event's primary asset$/ do
   page.should have_css ".upcoming-events .event .contentasset img", count: @events.count
 end
 
+Then /^I should see the event's information$/ do
+  page.find(".event").should have_content Event.last.title
+end
+
 
 #### Routing
 When /^I go to the events page$/ do
   visit events_path
+end
+
+When /^I go to (?:that|the|an) event's page$/ do
+  visit Event.last.link_path
+end
+
+When /^I go to an event page for an event that doesn't exist$/ do
+  visit event_path(year: 1, month: 2, day: 3, slug: "doesnt-exist")
+end
+
+Then /^I should be redirected to the events page$/ do
+  current_path.should eq events_path
 end

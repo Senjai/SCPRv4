@@ -1,7 +1,7 @@
 module ContentBaseHelpers
   def make_content(num=5) # Creates `num` of each ContentBase subclass for helping with Sphinx tests
     ContentBase.content_classes.each do |klass|
-      FactoryGirl.create_list(klass.to_s.underscore.to_sym, num.to_i)
+      FactoryGirl.create_list(klass.to_s.underscore.to_sym, num.to_i, with_category: true)
     end
   end
 end

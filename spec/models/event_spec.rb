@@ -94,9 +94,21 @@ describe Event do
   end
   
   describe "asset" do
-    it "can have an asset" do
+    it "can have an asset" do # TODO Stub the assethost requests
       event = create :event, asset_count: 1
       event.assets.first.asset.should be_present
+    end
+  end
+  
+  describe "#remote_link_path" do
+    it "can generate a remote_link_path" do
+      event = create :event
+      event.remote_link_path.should_not be_nil
+    end
+
+    it "points to scpr.org" do
+      event = create :event
+      event.remote_link_path.should match "http://www.scpr.org"
     end
   end
 end

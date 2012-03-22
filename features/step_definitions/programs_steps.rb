@@ -60,9 +60,6 @@ end
 
 #### Utility
 Given /^the feeds are cached$/ do
-  FakeWeb.register_uri(:any, "http://fakeweb.fake/rss", body: load_xml_fixture_file("rss.xml")) # stub the feed response - speed up tests & don't hit the poor servers 800 times/day with the tests.
-  FakeWeb.register_uri(:any, "http://fakeweb.fake/podcast", body: load_xml_fixture_file("podcast.xml"))
-  
   @program.cache.should be_true
   Rails.cache.fetch("ext_program:#{@program.slug}:podcast").should_not be_blank if @program.podcast_url.present?
   Rails.cache.fetch("ext_program:#{@program.slug}:rss").should_not be_blank if @program.rss_url.present?
