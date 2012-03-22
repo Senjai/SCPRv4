@@ -16,7 +16,8 @@ class EventsController < ApplicationController
   end
   
   def show
-    # will handle a single event
+    @event = Event.find_by_slug(params[:slug])
+    redirect_to events_path if @event.blank?
   end
   
   def forum

@@ -1,0 +1,20 @@
+<div class="event">
+	<div class="row">
+		<div class="span2">
+			<div class="article-meta">
+				<div class="date">
+					<p><%= format_date @event.starts_at, format: :full_date %></p>
+				</div>
+				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side" } %> <%# To be replaced with a better solution %>
+				<%= render 'shared/cwidgets/comment_count', content: @event, cssClass: "side" %> <%# To be replaced with a better solution %>
+				<%= render "shared/cwidgets/audio", content: @event %> <%# To be replaced with a better solution %>
+			</div>
+			
+		</div>
+		<div class="span6">
+			<h1 class="story-headline"><%= link_to @event.title, @event.link_path %></h1>
+			<%= render_asset @event, "blog" %>
+			<%= @event.description.html_safe %>
+		</div>
+	</div>
+</div>

@@ -20,8 +20,8 @@
 			<% if content_for?(:sidebar) %> 
 				<%= yield(:sidebar) %>
 			<% else %>
+				<%= yield :section_nav %>
 				<div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div>
-
 				<%= yield :sidebartop %>
 
 				<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>

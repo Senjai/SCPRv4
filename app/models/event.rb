@@ -4,6 +4,9 @@ class Event < ActiveRecord::Base
   
   has_many :assets, :class_name => "ContentAsset", :as => :content
   
+  belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
+  has_many :uploaded_audio, :as => "content"
+  
   #----------
 
   scope :published, where(:is_published => true)
@@ -18,16 +21,6 @@ class Event < ActiveRecord::Base
   
   #----------
   
-  def teaser # TODO Need a teaser column in mercer for events
-    description.blank? ? "#{title} at #{location_name}" : description.scan(/(?:\w+\s)/)[0..20].join(" ") + "..."
-  end
-  
-  #----------
-  
-  def obj_key
-    "events/event:#{self.id}"
-  end
-  
   def link_path(options={})
     Rails.application.routes.url_helpers.event_path(options.merge!({
       :year => self.starts_at.year, 
@@ -36,5 +29,45 @@ class Event < ActiveRecord::Base
       :slug => self.slug,
       :trailing_slash => true
     }))
+  end
+  
+  ### ContentBase methods
+  
+  def teaser # TODO Need a teaser column in mercer for events
+    description.blank? ? "#{title} at #{location_name}" : description.scan(/(?:\w+\s)/)[0..20].join(" ") + "..."
+  end
+  
+  def headline
+    title
+  end
+  
+  
+  def audio
+    @audio ||= self._get_audio()
+  end
+  
+  def _get_audio
+    # check for ENCO Audio
+    audio = []
+    
+    if self.respond_to?(:enco_audio)
+      audio << self.enco_audio
+    end
+    
+    if self.respond_to?(:uploaded_audio)
+      audio << self.uploaded_audio
+    end
+    
+    return audio.flatten.compact
+  end
+  
+  
+  def remote_link_path
+    "http://www.scpr.org#{self.link_path}"
+  end
+  
+  
+  def obj_key
+    "events/event:#{self.id}"
   end
 end
