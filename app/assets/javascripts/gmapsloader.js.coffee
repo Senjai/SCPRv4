@@ -10,6 +10,7 @@ class scpr.GMapsLoader
         address: "data-address"
         mapId: "data-map-id"
         defaultMapId: "#map-canvas"
+        errorsDiv: "#map-errors"
         errorMsg: "There was a problem loading the map. Please go to http://maps.google.com and search from there."
         zoom: 12
         # The defaults below point (approximately) to the Crawford Family Forum, just so the map has something relevantto point to while it's geocoding the event address
@@ -29,8 +30,7 @@ class scpr.GMapsLoader
                     mapElement = $(@options.defaultMapId)
                     return false if mapElement.html().trim() # don't do anything if the element already has a map in it
                 
-                if mapElement
-                    @mapInit mapElement[0], $(event.target).attr(@options.address)
+                @mapInit mapElement, $(event.target).attr(@options.address)
 
 
     mapInit: (mapElement, address) ->
@@ -47,13 +47,13 @@ class scpr.GMapsLoader
            center: new google.maps.LatLng(@options.defaultLat, @options.defaultLong)
            mapTypeId: google.maps.MapTypeId.ROADMAP
     
-        map = new google.maps.Map(mapElement, mapOpts)
+        map = new google.maps.Map(mapElement[0], mapOpts)
         @getLatLong(address, map)
 
 
     getLatLong: (address, map) ->
         geocoder = new google.maps.Geocoder()
-        geocoder.geocode { 'address': address }, (results, status) ->
+        geocoder.geocode { 'address': address }, (results, status) =>
              if status == google.maps.GeocoderStatus.OK
                 map.setCenter(results[0].geometry.location)
                 marker = new google.maps.Marker
@@ -61,9 +61,9 @@ class scpr.GMapsLoader
                     position: results[0].geometry.location
          
               else
-                @notifyError
+                @notifyError("Sorry, we couldn't find the location of this event.")
     
 
-    notifyError: ->
-        $(map).append @options.errorMsg
+    notifyError: (msg=@options.errorMsg) ->
+        $(@options.errorsDiv).append msg
 
