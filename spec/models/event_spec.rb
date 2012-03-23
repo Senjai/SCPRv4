@@ -64,7 +64,7 @@ describe Event do
     end
     
     it "should have plus-signs if there are spaces in the address" do
-      event = build :event, address: "474 South Raymond"
+      event = build :event, address_1: "474 South Raymond"
       event.url_safe_address.should match /\+/
     end
   end
