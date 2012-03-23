@@ -34,7 +34,7 @@
 					<div class="span3">
 						<div class="location-text">Location</div>
 						<ul class="address">
-							<li><span class="blue"><%= @event.location_name %></span></li>
+							<li><span class="blue"><%= @event.location_link.present? ? link_to(@event.location_name, @event.location_link) : @event.location_name %></span></li>
 							<% if @event.address_1.present? %><li><%= raw @event.address_1 %></li><% end %>
 							<% if @event.address_2.present? %><li><%= raw @event.address_2 %></li><% end %>
 							<li><%= "#{@event.city}," if @event.city.present? %> <%= "#{@event.state} #{@event.zip_code}" %></li>
@@ -57,7 +57,31 @@
 			<p><%= raw @event.description %></p>
 			<br style="clear: both" />
 			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
-			<%= comments_for @event %>
 		</div>
+	</div>
+</div>
+
+<% if @more_events.present? %>
+	<div class="more-events">
+		<div class="row ">
+			<div class="span2">
+				<h6>More Events at the Crawford Family Forum</h6>
+			</div>
+			<div class="span3">
+				<%= render 'small_event', event: @more_events.first %>
+			</div>
+			<div class="span3">
+				<%= render 'small_event', event: @more_events.last %>
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<div class="row">
+	<div class="span2">
+		<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
+	</div>
+	<div class="span6">
+		<%= comments_for @event, header: false %>
 	</div>
 </div>

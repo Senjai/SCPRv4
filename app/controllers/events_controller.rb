@@ -16,8 +16,11 @@ class EventsController < ApplicationController
   end
   
   def show
-    @event = Event.find_by_slug(params[:slug])
-    redirect_to events_path if @event.blank?
+    if @event = Event.find_by_slug(params[:slug])
+      @more_events = Event.forum.upcoming.where("id != ?", @event.id).limit(2)
+    else
+      redirect_to events_path
+    end
   end
   
   def forum

@@ -1,5 +1,5 @@
 <div id="comments" class="comments">
-	<h3 class="head">Comments</h3>
+	<% if header %><h3 class="head">Comments</h3><% end %>
 	<!-- disqus comments -->
 	<div id="disqus_thread" class="<%= cssClass ||= nil %>"></div>
 	<script type="text/javascript">

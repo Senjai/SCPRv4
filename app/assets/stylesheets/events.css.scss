@@ -109,6 +109,18 @@ span.fake-link {
 	}
 }
 
+.more-events {
+	margin-bottom: 10px;
+	h6 {
+		font-size: 12px;
+		margin-top: 5px;
+	}
+	
+	h5 a {
+		color: $black;
+	}
+}
+
 .events {
 	.upcoming-events {
 		.event {

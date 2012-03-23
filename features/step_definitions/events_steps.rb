@@ -81,7 +81,6 @@ Then /^I should not see an RSVP link$/ do
   page.should_not have_css "#rsvp-btn"
 end
 
-
 #### Routing
 When /^I go to the events page$/ do
   visit events_path

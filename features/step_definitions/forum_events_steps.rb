@@ -47,6 +47,16 @@ Then /^I should only see forum events$/ do
   end
 end
 
+Then /^I should see (\d+) more upcoming events listed$/ do |num|
+  page.should have_css ".more-events .event", count: num.to_i
+end
+
+Then /^that event should not be in the upcoming events$/ do
+  find(".more-events").should_not have_content @event.title
+end
+
+
+
 #### Assertions
 Then /^the events should be ordered by "([^"]*)"$/ do |order|
   pending "Need to figure this one out"

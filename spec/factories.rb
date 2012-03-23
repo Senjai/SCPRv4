@@ -118,6 +118,7 @@ FactoryGirl.define do
 
 # Event #########################################################
   factory :event do
+    sequence(:id, 1) # Not auto-incrementing in database?
     sequence(:title) { |n| "A Very Special Event #{n}" }
     slug { title.parameterize }
     description "This is a very special event."

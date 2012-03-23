@@ -89,5 +89,12 @@ Scenario: Do not show map
 	Then I should not see a map
 	And I should not see a link to open the map
 
+Scenario: See more upcoming events
+	Given an event with the following attributes:
+	 | etype | starts_at           |
+	 | comm  | 30 minutes from now |
 
+	When I go to that event's page
+	Then I should see 2 more upcoming events listed
+	And that event should not be in the upcoming events
 	
