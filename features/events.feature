@@ -45,7 +45,45 @@ Scenario: View an individual event
 	When I go to that event's page
 	Then I should see the event's information
 	And I should see article meta
+	And I should see a comments section
 
 Scenario: Visit a page for an event that doesn't exist
 	When I go to an event page for an event that doesn't exist
 	Then I should be redirected to the events page
+
+Scenario: RSVP link
+	Given an event with the following attributes:
+	 | rsvp_link       |
+	 | http://scpr.org |
+
+	When I go to that event's page
+	Then I should see an RSVP link
+	
+Scenario: No RSVP link
+	Given an event with the following attributes:
+	 | rsvp_link |
+	 |           |
+	
+	When I go to that event's page
+	Then I should not see an RSVP link
+
+Scenario: Show Map
+	Given an event with the following attributes:
+	 | show_map |
+	 | 1        |
+	
+	When I go to that event's page
+	Then I should see a map
+	And I should see a link to open the map
+
+Scenario: Do not show map
+	Given an event with the following attributes:
+	 | show_map |
+	 | 0        |
+	
+	When I go to that event's page
+	Then I should not see a map
+	And I should not see a link to open the map
+
+
+	

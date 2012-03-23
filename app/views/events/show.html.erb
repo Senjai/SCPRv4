@@ -1,20 +1,68 @@
+<% content_for :title_bar do %>
+<div class="page-header">
+	<div class="row">
+			<div class="span8">
+				<h1 class="page-title"><%= link_to "Events", events_path %></h1>
+			</div>
+			<div class="span4">
+				<h3>In this section</h3>
+			</div>
+		</div>
+	</div>
+<% end %>
+
 <div class="event">
 	<div class="row">
 		<div class="span2">
 			<div class="article-meta">
-				<div class="date">
-					<p><%= format_date @event.starts_at, format: :full_date %></p>
-				</div>
 				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side" } %> <%# To be replaced with a better solution %>
-				<%= render 'shared/cwidgets/comment_count', content: @event, cssClass: "side" %> <%# To be replaced with a better solution %>
+				<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
 				<%= render "shared/cwidgets/audio", content: @event %> <%# To be replaced with a better solution %>
 			</div>
 			
 		</div>
 		<div class="span6">
-			<h1 class="story-headline"><%= link_to @event.title, @event.link_path %></h1>
+			<h1 class="story-headline event-headline"><%= link_to @event.title, @event.link_path %></h1>
+			<div class="event-details">
+				<div class="row">
+					<div class="span3">
+						<%= event_link @event %><br />
+						<%= link_to "RSVP for this event", @event.rsvp_link, id: "rsvp-btn", class: "btn primary" if @event.rsvp_link.present? %>
+					</div>
+					<div class="span3">
+						<div class="location-text">Location</div>
+						<ul class="address">
+							<li><span class="blue"><%= @event.location_name %></span></li>
+							<% if @event.address_1.present? %><li><%= raw @event.address_1 %></li><% end %>
+							<% if @event.address_2.present? %><li><%= raw @event.address_2 %></li><% end %>
+							<li><%= "#{@event.city}," if @event.city.present? %> <%= "#{@event.state} #{@event.zip_code}" %></li>
+							<% if @event.show_map %>
+								<li class="modal-container">
+									<span class="fake-link bold map-link modal-toggler">Map &amp; Directions</span>
+									<%= modal(cssClass: "light google-maps") do %>
+										<%# content_cache("gmaps:event:#{@event.obj_key}") do %>
+											<%# register_content @event %>
+											<div class="google-map">
+												<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%=@event.url_safe_address%>+&amp;aq=&amp;sll=&amp;sspn=0.007463,0.016512&amp;ie=UTF8&amp;hq=&amp;hnear=<%=@event.city%>&amp;ll=<%=@event.lat_long%>&amp;spn=0.007468,0.016512&amp;t=m&amp;z=14&amp;output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=474+South+Raymond+Avenue+Pasadena,+CA+91105+&amp;aq=&amp;sll=34.198815,-118.4225&amp;sspn=0.007463,0.016512&amp;ie=UTF8&amp;hq=&amp;hnear=474+S+Raymond+Ave,+Pasadena,+California+91105&amp;ll=34.13724,-118.148703&amp;spn=0.007468,0.016512&amp;t=m&amp;z=14" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+											</div>
+										<%# end %>
+									<% end %>
+								</li>
+							<% end %>
+
+						</ul>						
+					</div>
+				</div>
+			</div>
 			<%= render_asset @event, "blog" %>
-			<%= @event.description.html_safe %>
+			<p><%= raw @event.description %></p>
+			<br style="clear: both" />
+			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom" } %> <%# TODO Replace this with a better solution %>
+			<%= comments_for @event %>
 		</div>
 	</div>
 </div>
+
+<% content_for :footer do %>
+<script  src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAASoHQI_jw0vKvKHVPGPNJpxSGz8Wd9fMBu6LRnr5fKcCD4nDnGxRtnRr8EQvJUDkdZcQbpWnRdmG0LQ" type="text/javascript"></script>
+<% end %>

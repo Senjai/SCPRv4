@@ -21,6 +21,34 @@ class Event < ActiveRecord::Base
   
   #----------
   
+  # Address and Google Maps stuff.
+  # TODO Move this out of Events, into its own class.
+  
+  def gmaps_json
+    if inline_address.present?
+      puts "... fetching JSON from Google Maps"
+      raw_json = Net::HTTP.get(URI.parse("http://maps.googleapis.com/maps/api/geocode/json?address=#{url_safe_address}&sensor=false")) # TODO Pass in some informatiomn from the user's device to enable sensor or not
+      JSON.parse(raw_json)
+    end
+  end
+  
+  def lat_long
+    json = gmaps_json
+    if json.present? and json["status"] == "OK"
+      "#{json["results"][0]["geometry"]["location"]["lat"]},#{json["results"][0]["geometry"]["location"]["lng"]}" # TODO This is fragile, dependent upon the format & order of the JSON response from google maps
+    end
+  end
+  
+  def url_safe_address
+    inline_address.gsub(/\s/, "+") # TODO Figure out what else we need to gsub - https://developers.google.com/maps/documentation/webservices/#BuildingURLs
+  end
+  
+  def inline_address(separator=", ")
+    [address_1, address_2, city, state, zip_code].reject { |element| element.blank? }.join(separator)
+  end
+  
+  #----------
+  
   def link_path(options={})
     Rails.application.routes.url_helpers.event_path(options.merge!({
       :year => self.starts_at.year, 
@@ -30,6 +58,7 @@ class Event < ActiveRecord::Base
       :trailing_slash => true
     }))
   end
+  
   
   ### ContentBase methods
   
@@ -41,6 +70,9 @@ class Event < ActiveRecord::Base
     title
   end
   
+  def has_comments?
+    true
+  end
   
   def audio
     @audio ||= self._get_audio()
