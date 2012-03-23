@@ -68,40 +68,42 @@ span.fake-link {
 		margin-bottom: 10px;
 	}
 	
-	.event-details {
-		padding-top: 5px;
-		margin-bottom: 10px;
-		border-top: 1px solid $grayLighter;
-		border-bottom: 1px solid $grayLighter;
-		a {
-			margin: 5px 0;
-		}
-		.location-text {
-			@include font-heading($size: 12px, $lineHeight: 14px);
-			display: inline-block;
-			vertical-align: top;
-			margin-right: 10px;
-			color: $gray;
-		}
-		ul.address {
-			padding: 0;
-			margin: 0;
-			display: inline-block;
-			li {
-				@include font-heading($size: 14px, $weight: 250, $lineHeight: 14px);
-				list-style: none;
+	&.event-detail {
+		.event-details {
+			padding-top: 5px;
+			margin-bottom: 10px;
+			border-top: 1px solid $grayLighter;
+			border-bottom: 1px solid $grayLighter;
+			a {
+				margin: 5px 0;
 			}
+			.location-text {
+				@include font-heading($size: 12px, $lineHeight: 14px);
+				display: inline-block;
+				vertical-align: top;
+				margin-right: 10px;
+				color: $gray;
+			}
+			ul.address {
+				padding: 0;
+				margin: 0;
+				display: inline-block;
+				li {
+					@include font-heading($size: 14px, $weight: 250, $lineHeight: 14px);
+					list-style: none;
+				}
 
-			.blue {
-				color: $blue;
+				.blue {
+					color: $blue;
+				}
 			}
-		}
 		
-		.map-link {
-			background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 6px;
-			padding-right:15px;
-			&:hover {
-				background-position:right -38px;
+			.map-link {
+				background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 6px;
+				padding-right:15px;
+				&:hover {
+					background-position:right -38px;
+				}
 			}
 		}
 	}
