@@ -205,5 +205,9 @@ describe ApplicationHelper do
       format_date(@date, with: "%D").should match "12/31/69"
     end
   end
+  
+  describe "modal" do
+    pending
+  end
 
 end

@@ -17,6 +17,7 @@
 
 //= require audio
 //= require video
+//= require modal
 //= require listen_live
 //= require megamenu
 //= require smart_time

@@ -325,4 +325,9 @@ module ApplicationHelper
     options.reverse_merge!(class: "event-link")
     return link_to(format_date(event.starts_at, format: :event), event.link_path, options)
   end
+  
+  def modal(options={}, &block)
+    content_for :modal_content, capture(&block)
+    render 'shared/modal_shell', options.reverse_merge!(cssClass: "", id: "")
+  end
 end
