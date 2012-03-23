@@ -1,4 +1,4 @@
-<% find_gmaps %>
+<% watch_gmaps %>
 
 <% content_for :title_bar do %>
 <div class="page-header">
@@ -17,7 +17,7 @@
 	<div class="row">
 		<div class="span2">
 			<div class="article-meta">
-				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side" } %> <%# To be replaced with a better solution %>
+				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side", title: "event" } %> <%# To be replaced with a better solution %>
 				<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
 				<%= render "shared/cwidgets/audio", content: @event %> <%# To be replaced with a better solution %>
 			</div>
@@ -29,7 +29,7 @@
 				<div class="row">
 					<div class="span3">
 						<%= event_link @event %><br />
-						<%= link_to "RSVP for this event", @event.rsvp_link, id: "rsvp-btn", class: "btn primary" if @event.rsvp_link.present? %>
+						<%= link_to("RSVP for this event", @event.rsvp_link, id: "rsvp-btn", class: "btn primary") if @event.rsvp_link.present? %>
 					</div>
 					<div class="span3">
 						<div class="location-text">Location</div>
@@ -41,9 +41,9 @@
 							<% if @event.show_map %>
 								<li class="modal-container">									
 									<span class="fake-link bold map-link modal-toggler" data-address="<%= @event.url_safe_address %>">Map &amp; Directions</span>
-									<%= modal(cssClass: "light google-maps") do %>
+									<%= modal("google-maps") do %>
 										<h5 class="address"><%= @event.inline_address %></h5>
-										<div class="google-map" id="map-canvas"></div>
+										<div class="google-map map-canvas" id="map-canvas"></div>
 										<div id="map-errors">&nbsp;</div>
 									<% end %>
 								</li>
@@ -56,7 +56,7 @@
 			<%= render_asset @event, "blog" %>
 			<p><%= raw @event.description %></p>
 			<br style="clear: both" />
-			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom" } %> <%# TODO Replace this with a better solution %>
+			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
 			<%= comments_for @event %>
 		</div>
 	</div>

@@ -207,11 +207,52 @@ describe ApplicationHelper do
   end
   
   describe "modal" do
-    pending
+    it "renders the modal shell partial" do
+      helper.modal("anything") { "content" }.should_not be_blank
+    end
+    
+    it "raises an error if no style is passed in" do
+      expect { helper.modal() { "content" } }.to raise_error ArgumentError
+    end
+    
+    it "raises an error if a block is not given" do
+      expect { helper.modal("anything") }.to raise_error
+    end
+    
+    it "passes in the style" do
+      helper.modal("awesome-modal") { "content" }.should match /awesome\-modal/
+    end
+    
+    it "makes content_for :modal_content" do
+      helper.modal("anything") { "Hello!" }
+      helper.content_for?(:modal_content).should be_true
+    end
+    
+    it "renders the modal_content block" do
+      helper.modal("anything") { "Hello!" }.should match /Hello!/
+    end
   end
   
-  describe "find_gmaps" do
-    pending
+  describe "watch_gmaps" do
+    it "adds the google maps API script reference to the header" do
+      helper.watch_gmaps
+      helper.content_for(:headerjs).should match /script/
+    end
+    
+    it "finds the google maps API key and uses that in the API script reference" do
+      helper.watch_gmaps
+      helper.content_for(:headerjs).should match API_Keys["google_maps"]
+    end
+    
+    it "adds a GMapsLoader object to the footer js" do
+      helper.watch_gmaps
+      helper.content_for(:footerjss).should match /GMapsLoader/
+    end
+    
+    it "takes options to pass into the GMaps Loader object" do
+      helper.watch_gmaps(zoom: 0)
+      helper.content_for(:footerjss).should match "\"zoom\":0"
+    end
   end
 
 end

@@ -1,5 +1,5 @@
 <div class="sharing-tools <%= options[:cssClass] %> clearfix">
-	<h5>Share this story:</h5>
+	<h5>Share this <%= options[:title] ||= "story" %>:</h5>
 	<ul>
 	    <li class="facebook social_fb" data-url="<%= URI.escape(content.remote_link_path) %>">Facebook (<span class="count">&nbsp;&nbsp;</span>)</a></li>
 	    <li class="twitter social_twit" data-url="<%= URI.escape(content.remote_link_path) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</a></li>

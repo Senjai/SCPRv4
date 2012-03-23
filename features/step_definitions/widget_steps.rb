@@ -13,3 +13,11 @@ end
 Then /^I should see a brightcove player section$/ do
   pending # express the regexp above with the code you wish you had
 end
+
+Then /^the article meta header should say "([^"]*)"$/ do |text|
+  page.find(".article-meta").should have_content "#{text}"
+end
+
+Then /^I should see article meta$/ do
+  page.should have_css ".article-meta"
+end

@@ -3,7 +3,6 @@ require "spec_helper"
 describe Event do  
   describe "associations" do
     it { should have_many :assets }
-#    it { should belong_to :enco_audio }
     it { should have_many :uploaded_audio }
   end
   
@@ -24,39 +23,6 @@ describe Event do
     end
   end
   
-  describe "gmap_json" do
-    it "makes an HTTP request to Google Map's API" do
-      event = build :event, address_1: "123 Fake St.", address_2: "Apt. A", city: "Pasadena", state: "CA", zip_code: "12345"
-      FakeWeb.register_uri(:get, /maps/, body: load_response_fixture_file("gmaps.json"))
-      event.gmaps_json.should_not be_blank
-    end
-    
-    it "returns nil if there is no address information" do
-      event = build :event, address_1: "", address_2: "", city: "", state: "", zip_code: ""
-      event.gmaps_json.should be_nil
-    end
-  end
-  
-  describe "lat_long" do
-    it "returns nil if gmaps_json doesn't return anythiung" do
-      event = build :event
-      event.stub!(:gmaps_json) { nil }
-      event.lat_long.should be_nil
-    end
-    
-    it "returs nil if gmaps returns something besides an 'OK' status" do
-      event = build :event
-      event.stub!(:gmaps_json) { { status: "404" } }
-      event.lat_long.should be_nil
-    end
-    
-    it "returns the latitude and longitude if everything checks out" do
-      event = build :event
-      FakeWeb.register_uri(:get, /maps/, body: load_response_fixture_file("gmaps.json"))
-      event.lat_long.should match /^-?\d+\.\d+,-?\d+\.\d+$/
-    end
-  end
-  
   describe "url_safe_address" do
     it "should not have spaces" do
       event = build :event
@@ -68,7 +34,7 @@ describe Event do
       event.url_safe_address.should match /\+/
     end
   end
-  
+    
   describe "#link_path" do
     it "can generate a link_path" do
       event = create :event

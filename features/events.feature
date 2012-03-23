@@ -1,7 +1,7 @@
 Feature: Events
 
 Background:
-	Given the following events:
+	Given events with the following attributes:
 	 | title         | etype | starts_at     | is_published |
 	 | A Rad Event   | comm  | tomorrow 2pm  | 1            |
 	 | A Cool Event  | comm  | tomorrow 1pm  | 1            |
@@ -41,10 +41,14 @@ Scenario: Pagination
 	And there should be pagination
 
 Scenario: View an individual event
-	Given there is 1 event
+	Given an event with the following attributes:
+	 | title     |
+	 | CFF Event |
+
 	When I go to that event's page
-	Then I should see the event's information
+	Then I should see "CFF Event"
 	And I should see article meta
+	And the article meta header should say "event"
 	And I should see a comments section
 
 Scenario: Visit a page for an event that doesn't exist

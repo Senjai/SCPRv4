@@ -109,27 +109,6 @@ span.fake-link {
 	}
 }
 
-// modal
-.google-maps {
-		@include font-sans-serif($weight:normal, $size:0.95em);
-		color: $grayAlt;
-		padding: 0 0 0 5px;
-		width: 400px;
-		min-height: 350px;
-		left: -250px;
-		top: 26px;
-		
-		.arrow-up {
-			left: 300px !important; // To overide default arrow position
-		}
-		
-		.google-map {
-			margin-top: 20px;
-			width: 350px;
-			height: 350px;
-		}
-}
-
 .events {
 	.upcoming-events {
 		.event {

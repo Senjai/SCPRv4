@@ -326,13 +326,13 @@ module ApplicationHelper
     return link_to(format_date(event.starts_at, format: :event), event.link_path, options)
   end
   
-  def modal(options={}, &block)
-    content_for :modal_content, capture(&block)
-    render 'shared/modal_shell', options.reverse_merge!(cssClass: "", id: "")
+  def modal(cssClass, &block)
+    content_for(:modal_content, capture(&block))
+    render('shared/modal_shell', cssClass: cssClass)
   end
   
-  def find_gmaps
-    content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_Keys["google_maps"]}&sensor=false")
-    content_for :footerjss, "var gmapsLoader = new scpr.GMapsLoader();"
+  def watch_gmaps(options={})
+    content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_Keys["google_maps"]}&sensor=true")
+    content_for :footerjss, "var gmapsLoader = new scpr.GMapsLoader(#{raw options.to_json});".html_safe
   end
 end
