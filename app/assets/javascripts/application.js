@@ -18,6 +18,7 @@
 //= require audio
 //= require video
 //= require modal
+//= require gmapsloader
 //= require listen_live
 //= require megamenu
 //= require smart_time

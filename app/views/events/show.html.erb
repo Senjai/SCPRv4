@@ -1,3 +1,5 @@
+<% find_gmaps %>
+
 <% content_for :title_bar do %>
 <div class="page-header">
 	<div class="row">
@@ -37,15 +39,11 @@
 							<% if @event.address_2.present? %><li><%= raw @event.address_2 %></li><% end %>
 							<li><%= "#{@event.city}," if @event.city.present? %> <%= "#{@event.state} #{@event.zip_code}" %></li>
 							<% if @event.show_map %>
-								<li class="modal-container">
-									<span class="fake-link bold map-link modal-toggler">Map &amp; Directions</span>
+								<li class="modal-container">									
+									<span class="fake-link bold map-link modal-toggler" data-address="<%= @event.url_safe_address %>">Map &amp; Directions</span>
 									<%= modal(cssClass: "light google-maps") do %>
-										<%# content_cache("gmaps:event:#{@event.obj_key}") do %>
-											<%# register_content @event %>
-											<div class="google-map">
-												<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=<%=@event.url_safe_address%>+&amp;aq=&amp;sll=&amp;sspn=0.007463,0.016512&amp;ie=UTF8&amp;hq=&amp;hnear=<%=@event.city%>&amp;ll=<%=@event.lat_long%>&amp;spn=0.007468,0.016512&amp;t=m&amp;z=14&amp;output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=474+South+Raymond+Avenue+Pasadena,+CA+91105+&amp;aq=&amp;sll=34.198815,-118.4225&amp;sspn=0.007463,0.016512&amp;ie=UTF8&amp;hq=&amp;hnear=474+S+Raymond+Ave,+Pasadena,+California+91105&amp;ll=34.13724,-118.148703&amp;spn=0.007468,0.016512&amp;t=m&amp;z=14" style="color:#0000FF;text-align:left">View Larger Map</a></small>
-											</div>
-										<%# end %>
+										<h5 class="address"><%= @event.inline_address %></h5>
+										<div class="google-map" id="map-canvas"></div>
 									<% end %>
 								</li>
 							<% end %>
@@ -62,7 +60,3 @@
 		</div>
 	</div>
 </div>
-
-<% content_for :footer do %>
-<script  src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAASoHQI_jw0vKvKHVPGPNJpxSGz8Wd9fMBu6LRnr5fKcCD4nDnGxRtnRr8EQvJUDkdZcQbpWnRdmG0LQ" type="text/javascript"></script>
-<% end %>

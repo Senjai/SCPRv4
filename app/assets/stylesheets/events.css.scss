@@ -101,7 +101,7 @@ span.fake-link {
 			background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 6px;
 			padding-right:15px;
 			&:hover {
-				background-position:right -39px;
+				background-position:right -38px;
 			}
 		}
 	}
@@ -123,6 +123,8 @@ span.fake-link {
 		
 		.google-map {
 			margin-top: 20px;
+			width: 350px;
+			height: 350px;
 		}
 }
 

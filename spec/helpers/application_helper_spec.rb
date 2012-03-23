@@ -209,5 +209,9 @@ describe ApplicationHelper do
   describe "modal" do
     pending
   end
+  
+  describe "find_gmaps" do
+    pending
+  end
 
 end

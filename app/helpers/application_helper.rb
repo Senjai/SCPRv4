@@ -330,4 +330,9 @@ module ApplicationHelper
     content_for :modal_content, capture(&block)
     render 'shared/modal_shell', options.reverse_merge!(cssClass: "", id: "")
   end
+  
+  def find_gmaps
+    content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_Keys["google_maps"]}&sensor=false")
+    content_for :footerjss, "var gmapsLoader = new scpr.GMapsLoader();"
+  end
 end
