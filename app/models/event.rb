@@ -19,6 +19,18 @@ class Event < ActiveRecord::Base
     upcoming.first
   end
   
+  def upcoming?
+    ends_at > Time.now # Use "ends_at" so it still shows the details while the event is happening
+  end
+  
+  def consoli_dated # This could be a little more robust, but it'll do for now, should probably also be a helper.
+    if starts_at.day == ends_at.day
+      starts_at.strftime("%A, %B %e, %l-") + ends_at.strftime("%l%P")
+    else
+      starts_at.strftime("%A, %B %e, %l%P-") + ends_at.strftime("%A, %B %e, %l%P")
+    end
+  end
+  
   #----------
   
   def url_safe_address
@@ -55,26 +67,6 @@ class Event < ActiveRecord::Base
   def has_comments?
     true
   end
-  
-  def audio
-    @audio ||= self._get_audio()
-  end
-  
-  def _get_audio # Do we need to check for ENCO audio for Events?
-    # check for ENCO Audio
-    audio = []
-    
-    if self.respond_to?(:enco_audio)
-      audio << self.enco_audio
-    end
-    
-    if self.respond_to?(:uploaded_audio)
-      audio << self.uploaded_audio
-    end
-    
-    return audio.flatten.compact
-  end
-  
   
   def remote_link_path
     "http://www.scpr.org#{self.link_path}"

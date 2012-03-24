@@ -81,6 +81,10 @@ Then /^I should not see an RSVP link$/ do
   page.should_not have_css "#rsvp-btn"
 end
 
+Then /^I should see that even has already occurred$/ do
+  page.should have_css ".past-date"
+end
+
 #### Routing
 When /^I go to the events page$/ do
   visit events_path

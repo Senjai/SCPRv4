@@ -21,3 +21,8 @@ end
 Then /^I should see article meta$/ do
   page.should have_css ".article-meta"
 end
+
+Then /^I should see an audio link$/ do
+  pending
+  page.should have_css ".audio-toggler"
+end

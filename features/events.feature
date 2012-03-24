@@ -98,3 +98,14 @@ Scenario: See more upcoming events
 	Then I should see 2 more upcoming events listed
 	And that event should not be in the upcoming events
 	
+Scenario: View detail for a past event
+	Given an event with the following attributes:
+	 | starts_at   | archive_description    | show_map | rsvp_link       | audio                                    |
+	 | 2 weeks ago | This event was awesome | 1        | http://scpr.org | audio/events/2011/05/23/Father_Boyle.mp3 |
+
+	When I go to that event's page
+	Then I should see that even has already occurred
+	And I should not see an RSVP link
+	And I should not see a link to open the map
+	And I should not see a map
+	And I should see an audio link

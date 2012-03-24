@@ -34,7 +34,11 @@ describe Event do
       event.url_safe_address.should match /\+/
     end
   end
-    
+  
+  describe "consoli_dated" do
+    pending
+  end  
+      
   describe "#link_path" do
     it "can generate a link_path" do
       event = create :event
@@ -64,12 +68,12 @@ describe Event do
     end
   end
   
-  describe "closest" do
+  describe "closest" do # TODO All the scopes are ugly and inefficient
     it "returns the closest published future event" do
       events = create_list :event, 5
       closest = Event.closest
       closest.should eq Event.upcoming.first
-      closest.should eq events.last
+      closest.should eq events.first
     end
   end
   
@@ -120,7 +124,7 @@ describe Event do
         spon_event = create :event, etype: "spon"
         pick_event = create :event, etype: "pick"
         comm_event = create :event, etype: "comm"
-        spon_events = Event.forum
+        spon_events = Event.sponsored
         spon_events.count.should eq 1
         spon_events.first.should eq spon_event
       end

@@ -77,6 +77,11 @@ span.fake-link {
 			a {
 				margin: 5px 0;
 			}
+			.past-date {
+				background: url(image_path('icons/calendar-icon-black.png')) no-repeat left 5px;
+				@include font-heading($size: 12px);
+				padding-left: 26px;
+			}
 			.location-text {
 				@include font-heading($size: 12px, $lineHeight: 14px);
 				display: inline-block;
@@ -114,6 +119,7 @@ span.fake-link {
 	h6 {
 		font-size: 12px;
 		margin-top: 5px;
+		text-align: right;
 	}
 	
 	h5 a {

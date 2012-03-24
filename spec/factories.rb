@@ -140,6 +140,7 @@ FactoryGirl.define do
     created_at Time.now
     modified_at Time.now
     for_program "airtalk"
+    audio "audio/events/2011/05/23/Father_Boyle.mp3"
     archive_description "This is the description that shows after the event has happened"
     is_published 1
     
