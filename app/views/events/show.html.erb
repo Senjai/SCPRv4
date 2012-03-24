@@ -60,7 +60,7 @@
 				</div>
 			</div>
 			<%= render_asset @event, "blog" %>
-			<p><%= raw @event.description %></p>
+			<p><%= raw @event.upcoming? ? @event.description : @event.archive_description %></p>
 			<br style="clear: both" />
 			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
 		</div>

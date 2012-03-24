@@ -100,8 +100,8 @@ Scenario: See more upcoming events
 	
 Scenario: View detail for a past event
 	Given an event with the following attributes:
-	 | starts_at   | archive_description    | show_map | rsvp_link       | audio                                    |
-	 | 2 weeks ago | This event was awesome | 1        | http://scpr.org | audio/events/2011/05/23/Father_Boyle.mp3 |
+	 | starts_at   | description                | archive_description    | show_map | rsvp_link       | audio                                    |
+	 | 2 weeks ago | This event will be awesome | This event was awesome | 1        | http://scpr.org | audio/events/2011/05/23/Father_Boyle.mp3 |
 
 	When I go to that event's page
 	Then I should see that even has already occurred
@@ -109,3 +109,13 @@ Scenario: View detail for a past event
 	And I should not see a link to open the map
 	And I should not see a map
 	And I should see an audio link
+	And I should see "This event was awesome"
+	And I should not see "This event will be awesome"
+
+Scenario: Detail for Past Event without audio
+	Given an event with the following attributes:
+	 | starts_at   | audio |
+	 | 2 weeks ago |       |
+
+	When I go to that event's page
+	Then I should not see an audio link
