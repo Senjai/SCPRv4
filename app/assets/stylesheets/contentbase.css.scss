@@ -34,7 +34,7 @@
 	    padding-left: 14px;
 	}
 	
-	time, .shell-link, span.event-location {
+	time, .shell-link {
 	    /* display: inline-block; */
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;

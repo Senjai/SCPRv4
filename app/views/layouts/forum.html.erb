@@ -6,7 +6,7 @@
 	<%= render "shared/header/opengraph" %>
 	<%= csrf_meta_tags %>
 </head>
-<body class="<%= @BODY_CLASS %>" id="<%= @BODY_ID %>">
+<body class="forum">
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
 <%= yield :masthead if content_for? :masthead %>

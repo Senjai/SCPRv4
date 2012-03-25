@@ -1,4 +1,4 @@
-<% title ||= "Events" %>
+<% title ||= "" %>
 <% cssClass ||= "" %>
 
 <h2><%= title %></h2>
@@ -6,23 +6,19 @@
 <section class="events-list <%= cssClass %>">
 	<% events.each do |event| %>
   		<article class="cbase event teaser event-headers">
-			<div class="row">
 				<% if event.assets.present? %>
-					<div class="span2">
-						<%= render_asset event, 'lsquare' %>
-					</div>
+					<a href="<%= event.link_path %>">
+						<%= render_asset event, 'thumb' %>
+					</a>
 				<% end %>
-				<div class="info <%= event.assets.present? ? "span6" : "span8" %>">
-					<div class="event-details">
-						<%= event_link event %> 
-						<% if event.location_name.present? %>
-							<span class="event-location"><%= event.location_name %></span>
-						<% end %>
-					</div> <!-- event-details -->
+				<div class="event-details">
+					<%= event_link event %> 
+					<% if event.location_name.present? %>
+						<span class="event-location <%= event.is_forum_event ? "forum" : "" %>"><%= event.location_name %></span>
+					<% end %>
 					<h1 class="story-title"><%= link_to event.title, event.link_path %></h1>
-					<p><%= event.teaser.html_safe %></p>
-				</div> <!-- info -->
-			</div> <!-- row -->
+					<p><%= event.teaser.html_safe %> <%= link_to "More", event.link_path %></p>
+				</div> <!-- event-details -->
 		</article>
 	<% end %>
 <% end %>

@@ -24,6 +24,14 @@ class Event < ActiveRecord::Base
   
   #----------
   
+  def is_forum_event
+    if self.etype == "comm" || self.etype == "cult" || self.etype == "hall"
+      true
+    end
+  end
+  
+  #----------
+  
   def obj_key
     "events/event:#{self.id}"
   end

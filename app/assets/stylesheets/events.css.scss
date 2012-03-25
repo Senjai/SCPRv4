@@ -4,26 +4,19 @@ a.event-link {
 	padding-left: 25px;
 	height: 19px;
 	background: url(image_path("icons/calendar-icon.png")) no-repeat left top;
-	min-width: 150px;
-}
-
-.event-location {
-	margin-left: 10px;
+	min-width: 120px;
 }
 
 .event-headers	 {
 	h1, h2, h4.story-title {
 		a {
 			color: #000;
-			&:hover {
-				text-decoration: none
-			}
 		}
 	}
 		
 	h1.story-title {
 		@include font-navigation($weight: bold, $size: 22px);
-		margin: 10px 0;
+		margin: 4px 0;
 	}
 	
 	h2.story-title {
@@ -166,14 +159,26 @@ a.event-link {
 }
 
 .events-list {
-	border-bottom: 1px solid $gray;
+	border-bottom: 1px solid $grayLight;
 	.teaser {
-		.contentasset {
-			width: 130px;
-			height: 130px;
-			overflow: hidden;
+		padding:18px 0;
+		img {
+			float:left;
+			margin-right:12px;
 		}
-
+		.event-details {
+			margin-left:100px;
+			span.event-location {
+			    /* display: inline-block; */
+		        @include font-sans-serif(normal, 11px);
+		        color: $gray;
+		        text-transform: uppercase;
+				white-space:nowrap;
+				&.forum {
+					color:$orangeDark;
+				}
+			}
+		}
 		.info {
 			margin: 0 5px;
 		}
@@ -183,14 +188,10 @@ a.event-link {
 
 /* FADER */
 
-@mixin opacity-without-inheritance($opacity: 0.6) {
-	/* Cross-browser opacity which doesn't pass down to child elements */
-	background: rgb(0, 0, 0) transparent; /* Fallback for old browsers */
-	background: rgba(0, 0, 0, $opacity); /* RGBa with 0.6 opacity */
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000); /* For IE 5.5 - 7*/
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)"; /* For IE 8*/
+.forum #megamenu {
+	$shadow: 0 6px 10px rgba(0,0,0,.5);
+	@include box-shadow($shadow);
 }
-
 #events-header {
 	position: relative;
 	top: -45px;
@@ -209,8 +210,6 @@ a.event-link {
 		overflow: hidden;
 		text-align: center;
 		&>img {
-			position: absolute;
-			margin: 0 auto;
 			max-width:1500px;
 			width:100%;
 			z-index: 8;
@@ -231,7 +230,6 @@ a.event-link {
 		left: -290px;
 		top: -430px;
 		z-index: 11; /* Since we're setting z-index on the images for the fading. */
-		@include opacity-without-inheritance($opacity: 0.4);
 		padding: 20px;
 		height: 180px;
 		width: 523px;
@@ -243,6 +241,7 @@ a.event-link {
 			background: url(image_path("event-headers/cff-logo.png"));
 		}
 		.tagline {
+			margin-left:37px;
 			h3 {
 				color:#00b9f3;
 				font:34px/48px "Museo Slab", sans-serif;
