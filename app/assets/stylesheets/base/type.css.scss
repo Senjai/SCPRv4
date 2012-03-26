@@ -191,6 +191,10 @@ em {
 .muted {
   color: $grayLighter;
 }
+.more {
+	@include font-sans-serif($size: 12px, $weight: bold);
+	text-transform:uppercase;
+}
 
 // Blockquotes
 blockquote {

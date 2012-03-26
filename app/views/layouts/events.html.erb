@@ -1,3 +1,16 @@
+<% content_for :title_bar do %>
+<div class="page-header">
+	<div class="row">
+			<div class="span8">
+				<h1 class="page-title"><%= link_to "Events", events_path %></h1>
+			</div>
+			<div class="span4">
+				<h3 class="section-nav-header">In this section</h3>
+			</div>
+		</div>
+	</div>
+<% end %>
+
 <% content_for :content do %>
 	<% if content_for? :event_content %>
 		<%= yield :event_content %>

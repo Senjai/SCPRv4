@@ -1,35 +1,34 @@
 <% watch_gmaps %>
 
-<% content_for :title_bar do %>
-<div class="page-header">
-	<div class="row">
-			<div class="span8">
-				<h1 class="page-title"><%= link_to "Events", events_path %></h1>
-			</div>
-			<div class="span4">
-				<h3>In this section</h3>
-			</div>
-		</div>
-	</div>
-<% end %>
 
 <div class="event event-detail">
 	<div class="row">
 		<div class="span2">
 			<div class="article-meta">
 				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side", title: "event" } %> <%# To be replaced with a better solution %>
-				<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
+				<%#= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
 				<%# render "shared/cwidgets/audio", content: @event %> <%# To be replaced with a better solution %>
 			</div>
 			
 		</div>
 		<div class="span6">
 			<h1 class="story-headline event-headline"><%= link_to @event.title, @event.link_path %></h1>
+			<% if @event.sponsor? %>
+				<p class="sponsor">Sponsor: 
+					<% if @event.sponsor_link? %>
+						<a href="<%= @event.sponsor_link %>"><%= @event.sponsor %></a>
+					<% else %>
+						<%= @event.sponsor %>
+					<% end %>
+				</p>
+			<% end %>
 			<div class="event-details">
 				<div class="row">
 					<div class="span3">
 						<% if @event.upcoming? %>
-							<%= event_link @event %>
+							<div class="upcoming-date">
+								<%= @event.consoli_dated %>
+							</div>
 						<% else %>
 							<div class="past-date">This event took place on:<br />
 								<%= @event.consoli_dated %>
@@ -67,7 +66,7 @@
 	</div>
 </div>
 
-<% if @more_events.present? %>
+<% if @more_events.present? and @event.upcoming? and @event.is_forum_event %>
 	<div class="more-events">
 		<div class="row ">
 			<div class="span2">
@@ -83,11 +82,12 @@
 	</div>
 <% end %>
 
+
 <div class="row">
 	<div class="span2">
-		<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
+		<%#= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
 	</div>
 	<div class="span6">
-		<%= comments_for @event, header: false %>
+		<%#= comments_for @event, header: false %>
 	</div>
 </div>

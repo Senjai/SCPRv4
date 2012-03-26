@@ -35,6 +35,8 @@ class Event < ActiveRecord::Base
   
   def url_safe_address
     inline_address.gsub(/\s/, "+") # TODO Figure out what else we need to gsub - https://developers.google.com/maps/documentation/webservices/#BuildingURLs
+  end
+  
   def is_forum_event
     if self.etype == "comm" || self.etype == "cult" || self.etype == "hall"
       true

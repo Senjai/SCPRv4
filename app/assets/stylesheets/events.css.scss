@@ -45,7 +45,7 @@ span.fake-link {
 	}
 	
 	h3, a.twitter-peeker {
-		@include font-slab-headings($size: 14px, $lineHeight: 18px);
+		@include font-slab-headings($size: 15px, $lineHeight: 18px);
 		text-transform: uppercase;
 	}
 	
@@ -54,7 +54,7 @@ span.fake-link {
 	}
 	
 	h6 {
-		@include font-slab-headings($size: 17px, $lineHeight: 18px);
+		@include font-slab-headings($size: 18px, $lineHeight: 18px);
 		text-transform: uppercase;
 		margin-bottom: 10px;
 	}
@@ -64,15 +64,33 @@ span.fake-link {
 	.story-headline.event-headline {
 		margin-bottom: 10px;
 	}
-	
+	.sponsor {
+		color:$gray;
+		@include font-heading($size: 11px, $weight: normal);
+		margin-bottom:0;
+		a {
+			color:$nearBlack;
+		}
+	}
 	&.event-detail {
+		.sharing-tools.bottom {
+			border-bottom:none;
+			margin-bottom:0;
+		}
 		.event-details {
-			padding-top: 5px;
+			padding: 5px 0;
 			margin-bottom: 10px;
 			border-top: 1px solid $grayLighter;
 			border-bottom: 1px solid $grayLighter;
 			a {
 				margin: 5px 0;
+			}
+			.upcoming-date {
+				background: url(image_path('icons/calendar-icon-orange.png')) no-repeat left 5px;
+				color:$orangeDark;
+				@include font-heading($size: 13px, $weight: 600, $lineHeight: 16px);
+				min-height:25px;
+				padding:3px 0 0 26px;
 			}
 			.past-date {
 				background: url(image_path('icons/calendar-icon-black.png')) no-repeat left 5px;
@@ -91,7 +109,7 @@ span.fake-link {
 				margin: 0;
 				display: inline-block;
 				li {
-					@include font-heading($size: 14px, $weight: 250, $lineHeight: 14px);
+					@include font-heading($size: 13px, $weight: normal, $lineHeight: 16px);
 					list-style: none;
 				}
 
@@ -99,7 +117,6 @@ span.fake-link {
 					color: $blue;
 				}
 			}
-		
 			.map-link {
 				background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 6px;
 				padding-right:15px;
@@ -112,7 +129,10 @@ span.fake-link {
 }
 
 .more-events {
+	border-bottom:1px solid $grayLight;
+	border-top:1px solid $grayLight;
 	margin-bottom: 10px;
+	padding:16px 0;
 	h6 {
 		font-size: 12px;
 		margin-top: 5px;
@@ -120,7 +140,10 @@ span.fake-link {
 	}
 	
 	h5 a {
-		color: $black;
+		color: $nearBlack;
+		@include font-headline($weight: 600);
+		font-size:15px;
+		line-height:18px;
 	}
 }
 
@@ -164,6 +187,7 @@ span.fake-link {
 			}
 		}
 		.closest {
+			padding-bottom:10px;
 		}
 	}
 
@@ -187,14 +211,14 @@ span.fake-link {
 		}
 		
 		.twitter-peeker {
+			color:$nearBlack;
 			display: block;
+			font-size:15px;
 			height: 41px;
 			margin: 15px 0 10px 0;
 			padding: 10px 80px 7px 5px;
 			background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
-			text-align: center;
 			color: inherit;
-			@include box-shadow($shadow: inset 0 1px 1px rgba(0,0,0,.25));
 			&:hover {
 				text-decoration: none;
 			}
@@ -203,10 +227,14 @@ span.fake-link {
 		.tweet {
 			margin: 12px 0 8px 0;
 			border-bottom: 1px solid $grayLighter;
-			padding-bottom: 5px;
-			@include font-sans-serif($size: 12px, $lineHeight: 15px);
+			padding-bottom: 10px;
+			@include font-serif($size: 12px, $lineHeight: 15px);
 			h5 {
-				@include font-shorthand($size: 12px, $weight: bold);
+				@include font-shorthand($size: 13px, $weight: bold);
+				margin-top:-5px;
+				a {
+					color:$nearBlack;
+				}
 			}
 			img.tweet-image {
 				display: inline-block;
@@ -230,6 +258,9 @@ span.fake-link {
 	margin-bottom: 20px;
 	.past-events {
 		padding: 15px 0;
+		.byline {
+			@include font-serif($size: 12px);
+		}
 	}
 	h3.title {
 		background:url("section-headline-background.png") repeat-x;
@@ -294,6 +325,7 @@ span.fake-link {
 		overflow: hidden;
 		text-align: center;
 		&>img {
+			top:0;
 			max-width:1500px;
 			width:100%;
 			z-index: 8;
@@ -339,6 +371,7 @@ span.fake-link {
 				font-weight: normal;
 				margin:0;
 				text-shadow:0 1px 0 rgba(0,0,0,0.75);
+				visibility:hidden;
 			}
 		}
 	}
@@ -350,19 +383,46 @@ span.fake-link {
 		text-align: center;
 		width: 100%;
 		.chooser {
-			color: $yellow;
-			font-size: 22px;
+			border:4px solid $white;
+			@include border-radius(10px);
+			@include hide-text();
 			display: inline-block;
-			width: 30px;
-			height: 20px;
+			margin:0 5px;
+			width: 10px;
+			height: 10px;
+			opacity:0.3;
 			&:hover {
-				cursor: pointer;
+				cursor: pointer;;
+				background-color:$nearBlack;
+				opacity:0.5;
 			}
 		}
 	}
 }
-
-nav.events {
+.filters.events {
+	border-top:none;
+	margin-top:-20px;
+	a.active { 
+		position:relative;
+		span {
+			background:url(image_path('icons/filter-arrow.png')) no-repeat left top;
+			position:absolute;
+			display:block;
+			width:19px;
+			height:11px;
+			top:21px;
+			left:50%;
+			margin-left:-10px;
+		}
+	}
+}
+h3.section-nav-header {
+	color:$gray;
+	font-size:16px;
+	margin-top:10px;
+}
+nav.section-nav {
+	margin-top:-20px;
 	margin-bottom: 25px;
 	h4 {
 		font-weight: 400;
@@ -373,13 +433,13 @@ nav.events {
 		display: block;
 		text-transform: uppercase;
 		border-bottom: 1px solid $grayLighter;
-		@include font-navigation($size: 14px);
+		@include font-navigation($size: 13px, $weight: 600);
 		color: darken($gray, 20%);
 		padding: 8px;
 		@include transition(all .15s ease-in-out);
 		&:hover {
-			text-decoration: none;
-			background: $nearWhite;
+			color:$orangeDark;
+			text-decoration: underline;
 		}
 	}
 }
@@ -402,7 +462,7 @@ nav.events {
 .static-content {
 	img.left {
 		float: left;
-		margin: 0 10px;
+		margin: 0 10px 0 0;
 	}
 	
 	ul.info {

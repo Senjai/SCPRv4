@@ -11,7 +11,7 @@
 		</div> <!-- hero -->
 		<div class="choosers">
 			<% 4.times do |i| %>
-				<div class="chooser" data-slide="hero-<%=i+1%>">+</div>
+				<div class="chooser" data-slide="hero-<%=i+1%>"><%=i+1%></div>
 			<% end %>
 		</div> <!-- movers -->
 		<div class="hero-text">
@@ -35,6 +35,7 @@
 				<%= render_asset @closest_event, 'lead5' %>
 				<div class="calendar-date"><%= event_link @closest_event %></div>
 				<h1 class="story-title"><%= link_to @closest_event.title, @closest_event.link_path %></h1>
+				<%= @closest_event.teaser %>
 			</div>
 		<% end %>
 		
@@ -57,6 +58,7 @@
 					</div>
 				<% end %>
 			<% end %>
+			<p><a href="/events/list/forum" class="more">More Upcoming Events</a></p>
 		</div>
 	</section> <!-- upcoming-events -->
 	
@@ -73,6 +75,15 @@
 			<a class="twitter-peeker" href="http://twitter.com/KPCCForum">Tweets from the Crawford Family Forum</a>
 			<%= cached_tweets %>
 		<% end %>
+		
+		<div class="ad widget">
+			<!-- membership_sidebar -->
+			<div class="dfp" id='div-gpt-ad-1331935001948-1' style='width:300px; height:100px;'>
+			<script type='text/javascript'>
+			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331935001948-1'); });
+			</script>
+			</div>
+		</div>
 	</section>
 </div> <!-- .row -->
 
