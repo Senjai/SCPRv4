@@ -36,9 +36,54 @@ describe Event do
   end
   
   describe "consoli_dated" do
-    pending
-  end  
-      
+    it "uses the start date only if is_all_day is true" do
+      event = build :event, is_all_day: true, starts_at: 1.hour.from_now
+      event.consoli_dated.should_not match event.starts_at.strftime("%l%P")
+    end
+    
+    it "uses the full starts_at time if there is no ends_at" do
+      event = build :event, starts_at: 1.hour.ago, ends_at: nil
+      event.consoli_dated.should match event.starts_at.strftime("%l%P")
+    end
+    
+    it "consolidates the start and end date if they are the same" do
+      event = build :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
+      event.consoli_dated.scan(event.starts_at.strftime("%A")).length.should eq 1
+    end
+    
+    it "Shows full dates for start and end dates if they are different days" do
+      event = build :event, starts_at: Time.now.yesterday, ends_at: Time.now.tomorrow
+      event.consoli_dated.should match event.starts_at.strftime("%A")
+      event.consoli_dated.should match event.ends_at.strftime("%A")
+    end
+  end
+  
+  describe "upcoming?" do
+    it "uses the start time if the event has no end time" do
+      event = build :event, ends_at: nil, starts_at: 1.hour.ago
+      event.upcoming?.should be_false
+    end
+    
+    it "uses the end time if it exists" do
+      event = build :event, starts_at: 1.hour.ago, ends_at: 1.hour.from_now
+      event.upcoming?.should be_true
+    end
+  end
+  
+  describe "description" do
+    it "returns the description if the event is upcoming" do
+      event = build :event, description: "Future", archive_description: "Past"
+      event.stub(:upcoming?) { true }
+      event.description.should match "Future"
+    end
+    
+    it "returns the archive description if the event is in the past" do
+      event = build :event, description: "Future", archive_description: "Past"
+      event.stub(:upcoming?) { false }
+      event.description.should match "Past"
+    end
+  end
+  
   describe "#link_path" do
     it "can generate a link_path" do
       event = create :event

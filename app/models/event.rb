@@ -13,18 +13,26 @@ class Event < ActiveRecord::Base
   scope :upcoming, lambda { published.where("starts_at > ?", Time.now).order("starts_at") }
   scope :forum, published.where("etype != ? AND etype != ?", "spon", "pick")
   scope :sponsored, published.where("etype = ?", "spon")
-  scope :past, lambda { published.where("ends_at < ?", Time.now).order("starts_at desc") }
+  scope :past, lambda { published.where("starts_at < ?", Time.now).order("starts_at desc") }
   
   def self.closest
     upcoming.first
   end
   
-  def upcoming?
-    ends_at > Time.now # Use "ends_at" so it still shows the details while the event is happening
+  def upcoming? # Still display maps, details, etc. if the event is currently happening
+    if ends_at.blank?
+      starts_at > Time.now
+    else
+      ends_at > Time.now
+    end
   end
   
-  def consoli_dated # This could be a little more robust, but it'll do for now, should probably also be a helper.
-    if starts_at.day == ends_at.day
+  def consoli_dated # This could be a little more robust, but it'll do for now, should probably be a helper.
+    if self.is_all_day
+      starts_at.strftime("%A, %B %e")
+    elsif ends_at.blank?
+      starts_at.strftime("%A, %B %e, %l%P")
+    elsif starts_at.day == ends_at.day
       starts_at.strftime("%A, %B %e, %l-") + ends_at.strftime("%l%P")
     else
       starts_at.strftime("%A, %B %e, %l%P-") + ends_at.strftime("%A, %B %e, %l%P")
@@ -51,6 +59,10 @@ class Event < ActiveRecord::Base
   
   def inline_address(separator=", ")
     [address_1, address_2, city, state, zip_code].reject { |element| element.blank? }.join(separator)
+  end
+  
+  def description
+    self.upcoming? ? self[:description] : self[:archive_description]
   end
   
   #----------

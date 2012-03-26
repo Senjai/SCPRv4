@@ -14,8 +14,8 @@ span.fake-link {
   font-weight: inherit;
   &:hover {
 	cursor: pointer;
-    color: $linkColorHover;
-    text-decoration: underline;
+	color: $linkColorHover;
+	text-decoration: underline;
   }
 
 	&.bold {
@@ -193,7 +193,7 @@ span.fake-link {
 
 	.social {
 		.banners {
-			margin:  10px 0 10px 0;
+			margin:	 10px 0 10px 0;
 			padding-bottom: 15px;
 			border-bottom: 1px solid $grayLighter;
 			a {
@@ -284,10 +284,10 @@ span.fake-link {
 		.event-details {
 			margin-left:100px;
 			span.event-location {
-			    /* display: inline-block; */
-		        @include font-sans-serif(normal, 11px);
-		        color: $gray;
-		        text-transform: uppercase;
+				/* display: inline-block; */
+				@include font-sans-serif(normal, 11px);
+				color: $gray;
+				text-transform: uppercase;
 				white-space:nowrap;
 				&.forum {
 					color:$orangeDark;
@@ -307,81 +307,22 @@ span.fake-link {
 	$shadow: 0 6px 10px rgba(0,0,0,.5);
 	@include box-shadow($shadow);
 }
+
 #events-header {
 	position: relative;
-	top: -45px;
-	height: 450px; /* Is there a better way to push the page content down? */
+	top: -38px;
+	height: 468px; /* Is there a better way to push the page content down? */
 	min-width:1110px;
-	
-	.wrapper {
-		position: relative;
-	}
-	
-	.hero {
-		position: relative;
-		background-color:#2e2e2e;
-		height:468px;
-		width:100%;
-		overflow: hidden;
-		text-align: center;
-		&>img {
-			top:0;
-			max-width:1500px;
-			width:100%;
-			z-index: 8;
-			opacity: 0.0;
-			&.active {
-				z-index: 10;
-				opacity: 1.0;
-			}
-			&.last-active {
-				z-index: 9;
-			}
-		}
-	}
-	
-	.hero-text {
-		position: relative;
-		margin: 0 auto;
-		left: -290px;
-		top: -430px;
-		z-index: 11; /* Since we're setting z-index on the images for the fading. */
-		padding: 20px;
-		height: 180px;
-		width: 523px;
-		text-align: left;
-		.cff-logo {
-			margin: 5px auto;
-			width: 524px;
-			height: 37px;
-			background: url(image_path("event-headers/cff-logo.png"));
-		}
-		.tagline {
-			margin-left:37px;
-			h3 {
-				color:#00b9f3;
-				font:34px/48px "Museo Slab", sans-serif;
-				font-weight: 500;
-				margin:0;
-				text-shadow:0 1px 0 rgba(0,0,0,0.75);
-			}
-			p {
-				color:#fff;
-				font:18px/21px "Museo Slab", sans-serif;
-				font-weight: normal;
-				margin:0;
-				text-shadow:0 1px 0 rgba(0,0,0,0.75);
-				visibility:hidden;
-			}
-		}
-	}
+	background-color:#2e2e2e;
+	width:100%;
+	overflow: hidden;
 	
 	.choosers {
-		position: relative;
-		top: -30px;
-		z-index: 11;
-		text-align: center;
+		position: absolute;
 		width: 100%;
+		text-align: center;
+		bottom: 0;
+		z-index: 21;
 		.chooser {
 			border:4px solid $white;
 			@include border-radius(10px);
@@ -392,13 +333,64 @@ span.fake-link {
 			height: 10px;
 			opacity:0.3;
 			&:hover {
-				cursor: pointer;;
+				cursor: pointer;
 				background-color:$nearBlack;
 				opacity:0.5;
 			}
 		}
 	}
+	
+	.slides-wrapper {
+		position: relative;
+		max-width: 1500px;
+		margin: 0 auto;
+		.slide {
+			z-index: 8;
+			opacity: 0;
+			img {
+				width: 100%;
+				position: absolute;
+				z-index: 19;
+			}
+			.slide-text {
+				position: absolute;
+				z-index: 20;
+				top: 50px;
+				left: 50px;
+				width: 523px;
+				text-align: left;
+				padding: 35px 0 0 37px;
+				background: url(image_path("event-headers/cff-logo.png")) no-repeat left top;
+				h3 {
+					color:#00b9f3;
+					font:34px/48px "Museo Slab", sans-serif;
+					font-weight: 500;
+					margin:0;
+					text-shadow:0 1px 0 rgba(0,0,0,0.75);
+				}
+				p {
+					color:#fff;
+					font:18px/21px "Museo Slab", sans-serif;
+					font-weight: normal;
+					margin:0;
+					text-shadow:0 1px 0 rgba(0,0,0,0.75);
+				}
+			}
+		
+			&.active {
+				z-index: 10;
+				opacity: 1.0;
+			}
+			&.last-active {
+				z-index: 9;
+			}
+		}
+	}
+	
+	
+
 }
+
 .filters.events {
 	border-top:none;
 	margin-top:-20px;
