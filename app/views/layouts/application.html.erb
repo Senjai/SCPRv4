@@ -11,6 +11,7 @@
 <%= render "shared/masthead" %>
 
 <div id="main" class="container">
+	<%= yield :title_bar if content_for? :title_bar %>
 	<div class="row">
 		<%= yield :masthead if content_for? :masthead %>
 		<article class="span8">
@@ -20,8 +21,8 @@
 			<% if content_for?(:sidebar) %> 
 				<%= yield(:sidebar) %>
 			<% else %>
+				<%= yield :section_nav %>
 				<div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div>
-
 				<%= yield :sidebartop %>
 
 				<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>

@@ -53,7 +53,7 @@ module WidgetsHelper
   
   def comments_for(object, options={})
     if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
-      render('shared/cwidgets/comments', { content: object, cssClass: "" }.merge!(options))
+      render('shared/cwidgets/comments', { content: object, cssClass: "", header: true }.merge!(options))
     end
   end
   

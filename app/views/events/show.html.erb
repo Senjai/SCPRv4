@@ -1,0 +1,93 @@
+<% watch_gmaps %>
+
+<% content_for :title_bar do %>
+<div class="page-header">
+	<div class="row">
+			<div class="span8">
+				<h1 class="page-title"><%= link_to "Events", events_path %></h1>
+			</div>
+			<div class="span4">
+				<h3>In this section</h3>
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<div class="event event-detail">
+	<div class="row">
+		<div class="span2">
+			<div class="article-meta">
+				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side", title: "event" } %> <%# To be replaced with a better solution %>
+				<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
+				<%# render "shared/cwidgets/audio", content: @event %> <%# To be replaced with a better solution %>
+			</div>
+			
+		</div>
+		<div class="span6">
+			<h1 class="story-headline event-headline"><%= link_to @event.title, @event.link_path %></h1>
+			<div class="event-details">
+				<div class="row">
+					<div class="span3">
+						<% if @event.upcoming? %>
+							<%= event_link @event %>
+						<% else %>
+							<div class="past-date">This event took place on:<br />
+								<%= @event.consoli_dated %>
+							</div>
+						<% end %>
+						<%= link_to("RSVP for this event", @event.rsvp_link, id: "rsvp-btn", class: "btn primary") if @event.rsvp_link.present? and @event.upcoming? %>
+					</div>
+					<div class="span3">
+						<div class="location-text">Location</div>
+						<ul class="address">
+							<li><span class="blue"><%= @event.location_link.present? ? link_to(@event.location_name, @event.location_link) : @event.location_name %></span></li>
+							<% if @event.address_1.present? %><li><%= raw @event.address_1 %></li><% end %>
+							<% if @event.address_2.present? %><li><%= raw @event.address_2 %></li><% end %>
+							<li><%= "#{@event.city}," if @event.city.present? %> <%= "#{@event.state} #{@event.zip_code}" %></li>
+							<% if @event.show_map and @event.upcoming? %>
+								<li class="modal-container">									
+									<span class="fake-link bold map-link modal-toggler" data-address="<%= @event.url_safe_address %>">Map &amp; Directions</span>
+									<%= modal("google-maps") do %>
+										<h5 class="address"><%= @event.inline_address %></h5>
+										<div class="google-map map-canvas" id="map-canvas"></div>
+										<div id="map-errors">&nbsp;</div>
+									<% end %>
+								</li>
+							<% end %>
+
+						</ul>						
+					</div>
+				</div>
+			</div>
+			<%= render_asset @event, "blog" %>
+			<p><%= raw @event.upcoming? ? @event.description : @event.archive_description %></p>
+			<br style="clear: both" />
+			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
+		</div>
+	</div>
+</div>
+
+<% if @more_events.present? %>
+	<div class="more-events">
+		<div class="row ">
+			<div class="span2">
+				<h6>More Events at the Crawford Family Forum</h6>
+			</div>
+			<div class="span3 divider">
+				<%= render 'small_event', event: @more_events.first %>
+			</div>
+			<div class="span3">
+				<%= render 'small_event', event: @more_events.last %>
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<div class="row">
+	<div class="span2">
+		<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
+	</div>
+	<div class="span6">
+		<%= comments_for @event, header: false %>
+	</div>
+</div>

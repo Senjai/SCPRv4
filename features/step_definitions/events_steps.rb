@@ -1,11 +1,12 @@
 #### Setup
-Given /^the following events:$/ do |table|
-  @events = []
+Given /^(?:an )?events? with the following attributes?:$/ do |table|
+  events = []
   table.hashes.each do |attributes|
     attributes["starts_at"] = Chronic.parse(attributes["starts_at"]) if attributes["starts_at"].present?
-    @events << create(:event, attributes)
+    events << create(:event, attributes)
   end
-  Event.count.should eq table.hashes.count
+  events.count.should eq table.hashes.count
+  @event = events[rand(events.count)]
 end
 
 Given /^there (?:is|are) (\d+) events?$/ do |num|
@@ -69,15 +70,35 @@ Then /^I should see (\d+) past events in "([^"]*)"$/ do |num, text|
 end
 
 Then /^I should see each event's primary asset$/ do
-  page.should have_css ".upcoming-events .event .contentasset img", count: @events.count
+  page.should have_css ".upcoming-events .event .contentasset img", count: Event.all.count
 end
 
+Then /^I should see an RSVP link$/ do
+  page.should have_css "#rsvp-btn"
+end
+
+Then /^I should not see an RSVP link$/ do
+  page.should_not have_css "#rsvp-btn"
+end
+
+Then /^I should see that even has already occurred$/ do
+  page.should have_css ".past-date"
+end
 
 #### Routing
 When /^I go to the events page$/ do
   visit events_path
 end
 
-When /^I go to the event list page for "([^"]*)"$/ do |list|
-  visit events_path(list: list)
+When /^I go to (?:that|the|an) event's page$/ do
+  visit @event.link_path
 end
+
+When /^I go to an event page for an event that doesn't exist$/ do
+  visit event_path(year: 1, month: 2, day: 3, slug: "doesnt-exist")
+end
+
+Then /^I should be redirected to the events page$/ do
+  current_path.should eq events_path
+end
+

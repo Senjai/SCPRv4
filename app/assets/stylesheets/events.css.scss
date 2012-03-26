@@ -7,6 +7,26 @@ a.event-link {
 	min-width: 120px;
 }
 
+span.fake-link {
+  color: $linkColor;
+  text-decoration: none;
+  line-height: inherit;
+  font-weight: inherit;
+  &:hover {
+	cursor: pointer;
+    color: $linkColorHover;
+    text-decoration: underline;
+  }
+
+	&.bold {
+		font-weight: 500;
+	}
+}
+
+.event-location {
+	margin-left: 10px;
+}
+
 .event-headers	 {
 	h1, h2, h4.story-title {
 		a {
@@ -37,6 +57,70 @@ a.event-link {
 		@include font-slab-headings($size: 17px, $lineHeight: 18px);
 		text-transform: uppercase;
 		margin-bottom: 10px;
+	}
+}
+
+.event {
+	.story-headline.event-headline {
+		margin-bottom: 10px;
+	}
+	
+	&.event-detail {
+		.event-details {
+			padding-top: 5px;
+			margin-bottom: 10px;
+			border-top: 1px solid $grayLighter;
+			border-bottom: 1px solid $grayLighter;
+			a {
+				margin: 5px 0;
+			}
+			.past-date {
+				background: url(image_path('icons/calendar-icon-black.png')) no-repeat left 5px;
+				@include font-heading($size: 12px);
+				padding-left: 26px;
+			}
+			.location-text {
+				@include font-heading($size: 12px, $lineHeight: 14px);
+				display: inline-block;
+				vertical-align: top;
+				margin-right: 10px;
+				color: $gray;
+			}
+			ul.address {
+				padding: 0;
+				margin: 0;
+				display: inline-block;
+				li {
+					@include font-heading($size: 14px, $weight: 250, $lineHeight: 14px);
+					list-style: none;
+				}
+
+				.blue {
+					color: $blue;
+				}
+			}
+		
+			.map-link {
+				background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 6px;
+				padding-right:15px;
+				&:hover {
+					background-position:right -38px;
+				}
+			}
+		}
+	}
+}
+
+.more-events {
+	margin-bottom: 10px;
+	h6 {
+		font-size: 12px;
+		margin-top: 5px;
+		text-align: right;
+	}
+	
+	h5 a {
+		color: $black;
 	}
 }
 

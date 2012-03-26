@@ -5,12 +5,6 @@ Given /^there (?:is|are) (\d+) upcoming forum events?$/ do |num|
   Event.all.count.should eq num.to_i
 end
 
-Given /^each event has (\d+) assets?$/ do |num|
-  @events.each do |event|
-    create :asset, content: event
-  end
-end
-
 
 #### Routing
 When /^I go to the forum page$/ do
@@ -52,6 +46,16 @@ Then /^I should only see forum events$/ do
     page.should_not match event.title
   end
 end
+
+Then /^I should see (\d+) more upcoming events listed$/ do |num|
+  page.should have_css ".more-events .event", count: num.to_i
+end
+
+Then /^that event should not be in the upcoming events$/ do
+  find(".more-events").should_not have_content @event.title
+end
+
+
 
 #### Assertions
 Then /^the events should be ordered by "([^"]*)"$/ do |order|

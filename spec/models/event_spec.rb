@@ -1,6 +1,44 @@
 require "spec_helper"
 
 describe Event do  
+  describe "associations" do
+    it { should have_many :assets }
+    it { should have_many :uploaded_audio }
+  end
+  
+  describe "inline_address" do
+    it "returns the full address if all address fields are present" do
+      event = build :event, address_1: "123 Fake St.", address_2: "Apt. A", city: "Pasadena", state: "CA", zip_code: "12345"
+      event.inline_address.should match "123 Fake St., Apt. A, Pasadena, CA, 12345"
+    end
+    
+    it "ignores fields that are not present" do
+      event = build :event, address_1: "123 Fake St.", address_2: "", city: "Pasadena", state: "CA", zip_code: "12345"
+      event.inline_address.should match "123 Fake St., Pasadena, CA, 12345"
+    end
+    
+    it "accepts an alternate separator" do
+      event = build :event
+      event.inline_address(" | ").should match " | "
+    end
+  end
+  
+  describe "url_safe_address" do
+    it "should not have spaces" do
+      event = build :event
+      event.url_safe_address.should_not match /\s/
+    end
+    
+    it "should have plus-signs if there are spaces in the address" do
+      event = build :event, address_1: "474 South Raymond"
+      event.url_safe_address.should match /\+/
+    end
+  end
+  
+  describe "consoli_dated" do
+    pending
+  end  
+      
   describe "#link_path" do
     it "can generate a link_path" do
       event = create :event
@@ -30,12 +68,12 @@ describe Event do
     end
   end
   
-  describe "closest" do
+  describe "closest" do # TODO All the scopes are ugly and inefficient
     it "returns the closest published future event" do
       events = create_list :event, 5
       closest = Event.closest
       closest.should eq Event.upcoming.first
-      closest.should eq events.last
+      closest.should eq events.first
     end
   end
   
@@ -86,17 +124,35 @@ describe Event do
         spon_event = create :event, etype: "spon"
         pick_event = create :event, etype: "pick"
         comm_event = create :event, etype: "comm"
-        spon_events = Event.forum
+        spon_events = Event.sponsored
         spon_events.count.should eq 1
         spon_events.first.should eq spon_event
       end
     end
   end
   
+  describe "audio" do
+    it "responds to audio" do
+      build(:event).should respond_to :audio
+    end
+  end
+  
   describe "asset" do
-    it "can have an asset" do
+    it "can have an asset" do # TODO Stub the assethost requests
       event = create :event, asset_count: 1
       event.assets.first.asset.should be_present
+    end
+  end
+  
+  describe "#remote_link_path" do
+    it "can generate a remote_link_path" do
+      event = create :event
+      event.remote_link_path.should_not be_nil
+    end
+
+    it "points to scpr.org" do
+      event = create :event
+      event.remote_link_path.should match "http://www.scpr.org"
     end
   end
 end

@@ -1,30 +1,25 @@
-def content_base_associations(object, eval)
-  FactoryGirl.create_list(:asset, eval.asset_count.to_i, content: object)
-  FactoryGirl.create_list(:link, eval.link_count.to_i, content: object)
-  FactoryGirl.create_list(:brel, eval.brels_count.to_i, content: object)
-  FactoryGirl.create_list(:frel, eval.frels_count.to_i, related: object)
+def content_base_associations(object, evaluator)
+  FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: object)
+  FactoryGirl.create_list(:link, evaluator.link_count.to_i, content: object)
+  FactoryGirl.create_list(:brel, evaluator.brel_count.to_i, content: object)
+  FactoryGirl.create_list(:frel, evaluator.frel_count.to_i, related: object)
+  FactoryGirl.create(:content_category, content: object, category: FactoryGirl.create(evaluator.category_type)) if evaluator.category_type.present? && evaluator.with_category
 end
 
-FactoryGirl.define do  
-  factory :asset, class: ContentAsset do
-    sequence(:id, 1)
-    asset_order 1
-    asset_id 33585 # This is an actual BrightCove asset on AssetHost. This is not the best way to test this but it'll do for now.
-    sequence(:caption) { |n| "Caption #{n}" } 
-  end
-  
-  factory :byline, class: "ContentByline" do
-    role 0
-    user
-  end
-  
+FactoryGirl.define do
+
+# Schedule #########################################################
   factory :schedule do # Requires us to pass in kpcc_proram_id or other_program_id and program. There must be a better way to do this.
     sequence(:day) { |n| (Time.now + 60*60*24*n).day }
     start_time "00:00:00" # arbitrary
     end_time "02:00:00" # aribtrary
-    url { "/programs/#{program.underscore}" }
+    sequence(:program) { |n| "Cool Program #{n}" } 
+    url { "/programs/#{program.parameterize}" }
+    kpcc_program_id 1
   end
   
+
+# User #########################################################
   factory :user, class: "Bio", aliases: [:author] do
     bio "This is a bio"
     short_bio "Short!"
@@ -37,16 +32,12 @@ FactoryGirl.define do
     twitter "@kpcc"
     sequence(:user_id) 
   end
-  
-  factory :link do
-    title "A Related Link"
-    link "http://oncentral.org"
-    link_type "website"
-  end
-    
+
+
+# KpccProgram #########################################################
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
-    sequence(:slug) { |n| "show-#{n}" }
+    slug { title.parameterize }
     teaser "AirTalk, short teaser, etc."
     description "This is the description for AirTalk!"
     host "Larry Mantle"
@@ -60,17 +51,22 @@ FactoryGirl.define do
     display_segments 1
     display_episodes 1
     
+    ignore { segment Hash.new } # Ensures that `merge` has something to do in the after_create block
+    ignore { episode Hash.new } # Ensures that `merge` has something to do in the after_create block
     ignore { episode_count 0 }
     ignore { segment_count 0 }
-    after_create do |kpcc_program, eval|
-      FactoryGirl.create_list(:show_episode, eval.episode_count, show: kpcc_program)
-      FactoryGirl.create_list(:show_segment, eval.segment_count, show: kpcc_program)
+    
+    after_create do |kpcc_program, evaluator|
+      FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: kpcc_program))
+      FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: kpcc_program))
     end
   end
   
+
+# OtherProgram #########################################################
   factory :other_program do
     sequence(:title) { |n| "Other Program #{n}" }
-    sequence(:slug) { |n| "other-program-#{n}" }
+    slug { title.parameterize }
     teaser "Outside Program"
     description "This is the description for the outside program!"
     host "Larry Mantle"
@@ -83,22 +79,26 @@ FactoryGirl.define do
     produced_by "BBC"
   end
   
+
+# ShowRundown #########################################################
   factory :show_rundown do
     episode
     segment
     sequence(:segment_order) { |n| n }
   end
   
+
+# Blog #########################################################
   factory :blog do
     sequence(:name) { |n| "Blog #{n}" }
-    sequence(:slug) { |n| "blog-#{n}" }
-    sequence(:_teaser) { |n| "This is the blog #{n} teaser" }
+    slug { name.parameterize }
+    _teaser { "This is the teaser for #{name}!" }
     description "This is a description for this blog."
     head_image "http://media.scpr.org/assets/images/heads/larry_transparent.png"
     is_active true
     is_remote false
     is_news true
-    feed_url "http://feeds.scpr.org/LarryMantleBlog"
+    feed_url "http://oncentral.org/rss/latest"
     custom_url "http://scpr.org" # it's a required field?
     
     factory :news_blog do
@@ -115,38 +115,12 @@ FactoryGirl.define do
     end
   end
   
-  factory :category do
-    trait :is_news do 
-      sequence(:category) { |n| "Local #{n}" }
-      sequence(:slug) { |n| "local-#{n}" }
-      is_news true
-      sequence(:comment_bucket_id)
-    end
-    
-    trait :is_not_news do
-      sequence(:category) { |n| "Culture #{n}" }
-      sequence(:slug) { |n| "culture-#{n}" }
-      is_news false
-      sequence(:comment_bucket_id)
-    end
-    
-    factory :category_news, traits: [:is_news]
-    factory :category_not_news, traits: [:is_not_news]
-  end
-  
-  factory :related do
-    factory :brel do # "brels" - expects content to be passed in
-      association :related, factory: :show_segment
-    end
-    
-    factory :frel do # "frels" - expects related to be passed in
-      association :content, factory: :show_segment
-    end
-  end
-  
+
+# Event #########################################################
   factory :event do
+    sequence(:id, 1) # Not auto-incrementing in database?
     sequence(:title) { |n| "A Very Special Event #{n}" }
-    sequence(:slug) { |n| "a-very-special-event-#{n}" }
+    slug { title.parameterize }
     description "This is a very special event."
     etype "comm" # This is actually "type" in mercer
     sponsor "Patt Morrison"
@@ -166,144 +140,229 @@ FactoryGirl.define do
     created_at Time.now
     modified_at Time.now
     for_program "airtalk"
+    audio "audio/events/2011/05/23/Father_Boyle.mp3"
     archive_description "This is the description that shows after the event has happened"
     is_published 1
     
     ignore { asset_count 0 }
-    after_create do |event, eval|
-      FactoryGirl.create_list(:asset, eval.asset_count.to_i.to_i, content: event)
+    after_create do |event, evaluator|
+      FactoryGirl.create_list(:asset, evaluator.asset_count.to_i.to_i, content: event)
     end
   end
   
-  ### ContentBase Classes
-  ##### NOTE: The name of the factory should eq ClassName.to_s.underscore.to_sym, i.e. NewsStory = :news_story
-  ##### This is to please #make_content in /spec/support/content_methods.rb
+
+# ContentAsset#########################################################
+  factory :asset, class: ContentAsset do
+    sequence(:id, 1)
+    asset_order 1
+    asset_id 33585 # This is an actual BrightCove asset on AssetHost. This is not the best way to test this but it'll do for now.
+    sequence(:caption) { |n| "Caption #{n}" } 
+  end
+
+
+# ContentByline #########################################################
+  factory :byline, class: "ContentByline" do
+    role 0
+    user
+  end
   
-  factory :video_shell do
-    association :category, factory: :category_not_news
-    sequence(:headline) { |n| "This is a video #{n}" }
+  
+# Category #########################################################
+  factory :category do
+    trait :is_news do 
+      sequence(:category) { |n| "Local #{n}" }
+      is_news true
+    end
+
+    trait :is_not_news do
+      sequence(:category) { |n| "Culture #{n}" }
+      is_news false
+    end
+
+    slug { category.parameterize }
+    sequence(:comment_bucket_id)
+
+    factory :category_news, traits: [:is_news]
+    factory :category_not_news, traits: [:is_not_news]
+  end
+  
+
+# ContentCategory #########################################################
+  factory :content_category do
+    # Empty, forcing us to pass content and category every time we create one
+  end
+
+# Related #########################################################
+factory :related_content, class: Related do
+  factory :brel do # "brels" - needs content
+    flag 0
+    related { |brel| brel.association(:content_shell) } #TODO Need to be able to pass in any type of factory here
+  end
+
+  factory :frel do # "frels" - needs related
+    flag 0
+    content { |frel| frel.association(:content_shell) } #TODO Need to be able to pass in any type of factory here
+  end
+end
+  
+# Link #########################################################
+  factory :link do
+    title "A Related Link"
+    link "http://oncentral.org"
+    link_type "website"
+  end
+
+
+
+##########################################################
+### ContentBase Classes
+##### *NOTE:* The name of the factory should eq `ClassName.to_s.underscore.to_sym`, i.e. NewsStory = :news_story
+##### This is to please `#make_content` in /spec/support/content_base_helpers.rb
+##########################################################
+
+# ContentBase - Common attributes ##########################################################
+  trait :content_base do
+    ignore { asset_count 0 }
+    ignore { link_count 0 }
+    ignore { brel_count 0 }
+    ignore { frel_count 0 }
+    ignore { with_category false }
     status 5
-    sequence(:slug) { |n| "slug-#{n}" }
-    sequence(:published_at) { |n| Time.now + 60*n }
+  end
+  
+  trait :sequenced_published_at do
+    sequence(:published_at) { |n| Time.now + 60*60*n }
+  end
+  
+
+# VideoShell ##########################################################
+  factory :video_shell do
+    content_base
+    sequence(:headline) { |n| "This is a video #{n}" }
+    slug { headline.parameterize }
     body "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet non congue libero commodo. Vestibulum dolor nibh, eleifend eu suscipit eget, egestas sed diam. Proin cursus rutrum nibh eget consequat. Donec viverra augue sed nisl ultrices venenatis id eget quam. Cras id dui a magna tristique fermentum in sit amet lacus. Curabitur urna metus, mattis vel mollis quis, placerat vitae turpis.
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
+    sequenced_published_at
     
-    ignore { asset_count 1 }
-    ignore { link_count 0 }
-    ignore { brels_count 0 }
-    ignore { frels_count 0 }
-    after_create do |video_shell, eval|
-      content_base_associations(video_shell, eval)
+    ignore { related_factory "content_shell" }
+    ignore { category_type :category_not_news }
+    
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
   
+
+# NewsStory #########################################################
   factory :news_story do
-    association :category, factory: :category_news
+    content_base
     primary_reporter_id 7
-    headline "This is a news story"
-    sequence(:slug) { |n| "news-story-#{n}" }
+    sequence(:headline) { |n| "This is news story ##{n}" }
+    slug { headline.parameterize }
     news_agency "KPCC"
     _teaser "This is a teaser"
     body "This is a big block of text for the news story"
     locale "local"
-    sequence(:published_at) { |n| Time.now + 60*n }
     editing_status 2
     is_published 1 # required field by db but not used anymore
-    status 5
     byline "Local Byline"
     comment_count 1
     
-    ignore { asset_count 0 }
-    ignore { link_count 0 }
-    ignore { brels_count 0 }
-    ignore { frels_count 0 }
-    after_create do |news_story, eval|
-      content_base_associations(news_story, eval)
+    sequenced_published_at
+    ignore { related_factory "content_shell" }
+    ignore { category_type :category_news }
+    
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
-  
+
+
+# ShowEpisode #########################################################
   factory :show_episode, aliases: [:episode] do
+    content_base
     show
     sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
     title "AirTalk for May 22, 2009"
     _teaser "This is a short summary of the show"
-    sequence(:published_at) { |n| Time.now + 60*n }
-    status 5
     comment_count 0
+
+    sequenced_published_at
     
-    ignore { asset_count 0 }
-    ignore { link_count 0 }
-    ignore { brels_count 0 }
-    ignore { frels_count 0 }
-    after_create do |show_episode, eval|
-      content_base_associations(show_episode, eval)
+    ignore { segment_count 0 }
+    ignore { related_factory "content_shell" }
+    ignore { category_type nil }
+    
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
+      FactoryGirl.create_list(:show_rundown, evaluator.segment_count.to_i, episode: object, segment: FactoryGirl.create(:segment, show: object.show))
     end
   end
-  
+
+
+# ShowSegment #########################################################
   factory :show_segment, aliases: [:segment] do
+    content_base
     show
-    association :category, factory: :category_not_news
     sequence(:title) { |n| "Show Segment #{n}" }
-    sequence(:slug) { |n| "show-segment-#{n}" }
+    slug { title.parameterize }
     _teaser "This is a teaser for the show segment"
     body "This is a description of the show segment"
     locale "local"
-    status 5
     comment_count 1
     _short_headline "Short Headline"
-    sequence(:published_at) { |n| Time.now + 60*n }
-    audio_date Time.now
+    audio_date { Time.now }
     enco_number 999
+
+    sequenced_published_at
+    ignore { related_factory "content_shell" }
+    ignore { category_type :category_news }
     
-    ignore { asset_count 0 }
-    ignore { link_count 0 }
-    ignore { brels_count 0 }
-    ignore { frels_count 0 }
-    after_create do |show_segment, eval|
-      content_base_associations(show_segment, eval)
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
-  
+
+
+# BlogEntry #########################################################
   factory :blog_entry do
-    association :category, factory: :category_not_news
+    content_base
     sequence(:title) { |n| "Blog Entry #{n}" }
-    sequence(:slug) { |n| "blog-entry-#{n}" }
+    slug { title.parameterize }
     content "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet non congue libero commodo. Vestibulum dolor nibh, eleifend eu suscipit eget, egestas sed diam. Proin cursus rutrum nibh eget consequat. Donec viverra augue sed nisl ultrices venenatis id eget quam. Cras id dui a magna tristique fermentum in sit amet lacus. Curabitur urna metus, mattis vel mollis quis, placerat vitae turpis.
     Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
     author
     blog
     blog_slug { slug }
-    status 5
     is_published 1 # required field by db but not used anymore
     comment_count 1
-    sequence(:published_at) { |n| Time.now + 60*n }
+
+    sequenced_published_at
+    ignore { related_factory "content_shell" }
+    ignore { category_type :category_not_news }
     
-    ignore { asset_count 0 }
-    ignore { link_count 0 }
-    ignore { brels_count 0 }
-    ignore { frels_count 0 }
-    after_create do |blog_entry, eval|
-      content_base_associations(blog_entry, eval)
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
-  
+
+
+# ContentShell #########################################################
   factory :content_shell do
-    association :category, factory: :category_news
+    content_base
     comment_count 2
-    headline "This is some outside Content"
+    sequence(:headline) { |n| "This is some outside Content #{n}" }
     byline "Some Reporter"
     site "blogdowntown"
-    _teaser "This is a teaser for the content"
+    sequence(:_teaser) { |n| "This is a teaser for the content #{n}" }
     url "http://blogdowntown.com/2011/11/6494-green-paint-welcomes-cyclists-to-a-reprioritized"
-    status 5
-    sequence(:pub_at) { |n| Time.now + 60*n }
     
-    ignore { asset_count 0 }
-    ignore { link_count 0 }
-    ignore { brels_count 0 }
-    ignore { frels_count 0 }
-    after_create do |content_shell, eval|
-      content_base_associations(content_shell, eval)
+    sequence(:pub_at) { |n| Time.now + 60*60*n }
+    ignore { related_factory "video_shell" }
+    ignore { category_type :category_news }
+
+    after_create do |object, evaluator|
+      content_base_associations(object, evaluator)
     end
   end
 end

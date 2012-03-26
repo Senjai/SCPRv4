@@ -52,24 +52,25 @@
 		
 		.dark-modal-arrow {
 			position: relative;
-			top: -16px;
-			background: url(image_path('icons/dark-modal-arrow.png')) no-repeat 45px top;
+			top: -15px;
+			background: url(image_path('icons/dark-modal-arrow.png')) no-repeat 70px top;
 		}
 		
 		.inner-container {
 			margin-top: 13px; // Top of the modal box
 			@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
-			@include background-image(linear-gradient(#333, #111));
-			border: none;
+			@include background-image(linear-gradient(#333, #1b1b1b));
+			border: 1px solid #4c4c4c;
 			padding: 0;
 		}
 		
 		button.arrow {
+			cursor:pointer;
 			display: block;
 			position: relative;
 			top: 300px;		
 			width: 48px;
-			height: 48px;
+			height: 49px;
 			border-radius: 7px;
 			-moz-border-radius: 7px;
 			-webkit-border-radius: 7px;
@@ -89,7 +90,7 @@
 			text-align: center;
 			@include font-sans-serif(bold, 12px);
 			color: darken($gray, 15%);
-			text-shadow: 0 1px #888;
+			text-shadow: 0 -1px $black;
 		}
 		
 		div.list {
@@ -103,13 +104,16 @@
 } /* #multimedia */
 
 div.list {
-	@include font-heading;
+	@include font-headline;
+	font-weight:500;
 	text-align: center;
 	color: #808080;
 }
 
 .video-thumb {
 	a {
+		color:$grayLight;
+		display:block;
 		&:hover {
 			text-decoration: none;
 		}
@@ -120,10 +124,6 @@ div.list {
 		max-height: 143px;
 		overflow: hidden;
 		@include video-effects;
-	}
-	a {
-		color:$grayLight;
-		display:block;
 	}
 }
 

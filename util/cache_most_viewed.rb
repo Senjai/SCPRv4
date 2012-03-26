@@ -1,5 +1,20 @@
 # run through rails runner
 
+# initialize pickle so that we can cache for mercer
+
+require "rubypython"
+
+# FIXME: Hardcoding production python path for now, but this should be fixed
+if Rails.env == "production"
+  RubyPython.start(:python_exe => "/usr/local/python2.7.2/bin/python")
+else
+  RubyPython.start()      
+end
+    
+pickle = RubyPython.import("cPickle")
+
+# initialize our view for rendering
+
 view = ActionView::Base.new(ActionController::Base.view_paths, {})  
    
 class << view  
@@ -54,3 +69,11 @@ end
 
 top_traffic = view.render(:partial => "shared/widgets/most_popular_viewed", :object => content, :as => :content)
 Rails.cache.write("widget/popular_viewed",top_traffic)
+
+# write mercer cache
+
+(Rails.cache.instance_variable_get :@data).set(
+  ':1:most_popular:viewed',
+  pickle.dumps(top_traffic),
+  :raw => true
+)

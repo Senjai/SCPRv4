@@ -1,7 +1,7 @@
 Feature: Events
 
 Background:
-	Given the following events:
+	Given events with the following attributes:
 	 | title         | etype | starts_at     | is_published |
 	 | A Rad Event   | comm  | tomorrow 2pm  | 1            |
 	 | A Cool Event  | comm  | tomorrow 1pm  | 1            |
@@ -39,3 +39,83 @@ Scenario: Pagination
 	When I go to the events page
 	Then I should see 10 events
 	And there should be pagination
+
+Scenario: View an individual event
+	Given an event with the following attributes:
+	 | title     |
+	 | CFF Event |
+
+	When I go to that event's page
+	Then I should see "CFF Event"
+	And I should see article meta
+	And the article meta header should say "event"
+	And I should see a comments section
+
+Scenario: Visit a page for an event that doesn't exist
+	When I go to an event page for an event that doesn't exist
+	Then I should be redirected to the events page
+
+Scenario: RSVP link
+	Given an event with the following attributes:
+	 | rsvp_link       |
+	 | http://scpr.org |
+
+	When I go to that event's page
+	Then I should see an RSVP link
+	
+Scenario: No RSVP link
+	Given an event with the following attributes:
+	 | rsvp_link |
+	 |           |
+	
+	When I go to that event's page
+	Then I should not see an RSVP link
+
+Scenario: Show Map
+	Given an event with the following attributes:
+	 | show_map |
+	 | 1        |
+	
+	When I go to that event's page
+	Then I should see a map
+	And I should see a link to open the map
+
+Scenario: Do not show map
+	Given an event with the following attributes:
+	 | show_map |
+	 | 0        |
+	
+	When I go to that event's page
+	Then I should not see a map
+	And I should not see a link to open the map
+
+Scenario: See more upcoming events
+	Given an event with the following attributes:
+	 | etype | starts_at           |
+	 | comm  | 30 minutes from now |
+
+	When I go to that event's page
+	Then I should see 2 more upcoming events listed
+	And that event should not be in the upcoming events
+	
+Scenario: View detail for a past event
+	Given an event with the following attributes:
+	 | starts_at   | description                | archive_description    | show_map | rsvp_link       | audio                                    |
+	 | 2 weeks ago | This event will be awesome | This event was awesome | 1        | http://scpr.org | audio/events/2011/05/23/Father_Boyle.mp3 |
+
+	When I go to that event's page
+	Then I should see that even has already occurred
+	And I should not see an RSVP link
+	And I should not see a link to open the map
+	And I should not see a map
+	And I should see an audio link
+	And I should see "This event was awesome"
+	And I should not see "This event will be awesome"
+
+Scenario: Detail for Past Event without audio
+	Given an event with the following attributes:
+	 | starts_at   | audio |
+	 | 2 weeks ago |       |
+
+	When I go to that event's page
+	Then I should not see an audio link

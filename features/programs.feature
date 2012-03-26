@@ -7,12 +7,13 @@ Scenario: No Programs
 	Then I should not see any programs
 
 Scenario: See the featured programs on the index page
-	Given the following programs:
+	Given kpcc programs with the following attributes:
 		| slug				| title						|
 		| madeleine-brand	| The Madeleine Brand Show	|
 		| airtalk			| Airtalk					|
 		| patt-morrison		| Patt Morrison				|
 		| offramp			| Off-Ramp					|
+		
 	When I go to the programs page
 	Then I should see the featured programs in the correct order
 
@@ -30,7 +31,7 @@ Scenario Outline: View a Featured Program's page
 		| offramp			| Off-Ramp					|
 		
 Scenario: View a KPCC Program's page
-	Given there is 1 kpcc programs
+	Given there is 1 kpcc program
 	When I go to the program's page
 	Then I should see the program's information
 	
@@ -41,43 +42,66 @@ Scenario: View an Other Program's page
 	And I shouldn't see anything about episodes
 
 Scenario: View cached podcast feed for Other Program
-	Given there is 1 other program with a podcast and no RSS
-	And its feeds are cached
+	Given an other program with the following attributes:
+	 | podcast_url                     | rss_url |
+	 | http://oncentral.org/rss/latest |         |
+
+	And the feeds are cached
 	When I go to the program's page
 	Then I should see a list of that program's podcast entries
 	And I should not see any RSS entries
 
 Scenario: View cached RSS feed for Other Program
-	Given there is 1 other program with an RSS and no podcast
-	And its feeds are cached
+	Given an other program with the following attributes:
+	 | podcast_url | rss_url                         |
+	 |             | http://oncentral.org/rss/latest |
+
+	And the feeds are cached
 	When I go to the program's page
 	Then I should see a list of that program's RSS entries
 	And I should not see any podcast entries
 
 Scenario: View Other Program without rss or podcast
-	Given there is 1 other program with no RSS and no podcast
+	Given an other program with the following attributes:
+	 | podcast_url | rss_url |
+	 |             |         |
+
 	When I go to the program's page
 	Then I should see that there is nothing to list
 	
 Scenario: See a program's segments
-	Given there is 1 segment-style kpcc program
-	And the program has 2 segments
+	Given a kpcc program with the following attributes:
+	 | display_segments | display_episodes | segment_count | segment[asset_count] |
+	 | 1                | 0                | 2             | 1                    |
+
 	When I go to the program's page
 	Then I should see a list of that program's segments
 	And I should see each segment's primary asset
 
 Scenario: See an episodic program's episodes
-	Given there is 1 episodic-style kpcc program
-	And the program has 2 episodes
+	Given a kpcc program with the following attributes:
+	 | display_segments | display_episodes | episode_count | episode[asset_count] |
+	 | 0                | 1                | 2             | 1                    |
+	
 	When I go to the program's page
 	Then I should see a list of older episodes below the current episode
 	And I should see each episode's primary asset
 	
 Scenario: See an episodic program's current episode
-	Given there is 1 episodic-style kpcc program
-	And the program has 2 episodes
-	And each episode has 2 segments
+	Given a kpcc program with the following attributes:
+	 | display_segments | display_episodes | episode_count | episode[segment_count] | episode[asset_count] |
+	 | 0                | 1                | 2             | 2                      | 1                    |
+
 	When I go to the program's page
 	Then I should see the current episode's information
 	And I should see the episode's primary asset
 	And I should see a list of the current episode's segments
+
+Scenario: See a video player if the program has a dedicated Brightcove player
+	Given a kpcc program with the following attributes:
+	 | title     | video_player |
+	 | Cool Show | 99999        |
+	
+	When I go to that program's page
+	Then I should see a brightcove player section
+
