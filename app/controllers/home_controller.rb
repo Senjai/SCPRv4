@@ -22,7 +22,7 @@ class HomeController < ApplicationController
       include Rails.application.routes.url_helpers
     end
     
-    Rails.logger.debug("in _cache_homepage for #{obj_key}")
+    Rails.logger.info("in _cache_homepage for #{obj_key}")
     
     # -- Update Sphinx Index -- #
     
@@ -33,9 +33,8 @@ class HomeController < ApplicationController
       if idx && idx.any?
         tsc = ThinkingSphinx::Configuration.instance
         # run index
-        tsc.controller.index idx
-        
-        Rails.logger.debug("Sphinx index updated for #{model.name}")
+        out = tsc.controller.index idx
+        Rails.logger.info("Sphinx index updated for #{model.name}: #{out}")
       end
     end
     
