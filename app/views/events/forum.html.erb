@@ -4,7 +4,7 @@
 <!-- HERO -->
 	<header id="events-header">
 		<div class="slides-wrapper">
-			<div class="slide" id="hero-1">
+			<div class="slide active" id="hero-1">
 				<div class="slide-text">
 					<h3>Where the conversation starts</h3>
 					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
@@ -12,7 +12,7 @@
 				<%= image_tag 'event-headers/hero-1.jpg', alt: "" %>
 			</div>
 		
-			<div class="slide active" id="hero-2">
+			<div class="slide" id="hero-2">
 				<div class="slide-text">
 					<h3>Crawford Family Forum</h3>
 					<p>Located in Pasadena, CA at the home of KPCC.</p>
@@ -37,9 +37,10 @@
 			</div>
 		</div><!-- slides-wrapper -->
 		<div class="choosers">
-			<% 4.times do |i| %>
-				<div class="chooser" data-slide="hero-<%=i+=1%>"><%=i%></div>
-			<% end %>
+			<div class="chooser active" data-slide="hero-1">1</div>
+			<div class="chooser" data-slide="hero-2">2</div>
+			<div class="chooser" data-slide="hero-3">3</div>
+			<div class="chooser" data-slide="hero-4">4</div>
 		</div> <!-- choosers -->
     </header>
 <% end %>
