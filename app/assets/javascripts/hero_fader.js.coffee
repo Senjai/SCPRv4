@@ -36,6 +36,10 @@ class scpr.HeroFader
             
             # Don't do anything if the user clicked on the chooser for the slide that they're already on
             if $next[0] isnt $active[0]
+                # Hightlight the chooser for the active slide
+                $(@options.chooser + "[#{@options.slideId}='#{$next.attr("id")}']").addClass("active")
+                $(@options.chooser + "[#{@options.slideId}='#{$active.attr("id")}']").removeClass("active")
+                
                 # Clear the timeout incase we clicked a button in the middle of one
                 clearTimeout(@faderTimeout)
 

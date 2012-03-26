@@ -337,6 +337,10 @@ span.fake-link {
 				background-color:$nearBlack;
 				opacity:0.5;
 			}
+			&.active {
+				border-color: #b24401;
+				opacity: 0.8;
+			}
 		}
 	}
 	
