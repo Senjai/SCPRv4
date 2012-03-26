@@ -87,4 +87,8 @@ Scprv4::Application.routes.draw do
   match '/beta/' => "home#beta", :as => :beta
   
   root to: "home#index"
+  
+  # catch error routes
+  match '/404', :to => 'home#not_found'
+  match '/500', :to => 'home#error'
 end
