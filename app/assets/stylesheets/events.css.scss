@@ -356,7 +356,8 @@ span.fake-link {
 				position: absolute;
 				z-index: 20;
 				top: 50px;
-				left: 50px;
+				left: 50%;
+				margin-left:-554px;
 				width: 523px;
 				text-align: left;
 				padding: 35px 0 0 37px;
