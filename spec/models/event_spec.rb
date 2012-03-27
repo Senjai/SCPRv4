@@ -170,7 +170,7 @@ describe Event do
     end
     
     describe "forum" do
-      it "only selects events not of type 'spon' or 'pick'" do
+      it "only selects events of types in ForumTypes array" do
         spon_event = create :event, etype: "spon" # "spon" = sponsored
         pick_event = create :event, etype: "pick"
         comm_event = create :event, etype: "comm"

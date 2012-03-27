@@ -58,8 +58,8 @@
 						<div class="location-text">Location</div>
 						<ul class="address">
 							<li><span class="blue"><%= @event.location_link.present? ? link_to(@event.location_name, @event.location_link) : @event.location_name %></span></li>
-							<% if @event.address_1.present? %><li><%= raw @event.address_1 %></li><% end %>
-							<% if @event.address_2.present? %><li><%= raw @event.address_2 %></li><% end %>
+							<% if @event.address_1.present? %><li><%= @event.address_1 %></li><% end %>
+							<% if @event.address_2.present? %><li><%= @event.address_2 %></li><% end %>
 							<li><%= "#{@event.city}," if @event.city.present? %> <%= "#{@event.state} #{@event.zip_code}" %></li>
 							<% if @event.show_map and @event.upcoming? %>
 								<li class="modal-container">									
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 			<%= render_asset @event, "blog" %>
-			<p><%= simple_format @event.description, santize: false %></p>
+			<p><%= simple_format @event.description, sanitize: false %></p>
 			<br style="clear: both" />
 			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
 		</div>

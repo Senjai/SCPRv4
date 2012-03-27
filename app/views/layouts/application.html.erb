@@ -11,9 +11,9 @@
 <%= render "shared/masthead" %>
 
 <div id="main" class="container">
-	<%= yield :title_bar if content_for? :title_bar %>
+	<%= yield :title_bar %>
 	<div class="row">
-		<%= yield :masthead if content_for? :masthead %>
+		<%= yield :masthead %>
 		<article class="span8">
 			<%= content_for?(:content) ? yield(:content) : yield %>
 		</article>

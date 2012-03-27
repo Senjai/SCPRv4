@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
 
   scope :published, where(:is_published => true)
   scope :upcoming, lambda { published.where("starts_at > ?", Time.now).order("starts_at") }
-  scope :forum, published.where("etype != ? AND etype != ?", "spon", "pick")
+  scope :forum, published.where("etype IN (?)", ForumTypes)
   scope :sponsored, published.where("etype = ?", "spon")
   scope :past, lambda { published.where("starts_at < ?", Time.now).order("starts_at desc") }
   
@@ -93,7 +93,26 @@ class Event < ActiveRecord::Base
   ### ContentBase methods
   
   def teaser # TODO Need a teaser column in mercer for events
-    description.blank? ? "#{title} at #{location_name}" : description.scan(/(?:\w+\s)/)[0..20].join(" ") + "..."
+    l = 180    
+    
+    # first test if the first paragraph is an acceptable length
+    fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.description).gsub("&nbsp;"," ").gsub(/\r/,''))
+    
+    if fp && fp[1].length < l
+      # cool, return this
+      return fp[1]
+    elsif fp
+      # try shortening this paragraph
+      short = /^(.{#{l}}\w*)\W/.match(fp[1])
+      
+      if short
+        return "#{short[1]}..."
+      else
+        return fp[1]
+      end
+    else
+      return ''
+    end
   end
   
   def headline

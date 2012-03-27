@@ -39,7 +39,7 @@ class scpr.GMapsLoader
             return false
     
         if !address # Make sure Google Maps has something to do when it's loaded
-            @notifyError
+            @notifyError()
             return false
 
         mapOpts = 
