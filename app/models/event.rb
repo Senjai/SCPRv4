@@ -70,10 +70,6 @@ class Event < ActiveRecord::Base
     end
   end
   
-  def show_comments
-    false # TODO Add this column in mercer
-  end
-  
   def audio_url
     "http://media.scpr.org/#{self.audio}"
   end
@@ -92,8 +88,34 @@ class Event < ActiveRecord::Base
   
   ### ContentBase methods
   
-  def teaser # TODO Need a teaser column in mercer for events
-    description.blank? ? "#{title} at #{location_name}" : description.scan(/(?:\w+\s)/)[0..20].join(" ") + "..."
+  def teaser
+    if self._teaser?
+      return self._teaser
+    end
+    
+    # -- cut down body to get teaser -- #
+    
+    l = 180    
+    
+    # first test if the first paragraph is an acceptable length
+    fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.description).gsub("&nbsp;"," ").gsub(/\r/,''))
+    
+    if fp && fp[1].length < l
+      # cool, return this
+      return fp[1]
+    elsif fp
+      # try shortening this paragraph
+      short = /^(.{#{l}}\w*)\W/.match(fp[1])
+      
+      if short
+        return "#{short[1]}..."
+      else
+        return fp[1]
+      end
+    else
+      return ''
+    end    
+
   end
   
   def headline
@@ -107,7 +129,6 @@ class Event < ActiveRecord::Base
   def remote_link_path
     "http://www.scpr.org#{self.link_path}"
   end
-  
   
   def obj_key
     "events/event:#{self.id}"

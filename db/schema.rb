@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301225558) do
+ActiveRecord::Schema.define(:version => 20120327015211) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -249,7 +249,6 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
   create_table "contentbase_contentshell", :force => true do |t|
     t.integer  "comment_count",                       :default => 0,                     :null => false
     t.string   "headline",      :limit => 200,                                           :null => false
-    t.string   "byline",        :limit => 50,                                            :null => false
     t.string   "site",          :limit => 50,         :default => "KPCC",                :null => false
     t.text     "_teaser",       :limit => 2147483647,                                    :null => false
     t.string   "url",           :limit => 150,                                           :null => false
@@ -450,7 +449,6 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.string   "slug",                :limit => 50,                            :null => false
     t.text     "description",         :limit => 2147483647,                    :null => false
     t.string   "type",                :limit => 4,                             :null => false
-    t.string   "image",               :limit => 100,                           :null => false
     t.string   "sponsor",             :limit => 140,                           :null => false
     t.string   "sponsor_link",        :limit => 200,                           :null => false
     t.datetime "starts_at",                                                    :null => false
@@ -472,6 +470,8 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.text     "archive_description", :limit => 2147483647,                    :null => false
     t.string   "audio",               :limit => 100,        :default => "",    :null => false
     t.boolean  "is_published",                                                 :null => false
+    t.boolean  "show_comments",                                                :null => false
+    t.text     "_teaser",             :limit => 2147483647,                    :null => false
   end
 
   add_index "events_event", ["slug"], :name => "events_event_slug"
@@ -1187,6 +1187,8 @@ ActiveRecord::Schema.define(:version => 20120301225558) do
     t.text     "archive_description", :limit => 2147483647,                    :null => false
     t.string   "audio",               :limit => 100,        :default => "",    :null => false
     t.boolean  "is_published",                                                 :null => false
+    t.boolean  "show_comments",                                                :null => false
+    t.text     "_teaser",             :limit => 2147483647,                    :null => false
   end
 
   create_table "rails_layout_homepagecontent", :id => false, :force => true do |t|
