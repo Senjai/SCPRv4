@@ -51,6 +51,8 @@ class ContentBase < ActiveRecord::Base
   
   has_one :content_category, :as => "content"
   has_one :category, :through => :content_category
+  
+  has_many :audio, :as => :content, :order => "position asc"
     
   def self.published
     where(:status => STATUS_LIVE).order("published_at desc")
@@ -292,25 +294,5 @@ class ContentBase < ActiveRecord::Base
   def public_datetime
     self.published_at
   end
-  
-  #----------
-  
-  def audio
-    @audio ||= self._get_audio()
-  end
-  
-  def _get_audio
-    # check for ENCO Audio
-    audio = []
     
-    if self.respond_to?(:enco_audio)
-      audio << self.enco_audio
-    end
-    
-    if self.respond_to?(:uploaded_audio)
-      audio << self.uploaded_audio
-    end
-    
-    return audio.flatten.compact
-  end
 end
