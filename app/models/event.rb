@@ -45,7 +45,7 @@ class Event < ActiveRecord::Base
   #----------
   
   def url_safe_address
-    inline_address.gsub(/\s/, "+") # TODO Figure out what else we need to gsub - https://developers.google.com/maps/documentation/webservices/#BuildingURLs
+    URI.escape(inline_address.gsub(/\s/, '+'), Regexp.new("[^#{URI::PATTERN::UNRESERVED}\+]"))
   end
   
   def is_forum_event?

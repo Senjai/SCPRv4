@@ -32,6 +32,11 @@ describe Event do
       event = build :event, address_1: "474 South Raymond"
       event.url_safe_address.should match /\+/
     end
+    
+    it "should escape other special characters" do
+      event = build :event, address_1: "474 South & Main, CA"
+      event.url_safe_address.should_not match /[\&,]/
+    end
   end
   
   describe "consoli_dated" do
