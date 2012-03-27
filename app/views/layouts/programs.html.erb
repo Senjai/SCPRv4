@@ -1,4 +1,5 @@
-<% content_for :masthead do %>
+<% content_for :title_bar do %>
+<div class="row">
 	<div class="span12 program-masthead">
 		<div class="span8">
 			<div class="row">
@@ -21,13 +22,14 @@
 			</a> <!-- .support -->
 		</div> <!-- span4 -->
 	</div> <!-- program masthead-->
+</div>
 <% end %>
 
 <% content_for :content do %>
 	<%= content_for?(:program_content) ? yield(:program_content) : yield %>
 <% end %>
 
-<% content_for :sidebartop do %>
+<% content_for :sidebar_middle do %>
 	<% if @program.is_a? KpccProgram %>
 		<%= render "shared/widgets/program_about", program: @program %>
 	<% end %>

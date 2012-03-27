@@ -37,7 +37,7 @@ class OtherProgram < ActiveRecord::Base
       
       if podcast.present? && !podcast.is_a?(Fixnum)
         podcast_html = view.render :partial => "programs/cached/podcast_entry", :collection => podcast.entries.first(5), :as => :entry
-        podcast_cache = Rails.cache.write("ext_program:#{self.slug}:podcast", podcast_html)
+        Rails.cache.write("ext_program:#{self.slug}:podcast", podcast_html)
         puts "Cached Podcast."
       end
     end
@@ -51,13 +51,13 @@ class OtherProgram < ActiveRecord::Base
       end
       
       if rss.present? && !rss.is_a?(Fixnum)
-        rss_cache = Rails.cache.write(
+        Rails.cache.write(
           "ext_program:#{self.slug}:rss", 
            view.render(:partial => "programs/cached/podcast_entry", :collection => rss.entries.first(5), :as => :entry)
         )
         puts "Cached RSS."
       end
     end # rss_url?
-    return rss.present? || podcast.present?
+    return podcast.present? || rss.present?
   end
 end
