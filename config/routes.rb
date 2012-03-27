@@ -55,6 +55,7 @@ Scprv4::Application.routes.draw do
   
   # -- Forum -- #
   match '/forum/space' => 'events#space', as: :forum_space
+  match '/forum/space/request' => 'events#request', as: :forum_request
   match '/forum/directions' => 'events#directions', as: :forum_directions
   match '/forum/volunteer' => 'events#volunteer', as: :forum_volunteer
   match '/crawfordfamilyforum' => 'events#about', as: :forum_about
