@@ -1,5 +1,5 @@
+<% page_title [@event.title, "Events"] %>
 <% watch_gmaps %>
-
 
 <div class="event event-detail">
 	<div class="row">
@@ -63,7 +63,7 @@
 							<li><%= "#{@event.city}," if @event.city.present? %> <%= "#{@event.state} #{@event.zip_code}" %></li>
 							<% if @event.show_map and @event.upcoming? %>
 								<li class="modal-container">									
-									<span class="fake-link bold map-link modal-toggler" data-address="<%= @event.url_safe_address %>">Map &amp; Directions</span>
+									<span class="fake-link bold map-link modal-toggler" data-address="<%= j @event.inline_address %>">Map &amp; Directions</span>
 									<%= modal("google-maps") do %>
 										<h5 class="address"><%= @event.inline_address %></h5>
 										<div class="google-map map-canvas" id="map-canvas"></div>

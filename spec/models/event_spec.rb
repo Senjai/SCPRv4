@@ -22,23 +22,6 @@ describe Event do
     end
   end
   
-  describe "url_safe_address" do
-    it "should not have spaces" do
-      event = build :event
-      event.url_safe_address.should_not match /\s/
-    end
-    
-    it "should have plus-signs if there are spaces in the address" do
-      event = build :event, address_1: "474 South Raymond"
-      event.url_safe_address.should match /\+/
-    end
-    
-    it "should escape other special characters" do
-      event = build :event, address_1: "474 South & Main, CA"
-      event.url_safe_address.should_not match /[\&,]/
-    end
-  end
-  
   describe "consoli_dated" do
     it "uses the start date only if is_all_day is true" do
       event = build :event, is_all_day: true, starts_at: 1.hour.from_now

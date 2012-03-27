@@ -48,10 +48,6 @@ class Event < ActiveRecord::Base
   
   #----------
   
-  def url_safe_address
-    URI.escape(inline_address.gsub(/\s/, '+'), Regexp.new("[^#{URI::PATTERN::UNRESERVED}\+]"))
-  end
-  
   def is_forum_event?
     ForumTypes.include? self.etype
   end
