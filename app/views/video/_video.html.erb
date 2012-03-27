@@ -7,6 +7,6 @@
 	</section>
 	<h1 class="story-headline"><%= video.headline %></h1>
 	<p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= smart_date video %></time></p>
-	<p class="description"><%= video.body %></p>
+	<p class="description"><%= raw video.body %></p>
 	<%= social_tools_for video, cssClass: "multimedia" %>
 <% end %>

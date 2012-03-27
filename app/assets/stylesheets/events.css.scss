@@ -266,7 +266,7 @@ span.fake-link {
 		background:url("section-headline-background.png") repeat-x;
 		height:35px;
 		line-height: 35px;
-		padding-left: 5px;
+		padding:2px 0 0 5px;
 		a {
 			
 		}
@@ -440,19 +440,35 @@ nav.section-nav {
 		}
 	}
 }
-
-#getting-there {
+.forum nav.section-nav {
+	margin-bottom:10px;
+}
+.forum #sidebar .widget {
 	display: block;
-	background: url(image_path("cff-building.png")) no-repeat right 98%;
-	&:hover {
-		text-decoration: none;
+	p { 
+		margin:20px 0 24px;
+		@include font-navigation($size: 14px, $lineHeight: 16px);
 	}
-	ul { 
-		margin-top: 20px;
-		@include font-navigation($size: 13px);
-		li {
-			color: darken($gray, 20%);
-		}
+}
+.forum #sidebar #getting-there {
+	background: url(image_path("cff-building.png")) no-repeat right 98%;
+	h3 {
+		background: url(image_path("icons/forum-directions.png")) no-repeat left top;
+		padding-left:46px;
+	}
+	p { 
+		margin:20px 0 24px;
+		width:130px;
+	}
+}
+.forum #sidebar #community-partnerships {
+	h3 {
+		background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
+		height:26px;
+		padding-left:46px;
+	}
+	p { 
+		margin:14px 0;
 	}
 }
 

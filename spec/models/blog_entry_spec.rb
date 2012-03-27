@@ -11,7 +11,6 @@ describe BlogEntry do
     it { should belong_to :author }
     it { should have_many :tagged }
     it { should have_many(:tags).through(:tagged) }
-    it { should have_many :uploaded_audio }
   end
   
   describe "scopes" do

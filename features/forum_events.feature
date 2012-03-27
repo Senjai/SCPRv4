@@ -26,7 +26,7 @@ Scenario: No Events
 Scenario: See the closest 4 events
 	Given there are 6 upcoming forum events
 	When I go to the forum page
-	Then I should see the 4 closest events
+	Then I should see the 3 closest events
 
 Scenario: See primary assets for each event
 	Given events with the following attributes:

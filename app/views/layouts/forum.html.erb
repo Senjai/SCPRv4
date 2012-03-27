@@ -24,20 +24,22 @@
 			<% else %>
 				<%= render 'events/nav' %>
 
-				<a href="<%= forum_directions_path %>" id="getting-there" class="widget event-headers">
-					<h3>Getting to the <br />Crawford Family Forum</h3>
-					<ul>
-						<li>Directions</li>
-						<li>Parking</li>
-						<li>Public Transit</li>
-					</ul>
-				</a>
-
-				<div id="community-partnerships" class="widget event-headers">
-					<h3>Community Partnerships</h3>
-					<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> <!-- temporary -->
+				<div id="getting-there" class="widget event-headers">
+					<h3>Finding the Crawford Family Forum</h3>
+					<p><%= link_to "Get directions, parking and public transit info", forum_directions_path %></p>
 				</div>
 
+				<div id="community-partnerships" class="widget event-headers">
+					<h3>Partner with us</h3>
+					<p>We seek events that open dialogue and deepen the relationships and understanding of Southern California’s diverse communities.</p>
+					<p><%= link_to "Learn more about community partnerships", forum_space_path %></p>
+				</div>
+
+				<div class="ad widget">
+					<a href="https://scprcontribute.publicradio.org">
+					    <%= image_tag 'support-forum.png', alt: "Pledge now to become a KPCC member" %>
+					</a>
+				</div>
 			<% end %> <!-- /SIDEBAR -->
 			
 		</div>

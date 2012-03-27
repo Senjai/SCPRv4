@@ -3,6 +3,7 @@ def content_base_associations(object, evaluator)
   FactoryGirl.create_list(:link, evaluator.link_count.to_i, content: object)
   FactoryGirl.create_list(:brel, evaluator.brel_count.to_i, content: object)
   FactoryGirl.create_list(:frel, evaluator.frel_count.to_i, related: object)
+  FactoryGirl.create_list(:byline, evaluator.byline_count.to_i, content: object)
   FactoryGirl.create(:content_category, content: object, category: FactoryGirl.create(evaluator.category_type)) if evaluator.category_type.present? && evaluator.with_category
 end
 
@@ -143,6 +144,8 @@ FactoryGirl.define do
     audio "audio/events/2011/05/23/Father_Boyle.mp3"
     archive_description "This is the description that shows after the event has happened"
     is_published 1
+    show_comments 1
+    _teaser "This is a short teaser"
     
     ignore { asset_count 0 }
     after_create do |event, evaluator|
@@ -161,9 +164,10 @@ FactoryGirl.define do
 
 
 # ContentByline #########################################################
-  factory :byline, class: "ContentByline" do
+  factory :byline, class: "ContentByline" do # Requires we pass in "content"
     role 0
     user
+    name "Dan Jones"
   end
   
   
@@ -227,6 +231,7 @@ end
     ignore { brel_count 0 }
     ignore { frel_count 0 }
     ignore { with_category false }
+    ignore { byline_count 0 }
     status 5
   end
   
@@ -352,7 +357,6 @@ end
     content_base
     comment_count 2
     sequence(:headline) { |n| "This is some outside Content #{n}" }
-    byline "Some Reporter"
     site "blogdowntown"
     sequence(:_teaser) { |n| "This is a teaser for the content #{n}" }
     url "http://blogdowntown.com/2011/11/6494-green-paint-welcomes-cyclists-to-a-reprioritized"

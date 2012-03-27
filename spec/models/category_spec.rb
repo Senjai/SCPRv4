@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe Category do
+  describe "associations" do
+    it { should belong_to :comment_bucket }
+  end
+  
   describe "#link_path" do
     it "can generate a link_path" do
       category = create :category_news

@@ -22,18 +22,6 @@ describe Event do
     end
   end
   
-  describe "url_safe_address" do
-    it "should not have spaces" do
-      event = build :event
-      event.url_safe_address.should_not match /\s/
-    end
-    
-    it "should have plus-signs if there are spaces in the address" do
-      event = build :event, address_1: "474 South Raymond"
-      event.url_safe_address.should match /\+/
-    end
-  end
-  
   describe "consoli_dated" do
     it "uses the start date only if is_all_day is true" do
       event = build :event, is_all_day: true, starts_at: 1.hour.from_now
@@ -54,6 +42,17 @@ describe Event do
       event = build :event, starts_at: Time.now.yesterday, ends_at: Time.now.tomorrow
       event.consoli_dated.should match event.starts_at.strftime("%A")
       event.consoli_dated.should match event.ends_at.strftime("%A")
+    end
+    
+    it "shows meridian for starts_at if it doesn't match that of ends_at" do
+      event = build :event, starts_at: Time.now.beginning_of_day, ends_at: Time.now.end_of_day
+      event.consoli_dated.should match "am"
+      event.consoli_dated.should match "pm"
+    end
+    
+    it "hides meridian for starts_at only if it matches that of ends_at" do
+      event = build :event, starts_at: Time.now.beginning_of_day, ends_at: Time.now.beginning_of_day + 60*60*2
+      event.consoli_dated.scan("am").length.should eq 1
     end
   end
   

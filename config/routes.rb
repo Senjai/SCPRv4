@@ -55,6 +55,7 @@ Scprv4::Application.routes.draw do
   
   # -- Forum -- #
   match '/forum/space' => 'events#space', as: :forum_space
+  match '/forum/space/request' => 'events#request', as: :forum_request
   match '/forum/directions' => 'events#directions', as: :forum_directions
   match '/forum/volunteer' => 'events#volunteer', as: :forum_volunteer
   match '/crawfordfamilyforum' => 'events#about', as: :forum_about
@@ -96,4 +97,8 @@ Scprv4::Application.routes.draw do
   match '/beta/' => "home#beta", :as => :beta
   
   root to: "home#index"
+  
+  # catch error routes
+  match '/404', :to => 'home#not_found'
+  match '/500', :to => 'home#error'
 end

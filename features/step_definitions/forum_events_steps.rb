@@ -29,7 +29,7 @@ Then /^I should see the closest event featured$/ do
 end
 
 Then /^I should see future events listed below the closest event$/ do
-  page.should have_css ".event.future", count: @events.count - 1
+  page.should have_css ".event.future"
 end
 
 Then /^the closest event should not be in the list of future events$/ do
@@ -54,7 +54,6 @@ end
 Then /^that event should not be in the upcoming events$/ do
   find(".more-events").should_not have_content @event.title
 end
-
 
 
 #### Assertions

@@ -2,7 +2,7 @@ module TwitterCacher
 
   def cache_tweets(*screen_names)
     options = screen_names.last.is_a?(Hash) ? screen_names.pop : {}
-    options.reverse_merge!(count: 5, trim_user: 0, include_rts: 1, exclude_replies: 1, include_entities: 0)
+    options.reverse_merge!(count: 6, trim_user: 0, include_rts: 1, exclude_replies: 1, include_entities: 0)
     return "A request for that amount of tweets is going to upset Twitter. Keep it under 150/hour." if (screen_names.length * options[:count].to_i) > 150
     
     view = ActionView::Base.new(ActionController::Base.view_paths, {})
