@@ -63,7 +63,7 @@ class scpr.ContentBaseAPI
         to = new Date()
         from = new Date(date)
 
-        if to.getISODate() == from.getISODate()
+        if [to.getYear,to.getMonth,to.getDate].join("-") == [from.getYear,from.getMonth,from.getDate].join("-")
             # today.  just h:mm
             return strftime "%l:%M%p", from
         else if ( Number(to) - Number(from) ) < (86400 * 7)
