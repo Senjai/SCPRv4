@@ -22,6 +22,7 @@ class scpr.ContentBaseAPI
         24:     'shows/segment'
         44:     'blogs/entry'
         115:    'content/shell'
+        125:    'content/video'
         
     @ContentTypeToDjango:
         'news/story':       15
@@ -29,6 +30,7 @@ class scpr.ContentBaseAPI
         'shows/episode':    25
         'blogs/entry':      44
         'content/shell':    115
+        'content/video':    125
             
     constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend options || {}

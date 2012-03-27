@@ -24,7 +24,7 @@ class ContentBase < ActiveRecord::Base
     'shows/segment' => "ShowSegment",
     'shows/episode' => "ShowEpisode",
     'blogs/entry'   => "BlogEntry",
-    'video/shell'   => "VideoShell",
+    'content/video' => "VideoShell",
     'content/shell' => "ContentShell"
   }
   
@@ -36,7 +36,8 @@ class ContentBase < ActiveRecord::Base
     %r{^/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'shows/segment',
     %r{^/admin/shows/segment/(\d+)/}                 => 'shows/segment',
     %r{^/admin/shows/episode/(\d+)/}                 => 'shows/episode',
-    %r{^/admin/contentbase/contentshell/(\d+)/}      => 'content/shell'
+    %r{^/admin/contentbase/contentshell/(\d+)/}      => 'content/shell',
+    %r{^/admin/contentbase/videoshell/(\d+)/}      => 'content/video'    
   }
 
   # All ContentBase objects have assets and alarms
