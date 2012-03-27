@@ -320,9 +320,9 @@ module ApplicationHelper
     formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
   end
   
-  def modal(cssClass, &block)
+  def modal(cssClass, options={}, &block)
     content_for(:modal_content, capture(&block))
-    render('shared/modal_shell', cssClass: cssClass)
+    render('shared/modal_shell', cssClass: cssClass, options: options)
   end
   
   def watch_gmaps(options={})

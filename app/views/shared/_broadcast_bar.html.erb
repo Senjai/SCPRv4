@@ -7,8 +7,13 @@
 			<li class="active-show-title">
 				<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
 				<% if o.programme %>
-					<a href="<%= program_path(o.programme.slug) %>" class="<%= o.show_modal? %>">
-						<%= image_tag("broadcast-bar/headshots/#{o.programme.slug}.png", :size => "90x70", :alt => o.programme.title, :class => "bbar_headshot") if o.programme.is_a? KpccProgram %><%= o.program %>
+					<% if o.programme.is_a? KpccProgram %>
+						<a href="<%= program_path(o.programme.slug) %>">
+							<%= image_tag("broadcast-bar/headshots/#{o.programme.slug}.png", :size => "90x70", :alt => o.programme.title, :class => "bbar_headshot") %>
+						</a>
+					<% end %>
+					<a href="<%= program_path(o.programme.slug) %>"<% if o.show_modal? %> class="modal-toggler" data-modal-id="episode-guide"<% end %>>
+						<%= o.program %>
 					</a>
 				<% else %>
 					<%= o.program %>
@@ -21,7 +26,9 @@
 				<!-- <li class="show-status">On Now:</li> -->
 				<% if o.show_modal? %>
 					<li class="show-summary">
-						<%= render :partial => "shared/broadcast_bar/episode_guide", :object => o.programme.episodes.published.first, :as => :episode, :locals => { :program => o.programme } %>
+						<%= modal("episode-guide", modal_id: "episode-guide") do %>
+							<%= render :partial => "shared/broadcast_bar/episode_guide", :object => o.programme.episodes.published.first, :as => :episode, :locals => { :program => o.programme } %>
+						<% end %>
 					</li>
 				<% end %>
 				<!-- <li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li> -->

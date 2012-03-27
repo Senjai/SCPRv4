@@ -36,11 +36,11 @@
 			color: $orangeDark;
 		}
 	}
-}
+} // modal-light
 
 @mixin modal-dark {
 	
-}
+} // modal-dark
 
 .modal-container { // Wrap this class around the modal-popup if you need to so the modal will be positioned properly
 	position: relative;
@@ -76,7 +76,6 @@
 	
 	// Check out the `modal` helper for a quick way to put a modal anywhere
 	
-	display: block;
 	position: absolute;
 	display: none;
 	z-index: 30; // Pop-ups are greedy
@@ -105,7 +104,12 @@
 	
 	&.episode-guide {
 		@include modal-light;
-	}// .broadcast-bar
+		position:absolute;
+		width:650px;
+		min-height:300px;
+		left:-220px;
+		top:27px;
+	} // .episode-guide
 	
 	&.videos {
 		@include modal-dark;
