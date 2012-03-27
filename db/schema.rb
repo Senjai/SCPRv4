@@ -470,8 +470,8 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
     t.text     "archive_description", :limit => 2147483647,                    :null => false
     t.string   "audio",               :limit => 100,        :default => "",    :null => false
     t.boolean  "is_published",                                                 :null => false
-    t.boolean  "show_comments",                                                :null => false
     t.text     "_teaser",             :limit => 2147483647,                    :null => false
+    t.boolean  "show_comments",                                                :null => false
   end
 
   add_index "events_event", ["slug"], :name => "events_event_slug"
@@ -746,6 +746,22 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
   end
 
   add_index "mailchimp_reciever", ["campaign_id"], :name => "mailchimp_reciever_8fd46b1a"
+
+  create_table "media_audio", :force => true do |t|
+    t.string  "mp3",             :limit => 100
+    t.integer "size"
+    t.integer "duration"
+    t.integer "enco_number"
+    t.date    "enco_date"
+    t.integer "content_type_id",                                           :null => false
+    t.integer "object_id",                                                 :null => false
+    t.text    "description",     :limit => 2147483647
+    t.string  "byline",          :limit => 150,        :default => "KPCC", :null => false
+    t.integer "position",                              :default => 0,      :null => false
+  end
+
+  add_index "media_audio", ["content_type_id", "object_id"], :name => "media_audio_content_type_id_569dcfe00f4d911"
+  add_index "media_audio", ["content_type_id"], :name => "media_audio_e4470c6e"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
@@ -1095,6 +1111,7 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
     t.boolean "display_segments",                                          :null => false
     t.integer "blog_id"
     t.string  "video_player",     :limit => 20
+    t.string  "audio_dir",        :limit => 50
   end
 
   add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
@@ -1197,6 +1214,20 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
     t.integer "content_id",                   :null => false
     t.string  "content_type",                 :null => false
     t.integer "position",     :default => 99, :null => false
+  end
+
+  create_table "rails_media_audio", :id => false, :force => true do |t|
+    t.integer "id",                                 :default => 0,      :null => false
+    t.integer "content_id",                                             :null => false
+    t.string  "content_type",                                           :null => false
+    t.string  "mp3",          :limit => 100
+    t.text    "description",  :limit => 2147483647
+    t.string  "byline",       :limit => 150,        :default => "KPCC", :null => false
+    t.integer "enco_number"
+    t.date    "enco_date"
+    t.integer "position",                           :default => 0,      :null => false
+    t.integer "duration"
+    t.integer "size"
   end
 
   create_table "rails_media_link", :id => false, :force => true do |t|
