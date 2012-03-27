@@ -60,6 +60,17 @@ describe Event do
       event.consoli_dated.should match event.starts_at.strftime("%A")
       event.consoli_dated.should match event.ends_at.strftime("%A")
     end
+    
+    it "shows meridian for starts_at if it doesn't match that of ends_at" do
+      event = build :event, starts_at: Time.now.beginning_of_day, ends_at: Time.now.end_of_day
+      event.consoli_dated.should match "am"
+      event.consoli_dated.should match "pm"
+    end
+    
+    it "hides meridian for starts_at only if it matches that of ends_at" do
+      event = build :event, starts_at: Time.now.beginning_of_day, ends_at: Time.now.beginning_of_day + 60*60*2
+      event.consoli_dated.scan("am").length.should eq 1
+    end
   end
   
   describe "upcoming?" do

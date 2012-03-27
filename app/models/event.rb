@@ -30,13 +30,17 @@ class Event < ActiveRecord::Base
     end
   end
   
-  def consoli_dated # This could be a little more robust, but it'll do for now, should probably be a helper.
+  def consoli_dated # should probably be a helper.
     if self.is_all_day
       starts_at.strftime("%A, %B %e")
     elsif ends_at.blank?
       starts_at.strftime("%A, %B %e, %l%P")
     elsif starts_at.day == ends_at.day
-      starts_at.strftime("%A, %B %e, %l-") + ends_at.strftime("%l%P")
+      if starts_at.strftime("%P") != ends_at.strftime("%P")
+        starts_at.strftime("%A, %B %e, %l%P-") + ends_at.strftime("%l%P")
+      else
+        starts_at.strftime("%A, %B %e, %l-") + ends_at.strftime("%l%P")
+      end
     else
       starts_at.strftime("%A, %B %e, %l%P-") + ends_at.strftime("%A, %B %e, %l%P")
     end

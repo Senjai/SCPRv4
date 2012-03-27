@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe NewsStory do
-  describe "associations" do
-    it { should belong_to :enco_audio }
-    it { should have_many :uploaded_audio }
-  end
-  
   describe "link_path" do
     it "does not override the hard-coded options" do
       news_story = create :news_story

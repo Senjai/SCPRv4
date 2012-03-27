@@ -17,6 +17,7 @@ ContentBase.content_classes.each do |c|
       it { should have_many :frels }
       it { should have_many :related_links }
       it { should have_many :queries }
+      it { should have_many :audio }
       it { should have_one :content_category }
       it { should have_one(:category).through(:content_category) }
     end
