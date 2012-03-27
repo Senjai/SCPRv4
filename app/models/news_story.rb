@@ -6,9 +6,6 @@ class NewsStory < ContentBase
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
       
-  belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
-  has_many :uploaded_audio, :as => "content"
-  
   define_index do
     indexes headline
     indexes lede

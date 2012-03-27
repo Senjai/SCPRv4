@@ -13,6 +13,16 @@ class HomeController < ApplicationController
   
   #----------
   
+  def error
+    render :template => "/error/500.html", :status => 500, :layout => "error"
+  end
+  
+  def not_found
+    render :template => "/error/404.html", :status => 404, :layout => "error"
+  end
+  
+  #----------
+  
   def self._cache_homepage(obj_key=nil,pickle=nil)
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  
     
@@ -22,7 +32,7 @@ class HomeController < ApplicationController
       include Rails.application.routes.url_helpers
     end
     
-    Rails.logger.debug("in _cache_homepage for #{obj_key}")
+    Rails.logger.info("in _cache_homepage for #{obj_key}")
     
     # -- Update Sphinx Index -- #
     
@@ -33,9 +43,8 @@ class HomeController < ApplicationController
       if idx && idx.any?
         tsc = ThinkingSphinx::Configuration.instance
         # run index
-        tsc.controller.index idx
-        
-        Rails.logger.debug("Sphinx index updated for #{model.name}")
+        out = tsc.controller.index idx
+        Rails.logger.info("Sphinx index updated for #{model.name}: #{out}")
       end
     end
     
