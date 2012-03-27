@@ -4,8 +4,11 @@ class Event < ActiveRecord::Base
   
   has_many :assets, :class_name => "ContentAsset", :as => :content
   
-#  belongs_to :enco_audio, :foreign_key => "enco_number", :primary_key => "enco_number", :conditions => proc { ["publish_date = ?",self.audio_date] }
-  has_many :uploaded_audio, :as => "content"
+  ForumTypes = [
+    "comm",
+    "cult",
+    "hall"
+  ]
   
   #----------
 
@@ -45,10 +48,8 @@ class Event < ActiveRecord::Base
     inline_address.gsub(/\s/, "+") # TODO Figure out what else we need to gsub - https://developers.google.com/maps/documentation/webservices/#BuildingURLs
   end
   
-  def is_forum_event
-    if self.etype == "comm" || self.etype == "cult" || self.etype == "hall"
-      true
-    end
+  def is_forum_event?
+    ForumTypes.include? self.etype
   end
   
   #----------
@@ -62,9 +63,20 @@ class Event < ActiveRecord::Base
   end
   
   def description
-    self.upcoming? ? self[:description] : self[:archive_description]
+    if self.upcoming? or (!self.upcoming? and archive_description.blank?)
+      self[:description]
+    else
+      archive_description
+    end
   end
   
+  def show_comments
+    false # TODO Add this column in mercer
+  end
+  
+  def audio_url
+    "http://media.scpr.org/#{self.audio}"
+  end
   #----------
   
   def link_path(options={})
@@ -89,7 +101,7 @@ class Event < ActiveRecord::Base
   end
   
   def has_comments?
-    true
+    self.show_comments
   end
   
   def remote_link_path

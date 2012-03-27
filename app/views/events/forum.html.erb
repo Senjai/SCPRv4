@@ -128,6 +128,11 @@
 									<div class="info <%= event.assets.present? ? "span3" : "span4" %>">
 										<h4 class="story-title"><%= link_to event.title, event.link_path %></h4>
 										<p class="byline"><%= format_date event.starts_at, format: :full_date %></p>
+										<% if event.audio.present? %>
+											<%= content_tag :div, link_to("Listen to this event", event.audio_url), class: "story-audio inline" %>
+										<% elsif event.show_comments %>
+											<%= comment_count_for event %>
+										<% end %>
 									</div>
 								</div> <!-- row -->
 							</article>

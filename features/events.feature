@@ -49,7 +49,7 @@ Scenario: View an individual event
 	Then I should see "CFF Event"
 	And I should see article meta
 	And the article meta header should say "event"
-	And I should see a comments section
+	And I should not see a comments section
 
 Scenario: Visit a page for an event that doesn't exist
 	When I go to an event page for an event that doesn't exist
@@ -111,6 +111,14 @@ Scenario: View detail for a past event
 	And I should see an audio link
 	And I should see "This event was awesome"
 	And I should not see "This event will be awesome"
+
+Scenario: View detail for event without audio
+	Given an event with the following attributes:
+	 | audio |
+	 |       |
+	
+	When I go to that event's page
+	Then I should not see an audio link
 
 Scenario: Detail for Past Event without audio
 	Given an event with the following attributes:

@@ -7,7 +7,25 @@
 			<div class="article-meta">
 				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side", title: "event" } %> <%# To be replaced with a better solution %>
 				<%#= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
-				<%# render "shared/cwidgets/audio", content: @event %> <%# To be replaced with a better solution %>
+				
+				<% if @event.audio.present?%>
+					<!-- Audio --> <%# TODO Merge this into Audio model%>
+					<aside class="story-audio">
+						<div class="inner-container clearfix">
+							<div class="audio-content">
+								<h4>Listen Now</h4>
+							</div>
+							<a href="<%= @event.audio_url %>" class="play-btn audio-toggler" title="<%= h @event.headline %>" data-duration="<%= nil %>"></a>
+							<span class="duration"><%= nil %></span>
+							<ul class="audio-tools">
+							    <li>
+							        <a href="<%= @event.audio_url %>">Download</a>
+							    </li>
+							</ul>
+						</div>
+					</aside>
+				<% end %>
+				
 			</div>
 			
 		</div>
@@ -59,14 +77,14 @@
 				</div>
 			</div>
 			<%= render_asset @event, "blog" %>
-			<p><%= raw @event.description %></p>
+			<p><%= simple_format @event.description, santize: false %></p>
 			<br style="clear: both" />
 			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
 		</div>
 	</div>
 </div>
 
-<% if @more_events.present? and @event.upcoming? and @event.is_forum_event %>
+<% if @more_events.present? and @event.upcoming? and @event.is_forum_event? %>
 	<div class="more-events">
 		<div class="row ">
 			<div class="span2">
@@ -82,12 +100,13 @@
 	</div>
 <% end %>
 
-
-<div class="row">
-	<div class="span2">
-		<%#= comment_widget_for @event, cssClass: "left-side" %>
+<% if @event.show_comments %>
+	<div class="row">
+		<div class="span2">
+			<%= comment_widget_for @event, cssClass: "left-side", name: "comments" %>
+		</div>
+		<div class="span6">
+			<%= comments_for @event, header: false %>
+		</div>
 	</div>
-	<div class="span6">
-		<%#= comments_for @event, header: false %>
-	</div>
-</div>
+<% end %>

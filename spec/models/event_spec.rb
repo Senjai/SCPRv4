@@ -3,7 +3,6 @@ require "spec_helper"
 describe Event do  
   describe "associations" do
     it { should have_many :assets }
-    it { should have_many :uploaded_audio }
   end
   
   describe "inline_address" do
@@ -77,10 +76,28 @@ describe Event do
       event.description.should match "Future"
     end
     
-    it "returns the archive description if the event is in the past" do
+    it "returns the archive description if the event is in the past and it has an archive description" do
       event = build :event, description: "Future", archive_description: "Past"
       event.stub(:upcoming?) { false }
       event.description.should match "Past"
+    end
+    
+    it "returns the description if the event is in the past and it does not have an archive description" do
+      event = build :event, description: "Future", archive_description: nil
+      event.stub(:upcoming?) { false }
+      event.description.should match "Future"
+    end
+  end
+  
+  describe "audio_url" do
+    it "has the SCPR media url" do
+      event = build :event
+      event.audio_url.should match "media.scpr.org"
+    end
+    
+    it "has the audio file in it" do
+      event = build :event, audio: "/some/path/audio.mp3"
+      event.audio_url.should match event.audio
     end
   end
   
@@ -186,6 +203,20 @@ describe Event do
     it "can have an asset" do # TODO Stub the assethost requests
       event = create :event, asset_count: 1
       event.assets.first.asset.should be_present
+    end
+  end
+  
+  describe "is_forum_event" do
+    it "is true if event type in the ForumTypes variable" do
+      Event::ForumTypes.each do |etype|
+        event = build :event, etype: etype
+        event.is_forum_event?.should be_true
+      end
+    end
+    
+    it "is false if event is something else" do
+      event = build :event, etype: "spon"
+      event.is_forum_event?.should be_false
     end
   end
   
