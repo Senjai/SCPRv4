@@ -160,30 +160,6 @@ describe ApplicationHelper do
     end
   end
   
-  describe "#event_link" do
-    let(:event) { build :event, starts_at: Time.at(0) } # December 31, 1969
-    
-    it "returns nil if the object doesn't respond to starts_at" do
-      event_link("string").should be_nil
-    end
-    
-    it "returns the 'event' format" do
-      event_link(event).should match "Wednesday, December 31"
-    end
-    
-    it "uses the event's link_path as the link if an event is provided" do
-      event_link(event).should match event.link_path
-    end
-    
-    it "takes options" do
-      event_link(event, class: "some-class").should match /some-class/
-    end
-    
-    it "returns a link" do
-      event_link(event).should match /<a /
-    end
-  end
-  
   describe "#format_date" do
     before :each do
       @date = Time.at(0) # December 31, 1969

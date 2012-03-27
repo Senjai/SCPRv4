@@ -58,6 +58,6 @@ class OtherProgram < ActiveRecord::Base
         puts "Cached RSS."
       end
     end # rss_url?
-    return rss_cache.present? || podcast_cache.present?
+    return rss.present? || podcast.present?
   end
 end

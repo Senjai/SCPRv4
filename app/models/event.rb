@@ -24,10 +24,14 @@ class Event < ActiveRecord::Base
   end
   
   def upcoming? # Still display maps, details, etc. if the event is currently happening
-    if ends_at.blank?
-      starts_at > Time.now
+    starts_at > Time.now
+  end
+  
+  def current?
+    if ends_at.present?
+      Time.now.between? starts_at, ends_at
     else
-      ends_at > Time.now
+      Time.now.between? starts_at, starts_at.end_of_day
     end
   end
   
@@ -64,7 +68,7 @@ class Event < ActiveRecord::Base
   end
   
   def description
-    if self.upcoming? or (!self.upcoming? and archive_description.blank?)
+    if self.upcoming? or archive_description.blank?
       self[:description]
     else
       archive_description

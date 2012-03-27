@@ -54,7 +54,7 @@
 		<% if @closest_event.present? %>
 			<div class="event closest">
 				<%= render_asset @closest_event, 'lead5' %>
-				<div class="calendar-date"><%= event_link @closest_event %></div>
+				<div class="calendar-date"><%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.link_path, class: "event-link" %> </div>
 				<h1 class="story-title"><%= link_to @closest_event.title, @closest_event.link_path %></h1>
 				<%= @closest_event.teaser %>
 			</div>
@@ -71,7 +71,7 @@
 								</div>
 							<% end %>
 							<div class="info <%= event.assets.present? ? "span3" : "span5" %>">
-								<%= event_link event %>
+								<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
 								<h2 class="story-title"><%= link_to event.title, event.link_path %></h2>
 								<%= event.teaser %>
 							</div>
