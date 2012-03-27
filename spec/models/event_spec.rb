@@ -169,6 +169,19 @@ describe Event do
       end
     end
     
+    describe "in_day" do
+      it "uses the date passed in and finds any events during that day" do
+        now = Time.now
+        date = Time.new(now.year, now.month, now.day)
+        today_event = create :event, starts_at: now
+        create :event, starts_at: now.tomorrow
+        create :event, starts_at: now.yesterday
+        in_day_events = Event.in_day(date)
+        in_day_events.count.should eq 1
+        in_day_events.first.should eq today_event
+      end
+    end
+    
     describe "forum" do
       it "only selects events of types in ForumTypes array" do
         spon_event = create :event, etype: "spon" # "spon" = sponsored

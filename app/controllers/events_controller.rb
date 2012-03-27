@@ -16,7 +16,8 @@ class EventsController < ApplicationController
   end
   
   def show
-    if @event = Event.find_by_slug(params[:slug])
+    date = Time.new(params[:year], params[:month], params[:day])
+    if @event = Event.where(slug: params[:slug]).in_day(date).first
       @more_events = Event.forum.upcoming.where("id != ?", @event.id).limit(2)
     else
       redirect_to events_path

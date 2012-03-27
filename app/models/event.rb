@@ -17,6 +17,7 @@ class Event < ActiveRecord::Base
   scope :forum, published.where("etype IN (?)", ForumTypes)
   scope :sponsored, published.where("etype = ?", "spon")
   scope :past, lambda { published.where("starts_at < ?", Time.now).order("starts_at desc") }
+  scope :in_day, lambda { |date| where("starts_at BETWEEN ? AND ?", date.beginning_of_day, date.end_of_day) }
   
   def self.closest
     upcoming.first
