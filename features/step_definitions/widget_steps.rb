@@ -2,6 +2,10 @@ Then /^I should see (?:a|the) comments? section$/ do
   page.should have_css "#comments"
 end
 
+Then /^I should not see (?:a|the) comments? section$/ do
+  page.should_not have_css "#comments"
+end
+
 Then /^I should see (\d+) related articles$/ do |num|
   page.should have_css ".related-articles li", count: num.to_i
 end
@@ -23,12 +27,10 @@ Then /^I should see article meta$/ do
 end
 
 Then /^I should see an audio link$/ do
-  pending
   page.should have_css ".audio-toggler"
 end
 
 Then /^I should not see an audio link$/ do
-  pending
   page.should_not have_css ".audio-toggler"
 end
 

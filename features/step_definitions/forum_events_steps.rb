@@ -71,5 +71,5 @@ end
 
 #### Actions
 When /^I click on "([^"]*)" in the navigation$/ do |text|
-  page.find("nav.events").click_link(text)
+  page.find("nav.section-nav").click_link(text)
 end

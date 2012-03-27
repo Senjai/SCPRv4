@@ -79,6 +79,7 @@
 	display: block;
 	position: absolute;
 	display: none;
+	z-index: 30; // Pop-ups are greedy
 	
 	// Use these classes for positioning, width, height, and any extra options you want on a specific modal (or a group of duplicate modals)
 	&.google-maps {

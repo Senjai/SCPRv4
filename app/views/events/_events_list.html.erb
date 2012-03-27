@@ -14,7 +14,7 @@
 				<div class="event-details">
 					<%= event_link event %> 
 					<% if event.location_name.present? %>
-						<span class="event-location <%= event.is_forum_event ? "forum" : "" %>"><%= event.location_name %></span>
+						<span class="event-location<%= " forum" if event.is_forum_event? %>"><%= event.location_name %></span>
 					<% end %>
 					<h1 class="story-title"><%= link_to event.title, event.link_path %></h1>
 					<p><%= event.teaser.html_safe %> <%= link_to "More", event.link_path %></p>

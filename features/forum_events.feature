@@ -98,19 +98,13 @@ Scenario: Archive page
 	And the events should be ordered by "starts_at asc"
 	And I should only see forum events
 
-Scenario: Static Content
+Scenario Outline: Static Content
 	When I go to the forum page
-	And I click on "Directions & Parking" in the navigation
+	And I click on "<link_text>" in the navigation
 	Then I should see static content
 	
-	When I go to the forum page
-	When I click on "Community Partnerships" in the navigation
-	Then I should see static content
-	
-	When I go to the forum page
-	When I click on "Contact Us" in the navigation
-	Then I should see static content
-	
-	When I go to the forum page
-	When I click on "About the Crawford Family Forum" in the navigation
-	Then I should see static content
+	Examples:
+	 | link_text    |
+	 | Directions   |
+	 | Partnerships |
+	 | About        |
