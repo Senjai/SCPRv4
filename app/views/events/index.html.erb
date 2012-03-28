@@ -1,0 +1,12 @@
+<% page_title "Events" %>
+
+<nav class="filters events">
+	<ul class="clearfix">
+		<li class="heading">View:</li>
+	    <li><%= link_to(raw("All Events<span></span>"), events_path(list: "all"), id: "all", class: %w{sponsored forum}.include?(params[:list]) ? nil : "active") %></li>
+	    <li><%= link_to(raw("Crawford Family Forum Events<span></span>"), events_path(list: "forum"), id: "forum", class: params[:list] == "forum" ? "active" : nil) %></li>
+	    <li><%= link_to(raw("Sponsored Events<span></span>"), events_path(list: "sponsored"), id: "sponsored", class: params[:list] == "sponsored" ? "active" : nil) %></li>
+	</ul>
+</nav>
+
+<%= render 'events_list', events: @events, cssClass: "upcoming-events" %>

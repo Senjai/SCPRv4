@@ -1,9 +1,11 @@
 require 'rubygems'
 require 'cucumber/rails'
 require 'cucumber/rspec/doubles'
-include FactoryGirl::Syntax::Methods
 require 'cucumber/thinking_sphinx/external_world'
-require 'thinking_sphinx/test'
+require 'chronic'
+require 'database_cleaner'
+require 'database_cleaner/cucumber'
+include FactoryGirl::Syntax::Methods
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -30,14 +32,9 @@ ActionController::Base.allow_rescue = false
 
 # Remove/comment out the lines below if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
-begin
-  require 'database_cleaner'
-  require 'database_cleaner/cucumber'
-  DatabaseCleaner.strategy = :truncation
-  DatabaseCleaner.clean
-rescue NameError
-  raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
-end
+
+DatabaseCleaner.clean_with :truncation
+DatabaseCleaner.strategy = :transaction
 
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
 # See the DatabaseCleaner documentation for details. Example:
@@ -56,13 +53,13 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 Cucumber::Rails::World.use_transactional_fixtures = false
+Cucumber::ThinkingSphinx::ExternalWorld.new
 
 Before do
   DatabaseCleaner.start
-  Cucumber::ThinkingSphinx::ExternalWorld.new
   FactoryGirl.reload
 end
 
-After do |scenario|
+After do
   DatabaseCleaner.clean
 end

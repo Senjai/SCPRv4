@@ -1,0 +1,10 @@
+<% tweets.each do |tweet| %>
+	<div class="tweet">
+		<%= image_tag tweet.user.profile_image_url, class: "tweet-image"%>
+		<div class="tweet-content">
+			<% unless tweet.user.name.blank? %><h5><a href="http://twitter.com/<%= tweet.user.screen_name %>"><%= tweet.user.name %></a> <span class="byline">(@<%= tweet.user.screen_name %>)</span></h5><% end %>
+			<%= auto_link(tweet.text).html_safe %>
+			<span class="byline"><%= format_date Time.parse(tweet.created_at), with: "%b %e" %></span>
+		</div>
+	</div>
+<% end %>

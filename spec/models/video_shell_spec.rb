@@ -9,18 +9,6 @@ describe VideoShell do
     end
   end
   
-  describe "associations" do
-    it "responds to category" do
-      @video = create_list :video_shell, 3
-      @video.any? { |v| v.category == nil }.should be_false
-    end
-  
-    it "has assets" do
-      @video = create_list :video_shell, 3
-      @video.any? { |v| v.assets == nil }.should be_false
-    end
-  end
-  
   describe "scopes" do
     it "#published only selects published content" do
       @published = create_list :video_shell, 3, status: 5

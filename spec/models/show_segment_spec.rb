@@ -1,6 +1,12 @@
 require "spec_helper"
 
 describe ShowSegment do
+  describe "associations" do
+    it { should belong_to :show }
+    it { should have_many :rundowns }
+    it { should have_many(:episodes).through(:rundowns) }
+  end
+  
   describe "link_path" do
     it "does not override the hard-coded options" do
       segment = create :show_segment

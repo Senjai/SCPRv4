@@ -17,6 +17,21 @@ namespace :scprv4 do
     
     #----------
     
+    desc "Cache tweets"
+    task :tweets => :environment do
+      require 'twitter_cacher'
+      include TwitterCacher
+      # Add any more feeds you want to cache. Each feed will be in a cache named `twitter:#{screen_name}`
+      ## Ex. twitter:KPCCForum
+      # The last argument can optionally be a hash of options to pass the to the Twitter.user_timeline method.
+      # These options will be applied to all the feeds being cached. See module TwitterCacher for default options.
+      # See the Twitter API docs for more available options: https://dev.twitter.com/docs/api/1/get/statuses/user_timeline
+      ## Example usage: cache_tweets("KPCCForum", "SCPR", count: 10, include_rts: false)
+      cache_tweets("KPCCForum")
+    end
+    
+    #----------
+    
     desc "Cache external programs"
     task :programs => [ :environment ] do
       OtherProgram.active.each { |p| p.cache }

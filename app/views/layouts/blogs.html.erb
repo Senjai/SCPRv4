@@ -13,7 +13,7 @@
 	<%= content_for?(:blog_content) ? yield(:blog_content) : yield %>
 <% end %>
 
-<% content_for :sidebartop do %>
+<% content_for :sidebar_middle do %>
 	<%= render "shared/widgets/blog_about" %>
 	<%= render :partial => "blogs/recent_posts" %>
 <% end %>

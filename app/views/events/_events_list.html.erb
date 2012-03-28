@@ -1,0 +1,25 @@
+<% title ||= "" %>
+<% cssClass ||= "" %>
+
+<h2><%= title %></h2>
+<%= any_to_list? events, title: title do %>
+<section class="events-list <%= cssClass %>">
+	<% events.each do |event| %>
+  		<article class="cbase event teaser event-headers">
+				<% if event.assets.present? %>
+					<a href="<%= event.link_path %>">
+						<%= render_asset event, 'thumb' %>
+					</a>
+				<% end %>
+				<div class="event-details">
+					<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
+					<% if event.location_name.present? %>
+						<span class="event-location<%= " forum" if event.is_forum_event? %>"><%= event.location_name %></span>
+					<% end %>
+					<h1 class="story-title"><%= link_to event.title, event.link_path %></h1>
+					<p><%= event.teaser.html_safe %> <%= link_to "More", event.link_path %></p>
+				</div> <!-- event-details -->
+		</article>
+	<% end %>
+<% end %>
+<%= will_paginate events %>

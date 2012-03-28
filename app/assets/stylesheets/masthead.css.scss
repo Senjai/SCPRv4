@@ -390,6 +390,16 @@ nav.utils ul {
 						padding-left:28px;
 					}
 				}
+				p.more a {
+					color:$grayAlt;
+					@include font-sans-serif(bold, 11px);
+					padding:0;
+					margin: 0;
+					text-transform:uppercase;
+					&:hover {
+						text-decoration:underline;
+					}
+				}
 			}
 		}
 		.events-sponsored {
@@ -404,6 +414,9 @@ nav.utils ul {
 			.event-title {
 				a {
 					padding:4px 0 0 0;
+					&:hover {
+						text-decoration: underline;
+					}
 				}
 			}
 			.event-date {

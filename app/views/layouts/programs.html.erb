@@ -1,9 +1,10 @@
-<% content_for :masthead do %>
+<% content_for :title_bar do %>
+<div class="row">
 	<div class="span12 program-masthead">
 		<div class="span8">
 			<div class="row">
 				<div class="span4 show-title">
-					<h2><%= link_to @program.title, program_path(@program.slug) %></h2>
+					<h1 class="page-title"><%= link_to @program.title, program_path(@program.slug) %></h1>
 				</div>
 				<div class="span4 show-meta headshot <%= @program.slug %>">
 					<div class="info">
@@ -12,22 +13,23 @@
 							with <%= @program.host %>
 						<% end %>
 					</div>
-				</div>
+				</div> <!-- span4 show-meta -->
 			</div> <!-- .row -->
 		</div> <!-- .span8 -->
 		<div class="span4">
 			<a class="support <%= "small" if @program.title.length > 20 %>" href="http://scprcontribute.publicradio.org/">
 				Support all the great programming on KPCC, including <%= @program.title %>.
 			</a> <!-- .support -->
-		</div>
-	</div> <!-- .program-masthead -->
+		</div> <!-- span4 -->
+	</div> <!-- program masthead-->
+</div>
 <% end %>
 
 <% content_for :content do %>
 	<%= content_for?(:program_content) ? yield(:program_content) : yield %>
 <% end %>
 
-<% content_for :sidebartop do %>
+<% content_for :sidebar_middle do %>
 	<% if @program.is_a? KpccProgram %>
 		<%= render "shared/widgets/program_about", program: @program %>
 	<% end %>

@@ -118,3 +118,35 @@ time.smart {
 		font-weight:600;
 	}
 }
+
+.teaser {
+	border-bottom: 1px solid $grayLighter;
+	padding: 10px 0;
+	.info {
+		@include font-serif($size: 13px);
+		vertical-align: top;
+		padding-right: 5px;
+		h3 {
+			@include font-headline();
+			font-size:20px;
+			line-height:22px;
+			a {
+				color:$nearBlack;
+			}
+		}
+		.byline {
+			margin-bottom:10px;
+		}
+	}
+	.interact {
+		@include font-sans-serif($size: 11px);
+		margin-right: 0;
+		.story-audio {
+			display:block;
+			margin-bottom:3px;
+			a {
+				padding-left:19px;
+			}
+		}
+	}
+}

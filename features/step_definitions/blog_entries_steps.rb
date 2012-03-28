@@ -9,16 +9,11 @@ Given /^(\d+) entr(?:ies|y) for that blog$/ do |num|
   @entries = create_list :blog_entry, num.to_i, blog: @blog
 end
 
-Given /^the blog entry has (\d+) backward related articles?$/ do |num|
-  @related = create_list :brel, num.to_i, content: @blog_entry
-end
-
-Given /^the blog entry has (\d+) forward related articles?$/ do |num|
-  @related = create_list :frel, num.to_i, related: @blog_entry
-end
-
-Given /^the blog entry has (\d+) related links?$/ do |num| 
-  @links = create_list :link, num.to_i, content: @blog_entry
+Given /^(?:a? )?blog entr(?:ies|y) with the following attributes?:$/ do |table|
+  table.hashes.each do |attributes|
+    create(:blog_entry, Rack::Utils.parse_nested_query(attributes.to_query))
+  end
+  @blog_entry =  BlogEntry.all[rand(BlogEntry.count.to_i)]
 end
 
 
@@ -61,7 +56,7 @@ end
 
 #### Utility
 Given /^the entry for it has been cached$/ do
-  puts @cached = Blog.cache_remote_entries
+  @cached = Blog.cache_remote_entries
   @cached.count.should eq @blogs.count
 end
 

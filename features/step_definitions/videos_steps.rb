@@ -1,6 +1,6 @@
 #### Setup
 Given /^there (?:is|are) (\d+) video shells?$/ do |num|
-  @video_shells = create_list :video_shell, num.to_i
+  @video_shells = create_list :video_shell, num.to_i, asset_count: 1
   @video_shell = @video_shells[rand(@video_shells.length)]
   VideoShell.all.count.should eq num.to_i
 end
@@ -21,12 +21,6 @@ end
 
 
 #### Finders
-Then /^I should see that video's information$/ do
-  page.should have_content @video_shell.headline
-  page.should have_content @video_shell.body
-  page.should have_content helper.render_byline @video_shell
-end
-
 Then /^I should see the most recently published video featured$/ do
   page.find("article>h1.story-headline").should have_content VideoShell.published.first.headline
 end
@@ -44,7 +38,7 @@ Then /^I should see the (\d+) most recently published videos in the pop\-up$/ do
   find(".videos-overlay").should have_css ".list .video-thumb", count: num.to_i
 end
 
-Then /^there should be pagination$/ do
+Then /^there should be modal pagination$/ do
   find("button.arrow.right")['data-page'].should eq "2"
   find("button.arrow.left")['data-page'].should eq ""
   find(".pagination").should have_content "1 of 2"

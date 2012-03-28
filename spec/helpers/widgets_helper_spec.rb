@@ -105,7 +105,7 @@ describe WidgetsHelper do
     end
     
     it "renders the related_content_and_links partial" do
-      object_with_related_content = create :show_segment, brels_count: 1, frels_count: 1, link_count: 1
+      object_with_related_content = create :show_segment, brel_count: 1, frel_count: 1, link_count: 1
       object_with_related_content.brels.should be_present
       object_with_related_content.frels.should be_present
       object_with_related_content.related_links.should be_present
@@ -115,7 +115,7 @@ describe WidgetsHelper do
     end
     
     it "shows the related content for the object" do
-      object_with_related_content = create :show_segment, brels_count: 1, frels_count: 1
+      object_with_related_content = create :show_segment, brel_count: 1, frel_count: 1
       related_partial = related_for(object_with_related_content)
       related_partial.should match object_with_related_content.frels.first.content.short_headline
       related_partial.should match object_with_related_content.brels.first.related.short_headline

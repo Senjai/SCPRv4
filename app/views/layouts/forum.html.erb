@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+	<title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
+	<%= render "shared/header/header_js" %>
+	<%= render "shared/header/opengraph" %>
+	<%= csrf_meta_tags %>
+</head>
+<body class="forum">
+<!-- MASTHEAD-->
+<%= render "shared/masthead" %>
+<%= yield :masthead if content_for? :masthead %>
+
+<div id="main" class="container event-headers">
+	<div class="row">
+		<div class="span9">
+			<%= yield %>
+		</div>
+		
+		<!-- SIDEBAR -->
+		<div id="sidebar" class="span3">
+			<% if !content_for(:sidebar) %>
+				<%= yield :sidebar %>
+			<% else %>
+				<%= render 'events/nav' %>
+
+				<div id="getting-there" class="widget event-headers">
+					<h3>Finding the Crawford Family Forum</h3>
+					<p><%= link_to "Get directions, parking and public transit info", forum_directions_path %></p>
+				</div>
+
+				<div id="community-partnerships" class="widget event-headers">
+					<h3>Partner with us</h3>
+					<p>We seek events that open dialogue and deepen the relationships and understanding of Southern California’s diverse communities.</p>
+					<p><%= link_to "Learn more about community partnerships", forum_space_path %></p>
+				</div>
+
+				<div class="ad widget">
+					<a href="https://scprcontribute.publicradio.org">
+					    <%= image_tag 'support-forum.png', alt: "Pledge now to become a KPCC member" %>
+					</a>
+				</div>
+			<% end %> <!-- /SIDEBAR -->
+			
+		</div>
+	</div>
+
+	<%= yield(:bottom) if content_for?(:bottom) %>
+</div>
+
+<%= render :partial => "shared/footer" %>
+<%= render :partial => "shared/footer/footer_js" %>
+
+</body>
+</html>

@@ -2,8 +2,15 @@ require 'spec_helper'
 
 describe BlogEntry do
   it "responds to category" do
-    entry = create_list :blog_entry, 3
+    entry = create_list :blog_entry, 3, with_category: true
     entry.any? { |e| e.category == nil }.should be_false
+  end
+  
+  describe "associations" do
+    it { should belong_to :blog }
+    it { should belong_to :author }
+    it { should have_many :tagged }
+    it { should have_many(:tags).through(:tagged) }
   end
   
   describe "scopes" do
@@ -17,11 +24,6 @@ describe BlogEntry do
   end
   
   describe "instance" do # TODO: Move these into ContentBase specs
-    it "inherits from ContentBase" do
-      entry = build :blog_entry
-      entry.should be_a ContentBase
-    end
-    
     describe "link_path" do
       it "returns a link_path" do
         entry = create :blog_entry

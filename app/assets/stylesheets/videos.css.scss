@@ -1,12 +1,8 @@
 @mixin video-effects {
-	-webkit-transition: box-shadow linear 0.2s;
-	-moz-transition: box-shadow linear 0.2s;
-	transition: box-shadow linear 0.2s;
+	@include transition(box-shadow linear 0.2s);
 	@include box-shadow(none);
 	&:hover {
-		-webkit-transition: box-shadow linear 0.2s;
-		-moz-transition: box-shadow linear 0.2s;
-		transition: box-shadow linear 0.2s;
+		@include transition(box-shadow linear 0.2s);
 		@include box-shadow(0 0 12px $gray);
 	}
 }
@@ -28,9 +24,7 @@
 		width: 175px;
 		background: #070707 url(image_path('browse-all-default.png')) no-repeat left center;
 		border: 1px solid #505050;
-		border-radius: 3px;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
+		@include border-radius(3px);
 		padding: 8px 7px 8px 30px;
 		color: #777777;
 		@include font-heading(normal, 12px);
@@ -43,50 +37,25 @@
 			cursor: pointer;
 		}
 	}
-	.videos-overlay {
-		display: none; /* So it doesn't show on page-load */
-		position: absolute;
-		margin: 40px 0 0 0; // Top of the arrow
-		min-height: 640px;
-		z-index: 10; /* Just to be sure it's in front */
-		
-		.dark-modal-arrow {
-			position: relative;
-			top: -15px;
-			background: url(image_path('icons/dark-modal-arrow.png')) no-repeat 70px top;
-		}
-		
-		.inner-container {
-			margin-top: 13px; // Top of the modal box
-			@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
-			@include background-image(linear-gradient(#333, #1b1b1b));
-			border: 1px solid #4c4c4c;
-			padding: 0;
-		}
-		
+	.videos-list {
 		button.arrow {
-			cursor:pointer;
 			display: block;
 			position: relative;
 			top: 300px;		
 			width: 48px;
 			height: 49px;
-			border-radius: 7px;
-			-moz-border-radius: 7px;
-			-webkit-border-radius: 7px;
+			@include border-radius(7px);
 			opacity: 0.5;
 			&.left {
-				left: 20px;
+				margin-left: 17px;
 				background: url(image_path('overlay-prev.png')) no-repeat left top;
 			}
 			&.right {
-				right: 5px;
 				background: url(image_path('overlay-next.png')) no-repeat left top;
 			}
 		}
 		
 		.pagination {
-			line-height: 20px;
 			text-align: center;
 			@include font-sans-serif(bold, 12px);
 			color: darken($gray, 15%);
@@ -96,8 +65,12 @@
 		div.list {
 			margin-top: 25px;
 			.video-thumb {
-				padding-left: 24px;
+				padding: 10px 13px;
 			}
+		}
+		
+		.right-col {
+			margin-left: 5px; // This is because the grid column's margins get messed up in this modal, so I have to fake it.
 		}
 
 	} /* .videos-overlay */
@@ -138,19 +111,13 @@ div.list {
 }
 
 .BrightcoveVideoOverlay {
-    filter:alpha(opacity=50);
-    opacity: 0.5;
+    @include opacity(0.5);
     background: url(http://media.scpr.org/assets/images/videoplayer-play.png) bottom left no-repeat;
     cursor: pointer;
-    -webkit-transition: opacity linear 0.2s;
-    -moz-transition: opacity linear 0.2s;
-    transition: opacity linear 0.2s;
+    @include transition(opacity linear 0.2s);
 }
 
 .BrightcoveVideoOverlay:hover {
-    filter:alpha(opacity=90);
-    opacity: 0.9;
-    -webkit-transition: opacity linear 0.2s;
-    -moz-transition: opacity linear 0.2s;
-    transition: opacity linear 0.2s;
+    @include opacity(0.9);
+    @include transition(opacity linear 0.2s);
 }

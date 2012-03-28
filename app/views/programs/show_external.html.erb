@@ -12,19 +12,19 @@
 </div>
 
 <br style="clear: both"/>
-<hr/>
 
-<% if @program.podcast_url? && podcast = Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
-	<h2>Recently</h2>
-	<%= raw podcast %>
+<section class="show-segments">
+	<% if @program.podcast_url? && podcast = Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
+			<h2>Recently</h2>
+			<%= raw podcast %>
 
-<% elsif @program.rss_url? && rss = Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
-	<h2>Latest News</h2>
-	<%= raw rss %>
+	<% elsif @program.rss_url? && rss = Rails.cache.fetch("ext_program:#{@program.slug}:rss") %>
+			<h2>Latest News</h2>
+			<%= raw rss %>
 
-<% else %>
-	<span class="none-to-list">There is currently no feed available for this program.</span>
-<% end %>
+	<% else %>
+		<span class="none-to-list">There is currently no feed available for this program.</span>
+	<% end %>
+</section>
 
 <br style="clear: both"/>
-<hr/>

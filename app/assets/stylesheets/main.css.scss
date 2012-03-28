@@ -84,7 +84,8 @@ section.broadcastbar {
 					color:$orangeDark;
 					font-weight:600;
 					text-shadow:1px 1px 0px #fff;
-					&.true {
+					display: inline-block;
+					&.modal-toggler {
 						background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
 						padding-right:15px;
 						&:hover {
@@ -104,48 +105,6 @@ section.broadcastbar {
 				padding:0 0 0 5px;
 				position:relative;
 				.episode-guide {
-					@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
-					background-color:$grayBackground;
-					border:1px solid #bfbfbf;
-					display:block;
-					position:absolute;
-					width:650px;
-					min-height:300px;
-					left:-220px;
-					top:27px;
-					&.hidden {
-						display:none;
-					}
-					.inner-container {
-						padding:20px 25px;
-					}
-					.arrow-up {
-						background:url(image_path('broadcast-bar/episode-modal-arrow-up.png')) no-repeat;
-						width:28px;
-						height:12px;
-						position:absolute;
-						left:70px;
-						top:-12px;
-					}
-					.modal-close {
-						background:url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
-						cursor:pointer;
-						width:16px;
-						height:15px;
-						opacity:0.8;
-						position:absolute;
-						right:25px;
-						top:20px;
-						&:hover {
-							opacity:1.0;
-						}
-					}
-					h6 {
-						margin-bottom:$baseline/2;
-						a {
-							color:$orangeDark;
-						}
-					}
 					img {
 						float:left;
 						width:58px;
@@ -219,7 +178,7 @@ section.broadcastbar {
 				color:$gray;
 				letter-spacing:-0.15em;
 				padding:0 0 0 5px;
-			}	
+			}
 		}
 	}
 }
@@ -277,6 +236,13 @@ section.broadcastbar {
 .events-forum {
 	border-left:1px solid $grayLighter;
 	padding:0 0 0 10px;
+	.event-date {
+		@include font-serif($size:0.90em);
+		background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
+		color:$linkColor;
+		margin:10px 0 0 20px;
+		padding-left:112px;
+	}
 	h6 {
 		padding-left:5px;
 	}
@@ -298,13 +264,6 @@ section.broadcastbar {
 			@include font-headline($weight:normal);
 			font-size:1.2em;
 			margin:0;
-		}
-		.event-date {
-			@include font-serif($size:0.90em);
-			background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
-			color:$linkColor;
-			margin:10px 0 0 20px;
-			padding-left:112px;
 		}
 		img {
 			float:left;
@@ -453,3 +412,53 @@ div#sidebar-bottom {
 		margin:0 0 10px 0;
 	}	
 }
+
+// Filters bar (please move this to a more appropriate file)
+nav.filters {
+	background: #f5f5f5;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+	margin: 10px 0;
+	padding:10px;
+	@include font-heading($size: 12px, $weight: 600);
+	text-transform: uppercase;
+	ul {margin:0;}
+	li {
+		float:left;
+		list-style-type:none;
+		margin-right:30px;
+		&.heading {
+			color:#575757;
+			margin-right:20px;
+			text-transform:none;
+		}
+		a {
+			@include border-radius(3px);
+			color: #2e2e2e;
+			font-weight:600;
+			padding: 3px 5px;
+			margin: 0 25px;
+			&:first-of-type {
+				margin-left: 0;
+			}
+			&:last-of-type {
+				margin-right: 0;
+			}
+			&:hover, &.active {
+				background-color: $gray;
+				color: $nearWhite;
+				text-shadow: 0 1px #000;
+				text-decoration: none;
+			}
+			&:hover {
+				background-color: #9c9c9c;
+			}
+		}
+	}
+}
+
+// Global Styles
+.block-content { 
+	padding-right: 10px;
+}
+

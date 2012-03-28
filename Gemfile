@@ -17,6 +17,8 @@ gem 'newrelic_rpm'
 
 gem "ruby-mp3info"
 gem "feedzirra"
+gem "twitter"
+gem 'twitter-text' # text processing for things like urls, hashtags, and @replies in twitter feeds
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -29,8 +31,10 @@ group :assets do
   gem 'oily_png'
 end
 
-group :test, :development do 
+group :test, :development do
+  gem 'rspec'
 	gem "rspec-rails"
+	gem 'guard'
 	gem 'guard-rspec' # Automatically run tests
 	gem 'guard-cucumber' # Automatically run tests
 	gem 'rb-fsevent', require: false # For file-watching on Mac
@@ -38,12 +42,16 @@ group :test, :development do
 end
 
 group :test do
-  gem 'cucumber-rails', ">= 1.3.0", require: false # Integration testing
+  gem 'cucumber'
+  gem 'cucumber-rails', '1.3.0', require: false # Integration testing
+  gem 'factory_girl'
   gem 'factory_girl_rails' # Factories for test data
   gem 'database_cleaner' # Database cleaning strategy
   gem 'mocha' # cross-framework mocking
   gem 'capybara' # Acceptance/Integration testing
   gem 'shoulda-matchers' # For quickly writing common tests
+  gem 'chronic' # useful time parsing from human-readable formats
+  gem 'fakeweb'
 end
 
 group :worker do
