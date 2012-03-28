@@ -9,7 +9,7 @@
 <body class="forum">
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
-<%= yield :masthead if content_for? :masthead %>
+<%= yield :masthead %>
 
 <div id="main" class="container event-headers">
 	<div class="row">
@@ -45,7 +45,8 @@
 		</div>
 	</div>
 
-	<%= yield(:bottom) if content_for?(:bottom) %>
+	<%= yield :bottom %>
+	<%= render "shared/audio/inpage_audio_player" %>
 </div>
 
 <%= render :partial => "shared/footer" %>
