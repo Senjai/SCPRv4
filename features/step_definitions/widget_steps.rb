@@ -14,8 +14,12 @@ Then /^I should see (\d+) related links$/ do |num|
   page.should have_css ".related-links li", count: num.to_i
 end
 
-Then /^I should see a brightcove player section$/ do
-  pending # express the regexp above with the code you wish you had
+Then /^I should see a video$/ do
+  page.should have_css "object.BrightcoveExperience"
+end
+
+Then /^I should not see a video$/ do
+  page.should_not have_css "object.BrightcoveExperience"
 end
 
 Then /^the article meta header should say "([^"]*)"$/ do |text|
