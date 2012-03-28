@@ -117,3 +117,14 @@ Scenario Outline: Static Content
 	 | Directions   |
 	 | Partnerships |
 	 | About        |
+
+Scenario Outline: Other static pages
+	When I go to "<page>"
+	Then I should see static content
+	
+	Examples:
+	 | page            |
+	 | forum request   |
+	 | forum caterers  |
+	 | forum volunteer |
+

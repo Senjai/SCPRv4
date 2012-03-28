@@ -54,20 +54,24 @@ Scprv4::Application.routes.draw do
   match '/programs/:show(/page/:page)' => 'programs#show', :as => :program, :constraints => { :page => /\d+/ }
   match '/programs/' => 'programs#index', :as => :programs
   
-  # -- Forum -- #
-  match '/forum/space' => 'events#space', as: :forum_space
-  match '/forum/space/request' => 'events#request', as: :forum_request
-  match '/forum/directions' => 'events#directions', as: :forum_directions
-  match '/forum/volunteer' => 'events#volunteer', as: :forum_volunteer
-  match '/crawfordfamilyforum' => 'events#about', as: :forum_about
   
   # -- Events -- #
-  match '/events/forum/archive' => 'events#archive', as: :forum_events_archive
+  ## forum static pages
+  match '/events/forum/space/request/' => 'events#request', as: :forum_request
+  match '/events/forum/request/caterers' => 'events#caterers', as: :forum_caterers
+  match '/events/forum/space/' => 'events#space', as: :forum_space
+  match '/events/forum/directions/' => 'events#directions', as: :forum_directions
+  match '/events/forum/volunteer/' => 'events#volunteer', as: :forum_volunteer
+  match '/events/forum/about/' => 'events#about', as: :forum_about
+  
+  ## Event lists/details
+  match '/events/forum/archive/' => 'events#archive', as: :forum_events_archive
   match '/events/forum/' => 'events#forum', as: :forum_events
-  match '/events/sponsored' => 'events#index', :as => :events_sponsored, defaults: { list: "sponsored" } # legacy
+  match '/events/sponsored/' => 'events#index', :as => :sponsored_events, defaults: { list: "sponsored" }
   match '/events/:year/:month/:day/:slug/' => 'events#show', :as => :event
-  match '/events(/list/:list)' => 'events#index', :as => :events, defaults: { list: "all" }
+  match '/events(/list/:list)/' => 'events#index', :as => :events, defaults: { list: "all" }
 
+  
   # -- Videos -- #
   resources :video, only: [:index, :show] do
     match ':slug' => "video#show", on: :member

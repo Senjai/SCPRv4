@@ -45,6 +45,10 @@ When /^I go to the home page$/ do
   current_path.should eq home_path
 end
 
+When /^I go to "([^"]*)"$/ do |path|
+  visit Rails.application.routes.url_helpers.send(path.gsub("\s", "_") + "_path")
+end
+
 
 #### Assertions
 When /^I'm looking at the "[^"]*" section$/ do
