@@ -57,19 +57,19 @@ Scprv4::Application.routes.draw do
   
   # -- Events -- #
   ## forum static pages
-  match '/events/forum/space/request/' => 'events#request', as: :forum_request, trailing_slash: true
-  match '/events/forum/request/caterers/' => 'events#caterers', as: :forum_caterers, trailing_slash: true
-  match '/events/forum/space/' => 'events#space', as: :forum_space, trailing_slash: true
-  match '/events/forum/directions/' => 'events#directions', as: :forum_directions, trailing_slash: true
-  match '/events/forum/volunteer/' => 'events#volunteer', as: :forum_volunteer, trailing_slash: true
-  match '/events/forum/about/' => 'events#about', as: :forum_about, trailing_slash: true
+  match '/events/forum/space/request/'      => 'events#request',    as: :forum_request,         trailing_slash: true
+  match '/events/forum/request/caterers/'   => 'events#caterers',   as: :forum_caterers,        trailing_slash: true
+  match '/events/forum/space/'              => 'events#space',      as: :forum_space,           trailing_slash: true
+  match '/events/forum/directions/'         => 'events#directions', as: :forum_directions,      trailing_slash: true
+  match '/events/forum/volunteer/'          => 'events#volunteer',  as: :forum_volunteer,       trailing_slash: true
+  match '/events/forum/about/'              => 'events#about',      as: :forum_about,           trailing_slash: true
   
   ## Event lists/details
-  match '/events/forum/archive/' => 'events#archive', as: :forum_events_archive, trailing_slash: true
-  match '/events/forum/' => 'events#forum', as: :forum_events, trailing_slash: true
-  match '/events/sponsored/' => 'events#index', :as => :sponsored_events, trailing_slash: true, defaults: { list: "sponsored" }
-  match '/events/:year/:month/:day/:slug/' => 'events#show', :as => :event, trailing_slash: true
-  match '/events/(list/:list)' => 'events#index', :as => :events, trailing_slash: true, defaults: { list: "all" }
+  match '/events/forum/archive/'            => 'events#archive',    as: :forum_events_archive,  trailing_slash: true
+  match '/events/forum/'                    => 'events#forum',      as: :forum_events,          trailing_slash: true
+  match '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      trailing_slash: true, defaults: { list: "sponsored" }
+  match '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event,                 trailing_slash: true
+  match '/events/(list/:list)'              => 'events#index',      as: :events,                trailing_slash: true, defaults: { list: "all" }
 
   
   # -- Videos -- #
