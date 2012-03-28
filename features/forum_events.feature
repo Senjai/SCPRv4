@@ -27,6 +27,15 @@ Scenario: See the closest 4 events
 	Given there are 6 upcoming forum events
 	When I go to the forum page
 	Then I should see the 3 closest events
+	
+Scenario: Only show forum events on the Forum page
+	Given events with the following attributes:
+	 | etype |
+	 | comm  |
+	 | spon  |
+	
+	When I go to the forum page
+	Then I should see 1 event
 
 Scenario: See primary assets for each event
 	Given events with the following attributes:
