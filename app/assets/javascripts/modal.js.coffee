@@ -19,8 +19,8 @@ class scpr.Modal
                     else
                         if $(event.target).next(@options.modal).length then $(event.target).next(@options.modal).toggle() else $(event.target).closest(@options.modal).toggle()
 
-                        event.preventDefault()
-                        return false
+                    event.preventDefault()
+                    return false
 
             $("body").on
                 # Decide when to close the modal, adapted from zbase.js
