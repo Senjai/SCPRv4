@@ -8,52 +8,28 @@
 
 class scpr.VideoPage
     DefaultOptions:
-        button: 'button.browse-all-videos'
-        overlay: '.videos-overlay'
-        nav: 
-            button: 'button.arrow'
-            left: 'button.arrow.left'
-            right: 'button.arrow.right' 
-        inactive:
-            "background-color": "#070707"
-            color: "#777777"
-            "border-color": "#505050"
-        active:
-            "background-color": "#2e2e2e"
-            color: "#bfbfbf"
-            "border-color": "#808080"
+        browseAll: '.browse-all-videos'
+        overlay: '.videos-list'
+        navButton: 'button.arrow'
         
     constructor: (options) ->
-        @opts = _(_({}).extend(@DefaultOptions)).extend options||{}
-        @clickShouldHide = false
-    
-        # This is the easiest way to tell if the cursor is in the overlay or not
-        $(@opts.overlay).hover(
-          => @clickShouldHide = false
-          => @clickShouldHide = true
-        )
+        @options = _(_({}).extend(@DefaultOptions)).extend options||{}    
 
+        $(@options.browseAll).on
+            click: (event) =>
+                @getVideos() if !$(@options.overlay + " .video-thumb").length
+                
         # Nav button hover functionality
-        for button in $(@opts.nav.button)
+        for button in $(@options.navButton)
             $(button).on
                 click: (event) =>
                     page = $(event.target).attr("data-page")
                     @getVideos(page) unless page is ""
                 mouseenter: (event) =>
                     unless $(event.target).attr("data-page") is "" 
-                      @fadeButton $(event.target), "in"
+                      @fadeButton($(event.target), "in")
                 mouseleave: (event) =>
-                    @fadeButton $(event.target), "out"
-
-        # When you click the button, show the modal
-        $(@opts.button).click => @showModal()
-
-        # Hide the overlay if the Esc key is pressed
-        $(document).keyup (e) => (@hideModal() if e.keyCode is 27 and $(@opts.overlay).css("display") isnt "none")
-   
-        # And finally, if we click outside of the overlay, hide it.
-        $('body').click => @hideModal() if @clickShouldHide and $(@opts.overlay).css("display") isnt "none"
-
+                    @fadeButton($(event.target), "out")
 
     getVideos: (page=1) ->
         $.ajax {
@@ -63,18 +39,18 @@ class scpr.VideoPage
                 page: page
             dataType: "script"
             beforeSend: (xhr) =>
-                if $(@opts.overlay).css("display") is "none" # Wait for 200ms to spin, otherwise the spinner is off-center
+                if $(@options.overlay).css("display") is "none" # Wait for 200ms to spin, otherwise the spinner is off-center
                   setTimeout ( => 
-                    $(@opts.overlay).spin()
+                    $(@options.overlay).spin()
                   ), 200
                 else
-                    $(@opts.overlay).spin()
+                    $(@options.overlay).spin()
                 console.log "Sending Request..."
             error: (xhr, status, error) -> 
-                $('.videos-overlay .list').html "Error loading videos. Please refresh the page and try again. (#{error})"
+                $(@options.overlay + ' .list').html "Error loading videos. Please refresh the page and try again. (#{error})"
             complete: (xhr, status) => 
                 setTimeout ( => 
-                  $(@opts.overlay).spin(false)
+                  $(@options.overlay).spin(false)
                 ), 200 # in case it takes less than 200ms to load the videos
                 console.log "Finished request. Status: #{status}"
         }
@@ -85,13 +61,3 @@ class scpr.VideoPage
         opacity = if dir is "in" then 1 else 0.5
         b.css("cursor", cursor)
         b.animate({opacity: opacity}, "fast")
-        
-    showModal: =>
-        @getVideos() if !$(@opts.overlay + " ul>li").length # Get videos only if the modal hasn't been opened yet
-        $(@opts.overlay).show("fast")
-        $(@opts.button).addClass("active")
-
-    hideModal: =>
-        $(@opts.overlay).hide("fast")
-        @clickShouldHide = false
-        $(@opts.button).removeClass("active")

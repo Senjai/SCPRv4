@@ -39,7 +39,35 @@
 } // modal-light
 
 @mixin modal-dark {
+	@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
+	@include background-image(linear-gradient(#333, #1b1b1b));
+	border: 1px solid #4c4c4c;
+	margin-top: 14px;
 	
+	.inner-container {
+	}
+	
+	.arrow-up {
+		background: url(image_path('icons/dark-modal-arrow.png')) no-repeat;
+		width: 28px;
+		height: 12px;
+		position: absolute;
+		left: 70px; // specify a new 'left' property on your specific class for the modal, flagged with !important to override the horizontal position of the arrow
+		top: -12px;
+	}
+	.modal-close {
+		background: url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
+		cursor: pointer;
+		width: 18px;
+		height: 16px;
+		opacity: 0.8;
+		position: absolute;
+		right: 25px;
+		top: 20px;
+		&:hover {
+			opacity: 1.0;
+		}
+	}
 } // modal-dark
 
 .modal-container { // Wrap this class around the modal-popup if you need to so the modal will be positioned properly
@@ -110,7 +138,9 @@
 		top:27px;
 	} // .episode-guide
 	
-	&.videos {
+	&.videos-list {
 		@include modal-dark;
+		min-height: 640px;
+		width: 1110px;
 	} // .video-list
 }

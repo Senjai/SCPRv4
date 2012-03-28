@@ -16,11 +16,12 @@ class scpr.Modal
                 click: (event) =>
                     if $(event.target).attr(@options.modalId)
                         $(".modal-popup#"+$(event.target).attr(@options.modalId)).toggle()
-                        event.preventDefault
-                        return false
                     else
                         if $(event.target).next(@options.modal).length then $(event.target).next(@options.modal).toggle() else $(event.target).closest(@options.modal).toggle()
-            
+
+                        event.preventDefault()
+                        return false
+
             $("body").on
                 # Decide when to close the modal, adapted from zbase.js
                 click: (event) =>
