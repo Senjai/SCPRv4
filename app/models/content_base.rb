@@ -11,12 +11,12 @@ class ContentBase < ActiveRecord::Base
   STATUS_LIVE     = 5
   
   STATUS_TEXT = {
-      STATUS_KILLED:  "Killed",
-      STATUS_DRAFT:   "Draft",
-      STATUS_REWORK:  "Awaiting Rework",
-      STATUS_EDIT:    "Awaiting Edits",
-      STATUS_PENDING: "Pending",
-      STATUS_LIVE:    "Published"
+      STATUS_KILLED   => "Killed",
+      STATUS_DRAFT    => "Draft",
+      STATUS_REWORK   => "Awaiting Rework",
+      STATUS_EDIT     => "Awaiting Edits",
+      STATUS_PENDING  => "Pending",
+      STATUS_LIVE     => "Published"
   }
   
   CONTENT_CLASSES = {
@@ -294,6 +294,12 @@ class ContentBase < ActiveRecord::Base
     
   def public_datetime
     self.published_at
+  end
+  
+  #----------
+  
+  def status_text
+    ContentBase::STATUS_TEXT[ self.status ]
   end
     
 end
