@@ -493,6 +493,27 @@
 	}
 }
 
+// Newsletter widget
+.newsletter-subscribe {
+	padding: 5px;
+	form {
+		input.email {
+			padding-left: 30px;
+			background: url(image_path("icons/envelope-open.png")) no-repeat 5px 2px;
+			height: 15px;
+			@include font-sans-serif($size: 10px);
+			display: inline-block;
+		}
+		
+		input[type=submit] {
+			@include font-shorthand($size: 10px, $weight: normal);
+			display: inline-block;
+			padding: 2px 7px 1px 7px;
+			margin: 0 0 0 7px;
+		}
+	}
+}
+
 // Related Articles
 .related-articles {
 	h6 {
