@@ -57,17 +57,44 @@ describe Event do
   end
   
   describe "upcoming?" do
-    it "uses the start time if the event has no end time" do
+    it "is true if the start time is greater than right now" do
+      event = build :event, ends_at: nil, starts_at: 1.hour.from_now
+      event.upcoming?.should be_true
+    end
+    
+    it "is false if the event start time is in the past" do
       event = build :event, ends_at: nil, starts_at: 1.hour.ago
       event.upcoming?.should be_false
     end
-    
-    it "uses the end time if it exists" do
-      event = build :event, starts_at: 1.hour.ago, ends_at: 1.hour.from_now
-      event.upcoming?.should be_true
-    end
   end
   
+  describe "current?" do
+    it "is true if Time.now is between the start and end times" do
+      event = build :event, starts_at: 1.hour.ago, ends_at: 1.hour.from_now
+      event.current?.should be_true
+    end
+    
+    it "is true if ends_at is blank and Time.now is between start time and end of day" do
+      event = build :event, starts_at: 1.hour.ago, ends_at: nil
+      event.current?.should be_true
+    end
+    
+    it "is false if start time is in the future" do
+      event = build :event, starts_at: 1.hour.from_now
+      event.current?.should be_false
+    end
+    
+    it "is false if event ends_at is in the past" do
+      event = build :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
+      event.current?.should be_false
+    end
+    
+    it "is false if no ends_at and event starts_at was yeserday" do
+      event = build :event, starts_at: Time.now.yesterday
+      event.current?.should be_false
+    end
+  end
+
   describe "description" do
     it "returns the description if the event is upcoming" do
       event = build :event, description: "Future", archive_description: "Past"
@@ -170,7 +197,7 @@ describe Event do
     end
     
     describe "forum" do
-      it "only selects events not of type 'spon' or 'pick'" do
+      it "only selects events of types in ForumTypes array" do
         spon_event = create :event, etype: "spon" # "spon" = sponsored
         pick_event = create :event, etype: "pick"
         comm_event = create :event, etype: "comm"

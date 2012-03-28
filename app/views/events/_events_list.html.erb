@@ -12,7 +12,7 @@
 					</a>
 				<% end %>
 				<div class="event-details">
-					<%= event_link event %> 
+					<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
 					<% if event.location_name.present? %>
 						<span class="event-location<%= " forum" if event.is_forum_event? %>"><%= event.location_name %></span>
 					<% end %>

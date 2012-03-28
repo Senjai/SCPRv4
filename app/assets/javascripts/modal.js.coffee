@@ -15,10 +15,13 @@ class scpr.Modal
                 # Specify a modal ID to pop-up. If no modalID is specified on the link, then it will try to find the closest modal.
                 click: (event) =>
                     if $(event.target).attr(@options.modalId)
-                        $("#"+$(event.target).attr(@options.modalId)).toggle()
+                        $(".modal-popup#"+$(event.target).attr(@options.modalId)).toggle()
                     else
                         if $(event.target).next(@options.modal).length then $(event.target).next(@options.modal).toggle() else $(event.target).closest(@options.modal).toggle()
-            
+
+                        event.preventDefault()
+                        return false
+
             $("body").on
                 # Decide when to close the modal, adapted from zbase.js
                 click: (event) =>

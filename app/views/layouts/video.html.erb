@@ -14,27 +14,27 @@
 <%= render "shared/masthead" %>
 
 <div id="main" class="container">
-	<div class="videos-overlay">
-		<div class="inner-container">
-			<div class="dark-modal-arrow">&nbsp;</div>
-			<div class="row">
-				<div class="span1">
-					<button class="arrow left" id="next-page" data-page="">&nbsp;</button>
-				</div>
-				<div class="list span10">
-					<%# This is populated via ajax from videos.js.coffee %>
-				</div>
-				<div class="span1">
-					<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
-				</div>
-			</div>
-			<div class="pagination">&nbsp;</div>
-		</div> <!-- inner-container -->
-	</div> <!-- .videos-overlay -->
-	
 	<div class="row">
 		<div class="span2">
-			<button id="browse-all-videos" class="browse-all-videos">Browse All Videos</button>
+			<button class="browse-all-videos modal-toggler">Browse All Videos</button>
+			
+			<%= modal("videos-list", modal_id: "episode-guide") do %>
+				<div class="row">
+					<div class="span1">
+						<button class="arrow left" id="next-page" data-page="">&nbsp;</button>
+					</div>
+					<div class="span10">
+						<div class="list">
+							<%# This is populated via ajax from videos.js.coffee %>
+						</div>
+					</div>
+					<div class="span1 right-col">
+						<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
+					</div>
+				</div>
+				<div class="pagination">&nbsp;</div>
+			<% end %>
+			
 		</div> <!-- .span2 -->
 		
 		<article class="span8">
@@ -67,7 +67,7 @@
 </div>
 
 <% content_for :footerjss do %>
-	var videoPage = new scpr.VideoPage();
+	videoPage = new scpr.VideoPage();
 <% end %>
 
 <%= render :partial => "shared/footer" %>

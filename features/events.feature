@@ -48,7 +48,6 @@ Scenario: View an individual event
 	When I go to that event's page
 	Then I should see "CFF Event"
 	And I should see article meta
-	And the article meta header should say "event"
 	And I should not see a comments section
 
 Scenario: Visit a page for an event that doesn't exist

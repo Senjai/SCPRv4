@@ -1,4 +1,4 @@
-<div class="modal-popup hidden <%= cssClass %>">
+<div class="modal-popup <%= cssClass %>"<% if options[:modal_id] %> id="<%=options[:modal_id]%>"<%end%>>
 	<div class="arrow-up"></div>
 	<div class="modal-close modal-toggler"></div>
 	<div class="inner-container">

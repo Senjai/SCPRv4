@@ -320,15 +320,9 @@ module ApplicationHelper
     formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
   end
   
-  def event_link(event, options={})
-    return nil if !event.respond_to?(:starts_at)
-    options.reverse_merge!(class: "event-link")
-    return link_to(format_date(event.starts_at, format: :event), event.link_path, options)
-  end
-  
-  def modal(cssClass, &block)
+  def modal(cssClass, options={}, &block)
     content_for(:modal_content, capture(&block))
-    render('shared/modal_shell', cssClass: cssClass)
+    render('shared/modal_shell', cssClass: cssClass, options: options)
   end
   
   def watch_gmaps(options={})

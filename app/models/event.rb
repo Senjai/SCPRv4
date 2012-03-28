@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
 
   scope :published, where(:is_published => true)
   scope :upcoming, lambda { published.where("starts_at > ?", Time.now).order("starts_at") }
-  scope :forum, published.where("etype != ? AND etype != ?", "spon", "pick")
+  scope :forum, published.where("etype IN (?)", ForumTypes)
   scope :sponsored, published.where("etype = ?", "spon")
   scope :past, lambda { published.where("starts_at < ?", Time.now).order("starts_at desc") }
   
@@ -23,10 +23,14 @@ class Event < ActiveRecord::Base
   end
   
   def upcoming? # Still display maps, details, etc. if the event is currently happening
-    if ends_at.blank?
-      starts_at > Time.now
+    starts_at > Time.now
+  end
+  
+  def current?
+    if ends_at.present?
+      Time.now.between? starts_at, ends_at
     else
-      ends_at > Time.now
+      Time.now.between? starts_at, starts_at.end_of_day
     end
   end
   
@@ -63,7 +67,7 @@ class Event < ActiveRecord::Base
   end
   
   def description
-    if self.upcoming? or (!self.upcoming? and archive_description.blank?)
+    if self.upcoming? or archive_description.blank?
       self[:description]
     else
       archive_description
@@ -115,7 +119,6 @@ class Event < ActiveRecord::Base
     else
       return ''
     end    
-
   end
   
   def headline
