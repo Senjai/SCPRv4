@@ -31,9 +31,16 @@ class PodcastsController < ApplicationController
       @content = ( @podcast.program ? @podcast.program.segments : ShowSegment ).published
       @obj_type = "shows/segment:new"
     elsif @podcast.item_type == "content"
-      # TBD
       @obj_type = "contentbase:new"
       
+      @content = ThinkingSphinx.search '', 
+        :with       => { :has_audio => true }, 
+        :without    => { :category => '' },
+        :classes    => ContentBase.content_classes, 
+        :order      => :published_at, 
+        :page       => 1, 
+        :per_page   => 15, 
+        :sort_mode  => :desc
     else
       # nothing...
     end

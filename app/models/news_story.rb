@@ -16,7 +16,9 @@ class NewsStory < ContentBase
     has "(news_story.source <=> 'kpcc')", :as => :is_source_kpcc, :type => :boolean
     has "CRC32(CONCAT('news/story:',news_story.id))", :type => :integer, :as => :obj_key
     has "(news_story.story_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
     where "status = #{STATUS_LIVE}"
+    join audio
   end
   
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
