@@ -300,7 +300,8 @@ end
     
     after_create do |object, evaluator|
       content_base_associations(object, evaluator)
-      FactoryGirl.create_list(:show_rundown, evaluator.segment_count.to_i, episode: object, segment: FactoryGirl.create(:segment, show: object.show))
+      segments = FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, show: object.show)
+      segments.each { |segment| segment.episodes << object }
     end
   end
 

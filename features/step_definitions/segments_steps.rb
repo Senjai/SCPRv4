@@ -46,11 +46,18 @@ Then /^the segments should be ordered by the segment order$/ do
 end 
 
 
+
+#### Assertions
+Then /^that section should not have the current segment listed$/ do
+  page.find(@css_finder).should_not have_content @segment.title
+end
+
+
 #### Routing
-When /^I go to (?:that|the|a) segment's page$/ do
-  segment = ShowSegment.all[rand(ShowSegment.count)]
-  visit segment.link_path
-  current_path.should eq segment.link_path
+When /^I go to (?:that|the|a|any) segment's page$/ do
+  @segment = ShowSegment.all[rand(ShowSegment.count)]
+  visit @segment.link_path
+  current_path.should eq @segment.link_path
 end
 
 

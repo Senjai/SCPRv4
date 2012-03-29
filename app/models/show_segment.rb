@@ -24,6 +24,18 @@ class ShowSegment < ContentBase
   
   #----------
   
+  def episode
+    episodes.first
+  end
+  
+  def sister_segments
+    if episodes.present?
+      episode.segments.published.where("shows_segment.id != ?", self.id)
+    else
+      show.segments.published.where("shows_segment.id != ?", self.id).limit(5)
+    end
+  end
+  
   def headline
     self.title
   end
