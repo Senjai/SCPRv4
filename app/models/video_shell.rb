@@ -17,6 +17,7 @@ class VideoShell < ContentBase
     has "CRC32(CONCAT('content/video:',contentbase_videoshell.id))", :type => :integer, :as => :obj_key
     has "1", :as => :is_source_kpcc, :type => :boolean
     has "0", :as => :is_slideshow, :type => :boolean
+    has "0", :as => :has_audio, :type => :boolean
     where "status = #{STATUS_LIVE}"
   end
   
