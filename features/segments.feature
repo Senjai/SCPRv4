@@ -1,5 +1,10 @@
 Feature: Segments
 
+Scenario: Go to a segment page that doesn't exist
+	Given there is 1 segment
+	When I visit a segment page with an incorrect id
+	Then I should be on that segment's program page
+
 Scenario: View a segment
 Given a kpcc program with the following attributes:
 	| segment_count | segment[asset_count] |

@@ -4,6 +4,10 @@ Given /^the program has (\d+) segments?$/ do |num|
   @segment = @segments[rand(@segments.length)]
 end
 
+Given /^there (?:is|are) (\d+) segments?$/ do |num|
+  @segment = create_list :show_segment, num.to_i
+end
+
 Given /^(?:each|the) episode has (\d+) segments?$/ do |num|
   @program.episodes.each do |episode|
     segments = create_list :show_segment, num.to_i, asset_count: 1, show: @program
@@ -60,4 +64,10 @@ When /^I go to (?:that|the|a|any) segment's page$/ do
   current_path.should eq @segment.link_path
 end
 
+When /^I visit a segment page with an incorrect id$/ do
+  visit "/programs/patt-morrison/2012/03/27/000/us-navy-developing-soldiers-spidey-sense-intuition/"
+end
 
+Then /^I should be on that segment's program page$/ do
+  pending # express the regexp above with the code you wish you had
+end
