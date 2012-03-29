@@ -1,14 +1,13 @@
 <%= content_cache("related:#{content.obj_key}") do %>
 	<% register_content content %>
 	<% if (rels = content.sorted_relations(content.frels.normal,content.brels.notiein)).any? %>
-		<aside class="related-articles">
+		<aside class="related-articles cbase">
 			<h6>More from KPCC</h6>
 			<ul>
 				<% for c in rels %>
 			    <li>
 					<% register_content c %>
-					<%= link_to c.short_headline, c.link_path %>
-					<br/><%= smart_date c %>
+					<%= link_to c.short_headline, c.link_path %> <span class="pipe">|</span> <time><%= smart_date c %></time>
 			    </li>
 				<% end %>
 			</ul>
@@ -16,7 +15,7 @@
 	<% end %>
 	
 	<% if content.related_links.any? %>
-		<aside class="related-links">
+		<aside class="related-links cbase">
 			<h6>Elsewhere on the Web</h6>
 			<ul>
 				<% content.related_links.each do |link| %>

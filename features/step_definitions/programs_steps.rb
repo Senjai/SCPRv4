@@ -19,6 +19,7 @@ Given /^(?:an? )?(kpcc|other) programs? with the following attributes?:$/ do |pr
 end
 
 
+
 #### Finders
 Then /^I should see the program's information$/ do
   find(".show-title h1").should have_content @program.title
@@ -58,6 +59,7 @@ Then /^I should see the featured programs in the correct order$/ do
 end
 
 
+
 #### Utility
 Given /^the feeds are cached$/ do
   @program.cache.should be_true
@@ -72,13 +74,22 @@ Given /^the program is currently on$/ do
 end
 
 
+
 #### Routing
 When /^I go to the programs page$/ do
   visit programs_path
   current_path.should eq programs_path
 end
 
+Then /^I should be on the programs page$/ do
+  current_path.should eq programs_path
+end
+
 When /^I go to (?:the|a|that) program's page$/ do
   visit program_path @program
   current_path.should eq program_path @program
+end
+
+When /^I go to a program page with slug "([^"]*)"$/ do |slug|
+  visit program_path(show: slug)
 end
