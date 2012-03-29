@@ -10,6 +10,7 @@
 //= require jquery.jplayer.min
 //= require moment
 //= require moment-strftime
+//= require bootstrap-tab
 
 //= require audio
 //= require video
