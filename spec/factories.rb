@@ -85,7 +85,6 @@ FactoryGirl.define do
   factory :show_rundown do
     episode
     segment
-    sequence(:segment_order) { |n| n }
   end
   
 
