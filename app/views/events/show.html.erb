@@ -77,7 +77,7 @@
 				</div>
 			</div>
 			<%= render_asset @event, "blog" %>
-			<p><%= simple_format @event.description, sanitize: false %></p>
+			<p><%= simple_format(@event.description, {}, sanitize: false) %></p>
 			<br style="clear: both" />
 			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
 		</div>
