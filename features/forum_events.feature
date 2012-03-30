@@ -127,4 +127,5 @@ Scenario Outline: Other static pages
 	 | forum request   |
 	 | forum caterers  |
 	 | forum volunteer |
+	 | forum riots	   |
 
