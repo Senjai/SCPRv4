@@ -59,14 +59,5 @@ namespace :remote_ts do
   end
 end
 
+after "deploy:update_code", "thinking_sphinx:configure"
 after "deploy:update", "newrelic:notice_deployment"
-
-#task :before_update_code, :roles => [:app] do
-#  thinking_sphinx.stop
-#end
-
-#task :after_update_code, :roles => [:app] do
-  #symlink_sphinx_indexes
-#  thinking_sphinx.configure
-#  thinking_sphinx.start
-#end
