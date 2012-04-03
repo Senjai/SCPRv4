@@ -62,60 +62,34 @@ $headShotWidth: 90px;
 }
 
 .program-masthead {
-	border-bottom: 1px solid #a2a2a2;
+	position: relative;
+	border-bottom: 1px solid $grayLighter;
 	margin-bottom: $baseline / 2;
-	margin-top: $baseline / 2 * -1;
-	padding: 0 0 10px 0;
-	.row {
-		position: relative;
-		min-height: $headShotHeight;
-	}
-	
-	.show-title {
-		min-height: $headShotHeight;
-	}
-	
-	h1.page-title {
-		position: absolute;
-		bottom: 0;
-		line-height: 30px;
-		width: 400px;
-	}
+	padding-bottom: 10px;
 	
 	.show-meta {
-		position: absolute;
-		right: 0;
-		bottom: 0;
+		@include font-sans-serif($size: 11px, $lineHeight: 14px);
 		text-align: right;
-		min-height: $headShotHeight;
+		vertical-align: bottom;
 		padding-right: $headShotWidth;
-		width: 240px;
+		min-width: $headShotWidth;
+		height: $headShotHeight;
 		background-position: right top;
-		.info {
-			position: absolute;
-			bottom: 0;
-			right: $headShotWidth;
-			@include font-sans-serif($size: 11px, $lineHeight: 14px);
-		}
-		
 	}
 	
-	.span4 {
-		margin: 0;
-		.support {
-			position: relative;
-			top: 15px; /* hax */
-			left: 14px;
-			height: $headShotHeight - 7px;
-			background: url(image_path('support-banner.png')) no-repeat left top;
-			display: block;
-			padding: 7px 9px 0 63px;
-			margin: 0;
-			width: 240px;
+	.support {
+		display: table;
+		height: 55px;
+		background: url(image_path('support-banner.png')) no-repeat left top;
+		padding: 0 9px 0 63px;
+		width: 238px;
+		overflow: hidden;
+		@include font-slab-headings(300, 13px, 8px);		
+		a {
+			display: table-cell;
+			vertical-align: middle;
 			color: #fff;
 			text-shadow: 0 1px $orangeDark;
-			@include font-slab-headings(300, 13px);
-			overflow-y: hidden;
 			&.small {
 				font-size:11px;
 				line-height:15px;

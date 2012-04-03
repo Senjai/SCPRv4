@@ -10,9 +10,9 @@
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
 
-<div id="main" class="container">
+<div id="main" class="container-fluid">
 	<%= yield :title_bar %>
-	<div class="row">
+	<div class="row-fluid">
 		<article class="span8">
 			<%= content_for?(:content) ? yield(:content) : yield %>
 		</article>

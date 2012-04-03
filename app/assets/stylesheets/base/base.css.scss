@@ -34,8 +34,17 @@ $purple:            #7a43b6;
 $facebookBlue:		#3b5895;
 
 // Baseline grid
-$basefont:          14px;
-$baseline:          21px;
+$baseFontSize: 14px;
+$baseLineHeight: 21px;
+$baseFontFamily: "Georgia", Times New Roman, Times, serif;
+$textColor: $nearBlack;
+
+
+// Legacy
+$basefont:          $baseFontSize;
+$baseline:          $baseLineHeight;
+// end Legacy
+
 
 // Clearfix for clearing floats like a boss h5bp.com/q
 @mixin clearfix {

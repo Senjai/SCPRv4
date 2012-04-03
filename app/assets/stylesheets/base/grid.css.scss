@@ -1,0 +1,41 @@
+// Grid
+$gridColumns:       12;
+$gridColumnWidth:   65px;
+$gridGutterWidth:   30px;
+$gridRowWidth:      ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 1));
+$columnOffset: 1;
+$extraSpace: ($gridGutterWidth * 2);
+$siteWidth:  $gridRowWidth;
+
+$fluidColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
+$fluidGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
+
+// Grid System
+@mixin columns($columnSpan: 1) {
+  float: left;
+  width: ($gridColumnWidth * $columnSpan) + ($gridGutterWidth * ($columnSpan - 1));
+  margin-left: $gridGutterWidth;
+}
+@mixin offsetMath() {
+  margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace;
+}
+@mixin offset($columnOffset: 1) {
+  margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace;
+  &:first-child {
+  	margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace;
+  }
+}
+
+@mixin respond-to($media) {
+  @if $media == small {
+    @media only screen and (max-width: $mediaSmallLandscape) { @content; }
+  }
+
+  @else if $media == medium {
+    @media only screen and (min-width: $mediaSmallLandscape + 1) and (max-width: $mediaMidLandscape) { @content; }
+  }
+
+  @else if $media == large {
+    @media only screen and (min-width: $mediaMax) { @content; }
+  }
+}

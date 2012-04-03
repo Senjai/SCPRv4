@@ -2,53 +2,63 @@
 	<p>Thank you for checking out the KPCC beta! Use the feedback button at the bottom of the page, or <a href="/beta">opt out of the beta</a>.</p>
 </div>
 <header id="masthead">
-	<div class="container">
-		<div class="row">
-    		<div class="logo span5">
-		        <h1>
-		            <a href="/">
-		            	<%= image_tag "logo-masthead.png" %>
-		            </a>
-		        </h1>
-				<iframe id="kpcc-fb-like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fkpccfm&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
-		    </div>
-			<div class="span2 pledge-container">
-				<!-- membership_masthead -->
-				<div id='div-gpt-ad-1331935001948-0' style='width:286px; height:73px;'>
-				<script type='text/javascript'>
-				googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331935001948-0'); });
-				</script>
+	<div class="container-fluid">
+		<div class="row-fluid">
+    		<div class="span4 logo">
+				<h1>
+					<a href="/"><%= image_tag "logo-masthead.png" %></a>
+					<iframe id="kpcc-fb-like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fkpccfm&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
+				</h1>
+			</div>
+
+			<div class="span4">
+				<div class="pledge-container">
+					<!-- membership_masthead -->
+					<div id='div-gpt-ad-1331935001948-0' class="ad" style='width:286px; height:73px;'>
+						<script type='text/javascript'>
+							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331935001948-0'); });
+						</script>
+					</div>
 				</div>
 			</div>
-		    <nav class="utils span5">
-				<ul class="nav secondary-nav clearfix">
-					<li class="social">Follow us
-						<a href="http://facebook.com/kpccfm"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
-	    		        <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
-						<a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
-	    		    </li>
-					<% if current_user %>
-						<li class="username">Hi <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
-						<li><a href="/accounts/logout/">Log Out</a></li>
-					<% else %>
-		    		    <li><a href="/accounts/login/">Login</a></li>
-		    		    <li><a href="/accounts/register/">Register</a></li>					
-					<% end %>
-	    		</ul>
-	    	</nav>
-		</div>
-		<div class="row">
-			<nav id="megamenu" class="nav-primary topbar span12">
-				<nav class="sections clearfix">
+			
+		    <div class="span4">
+				<nav class="utils">
+					<ul class="nav secondary-nav clearfix">
+						<li class="social">Follow us
+							<a href="http://facebook.com/kpccfm"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
+		    		        <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
+							<a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
+		    		    </li>
+						<% if current_user %>
+							<li class="username">Hi <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
+							<li><a href="/accounts/logout/">Log Out</a></li>
+						<% else %>
+			    		    <li><a href="/accounts/login/">Login</a></li>
+			    		    <li><a href="/accounts/register/">Register</a></li>					
+						<% end %>
+		    		</ul>
+		    	</nav>
+			</div>
+		</div> <!-- row fluid -->
+		
+		<% nav_items = [
+			{ title: "News", "data-section" => "news-mega", href: "/news/" },
+			{ title: "Arts &amp; Life", "data-section" => "arts-mega", href: "/arts-life/" },
+			{ title: "Programs", "data-section" => "programs-mega", href: "/programs/" },
+			{ title: "Events", "data-section" => "events-mega", href: "/events/" },
+			{ title: "Support Us", "data-section" => "support-mega", href: "/support/" }
+		] %>
+		<nav id="megamenu" class="nav-primary topbar navbar">
+			<div class="navbar-inner container">
+				<nav class="sections clearfix nav-collapse">
 					<ul>
 					    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>
-					    <li class="mega"><a href="/news/" data-section="news-mega"><span>News</span></a></li>
-					    <li class="mega"><a href="/arts-life/" data-section="arts-mega"><span>Arts &amp; Life</span></a></li>
-					    <li class="mega"><a href="/programs/" data-section="programs-mega"><span>Programs</span></a></li>
-					    <li class="mega"><a href="/events/" data-section="events-mega"><span>Events</span></a></li>
-						<li class="mega"><a href="/support/" data-section="support-mega"><span>Support Us</span></a></li>
+						<% nav_items.each do |item| %>
+						    <li class="mega"><a href="<%=item[:href]%>" data-section="<%=item["data-section"]%>"><span><%= item[:title].html_safe %></span></a></li>
+						<% end %>
 					</ul>
-					<form action="/search/" class="search" method="get">
+					<form action="/search/" class="search navbar-form pull-right" method="get">
 						<fieldset>
 						    <label>Search:</label>
 						    <div class="inputs">
@@ -58,8 +68,11 @@
 						</fieldset>
 					</form>
 				</nav>
-			</nav>
-		</div>
+			
+				<div class="nav-simple">
+				</div>
+			</div> <!-- .navbar-inner -->
+		</nav>
 	</div>
 </header>
 

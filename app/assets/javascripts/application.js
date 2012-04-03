@@ -14,6 +14,7 @@
 //= require jquery.jplayer.min
 //= require moment
 //= require moment-strftime
+//= require bootstrap
 
 //= require audio
 //= require video

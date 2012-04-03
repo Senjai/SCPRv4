@@ -1,4 +1,4 @@
- /*
+/*
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
@@ -13,7 +13,8 @@
 @import "base/reset.css.scss";
 @import "base/base.css.scss";
 @import "base/type.css.scss";
-@import "base/grids.css.scss";
+@import "base/grid.css.scss";
+@import "base/responsive.css.scss";
 @import "base/patterns.css.scss";
 @import "base/forms.css.scss";
 @import "base/tables.css.scss";
@@ -38,4 +39,3 @@
 @import "widgets.css.scss";
 @import "modals.css.scss";
 @import "slideshow.css.scss";
-

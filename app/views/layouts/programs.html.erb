@@ -1,28 +1,27 @@
 <% content_for :title_bar do %>
-<div class="row">
-	<div class="span12 program-masthead">
-		<div class="span8">
-			<div class="row">
-				<div class="span4 show-title">
-					<h1 class="page-title"><%= link_to @program.title, program_path(@program.slug) %></h1>
-				</div>
-				<div class="span4 show-meta headshot <%= @program.slug %>">
-					<div class="info">
-						<%= @program.airtime %><br />
-						<% if @program.host? %>
-							with <%= @program.host %>
-						<% end %>
-					</div>
-				</div> <!-- span4 show-meta -->
-			</div> <!-- .row -->
-		</div> <!-- .span8 -->
+<div class="page-header program-masthead">
+	<div class="row-fluid">
+		<div class="span5">
+			<h1 class="page-title"><%= link_to @program.title, program_path(@program.slug) %></h1>
+		</div>
+		<div class="span3">
+			<div class="show-meta headshot <%= @program.slug %>">
+				<%= @program.airtime %><br />
+				<% if @program.host.present? %>
+					with <%= @program.host %>
+				<% end %>
+			</div>
+		</div> <!-- span3 -->
 		<div class="span4">
-			<a class="support <%= "small" if @program.title.length > 20 %>" href="http://scprcontribute.publicradio.org/">
-				Support all the great programming on KPCC, including <%= @program.title %>.
-			</a> <!-- .support -->
-		</div> <!-- span4 -->
-	</div> <!-- program masthead-->
+			<div class="support">
+				<a class="<%= "small" if @program.title.length > 20 %>" href="http://scprcontribute.publicradio.org/">
+					Support all the great programming on KPCC, including <%= @program.title %>.
+				</a> 
+			</div><!-- .support -->
+		</div>
+	</div><!-- row -->
 </div>
+
 <% end %>
 
 <% content_for :content do %>

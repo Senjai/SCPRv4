@@ -1,12 +1,11 @@
 // Masthead container
 header#masthead {
 	margin-bottom:$baseline;
-	div.container {
-		div.row {
-			nav.span5 {
-				width:319px !important;
-			}
-		}
+}
+
+#beta-bar {
+	@include respond-to(small) {
+		display: none;
 	}
 }
 
@@ -20,12 +19,11 @@ header#masthead {
 	position:relative;
 	h1 {
 		line-height:20px;
-		margin:16px 0;		
+		margin:16px 0;
 	}
 	#kpcc-fb-like {
-		position:absolute;
-		left:200px;
-		top:20px;
+		vertical-align: bottom;
+		max-width: 85px;
 	}
 }
 
@@ -47,10 +45,11 @@ header#masthead {
 }
 // Pledge
 .pledge-container {
-	background:url("pledge-container-bg.jpg") no-repeat bottom;
+	background: url(image_path("pledge-container-bg.jpg")) no-repeat bottom;
 	height:72px;
-	width:286px !important;
-	position:relative;
+	width:286px !important;	
+	@include respond-to(small) { display: none !important; }
+	
 	// Pledge Now button
 	.pledge {
 		left:132px;
@@ -74,6 +73,7 @@ header#masthead {
 .pledge, nav.utils {
 	margin:10px 0;
 }
+
 nav.utils ul {
 	@include text-utility();
 	display:block;
