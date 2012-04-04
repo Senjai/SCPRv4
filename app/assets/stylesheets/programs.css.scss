@@ -1,6 +1,13 @@
 $headShotHeight: 70px;
 $headShotWidth: 90px;
 
+.show-segments, .show-episodes {
+	h2 {
+		color:$orangeDark;
+		font-size:18px;
+		font-weight:600;
+	}
+}
 #featured-programs {
 	h4 {
 		color:$orangeDark;
@@ -203,84 +210,6 @@ a.with-icon {
 	li {
 		list-style: none;
 	}
-}
-
-.show-episodes {  
-	border-top:1px solid $grayLight;
-	margin-top:$baseline;
-	padding-top:$baseline / 2;  
-    h2 {
-       color: $orangeDark;
-		font-size: 18px;
-		font-weight: 600;
-    }
-}
-
-.show-episode {
-	border-bottom: 1px solid $grayLighter;
-    margin-top: $baseline;
-	padding-bottom: 16px;
-    .span2 img {
-       width: 170px;
-       height: 170px;
-    }
-	h3 {
-		@include font-headline();
-		font-size:20px;
-		a {
-			color: $nearBlack;
-		}
-	}
-	p {
-		font-size:13px;
-		line-height:18px;
-	}
-}
-
-.current-episode {
-    h2 {
-		font-size:18px;
-        font-weight: 600;
-        margin: 6px 0 12px 0;
-		a {
-			color:$nearBlack;
-		}
-    }
-    
-    h3 {
-        margin-top: 8px;
-    }
-}
-.current-episode-segments {
-	h3 {
-		font-size:16px;
-		font-weight:600;
-	}
-	.cbase {
-		margin-bottom:$baseline / 2;
-		a.comment_link {
-			margin-left:0;
-		}
-	}
-}
-
-.upcoming-episode {
-    margin: 12px 0;
-    padding: 12px 0;
-    border-top: 1px solid #ccc;
-    
-    h3 {
-        font-weight: 400;
-        
-        b {
-            color: $orangeDark;
-            font-weight: inherit;
-        }
-    }
-    
-    p {
-        margin-bottom: 0;
-    }
 }
 
 .show-video {

@@ -1,14 +1,16 @@
 <% page_title @program.title %>
 
 <% if @program.display_episodes %>
-	<%= render :partial => "current_episode", :object => @program.episodes.published.first if @program.episodes.published.present? %>
+	<section class="show-feature">
+		<%= render :partial => "current_episode", :object => @program.episodes.published.first if @program.episodes.published.present? %>
 
-	<% if upcoming = @program.episodes.upcoming.first %>
-		<div class="upcoming-episode">
-			<h3><b>Coming Up:</b> <%= upcoming.title %></h3>
-			<p><%= upcoming.teaser %></p>
-		</div>
-	<% end %>
+		<% if upcoming = @program.episodes.upcoming.first %>
+			<div class="upcoming-episode">
+				<h3><b>Coming Up:</b> <%= upcoming.title %></h3>
+				<p><%= upcoming.teaser %></p>
+			</div>
+		<% end %>
+	</section>
 <% end %>
 
 <a name="archive"></a>

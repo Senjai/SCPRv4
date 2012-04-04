@@ -52,6 +52,9 @@ class ProgramsController < ApplicationController
     if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
       redirect_to @segment.link_path and return
     end
+    
+    rescue
+      redirect_to program_path @program
   end
   
   #----------

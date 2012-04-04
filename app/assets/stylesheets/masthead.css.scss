@@ -102,22 +102,30 @@ nav.utils ul {
 .nav-compact {
 	display: none;
 	position: fixed;
-	width: 140px;
+	top: 0;
+	left: -50%;
+	width: 50%;
+	height: 100%;
 	z-index: 10;
-	@include box-shadow(1px 2px 3px $grayDark);
-	@include background-image(linear-gradient($grayLighter, $grayLight));
+	@include box-shadow(3px 0 5px rgba(0,0,0,.35));
+	background: $grayLighter;
 	border: 1px solid $black;
-	left: -142px;
 	.nav-toggler {
 		position: absolute;
-		left: 140px;
+		right: -15px;
+		top: -1px; /* inline with border */
 		background: $black;
-		width: 15px;
-		height: 20px;
+		padding: 0 5px;
+		height: 120px;
+		line-height: 120px;
 		color: $white;
 		font-weight: bold;
+		&:hover {
+			cursor: pointer; /* just because */
+		}
 	}
 	a {
+		@include background-image(linear-gradient($grayLighter, $gray));
 		text-align: right;
 		vertical-align: text-bottom;
 		display: block;
@@ -125,12 +133,13 @@ nav.utils ul {
 		@include font-navigation;
 		border-bottom: 1px solid $black;
 		padding: 5px;
-		&.top {
-			background: $gray;
-			color: $nearWhite;
+		&:first-of-type {
+			@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
+			background-color:#cb5f1d;
+			color: $white;
 		}
 		&:last-of-type {
-			border-bottom: none;
+			@include box-shadow(0 1px 3px rgba(0,0,0,.45));
 		}
 	}
 }

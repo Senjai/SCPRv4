@@ -1,17 +1,30 @@
 <div id="most-popular" class="widget">   
 	<h6>Most Popular</h6>
-	<ul class="tabs">
-	    <li><a href="#pop_tab1">Viewed</a></li>
-	    <li><a href="#pop_tab2">Discussed</a></li>
-	    <li><a href="#pop_tab3">Shared</a></li>
+	<ul class="nav nav-tabs">
+	    <li class="active"><a href="#pop_tab1" data-toggle="tab">Viewed</a></li>
+	    <li><a href="#pop_tab2" data-toggle="tab">Discussed</a></li>
+	    <li><a href="#pop_tab3" data-toggle="tab">Shared</a></li>
 	</ul>
-	<div class="popular" id="pop_tab1">
-		<% if popular = ActionController::Base.cache_store.read("widget/popular_viewed") %>
-	        <%= raw popular %>
-	    <% else %>
-	        <p>The most viewed content widget has an error and will refresh momentarily.</p>
-	    <% end %>
+	<div class="tab-content">
+		<div class="tab-pane active popular" id="pop_tab1">
+			<% if popular = ActionController::Base.cache_store.read("widget/popular_viewed") %>
+		        <%= raw popular %>
+		    <% else %>
+		        <p>The most viewed content widget has an error and will refresh momentarily.</p>
+		    <% end %>
+		</div>
+		<div class="tab-pane popular" id="pop_tab2">
+			<% if discussed = ActionController::Base.cache_store.read("widget/popular_commented") %>
+		        <%= raw discussed %>
+		    <% else %>
+		        <p>The most discussed content widget has an error and will refresh momentarily.</p>
+		    <% end %>    
+		</div>
+		<div class="tab-pane" id="pop_tab3">
+			<iframe src="//www.facebook.com/plugins/recommendations.php?site=www.scpr.org&amp;width=346&amp;height=300&amp;header=false&amp;colorscheme=light&amp;linktarget=_blank&amp;border_color=%23fff&amp;font=arial&amp;appId=165282643531298" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:346px; height:300px;" allowTransparency="true"></iframe>
+		</div>
 	</div>
+
 	<div class="popular" id="pop_tab2">
 		<% if discussed = ActionController::Base.cache_store.read("widget/popular_commented") %>
 	        <%= raw discussed %>

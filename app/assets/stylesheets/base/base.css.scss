@@ -77,6 +77,15 @@ $analog2:           spin($baseColor, -22);
 // MIXINS
 // ------
 
+// Asset and its container will stretch to the width of the span, up to the specified max-width
+@mixin responsiveImageAsset($maxWidth: 160px) {
+	.contentasset, .contentasset img {
+		width: 100%;
+		max-width: $maxWidth;
+		height: auto;
+	}
+}
+
 // mixin for getting IE to respect inline-block
 @mixin hide-text() {
 	text-indent: 100%;

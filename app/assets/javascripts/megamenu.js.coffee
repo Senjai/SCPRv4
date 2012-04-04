@@ -56,7 +56,16 @@ class scpr.MegaMenu
                 sec.drop.mouseout =>
                     sec.score -= 1
                     sec.func()
-                    @expanded -= 1
+                    @expanded -= 1                     
+                    
+				# The following works sort-of. It still follows a link if you click it once, click somewhere else, and then click it again. It should show the menu again.
+                $("body").on
+                    touchstart: (event) =>
+                        if sec.drop.is(":visible") and !$(event.target).is(sec.drop) and !$(event.target).closest(sec.drop).length
+                            sec.score -= 1
+                            sec.func()
+                            @expanded -= 1
+                        
                     
     _score: (sec) ->
         if sec.score > 0 && !sec.selected

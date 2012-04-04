@@ -19,8 +19,8 @@ $mediaSmallPortrait: 320px;
 
 .container-fluid {
 	@include clearfix;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 25px;
+	padding-right: 25px;
 }
 
 // Visibility utilities
@@ -77,6 +77,11 @@ $mediaSmallPortrait: 320px;
 		display: block;
 		line-height: $baseLineHeight;
 	}
+	
+	.show-segments .teaser .info {
+		border-right: none !important;
+		padding-right: 0;
+	}
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
@@ -93,6 +98,7 @@ $mediaSmallPortrait: 320px;
 			border-left: none !important;
 		}
 	}
+	
 	
 	// Remove width from containers
 	.container-fluid {
@@ -156,6 +162,15 @@ $mediaSmallPortrait: 320px;
 	.nav-compact {
 		display: block !important;
 	}
+	
+	.filters {
+		li.heading {
+			display: none !important;
+		}
+		.active-arrow {
+			display: none !important;
+		}
+	}
 }
 
 
@@ -189,12 +204,7 @@ $mediaSmallPortrait: 320px;
 }
 
 @media (max-width: 1064px) {
-	.contentasset {
-		max-width: 100% !important;
-		img {
-			height: auto !important;
-		}
-	}
+
 }
 
 // LARGE DESKTOP & UP
