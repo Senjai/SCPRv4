@@ -4,8 +4,6 @@
 //= require modernizr.custom.45510
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui-1.8.16.custom
-//= require jquery_textchange
 //= require jquery.touchwipe
 
 //= require jquery.mousewheel.3.0.4
@@ -13,8 +11,7 @@
 //= require jquery.jplayer.min
 //= require moment
 //= require moment-strftime
-//= require bootstrap
-
+//= require bootstrap-tab
 
 //= require audio
 //= require video
