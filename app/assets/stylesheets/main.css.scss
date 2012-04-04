@@ -39,20 +39,15 @@
 	border-top:1px solid $white;
 	border-bottom:1px solid $white;
 	height:46px;
-	width:100%;
 }
 section.broadcastbar {
-	margin:$margin-center;
-	width:1112px;
 	@include clearfix();
-	.left {
-	    float: left;
+	.current-program {
 	    margin-top: 14px;
 	}
-	.right {
-	    float:right;
-		margin-right:20px;
+	.next-program {
 	    margin-top: 14px;
+		text-align: right;
 	}
 	ul {
 		list-style:none outside none;

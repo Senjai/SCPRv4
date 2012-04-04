@@ -1,4 +1,4 @@
-<nav id="most-popular" class="widget">   
+<div id="most-popular" class="widget">   
 	<h6>Most Popular</h6>
 	<ul class="tabs">
 	    <li><a href="#pop_tab1">Viewed</a></li>
@@ -20,9 +20,12 @@
 	    <% end %>    
 	</div>
 	<div id="pop_tab3">
+		<div class="fb-recommendations" data-site="scpr.org" data-app-id="165282643531298" data-width="346" data-height="280" data-header="false" data-border-color="#ffffff"></div>
+		<!--
 		<iframe src="//www.facebook.com/plugins/recommendations.php?site=www.scpr.org&amp;width=346&amp;height=300&amp;header=false&amp;colorscheme=light&amp;linktarget=_blank&amp;border_color=%23fff&amp;font=arial&amp;appId=165282643531298" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:346px; height:300px;" allowTransparency="true"></iframe>
+		-->
 	</div>
-</nav>
+</div>
 
 <% content_for :footerjss do %>
 	var popTab = $("#most-popular").tabs({selected:0})

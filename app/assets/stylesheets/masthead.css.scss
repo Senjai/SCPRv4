@@ -3,12 +3,6 @@ header#masthead {
 	margin-bottom:$baseline;
 }
 
-#beta-bar {
-	@include respond-to(small) {
-		display: none;
-	}
-}
-
 // Set a min-height on the Hero pencil so that top and bottom margins are respected even when we don't have a hero to display
 .hero {
 	min-height:1px;
@@ -48,7 +42,6 @@ header#masthead {
 	background: url(image_path("pledge-container-bg.jpg")) no-repeat bottom;
 	height:72px;
 	width:286px !important;	
-	@include respond-to(small) { display: none !important; }
 	
 	// Pledge Now button
 	.pledge {
@@ -106,6 +99,43 @@ nav.utils ul {
 }
 
 // Main Navbar Light
+.nav-compact {
+	display: none;
+	position: fixed;
+	width: 140px;
+	z-index: 10;
+	@include box-shadow(1px 2px 3px $grayDark);
+	@include background-image(linear-gradient($grayLighter, $grayLight));
+	border: 1px solid $black;
+	left: -142px;
+	.nav-toggler {
+		position: absolute;
+		left: 140px;
+		background: $black;
+		width: 15px;
+		height: 20px;
+		color: $white;
+		font-weight: bold;
+	}
+	a {
+		text-align: right;
+		vertical-align: text-bottom;
+		display: block;
+		color: $black;
+		@include font-navigation;
+		border-bottom: 1px solid $black;
+		padding: 5px;
+		&.top {
+			background: $gray;
+			color: $nearWhite;
+		}
+		&:last-of-type {
+			border-bottom: none;
+		}
+	}
+}
+
+
 .nav-primary {
 	@include background-image(linear-gradient(darken($nearWhite, 10%) 1%, $nearWhite 2%, $grayLighter 98%, darken($grayLighter, 10%) 100%));
 	background-color:darken($grayLighter, 10%);
@@ -132,7 +162,7 @@ nav.utils ul {
 			}
 		}
 	}
-	.sections ul li a {	
+	.sections ul li a {
 		@include font-navigation(600, 16px);
 		color:$grayDark;
 		padding:8px 24px;
@@ -144,33 +174,40 @@ nav.utils ul {
 			@include box-shadow($nav-shadow);
 		}
 	}
-	form {float:right;margin-right:8px;}
-	form fieldset {
-		margin:0;
-		padding:0;
-		label {
-			display:none;
-		}
-		input.search {
-			@include border-radius(20px);
-			margin-top:3px;
-			padding:0 8px;
-			width: 160px;
-			&:focus {
-				outline: none;
-			    border-color:#999;
-				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
-			    @include box-shadow($shadow);
+	
+	form {
+		width: 100%;
+		
+		fieldset {
+			margin-right: 0 8px 0 0;
+			padding: 0;
+			text-align: right;
+			label {
+				display:none;
+			}
+			input.search {
+				@include border-radius(20px);
+				margin-top:3px;
+				padding:0 8px;
+				width: 75%;
+				max-width: 160px;
+				&:focus {
+					outline: none;
+				    border-color:#999;
+					$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
+				    @include box-shadow($shadow);
+				}
+			}
+			input.submit {
+				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+				width:20px;
+				height:20px;
+				text-indent:-9999px;
+				border:0;
 			}
 		}
-		input.submit {
-			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
-			width:20px;
-			height:20px;
-			text-indent:-9999px;
-			border:0;
-		}
 	}
+	
 	.section-mega {
 		background-color:$white;
 		width:100%;
@@ -200,6 +237,9 @@ nav.utils ul {
 		}
 		.categories, .featured, .kpcc-programs, .events-nav, .events-forum {
 			background:url(image_path('mega-divider.png')) no-repeat right 10px;
+			&:last-child {
+				background: none;
+			}
 		}
 		.categories {
 			position:relative;

@@ -7,7 +7,7 @@
     		<div class="span4 logo">
 				<h1>
 					<a href="/"><%= image_tag "logo-masthead.png" %></a>
-					<iframe id="kpcc-fb-like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fkpccfm&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
+					<div class="fb-like" data-href="http://facebook.com/kpccfm" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
 				</h1>
 			</div>
 
@@ -49,30 +49,39 @@
 			{ title: "Events", "data-section" => "events-mega", href: "/events/" },
 			{ title: "Support Us", "data-section" => "support-mega", href: "/support/" }
 		] %>
-		<nav id="megamenu" class="nav-primary topbar navbar">
-			<div class="navbar-inner container">
-				<nav class="sections clearfix nav-collapse">
-					<ul>
-					    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>
-						<% nav_items.each do |item| %>
-						    <li class="mega"><a href="<%=item[:href]%>" data-section="<%=item["data-section"]%>"><span><%= item[:title].html_safe %></span></a></li>
-						<% end %>
-					</ul>
-					<form action="/search/" class="search navbar-form pull-right" method="get">
-						<fieldset>
-						    <label>Search:</label>
-						    <div class="inputs">
-						        <input type="text" name="q" placeholder="Search" class="search" />
-						        <input type="submit" value="Submit" id="submit" class="submit" />
-						    </div>
-						</fieldset>
-					</form>
-				</nav>
-			
-				<div class="nav-simple">
-				</div>
+		<div id="megamenu" class="nav-primary topbar navbar">
+			<div class="navbar-inner">
+				<div class="row-fluid">
+					<div class="span9">
+						<nav class="sections clearfix">
+							<ul>
+							    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>
+								<% nav_items.each do |item| %>
+								    <li class="mega"><a href="<%=item[:href]%>" data-section="<%=item["data-section"]%>"><span><%= item[:title].html_safe %></span></a></li>
+								<% end %>
+							</ul>
+						</nav>
+					</div> <!-- span9 -->
+					<div class="span3">
+						<form action="/search/" method="get">
+							<fieldset>
+							    <label>Search:</label>
+							    <input type="text" name="q" placeholder="Search" class="search" />
+							    <input type="submit" value="Submit" id="submit" class="submit" />
+							</fieldset>
+						</form>
+					</div> <!-- span4 -->
+				</div> <!-- row-fluid -->
 			</div> <!-- .navbar-inner -->
-		</nav>
+		</div> <!-- megamenu -->
+		
+		<nav class="nav-compact in">
+			<span class="nav-toggler">&lt;</span>
+			<a href="/" class="top">KPCC.org</a>
+			<% nav_items.each do |item| %>
+				<a href="<%=item[:href]%>"><%= item[:title].html_safe %></a>
+			<% end %>
+		</nav> <!-- nav compact -->
 	</div>
 </header>
 

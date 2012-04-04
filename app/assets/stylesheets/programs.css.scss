@@ -147,10 +147,6 @@ header.episode {
 	@include font-heading($size: 12px, $weight: 600);
 }
 
-.program-about {
-	padding: 0 0 5px 0;
-}
-
 a.with-icon {
 	margin-left: 4px;
 	display: block;
@@ -193,11 +189,11 @@ a.with-icon {
 		padding-left: 18px;
 	}
 	margin-bottom: 10px;
+	border-right: 1px solid $grayLighter
 }
 
 .about {
 	min-height: 100px;
-	margin: 0;
 	color: $gray;
 	@include font-sans-serif($size: 12px, $lineHeight: 16px);
 }

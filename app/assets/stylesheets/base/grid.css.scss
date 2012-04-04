@@ -7,8 +7,8 @@ $columnOffset: 1;
 $extraSpace: ($gridGutterWidth * 2);
 $siteWidth:  $gridRowWidth;
 
-$fluidColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
-$fluidGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
+$fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
+$fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
 
 // Grid System
 @mixin columns($columnSpan: 1) {

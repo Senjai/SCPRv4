@@ -8,10 +8,6 @@ footer {
 	@include font-sans-serif(normal, 11px);
 	text-transform:uppercase;
 	
-	.container-fluid {
-
-	}
-	
 	h5 {
 		color:#5c5c5c;
 		@include font-shorthand(normal, 11px);
@@ -162,33 +158,22 @@ footer {
 		
 		.section {
 			min-height: 260px;
-			margin: 0 5px;
-			padding: 0 10px 0 0;
-			border-right: 1px solid $grayDark;
-			&:last-of-type {
-				border-right: none;
+			padding-left: 10px;
+			border-left: 1px solid $grayDark;
+			&.first {
+				border-left: none;
 			}
 		}
 	}
 	
 	.mobile-apps {
-		width: 255px;
-		border-bottom:1px solid $grayAlt;
-		border-top:1px solid $grayAlt;
-		background:url(image_path('footer-mobileapps.png')) no-repeat right bottom;
-		color:$white;
-		font-size:14px;
-		height:90px;
-		line-height:16px;
-		position:relative;
-		text-transform:none;
-		a {
-			position:absolute;
-			text-align:right;
-			width:100px;
-			height:35px;
-			left:0;
-			top:50px;
+		width: 100%;
+		max-width: 225px;
+		a,img {
+			display: block;
+			margin: 0 auto;
+			max-width: 225px;
+			text-align: center;
 		}
 	}
 	

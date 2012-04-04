@@ -951,20 +951,39 @@ a.comment-count.inline {
 .ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 .ui-tabs .ui-tabs-hide { display: none !important; }
 
-// Facebook
-.facebook_like_1 p {
-	@include font-heading($size:1.1em);
-	background:url("facebook/facebook_icon.gif") no-repeat scroll 1% 10% transparent;
-	color:$facebookBlue;
-	line-height:25px;
-	padding:0 0 0 30px;
-	a {
+.fb-like {
+	max-width: 90px;
+	overflow: hidden;
+}
+
+.fb-recommendations {
+	width: 100%;
+	max-width: 346px;
+	overflow: hidden;
+}
+
+.widget.facebook {
+	.fb-like-container {
+		text-align: right;
+	}
+	.fb-facepile {
+		width: 100%;
+		max-width: 300px;
+		margin-left: 2px;
+		overflow: hidden;
+	}
+	p {
+		@include font-heading($size:1.1em);
+		background:url("facebook/facebook_icon.gif") no-repeat left top;
 		color:$facebookBlue;
+		height: 25px;
+		line-height: 12px;
+		margin-bottom: 5px;
+		padding:0 0 0 30px;
+		a {
+			vertical-align: text-bottom;
+			color:$facebookBlue;
+		}
 	}
 }
-.facebook_like_2 {
-	padding:0 0 0 30px;
-}
-section.facebook .row .span2 {
-	width:198px;
-}
+

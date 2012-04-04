@@ -8,3 +8,20 @@ function open_popup(url) {
 function tryWidth(width) {
 	window.open(window.location.pathname, "dev", "height=1000,width="+width)
 }
+
+// temporary
+$(document).ready(function() {
+	$(".nav-compact.in .nav-toggler").on("click", function(event) {
+		$(".nav-compact").animate({left: '-10px'}, 300, function() { 
+			$(".nav-compact").removeClass('in').addClass('out');
+		});
+	});
+	
+	$(".nav-compact.out .nav-toggler").on("click", function(event) {
+		console.log("okay");
+		$(".nav-compact").animate({left: '-160px'}, 300, function() {
+			$(".nav-compact").removeClass('out').addClass('in');
+			console.log("went in");
+		});
+	});
+});

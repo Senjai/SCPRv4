@@ -465,7 +465,7 @@ footer {
       font-size:12px;
 	  margin-bottom: -1px;
       margin-right: 2px;
-      padding: 0 15px;
+      padding: 0 12px;
       line-height: ($baseline * 1.5) - 1;
       &:hover {
         background-color: $grayLighter;
@@ -476,7 +476,7 @@ footer {
     }
     &.ui-tabs-selected a {
       background-color: #fff;
-      padding: 0 14px;
+      padding: 0 13px;
       border: 1px solid #ccc;
       border-bottom: 0;
       color: $orangeDark;
