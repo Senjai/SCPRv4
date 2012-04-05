@@ -1,20 +1,13 @@
 <div class="blog-about widget">
 	<h6>About the blog: <%= @blog.name %></h6>
-	<div class="row divider">
-		<div class="span2">
-			<ul>
-		   <!-- <li class="twitter">
-			        <a href="">Follow The DeBord Report on Twitter</a>
-			    </li> 
-			-->
-			    <li class="rss">
-					<%= link_to "Subscribe to RSS Feed", @blog.feed_url %>
-			        <a href=""></a>
-			    </li>
-			</ul>
+	<div class="row-fluid">
+		<div class="span5">
+			<nav class="connect">
+				<%= link_to "RSS", @blog.feed_url, class: "rss with-icon" %>
+			</nav>
 		</div>
-		<div class="span2">
-			<p><%= @blog.description %></p>
+		<div class="span7">
+			<p class="about"><%= @blog.description.html_safe %></p>
 		</div>
 	</div>
 </div>

@@ -401,6 +401,60 @@
 	}
 }
 
+.connect {
+	.title {
+		display: block;
+		@include font-heading($size: 12px, $weight: 600, $lineHeight: 14px);
+		margin-bottom:5px;
+		text-transform: uppercase;
+	}
+	a {
+		@include font-sans-serif($weight: normal, $size: 12px);
+		margin-bottom:2px;
+		padding-left: 18px;
+	}
+	margin-bottom: 10px;
+	border-right: 1px solid $grayLighter;
+	min-height: 100px;
+}
+
+.about {
+	min-height: 100px;
+	color: $gray;
+	@include font-sans-serif($size: 12px, $lineHeight: 16px);
+}
+
+a.with-icon {
+	margin-left: 4px;
+	padding-top: 2px; /* cheat to push the text down a little */
+	display: block;
+	line-height: 16px;
+	background-repeat: no-repeat;
+	background-position: left 3px;
+	color: lighten($black, 40%);
+	&.twitter {
+		background-image: url(image_path("icons/tiny-twitter.png"));
+	}
+	&.facebook {
+		background-image: url(image_path("icons/tiny-facebook.png"));
+	}
+	&.podcast {
+		background-image: url(image_path("icons/tiny-podcast.png"));
+	}
+	&.rss {
+		background-image: url(image_path("icons/tiny-rss.png"));
+	}
+	&.archive {
+		@include font-sans-serif($size: 12px, $weight: bold);
+		background-image: url(image_path("icons/archived.png"));
+		padding-left: 21px;
+	}
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+
 // Blog/Program Host Widget
 #sidebar .host, .host {
 	border-top:1px solid $grayLighter;

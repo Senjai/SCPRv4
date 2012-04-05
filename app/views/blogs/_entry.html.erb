@@ -1,16 +1,13 @@
-<div class="row entry">
-	<div class="span8">
-		<div class="row">
-			<%= article_meta_for entry %>
-			<div class="span6">
-				<h1 class="story-headline"><%= link_to entry.title, entry.link_path %></h1>
-				<p class="byline"><%= render_byline entry %></p>
-				<%= render_asset entry, "blog" %>
-				<%= raw entry.content %>
-				
-				<p><i><%= render_contributing_byline entry %></i></p>
-				
-			</div>
-		</div>
-	</div>
-</div>
+<div class="row-fluid">
+	<%= article_meta_for entry %>
+	
+	<div class="span9">
+		<article class="entry">
+			<h1 class="story-headline"><%= link_to entry.title, entry.link_path %></h1>
+			<p class="byline"><%= render_byline entry %></p>
+			<%= render_asset entry, "blog" %>
+			<%= simple_format entry.content, {}, sanitize: false %>
+			<p><i><%= render_contributing_byline entry %></i></p>
+		</article>
+	</div> <!-- span9 -->
+</div> <!-- row fluid -->

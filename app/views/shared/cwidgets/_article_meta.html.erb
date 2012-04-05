@@ -1,8 +1,10 @@
-<div class="span2 article-meta">
-	<div class="date">
-		<p><%= smart_date content %></p>
+<div class="span3">
+	<div class="article-meta">
+		<div class="date">
+			<p><%= smart_date content %></p>
+		</div>
+		<%= social_tools_for content, cssClass: "side" %>
+		<%= comment_widget_for content, cssClass: 'left-side' %>
+		<%= render "shared/cwidgets/audio", :content => content %>
 	</div>
-	<%= social_tools_for content, cssClass: "side" %>
-	<%= comment_widget_for content, cssClass: 'left-side' %>
-	<%= render "shared/cwidgets/audio", :content => content %>
 </div>

@@ -11,9 +11,7 @@
 			</nav>
 		</div>
 		<div class="span7">
-			<div class="about">
-				<%= program.teaser.html_safe %>
-			</div>
+			<p class="about"><%= program.teaser.html_safe %></p>
 		</div>
 	</div>
 	<%= link_to "View Archived Episodes", program_path(program, :anchor => "archive"), class: "archive with-icon" %>

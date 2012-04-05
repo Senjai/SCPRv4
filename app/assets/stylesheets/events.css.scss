@@ -263,7 +263,7 @@ span.fake-link {
 	border-bottom: 1px solid $grayLight;
 	.teaser {
 		padding:18px 0;
-		@include responsiveImageAsset(160px);
+		@include responsiveImageAsset($threeW);
 
 		.event-details {
 			span.event-location {

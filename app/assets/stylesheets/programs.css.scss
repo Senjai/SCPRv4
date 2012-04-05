@@ -88,10 +88,10 @@ $headShotWidth: 90px;
 		display: table;
 		height: 55px;
 		background: url(image_path('support-banner.png')) no-repeat left top;
-		padding: 0 9px 0 63px;
-		width: 238px;
+		padding: 0 5px 0 63px;
+		width: 309px;
 		overflow: hidden;
-		@include font-slab-headings(300, 13px, 8px);		
+		@include font-slab-headings(300, 13px, 15px);		
 		a {
 			display: table-cell;
 			vertical-align: middle;
@@ -99,7 +99,6 @@ $headShotWidth: 90px;
 			text-shadow: 0 1px $orangeDark;
 			&.small {
 				font-size:11px;
-				line-height:15px;
 			}
 		}
 	}
@@ -152,57 +151,6 @@ header.episode {
 	margin-bottom: 10px;
 	padding: 8px 3px 8px 12px;
 	@include font-heading($size: 12px, $weight: 600);
-}
-
-a.with-icon {
-	margin-left: 4px;
-	display: block;
-	line-height: 14px;
-	background-repeat: no-repeat;
-	background-position: left 3px;
-	color: lighten($black, 40%);
-	&.twitter {
-		background-image: url(image_path("icons/tiny-twitter.png"));
-	}
-	&.facebook {
-		background-image: url(image_path("icons/tiny-facebook.png"));
-	}
-	&.podcast {
-		background-image: url(image_path("icons/tiny-podcast.png"));
-	}
-	&.rss {
-		background-image: url(image_path("icons/tiny-rss.png"));
-	}
-	&.archive {
-		@include font-sans-serif($size: 12px, $weight: bold);
-		background-image: url(image_path("icons/archived.png"));
-		padding-left: 21px;
-	}
-	&:hover {
-		text-decoration: underline;
-	}
-}
-
-.connect {
-	.title {
-		display: block;
-		@include font-heading($size: 12px, $weight: 600, $lineHeight: 14px);
-		margin-bottom:5px;
-		text-transform: uppercase;
-	}
-	a {
-		@include font-sans-serif($weight: normal, $size: 12px);
-		margin-bottom:2px;
-		padding-left: 18px;
-	}
-	margin-bottom: 10px;
-	border-right: 1px solid $grayLighter
-}
-
-.about {
-	min-height: 100px;
-	color: $gray;
-	@include font-sans-serif($size: 12px, $lineHeight: 16px);
 }
 
 .missed-it {

@@ -148,7 +148,7 @@ $mediaSmallPortrait: 320px;
 
 
 
-// TABLETS AND BELOW
+// TABLETS AND BELOW ( switches to hidden nav )
 // -----------------
 @media (max-width: 979px) {
 	.nav-primary {
@@ -171,6 +171,19 @@ $mediaSmallPortrait: 320px;
 			display: none !important;
 		}
 	}
+	
+	.article-meta {
+		display: none;
+	}
+	
+	.fold h6 {
+		margin-top: 0 !important;
+		text-align: left !important;
+	}
+	
+	.comment-count {
+		display: none;
+	}
 }
 
 
@@ -182,7 +195,7 @@ $mediaSmallPortrait: 320px;
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 }
 
-@media (max-width: 1004px) {
+@media (max-width: 1024px) {
 	.ad {
 		overflow: hidden;
 		img, object, .dfp {
@@ -204,8 +217,10 @@ $mediaSmallPortrait: 320px;
 }
 
 @media (max-width: 1064px) {
+	
 
 }
+
 
 // LARGE DESKTOP & UP
 // ------------------

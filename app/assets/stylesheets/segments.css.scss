@@ -13,7 +13,7 @@
 	}
 	
 	.teaser {
-		@include responsiveImageAsset(170px);
+		@include responsiveImageAsset($lsquareW);
 		.info {
 			border-right: 1px solid $grayLighter;
 			padding-right: 10px;
@@ -45,6 +45,7 @@ section.segment-meta {
 
 article.segment {
 	display: inline-block;
+	@include responsiveImageAsset($sixW);
 	h1.story-title {
 		@include font-headline();
 	}
