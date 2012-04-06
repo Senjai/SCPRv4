@@ -43,20 +43,11 @@
 
 // Blog Branding
 .blog-masthead {
-	height:47px;
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: $baseline / 2;
 	
  	h2 {
-		color:$black;
-		font-size:28px;
-		font-weight:200;
-	}
-	span.orange {
-		color:$orange;
-	}
-	span.blue {
-		color:$linkColorHover;
+		@include font-shorthand(200, 28px, 30px);
 	}
 }
 
@@ -66,15 +57,11 @@
 	}
 }
 
-
-.blog-landing {
-	.entry {
-		padding-top:$baseline / 2;
-		@include responsiveImageAsset($sixW);
-		border-bottom: 1px solid $grayLight;
-	}
+.entry {
+	padding-top:$baseline / 2;
+	@include responsiveImageAsset($sixW);
+	border-bottom: 1px solid $grayLight;
 }
-
 
 // Blog Entry Date Styling
 .date {

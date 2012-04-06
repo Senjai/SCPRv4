@@ -56,6 +56,24 @@ span.fake-link {
 }
 
 .event {
+	&.future {
+		padding: 10px 0;
+		@include responsiveImageAsset($thumbW);
+		.info {
+			@include font-serif($size: 13px);
+			vertical-align: top;
+			h3 {
+				a {
+					color:$nearBlack;
+				}
+			}
+		}
+		&:last-of-type {
+			border-bottom: none;
+		}
+	}
+	
+	
 	.story-headline.event-headline {
 		margin-bottom: 10px;
 	}
@@ -141,36 +159,6 @@ span.fake-link {
 	.upcoming-events {
 		.event {
 			border-bottom: 1px solid $grayLighter;
-		}
-
-		.future {
-			padding: 10px 0;
-			.contentasset {
-				margin-top: 6px;
-				overflow: hidden;
-				width: 160px !important; /* FIXME hack */
-				height: 130px;
-				img {
-					width: 160px !important; /* FIXME hack */
-					height: 160px !important;
-				}
-			}
-
-			.info {
-				@include font-serif($size: 13px);
-				vertical-align: top;
-				h3 {
-					@include font-headline();
-					font-size:20px;
-					line-height:22px;
-					a {
-						color:$nearBlack;
-					}
-				}
-			}
-			&:last-of-type {
-				border-bottom: none;
-			}
 		}
 		.closest {
 			padding-bottom:10px;

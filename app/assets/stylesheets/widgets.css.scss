@@ -846,6 +846,11 @@ a.comment-count.inline {
 // Ad units
 .ad {
 	text-align:center;
+	overflow: hidden;
+	img, object, .dfp {
+		max-width: 100% !important;
+	}
+	
 	&:first-child {
 		padding-top:0;
 	}
@@ -1005,6 +1010,8 @@ a.comment-count.inline {
 .ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 .ui-tabs .ui-tabs-hide { display: none !important; }
 
+
+// Facebook
 .fb-like {
 	max-width: 90px;
 	overflow: hidden;
@@ -1016,16 +1023,24 @@ a.comment-count.inline {
 	overflow: hidden;
 }
 
+.fb-facepile {
+	width: 100%;
+	max-width: 300px;
+	margin-left: 2px;
+	overflow: hidden;
+}
+
 .widget.facebook {
 	.fb-like-container {
 		text-align: right;
 	}
-	.fb-facepile {
-		width: 100%;
-		max-width: 300px;
-		margin-left: 2px;
-		overflow: hidden;
+	
+	.fb-facepile-container {
+		iframe {
+			width: 100% !important;
+		}
 	}
+
 	p {
 		@include font-heading($size:1.1em);
 		background:url("facebook/facebook_icon.gif") no-repeat left top;

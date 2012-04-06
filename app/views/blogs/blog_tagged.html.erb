@@ -1,8 +1,8 @@
-<% @PAGE_TITLE = "Entries tagged '#{@tag.name}' at #{@blog.name}" %>
+<% page_title "Entries tagged '#{@tag.name}' at #{@blog.name}" %>
 
-<div class="row">
-	<div class="span2">&nbsp;</div>
-	<div class="span6">
+<div class="row-fluid">
+	<div class="span3">&nbsp;</div>
+	<div class="span9">
 		<h1><%= @entries.total_entries %> Entries tagged '<%= @tag.name %>'</h1>
 	</div>
 </div>
@@ -11,8 +11,6 @@
 <%= render :partial => "entry", :collection => @entries.collect {|e| e.content }, :as => :entry %>
 </div>
 
-<div class="row">
-	<div class="span6 offset2 blog-pag">
-		<%= will_paginate @entries, :page_links => false %>
-	</div>
+<div class="offset2 blog-pag">
+	<%= will_paginate @entries, :page_links => false %>
 </div>

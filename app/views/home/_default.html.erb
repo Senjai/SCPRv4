@@ -1,18 +1,19 @@
-<div class="row">
+<div class="row-fluid">
 	<%= content_cache("home_leads") do %>
 		<% register_content("layout/homepage") %>
-		<div class="span5">
+		<div class="span8">
 			<%= render_content @homepage.content[0], "lead5" if @homepage %>
 		</div>
-		<div class="span3 offleads">
-			<%= render_content @homepage.content[1..-1], "offlead" if @homepage %>
+		<div class="span4">
+			<div class="offleads">
+				<%= render_content @homepage.content[1..-1], "offlead" if @homepage %>
+			</div>
 		</div>
 	<% end %>	
 </div>
 
 <% content_for :conversation_slot do %>
-	<div class="join-conversation-container">
-		<hr/>
+	<div class="join-conversation-container home">
 		<%= featured_comment :bucket => nil, :style => "home" %>
 	</div>
 <% end %>

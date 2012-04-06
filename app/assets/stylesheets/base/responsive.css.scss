@@ -1,9 +1,11 @@
 @import "base/bootstrap/mixins";
 
+$containerPadding: 25px;
+
 // Device sizes
-$mediaMax: 1140px; // The maximum we care about, after this it's just fixed-grid
+$mediaMax: $gridRowWidth + $containerPadding * 2; // The maximum we care about, after this it's just fixed-grid
 $mediaMidLandscape: 1024px;
-$mediaMidPortrait: 767px;
+$mediaMidPortrait: 768px;
 $mediaSmallLandscape: 480px;
 $mediaSmallPortrait: 320px;
 
@@ -19,8 +21,8 @@ $mediaSmallPortrait: 320px;
 
 .container-fluid {
 	@include clearfix;
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: $containerPadding;
+	padding-right: $containerPadding;
 }
 
 // Visibility utilities
@@ -54,10 +56,19 @@ $mediaSmallPortrait: 320px;
   .visible-desktop   { display: none; }
 }
 
-// UP TO LANDSCAPE PHONE
-// ---------------------
 
-@media (max-width: 480px) {
+// Printer
+@media print {
+	.audio-bar, #uvTab {
+		display: none !important;
+	}
+}
+
+
+
+
+// Phone Landscape and below
+@media (max-width: $mediaSmallLandscape) {
 
 	// Undo negative margin on rows
 	.row {
@@ -82,31 +93,55 @@ $mediaSmallPortrait: 320px;
 		border-right: none !important;
 		padding-right: 0;
 	}
+	
+	.broadcastbar .show-time {
+		display: none;
+	}
 }
 
-@media (min-width: 481px) and (max-width: 767px) {
-	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
-}
 
-// Small devices/Phones (up to tablet=768, exclusive)
-// --------------------------------------------------
 
-@media (max-width: 767px) {
-  
+
+// Portrait Tablet and below ("reader mode")
+@media (max-width: $mediaMidPortrait) {
+	.nav-primary {
+		display: none;
+	}
+	
+	#offsreen-header {
+		display: none;
+	}
+	
+	.nav-compact {
+		display: block !important;
+	}
+	
+	.filters {
+		li.heading {
+			display: none !important;
+		}
+		.active-arrow {
+			display: none !important;
+		}
+	}
+	
+	.fold h6 {
+		margin-top: 0 !important;
+		text-align: left !important;
+	}
+	
+	.comment-count {
+		display: none;
+	}
+	
+	.article-meta {
+		display: none;
+	}
+	
 	.footer-nav {
 		.section {
 			border-left: none !important;
 		}
-	}
-	
-	
-	// Remove width from containers
-	.container-fluid {
-		width: auto;
-	}
-	// Fluid rows
-	.row-fluid {
-		width: 100%;
 	}
 	
 	#sidebar {
@@ -129,80 +164,63 @@ $mediaSmallPortrait: 320px;
 			display: none;
 		}
 	}
-}
-
-
-
-// PORTRAIT TABLET TO DEFAULT DESKTOP
-// ----------------------------------
-
-@media (min-width: 768px) and (max-width: 979px) {
 	
-  // Fixed grid
-  //@include gridCore($gridColumnWidth, $gridGutterWidth);
-
-  // Fluid grid
-  @include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
-
-}
-
-
-
-// TABLETS AND BELOW ( switches to hidden nav )
-// -----------------
-@media (max-width: 979px) {
-	.nav-primary {
-		display: none;
-	}
-	
-	#offsreen-header {
-		display: none;
-	}
-	
-	.nav-compact {
-		display: block !important;
-	}
-	
-	.filters {
-		li.heading {
-			display: none !important;
+	#main {
+		.lead5 {
+			border-bottom: 1px solid $grayLighter;
+			padding-bottom: 5px;
+			margin-bottom: 5px;
 		}
-		.active-arrow {
-			display: none !important;
+		.events-forum {
+			border-left: none;
+			padding-left: 0;
+			margin-left: 0;
+		}
+		
+		.more-news-container, .more-news-content {
+			border-right: none;
+			padding-right: none;
+			margin-bottom: 5px;
+		}
+		
+		.related-content {
+			border-top: 1px solid $grayLighter;
+			padding-top: 10px;
 		}
 	}
-	
-	.article-meta {
-		display: none;
-	}
-	
-	.fold h6 {
-		margin-top: 0 !important;
-		text-align: left !important;
-	}
-	
-	.comment-count {
+
+	.broadcastbar .next-program {
 		display: none;
 	}
 }
 
 
 
-// DEFAULT DESKTOP
-// ---------------
 
-@media (min-width: 980px) {
+// Above Tablet Portrait
+@media (min-width: $mediaMidPortrait + 1) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 }
 
-@media (max-width: 1024px) {
-	.ad {
-		overflow: hidden;
-		img, object, .dfp {
-			max-width: 100% !important;
-		}
+
+
+
+// Below Tablet Landscape
+@media (max-width: $mediaMidLandscape - 1) {
+	.nav-primary form {
+		display: none;
 	}
 	
+	.audio-bar, #uvTab {
+		display: none !important; // temporary
+	}
+}
+
+
+
+
+// Below Max Width (normal screen)
+@media (max-width: $mediaMax - 1) {	
 	.program-masthead .support {
 		display: block !important;
 		background: none !important;
@@ -216,26 +234,14 @@ $mediaSmallPortrait: 320px;
 	}
 }
 
-@media (max-width: 1064px) {
-	
-
-}
 
 
-// LARGE DESKTOP & UP
-// ------------------
 
+// Max width (normal screen) and above
 @media (min-width: $mediaMax) {
 	.container-fluid {
 		margin-left: auto;
 		margin-right: auto;
 		max-width: $gridRowWidth;
 	}
-	
-	// Fixed grid
-	@include gridCore($gridColumnWidth, $gridGutterWidth);
-
-	// Input grid
-	@include gridInput($gridColumnWidth, $gridGutterWidth);
-
 }

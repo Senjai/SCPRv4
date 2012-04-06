@@ -5,8 +5,9 @@ function open_popup(url) {
 }
 
 // temporary dev tool
-function tryWidth(width) {
-	window.open(window.location.pathname, "dev", "height=1000,width="+width)
+function openWindow(width, height) {
+	if(height == null) height = "1000";
+	window.open(window.location, "dev", "height="+height+",width="+width)
 }
 
 function animateMenu(percentage) {

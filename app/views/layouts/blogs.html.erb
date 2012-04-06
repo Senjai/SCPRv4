@@ -1,11 +1,9 @@
 <% content_for :content do %>
-	<div class="row">
-		<div class="span8 blog-masthead">
-			<div class="row">
-				<div class="span2">&nbsp;</div>
-				<div class="span6">
-					<h2><span class="blue"><%= link_to @blog.name, blog_path(@blog) %></span></h2>
-				</div>
+	<div class="blog-masthead">
+		<div class="row-fluid">
+			<div class="span3 visible-desktop">&nbsp;</div>
+			<div class="span9">
+				<h2><%= link_to @blog.name, blog_path(@blog) %></h2>
 			</div>
 		</div>
 	</div>

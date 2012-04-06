@@ -184,13 +184,15 @@ nav.utils ul {
 		}
 	}
 	
+	nav, form {
+		display: inline-block;
+	}
+	
 	form {
-		width: 100%;
-		
+		float:right;		
 		fieldset {
-			margin-right: 0 8px 0 0;
+			margin: 0 8px 0 0;
 			padding: 0;
-			text-align: right;
 			label {
 				display:none;
 			}
@@ -198,8 +200,7 @@ nav.utils ul {
 				@include border-radius(20px);
 				margin-top:3px;
 				padding:0 8px;
-				width: 75%;
-				max-width: 160px;
+				width: 160px;
 				&:focus {
 					outline: none;
 				    border-color:#999;

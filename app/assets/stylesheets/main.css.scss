@@ -1,6 +1,12 @@
 // #Main Body Content
 #main {
 	margin-top:1px;
+	
+	.homepage-top {
+		border-bottom:1px solid $grayLighter;
+		margin-bottom:$baseline;
+	}
+	.homepage-bottom { margin:0; padding: 0;}
 }
 
 // Trending Bar
@@ -177,17 +183,29 @@ section.broadcastbar {
 		}
 	}
 }
-.offleads hr {
-	margin: 6px 0;
-	&:last-child {
-		display:none;
+.offleads {
+	.offlead {
+		/* let's fake a 5px vertical padding */ 
+		padding: 0 0 5px 0;
+		margin: 0 0 5px 0;
+		border-bottom: 1px solid $grayLighter;
+		&:last-child {
+			border-bottom: none;
+		}
 	}
 }
 // Join Conversation
 .join-conversation-container {
-	margin:6px 0 0 30px;
-	section.join_conversation {
+	margin:10px 0;
+	
+	&.home {
+		border-top: 1px solid $grayLighter;
+		border-bottom: 1px solid $grayLighter;
+	}
+	
+	.join_conversation {
 		background-color:$grayBackground;
+
 		h6 {
 			color:$black;
 			padding:5px 0 0 10px;	
@@ -205,6 +223,7 @@ section.broadcastbar {
 			@include font-sans-serif($size:0.85em);
 			color:$grayLight;
 			padding:5px 25px 10px 55px;
+			margin: 0;
 			a {
 				color:$gray;
 			}
@@ -270,18 +289,12 @@ section.broadcastbar {
 #events-mega {
     .events-content {
         img {
-            float: left;
+           float: left;
            width: 65px;
            height: 65px;
            margin-right: 12px;
         }
     }
-}
-
-
-.top-half {
-	border-bottom:1px solid $grayLight;
-	margin-bottom:$baseline;
 }
 
 // Cbase H3 - Applies styling to first headline - activated by jQuery
@@ -291,33 +304,30 @@ section.broadcastbar {
 }
 
 // More News
-section.more-news-container {
-	margin:0 !important;
-	width:770px !important;
-	div.more-news {
-		border-right:1px solid $grayLighter;
-		padding:0 10px ($baseline / 2) 0;
-		section.more-news-title {
-			background:url("section-headline-background.png") repeat-x;
-			height:35px;
-			h6 {	
-				color:$grayAlt;
-				float:left;
-				font-size:18px;
-				padding:4px 0 0 8px;
-				text-transform:none;
-			}
+.more-news-container {
+	border-right:1px solid $grayLighter;
+	padding-right: 10px;
+	.more-news {
+		padding-bottom: $baseLineHeight / 2;
+		&:last-of-type {
+			border-bottom: 1px solid $grayLight;
+		}
+		h6.more-news-title {
+			background:url("section-headline-background.png") repeat-x 0 0;
+			@include font-shorthand($size: 18px, $lineHeight: 35px);
+			color:$grayAlt;
+			padding-left:8px;
+			text-transform:none;
+			margin-bottom: 10px;
 			span {
-				@include font-sans-serif($size:0.85em);
+				@include font-sans-serif($size:12px);
 				float:right;
-				padding:8px 8px 0 0;
+				padding: 7px 8px 0 0;
 			}
 		}
-		section.more-news-content {
-			float:left;
-			margin:10px 0 0 0;
-			padding-right:10px;
-			width:445px;
+		.more-news-content {
+			padding-right:5px;
+			border-right:1px solid $grayLighter;
 			p.story-title {
 				@include font-headline($weight:bold);
 				font-size:1.2em;
@@ -327,15 +337,14 @@ section.more-news-container {
 				}
 			}
 			p.story-content {
-				font-size:13px;
-				line-height:18px;
+				@include font-shorthand($size: 13px, $lineHeight: 18px);
 				padding:10px 0 0 100px;
 			}
 			ul {
-			    margin-top: 12px;
-				list-style-image:url("more-headlines-li.png");
+			    margin: 12px 0 0 0;
+				list-style: none inside url("more-headlines-li.png");
 				li {
-					margin:5px 0 0 -10px;
+					margin:5px 0 0 0;
 					a {
 						@include font-headline($weight:lighter);
 						color:$grayAlt;
@@ -345,22 +354,13 @@ section.more-news-container {
 			}
 		}
 		div.related-content {
-			border-left:1px solid $grayLighter;
-			margin:10px 0 0 0;
-			padding:0 0 0 15px;
+			@include responsiveImageAsset($threeW);
 			h6 {
 				font-size:0.90em;
-				padding:5px 3px 5px 0;
+				padding:5px 0;
 			}
 			img.segment {
 				padding:10px 0 0 0;
-			}
-			.contentasset {
-				a {
-					display:block;
-					max-height:170px;
-					overflow:hidden;
-				}
 			}
 			span.caption {
 				@include font-headline($weight:lighter);
@@ -373,10 +373,9 @@ section.more-news-container {
 			}
 			blockquote {
 				@include font-headline($weight:lighter);
+				@include font-shorthand($size: 1.5em, $lineHeight: 23px);
 				border:0 none;
-				font-size:1.5em;
 				font-style:italic;
-				line-height:23px;
 				margin:10px 0 5px 0;
 				padding:0;
 			}
@@ -392,21 +391,7 @@ section.more-news-container {
 }
 
 
-// Sidebar
-div#sidebar-top {
-	hr {
-		margin:0 0 10px 0;
-	}
-}
-div#sidebar-bottom {
-	margin:0 0 0 20px;
-	hr {
-		margin:0 0 10px 0;
-	}
-	h6 {
-		margin:0 0 10px 0;
-	}	
-}
+
 
 // Filters bar (please move this to a more appropriate file)
 nav.filters {

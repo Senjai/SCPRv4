@@ -1,15 +1,14 @@
 <%=
 	begin
-		render :partial => @homepage.base, :homepage => @homepage
+		render :partial => "default", :homepage => @homepage
 	rescue
 		render :partial => "default", :homepage => @homepage
 	end
 %>
 
-<div class="row">
-	<%= yield :conversation_slot %>
-	
-	<div class="span4">
+<%= yield :conversation_slot %>
+<div class="row-fluid">
+	<div class="span6">
 		<div class="headlines">
 			<h6>More Headlines</h6>
 			<ul class="cbase">
@@ -17,10 +16,10 @@
 			</ul>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="span6">
 		<section class="events-forum">
 			<h6>Events at the Crawford Family Forum</h6>
-			<%= render "shared/widgets/events_at_the_forum" %>	
+			<%= render "shared/widgets/events_at_the_forum" %>
 		</section>
 	</div>	
 </div>
