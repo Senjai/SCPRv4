@@ -22,7 +22,7 @@ span.fake-link {
 	}
 }
 
-.event-headers	 {
+@mixin event-headers {
 	h1, h2, h4.story-title {
 		a {
 			color: #000;
@@ -56,12 +56,12 @@ span.fake-link {
 }
 
 .event {
+	@include event-headers;
 	&.future {
 		padding: 10px 0;
 		@include responsiveImageAsset($thumbW);
 		.info {
 			@include font-serif($size: 13px);
-			vertical-align: top;
 			h3 {
 				a {
 					color:$nearBlack;

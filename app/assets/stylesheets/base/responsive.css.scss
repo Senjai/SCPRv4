@@ -68,15 +68,9 @@ $mediaSmallPortrait: 320px;
 
 
 // Phone Landscape and below
-@media (max-width: $mediaSmallLandscape) {
-
-	// Undo negative margin on rows
-	.row {
-		margin-left: 0;
-	}
-
+@media (max-width: $mediaSmallLandscape) {	
 	// Make all columns even
-	.row > [class*="span"], .row-fluid > [class*="span"] {
+	.row-fluid > [class*="span"] {
 		float: none;
 		display: block;
 		width: auto;
@@ -101,14 +95,20 @@ $mediaSmallPortrait: 320px;
 
 
 
+// Between Tablet Portrait and Phone Landscape
+@media (max-width: $mediaMidPortrait - 1) and (min-width: $mediaSmallLandscape + 1) {
 
-// Portrait Tablet and below ("reader mode")
-@media (max-width: $mediaMidPortrait) {
+}
+
+
+
+// Below Portrait Tablet ("reader mode")
+@media (max-width: $mediaMidPortrait - 1) {	
 	.nav-primary {
 		display: none;
 	}
 	
-	#offsreen-header {
+	#offscreen-header {
 		display: none;
 	}
 	
@@ -144,16 +144,10 @@ $mediaSmallPortrait: 320px;
 		}
 	}
 	
-	#sidebar {
+	#sidebar, #sidebar-top, #sidebar-bottom {
 		display: none;
 	}
-	
-	.contentasset {
-		text-align: center;
-		margin-left: auto !important;
-		margin-right: auto !important;
-	}
-	
+		
 	#beta-bar {
 		display: none;
 	}
@@ -166,18 +160,23 @@ $mediaSmallPortrait: 320px;
 	}
 	
 	#main {
-		.lead5 {
-			border-bottom: 1px solid $grayLighter;
-			padding-bottom: 5px;
-			margin-bottom: 5px;
+		.homepage-top {
+			border-bottom: none;
+			margin-bottom: 0;
 		}
+		.more-content {
+			@include horizontify;
+		}
+		
 		.events-forum {
 			border-left: none;
 			padding-left: 0;
-			margin-left: 0;
+			.mq-row-fluid {
+				@include makeFluidRow;
+			}
 		}
 		
-		.more-news-container, .more-news-content {
+		.more-news-content {
 			border-right: none;
 			padding-right: none;
 			margin-bottom: 5px;
@@ -186,6 +185,8 @@ $mediaSmallPortrait: 320px;
 		.related-content {
 			border-top: 1px solid $grayLighter;
 			padding-top: 10px;
+			@include centeredAsset;
+			@include responsiveImageAsset($threeW);
 		}
 	}
 
@@ -197,8 +198,8 @@ $mediaSmallPortrait: 320px;
 
 
 
-// Above Tablet Portrait
-@media (min-width: $mediaMidPortrait + 1) {
+// Tablet Portrait And Above
+@media (min-width: $mediaMidPortrait) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 }
 
@@ -214,8 +215,66 @@ $mediaSmallPortrait: 320px;
 	.audio-bar, #uvTab {
 		display: none !important; // temporary
 	}
+	
+	#main {
+		.more-news-container {
+			border-right: none;
+			padding-right: none;
+			margin-bottom: 5px;
+			.more-news {
+				border-bottom: none;
+			}
+		}
+		
+		.homepage-top {
+			border-bottom: none;
+		}
+		
+		.homepage-top, .homepage-bottom {
+			@include horizontify;
+			
+			#sidebar-top, #sidebar-bottom {
+				.mq-row-fluid {
+					@include makeFluidRow;
+					border-top: 1px solid $grayLighter;
+					padding-top:20px;
+					
+					&.advertisements {
+						background: $grayBackground;
+					}
+				}
+				.widget {
+					border-bottom: none;
+				}
+			}
+		}
+		
+		
+	}
 }
 
+
+
+// Between Mid Portrait and Max
+@media(max-width: $mediaMax - 1) and (min-width: $mediaMidPortrait) {
+	#main {
+		.homepage-default {
+			@include horizontify;
+			.offleads {
+				@include makeFluidRow;
+				.span4:last-child .offlead {
+					border-right: none;
+				}
+				.offlead {
+					padding-left: 5px;
+					padding-right: 5px;
+					border-right: 1px solid $grayLighter;
+					border-bottom: none;
+				}
+			}
+		}
+	}
+}
 
 
 
@@ -230,6 +289,15 @@ $mediaSmallPortrait: 320px;
 			display: inline;
 			color: $black !important;
 			text-shadow: none !important;
+		}
+	}
+	
+	#main {
+		.lead5 {
+			@include centeredAsset;
+			border-bottom: 1px solid $grayLighter;
+			padding-bottom: 5px;
+			margin-bottom: 5px;
 		}
 	}
 }

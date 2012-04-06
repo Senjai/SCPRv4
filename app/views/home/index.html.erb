@@ -1,27 +1,26 @@
 <%=
 	begin
-		render :partial => "default", :homepage => @homepage
+		render :partial => @homepage.base, :homepage => @homepage
 	rescue
 		render :partial => "default", :homepage => @homepage
 	end
 %>
 
 <%= yield :conversation_slot %>
-<div class="row-fluid">
-	<div class="span6">
-		<div class="headlines">
-			<h6>More Headlines</h6>
-			<ul class="cbase">
-				<%= raw Rails.cache.read("home/headlines") %>
-			</ul>
+<div class="more-content">
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="headlines">
+				<h6>More Headlines</h6>
+				<ul class="cbase">
+					<%= raw Rails.cache.read("home/headlines") %>
+				</ul>
+			</div>
 		</div>
-	</div>
-	<div class="span6">
-		<section class="events-forum">
-			<h6>Events at the Crawford Family Forum</h6>
+		<div class="span6">
 			<%= render "shared/widgets/events_at_the_forum" %>
-		</section>
-	</div>	
+		</div>	
+	</div>
 </div>
 
 <% content_for :lower do %>

@@ -342,23 +342,23 @@
 
 // The Grid
 @mixin gridCore($gridColumnWidth, $gridGutterWidth) {
-  [class*="span"] {
-    float: left;
-    margin-left: $gridGutterWidth;
-  }
+	.row {
+		margin-left: $gridGutterWidth * -1;
+	    @include clearfix();
+	
+		> [class*="span"] {
+		  float: left;
+		  margin-left: $gridGutterWidth;
+		}
 
-  @for $i from 1 through $gridColumns {
-    .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
-  }
+		@for $i from 1 through $gridColumns {
+		  > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
+		}
 
-  @for $i from 1 through $gridColumns {
-    .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
-  }
-
-  .row {
-    margin-left: $gridGutterWidth * -1;
-    @include clearfix();
-  }
+		@for $i from 1 through $gridColumns {
+		  > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
+		}
+	}
 
   .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
     @include gridCoreSpan($gridColumns, $gridColumnWidth, $gridGutterWidth);
@@ -373,9 +373,12 @@
   margin-left: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)) + ($gridGutterWidth * 2);
 }
 
-@mixin gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth) {
-  .row-fluid {
-    width: 100%;
+@mixin gridFluidSpan($columns, $fluidGridColumnWidth, $fluidGridGutterWidth) {
+  width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 1));
+}
+
+@mixin makeFluidRow { // Can we dry this by passing in a variable class name to mixin gridFluid ?
+	width: 100%;
     @include clearfix();
     > [class*="span"] {
       float: left;
@@ -387,11 +390,13 @@
     @for $i from 1 through $gridColumns {
       > .span#{$i} { @include gridFluidSpan($i, $fluidGridColumnWidth, $fluidGridGutterWidth); }
     }
-  }
 }
 
-@mixin gridFluidSpan($columns, $fluidGridColumnWidth, $fluidGridGutterWidth) {
-  width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 1));
+
+@mixin gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth) {
+	.row-fluid {
+		@include makeFluidRow;
+	}
 }
 
 @mixin gridInput($gridColumnWidth, $gridGutterWidth) {
@@ -406,6 +411,17 @@
 
 @mixin gridInputSpan($columns, $gridColumWidth, $gridGutterWidth) {
   width: (($gridColumnWidth) * $columns) + ($gridGutterWidth * ($columns - 1)) - 10;
+}
+
+@mixin horizontify {
+	> .row-fluid {
+		> [class*="span"] {
+	    	float: none;
+			display: block;
+			width: 100%;
+			margin: 0;
+		}
+	}
 }
 
 @mixin makeFluidColumn($columns) {

@@ -184,14 +184,13 @@ section.broadcastbar {
 	}
 }
 .offleads {
+	.span4:last-child .offlead {
+		border-bottom: none;
+	}
 	.offlead {
-		/* let's fake a 5px vertical padding */ 
 		padding: 0 0 5px 0;
 		margin: 0 0 5px 0;
 		border-bottom: 1px solid $grayLighter;
-		&:last-child {
-			border-bottom: none;
-		}
 	}
 }
 // Join Conversation
@@ -246,44 +245,9 @@ section.broadcastbar {
 	}
 }
 
-// Events at the Forum
 .events-forum {
 	border-left:1px solid $grayLighter;
-	padding:0 0 0 10px;
-	.event-date {
-		@include font-serif($size:0.90em);
-		background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
-		color:$linkColor;
-		margin:10px 0 0 20px;
-		padding-left:112px;
-	}
-	h6 {
-		padding-left:5px;
-	}
-	.events-content {
-		@include clearfix();
-		margin:10px 0;
-		a {
-			color:$grayAlt;
-			&:hover .event-title {
-				color:$grayAlt;
-				text-decoration:underline;
-			}
-			&:hover {
-				text-decoration:none;
-			}
-		}
-		.event-title {
-			color:$grayAlt;
-			@include font-headline($weight:normal);
-			font-size:1.2em;
-			margin:0;
-		}
-		img {
-			float:left;
-			padding:0 15px 0 5px;			
-		}
-	}
+	padding-left: 20px;
 }
 
 #events-mega {
@@ -338,7 +302,7 @@ section.broadcastbar {
 			}
 			p.story-content {
 				@include font-shorthand($size: 13px, $lineHeight: 18px);
-				padding:10px 0 0 100px;
+				padding:10px 0 0 0;
 			}
 			ul {
 			    margin: 12px 0 0 0;
@@ -379,9 +343,9 @@ section.broadcastbar {
 				margin:10px 0 5px 0;
 				padding:0;
 			}
-			div.comments-quotee {
+			.comments-quotee {
 				@include font-sans-serif($size:0.85em);
-				background:url("more-news-quotee-icon.png") no-repeat scroll 60% 0 transparent;
+				background:url("more-news-quotee-icon.png") no-repeat 100px top;
 				color:$grayLight;
 				height:35px;
 				padding:20px 0 0 20px;

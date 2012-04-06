@@ -1,24 +1,30 @@
 <% content_cache("events:upcoming_forum") do %>
 	<% register_content "events/event:new" %>
-	<div class="event-headers event future">
-		<% @g_upcoming_events_forum.first(2).each do |event| %>
-			<div class="row-fluid">
-				<% if event.assets.present? %>
-					<div class="span4">
-						<%= render_asset event, 'thumb' %>
+	<section class="events-forum">
+		<h6>Events at the Crawford Family Forum</h6>
+		<div class="mq-row-fluid">
+			<% @g_upcoming_events_forum.first(2).each do |event| %>
+				<div class="span6">
+					<div class="event future">
+						<div class="row-fluid">
+							<% if event.assets.present? %>
+								<div class="span4">
+									<%= render_asset event, 'thumb' %>
+								</div>
+								<div class="span8">
+							<% else %>
+								<div class="span12">
+							<% end %>
+								<div class="info">
+									<h2 class="story-title"><%= link_to event.title, event.link_path %></h2>
+									<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
+								</div>
+							</div> <!-- span -->
+						</div> <!-- row fluid -->
 					</div>
-					<div class="span8">
-				<% else %>
-					<div class="span12">
-				<% end %>
-					<div class="info">
-						<h2 class="story-title"><%= link_to event.title, event.link_path %></h2>
-						<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
-					</div>
-				</div> <!-- span -->
-			</div> <!-- row fluid -->
-		<% end %>
-
-		<p class="more"><%= link_to "View More Forum Events", forum_events_path %></p>
-	</div>
+				</div>
+			<% end %>
+		</div> <!-- query row fluid -->
+	</section>
+	<p class="more"><%= link_to "View More Forum Events", forum_events_path %></p>
 <% end %>
