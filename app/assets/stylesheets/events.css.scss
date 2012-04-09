@@ -57,9 +57,16 @@ span.fake-link {
 
 .event {
 	@include event-headers;
+	
+	&.closest {
+		@include responsiveImageAsset($fiveW);
+		@include centeredAsset;
+	}
+	
 	&.future {
 		padding: 10px 0;
-		@include responsiveImageAsset($thumbW);
+		@include responsiveImageAsset($lsquareW);
+		@include centeredAsset;
 		.info {
 			@include font-serif($size: 13px);
 			h3 {
@@ -70,6 +77,15 @@ span.fake-link {
 		}
 		&:last-of-type {
 			border-bottom: none;
+		}
+	}
+	
+	&.past {
+		@include responsiveImageAsset($thumbW);
+		@include centeredAsset;
+		padding: 15px 0;
+		.byline {
+			@include font-serif($size: 12px);
 		}
 	}
 	
@@ -91,6 +107,7 @@ span.fake-link {
 			margin-bottom:0;
 		}
 		.event-details {
+			@include responsiveImageAsset($sixW);
 			padding: 5px 0;
 			margin-bottom: 10px;
 			border-top: 1px solid $grayLighter;
@@ -159,9 +176,10 @@ span.fake-link {
 	.upcoming-events {
 		.event {
 			border-bottom: 1px solid $grayLighter;
-		}
-		.closest {
-			padding-bottom:10px;
+			margin-bottom: 5px;
+			&.closest {
+				padding-bottom:10px;
+			}
 		}
 	}
 
@@ -230,21 +248,6 @@ span.fake-link {
 .archive-strip {
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: 20px;
-	.past-events {
-		padding: 15px 0;
-		.byline {
-			@include font-serif($size: 12px);
-		}
-	}
-	h3.title {
-		background:url("section-headline-background.png") repeat-x;
-		height:35px;
-		line-height: 35px;
-		padding:2px 0 0 5px;
-		a {
-			
-		}
-	}
 }
 
 .events-list {
@@ -252,7 +255,8 @@ span.fake-link {
 	.teaser {
 		padding:18px 0;
 		@include responsiveImageAsset($threeW);
-
+		@include centeredAsset;
+		
 		.event-details {
 			span.event-location {
 				@include font-sans-serif(normal, 11px);

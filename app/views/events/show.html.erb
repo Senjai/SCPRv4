@@ -1,15 +1,15 @@
 <% page_title [@event.title, "Events"] %>
 <% watch_gmaps %>
 
-<div class="event event-detail">
-	<div class="row">
-		<div class="span2">
+<section class="event event-detail">
+	<div class="row-fluid">
+		<div class="span3">
 			<div class="article-meta">
 				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side", title: "event" } %> <%# To be replaced with a better solution %>
 				<%#= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
 				
 				<% if @event.audio.present?%>
-					<!-- Audio --> <%# TODO Merge this into Audio model%>
+					<!-- Audio --> <%# TODO Merge this into Audio model %>
 					<aside class="story-audio">
 						<div class="inner-container clearfix">
 							<div class="audio-content">
@@ -25,11 +25,10 @@
 						</div>
 					</aside>
 				<% end %>
-				
-			</div>
-			
-		</div>
-		<div class="span6">
+			</div> <!-- article meta -->
+		</div> <!-- span -->
+		
+		<div class="span9">
 			<h1 class="story-headline event-headline"><%= link_to @event.title, @event.link_path %></h1>
 			<% if @event.sponsor? %>
 				<p class="sponsor">Sponsor: 
@@ -41,8 +40,8 @@
 				</p>
 			<% end %>
 			<div class="event-details">
-				<div class="row">
-					<div class="span3">
+				<div class="row-fluid">
+					<div class="span6">
 						<% if @event.upcoming? or @event.current? %>
 							<div class="upcoming-date">
 								<%= @event.consoli_dated %>
@@ -53,8 +52,9 @@
 							</div>
 						<% end %>
 						<%= link_to("RSVP for this event", @event.rsvp_link, id: "rsvp-btn", class: "btn primary") if @event.rsvp_link.present? and @event.upcoming? %>
-					</div>
-					<div class="span3">
+					</div> <!-- span -->
+					
+					<div class="span6">
 						<div class="location-text">Location</div>
 						<ul class="address">
 							<li><span class="blue"><%= @event.location_link.present? ? link_to(@event.location_name, @event.location_link) : @event.location_name %></span></li>
@@ -73,16 +73,17 @@
 							<% end %>
 
 						</ul>						
-					</div>
-				</div>
-			</div>
+					</div> <!-- span -->
+				</div> <!-- row fluid -->
+			</div> <!-- event-details -->
+			
 			<%= render_asset @event, "blog" %>
 			<p><%= simple_format(@event.description, {}, sanitize: false) %></p>
 			<br style="clear: both" />
 			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
-		</div>
-	</div>
-</div>
+		</div> <!-- span -->
+	</div> <!-- row-fluid -->
+</section> <!-- event-detail -->
 
 <section class="fold">
 	<% if @more_events.present? and (@event.upcoming? || @event.current?) and @event.is_forum_event? %>

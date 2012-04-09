@@ -46,79 +46,90 @@
 <% end %>
 
 <!-- CONTENT -->
-<div class="row events">
+<div class="events">
+	<div class="row-fluid">
 	
-	<!-- LEFT COLUMN -->
-	<section class="span5 upcoming-events">
-		<h6>Attend an Upcoming Event</h6>
-		<% if @closest_event.present? %>
-			<div class="event closest">
-				<%= render_asset @closest_event, 'lead5' %>
-				<div class="calendar-date"><%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.link_path, class: "event-link" %> </div>
-				<h1 class="story-title"><%= link_to @closest_event.title, @closest_event.link_path %></h1>
-				<%= @closest_event.teaser %>
-			</div>
-		<% end %>
-		
-		<div class="future-events">
-			<%= any_to_list? @future_events, title: "Future Events", message: "There are no events planned for the near future. Check back soon!" do %>
-				<% @future_events.each do |event| %>
-					<div class="row-fluid">
-						<% if event.assets.present? %>
-							<div class="span4">
-								<%= render_asset event, 'lsquare' %>
-							</div>
-							<div class="span8">
-						<% else %>
-							<div class="span12">
-						<% end %>
-							<div class="info">
-								<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
-								<h2 class="story-title"><%= link_to event.title, event.link_path %></h2>
-								<%= event.teaser %>
-							</div>
-						</div> <!-- span -->
-					</div> <!-- row fluid -->
+		<!-- LEFT COLUMN -->
+		<div class="span7">
+			<section class="upcoming-events">
+				<h6>Attend an Upcoming Event</h6>
+				<% if @closest_event.present? %>
+					<div class="event closest">
+						<%= render_asset @closest_event, 'lead5' %>
+						<%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.link_path, class: "event-link" %>
+						<h1 class="story-title"><%= link_to @closest_event.title, @closest_event.link_path %></h1>
+						<%= @closest_event.teaser %>
+					</div>
 				<% end %>
-			<% end %>
-			<p><a href="<%= events_path(list: 'forum') %>" class="more">More Upcoming Events</a></p>
-		</div>
-	</section> <!-- upcoming-events -->
-	
-	<!-- MIDDLE COLUMN (social media) -->
-	<section class="span4 social">
-		<h3>Follow Us on Social Media</h3>
-		<div class="banners">
-			<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook-banner" alt="Follow the Crawford Family Forum on Facebook">&nbsp;</a>
-			<a href="http://twitter.com/KPCCForum" class="twitter-banner" alt="Follow the Crawford Family Forum on Twitter">&nbsp;</a>
-		</div>
 		
-		<!-- TWITTER -->
-		<% if cached_tweets = Rails.cache.fetch("twitter:KPCCForum") %>
-			<a class="twitter-peeker" href="http://twitter.com/KPCCForum">Tweets from the Crawford Family Forum</a>
-			<%= cached_tweets %>
-		<% end %>
-	</section>
-</div> <!-- .row -->
+				<%= any_to_list? @future_events, title: "Future Events", message: "There are no events planned for the near future. Check back soon!" do %>
+					<% @future_events.each do |event| %>
+						<div class="event future">
+							<div class="row-fluid">
+								<% if event.assets.present? %>
+									<div class="span4">
+										<%= render_asset event, 'lsquare' %>
+									</div>
+									<div class="span8">
+								<% else %>
+									<div class="span12">
+								<% end %>
+									<div class="info">
+										<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
+										<h2 class="story-title"><%= link_to event.title, event.link_path %></h2>
+										<%= event.teaser %>
+									</div>
+								</div> <!-- span -->
+							</div> <!-- row fluid -->
+						</div> <!-- event future -->
+					<% end %>
+				<% end %>
+				<p><a href="<%= events_path(list: 'forum') %>" class="more">More Upcoming Events</a></p>
+			</section> <!-- upcoming-events -->
+		</div> <!-- span -->
+	
+		<!-- MIDDLE COLUMN (social media) -->
+		<div class="span5">
+			<section class="social">
+				<h3>Follow Us on Social Media</h3>
+				<div class="banners">
+					<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook-banner" alt="Follow the Crawford Family Forum on Facebook">&nbsp;</a>
+					<a href="http://twitter.com/KPCCForum" class="twitter-banner" alt="Follow the Crawford Family Forum on Twitter">&nbsp;</a>
+				</div>
+		
+				<!-- TWITTER -->
+				<% if cached_tweets = Rails.cache.fetch("twitter:KPCCForum") %>
+					<a class="twitter-peeker" href="http://twitter.com/KPCCForum">Tweets from the Crawford Family Forum</a>
+					<%= cached_tweets %>
+				<% end %>
+			</section>
+		</div> <!-- span -->
+	</div> <!-- .row-fluid -->
+</div> <!-- events -->
 
 
 <!-- ARCHIVE STRIP -->
 <% if any_to_list? @past_events %>
 	<% content_for :bottom do %>
-		<div class="row">
-			<section class="span12 archive-strip">
-				<h3 class="title"><%= link_to "Check out events from the Archive", forum_events_archive_path %></h3>
-				<div class="row past-events">
-					<% @past_events.each do |event| %>
-						<div class="span4">
-							<article class="event past<%= " divider" unless event == @past_events.last %>">
-								<div class="row">
-									<% if event.assets.present? %>
-										<div class="span1">
-											<%= render_asset event, 'thumb' %>
-										</div>
-									<% end %>
-									<div class="info <%= event.assets.present? ? "span3" : "span4" %>">
+		<section class="archive-strip">
+			<h6 class="more-news-title">
+				<%= link_to "Events from the Archive", forum_events_archive_path %>
+				<span><%= link_to "More", forum_events_archive_path %></span>
+			</h6>
+			<div class="row-fluid">
+				<% @past_events.each do |event| %>
+					<div class="span4">
+						<div class="event past">
+							<div class="row-fluid">
+								<% if event.assets.present? %>
+									<div class="span4">
+										<%= render_asset event, 'thumb' %>
+									</div>
+									<div class="8">
+								<% else %>
+									<div class="span12">
+								<% end %>
+									<div class="info">
 										<h4 class="story-title"><%= link_to event.title, event.link_path %></h4>
 										<p class="byline"><%= format_date event.starts_at, format: :full_date %></p>
 										<% if event.audio.present? %>
@@ -126,14 +137,14 @@
 										<% elsif event.show_comments %>
 											<%= comment_count_for event %>
 										<% end %>
-									</div>
-								</div> <!-- row -->
-							</article>
-						</div>
-					<% end %>
-				</div>
-			</section>
-		</div><!-- row -->
+									</div> <!-- info -->
+								</div> <!-- span -->
+							</div> <!-- row fluid -->
+						</div> <!-- event past -->
+					</div> <!-- span -->
+				<% end %>
+			</div> <!-- row-fluid -->
+		</section>
 	<% end %>
 <% end %>
 

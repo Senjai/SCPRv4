@@ -11,43 +11,44 @@
 <%= render "shared/masthead" %>
 <%= yield :masthead %>
 
-<div id="main" class="container event-headers">
-	<div class="row">
+<div id="main" class="container-fluid event-headers">
+	<div class="row-fluid">
 		<div class="span9">
 			<%= yield %>
 		</div>
 		
 		<!-- SIDEBAR -->
-		<div id="sidebar" class="span3">
-			<% if !content_for(:sidebar) %>
-				<%= yield :sidebar %>
-			<% else %>
-				<%= render 'events/nav' %>
+		<div class="span3">
+			<div id="sidebar">
+				<% if !content_for(:sidebar) %>
+					<%= yield :sidebar %>
+				<% else %>
+					<%= render 'events/nav' %>
 
-				<div id="getting-there" class="widget event-headers">
-					<h3>Finding the Crawford Family Forum</h3>
-					<p><%= link_to "Get directions, parking and public transit info", forum_directions_path %></p>
-				</div>
+					<div id="getting-there" class="widget">
+						<h3>Finding the Crawford Family Forum</h3>
+						<p><%= link_to "Get directions, parking and public transit info", forum_directions_path %></p>
+					</div>
 
-				<div id="community-partnerships" class="widget event-headers">
-					<h3>Partner with us</h3>
-					<p>We seek events that open dialogue and deepen the relationships and understanding of Southern California’s diverse communities.</p>
-					<p><%= link_to "Learn more about community partnerships", forum_space_path %></p>
-				</div>
+					<div id="community-partnerships" class="widget">
+						<h3>Partner with us</h3>
+						<p>We seek events that open dialogue and deepen the relationships and understanding of Southern California’s diverse communities.</p>
+						<p><%= link_to "Learn more about community partnerships", forum_space_path %></p>
+					</div>
 
-				<div class="ad widget">
-					<a href="https://scprcontribute.publicradio.org">
-					    <%= image_tag 'support-forum.png', alt: "Pledge now to become a KPCC member" %>
-					</a>
-				</div>
-			<% end %> <!-- /SIDEBAR -->
-			
-		</div>
-	</div>
+					<div class="ad widget">
+						<a href="https://scprcontribute.publicradio.org">
+						    <%= image_tag 'support-forum.png', alt: "Pledge now to become a KPCC member" %>
+						</a>
+					</div>
+				<% end %> <!-- /SIDEBAR -->
+			</div> <!-- sidebar -->
+		</div> <!-- span3 -->
+	</div> <!-- row fluid -->
 
 	<%= yield :bottom %>
 	<%= render "shared/audio/inpage_audio_player" %>
-</div>
+</div> <!-- container-fluid -->
 
 <%= render :partial => "shared/footer" %>
 <%= render :partial => "shared/footer/footer_js" %>
