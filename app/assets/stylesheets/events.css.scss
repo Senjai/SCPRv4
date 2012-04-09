@@ -273,8 +273,7 @@ span.fake-link {
 /* FADER */
 
 .forum #megamenu {
-	$shadow: 0 6px 10px rgba(0,0,0,.5);
-	@include box-shadow($shadow);
+	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
 }
 
 #events-header {

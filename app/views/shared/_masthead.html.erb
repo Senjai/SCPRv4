@@ -3,44 +3,53 @@
 </div>
 <header id="masthead">
 	<div class="container-fluid">
-		<div class="row-fluid">
-    		<div class="span4 logo">
-				<h1>
-					<a href="/"><%= image_tag "logo-masthead.png" %></a>
-					<div class="fb-like" data-href="http://facebook.com/kpccfm" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
-				</h1>
-			</div>
-
-			<div class="span4">
-				<div class="pledge-container">
-					<!-- membership_masthead -->
-					<div id='div-gpt-ad-1331935001948-0' class="ad" style='width:286px; height:73px;'>
-						<script type='text/javascript'>
-							googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331935001948-0'); });
-						</script>
+		<div class="head-lead">
+			<div class="row-fluid">
+	    		<div class="span4">
+					<div class="logo">
+						<a href="/"><%= image_tag "logo-masthead.png", alt: "KPCC.org" %></a>
 					</div>
 				</div>
-			</div>
+
+				<div class="span5">
+					<div class="mid-header-wrapper">
+						<div class="fb-like" data-href="http://facebook.com/kpccfm" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+						<div class="pledge-container">
+							<!-- membership_masthead -->
+							<div id='div-gpt-ad-1331935001948-0' class="ad" style='width:286px; height:73px;'>
+								<script type='text/javascript'>
+									googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331935001948-0'); });
+								</script>
+							</div>
+						</div>
+						<div class="pledge-button-container">
+							<div class="pledge">
+								<a href="/support/">Pledge Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			
-		    <div class="span4">
-				<nav class="utils">
-					<ul class="nav secondary-nav clearfix">
-						<li class="social">Follow us
-							<a href="http://facebook.com/kpccfm"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
-		    		        <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
-							<a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
-		    		    </li>
-						<% if current_user %>
-							<li class="username">Hi <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
-							<li><a href="/accounts/logout/">Log Out</a></li>
-						<% else %>
-			    		    <li><a href="/accounts/login/">Login</a></li>
-			    		    <li><a href="/accounts/register/">Register</a></li>					
-						<% end %>
-		    		</ul>
-		    	</nav>
-			</div>
-		</div> <!-- row fluid -->
+			    <div class="span3">
+					<nav class="utils">
+						<ul class="nav secondary-nav clearfix">
+							<li class="social">Follow us
+								<a href="http://facebook.com/kpccfm"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
+			    		        <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
+								<a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
+			    		    </li>
+							<% if current_user %>
+								<li class="username">Hi, <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
+								<li><a href="/accounts/logout/">Log Out</a></li>
+							<% else %>
+				    		    <li><a href="/accounts/login/">Login</a></li>
+				    		    <li><a href="/accounts/register/">Register</a></li>					
+							<% end %>
+			    		</ul>
+			    	</nav>
+				</div>
+			</div> <!-- row fluid -->
+		</div>
 		
 		<% nav_items = [
 			{ title: "News", "data-section" => "news-mega", href: "/news/" },
@@ -49,37 +58,33 @@
 			{ title: "Events", "data-section" => "events-mega", href: "/events/" },
 			{ title: "Support Us", "data-section" => "support-mega", href: "/support/" }
 		] %>
-		<div id="megamenu" class="nav-primary topbar navbar">
+		<div id="megamenu" class="nav-primary topbar">
 			<div class="navbar-inner">
-
-						<nav class="sections clearfix">
-							<ul>
-							    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>
-								<% nav_items.each do |item| %>
-								    <li class="mega"><a href="<%=item[:href]%>" data-section="<%=item["data-section"]%>"><span><%= item[:title].html_safe %></span></a></li>
-								<% end %>
-							</ul>
-						</nav>
-						
-						<form action="/search/" method="get">
-							<fieldset>
-							    <label>Search:</label>
-							    <input type="text" name="q" placeholder="Search" class="search" />
-							    <input type="submit" value="Submit" id="submit" class="submit" />
-							</fieldset>
-						</form>
-
+				<nav class="sections clearfix">
+					<ul>
+					    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>
+						<% nav_items.each do |item| %>
+						    <li class="mega"><a href="<%=item[:href]%>" data-section="<%=item["data-section"]%>"><span><%= item[:title].html_safe %></span></a></li>
+						<% end %>
+					</ul>
+				</nav>
+		
+				<form action="/search/" method="get">
+					<fieldset>
+					    <label>Search:</label>
+					    <input type="text" name="q" placeholder="Search" class="search" />
+					    <input type="submit" value="Submit" id="submit" class="submit" />
+					</fieldset>
+				</form>
 			</div> <!-- .navbar-inner -->
 		</div> <!-- megamenu -->
 		
-		<nav class="nav-compact in">
-			<span class="nav-toggler">&nbsp;</span>
-			<a href="/" class="top">KPCC.org</a>
+		<nav class="nav-condensed">
 			<% nav_items.each do |item| %>
-				<a href="<%=item[:href]%>"><%= item[:title].html_safe %></a>
+			    <a href="<%=item[:href]%>" class="btn"><%= item[:title].html_safe %></a>
 			<% end %>
-		</nav> <!-- nav compact -->
-	</div>
+		</nav>
+	</div> <!-- container fluid -->
 </header>
 
 <div class="live-update"></div>

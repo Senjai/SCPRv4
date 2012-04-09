@@ -4,7 +4,6 @@
 //= require modernizr.custom.45510
 //= require jquery
 //= require jquery_ujs
-//= require jquery.touchwipe
 
 //= require jquery.mousewheel.3.0.4
 //= require jquery.carouFredSel-5.1.0

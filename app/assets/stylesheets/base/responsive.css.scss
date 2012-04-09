@@ -1,5 +1,3 @@
-@import "base/bootstrap/mixins";
-
 $containerPadding: 25px;
 
 // Device sizes
@@ -104,18 +102,6 @@ $mediaSmallPortrait: 320px;
 
 // Below Portrait Tablet ("reader mode")
 @media (max-width: $mediaMidPortrait - 1) {	
-	.nav-primary {
-		display: none;
-	}
-	
-	#offscreen-header {
-		display: none;
-	}
-	
-	.nav-compact {
-		display: block !important;
-	}
-	
 	.filters {
 		li.heading {
 			display: none !important;
@@ -152,13 +138,6 @@ $mediaSmallPortrait: 320px;
 		display: none;
 	}
 	
-	#masthead {
-		text-align: center;
-		.pledge-container {
-			display: none;
-		}
-	}
-	
 	#main {
 		.homepage-top {
 			border-bottom: none;
@@ -190,8 +169,10 @@ $mediaSmallPortrait: 320px;
 		}
 	}
 
-	.broadcastbar .next-program {
-		display: none;
+	.broadcastbar .next-program { display: none; }
+	#masthead { 
+		text-align: center;
+		.utils { display: none; }
 	}
 }
 
@@ -201,6 +182,9 @@ $mediaSmallPortrait: 320px;
 // Tablet Portrait And Above
 @media (min-width: $mediaMidPortrait) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
+	.nav-compact {
+		display: none;
+	}
 }
 
 
@@ -208,10 +192,29 @@ $mediaSmallPortrait: 320px;
 
 // Below Tablet Landscape
 @media (max-width: $mediaMidLandscape - 1) {
-	.nav-primary form {
-		display: none;
-	}
+	#masthead {
+		background: $grayLighter;
+		@include box-shadow(0 3px 5px rgba(0,0,0,.5));
+		
+		.mid-header-wrapper {
+			text-align: center;
+			.pledge-container {
+				display: none;
+			}
+		
+			.pledge-button-container {
+				display: inline-block;
+			}
+		}
+
+		.nav-primary {
+			display: none;
+		}
 	
+		.nav-condensed {
+			display: block;
+		}
+	}
 	.audio-bar, #uvTab {
 		display: none !important; // temporary
 	}
@@ -229,27 +232,27 @@ $mediaSmallPortrait: 320px;
 		.homepage-top {
 			border-bottom: none;
 		}
+
+		@include horizontify; 
 		
-		.homepage-top, .homepage-bottom {
+		.homepage-top, .homepage-bottom { // Since we have different sections on the homepage and `horizontify` looks for .row-fluid as direct descendants
 			@include horizontify;
+		}
+	}
+	
+	#sidebar, #sidebar-top, #sidebar-bottom {
+		.mq-row-fluid {
+			@include makeFluidRow;
+			border-top: 1px solid $grayLighter;
+			padding-top:20px;
 			
-			#sidebar-top, #sidebar-bottom {
-				.mq-row-fluid {
-					@include makeFluidRow;
-					border-top: 1px solid $grayLighter;
-					padding-top:20px;
-					
-					&.advertisements {
-						background: $grayBackground;
-					}
-				}
-				.widget {
-					border-bottom: none;
-				}
+			&.advertisements {
+				background: $grayBackground;
 			}
 		}
-		
-		
+		.widget {
+			border-bottom: none;
+		}
 	}
 }
 
