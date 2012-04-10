@@ -97,6 +97,32 @@ $mediaSmallPortrait: 320px;
 		@include centeredAsset;
 		@include responsiveImageAsset($threeW);
 	}
+	
+	// Fluid Footer for small resolutions
+		.footer-nav { 
+			> .span3 { // one column
+				margin-left: 0;
+				.section {
+					@include makeFluidRow; // So the rows within each section will persist
+					border-left: none !important;
+					border-bottom: 1px solid $grayDark;
+					padding-bottom: 5px;
+					padding-top: 5px;
+					min-height: 0;
+					.mq-row-fluid {
+						@include makeFluidRow;
+					}
+					nav {
+						@include gridFluidSpan(6);
+					}
+				}
+		
+				&:last-child .section {
+					border-bottom: none;
+				}
+			}
+		}
+	// end Fluid Footer
 }
 
 
@@ -106,6 +132,14 @@ $mediaSmallPortrait: 320px;
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 	.head-lead {
 		@include horizontify;
+	}
+	
+	.footer-nav > .span3 { // two columns
+		@include gridFluidSpan(6);
+		&:nth-child(3) { 
+			margin-left: 0px;
+			.section { border-left: none; }
+		}
 	}
 }
 
@@ -135,22 +169,12 @@ $mediaSmallPortrait: 320px;
 		display: none;
 	}
 	
-	.footer-nav {
-		.section {
-			border-left: none !important;
-		}
-	}
-	
 	#sidebar, #sidebar-top, #sidebar-bottom {
 		display: none;
 	}
 		
 	#beta-bar {
 		display: none;
-	}
-	
-	.mq-row-fluid {
-		@include makeFluidRow;
 	}
 	
 	#main, .homepage-top, .homepage-bottom, .more-content { // Since we have different sections on the homepage and `horizontify` looks for .row-fluid as direct descendants
@@ -175,6 +199,9 @@ $mediaSmallPortrait: 320px;
 		.events-forum {
 			border-left: none;
 			padding-left: 0;
+			.mq-row-fluid {
+				@include makeFluidRow;
+			}
 		}
 		
 		.more-news-content {

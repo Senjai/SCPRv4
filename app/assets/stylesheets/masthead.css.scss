@@ -305,7 +305,9 @@ nav.utils ul {
 					background-position: 0 12px;
 					padding: 10px 0 0 78px;
 					min-height: 80px;
-					&:first-child { border-bottom: 1px solid $grayLighter; }
+					&:first-child { 
+						border-bottom: 1px solid $grayLighter;
+					}
 					h4 {
 						color:$orangeDark;
 						@include font-sans-serif($weight: 600, $size: 15px);

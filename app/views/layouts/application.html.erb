@@ -22,24 +22,16 @@
 					<%= yield(:sidebar) %>
 				<% else %>
 					<%= yield :sidebar_top %>
-					<div class="mq-row-fluid advertisements">
-						<div class="span6"><div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div></div>
-						<div class="span6"><%= render "shared/widgets/facebook" %></div>
-					</div>
+					<div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div>
+					<%= render "shared/widgets/facebook" %>
 				
 					<%= yield :sidebar_middle %>
-					<div class="mq-row-fluid">
-						<div class="span6"><%= render "shared/widgets/newsletter_subscribe" %></div>
-						<div class="span6"><%= render "shared/widgets/most_popular" %></div>
-					</div>
-					<div class="mq-row-fluid advertisements">
-						<div class="span6"><%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %></div>
-						<div class="span6"><%= render "shared/widgets/oas", :ad_id => 'x02' %></div>
-					</div>
-					<div class="mq-row-fluid advertisements">
-						<div class="span6"><%= render "shared/widgets/promo_mobile" %></div>
-						<div class="span6"><%= render "shared/widgets/oas", :ad_id => 'x03' %></div>
-					</div>
+					<%= render "shared/widgets/newsletter_subscribe" %>
+					<%= render "shared/widgets/most_popular" %>
+					<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
+					<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+					<%= render "shared/widgets/promo_mobile" %>
+					<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 				<% end %>
 			</div> <!-- sidebar -->
 		</div> <!-- span4 -->

@@ -377,7 +377,7 @@
   width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 1));
 }
 
-@mixin makeFluidRow { // Can we dry this by passing in a variable class name to mixin gridFluid ?
+@mixin makeFluidRow {
 	width: 100%;
     @include clearfix();
     > [class*="span"] {

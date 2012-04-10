@@ -23,17 +23,14 @@
 
 				<div class="span4">
 					<div id="sidebar-top">
-						<div class="mq-row-fluid advertisements">
-							<div class="span6"><div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div></div>
-							<div class="span6"><%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %></div>
-						</div>
-						<div class="mq-row-fluid">
-							<div class="span6"><%= render "shared/widgets/newsletter_subscribe" %></div>
-							<!-- div class="ad widget" style="border-bottom: 1px solid #E0E0E0;padding-bottom: 16px;">
-								<img src="http://media.scpr.org/assets/images/campaigns/2012/billboard_ideas_large.png" alt="" />
-							</div -->
-							<div class="span6"><%= render "shared/widgets/most_popular" %></div>		
-						</div>	
+						<div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div>
+						<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
+                           
+						<%= render "shared/widgets/newsletter_subscribe" %>
+						<!-- div class="ad widget" style="border-bottom: 1px solid #E0E0E0;padding-bottom: 16px;">
+							<img src="http://media.scpr.org/assets/images/campaigns/2012/billboard_ideas_large.png" alt="" />
+						</div -->
+						<%= render "shared/widgets/most_popular" %>
 					</div> <!-- sidebar-top -->
 				</div> <!-- span4 -->
 				<div class="span12 top-half">&nbsp;</div>
@@ -49,14 +46,11 @@
 				</div> <!-- span8 -->
 				<div class="span4">
 					<div id="sidebar-bottom">
-						<div class="mq-row-fluid advertisements">
-							<div class="span6"><%= render "shared/widgets/oas", :ad_id => 'x02' %></div>
-							<div class="span6"><%= render "shared/widgets/facebook" %></div>	
-						</div>
-						<div class="mq-row-fluid advertisements">
-							<div class="span6"><%= render "shared/widgets/promo_mobile" %></div>
-							<div class="span6"><%= render "shared/widgets/oas", :ad_id => 'x03' %></div>
-						</div>
+						<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+						<%= render "shared/widgets/facebook" %>
+                           
+						<%= render "shared/widgets/promo_mobile" %>
+						<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 					</div> <!-- sidebar bottom -->
 				</div> <!-- span4 -->
 			</div> <!-- row fluid -->
