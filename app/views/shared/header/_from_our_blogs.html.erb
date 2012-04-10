@@ -1,0 +1,10 @@
+<ul class="cbase">
+	<% for e in content do %>
+		<% register_content(e) %>
+		<li>
+			<h4><%= link_to e.headline, e.link_path %></h4>
+			<%= link_to e.blog.name, e.blog %>
+			<%= smart_date_js e, "data-window" => "8h" %>
+		</li>
+	<% end %>
+</ul>

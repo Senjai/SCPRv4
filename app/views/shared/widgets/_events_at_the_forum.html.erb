@@ -16,7 +16,7 @@
 								<div class="span12">
 							<% end %>
 								<div class="info">
-									<h2 class="story-title"><%= link_to event.title, event.link_path %></h2>
+									<h4 class="story-title"><%= link_to event.title, event.link_path %></h4>
 									<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
 								</div>
 							</div> <!-- span -->
@@ -25,6 +25,6 @@
 				</div>
 			<% end %>
 		</div> <!-- query row fluid -->
+		<p class="more"><%= link_to "View More Forum Events", forum_events_path %></p>
 	</section>
-	<p class="more"><%= link_to "View More Forum Events", forum_events_path %></p>
 <% end %>

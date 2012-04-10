@@ -20,7 +20,7 @@ body {
 // ------
 
 // Topbar for Branding and Nav
-.topbar {
+header.topbar {
   height: 40px;
   top: 0;
   left: 0;
@@ -105,7 +105,7 @@ div.secondary-nav {
     float: right;
     margin:10px 0 0 10px;
 	font-size:12px;
-  }
+}
   ul {
     display: block;
     float: left;

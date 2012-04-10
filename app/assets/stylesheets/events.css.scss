@@ -280,6 +280,19 @@ span.fake-link {
 	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
 }
 
+.events-header-small {
+	text-align: center;
+	display: none;
+	@include background-image(linear-gradient(lighten(#2e2e2e, 10%), #2e2e2e));
+	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
+	padding: 15px 10px 10px 10px;
+	margin-bottom: 20px;
+	margin-top: -21px;
+	img {
+		max-width: 100%;
+	}
+}
+
 #events-header {
 	position: relative;
 	top: -38px;

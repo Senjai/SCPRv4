@@ -7,6 +7,11 @@
 		margin-bottom:$baseline;
 	}
 	.homepage-bottom { margin:0; padding: 0;}
+	
+	.events-forum {
+		border-left:1px solid $grayLighter;
+		padding-left: 20px;
+	}
 }
 
 // Trending Bar
@@ -50,10 +55,12 @@ section.broadcastbar {
 	@include clearfix();
 	.current-program {
 	    margin-top: 14px;
+		white-space: nowrap;
 	}
 	.next-program {
 	    margin-top: 14px;
 		text-align: right;
+		white-space: nowrap;
 	}
 	ul {
 		list-style:none outside none;
@@ -72,6 +79,7 @@ section.broadcastbar {
 			    position: relative;
 			    top: -38px;
 				margin-bottom: -52px;
+				z-index: 0;
 			}
 			&.on-now {
 				float:left;
@@ -245,20 +253,21 @@ section.broadcastbar {
 	}
 }
 
-.events-forum {
-	border-left:1px solid $grayLighter;
-	padding-left: 20px;
+p.more a {
+	color:$grayAlt;
+	@include font-sans-serif(bold, 11px);
+	padding:0;
+	margin: 0;
+	text-transform:uppercase;
+	&:hover {
+		text-decoration:underline;
+	}
 }
 
-#events-mega {
-    .events-content {
-        img {
-           float: left;
-           width: 65px;
-           height: 65px;
-           margin-right: 12px;
-        }
-    }
+.events-forum {
+	.event.future {
+		@include responsiveImageAsset($thumbW);
+	}
 }
 
 // Cbase H3 - Applies styling to first headline - activated by jQuery

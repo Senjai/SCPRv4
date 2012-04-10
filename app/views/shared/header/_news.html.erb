@@ -1,65 +1,51 @@
-<div class="row-fluid">
-	<div class="categories span3">
-		<div class="inner-container clearfix">
-		<h6>Categories</h6>
-		<ul>
-		    <li><a href="/local/">Local</a></li>
-		    <li><a href="/california/">State</a></li>
-		    <li><a href="/world/">U.S./World</a></li>
-		    <li><a href="/politics/">Politics</a></li>
-		    <li><a href="/environment/">Eco/Sci</a></li>
-		</ul>
-		<ul class="right">
-		    <li><a href="/money/">Money</a></li>
-		    <li><a href="/crime/">Crime &amp; Safety</a></li>
-		    <li><a href="/education/">Education</a></li>
-		    <li><a href="/health/">Health</a></li>
-		</ul>
-		<ul class="content-types">
-		    <li class="videos"><a href="/video/">Videos</a></li>
-		    <li><a href="/blogs/">Blogs</a></li>
-			<li><a href="/network/">Network</a></li>
-		</ul>
-		</div>
-	</div>
-	<div class="featured span4">
-		<div class="inner-container clearfix">
-		<h6>Latest News</h6>
-		<% content_cache("mega_news_latest") do %>
-			<% register_content("contentbase:new") %>
-			<ul>
-			<% for c in get_latest_news.first(2) do %>
-				<% register_content(c) %>
-				<li>
-					<a href="<%= c.link_path %>">
-					<%= render_asset(c,"thumb") %>
-					<p><%= c.headline %></p>
-					</a>
-				</li>
-			<% end %>
-			</ul>
-		<% end %>
-		</div>
-	</div>
-	<div class="blogs span5">
-		<div class="inner-container clearfix">
-			<h6>From Our Blogs</h6>			
-			<ul class="cbase">
+<div class="inner-container">
+	<div class="row-fluid">
+		<div class="span3">
+			<div class="section">
+				<nav>
+					<h6>Categories</h6>
+					<div class="row-fluid">
+						<ul class="span6">
+						    <li><a href="/local/">Local</a></li>
+						    <li><a href="/california/">State</a></li>
+						    <li><a href="/world/">U.S./World</a></li>
+						    <li><a href="/politics/">Politics</a></li>
+						    <li><a href="/environment/">Eco/Sci</a></li>
+						</ul>
+						<ul class="span6">
+						    <li><a href="/money/">Money</a></li>
+						    <li><a href="/crime/">Crime &amp; Safety</a></li>
+						    <li><a href="/education/">Education</a></li>
+						    <li><a href="/health/">Health</a></li>
+						</ul>
+					</div> <!-- row-fluid -->
+					<ul class="content-types">
+					    <li class="videos"><a href="/video/">Videos</a></li>
+					    <li><a href="/blogs/">Blogs</a></li>
+						<li><a href="/network/">Network</a></li>
+					</ul>
+				</nav>
+			</div> <!-- section -->
+		</div> <!-- span -->
+		
+		<div class="span4">
+			<div class="section">
+				<h6>Latest News</h6>
+				<% content_cache("mega_news_latest") do %>
+					<% register_content("contentbase:new") %>
+					<%= render "shared/header/featured", content: get_latest_news.first(2) %>
+				<% end %>
+			</div> <!-- section -->
+		</div> <!-- span -->
+		
+		<div class="span5">
+			<div class="section last">
+				<h6>From Our Blogs</h6>			
 				<% content_cache("mega_news_blogs") do %>
 					<% register_content("blogs/entry:new") %>
-					
-					<% for e in @g_latest_blogs_news.limit(3) do %>
-						<% register_content(e) %>
-						<li><p class="entry-title">
-							<a href="<%= e.link_path %>">
-								<span class="headline"><%= e.headline %></span>
-								<span class="blog-name"><%= e.blog.name %></span>
-								<time class="smarttime" datetime="<%= e.published_at.strftime("%FT%R") %>" data-unixtime="<%= e.published_at.to_i %>"  data-window="8h"></time>
-							</a>
-						</p></li>
-					<% end %>
+					<%= render "shared/header/from_our_blogs", content: @g_latest_blogs_news.limit(3) %>
 				<% end %>
-	    	</ul>
-		</div>
-	</div>
-</div>
+			</div> <!-- section -->
+		</div> <!-- span -->
+	</div> <!-- row fluid -->
+</div> <!-- inner container -->

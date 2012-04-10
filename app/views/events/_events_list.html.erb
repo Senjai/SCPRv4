@@ -5,7 +5,7 @@
 <%= any_to_list? events, title: title do %>
 <section class="events-list <%= cssClass %>">
 	<% events.each do |event| %>
-  		<article class="cbase event teaser event-headers">
+  		<article class="cbase event teaser">
 			<div class="row-fluid">
 				<% if event.assets.present? %>
 					<div class="span3">

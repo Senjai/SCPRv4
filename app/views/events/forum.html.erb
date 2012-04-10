@@ -2,6 +2,10 @@
 
 <% content_for :masthead do %>
 <!-- HERO -->
+	<div class="events-header-small">
+		<%= image_tag "event-headers/cff-logo.png" %>
+	</div>
+	
 	<header id="events-header">
 		<div class="slides-wrapper">
 			<div class="slide active" id="hero-1">
@@ -113,7 +117,7 @@
 	<% content_for :bottom do %>
 		<section class="archive-strip">
 			<h6 class="more-news-title">
-				<%= link_to "Events from the Archive", forum_events_archive_path %>
+				Events from the Archive
 				<span><%= link_to "More", forum_events_archive_path %></span>
 			</h6>
 			<div class="row-fluid">

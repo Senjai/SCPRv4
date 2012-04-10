@@ -132,37 +132,43 @@ nav.utils ul {
 	
 	.sections {
 		white-space: nowrap;
-		ul li {	
-			&.listen-live {
-				@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
-				background-color:#cb5f1d;
-				&:hover {
-					@include background-image(linear-gradient(#cb5f1d, #9b4816));
-				}
-				a {
-					background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
-					color:$white;
-					padding-left:33px;
-					padding-right:22px;
+		ul {
+			margin-left: 0;
+			li {
+				height: 36px;
+				display: inline-block;
+				&.listen-live {
+					@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
+					background-color:#cb5f1d;
 					&:hover {
-						background-color:transparent;
+						@include background-image(linear-gradient(#cb5f1d, #9b4816));
+					}
+					a {
+						background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
 						color:$white;
-						$no-shadow: none;
-						@include box-shadow($no-shadow);
+						padding-left:33px;
+						padding-right:22px;
+						&:hover {
+							background-color:transparent;
+							color:$white;
+							$no-shadow: none;
+							@include box-shadow($no-shadow);
+						}
 					}
 				}
-			}
 		
-			a {
-				@include font-navigation(600, 16px);
-				color:$grayDark;
-				padding:8px 24px;
-				text-transform:uppercase;
-				&:hover, &.hover {
-					background-color:$white;
-					color:$orangeDark;
-					$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
-					@include box-shadow($nav-shadow);
+				a {
+					display: block;
+					@include font-navigation(600, 16px);
+					color:$grayDark;
+					padding:8px 24px;
+					text-transform:uppercase;
+					&:hover, &.hover {
+						background-color:$white;
+						color:$orangeDark;
+						$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
+						@include box-shadow($nav-shadow);
+					}
 				}
 			}
 		}
@@ -173,7 +179,8 @@ nav.utils ul {
 	}
 	
 	form {
-		float:right;		
+		float:right;
+		margin-top: 5px; /* Push the form down a little to vertically center it */
 		fieldset {
 			margin: 0 8px 0 0;
 			padding: 0;
@@ -203,6 +210,7 @@ nav.utils ul {
 	}
 	
 	.section-mega {
+		z-index: 10;
 		background-color:$white;
 		width:100%;
 		min-height:$baseline * 10;
@@ -211,276 +219,119 @@ nav.utils ul {
 		left:0;
 		$mega-shadow:0 2px 3px lighten($gray, 10%);
 		@include box-shadow($mega-shadow);
+		
+		h4 {
+			@include font-navigation($weight: normal, $size: 15px);
+			a { color: $black; }
+			text-transform: none; // for elements with the cbase class
+		}
+		
 		h6 {
 			color:$orangeDark;
 			font-size:11px;
 			line-height:1.3em;
 		}
-		ul li a {
-			color:$nearBlack;
-			@include font-sans-serif(bold, 12px);
-			&:hover {
-				text-decoration:underline;
-				time {
-					text-decoration:none;
-				}
-			}
+		
+		ul {
+			list-style: none;
+			margin: 0;
 		}
-		.categories, .featured, .blogs {
-			min-height:$baseline * 10;
-		}
-		.categories, .featured, .kpcc-programs, .events-nav, .events-forum {
-			background:url(image_path('mega-divider.png')) no-repeat right 10px;
-			&:last-child {
-				background: none;
-			}
-		}
-		.categories {
-			position:relative;
-			ul {
-				display:block;
-				float:left;
-				margin-right:0;
-				width:48%;
-				&.right {
-					margin-left:2%;
-				}
-				li {
-					display:block;
-					width:100%;
-					a {
-						display:block;
-						padding:3px;
-						text-transform:uppercase;
-					}
-				}
-			}
-			ul.content-types {
-				position:absolute;
-				left:10px;
-				bottom:10px;
-				width:235px;
-				li {
-					border-right:1px solid $grayLighter;
-					float:left;
-					width:auto;
-					margin:0 4px;
-					&:last-child {
-						border-right:none;
-					}
-					&.videos {
-						@include ie-inline-block();
-						background:url(image_path('icons/videos.png')) no-repeat left top;
-						padding-left:22px;
-					}
-					a {
-						padding:0 10px 0 2px;
-					}
-				}
-			}
-		}
-		.featured {
-			@include clearfix();
-			ul li {
-				a {
-					@include clearfix();
-				}
-				p {
-					@include font-headline(600);
-					font-size:15px;
-					padding-left:75px;
-					background: url(image_path('fallback-img.png')) no-repeat left top;
-					min-height: 65px;
-					margin-bottom: 0;
-				}
-			}
-			img {
-				float:left;
-				width:65px;
-				height:65px;
-				margin-right:12px;
-			}
-		}
-		.blogs, .events-sponsored {
-			li {
-				border-bottom:1px solid $nearWhite;
-				float:none;
-				&:last-child {
-					border-bottom:none;
-				}
-			}
-			p {
-				margin-bottom:0;
-				a {
-					@include font-headline(600);
-					font-size:14px;
-					padding:6px 4px;
-					&:hover {
+		
+		nav {
+			width: 100%;
+			li a {
+				color:$nearBlack;
+				@include font-sans-serif(bold, 12px);
+				text-transform: uppercase;
+				&:hover {
+					time {
 						text-decoration:none;
 					}
-					.blog-name {
-						color:$grayLight;
-						@include font-sans-serif(normal, 11px);
-						margin-left:4px;
-						text-transform:uppercase;
-						@include ie-inline-block();
-					}
-					.headline:hover {
-						text-decoration:underline;
-					}
 				}
 			}
 		}
-		.kpcc-programs {
-			ul {
-				margin:0;
-				width:48%;
-				&.first {
-					border-right:1px solid $grayLighter;
-					padding-right:10px;
+	
+		.section {
+			border-right: 1px solid $grayLighter;
+			padding-right: $fluidGridGutterWidth;
+			&.last {
+				border-right: none;
+			}
+		}
+		
+		ul.content-types {
+			margin-top: 20px;
+			li {
+				display: inline-block;
+				padding: 0 8px;
+				border-right: 1px solid $grayLighter;
+				&.videos {
+					background:url(image_path('icons/videos.png')) no-repeat left top;
+					padding-left:22px;
 				}
 				&:last-child {
-					margin-left:10px;
+					border-right: none;
 				}
-				li {
-					background:url(image_path('broadcast-bar/madeleine-brand-sm.png')) no-repeat left 12px;
-					padding:0;
-					&:first-child {
-						border-bottom:1px solid $grayLighter;
+			}
+		}
+		
+		&#events-mega .section { 
+			min-height: 280px;
+
+		}
+		
+		&#news-mega .section {
+			min-height: 220px;
+		}
+		
+		&#arts-mega .section {
+			min-height: 220px;
+		}
+		
+		&#support-mega .section {
+			min-height: 200px;
+			.pledge a {
+				background-position:8px 8px;
+				font-weight:bold;
+				padding:6px 9px 7px 34px;
+			}
+		}
+		
+		&#programs-mega .section {
+			&.programs {
+				a { 
+					display: block;
+					background-repeat: no-repeat;
+					background-position: 0 12px;
+					padding: 10px 0 0 78px;
+					min-height: 80px;
+					&:first-child { border-bottom: 1px solid $grayLighter; }
+					h4 {
+						color:$orangeDark;
+						@include font-sans-serif($weight: 600, $size: 15px);
+					}
+					p {
+						@include font-sans-serif(normal, 11px, 16px);
+						color: $black;
+						margin-bottom:0;
 					}
 					&:hover {
-						background-color:$nearWhite;
+						background-color: $nearWhite;
+						text-decoration: none;
+					}
+					&.madeleine-brand {
+						background-image:url(image_path('broadcast-bar/madeleine-brand-sm.png'));
 					}
 					&.airtalk {
 						background-image:url(image_path('broadcast-bar/larry-airtalk-sm.png'));
 					}
-					&.patt {
+					&.patt-morrison {
 						background-image:url(image_path('broadcast-bar/patt-morrison-sm.png'));
 					}
 					&.offramp {
 						background-image:url(image_path('broadcast-bar/john-offramp-sm.png'));
 					}
-					a {
-						padding:15px 0 15px 78px;
-						&:hover {
-							text-decoration:none;
-						}
-						h4 {
-							color:$orangeDark;
-							font-weight:600;
-						}
-						p {
-							@include font-sans-serif(normal, 11px, 16px);
-							margin-bottom:0;
-						}
-					}
 				}
-			}
-		}
-		.all-programs {
-			ul {
-				li {
-					float:none;
-					width:100%;
-					a {
-						padding:5px 5px 5px 0;
-					}
-				}
-			}
-		}
-		.events-nav.categories {
-			ul {
-				width:100%;
-				li {
-					float:none;
-				}
-			}
-		}
-		.events-forum {
-			border-left:none;
-			padding:0;
-			.inner-container {
-				padding-left:0;
-				.events-content {
-					@include clearfix();
-					margin-bottom:$baseline;
-					a {
-						color:$grayAlt;
-						&:hover .event-title {
-							text-decoration:underline;
-						}
-					}
-					.event-title, .event-date {
-						margin-left:97px;
-					}
-					.event-title {
-						font-size:15px;
-						a, a:hover {
-							color:$grayAlt;
-						}
-					}
-					.event-date {
-						background-position:left top;
-						padding-left:28px;
-					}
-				}
-				p.more a {
-					color:$grayAlt;
-					@include font-sans-serif(bold, 11px);
-					padding:0;
-					margin: 0;
-					text-transform:uppercase;
-					&:hover {
-						text-decoration:underline;
-					}
-				}
-			}
-		}
-		.events-sponsored {
-			.inner-container {
-				padding-left:0;
-			}
-			li {
-				border-bottom:none;
-				line-height:11px;
-				margin-bottom:$baseline / 2;
-			}
-			.event-title {
-				a {
-					padding:4px 0 0 0;
-					&:hover {
-						text-decoration: underline;
-					}
-				}
-			}
-			.event-date {
-				color:$linkColor;
-				font-size:11px;
-			}
-			p.more a {
-				color:$grayAlt;
-				@include font-sans-serif(bold, 11px);
-				padding:6px 0;
-				text-transform:uppercase;
-				&:hover {
-					text-decoration:underline;
-				}
-			}
-		}
-	}
-}
-#support-mega {
-	.pledge-container {
-		background:none;
-		.pledge {
-			position:relative;
-			margin-left:0;
-			left:0;
-			top:0;
-			a {
-				background-position:8px 8px;
-				font-weight:bold;
-				padding:6px 9px 7px 34px;
 			}
 		}
 	}
