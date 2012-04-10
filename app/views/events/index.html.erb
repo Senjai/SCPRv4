@@ -8,5 +8,11 @@
 	    <li><%= link_to(raw("Sponsored Events<span></span>"), sponsored_events_path, id: "sponsored", class: params[:list] == "sponsored" ? "active" : nil) %></li>
 	</ul>
 </nav>
+<!-- events_home -->
+<div id='div-gpt-ad-1334030619228-0' style='width:728px; height:90px;'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1334030619228-0'); });
+</script>
+</div>
 
 <%= render 'events_list', events: @events, cssClass: "upcoming-events" %>
