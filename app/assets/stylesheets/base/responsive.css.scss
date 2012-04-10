@@ -2,7 +2,7 @@ $containerPadding: 25px;
 
 // Device sizes
 $mediaMax: $gridRowWidth + $containerPadding * 2; // The maximum we care about, after this it's just fixed-grid
-$desktopSmall: 960px;
+$mediaDesktopSmall: 960px;
 $mediaMidLandscape: 1024px;
 $mediaMidPortrait: 768px;
 $mediaSmallLandscape: 480px;
@@ -87,6 +87,10 @@ $mediaSmallPortrait: 320px;
 		padding-right: 0;
 	}
 	
+	.event {
+		border-bottom: 1px solid $grayLighter;
+	}
+	
 	.broadcastbar .show-time {
 		display: none;
 	}
@@ -131,7 +135,7 @@ $mediaSmallPortrait: 320px;
 @media (max-width: $mediaMidPortrait - 1) and (min-width: $mediaSmallLandscape + 1) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 	.head-lead {
-		@include horizontify;
+		@include vertify;
 	}
 	
 	.footer-nav > .span3 { // two columns
@@ -141,6 +145,24 @@ $mediaSmallPortrait: 320px;
 			.section { border-left: none; }
 		}
 	}
+	
+	// Set new widths for main columns in CFF layout
+		#forum {
+			#forum-span-content { // main content
+				@include gridFluidSpan(7);
+			}
+			#forum-span-sidebar { // sidebar
+				@include gridFluidSpan(5);
+			}
+			
+			#forum-span-upcoming-events { // upcoming events
+				@include gridFluidSpan(12);
+			}
+			#forum-span-social { // social media
+				display: none;
+			}
+		}
+	// End CFF layout widths
 }
 
 
@@ -169,24 +191,37 @@ $mediaSmallPortrait: 320px;
 		display: none;
 	}
 	
-	#sidebar, #sidebar-top, #sidebar-bottom {
-		display: none;
-	}
+	// hide Sidebars on "main" bodies
+		#main {
+			#sidebar, #sidebar-top, #sidebar-bottom {
+				display: none;
+			}
+		}
+	// end hide Sidebars
 		
 	#beta-bar {
 		display: none;
 	}
 	
-	#main, .homepage-top, .homepage-bottom, .more-content { // Since we have different sections on the homepage and `horizontify` looks for .row-fluid as direct descendants
-		@include horizontify;
-	} 
+	// Vertify Layouts
+		#main, .homepage-top, .homepage-bottom, .more-content { // Since we have different sections on the homepage and `vertify` looks for .row-fluid as direct descendants
+			@include vertify;
+		} 
+	// end Vertify
 	
-	#main {
-		.homepage-top {
-			border-bottom: none;
-			margin-bottom: 0;
+	.homepage-top {
+		border-bottom: none;
+		margin-bottom: 0;
+		.events-forum {
+			border-left: none;
+			padding-left: 0;
+			.mq-row-fluid {
+				@include makeFluidRow;
+			}
 		}
-		
+	}
+	
+	.homepage-bottom {
 		.more-news-container {
 			border-right: none;
 			padding-right: none;
@@ -195,15 +230,7 @@ $mediaSmallPortrait: 320px;
 				border-bottom: none;
 			}
 		}
-		
-		.events-forum {
-			border-left: none;
-			padding-left: 0;
-			.mq-row-fluid {
-				@include makeFluidRow;
-			}
-		}
-		
+	
 		.more-news-content {
 			border-right: none;
 			padding-right: none;
@@ -230,19 +257,29 @@ $mediaSmallPortrait: 320px;
 		// end Minimal Header
 	}
 	
-	#sidebar, #sidebar-top, #sidebar-bottom {
-		.mq-row-fluid {
-			border-top: 1px solid $grayLighter;
-			padding-top:20px;
+	#main {
+		#sidebar, #sidebar-top, #sidebar-bottom {
+			.mq-row-fluid {
+				border-top: 1px solid $grayLighter;
+				padding-top:20px;
 			
-			&.advertisements {
-				background: $grayBackground;
+				&.advertisements {
+					background: $grayBackground;
+				}
+			}
+			.widget {
+				border-bottom: none;
 			}
 		}
-		.widget {
-			border-bottom: none;
-		}
 	}
+	
+	// Forum Events header switch
+		#events-header {
+			display: none;
+		}
+	
+		.events-header-small { display: block; }
+	// end Forum Events Header
 }
 
 
@@ -256,8 +293,8 @@ $mediaSmallPortrait: 320px;
 
 
 // Below Tablet Landscape
-@media (max-width: $desktopSmall - 1) {	
-	// Pledge Banner to Button, hide form
+@media (max-width: $mediaDesktopSmall - 1) {	
+	// Pledge Banner to Button & hide form
 		#masthead {
 			form {
 				display: none;
@@ -278,23 +315,17 @@ $mediaSmallPortrait: 320px;
 	.audio-bar, #uvTab {
 		display: none !important; // temporary
 	}
-	
-	#events-header {
-		display: none;
-	}
-	
-	.events-header-small { display: block; }
 }
 
 
 
 // Small Landscape to desktop small
-@media(max-width: $desktopSmall - 1) and (min-width: $mediaSmallLandscape) {
+@media(max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
 	
-	// Horizontify the lead stories //
+	// vertify the lead stories //
 		#main {
 			.homepage-default {
-				@include horizontify;
+				@include vertify;
 				.offleads {
 					@include makeFluidRow;
 					.span4:last-child .offlead {
@@ -322,24 +353,29 @@ $mediaSmallPortrait: 320px;
 
 
 // Below Max Width
-@media (max-width: $mediaMax - 1) {	
-	.program-masthead .support {
-		display: block !important;
-		background: none !important;
-		width: auto !important;
-		height: auto !important;
-		a {
-			display: inline;
-			color: $black !important;
-			text-shadow: none !important;
+@media (max-width: $mediaMax - 1) {
+	
+	// This happens below maxWidth because the banner is an image.
+	// TODO Change the support banner to a more fluid div so it can scale nicely.
+	// Remove background from Support Banner to allow fluidity //
+		.program-masthead .support {
+			display: block !important;
+			background: none !important;
+			width: auto !important;
+			height: auto !important;
+			a {
+				display: inline;
+				color: $black !important;
+				text-shadow: none !important;
+			}
 		}
-	}
+	// end Support Banner
 	
 }
 
 
 // Max width (normal screen) and above
-@media (min-width: $desktopSmall) {
+@media (min-width: $mediaMax) {
 	.container-fluid {
 		margin-left: auto;
 		margin-right: auto;

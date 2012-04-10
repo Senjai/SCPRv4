@@ -45,6 +45,7 @@ header.episode {
 
 .show-episode {
 	@include responsiveImageAsset($lsquareW);
+	@include centeredAsset;
 	border-bottom: 1px solid $grayLighter;
     margin-top: $baseline;
 	padding-bottom: 16px;

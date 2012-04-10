@@ -54,9 +54,9 @@
 	<div class="row-fluid">
 	
 		<!-- LEFT COLUMN -->
-		<div class="span7">
+		<div id="forum-span-upcoming-events" class="span7">
 			<section class="upcoming-events">
-				<h6>Attend an Upcoming Event</h6>
+				<h6 class="upcoming">Attend an Upcoming Event</h6>
 				<% if @closest_event.present? %>
 					<div class="event closest">
 						<%= render_asset @closest_event, 'lead5' %>
@@ -93,17 +93,17 @@
 		</div> <!-- span -->
 	
 		<!-- MIDDLE COLUMN (social media) -->
-		<div class="span5">
+		<div id="forum-span-social" class="span5">
 			<section class="social">
 				<h3>Follow Us on Social Media</h3>
 				<div class="banners">
-					<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook-banner" alt="Follow the Crawford Family Forum on Facebook">&nbsp;</a>
-					<a href="http://twitter.com/KPCCForum" class="twitter-banner" alt="Follow the Crawford Family Forum on Twitter">&nbsp;</a>
+					<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook">Like the Crawford Family Forum on Facebook</a><br />
+					<a href="http://twitter.com/KPCCForum" class="twitter">Follow the Crawford Family Forum on Twitter</a>
 				</div>
 		
 				<!-- TWITTER -->
 				<% if cached_tweets = Rails.cache.fetch("twitter:KPCCForum") %>
-					<a class="twitter-peeker" href="http://twitter.com/KPCCForum">Tweets from the Crawford Family Forum</a>
+					<a class="twitter-peeker" href="http://twitter.com/KPCCForum"><h3>Tweets from the Crawford Family Forum</h3></a>
 					<%= cached_tweets %>
 				<% end %>
 			</section>
@@ -129,7 +129,7 @@
 									<div class="span4">
 										<%= render_asset event, 'thumb' %>
 									</div>
-									<div class="8">
+									<div class="span8">
 								<% else %>
 									<div class="span12">
 								<% end %>

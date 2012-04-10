@@ -413,7 +413,7 @@
   width: (($gridColumnWidth) * $columns) + ($gridGutterWidth * ($columns - 1)) - 10;
 }
 
-@mixin horizontify {
+@mixin vertify {
 	> .row-fluid {
 		> [class*="span"] {
 	    	float: none;

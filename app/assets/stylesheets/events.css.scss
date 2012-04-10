@@ -39,7 +39,7 @@ span.fake-link {
 		margin: 10px 0;
 	}
 	
-	h3, a.twitter-peeker {
+	h3 {
 		@include font-slab-headings($size: 15px, $lineHeight: 18px);
 		text-transform: uppercase;
 	}
@@ -48,12 +48,14 @@ span.fake-link {
 		@include font-navigation($weight: normal, $size: 15px);
 	}
 	
-	h6 {
+	h6.upcoming {
 		@include font-slab-headings($size: 18px, $lineHeight: 18px);
 		text-transform: uppercase;
 		margin-bottom: 10px;
 	}
 }
+
+#forum { @include event-headers; }
 
 .event {
 	@include event-headers;
@@ -74,9 +76,6 @@ span.fake-link {
 					color:$nearBlack;
 				}
 			}
-		}
-		&:last-of-type {
-			border-bottom: none;
 		}
 	}
 	
@@ -185,31 +184,38 @@ span.fake-link {
 
 	.social {
 		.banners {
-			margin:	 10px 0 10px 0;
-			padding-bottom: 15px;
+			margin-bottom: 10px;
 			border-bottom: 1px solid $grayLighter;
+			line-height: 0; // so the br between the links doesn't have any space
 			a {
-				display: block;
-				width: 296px;
-				height: 24px;
-				margin: 10px 0 0 0;
-			}
-			.twitter-banner {
-				background: #fff url(image_path("facebook/twitter-banner.png")) no-repeat 0 0;
-			}
-			.facebook-banner {
-				background: #fff url(image_path("facebook/facebook-banner.png")) no-repeat 0 0;
+				display: table-cell; // to vertically align the text.
+				@include font-sans-serif(bold, 12px, 14px);
+				vertical-align: middle;
+				padding: 0 0 5px 30px;
+				height: 30px;
+				background-repeat: no-repeat;
+				background-position: left 50%;
+				&.facebook { 
+					background-image: url(image_path("facebook/facebook-icon.png")); 
+					color: $facebookBlue;
+				}
+				&.twitter {
+					background-image: url(image_path("facebook/twitter-icon.png")); 
+					color: $twitterBlue;
+				}
 			}
 		}
 		
 		.twitter-peeker {
 			color:$nearBlack;
-			display: block;
+			display: table-cell;
+			vertical-align: middle;
 			font-size:15px;
 			height: 41px;
 			margin: 15px 0 10px 0;
-			padding: 10px 80px 7px 5px;
+			padding: 10px 80px 10px 5px;
 			background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
+			
 			color: inherit;
 			&:hover {
 				text-decoration: none;
@@ -221,6 +227,7 @@ span.fake-link {
 			border-bottom: 1px solid $grayLighter;
 			padding-bottom: 10px;
 			@include font-serif($size: 12px, $lineHeight: 15px);
+			@include clearfix;
 			h5 {
 				@include font-shorthand($size: 13px, $weight: bold);
 				margin-top:-5px;
@@ -229,14 +236,15 @@ span.fake-link {
 				}
 			}
 			img.tweet-image {
-				display: inline-block;
+				float: left;
 				vertical-align: top;
 				margin-right: 6px;
+				@include gridFluidSpan(2)
 			}
 			.tweet-content {
 				vertical-align: top;
-				width: 280px;
-				display: inline-block;
+				float: left;
+				@include gridFluidSpan(10)
 			}
 			.byline {
 				font-size: 10px;
@@ -288,16 +296,14 @@ span.fake-link {
 	padding: 15px 10px 10px 10px;
 	margin-bottom: 20px;
 	margin-top: -21px;
-	img {
-		max-width: 100%;
-	}
+	img { max-width: 100%; }
 }
 
 #events-header {
 	position: relative;
 	top: -38px;
 	height: 468px;
-	min-width:1110px;
+	//min-width:1110px;
 	background-color:#2e2e2e;
 	@include background-image(linear-gradient(#2e2e2e, lighten(#2e2e2e, 10%)));
 	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
@@ -346,9 +352,8 @@ span.fake-link {
 			.slide-text {
 				position: absolute;
 				z-index: 20;
-				top: 50px;
-				left: 50%;
-				margin-left:-554px;
+				top: 45px;
+				left: 5%;
 				width: 523px;
 				text-align: left;
 				padding: 35px 0 0 37px;
@@ -403,7 +408,6 @@ h3.section-nav-header {
 	margin-top:10px;
 }
 nav.section-nav {
-	margin-top:-20px;
 	margin-bottom: 25px;
 	h4 {
 		font-weight: 400;
@@ -427,32 +431,35 @@ nav.section-nav {
 .forum nav.section-nav {
 	margin-bottom:10px;
 }
-.forum #sidebar .widget {
-	display: block;
-	p { 
-		margin:20px 0 24px;
-		@include font-navigation($size: 14px, $lineHeight: 16px);
+.forum #sidebar {
+	.widget {
+		display: block;
+		p { 
+			margin:20px 0 24px;
+			@include font-navigation($size: 14px, $lineHeight: 16px);
+		}
 	}
-}
-.forum #sidebar #getting-there {
-	background: url(image_path("cff-building.png")) no-repeat right 98%;
-	h3 {
-		background: url(image_path("icons/forum-directions.png")) no-repeat left top;
-		padding-left:46px;
+	
+	#getting-there {
+		background: url(image_path("cff-building.png")) no-repeat right 98%;
+		h3 {
+			background: url(image_path("icons/forum-directions.png")) no-repeat left top;
+			padding-left:46px;
+		}
+		p { 
+			padding-right: 115px;
+		}
 	}
-	p { 
-		margin:20px 0 24px;
-		width:130px;
-	}
-}
-.forum #sidebar #community-partnerships {
-	h3 {
-		background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
-		height:26px;
-		padding-left:46px;
-	}
-	p { 
-		margin:14px 0;
+	
+	#community-partnerships {
+		h3 {
+			background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
+			height:26px;
+			padding-left:46px;
+		}
+		p { 
+			margin:14px 0;
+		}
 	}
 }
 
