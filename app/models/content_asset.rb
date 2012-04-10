@@ -29,7 +29,7 @@ class ContentAsset < ActiveRecord::Base
       # write cache that can be expired by content or asset
       Rails.cache.write(key,@_asset,:objects => [self.content,@_asset])
       
-      @@loaded = true
+      #@@loaded = true
       
       return @_asset
     end
