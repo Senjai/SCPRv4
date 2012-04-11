@@ -6,7 +6,7 @@
 <% if video_thumb ||= nil and video_thumb.assets.present? %>
 	<div class="video-thumb span3">
 		<a href="<%= video_path(video_thumb) %>">
-			<%= video_thumb.assets.first.asset.tags.three.html_safe %> <%# TODO use render_asset here %>
+			<%= video_thumb.assets.first.asset.three.tag %> <%# TODO use render_asset here %>
 			<span class="title"><%= video_thumb.short_headline %></span>
 		</a>
 	</div>
