@@ -4,7 +4,7 @@
 #sidebar, #sidebar-top, #sidebar-bottom,
 #dsq-reply, #dsq-global-toolbar, #dsq-realtime-options, #dsq-sort-by, #dsq-pagination, #dsq-reactions, .dsq-h3-reactions, #dsq-show-more-reactions,
 #article-content-carousel, #article-article-meta, .storybar, #article-sharing-tools, #article-related-content,
-#other-segments, #more-events, 
+#other-segments, #more-events, .slideview .nav,
 #program-masthead-support, #program-masthead-headshot, .section-nav-header,
 #fold-comments-count-widget, .sfy-story, #article-next-prev,
 #page-footer,
@@ -27,4 +27,8 @@
 			}
 		}
 	}
+}
+
+#comments {
+	page-break-before: always;
 }
