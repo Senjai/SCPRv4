@@ -44,6 +44,8 @@ class Asset
   
   #----------
   
+  # on class load, define our connection and middleware
+  
   class << self
     @@token   = Rails.application.config.assethost.token
     @@server  = Rails.application.config.assethost.server
@@ -71,13 +73,15 @@ class Asset
     
     if a = Rails.cache.read(key)
       # cache hit -- instantiate from the cached json
-      puts "cache hit for asset find on #{id}"
       return self.new(a)
     else
       # missed... request it from the server
-      puts "making a request for asset on #{id}"
       resp = @@conn.get("#{@@prefix}/assets/#{id}")
-      puts "asset resp is #{resp}. Status is #{resp.status}"
+
+      # write this asset into cache
+      Rails.cache.write(key,resp.body)
+      
+      # now create an asset and return it
       return self.new(resp.body)
     end
   end
@@ -87,13 +91,13 @@ class Asset
   attr_accessor :json, :caption, :title, :id, :size, :taken_at, :owner, :url, :api_url, :native
   
   def initialize(json)
-    puts "new Asset with json: #{json}"
     @json = json
     @_sizes = {}
     
+    # Define functions for each of our output sizes.  _size will return 
+    # AssetSize objects
     class << self
       @@outputs.each do |o|
-        puts "defining asset function for #{o['code']}"
         define_method o['code'] do
           self._size(o)
         end
