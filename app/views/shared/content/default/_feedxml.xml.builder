@@ -6,7 +6,7 @@ xml.item do
   xml.dc :creator, render_byline(content,false)
   
   if content.assets.any?
-    xml.enclosure :url => content.assets.first.asset.urls.thumb, :type => "image/jpeg", :length => ""
+    xml.enclosure :url => content.assets.first.asset.thumb.url, :type => "image/jpeg", :length => ""
   end
   
   descript = ""
