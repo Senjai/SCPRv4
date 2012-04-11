@@ -14,6 +14,33 @@ describe ShowSegment do
     end
   end
   
+  describe "episode" do
+    it "uses the first episode the segment is associated with" do
+      segment = create :show_segment
+      episodes = create_list :show_episode, 3
+      episodes.each { |episode| create :show_rundown, episode: episode, segment: segment }
+      segment.episode.should eq segment.episodes.first
+    end
+  end
+  
+  describe "sister_segments" do
+    it "uses the other segments from the episode if episodes exist" do
+      episode = create :show_episode, segment_count: 3
+      episode.segments.last.sister_segments.should eq episode.segments.first(2)
+    end
+    
+    it "uses the 5 latest segments from its program if no episodes exist" do
+      program = create :kpcc_program, segment_count: 7
+      program.segments.published.last.sister_segments.should eq program.segments.published.first(5)
+      program.segments.published.first.sister_segments.should eq program.segments.published[1..5]
+    end
+    
+    it "does not include itself" do
+      program = create :kpcc_program, segment_count: 3
+      program.segments.first.sister_segments.should_not include program.segments.first
+    end
+  end
+  
   describe "headline" do
     it "is the title" do
       segment = build :show_segment

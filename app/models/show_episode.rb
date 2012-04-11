@@ -20,8 +20,9 @@ class ShowEpisode < ContentBase
     has "1", :as => :is_source_kpcc, :type => :boolean
     has "CRC32(CONCAT('shows/episode:',shows_episode.id))", :type => :integer, :as => :obj_key
     has "0", :type => :boolean, :as => :is_slideshow
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
     where "status = #{STATUS_LIVE}"
-    
+    join audio
   end
       
   #----------

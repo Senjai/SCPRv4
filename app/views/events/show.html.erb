@@ -77,36 +77,38 @@
 				</div>
 			</div>
 			<%= render_asset @event, "blog" %>
-			<p><%= simple_format @event.description, sanitize: false %></p>
+			<p><%= simple_format(@event.description, {}, sanitize: false) %></p>
 			<br style="clear: both" />
 			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom", title: "event" } %> <%# TODO Replace this with a better solution %>
 		</div>
 	</div>
 </div>
 
-<% if @more_events.present? and (@event.upcoming? || @event.current?) and @event.is_forum_event? %>
-	<div class="more-events">
-		<div class="row ">
-			<div class="span2">
-				<h6>More Events at the Crawford Family Forum</h6>
-			</div>
-			<div class="span3 divider">
-				<%= render 'small_event', event: @more_events.first %>
-			</div>
-			<div class="span3">
-				<%= render 'small_event', event: @more_events.last %>
+<section class="fold">
+	<% if @more_events.present? and (@event.upcoming? || @event.current?) and @event.is_forum_event? %>
+		<div class="more-events">
+			<div class="row ">
+				<div class="span2">
+					<h6>More Events at the Crawford Family Forum</h6>
+				</div>
+				<div class="span3 divider">
+					<%= render 'small_event', event: @more_events.first %>
+				</div>
+				<div class="span3">
+					<%= render 'small_event', event: @more_events.last %>
+				</div>
 			</div>
 		</div>
-	</div>
-<% end %>
+	<% end %>
 
-<% if @event.show_comments %>
-	<div class="row">
-		<div class="span2">
-			<%= comment_widget_for @event, cssClass: "left-side", name: "comments" %>
+	<% if @event.show_comments %>
+		<div class="row">
+			<div class="span2">
+				<%= comment_widget_for @event, cssClass: "left-side", name: "comments" %>
+			</div>
+			<div class="span6">
+				<%= comments_for @event, header: false %>
+			</div>
 		</div>
-		<div class="span6">
-			<%= comments_for @event, header: false %>
-		</div>
-	</div>
-<% end %>
+	<% end %>
+</section>

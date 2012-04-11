@@ -3,7 +3,7 @@
 <script type="text/javascript">
 		ahSlides = new AssetHost.Slideshow({
 			imgwidth: $("#asset_slideshow_<%= content.id %>").width(),
-			imgheight: <%= assets.first.asset.sizes.six.height.to_i + 40 %>,
+			imgheight: <%= assets.first.asset.six.height.to_i + 40 %>,
 			assets: <%= raw assets.to_json %>,
 			el: "#asset_slideshow_<%= content.id %>"
 		})

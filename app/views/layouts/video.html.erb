@@ -48,7 +48,7 @@
 							<% if video.assets.present? %>
 								<div class="video-thumb span2">
 									<a href="<%= video_path(video) %>">
-										<%= video.assets.first.asset.tags.three.html_safe %> <%# TODO use render_asset here %>
+										<%= video.assets.first.asset.three.tag %> <%# TODO use render_asset here %>
 										<span class="title"><%= video.short_headline %></span>
 									</a>
 								</div>

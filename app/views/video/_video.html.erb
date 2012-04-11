@@ -3,7 +3,7 @@
 <%= render_content video, "opengraph" %>
 <% if defined?(video) and video.assets.present? %> <%# This is a temporary fix that needs to be validated in the future %>
 	<section class="video">
-		<%= video.assets.first.asset.tags.eight.html_safe %>
+		<%= video.assets.first.asset.eight.tag %>
 	</section>
 	<h1 class="story-headline"><%= video.headline %></h1>
 	<p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= smart_date video %></time></p>

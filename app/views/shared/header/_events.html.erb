@@ -3,11 +3,11 @@
 		<div class="inner-container clearfix">
 		<h6>In this section</h6>
 		<ul>
-			<li><a href="/events/forum/">The Crawford Family Forum</a></li>
-		    <li><a href="/forum/directions/">Directions &amp; Parking</a></li>	
-		    <li><a href="/forum/space/">Community Partnerships</a></li>
-			<li><a href="/events/forum/archive/">Past Events</a></li>
-		    <li><a href="/forum/about/">About Us</a></li>	
+			<li><a href="<%= forum_events_path %>">The Crawford Family Forum</a></li>
+		    <li><a href="<%= forum_directions_path %>">Directions &amp; Parking</a></li>	
+		    <li><a href="<%= forum_space_path %>">Community Partnerships</a></li>
+			<li><a href="<%= forum_events_archive_path %>">Past Events</a></li>
+		    <li><a href="<%= forum_about_path %>">About Us</a></li>	
 		</ul>
 		</div>
 	</div>
@@ -32,7 +32,7 @@
 				<% end %>
 		    	</ul>
 			<% end %>
-			<p class="more"><a href="/events/sponsored/">View more events</a></p>
+			<p class="more"><a href="<%= sponsored_events_path %>">View more events</a></p>
 		</div>
 	</div>
 </div>

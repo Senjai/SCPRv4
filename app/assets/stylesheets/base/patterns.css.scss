@@ -440,7 +440,7 @@ footer {
 }
 
 // Common tab and pill styles
-.tabs,
+.nav-tabs,
 .pills {
   margin:0 0 20px;
   padding: 0;
@@ -455,12 +455,12 @@ footer {
 }
 
 // Basic Tabs
-.tabs {
+.nav-tabs {
   width: 97%;
   border-bottom: 1px solid $grayLight;
   padding-left:3%;
   li {
-    a {
+    > a {
 	  color:$gray;
       font-size:12px;
 	  margin-bottom: -1px;
@@ -474,14 +474,23 @@ footer {
 		text-decoration:none;
       }
     }
-    &.ui-tabs-selected a {
+  }
+    > .active > a {
       background-color: #fff;
       padding: 0 14px;
       border: 1px solid #ccc;
       border-bottom: 0;
       color: $orangeDark;
     }
-  }
+}
+
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
+}
+.tab-content > .active,
+.pill-content > .active {
+  display: block;
 }
 
 // Basic pill nav

@@ -2,7 +2,7 @@
 
 <div class="author-info">
     <figure class="clearfix">
-		<%= byline.user.headshot.tag(:thumb) %>
+		<%= byline.user.headshot.thumb.tag %>
     	<figcaption>
 			<h6><%= link_to byline.user.name, bio_path(byline.user.slugged_name) %>, <em><%= byline.user.title %></em></h6>
 			<p class="brief-bio"><%= byline.user.short_bio %></p>

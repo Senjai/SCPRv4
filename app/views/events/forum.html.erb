@@ -79,7 +79,7 @@
 					</div>
 				<% end %>
 			<% end %>
-			<p><a href="/events/list/forum" class="more">More Upcoming Events</a></p>
+			<p><a href="<%= events_path(list: 'forum') %>" class="more">More Upcoming Events</a></p>
 		</div>
 	</section> <!-- upcoming-events -->
 	
@@ -120,7 +120,7 @@
 										<h4 class="story-title"><%= link_to event.title, event.link_path %></h4>
 										<p class="byline"><%= format_date event.starts_at, format: :full_date %></p>
 										<% if event.audio.present? %>
-											<%= content_tag :div, link_to("Listen to this event", event.audio_url), class: "story-audio inline" %>
+											<%= content_tag :div, link_to("Listen to this event", event.audio_url, class: "inline audio-toggler", title: event.title), class: "story-audio inline" %>
 										<% elsif event.show_comments %>
 											<%= comment_count_for event %>
 										<% end %>

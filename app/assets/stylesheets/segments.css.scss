@@ -1,20 +1,4 @@
 .show-segments {
-	border-top:1px solid $grayLight;
-	margin-top:$baseline;
-	padding-top:$baseline / 2;
-	&.span8 {
-		margin: 0;
-		padding: 0;		
-	}
-	&.episode {
-		border-top:none;
-	}
-	h2 {
-		color:$orangeDark;
-		font-size:18px;
-		font-weight:600;
-	}
-	
 	.teaser {
 		.contentasset {
 			margin-top: 6px;
@@ -50,10 +34,6 @@ section.segment-meta {
 	}
 }
 
-section.segment {
-	
-}	
-
 article.segment {
 	display: inline-block;
 	h1.story-title {
@@ -69,5 +49,13 @@ h5.episode-title {
 		color:$grayDark;
 		font-size:13px;
 		font-weight:500;
+	}
+}
+
+.other-segments ul {
+	@include font-headline($weight: normal);
+	font-size: 14px;
+	a {
+		color: $black;
 	}
 }

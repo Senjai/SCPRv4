@@ -21,7 +21,7 @@ Then /^I should see "([^"]*)" events ordered by "([^"]*)"$/ do |list, order|
   end
 end
 
-Then /^I should see (\d+) events$/ do |num|
+Then /^I should see (\d+) events?$/ do |num|
   if num.to_i == 0
     page.should_not have_css ".event"
   else

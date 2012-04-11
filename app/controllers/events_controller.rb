@@ -25,10 +25,10 @@ class EventsController < ApplicationController
   end
   
   def forum
-    @upcoming_events = Event.upcoming.limit(3)
+    @upcoming_events = Event.forum.upcoming.limit(3)
     @closest_event = @upcoming_events.first
     @future_events = @upcoming_events[1..-1]
-    @past_events = Event.past.limit(3)
+    @past_events = Event.forum.past.limit(3)
     render layout: 'forum'
   end
 end
