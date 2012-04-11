@@ -25,17 +25,3 @@ $fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
   	margin-left: ($gridColumnWidth * $columnOffset) + ($gridGutterWidth * ($columnOffset - 1)) + $extraSpace;
   }
 }
-
-@mixin respond-to($media) {
-  @if $media == small {
-    @media only screen and (max-width: $mediaSmallLandscape) { @content; }
-  }
-
-  @else if $media == medium {
-    @media only screen and (min-width: $mediaSmallLandscape + 1) and (max-width: $mediaMidLandscape) { @content; }
-  }
-
-  @else if $media == large {
-    @media only screen and (min-width: $mediaMax) { @content; }
-  }
-}
