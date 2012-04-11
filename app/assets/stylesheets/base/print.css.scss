@@ -14,7 +14,7 @@
 .head-lead { min-height: 0 !important; }
 #masthead { padding: 0 !important; margin: 0 !important; }
 
-#article-related-content .story-body, .event-details {
+#article-related-content, .story-body, .event-details {
 	a, a#events-rsvp-button {
 		&:link, &:visited {
 			color: darken(#007fa6, 15%);
