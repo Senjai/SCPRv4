@@ -101,6 +101,7 @@ span.fake-link {
 		}
 	}
 	&.event-detail {
+		@include responsiveImageAsset($sixW);
 		.sharing-tools.bottom {
 			border-bottom:none;
 			margin-bottom:0;
@@ -322,6 +323,10 @@ nav.section-nav {
 
 .forum nav.section-nav.vertical {
 	margin-bottom:10px;
+}
+
+#main nav.section-nav.vertical { 
+	margin-top: -21px;
 }
 
 /* FADER */

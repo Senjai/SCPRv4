@@ -61,6 +61,7 @@
 	
 	&.lead {
 		@include responsiveImageAsset($fourW);
+		@include centeredAsset;
 	}
 	
 	&.lead5 {

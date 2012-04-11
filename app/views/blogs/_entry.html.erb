@@ -6,7 +6,7 @@
 			<h1 class="story-headline"><%= link_to entry.title, entry.link_path %></h1>
 			<p class="byline"><%= render_byline entry %></p>
 			<%= render_asset entry, "blog" %>
-			<%= simple_format entry.content, {}, sanitize: false %>
+			<div class="story-body"><%= simple_format entry.content, {}, sanitize: false %></div>
 			<p><i><%= render_contributing_byline entry %></i></p>
 		</article>
 	</div> <!-- span9 -->

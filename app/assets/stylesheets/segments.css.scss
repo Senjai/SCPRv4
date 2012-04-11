@@ -44,7 +44,6 @@ section.segment-meta {
 }
 
 article.segment {
-	display: inline-block;
 	@include responsiveImageAsset($sixW);
 	h1.story-title {
 		@include font-headline();

@@ -4,7 +4,7 @@
 		<div class="span5">
 			<h1 class="page-title"><%= link_to @program.title, program_path(@program.slug) %></h1>
 		</div>
-		<div class="span3">
+		<div class="span3" id="program-masthead-headshot">
 			<div class="show-meta headshot <%= @program.slug %>">
 				<%= @program.airtime %><br />
 				<% if @program.host.present? %>
@@ -12,7 +12,7 @@
 				<% end %>
 			</div>
 		</div> <!-- span3 -->
-		<div class="span4">
+		<div class="span4" id="program-masthead-support">
 			<div class="support">
 				<a class="<%= "small" if @program.title.length > 20 %>" href="http://scprcontribute.publicradio.org/">
 					Support all the great programming on KPCC, including <%= @program.title %>.

@@ -18,7 +18,7 @@
 		<%= render "shared/cwidgets/audio", :content => @story %>
 	</div>
 
-	<%= simple_format @story.body, {}, :sanitize => false %>
+	<div class="story-body"><%= simple_format @story.body, {}, :sanitize => false %></div>
 
 	<p><i><%= render_contributing_byline @story %></i></p>
 

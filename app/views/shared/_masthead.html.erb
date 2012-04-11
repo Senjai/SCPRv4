@@ -6,12 +6,12 @@
 		<div class="head-lead">
 			<div class="row-fluid">
 	    		<div class="span4">
-					<div class="logo">
+					<div class="logo" id="masthead-kpcc-logo">
 						<a href="/"><%= image_tag "logo-masthead.png", alt: "KPCC.org" %></a>
 					</div>
 				</div>
 
-				<div class="span5">
+				<div class="span5" id="masthead-mid-header-wrapper">
 					<div class="mid-header-wrapper">
 						<div class="fb-like" data-href="http://facebook.com/kpccfm" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
 						<div class="pledge-container">
@@ -30,7 +30,7 @@
 					</div>
 				</div>
 			
-			    <div class="span3">
+			    <div class="span3" id="masthead-right-header-wrapper">
 					<nav class="utils">
 						<ul class="nav secondary-nav clearfix">
 							<li class="social">Follow us
@@ -79,7 +79,7 @@
 			</div> <!-- .navbar-inner -->
 		</div> <!-- megamenu -->
 		
-		<nav class="nav-condensed">
+		<nav class="nav-condensed" id="masthead-nav-condensed">
 			<% nav_items.each do |item| %>
 			    <a href="<%=item[:href]%>" class="btn"><%= item[:title].html_safe %></a>
 			<% end %>

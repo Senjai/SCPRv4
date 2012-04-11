@@ -373,14 +373,15 @@ nav.filters {
 	border-top: 1px solid #bfbfbf;
 	border-bottom: 1px solid #bfbfbf;
 	margin: 10px 0;
-	padding:10px;
+	padding: 10px;
 	@include font-heading($size: 12px, $weight: 600);
 	text-transform: uppercase;
-	ul {margin:0;}
+	ul { margin:0; }
 	li {
 		float:left;
 		list-style-type:none;
-		margin-right:30px;
+		margin-right:3%;
+		&:last-child { margin: 0; }
 		&.heading {
 			color:#575757;
 			margin-right:20px;
@@ -391,13 +392,6 @@ nav.filters {
 			color: #2e2e2e;
 			font-weight:600;
 			padding: 3px 5px;
-			margin: 0 25px;
-			&:first-of-type {
-				margin-left: 0;
-			}
-			&:last-of-type {
-				margin-right: 0;
-			}
 			&:hover, &.active {
 				background-color: $gray;
 				color: $nearWhite;

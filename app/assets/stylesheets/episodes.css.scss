@@ -64,6 +64,7 @@ header.episode {
 
 .current-episode {
 	@include responsiveImageAsset($fourW);
+	@include centeredAsset;
     h2 {
 		font-size:18px;
         font-weight: 600;

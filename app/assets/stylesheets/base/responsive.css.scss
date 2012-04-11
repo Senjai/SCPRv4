@@ -33,41 +33,18 @@ $mediaSmallPortrait: 320px;
 .hidden-tablet     { display: block; }
 .hidden-desktop    { display: none; }
 
-// Phones only
-@media (max-width: 767px) {
-  // Show
-  .visible-phone     { display: block; }
-  // Hide
-  .hidden-phone      { display: none; }
-  // Hide everything else
-  .hidden-desktop    { display: block; }
-  .visible-desktop   { display: none; }
-}
-
 // Tablets & small desktops only
-@media (min-width: 768px) and (max-width: 979px) {
-  // Show
+@media screen and (min-width: 768px) and (max-width: 979px) {
   .visible-tablet    { display: block; }
-  // Hide
   .hidden-tablet     { display: none; }
-  // Hide everything else
   .hidden-desktop    { display: block; }
   .visible-desktop   { display: none; }
 }
-
-
-// Printer
-@media print {
-	.audio-bar, #uvTab {
-		display: none !important;
-	}
-}
-
 
 
 
 // Phone Landscape and below
-@media (max-width: $mediaSmallLandscape) {	
+@media screen and (max-width: $mediaSmallLandscape) {	
 	// Make all columns even
 	.row-fluid > [class*="span"] {
 		float: none;
@@ -75,6 +52,8 @@ $mediaSmallPortrait: 320px;
 		width: auto;
 		margin: 0;
 	}
+	
+	.hidden-phone      { display: none; }
 
 	// Block level the page header small tag for readability
 	.page-header h1 small {
@@ -138,19 +117,16 @@ $mediaSmallPortrait: 320px;
 		nav.section-nav.horizontal { display: block; }
 	// end CFF navs
 	
-	.homepage-bottom {
-		.more-news-content {
-			border-right: none;
-			padding-right: none;
-			margin-bottom: 5px;
-		}
+	.more-news-content {
+		border-right: none;
+		padding-right: none;
+		margin-bottom: 5px;
 	}
 	
 	.homepage-top {
 		.events-forum {
-			border: none;
+			border-left: none !important;
 			padding-left: 0;
-			.event { border: none; }
 			.mq-row-fluid {
 				@include makeFluidRow;
 			}
@@ -161,7 +137,7 @@ $mediaSmallPortrait: 320px;
 
 
 // Between Tablet Portrait and Phone Landscape
-@media (max-width: $mediaMidPortrait - 1) and (min-width: $mediaSmallLandscape + 1) {
+@media screen and (max-width: $mediaMidPortrait - 1) and (min-width: $mediaSmallLandscape + 1) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 	.head-lead {
 		@include vertify;
@@ -197,16 +173,7 @@ $mediaSmallPortrait: 320px;
 
 
 // Below Portrait Tablet ("reader mode")
-@media (max-width: $mediaMidPortrait - 1) {	
-	.filters {
-		li.heading {
-			display: none !important;
-		}
-		.active-arrow {
-			display: none !important;
-		}
-	}
-	
+@media screen and (max-width: $mediaMidPortrait - 1) {	
 	.fold h6 {
 		margin-top: 0 !important;
 		text-align: left !important;
@@ -263,14 +230,12 @@ $mediaSmallPortrait: 320px;
 	}
 	
 	// since we're hiding the sidebars, remove the borders around more news
-	.homepage-bottom {
-		.more-news-container {
-			border-right: none;
-			padding-right: none;
-			margin-bottom: 5px;
-			.more-news {
-				border-bottom: none;
-			}
+	.more-news-container {
+		border-right: none;
+		padding-right: none;
+		margin-bottom: 5px;
+		.more-news {
+			border-bottom: none;
 		}
 	}
 	
@@ -281,6 +246,9 @@ $mediaSmallPortrait: 320px;
 	
 		.events-header-small { display: block; }
 	// end Forum Events Header
+	
+	.section-nav-header { display: none; }
+	#events-event-detail { @include gridFluidSpan(12); }
 }
 
 
@@ -288,13 +256,24 @@ $mediaSmallPortrait: 320px;
 
 
 // Tablet Portrait And Above
-@media (min-width: $mediaMidPortrait) {
+@media screen and (min-width: $mediaMidPortrait) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 }
 
 
 // Below Tablet Landscape
-@media (max-width: $mediaDesktopSmall - 1) {	
+@media screen and (max-width: $mediaDesktopSmall - 1) {
+	// Simplify Filters nav to allow for graceful wrapping
+		.filters {
+			li.heading {
+				display: none !important;
+			}
+			.active-arrow {
+				display: none !important;
+			}
+		}
+	// end Filters
+	
 	// Pledge Banner to Button & hide form
 		#masthead {
 			form {
@@ -321,7 +300,7 @@ $mediaSmallPortrait: 320px;
 
 
 // Small Landscape to desktop small
-@media(max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
+@media screen and(max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
 	
 	// vertify the lead stories //
 		#main {
@@ -354,7 +333,7 @@ $mediaSmallPortrait: 320px;
 
 
 // Below Max Width
-@media (max-width: $mediaMax - 1) {
+@media screen and (max-width: $mediaMax - 1) {
 	
 	// This happens below maxWidth because the banner is an image.
 	// TODO Change the support banner to a more fluid div so it can scale nicely.
@@ -376,7 +355,7 @@ $mediaSmallPortrait: 320px;
 
 
 // Max width (normal screen) and above
-@media (min-width: $mediaMax) {
+@media screen and (min-width: $mediaMax) {
 	.container-fluid {
 		margin-left: auto;
 		margin-right: auto;

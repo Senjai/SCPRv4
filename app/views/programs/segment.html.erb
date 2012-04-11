@@ -32,10 +32,10 @@
 	</div> <!-- span -->
 </div>
 
-<section class="fold">
+<section class="fold" id="fold">
 	<aside class="other-segments">
 		<div class="row-fluid">
-			<div class="span3">
+			<div class="span3 row-title">
 				<h6>More from this <%= @segment.episodes.present? ? "Episode" : "Program" %></h6>
 			</div>
 			<div class="span9">
@@ -49,7 +49,7 @@
 	</aside>
 		
 	<div class="row-fluid">
-		<div class="span3">
+		<div class="span3" id="fold-comments-count-widget">
 			<%= comment_widget_for @segment, cssClass: "left-side", name: "comments" %>
 		</div>
 		<div class="span9">

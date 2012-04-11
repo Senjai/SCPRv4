@@ -1,11 +1,7 @@
-<% @PAGE_TITLE = "Latest Arts" %>
+<% page_title "Latest Arts" %>
 
 <h1>Latest Arts</h1>
-
 <%= render_content @top, "twocol" %>
-<div class="row">
-<section class="span8 more-news-container">
+<section class="more-news-container">
 	<%= render :partial => "home/cached/sections_sec", :collection => @sections, :as => :section %>
 </section>
-</div>
-
