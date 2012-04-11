@@ -50,6 +50,7 @@ module Scprv4
     config.assets.version = '1.0'
     
     config.scpr = ActiveSupport::OrderedOptions.new
+    config.assethost = ActiveSupport::OrderedOptions.new
     
     Disqussion.configure do |disq|
       disq.api_key    = "n5QMkXRJa76bdBYruPhtYDvKe6wx7Vo0MqKlCypJdnh7lj6FNnFt1Lr9XAtpU2oe"

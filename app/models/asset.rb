@@ -1,59 +1,144 @@
-class Asset < ActiveResource::Base
-  self.site = "http://#{AssetHost[:server]}/api/"
-  self.element_name = 'asset'
-  self.include_root_in_json = false
+class Asset
+  require 'faraday'
+  require 'faraday_middleware'
   
-  def obj_key
-    "asset/#{self.id}"
-  end
-  
-  def tag(size)
-    if !self.tags
-      return nil
-    end
+  class AssetNotFound < Faraday::Error::ClientError
+    attr_reader :response
     
-    self.tags.send(size.to_s).html_safe
+    def initialize(response)
+      super "Asset not found."
+      @response = response
+    end
   end
   
-  def asset
-    return self
+  class AssetRequestError < Faraday::Error::ClientError
+    attr_reader :response
+    
+    def initialize(response)
+      super "Asset request failed with status #{response.status}"
+      @response = response
+    end
   end
   
   #----------
   
-  def url_domain 
-    if !self.url
-      return nil
+  class AssetErrors < Faraday::Response::Middleware
+    def initialize(app)
+      super(app)
     end
-    
-    domain = URI.parse(self.url).host
-    
-    return (domain == 'www.flickr.com') ? 'Flickr' : domain
-  end
-  
-  #----------
 
+    def call(env)
+      response = @app.call(env)
+      
+      response.on_complete do |env|
+        if env[:status] == 404
+          raise AssetNotFound, response
+        elsif env[:status] == 400 || env[:status] == 500
+          raise AssetRequestError, response
+        end
+      end
+      
+      response
+    end
+  end
+  
+  #----------
+  
   class << self
-      @@auth_token = AssetHost[:token]
-            
-      #----------
-            
-      def element_path(id, prefix_options = {}, query_options = nil)
-        super(id, *apply_auth_token(prefix_options, query_options))
-      end
-
-      def collection_path(prefix_options = {}, query_options = nil)
-        super(*apply_auth_token(prefix_options, query_options))
-      end
-      
-      def apply_auth_token(prefix_options, query_options)
-            if query_options
-              [prefix_options, query_options.merge(:auth_token => @@auth_token)]
-            else
-              [prefix_options.merge(:auth_token => @@auth_token)]
-            end
-          end
-      
-      
+    @@token   = Rails.application.config.assethost.token
+    @@server  = Rails.application.config.assethost.server
+    @@prefix  = Rails.application.config.assethost.prefix
+    
+    # set up our connection at initialization time
+    @@conn = Faraday.new("http://#{@@server}",:params => {:auth_token => @@token}) do |c|
+      c.use Asset::AssetErrors
+      c.use FaradayMiddleware::ParseJson, :content_type => /\bjson$/
+      c.use FaradayMiddleware::Instrumentation
+      c.adapter Faraday.default_adapter
     end
+    
+    # -- run a request for outputs to populate convenience functions -- #
+    
+    resp = @@conn.get("#{@@prefix}/outputs")
+    @@outputs = resp.body    
+  end
+    
+  # asset = Asset.find(id)
+  #
+  # Given an asset ID, returns an asset object
+  def self.find(id)
+    key = "asset/asset-#{id}"
+    
+    if a = Rails.cache.read(key)
+      # cache hit -- instantiate from the cached json
+      puts "cache hit for asset find on #{id}"
+      return self.new(a)
+    else
+      # missed... request it from the server
+      puts "making a request for asset on #{id}"
+      resp = @@conn.get("#{@@prefix}/assets/#{id}")
+      puts "asset resp is #{resp}. Status is #{resp.status}"
+      return self.new(resp.body)
+    end
+  end
+  
+  #----------
+  
+  attr_accessor :json, :caption, :title, :id, :size, :taken_at, :owner, :url, :api_url, :native
+  
+  def initialize(json)
+    puts "new Asset with json: #{json}"
+    @json = json
+    @_sizes = {}
+    
+    class << self
+      @@outputs.each do |o|
+        puts "defining asset function for #{o['code']}"
+        define_method o['code'] do
+          self._size(o)
+        end
+      end
+    end
+    
+    # define some attributes
+    [:caption,:title,:id,:size,:taken_at,:owner,:url,:api_url,:native].each { |key| self.send("#{key}=",@json[key.to_s]) }
+    
+  end
+  
+  #----------
+  
+  def _size(output)
+    @_sizes[ output['code'] ] ||= AssetSize.new(self,output)      
+  end
+  
+  #----------
+  
+  def as_json
+    @json
+  end
 end
+
+#----------
+
+class AssetSize
+  attr_accessor  :width
+  attr_accessor  :height
+  attr_accessor  :tag
+  attr_accessor  :url
+  attr_accessor  :asset
+  attr_accessor  :output
+    
+  def initialize(asset,output)
+    @asset  = asset
+    @output = output
+    
+    self.width    = @asset.json['sizes'][ output['code'] ]['width']
+    self.height   = @asset.json['sizes'][ output['code'] ]['height']
+    self.tag      = @asset.json['tags'][ output['code'] ]
+    self.url      = @asset.json['urls'][ output['code'] ]
+
+  end
+end
+
+#----------
+
