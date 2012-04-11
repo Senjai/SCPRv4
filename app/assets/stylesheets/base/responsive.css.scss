@@ -95,6 +95,11 @@ $mediaSmallPortrait: 320px;
 		display: none;
 	}
 	
+	
+	.more-news-content {
+		border-right: none !important;
+	}
+	
 	.related-content {
 		border-top: 1px solid $grayLighter;
 		padding-top: 10px;
@@ -132,6 +137,25 @@ $mediaSmallPortrait: 320px;
 		nav.section-nav.vertical { display: none; }
 		nav.section-nav.horizontal { display: block; }
 	// end CFF navs
+	
+	.homepage-bottom {
+		.more-news-content {
+			border-right: none;
+			padding-right: none;
+			margin-bottom: 5px;
+		}
+	}
+	
+	.homepage-top {
+		.events-forum {
+			border: none;
+			padding-left: 0;
+			.event { border: none; }
+			.mq-row-fluid {
+				@include makeFluidRow;
+			}
+		}
+	}
 }
 
 
@@ -209,39 +233,10 @@ $mediaSmallPortrait: 320px;
 	}
 	
 	// Vertify Layouts
-		#main, .homepage-top, .homepage-bottom, .more-content { // Since we have different sections on the homepage and `vertify` looks for .row-fluid as direct descendants
+		#main, .homepage-top, .homepage-bottom { // Since we have different sections on the homepage and `vertify` looks for .row-fluid as direct descendants
 			@include vertify;
 		} 
 	// end Vertify
-	
-	.homepage-top {
-		border-bottom: none;
-		margin-bottom: 0;
-		.events-forum {
-			border-left: none;
-			padding-left: 0;
-			.mq-row-fluid {
-				@include makeFluidRow;
-			}
-		}
-	}
-	
-	.homepage-bottom {
-		.more-news-container {
-			border-right: none;
-			padding-right: none;
-			margin-bottom: 5px;
-			.more-news {
-				border-bottom: none;
-			}
-		}
-	
-		.more-news-content {
-			border-right: none;
-			padding-right: none;
-			margin-bottom: 5px;
-		}
-	}
 
 	.broadcastbar .next-program { display: none; }
 	#masthead { 
@@ -262,17 +257,18 @@ $mediaSmallPortrait: 320px;
 		// end Minimal Header
 	}
 	
-	#main {
-		#sidebar, #sidebar-top, #sidebar-bottom {
-			.mq-row-fluid {
-				border-top: 1px solid $grayLighter;
-				padding-top:20px;
-			
-				&.advertisements {
-					background: $grayBackground;
-				}
-			}
-			.widget {
+	.homepage-top {
+		border-bottom: none !important;
+		margin-bottom: 0 !important;
+	}
+	
+	// since we're hiding the sidebars, remove the borders around more news
+	.homepage-bottom {
+		.more-news-container {
+			border-right: none;
+			padding-right: none;
+			margin-bottom: 5px;
+			.more-news {
 				border-bottom: none;
 			}
 		}
