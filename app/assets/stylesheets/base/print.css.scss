@@ -2,11 +2,12 @@
 #megamenu, #masthead-nav-condensed, #masthead-mid-header-wrapper, #masthead-right-header-wrapper, 
 #beta-bar, #offscreen-header, #broadcast-bar-outer-container,
 #sidebar, #sidebar-top, #sidebar-bottom,
-#article-sharing-tools, #dsq-reply, #dsq-global-toolbar, #dsq-realtime-options, #dsq-sort-by, #dsq-pagination,
-#article-content-carousel, #article-article-meta,
+#dsq-reply, #dsq-global-toolbar, #dsq-realtime-options, #dsq-sort-by, #dsq-pagination, #dsq-reactions, .dsq-h3-reactions, #dsq-show-more-reactions,
+#article-content-carousel, #article-article-meta, .storybar, #article-sharing-tools, #article-related-content,
+#other-segments, #more-events, 
 #program-masthead-support, #program-masthead-headshot, .section-nav-header,
 #fold-comments-count-widget, .sfy-story, #article-next-prev,
-#footer-nav, #footer-bottom-links, #footer-support-button, #iphone-app-promo, 
+#page-footer,
 .audio-bar, #uvTab, object, embed, iframe { display: none !important; }
 
 #fold .row-title h6 { text-align: left; }
@@ -14,7 +15,7 @@
 .head-lead { min-height: 0 !important; }
 #masthead { padding: 0 !important; margin: 0 !important; }
 
-#article-related-content, .story-body, .event-details {
+.story-body, .event-details {
 	a, a#events-rsvp-button {
 		&:link, &:visited {
 			color: darken(#007fa6, 15%);
