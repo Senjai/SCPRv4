@@ -113,7 +113,7 @@ class Asset
   
   #----------
   
-  def as_json
+  def as_json(options={})
     @json
   end
 end
@@ -137,6 +137,10 @@ class AssetSize
     self.tag      = @asset.json['tags'][ output['code'] ]
     self.url      = @asset.json['urls'][ output['code'] ]
 
+  end
+  
+  def tag
+    @tag.html_safe
   end
 end
 

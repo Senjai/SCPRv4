@@ -286,7 +286,7 @@ class ContentBase < ActiveRecord::Base
   
   def first_asset_square
     if self.assets.any?
-      self.assets.first.asset.tag(:lsquare)
+      self.assets.first.asset.lsquare.tag
     end
   end
   
