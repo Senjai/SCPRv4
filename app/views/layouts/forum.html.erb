@@ -23,7 +23,7 @@
 				<% if !content_for(:sidebar) %>
 					<%= yield :sidebar %>
 				<% else %>
-					<%= render 'events/nav' %>
+					<%= render 'events/nav', navClass: "vertical" %>
 
 					<div class="mq-row-fluid">
 						<div class="span4">

@@ -296,6 +296,7 @@ span.fake-link {
 	padding: 15px 10px 10px 10px;
 	margin-bottom: 20px;
 	margin-top: -21px;
+	@include clearfix; // for the navigation
 	img { max-width: 100%; }
 }
 
@@ -402,35 +403,54 @@ span.fake-link {
 		}
 	}
 }
+
+.section-nav-horizontal {
+	
+}
+
+
 h3.section-nav-header {
 	color:$gray;
 	font-size:16px;
 	margin-top:10px;
 }
+
 nav.section-nav {
-	margin-bottom: 25px;
-	h4 {
-		font-weight: 400;
-		color: lighten($gray, 30%);
-		border-bottom: 1px solid $grayLighter;
+	@include font-navigation($size: 13px, $weight: 600);
+	&.vertical {
+		margin-bottom: 25px;
+		a {
+			display: block;
+			text-transform: uppercase;
+			border-bottom: 1px solid $grayLighter;
+			color: darken($gray, 20%);
+			padding: 8px;
+			&:hover {
+				color:$orangeDark;
+				text-decoration: underline;
+			}
+		}
 	}
-	a {
-		display: block;
-		text-transform: uppercase;
-		border-bottom: 1px solid $grayLighter;
-		@include font-navigation($size: 13px, $weight: 600);
-		color: darken($gray, 20%);
-		padding: 8px;
-		@include transition(all .15s ease-in-out);
-		&:hover {
-			color:$orangeDark;
-			text-decoration: underline;
+	
+	&.horizontal {
+		display: none;
+		a { // Faking a two-column fluid grid here, so it's a little hacky
+			$this_borderColor: #222;
+			float: left;
+			color: $nearWhite;
+			width: 50%; // We don't want the gutter width so we won't use the grid here
+			padding: 5px 0;
+			border-bottom: 1px solid $this_borderColor;
+			&:nth-child(even) { @include box-shadow(1px 0 $this_borderColor inset); } // Fake border between columns
+			&:nth-last-child(-n+2) { border-bottom: none; } // no border on the last two
 		}
 	}
 }
-.forum nav.section-nav {
+
+.forum nav.section-nav.vertical {
 	margin-bottom:10px;
 }
+
 .forum #sidebar {
 	.widget {
 		display: block;

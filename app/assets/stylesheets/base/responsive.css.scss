@@ -127,6 +127,11 @@ $mediaSmallPortrait: 320px;
 			}
 		}
 	// end Fluid Footer
+	
+	// Hide CFF vertical nav, show horizontal nav
+		nav.section-nav.vertical { display: none; }
+		nav.section-nav.horizontal { display: block; }
+	// end CFF navs
 }
 
 
