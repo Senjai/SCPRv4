@@ -1,13 +1,6 @@
 GIT
-  remote: git://github.com/SCPR/redis-content-store.git
-  revision: dcb7843b10afc68a85c105fd58eaa76cf71e250f
-  ref: dcb7843b10afc68a85c105fd58eaa76cf71e250f
-  specs:
-    redis-content-store (3.2.2)
-      redis-activesupport (~> 3.2.2)
-
-PATH
-  remote: /Users/eric/projects/forks/disqussion
+  remote: git://github.com/SCPR/disqussion.git
+  revision: b354726c7dd97428101965db6be9398ce86e8c01
   specs:
     disqussion (0.0.5)
       faraday (~> 0.7.6)
@@ -15,6 +8,14 @@ PATH
       hashie (~> 1.0.0)
       multi_json (~> 1.0.0)
       rash (~> 0.3.0)
+
+GIT
+  remote: git://github.com/SCPR/redis-content-store.git
+  revision: dcb7843b10afc68a85c105fd58eaa76cf71e250f
+  ref: dcb7843b10afc68a85c105fd58eaa76cf71e250f
+  specs:
+    redis-content-store (3.2.2)
+      redis-activesupport (~> 3.2.2)
 
 GEM
   remote: http://rubygems.org/

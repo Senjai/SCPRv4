@@ -9,8 +9,8 @@ gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.gi
 gem 'jquery-rails'
 gem 'will_paginate'
 gem 'capistrano'
-#gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
-gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
+gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
+#gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
 gem 'thinking-sphinx', '2.0.10'
 
 gem 'therubyracer'
