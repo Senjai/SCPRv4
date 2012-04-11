@@ -28,7 +28,7 @@ gem 'twitter-text' # text processing for things like urls, hashtags, and @replie
 # in production environments by default.
 group :assets do
   gem "eco"
-  gem "sass", "~> 3.2.0.alpha.35"
+  gem "sass"
   gem 'sass-rails'
   gem 'bootstrap-sass'
   gem "compass-rails"

@@ -224,9 +224,7 @@ GEM
       blankslate (>= 2.1.2.3)
       ffi (~> 1.0.7)
     rubyzip (0.9.6.1)
-    rubyzip (0.9.7)
     sass (3.1.15)
-    sass (3.2.0.alpha.101)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -308,7 +306,7 @@ DEPENDENCIES
   rspec-rails
   ruby-mp3info
   rubypython
-  sass (~> 3.2.0.alpha.35)
+  sass
   sass-rails
   shoulda-matchers
   therubyracer

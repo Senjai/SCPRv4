@@ -21,9 +21,9 @@
 			font-weight: bold;
 		
 			&:after {
-			   content: " (" attr(href) ") "; // nice
+			   content: " (" attr(href) ") ";
 			   font-size: 80%;
-		   }
+			}
 		}
 	}
 }
