@@ -10,10 +10,14 @@ gem 'jquery-rails'
 gem 'will_paginate'
 gem 'capistrano'
 gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
+#gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
 gem 'thinking-sphinx', '2.0.10'
 
 gem 'therubyracer'
 gem 'newrelic_rpm'
+
+gem "faraday", "0.7.6"
+gem "faraday_middleware"
 
 gem "ruby-mp3info"
 gem "feedzirra"

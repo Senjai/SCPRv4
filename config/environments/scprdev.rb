@@ -61,4 +61,9 @@ Scprv4::Application.configure do
   
   config.scpr.host = "staging.scprdev.org"
   config.scpr.media_root = "/home/kpcc/media"
+  
+  config.assethost.server = "a.scpr.org"
+  config.assethost.token = "droQQ2LcESKeGPzldQr7"
+  config.assethost.prefix = "/api"
+  
 end
