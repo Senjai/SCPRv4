@@ -1,20 +1,17 @@
 <% if content.category %>
-	<div class="content_carousel" id="article-content-carousel">
-		<div class="section-head">
-			<h3>More in <%= content.category.category %></h3>
-			<nav>
-				<a class="prev" id="sec_carousel_prev" href="#"><span>prev</span></a>
-				<a class="next" id="sec_carousel_next" href="#"><span>next</span></a>
-			</nav>
-		</div>
-		<ul class="carousel clearfix" id="sec_carousel">
-			
-		</ul>
-		<div class="carousel-page clearfix" id="sec_carousel_pag"></div>
-	</div>
-	
-	<% content_for :footerjss do %>
-		var secCarousel = new scpr.SectionCarousel(<%= raw content.category.content(1,4,content).to_json() %>);
+	<div class="content-carousel" id="article-content-carousel">
+		<h6 class="more-news-title">
+			More in <%= content.category.category %>
+			<span><%= link_to "More", forum_events_archive_path %></span>
+		</h6>
 		
-	<% end %>
+		<div class="row-fluid">
+			<% content.category.content(1, 4, content).each do |extra_content| %>
+				<div class="span3">
+					<%= render_asset extra_content, "thumb" %>
+					<span class="title"><%= link_to extra_content.headline, extra_content.link_path %></span>
+				</div>
+			<% end %>
+		</div>
+	</div>
 <% end %>

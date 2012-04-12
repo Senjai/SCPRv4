@@ -659,6 +659,14 @@ a.with-icon {
 }
 
 // Content Carousel
+.content-carousel { 
+	@include responsiveImageAsset($thumbW);
+	@include centeredAsset;
+	.title a { 
+		@include font-navigation($size: 14px);
+		color: $nearBlack;
+	}
+}
 .content_carousel {
 	border-top:1px solid $grayLight;
 	.section-head { 

@@ -1,12 +1,6 @@
 <% content_for :content do %>
-	<div class="row">
-		<div class="span8">
-			<%= yield :headline %>
-		</div>
-	</div>
-	<div class="row">
-		<%= content_for?(:news_content) ? yield(:news_content) : yield %>
-	</div>
+	<div class="story-page-headline"><%= yield :headline %></div>
+	<%= content_for?(:news_content) ? yield(:news_content) : yield %>
 	<%= yield :postcontent %>
 <% end %>
 

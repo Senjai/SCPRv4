@@ -2,6 +2,7 @@
 	width: 160px;
 	float: right;
 	clear: right;
+	margin-left: 12px;
 }
 
 .storycenter {
@@ -33,4 +34,12 @@
 		color:$gray;
 		font-weight:bold;
 	}
+}
+
+.news-top .lead { border-bottom: none; } // remove the bottom border on ".cbase.lead" for news and arts landing pages, since the "more news container" is right below
+
+.story-page-headline {
+	border-bottom: 1px solid $grayLighter;
+	margin-bottom: 10px;
+	p.byline { margin-bottom: 0;}
 }

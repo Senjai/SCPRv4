@@ -23,13 +23,12 @@
 				<% else %>
 					<%= yield :sidebar_top %>
 					<div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div>
-					<%= render "shared/widgets/facebook" %>
-				
 					<%= yield :sidebar_middle %>
-					<%= render "shared/widgets/newsletter_subscribe" %>
-					<%= render "shared/widgets/most_popular" %>
 					<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
+					<%= render "shared/widgets/newsletter_subscribe" %>
+					<%= render "shared/widgets/most_popular" %>				
 					<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+					<%= render "shared/widgets/facebook" %>
 					<%= render "shared/widgets/promo_mobile" %>
 					<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 				<% end %>

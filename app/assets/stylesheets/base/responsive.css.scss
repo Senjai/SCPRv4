@@ -76,7 +76,9 @@ $mediaSmallPortrait: 320px;
 		border-right: none !important;
 	}
 	
-	.cbase.offlead .row-fluid { @include makeFluidRow; } // Assets are thumbnails so these can stay in multiple column format
+	.cbase {
+		&.offlead .row-fluid { @include makeFluidRow; } // Assets are thumbnails so these can stay in multiple column format
+	}
 	
 	.related-content {
 		border-top: 1px solid $grayLighter;
