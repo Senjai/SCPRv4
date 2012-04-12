@@ -1,23 +1,40 @@
 <% page_title @category.category %>
-
 <h1><%= @category.category %></h1>
 
 <% links = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
 
 <% if @content.current_page == 1 %>
 	<%= render_content @content[0], "twocol" %>
+	<%= render_content @content[1..2], "offlead_asset" %>
 	
-	<hr/>
-
-	<%= render_content @content[1..2], "offlead_asset" %>			
+	<div class="content-thumbnails">
+		<% @content[3..-1].each_with_index do |content, i| %>
+			<% if i % 2 == 0 %>
+				<div class="row-fluid">
+			<% end %>
 			
-	<%= render_content @content[3..-1], "thumbnail" %>
+			<%= render_content content, "thumbnail" %>
+			
+			<% if i % 2 == 1 %>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
 <% else %>
 	<%= links %>
-
-	<% for c in @content %>
-		<%= render_content c, "thumbnail" %>
-	<% end %>
+	<div class="content-thumbnails">
+		<% @content.each_with_index do |content, i| %>
+			<% if i % 2 == 0 %>
+				<div class="row-fluid">
+			<% end %>
+		
+			<%= render_content content, "thumbnail" %>
+			
+			<% if i % 2 == 1 %>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
 <% end %>
 
 <%= links %>

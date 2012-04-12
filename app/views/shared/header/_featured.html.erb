@@ -1,15 +1,17 @@
 <% for c in content do %>
 	<% register_content(c) %>
-	<div class="row-fluid">
-		<% if c.assets.present? %>
-			<div class="span4">
-				<a href="<%=c.link_path%>"><%= render_asset(c,"thumb") %></a>
-			</div>
-			<div class="span8">
-		<% else %>
-			<div class="span12">
-		<% end %>
-			<h4><%= link_to c.headline, c.link_path %></h4>
-		</div> <!-- span -->
-	</div> <!-- row fluid -->
+	<div class="featured">
+		<div class="row-fluid">
+			<% if c.assets.present? %>
+				<div class="span4">
+					<a href="<%=c.link_path%>"><%= render_asset(c,"thumb") %></a>
+				</div>
+				<div class="span8">
+			<% else %>
+				<div class="span12">
+			<% end %>
+				<h4><%= link_to c.headline, c.link_path %></h4>
+			</div> <!-- span -->
+		</div> <!-- row fluid -->
+	</div>
 <% end %>

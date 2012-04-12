@@ -1,11 +1,16 @@
-<div class="cbase offlead clearfix">
-	<%= render_asset content, "thumb" %>
-	<h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
-	<h4>
-		<%= render_byline content %> 
-		<%= smart_date_js content, "data-relativefor" => "8h" %>
-	</h4>
-
-	<p><%= h strip_tags(content.teaser) %></p>	
+<div class="cbase offlead">
+	<div class="row-fluid">
+		<div class="span2">
+			<%= render_asset(content,"thumb") %>
+		</div>
+		
+		<div class="span10">
+			<h3><%= link_to content.short_headline, content.link_path %></h3>
+			<h4>
+				<%= render_byline content %> 
+				<%= smart_date_js content, "data-relative" => "8h" %>
+			</h4>
+			<p class="story-content clearfix"><%= h strip_tags(content.teaser) %></p>
+		</div> <!-- span -->
+	</div> <!-- row -->
 </div>
-<hr/>

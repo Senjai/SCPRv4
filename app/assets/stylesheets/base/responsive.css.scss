@@ -66,10 +66,6 @@ $mediaSmallPortrait: 320px;
 		padding-right: 0;
 	}
 	
-	.event {
-		border-bottom: 1px solid $grayLighter;
-	}
-	
 	.broadcastbar .show-time {
 		display: none;
 	}
@@ -77,8 +73,9 @@ $mediaSmallPortrait: 320px;
 	
 	.more-news-content {
 		border-right: none !important;
-		.cbase.offlead .row-fluid { @include makeFluidRow; } // content teasers
 	}
+	
+	.cbase.offlead .row-fluid { @include makeFluidRow; } // Assets are thumbnails so these can stay in multiple column format
 	
 	.related-content {
 		border-top: 1px solid $grayLighter;
@@ -126,8 +123,8 @@ $mediaSmallPortrait: 320px;
 	
 	.homepage-top {
 		.events-forum {
-			border-left: none !important;
-			padding-left: 0;
+			border: none !important;
+			padding-left: 0 !important;
 			.mq-row-fluid {
 				@include makeFluidRow;
 			}
@@ -301,7 +298,7 @@ $mediaSmallPortrait: 320px;
 
 
 // Small Landscape to desktop small
-@media screen and(max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
+@media screen and (max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
 	
 	// vertify the lead stories //
 		#main {
@@ -320,15 +317,20 @@ $mediaSmallPortrait: 320px;
 					}
 				}
 			}
-		
-	 		.lead5 {
-	 			@include centeredAsset;
-	 			border-bottom: 1px solid $grayLighter;
-	 			padding-bottom: 5px;
-	 			margin-bottom: 5px;
-	 		}
 		}
 	// end //
+}
+
+// Below Small Desktop
+@media screen and (max-width: $mediaDesktopSmall - 1) {
+	.homepage-default {
+		.lead5 {
+			@include centeredAsset;
+			border-bottom: 1px solid $grayLighter;
+			padding-bottom: 5px;
+			margin-bottom: 5px;
+		}
+	}
 }
 
 
