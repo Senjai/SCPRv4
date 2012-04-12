@@ -1,14 +1,14 @@
 <%# Small video for Modal only %>
 <% if video_thumb_counter % 3 == 0 %>
-	<div class="row">
+	<div class="row-fluid">
 <% end %>
 
 <% if video_thumb ||= nil and video_thumb.assets.present? %>
-	<div class="video-thumb span3">
-		<a href="<%= video_path(video_thumb) %>">
-			<%= video_thumb.assets.first.asset.three.tag %> <%# TODO use render_asset here %>
-			<span class="title"><%= video_thumb.short_headline %></span>
-		</a>
+	<div class="span4">
+		<div class="video-thumb">
+			<%= render_asset video_thumb, "three" %>
+			<%= link_to video_thumb.short_headline, video_path(video_thumb) %>
+		</div>
 	</div>
 <% end %>
 

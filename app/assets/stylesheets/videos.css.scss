@@ -9,8 +9,7 @@
 
 #multimedia {
 	.video {
-		margin:$baseline 5px;
-		margin-top: 60px; /* Make room for the button */
+		margin: 60px 5px $baseline 5px;
 		width:730px;
 		height:411px;
 		position: relative;
@@ -64,13 +63,10 @@
 		
 		div.list {
 			margin-top: 25px;
-			.video-thumb {
-				padding: 10px 13px;
-			}
 		}
 		
 		.right-col {
-			margin-left: 5px; // This is because the grid column's margins get messed up in this modal, so I have to fake it.
+			//margin-left: 5px; // This is because the grid column's margins get messed up in this modal, so I have to fake it.
 		}
 
 	} /* .videos-overlay */
@@ -84,6 +80,8 @@ div.list {
 }
 
 .video-thumb {
+	@include responsiveImageAsset($threeW);
+	@include centeredAsset;
 	a {
 		color:$grayLight;
 		display:block;

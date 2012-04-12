@@ -13,13 +13,13 @@
 <!-- MASTHEAD-->
 <%= render "shared/masthead" %>
 
-<div id="main" class="container">
-	<div class="row">
+<div id="video" class="container-fluid">
+	<div class="row-fluid">
 		<div class="span2">
-			<button class="browse-all-videos modal-toggler">Browse All Videos</button>
+			<button class="browse-all-videos modal-toggler" data-modal-id="videos_list">Browse All Videos</button>
 			
-			<%= modal("videos-list", modal_id: "episode-guide") do %>
-				<div class="row">
+			<%= modal("videos-list", modal_id: "videos_list") do %>
+				<div class="row-fluid">
 					<div class="span1">
 						<button class="arrow left" id="next-page" data-page="">&nbsp;</button>
 					</div>
@@ -31,10 +31,9 @@
 					<div class="span1 right-col">
 						<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
 					</div>
-				</div>
+				</div> <!-- row-fluid -->
 				<div class="pagination">&nbsp;</div>
 			<% end %>
-			
 		</div> <!-- .span2 -->
 		
 		<article class="span8">
@@ -43,14 +42,12 @@
 			<% if any_to_list? @latest_videos %>
 				<div class="multimedia latest-videos">
 					<h3 class="head">Latest Videos</h3>
-					<div class="list muted row">
+					<div class="list muted row-fluid">
 						<% @latest_videos.each do |video| %>
 							<% if video.assets.present? %>
-								<div class="video-thumb span2">
-									<a href="<%= video_path(video) %>">
-										<%= video.assets.first.asset.three.tag %> <%# TODO use render_asset here %>
-										<span class="title"><%= video.short_headline %></span>
-									</a>
+								<div class="video-thumb span3">
+									<%= render_asset video, "three" %>
+									<span class="title"><%= link_to video.short_headline, video_path(video) %></span>
 								</div>
 							<% end %>
 						<% end %>
@@ -63,7 +60,7 @@
 		<div class="span2">
 			&nbsp;
 		</div>
-	</div>
+	</div> <!-- row fluid -->
 </div>
 
 <% content_for :footerjss do %>

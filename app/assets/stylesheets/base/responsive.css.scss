@@ -22,6 +22,7 @@ $mediaSmallPortrait: 320px;
 	@include clearfix;
 	padding-left: $containerPadding;
 	padding-right: $containerPadding;
+	position: relative; // for modals
 }
 
 // Visibility utilities
