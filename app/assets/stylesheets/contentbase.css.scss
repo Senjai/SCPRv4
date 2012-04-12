@@ -69,6 +69,7 @@
 	}
 	
 	&.offlead {
+		@include responsiveImageAsset($thumbW);
 		&:last-child {
 			hr {
 				display:none;
@@ -85,11 +86,6 @@
 	        font-weight:normal;
 			margin-bottom: 0;
 			color: #999;
-	    }
-	    img {
-	        display: inline;
-	        float: left;
-	        margin: 8px 12px 12px 0;
 	    }
 	}
 	

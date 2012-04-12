@@ -77,6 +77,7 @@ $mediaSmallPortrait: 320px;
 	
 	.more-news-content {
 		border-right: none !important;
+		.cbase.offlead .row-fluid { @include makeFluidRow; } // content teasers
 	}
 	
 	.related-content {
