@@ -41,7 +41,7 @@ end
 Then /^there should be modal pagination$/ do
   find("button.arrow.right")['data-page'].should eq "2"
   find("button.arrow.left")['data-page'].should eq ""
-  find(".pagination").should have_content "1 of 2"
+  find(".pages").should have_content "1 of 2"
 end
 
 Then /^I should see that there is nothing to list in the pop\-up with the message "([^"]*)"$/ do |message|
@@ -55,7 +55,7 @@ end
 
 Then /^I should be on page 2 of the videos list$/ do
   pending "FIXME Selenium isn't waiting for the request to finish"
-  # find(".pagination").should have_content "2 of 2"
+  # find(".pages").should have_content "2 of 2"
   # find("button.arrow.right")['data-page'].should eq ""
   # find("button.arrow.left")['data-page'].should eq "1"
 end

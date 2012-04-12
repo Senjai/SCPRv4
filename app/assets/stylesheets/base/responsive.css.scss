@@ -133,6 +133,19 @@ $mediaSmallPortrait: 320px;
 			}
 		}
 	}
+	
+	// Fake the "pager"... hide all page number links, just show Previous and Next links.
+		.pagination { 
+			a, span, em {
+				display: none;
+				&.previous_page { display: inline; } 
+				&.next_page { 
+					display: inline;
+					float: right;
+				}
+			}
+		}
+	// End Pager
 }
 
 

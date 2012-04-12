@@ -8,7 +8,7 @@ Then /^I should see that there is nothing to list with the message "([^"]*)"$/ d
 end
 
 Then /^there should be pagination$/ do
-  page.should have_css ".pagination"
+  page.should have_css ".pages"
 end
 
 Then /^I should see static content$/ do

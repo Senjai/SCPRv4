@@ -89,12 +89,10 @@
 			color: #999;
 	    }
 	}
-	
+
 	&.thumbnail {
-		border-bottom: 1px solid $grayLighter;
 		padding-bottom: 10px;
 		margin-bottom: 10px;
-		&:nth-child(even) { border-left: 1px solid $grayLighter; }
 	    h3 {
 	        font-weight:600;
 			margin-bottom: 0;
@@ -106,6 +104,8 @@
 	    }
 	}
 }
+
+.category-page .cbase.thumbnail { border-bottom: 1px solid $grayLighter; } // Add a bottom-border to the "thumbnails" on category index pages. Should probably not be using "thumbnail" partial for this.
 
 time.smart {
 	/* display: inline-block; */

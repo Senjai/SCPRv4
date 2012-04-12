@@ -1,11 +1,9 @@
-<div class="span6">
-	<div class="cbase thumbnail">
-		<h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
-		<h4>
-			<%= render_byline content %>
-			<%= smart_date_js content %>
-		</h4>
+<div class="cbase thumbnail">
+	<h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
+	<h4>
+		<%= render_byline content %>
+		<%= smart_date_js content %>
+	</h4>
 
-		<p><%= strip_tags content.teaser %></p>
-	</div>
+	<p><%= strip_tags content.teaser %></p>
 </div>

@@ -65,6 +65,9 @@ header.episode {
 .current-episode {
 	@include responsiveImageAsset($fourW);
 	@include centeredAsset;
+	border-bottom: 1px solid $grayLighter;
+	margin-bottom: 12px;
+	
     h2 {
 		font-size:18px;
         font-weight: 600;
@@ -92,9 +95,9 @@ header.episode {
 }
 
 .upcoming-episode {
-    margin: 12px 0;
-    padding: 12px 0;
-    border-top: 1px solid $grayLight;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+	border-bottom: 1px solid $grayLighter;
     
     h3 {
         font-weight: 400;
