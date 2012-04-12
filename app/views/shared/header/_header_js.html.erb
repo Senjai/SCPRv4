@@ -2,7 +2,41 @@
 <%= stylesheet_link_tag "base/print", media: "print" %>
 <%= javascript_include_tag "application" %>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=1160">
+<script type="text/javascript">
+// Check for mobile
+ if( navigator.userAgent.match(/Android/i)
+ || navigator.userAgent.match(/webOS/i)
+ || navigator.userAgent.match(/iPhone/i)
+ || navigator.userAgent.match(/iPod/i)
+ || navigator.userAgent.match(/BlackBerry/i)
+ ){
+	$("meta[name=viewport]").attr("content", "width=device-width");
+ }
+
+// http://webdesignerwall.com/tutorials/iphone-safari-viewport-scaling-bug
+// (function(doc) {
+// 
+// 	var addEvent = 'addEventListener',
+// 	    type = 'gesturestart',
+// 	    qsa = 'querySelectorAll',
+// 	    scales = [1, 1],
+// 	    meta = qsa in doc ? doc[qsa]('meta[name=viewport]') : [];
+// 
+// 	function fix() {
+// 		meta.content = 'width=device-width,minimum-scale=' + scales[0] + ',maximum-scale=' + scales[1];
+// 		doc.removeEventListener(type, fix, true);
+// 	}
+// 
+// 	if ((meta = meta[meta.length - 1]) && addEvent in doc) {
+// 		fix();
+// 		scales = [.25, 1.6];
+// 		doc[addEvent](type, fix, true);
+// 	}
+// 
+// }(document));
+</script>
+
 
 <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js"></script>
 <script type="text/javascript">ahClient = new AssetHost.Client()</script>

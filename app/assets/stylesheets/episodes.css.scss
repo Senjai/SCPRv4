@@ -66,7 +66,7 @@ header.episode {
 	@include responsiveImageAsset($fourW);
 	@include centeredAsset;
 	border-bottom: 1px solid $grayLighter;
-	margin-bottom: 12px;
+	margin-bottom: $baseline/2;
 	
     h2 {
 		font-size:18px;
