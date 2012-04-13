@@ -41,16 +41,16 @@ class scpr.VideoPage
             beforeSend: (xhr) =>
                 if $(@options.overlay).css("display") is "none" # Wait for 200ms to spin, otherwise the spinner is off-center
                   setTimeout ( => 
-                    $(@options.overlay).spin()
+                    $(@options.overlay + " .list").spin()
                   ), 200
                 else
-                    $(@options.overlay).spin()
+                    $(@options.overlay + " .list").spin()
                 console.log "Sending Request..."
             error: (xhr, status, error) => 
                 $(@options.overlay + ' .list').html "Error loading videos. Please refresh the page and try again. (#{error})"
             complete: (xhr, status) => 
                 setTimeout ( => 
-                  $(@options.overlay).spin(false)
+                  $(@options.overlay + " .list").spin(false)
                 ), 200 # in case it takes less than 200ms to load the videos
                 console.log "Finished request. Status: #{status}"
         }
