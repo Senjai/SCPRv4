@@ -19,49 +19,37 @@ p {
 // --------
 
 h1, h2, h3, h4, h5, h6, h7 {
-  font-weight: bold;
-  @include font-heading();
   color: $nearBlack;
-  small {
-    color: $grayLight;
-  }
+  small { color: $grayLight; }
 }
+
 h1 {
+  @include font-heading($size: 30px, $lineHeight: $baseline * 1.6);
   margin-bottom: $baseline;
-  font-size: 30px;
-  line-height: $baseline * 1.5;
-  small {
-    font-size: 18px;
-  }
+  small { font-size: 18px; }
 }
+
 h2 {
-  font-size: 24px;
-  line-height: 1.4em;
-  small {
-    font-size: 14px;
-  }
+	@include font-heading($size: 24px, $lineHeight: $baseline * 1.4);
+  small { font-size: 14px; }
 }
-h3, h4, h5, h6 {
-  line-height: 1.6em;
-}
+
+
 h3 {
-  font-size: 18px;
-  small {
-    font-size: 14px;
-  }
+	@include font-heading($size: 18px, $lineHeight: $baseline * 1.4);
+  small { font-size: 14px; }
 }
+
 h4 {
-  font-size: 16px;
-  small {
-    font-size: 12px;
-  }
+	@include font-heading($size: 16px, $lineHeight: $baseline * 1.2);
+  small { font-size: 12px; }
 }
-h5 {
-  font-size: 14px;
-}
+
+h5 { @include font-heading($size: 14px, $lineHeight: $baseline * 1.1); }
+
 h6 {
+	@include font-heading($size: 14px, $lineHeight: $baseline * 1.6);
   color:#B24401;
-  font-size: 14px;
   text-transform: uppercase;
 }
 
@@ -80,7 +68,7 @@ h1.page-title {
 
 // Headline styles
 .story-headline {
-	@include font-headline();
+	@include font-headline;
 	margin-bottom:0;
 	a {
 		color:$nearBlack;
@@ -88,10 +76,10 @@ h1.page-title {
 }
 .story-body {
 	h2 {
-		font-size:1.2em;
+		font-size:17px;
 	}
 	h3, h4, h5 {
-		font-size:1em;
+		font-size:14px;
 	}
 }
 
