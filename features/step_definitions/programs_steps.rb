@@ -22,7 +22,7 @@ end
 
 #### Finders
 Then /^I should see the program's information$/ do
-  find(".show-title h1").should have_content @program.title
+  find("h1.page-title").should have_content @program.title
 end
 
 Then /^I should see a headshot of the program's host$/ do

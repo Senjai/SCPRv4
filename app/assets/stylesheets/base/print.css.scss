@@ -16,7 +16,7 @@
 #masthead { padding: 0 !important; margin: 0 !important; }
 
 .story-body, .event-details {
-	a, a#events-rsvp-button {
+	a, a#events-rsvp-btn {
 		&:link, &:visited {
 			color: darken(#007fa6, 15%);
 			font-weight: bold;

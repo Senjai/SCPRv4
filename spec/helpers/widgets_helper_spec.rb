@@ -100,8 +100,9 @@ describe WidgetsHelper do
       related_for(create :blog).should be_nil # blog is not a content bas
     end
     
-    it "does not render anything if the object does not have any relations or links" do
-      related_for(object).should be_blank
+    it "does not show headers if there is no related content" do
+      related_for(object).should_not match /More from KPCC/
+      related_for(object).should_not match /Elsewhere on the Web/
     end
     
     it "renders the related_content_and_links partial" do

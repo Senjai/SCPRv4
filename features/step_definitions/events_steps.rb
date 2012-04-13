@@ -23,9 +23,9 @@ end
 
 Then /^I should see (\d+) events?$/ do |num|
   if num.to_i == 0
-    page.should_not have_css ".event"
+    page.find("#main, #forum").should_not have_css ".event"
   else
-    page.should have_css ".event", count: num.to_i
+    page.find("#main, #forum").should have_css ".event", count: num.to_i
   end
 end
 
@@ -74,11 +74,11 @@ Then /^I should see each event's primary asset$/ do
 end
 
 Then /^I should see an RSVP link$/ do
-  page.should have_css "#rsvp-btn"
+  page.should have_css "#events-rsvp-btn"
 end
 
 Then /^I should not see an RSVP link$/ do
-  page.should_not have_css "#rsvp-btn"
+  page.should_not have_css "#events-rsvp-btn"
 end
 
 Then /^I should see that even has already occurred$/ do

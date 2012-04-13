@@ -51,7 +51,7 @@
 								<%= @event.consoli_dated %>
 							</div>
 						<% end %>
-						<%= link_to("RSVP for this event", @event.rsvp_link, id: "rsvp-btn", class: "btn primary", id: "events-rsvp-button") if @event.rsvp_link.present? and @event.upcoming? %>
+						<%= link_to("RSVP for this event", @event.rsvp_link, class: "btn primary", id: "events-rsvp-btn") if @event.rsvp_link.present? and @event.upcoming? %>
 					</div> <!-- span -->
 					
 					<div class="span6">

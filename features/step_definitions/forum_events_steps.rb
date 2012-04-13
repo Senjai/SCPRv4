@@ -19,7 +19,7 @@ end
 
 #### Finders
 Then /^I should see the (\d+) closest events?$/ do |num|
-  page.should have_css ".event", count: num.to_i
+  page.should have_css ".upcoming-events .event", count: num.to_i
   page.first(".upcoming-events .event").should have_content Event.forum.upcoming.first.title
 end
 
@@ -33,7 +33,7 @@ Then /^I should see future events listed below the closest event$/ do
 end
 
 Then /^the closest event should not be in the list of future events$/ do
-  page.find(".future-events").should_not have_content Event.forum.closest.title
+  page.find(".event.future").should_not have_content Event.forum.closest.title
 end
 
 Then /^I should see a list of archived events in the archive strip$/ do
