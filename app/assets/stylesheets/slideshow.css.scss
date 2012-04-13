@@ -84,6 +84,8 @@
     }
     
     p {
+		color: #777;
+		@include font-sans-serif(normal, 11px, 14px);
         margin: 0;
         padding: 4px 4px;
     }
