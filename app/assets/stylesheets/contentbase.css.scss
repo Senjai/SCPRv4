@@ -69,6 +69,7 @@
 	
 	&.lead5 {
 		@include responsiveImageAsset($fiveW);
+		@include centeredAsset;
 	}
 	
 	&.offlead {
@@ -105,25 +106,15 @@
 	}
 }
 
-.category-page .cbase.thumbnail { border-bottom: 1px solid $grayLighter; } // Add a bottom-border to the "thumbnails" on category index pages. Should probably not be using "thumbnail" partial for this.
+// Add a bottom-border to the "thumbnails" on category index pages. Should probably not be using "thumbnail" partial for this.
+.category-page .cbase.thumbnail { border-bottom: 1px solid $grayLighter; }
 
+.homepage-lead.lead-right .lead { border-bottom: none; }
 time.smart {
 	/* display: inline-block; */
     @include font-sans-serif(normal, 11px);
     color: $orangeDark;
     text-transform: uppercase;
-}
-
-#lead-right {
-	#lead-right .offleads .offlead:first-child h3.story-headline {
-		font-size: 26px;
-		line-height: 28px;
-		font-weight: bold;
-	}
-	.lead h1 {
-		font-size:24px;
-		font-weight:600;
-	}
 }
 
 .teaser {

@@ -12,6 +12,14 @@
 		border-left:1px solid $grayLighter;
 		padding-left: 20px;
 	}
+	
+	.homepage-lead {
+		&.lead-right {
+			// Make the first headline bigger in lead-right scheme
+			.offleads .span4:first-child .offlead h3.story-headline { @include font-shorthand(bold, 28px, 26px); }
+			.lead h1 { @include font-shorthand(600, 24px); }
+		}
+	}
 }
 
 // Trending Bar

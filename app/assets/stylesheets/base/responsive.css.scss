@@ -318,18 +318,20 @@ $mediaSmallPortrait: 320px;
 	
 	// vertify the lead stories //
 		#main {
-			.homepage-default {
-				@include vertify;
-				.offleads {
-					@include makeFluidRow;
-					.span4:last-child .offlead {
-						border-right: none;
-					}
-					.offlead {
-						padding-left: 5px;
-						padding-right: 5px;
-						border-right: 1px solid $grayLighter;
-						border-bottom: none;
+			.homepage-lead {
+				&.default, &.lead-right {
+					@include vertify;
+					.offleads {
+						@include makeFluidRow;
+						.span4:last-child .offlead {
+							border-right: none;
+						}
+						.offlead {
+							padding-left: 5px;
+							padding-right: 5px;
+							border-right: 1px solid $grayLighter;
+							border-bottom: none;
+						}
 					}
 				}
 			}
@@ -339,12 +341,21 @@ $mediaSmallPortrait: 320px;
 
 // Below Small Desktop
 @media screen and (max-width: $mediaDesktopSmall - 1) {
-	.homepage-default {
-		.lead5 {
-			@include centeredAsset;
-			border-bottom: 1px solid $grayLighter;
-			padding-bottom: 5px;
-			margin-bottom: 5px;
+	.homepage-lead {
+		&.default {
+			.lead5 {
+				border-bottom: 1px solid $grayLighter;
+				padding-bottom: 5px;
+				margin-bottom: 5px;
+			}
+		}
+		
+		&.lead-right {
+			.offleads .span4:last-child .offlead { border-bottom: 1px solid $grayLighter; }
+			.lead5 {
+				padding-bottom: 5px;
+				margin-bottom: 5px;
+			}
 		}
 	}
 }
