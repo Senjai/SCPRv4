@@ -3,11 +3,15 @@
 </div>
 <header id="masthead">
 	<div class="container-fluid">
+		<div class="head-lead-minimal">
+			<span id="condensed-nav-link" class="condensed-nav-link">&nbsp;</span>
+			<a href="/" class="dark-logo"><%= image_tag "logo-masthead-dark.png", alt: "KPCC.org", id: "masthead-logo-dark" %></a>
+		</div>
 		<div class="head-lead">
 			<div class="row-fluid">
 	    		<div class="span4">
 					<div class="logo" id="masthead-kpcc-logo">
-						<a href="/"><%= image_tag "logo-masthead.png", alt: "KPCC.org" %></a>
+						<a href="/"><%= image_tag "logo-masthead.png", alt: "KPCC.org", id: "masthead-logo-light" %></a>
 					</div>
 				</div>
 
@@ -78,12 +82,6 @@
 				</form>
 			</div> <!-- .navbar-inner -->
 		</div> <!-- megamenu -->
-		
-		<nav class="nav-condensed" id="masthead-nav-condensed">
-			<% nav_items.each do |item| %>
-			    <a href="<%=item[:href]%>" class="btn"><%= item[:title].html_safe %></a>
-			<% end %>
-		</nav>
 	</div> <!-- container fluid -->
 </header>
 

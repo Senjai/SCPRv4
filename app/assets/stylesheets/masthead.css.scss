@@ -2,19 +2,38 @@
 header#masthead {
 	margin-bottom:$baseline;
 	
-	.head-lead {
-		min-height: 78px;
-	}
+	.head-lead { min-height: 78px; }
+	.head-lead-minimal {
+		display: none;
+		text-align: center;
+		padding: 20px 0;
+		@include clearfix;
+		
+		a.dark-logo {
+			margin: 0 auto;
+		}
+		span.condensed-nav-link {
+			margin-right: 10px; 
+			float: left;
+			background: url(image_path("icons/nav-btn.png")) left top;
+			width: 35px;
+			height: 32px;
+			text-align: text-top;
+			cursor: pointer;
+			&:hover { text-decoration: none; }
+		}
+	}	
 }
 
 // Set a min-height on the Hero pencil so that top and bottom margins are respected even when we don't have a hero to display
-.hero {
-	min-height:1px;
-}
+.hero { min-height:1px; }
 
 // KPCC logo image
 .logo {
-	margin-top: 20px;
+	a { 
+		display: block;
+		margin-top: 20px;
+	}
 }
 
 .mid-header-wrapper {

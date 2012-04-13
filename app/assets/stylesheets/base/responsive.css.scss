@@ -23,6 +23,10 @@ $mediaSmallPortrait: 320px;
 	padding-left: $containerPadding;
 	padding-right: $containerPadding;
 	position: relative; // for modals
+	
+	&#footer-container {
+		position: static; // So we can pop out the footer into the side nav
+	}
 }
 
 // Visibility utilities
@@ -87,32 +91,6 @@ $mediaSmallPortrait: 320px;
 		@include responsiveImageAsset($threeW);
 	}
 	
-	// Fluid Footer for small resolutions
-		.footer-nav { 
-			> .span3 { // one column
-				margin-left: 0;
-				.section {
-					@include makeFluidRow; // So the rows within each section will persist
-					border-left: none !important;
-					border-bottom: 1px solid $grayDark;
-					padding-bottom: 5px;
-					padding-top: 5px;
-					min-height: 0;
-					.mq-row-fluid {
-						@include makeFluidRow;
-					}
-					nav {
-						@include gridFluidSpan(6);
-					}
-				}
-		
-				&:last-child .section {
-					border-bottom: none;
-				}
-			}
-		}
-	// end Fluid Footer
-	
 	// Hide CFF vertical nav, show horizontal nav
 		nav.section-nav.vertical { display: none; }
 		nav.section-nav.horizontal { display: block; }
@@ -155,14 +133,6 @@ $mediaSmallPortrait: 320px;
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 	.head-lead {
 		@include vertify;
-	}
-	
-	.footer-nav > .span3 { // two columns
-		@include gridFluidSpan(6);
-		&:nth-child(3) { 
-			margin-left: 0px;
-			.section { border-left: none; }
-		}
 	}
 	
 	// Set new widths for main columns in CFF layout
@@ -222,19 +192,15 @@ $mediaSmallPortrait: 320px;
 	.broadcastbar .next-program { display: none; }
 	#masthead { 
 		text-align: center;
-		.utils { display: none; }
 		
 		// Minimal Header
-			background: $grayLighter;
+			background: #2e2e2e;
 			@include box-shadow(0 3px 5px rgba(0,0,0,.5));
 
-			.nav-primary {
-				display: none;
-			}
-
-			.nav-condensed {
-				display: block;
-			}
+			#masthead-mid-header-wrapper, #masthead-right-header-wrapper { display: none; }
+			.head-lead, .nav-primary { display: none; }
+			.head-lead-minimal { display: block !important; }
+			
 		// end Minimal Header
 	}
 	
@@ -263,6 +229,74 @@ $mediaSmallPortrait: 320px;
 	
 	.section-nav-header { display: none; }
 	#events-event-detail { @include gridFluidSpan(12); }
+	
+	// Pop the footer nav out and turn it into the side-nav
+		body { 
+			position: relative;
+			margin: 0;
+		} // So the nav action works
+		$compactNavW: 300px; // Be sure to change it in utilities.js/CompactNav as well.
+		footer {
+			.footer-nav {
+				@include box-shadow(3px 3px 3px rgba(0,0,0,.4));
+				position: absolute;
+				top: 0;
+				left: $compactNavW * -1;		
+				width: $compactNavW;
+			
+				.compact-nav-head { display: block; }
+			
+				h3 { // Switch these to have the darker background
+					@include footer-h4;
+				}
+			
+				h4 { 
+					@include footer-h3;
+					font-size: 12px;
+					color: $gray;
+				}
+			
+				[class*="span"] {
+					float: none;
+					display: block;
+					width: auto;
+					margin: 0;
+				}
+			
+				.section {
+					border: none;
+					display: block;
+					padding: 0;
+					nav { margin: 0; }
+					ul li, ul li.bullet, address { padding-left: 10px; }
+					ul li, h4, h3 {
+						border-top: 1px solid $grayDark;
+						border-bottom: 1px solid $black;
+						margin: 0;
+					}
+				
+					ul {
+						&.inline li { 
+							display: block;
+							margin: 0;
+						}
+						&.social-media li {
+							border: none;
+							margin: 5px 5px 5px 0;
+							display: inline-block;
+						}
+						li.bullet { 
+							background-image: none; 
+						}
+					}
+				}
+			}
+		
+			.bottom-links {
+				border: none;
+			}
+		}
+	// end sideNav
 }
 
 

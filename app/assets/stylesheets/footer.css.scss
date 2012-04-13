@@ -1,7 +1,29 @@
+$footerBackground: #2e2e2e;
 .dark-theme footer { background-image: url(image_path('footer-arrow-dark.png')); }
 
+@mixin footer-h4 { // so we can switch h3 and h4 easily in responsive
+	background-color:#232323;
+	border-bottom:1px solid $grayAlt;
+	border-top:1px solid $grayAlt;
+	color:#545454;
+	font-size:13px;
+	margin-bottom:2px;
+	padding:0 3px;
+	text-shadow:0 1px 0 #000;	
+}
+
+@mixin footer-h3 {
+	background-color: transparent;
+	border: none;
+	color:#8f8f8f;
+	font-size:14px;
+	font-weight:200;
+	margin-bottom:6px;
+	text-shadow:0 1px 0 #000;
+}
+
 footer {
-	background-color: #2e2e2e;
+	background-color: $footerBackground;
 	background-image: url(image_path('footer-arrow.png'));
 	background-repeat: no-repeat;
 	background-position: 75% 0;
@@ -14,25 +36,9 @@ footer {
 		color:#5c5c5c;
 		@include font-shorthand(normal, 11px);
 	}
-	
-	h4 {
-		background-color:#232323;
-		border-bottom:1px solid $grayAlt;
-		border-top:1px solid $grayAlt;
-		color:#545454;
-		font-size:13px;
-		margin-bottom:2px;
-		padding:0 3px;
-		text-shadow:0 1px 0 #000;
-	}
-	
-	h3 {
-		color:#8f8f8f;
-		font-size:14px;
-		font-weight:200;
-		margin-bottom:6px;
-		text-shadow:0 1px 0 #000;
-	}
+
+	h4 { @include footer-h4; }
+	h3 { @include footer-h3; }
 	
 	h2 {
 		color:#00b9f3;
@@ -51,6 +57,26 @@ footer {
 	ul {
 		list-style-type: none;
 		margin: 0;
+		
+		li {
+			a { 
+				display: block; 
+				&:hover { text-decoration: none; }
+			}
+			
+			&.bullet {
+				background-position: left 8px;
+				background-repeat: no-repeat;
+				padding-left: 16px;
+				&.dark {
+					background-image: url(image_path('bullet-dark.png'));
+				}
+				&.light {
+					background-image: url(image_path('bullet-light.png'));
+				}
+			}
+		}
+		
 		&.inline li {
 			display: inline-block;
 			margin-right: 10px;
@@ -128,34 +154,32 @@ footer {
 				}
 			}
 		}
-		
-		li.bullet {
-			background-position: left 8px;
-			background-repeat: no-repeat;
-			padding-left: 16px;
-			&.dark {
-				background-image: url(image_path('bullet-dark.png'));
-			}
-			&.light {
-				background-image: url(image_path('bullet-light.png'));
-			}
-		}
 	}
 	
 	.pledge {
 		text-transform:none;
-		a:hover {
-			color:#fff;
+		a {
+			color: $white;
 			&:hover {
-				box-shadow:0 0 6px #000;
+				@include box-shadow(0 0 6px #000);
 			}
 		}
-
 	}
 	
 	.footer-nav {
+		.compact-nav-head {
+			display: none;
+			@include clearfix;
+			.pledge { float:left; }
+			.in-btn { 
+				float: right; 
+				margin-top: 7px;
+			}
+		}
+		
+		background: $footerBackground;
 		margin-bottom: 10px;
-		a { color:#bfbfbf; }
+		li a { color:#bfbfbf; }
 		nav { margin-bottom: 10px; }
 		
 		.section {
@@ -171,7 +195,7 @@ footer {
 	.mobile-apps {
 		width: 100%;
 		max-width: 225px;
-		a,img {
+		a, img {
 			display: block;
 			margin: 0 auto;
 			max-width: 225px;

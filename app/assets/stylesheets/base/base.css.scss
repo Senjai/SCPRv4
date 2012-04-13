@@ -322,7 +322,8 @@ a {
 	  &.primary,
 	  &.danger,
 	  &.success,
-	  &.info {
+	  &.info,
+	  &.inverse {
 	    color: #fff;
 	    &:hover {
 	      color: #fff;
@@ -335,6 +336,16 @@ a {
 			@include btnColor($blue, darken($blueDark, 10%));
 		}
 	  }
+	
+	  &.inverse {
+		color: $gray;
+	    @include btnColor($grayDark, $nearBlack);
+		background-color:$grayDark;
+		&:hover {
+			@include btnColor($grayDark, $nearBlack);
+		}
+	  }
+	
 	  &.success {
 	    @include btnColor(#62c462, #57a957);
 		background-color:#57a957;
