@@ -98,6 +98,7 @@ class scpr.ContentBaseAPI.MultiSelector
         else if evt.which == 13
             # select our matches
             $(_(@matches).values()).prop("checked",true) if @matches
+            _(@matches).each (el,text) -> $(el).parent().removeClass "match"
             @matches = null
             @string = null
             
