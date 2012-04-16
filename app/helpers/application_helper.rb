@@ -19,7 +19,7 @@ module ApplicationHelper
     
     html = ''
     
-    [content].flatten.each do |c|
+    (content.is_a?(Array) ? content : [content]).each do |c|
       if c.respond_to?(:content) && c.content.is_a?(ContentBase)
         c = c.content
       end

@@ -10,9 +10,9 @@ class Bio < ActiveRecord::Base
       :order      => :published_at,
       :sort_mode  => :desc,
       :with       => { :user_id => self.id },
-      :per_page   => 20,
+      :per_page   => 15,
       :page       => page
-    ).collect &:content
+    )
   end
   
   #----------
