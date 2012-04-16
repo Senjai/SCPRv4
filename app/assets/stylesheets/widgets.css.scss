@@ -263,6 +263,10 @@
 .sharing-tools {
 	@include story-sidebar-widget();
 	margin-bottom:$baseline;
+	&.bottom {
+		border-bottom: none;
+		margin: 0;
+	}
 	h5 {
 		color:$orangeDark;
 		display:block;
@@ -517,32 +521,26 @@ a.with-icon {
 		}
 	}
 }
-// Prev-Next Widget 
+
 .next-prev {
-	margin-top:$baseline * -1/2;
-	ul {
-		@include clearfix();
-		margin:0 0 ($baseline / 2) 0;
-		li {
-			@include nav-horiz();
-			padding:0;
-			width:49%;
-			&:first-child {
-				border-right:1px solid $grayLighter;
-			}
-			&.next p {
-				text-align:right;
-			}
-			&.next h6 {
-				text-align:right;
-			}
-			h6 {
-				color:$grayLight;
-			}
-			a {
-				display:block;
-				padding:10px;
-			}
+	@include font-headline($weight: normal);
+	font-size: 14px;
+	padding-bottom: 5px;
+	a { color: $black; }
+	
+	.left {
+		text-align: left;
+		.arrow {
+			margin-right: 10px;
+			float: left;
+		}
+	}
+	
+	.right {
+		text-align: right;
+		.arrow {
+			margin-left: 10px;
+			float: right;
 		}
 	}
 }
@@ -585,13 +583,14 @@ a.with-icon {
 // PIJ Query
 .pij-query {
 	h6 {
-	background:transparent url(image_path('icons/pij-query.png')) no-repeat 0 4px;
-	color:$grayDark;
-	padding-left:30px;
-	small {
-		@include font-sans-serif(normal, 11px);
-		text-transform:none;
-	}
+		background: url(image_path('icons/pij-query.png')) no-repeat 0 4px;
+		color:$grayDark;
+		padding-left:30px;
+		line-height: $baseLineHeight;
+		small {
+			@include font-sans-serif(normal, 11px);
+			text-transform:none;
+		}
 	}
 }
 
@@ -662,9 +661,14 @@ a.with-icon {
 .content-carousel { 
 	@include responsiveImageAsset($thumbW);
 	@include centeredAsset;
-	.title a { 
-		@include font-navigation($size: 14px);
-		color: $nearBlack;
+	.title {
+		display: block;
+		text-align: center;
+		margin-bottom: 10px;
+		a { 
+			@include font-navigation($size: 14px);
+			color: $nearBlack;
+		}
 	}
 }
 .content_carousel {

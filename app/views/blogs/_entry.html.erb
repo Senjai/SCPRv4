@@ -1,13 +1,27 @@
-<div class="row-fluid">
-	<%= article_meta_for entry %>
-	
-	<div class="span9">
-		<article class="entry">
-			<h1 class="story-headline"><%= link_to entry.title, entry.link_path %></h1>
-			<p class="byline"><%= render_byline entry %></p>
-			<%= render_asset entry, "blog" %>
-			<div class="story-body"><%= simple_format entry.content, {}, sanitize: false %></div>
-			<p><i><%= render_contributing_byline entry %></i></p>
-		</article>
-	</div> <!-- span9 -->
-</div> <!-- row fluid -->
+<div class="entry content-block">
+	<div class="row-fluid">
+		<%= article_meta_for entry %>
+
+		<div class="span9 mq-solo-span">
+			<article>
+				<header>
+					<h1 class="story-headline"><%= link_to entry.title, entry.link_path %></h1>
+					<p class="byline"><%= render_byline entry %></p>
+				</header>
+		
+				<div class="story-body">
+					<%= render_asset entry, "blog" %>
+					<%= simple_format entry.content, {}, sanitize: false %>
+				</div>
+		
+				<footer>
+					<i><%= render_contributing_byline entry %></i>
+					<% if entry.tags.present? %>
+						<br /><i>Tagged:</i> <%= raw entry.tags.collect {|t| link_to(t.name, blog_entries_tagged_path(@blog.slug,t.slug)) }.join(", ") %>
+					<% end %>
+				</footer>
+			</article>
+			<%= social_tools_for entry, cssClass: "bottom" %>
+		</div> <!-- span9 -->
+	</div> <!-- row fluid -->
+</div> <!-- entry -->

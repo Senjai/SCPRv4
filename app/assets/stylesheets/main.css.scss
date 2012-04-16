@@ -414,15 +414,17 @@ nav.filters {
 }
 
 // Global Styles
-.block-content { 
-	padding-right: 10px;
+.content-block {
+	border-bottom: 1px solid $grayLight;
+	margin-bottom: 10px;
 }
 
-section.fold {
+.fold {
 	h6 {
 		font-size: 12px;
 		margin-top: 5px;
 		text-align: right;
+		line-height: $baseLineHeight;
 	}
 }
 

@@ -58,9 +58,16 @@
 }
 
 .entry {
-	padding-top:$baseline / 2;
-	@include responsiveImageAsset($sixW);
-	border-bottom: 1px solid $grayLight;
+	article {
+		padding-top:$baseline / 2;
+		padding-bottom: $baseline / 2;
+		@include responsiveImageAsset($sixW);
+	}
+	
+	&.li { 
+		border-bottom: 1px solid $grayLight;
+		margin-bottom: 10px;
+	}
 }
 
 // Blog Entry Date Styling

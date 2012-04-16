@@ -100,14 +100,9 @@ span.fake-link {
 			color:$nearBlack;
 		}
 	}
-	&.event-detail {
+	&.content-block {
 		@include responsiveImageAsset($sixW);
-		.sharing-tools.bottom {
-			border-bottom:none;
-			margin-bottom:0;
-		}
 		.event-details {
-			@include responsiveImageAsset($sixW);
 			padding: 5px 0;
 			margin-bottom: 10px;
 			border-top: 1px solid $grayLighter;
@@ -160,9 +155,11 @@ span.fake-link {
 
 .more-events {
 	border-bottom:1px solid $grayLight;
-	border-top:1px solid $grayLight;
 	margin-bottom: 10px;
-	padding:16px 0;
+	
+	.event { 
+		margin-bottom: 10px;
+	}
 	
 	h5 a {
 		color: $nearBlack;
@@ -449,10 +446,6 @@ nav.section-nav {
 			margin-left:-10px;
 		}
 	}
-}
-
-.section-nav-horizontal {
-	
 }
 
 

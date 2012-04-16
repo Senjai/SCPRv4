@@ -1,28 +1,22 @@
-<% 
-	page_title [@blog.name, @entry.title], " : "
-	@OG_TYPE = "blog"
-%>
+<% page_title [@blog.name, @entry.title], " : "
+@OG_TYPE = "blog" %>
 
 <%= render_content @entry, "opengraph" %>
-
 <%= render :partial => "entry", :object => @entry %>
 
-<div class="row-fluid">
-	<div class="span3 visible-desktop">&nbsp;</div>
-	<div class="span9">
-		<% if @entry.tags.any? %>
-			<p>
-				<i>Tagged:</i> 
-				<%= raw @entry.tags.collect {|t| link_to(t.name, blog_entries_tagged_path(@blog.slug,t.slug)) }.join(", ") %>
-			</p>
-		<% end %>
-		
-		<%= related_for @entry %>
-		<%= social_tools_for @entry, cssClass: "bottom" %>
-		<%= render "shared/cwidgets/next_prev" %>
-		<%= comments_for @entry %>
-	</div>
-</div>
+<div class="fold" id="fold">
+	<%= related_for @entry %>
+	<%= render "shared/cwidgets/next_prev" %>
+	
+	<div class="row-fluid">
+		<div class="span3" id="fold-comments-count-widget">
+			<%= comment_widget_for @entry, cssClass: "left-side", name: "comments" %>
+		</div>
+		<div class="span9 mq-solo-span">
+			<%= comments_for @entry, header: false %>
+		</div>
+	</div> <!-- row-fluid -->
+</div> <!-- fold -->
 
 <%= render "shared/cwidgets/track_page", :content => @entry %>
 

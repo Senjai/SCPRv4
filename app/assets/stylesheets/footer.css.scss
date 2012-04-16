@@ -1,5 +1,5 @@
 $footerBackground: #2e2e2e;
-.dark-theme footer { background-image: url(image_path('footer-arrow-dark.png')); }
+.dark-theme #page-footer footer { background-image: url(image_path('footer-arrow-dark.png')); }
 
 @mixin footer-h4 { // so we can switch h3 and h4 easily in responsive
 	background-color:#232323;
@@ -22,13 +22,15 @@ $footerBackground: #2e2e2e;
 	text-shadow:0 1px 0 #000;
 }
 
-footer {
+#page-footer footer {
 	background-color: $footerBackground;
 	background-image: url(image_path('footer-arrow.png'));
 	background-repeat: no-repeat;
 	background-position: 75% 0;
+  	padding-top: $baseline - 1;
 	padding-bottom: 30px;
 	color:#bfbfbf;
+	margin-top: $baseline - 1;
 	@include font-sans-serif(normal, 11px);
 	text-transform:uppercase;
 	

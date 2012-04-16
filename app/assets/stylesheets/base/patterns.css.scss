@@ -274,10 +274,6 @@ div.secondary-nav {
     line-height: $baseline * 1.5;
   }
 }
-footer {
-  margin-top: $baseline - 1;
-  padding-top: $baseline - 1;
-}
 
 // PAGE HEADERS
 // ------------
@@ -515,28 +511,6 @@ footer {
       text-shadow: 0 1px 1px rgba(0,0,0,.25);
     }
   }
-}
-
-// Basic footer nav
-footer {
-	ul.menu {
-		font-size:11px;
-		text-align:center;		
- 		li {
-			color:$grayLight;
-			display:inline;
-		}
-		a {
-			color:$grayLight;
-		}
-		a:hover {
-			color:$gray;
-		}
-	}
-	.pipe {
-		display:inline-block;
-		padding:0 5px;
-	}	
 }
 
 // Dividers

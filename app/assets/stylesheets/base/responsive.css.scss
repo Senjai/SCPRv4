@@ -8,11 +8,6 @@ $mediaMidPortrait: 768px;
 $mediaSmallLandscape: 480px;
 $mediaSmallPortrait: 320px;
 
-// RESPONSIVE CLASSES
-// ------------------
-
-// Hide from screenreaders and browsers
-// Credit: HTML5 Boilerplate
 .hidden {
   display: none;
   visibility: hidden;
@@ -37,14 +32,6 @@ $mediaSmallPortrait: 320px;
 .hidden-phone      { display: block; }
 .hidden-tablet     { display: block; }
 .hidden-desktop    { display: none; }
-
-// Tablets & small desktops only
-@media screen and (min-width: 768px) and (max-width: 979px) {
-  .visible-tablet    { display: block; }
-  .hidden-tablet     { display: none; }
-  .hidden-desktop    { display: block; }
-  .visible-desktop   { display: none; }
-}
 
 
 
@@ -82,6 +69,10 @@ $mediaSmallPortrait: 320px;
 	
 	.cbase {
 		&.offlead .row-fluid { @include makeFluidRow; } // Assets are thumbnails so these can stay in multiple column format
+	}
+	
+	.next-prev .span9 .row-fluid { 
+		@include makeFluidRow; // It's just a few words, no need to make it vertical
 	}
 	
 	.related-content {
@@ -124,6 +115,18 @@ $mediaSmallPortrait: 320px;
 			}
 		}
 	// End Pager
+	
+	// Make content carousel assets 2-columns instead of 1 column, since they're just thumbs
+		.content-carousel {
+			.row-fluid {
+				@include makeFluidRow;
+				> .span3 {					
+					@include gridFluidSpan(6);
+					&:nth-child(odd) { padding-left: 0px; margin-left: 0px; }
+				}
+			}
+		}
+	// end Content Carousel
 }
 
 
@@ -158,10 +161,22 @@ $mediaSmallPortrait: 320px;
 
 // Below Portrait Tablet ("reader mode")
 @media screen and (max-width: $mediaMidPortrait - 1) {	
-	.fold h6 {
-		margin-top: 0 !important;
-		text-align: left !important;
 	
+	.visible-reader { display: block; }
+	.hidden-reader { display: none; }
+	
+	.content-block, .fold, .blog-masthead {
+		.mq-solo-span { // Spans with this class will be by themselves at the "reader mode" breakpoint, so we need to tell them to span 100% and ditch the left margin
+			@include gridFluidSpan(12);
+			margin-left: 0;
+		}
+	}
+	
+	.fold {
+		h6 {
+			margin-top: 0 !important;
+			text-align: left !important;
+		}
 		.comment-count {
 			display: none;
 		}
@@ -234,7 +249,7 @@ $mediaSmallPortrait: 320px;
 		html, body, .container-fluid, header, footer { margin: 0; } 
 		body { position: relative; } // So the nav action works
 		$compactNavW: 300px; // Be sure to change it in utilities.js/CompactNav as well.
-		footer {
+		#page-footer footer {
 			.footer-nav {
 				@include box-shadow(3px 3px 3px rgba(0,0,0,.4));
 				position: absolute;
@@ -305,6 +320,8 @@ $mediaSmallPortrait: 320px;
 // Tablet Portrait And Above
 @media screen and (min-width: $mediaMidPortrait) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
+	.visible-reader { display: none; }
+	.hidden-reader { display: block; }
 }
 
 
@@ -395,6 +412,8 @@ $mediaSmallPortrait: 320px;
 
 
 
+
+
 // Below Max Width
 @media screen and (max-width: $mediaMax - 1) {
 	
@@ -418,7 +437,7 @@ $mediaSmallPortrait: 320px;
 
 
 // Max width (normal screen) and above
-@media screen and (min-width: $mediaMax) {
+@media screen and (min-width: $mediaMax) {	
 	.container-fluid {
 		margin-left: auto;
 		margin-right: auto;

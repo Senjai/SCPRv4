@@ -1,36 +1,39 @@
 <% page_title @story.headline %>
 <%= render_content @story, "opengraph" %>
 
-<% content_for :headline do %>
-	<%= social_tools_for @story, cssClass: "top" %>
-	<h1 class="story-headline"><%= @story.headline %></h1>
-	<p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
-<% end %>
+<div class="story content-block">
+	<article>
+		<header>
+			<%= social_tools_for @story, cssClass: "top" %>
+			<h1 class="story-headline"><%= @story.headline %></h1>
+			<p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
+		</header>
+	
+		<div class="story-body <%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
+			<%= render_asset @story, "story" %>
 
-<div class="<%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
-<div class="story-body">
-	<%= render_asset @story, "story" %>
+			<div class="storybar">
+				<%= comment_widget_for @story, cssClass: 'right-side' %>
+				<%= render "shared/cwidgets/audio", :content => @story %>
+				<%= render_asset(@story, "extra") if @story.extra_asset_scheme == "sidebar" %>
+			</div>
 
-	<div class="storybar">
-		<%= comment_widget_for @story, cssClass: 'right-side' %>
-		<%= render "shared/cwidgets/audio", :content => @story %>
-		<%= render_asset(@story, "extra") if @story.extra_asset_scheme == "sidebar" %>
-	</div>
-
-	<%= simple_format @story.body, {}, :sanitize => false %>
-
-	<p><i><%= render_contributing_byline @story %></i></p>
-</div>
-	<%= related_for @story %>
-	<%= render "shared/cwidgets/pij_query", :content => @story %>
+			<%= simple_format @story.body, {}, :sanitize => false %>
+		</div>
+	
+		<footer>
+			<p><i><%= render_contributing_byline @story %></i></p>
+		</footer>
+	</article>
 	<%= social_tools_for @story, cssClass: "bottom" %>
-	<%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
-</div>
+</div> <!-- story -->
 
-<% content_for :postcontent do %>
-	<%= render "shared/cwidgets/content_carousel", :content => @story %>
-	<%= comments_for @story %>
-<% end %>
+<%= related_for @story %>
+<%= render "shared/cwidgets/pij_query", :content => @story %>
+<%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
+
+<%= render "shared/cwidgets/content_carousel", :content => @story %>
+<%= comments_for @story %>
 
 <%= render "shared/cwidgets/track_page", :content => @story %>
 

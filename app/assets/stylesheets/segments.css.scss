@@ -43,10 +43,13 @@ section.segment-meta {
 	}
 }
 
-article.segment {
-	@include responsiveImageAsset($sixW);
-	h1.story-title {
-		@include font-headline();
+.segment {
+	border-bottom: 1px solid $grayLight;
+	article {
+		@include responsiveImageAsset($sixW);
+		h1.story-title {
+			@include font-headline();
+		}
 	}
 }
 

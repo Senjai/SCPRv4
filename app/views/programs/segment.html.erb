@@ -1,38 +1,39 @@
 <% page_title [@segment.headline, @program.title] %>
 <%= render_content @segment, "opengraph" %>
 
-<div class="row-fluid">
-	<%= article_meta_for @segment %>
+<div class="segment content-block">
+	<div class="row-fluid">
+		<%= article_meta_for @segment %>
 	
-	<div class="span9">
-		<section class="segment">
-			<h5 class="episode-title">
-				<% if @segment.episode.present? %>
-					<%= link_to @segment.episode.title, @segment.episode.link_path %>
-				<% else %>
-					<%= link_to @program.title, program_path(@program) %>
-				<% end %>
-			</h5>
-
-			<article class="segment">
-				<h1 class="story-headline"><%= @segment.headline %></h1>
-				<p class="byline"><%= render_byline @segment %></p>
+		<div class="span9 mq-solo-span">
+			<article>
+				<header>
+					<h5 class="episode-title">
+						<% if @segment.episode.present? %>
+							<%= link_to @segment.episode.title, @segment.episode.link_path %>
+						<% else %>
+							<%= link_to @program.title, program_path(@program) %>
+						<% end %>
+					</h5>
+					<h1 class="story-headline"><%= @segment.headline %></h1>
+					<p class="byline"><%= render_byline @segment %></p>
+				</header>
 			
-				<%= render_asset @segment, "segment" %>
 				<div class="story-body">
+					<%= render_asset @segment, "segment" %>
 					<%= simple_format @segment.body, {}, :sanitize => false %>
-			
 					<br style="clear: both"/>
 				</div>
+				
 			</article><!-- article.segment -->
-		
-			<%= related_for @segment %>
 			<%= social_tools_for @segment, cssClass: "bottom" %>
-		</section> <!-- section.segment -->
-	</div> <!-- span -->
-</div>
+		</div> <!-- span -->
+	</div> <!-- row fluid -->
+</div> <!-- segment -->
 
-<section class="fold" id="fold">
+<div class="fold" id="fold">
+	<%= related_for @segment %>
+	
 	<aside class="other-segments" id="other-segments">
 		<div class="row-fluid">
 			<div class="span3 row-title">
@@ -49,11 +50,11 @@
 	</aside>
 		
 	<div class="row-fluid">
-		<div class="span3" id="fold-comments-count-widget">
+		<div class="span3 row-title" id="fold-comments-count-widget">
 			<%= comment_widget_for @segment, cssClass: "left-side", name: "comments" %>
 		</div>
-		<div class="span9">
+		<div class="span9 mq-solo-span">
 			<%= comments_for @segment, header: false %>
 		</div>
 	</div> <!-- row-fluid -->
-</section>
+</div>
