@@ -58,6 +58,8 @@ class scpr.ContentBaseAPI.MultiSelector
     
     deactivate: (el) ->
         $(el.el).removeClass "active"
+        $(".match", el.el).removeClass "match"
+        
         @string = null
         @matches = null
         @active = null
@@ -74,14 +76,20 @@ class scpr.ContentBaseAPI.MultiSelector
             @string = (@string||"") + char
             
             # deselect all matches
-            $(@matches).removeClass("match") if @matches
+            _(@matches).each (el,text) -> $(el).parent().removeClass("match")
             
             test = ///^\s*#{@string}///i
             # now select anything that matches our new string
             m = {}
             _(@matches || @active.opts).each (el,text) ->
                 # does the text match our string?
-                m[ text ] = el if test.test(text)
+                if test.test(text)
+                    # put this into matches
+                    m[ text ] = el 
+                    
+                    # and highlight it
+                    # el is the input itself, so highlight on the parent label
+                    $(el).parent().addClass("match")
                 
             # matches?
             @matches = m unless _(m).isEmpty()
