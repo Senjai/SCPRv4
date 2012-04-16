@@ -69,7 +69,7 @@ class scpr.ContentBaseAPI.MultiSelector
     _keyhandler: (evt) ->
         # short-circuit if we aren't active
         return true if !@active
-        
+                
         if 65 <= evt.which <= 90
             console.log "keypress is ", evt
             char = String.fromCharCode evt.which
@@ -98,6 +98,13 @@ class scpr.ContentBaseAPI.MultiSelector
         else if evt.which == 13
             # select our matches
             $(_(@matches).values()).prop("checked",true) if @matches
+            @matches = null
+            @string = null
+            
+        else if evt.which == 27
+            # escape... clear our selection string and matches
+            console.log "in escape handler"
+            _(@matches).each (el,text) -> $(el).parent().removeClass "match"
             @matches = null
             @string = null
             
