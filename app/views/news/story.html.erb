@@ -8,17 +8,19 @@
 <% end %>
 
 <div class="<%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
+<div class="story-body">
 	<%= render_asset @story, "story" %>
 
 	<div class="storybar">
-		<%= render "shared/cwidgets/comment_count", :cssClass => 'right-side', :content => @story %>
+		<%= comment_widget_for @story, cssClass: 'right-side' %>
 		<%= render "shared/cwidgets/audio", :content => @story %>
+		<%= render_asset(@story, "extra") if @story.extra_asset_scheme == "sidebar" %>
 	</div>
 
-	<div class="story-body"><%= simple_format @story.body, {}, :sanitize => false %></div>
+	<%= simple_format @story.body, {}, :sanitize => false %>
 
 	<p><i><%= render_contributing_byline @story %></i></p>
-
+</div>
 	<%= related_for @story %>
 	<%= render "shared/cwidgets/pij_query", :content => @story %>
 	<%= social_tools_for @story, cssClass: "bottom" %>

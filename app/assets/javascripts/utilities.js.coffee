@@ -2,7 +2,7 @@
 
 class scpr.CompactNav
     constructor: ->
-        @navWidth = 300;
+        @navWidth = 300
         $("#condensed-nav-link").on
             click: => @slideNav(0, "in")
 
