@@ -1,0 +1,9 @@
+<% assets[1..-1].each do |asset| %>
+	<div class="contentasset sidebar">
+		<%= asset.asset.lsquare.tag %>
+		<h4><%= asset.asset.owner %></h4>
+		<% if asset.caption.present? %>
+			<p><%= asset.caption%></p>
+		<% end %>
+	</div>
+<% end %>

@@ -3,29 +3,14 @@
 	float: right;
 	clear: right;
 	margin-left: 12px;
+	@include responsiveImageAsset($lsquareW);
 }
 
 .storycenter {
-	@extend .offset1;
-	.storybar {
-		margin-left: 12px
-		
-	}
+	@include centeredAsset;
+	@include responsiveImageAsset($sixW);
 }
 
-.storyleft {
-	padding-right: 190px;
-	.storybar {
-		margin-right: -190px;
-	}
-	
-}
-
-.storytitle {
-	border-top:1px solid $grayLighter;
-	margin-bottom:$baseline;
-	padding-top:($baseline / 2);
-}
 .byline {
 	color:$gray;
 	@include text-utility();
@@ -42,4 +27,12 @@
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: 10px;
 	p.byline { margin-bottom: 0;}
+}
+
+.slideview { // Temporarily overriding the fixed-size slideshow elements
+	width: 100% !important;
+	max-width: 100% !important;
+	.ah_imgholder, .ah_imgholder img { max-width: 100% !important; margin: 0 auto !important; height: auto !important; }
+	ul, li, .text { max-width: 100% !important; margin: 0 auto !important; }
+	li { height: auto !important; }
 }

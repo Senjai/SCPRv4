@@ -161,10 +161,10 @@ $mediaSmallPortrait: 320px;
 	.fold h6 {
 		margin-top: 0 !important;
 		text-align: left !important;
-	}
 	
-	.comment-count {
-		display: none;
+		.comment-count {
+			display: none;
+		}
 	}
 	
 	.article-meta {
@@ -230,10 +230,8 @@ $mediaSmallPortrait: 320px;
 	#events-event-detail { @include gridFluidSpan(12); }
 	
 	// Pop the footer nav out and turn it into the side-nav
-		body { 
-			position: relative;
-			margin: 0;
-		} // So the nav action works
+		html, body, .container-fluid, header, footer { margin: 0; } 
+		body { position: relative; } // So the nav action works
 		$compactNavW: 300px; // Be sure to change it in utilities.js/CompactNav as well.
 		footer {
 			background-image:none;
@@ -277,8 +275,8 @@ $mediaSmallPortrait: 320px;
 					display: block;
 					padding: 0;
 					nav { margin: 0; }
-					h4, ul li, ul li.bullet, address { padding-left: 16px; }
-					ul li, h4, h3, .social-media li {
+					ul li a, address { padding-left: 10px; }
+					ul li, h4, h3 {
 						border-top: 1px solid $grayDark;
 						border-bottom: 1px solid $black;
 						margin: 0;
@@ -311,7 +309,8 @@ $mediaSmallPortrait: 320px;
 							}
 						}
 						li.bullet { 
-							background-image: none; 
+							background-image: none;
+							padding-left: 0;
 						}
 					}
 				}

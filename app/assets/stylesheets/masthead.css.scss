@@ -1,12 +1,12 @@
 // Masthead container
 header#masthead {
-	margin-bottom:$baseline;
-	
+	margin:0 0 $baseline 0;
 	.head-lead { min-height: 78px; }
 	.head-lead-minimal {
 		display: none;
 		text-align: center;
 		padding: 20px 0;
+		margin: 0;
 		@include clearfix;
 		
 		a.dark-logo {
