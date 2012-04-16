@@ -210,7 +210,6 @@ $mediaSmallPortrait: 320px;
 		
 		// Minimal Header
 			background: #2e2e2e;
-			@include box-shadow(0 3px 5px rgba(0,0,0,.5));
 
 			#masthead-mid-header-wrapper, #masthead-right-header-wrapper { display: none; }
 			.head-lead, .nav-primary { display: none; }
@@ -250,23 +249,34 @@ $mediaSmallPortrait: 320px;
 		body { position: relative; } // So the nav action works
 		$compactNavW: 300px; // Be sure to change it in utilities.js/CompactNav as well.
 		#page-footer footer {
+			background-image:none;
+			.partners, .mobile-apps {
+				display:none;
+			}
+			
 			.footer-nav {
-				@include box-shadow(3px 3px 3px rgba(0,0,0,.4));
 				position: absolute;
 				top: 0;
 				left: $compactNavW * -1;		
 				width: $compactNavW;
-			
+				&.active {
+					@include box-shadow(3px 0 8px rgba(0,0,0,.4));
+				}
 				.compact-nav-head { display: block; }
-			
+				h3, .pledge {
+					margin-left:12px;
+				}
 				h3 { // Switch these to have the darker background
 					@include footer-h4;
+					color:#8f8f8f;
+					padding-left:12px;
 				}
 			
 				h4 { 
 					@include footer-h3;
 					font-size: 12px;
-					color: $gray;
+					font-weight:bold;
+					color: #696969;
 				}
 			
 				[class*="span"] {
@@ -287,16 +297,32 @@ $mediaSmallPortrait: 320px;
 						border-bottom: 1px solid $black;
 						margin: 0;
 					}
+					ul.inline li.nav-label {
+						display:none;
+					}
+					ul li a {
+						color:#e0e0e0;
+						font-size:14px;
+						padding:4px 0;
+					}
 				
 					ul {
 						&.inline li { 
 							display: block;
 							margin: 0;
 						}
-						&.social-media li {
-							border: none;
-							margin: 5px 5px 5px 0;
-							display: inline-block;
+						&.social-media {
+							margin-bottom:0;
+							li {
+								margin:0;
+								display: block;
+								a {
+									background-image:none;
+									text-indent:0;
+									height:auto;
+									width:100%;
+								}
+							}
 						}
 						li.bullet { 
 							background-image: none;
