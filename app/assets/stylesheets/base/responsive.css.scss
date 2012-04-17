@@ -127,6 +127,8 @@ $mediaSmallPortrait: 320px;
 			}
 		}
 	// end Content Carousel
+	
+	.event .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
 }
 
 
@@ -164,6 +166,20 @@ $mediaSmallPortrait: 320px;
 	
 	.visible-reader { display: block; }
 	.hidden-reader { display: none; }
+	
+	.modal-popup { // using important flag here to cover all modals, since most of these rules are specified in more specific classes
+		position: fixed;
+		left: $containerPadding !important;
+		top: $containerPadding !important;
+		max-width: 85% !important;
+		max-height: 85% !important;
+		overflow: scroll;
+		.arrow-up { display: none; }
+		.google-map { 
+			max-width: 100%; 
+			max-height: 85%;
+		} // For google maps modals
+	}
 	
 	.content-block, .fold, .blog-masthead {
 		.mq-solo-span { // Spans with this class will be by themselves at the "reader mode" breakpoint, so we need to tell them to span 100% and ditch the left margin
