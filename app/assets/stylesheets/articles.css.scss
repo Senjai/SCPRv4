@@ -38,3 +38,23 @@
 	ul, li, .text { max-width: 100% !important; margin: 0 auto !important; }
 	li { height: auto !important; }
 }
+
+.content-block { // This is for news-style content (blogs, events, stories, segments) in its entirety - It is here to add styles to the main block of content
+	border-bottom: 1px solid $grayLight;
+	margin-bottom: 10px;
+}
+
+.fold { // related content below the main content - comments, "more from"s, etc.
+	h6 {
+		font-size: 12px;
+		margin-top: 5px;
+		text-align: right;
+		line-height: $baseLineHeight;
+	}
+}
+
+article {
+	img, object, iframe, embed {
+		max-width: 100%;
+	}
+}

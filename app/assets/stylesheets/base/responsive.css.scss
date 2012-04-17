@@ -128,7 +128,7 @@ $mediaSmallPortrait: 320px;
 		}
 	// end Content Carousel
 	
-	.event .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
+	.event.content-block .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
 }
 
 
