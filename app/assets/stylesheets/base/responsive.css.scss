@@ -141,7 +141,6 @@ $mediaSmallPortrait: 320px;
 }
 
 
-
 // Between Tablet Portrait and Phone Landscape
 @media screen and (max-width: $mediaMidPortrait - 1) and (min-width: $mediaSmallLandscape + 1) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);

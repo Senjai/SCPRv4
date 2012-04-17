@@ -182,7 +182,7 @@ nav.utils ul {
 					display: block;
 					@include font-navigation(600, 16px);
 					color:$grayDark;
-					padding:8px 24px;
+					padding:8px 22px;
 					text-transform:uppercase;
 					&:hover, &.hover {
 						background-color:$white;

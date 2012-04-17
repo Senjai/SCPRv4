@@ -55,21 +55,16 @@
 			</div> <!-- row fluid -->
 		</div>
 		
-		<% nav_items = [
-			{ title: "News", "data-section" => "news-mega", href: "/news/" },
-			{ title: "Arts &amp; Life", "data-section" => "arts-mega", href: "/arts-life/" },
-			{ title: "Programs", "data-section" => "programs-mega", href: "/programs/" },
-			{ title: "Events", "data-section" => "events-mega", href: "/events/" },
-			{ title: "Support Us", "data-section" => "support-mega", href: "/support/" }
-		] %>
 		<div id="megamenu" class="nav-primary">
 			<div class="navbar-inner">
 				<nav class="sections clearfix">
 					<ul>
 					    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>
-						<% nav_items.each do |item| %>
-						    <li class="mega"><a href="<%=item[:href]%>" data-section="<%=item["data-section"]%>"><span><%= item[:title].html_safe %></span></a></li>
-						<% end %>
+						<li class="mega"><a href="/news/" data-section="news-mega"><span>News</span></a></li>
+						<li class="mega"><a href="/arts-life/" data-section="arts-mega"><span>Arts &amp; Life</span></a></li>
+						<li class="mega"><a href="/programs/" data-section="programs-mega"><span>Programs</span></a></li>
+						<li class="mega"><a href="/events/" data-section="events-mega"><span>Events</span></a></li>
+						<li class="mega"><a href="/support/" data-section="support-mega"><span>Support Us</span></a></li>
 					</ul>
 				</nav>
 		
