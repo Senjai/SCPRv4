@@ -10,8 +10,11 @@
 #multimedia {
 	.video {
 		margin: 60px 5px $baseline 5px;
-		width:730px;
-		height:411px;
+		@include responsiveImageAsset;
+		max-width:730px;
+		max-height:411px;
+		img { height: auto; }
+		object { width: 100%; }
 		position: relative;
 		@include video-effects;
 	}
@@ -109,11 +112,20 @@ div.list {
 	}
 }
 
+.video > div:first-child { 
+	position: static !important; // So the overlay looks to .video
+	width: 100% !important; // So the video expands to 100% rather than a fixed width.
+}
+
 .BrightcoveVideoOverlay {
     @include opacity(0.5);
     background: url(http://media.scpr.org/assets/images/videoplayer-play.png) bottom left no-repeat;
     cursor: pointer;
     @include transition(opacity linear 0.2s);
+	width: 100% !important; // So it doesn't use the fixed width
+	position: absolute !important; // So we can tell it to sit at the bottom of the .video div
+	bottom: 0 !important;
+	height: 100% !important; // So it doesn't used the fixed height
 }
 
 .BrightcoveVideoOverlay:hover {

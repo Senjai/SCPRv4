@@ -125,6 +125,19 @@ $mediaSmallPortrait: 320px;
 	// end Content Carousel
 	
 	.event.content-block .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
+	
+	// latest videos: 2 cols
+		#multimedia .latest-videos {
+			.row-fluid {
+				@include makeFluidRow;
+				> .span3 {
+					@include gridFluidSpan(6);
+					&:nth-child(odd) { margin-left: 0; }
+					&:nth-child(even):after { visibility: hidden; content: "."; } // total hack, need to come up with a better way to do this
+				}
+			}
+		}
+	// end latest videos
 }
 
 
@@ -160,8 +173,8 @@ $mediaSmallPortrait: 320px;
 // Below Portrait Tablet ("reader mode")
 @media screen and (max-width: $mediaMidPortrait - 1) {	
 	
-	.visible-reader { display: block; }
-	.hidden-reader { display: none; }
+	.visible-reader { display: block !important; }
+	.hidden-reader { display: none !important; }
 	
 	.modal-popup { // using important flag here to cover all modals, since most of these rules are specified in more specific classes
 		$modalMargin: 4%;
@@ -169,7 +182,7 @@ $mediaSmallPortrait: 320px;
 		left: $modalMargin !important;
 		top: 180px !important; // Leave room for headers to show
 		width: 100% - $modalMargin * 2 !important;
-		max-height: 85% !important;
+		max-height: 75% !important;
 		overflow: scroll;
 		.arrow-up { display: none; }
 		.google-map { 
@@ -350,6 +363,12 @@ $mediaSmallPortrait: 320px;
 			}
 		}
 	// end sideNav
+	
+	#video { @include vertify; } // Make the video page stretch out
+	#multimedia {
+		.video { margin-top: 0; }
+	}
+	
 }
 
 
@@ -359,8 +378,8 @@ $mediaSmallPortrait: 320px;
 // Tablet Portrait And Above
 @media screen and (min-width: $mediaMidPortrait) {
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
-	.visible-reader { display: none; }
-	.hidden-reader { display: block; }
+	.visible-reader { display: none !important; }
+	.hidden-reader { display: block !important; }
 }
 
 
@@ -368,12 +387,8 @@ $mediaSmallPortrait: 320px;
 @media screen and (max-width: $mediaDesktopSmall - 1) {
 	// Simplify Filters nav to allow for graceful wrapping
 		.filters {
-			li.heading {
-				display: none !important;
-			}
-			.active-arrow {
-				display: none !important;
-			}
+			li.heading { display: none !important; }
+			.active-arrow { display: none !important; }
 		}
 	// end Filters
 	
@@ -455,7 +470,6 @@ $mediaSmallPortrait: 320px;
 
 // Below Max Width
 @media screen and (max-width: $mediaMax - 1) {
-	
 	// This happens below maxWidth because the banner is an image.
 	// TODO Change the support banner to a more fluid div so it can scale nicely.
 	// Remove background from Support Banner to allow fluidity //

@@ -15,7 +15,7 @@
 
 <div id="video" class="container-fluid">
 	<div class="row-fluid">
-		<div class="span2">
+		<div class="span2 hidden-reader">
 			<button class="browse-all-videos modal-toggler" data-modal-id="videos_list">Browse All Videos</button>
 			
 			<%= modal("videos-list", modal_id: "videos_list") do %>
@@ -42,17 +42,21 @@
 			<% if any_to_list? @latest_videos %>
 				<div class="multimedia latest-videos">
 					<h3 class="head">Latest Videos</h3>
-					<div class="list muted row-fluid">
-						<% @latest_videos.each do |video| %>
-							<% if video.assets.present? %>
-								<div class="video-thumb span3">
-									<%= render_asset video, "three" %>
-									<span class="title"><%= link_to video.short_headline, video_path(video) %></span>
-								</div>
+					<div class="list muted">
+						<div class="row-fluid">
+							<% @latest_videos.each do |video| %>
+								<% if video.assets.present? %>
+									<div class="span3">
+										<div class="video-thumb">
+											<%= render_asset video, "three" %>
+											<span class="title"><%= link_to video.short_headline, video_path(video) %></span>
+										</div> <!-- video-thumb -->
+									</div>
+								<% end %>
 							<% end %>
-						<% end %>
-					</div>
-				</div>
+						</div> <!-- row fluid -->
+					</div> <!-- list muted -->
+				</div> <!-- latest videos -->
 			<% end %>
 			<%= comments_for @video, cssClass: 'multimedia muted' %>
 		</article>
