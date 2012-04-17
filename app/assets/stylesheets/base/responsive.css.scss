@@ -170,7 +170,8 @@ $mediaSmallPortrait: 320px;
 	.modal-popup { // using important flag here to cover all modals, since most of these rules are specified in more specific classes
 		position: fixed;
 		left: $containerPadding !important;
-		top: $containerPadding !important;
+		top: 70px !important;
+		width: 92% !important;
 		max-width: 85% !important;
 		max-height: 85% !important;
 		overflow: scroll;
