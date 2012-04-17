@@ -153,14 +153,18 @@ nav.utils ul {
 	
 	.sections {
 		white-space: nowrap;
+		width: 76%;
 		ul {
 			margin-left: 0;
 			li {
+				width: 15%;
+				text-align: center;
 				height: 36px;
 				display: inline-block;
 				&.listen-live {
 					@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
 					background-color:#cb5f1d;
+					width: 126px;
 					&:hover {
 						@include background-image(linear-gradient(#cb5f1d, #9b4816));
 					}
@@ -182,7 +186,7 @@ nav.utils ul {
 					display: block;
 					@include font-navigation(600, 16px);
 					color:$grayDark;
-					padding:8px 22px;
+					padding:8px 0;
 					text-transform:uppercase;
 					&:hover, &.hover {
 						background-color:$white;
@@ -200,7 +204,9 @@ nav.utils ul {
 	}
 	
 	form {
-		float:right;
+		white-space: nowrap; // for the icon
+		width: 23%;
+		text-align: right;
 		margin-top: 5px; /* Push the form down a little to vertically center it */
 		fieldset {
 			margin: 0 8px 0 0;
@@ -212,7 +218,7 @@ nav.utils ul {
 				@include border-radius(20px);
 				margin-top:3px;
 				padding:0 8px;
-				width: 160px;
+				width: 75%;
 				&:focus {
 					outline: none;
 				    border-color:#999;

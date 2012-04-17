@@ -393,9 +393,8 @@ $mediaSmallPortrait: 320px;
 	
 	// Pledge Banner to Button & hide form
 		#masthead {
-			form {
-				display: none;
-			}
+			form { display: none; }
+			.nav-primary .sections { width: 100%; }
 			.mid-header-wrapper {
 				text-align: center;
 				.pledge-container {
