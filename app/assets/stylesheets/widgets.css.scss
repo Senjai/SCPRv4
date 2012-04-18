@@ -103,30 +103,41 @@
 }
 // Audio Bar
 .audio-bar {
-	&.bar-inactive {
-		bottom:$baseline * -3.5;
-	}
-	&.bar-active {
-		bottom:0;
-	}
+	max-width: $gridRowWidth;
+	width: 94%;
+	&.bar-inactive { bottom: $baseline * -4; }
+	&.bar-active { bottom:0; }
 	background-color:#fff;
+	min-height:$baseline * 3;
 	height:$baseline * 3;
 	position:fixed;
 	z-index:1000;
 	$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
 	@include box-shadow($nav-shadow);
+	
+	.section-left { 
+		@include gridFluidSpan(5);
+		float: left;
+	}
+	.section-mid { 
+		@include gridFluidSpan(6);
+		float: left;
+	}
+
 	.jp-gui {
 		border-right:1px solid $grayLighter;
-		width:400px;
-		float:left;
+		min-height:$baseline * 3;
+		//width:400px;
+		//float:left;
 	}
 	.jp-title {
-		border-right:1px solid $grayLighter;
-		width:648px;
-		float:left;
+		min-height:$baseline * 3;
+		//border-right:1px solid $grayLighter;
+		//width:648px;
+		//float:left;
 		p {
 			@include font-sans-serif(bold, 16px);
-			padding:20px;
+			padding: 10px;
 			span {
 				@include ie-inline-block();
 				margin-right:$baseline / 2;
@@ -135,15 +146,13 @@
 				text-transform:uppercase;
 			}
 			
-			i {
-			    font-style: inherit;
-			}
+			i { font-style: inherit; }
 		}
 	}
 	.jp-controls {
 		float:left;
-		height:$baseline * 3;
 		width:100px;
+		height:$baseline * 3;
 		margin:0;
 		padding:0 6px;
 		li {
@@ -163,33 +172,24 @@
 		margin-top:25px;
 		opacity:0.6;
 	}
-	.jp-rw:hover, .jp-ff:hover, .jp-mute:hover, .jp-unmute:hover {
-		opacity:1;
-	}
-	.jp-rw {
-		background-position:-97px -17px;
-	}
-	.jp-ff {
-		background-position:-125px -17px;
-	}
+	.jp-rw:hover, .jp-ff:hover, .jp-mute:hover, .jp-unmute:hover { opacity:1; }
+	.jp-rw { background-position:-97px -17px; }
+	.jp-ff { background-position:-125px -17px; }
+	.jp-play { background-position:0 0; }
+	.jp-play:hover { background-position:0 -45px; }
+	.jp-pause:hover { background-position:-49px -45px; }
+	.jp-unmute { background-position: -174px -10px; }
+	
 	.jp-play, .jp-pause {
 		margin-top:10px;
 		width:42px;
 		height:42px;
 	}
-	.jp-play {
-		background-position:0 0;
-	}
-	.jp-play:hover {
-		background-position:0 -45px;
-	}
+
 	.jp-pause {
 		background-position: -48px 0;
 		width:42px;
 		height:42px;
-	}
-	.jp-pause:hover {
-		background-position:-49px -45px;
 	}
 	.jp-mute, .jp-unmute {
 		background-position: -147px -10px;
@@ -198,23 +198,21 @@
 		width:25px;
 		height:25px;
 	}
-	.jp-unmute {
-		background-position: -174px -10px;
-	}
 	.jp-bar {
-		width:200px;
+		//width:200px;
+		width: 40%;
 		float:left;
 		margin-right:7px;
 	}
 	.jp-progress {
-		float:left;
-		width:285px;
+		//float:left;
+		//width:285px;
 		.jp-current-time, .jp-duration {
 			@include font-sans-serif(normal, 11px);
 			color:$nearBlack;
 			width:35px;
 			float:left;
-			margin-top:20px;
+			margin-top:20px;			
 		}
 		.jp-seek-bar {
 			background-color:#e0e0e0;
@@ -232,8 +230,9 @@
 		}
 	}
 	.bar-close {
-		float:left;
-		position:relative;
+		border-left: 1px solid $grayLighter;
+		min-height: $baseline * 3;
+		float:right;
 		width:60px;
 		a {	
 			color:#fff;
@@ -242,13 +241,8 @@
 			display:block;
 			font-size:9px;
 			width:58px;
-			height:58px;
 			opacity:0.8;
 			padding:42px 0 0 2px;
-			position:absolute;
-			left:0;
-			top:0;
-			vertical-align:bottom;
 			&:hover {
 				color:$gray;
 				opacity:1.0;
@@ -1050,14 +1044,10 @@ a.comment-count.inline {
 }
 
 .widget.facebook {
-	.fb-like-container {
-		text-align: right;
-	}
+	.fb-like-container { text-align: right; }
 	
-	.fb-facepile-container {
-		iframe {
-			width: 100% !important;
-		}
+	.fb-facepile {
+		iframe { width: 100% !important; }
 	}
 
 	p {

@@ -41,7 +41,7 @@ namespace :scprv4 do
     
     desc "Cache homepage one time"
     task :homepage => [ :environment ] do
-      puts "Cachining homepage..."
+      puts "Caching homepage..."
       require 'rubypython'
     
       # load python

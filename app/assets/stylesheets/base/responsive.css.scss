@@ -1,5 +1,3 @@
-$containerPadding: 25px;
-
 // Device sizes
 $mediaMax: $gridRowWidth + $containerPadding * 2; // The maximum we care about, after this it's just fixed-grid
 $mediaDesktopSmall: 960px;
@@ -8,11 +6,16 @@ $mediaMidPortrait: 768px;
 $mediaSmallLandscape: 480px;
 $mediaSmallPortrait: 320px;
 
+// Visibility utilities
+
 .hidden {
   display: none;
   visibility: hidden;
 }
+.visible-reader { display: none; }
+.hidden-reader { display: block; }
 
+// Default container behavior
 .container-fluid {
 	@include clearfix;
 	padding-left: $containerPadding;
@@ -23,16 +26,6 @@ $mediaSmallPortrait: 320px;
 		position: static; // So we can pop out the footer into the side nav
 	}
 }
-
-// Visibility utilities
-// For desktops
-.visible-phone     { display: none; }
-.visible-tablet    { display: none; }
-.visible-desktop   { display: block; }
-.hidden-phone      { display: block; }
-.hidden-tablet     { display: block; }
-.hidden-desktop    { display: none; }
-
 
 
 // Phone Landscape and below
@@ -356,17 +349,14 @@ $mediaSmallPortrait: 320px;
 				}
 			}
 		
-			.bottom-links {
-				border: none;
-			}
+			.bottom-links { border: none; }
 		}
 	// end sideNav
 	
 	#video { @include vertify; } // Make the video page stretch out
 	#multimedia {
 		.video { margin-top: 0; }
-	}
-	
+	}	
 }
 
 
@@ -407,9 +397,7 @@ $mediaSmallPortrait: 320px;
 		}
 	// end Pledge Banner to Button
 	
-	.audio-bar, #uvTab {
-		display: none !important; // temporary
-	}
+	#uvTab { display: none !important; } // The "feedback" button... fixed position on touch screen, more trouble than it's worth
 }
 
 
