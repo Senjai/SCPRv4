@@ -164,11 +164,11 @@ $mediaSmallPortrait: 320px;
 	.hidden-reader { display: none; }
 	
 	.modal-popup { // using important flag here to cover all modals, since most of these rules are specified in more specific classes
+		$modalMargin: 4%;
 		position: fixed;
-		left: $containerPadding !important;
-		top: 70px !important;
-		width: 92% !important;
-		max-width: 85% !important;
+		left: $modalMargin !important;
+		top: 180px !important; // Leave room for headers to show
+		width: 100% - $modalMargin * 2 !important;
 		max-height: 85% !important;
 		overflow: scroll;
 		.arrow-up { display: none; }
