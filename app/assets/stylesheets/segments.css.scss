@@ -21,28 +21,6 @@
 	}
 }
 
-section.segment-meta {
-	margin: 40px 0 0 0;
-	display: inline-block;
-	text-align: right;
-	time {
-		@include font-sans-serif($size: 10px, $weight: bold);
-	}
-	.sharing-tools {
-		margin-top: 20px;
-	}
-	.story-audio {
-		@include font-sans-serif($size: 10px);
-		.inner-container { /* This is because the audio widget as-is doesn't fit very well in the sidebar here */
-			padding: 5px;
-		}
-		.audio-content {
-			margin-top: 5px;
-			margin-right: 5px;
-		}
-	}
-}
-
 .segment {
 	border-bottom: 1px solid $grayLight;
 	article {

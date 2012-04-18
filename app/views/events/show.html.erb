@@ -5,7 +5,7 @@
 	<div class="row-fluid">
 		<div class="span3">
 			<div class="article-meta">
-				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "side", title: "event" } %> <%# To be replaced with a better solution %>
+				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "vertical left", title: "event" } %> <%# To be replaced with a better solution %>
 				<%#= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
 				
 				<% if @event.audio.present?%>
@@ -87,7 +87,7 @@
 				
 			</article>
 			
-			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "bottom" } %> <%# TODO Replace this with a better solution %>
+			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "horizontal bottom" } %> <%# TODO Replace this with a better solution %>
 		</div> <!-- span -->
 	</div> <!-- row-fluid -->
 </div> <!-- event -->
