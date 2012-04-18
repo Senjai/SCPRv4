@@ -44,7 +44,7 @@ class scpr.Audio
                     playBtn:    btn
                     mp3:        mp3
                     title:      title
-                    duration:	duration
+                    duration:   duration
                     
                 @widgets.push widget
         
@@ -52,7 +52,9 @@ class scpr.Audio
         
         # register listener to close audio bar
         $(".bar-close", @audiobar).click =>
-            @audiobar.animate {bottom:-70}, 300
+            @audiobar.animate {bottom:@audiobar.height() * -1}, 300, =>
+                @audiobar.removeClass('active')
+    
             @player.jPlayer "stop"
             
             @playing = false
@@ -96,6 +98,7 @@ class scpr.Audio
                 false
         
         # animate the bar
+        @audiobar.addClass("active")
         @audiobar.animate {bottom:0}, 1000
         
         # and hit play
