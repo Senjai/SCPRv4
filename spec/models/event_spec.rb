@@ -29,8 +29,8 @@ describe Event do
     end
     
     it "uses the full starts_at time if there is no ends_at" do
-      event = build :event, starts_at: 1.hour.ago, ends_at: nil
-      event.consoli_dated.should match event.starts_at.strftime("%l%P")
+      event = build :event, starts_at: Chronic.parse("5pm"), ends_at: nil
+      event.consoli_dated.should match "5pm"
     end
     
     it "consolidates the start and end date if they are the same" do
@@ -53,6 +53,26 @@ describe Event do
     it "hides meridian for starts_at only if it matches that of ends_at" do
       event = build :event, starts_at: Time.now.beginning_of_day, ends_at: Time.now.beginning_of_day + 60*60*2
       event.consoli_dated.scan("am").length.should eq 1
+    end
+    
+    it "only shows the hour if the event starts and ends on the hour" do
+      event = build :event, starts_at: Chronic.parse("5pm"), ends_at: Chronic.parse("6pm")
+      event.consoli_dated.should_not match /:/
+    end
+    
+    it "shows the minutes for both if the event does not start on the hour" do
+      event = build :event, starts_at: Chronic.parse("5:30pm"), ends_at: Chronic.parse("6pm")
+      event.consoli_dated.scan(/:/).length.should eq 2
+    end
+    
+    it "shows the minutes for both if the event does not end on the hour" do
+      event = build :event, starts_at: Chronic.parse("5pm"), ends_at: Chronic.parse("5:30pm")
+      event.consoli_dated.scan(/:/).length.should eq 2
+    end
+    
+    it "shows the minutes for both if the event does not start or end on the hour" do
+      event = build :event, starts_at: Chronic.parse("5:30pm"), ends_at: Chronic.parse("6:30pm")
+      event.consoli_dated.scan(/:/).length.should eq 2
     end
   end
   
