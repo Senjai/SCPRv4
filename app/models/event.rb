@@ -35,18 +35,21 @@ class Event < ActiveRecord::Base
   end
   
   def consoli_dated # should probably be a helper.
+    # If one needs minutes, use that format for the other as well, for consistency
+    timef = (starts_at.min == 0 and [0, nil].include?(ends_at.try(:min))) ? "%l" : "%l:%M"
+    
     if self.is_all_day
-      starts_at.strftime("%A, %B %e")
+      starts_at.strftime("%A, %B %e") # Wednesday, October 11
     elsif ends_at.blank?
-      starts_at.strftime("%A, %B %e, %l%P")
-    elsif starts_at.day == ends_at.day
-      if starts_at.strftime("%P") != ends_at.strftime("%P")
-        starts_at.strftime("%A, %B %e, %l%P-") + ends_at.strftime("%l%P")
+      starts_at.strftime("%A, %B %e, #{timef}%P") # Wednesday, October 11, 11am
+    elsif starts_at.day == ends_at.day # If the event starts and ends on the same day
+      if starts_at.strftime("%P") != ends_at.strftime("%P") # If it starts in the AM and ends in the PM
+        starts_at.strftime("%A, %B %e, #{timef}%P-") + ends_at.strftime("#{timef}%P")
       else
-        starts_at.strftime("%A, %B %e, %l-") + ends_at.strftime("%l%P")
+        starts_at.strftime("%A, %B %e, #{timef}-") + ends_at.strftime("#{timef}%P")
       end
-    else
-      starts_at.strftime("%A, %B %e, %l%P-") + ends_at.strftime("%A, %B %e, %l%P")
+    else # If the event starts and ends on different days
+      starts_at.strftime("%A, %B %e, #{timef}%P-") + ends_at.strftime("%A, %B %e, #{timef}%P")
     end
   end
   
