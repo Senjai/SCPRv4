@@ -58,10 +58,6 @@ $mediaSmallPortrait: 320px;
 		padding-right: 0;
 	}
 	
-	.broadcastbar .show-time {
-		display: none;
-	}
-	
 	
 	.more-news-content {
 		border-right: none !important;
@@ -221,7 +217,7 @@ $mediaSmallPortrait: 320px;
 		} 
 	// end Vertify
 
-	.broadcastbar .next-program { display: none; }
+	.broadcast-bar .section.next-program { display: none; }
 	#masthead { 
 		text-align: center;
 		

@@ -11,7 +11,7 @@
 <%= render "shared/masthead" %>
 
 <!-- BROADCAST BAR -->
-<%= render "shared/broadcast_bar" %>
+<%= render("shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
 
 <div class="container-fluid">
 	<div id="main">

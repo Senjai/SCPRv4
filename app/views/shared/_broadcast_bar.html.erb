@@ -1,62 +1,47 @@
-<% if o = Schedule.on_now %>
-	<div id="broadcast-bar-outer-container" class="<%= "headshot" if o.programme.is_a?(KpccProgram) %>">
-		<div id="broadcast-bar-inner-container">
-			<div class="container-fluid">
-				<section class="broadcastbar">
-					<div class="row-fluid">
-						<div class="span6">
-							<div class="current-program">
-								<ul>
-									<li class="active-show-title">
-										<%= image_tag "broadcast-bar/onair.png", :size => "56x21", :alt => "On Now", :style => "margin-bottom: -3px" %>
-										<% if o.programme %>
-											<% if o.programme.is_a? KpccProgram %>
-												<a href="<%= program_path(o.programme.slug) %>">
-													<%= image_tag("broadcast-bar/headshots/#{o.programme.slug}.png", :size => "90x70", :alt => o.programme.title, :class => "bbar_headshot") %>
-												</a>
-											<% end %>
-											<a href="<%= program_path(o.programme.slug) %>"<% if o.show_modal? %> class="modal-toggler" data-modal-id="episode-guide"<% end %>>
-												<%= o.program %>
-											</a>
-										<% else %>
-											<%= o.program %>
-										<% end %>
-									</li>
-									<li class="show-time">
-										<%= o.start_time.strftime(o.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
-										 - <%= o.end_time.strftime(o.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
-									</li>
-									<!-- <li class="show-status">On Now:</li> -->
-									<% if o.show_modal? %>
-										<li class="show-summary">
-											<%= modal("episode-guide", modal_id: "episode-guide") do %>
-												<%= render :partial => "shared/broadcast_bar/episode_guide", :object => o.programme.episodes.published.first, :as => :episode, :locals => { :program => o.programme } %>
-											<% end %>
-										</li>
-									<% end %>
-									<!-- <li class="join-conversation"><a href="" title="Join the conversation">Join the conversation</a></li> -->
-								</ul>
-							</div> <!-- current-show -->
-						</div> <!-- span6 -->
-						<div class="span6"> 
-							<div class="next-program">
-								<ul>
-									<% if u = o.up_next %>
-										<li class="upnext-show-title">
-											<%= image_tag("broadcast-bar/upnext.png", :size => "66x21", :alt => 'Up Next', :style => "margin-bottom: -3px") %>
-											<%= u.program %>
-										</li>
-										<li class="show-time">
-											<%= u.start_time.strftime(u.start_time.min == 0 ? "%l %P" : "%l:%M %P") %>
-											 - <%= u.end_time.strftime(u.end_time.min == 0 ? "%l %P" : "%l:%M %P") %>
-										</li>	
-									<% end %>
-								</ul>
-							</div> <!-- next-program -->
-						</div> <!-- span6 -->
-					</div> <!-- row-fluid -->
-				</section> <!-- broadcast-bar -->
-			</div> <!-- container-fluid -->
-		</div> <!-- inner-container -->
-	</div><!-- outer-container -->
-<% end %>
+<div class="broadcast-bar<%= " with-headshot" if current.programme.is_a? KpccProgram %>" id="broadcast-bar">
+	<div class="bb-inner-container">
+		<div class="container-fluid">
+			<div class="sections">
+				<div class="section current-program">
+					<div class="current program">
+						<% if current.programme.is_a? KpccProgram %>
+							<a href="<%= program_path(current.programme.slug) %>" class="headshot <%= current.programme.slug %>">&nbsp;</a>
+						<% end %>
+					
+						<div class="program-info">
+							<% if current.programme %>
+									<a href="<%= program_path(current.programme.slug) %>" class="show-title<%= " modal-toggler" if current.show_modal? %>" data-modal-id="<%= "episode-guide" if current.show_modal? %>"><%= current.program %></a>
+							<% else %>
+								<%= current.program %>
+							<% end %>
+							<span class="show-time"><%= current.start_time.strftime(current.start_time.min == 0 ? "%l %P" : "%l:%M %P") %> - <%= current.end_time.strftime(current.end_time.min == 0 ? "%l %P" : "%l:%M %P") %></span>
+						</div> <!-- program-info -->
+				
+						<% if current.show_modal? %>
+							<div class="modal-container">
+								<%= modal("episode-guide", modal_id: "episode-guide") do %>
+									<%= render :partial => "shared/broadcast_bar/episode_guide", :object => current.programme.episodes.published.first, :as => :episode, :locals => { :program => current.programme } %>
+								<% end %>
+							</div>
+						<% end %>
+					</div> <!-- current program -->
+				</div> <!-- section -->
+		
+				<div class="section next-program">
+					<div class="next program">
+						<% if up_next = current.up_next %>
+							<div class="program-info">
+								<% if up_next.programme %>
+									<a href="<%= program_path(up_next.programme.slug) %>" class="show-title"><%= up_next.program %></a>
+								<% else %>
+									<%= up_next.program %>
+								<% end %>
+								<span class="show-time"><%= up_next.start_time.strftime(up_next.start_time.min == 0 ? "%l %P" : "%l:%M %P") %> - <%= up_next.end_time.strftime(up_next.end_time.min == 0 ? "%l %P" : "%l:%M %P") %></span>
+							</div> <!-- program-info -->
+						<% end %>
+					</div> <!-- next program -->
+				</div> <!-- section -->
+			</div> <!-- sections -->
+		</div> <!-- container-fluid -->
+	</div> <!-- bb-inner-container -->
+</div>

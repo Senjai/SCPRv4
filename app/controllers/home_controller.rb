@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   
   def index
     @homepage = Homepage.published.first
+    @schedule_current = Schedule.on_now
   end
   
   #----------

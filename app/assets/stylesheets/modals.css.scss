@@ -14,7 +14,7 @@
 		width: 28px;
 		height: 12px;
 		position: absolute;
-		left: 70px; // specify a new 'left' property on your specific class for the modal, flagged with !important to override the horizontal position of the arrow
+		left: 70px; // specify a new 'left' property on your specific class for the modal override this default horizontal position of the arrow
 		top: -12px;
 	}
 	.modal-close {
@@ -134,8 +134,11 @@
 		@include modal-light;
 		width:650px;
 		min-height:300px;
-		left:-220px;
-		top:27px;
+		left:70px;
+		top:-10px;
+		.arrow-up { 
+			left: 349px;
+		}
 	} // .episode-guide
 	
 	&.videos-list {

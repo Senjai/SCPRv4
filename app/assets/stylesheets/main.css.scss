@@ -45,159 +45,291 @@
 }
 
 // Broadcast Bar
-#broadcast-bar-outer-container {
+.broadcast-bar {
 	border-top:1px solid $grayBorder;
 	border-bottom:1px solid $grayBorder;
-	margin:3px 0 25px 0;
-	&.headshot {
-		margin-top:12px;
+	margin-bottom: 25px;
+	
+	&.with-headshot { 
+		margin-top: 15px; // So the host isn't wearing the nav as a tophat
+		.program.current .program-info { margin-left: 100px; } // Push the show title link over since we have to absolutely-position the headshot
 	}
+	
+	.bb-inner-container {
+		background:$grayBackground;
+		border-top:1px solid $white;
+		border-bottom:1px solid $white;
+		height: 46px;
+		display: table; // so the BB extends downwards when the text wraps
+		width: 100%;
+		
+		.sections { display: table; width: 100%;}
+	}
+	
+	a.headshot {
+		position: absolute; // Since we have to push it up a bit to extend above the bar, and we don't want any extra space below
+		bottom: 0;
+		width: 90px;
+		height: 70px;
+		&:hover { text-decoration: none; }
+	}
+	
+	.program-info {
+		a.show-title {
+			@include font-heading($weight: 600, $size: 22px);
+			text-shadow:1px 1px 0px #fff;
+			color:$orangeDark;
+			margin-right: 5px; // Leave space for the show time
+		}
+		
+		.show-time {
+			@include font-sans-serif($weight:normal, $size:12px);
+			color:$gray;
+			letter-spacing:-0.15em;
+			white-space: nowrap; // Don't want the time getting split up onto different lines
+		}
+	}
+	
+	.section {
+		display: table-cell;
+		width: 50%;
+		vertical-align: middle;
+		height: 46px;
+
+		.program {
+			padding-left: 70px; // Room for the status badge
+			background-position: 0 0;
+			background-repeat: no-repeat;
+			
+			&.current {
+				float: left;
+				background-image: url(image_path("broadcast-bar/onair.png"));
+				a.modal-toggler {
+					background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
+					padding-right:15px;
+					&:hover {
+						background-position:right -34px;
+					}
+				}
+			}
+	
+			&.next {
+				float: right;
+				background-image: url(image_path("broadcast-bar/upnext.png"));
+			}
+		}
+	}
+	
 }
-#broadcast-bar-inner-container {
-	background:$grayBackground;
-	border-top:1px solid $white;
-	border-bottom:1px solid $white;
-	height:46px;
-}
-section.broadcastbar {
-	@include clearfix();
-	.current-program {
-	    margin-top: 14px;
+
+.episode-guide {
+	@include font-sans-serif($weight:normal, $size:0.95em);
+	color:$grayAlt;
+	img {
+		float:left;
+		width:58px;
+		height:58px;
 	}
-	.next-program {
-	    margin-top: 14px;
-		text-align: right;
-		white-space: nowrap;
-	}
-	ul {
-		list-style:none outside none;
-		margin:0;
+	ul.cbase {
 		li {
-			@include ie-inline-block();
-			&.on-air {
-				position:relative;
+			display:block;
+			list-style-image:url(image_path('mega-divider.png'));
+			margin-bottom:$baseline / 2;
+			&.lead {
+				list-style-image:none;
 			}
-			&.on-air img {
-				position:absolute;
-				left:0;
-				top:0;
-			}
-			.bbar_headshot {
-			    position: relative;
-			    top: -38px;
-				margin-bottom: -52px;
-				z-index: 0;
-			}
-			&.on-now {
-				float:left;
-				margin:0 0 0 90px;
-				padding:8px 0 0 0;
-			}
-			&.active-show-title {
-				@include font-heading($weight:normal, $size:1.5em);
-				color:$orangeDark;
+			&.more {
+				margin-bottom:0;
 				a {
-					color:$orangeDark;
-					font-weight:600;
-					text-shadow:1px 1px 0px #fff;
-					display: inline-block;
-					&.modal-toggler {
-						background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
-						padding-right:15px;
-						&:hover {
-							background-position:right -34px;
-						}
-					}
+					background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
+					font-size:11px;
+					padding-bottom:2px;
+					padding-right:17px;
 				}
 			}
-			&.show-status {
-				@include font-sans-serif($weight:bold, $size:1.05em);
-				color:$grayAlt;
-				padding:0 0 0 5px;
+			a.comment_link {
+				margin-left:0;
 			}
-			&.show-summary {
-				@include font-sans-serif($weight:normal, $size:0.95em);
-				color:$grayAlt;
-				padding:0 0 0 5px;
-				position:relative;
-				.episode-guide {
-					img {
-						float:left;
-						width:58px;
-						height:58px;
-					}
-					ul.cbase {
-						li {
-							display:block;
-							list-style-image:url(image_path('mega-divider.png'));
-							margin-bottom:$baseline / 2;
-							&.lead {
-								list-style-image:none;
-							}
-							&.more {
-								margin-bottom:0;
-								a {
-									background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
-									font-size:11px;
-									padding-bottom:2px;
-									padding-right:17px;
-								}
-							}
-							a.comment_link {
-								margin-left:0;
-							}
-						}
-						margin-left:80px;
-						h4 {
-							font-size:18px;
-							font-weight:bold;
-						}
-						h5 {
-							font-size:15px;
-						}
-						p {
-							color:$nearBlack;
-							font-size:13px;
-							line-height:18px;
-						}
-						.headline {
-							@include font-headline(600);
-							a {
-								color:$nearBlack;
-								}
-							a.comment_link {
-								color:$linkColor;
-							}
-						}
-					}
+		}
+		margin-left:80px;
+		h4 {
+			font-size:18px;
+			font-weight:bold;
+		}
+		h5 {
+			font-size:15px;
+		}
+		p {
+			color:$nearBlack;
+			font-size:13px;
+			line-height:18px;
+		}
+		.headline {
+			@include font-headline(600);
+			a {
+				color:$nearBlack;
 				}
-			}
-			&.join-conversation {
-				padding:0 0 0 12px;
-				a {
-					@include font-sans-serif($weight:bold, $size:1em);
-					background:url("broadcast-bar/comment-icon.png") no-repeat scroll transparent;	
-					color:$linkColor;
-					padding:0 18px;
-				}
-			}
-			&.up-next img {
-				padding:8px 0 0 60px;
-			}
-			&.upnext-show-title, .upnext-show-title a {			    
-				@include font-heading($weight:600, $size:1.5em);
-				color:$orangeDark;
-				text-shadow:1px 1px 0px #fff;
-			}
-			&.show-time {
-				@include font-sans-serif($weight:normal, $size:0.9em);
-				color:$gray;
-				letter-spacing:-0.15em;
-				padding:0 0 0 5px;
+			a.comment_link {
+				color:$linkColor;
 			}
 		}
 	}
 }
+
+
+// #broadcast-bar-outer-container {
+// 	border-top:1px solid $grayBorder;
+// 	border-bottom:1px solid $grayBorder;
+// 	margin:3px 0 25px 0;
+// 	&.headshot {
+// 		margin-top:12px;
+// 	}
+// }
+// #broadcast-bar-inner-container {
+// 	background:$grayBackground;
+// 	border-top:1px solid $white;
+// 	border-bottom:1px solid $white;
+// 	height:46px;
+// }
+//section.broadcastbar {
+//	@include clearfix();
+//	.current-program {
+//	    margin-top: 14px;
+//	}
+//	.next-program {
+//	    margin-top: 14px;
+//		text-align: right;
+//		white-space: nowrap;
+//	}
+//	ul {
+//		list-style:none outside none;
+//		margin:0;
+//		li {
+//			@include ie-inline-block();
+//			&.on-air {
+//				position:relative;
+//			}
+//			&.on-air img {
+//				position:absolute;
+//				left:0;
+//				top:0;
+//			}
+//			.bbar_headshot {
+//			    position: relative;
+//			    top: -38px;
+//				margin-bottom: -52px;
+//				z-index: 0;
+//			}
+//			&.on-now {
+//				float:left;
+//				margin:0 0 0 90px;
+//				padding:8px 0 0 0;
+//			}
+//			&.active-show-title {
+//				@include font-heading($weight:normal, $size:1.5em);
+//				color:$orangeDark;
+//				a {
+//					color:$orangeDark;
+//					font-weight:600;
+//					text-shadow:1px 1px 0px #fff;
+//					display: inline-block;
+//					&.modal-toggler {
+//						background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
+//						padding-right:15px;
+//						&:hover {
+//							background-position:right -34px;
+//						}
+//					}
+//				}
+//			}
+//			&.show-status {
+//				@include font-sans-serif($weight:bold, $size:1.05em);
+//				color:$grayAlt;
+//				padding:0 0 0 5px;
+//			}
+//			&.show-summary {
+//				@include font-sans-serif($weight:normal, $size:0.95em);
+//				color:$grayAlt;
+//				padding:0 0 0 5px;
+//				position:relative;
+//				.episode-guide {
+//					img {
+//						float:left;
+//						width:58px;
+//						height:58px;
+//					}
+//					ul.cbase {
+//						li {
+//							display:block;
+//							list-style-image:url(image_path('mega-divider.png'));
+//							margin-bottom:$baseline / 2;
+//							&.lead {
+//								list-style-image:none;
+//							}
+//							&.more {
+//								margin-bottom:0;
+//								a {
+//									background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
+//									font-size:11px;
+//									padding-bottom:2px;
+//									padding-right:17px;
+//								}
+//							}
+//							a.comment_link {
+//								margin-left:0;
+//							}
+//						}
+//						margin-left:80px;
+//						h4 {
+//							font-size:18px;
+//							font-weight:bold;
+//						}
+//						h5 {
+//							font-size:15px;
+//						}
+//						p {
+//							color:$nearBlack;
+//							font-size:13px;
+//							line-height:18px;
+//						}
+//						.headline {
+//							@include font-headline(600);
+//							a {
+//								color:$nearBlack;
+//								}
+//							a.comment_link {
+//								color:$linkColor;
+//							}
+//						}
+//					}
+//				}
+//			}
+//			&.join-conversation {
+//				padding:0 0 0 12px;
+//				a {
+//					@include font-sans-serif($weight:bold, $size:1em);
+//					background:url("broadcast-bar/comment-icon.png") no-repeat scroll transparent;	
+//					color:$linkColor;
+//					padding:0 18px;
+//				}
+//			}
+//			&.up-next img {
+//				padding:8px 0 0 60px;
+//			}
+//			&.upnext-show-title, .upnext-show-title a {	
+//				@include font-heading($weight:600, $size:1.5em);
+//				color:$orangeDark;
+//				text-shadow:1px 1px 0px #fff;
+//			}
+//			&.show-time {
+//				@include font-sans-serif($weight:normal, $size:0.9em);
+//				color:$gray;
+//				letter-spacing:-0.15em;
+//				padding:0 0 0 5px;
+//			}
+//		}
+//	}
+//}
 .offleads {
 	.span4:last-child .offlead {
 		border-bottom: none;
@@ -409,26 +541,5 @@ nav.filters {
 				background-color: #9c9c9c;
 			}
 		}
-	}
-}
-
-// Global Styles
-.content-block {
-	border-bottom: 1px solid $grayLight;
-	margin-bottom: 10px;
-}
-
-.fold {
-	h6 {
-		font-size: 12px;
-		margin-top: 5px;
-		text-align: right;
-		line-height: $baseLineHeight;
-	}
-}
-
-article {
-	img, object, iframe, embed {
-		max-width: 100%;
 	}
 }
