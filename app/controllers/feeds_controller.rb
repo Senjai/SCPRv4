@@ -27,7 +27,7 @@ class FeedsController < ApplicationController
     )
     
     xml = render_to_string :action => "feed", :formats => :xml
-    Rails.cache.write_entry("feeds:all_news",xml,:objects => [@content,"contentbase:new"].flatten)
+    Rails.cache.write_entry( "feeds:all_news", xml, :objects => (@content + ["contentbase:new"]) )
     render :text => xml, :format => :xml    
   end
 end

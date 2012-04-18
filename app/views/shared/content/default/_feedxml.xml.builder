@@ -3,7 +3,10 @@ xml.item do
   xml.guid  content.remote_link_path
   xml.link  content.remote_link_path
   
-  xml.dc :creator, render_byline(content,false)
+  b = render_byline(content,false)
+  if b
+    xml.dc :creator, b
+  end
   
   if content.assets.any?
     xml.enclosure :url => content.assets.first.asset.thumb.url, :type => "image/jpeg", :length => ""
