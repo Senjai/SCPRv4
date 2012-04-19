@@ -20,11 +20,6 @@
 		@include font-sans-serif(normal, 11px, 14px);
 		margin-bottom:0;
     }
-
-	// styles
-	&.thumb {
-		max-width: $thumbW;
-	}
 }
 
 .contentasset.caR {

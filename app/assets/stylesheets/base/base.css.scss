@@ -46,38 +46,6 @@ $textColor: $nearBlack;
 $basefont:          $baseFontSize;
 $baseline:          $baseLineHeight;
 
-// Asset Output Sizes
-$thumbW: 88px;
-$thumbH: $thumbW;
-//
-$lsquareW: 188px;
-$lsquareH: $lsquareW;
-//
-$threeW: 255px;
-$threeH: $threeW;
-//
-$leadW: 324px;
-$leadH: $leadW;
-//
-$fourW: 350px;
-$fourH: $fourW;
-//
-$fiveW: 445px;
-$fiveH: 334px;
-//
-$sixW: 540px;
-$sixH: 406px;
-//
-$wideW: 620px;
-$wideH: 414px;
-//
-$eightW: 730px;
-$eightH: 411px;
-//
-$fullW: 1024px;
-$fullH: $fullW;
-
-
 
 // Clearfix for clearing floats like a boss h5bp.com/q
 @mixin clearfix {
