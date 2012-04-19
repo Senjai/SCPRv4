@@ -1,16 +1,13 @@
 .show-segments {
-	border-top:1px solid $grayLight;
-	margin-top:$baseline;
-	padding-top:$baseline / 2;
-
-	&.episode { border-top:none; }
 	h2 {
+		border-bottom: 1px solid $grayLighter;
 		color:$orangeDark;
 		font-size:18px;
 		font-weight:600;
 	}
-	
+		
 	.teaser {
+		@include centeredAsset;
 		.info {
 			border-right: 1px solid $grayLighter;
 			padding-right: 10px;

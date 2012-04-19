@@ -129,6 +129,8 @@ $mediaSmallPortrait: 320px;
 			}
 		}
 	// end latest videos
+	
+	#program-external-header { @include makeFluidRow; }
 }
 
 
@@ -354,7 +356,16 @@ $mediaSmallPortrait: 320px;
 	#video { @include vertify; } // Make the video page stretch out
 	#multimedia {
 		.video { margin-top: 0; }
-	}	
+	}
+	
+	.program-masthead {
+		@include vertify;
+		#program-masthead-title {
+			h1 { @include font-shorthand($size: 28px, $weight: bold, $lineHeight: $baseLineHeight + 5); }
+			.show-meta { display: none; }
+		}
+		#program-masthead-support { display: none; }
+	}
 }
 
 
@@ -456,15 +467,15 @@ $mediaSmallPortrait: 320px;
 	// This happens below maxWidth because the banner is an image.
 	// TODO Change the support banner to a more fluid div so it can scale nicely.
 	// Remove background from Support Banner to allow fluidity //
-		.program-masthead .support {
-			display: block !important;
-			background: none !important;
-			width: auto !important;
-			height: auto !important;
+		.program-masthead #program-masthead-support .support {
+			display: block;
+			background: none;
+			height: auto;
+			width: auto;
 			a {
-				display: inline;
-				color: $black !important;
-				text-shadow: none !important;
+				display: block;
+				color: $black;
+				text-shadow: none;
 			}
 		}
 	// end Support Banner

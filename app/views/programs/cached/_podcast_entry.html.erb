@@ -1,26 +1,31 @@
-<article class="teaser">
-	<div class="row">
-		<div class="info divider span6">
-			<h3><%= link_to entry.title, entry.url %></h3>
-			<p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
-			<%= entry.summary.html_safe %>
+<article class="teaser program-external">
+	<div class="row-fluid">
+		<div class="<%= entry.enclosure_url.present? ? "span9" : "span12" %>">
+			<div class="info">
+				<header>
+					<h3><%= link_to entry.title, entry.url %></h3>
+					<p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
+				</header>
+			
+				<%= entry.summary.html_safe %>
+			</div>
 		</div>
-		<div class="interact span2">
-			<% if entry.enclosure_url.present? %>
-				<aside class="story-audio">
-					<div class="inner-container clearfix">
-						<div class="audio-content">
-							<h4>Listen Now</h4>
+		<% if entry.enclosure_url.present? %>
+			<div class="span3">
+					<aside class="story-audio">
+						<div class="inner-container clearfix">
+							<div class="audio-content">
+								<h4>Listen Now</h4>
+							</div>
+							<a href="<%= entry.enclosure_url %>" class="play-btn audio-toggler" title="<%= entry.title %>"></a>
+							<ul class="audio-tools">
+							    <li>
+							        <a href="<%= entry.enclosure_url %>">Download</a>
+							    </li>
+							</ul>
 						</div>
-						<a href="<%= entry.enclosure_url %>" class="play-btn audio-toggler" title="<%= entry.title %>"></a>
-						<ul class="audio-tools">
-						    <li>
-						        <a href="<%= entry.enclosure_url %>">Download</a>
-						    </li>
-						</ul>
-					</div>
-				</aside>
-			<% end %>
-		</div>
-	</div>
+					</aside>
+			</div> <!-- span -->
+		<% end %>
+	</div> <!-- row-fluid -->
 </article>
