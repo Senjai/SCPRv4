@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120316190601) do
+ActiveRecord::Schema.define(:version => 20120327015211) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -465,7 +465,6 @@ ActiveRecord::Schema.define(:version => 20120316190601) do
     t.string   "slug",                :limit => 50,                            :null => false
     t.text     "description",         :limit => 2147483647,                    :null => false
     t.string   "type",                :limit => 4,                             :null => false
-    t.string   "image",               :limit => 100,                           :null => false
     t.string   "sponsor",             :limit => 140,                           :null => false
     t.string   "sponsor_link",        :limit => 200,                           :null => false
     t.datetime "starts_at",                                                    :null => false
@@ -487,6 +486,8 @@ ActiveRecord::Schema.define(:version => 20120316190601) do
     t.text     "archive_description", :limit => 2147483647,                    :null => false
     t.string   "audio",               :limit => 100,        :default => "",    :null => false
     t.boolean  "is_published",                                                 :null => false
+    t.text     "_teaser",             :limit => 2147483647,                    :null => false
+    t.boolean  "show_comments",                                                :null => false
   end
 
   add_index "events_event", ["slug"], :name => "events_event_slug"
@@ -721,6 +722,22 @@ ActiveRecord::Schema.define(:version => 20120316190601) do
     t.integer "content_type_id",                                           :null => false
     t.integer "object_id",                                                 :null => false
     t.text    "description",     :limit => 2147483647,                     :null => false
+    t.string  "byline",          :limit => 150,        :default => "KPCC", :null => false
+    t.integer "position",                              :default => 0,      :null => false
+  end
+
+  add_index "media_audio", ["content_type_id", "object_id"], :name => "media_audio_content_type_id_569dcfe00f4d911"
+  add_index "media_audio", ["content_type_id"], :name => "media_audio_e4470c6e"
+
+  create_table "media_audio", :force => true do |t|
+    t.string  "mp3",             :limit => 100
+    t.integer "size"
+    t.integer "duration"
+    t.integer "enco_number"
+    t.date    "enco_date"
+    t.integer "content_type_id",                                           :null => false
+    t.integer "object_id",                                                 :null => false
+    t.text    "description",     :limit => 2147483647
     t.string  "byline",          :limit => 150,        :default => "KPCC", :null => false
     t.integer "position",                              :default => 0,      :null => false
   end
@@ -1076,6 +1093,7 @@ ActiveRecord::Schema.define(:version => 20120316190601) do
     t.boolean "display_segments",                                          :null => false
     t.integer "blog_id"
     t.string  "video_player",     :limit => 20
+    t.string  "audio_dir",        :limit => 50
   end
 
   add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
@@ -1168,6 +1186,8 @@ ActiveRecord::Schema.define(:version => 20120316190601) do
     t.text     "archive_description", :limit => 2147483647,                    :null => false
     t.string   "audio",               :limit => 100,        :default => "",    :null => false
     t.boolean  "is_published",                                                 :null => false
+    t.boolean  "show_comments",                                                :null => false
+    t.text     "_teaser",             :limit => 2147483647,                    :null => false
   end
 
   create_table "rails_layout_homepagecontent", :id => false, :force => true do |t|
@@ -1183,7 +1203,7 @@ ActiveRecord::Schema.define(:version => 20120316190601) do
     t.integer "content_id",                                             :null => false
     t.string  "content_type",                                           :null => false
     t.string  "mp3",          :limit => 100
-    t.text    "description",  :limit => 2147483647,                     :null => false
+    t.text    "description",  :limit => 2147483647
     t.string  "byline",       :limit => 150,        :default => "KPCC", :null => false
     t.integer "enco_number"
     t.date    "enco_date"
