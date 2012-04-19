@@ -2,15 +2,15 @@
 <div class="page-header program-masthead">
 	<div class="row-fluid">
 		<div class="span8" id="program-masthead-title">
-			<h1 class="page-title<%= " headshot #{@program.slug}" if @program.is_a? KpccProgram %>">
-				<%= link_to @program.title, program_path(@program.slug) %>
+			<div class="program-info<%= " headshot #{@program.slug}" if @program.is_a? KpccProgram %>">
+				<h1 class="page-title"><%= link_to @program.title, program_path(@program.slug) %></h1>
 				<div class="show-meta">
 					<%= @program.airtime %>
 					<% if @program.host.present? %>
 						<br />with <%= @program.host %>
 					<% end %>
-				</div>
-			</h1>
+				</div> <!-- show meta -->
+			</div> <!-- program info -->
 		</div>
 		
 		<div class="span4" id="program-masthead-support">

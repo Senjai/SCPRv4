@@ -66,7 +66,7 @@ $headShotWidth: 90px;
 		background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
 	}
 	
-	&.page-title { 
+	&.program-info { 
 		height: $headShotHeight;
 		min-height: $headShotHeight;
 		padding-right: $headShotWidth;
@@ -78,24 +78,23 @@ $headShotWidth: 90px;
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: $baseline / 2;
 	padding-bottom: 10px;
-		
-	h1 {
+	
+	.program-info {
 		display: table-cell;
-		width: 700px; // just give the table cell some pixels, it's finicky about percentages
+		width: 700px; // table-cell needs pixels, but with max-width set it's fluid
 		max-width: 100%;
 		vertical-align: bottom;
-		padding-right: 0;
-		a { 
-			vertical-align: bottom;
-			display: block;
+	
+		h1 { 
 			float: left;
+			margin: 0;
 		}
 		.show-meta {
 			@include font-sans-serif($size: 11px, $lineHeight: 14px);
 			text-align: right;
-			vertical-align: bottom;
 			float: right;
 		}
+		
 	}
 	
 	.support {

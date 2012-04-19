@@ -359,21 +359,12 @@ $mediaSmallPortrait: 320px;
 	}
 	
 	.program-masthead {
-		#program-masthead-title { @include gridFluidSpan(12); }
-		#program-masthead-support {
-			float: none;
-			display: block;
-			width: auto;
-			margin: 0;
-			.support {
-				display: block;
-				width: 100% !important;
-				padding: 10px 0 0 0;
-				margin: 0;
-				text-align: center;
-				a { display: block;}
-			 }
+		@include vertify;
+		#program-masthead-title {
+			h1 { @include font-shorthand($size: 28px, $weight: bold, $lineHeight: $baseLineHeight + 5); }
+			.show-meta { display: none; }
 		}
+		#program-masthead-support { display: none; }
 	}
 }
 
