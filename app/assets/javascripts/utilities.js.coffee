@@ -11,18 +11,22 @@ class scpr.CompactNav
 
     slideNav: (left, dir) ->
         if dir is "in"
+            $("html").css
+                "overflow-x": "hidden"
             $(".footer-nav").addClass("active")
             $("body").css
                 height: $("#footer-nav").height()
-                position: "relative"
+                overflow: "hidden"
 
-        $("body").animate(
-            left: left + @navWidth
+        $("#footer-nav").animate(
+            left: left
         "fast", ->
             if dir is "out"
+                $("html").css
+                    "overflow-x": "visible"
                 $("body").css
                     height: "auto"
-                    position: "static"
+                    overflow: "visible"
                 $(".footer-nav").removeClass("active")
         )
 
