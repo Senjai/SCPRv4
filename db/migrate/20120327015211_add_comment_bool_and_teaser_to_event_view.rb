@@ -2,6 +2,7 @@ class AddCommentBoolAndTeaserToEventView < ActiveRecord::Migration
   def up
     execute("
     create or replace 
+    SQL SECURITY INVOKER 
     view rails_events_event as 
     select 
       id,title,slug,description,
