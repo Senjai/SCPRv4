@@ -17,8 +17,8 @@ class scpr.CompactNav
         $("#footer-nav").animate(
             left: left
         "fast", ->
-            #if dir is "out" # Remove the extra space at the bottom of a page that is shorter than the nav
-            #    $("body").css("position", "static")
+            if dir is "out"
+                $("body").css("height", "auto").css("overflow", "visible")
         )
 
 
