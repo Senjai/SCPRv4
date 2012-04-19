@@ -10,15 +10,24 @@ class scpr.CompactNav
             click: => @slideNav(@navWidth * -1, "out")
 
     slideNav: (left, dir) ->
-        $("html").css("overflow-x", if dir is "in" then "hidden" else "visible") # Hides horizontal scrollbars
-        $(".footer-nav").toggleClass("active")
-        $("body").css("height", $("#footer-nav").height()).css("overflow", "hidden")
+        if dir is "in"
+            $("html").css
+                "overflow-x": "hidden"
+            $(".footer-nav").addClass("active")
+            $("body").css
+                height: $("#footer-nav").height()
+                overflow: "hidden"
 
         $("#footer-nav").animate(
             left: left
         "fast", ->
             if dir is "out"
-                $("body").css("height", "auto").css("overflow", "visible")
+                $("html").css
+                    "overflow-x": "visible"
+                $("body").css
+                    height: "auto"
+                    overflow: "visible"
+                $(".footer-nav").removeClass("active")
         )
 
 
