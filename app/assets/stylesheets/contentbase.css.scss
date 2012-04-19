@@ -117,7 +117,7 @@ time.smart {
 .teaser {
 	border-bottom: 1px solid $grayLighter;
 	padding: 10px 0;
-	.info {
+	.info, header {
 		@include font-serif($size: 13px);
 		vertical-align: top;
 		h3 {
