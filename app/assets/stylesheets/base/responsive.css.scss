@@ -306,8 +306,8 @@ $mediaSmallPortrait: 320px;
 					display: block;
 					padding: 0;
 					nav { margin: 0; }
-					ul li a, address { padding-left: 10px; }
-					ul li, h4, h3 {
+					h4, ul li, ul li.bullet, address { padding-left: 16px; }
+					ul li, h4, h3, .social-media li {
 						border-top: 1px solid $grayDark;
 						border-bottom: 1px solid $black;
 						margin: 0;

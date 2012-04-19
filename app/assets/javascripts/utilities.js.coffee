@@ -14,21 +14,25 @@ class scpr.CompactNav
             $("html").css
                 "overflow-x": "hidden"
             $(".footer-nav").addClass("active")
+            $(".viewport").css
+                height: $("#footer-nav").height()
+                width: "100%"
+                position: "absolute"
             $("body").css
                 height: $("#footer-nav").height()
+                width: $(window).width()
+                position: "relative"
                 overflow: "hidden"
 
-        $("#footer-nav").animate(
-            left: left
-        "fast", ->
-            if dir is "out"
-                $("html").css
-                    "overflow-x": "visible"
-                $("body").css
-                    height: "auto"
-                    overflow: "visible"
-                $(".footer-nav").removeClass("active")
-        )
+	        $(".viewport").animate(
+	            left: left + @navWidth
+	        "fast", ->
+	            if dir is "out"
+	                $(".viewport").css
+	                    height: "auto"
+	                    position: "static"
+	                $(".footer-nav").removeClass("active")
+	        )
 
 
 class scpr.Track
