@@ -1,5 +1,12 @@
 .contentasset, .cbase .contentasset {
-    img {max-width:100%;}
+	
+	max-width: 100% !important;
+	height: auto !important;
+	img {
+		max-width: 100% !important;
+		height: auto !important;
+	}
+		
 	h4 {
 	   text-transform: none;
        text-align: right;

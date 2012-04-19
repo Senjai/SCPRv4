@@ -110,15 +110,6 @@ $analog2:           spin($baseColor, -22);
 // MIXINS
 // ------
 
-// Asset and its container will stretch to the width of the span, up to the specified max-width
-// Work in progress - need a strategy for different asset schemes
-@mixin responsiveImageAsset($maxWidth: $thumbW) {
-	.contentasset, .contentasset img {
-		width: 100% !important;
-		max-width: $maxWidth !important;
-		height: auto !important;
-	}
-}
 
 @mixin centeredAsset {
 	.contentasset {

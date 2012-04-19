@@ -3,9 +3,7 @@
 	margin-top:$baseline;
 	padding-top:$baseline / 2;
 
-	&.episode {
-		border-top:none;
-	}
+	&.episode { border-top:none; }
 	h2 {
 		color:$orangeDark;
 		font-size:18px;
@@ -13,7 +11,6 @@
 	}
 	
 	.teaser {
-		@include responsiveImageAsset($lsquareW);
 		.info {
 			border-right: 1px solid $grayLighter;
 			padding-right: 10px;
@@ -24,7 +21,6 @@
 .segment {
 	border-bottom: 1px solid $grayLight;
 	article {
-		@include responsiveImageAsset($sixW);
 		h1.story-title {
 			@include font-headline();
 		}
@@ -45,7 +41,5 @@ h5.episode-title {
 .other-segments ul {
 	@include font-headline($weight: normal);
 	font-size: 14px;
-	a {
-		color: $black;
-	}
+	a { color: $black; }
 }

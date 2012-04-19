@@ -44,7 +44,6 @@ header.episode {
 }
 
 .show-episode {
-	@include responsiveImageAsset($lsquareW);
 	@include centeredAsset;
 	border-bottom: 1px solid $grayLighter;
     margin-top: $baseline;
@@ -63,7 +62,6 @@ header.episode {
 }
 
 .current-episode {
-	@include responsiveImageAsset($fourW);
 	@include centeredAsset;
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: $baseline/2;

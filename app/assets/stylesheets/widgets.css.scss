@@ -305,7 +305,6 @@
 	}
 	
 	&.top {
-		border-bottom: 1px solid $grayLighter;
 		padding-bottom: 5px;
 		margin-bottom: 5px;
 	}
@@ -661,7 +660,6 @@ a.with-icon {
 
 // Content Carousel
 .content-carousel { 
-	@include responsiveImageAsset($thumbW);
 	@include centeredAsset;
 	.title {
 		display: block;

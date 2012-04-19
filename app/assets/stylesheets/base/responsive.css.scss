@@ -68,7 +68,6 @@ $mediaSmallPortrait: 320px;
 		border-top: 1px solid $grayLighter;
 		padding-top: 10px;
 		@include centeredAsset;
-		@include responsiveImageAsset($threeW);
 	}
 	
 	// Hide CFF vertical nav, show horizontal nav

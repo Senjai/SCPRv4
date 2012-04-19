@@ -3,12 +3,10 @@
 	float: right;
 	clear: right;
 	margin-left: 12px;
-	@include responsiveImageAsset($lsquareW);
 }
 
 .storycenter {
 	@include centeredAsset;
-	@include responsiveImageAsset($sixW);
 }
 
 .byline {

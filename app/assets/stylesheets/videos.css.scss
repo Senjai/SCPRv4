@@ -10,7 +10,6 @@
 #multimedia {
 	.video {
 		margin: 60px 5px $baseline 5px;
-		@include responsiveImageAsset;
 		max-width:730px;
 		max-height:411px;
 		img { height: auto; }
@@ -84,7 +83,6 @@ div.list {
 }
 
 .video-thumb {
-	@include responsiveImageAsset($threeW);
 	@include centeredAsset;
 	a {
 		color:$grayLight;

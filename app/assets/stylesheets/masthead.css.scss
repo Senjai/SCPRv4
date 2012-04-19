@@ -283,10 +283,6 @@ nav.utils ul {
 			&.last {
 				border-right: none;
 			}
-			
-			.featured {
-				@include responsiveImageAsset($thumbW);
-			}
 		}
 		
 		ul.content-types {

@@ -59,15 +59,10 @@ span.fake-link {
 
 .event {
 	@include event-headers;
-	
-	&.closest {
-		@include responsiveImageAsset($fiveW);
-		@include centeredAsset;
-	}
+	&.closest { @include centeredAsset; }
 	
 	&.future {
 		padding: 10px 0;
-		@include responsiveImageAsset($lsquareW);
 		@include centeredAsset;
 		.info {
 			@include font-serif($size: 13px);
@@ -80,7 +75,6 @@ span.fake-link {
 	}
 	
 	&.past {
-		@include responsiveImageAsset($thumbW);
 		@include centeredAsset;
 		padding: 15px 0;
 		.byline {
@@ -101,7 +95,6 @@ span.fake-link {
 		}
 	}
 	&.content-block {
-		@include responsiveImageAsset($sixW);
 		.event-details {
 			padding: 5px 0;
 			margin-bottom: 10px;
@@ -259,7 +252,6 @@ span.fake-link {
 .events-list {
 	.teaser {
 		padding:18px 0;
-		@include responsiveImageAsset($threeW);
 		@include centeredAsset;
 		
 		.event-details {
