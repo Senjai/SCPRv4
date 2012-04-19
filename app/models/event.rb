@@ -77,10 +77,6 @@ class Event < ActiveRecord::Base
     end
   end
   
-  def show_comments
-    false # TODO Add this column in mercer
-  end
-  
   def audio_url
     "http://media.scpr.org/#{self.audio}"
   end
@@ -99,7 +95,13 @@ class Event < ActiveRecord::Base
   
   ### ContentBase methods
   
-  def teaser # TODO Need a teaser column in mercer for events
+  def teaser
+    if self._teaser?
+      return self._teaser
+    end
+    
+    # -- cut down body to get teaser -- #
+    
     l = 180    
     
     # first test if the first paragraph is an acceptable length
@@ -119,7 +121,7 @@ class Event < ActiveRecord::Base
       end
     else
       return ''
-    end
+    end    
   end
   
   def headline
@@ -133,7 +135,6 @@ class Event < ActiveRecord::Base
   def remote_link_path
     "http://www.scpr.org#{self.link_path}"
   end
-  
   
   def obj_key
     "events/event:#{self.id}"

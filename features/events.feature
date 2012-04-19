@@ -40,15 +40,23 @@ Scenario: Pagination
 	Then I should see 10 events
 	And there should be pagination
 
-Scenario: View an individual event
+Scenario: View an individual event without comments
 	Given an event with the following attributes:
-	 | title     |
-	 | CFF Event |
+	 | title     | show_comments |
+	 | CFF Event | 0             |
 
 	When I go to that event's page
 	Then I should see "CFF Event"
 	And I should see article meta
 	And I should not see a comments section
+	
+Scenario: View an individual event with comments
+	Given an event with the following attributes:
+	 | title     | show_comments |
+	 | CFF Event | 1             |
+
+	When I go to that event's page
+	Then I should see a comments section
 
 Scenario: Visit a page for an event that doesn't exist
 	When I go to an event page for an event that doesn't exist
