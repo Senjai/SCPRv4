@@ -10,18 +10,17 @@ class scpr.CompactNav
             click: => @slideNav(@navWidth * -1, "out")
 
     slideNav: (left, dir) ->
-        $("html").css("overflow-x", if dir is "in" then "hidden" else "visible") # Hides scrollbars but user can still scroll
-        
-        if dir is "in"
-            $("body").css("position", "relative")
-            
+        $("html").css("overflow-x", if dir is "in" then "hidden" else "visible") # Hides horizontal scrollbars
         $(".footer-nav").toggleClass("active")
-        $("body").animate(
-            left: left + @navWidth
+        $("body").css("height", $("#footer-nav").height()).css("overflow", "hidden")
+
+        $("#footer-nav").animate(
+            left: left
         "fast", ->
-            if dir is "out" # Remove the extra space at the bottom of a page that is shorter than the nav
-                $("body").css("position", "static")
+            #if dir is "out" # Remove the extra space at the bottom of a page that is shorter than the nav
+            #    $("body").css("position", "static")
         )
+
 
 class scpr.Track
     DefaultOptions:
