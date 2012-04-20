@@ -32,7 +32,12 @@ body {
 	.events-forum {
 		border-left:1px solid $grayLighter;
 		padding-left: 20px;
-		h4 { @include font-navigation(600, 16px, $baseLineHeight); }
+		h4 {
+			@include font-headline;
+			@include font-shorthand(600, 15px, $baseLineHeight);
+			a { color: $nearBlack; }
+			text-transform: none; // for elements with the cbase class
+		}
 	}
 	
 	.homepage-lead {
