@@ -2,7 +2,7 @@
 @OG_TYPE = "blog" %>
 
 <%= render_content @entry, "opengraph" %>
-<%= render :partial => "entry", :object => @entry %>
+<%= render "blogs/entry", entry: @entry %>
 
 <div class="fold" id="fold">
 	<%= related_for @entry %>

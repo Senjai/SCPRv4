@@ -21,6 +21,6 @@
 
 <section class="show-segments episode">
 	<%= any_to_list? @segments, title: "Segments" do %>
-  		<%= render partial: 'segment', collection: @segments %>
+  		<%= render partial: 'programs/segment', collection: @segments %>
 	<% end %>
 </section>

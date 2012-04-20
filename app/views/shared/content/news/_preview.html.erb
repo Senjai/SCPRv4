@@ -1,19 +1,2 @@
-<% asset = capture do %>
-<%= render_asset content, "story" %>
-<% end %>
-
-<div class="row">
-	<div class="span8">
-		<h1 class="story-headline"><%= content.headline %></h1>
-		<p class="byline"><%= render_byline content %> <span class="pipe">|</span> 
-		<time pubdate><%= smart_date content %></time></p>
-		<%= yield :headline %>
-	</div>
-</div>
-<div class="row">
-	<div class="span6" style="padding-right: 190px">
-		<%= asset %>
-		<%= simple_format content.body, {}, :sanitize => false %>
-	</div>
-</div>
-
+<% @story = content %>
+<%= render template: "/news/story" %>
