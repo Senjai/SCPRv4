@@ -62,16 +62,10 @@ span.fake-link {
 	&.closest { @include centeredAsset; }
 	
 	&.future {
-		padding: 10px 0;
+		margin-bottom: 10px;
 		@include centeredAsset;
-		.info {
-			@include font-serif($size: 13px);
-			h3 {
-				a {
-					color:$nearBlack;
-				}
-			}
-		}
+		@include font-serif($size: 13px);
+		h4 a { color:$nearBlack; }
 	}
 	
 	&.past {

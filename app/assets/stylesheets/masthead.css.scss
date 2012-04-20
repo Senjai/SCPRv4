@@ -279,6 +279,7 @@ nav.utils ul {
 		}
 		
 		.featured {
+			@include centeredAsset;
 			h4 { font-size: 16px; }
 		}
 		

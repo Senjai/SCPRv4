@@ -4,7 +4,7 @@
 		<div class="row-fluid">
 			<% if c.assets.present? %>
 				<div class="span4">
-					<a href="<%=c.link_path%>"><%= render_asset(c,"thumb") %></a>
+					<%= render_asset(c,"thumb") %>
 				</div>
 				<div class="span8">
 			<% else %>
@@ -15,5 +15,5 @@
 				<%= smart_date_js c, "data-window" => "8h" %>
 			</div> <!-- span -->
 		</div> <!-- row fluid -->
-	</div>
+	</div> <!-- featured -->
 <% end %>
