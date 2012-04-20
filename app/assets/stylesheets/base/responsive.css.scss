@@ -27,6 +27,15 @@ $mediaSmallPortrait: 320px;
 	}
 }
 
+@mixin fluidPopup($margin: 4%, $top: 180px) {
+	position: fixed;
+	left: $margin !important;
+	top: $top !important; // Leave room for headers to show
+	width: 100% - $margin * 2 !important;
+	max-height: 75% !important;
+	overflow: scroll;
+}
+
 // Phone Landscape and below
 @media screen and (max-width: $mediaSmallLandscape) {	
 	// Make all columns even
@@ -169,13 +178,7 @@ $mediaSmallPortrait: 320px;
 	.hidden-reader { display: none !important; }
 	
 	.modal-popup { // using important flag here to cover all modals, since most of these rules are specified in more specific classes
-		$modalMargin: 4%;
-		position: fixed;
-		left: $modalMargin !important;
-		top: 180px !important; // Leave room for headers to show
-		width: 100% - $modalMargin * 2 !important;
-		max-height: 75% !important;
-		overflow: scroll;
+		@include fluidPopup;
 		.arrow-up { display: none; }
 		.google-map { 
 			max-width: 100%; 
@@ -363,7 +366,44 @@ $mediaSmallPortrait: 320px;
 		}
 		#program-masthead-support { display: none; }
 	}
-}
+	
+	
+	// Audio bar handler
+		// Dim body
+		body.with-audio-bar {
+			overflow: hidden;
+			#opaque-cover {
+				width: 100%;
+				display: block;
+			}
+		}
+		
+		#audio-bar {
+			$barHeight: 140px;
+			@include fluidPopup;
+			min-height: $barHeight + 5;
+		
+			.section-left, .section-mid {
+				width: 100%;
+				float: none;
+				display: block;
+			}
+			.bar-close { height: $barHeight; }
+		
+			.jp-gui { border-right: none; }
+			.jp-gui, .jp-controls {
+				height: $barHeight / 3;
+				min-height: $barHeight / 3;
+			}
+			
+			.jp-title {
+				height: $barHeight / 2;
+				min-height: $barHeight / 2;
+				padding-right: 10px;
+			}
+		}
+	// end Audio Bar
+} // end Reader mode
 
 
 

@@ -1,8 +1,14 @@
-<div class="audio-bar">
+<div class="audio-bar" id="audio-bar">
 	<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 	<div id="jp_container_1" class="jp-audio">
 		<div class="jp-type-single">
-
+		
+			<!-- put bar-close first so it floats right properly when the widget switches to modal 
+				 On the normal layout, everything here is floated so it still gets pushed to the right properly -->
+			<div class="bar-close">
+				<a href="#">Close &amp; Stop</a>
+			</div>
+		
 			<div class="section-left">
 				<div class="jp-gui jp-interface clearfix">
 					<ul class="jp-controls clearfix">
@@ -28,11 +34,7 @@
 					<p><span>Now Playing: </span><i id="jplayer1_title"></i></p>
 				</div>
 			</div> <!-- section-mid -->
-		
-			<div class="bar-close">
-				<a href="#">Close &amp; Stop</a>
-			</div>
-				
+			
 		</div> <!-- jp-type-single -->
 	</div> <!-- jp-audio -->
 </div> <!-- audio-bar -->

@@ -51,19 +51,23 @@ class scpr.Audio
         console.log "found #{@widgets.length} widgets."
         
         # register listener to close audio bar
-        $(".bar-close", @audiobar).click =>
-            @audiobar.animate {bottom:@audiobar.height() * -1}, 300, =>
-                @audiobar.removeClass('active')
-    
-            @player.jPlayer "stop"
-            
-            @playing = false
-            @active = null
-            
-            return false
+        $("#{@options.audioBar} .bar-close, #opaque-cover").click => @closeAndStop()
+
     
     #----------
+    
+    closeAndStop: ->
+        @audiobar.animate { bottom: @audiobar.height() * -1 }, 300, =>
+            @audiobar.removeClass('active')
+            $("body").removeClass("with-audio-bar") # which also hides the opaque-cover
+
+        @player.jPlayer "stop"
         
+        @playing = false
+        @active = null
+        
+        return false
+
     play: (widget) ->
         if @playing && @active == widget
             console.log("pause/play")
@@ -98,8 +102,11 @@ class scpr.Audio
                 false
         
         # animate the bar
-        @audiobar.addClass("active")
-        @audiobar.animate {bottom:0}, 1000
+        @audiobar.addClass("active")        
+        $("#opaque-cover").css(height: $(window).height())
+        $("body").addClass("with-audio-bar")
+
+        @audiobar.animate { bottom: 0 }, 1000
         
         # and hit play
         @player.jPlayer "play"

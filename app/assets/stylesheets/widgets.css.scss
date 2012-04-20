@@ -102,6 +102,17 @@
 	}
 }
 // Audio Bar
+#opaque-cover {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 0;
+	width: 0;
+	display: none;
+	background: rgba(0,0,0,0.5);
+	z-index: 999;
+}
+
 .audio-bar {
 	max-width: $gridRowWidth;
 	width: 94%;
@@ -110,11 +121,11 @@
 	position:fixed;
 	z-index:1000;
 	bottom: $baseline * -4;
-
-	&.active {
-		$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
-		@include box-shadow($nav-shadow);
-	}
+	display: none;
+	$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
+	@include box-shadow($nav-shadow);
+		
+	&.active { display: block; }
 	
 	.section-left { 
 		@include gridFluidSpan(5);
@@ -128,17 +139,14 @@
 	.jp-gui {
 		border-right:1px solid $grayLighter;
 		min-height:$baseline * 4;
-		//width:400px;
-		//float:left;
 	}
 	.jp-title {
 		min-height:$baseline * 4;
-		//border-right:1px solid $grayLighter;
-		//width:648px;
-		//float:left;
 		p {
+			display: block;
 			@include font-sans-serif(bold, 16px);
 			padding: 10px;
+			margin: 0;
 			span {
 				@include ie-inline-block();
 				margin-right:$baseline / 2;
@@ -200,20 +208,17 @@
 		height:25px;
 	}
 	.jp-bar {
-		//width:200px;
-		width: 40%;
+		width: 30%;
 		float:left;
 		margin-right:7px;
 	}
 	.jp-progress {
-		//float:left;
-		//width:285px;
 		.jp-current-time, .jp-duration {
 			@include font-sans-serif(normal, 11px);
 			color:$nearBlack;
 			width:35px;
 			float:left;
-			margin-top:20px;			
+			margin-top:20px;
 		}
 		.jp-seek-bar {
 			background-color:#e0e0e0;
@@ -224,7 +229,6 @@
 			.jp-play-bar {
 				@include background-image(linear-gradient(rgba(0,0,0,.35), #03b9f2 5%, darken(#03b9f2, 8%)));
 				background-color:#03b9f2;
-				width:50%;
 				height:8px;
 				@include border-radius(6px);
 			}
