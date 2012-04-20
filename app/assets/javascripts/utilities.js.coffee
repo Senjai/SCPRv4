@@ -31,6 +31,9 @@ class scpr.CompactNav
 	                $(".viewport").css
 	                    height: "auto"
 	                    position: "static"
+                    $("body").css
+                        height: "auto"
+                        overflow: "hidden"
 	                $(".footer-nav").removeClass("active")
 	        )
 
