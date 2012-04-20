@@ -32,6 +32,7 @@ class scpr.CompactNav
         )
 
 
+
 class scpr.Track
     DefaultOptions:
         content_path: "/track/page"
