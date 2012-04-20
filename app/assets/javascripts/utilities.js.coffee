@@ -26,8 +26,10 @@ class scpr.CompactNav
 
     slideLeft: ->
         @viewPort.animate(left: 0, "fast", =>
-            @viewPort.removeClass("navIn")
-            $("body").removeClass("navIn")
+            @viewPort.removeClass("navIn").css(height: "auto")
+            $("body").removeClass("navIn").css
+                height: "auto"
+                width: "auto"
             @nav.removeClass("active")
         )
 
