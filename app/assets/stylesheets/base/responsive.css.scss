@@ -374,6 +374,19 @@ $mediaSmallPortrait: 320px;
 	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 	.visible-reader { display: none !important; }
 	.hidden-reader { display: block !important; }
+	
+	// Override the styles set by the Slider-Nav javascript
+		body {
+			height: auto !important;
+			width: auto !important;
+			position: static !important;
+			overflow: visible !important;
+		}
+		.viewport {
+			height: auto !important;
+			position: static !important;
+		}
+	// end slider override
 }
 
 

@@ -403,12 +403,12 @@ input[type=submit].btn {
 }
 
 
-// Utility
 #translucent {
 	@include background;
 	@include border;
 }
 
+// Utility
 .divider {
 	background:url(image_path('mega-divider.png')) repeat-y right top;
 	margin-right:-15px;

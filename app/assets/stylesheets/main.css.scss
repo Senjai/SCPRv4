@@ -1,3 +1,24 @@
+// Global styles for the slide-in nav
+body {
+	width: auto;
+	height: auto;
+	
+	&.navIn {
+		position: relative;
+        overflow: hidden;
+	}
+}
+
+.viewport {
+	width: 100%;
+	height: auto;
+	
+	&.navIn {
+	    position: absolute;
+	}
+}
+
+
 // #Main Body Content
 #main {
 	margin-top:1px;
@@ -19,26 +40,6 @@
 			.offleads .span4:first-child .offlead h3.story-headline { @include font-shorthand(bold, 28px, 26px); }
 			.lead h1 { @include font-shorthand(600, 24px); }
 		}
-	}
-}
-
-body {
-	width: auto;
-	height: auto;
-	
-	&.navIn {
-		position: relative;
-        overflow: hidden;
-	}
-}
-
-.viewport {
-	width: 100%;
-	height: auto;
-	
-	&.navIn {
-		width: 100%;
-	    position: absolute;
 	}
 }
 

@@ -21,7 +21,6 @@ class scpr.CompactNav
             height: @nav.height()
             width: $(window).width()
 
-        @viewPort.addClass("navIn").css(height: @nav.height())
         @viewPort.animate(left: @navWidth, "fast")
 
     slideLeft: ->
