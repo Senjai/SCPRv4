@@ -29,7 +29,7 @@
 							<% register_content e %>
 							<li>
 								<h4><%= link_to e.title, e.link_path %></h4>
-								<%= link_to format_date(e.starts_at, format: :event), e.link_path %>
+								<%= link_to format_date(e.starts_at, format: :event), e.link_path, class: "event-link" %>
 								
 							</li>
 						<% end %>

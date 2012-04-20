@@ -401,6 +401,9 @@ input[type=submit].btn {
 	border-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
 	background-clip: padding-box;
 }
+
+
+// Utility
 #translucent {
 	@include background;
 	@include border;
@@ -409,6 +412,11 @@ input[type=submit].btn {
 .divider {
 	background:url(image_path('mega-divider.png')) repeat-y right top;
 	margin-right:-15px;
+}
+
+.pull-down {
+	position: absolute;
+	bottom: 0;
 }
 
 // Margins & Padding

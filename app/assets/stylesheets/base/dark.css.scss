@@ -115,12 +115,14 @@ html {height:100%;}
 				@include box-shadow($mega-shadow);
 				h6 { color:$white; }
 				a { color:$gray; }
-			
-				.section { border-color: $grayDark; }
-				ul.content-types li { border-color: $grayDark; }
+				.blog-title a { color:$grayLight; }
+				
+				ul.cbase li, 
+				.section, 
+				ul.content-types li, 
+				.section.programs a:first-child { border-color: $grayDark; }
 				
 				&#programs-mega .section.programs a {
-					&:first-child { border-color: $grayDark; }
 					&:hover { background-color: $nearBlack; }
 					p { color: $gray; }
 				}

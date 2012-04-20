@@ -3,7 +3,7 @@
 		<% register_content(e) %>
 		<li>
 			<h4><%= link_to e.headline, e.link_path %></h4>
-			<%= link_to e.blog.name, e.blog %>
+			<span class="blog-title"><%= link_to e.blog.name, e.blog %></span>
 			<%= smart_date_js e, "data-window" => "8h" %>
 		</li>
 	<% end %>
