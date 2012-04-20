@@ -53,6 +53,9 @@ class scpr.Audio
         # register listener to close audio bar
         $("#{@options.audioBar} .bar-close, #opaque-cover").click => @closeAndStop()
 
+        # Hide the modal if the Esc key is pressed
+        $(document).keyup (event) =>
+            @closeAndStop() if event.keyCode is 27 and @audiobar.is(":visible")
     
     #----------
     
@@ -103,7 +106,6 @@ class scpr.Audio
         
         # animate the bar
         @audiobar.addClass("active")        
-        $("#opaque-cover").css(height: $(window).height())
         $("body").addClass("with-audio-bar")
 
         @audiobar.animate { bottom: 0 }, 1000
