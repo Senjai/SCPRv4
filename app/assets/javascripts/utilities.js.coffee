@@ -2,37 +2,34 @@
 
 class scpr.CompactNav
     constructor: ->
+        @nav = $("#footer-nav")
         @navWidth = 300
+        @viewPort = $(".viewport")
+
         $("#condensed-nav-link").on
-            click: => @slideNav(0, "in")
+            click: => @slideRight()
 
         $("#compact-nav-head .in-btn").on
-            click: => @slideNav(@navWidth * -1, "out")
+            click: => @slideLeft()
 
-    slideNav: (left, dir) ->
-        if dir is "in"
-            $("html").css
-                "overflow-x": "hidden"
-            $(".footer-nav").addClass("active")
-            $(".viewport").css
-                height: $("#footer-nav").height()
-                width: "100%"
-                position: "absolute"
-            $("body").css
-                height: $("#footer-nav").height()
-                width: $(window).width()
-                position: "relative"
-                overflow: "hidden"
+    slideRight: ->
+        $("html").css("overflow-x": "hidden")
+        @nav.addClass("active")
+        @viewPort.addClass("navIn").css(height: @nav.height())
 
-	        $(".viewport").animate(
-	            left: left + @navWidth
-	        "fast", ->
-	            if dir is "out"
-	                $(".viewport").css
-	                    height: "auto"
-	                    position: "static"
-	                $(".footer-nav").removeClass("active")
-	        )
+        $("body").addClass("navIn").css
+            height: @nav.height()
+            width: $(window).width()
+
+        @viewPort.addClass("navIn").css(height: @nav.height())
+        @viewPort.animate(left: @navWidth, "fast")
+
+    slideLeft: ->
+        @viewPort.animate(left: 0, "fast", =>
+            @viewPort.removeClass("navIn")
+            $("body").removeClass("navIn")
+            @nav.removeClass("active")
+        )
 
 
 class scpr.Track

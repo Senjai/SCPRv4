@@ -22,6 +22,26 @@
 	}
 }
 
+body {
+	width: auto;
+	height: auto;
+	
+	&.navIn {
+		position: relative;
+        overflow: hidden;
+	}
+}
+
+.viewport {
+	width: auto;
+	height: auto;
+	
+	&.navIn {
+		width: 100%;
+	    position: absolute;
+	}
+}
+
 // Trending Bar
 .trending {
 	border-bottom:1px solid $grayLighter;
