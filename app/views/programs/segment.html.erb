@@ -20,14 +20,15 @@
 				</header>
 			
 				<div class="story-body">
+					<div class="visible-reader"><%= content_widget "primary_audio", @segment %></div>
 					<%= render_asset @segment, "segment" %>
 					<%= simple_format @segment.body, {}, :sanitize => false %>
 					<br style="clear: both"/>
 				</div>
 				
+				<div class="visible-reader"><%= content_widget "extra_audio", @segment %></div>
 			</article><!-- article.segment -->
 			
-			<div class="visible-reader"><%= content_widget "audio", @segment %></div>
 			<%= content_widget "social_tools", @segment, cssClass: "bottom horizontal" %>
 		</div> <!-- span -->
 	</div> <!-- row fluid -->

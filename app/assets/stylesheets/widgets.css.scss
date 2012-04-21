@@ -103,7 +103,7 @@
 }
 // Audio Bar
 #opaque-cover {
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
 	height: 0;
@@ -530,7 +530,7 @@ a.with-icon {
 .next-prev {
 	@include font-headline($weight: normal);
 	font-size: 14px;
-	padding-bottom: 5px;
+	padding-bottom: 10px;
 	a { color: $black; }
 	
 	.left {

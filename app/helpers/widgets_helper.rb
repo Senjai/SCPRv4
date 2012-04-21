@@ -62,7 +62,7 @@ module WidgetsHelper
   def content_widget(partial, object, options={})
     if object.present? and object.is_a?(ContentBase)
       partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
-      render partial, content: object, options:{ cssClass: "" }.merge!(options)
+      render(partial, { content: object, cssClass: "" }.merge!(options))
     end
   end
 end

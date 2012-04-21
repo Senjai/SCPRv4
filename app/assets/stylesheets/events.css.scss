@@ -156,6 +156,13 @@ span.fake-link {
 	}
 }
 
+.events-fold {
+	.comments, .comment-count { 
+		border-top: none;
+		padding-top: none;
+	}
+}
+
 .events {
 	.upcoming-events {
 		.event {

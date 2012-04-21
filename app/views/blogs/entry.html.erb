@@ -6,7 +6,7 @@
 
 <div class="fold" id="fold">
 	<%= content_widget "related_content_and_links", @entry %>
-	<%= render "shared/cwidgets/next_prev" %>
+	<%= content_widget "next_prev", @entry %>
 	
 	<div class="row-fluid">
 		<div class="span3" id="fold-comments-count-widget">
@@ -18,5 +18,4 @@
 	</div> <!-- row-fluid -->
 </div> <!-- fold -->
 
-<%= render "shared/cwidgets/track_page", :content => @entry %>
-
+<%= content_widget "track_page", @entry %>

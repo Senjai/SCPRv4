@@ -5,8 +5,8 @@
 	<div class="row-fluid">
 		<div class="span3">
 			<div class="article-meta">
-				<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "vertical left", title: "event" } %> <%# To be replaced with a better solution %>
-				<%#= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
+				<%= render 'shared/cwidgets/social_tools', content: @event, cssClass: "vertical left" %> <%# To be replaced with a better solution %>
+				<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
 				
 				<% if @event.audio.present?%>
 					<!-- Audio --> <%# TODO Merge this into Audio model %>
@@ -87,12 +87,12 @@
 				
 			</article>
 			
-			<%= render 'shared/cwidgets/social_tools', content: @event, options: { cssClass: "horizontal bottom" } %> <%# TODO Replace this with a better solution %>
+			<%= render 'shared/cwidgets/social_tools', content: @event, cssClass: "horizontal bottom" %> <%# TODO Replace this with a better solution %>
 		</div> <!-- span -->
 	</div> <!-- row-fluid -->
 </div> <!-- event -->
 
-<div class="fold" id="fold">
+<div class="fold events-fold" id="fold">
 	<% if @more_events.present? and (@event.upcoming? || @event.current?) and @event.is_forum_event? %>
 		<aside class="more-events" id="more-events">
 			<div class="row-fluid">

@@ -10,11 +10,12 @@
 		</header>
 	
 		<div class="story-body <%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
+			<div class="visible-reader"><%= content_widget "primary_audio", @story %></div>
 			<%= render_asset @story, "story" %>
 
 			<div class="storybar">
 				<%= comment_widget_for @story, cssClass: 'right-side' %>
-				<%= render "shared/cwidgets/audio", :content => @story %>
+				<div class="hidden-reader"><%= content_widget "audio", @story %></div>
 				<%= render_asset(@story, "extra") if @story.extra_asset_scheme == "sidebar" %>
 			</div>
 
@@ -23,6 +24,7 @@
 	
 		<footer>
 			<p><i><%= render_contributing_byline @story %></i></p>
+			<div class="visible-reader"><%= content_widget "extra_audio", @story %></div>
 		</footer>
 	</article>
 	<%= content_widget "social_tools", @story, cssClass: "bottom horizontal" %>
