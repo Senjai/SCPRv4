@@ -1,6 +1,6 @@
 <div class="entry content-block">
 	<div class="row-fluid">
-		<%= article_meta_for entry %>
+		<%= content_widget "article_meta", entry %>
 
 		<div class="span9 mq-solo-span">
 			<article>
@@ -21,7 +21,7 @@
 					<% end %>
 				</footer>
 			</article>
-			<%= social_tools_for entry, cssClass: "horizontal bottom" %>
+			<%= content_widget "social_tools", entry, cssClass: "horizontal bottom" %>
 		</div> <!-- span9 -->
 	</div> <!-- row fluid -->
 </div> <!-- entry -->

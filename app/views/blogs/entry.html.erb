@@ -5,7 +5,7 @@
 <%= render "blogs/entry", entry: @entry %>
 
 <div class="fold" id="fold">
-	<%= related_for @entry %>
+	<%= content_widget "related_content_and_links", @entry %>
 	<%= render "shared/cwidgets/next_prev" %>
 	
 	<div class="row-fluid">

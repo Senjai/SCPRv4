@@ -28,7 +28,7 @@ Then /^I should see the segment's primary asset$/ do
 end
 
 Then /^I should see the segment's information$/ do
-  page.find("article.segment h1").should have_content ShowSegment.last.headline
+  page.find(".segment article header").should have_content ShowSegment.last.headline
 end
 
 Then /^I should see a list of that program's segments$/ do

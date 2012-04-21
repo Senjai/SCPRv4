@@ -3,7 +3,7 @@
 
 <div class="segment content-block">
 	<div class="row-fluid">
-		<%= article_meta_for @segment %>
+		<%= content_widget "article_meta", @segment %>
 	
 		<div class="span9 mq-solo-span">
 			<article>
@@ -26,13 +26,15 @@
 				</div>
 				
 			</article><!-- article.segment -->
-			<%= social_tools_for @segment, cssClass: "bottom horizontal" %>
+			
+			<div class="visible-reader"><%= content_widget "audio", @segment %></div>
+			<%= content_widget "social_tools", @segment, cssClass: "bottom horizontal" %>
 		</div> <!-- span -->
 	</div> <!-- row fluid -->
 </div> <!-- segment -->
 
 <div class="fold" id="fold">
-	<%= related_for @segment %>
+	<%= content_widget "related_content_and_links", @segment %>
 	
 	<aside class="other-segments" id="other-segments">
 		<div class="row-fluid">
