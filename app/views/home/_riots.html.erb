@@ -1,0 +1,22 @@
+<div style="font-size: 24px;border-bottom: 6px solid #fcc;margin-bottom: 6px"><a href="/riots/">LA Riots: 20 Years Later</a></div>
+
+<div class="row">
+	<%= content_cache("home_leads") do %>
+		<% register_content("layout/homepage") %>
+		<div class="span6">
+			<%= render_content @homepage.content[0], "lead6" if @homepage %>
+		</div>
+		<div class="span2 offleads">
+			<%= render_content @homepage.content[1..-1], "offlead" if @homepage %>
+		</div>
+	<% end %>
+</div>
+
+<div style="height: 6px;background-color: #fcc;">&nbsp;</div>
+
+<% content_for :conversation_slot do %>
+	<div class="join-conversation-container">
+		<hr/>
+		<%= featured_comment :bucket => nil, :style => "home" %>
+	</div>
+<% end %>
