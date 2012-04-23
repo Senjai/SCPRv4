@@ -480,24 +480,3 @@ h3.section-nav-header {
 	}
 }
 
-.static-content {
-	img.left {
-		float: left;
-		margin: 0 10px 0 0;
-	}
-	
-	ul.info {
-		background: $nearWhite;
-		border: 1px solid $grayLighter;
-		margin: 5px 0;
-		padding: 15px 15px 5px 20px;
-		li {
-			list-style: none;
-			margin-bottom: 15px;
-		}
-	}
-	
-	.google-map {
-		text-align: center;
-	}
-}

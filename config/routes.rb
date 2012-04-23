@@ -101,6 +101,7 @@ Scprv4::Application.routes.draw do
   # -- Home -- #
   match '/' => "home#index", :as => :home
   match '/beta/' => "home#beta", :as => :beta
+  match '/listen' => "home#listen", as: :listen
   
   root to: "home#index"
   

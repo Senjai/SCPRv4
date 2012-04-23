@@ -14,6 +14,10 @@ class HomeController < ApplicationController
   
   #----------
   
+  def listen
+    render layout: 'application'
+  end
+  
   def error
     render :template => "/error/500.html", :status => 500, :layout => "error"
   end
