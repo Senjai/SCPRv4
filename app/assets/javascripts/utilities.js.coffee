@@ -3,7 +3,6 @@
 class scpr.CompactNav
     constructor: ->
         @nav = $("#footer-nav")
-        @navWidth = 300
         @viewPort = $(".viewport")
 
         $("#condensed-nav-link").on
@@ -21,7 +20,7 @@ class scpr.CompactNav
             height: @nav.height()
             width: $(window).width()
 
-        @viewPort.animate(left: @navWidth, "fast")
+        @viewPort.animate(left: @nav.width(), "fast")
 
     slideLeft: ->
         @viewPort.animate(left: 0, "fast", =>
@@ -32,7 +31,7 @@ class scpr.CompactNav
             @nav.removeClass("active")
         )
 
-
+#----------
 
 class scpr.Track
     DefaultOptions:
