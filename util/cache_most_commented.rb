@@ -30,7 +30,10 @@ Disqussion::Client.threads.listPopular(:forum => "kpcc",:interval => "3d").respo
   begin
     cobj = ContentBase.obj_by_key(p.identifiers[0])
     count = p.posts_in_interval
-    content << [count,cobj]
+
+    if count.present? and cobj.present?
+      content << [count,cobj]
+    end
   rescue
     next
   end
