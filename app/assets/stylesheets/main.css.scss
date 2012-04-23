@@ -561,3 +561,18 @@ nav.filters {
 		}
 	}
 }
+
+// Error
+#error {
+	form {
+		margin: 10px 0;
+
+		input { display: inline-block; }
+		input[type=text] {
+			max-width:450px;
+			width:100%;
+			font-size:15px;
+			padding:5px;			
+		}
+	}
+}

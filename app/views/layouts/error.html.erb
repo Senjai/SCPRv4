@@ -10,17 +10,11 @@
 <div class="viewport">
 	<!-- MASTHEAD-->
 	<%= render "shared/masthead" %>
-
-	<div id="main" class="container">
-		<div class="row">
-			<%= yield :masthead if content_for? :masthead %>
-			<article class="span8 offset2" style="min-height: 400px">
-				<%= content_for?(:content) ? yield(:content) : yield %>
-			</article>
-		</div> <!-- row -->
+	<div id="error" class="container-fluid">
+		<%= yield %>
 	</div> <!-- main -->
 	
-	<%= render :partial => "shared/footer/footer" %>
+	<%= render :partial => "shared/footer" %>
 	<%= render :partial => "shared/footer/footer_js" %>
 	
 </div> <!-- viewport -->
