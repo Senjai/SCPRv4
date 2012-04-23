@@ -9,9 +9,17 @@ header#masthead {
 		margin: 0;
 		@include clearfix;
 		
-		a.dark-logo {
-			margin: 0 auto;
+		a.antenna {
+			background: url(image_path("icons/antenna-orange.png")) no-repeat left top;
+			height: 28px;
+			color: $nearWhite;
+			@include font-navigation($size: 14px);
+			padding: 5px 0 0 25px;
+			display: block;
+			&:hover { text-decoration: none; }
 		}
+		
+		a.dark-logo { margin: 0 auto; }
 		span.condensed-nav-link {
 			margin-right: 10px; 
 			float: left;
