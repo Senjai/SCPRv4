@@ -9,7 +9,7 @@ class HomeController < ApplicationController
   #----------
 
   def beta
-    render :layout => "beta"
+    render :layout => false
   end
   
   #----------

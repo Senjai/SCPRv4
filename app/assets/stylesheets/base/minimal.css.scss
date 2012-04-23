@@ -6,182 +6,275 @@ body.minimal {
 	background-color:darken($white, 2%);
 	@include font-sans-serif;
 	p { @include font-sans-serif(200); }
+	
 	header {
-		background-color:$nearBlack;
-		border-bottom:5px solid $grayLight;
+		padding-top: 10px;
+		height: 30px;
+		background:#222;
+		@include background-image(linear-gradient(#333, #222));
+	    $shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1);
+	    @include box-shadow($shadow);
+	
+		h3#site-title a {
+			background:transparent url(image_path('logo-full-sm.png')) no-repeat left top;
+			width:130px;
+			height:30px;
+			display:block;text-indent:-9999px;
+			float: left;
+		}
+		
+		a.home-link { 
+			float: right;
+			color: darken($white, 20%);
+			@include font-shorthand($size: 12px); 
+		}
 	}
-	header h3 {
-		color: $orange;
-		font-weight:100;
-		font-size:22px;
-		margin:3px 6px 0 0;
-		@include ie-inline-block;
-	}
-	header li.menu a {
-		color: darken($white, 20%);
-	}
-	header li.menu a:hover {
-		color:$white;
-	}
-	.secondary-nav {
-		color:$gray;
-	}
-	#content {
-		z-index:0;
-		border-bottom:1px solid $grayLighter;
-		border-top:1px solid $white;
+	
+	.content-container {
+		padding: 100px 0;
 		@include background-image(linear-gradient($nearWhite, darken($nearWhite, 5%)));
+		border-bottom:1px solid $grayLighter;
+		margin-bottom: 20px;
 	}
-	.section-top {
-		padding:0 20px;
-		@include clearfix();
-		.social {
-			float:right;
-			margin-top:8px;
-			text-align:right;
+	
+	.box {
+		background-color:$white;
+		border:1px solid $grayLighter;
+		padding:20px;
+		margin:0 auto;
+		max-width: 580px;
+		z-index: 10;
+		position: relative;
+		
+		h3 { margin-bottom: 5px; }
+		
+		ul li {
+			margin-bottom: 18px;
+			color: $gray;
+			strong { color: $orangeDark; }
 		}
 	}
-	.register {
-		padding:($baseline * 4) 0 ($baseline * 4) 0;
-		.form-container {
- 			@include columns(8);
-		}
-		aside {
-			@include columns(4);
-		}
+	
+	p.beta-button {
+		text-align: center;
+		a#beta-button { font-size: 16px; }
+		a { margin-bottom: 5px; }
 	}
-	.login {
-		padding:($baseline * 8) 0 ($baseline * 4) 0;
+		
+	.floating-shadow {
+		background:transparent url(image_path('floating-shadow.png')) no-repeat center bottom;
+		height: 100px;
+		margin-top:-60px;
 		position:relative;
-		aside {
-			margin-top:($baseline * 2);
-		}
+		z-index: 5;
 	}
-	.profile {
-		padding:($baseline * 4) 0 ($baseline * 4) 0;
-		aside ul {
-			font-size:12px;
-		}
-	}
-	.pledge-list {
-		float:left;
-		width:40%;
-		margin-right:$gridGutterWidth;
-	}
-	aside {
-		h3, h4, h5, h6 {
-			color:lighten($grayDark, 15%);
-			text-shadow:0 1px 0 rgba(255,255,255,1);;
-		}
-		ul {
-			h5, h6 { font-weight:300;}
-		}
-		p {
-			font-size:12px;
-		}
-	}
+	
 	footer {
-		margin-top:$baseline;
+		text-align: center;
+		padding-bottom: 10px;
+		ul {
+			margin: 0;
+			list-style: none;
+			li, li a { 
+				@include font-shorthand($size: 12px, $lineHeight: 10px); 
+				color: $grayLight;
+			}
+			li a:hover { color: $gray; }
+			li {
+				display: inline-block;
+				padding: 0 10px 0 0;
+				margin: 0 0 0 10px;
+				border-right: 1px solid $grayLight;
+				&:first-child { margin-left: 0; }
+				&:last-child { 
+					padding-right: 0;
+					border-right: none;
+				}
+			}
+		}
 	}
 }
 
-// Header styles
-h3#site-title a {
-	background:transparent url(image_path('logo-full-sm.png')) no-repeat left top;
-	width:130px;
-	height:18px;
-	padding:0;
-}
-h3#site-title a {display:block;text-indent:-9999px;}
-
-// Form styles
-.form {
-	background-color:$white;
-	border:1px solid $grayLighter;
-	padding:12px 0;
-	position:relative;
-	z-index:2;
-}
-.simple {
-	margin:0 auto;
-	width: 600px;
-}
-.label-offset {
-	margin-left:90px;
-}
-
-// Content Styling
-.ib {
-	float:left;
-	margin-right:$gridGutterWidth;
-}
-hr.carved {
-  clear: both; 
-  float: none; 
-  width: 100%; 
-  height: 2px;
-  margin: ($baseline / 2) 0;
-  border: none; 
-  background: #ddd;
-  background-image: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      color-stop(0.5, $grayLighter),
-      color-stop(0.5, $white)
-  );
-  background-image: -moz-linear-gradient(
-      center top,
-      $grayLighter 50%,
-      $white 50%
-  );
-}
-.facebook-follow, .twitter-follow {
-	background-repeat:no-repeat;
-	background-position:left middle;
-	padding:10px 0 0 55px;
-	height:38px;
-	margin-bottom:$baseline;
-}
-.facebook-follow {
-	background-image:url(image_path('icons/facebook.png'));
-}
-.twitter-follow {
-	background-image:url(image_path('icons/twitter.png'));
-	padding:14px 0 0 64px;
-}
-#fb-like-box {
-	display:inline-block;
-	overflow:hidden;
-	height:30px;
-	width:200px;
-	position:relative;
-}
-#fb-like-box iframe {
-	position:absolute;
-	left:-50px;
-	top:-45px;
-}
-.benefits li {
-	background-repeat:no-repeat;
-	background-position:0 3px;
-	padding-left:32px;
-}
-body.minimal {
-	li.comment {
-		background-image:url(image_path('icons/comment.png'));
-	}
-	li.membership {
-		background-image:url(image_path('icons/cogs.png'));
-	}
-	li.futures {
-		background-image:url(image_path('icons/chemical.png'));
-	}
-}
-.floating-shadow {
-	background:transparent url(image_path('floating-shadow.png')) no-repeat center bottom;
-	height: 100px;
-	margin-top:-60px;
-	position:relative;
-	z-index:1;
-}
+//body.minimal {
+//	background-color:darken($white, 2%);
+//	@include font-sans-serif;
+//	p { @include font-sans-serif(200); }
+//	header {
+//		background-color:$nearBlack;
+//		border-bottom:5px solid $grayLight;
+//	}
+//	header h3 {
+//		color: $orange;
+//		font-weight:100;
+//		font-size:22px;
+//		margin:3px 6px 0 0;
+//		@include ie-inline-block;
+//	}
+//	header li.menu a {
+//		color: darken($white, 20%);
+//	}
+//	header li.menu a:hover {
+//		color:$white;
+//	}
+//	.secondary-nav {
+//		color:$gray;
+//	}
+//	#content {
+//		z-index:0;
+//		border-bottom:1px solid $grayLighter;
+//		border-top:1px solid $white;
+//		@include background-image(linear-gradient($nearWhite, darken($nearWhite, 5%)));
+//	}
+//	.section-top {
+//		padding:0 20px;
+//		@include clearfix();
+//		.social {
+//			float:right;
+//			margin-top:8px;
+//			text-align:right;
+//		}
+//	}
+//	.register {
+//		padding:($baseline * 4) 0 ($baseline * 4) 0;
+//		.form-container {
+// 			@include columns(8);
+//		}
+//		aside {
+//			@include columns(4);
+//		}
+//	}
+//	.login {
+//		padding:($baseline * 8) 0 ($baseline * 4) 0;
+//		position:relative;
+//		aside {
+//			margin-top:($baseline * 2);
+//		}
+//	}
+//	.profile {
+//		padding:($baseline * 4) 0 ($baseline * 4) 0;
+//		aside ul {
+//			font-size:12px;
+//		}
+//	}
+//	.pledge-list {
+//		float:left;
+//		width:40%;
+//		margin-right:$gridGutterWidth;
+//	}
+//	aside {
+//		h3, h4, h5, h6 {
+//			color:lighten($grayDark, 15%);
+//			text-shadow:0 1px 0 rgba(255,255,255,1);;
+//		}
+//		ul {
+//			h5, h6 { font-weight:300;}
+//		}
+//		p {
+//			font-size:12px;
+//		}
+//	}
+//	footer {
+//		margin-top:$baseline;
+//	}
+//	
+//	li.comment {
+//		background-image:url(image_path('icons/comment.png'));
+//	}
+//	li.membership {
+//		background-image:url(image_path('icons/cogs.png'));
+//	}
+//	li.futures {
+//		background-image:url(image_path('icons/chemical.png'));
+//	}
+//}
+//
+//// Header styles
+//h3#site-title a {
+//	background:transparent url(image_path('logo-full-sm.png')) no-repeat left top;
+//	width:130px;
+//	height:18px;
+//	padding:0;
+//}
+//h3#site-title a {display:block;text-indent:-9999px;}
+//
+//// Form styles
+//.form {
+//	background-color:$white;
+//	border:1px solid $grayLighter;
+//	padding:12px 0;
+//	position:relative;
+//	z-index:2;
+//}
+//.simple {
+//	margin:0 auto;
+//	width: 600px;
+//}
+//.label-offset {
+//	margin-left:90px;
+//}
+//
+//// Content Styling
+//.ib {
+//	float:left;
+//	margin-right:$gridGutterWidth;
+//}
+//hr.carved {
+//  clear: both; 
+//  float: none; 
+//  width: 100%; 
+//  height: 2px;
+//  margin: ($baseline / 2) 0;
+//  border: none; 
+//  background: #ddd;
+//  background-image: -webkit-gradient(
+//      linear,
+//      left top,
+//      left bottom,
+//      color-stop(0.5, $grayLighter),
+//      color-stop(0.5, $white)
+//  );
+//  background-image: -moz-linear-gradient(
+//      center top,
+//      $grayLighter 50%,
+//      $white 50%
+//  );
+//}
+//.facebook-follow, .twitter-follow {
+//	background-repeat:no-repeat;
+//	background-position:left middle;
+//	padding:10px 0 0 55px;
+//	height:38px;
+//	margin-bottom:$baseline;
+//}
+//.facebook-follow {
+//	background-image:url(image_path('icons/facebook.png'));
+//}
+//.twitter-follow {
+//	background-image:url(image_path('icons/twitter.png'));
+//	padding:14px 0 0 64px;
+//}
+//#fb-like-box {
+//	display:inline-block;
+//	overflow:hidden;
+//	height:30px;
+//	width:200px;
+//	position:relative;
+//}
+//#fb-like-box iframe {
+//	position:absolute;
+//	left:-50px;
+//	top:-45px;
+//}
+//.benefits li {
+//	background-repeat:no-repeat;
+//	background-position:0 3px;
+//	padding-left:32px;
+//}
+//
+//.floating-shadow {
+//	background:transparent url(image_path('floating-shadow.png')) no-repeat center bottom;
+//	height: 100px;
+//	margin-top:-60px;
+//	position:relative;
+//	z-index:1;
+//}

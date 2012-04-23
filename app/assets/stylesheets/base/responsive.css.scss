@@ -402,6 +402,13 @@ $mediaSmallPortrait: 320px;
 			}
 		}
 	// end Audio Bar
+	
+	// Hide floating shadow on minimal box
+		body.minimal {
+			.content-container { padding: 20px 0; }
+			.floating-shadow { display: none; }
+		}
+	//end floating shadow
 } // end Reader mode
 
 
