@@ -172,7 +172,7 @@ nav.utils ul {
 				&.listen-live {
 					@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
 					background-color:#cb5f1d;
-					width: 126px;
+					width: 136px;
 					&:hover {
 						@include background-image(linear-gradient(#cb5f1d, #9b4816));
 					}

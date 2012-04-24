@@ -775,54 +775,34 @@ a.comment-count.inline {
 }
 .comment-count {
 	border-top:1px solid $grayLight;
-	margin-bottom:$baseline;
+	margin-bottom:$baseLineHeight;
+	padding: 5px;
 	h4 {
 		background-position: left top;
-		background:url(image_path('icons/comment-count.png')) top right no-repeat;
+		padding-left: 28px;
+		background:url(image_path('icons/comment-count.png')) no-repeat;
 		color:$grayDark;
-		font-size:16px;
-		font-weight:600;
-		height:20px;
-		line-height:1;
-		margin-bottom:$baseline / 2;
-		opacity:0.85;
+		@include font-shorthand(600, 16px);
+		min-height:20px;
+		margin-bottom:$baseLineHeight / 2;
+		@include opacity(0.85);
 		padding-right:28px;
 	}
 	a {
 		@include font-sans-serif(normal, 11px);
 		display:block;
-		//padding-left:28px;
 	}
-	&.left-side {
-		text-align:right;
-		.inner-container {
-			padding-right:0;
-		}
+	&.left-side { 
+		text-align:right; 
 		h4 {
-			@include ie-inline-block();
-		}
-		&.right-align {
-			h4 {
-				@include ie-inline-block();
-				background-position: right 0;
-				padding-left: 0;
-				padding-right: 28px;
-			}
+			background-position: right top;
+			padding-right: 28px;
+			padding-left: 0;
 		}
 	}
-	&.right-side {
-		text-align:left;
-		.inner-container {
-			padding-left:0;
-		}
-	}
+	&.right-side { text-align:left; }
 }
 
-.storybar .comment-count h4 {
-	padding-right: 0;
-	padding-left: 28px;
-	background-position: top left;
-}
 
 // Comments styling
 .comments {
