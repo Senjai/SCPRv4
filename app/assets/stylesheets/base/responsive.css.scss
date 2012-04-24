@@ -412,6 +412,8 @@ $mediaSmallPortrait: 320px;
 			.floating-shadow { display: none; }
 		}
 	//end floating shadow
+	
+	#uvTab { display: none !important; } // The "feedback" button... fixed position on touch screen, gets in the way
 } // end Reader mode
 
 
@@ -464,8 +466,6 @@ $mediaSmallPortrait: 320px;
 			}
 		}
 	// end Pledge Banner to Button
-	
-	#uvTab { display: none !important; } // The "feedback" button... fixed position on touch screen, more trouble than it's worth
 }
 
 

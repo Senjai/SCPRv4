@@ -865,6 +865,7 @@ a.comment-count.inline {
 	overflow: hidden;
 	img, object, embed, .dfp, iframe {
 		max-width: 100% !important;
+		min-height: 0;
 	}
 	
 	&:first-child {
@@ -990,14 +991,18 @@ a.comment-count.inline {
 
 // Mobile App Promo
 .promo-mobile {
-	background:url(image_path('mobile/ad-bg.jpg')) no-repeat center 80%;
-	height:190px;
-	position:relative;
-	padding-bottom: 15px;
-	a {
-		position:absolute;
-		top:40px;
-		left:120px;
+	text-align: center;
+	max-height: 180px;
+	img { 
+		max-width: 100%;
+		position: relative;
+		top: -30px;
+		z-index: 9;
+	}
+	a { 
+		position: relative;
+		top: 15px;
+		z-index: 10;
 	}
 }
 #iphone-app-promo {
@@ -1038,6 +1043,10 @@ a.comment-count.inline {
 	width: 100%;
 	max-width: 346px;
 	overflow: hidden;
+	> span { 
+		width: 100% !important; 
+		iframe { width: 100% !important; }
+	}
 }
 
 .fb-facepile {
