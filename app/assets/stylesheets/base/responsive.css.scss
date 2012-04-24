@@ -75,7 +75,6 @@ $mediaSmallPortrait: 320px;
 	.related-content {
 		border-top: 1px solid $grayLighter;
 		padding-top: 10px;
-		@include centeredAsset;
 	}
 	
 	// Hide CFF vertical nav, show horizontal nav
