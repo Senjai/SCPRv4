@@ -459,6 +459,10 @@ $mediaSmallPortrait: 320px;
 			.nav-primary .sections { width: 100%; }
 			.mid-header-wrapper {
 				text-align: center;
+				.mq-pull-down {
+					position: relative;
+					text-align: left;
+				}
 				.pledge-container {
 					display: none;
 				}

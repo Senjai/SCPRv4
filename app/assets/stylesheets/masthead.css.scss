@@ -47,14 +47,16 @@ header#masthead {
 .mid-header-wrapper {
 	text-align: left;
 	white-space: nowrap;
+	
+	.fb-like {
+		display: inline-block;
+		vertical-align: bottom;
+		padding: 6px;
+		min-width: 100px;
+		max-width: none;
+	}
 }
 
-.fb-like {
-	display: inline-block;
-	vertical-align: bottom;
-	padding: 6px;
-	min-width: 100px;
-}
 // Pledge
 .pledge-container {
 	display: inline-block;
