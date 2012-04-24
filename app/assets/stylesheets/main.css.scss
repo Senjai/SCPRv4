@@ -287,11 +287,12 @@ h6.more-news-title {
 	padding-left:8px;
 	text-transform:none;
 	margin-bottom: 10px;
-	span {
-		@include font-sans-serif($size:12px);
-		float:right;
-		padding: 7px 8px 0 0;
-	}
+}
+
+.more-link {
+	@include font-sans-serif($size:12px);
+	float:right;
+	padding: 7px 8px 0 0;
 }
 
 .more-news-container {

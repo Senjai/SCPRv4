@@ -1,6 +1,6 @@
 class VideoController < ApplicationController
   layout "video"
-  respond_to :html, :json, :js
+  respond_to :html, :js
   
   def index
     begin

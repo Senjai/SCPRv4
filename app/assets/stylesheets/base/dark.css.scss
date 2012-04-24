@@ -1,6 +1,16 @@
 /* DARK THEME FOR VIDEO SECTIONS & OTHER PLACES WHERE THE FOCUS IS ON VISUAL CONTENT */
 html {height:100%;}
 .dark-theme {	
+	h1, h2, h3, h4, h5, h6, h7 {
+		color: $gray;
+	}
+	
+	.pagination {
+		a:hover, &.active a {
+	    	background-color: $nearBlack;
+		}
+	}
+	
 	// DEFINE FOCUS TRANSITIONS
 	.muted {
 		@include transition(opacity linear 0.2s);
