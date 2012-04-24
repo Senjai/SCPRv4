@@ -58,7 +58,7 @@ body {
 		float:left;
 		font-size:13px;
 		font-weight:normal;
-		line-height:1.8em;
+		line-height:$baseLineHeight * 1.5;
 		margin-right:10px;
 	}
 	ul li {
@@ -149,7 +149,7 @@ body {
 }
 
 .episode-guide {
-	@include font-sans-serif($weight:normal, $size:0.95em);
+	@include font-sans-serif($weight:100, $size:14px);
 	color:$grayAlt;
 	img {
 		float:left;
@@ -202,160 +202,6 @@ body {
 	}
 }
 
-
-// #broadcast-bar-outer-container {
-// 	border-top:1px solid $grayBorder;
-// 	border-bottom:1px solid $grayBorder;
-// 	margin:3px 0 25px 0;
-// 	&.headshot {
-// 		margin-top:12px;
-// 	}
-// }
-// #broadcast-bar-inner-container {
-// 	background:$grayBackground;
-// 	border-top:1px solid $white;
-// 	border-bottom:1px solid $white;
-// 	height:46px;
-// }
-//section.broadcastbar {
-//	@include clearfix();
-//	.current-program {
-//	    margin-top: 14px;
-//	}
-//	.next-program {
-//	    margin-top: 14px;
-//		text-align: right;
-//		white-space: nowrap;
-//	}
-//	ul {
-//		list-style:none outside none;
-//		margin:0;
-//		li {
-//			@include ie-inline-block();
-//			&.on-air {
-//				position:relative;
-//			}
-//			&.on-air img {
-//				position:absolute;
-//				left:0;
-//				top:0;
-//			}
-//			.bbar_headshot {
-//			    position: relative;
-//			    top: -38px;
-//				margin-bottom: -52px;
-//				z-index: 0;
-//			}
-//			&.on-now {
-//				float:left;
-//				margin:0 0 0 90px;
-//				padding:8px 0 0 0;
-//			}
-//			&.active-show-title {
-//				@include font-heading($weight:normal, $size:1.5em);
-//				color:$orangeDark;
-//				a {
-//					color:$orangeDark;
-//					font-weight:600;
-//					text-shadow:1px 1px 0px #fff;
-//					display: inline-block;
-//					&.modal-toggler {
-//						background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
-//						padding-right:15px;
-//						&:hover {
-//							background-position:right -34px;
-//						}
-//					}
-//				}
-//			}
-//			&.show-status {
-//				@include font-sans-serif($weight:bold, $size:1.05em);
-//				color:$grayAlt;
-//				padding:0 0 0 5px;
-//			}
-//			&.show-summary {
-//				@include font-sans-serif($weight:normal, $size:0.95em);
-//				color:$grayAlt;
-//				padding:0 0 0 5px;
-//				position:relative;
-//				.episode-guide {
-//					img {
-//						float:left;
-//						width:58px;
-//						height:58px;
-//					}
-//					ul.cbase {
-//						li {
-//							display:block;
-//							list-style-image:url(image_path('mega-divider.png'));
-//							margin-bottom:$baseline / 2;
-//							&.lead {
-//								list-style-image:none;
-//							}
-//							&.more {
-//								margin-bottom:0;
-//								a {
-//									background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
-//									font-size:11px;
-//									padding-bottom:2px;
-//									padding-right:17px;
-//								}
-//							}
-//							a.comment_link {
-//								margin-left:0;
-//							}
-//						}
-//						margin-left:80px;
-//						h4 {
-//							font-size:18px;
-//							font-weight:bold;
-//						}
-//						h5 {
-//							font-size:15px;
-//						}
-//						p {
-//							color:$nearBlack;
-//							font-size:13px;
-//							line-height:18px;
-//						}
-//						.headline {
-//							@include font-headline(600);
-//							a {
-//								color:$nearBlack;
-//								}
-//							a.comment_link {
-//								color:$linkColor;
-//							}
-//						}
-//					}
-//				}
-//			}
-//			&.join-conversation {
-//				padding:0 0 0 12px;
-//				a {
-//					@include font-sans-serif($weight:bold, $size:1em);
-//					background:url("broadcast-bar/comment-icon.png") no-repeat scroll transparent;	
-//					color:$linkColor;
-//					padding:0 18px;
-//				}
-//			}
-//			&.up-next img {
-//				padding:8px 0 0 60px;
-//			}
-//			&.upnext-show-title, .upnext-show-title a {	
-//				@include font-heading($weight:600, $size:1.5em);
-//				color:$orangeDark;
-//				text-shadow:1px 1px 0px #fff;
-//			}
-//			&.show-time {
-//				@include font-sans-serif($weight:normal, $size:0.9em);
-//				color:$gray;
-//				letter-spacing:-0.15em;
-//				padding:0 0 0 5px;
-//			}
-//		}
-//	}
-//}
 .offleads {
 	.span4:last-child .offlead {
 		border-bottom: none;
@@ -412,7 +258,7 @@ body {
 			a {
 				@include font-headline($weight:lighter);
 				color:$grayAlt;
-				font-size:1.05em;
+				font-size:15px;
 			}
 		}
 	}
@@ -461,7 +307,7 @@ h6.more-news-title {
 			border-right:1px solid $grayLighter;
 			p.story-title {
 				@include font-headline($weight:bold);
-				font-size:1.2em;
+				font-size:16px;
 				margin:0;
 				a {
 					color:$grayAlt;
@@ -479,14 +325,14 @@ h6.more-news-title {
 					a {
 						@include font-headline($weight:lighter);
 						color:$grayAlt;
-						font-size:1.05em;
+						font-size:15px;
 					}
 				}
 			}
 		}
 		div.related-content {			
 			h6 {
-				font-size:0.90em;
+				font-size:13px;
 				padding:5px 0;
 			}
 			img.segment {
@@ -496,7 +342,7 @@ h6.more-news-title {
 				@include font-headline($weight:lighter);
 				color:$grayAlt;
 				display:block;
-				font-size:1.1em;
+				font-size:15px;
 				a {
 					color:$grayAlt;
 				}

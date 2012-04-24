@@ -367,14 +367,10 @@
 .author-info {
 	margin-bottom:$baseline;
 	h6 {
-		@include font-sans-serif();
-		font-weight:bold;
-		line-height:1em;
+		@include font-sans-serif($weight: bold);
 		margin-bottom:10px;
 		text-transform:none;
-		a {
-			color:$grayDark;
-		}
+		a { color:$grayDark; }
 	}
 	img {
 		float:left;
@@ -397,9 +393,7 @@
 // About Blog Widget
 .blog-about {
 	border-bottom:1px solid $grayLighter;
-	h6 {
-		color:$orangeDark;
-	}
+	h6 { color:$orangeDark; }
 	p, ul {
 		@include font-sans-serif(normal, 12px, 16px);
 		margin-bottom:0;
@@ -474,7 +468,6 @@ a.with-icon {
 	h6.host-name {
 		@include font-sans-serif();
 		font-weight:bold;
-		line-height:1em;
 		margin-bottom:10px;
 		text-transform:none;
 		a {
@@ -743,7 +736,7 @@ ul.carousel {
 	p {
 		@include font-headline($weight:lighter);
 		color:$grayAlt;
-		font-size:1.05em;
+		font-size:15px;
 		line-height:16px;
 		margin:0 auto;
 		width:140px;
@@ -843,7 +836,7 @@ a.comment-count.inline {
 		h3 {
 			border-bottom:1px solid $grayLighter;
 			color:$orangeDark;
-			font-size:1em;
+			font-size: $baseFontSize;
 		}
 	}
 	.dsq-comment-text, .dsq-comment-header {
@@ -887,22 +880,15 @@ a.comment-count.inline {
 
 // Newsletter Subscribe
 .newsletter {
-	padding-top:.2em;
-	h6 {
-		margin-bottom:$baseline/2;
-	}
+	h6 { margin-bottom:$baseline / 2; }
+	a { text-transform:uppercase; }
+	form { margin-bottom:$baseline / 2; }
 	p {
 		color:$grayDark;
 		@include font-sans-serif($size:12px, $weight: bold);
 		line-height:16px;
 		margin-bottom:$baseline / 2;
 		width:240px;
-	}
-	a {
-		text-transform:uppercase ;
-	}
-	form {
-		margin-bottom:$baseline / 2;
 	}
 	input.email {
 		background:url(image_path('icons/newsletter-subscribe.png')) no-repeat 4px 3px;
@@ -984,7 +970,7 @@ a.comment-count.inline {
 		a {
 			color:$grayAlt;
 			@include font-headline(lighter);
-			font-size:1.05em;
+			font-size:15px;
 		}
 	}
 }
@@ -1028,8 +1014,6 @@ a.comment-count.inline {
 	margin-top:10px;
 	padding-left:40px;
 }
-.ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
-.ui-tabs .ui-tabs-hide { display: none !important; }
 
 #uvTab { z-index: 999 !important; } // push feedback button under audio bar widget & megamenu
 
@@ -1064,7 +1048,7 @@ a.comment-count.inline {
 	}
 
 	p {
-		@include font-heading($size:1.1em);
+		@include font-heading($size:15px);
 		background:url("facebook/facebook_icon.gif") no-repeat left top;
 		color:$facebookBlue;
 		height: 25px;

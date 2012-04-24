@@ -1,6 +1,6 @@
 .cbase {
 	h1, h2, h3, h4, h5, h6 {
-		line-height:1.1em;
+		line-height: $baseLineHeight;
 	}
 	p {
 		font-size:13px;
@@ -11,7 +11,7 @@
 	h4 {
 		color:$gray;
 		@include font-sans-serif(normal, 11px);
-	    line-height: 1.1em;
+	    line-height: $baseLineHeight;
         margin-top: 6px;
         text-transform: uppercase;
 	

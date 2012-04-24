@@ -89,7 +89,7 @@
 	// Example:
 	/*
 		 .google-maps {
-				@include font-sans-serif($weight:normal, $size:0.95em);
+				@include font-sans-serif($weight:normal, $size:13px);
 				color: $grayAlt;
 				width: 400px;
 				min-height: 350px;
@@ -111,7 +111,7 @@
 	// Use these classes for positioning, width, height, and any extra options you want on a specific modal (or a group of duplicate modals)
 	&.google-maps {
 		@include modal-light;
-		@include font-sans-serif($weight:normal, $size:0.95em);
+		@include font-sans-serif($weight:normal, $size:13px);
 		color: $grayAlt;
 		padding: 0 0 0 5px;
 		width: 400px;
