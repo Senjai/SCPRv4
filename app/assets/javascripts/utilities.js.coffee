@@ -35,22 +35,18 @@ class scpr.CompactNav
 
 class scpr.adSizer # Hack to get DFP ads to be responsive
     constructor: ->
-        $(document).ready ->
-            setTimeout -> # Wait a tick so the google ad script has time to render the iframe
-                console.log "Found #{$(".dfp iframe").length} DFP ads"
-
-                $.each $(".dfp iframe"), (i, element) ->
-                    $(element.document).ready ->
-                        ad = $(element.contentWindow.document).find("img, object, embed")[0]
-                        console.log "Resizing ad: ", ad
-                        
-                        $(ad).css
-                            "max-width": "100%",
-                            "height": "auto"
-
-                        console.log "Resized ad ##{i}."
-
+        $(document).ready =>    
+            # iFrame ads
+            setTimeout => # Wait a tick so the google ad script has time to render the iframe
+                $.each $(".dfp iframe"), (i, element) =>
+                    $(element.contentWindow.document).ready =>
+                        @resize($(element.contentWindow.document).find("img, object, embed")[0])
             , 500
+
+    resize: (element) ->
+        $(element).css
+            "max-width": "100%",
+            "height": "auto"
 
 
 class scpr.Track

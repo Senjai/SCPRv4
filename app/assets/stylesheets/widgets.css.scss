@@ -863,7 +863,7 @@ a.comment-count.inline {
 .ad {
 	text-align:center;
 	overflow: hidden;
-	img, object, .dfp, iframe {
+	img, object, embed, .dfp, iframe {
 		max-width: 100% !important;
 	}
 	
