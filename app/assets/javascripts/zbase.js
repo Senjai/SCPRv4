@@ -4,7 +4,7 @@ function open_popup(url) {
         return false; 
 }
 
-// temporary dev tool
+// temporary dev tool, can be deleted
 function openWindow(width, height) {
 	if(height == null) height = "1000";
 	window.open(window.location, "dev", "height="+height+",width="+width)
