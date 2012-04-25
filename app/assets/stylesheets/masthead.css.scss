@@ -98,19 +98,19 @@ header#masthead {
 nav.utils {
 	@include text-utility();
 	text-align: right;
-	.social {
-		margin-bottom: 5px;
-		img {
-			margin-left:5px;
-			vertical-align:text-top;
-		}
-	}
 	ul {
 		margin: 0;
 		li {
-			&:first-child { border-right:1px solid #e9e9e9; }
+			border-right:1px solid #e9e9e9;
+			&:last-child { border-right: none; }
 			display: inline-block;
 			padding: 0 8px 0 6px;
+			&.social {
+				img {
+					margin-left:5px;
+					vertical-align:text-top;
+				}
+			}
 		}
 	}
 }

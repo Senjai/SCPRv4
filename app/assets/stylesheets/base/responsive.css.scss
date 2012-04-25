@@ -457,6 +457,10 @@ $mediaSmallPortrait: 320px;
 		#masthead {
 			form { display: none; }
 			.nav-primary .sections { width: 100%; }
+			
+			#masthead-mid-header-wrapper { @include gridFluidSpan(4); }
+			#masthead-right-header-wrapper { @include gridFluidSpan(4); }
+			
 			.mid-header-wrapper {
 				text-align: center;
 				.mq-pull-down {
