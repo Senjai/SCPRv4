@@ -9,10 +9,10 @@
 	<% if content.is_a?(VideoShell) %>
 	  	<meta property="og:video:width" content="300" />
 	  	<meta property="og:video:height" content="200" />
-		<!--<meta property="og:video" content="http://c.brightcove.com/services/viewer/federated_f9/Add-Publisher-ID?isVid=1&amp;isUI=1&amp;playerKey=&amp;videoId=Add-Video-ID">-->
+		<meta property="og:video" content="http://c.brightcove.com/services/viewer/federated_f9/bcpid1247178207001?isVid=1&amp;isUI=1&amp;playerKey=AQ~~,AAAAmtVKbGE~,pW41hkPiaos27C7knwyeOWQgVlG4w7v5&amp;videoId=<%=content.assets.first.asset.native["videoid"] %>">
 	  	<meta property="og:video:type" content="application/x-shockwave-flash"/>
-		<meta property="og:video" content="<%# content.assets.first.asset.native.flvurl %>">
-	  	<meta property="og:video:type" content="video/mp4"/>
+		<!-- <meta property="og:video" content="<%# content.assets.first.asset.native.flvurl %>"> -->
+	  	<!-- <meta property="og:video:type" content="video/mp4"/> -->
 	<% end %>
 	
 	<% if content.assets.any? %>
