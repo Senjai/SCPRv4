@@ -18,6 +18,7 @@ class KpccProgram < ActiveRecord::Base
   has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
   has_many :episodes, :foreign_key => "show_id", :class_name => "ShowEpisode"
   has_many :schedules, :foreign_key => "kpcc_program_id", :class_name => "Schedule"
+  belongs_to :missed_it_bucket
   belongs_to :blog
   
   scope :active, where(:air_status => ['onair','online'])

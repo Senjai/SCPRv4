@@ -32,6 +32,7 @@
 <% content_for :sidebar_middle do %>
 	<% if @program.is_a? KpccProgram %>
 		<%= render "shared/widgets/program_about", program: @program %>
+		<%= render "shared/widgets/missed_it_bucket", kpcc_program: @program %>
 	<% end %>
 <% end %>
 

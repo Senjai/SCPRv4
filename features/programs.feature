@@ -112,3 +112,20 @@ Scenario: See a video player if the program has a dedicated Brightcove player
 	
 	When I go to that program's page
 	Then I should see a video
+
+Scenario: See the program's missed it bucket if it has one
+	Given a kpcc program with the following attributes:
+	 | missed_it_bucket[contents_count] |
+	 | 3                     |
+	
+	When I go to the program's page
+	Then I should see a missed it bucket
+	And the missed it bucket should have 3 items in it
+	
+Scenario: Do not show a missed it bucket if the program doesn't have one
+	Given a kpcc program with the following attributes:
+	 | missed_it_bucket_id |
+	 |                     |
+	
+	When I go to that program's page
+	Then I should not see a missed it bucket

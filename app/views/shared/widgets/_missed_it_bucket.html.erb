@@ -1,0 +1,10 @@
+<% if kpcc_program.respond_to?(:missed_it_bucket) and kpcc_program.missed_it_bucket.present? and kpcc_program.missed_it_bucket.contents.present? %>
+	<div class="missed-it-bucket widget">
+		<h6>In Case You Missed It</h6>
+		<ul class="missed-it-content">
+			<% kpcc_program.missed_it_bucket.contents.each do |content| %> <%# content is a MissedItContent object %>
+				<li><%= link_to content.content.headline, content.content.link_path %></li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>

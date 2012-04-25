@@ -54,12 +54,19 @@ FactoryGirl.define do
     
     ignore { segment Hash.new } # Ensures that `merge` has something to do in the after_create block
     ignore { episode Hash.new } # Ensures that `merge` has something to do in the after_create block
+    ignore { missed_it_bucket Hash.new }
     ignore { episode_count 0 }
     ignore { segment_count 0 }
     
     after_create do |kpcc_program, evaluator|
       FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: kpcc_program))
       FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: kpcc_program))
+      
+      # TODO Figure out a cleaner way to do this
+      if evaluator.missed_it_bucket_id.blank?
+        kpcc_program.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: kpcc_program.title))
+        kpcc_program.save!
+      end
     end
   end
   
@@ -148,7 +155,7 @@ FactoryGirl.define do
     
     ignore { asset_count 0 }
     after_create do |event, evaluator|
-      FactoryGirl.create_list(:asset, evaluator.asset_count.to_i.to_i, content: event)
+      FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: event)
     end
   end
   
@@ -214,9 +221,22 @@ end
     link "http://oncentral.org"
     link_type "website"
   end
+  
+# MissedItBucket #########################################################
+  factory :missed_it_bucket do
+    title "Airtalk"
+    ignore { contents_count 0 }
+    after_create do |object, evaluator|
+      FactoryGirl.create_list(:missed_it_content, evaluator.contents_count.to_i, missed_it_bucket: object)
+    end
+  end
 
-
-
+# MissedItContent #########################################################
+  factory :missed_it_content do
+    missed_it_bucket
+    content { |mic| mic.association(:content_shell) }
+  end
+  
 ##########################################################
 ### ContentBase Classes
 ##### *NOTE:* The name of the factory should eq `ClassName.to_s.underscore.to_sym`, i.e. NewsStory = :news_story
