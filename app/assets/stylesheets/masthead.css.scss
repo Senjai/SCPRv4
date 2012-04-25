@@ -42,24 +42,21 @@ header#masthead {
 
 // KPCC logo image
 .logo {
-	a { 
-		display: block;
+	white-space:nowrap;
+	a, .fb-like { 
+		display: inline-block;
 		margin-top: 20px;
+		vertical-align: top;
+	}
+	.fb-like {
+		padding: 5px 0 0 10px;
+		min-width: 100px;
+		max-width: none;
 	}
 }
 
 .mid-header-wrapper {
-	text-align: left;
 	white-space: nowrap;
-	
-	.fb-like {
-		display: inline-block;
-		vertical-align: bottom;
-		padding: 6px;
-		min-width: 100px;
-		position: relative;
-		max-width: none;
-	}
 }
 
 // Pledge
@@ -97,6 +94,8 @@ header#masthead {
 
 .pledge-button-container { // For the responsive button
 	display: none;
+	text-align: right;
+	.pledge { margin: 0; }
 }
 
 nav.utils {
@@ -165,12 +164,13 @@ nav.utils {
 	.sections {
 		height: 36px;
 		white-space: nowrap;
-		width: 76%;
+		width:76%;
 		ul {
 			margin-left: 0;
 			margin-top: 0;
 			li {
 				width: 15%;
+				max-width: 109px;
 				text-align: center;
 				height: 36px;
 				display: inline-block;
@@ -178,6 +178,7 @@ nav.utils {
 					@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
 					background-color:#cb5f1d;
 					width: 136px;
+					max-width: none; // Undo the max-width set above
 					&:hover {
 						@include background-image(linear-gradient(#cb5f1d, #9b4816));
 					}
@@ -218,8 +219,7 @@ nav.utils {
 	
 	form {
 		white-space: nowrap; // for the icon
-		width: 23%;
-		text-align: right;
+		float: right;
 		margin-top: 5px; /* Push the form down a little to vertically center it */
 		fieldset {
 			margin: 0 8px 0 0;
