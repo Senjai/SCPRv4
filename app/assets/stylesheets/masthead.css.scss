@@ -1,7 +1,11 @@
 // Masthead container
 header#masthead {
 	margin:0 0 $baseline 0;
-	.head-lead { min-height: 78px; }
+	.head-lead { 
+		height: 74px; 
+		overflow: hidden;
+	}
+	
 	.head-lead-minimal {
 		display: none;
 		text-align: center;
@@ -159,10 +163,12 @@ nav.utils {
 	z-index: 1000; // Make sure the nav bar and mega menus are above anything that is absolutely positioned, or with a z-index set.
 	
 	.sections {
+		height: 36px;
 		white-space: nowrap;
 		width: 76%;
 		ul {
 			margin-left: 0;
+			margin-top: 0;
 			li {
 				width: 15%;
 				text-align: center;
