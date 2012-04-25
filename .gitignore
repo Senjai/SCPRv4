@@ -9,6 +9,5 @@ tmp/
 .sass-cache/
 .DS_Store
 .rvmrc
-.powenv
 .rspec
-rerun.txt
+*.rdb
