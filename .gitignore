@@ -10,7 +10,6 @@ tmp/
 .DS_Store
 
 .rvmrc
-.powenv
 .rspec
 rerun.txt
 *.rdb
