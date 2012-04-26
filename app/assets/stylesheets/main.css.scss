@@ -282,7 +282,7 @@ p.more a {
 // More News
 h6.more-news-title {
 	background:url("section-headline-background.png") repeat-x 0 0;
-	@include font-shorthand($size: 18px, $lineHeight: 35px);
+	@include font-shorthand($weight: bold, $size: 18px, $lineHeight: 35px);
 	color:$grayAlt;
 	padding-left:8px;
 	text-transform:none;
@@ -306,6 +306,10 @@ h6.more-news-title {
 		.more-news-content {
 			padding-right:5px;
 			border-right:1px solid $grayLighter;
+			.offlead { /* cbase offlead reset */ 
+				border-bottom: none;
+				margin-bottom: 0;
+			}
 			p.story-title {
 				@include font-headline($weight:bold);
 				font-size:16px;
@@ -319,7 +323,7 @@ h6.more-news-title {
 				padding:10px 0 0 0;
 			}
 			ul {
-			    margin: 12px 0 0 0;
+			    margin: 0;
 				list-style: none inside url("more-headlines-li.png");
 				li {
 					margin:5px 0 0 0;
