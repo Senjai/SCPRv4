@@ -4,7 +4,7 @@ Then /^I should see a missed it bucket$/ do
 end
 
 Then /^the missed it bucket should have (\d+) items in it$/ do |num|
-  page.find(".missed-it-bucket").should have_css ".missed-it-content li", count: num.to_i 
+  page.find(".missed-it-bucket").should have_css ".missed-it-content", count: num.to_i 
 end
 
 Then /^I should not see a missed it bucket$/ do

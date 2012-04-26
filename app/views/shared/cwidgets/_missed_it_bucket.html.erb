@@ -1,18 +1,18 @@
 <% if kpcc_program.respond_to?(:missed_it_bucket) and kpcc_program.missed_it_bucket.present? and kpcc_program.missed_it_bucket.contents.present? %>
-	<div class="missed-it-bucket widget">
+	<div class="missed-it-bucket widget cbase">
 		<h6>In Case You Missed It</h6>
-		<div class="missed-it-content cbase">
-			<% kpcc_program.missed_it_bucket.contents.each do |content| %> <%# content is a MissedItContent object %>
-				<div class="row-fluid">
-					<div class="span4">
-						<%= render_asset content.content, "thumb" %>
-					</div>
-					<div class="span8">
-						<%= link_to content.content.headline, content.content.link_path %>
-						<h4><%= format_date content.content.published_at, format: "event" %>
-					</div>
-				</div> <!-- row-fluid -->
+			<% kpcc_program.missed_it_bucket.contents.limit(5).each do |content| %> <%# content is a MissedItContent object %>
+				<div class="missed-it-content">
+					<div class="row-fluid">
+						<div class="span4">
+							<%= render_asset content.content, "thumb" %>
+						</div>
+						<div class="span8">
+							<%= link_to content.content.headline, content.content.link_path %>
+							<h4><%= format_date content.content.published_at, format: "event" %>
+						</div>
+					</div> <!-- row-fluid -->
+				</div> <!-- missed it content -->
 			<% end %>
-		</div> <!-- missed it content -->
 	</div> <!-- missed it bucket -->
 <% end %>

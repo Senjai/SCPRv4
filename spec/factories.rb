@@ -9,6 +9,12 @@ end
 
 FactoryGirl.define do
 
+### Common Attributes
+trait :sequenced_published_at do
+  sequence(:published_at) { |n| Time.now + 60*60*n }
+end
+
+
 # Schedule #########################################################
   factory :schedule do # Requires us to pass in kpcc_proram_id or other_program_id and program. There must be a better way to do this.
     sequence(:day) { |n| (Time.now + 60*60*24*n).day }
@@ -221,21 +227,58 @@ end
     link "http://oncentral.org"
     link_type "website"
   end
+
+# Homepage #########################################################
+factory :homepage do
+  base "default"
+  sequenced_published_at
+  status 5
   
-# MissedItBucket #########################################################
-  factory :missed_it_bucket do
-    title "Airtalk"
-    ignore { contents_count 0 }
-    after_create do |object, evaluator|
-      FactoryGirl.create_list(:missed_it_content, evaluator.contents_count.to_i, missed_it_bucket: object)
+  # fields required marked "NOT NULL" in the database that, in fact, can be null
+  alert_link "http://www.scpr.org/news/2009/07/01/brush-fire-burning-in-angeles-national-forest/"
+  alert_text "A small fire has broken out in Castaic, closing the 5 in both directions."
+  local 1
+  national 1
+  world 1
+  flipper 1
+  is_published 1
+  blogs 1
+  rotator 1
+  
+  ignore { missed_it_bucket Hash.new }
+  ignore { contents_count 0 }
+  
+  after_create do |object, evaluator|
+    FactoryGirl.create_list(:homepage_content, evaluator.contents_count.to_i, homepage: object)
+    
+    # TODO Figure out a cleaner way to do this
+    if evaluator.missed_it_bucket_id.blank?
+      object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: "Homepage #{object.id}"))
+      object.save!
     end
   end
+end
+
+# HomepageContent #########################################################
+factory :homepage_content do
+  homepage
+  content { |hc| hc.association(:content_shell) }
+end
+
+# MissedItBucket #########################################################
+factory :missed_it_bucket do
+  title "Airtalk"
+  ignore { contents_count 0 }
+  after_create do |object, evaluator|
+    FactoryGirl.create_list(:missed_it_content, evaluator.contents_count.to_i, missed_it_bucket: object)
+  end
+end
 
 # MissedItContent #########################################################
-  factory :missed_it_content do
-    missed_it_bucket
-    content { |mic| mic.association(:content_shell) }
-  end
+factory :missed_it_content do
+  missed_it_bucket
+  content { |mic| mic.association(:content_shell) }
+end
   
 ##########################################################
 ### ContentBase Classes
@@ -252,10 +295,6 @@ end
     ignore { with_category false }
     ignore { byline_count 0 }
     status 5
-  end
-  
-  trait :sequenced_published_at do
-    sequence(:published_at) { |n| Time.now + 60*60*n }
   end
   
 

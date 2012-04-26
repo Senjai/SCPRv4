@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425181559) do
+ActiveRecord::Schema.define(:version => 20120327015211) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -613,24 +613,27 @@ ActiveRecord::Schema.define(:version => 20120425181559) do
   add_index "jobs_employee", ["department_id"], :name => "jobs_employee_2ae7390"
 
   create_table "layout_homepage", :force => true do |t|
-    t.string   "base",            :limit => 10,                     :null => false
-    t.string   "alert_type",      :limit => 5
-    t.string   "alert_text",      :limit => 140,                    :null => false
-    t.string   "alert_link",      :limit => 200,                    :null => false
+    t.string   "base",                :limit => 10,                     :null => false
+    t.string   "alert_type",          :limit => 5
+    t.string   "alert_text",          :limit => 140,                    :null => false
+    t.string   "alert_link",          :limit => 200,                    :null => false
     t.time     "alert_time"
-    t.boolean  "local",                                             :null => false
-    t.boolean  "national",                                          :null => false
-    t.boolean  "world",                                             :null => false
-    t.boolean  "flipper",                                           :null => false
-    t.boolean  "blogs",                                             :null => false
-    t.boolean  "rotator",                                           :null => false
-    t.boolean  "announcements",                  :default => false, :null => false
-    t.boolean  "headlines",                      :default => false, :null => false
-    t.integer  "headlines_count",                :default => 0,     :null => false
-    t.datetime "published_at",                                      :null => false
-    t.boolean  "is_published",                                      :null => false
-    t.integer  "status",                                            :null => false
+    t.boolean  "local",                                                 :null => false
+    t.boolean  "national",                                              :null => false
+    t.boolean  "world",                                                 :null => false
+    t.boolean  "flipper",                                               :null => false
+    t.boolean  "blogs",                                                 :null => false
+    t.boolean  "rotator",                                               :null => false
+    t.boolean  "announcements",                      :default => false, :null => false
+    t.boolean  "headlines",                          :default => false, :null => false
+    t.integer  "headlines_count",                    :default => 0,     :null => false
+    t.datetime "published_at",                                          :null => false
+    t.boolean  "is_published",                                          :null => false
+    t.integer  "status",                                                :null => false
+    t.integer  "missed_it_bucket_id"
   end
+
+  add_index "layout_homepage", ["missed_it_bucket_id"], :name => "layout_homepage_d12628ce"
 
   create_table "layout_homepagecontent", :force => true do |t|
     t.integer "homepage_id",                     :null => false

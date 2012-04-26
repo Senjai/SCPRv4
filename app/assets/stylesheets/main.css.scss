@@ -46,6 +46,11 @@ body {
 			.lead h1 { @include font-shorthand(600, 24px); }
 		}
 	}
+	
+	.missed-it-bucket {
+		padding-bottom: 5px;
+		.missed-it-content { text-align: center; }
+	}
 }
 
 // Trending Bar

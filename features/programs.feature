@@ -129,3 +129,11 @@ Scenario: Do not show a missed it bucket if the program doesn't have one
 	
 	When I go to that program's page
 	Then I should not see a missed it bucket
+	
+Scenario: Do not show a missed it bucket if the bucket has no contents
+	Given a kpcc program with the following attributes:
+	 | missed_it_bucket[contents_count] |
+	 | 0                                |
+
+	When I go to that program's page
+	Then I should not see a missed it bucket

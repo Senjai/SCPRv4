@@ -23,6 +23,25 @@
 	</div>
 </div>
 
+<% content_for :missed_it do %>
+	<% if @homepage.missed_it_bucket.present? and @homepage.missed_it_bucket.contents.present? %>
+		<div class="more-news missed-it-bucket">
+			<h6 class="more-news-title">In Case You Missed It</h6>
+
+			<div class="row-fluid">
+				<% @homepage.missed_it_bucket.contents.limit(6).each do |content| %>
+					<div class="span2">
+						<div class="missed-it-content">
+							<%= render_asset content.content, "lsquare" %>
+							<%= link_to content.content.headline, content.content.link_path %>
+						</div>
+					</div> <!-- span2 -->
+				<% end %>
+			</div> <!-- row fluid -->
+		</div> <!-- missed-it-bucket -->
+	<% end %>
+<% end %>
+
 <% content_for :lower do %>
 	<%= raw Rails.cache.read("home/sections") %>
 <% end %>
