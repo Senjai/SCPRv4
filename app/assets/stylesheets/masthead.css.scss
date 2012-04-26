@@ -220,32 +220,26 @@ nav.utils {
 	form {
 		white-space: nowrap; // for the icon
 		float: right;
-		margin-top: 5px; /* Push the form down a little to vertically center it */
-		fieldset {
-			margin: 0 8px 0 0;
-			padding: 0;
-			label {
-				display:none;
+		margin: 5px 8px 0 0; /* Push the form down a little to vertically center it */
+		label { display:none; }
+		input.search {
+			@include border-radius(20px);
+			margin-top:3px;
+			padding:0 8px;
+			width: 75%;
+			&:focus {
+				outline: none;
+			    border-color:#999;
+				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
+			    @include box-shadow($shadow);
 			}
-			input.search {
-				@include border-radius(20px);
-				margin-top:3px;
-				padding:0 8px;
-				width: 75%;
-				&:focus {
-					outline: none;
-				    border-color:#999;
-					$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
-				    @include box-shadow($shadow);
-				}
-			}
-			input.submit {
-				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
-				width:20px;
-				height:20px;
-				text-indent:-9999px;
-				border:0;
-			}
+		}
+		input.submit {
+			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+			width:20px;
+			height:20px;
+			text-indent:-9999px;
+			border:0;
 		}
 	}
 	
