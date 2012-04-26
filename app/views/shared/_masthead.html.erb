@@ -10,42 +10,35 @@
 		</div>
 		<div class="head-lead">
 			<div class="row-fluid">
-	    		<div class="span4">
+	    		<div class="span5" id="masthead-left-header-wrapper">
 					<div class="logo" id="masthead-kpcc-logo">
 						<a href="/"><%= image_tag "logo-masthead.png", alt: "KPCC.org", id: "masthead-logo-light" %></a>
+						<div class="fb-like" data-href="http://facebook.com/kpccfm" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
 					</div>
 				</div>
 
-				<div class="span5" id="masthead-mid-header-wrapper">
+				<div class="span4" id="masthead-mid-header-wrapper">
 					<div class="mid-header-wrapper">
-						<div class="mq-pull-down">
-							<div class="fb-like pull-down" data-href="http://facebook.com/kpccfm" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
-							<div class="pledge-container">
-								<!-- membership_masthead -->
-								<div id='div-gpt-ad-1331935001948-0' class="ad" style='width:286px; max-height:72px; overflow: hidden;'>
-									<script type='text/javascript'>
-										googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331935001948-0'); });
-									</script>
-								</div> <!-- ad -->
-							</div> <!-- pledge-container -->
-							<div class="pledge-button-container">
-								<div class="pledge">
-									<a href="/support/">Pledge Now</a>
-								</div> <!-- pledge -->
-							</div> <!-- pledge button container -->
-						</div>
+						<div class="pledge-container">
+							<!-- membership_masthead -->
+							<div id='div-gpt-ad-1331935001948-0' class="ad" style='width:286px; max-height:72px; overflow: hidden;'>
+								<script type='text/javascript'>
+									googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331935001948-0'); });
+								</script>
+							</div> <!-- ad -->
+						</div> <!-- pledge-container -->
 					</div> <!-- mid header wrapper -->
 				</div> <!-- span -->
 			
 			    <div class="span3" id="masthead-right-header-wrapper">
 					<nav class="utils">
-						<div class="social">Follow us
-							<a href="http://facebook.com/kpccfm"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
-		    		        <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
-							<a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
-		    		    </div>
-		
 						<ul>
+							<li class="social">
+								Follow us
+								<a href="http://facebook.com/kpccfm"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
+			    		        <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
+								<a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
+							</li>
 							<% if current_user %>
 								<li class="username">Hi, <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
 								<li><a href="/accounts/logout/">Log Out</a></li>
@@ -55,6 +48,11 @@
 							<% end %>
 			    		</ul>
 			    	</nav>
+					<div class="pledge-button-container">
+						<div class="pledge">
+							<a href="/support/">Pledge Now</a>
+						</div> <!-- pledge -->
+					</div> <!-- pledge button container -->
 				</div>
 			</div> <!-- row fluid -->
 		</div>

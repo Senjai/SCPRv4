@@ -457,20 +457,13 @@ $mediaSmallPortrait: 320px;
 		#masthead {
 			form { display: none; }
 			.nav-primary .sections { width: 100%; }
-			.mid-header-wrapper {
-				text-align: center;
-				.mq-pull-down {
-					position: relative;
-					top: 30px;
-					text-align: left;
-				}
-				.pledge-container {
-					display: none;
-				}
 
-				.pledge-button-container {
-					display: inline-block;
-				}
+			#masthead-left-header-wrapper { @include gridFluidSpan(6); }			
+			#masthead-right-header-wrapper { @include gridFluidSpan(6); }
+			
+			#masthead-mid-header-wrapper { display: none; }
+			#masthead-right-header-wrapper {
+				.pledge-button-container { display: block; }
 			}
 		}
 	// end Pledge Banner to Button
