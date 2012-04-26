@@ -657,9 +657,10 @@ a.with-icon {
 
 .missed-it-bucket {
 	a {
-		@include font-navigation($size: 14px);
+		@include font-navigation($size: 15px);
 		color: $nearBlack;
 	}
+	h4 { text-transform: none; }
 }
 
 // Content Carousel
