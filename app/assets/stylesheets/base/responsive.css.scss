@@ -238,15 +238,17 @@ $mediaSmallPortrait: 320px;
 		// end Minimal Header
 	}
 	
-	.homepage-top {
-		border-bottom: none !important;
-		margin-bottom: 0 !important;
+	#main {
+		.homepage-top {
+			border-bottom: none !important;
+			margin-bottom: 0 !important;
 		
-		.missed-it-bucket {
-			.row-fluid > hr:nth-of-type(3) { display: block !important; }
-			.span2 { 
-				@include gridFluidSpan(4);
-				&:nth-of-type(4) { margin-left: 0; }
+			.missed-it-bucket {
+				.row-fluid hr:nth-of-type(3) { display: block; }
+				.span2 { 
+					@include gridFluidSpan(4);
+					&:nth-of-type(4) { margin-left: 0; }
+				}
 			}
 		}
 	}
