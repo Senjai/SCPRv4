@@ -1,11 +1,10 @@
-.contentasset, .cbase .contentasset {
+.asset-block {
 	max-width: 100% !important;
 	height: auto !important;
-	img {
-		max-width: 100% !important;
-		height: auto !important;
-	}
-		
+	
+	margin-left: auto;
+	margin-right: auto;
+	
 	h4 {
 	   text-transform: none;
        text-align: right;
@@ -14,32 +13,47 @@
        margin-bottom: $baseline / 4;
        color: #999;
     }
+
     p {
         color: #777;
 		@include font-sans-serif(normal, 11px, 14px);
 		margin-bottom:0;
     }
+
+	&.right {
+	    display: inline;
+	    float: right;
+	    margin-left: $gridGutterWidth;
+	    margin-bottom: $gridGutterWidth;
+	}
+
+	&.wide { 
+		margin-bottom: $gridGutterWidth;
+	}
+	
+	&.multimedia {
+		margin-bottom: $baseLineHeight / 2;
+	}
+
+	&.caOL {
+	    display: inline;
+	    float: left;
+	    margin-right: 6px;
+	}
+
+	&.sidebar { 
+		margin-bottom: 10px; 
+		p { text-align: center; }
+	}
 }
 
-.contentasset.caR {
-    display: inline;
-    float: right;
-    margin-left: $gridGutterWidth;
-    margin-bottom: $gridGutterWidth;
-}
-
-.contentasset.caW {
-    margin: 0 auto;
-    margin-bottom: $gridGutterWidth;
-	position: relative;
-}
-
-.contentasset.caOL {
-    display: inline;
-    float: left;
-    margin-right: 6px;
-}
-
-.contentasset.sidebar {
-	margin-bottom: 10px;
+.contentasset {
+	height: auto;
+	position: relative; // to allow video overlays and other fun stuff
+	text-align: center;
+	
+	img {
+		max-width: 100% !important;
+		height: auto !important
+	}
 }

@@ -40,11 +40,25 @@ $baseLineHeight: 21px;
 $containerPadding: 25px;
 $baseFontFamily: "Georgia", Times New Roman, Times, serif;
 $textColor: $nearBlack;
-
-
 // Legacy
 $basefont:          $baseFontSize;
 $baseline:          $baseLineHeight;
+
+
+// Grid
+$gridColumns:       12;
+
+// Fixed Grid
+$gridColumnWidth:   65px;
+$gridGutterWidth:   30px;
+$gridRowWidth:      ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 1));
+$columnOffset: 1;
+$extraSpace: ($gridGutterWidth * 2);
+$siteWidth:  $gridRowWidth;
+
+// Fluid Grid
+$fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
+$fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
 
 
 // Clearfix for clearing floats like a boss h5bp.com/q
@@ -77,15 +91,6 @@ $analog2:           spin($baseColor, -22);
 
 // MIXINS
 // ------
-
-
-@mixin centeredAsset {
-	.contentasset {
-		text-align: center;
-		margin-left: auto !important;
-		margin-right: auto !important;
-	}
-}
 
 // mixin for getting IE to respect inline-block
 @mixin hide-text() {
