@@ -59,17 +59,14 @@ span.fake-link {
 
 .event {
 	@include event-headers;
-	&.closest { @include centeredAsset; }
 	
 	&.future {
 		margin-bottom: 10px;
-		@include centeredAsset;
 		@include font-serif($size: 13px);
 		h4 a { color:$nearBlack; }
 	}
 	
 	&.past {
-		@include centeredAsset;
 		padding: 15px 0;
 		.byline {
 			@include font-serif($size: 12px);
@@ -253,7 +250,6 @@ span.fake-link {
 .events-list {
 	.teaser {
 		padding:18px 0;
-		@include centeredAsset;
 		
 		.event-details {
 			span.event-location {

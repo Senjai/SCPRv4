@@ -348,7 +348,6 @@ h6.more-news-title {
 			}
 		}
 		div.related-content {			
-			@include centeredAsset;
 			h6 {
 				@include font-shorthand(bold, 13px, $baseLineHeight);
 				padding:5px 0;

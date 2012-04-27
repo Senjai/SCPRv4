@@ -17,7 +17,7 @@
 	<% end %>
 	
 	<% if content.assets.any? %>
-		<meta property="og:image" content="<%= content.assets.first.asset.lsquare.url %>" />
-		<link rel="image_src" href="<%= content.assets.first.asset.lsquare.url %>" />
+		<meta property="og:image" content="<%= content.assets.first.asset.lead.url %>" />
+		<link rel="image_src" href="<%= content.assets.first.asset.lead.url %>" />
 	<% end %>
 <% end %>
