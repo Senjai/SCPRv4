@@ -119,6 +119,22 @@ time.smart {
 	}
 }
 
+.span8.split {
+	@include clearfix();
+	margin-top:$baseline;
+	.offlead {
+		float:left;
+		width: 350px;
+		margin-left: 30px;
+		&:first-child {
+			margin-left:0;
+		}
+	}
+	hr {
+		display:none;
+	}
+}
+
 .teaser {
 	border-bottom: 1px solid $grayLighter;
 	padding: 10px 0;
