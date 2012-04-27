@@ -110,6 +110,81 @@ time.smart {
     text-transform: uppercase;
 }
 
+.cbase.lead {
+    h1 {
+	  font-size:26px;
+      margin-bottom: 0;
+    }
+}
+
+.cbase.offlead {
+	&:last-child {
+		hr {
+			display:none;
+		}
+	}
+    h3 {
+		@include font-headline();
+    	margin-bottom:0;
+    	a {
+    		color:$nearBlack;
+    	}
+    }
+    
+    h4 {
+        font-weight:normal;
+		margin-bottom: 0;
+		color: #999;
+    }
+    
+    img {
+        display: inline;
+        float: left;
+        margin: 8px 12px 12px 0;
+    }
+    
+}
+
+.cbase.thumbnail {
+    h3 {
+        font-weight:600;
+		margin-bottom: 0;
+    }
+    h4 {
+        font-weight:normal;
+		margin-bottom: 0;
+		color: #999;
+    }
+    
+}
+#lead-right {
+	#lead-right .offleads .offlead:first-child h3.story-headline {
+		font-size: 26px;
+		line-height: 28px;
+		font-weight: bold;
+	}
+	.lead h1 {
+		font-size:24px;
+		font-weight:600;
+	}
+}
+
+.span8.split {
+	@include clearfix();
+	margin-top:$baseline;
+	.offlead {
+		float:left;
+		width: 350px;
+		margin-left: 30px;
+		&:first-child {
+			margin-left:0;
+		}
+	}
+	hr {
+		display:none;
+	}
+}
+
 .teaser {
 	border-bottom: 1px solid $grayLighter;
 	padding: 10px 0;
