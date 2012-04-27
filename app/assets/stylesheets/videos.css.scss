@@ -115,9 +115,17 @@ div.list {
 	}
 }
 
-.video > div:first-child { 
-	position: static !important; // So the overlay looks to .video
-	width: 100% !important; // So the video expands to 100% rather than a fixed width.
+.video, .contentasset.caW {
+	 > div:first-child { 
+		position: static !important; // So the overlay looks to .video
+		width: 100% !important; // So the video expands to 100% rather than a fixed width.
+	}
+}
+
+.contentasset.caW {
+	.BrightcoveVideoOverlay {
+		height: 89% !important; // Temporary fix To work around .contentasset divs with text inside
+	}
 }
 
 .BrightcoveVideoOverlay {
@@ -127,11 +135,10 @@ div.list {
     @include transition(opacity linear 0.2s);
 	width: 100% !important; // So it doesn't use the fixed width
 	position: absolute !important; // So we can tell it to sit at the bottom of the .video div
-	bottom: 0 !important;
-	height: 100% !important; // So it doesn't used the fixed height
-}
-
-.BrightcoveVideoOverlay:hover {
-    @include opacity(0.9);
-    @include transition(opacity linear 0.2s);
+	top: 0 !important;
+	height: 99% !important; // So it doesn't used the fixed height
+	&:hover {
+	    @include opacity(0.9);
+	    @include transition(opacity linear 0.2s);
+	}
 }
