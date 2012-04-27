@@ -48,8 +48,16 @@ body {
 	}
 	
 	.missed-it-bucket {
-		padding-bottom: 5px;
-		.missed-it-content { text-align: center; }
+		.row-fluid > hr { 
+			display: none; 
+			background-color: $white;
+			width: 100%;
+			clear: both;
+		}
+		.missed-it-content { 
+			text-align: center;
+			margin-bottom: 10px;
+		}
 	}
 }
 

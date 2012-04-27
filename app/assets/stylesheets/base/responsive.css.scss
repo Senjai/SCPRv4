@@ -96,6 +96,8 @@ $mediaSmallPortrait: 320px;
 				@include makeFluidRow;
 			}
 		}
+		
+		.missed-it-bucket { display: none; }
 	}
 	
 	// Fake the "pager"... hide all page number links, just show Previous and Next links.
@@ -239,6 +241,14 @@ $mediaSmallPortrait: 320px;
 	.homepage-top {
 		border-bottom: none !important;
 		margin-bottom: 0 !important;
+		
+		.missed-it-bucket {
+			.row-fluid > hr:nth-of-type(3) { display: block !important; }
+			.span2 { 
+				@include gridFluidSpan(4);
+				&:nth-of-type(4) { margin-left: 0; }
+			}
+		}
 	}
 	
 	// since we're hiding the sidebars, remove the borders around more news
