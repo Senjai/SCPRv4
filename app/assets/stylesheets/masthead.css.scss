@@ -286,7 +286,6 @@ nav.utils {
 		}
 		
 		.featured {
-			@include centeredAsset;
 			h4 {
 				@include font-headline;
 				@include font-shorthand(600, 15px, $baseLineHeight);

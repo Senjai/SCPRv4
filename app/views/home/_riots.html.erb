@@ -1,12 +1,11 @@
 <div style="background:url('/assets/homepage/riots-header.png') no-repeat 0 0;height:53px;margin-bottom:8px;"><a href="/riots/" style="display:block;text-indent:-9999px;height:53px;">Full coverage &raquo;</a></div>
-
 <div class="row">
 	<%= content_cache("home_leads") do %>
 		<% register_content("layout/homepage") %>
-		<div class="span6">
-			<%= render_content @homepage.content[0], "lead6" if @homepage %>
+		<div class="span8">
+			<%= render_content @homepage.content[0], "lead8" if @homepage %>
 		</div>
-		<div class="span2 offleads">
+		<div class="span8 offleads split">
 			<%= render_content @homepage.content[1..-1], "offlead" if @homepage %>
 		</div>
 	<% end %>
