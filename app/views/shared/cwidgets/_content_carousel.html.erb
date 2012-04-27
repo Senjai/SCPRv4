@@ -2,16 +2,25 @@
 	<div class="content-carousel" id="article-content-carousel">
 		<h6 class="more-news-title">
 			More in <%= content.category.category %>
-			<span class="more-link"><%= link_to "More", forum_events_archive_path %></span>
+			<div class="pager-nav">
+				<a class="prev"></a>
+				<a class="next"></a>
+			</div>
 		</h6>
 		
-		<div class="row-fluid">
-			<% content.category.content(1, 4, content).each do |extra_content| %>
-				<div class="span3">
-					<%= render_asset extra_content, "thumb" %>
-					<span class="title"><%= link_to extra_content.headline, extra_content.link_path %></span>
-				</div>
-			<% end %>
+		<div class="carousel">
+			<div class="carousel-section carousel-current">
+				<% content.category.content(1, 4, content).each do |extra_content| %>
+					<div class="carousel-item">
+						<%= render_asset extra_content, "thumb" %>
+						<span class="title"><%= link_to extra_content.headline, extra_content.link_path %></span>
+					</div>
+				<% end %>
+			</div>
 		</div>
 	</div>
+<% end %>
+
+<% content_for :footerjss do %>
+	carousel = new scpr.ContentCarousel();
 <% end %>
