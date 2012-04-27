@@ -42,11 +42,11 @@ Scprv4::Application.routes.draw do
   match '/about/people/staff/:name' => 'people#bio', :as => :bio
 
   # -- Blogs -- #
-  match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged", :as => :blog_entries_tagged
-  match '/blogs/:blog/tagged/' => "blogs#blog_tags", :as => :blog_tags
-  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry", :as => :blog_entry, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
-  match '/blogs/:blog/(page/:page)' => 'blogs#show', :as => :blog, :constraints => { :page => /\d+/ }
-  match '/blogs/' => 'blogs#index', :as => :blogs
+  match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged", :as => :blog_entries_tagged,  trailing_slash: true
+  match '/blogs/:blog/tagged/' => "blogs#blog_tags",                    :as => :blog_tags,            trailing_slash: true
+  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry",   :as => :blog_entry,           trailing_slash: true, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
+  match '/blogs/:blog/(page/:page)' => 'blogs#show',                    :as => :blog,                 trailing_slash: true, :constraints => { :page => /\d+/ }
+  match '/blogs/' => 'blogs#index',                                     :as => :blogs,                trailing_slash: true
   
   # -- Programs -- #
   match '/programs/:show/:year/:month/:day/:id/:slug/' => "programs#segment", :as => :segment  
