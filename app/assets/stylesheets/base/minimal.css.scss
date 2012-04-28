@@ -6,6 +6,12 @@ body.minimal {
 	background-color:darken($white, 2%);
 	@include font-sans-serif;
 	p { @include font-sans-serif(200); }
+	.topbar {
+		height:60px;
+		.logo img {
+			padding-top:8px;
+		}
+	}
 	header {
 		background-color:$nearBlack;
 		border-bottom:5px solid $grayLight;

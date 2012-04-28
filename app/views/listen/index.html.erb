@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+	<title>Listen Live | 89.3 KPCC</title>
+	<%= render "shared/header/header_js" %>
+	<%= render "shared/header/opengraph" %>
+	<%= csrf_meta_tags %>
+	
+	<style type="text/css">
+
+	</style>
+
+	<!--
+		Initialize 
+	-->
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	      $("#jquery_jplayer_1").jPlayer({
+	        ready: function () {
+	          $(this).jPlayer("setMedia", {
+	            mp3: "http://live.scpr.org:80/"
+	          });
+	        },
+	        swfPath: "http://media.scpr.org/assets/scripts/jquery.jplayer/Jplayer.swf",
+	        supplied: "mp3",
+			
+	      });
+	    });
+	  </script>
+</head>
+<body class="minimal listen">
+    
+  <header class="topbar">
+    
+    <div class="wrapper">
+    	<a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>		
+    </div>
+  </header>
+
+  <div id="content">
+		<div class="player">
+			<div class="wrapper">
+          		<h2>Listen Live</h2>
+			</div>
+          
+			<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+			<div id="jp_container_1" class="jp-audio">
+				<div class="jp-type-single clearfix">
+
+					<!-- put bar-close first so it floats right properly when the widget switches to modal 
+						 On the normal layout, everything here is floated so it still gets pushed to the right properly -->
+
+					<div class="section-left">
+						<div class="jp-gui jp-interface clearfix">
+							<ul class="jp-controls clearfix">
+								<li><a href="javascript:;" class="jp-play">play</a></li>
+								<li><a href="javascript:;" class="jp-pause">pause</a></li>
+								<li><a href="javascript:;" class="jp-mute">mute</a></li>
+								<li><a href="javascript:;" class="jp-unmute">unmute</a></li>
+							</ul>
+							<div class="jp-progress">
+			  					<div class="jp-current-time"></div>
+							</div> <!-- jp-progress -->
+			  			</div> <!-- jp-gui -->
+					</div> <!-- section-left -->
+
+					<div class="section-mid">
+						<div class="jp-title">
+							<p><span>On now: </span><br /><i id="jplayer1_title"><a href="#" target="_blank">The Madeleine Brand Show</a> 9am - 10am</i></p>
+		      				<span style="margin-left:10px;">Up next:</span> <a href="{{ on_next.url }}" target="_blank">{{ on_next.program }}</a>
+		                    <span class="ceci-nest-pas-une-pipe">|</span>
+		                    <a href="/schedule/" target="_blank">Program Schedule</a>
+						</div>
+					</div> <!-- section-mid -->
+
+				</div> <!-- jp-type-single -->
+			</div> <!-- jp-audio -->
+
+          <div>
+          &raquo; <strong>iPhone and iPod Touch users:</strong> <a href="http://itunes.apple.com/us/app/kpcc-radio/id293825085?mt=8&amp;uo=6">Download the KPCC Radio app</a>.
+          </div>
+
+          <div id="other-ways" style="border-bottom:1px solid #e0e0e0;margin-top:10px auto;padding:10px 0;width:100%">
+              <div style="color:#333;display:inline;padding:5px">
+                 &raquo; Other ways to listen:&nbsp;&nbsp;<a href="http://live.scpr.org/listen.pls">MP3/iTunes</a><span class="ceci-nest-pas-une-pipe">|</span><a href="mms://kpcclive1.publicradio.org">Windows Media</a><span class="ceci-nest-pas-une-pipe">|</span><a href="http://www.scpr.org/iphone" target="_blank">iPhone</a>
+              </div>
+              <br class="clear-float" />
+          </div>
+      </div>
+
+
+	
+  </div>
+<div class="wrapper">
+<h6>Recent Headlines</h6>
+<article class="cbase offlead">			
+<img src="http://a.scpr.org/i/2b5430531fde5a23366e215c69c8f79d/35043-thumb.jpg" width="88" height="88" alt="">
+<h3><a href="/blogs/environment/2012/03/12/5039/environmentalists-seek-help-angelenos-map-citys-un/">Calling all creek freaks: Help map LA's streams and waterways</a></h3>
+<h4>By <a href="/about/people/staff/molly-peterson">Molly Peterson</a> 
+	<time class="smart smarttime" data-unixtime="1331555404" data-window="8h" datetime="2012-03-12T05:30"></time>
+</h4>
+<p class="story-content clearfix">Environmentalists are asking Angelenos to help find unmapped streams and small waterways.</p>
+</article>
+
+  <div class="headlines">
+			<ul class="cbase">
+					<li>
+		<a href="/blogs/environment/2012/03/12/5039/environmentalists-seek-help-angelenos-map-citys-un/">Calling all creek freaks: Help map LA's streams and waterways</a>
+		<time class="smart smarttime" data-unixtime="1331555404" data-window="8h" datetime="2012-03-12T05:30"></time>
+	</li><li>
+		<a href="/news/2012/03/11/31597/temple-memorializes-those-lost-after-japan-tsunami/">'Impermanence is true'</a>
+		<time class="smart smarttime" data-unixtime="1331521664" data-window="8h" datetime="2012-03-11T20:07"></time>
+	</li><li>
+		<a href="/blogs/news/2012/03/11/5041/crystal-cathedral-moving-changing-name/">Crystal Cathedral's congregation is moving and changing its name</a>
+		<time class="smart smarttime" data-unixtime="1331502439" data-window="8h" datetime="2012-03-11T14:47"></time>
+	</li><li>
+		<a href="/news/2012/03/11/31596/nuclear-woes-push-japan-into-a-new-energy-future/">Nuclear woes push Japan into a new energy future</a>
+		<time class="smart smarttime" data-unixtime="1331482045" data-window="8h" datetime="2012-03-11T09:07"></time>
+	</li><li>
+		<a href="/blogs/news/2012/03/10/5040/lafds-response-times-had-been-inflated-report/">LAFD's response times were inflated</a>
+		<time class="smart smarttime" data-unixtime="1331422658" data-window="8h" datetime="2012-03-10T15:37"></time>
+	</li>
+				</ul>
+		</div>
+	</div>
+  <footer>
+    <div class="">
+        <ul class="menu unstyled clearfix">
+        	<li><a href="/terms/">Terms &amp; Conditions</a></li>
+			<li><span class="pipe">|</span></li>
+        	<li><a href="/privacy/">Privacy</a></li>
+			<li><span class="pipe">|</span></li>
+			<li style="border:none"><a href="/web_site_feedback">Website Feedback</a></li>
+			<li><span class="pipe">|</span></li>
+			<li>Copyright 2001 &copy; Southern California Public Radio</li>
+		</ul>
+    </div>
+  </footer>
+
+
+<%= render :partial => "shared/footer/footer_js" %>
+
+</body>
+</html>
