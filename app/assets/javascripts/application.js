@@ -7,6 +7,7 @@
 
 //= require jquery.mousewheel.3.0.4
 //= require jquery.jplayer.min
+//= require spin.js
 //= require moment
 //= require moment-strftime
 //= require bootstrap-tab

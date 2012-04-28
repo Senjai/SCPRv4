@@ -8,19 +8,10 @@
 			</div>
 		</h6>
 		
-		<div class="carousel">
-			<div class="carousel-section carousel-current">
-				<% content.category.content(1, 4, content).each do |extra_content| %>
-					<div class="carousel-item">
-						<%= render_asset extra_content, "thumb" %>
-						<span class="title"><%= link_to extra_content.headline, extra_content.link_path %></span>
-					</div>
-				<% end %>
-			</div>
-		</div>
+			<div class="carousel" data-current-page="1"></div>
 	</div>
 <% end %>
 
 <% content_for :footerjss do %>
-	carousel = new scpr.ContentCarousel();
+	var carousel = new scpr.ContentCarousel({dataUrl: "<%= (dataUrl ||= "''") %>"});
 <% end %>

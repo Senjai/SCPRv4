@@ -1,5 +1,4 @@
 #= require scprbase
-#= require spin.js
 
 class scpr.VideoPage
     DefaultOptions:

@@ -656,8 +656,8 @@ a.with-icon {
 }
 
 // Content Carousel
-.content-carousel { 
-	overflow: hidden;
+.content-carousel {
+	@include clearfix; 
 	
 	.pager-nav {
 		float: right;
@@ -681,14 +681,12 @@ a.with-icon {
 			}
 		}
 	}
-	.carousel-section {
-		position: relative;
+	
+	.carousel {
+		min-height: 170px;
 	}
 	
 	.carousel-item {
-		width: 20%;
-		float: left;
-
 		.title {
 			display: block;
 			text-align: center;
