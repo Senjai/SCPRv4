@@ -1,35 +1,69 @@
 body.listen {
+	.small {
+		color:#666;
+		font-size:11px;
+		a {color:#2e2e2e;}
+	}
+	.pipe {
+		display:inline-block;
+		zoom:1;
+		*display:inline;
+		padding:0 4px;
+	}
 	.wrapper {
 		padding:0 10px;
+		position:relative;
+		h2 {
+			display:inline-block;
+			zoom:1;
+			*display:inline;
+			margin:4px 0;
+		}
+		.pledge {
+			position:absolute;
+			top:9px;
+			right:10px;
+		}
+		.small {
+			float:right;
+			margin-top:11px;
+		}
+	}
+	.headlines {
+		margin-top:10px;
 	}
 }
 .player .jp-audio {
-	border-bottom:1px solid #e0e0e0;
 	border-top:1px solid #e0e0e0;
-	margin:9px 0;
+	margin:0;
+}
+.player .section-left, .player .section-mid {
+	border-top:1px solid #fff;
+	float:left;
 }
 .player .section-left {
-	float:left;
 	width:200px;
 }
 .player .section-mid {
-	float:left;
-	width:340px;
+	border-left:1px solid #fff;
+	width:355px;
 }
   .player.active {
     display: block; }
   .player .jp-gui {
     border-right: 1px solid #e0e0e0;
-    min-height: 72px; }
+    min-height: 62px;
+	padding-top:5px;
+   }
   .player .jp-title {
-    min-height: 72px; }
+    min-height: 62px;
+ 	padding:5px 10px 10px;}
     .player .jp-title p {
       display: block;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: 16px;
       font-weight: bold;
       line-height: 20px;
-      padding: 10px;
       margin: 0; }
       .player .jp-title p span {
         display: inline-block;
@@ -44,7 +78,7 @@ body.listen {
   .player .jp-controls {
     float: left;
     width: 100px;
-    height: 72px;
+    height: 62px;
     margin: 0;
     padding: 0 6px; }
     .player .jp-controls li {
@@ -103,7 +137,7 @@ body.listen {
 	font-weight: bold;
 	line-height: 20px;
 	color: #888;
-	width: 35px;
+	width: 75px;
 	float: left;
 	margin-top: 24px; }
 

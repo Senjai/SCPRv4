@@ -19,12 +19,12 @@
 	        ready: function () {
 	          $(this).jPlayer("setMedia", {
 	            mp3: "http://live.scpr.org:80/"
-	          });
+	          }).jPlayer("play");
 	        },
 	        swfPath: "http://media.scpr.org/assets/scripts/jquery.jplayer/Jplayer.swf",
 	        supplied: "mp3",
-			
 	      });
+		  $.jPlayer.timeFormat.showHour = true;
 	    });
 	  </script>
 </head>
@@ -33,14 +33,25 @@
   <header class="topbar">
     
     <div class="wrapper">
-    	<a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>		
+    	<a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>
+		    <span class="pledge"><a href="/support/">Pledge now</a></span>
+		</a>
     </div>
   </header>
 
   <div id="content">
 		<div class="player">
-			<div class="wrapper">
+			<div class="wrapper clearfix">
+			  <div>
           		<h2>Listen Live</h2>
+              	<span class="small">
+					More ways to listen:&nbsp;&nbsp;
+					<a href="http://www.scpr.org/iphone/">KPCC iPhone app</a>
+					<span class="pipe">|</span>
+					<a href="http://live.scpr.org/listen.pls">MP3/iTunes</a>
+					<span class="pipe">|</span>
+					<a href="mms://kpcclive1.publicradio.org">Windows Media</a></span>
+              </div>
 			</div>
           
 			<div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -66,32 +77,23 @@
 
 					<div class="section-mid">
 						<div class="jp-title">
-							<p><span>On now: </span><br /><i id="jplayer1_title"><a href="#" target="_blank">The Madeleine Brand Show</a> 9am - 10am</i></p>
-		      				<span style="margin-left:10px;">Up next:</span> <a href="{{ on_next.url }}" target="_blank">{{ on_next.program }}</a>
-		                    <span class="ceci-nest-pas-une-pipe">|</span>
-		                    <a href="/schedule/" target="_blank">Program Schedule</a>
+							<p><span>On now: </span><br /><i id="jplayer1_title"><a href="#" target="_blank">Marketplace Morning Report</a> 9am - 10am</i></p>
+		      				<span class="small">
+								<span>Up next:</span> <a href="{{ on_next.url }}" target="_blank">{{ on_next.program }}</a>
+			                    <span class="pipe">|</span>
+			                    <a href="/schedule/" target="_blank">Program Schedule</a>
+							</span>
 						</div>
 					</div> <!-- section-mid -->
 
 				</div> <!-- jp-type-single -->
 			</div> <!-- jp-audio -->
-
-          <div>
-          &raquo; <strong>iPhone and iPod Touch users:</strong> <a href="http://itunes.apple.com/us/app/kpcc-radio/id293825085?mt=8&amp;uo=6">Download the KPCC Radio app</a>.
-          </div>
-
-          <div id="other-ways" style="border-bottom:1px solid #e0e0e0;margin-top:10px auto;padding:10px 0;width:100%">
-              <div style="color:#333;display:inline;padding:5px">
-                 &raquo; Other ways to listen:&nbsp;&nbsp;<a href="http://live.scpr.org/listen.pls">MP3/iTunes</a><span class="ceci-nest-pas-une-pipe">|</span><a href="mms://kpcclive1.publicradio.org">Windows Media</a><span class="ceci-nest-pas-une-pipe">|</span><a href="http://www.scpr.org/iphone" target="_blank">iPhone</a>
-              </div>
-              <br class="clear-float" />
-          </div>
       </div>
 
 
 	
   </div>
-<div class="wrapper">
+<div class="wrapper headlines">
 <h6>Recent Headlines</h6>
 <article class="cbase offlead">			
 <img src="http://a.scpr.org/i/2b5430531fde5a23366e215c69c8f79d/35043-thumb.jpg" width="88" height="88" alt="">
@@ -102,7 +104,7 @@
 <p class="story-content clearfix">Environmentalists are asking Angelenos to help find unmapped streams and small waterways.</p>
 </article>
 
-  <div class="headlines">
+  <div>
 			<ul class="cbase">
 					<li>
 		<a href="/blogs/environment/2012/03/12/5039/environmentalists-seek-help-angelenos-map-citys-un/">Calling all creek freaks: Help map LA's streams and waterways</a>
@@ -126,13 +128,13 @@
   <footer>
     <div class="">
         <ul class="menu unstyled clearfix">
-        	<li><a href="/terms/">Terms &amp; Conditions</a></li>
+        	<li><a href="/terms/" target="_blank">Terms &amp; Conditions</a></li>
 			<li><span class="pipe">|</span></li>
-        	<li><a href="/privacy/">Privacy</a></li>
+        	<li><a href="/privacy/" target="_blank">Privacy</a></li>
 			<li><span class="pipe">|</span></li>
-			<li style="border:none"><a href="/web_site_feedback">Website Feedback</a></li>
+			<li style="border:none"><a href="/web_site_feedback" target="_blank">Website Feedback</a></li>
 			<li><span class="pipe">|</span></li>
-			<li>Copyright 2001 &copy; Southern California Public Radio</li>
+			<li>Copyright 2012 &copy; Southern California Public Radio</li>
 		</ul>
     </div>
   </footer>
