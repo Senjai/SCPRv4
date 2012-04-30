@@ -79,6 +79,9 @@ Scprv4::Application.routes.draw do
     match 'list', on: :collection, as: :list
   end
   
+  # -- Listen Live -- #
+  match '/listen_live/' => 'listen#index', :as => :listen
+  
   # -- Search -- #
   match '/search/' => 'search#index', :as => :search
   
