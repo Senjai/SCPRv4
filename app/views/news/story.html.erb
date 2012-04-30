@@ -34,7 +34,7 @@
 <%= render "shared/cwidgets/pij_query", :content => @story %>
 <%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 
-<%= render "shared/cwidgets/content_carousel", :content => @story, dataUrl: "/news/#{@story.id}/carousel-contents" %>
+<%= content_widget 'content_carousel', @story %>
 <%= comments_for @story %>
 
 <%= render "shared/cwidgets/track_page", :content => @story %>

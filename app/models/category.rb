@@ -9,6 +9,12 @@ class Category < ActiveRecord::Base
   #----------
 
   def content(page=1,per_page=10,without_obj=nil)
+    ts_max_matches = 1000 # Thinking Sphinx config 'max_matches', throws an error if the offset (from pagination) is higher than this number
+    
+    if page.to_i*per_page.to_i > ts_max_matches
+      return []
+    end
+    
     args = {
       :classes    => ContentBase.content_classes,
       :page       => page,

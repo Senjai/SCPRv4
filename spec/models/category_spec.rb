@@ -26,4 +26,11 @@ describe Category do
       category.link_path(category: "wrong").should_not match "wrong"
     end
   end
+  
+  describe "content" do
+    it "returns an empty array if the page * per_page is greater than Thinking Sphinx's max_matches" do
+      category = create :category_news
+      category.content(101, 10).should be_blank
+    end
+  end
 end

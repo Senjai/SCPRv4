@@ -676,7 +676,10 @@ a.with-icon {
 			display:inline-block;
 			width:22px;
 			height:22px;
-			&.disabled { opacity:0.5; }
+			&.disabled { 
+				opacity:0.5;
+				cursor: default;
+			}
 			&.prev {
 				background-position:0 0;
 				&:hover { background-position:-62px 0; }
@@ -690,7 +693,7 @@ a.with-icon {
 		}
 	}
 	
-	.carousel-section {
+	.carousel {
 		min-height: 188px;
 	}
 	
@@ -1036,6 +1039,7 @@ a.comment-count.inline {
 
 #uvTab { z-index: 999 !important; } // push feedback button under audio bar widget & megamenu
 
+#uvTab { z-index: 999 !important; } // push feedback button under audio bar widget
 // Facebook
 .fb-like {
 	max-width: 90px;

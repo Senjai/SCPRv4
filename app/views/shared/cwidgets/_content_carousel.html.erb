@@ -10,8 +10,8 @@
 		
 			<div class="carousel" data-current-page="1"></div>
 	</div>
-<% end %>
 
-<% content_for :footerjss do %>
-	var carousel = new scpr.ContentCarousel({dataUrl: "<%= (dataUrl ||= "''") %>"});
+	<% content_for :footerjss do %>
+		var carousel = new scpr.ContentCarousel({dataUrl: "<%= category_carousel_path(content.class.to_s, content.id) %>"});
+	<% end %>
 <% end %>

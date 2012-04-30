@@ -27,15 +27,11 @@ content = []
 
 Disqussion::Client.threads.listPopular(:forum => "kpcc",:interval => "3d").response.each do |p|
   # find content object
-  begin
-    cobj = ContentBase.obj_by_key(p.identifiers[0])
-    count = p.posts_in_interval
-
-    if count.present? and cobj.present?
-      content << [count,cobj]
-    end
-  rescue
-    next
+  cobj = ContentBase.obj_by_key(p.identifiers[0])
+  count = p.posts_in_interval
+    
+  if cobj
+    content << [count,cobj]
   end
 end
 

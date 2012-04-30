@@ -16,12 +16,6 @@ class NewsController < ApplicationController
     # otherwise, just render
   end
   
-  def carousel_contents
-    @story = NewsStory.published.find(params[:id])
-    @carousel_contents = @story.category.content(params[:page], 4, @story)
-    respond_with @carousel_contents
-  end
-  
   #----------
   
   # map old /news/YYYY/MM/DD/slug URLs to the correct one with ID
