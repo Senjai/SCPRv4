@@ -22,11 +22,11 @@ end
 
 #### Finders
 Then /^I should see the most recently published video featured$/ do
-  page.find("article>h1.story-headline").should have_content VideoShell.published.first.headline
+  page.find("article header").should have_content VideoShell.published.first.headline
 end
 
 Then /^I should see that video featured$/ do
-  page.find("article>h1.story-headline").should have_content @video_shell.headline
+  page.find("article header").should have_content @video_shell.headline
 end
 
 Then /^I should see a section with the (\d+) most recently published videos$/ do |num|

@@ -7,14 +7,11 @@
 				<div class="span6">
 					<div class="event future">
 						<div class="row-fluid">
-							<% if event.assets.present? %>
-								<div class="span4">
-									<%= render_asset event, 'thumb' %>
-								</div>
-								<div class="span8">
-							<% else %>
-								<div class="span12">
-							<% end %>
+							<div class="span4">
+								<%= render_asset event, 'thumb', true %>
+							</div>
+							
+							<div class="span8">
 								<h4><%= link_to event.title, event.link_path %></h4>
 								<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
 							</div> <!-- span -->

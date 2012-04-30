@@ -1,19 +1,19 @@
-<% for c in content do %>
-	<% register_content(c) %>
-	<div class="featured">
-		<div class="row-fluid">
-			<% if c.assets.present? %>
-				<div class="span4">
-					<%= render_asset(c,"thumb") %>
-				</div>
-				<div class="span8">
-			<% else %>
-				<div class="span12">
-			<% end %>
-				<h4><%= link_to c.headline, c.link_path %></h4>
-				<span class="blog-title"><%= link_to c.category.category, c.category.link_path %></span>
-				<%= smart_date_js c, "data-window" => "8h" %>
-			</div> <!-- span -->
-		</div> <!-- row fluid -->
-	</div> <!-- featured -->
-<% end %>
+<div class="featured">
+	<% for c in content do %>
+		<% register_content(c) %>
+			<div class="row-fluid">
+				<% if c.assets.present? %>
+					<div class="span3">
+						<%= render_asset(c,"thumb", true) %>
+					</div>
+					<div class="span9">
+				<% else %>
+					<div class="span12">
+				<% end %>
+					<h4><%= link_to c.headline, c.link_path %></h4>
+					<span class="blog-title"><%= link_to c.category.category, c.category.link_path %></span>
+					<%= smart_date_js c, "data-window" => "8h" %>
+				</div> <!-- span -->
+			</div> <!-- row fluid -->
+	<% end %>
+</div> <!-- featured -->
