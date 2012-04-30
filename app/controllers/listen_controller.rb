@@ -1,0 +1,7 @@
+class ListenController < ApplicationController
+  
+  def index
+    render :layout => false
+  end
+  
+end

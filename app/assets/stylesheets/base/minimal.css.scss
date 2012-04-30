@@ -5,8 +5,8 @@
 body.minimal {
 	background-color:darken($white, 2%);
 	@include font-sans-serif;
-	p { @include font-sans-serif(200); }
-	
+	p { @include font-sans-serif(200); }	
+
 	header {
 		padding-top: 10px;
 		height: 30px;
