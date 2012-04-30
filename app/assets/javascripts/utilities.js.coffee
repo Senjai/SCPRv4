@@ -264,57 +264,6 @@ class scpr.SocialTools
     _signalTwitLoadFailure: ->
         console.log "failed to load twitter counts in 5 seconds."
         @gaq?.push ['_trackEvent','SocialTools','Twitter Failure',String(new Date),0,true]
-            
-#----------
-
-class scpr.SectionCarousel
-    DefaultOptions:
-        el: "#sec_carousel"
-        items: 4
-        prev: "#sec_carousel_prev"
-        next: "#sec_carousel_next"
-        pages: "#sec_carousel_pag"
-        param: "page"
-        
-    #----------
-    
-    _template:
-        """
-        <a href="<%= link_path %>">
-            <%= asset %>
-            <p><%= headline %></p>
-        </a>
-        """
-
-    #----------
-    
-    constructor: (items,options) ->
-        @options = _(_({}).extend(this.DefaultOptions)).extend( options || {} )
-
-        # -- create our initial elements -- #
-        @el = $(@options.el)
-        
-        for i in items
-            tag = $ "<li/>"
-            tag.html _.template @_template, i
-            @el.append tag
-        
-        # -- instantiate our carousel -- #
-
-        $(@options.el).carouFredSel
-            circular:   false
-            infinite:   false
-            auto:       false
-            items:      @options.items
-            prev:       @options.prev
-            next:       @options.next
-            pagination: @options.pages
-            scroll:
-                onAfter: (oldI,newI) => @_loadItems(oldI,newI)
-
-    _loadItems: (oldI,newI) ->
-        console.log "oldI is ", oldI
-        console.log "newI is ", newI
 
 #----------    
 
