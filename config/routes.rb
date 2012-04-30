@@ -85,7 +85,6 @@ Scprv4::Application.routes.draw do
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
-  match '/news/:id/carousel-contents' => 'news#carousel_contents'
   
   # -- RSS feeds -- #
   match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
@@ -96,6 +95,7 @@ Scprv4::Application.routes.draw do
 
   # -- Sections -- #
   match '/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new, :defaults => { :page => 1 }, :as => :section
+  match '/category/carousel-content/:object_class/:id' => 'category#carousel_content', as: :category_carousel, defaults: { format: :js }
   match '/news/' => 'category#news', :as => :latest_news
   match '/arts-life/' => 'category#arts', :as => :latest_arts
   
