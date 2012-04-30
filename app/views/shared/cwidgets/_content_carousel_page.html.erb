@@ -1,0 +1,11 @@
+<div class="carousel-section">
+	<div class="row-fluid">
+	<% contents.each do |extra_content| %>
+		<div class="span3">
+			<div class="carousel-item">
+				<%= render_asset extra_content, "thumb" %>
+				<span class="title"><%= link_to extra_content.headline, extra_content.link_path %></span>
+			</div>
+		</div>
+	<% end %>
+</div>
