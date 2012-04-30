@@ -951,6 +951,7 @@ a.comment-count.inline {
 .ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 .ui-tabs .ui-tabs-hide { display: none !important; }
 
+#uvTab { z-index: 999 !important; } // push feedback button under audio bar widget
 // Facebook
 .facebook_like_1 p {
 	@include font-heading($size:1.1em);
