@@ -15,15 +15,21 @@ class scpr.ContentCarousel
         @carousel = $(".#{@options.carouselWrapperClass} .#{@options.carouselClass}")
         
         @fetchContent()
-
+        
         $(".#{@options.carouselWrapperClass} #{@options.nextBtn}").on
             click: (event) =>
                 event.preventDefault()
+                if $(event.target).hasClass("disabled")
+                    return false
+
                 @fetchContent(parseInt(@carousel.attr("data-current-page"), 10) + 1)
                 
         $(".#{@options.carouselWrapperClass} #{@options.prevBtn}").on
             click: (event) =>
                 event.preventDefault()
+                if $(event.target).hasClass("disabled")
+                    return false
+
                 @fetchContent(parseInt(@carousel.attr("data-current-page"), 10) - 1)
 
     fetchContent: (page=1) ->
@@ -34,11 +40,10 @@ class scpr.ContentCarousel
                 page: page
             dataType: "script"
             beforeSend: (xhr) =>
-                $(@carousel).spin()
+                $(@carousel).spin("large")
                 console.log "Sending Request..."
             error: (xhr, status, error) => 
-                $(@carousel).html "Error loading videos. Please refresh the page and try again. (#{error})"
+                $(@carousel).html "Error loading content. Please refresh the page and try again. (#{error})"
             complete: (xhr, status) => 
                 $(@carousel).spin(false)
                 console.log "Finished request. Status: #{status}"
-    

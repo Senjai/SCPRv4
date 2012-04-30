@@ -19,7 +19,7 @@ class NewsController < ApplicationController
   def carousel_contents
     @story = NewsStory.published.find(params[:id])
     @carousel_contents = @story.category.content(params[:page], 4, @story)
-    respond_with @carousel_contents
+    render 'shared/cwidgets/content_carousel.js.erb'
   end
   
   #----------

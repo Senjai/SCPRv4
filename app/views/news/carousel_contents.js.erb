@@ -1,7 +1,0 @@
-$(".carousel").animate({opacity: 0}, 300);
-
-setTimeout(function() {
-	$(".carousel").html("<%= escape_javascript(render 'shared/cwidgets/content_carousel_page', contents: @carousel_contents) %>").animate({opacity: 1}, 300);
-	$(".carousel").attr("data-current-page", <%= params[:page] %>);
-}, 300);
-
