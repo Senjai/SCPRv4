@@ -300,9 +300,6 @@ h6.more-news-title {
 	padding-right: 10px;
 	.more-news {
 		padding-bottom: $baseLineHeight / 2;
-		&:last-of-type {
-			border-bottom: 1px solid $grayLight;
-		}
 		.more-news-content {
 			padding-right:5px;
 			border-right:1px solid $grayLighter;
