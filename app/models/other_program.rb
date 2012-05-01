@@ -19,6 +19,14 @@ class OtherProgram < ActiveRecord::Base
     slug
   end
   
+  #----------
+  
+  def link_path
+    Rails.application.routes.url_helpers.program_path(self,:trailing_slash => true)
+  end
+  
+  #----------
+  
   def cache
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  
 

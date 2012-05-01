@@ -113,7 +113,8 @@ class Schedule < ActiveRecord::Base
     {
       :start  => stime.to_i,
       :end    => etime.to_i,
-      :title  => self.programme.try(:title) || self.program
+      :title  => self.programme.try(:title) || self.program,
+      :link   => self.programme.try(:link_path)
     }
   end
   

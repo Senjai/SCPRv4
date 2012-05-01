@@ -55,7 +55,7 @@ class CategoryController < ApplicationController
   end
 
   def carousel_content
-    @content = params[:object_class].constantize.published.find(params[:id])
+    @content = params[:object_class].constantize.find(params[:id])
     @carousel_contents = @content.category.content(params[:page], 4, @content)
     render 'shared/cwidgets/content_carousel.js.erb'
   end
