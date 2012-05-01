@@ -1,16 +1,4 @@
 #= require scprbase
-
-class scpr.Track
-	DefaultOptions:
-		content_path: "/track/page"
-		
-	constructor: (options) ->
-		@options = _(_({}).extend(@DefaultOptions)).extend options || {}
-	
-	#----------
-	 
-	content: (tag) ->
-		$.post @options.content_path, tag:tag
 		
 #----------
 
