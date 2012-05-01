@@ -141,10 +141,16 @@ header.episode {
 	}
 }
 
-#program-external-header .connect { 
-	border-right: none; 
-	border-left: 1px solid $grayLighter;
-	padding-left: 5px;
+.program-external-header {
+	p { 
+		border-right: 1px solid $grayLighter;
+		padding-right: 5px;
+		margin: 0;
+	}
+	.connect { 
+		border-right: none;
+		min-height: 0px; 
+	}
 }
 
 .teaser.program-external {
