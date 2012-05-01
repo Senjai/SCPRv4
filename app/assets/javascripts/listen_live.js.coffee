@@ -246,6 +246,78 @@ class scpr.ListenLive
         @playing = true
 
     #----------
+    
+    class @CurrentGen
+        DefaultOptions:
+            url:                "http://live.scpr.org:80/;stream.nsv"
+            player:             "#jquery_jplayer_1"
+            swf_path:           "/assets-flash"
+            pause_timeout:      60
+            schedule_finder:    "#llschedule"
+            schedule_template:  JST["t_listen/currentgen_schedule"]
+            
+        constructor: (opts) ->
+            @options = _.defaults opts, @DefaultOptions
+            
+            @player = $(@options.player)
+            @_pause_timeout = null
+            
+            @_on_now = null
+            
+            # -- set up our player -- #
+                
+            @player.jPlayer
+                swfPath: @options.swf_path
+                supplied: "mp3"
+                ready: => 
+                    console.log "llPlayer setting media and playing"
+                    @player.jPlayer("setMedia",mp3:@options.url).jPlayer("play")
+                    
+            # -- register play / pause handlers -- #
+            @player.on $.jPlayer.event.play, (evt) =>
+                console.log "play event"
+                if @_pause_timeout
+                    clearTimeout @_pause_timeout
+                    @_pause_timeout = null
+                    console.log "cleared pause timeout"
+                
+            @player.on $.jPlayer.event.pause, (evt) => 
+                console.log "pause event"
+                
+                # set a timer to convert this pause to a stop in one minute
+                @_pause_timeout = setTimeout => 
+                    @player.jPlayer("clearMedia")
+                    @player.jPlayer("setMedia",mp3:@options.url)
+                    console.log "stopped after inactivity"
+                , @options.pause_timeout * 1000
+
+            $.jPlayer.timeFormat.showHour = true;
+
+            # -- build our schedule -- #
+            
+            if @options.schedule
+                @schedule = new ListenLive.Schedule @options.schedule
+                @_buildSchedule()
+                
+                setTimeout =>
+                    @_buildSchedule() unless @_on_now == @schedule.on_now()
+                , 60*1000
+                
+        #----------
+        
+        _buildSchedule: ->
+            on_now = @schedule.on_now()
+            on_next = @schedule.on_at( on_now.end.toDate() )
+                
+            console.log "on_now: ", on_now.toJSON()
+            console.log "on_next: ", on_next?.get("title")
+                
+            $(@options.schedule_finder).html @options.schedule_template? on_now:on_now.toJSON(), on_next:on_next.toJSON()
+                
+            @_on_now = on_now
+            
+    
+    #----------
 
     @ScheduleShow: Backbone.Model.extend
         urlRoot: '/api/programs'
@@ -255,11 +327,13 @@ class scpr.ListenLive
             @end 	= moment 1000 * Number(@attributes['end'])
             
             @set 
+                start:      @start
+                end:        @end
                 start_time: @start.strftime("%I:%M%p")
                 end_time:   @end.strftime("%I:%M%p")
                 
         isWhatsPlayingAt: (time) ->
-            @start.toDate() < time < @end.toDate()
+            @start.toDate() <= time < @end.toDate()
             
         isPlaying: (state) ->
             @set isPlaying:state
@@ -270,6 +344,10 @@ class scpr.ListenLive
         on_at: (time) ->
             # iterate through models until we get a true result from isWhatsPlayingAt
             @find (m) -> m.isWhatsPlayingAt time
+            
+        #----------
+        
+        on_now: -> @on_at (new Date)
 
     #----------
     

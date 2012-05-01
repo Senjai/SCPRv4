@@ -68,18 +68,6 @@ class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
         $(element).removeAttr("width").removeAttr("height")
 
 
-class scpr.Track
-    DefaultOptions:
-        content_path: "/track/page"
-        
-    constructor: (options) ->
-        @options = _(_({}).extend(@DefaultOptions)).extend options || {}
-    
-    #----------
-     
-    content: (tag) ->
-        $.post @options.content_path, tag:tag
-        
 #----------
 
 class scpr.SocialTools
