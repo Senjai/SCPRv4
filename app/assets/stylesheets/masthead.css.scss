@@ -286,6 +286,7 @@ nav.utils {
 		}
 		
 		.featured {
+			.contentasset { max-width: 65px; } // Override default thumbnail size to make it a little smaller
 			h4 {
 				@include font-headline;
 				@include font-shorthand(600, 15px, $baseLineHeight);

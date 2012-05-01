@@ -7,7 +7,7 @@
 					<p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
 				</header>
 			
-				<%= entry.summary.html_safe %>
+				<%= entry.summary.try(:html_safe) %>
 			</div>
 		</div>
 		<% if entry.enclosure_url.present? %>

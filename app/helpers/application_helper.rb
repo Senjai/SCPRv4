@@ -70,12 +70,11 @@ module ApplicationHelper
   # * shared/assets/story/default
   # * shared/assets/default/default
   
-  def render_asset(content,context)
-    # short circuit if it's obvious we're getting nowhere
-    if !content || !content.respond_to?("assets") || !content.assets.any?
-      return ''
+  def render_asset(content,context, fallback=false)
+    if !content || !content.respond_to?("assets") || !content.assets.present?
+      return fallback ? render("shared/assets/#{context}/fallback", content: content) : ''
     end
-
+    
     # look for a scheme on the content object
     scheme = content["#{context}_asset_scheme"] || "default"
 
