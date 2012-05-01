@@ -43,6 +43,14 @@ class KpccProgram < ActiveRecord::Base
     end
   end
   
+  #----------
+  
+  def link_path
+    Rails.application.routes.url_helpers.program_path(self,:trailing_slash => true)
+  end
+  
+  #----------
+  
   # Validation for later
   # validates :slug, uniqueness: true
 
