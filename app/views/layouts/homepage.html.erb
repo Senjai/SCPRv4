@@ -14,52 +14,51 @@
 	<!-- BROADCAST BAR -->
 	<%= render("shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
 
-	<div class="container-fluid">
-		<div id="main">
-			<section class="homepage-top">
-				<div class="row-fluid">
-					<section class="span8">
-						<%= yield %>
-					</section>
-
-					<div class="span4">
-						<div id="sidebar-top">
-							<%= render "shared/widgets/oas", :ad_id => 'x01' %>
-							<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
-                           
-							<%= render "shared/widgets/newsletter_subscribe" %>
-							<!-- div class="ad widget" style="border-bottom: 1px solid #E0E0E0;padding-bottom: 16px;">
-								<img src="http://media.scpr.org/assets/images/campaigns/2012/billboard_ideas_large.png" alt="" />
-							</div -->
-							<%= render "shared/widgets/most_popular" %>
-						</div> <!-- sidebar-top -->
-					</div> <!-- span4 -->
-					<div class="span12 top-half">&nbsp;</div>
-				</div> <!-- row fluid -->
+	<div id="main" class="container-fluid">
+		<section class="homepage-top">
+			<div class="row-fluid">
+				<section class="span8">
+					<%= yield %>
+				</section>
 				
-				<%= yield :missed_it %>
-			</section> <!-- homepage-top -->
+				<div class="span4">
+					<div id="sidebar-top">
+						<%= render "shared/widgets/oas", :ad_id => 'x01' %>
+						<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
+                          
+						<%= render "shared/widgets/newsletter_subscribe" %>
+						<!-- div class="ad widget" style="border-bottom: 1px solid #E0E0E0;padding-bottom: 16px;">
+							<img src="http://media.scpr.org/assets/images/campaigns/2012/billboard_ideas_large.png" alt="" />
+						</div -->
+						<%= render "shared/widgets/most_popular" %>
+					</div> <!-- sidebar-top -->
+				</div> <!-- span4 -->
+				<div class="span12 top-half">&nbsp;</div>
+			</div> <!-- row fluid -->
+				
+			<%= yield :missed_it %>
+		</section> <!-- homepage-top -->
 		
-			<section class="homepage-bottom">
-				<div class="row-fluid">
-					<div class="span8">
-						<section class="more-news-container">
-							<%= yield :lower %>
-						</section>
-					</div> <!-- span8 -->
-					<div class="span4">
-						<div id="sidebar-bottom">
-							<%= render "shared/widgets/oas", :ad_id => 'x02' %>
-							<%= render "shared/widgets/facebook" %>
-                           
-							<%= render "shared/widgets/promo_mobile" %>
-							<%= render "shared/widgets/oas", :ad_id => 'x03' %>
-						</div> <!-- sidebar bottom -->
-					</div> <!-- span4 -->
-				</div> <!-- row fluid -->
-			</section> <!-- homepage-bottom -->
-		</div> <!-- main -->
-	</div> <!-- container-fluid -->
+		<section class="homepage-bottom">
+			<div class="row-fluid">
+				<div class="span8">
+					<section class="more-news-container">
+						<%= yield :lower %>
+					</section>
+				</div> <!-- span8 -->
+				<div class="span4">
+					<div id="sidebar-bottom">
+						<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+						<%= render "shared/widgets/facebook" %>
+                          
+						<%= render "shared/widgets/promo_mobile" %>
+						<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+					</div> <!-- sidebar bottom -->
+				</div> <!-- span4 -->
+			</div> <!-- row fluid -->
+		</section> <!-- homepage-bottom -->
+	</div> <!-- main container-fluid -->
+
 	<%= render :partial => "shared/footer" %>
 	<%= render :partial => "shared/footer/footer_js" %>
 </div> <!-- viewport -->

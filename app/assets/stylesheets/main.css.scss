@@ -314,9 +314,6 @@ h6.more-news-title {
 	padding-right: 10px;
 	.more-news {
 		padding-bottom: $baseLineHeight / 2;
-		&:last-of-type {
-			border-bottom: 1px solid $grayLight;
-		}
 		.more-news-content {
 			padding-right:5px;
 			border-right:1px solid $grayLighter;
@@ -337,8 +334,8 @@ h6.more-news-title {
 				padding:10px 0 0 0;
 			}
 			ul {
-			    margin: 0;
-				list-style: none inside url("more-headlines-li.png");
+			    margin: 0 0 0 14px; /* Keep the bullets inside the box but wrap properly */
+				list-style: none url("more-headlines-li.png");
 				li {
 					margin:5px 0 0 0;
 					a {
