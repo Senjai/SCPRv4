@@ -10,23 +10,6 @@
 
 	</style>
 
-	<!--
-		Initialize 
-	-->
-	<script type="text/javascript">
-	    $(document).ready(function(){
-	      $("#jquery_jplayer_1").jPlayer({
-	        ready: function () {
-	          $(this).jPlayer("setMedia", {
-	            mp3: "http://live.scpr.org:80/"
-	          }).jPlayer("play");
-	        },
-	        swfPath: "http://media.scpr.org/assets/scripts/jquery.jplayer/Jplayer.swf",
-	        supplied: "mp3",
-	      });
-		  $.jPlayer.timeFormat.showHour = true;
-	    });
-	  </script>
 </head>
 <body class="minimal listen">
     
@@ -34,7 +17,7 @@
     
     <div class="wrapper">
     	<a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>
-		    <span class="pledge"><a href="/support/">Pledge now</a></span>
+		    <span class="pledge"><a href="/support/" target="_blank">Pledge now</a></span>
 		</a>
     </div>
   </header>
@@ -46,7 +29,7 @@
           		<h2>Listen Live</h2>
               	<span class="small">
 					More ways to listen:&nbsp;&nbsp;
-					<a href="http://www.scpr.org/iphone/">KPCC iPhone app</a>
+					<a href="http://www.scpr.org/iphone/" target="_blank">KPCC iPhone app</a>
 					<span class="pipe">|</span>
 					<a href="http://live.scpr.org/listen.pls">MP3/iTunes</a>
 					<span class="pipe">|</span>
@@ -75,15 +58,8 @@
 			  			</div> <!-- jp-gui -->
 					</div> <!-- section-left -->
 
-					<div class="section-mid">
-						<div class="jp-title">
-							<p><span>On now: </span><br /><i id="jplayer1_title"><a href="#" target="_blank">Marketplace Morning Report</a> 9am - 10am</i></p>
-		      				<span class="small">
-								<span>Up next:</span> <a href="{{ on_next.url }}" target="_blank">{{ on_next.program }}</a>
-			                    <span class="pipe">|</span>
-			                    <a href="/schedule/" target="_blank">Program Schedule</a>
-							</span>
-						</div>
+					<div class="section-mid" id="llschedule">
+
 					</div> <!-- section-mid -->
 
 				</div> <!-- jp-type-single -->
@@ -93,38 +69,18 @@
 
 	
   </div>
-<div class="wrapper headlines">
-<h6>Recent Headlines</h6>
-<article class="cbase offlead">			
-<img src="http://a.scpr.org/i/2b5430531fde5a23366e215c69c8f79d/35043-thumb.jpg" width="88" height="88" alt="">
-<h3><a href="/blogs/environment/2012/03/12/5039/environmentalists-seek-help-angelenos-map-citys-un/">Calling all creek freaks: Help map LA's streams and waterways</a></h3>
-<h4>By <a href="/about/people/staff/molly-peterson">Molly Peterson</a> 
-	<time class="smart smarttime" data-unixtime="1331555404" data-window="8h" datetime="2012-03-12T05:30"></time>
-</h4>
-<p class="story-content clearfix">Environmentalists are asking Angelenos to help find unmapped streams and small waterways.</p>
-</article>
+<div class="wrapper headlines" id="llcontent">
+	<h6>Top Story</h6>
 
-  <div>
-			<ul class="cbase">
-					<li>
-		<a href="/blogs/environment/2012/03/12/5039/environmentalists-seek-help-angelenos-map-citys-un/">Calling all creek freaks: Help map LA's streams and waterways</a>
-		<time class="smart smarttime" data-unixtime="1331555404" data-window="8h" datetime="2012-03-12T05:30"></time>
-	</li><li>
-		<a href="/news/2012/03/11/31597/temple-memorializes-those-lost-after-japan-tsunami/">'Impermanence is true'</a>
-		<time class="smart smarttime" data-unixtime="1331521664" data-window="8h" datetime="2012-03-11T20:07"></time>
-	</li><li>
-		<a href="/blogs/news/2012/03/11/5041/crystal-cathedral-moving-changing-name/">Crystal Cathedral's congregation is moving and changing its name</a>
-		<time class="smart smarttime" data-unixtime="1331502439" data-window="8h" datetime="2012-03-11T14:47"></time>
-	</li><li>
-		<a href="/news/2012/03/11/31596/nuclear-woes-push-japan-into-a-new-energy-future/">Nuclear woes push Japan into a new energy future</a>
-		<time class="smart smarttime" data-unixtime="1331482045" data-window="8h" datetime="2012-03-11T09:07"></time>
-	</li><li>
-		<a href="/blogs/news/2012/03/10/5040/lafds-response-times-had-been-inflated-report/">LAFD's response times were inflated</a>
-		<time class="smart smarttime" data-unixtime="1331422658" data-window="8h" datetime="2012-03-10T15:37"></time>
-	</li>
-				</ul>
-		</div>
-	</div>
+	<%= render_content @homepage.content[0], "offlead_asset" %>
+
+	<h6>More Headlines</h6>
+	
+	<ul class="cbase">
+	<%= render_content @homepage.content[1..-1], "headline" %>
+	</ul>
+</div>
+
   <footer>
     <div class="">
         <ul class="menu unstyled clearfix">
@@ -139,6 +95,13 @@
     </div>
   </footer>
 
+<% content_for :footerjss do %>
+	llPlayer = new scpr.ListenLive.CurrentGen({
+		schedule: 	<%= raw @schedule.to_json %>
+	})
+	
+	$("#llcontent a").attr("target","_blank")
+<% end %>
 
 <%= render :partial => "shared/footer/footer_js" %>
 
