@@ -3,6 +3,7 @@ class Blog < ActiveRecord::Base
   
   has_many :entries, :order => 'published_at desc', class_name: "BlogEntry"
   has_many :tags, :through => :entries
+  belongs_to :missed_it_bucket
   
   scope :active, where(:is_active => true)
   scope :is_news, where(:is_news => true)

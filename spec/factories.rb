@@ -64,14 +64,13 @@ end
     ignore { episode_count 0 }
     ignore { segment_count 0 }
     
-    after_create do |kpcc_program, evaluator|
-      FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: kpcc_program))
-      FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: kpcc_program))
+    after_create do |object, evaluator|
+      FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: object))
+      FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: object))
       
-      # TODO Figure out a cleaner way to do this
       if evaluator.missed_it_bucket_id.blank?
-        kpcc_program.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: kpcc_program.title))
-        kpcc_program.save!
+        object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: object.title))
+        object.save!
       end
     end
   end
@@ -125,6 +124,19 @@ end
     factory :remote_blog do
       is_remote true
       feed_url "http://oncentral.org/rss/latest"
+    end
+    
+    ignore { entry_count 0 }
+    ignore { entry Hash.new }
+    ignore { missed_it_bucket Hash.new }
+  
+    after_create do |object, evaluator|
+      FactoryGirl.create_list(:blog_entry, evaluator.entry_count.to_i, evaluator.entry.merge!(blog: object))
+      
+      if evaluator.missed_it_bucket_id.blank?
+        object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: object.name))
+        object.save!
+      end
     end
   end
   
@@ -251,7 +263,6 @@ factory :homepage do
   after_create do |object, evaluator|
     FactoryGirl.create_list(:homepage_content, evaluator.contents_count.to_i, homepage: object)
     
-    # TODO Figure out a cleaner way to do this
     if evaluator.missed_it_bucket_id.blank?
       object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: "Homepage #{object.id}"))
       object.save!

@@ -26,7 +26,19 @@ body {
 		border-bottom:1px solid $grayLighter;
 		margin-bottom:$baseline;
 		
-		.missed-it-bucket .carousel { min-height: 259px; }
+		
+		.missed-it-bucket {
+			.carousel { min-height: 259px; }
+			.row-fluid > hr { 
+				display: none; 
+				width: 100%;
+				clear: both;
+			}
+			.missed-it-content { 
+				text-align: center;
+				margin-bottom: 10px;
+			}
+		}
 	}
 	.homepage-bottom { margin:0; padding: 0;}
 	
@@ -46,18 +58,6 @@ body {
 			// Make the first headline bigger in lead-right scheme
 			.offleads .span4:first-child .offlead h3.story-headline { @include font-shorthand(bold, 28px, 26px); }
 			.lead h1 { @include font-shorthand(600, 24px); }
-		}
-	}
-	
-	.missed-it-bucket {
-		.row-fluid > hr { 
-			display: none; 
-			width: 100%;
-			clear: both;
-		}
-		.missed-it-content { 
-			text-align: center;
-			margin-bottom: 10px;
 		}
 	}
 }

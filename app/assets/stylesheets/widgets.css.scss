@@ -613,8 +613,9 @@ a.with-icon {
 
 .missed-it-bucket {
 	a {
-		@include font-navigation($size: 15px);
-		color: $nearBlack;
+		@include font-headline();
+		@include font-shorthand(600, 15px);
+		color:$nearBlack;
 	}
 	h4 { text-transform: none; }
 }

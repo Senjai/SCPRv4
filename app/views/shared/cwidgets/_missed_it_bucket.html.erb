@@ -1,8 +1,8 @@
-<% if kpcc_program.respond_to?(:missed_it_bucket) and kpcc_program.missed_it_bucket.present? and kpcc_program.missed_it_bucket.contents.present? %>
+<% if object.respond_to?(:missed_it_bucket) and object.missed_it_bucket.present? and object.missed_it_bucket.contents.present? %>
 	<div class="missed-it-bucket widget cbase">
 		<h6>In Case You Missed It</h6>
-			<% kpcc_program.missed_it_bucket.contents.limit(5).each do |content| %> <%# content is a MissedItContent object %>
-				<div class="missed-it-content">
+			<% object.missed_it_bucket.contents.limit(5).each do |content| %> <%# content is a MissedItContent object %>
+				<div class="missed-it-content carousel-item">
 					<div class="row-fluid">
 						<div class="span4">
 							<%= render_asset content.content, "thumb" %>

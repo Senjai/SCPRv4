@@ -7,7 +7,6 @@ Scenario: See the homepage missed it bucket if there is one
 	
 	When I go to the home page
 	Then I should see a missed it bucket
-	And the missed it bucket should have 3 items in it
 	
 Scenario: Do not show a missed it bucket if the homepage doesn't have one
 	Given a homepage with the following attributes:
