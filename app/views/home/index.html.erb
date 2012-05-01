@@ -25,21 +25,21 @@
 
 <% content_for :missed_it do %>
 	<% if @homepage.missed_it_bucket.present? and @homepage.missed_it_bucket.contents.present? %>
-		<div class="more-news missed-it-bucket">
-			<h6 class="more-news-title">In Case You Missed It</h6>
+		<div class="more-news missed-it-bucket content-carousel">
+			<h6 class="more-news-title">
+				In Case You Missed It
+				<div class="pager-nav">
+					<a class="prev"></a>
+					<a class="next"></a>
+				</div>
+			</h6>
 
-			<div class="row-fluid">
-				<% @homepage.missed_it_bucket.contents.limit(6).each do |content| %>
-					<div class="span2">
-						<div class="missed-it-content">
-							<%= render_asset content.content, "lsquare" %>
-							<%= link_to content.content.headline, content.content.link_path %>
-						</div>
-					</div> <!-- span2 -->
-					<hr />
-				<% end %>
-			</div> <!-- row fluid -->
+			<div class="carousel" data-current-page="1"></div>
 		</div> <!-- missed-it-bucket -->
+		
+		<% content_for :footerjss do %>
+			var carousel = new scpr.ContentCarousel({dataUrl: "<%= homepage_missed_it_content_path(@homepage.id) %>"});
+		<% end %>
 	<% end %>
 <% end %>
 

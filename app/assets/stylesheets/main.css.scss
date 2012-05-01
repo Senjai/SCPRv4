@@ -25,6 +25,8 @@ body {
 	.homepage-top {
 		border-bottom:1px solid $grayLighter;
 		margin-bottom:$baseline;
+		
+		.missed-it-bucket .carousel { min-height: 259px; }
 	}
 	.homepage-bottom { margin:0; padding: 0;}
 	

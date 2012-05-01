@@ -643,18 +643,6 @@ a.with-icon {
 	}
 }
 
-// In Case You Missed It Carousel
-// #missed-it {
-// 	margin-left:30px;
-// 	width:1111px;
-// 	hr {
-// 		border-color:$graydarkHR;
-// 	}
-// 	h3 {
-// 		color:$orangeDark;
-// 	}
-// }
-
 .missed-it-bucket {
 	a {
 		@include font-navigation($size: 15px);
