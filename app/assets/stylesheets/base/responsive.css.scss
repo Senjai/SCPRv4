@@ -118,7 +118,8 @@ $mediaSmallPortrait: 320px;
 				@include makeFluidRow;
 				> .span6 {					
 					@include gridFluidSpan(12);
-					&:nth-child(odd) { padding-left: 0px; margin-left: 0px; }
+					&:nth-child(even) { margin-right: 0px; }
+					&:nth-child(odd) { margin-left: 0px; }
 				}
 			}
 		}
@@ -202,9 +203,10 @@ $mediaSmallPortrait: 320px;
 	}
 	
 	.content-block, .fold, .blog-masthead {
-		.mq-solo-span { // Spans with this class will be by themselves at the "reader mode" breakpoint, so we need to tell them to span 100% and ditch the left margin
+		.mq-solo-span { // Spans with this class will be by themselves at the "reader mode" breakpoint, so we need to tell them to span 100% and ditch their margin
 			@include gridFluidSpan(24);
 			margin-left: 0;
+			margin-right: 0;
 		}
 	}
 	
