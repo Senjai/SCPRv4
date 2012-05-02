@@ -15,13 +15,14 @@
 	<%= render("shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
 
 	<div id="main" class="container-fluid">
+		
 		<section class="homepage-top">
 			<div class="row-fluid">
-				<section class="span8">
+				<section class="span16">
 					<%= yield %>
 				</section>
 
-				<div class="span4">
+				<div class="span8">
 					<div id="sidebar-top">
 						<%= render "shared/widgets/oas", :ad_id => 'x01' %>
 						<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>                        
@@ -31,19 +32,18 @@
 						</div -->
 						<%= render "shared/widgets/most_popular" %>
 					</div> <!-- sidebar-top -->
-				</div> <!-- span4 -->
-				<div class="span12 top-half">&nbsp;</div>
-			</div> <!-- row fluid -->
+				</div> <!-- span8 -->
+			</div> <!-- row-fluid -->
 		</section> <!-- homepage-top -->
 	
 		<section class="homepage-bottom">
 			<div class="row-fluid">
-				<div class="span8">
+				<div class="span16">
 					<section class="more-news-container">
 						<%= yield :lower %>
 					</section>
-				</div> <!-- span8 -->
-				<div class="span4">
+				</div> <!-- span16 -->
+				<div class="span8">
 					<div id="sidebar-bottom">
 						<%= render "shared/widgets/oas", :ad_id => 'x02' %>
 						<%= render "shared/widgets/facebook" %>
@@ -52,9 +52,10 @@
 						<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 						<%= render "shared/widgets/recent_videos" %>
 					</div> <!-- sidebar bottom -->
-				</div> <!-- span4 -->
+				</div> <!-- span8 -->
 			</div> <!-- row fluid -->
 		</section> <!-- homepage-bottom -->
+		
 	</div> <!-- main container-fluid -->
 	<%= render :partial => "shared/footer" %>
 	<%= render :partial => "shared/footer/footer_js" %>

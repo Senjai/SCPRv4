@@ -5,7 +5,7 @@
 <h1>Debugging Dashboard</h1>
 
 <div class="row">
-	<div class="span4">
+	<div class="span8">
 		<h2>News Story: Missing Category</h2>
 		<p><%= @stories.count() %> of <%= @baseline.count() %> stories published in the period</p>
 		<ul>
@@ -20,7 +20,7 @@
 		<% end %>
 		</ul>
 	</div>
-	<div class="span4">
+	<div class="span8">
 		<h2>News Story: No Assets</h2>
 		<p><%= @no_assets.count() %> of <%= @baseline.count() %> stories published in the period</p>
 		<ul>
@@ -36,7 +36,7 @@
 		</ul>
 	</div>
 	
-	<div class="span4">
+	<div class="span8">
 		<h2>Blog Entry (w/ News Category): No Assets</h2>
 		<p><%= @blog_no_assets.count() %> entries published in the period</p>
 		<ul>

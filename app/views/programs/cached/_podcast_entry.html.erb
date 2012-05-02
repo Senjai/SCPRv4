@@ -1,6 +1,6 @@
 <article class="teaser program-external">
 	<div class="row-fluid">
-		<div class="<%= entry.enclosure_url.present? ? "span9" : "span12" %>">
+		<div class="<%= entry.enclosure_url.present? ? "span18" : "span24" %>">
 			<div class="info">
 				<header>
 					<h3><%= link_to entry.title, entry.url %></h3>
@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<% if entry.enclosure_url.present? %>
-			<div class="span3">
+			<div class="span6">
 					<aside class="story-audio">
 						<div class="inner-container clearfix">
 							<div class="audio-content">

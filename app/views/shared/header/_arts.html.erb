@@ -1,20 +1,25 @@
 <div class="inner-container">
 	<div class="row-fluid">
-		<div class="span3">
+		<div class="span6">
 			<div class="section">
 				<h6>Categories</h6>
 				<nav>
 					<div class="row-fluid">
-						<ul class="span6">
-						    <li><a href="/culture/">Culture</a></li>
-						    <li><a href="/film/">Film</a></li>
-						    <li><a href="/books/">Books</a></li>	
-						</ul>
-						<ul class="span6">
-						    <li><a href="/arts/">Arts</a></li>
-						    <li><a href="/music/">Music</a></li>
-						    <li><a href="/food/">Food</a></li>	
-						</ul>
+						<div class="span12">
+							<ul>
+							    <li><a href="/culture/">Culture</a></li>
+							    <li><a href="/film/">Film</a></li>
+							    <li><a href="/books/">Books</a></li>	
+							</ul>
+						</div>
+						
+						<div class="span12">
+							<ul>
+							    <li><a href="/arts/">Arts</a></li>
+							    <li><a href="/music/">Music</a></li>
+							    <li><a href="/food/">Food</a></li>
+							</ul>
+						</div>
 					</div> <!-- row fluid -->
 					<ul class="content-types pull-down">
 					    <li><a href="/video/" class="video-icon">Videos</a></li>
@@ -24,7 +29,7 @@
 			</div> <!-- section -->
 		</div> <!-- span -->
 	
-		<div class="span4">
+		<div class="span8">
 			<div class="section">
 			<h6>Latest Stories</h6>
 				<% content_cache("mega_arts_latest") do %>
@@ -34,7 +39,7 @@
 			</div>
 		</div>
 	
-		<div class="span5">
+		<div class="span10">
 			<div class="section last">
 				<h6>From Our Blogs</h6>			
 				<% content_cache("mega_arts_blogs") do %>

@@ -169,7 +169,7 @@ time.smart {
 	}
 }
 
-.span8.split {
+.span16.split {
 	@include clearfix();
 	margin-top:$baseline;
 	.offlead {

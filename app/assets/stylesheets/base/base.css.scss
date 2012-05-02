@@ -46,15 +46,10 @@ $baseline:          $baseLineHeight;
 
 
 // Grid
-$gridColumns:       12;
-
-// Fixed Grid
-$gridColumnWidth:   65px;
-$gridGutterWidth:   30px;
-$gridRowWidth:      ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 1));
-$columnOffset: 1;
-$extraSpace: ($gridGutterWidth * 2);
-$siteWidth:  $gridRowWidth;
+$gridColumns:       24;
+$gridColumnWidth: 32.5px;
+$gridGutterWidth: 15px;
+$gridRowWidth:      ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
 
 // Fluid Grid
 $fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);

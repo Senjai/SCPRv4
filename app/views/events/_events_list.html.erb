@@ -8,22 +8,22 @@
   		<div class="cbase event teaser">
 			<div class="row-fluid">
 				<% if event.assets.present? %>
-					<div class="span3">
+					<div class="span6">
 						<a href="<%= event.link_path %>">
 							<%= render_asset event, 'three' %>
 						</a>
 					</div>
-					<div class="span9">
+					<div class="span18">
 				<% else %>
-					<div class="span12">
+					<div class="span24">
 				<% end %>
 					
 					<div class="event-details">
 						<div class="row-fluid">
-							<div class="span4">
+							<div class="span8">
 								<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %>
 							</div>
-							<div class="span8">
+							<div class="span16">
 								<% if event.location_name.present? %>
 									<span class="event-location<%= " forum" if event.is_forum_event? %>"><%= event.location_name %></span>
 								<% end %>

@@ -19,28 +19,28 @@
 			<%= yield :wide_content %>
 		<% else %>
 			<div class="row-fluid">
-				<div class="span2 hidden-reader">
+				<div class="span4 hidden-reader">
 					<button class="browse-all-videos modal-toggler" data-modal-id="videos_list">Browse All Videos</button>
 			
 					<%= modal("videos-list", modal_id: "videos_list") do %>
 						<div class="row-fluid">
-							<div class="span1">
+							<div class="span2">
 								<button class="arrow left" id="previous-page" data-page="">&nbsp;</button>
 							</div>
-							<div class="span10">
+							<div class="span20">
 								<div class="list">
 									<%# This is populated via ajax from videos.js.coffee %>
 								</div>
 							</div>
-							<div class="span1 right-col">
+							<div class="span2 right-col">
 								<button class="arrow right" id="next-page" data-page="">&nbsp;</button>
 							</div>
 						</div> <!-- row-fluid -->
 						<div class="pages">&nbsp;</div>
 					<% end %>
-				</div> <!-- .span2 -->
+				</div> <!-- .span4 -->
 		
-				<article class="span8">
+				<article class="span16">
 					<%= yield %>
 			
 					<% if any_to_list? @latest_videos %>
@@ -53,7 +53,7 @@
 								<div class="row-fluid">
 									<% @latest_videos.each do |video| %>
 										<% if video.assets.present? %>
-											<div class="span3">
+											<div class="span6">
 												<div class="video-thumb">
 													<%= render_asset video, "three_video" %>
 													<span class="title"><%= link_to video.short_headline, video_path(video) %></span>
@@ -68,7 +68,7 @@
 					<%= comments_for @video, cssClass: 'multimedia muted' %>
 				</article>
 		
-				<div class="span2 hidden-reader">
+				<div class="span4 hidden-reader">
 					&nbsp;
 				</div>
 			</div> <!-- row fluid -->

@@ -2,10 +2,10 @@
 <div class="row">
 	<%= content_cache("home_leads") do %>
 		<% register_content("layout/homepage") %>
-		<div class="span8">
+		<div class="span16">
 			<%= render_content @homepage.content[0], "lead8" if @homepage %>
 		</div>
-		<div class="span8 offleads split">
+		<div class="span16 offleads split">
 			<%= render_content @homepage.content[1..-1], "offlead" if @homepage %>
 		</div>
 	<% end %>

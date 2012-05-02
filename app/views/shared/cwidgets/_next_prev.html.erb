@@ -1,17 +1,17 @@
 <div class="next-prev" id="article-next-prev">
 	<div class="row-fluid">
-		<div class="span3 row-title">
+		<div class="span6 row-title">
 			<h6>More from <%= @blog.name %></h6>
 		</div>
-		<div class="span9">
+		<div class="span18">
 			<div class="row-fluid">
-				<div class="span6 left">
+				<div class="span12 left">
 					<% if @entry.previous.present? %>
 						<div class="arrow">&larr;</div>
 						<%= link_to @entry.previous.title, @entry.previous.link_path %>
 					<% end %>
 				</div>
-				<div class="span6 right">
+				<div class="span12 right">
 					<% if @entry.next.present? %>
 						<div class="arrow">&rarr;</div>
 						<%= link_to @entry.next.title, @entry.next.link_path %>
