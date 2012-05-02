@@ -217,27 +217,22 @@ span.fake-link {
 			padding-bottom: 10px;
 			@include font-serif($size: 12px, $lineHeight: 15px);
 			@include clearfix;
-			h5 {
-				@include font-shorthand($size: 13px, $weight: bold);
-				margin-top:-5px;
-				a {
-					color:$nearBlack;
-				}
-			}
+			
 			img.tweet-image {
 				float: left;
 				vertical-align: top;
 				margin-right: 6px;
-				@include gridFluidSpan(2)
 			}
-			.tweet-content {
-				vertical-align: top;
-				float: left;
-				@include gridFluidSpan(10)
+			
+
+			h5 {
+				display: inline-block;
+				@include font-shorthand($size: 13px, $weight: bold);
+				margin-top:-5px;
+				a { color:$nearBlack; }
 			}
-			.byline {
-				font-size: 10px;
-			}
+			
+			.byline { font-size: 10px; }
 		}
 	}
 }

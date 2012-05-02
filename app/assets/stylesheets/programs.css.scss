@@ -154,7 +154,7 @@ header.episode {
 }
 
 .teaser.program-external {
-	// scoping span9/span12 here for different style if there is audio (span9) or not (span12) 
-	.span9 .info { min-height: 100px; }
-	.span12 .info { border-right: none; }
+	// scoping span18/span24 here for different style if there is audio (span18) or not (span24) 
+	.span18 .info { min-height: 100px; }
+	.span24 .info { border-right: none; }
 }

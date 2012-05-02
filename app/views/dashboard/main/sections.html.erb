@@ -6,7 +6,7 @@
 
 <div class="row">
 <% for c in @homepage.content %>
-	<div class="span2">
+	<div class="span4">
 		<p><%= link_to c.content.obj_key, c.content.link_path %><br/><%= time_ago_in_words c.content.public_datetime %></p>
 	</div>
 <% end %>
@@ -15,14 +15,14 @@
 <% for sec in @sections %>
 	<h2><%= sec[:section].category %></h2>
 	<div class="row">
-		<div class="span2">
+		<div class="span4">
 			<b>Latest Content:</b>
 			<% for c in sec[:content] %>
 				<p><%= link_to c.obj_key, c.link_path %><br/><%= time_ago_in_words c.public_datetime %></p>
 			<% end %>
 		</div>
 		<% for cc in sec[:candidates][0..2] %>
-			<div class="span2">
+			<div class="span4">
 				<b><%= cc[:content].class %> (<%= cc[:metric].to_s %>)</b>
 				<% if cc[:metric] == :comment %>
 					<p>

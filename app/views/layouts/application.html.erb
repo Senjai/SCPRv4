@@ -15,10 +15,10 @@
 	<div id="main" class="container-fluid">
 		<%= yield :title_bar %>
 		<div class="row-fluid">
-			<article class="span8">
+			<article class="span16">
 				<%= content_for?(:content) ? yield(:content) : yield %>
 			</article>
-			<div class="span4">
+			<div class="span8">
 				<div id="sidebar">
 					<% if content_for?(:sidebar) %> 
 						<%= yield(:sidebar) %>
@@ -35,7 +35,7 @@
 						<%= render "shared/widgets/oas", :ad_id => 'x03' %>
 					<% end %>
 				</div> <!-- sidebar -->
-			</div> <!-- span4 -->
+			</div> <!-- span8 -->
 		</div> <!-- row-fluid -->
 		<%= render "shared/audio/inpage_audio_player" %>
 	</div> <!-- container fluid main -->

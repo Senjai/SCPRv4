@@ -1,7 +1,7 @@
 <section class="program-about widget">
 	<h6>About <%= program.title %></h6>
 	<div class="row-fluid">
-		<div class="span5">
+		<div class="span10">
 			<nav class="connect">
 				<span class="title">Stay Connected</span>
 				<%= link_to "Facebook", program.facebook_url, target: "_blank", class: "facebook with-icon" %>
@@ -10,7 +10,7 @@
 				<%= link_to "RSS", program.rss_url, target: "_blank", class: "rss with-icon" if program.rss_url.present? %>
 			</nav>
 		</div>
-		<div class="span7">
+		<div class="span14">
 			<p class="about"><%= program.teaser.html_safe %></p>
 		</div>
 	</div>

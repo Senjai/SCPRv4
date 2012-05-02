@@ -3,11 +3,11 @@
 <div class="current-episode">
 	<div class="episode">
 		<div class="row-fluid">
-			<div class="span6">
+			<div class="span12">
 				<h2><%= link_to current_episode.title, current_episode.link_path %></h2>
 				<%= simple_format current_episode.teaser %>	
 			</div>
-			<div class="span6">
+			<div class="span12">
 				<%= render_asset current_episode, "lead" %>
 			</div>
 		</div>
@@ -16,10 +16,10 @@
 	<div class="current-episode-segments">
 		<div class="row-fluid">
 			<% split_num = ( current_episode.segments.published.length.to_f / 2 ).ceil %>
-			<div class="span6">
+			<div class="span12">
 				<%= render_content current_episode.segments.published.first(split_num), "seg_headline" %>
 			</div>
-			<div class="span6">
+			<div class="span12">
 				<%= render_content current_episode.segments.published[split_num..-1], "seg_headline" %>		
 			</div>
 		</div>

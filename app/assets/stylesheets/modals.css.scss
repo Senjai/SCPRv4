@@ -144,6 +144,6 @@
 	&.videos-list {
 		@include modal-dark;
 		min-height: 700px;
-		@include gridFluidSpan(11);
+		@include gridFluidSpan(22);
 	} // .video-list
 }

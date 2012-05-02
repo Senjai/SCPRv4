@@ -1,12 +1,12 @@
 <div class="blog-about widget">
 	<h6>About the blog: <%= @blog.name %></h6>
 	<div class="row-fluid">
-		<div class="span5">
+		<div class="span10">
 			<nav class="connect">
 				<%= link_to "RSS", @blog.feed_url, class: "rss with-icon" %>
 			</nav>
 		</div>
-		<div class="span7">
+		<div class="span14">
 			<p class="about"><%= @blog.description.html_safe %></p>
 		</div>
 	</div>

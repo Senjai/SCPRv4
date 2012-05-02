@@ -9,10 +9,10 @@
 	<%= content_widget "next_prev", @entry %>
 	
 	<div class="row-fluid">
-		<div class="span3" id="fold-comments-count-widget">
+		<div class="span6" id="fold-comments-count-widget">
 			<%= comment_widget_for @entry, cssClass: "left-side", name: "comments" %>
 		</div>
-		<div class="span9 mq-solo-span">
+		<div class="span18 mq-solo-span">
 			<%= comments_for @entry, header: false %>
 		</div>
 	</div> <!-- row-fluid -->

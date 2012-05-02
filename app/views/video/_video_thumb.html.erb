@@ -4,7 +4,7 @@
 <% end %>
 
 <% if video_thumb ||= nil and video_thumb.assets.present? %>
-	<div class="span4">
+	<div class="span8">
 		<div class="video-thumb">
 			<%= render_asset video_thumb, "three_video" %>
 			<%= link_to video_thumb.short_headline, video_path(video_thumb) %>

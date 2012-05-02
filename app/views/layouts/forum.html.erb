@@ -16,12 +16,12 @@
 
 	<div id="forum" class="container-fluid">
 		<div class="row-fluid">
-			<div id="forum-span-content" class="span9">
+			<div id="forum-span-content" class="span18">
 				<%= yield %>
 			</div>
 		
 			<!-- SIDEBAR -->
-			<div id="forum-span-sidebar" class="span3">
+			<div id="forum-span-sidebar" class="span6">
 				<div id="sidebar">
 					<% if !content_for(:sidebar) %>
 						<%= yield :sidebar %>
@@ -29,14 +29,14 @@
 						<%= render 'events/nav', navClass: "vertical" %>
 
 						<div class="mq-row-fluid">
-							<div class="span4">
+							<div class="span8">
 								<div id="getting-there" class="widget">
 									<h3>Finding the Crawford Family Forum</h3>
 									<p><%= link_to "Get directions, parking and public transit info", forum_directions_path %></p>
 								</div>
 							</div>
 
-							<div class="span4">
+							<div class="span8">
 								<div id="community-partnerships" class="widget">
 									<h3>Partner with us</h3>
 									<p>We seek events that open dialogue and deepen the relationships and understanding of Southern California’s diverse communities.</p>
@@ -44,7 +44,7 @@
 								</div>
 							</div>
 						
-							<div class="span4">
+							<div class="span8">
 								<div class="ad widget">
 									<a href="https://scprcontribute.publicradio.org">
 									    <%= image_tag 'support-forum.png', alt: "Pledge now to become a KPCC member" %>
@@ -54,7 +54,7 @@
 						</div>
 					<% end %> <!-- /SIDEBAR -->
 				</div> <!-- sidebar -->
-			</div> <!-- span3 -->
+			</div> <!-- span6 -->
 		</div> <!-- row fluid -->
 
 		<%= yield :bottom %>
