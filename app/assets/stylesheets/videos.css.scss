@@ -90,20 +90,14 @@ div.list {
 	}
 	margin-top: 10px;
 	margin-bottom: 10px;
-	img {
-		max-height: 143px;
-		overflow: hidden;
-		@include video-effects;
-	}
+	img { @include video-effects; }
 }
 
 .latest-videos {
 	border-top:1px solid $nearBlack;
 	padding-top: 10px;
-	img {
-		width:158px;
-		height:88px;
-	}
+	
+	.list .row-fluid > hr { display: none; }
 }
 
 .video, .contentasset {

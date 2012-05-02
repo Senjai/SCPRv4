@@ -128,11 +128,11 @@
 	&.active { display: block; }
 	
 	.section-left { 
-		@include gridFluidSpan(10);
+		@include gridFluidSpan(12);
 		float: left;
 	}
 	.section-mid { 
-		@include gridFluidSpan(12);
+		@include gridFluidSpan(10);
 		float: left;
 	}
 
