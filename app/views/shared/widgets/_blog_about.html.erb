@@ -25,12 +25,12 @@
 				<% end %>
 		    	<figcaption>
 					<h6 class="host-name"><%= link_to author.name, author %></h6>
-					<p class="brief-bio"><%= author.short_bio %></p>
+					<p class="brief-bio">
+						<%= author.short_bio %>
+						<div><%= link_to("Follow #{author.twitter} on Twitter", author.twitter_url) if author.twitter.present? %></div>
+					</p>
 				</figcaption>
 			</figure>
-			<ul>
-				<li><%= link_to "Follow #{author.twitter} on Twitter", author.twitter_url %></li>
-			</ul>
 		</div>
 	<% end %>
 </div>

@@ -462,6 +462,8 @@ a.with-icon {
 #sidebar .host, .host {
 	border-bottom: 1px solid $nearWhite;
 	margin-bottom: 5px;
+	@include font-sans-serif(normal, 12px, 16px);
+	
 	&:last-child { border-bottom: none; }
 	.contentasset {
 		max-width: 60px;
@@ -469,13 +471,11 @@ a.with-icon {
 		margin: 5px 10px 5px 0;
 	}
 	h6.host-name {
-		@include font-sans-serif();
 		font-weight:bold;
 		margin-bottom: 5px;
 		text-transform:none;
 		a { color:$grayDark; }
 	}
-	p, ul {	@include font-sans-serif(normal, 12px, 16px); }
 }
 
 // Multimedia Article Sidebar
