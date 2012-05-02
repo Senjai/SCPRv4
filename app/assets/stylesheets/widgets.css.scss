@@ -460,23 +460,22 @@ a.with-icon {
 
 // Blog/Program Host Widget
 #sidebar .host, .host {
-	border-top:1px solid $grayLighter;
-	img {
-		float:left;
-		margin-right:18px;
+	border-bottom: 1px solid $nearWhite;
+	margin-bottom: 5px;
+	&:last-child { border-bottom: none; }
+	.contentasset {
+		max-width: 60px;
+		float: left;
+		margin: 5px 10px 5px 0;
 	}
 	h6.host-name {
 		@include font-sans-serif();
 		font-weight:bold;
-		margin-bottom:10px;
+		margin-bottom: 5px;
 		text-transform:none;
-		a {
-			color:$grayDark;
-		}
+		a { color:$grayDark; }
 	}
-	p, ul {
-		@include font-sans-serif(normal, 12px, 16px);
-	}
+	p, ul {	@include font-sans-serif(normal, 12px, 16px); }
 }
 
 // Multimedia Article Sidebar

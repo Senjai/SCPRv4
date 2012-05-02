@@ -174,6 +174,15 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
   add_index "blogs_blog", ["name"], :name => "name", :unique => true
   add_index "blogs_blog", ["slug"], :name => "slug", :unique => true
 
+  create_table "blogs_blog_authors", :force => true do |t|
+    t.integer "blog_id", :null => false
+    t.integer "bio_id",  :null => false
+  end
+
+  add_index "blogs_blog_authors", ["bio_id"], :name => "blogs_blog_authors_64afdb51"
+  add_index "blogs_blog_authors", ["blog_id", "bio_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
+  add_index "blogs_blog_authors", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
+
   create_table "blogs_entry", :force => true do |t|
     t.string   "title",             :limit => 140,                        :null => false
     t.string   "slug",              :limit => 50,                         :null => false

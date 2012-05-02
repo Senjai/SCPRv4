@@ -27,7 +27,7 @@ end
   
 
 # User #########################################################
-  factory :user, class: "Bio", aliases: [:author] do
+  factory :user, class: "Bio", aliases: [:author, :bio] do
     bio "This is a bio"
     short_bio "Short!"
     email "email@kpcc.org"
@@ -39,7 +39,7 @@ end
     twitter "@kpcc"
     sequence(:user_id) 
   end
-
+  
 
 # KpccProgram #########################################################
   factory :kpcc_program, aliases: [:show] do
