@@ -33,4 +33,8 @@ describe Category do
       category.content(101, 10).should be_blank
     end
   end
+  
+  describe "featured_candidates" do
+    pending
+  end
 end

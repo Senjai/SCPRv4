@@ -11,7 +11,9 @@
 					<div class="span24">
 				<% end %>
 					<h4><%= link_to c.headline, c.link_path %></h4>
-					<span class="blog-title"><%= link_to c.category.category, c.category.link_path %></span>
+					<% if c.category.present? %>
+						<span class="blog-title"><%= link_to c.category.category, c.category.link_path %></span>
+					<% end %>
 					<%= smart_date_js c, "data-window" => "8h" %>
 				</div> <!-- span -->
 			</div> <!-- row fluid -->
