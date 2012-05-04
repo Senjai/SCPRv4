@@ -373,7 +373,7 @@ nav.section-nav {
 		.slide {
 			z-index: 8;
 			@include opacity(0);
-			position: relative;
+			position: relative; // to make opacity happy in IE
 			img {
 				width: 100%;
 				position: absolute;
