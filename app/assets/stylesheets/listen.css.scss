@@ -101,9 +101,10 @@ body.listen {
     width: 18px;
     height: 11px;
     margin-top: 25px;
-    opacity: 0.6; }
+   	@include opacity(0.6);
+ }
   .player .jp-rw:hover, .player .jp-ff:hover, .player .jp-mute:hover, .player .jp-unmute:hover, .player .jp-volume-max:hover {
-    opacity: 1; }
+	@include opacity(1); }
   .player .jp-rw {
     background-position: -97px -17px; }
   .player .jp-ff {
@@ -166,13 +167,13 @@ body.listen {
   .player .jp-mute, .player .jp-unmute {
     background-position: -167px -10px;
     margin-top:2px;
-    opacity: 0.6;
+	@include opacity(0.6);
     width: 25px;
     height: 25px; }
   .player .jp-volume-max {
     background-position: -147px -10px;
     margin-top:2px;
-    opacity: 0.6;
+	@include opacity(0.6);
     width: 25px;
     height: 25px; }
   .player .jp-bar {
