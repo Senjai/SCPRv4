@@ -50,7 +50,11 @@
 }
 
 article {
-	img, object, iframe, embed {
+	img, object, iframe, embed, .pds-box {
 		max-width: 100%;
+	}
+	
+	.pds-box { 
+		width: 95% !important;
 	}
 }
