@@ -347,7 +347,8 @@ span.fake-link {
 		margin: 0 auto;
 		.slide {
 			z-index: 8;
-			opacity: 0;
+			@include opacity(0);
+			position: relative; // to make opacity happy in IE
 			img {
 				width: 100%;
 				position: absolute;
