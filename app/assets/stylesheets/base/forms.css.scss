@@ -61,7 +61,7 @@ form {
   textarea,
   select,
   .uneditable-input {
-    display: inline-block;
+    @include ie-inline-block;
     width: 210px;
     margin: 0;
     padding: 4px;
@@ -225,7 +225,7 @@ form {
 .inline-inputs {
   color: $gray;
   span, input[type=text] {
-    display: inline-block;
+    @include ie-inline-block;
   }
   input.mini {
     width: 60px;

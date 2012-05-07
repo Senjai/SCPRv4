@@ -415,7 +415,7 @@ nav.filters {
 	form {
 		margin: 10px 0;
 
-		input { display: inline-block; }
+		input { @include ie-inline-block; }
 		input[type=text] {
 			max-width:450px;
 			width:100%;

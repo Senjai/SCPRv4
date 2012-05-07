@@ -22,6 +22,9 @@ $mediaSmallPortrait: 320px;
 	padding-left: $containerPadding;
 	padding-right: $containerPadding;
 	position: relative; // for modals
+	margin-left: auto;
+	margin-right: auto;
+	max-width: $gridRowWidth;
 	
 	&#footer-container {
 		position: static; // So we can pop out the footer into the side nav
@@ -560,9 +563,5 @@ $mediaSmallPortrait: 320px;
 
 // Max width (normal screen) and above
 @media screen and (min-width: $mediaMax) {	
-	.container-fluid {
-		margin-left: auto;
-		margin-right: auto;
-		max-width: $gridRowWidth;
-	}
+	// This should probably stay empty since IE 7 can't see it
 }

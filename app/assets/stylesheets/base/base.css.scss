@@ -259,7 +259,7 @@ a {
 	.btn {
 	  // .button(#1174C6);
 	  cursor: pointer;
-	  display: inline-block;
+	  @include ie-inline-block;
 	  @include background-image(linear-gradient(#fff, #fff 25%, darken(#fff, 10%)));
 	  padding: 4px 14px;
 	  text-shadow: 0 1px 1px rgba(255,255,255,.75);
@@ -373,7 +373,7 @@ input[type=submit].btn {
 
 // Buttons
 /*.button($color: #fff, $padding: 4px 14px, $textColor: #333, $textShadow: 0 1px 1px rgba(255,255,255,.75), $fontSize: 13px, $borderColor: rgba(0,0,0,.1), $borderRadius: 4px) {
-  display: inline-block;
+  @include ie-inline-block;
   #gradient > .vertical-three-colors($color, $color, 0.25, darken($color, 10%));
   padding: $padding;
   text-shadow: $textShadow;

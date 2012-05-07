@@ -35,7 +35,7 @@
 	}
 	
 	time, .shell-link {
-	    /* display: inline-block; */
+	    /* @include ie-inline-block; */
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;
@@ -105,7 +105,7 @@
 
 .homepage-lead.lead-right .lead { border-bottom: none; }
 time.smart {
-	/* display: inline-block; */
+	/* @include ie-inline-block; */
     @include font-sans-serif(normal, 11px);
     color: $orangeDark;
     text-transform: uppercase;

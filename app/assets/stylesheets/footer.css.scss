@@ -24,7 +24,7 @@ $footerBackground: #2e2e2e;
 	h2 {
 		color:#00b9f3;
 		@include font-shorthand($size: 16px, $weight: 200);
-		display: inline-block;
+		@include ie-inline-block;
 		margin-right:10px;
 		text-shadow:0 1px 0 #000;
 		text-transform:none;
@@ -59,7 +59,7 @@ $footerBackground: #2e2e2e;
 		}
 		
 		&.inline li {
-			display: inline-block;
+			@include ie-inline-block;
 			margin-right: 10px;
 		}
 		
