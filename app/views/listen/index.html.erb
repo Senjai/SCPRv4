@@ -12,34 +12,28 @@
 
 	</style>
 
-	<script>
-	    	<!-- OAS SETUP BEGIN --> 
-	    	 <!--//configuration 
-	    	 OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/'; 
-	    	 OAS_sitepage = 'scpr.org'; 
-	    	 //OAS_sitepage = window.location.hostname + window.location.pathname; 
-	    	 OAS_listpos = 'x61,x62,x63'; 
-	    	 OAS_query = ''; 
-	    	 OAS_target = '_top'; 
-	    	 //end of configuration 
-	    	 OAS_version = 10; 
-	    	 OAS_rn = '001234567890'; OAS_rns = '1234567890'; 
-	    	 OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11); 
-	    	 function OAS_NORMAL(pos) { 
-	    	   document.write('<a href="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" target=' + OAS_target + '>');
-	    	   document.write('<img src="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" border="0" /></a>');
-	    	 } 
-	    	 //--> 
-	    </script>
+	<script type='text/javascript'>
+	var googletag = googletag || {};
+	googletag.cmd = googletag.cmd || [];
+	(function() {
+	var gads = document.createElement('script');
+	gads.async = true;
+	gads.type = 'text/javascript';
+	var useSSL = 'https:' == document.location.protocol;
+	gads.src = (useSSL ? 'https:' : 'http:') + 
+	'//www.googletagservices.com/tag/js/gpt.js';
+	var node = document.getElementsByTagName('script')[0];
+	node.parentNode.insertBefore(gads, node);
+	})();
+	</script>
 
-	    <script>
-	    	 <!-- 
-	    	 OAS_version = 11; 
-	    	 if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)) 
-	    	   OAS_version = 10; 
-	    	 if (OAS_version >= 11) 
-	    	   document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');//-->
-	    </script>
+	<script type='text/javascript'>
+	googletag.cmd.push(function() {
+	googletag.defineSlot('/127204706/listen_live', [234, 60], 'div-gpt-ad-1336163771924-0').addService(googletag.pubads());
+	googletag.pubads().enableSingleRequest();
+	googletag.enableServices();
+	});
+	</script>
 	
 </head>
 <body class="minimal listen">
@@ -63,6 +57,7 @@
 					<a href="http://www.scpr.org/iphone/" target="_blank">KPCC iPhone app</a>
 					<span class="pipe">|</span>
 					<a href="http://live.scpr.org/listen.pls">MP3/iTunes</a>
+				</span>
               </div>
 			</div>
           
@@ -122,29 +117,12 @@
 <div class="ad" style="text-align:center; height:80px"> 
     <p><small>Sponsors</small></p>
 
-    <!-- OAS AD 'Center1' begin --> 
-    <script> 
-    <!-- 
-    OAS_AD('x61'); 
-    //--> 
-    </script> 
-    <!-- OAS AD 'Center1' end --> 
-
-    <!-- OAS AD 'Center1' begin --> 
-    <script> 
-    <!-- 
-    OAS_AD('x62'); 
-    //--> 
-    </script> 
-    <!-- OAS AD 'Center1' end --> 
-
-    <!-- OAS AD 'Center1' begin --> 
-    <script> 
-    <!-- 
-    OAS_AD('x63'); 
-    //--> 
-    </script> 
-    <!-- OAS AD 'Center1' end --> 
+    <!-- listen_live -->
+	<div id='div-gpt-ad-1336163771924-0' style='width:234px; height:60px;'>
+	<script type='text/javascript'>
+	googletag.cmd.push(function() { googletag.display('div-gpt-ad-1336163771924-0'); });
+	</script>
+	</div>
 
     <br />
 	<p><small><a href="/support/underwriting/online_sponsorship/">Advertise with us</a></small></p>

@@ -255,6 +255,7 @@ class scpr.ListenLive
             pause_timeout:      60
             schedule_finder:    "#llschedule"
             schedule_template:  JST["t_listen/currentgen_schedule"]
+            solution:           "flash, html"
             
         constructor: (opts) ->
             @options = _.defaults opts, @DefaultOptions

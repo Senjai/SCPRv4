@@ -12,6 +12,10 @@ class Audio < ActiveRecord::Base
     "http://media.scpr.org/#{self.mp3}"
   end
   
+  def podcast_url
+    self.url.gsub("http://media.scpr.org/audio/","http://media.scpr.org/podcasts/")
+  end
+  
   def mp3_path
     Rails.application.config.scpr.media_root ? [Rails.application.config.scpr.media_root,self.mp3].join('/') : false
   end
