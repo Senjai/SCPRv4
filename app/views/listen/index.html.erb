@@ -2,6 +2,8 @@
 <html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
 	<title>Listen Live | 89.3 KPCC</title>
+	<meta name="viewport" content="width=556">
+	
 	<%= render "shared/header/header_js" %>
 	<%= render "shared/header/opengraph" %>
 	<%= csrf_meta_tags %>
@@ -10,6 +12,35 @@
 
 	</style>
 
+	<script>
+	    	<!-- OAS SETUP BEGIN --> 
+	    	 <!--//configuration 
+	    	 OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/'; 
+	    	 OAS_sitepage = 'scpr.org'; 
+	    	 //OAS_sitepage = window.location.hostname + window.location.pathname; 
+	    	 OAS_listpos = 'x61,x62,x63'; 
+	    	 OAS_query = ''; 
+	    	 OAS_target = '_top'; 
+	    	 //end of configuration 
+	    	 OAS_version = 10; 
+	    	 OAS_rn = '001234567890'; OAS_rns = '1234567890'; 
+	    	 OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11); 
+	    	 function OAS_NORMAL(pos) { 
+	    	   document.write('<a href="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" target=' + OAS_target + '>');
+	    	   document.write('<img src="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" border="0" /></a>');
+	    	 } 
+	    	 //--> 
+	    </script>
+
+	    <script>
+	    	 <!-- 
+	    	 OAS_version = 11; 
+	    	 if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)) 
+	    	   OAS_version = 10; 
+	    	 if (OAS_version >= 11) 
+	    	   document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');//-->
+	    </script>
+	
 </head>
 <body class="minimal listen">
     
@@ -17,7 +48,7 @@
     
     <div class="wrapper">
     	<a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>
-		    <span class="pledge"><a href="/support/" target="_blank">Pledge now</a></span>
+		    <span class="pledge"><a href="https://scprcontribute.publicradio.org/contribute.php?" target="_blank">Pledge now</a></span>
 		</a>
     </div>
   </header>
@@ -32,8 +63,6 @@
 					<a href="http://www.scpr.org/iphone/" target="_blank">KPCC iPhone app</a>
 					<span class="pipe">|</span>
 					<a href="http://live.scpr.org/listen.pls">MP3/iTunes</a>
-					<span class="pipe">|</span>
-					<a href="mms://kpcclive1.publicradio.org">Windows Media</a></span>
               </div>
 			</div>
           
@@ -49,12 +78,21 @@
 							<ul class="jp-controls clearfix">
 								<li><a href="javascript:;" class="jp-play">play</a></li>
 								<li><a href="javascript:;" class="jp-pause">pause</a></li>
-								<li><a href="javascript:;" class="jp-mute">mute</a></li>
-								<li><a href="javascript:;" class="jp-unmute">unmute</a></li>
 							</ul>
 							<div class="jp-progress">
 			  					<div class="jp-current-time"></div>
 							</div> <!-- jp-progress -->
+							<div class="clearfix"></div>
+							<ul class="volume-controls">
+								<li><a href="javascript:;" class="jp-mute">mute</a></li>
+								<li><a href="javascript:;" class="jp-unmute">unmute</a></li>
+								<li>
+									<div class="jp-volume-bar">
+										<div class="jp-volume-bar-value"></div>
+									</div>
+								</li>
+								<li><a href="javascript:;" class="jp-volume-max">max vol</a></li>
+							</ul>
 			  			</div> <!-- jp-gui -->
 					</div> <!-- section-left -->
 
@@ -80,7 +118,38 @@
 	<%= render_content @homepage.content[1..-1], "headline" %>
 	</ul>
 </div>
+<hr />
+<div class="ad" style="text-align:center; height:80px"> 
+    <p><small>Sponsors</small></p>
 
+    <!-- OAS AD 'Center1' begin --> 
+    <script> 
+    <!-- 
+    OAS_AD('x61'); 
+    //--> 
+    </script> 
+    <!-- OAS AD 'Center1' end --> 
+
+    <!-- OAS AD 'Center1' begin --> 
+    <script> 
+    <!-- 
+    OAS_AD('x62'); 
+    //--> 
+    </script> 
+    <!-- OAS AD 'Center1' end --> 
+
+    <!-- OAS AD 'Center1' begin --> 
+    <script> 
+    <!-- 
+    OAS_AD('x63'); 
+    //--> 
+    </script> 
+    <!-- OAS AD 'Center1' end --> 
+
+    <br />
+	<p><small><a href="/support/underwriting/online_sponsorship/">Advertise with us</a></small></p>
+
+</div>
   <footer>
     <div class="">
         <ul class="menu unstyled clearfix">

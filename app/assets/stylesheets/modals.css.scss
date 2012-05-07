@@ -22,12 +22,12 @@
 		cursor: pointer;
 		width: 18px;
 		height: 16px;
-		opacity: 0.8;
+		@include opacity(0.8);
 		position: absolute;
 		right: 25px;
 		top: 20px;
 		&:hover {
-			opacity: 1.0;
+			@include opacity(1);
 		}
 	}
 	h6 {
@@ -60,12 +60,12 @@
 		cursor: pointer;
 		width: 18px;
 		height: 16px;
-		opacity: 0.8;
+		@include opacity(0.8);
 		position: absolute;
 		right: 25px;
 		top: 20px;
 		&:hover {
-			opacity: 1.0;
+			@include opacity(1);
 		}
 	}
 } // modal-dark
@@ -144,6 +144,6 @@
 	&.videos-list {
 		@include modal-dark;
 		min-height: 700px;
-		@include gridFluidSpan(11);
+		@include gridFluidSpan(22);
 	} // .video-list
 }

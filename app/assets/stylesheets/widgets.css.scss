@@ -128,11 +128,11 @@
 	&.active { display: block; }
 	
 	.section-left { 
-		@include gridFluidSpan(5);
+		@include gridFluidSpan(12);
 		float: left;
 	}
 	.section-mid { 
-		@include gridFluidSpan(6);
+		@include gridFluidSpan(10);
 		float: left;
 	}
 
@@ -179,7 +179,7 @@
 		width:18px;
 		height:11px;
 		margin-top:25px;
-		opacity:0.6;
+		@include opacity(0.6);
 	}
 	.jp-rw:hover, .jp-ff:hover, .jp-mute:hover, .jp-unmute:hover { opacity:1; }
 	.jp-rw { background-position:-97px -17px; }
@@ -203,7 +203,7 @@
 	.jp-mute, .jp-unmute {
 		background-position: -147px -10px;
 		margin-top:18px;
-		opacity:0.6;
+		@include opacity(0.6);
 		width:25px;
 		height:25px;
 	}
@@ -246,11 +246,11 @@
 			display:block;
 			font-size:9px;
 			width:58px;
-			opacity:0.8;
+			@include opacity(0.8);
 			padding:42px 0 0 2px;
 			&:hover {
 				color:$gray;
-				opacity:1.0;
+				@include opacity(1);
 				text-decoration:none;
 			}
 		}
@@ -490,13 +490,13 @@ a.with-icon {
 				background:transparent url(image_path('icons/video-play-btn-sm.png')) no-repeat 0 0;
 				width:44px;
 				height:29px;
-				opacity:0.7;
+				@include opacity(0.7);
 				position:absolute;
 				bottom:12px;
 				left:6px;
 			}
 			&:hover span.play {
-				opacity:1;
+				@include opacity(1);
 			}
 		}
 		img {
@@ -594,53 +594,21 @@ a.with-icon {
 
 // Recent Videos
 .recent-videos {
-	ul { 
-		margin:0;
-		li {
-			@include clearfix();
-			list-style-type:none;
-			margin-bottom:$baseline;
-			figcaption {
-				p {
-					margin-bottom:0;
-					a {
-						@include font-headline();
-						color:$nearBlack;
-						font-size:15px;
-						font-weight:600;
-					}
-				}
-				span {
-					@include font-sans-serif(normal, 11px);
-				}
-			}
-			figure {
-				float:left;
-				width:120px;
-				height:67px;
-				margin-right:$baseline / 2;
-				overflow:hidden;	
-				a {
-					display:block;
-					height:67px;
-					position:relative;
-					span.play {
-						background:transparent url(image_path('icons/video-play-btn-sm-thumb.png')) no-repeat 0 0;
-						width:22px;
-						height:15px;
-						opacity:0.7;
-						position:absolute;
-						bottom:6px;
-						left:6px;
-						text-indent:-9999px;
-					}
-					&:hover span.play {
-						opacity:1;
-					}
-				}
-			}
+	ul {
+		margin: 0;
+		list-style: none;
+		li { margin-bottom: 10px; }
+	}
+	
+	p {
+		margin-bottom:0;
+		a {
+			@include font-headline();
+			@include font-shorthand(600, 15px);
+			color:$nearBlack;
 		}
 	}
+	span { @include font-sans-serif(normal, 11px); }
 }
 
 // In Case You Missed It Carousel
@@ -669,7 +637,7 @@ a.with-icon {
 			width:22px;
 			height:22px;
 			&.disabled { 
-				opacity:0.5;
+				@include opacity(0.5);
 				cursor: default;
 			}
 			&.prev {
@@ -743,7 +711,7 @@ a.with-icon {
 // 					background-position:-32px 0;
 // 				}
 // 				&.disabled {
-// 					opacity:0.5;
+// 					@include opacity(0.5);
 // 				}
 // 			}
 // 		}	
@@ -786,17 +754,17 @@ a.with-icon {
 // 		display: block;
 // 		float: left;
 // 		margin:0 3px;
-// 		opacity:0.5;
+// 		@include opacity(0.5);
 // 		width: 13px;
 // 		height: 13px;
 // 		text-indent: -9999px;
 // 		&:hover {
-// 			opacity:1;
+// 			@include opacity(1);
 // 		}
 // 		&.selected {
 // 			background-position:-19px -27px;
 // 			&:hover {
-// 				opacity:0.5;
+// 				@include opacity(0.5);
 // 			}
 // 		}
 // 	}

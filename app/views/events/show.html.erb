@@ -3,7 +3,7 @@
 
 <div class="event content-block">
 	<div class="row-fluid">
-		<div class="span3">
+		<div class="span6">
 			<div class="article-meta">
 				<%= render 'shared/cwidgets/social_tools', content: @event, cssClass: "vertical left" %> <%# To be replaced with a better solution %>
 				<%= comment_widget_for @event, cssClass: "left-side" %> <%# To be replaced with a better solution %>
@@ -28,7 +28,7 @@
 			</div> <!-- article meta -->
 		</div> <!-- span -->
 		
-		<div class="span9 mq-solo-span" id="events-event-detail">
+		<div class="span18 mq-solo-span" id="events-event-detail">
 			<article>
 				<header>
 					<h1 class="story-headline event-headline"><%= link_to @event.title, @event.link_path %></h1>
@@ -43,7 +43,7 @@
 					<% end %>
 					<div class="event-details">
 						<div class="row-fluid">
-							<div class="span6">
+							<div class="span12">
 								<% if @event.upcoming? or @event.current? %>
 									<div class="upcoming-date">
 										<%= @event.consoli_dated %>
@@ -56,7 +56,7 @@
 								<%= link_to("RSVP for this event", @event.rsvp_link, class: "btn primary", id: "events-rsvp-btn") if @event.rsvp_link.present? and @event.upcoming? %>
 							</div> <!-- span -->
 					
-							<div class="span6">
+							<div class="span12">
 								<div class="location-text">Location</div>
 								<ul class="address">
 									<li><span class="blue"><%= @event.location_link.present? ? link_to(@event.location_name, @event.location_link) : @event.location_name %></span></li>
@@ -96,15 +96,15 @@
 	<% if @more_events.present? and (@event.upcoming? || @event.current?) and @event.is_forum_event? %>
 		<aside class="more-events" id="more-events">
 			<div class="row-fluid">
-				<div class="span3 row-title">
+				<div class="span6 row-title">
 					<h6>More Events at the Crawford Family Forum</h6>
 				</div>
-				<div class="span9">
+				<div class="span18">
 					<div class="row-fluid">
-						<div class="span6">
+						<div class="span12">
 							<%= render 'small_event', event: @more_events.first %>
 						</div>
-						<div class="span6">
+						<div class="span12">
 							<%= render 'small_event', event: @more_events.last %>
 						</div>
 					</div> <!-- row fluid -->
@@ -115,10 +115,10 @@
 
 	<% if @event.show_comments %>
 		<div class="row-fluid">
-			<div class="span3" id="fold-comments-count-widget">
+			<div class="span6" id="fold-comments-count-widget">
 				<%= comment_widget_for @event, cssClass: "left-side", name: "comments" %>
 			</div>
-			<div class="span9 mq-solo-span">
+			<div class="span18 mq-solo-span">
 				<%= comments_for @event, header: false %>
 			</div>
 		</div> <!-- row-fluid -->

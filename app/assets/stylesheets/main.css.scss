@@ -42,7 +42,7 @@ body {
 	.homepage-lead {
 		&.lead-right {
 			// Make the first headline bigger in lead-right scheme
-			.offleads .span4:first-child .offlead h3.story-headline { @include font-shorthand(bold, 28px, 26px); }
+			.offleads .span8:first-child .offlead h3.story-headline { @include font-shorthand(bold, 28px, 26px); }
 			.lead h1 { @include font-shorthand(600, 24px); }
 		}
 	}
@@ -203,7 +203,7 @@ body {
 }
 
 .offleads {
-	.span4:last-child .offlead {
+	.span8:last-child .offlead {
 		border-bottom: none;
 	}
 	.offlead {

@@ -2,10 +2,10 @@
 	<div class="row-fluid">
 		<%= content_cache("home_leads") do %>
 			<% register_content("layout/homepage") %>
-			<div class="span8">
+			<div class="span15">
 				<%= render_content @homepage.content[0], "lead5" if @homepage %>
 			</div>
-			<div class="span4">
+			<div class="span9">
 				<div class="offleads">
 					<%= render_content @homepage.content[1..-1], "offlead" if @homepage %>
 				</div>

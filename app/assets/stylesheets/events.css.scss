@@ -217,27 +217,21 @@ span.fake-link {
 			padding-bottom: 10px;
 			@include font-serif($size: 12px, $lineHeight: 15px);
 			@include clearfix;
-			h5 {
-				@include font-shorthand($size: 13px, $weight: bold);
-				margin-top:-5px;
-				a {
-					color:$nearBlack;
-				}
-			}
+			
 			img.tweet-image {
 				float: left;
 				vertical-align: top;
 				margin-right: 6px;
-				@include gridFluidSpan(2)
 			}
-			.tweet-content {
-				vertical-align: top;
-				float: left;
-				@include gridFluidSpan(10)
+
+			h5 {
+				display: inline-block;
+				@include font-shorthand($size: 13px, $weight: bold);
+				margin-top:-5px;
+				a { color:$nearBlack; }
 			}
-			.byline {
-				font-size: 10px;
-			}
+			
+			.byline { font-size: 10px; }
 		}
 	}
 }
@@ -358,15 +352,16 @@ nav.section-nav {
 			margin:0 5px;
 			width: 10px;
 			height: 10px;
-			opacity:0.3;
+			@include opacity(0.3);
+			
 			&:hover {
 				cursor: pointer;
 				background-color:$nearBlack;
-				opacity:0.5;
+				@include opacity(0.5);
 			}
 			&.active {
 				border-color: #b24401;
-				opacity: 0.8;
+				@include opacity(0.8);
 			}
 		}
 	}
@@ -377,7 +372,8 @@ nav.section-nav {
 		margin: 0 auto;
 		.slide {
 			z-index: 8;
-			opacity: 0;
+			@include opacity(0);
+			position: relative; // to make opacity happy in IE
 			img {
 				width: 100%;
 				position: absolute;
@@ -410,7 +406,7 @@ nav.section-nav {
 		
 			&.active {
 				z-index: 10;
-				opacity: 1.0;
+				@include opacity(1);
 			}
 			&.last-active {
 				z-index: 9;

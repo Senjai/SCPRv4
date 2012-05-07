@@ -1,17 +1,19 @@
 <% page_title @program.title %>
 
-<div class="row-fluid" id="program-external-header">
-	<div class="span9">
-		<%= @program.description.html_safe %>
-	</div>
-	<div class="span3">
-		<div class="connect">
-			<%= link_to "Website", @program.web_url, target: "_blank", class: "archive with-icon" if @program.web_url? %>		
-			<%= link_to "RSS Feed", @program.rss_url, target: "_blank", class: "rss with-icon" if @program.rss_url? %>
-			<%= link_to "Podcast", @program.podcast_url, target: "_blank", class: "podcast with-icon" if @program.podcast_url? %>
+<div class="program-external-header">
+	<div class="row-fluid" id="program-external-header">
+		<div class="span18">
+			<p><%= @program.description.html_safe %></p>
 		</div>
-	</div>
-</div>
+		<div class="span6">
+			<nav class="connect">
+				<%= link_to "Website", @program.web_url, target: "_blank", class: "archive with-icon" if @program.web_url? %>		
+				<%= link_to "RSS Feed", @program.rss_url, target: "_blank", class: "rss with-icon" if @program.rss_url? %>
+				<%= link_to "Podcast", @program.podcast_url, target: "_blank", class: "podcast with-icon" if @program.podcast_url? %>
+			</nav>
+		</div>
+	</div> <!-- row fluid -->
+</div> <!-- .program-ext-header -->
 
 <div class="show-segments">
 	<% if @program.podcast_url? && podcast = Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>

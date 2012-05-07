@@ -4,10 +4,10 @@
 		<% if (rels = content.sorted_relations(content.frels.normal,content.brels.notiein)).any? %>
 			<aside class="related-articles cbase">
 				<div class="row-fluid">
-					<div class="span3 row-title">
+					<div class="span6 row-title">
 						<h6>More from KPCC</h6>
 					</div>
-					<div class="span9">
+					<div class="span18">
 						<ul>
 							<% for c in rels %>
 						    <li>
@@ -24,10 +24,10 @@
 		<% if content.related_links.any? %>
 			<aside class="related-links cbase">
 				<div class="row-fluid">
-					<div class="span3 row-title">
+					<div class="span6 row-title">
 						<h6>Elsewhere on the Web</h6>
 					</div>
-					<div class="span9">
+					<div class="span18">
 						<ul>
 							<% content.related_links.each do |link| %>
 						    <li>
