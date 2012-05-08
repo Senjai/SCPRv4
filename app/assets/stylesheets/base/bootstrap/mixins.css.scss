@@ -377,7 +377,14 @@
 // }
 
 @mixin gridFluidSpan($columns, $fluidGridColumnWidth, $fluidGridGutterWidth) {
-  width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 2));
+	width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 2));
+	// IE 7
+	// The following should go away, it's just here until we drop IE 7 support.
+	float: left;
+	margin: 0 $fluidGridGutterWidth;
+	&:first-child { margin-left: 0; }
+	&:last-child { margin-right: 0; }
+
 }
 
 @mixin makeFluidRow {
@@ -400,9 +407,7 @@
 
 
 @mixin gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth) {
-	.row-fluid {
-		@include makeFluidRow;
-	}
+	.row-fluid { @include makeFluidRow; }
 }
 
 // @mixin gridInput($gridColumnWidth, $gridGutterWidth) {
@@ -427,6 +432,17 @@
 			width: 100%;
 			margin: 0;
 		}
+
+		// IE 7
+		// This needs to die but unfortunately the *= syntax is CSS3 and IE7/8 don't support it! :-o
+		@for $i from 1 through $gridColumns {
+	      > .span#{$i} { 
+			float: none;
+			display: block;
+			width: 100%;
+			margin: 0;
+		  }
+	   }
 	}
 }
 
