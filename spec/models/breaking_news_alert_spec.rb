@@ -17,5 +17,10 @@ describe BreakingNewsAlert do
       BreakingNewsAlert.count.should eq 0
       BreakingNewsAlert.get_alert.should be_nil
     end
+    
+    it "orders by the created_at date" do
+      create_list :breaking_news_alert, 3
+      BreakingNewsAlert.get_alert.should eq BreakingNewsAlert.order("created_at desc").first
+    end
   end
 end
