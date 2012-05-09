@@ -62,7 +62,11 @@
 		</div>
 	</div>
 </header>
+<% if @g_breaking_news_alert.present? %>
+	<div class="container live-update" id="breaking-news">
+		<div class="alert-message error"><strong>BREAKING: </strong><%= @g_breaking_news_alert.headline %></div>
+	</div>
+<% end %>
 
-<div class="live-update"></div>
 <div class="hero"></div>
 <!-- end MASTHEAD-->

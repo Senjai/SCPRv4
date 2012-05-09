@@ -114,7 +114,16 @@ FactoryGirl.define do
       feed_url "http://oncentral.org/rss/latest"
     end
   end
-  
+
+# BreakingNewsAlert #########################################################
+  factory :breaking_news_alert do
+    headline "Breaking news!"
+    teaser "This is breaking news"
+    alert_time { Time.now }
+    alert_type "break"
+    is_published 1
+    email_sent 0
+  end
 
 # Event #########################################################
   factory :event do

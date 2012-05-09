@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
   def set_up_finders
     @g_upcoming_events_forum = Event.published.upcoming.forum.limit(4)
     @g_upcoming_events_sponsored = Event.published.upcoming.sponsored
+    @g_breaking_news_alert = BreakingNewsAlert.get_alert
     
     # FIXME: Isn't there a way to do this without hardcoding the table name in the where clause?
     @g_latest_blogs_news = BlogEntry.published.joins(:blog).where("blogs_blog.is_news = true").order("published_at desc")

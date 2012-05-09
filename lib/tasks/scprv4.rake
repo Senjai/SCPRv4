@@ -114,10 +114,8 @@ end
 
 # testing tasks
 namespace :db do
-  namespace :test do |s|
-    s[:prepare].clear
-    
-    task :prepare => :environment do
+  namespace :test do |s|    
+    task :load_mercer => :environment do
       if Rails.application.config.scpr.mercer_dump
         # clear test database
         s[:purge].invoke
