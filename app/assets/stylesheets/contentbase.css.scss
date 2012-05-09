@@ -35,7 +35,7 @@
 	}
 	
 	time, .shell-link {
-	    /* display: inline-block; */
+	    /* @include ie-inline-block; */
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;
@@ -57,6 +57,7 @@
 	    h1 {
 		  font-size:26px;
 	      margin-bottom: 0;
+		  line-height: $baseLineHeight * 1.5;
 	    }
 	}
 	
@@ -104,7 +105,7 @@
 
 .homepage-lead.lead-right .lead { border-bottom: none; }
 time.smart {
-	/* display: inline-block; */
+	/* @include ie-inline-block; */
     @include font-sans-serif(normal, 11px);
     color: $orangeDark;
     text-transform: uppercase;
@@ -169,7 +170,7 @@ time.smart {
 	}
 }
 
-.span8.split {
+.span16.split {
 	@include clearfix();
 	margin-top:$baseline;
 	.offlead {

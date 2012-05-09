@@ -23,6 +23,8 @@
 // right version is for icons, which come before. Applying both is ok, but it will
 // mean that space between those elements will be .6em (~2 space characters) in IE7,
 // instead of the 1 space in other browsers.
+
+/* IE 7 */
 @mixin ie7-restore-left-whitespace() {
   *margin-left: .3em;
 
@@ -31,6 +33,7 @@
   }
 }
 
+/* IE 7 */
 @mixin ie7-restore-right-whitespace() {
   *margin-right: .3em;
 
@@ -285,96 +288,103 @@
 // Popover arrows
 // -------------------------
 // For tipsies and popovers
-@mixin popoverArrowTop($arrowWidth: 5px, $color: $black) {
-  bottom: 0;
-  left: 50%;
-  margin-left: -$arrowWidth;
-  border-left: $arrowWidth solid transparent;
-  border-right: $arrowWidth solid transparent;
-  border-top: $arrowWidth solid $color;
-}
-@mixin popoverArrowLeft($arrowWidth: 5px, $color: $black) {
-  top: 50%;
-  right: 0;
-  margin-top: -$arrowWidth;
-  border-top: $arrowWidth solid transparent;
-  border-bottom: $arrowWidth solid transparent;
-  border-left: $arrowWidth solid $color;
-}
-@mixin popoverArrowBottom($arrowWidth: 5px, $color: $black) {
-  top: 0;
-  left: 50%;
-  margin-left: -$arrowWidth;
-  border-left: $arrowWidth solid transparent;
-  border-right: $arrowWidth solid transparent;
-  border-bottom: $arrowWidth solid $color;
-}
-@mixin popoverArrowRight($arrowWidth: 5px, $color: $black) {
-  top: 50%;
-  left: 0;
-  margin-top: -$arrowWidth;
-  border-top: $arrowWidth solid transparent;
-  border-bottom: $arrowWidth solid transparent;
-  border-right: $arrowWidth solid $color;
-}
-
-// Grid System
-// -----------
-
-// Table columns
-@mixin tableColumns($columnSpan: 1) {
-  float: none; // undo default grid column styles
-  width: (($gridColumnWidth) * $columnSpan) + ($gridGutterWidth * ($columnSpan - 1)) - 16; // 16 is total padding on left and right of table cells
-  margin-left: 0; // undo default grid column styles
-}
+// @mixin popoverArrowTop($arrowWidth: 5px, $color: $black) {
+//   bottom: 0;
+//   left: 50%;
+//   margin-left: -$arrowWidth;
+//   border-left: $arrowWidth solid transparent;
+//   border-right: $arrowWidth solid transparent;
+//   border-top: $arrowWidth solid $color;
+// }
+// @mixin popoverArrowLeft($arrowWidth: 5px, $color: $black) {
+//   top: 50%;
+//   right: 0;
+//   margin-top: -$arrowWidth;
+//   border-top: $arrowWidth solid transparent;
+//   border-bottom: $arrowWidth solid transparent;
+//   border-left: $arrowWidth solid $color;
+// }
+// @mixin popoverArrowBottom($arrowWidth: 5px, $color: $black) {
+//   top: 0;
+//   left: 50%;
+//   margin-left: -$arrowWidth;
+//   border-left: $arrowWidth solid transparent;
+//   border-right: $arrowWidth solid transparent;
+//   border-bottom: $arrowWidth solid $color;
+// }
+// @mixin popoverArrowRight($arrowWidth: 5px, $color: $black) {
+//   top: 50%;
+//   left: 0;
+//   margin-top: -$arrowWidth;
+//   border-top: $arrowWidth solid transparent;
+//   border-bottom: $arrowWidth solid transparent;
+//   border-right: $arrowWidth solid $color;
+// }
+// 
+// // Grid System
+// // -----------
+// 
+// // Table columns
+// @mixin tableColumns($columnSpan: 1) {
+//   float: none; // undo default grid column styles
+//   width: (($gridColumnWidth) * $columnSpan) + ($gridGutterWidth * ($columnSpan - 1)) - 16; // 16 is total padding on left and right of table cells
+//   margin-left: 0; // undo default grid column styles
+//}
 
 // Make a Grid
 // Use .makeRow and .makeColumn to assign semantic layouts grid system behavior
-@mixin makeRow() {
-  margin-left: $gridGutterWidth * -1;
-  @include clearfix();
-}
-@mixin makeColumn($columns: 1) {
-  float: left;
-  margin-left: $gridGutterWidth;
-  width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
-}
+// @mixin makeRow() {
+//   margin-left: $gridGutterWidth * -1;
+//   @include clearfix();
+// }
+// @mixin makeColumn($columns: 1) {
+//   float: left;
+//   margin-left: $gridGutterWidth;
+//   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
+// }
 
 // The Grid
-@mixin gridCore($gridColumnWidth, $gridGutterWidth) {
-	.row {
-		margin-left: $gridGutterWidth * -1;
-	    @include clearfix();
-	
-		> [class*="span"] {
-		  float: left;
-		  margin-left: $gridGutterWidth;
-		}
+// @mixin gridCore($gridColumnWidth, $gridGutterWidth) {
+// 	.row {
+// 		margin-left: $gridGutterWidth * -1;
+// 	    @include clearfix();
+// 	
+// 		> [class*="span"] {
+// 		  float: left;
+// 		  margin-left: $gridGutterWidth;
+// 		}
+// 
+// 		@for $i from 1 through $gridColumns {
+// 		  > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
+// 		}
+// 
+// 		@for $i from 1 through $gridColumns {
+// 		  > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
+// 		}
+// 	}
+// 
+//   .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+//     @include gridCoreSpan($gridColumns, $gridColumnWidth, $gridGutterWidth);
+//   }
+// }
 
-		@for $i from 1 through $gridColumns {
-		  > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
-		}
+// @mixin gridCoreSpan($columns, $gridColumnWidth, $gridGutterWidth) {
+//   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
+// }
 
-		@for $i from 1 through $gridColumns {
-		  > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
-		}
-	}
-
-  .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
-    @include gridCoreSpan($gridColumns, $gridColumnWidth, $gridGutterWidth);
-  }
-}
-
-@mixin gridCoreSpan($columns, $gridColumnWidth, $gridGutterWidth) {
-  width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
-}
-
-@mixin gridCoreOffset($columns, $gridColumnWidth, $gridGutterWidth) {
-  margin-left: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)) + ($gridGutterWidth * 2);
-}
+// @mixin gridCoreOffset($columns, $gridColumnWidth, $gridGutterWidth) {
+//   margin-left: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)) + ($gridGutterWidth * 2);
+// }
 
 @mixin gridFluidSpan($columns, $fluidGridColumnWidth, $fluidGridGutterWidth) {
-  width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 1));
+	width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 2));
+	// IE 7
+	// The following should go away, it's just here until we drop IE 7 support.
+	float: left;
+	margin: 0 $fluidGridGutterWidth;
+	&:first-child { margin-left: 0; }
+	&:last-child { margin-right: 0; }
+
 }
 
 @mixin makeFluidRow {
@@ -382,11 +392,14 @@
     @include clearfix();
     > [class*="span"] {
       float: left;
-      margin-left: $fluidGridGutterWidth;
+      margin: 0 $fluidGridGutterWidth;
     }
     > [class*="span"]:first-child {
       margin-left: 0;
     }
+	> [class*="span"]:last-child {
+		margin-right: 0;
+	}
     @for $i from 1 through $gridColumns {
       > .span#{$i} { @include gridFluidSpan($i, $fluidGridColumnWidth, $fluidGridGutterWidth); }
     }
@@ -394,24 +407,22 @@
 
 
 @mixin gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth) {
-	.row-fluid {
-		@include makeFluidRow;
-	}
+	.row-fluid { @include makeFluidRow; }
 }
 
-@mixin gridInput($gridColumnWidth, $gridGutterWidth) {
-  @for $i from 1 through $gridColumns {
-    input.span#{$i}, textarea.span#{$i}, .uneditable-input.span#{$i} { @include gridInputSpan($i, $gridColumnWidth, $gridGutterWidth); }
-  }
+// @mixin gridInput($gridColumnWidth, $gridGutterWidth) {
+//   @for $i from 1 through $gridColumns {
+//     input.span#{$i}, textarea.span#{$i}, .uneditable-input.span#{$i} { @include gridInputSpan($i, $gridColumnWidth, $gridGutterWidth); }
+//   }
+// 
+//   input, textarea, .uneditable-input {
+//     margin-left: 0; // override margin-left from core grid system
+//   }
+// }
 
-  input, textarea, .uneditable-input {
-    margin-left: 0; // override margin-left from core grid system
-  }
-}
-
-@mixin gridInputSpan($columns, $gridColumWidth, $gridGutterWidth) {
-  width: (($gridColumnWidth) * $columns) + ($gridGutterWidth * ($columns - 1)) - 10;
-}
+// @mixin gridInputSpan($columns, $gridColumWidth, $gridGutterWidth) {
+//   width: (($gridColumnWidth) * $columns) + ($gridGutterWidth * ($columns - 1)) - 10;
+// }
 
 @mixin vertify {
 	> .row-fluid {
@@ -421,6 +432,17 @@
 			width: 100%;
 			margin: 0;
 		}
+
+		// IE 7
+		// This needs to die but unfortunately the *= syntax is CSS3 and IE7/8 don't support it! :-o
+		@for $i from 1 through $gridColumns {
+	      > .span#{$i} { 
+			float: none;
+			display: block;
+			width: 100%;
+			margin: 0;
+		  }
+	   }
 	}
 }
 

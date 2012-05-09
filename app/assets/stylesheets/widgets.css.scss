@@ -57,7 +57,7 @@
 	
 	a.inline {
 		background: url(image_path('icons/tiny-listen.png')) no-repeat 2px 5px;
-		display: inline-block;
+		@include ie-inline-block;
 		padding-left: 17px;
 	}
 	
@@ -128,11 +128,11 @@
 	&.active { display: block; }
 	
 	.section-left { 
-		@include gridFluidSpan(5);
+		@include gridFluidSpan(12);
 		float: left;
 	}
 	.section-mid { 
-		@include gridFluidSpan(6);
+		@include gridFluidSpan(10);
 		float: left;
 	}
 
@@ -179,7 +179,7 @@
 		width:18px;
 		height:11px;
 		margin-top:25px;
-		opacity:0.6;
+		@include opacity(0.6);
 	}
 	.jp-rw:hover, .jp-ff:hover, .jp-mute:hover, .jp-unmute:hover { opacity:1; }
 	.jp-rw { background-position:-97px -17px; }
@@ -203,7 +203,7 @@
 	.jp-mute, .jp-unmute {
 		background-position: -147px -10px;
 		margin-top:18px;
-		opacity:0.6;
+		@include opacity(0.6);
 		width:25px;
 		height:25px;
 	}
@@ -246,11 +246,11 @@
 			display:block;
 			font-size:9px;
 			width:58px;
-			opacity:0.8;
+			@include opacity(0.8);
 			padding:42px 0 0 2px;
 			&:hover {
 				color:$gray;
-				opacity:1.0;
+				@include opacity(1);
 				text-decoration:none;
 			}
 		}
@@ -338,7 +338,7 @@
 		}
 		
 		ul li {
-			display: inline-block;
+			@include ie-inline-block;
 			margin-right: 8px;
 			background-position: left top;
 			padding-left:20px;
@@ -489,13 +489,13 @@ a.with-icon {
 				background:transparent url(image_path('icons/video-play-btn-sm.png')) no-repeat 0 0;
 				width:44px;
 				height:29px;
-				opacity:0.7;
+				@include opacity(0.7);
 				position:absolute;
 				bottom:12px;
 				left:6px;
 			}
 			&:hover span.play {
-				opacity:1;
+				@include opacity(1);
 			}
 		}
 		img {
@@ -551,12 +551,12 @@ a.with-icon {
 			background: url(image_path("icons/envelope-open.png")) no-repeat 5px 2px;
 			height: 15px;
 			@include font-sans-serif($size: 10px);
-			display: inline-block;
+			@include ie-inline-block;
 		}
 		
 		input[type=submit] {
 			@include font-shorthand($size: 10px, $weight: normal);
-			display: inline-block;
+			@include ie-inline-block;
 			padding: 2px 7px 1px 7px;
 			margin: 0 0 0 7px;
 		}
@@ -629,11 +629,11 @@ a.with-icon {
 			cursor: pointer;
 			margin-top: 7px;
 			background: url(image_path('icons/carousel-btns.png')) no-repeat;
-			display:inline-block;
+			@include ie-inline-block;
 			width:22px;
 			height:22px;
 			&.disabled { 
-				opacity:0.5;
+				@include opacity(0.5);
 				cursor: default;
 			}
 			&.prev {
@@ -707,7 +707,7 @@ a.with-icon {
 // 					background-position:-32px 0;
 // 				}
 // 				&.disabled {
-// 					opacity:0.5;
+// 					@include opacity(0.5);
 // 				}
 // 			}
 // 		}	
@@ -750,17 +750,17 @@ a.with-icon {
 // 		display: block;
 // 		float: left;
 // 		margin:0 3px;
-// 		opacity:0.5;
+// 		@include opacity(0.5);
 // 		width: 13px;
 // 		height: 13px;
 // 		text-indent: -9999px;
 // 		&:hover {
-// 			opacity:1;
+// 			@include opacity(1);
 // 		}
 // 		&.selected {
 // 			background-position:-19px -27px;
 // 			&:hover {
-// 				opacity:0.5;
+// 				@include opacity(0.5);
 // 			}
 // 		}
 // 	}

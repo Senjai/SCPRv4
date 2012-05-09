@@ -48,7 +48,7 @@ h4 {
 h5 { @include font-heading($size: 14px, $lineHeight: $baseline * 1.1); }
 
 h6 {
-	@include font-heading($size: 14px, $lineHeight: $baseline * 1.6);
+  @include font-heading($size: 14px, $lineHeight: $baseline * 1.6);
   color:#B24401;
   text-transform: uppercase;
 }

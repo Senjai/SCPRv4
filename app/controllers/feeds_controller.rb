@@ -10,7 +10,7 @@ class FeedsController < ApplicationController
     end
     
     @feed = {
-      :title => "All News || 89.3 KPCC",
+      :title => "All News | 89.3 KPCC",
       :description => "All news from KPCC's reporters, bloggers and shows."
     }
     

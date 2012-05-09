@@ -3,15 +3,17 @@
 		<% register_content(c) %>
 			<div class="row-fluid">
 				<% if c.assets.present? %>
-					<div class="span3">
+					<div class="span6">
 						<%= render_asset(c,"thumb", true) %>
 					</div>
-					<div class="span9">
+					<div class="span18">
 				<% else %>
-					<div class="span12">
+					<div class="span24">
 				<% end %>
 					<h4><%= link_to c.headline, c.link_path %></h4>
-					<span class="blog-title"><%= link_to c.category.category, c.category.link_path %></span>
+					<% if c.category.present? %>
+						<span class="blog-title"><%= link_to c.category.category, c.category.link_path %></span>
+					<% end %>
 					<%= smart_date_js c, "data-window" => "8h" %>
 				</div> <!-- span -->
 			</div> <!-- row fluid -->

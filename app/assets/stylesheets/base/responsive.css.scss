@@ -22,6 +22,9 @@ $mediaSmallPortrait: 320px;
 	padding-left: $containerPadding;
 	padding-right: $containerPadding;
 	position: relative; // for modals
+	margin-left: auto;
+	margin-right: auto;
+	max-width: $gridRowWidth;
 	
 	&#footer-container {
 		position: static; // So we can pop out the footer into the side nav
@@ -118,9 +121,10 @@ $mediaSmallPortrait: 320px;
 		.content-carousel {
 			.row-fluid {
 				@include makeFluidRow;
-				> .span3 {					
-					@include gridFluidSpan(6);
-					&:nth-child(odd) { padding-left: 0px; margin-left: 0px; }
+				> .span6 {					
+					@include gridFluidSpan(12);
+					&:nth-child(even) { margin-right: 0px; }
+					&:nth-child(odd) { margin-left: 0px; }
 				}
 			}
 		}
@@ -130,12 +134,19 @@ $mediaSmallPortrait: 320px;
 	
 	// latest videos: 2 cols
 		#multimedia .latest-videos {
-			.row-fluid {
-				@include makeFluidRow;
-				> .span3 {
-					@include gridFluidSpan(6);
-					&:nth-child(odd) { margin-left: 0; }
-					&:nth-child(even):after { visibility: hidden; content: "."; } // total hack, need to come up with a better way to do this
+			.row-fluid { 
+				@include makeFluidRow; 
+				
+				> .span6 {
+					@include gridFluidSpan(12);
+					&:nth-of-type(2) { 
+						margin-right: 0; 
+						&:after { 
+							content: "."; 
+							visibility: none;
+						} 
+					}
+					&:nth-of-type(3) { margin-left: 0; }
 				}
 			}
 		}
@@ -144,7 +155,7 @@ $mediaSmallPortrait: 320px;
 	#program-external-header { @include makeFluidRow; }
 	
 	.archive-strip {
-		> .row-fluid .span4:last-child .event { border-bottom: none; }
+		> .row-fluid .span8:last-child .event { border-bottom: none; }
 		.event { 
 			border-bottom: 1px solid $grayLighter; 
 			.row-fluid { @include makeFluidRow; }
@@ -163,14 +174,14 @@ $mediaSmallPortrait: 320px;
 	// Set new widths for main columns in CFF layout
 		#forum {
 			#forum-span-content { // main content
-				@include gridFluidSpan(7);
+				@include gridFluidSpan(14);
 			}
 			#forum-span-sidebar { // sidebar
-				@include gridFluidSpan(5);
+				@include gridFluidSpan(10);
 			}
 			
 			#forum-span-upcoming-events { // upcoming events
-				@include gridFluidSpan(12);
+				@include gridFluidSpan(24);
 			}
 			#forum-span-social { // social media
 				display: none;
@@ -197,9 +208,10 @@ $mediaSmallPortrait: 320px;
 	}
 	
 	.content-block, .fold, .blog-masthead {
-		.mq-solo-span { // Spans with this class will be by themselves at the "reader mode" breakpoint, so we need to tell them to span 100% and ditch the left margin
-			@include gridFluidSpan(12);
+		.mq-solo-span { // Spans with this class will be by themselves at the "reader mode" breakpoint, so we need to tell them to span 100% and ditch their margin
+			@include gridFluidSpan(24);
 			margin-left: 0;
+			margin-right: 0;
 		}
 	}
 	
@@ -278,7 +290,7 @@ $mediaSmallPortrait: 320px;
 	// end Forum Events Header
 	
 	.section-nav-header { display: none; }
-	#events-event-detail { @include gridFluidSpan(12); }
+	#events-event-detail { @include gridFluidSpan(24); }
 	
 	// Pop the footer nav out and turn it into the side-nav
 		html, body, .container-fluid, header, footer { margin: 0; } 
@@ -288,7 +300,7 @@ $mediaSmallPortrait: 320px;
 			
 			#footer-bottom-partners, .mobile-apps { display:none; }
 			#footer-bottom-legal { 
-				@include gridFluidSpan(12);
+				@include gridFluidSpan(24);
 				text-align: center;
 			}
 			
@@ -476,8 +488,8 @@ $mediaSmallPortrait: 320px;
 			form { display: none; }
 			.nav-primary .sections { width: 100%; }
 
-			#masthead-left-header-wrapper { @include gridFluidSpan(6); }			
-			#masthead-right-header-wrapper { @include gridFluidSpan(6); }
+			#masthead-left-header-wrapper { @include gridFluidSpan(12); }			
+			#masthead-right-header-wrapper { @include gridFluidSpan(12); }
 			
 			#masthead-mid-header-wrapper { display: none; }
 			#masthead-right-header-wrapper {
@@ -499,7 +511,7 @@ $mediaSmallPortrait: 320px;
 					@include vertify;
 					.offleads {
 						@include makeFluidRow;
-						.span4:last-child .offlead {
+						.span8:last-child .offlead {
 							border-right: none;
 						}
 						.offlead {
@@ -527,7 +539,7 @@ $mediaSmallPortrait: 320px;
 		}
 		
 		&.lead-right {
-			.offleads .span4:last-child .offlead { border-bottom: 1px solid $grayLighter; }
+			.offleads .span8:last-child .offlead { border-bottom: 1px solid $grayLighter; }
 			.lead5 {
 				padding-bottom: 5px;
 				margin-bottom: 5px;
@@ -563,9 +575,5 @@ $mediaSmallPortrait: 320px;
 
 // Max width (normal screen) and above
 @media screen and (min-width: $mediaMax) {	
-	.container-fluid {
-		margin-left: auto;
-		margin-right: auto;
-		max-width: $gridRowWidth;
-	}
+	// This should probably stay empty since IE 7 can't see it
 }

@@ -55,7 +55,7 @@
 	<div class="row-fluid">
 	
 		<!-- LEFT COLUMN -->
-		<div id="forum-span-upcoming-events" class="span7">
+		<div id="forum-span-upcoming-events" class="span13">
 			<section class="upcoming-events">
 				<h6 class="upcoming">Attend an Upcoming Event</h6>
 				<% if @closest_event.present? %>
@@ -72,12 +72,12 @@
 						<div class="event future">
 							<div class="row-fluid">
 								<% if event.assets.present? %>
-									<div class="span4">
+									<div class="span8">
 										<%= render_asset event, 'lsquare' %>
 									</div>
-									<div class="span8">
+									<div class="span16">
 								<% else %>
-									<div class="span12">
+									<div class="span24">
 								<% end %>
 									<div class="info">
 										<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
@@ -94,7 +94,7 @@
 		</div> <!-- span -->
 	
 		<!-- MIDDLE COLUMN (social media) -->
-		<div id="forum-span-social" class="span5">
+		<div id="forum-span-social" class="span11">
 			<section class="social">
 				<h3>Follow Us on Social Media</h3>
 				<div class="banners">
@@ -123,16 +123,16 @@
 			</h6>
 			<div class="row-fluid">
 				<% @past_events.each do |event| %>
-					<div class="span4">
+					<div class="span8">
 						<div class="event past">
 							<div class="row-fluid">
 								<% if event.assets.present? %>
-									<div class="span4">
+									<div class="span8">
 										<%= render_asset event, 'thumb' %>
 									</div>
-									<div class="span8">
+									<div class="span16">
 								<% else %>
-									<div class="span12">
+									<div class="span24">
 								<% end %>
 									<div class="info">
 										<h4 class="story-title"><%= link_to event.title, event.link_path %></h4>
