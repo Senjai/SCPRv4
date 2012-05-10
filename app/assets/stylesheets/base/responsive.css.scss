@@ -1,5 +1,8 @@
+// This is a self-contained media query package with specific rules for SCPRv4's design.
+// If this file is removed, nothing should break - the default desktop style should remain intact.
+
 // Device sizes
-$mediaMax: $gridRowWidth + $containerPadding * 2; // The maximum we care about, after this it's just fixed-grid
+$mediaMax: $siteWidth; // The maximum we care about, after this it's just fixed-grid
 $mediaDesktopSmall: 960px;
 $mediaMidLandscape: 1024px;
 $mediaMidPortrait: 768px;
@@ -7,30 +10,7 @@ $mediaSmallLandscape: 480px;
 $mediaSmallPortrait: 320px;
 
 
-// Visibility utilities
-.hidden {
-  display: none;
-  visibility: hidden;
-}
-.visible-reader { display: none; }
-.hidden-reader { display: block; }
-
-
-// Default container behavior
-.container-fluid {
-	@include clearfix;
-	padding-left: $containerPadding;
-	padding-right: $containerPadding;
-	position: relative; // for modals
-	margin-left: auto;
-	margin-right: auto;
-	max-width: $gridRowWidth;
-	
-	&#footer-container {
-		position: static; // So we can pop out the footer into the side nav
-	}
-}
-
+// These mixins are for responsive use only. Don't use them to define default styles (because they're not IE7/8-friendly).
 @mixin fluidPopup($margin: 4%, $top: 180px) {
 	position: fixed;
 	left: $margin !important;
@@ -39,6 +19,18 @@ $mediaSmallPortrait: 320px;
 	max-height: 75% !important;
 	overflow: scroll;
 }
+
+@mixin vertify {
+	> .row-fluid {
+		> [class*="span"] {
+	    	float: none;
+			display: block;
+			width: 100%;
+			margin: 0;
+		}
+	}
+}
+
 
 // Phone Landscape and below
 @media screen and (max-width: $mediaSmallLandscape) {	
@@ -50,7 +42,7 @@ $mediaSmallPortrait: 320px;
 		margin: 0;
 	}
 	
-	.hidden-phone      { display: none; }
+	.hidden-phone { display: none; }
 
 	// Block level the page header small tag for readability
 	.page-header h1 small {
@@ -164,7 +156,6 @@ $mediaSmallPortrait: 320px;
 
 // Between Tablet Portrait and Phone Landscape
 @media screen and (max-width: $mediaMidPortrait - 1) and (min-width: $mediaSmallLandscape + 1) {
-	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
 	.head-lead {
 		@include vertify;
 	}
@@ -242,8 +233,7 @@ $mediaSmallPortrait: 320px;
 			@include vertify;
 		} 
 	// end Vertify
-
-	.broadcast-bar .section.next-program { display: none; }
+	
 	#masthead { 
 		text-align: center;
 		
@@ -253,8 +243,13 @@ $mediaSmallPortrait: 320px;
 			#masthead-mid-header-wrapper, #masthead-right-header-wrapper { display: none; }
 			.head-lead, .nav-primary { display: none; }
 			.head-lead-minimal { display: block !important; }
-			
 		// end Minimal Header
+	}
+	
+	.broadcast-bar .section {
+		width: 100%;
+		float: none;
+		&.next-program { display: none; }
 	}
 	
 	.homepage-top {
@@ -442,23 +437,8 @@ $mediaSmallPortrait: 320px;
 
 
 // Tablet Portrait And Above
-@media screen and (min-width: $mediaMidPortrait) {
-	@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
-	.visible-reader { display: none !important; }
-	.hidden-reader { display: block !important; }
-	
-	// Override the styles set by the Slider-Nav javascript
-		body {
-			height: auto !important;
-			width: auto !important;
-			position: static !important;
-			overflow: visible !important;
-		}
-		.viewport {
-			height: auto !important;
-			position: static !important;
-		}
-	// end slider override
+@media screen and (min-width: $mediaMidPortrait) {	
+	// Don't define desktop styles here, because they won't be seen by IE7.
 }
 
 
@@ -491,7 +471,6 @@ $mediaSmallPortrait: 320px;
 
 // Small Landscape to desktop small
 @media screen and (max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
-	
 	// vertify the lead stories //
 		#main {
 			.homepage-lead {
@@ -499,14 +478,15 @@ $mediaSmallPortrait: 320px;
 					@include vertify;
 					.offleads {
 						@include makeFluidRow;
-						.span8:last-child .offlead {
-							border-right: none;
-						}
-						.offlead {
-							padding-left: 5px;
-							padding-right: 5px;
+						.span8:last-child .cbase.offlead { border-right: none; }
+						.cbase.offlead {
+							padding-right: 10px;
 							border-right: 1px solid $grayLighter;
-							border-bottom: none;
+							
+							// override
+							border-top: none;
+							padding-top: 0;
+							margin-top: 0;
 						}
 					}
 				}
@@ -558,10 +538,17 @@ $mediaSmallPortrait: 320px;
 		}
 	// end Support Banner
 	
+	
+	// Basically, if this media query is being read by the browser, 
+	// then we can set a lower min-width than the default to allow 
+	// the responsive design to do its thing. Otherwise (IE 7), the 
+	// default min-width (set to the $siteWidth) will keep the site 
+	// at that width.
+	body { min-width: 300px; }
 }
 
 
 // Max width (normal screen) and above
 @media screen and (min-width: $mediaMax) {	
-	// This should probably stay empty since IE 7 can't see it
+	// Don't define desktop styles here, because they won't be seen by IE7.
 }

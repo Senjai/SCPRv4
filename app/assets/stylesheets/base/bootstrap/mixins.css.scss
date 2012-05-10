@@ -33,6 +33,7 @@
   }
 }
 
+
 /* IE 7 */
 @mixin ie7-restore-right-whitespace() {
   *margin-right: .3em;
@@ -343,48 +344,46 @@
 //   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
 // }
 
-// The Grid
-// @mixin gridCore($gridColumnWidth, $gridGutterWidth) {
-// 	.row {
-// 		margin-left: $gridGutterWidth * -1;
-// 	    @include clearfix();
-// 	
-// 		> [class*="span"] {
-// 		  float: left;
-// 		  margin-left: $gridGutterWidth;
-// 		}
-// 
-// 		@for $i from 1 through $gridColumns {
-// 		  > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
-// 		}
-// 
-// 		@for $i from 1 through $gridColumns {
-// 		  > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
-// 		}
-// 	}
-// 
-//   .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
-//     @include gridCoreSpan($gridColumns, $gridColumnWidth, $gridGutterWidth);
-//   }
-// }
 
-// @mixin gridCoreSpan($columns, $gridColumnWidth, $gridGutterWidth) {
-//   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
-// }
 
-// @mixin gridCoreOffset($columns, $gridColumnWidth, $gridGutterWidth) {
-//   margin-left: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)) + ($gridGutterWidth * 2);
-// }
+// Fixed Grid
+@mixin gridCore($gridColumnWidth, $gridGutterWidth) {
+	.row {
+		margin-left: $gridGutterWidth * -1;
+	    @include clearfix();
+	
+		> [class*="span"] {
+		  float: left;
+		  margin-left: $gridGutterWidth;
+		}
 
+		@for $i from 1 through $gridColumns {
+		  > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
+		}
+
+		@for $i from 1 through $gridColumns {
+		  > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
+		}
+	}
+
+  .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+    @include gridCoreSpan($gridColumns, $gridColumnWidth, $gridGutterWidth);
+  }
+}
+
+@mixin gridCoreSpan($columns, $gridColumnWidth, $gridGutterWidth) {
+  width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
+}
+
+@mixin gridCoreOffset($columns, $gridColumnWidth, $gridGutterWidth) {
+  margin-left: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)) + ($gridGutterWidth * 2);
+}
+
+
+
+// Fluid Grid
 @mixin gridFluidSpan($columns, $fluidGridColumnWidth, $fluidGridGutterWidth) {
 	width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 2));
-	// IE 7
-	// The following should go away, it's just here until we drop IE 7 support.
-	float: left;
-	margin: 0 $fluidGridGutterWidth;
-	&:first-child { margin-left: 0; }
-	&:last-child { margin-right: 0; }
-
 }
 
 @mixin makeFluidRow {
@@ -392,14 +391,11 @@
     @include clearfix();
     > [class*="span"] {
       float: left;
-      margin: 0 $fluidGridGutterWidth;
+      margin-left: $fluidGridGutterWidth * 2;
     }
     > [class*="span"]:first-child {
       margin-left: 0;
     }
-	> [class*="span"]:last-child {
-		margin-right: 0;
-	}
     @for $i from 1 through $gridColumns {
       > .span#{$i} { @include gridFluidSpan($i, $fluidGridColumnWidth, $fluidGridGutterWidth); }
     }
@@ -408,42 +404,6 @@
 
 @mixin gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth) {
 	.row-fluid { @include makeFluidRow; }
-}
-
-// @mixin gridInput($gridColumnWidth, $gridGutterWidth) {
-//   @for $i from 1 through $gridColumns {
-//     input.span#{$i}, textarea.span#{$i}, .uneditable-input.span#{$i} { @include gridInputSpan($i, $gridColumnWidth, $gridGutterWidth); }
-//   }
-// 
-//   input, textarea, .uneditable-input {
-//     margin-left: 0; // override margin-left from core grid system
-//   }
-// }
-
-// @mixin gridInputSpan($columns, $gridColumWidth, $gridGutterWidth) {
-//   width: (($gridColumnWidth) * $columns) + ($gridGutterWidth * ($columns - 1)) - 10;
-// }
-
-@mixin vertify {
-	> .row-fluid {
-		> [class*="span"] {
-	    	float: none;
-			display: block;
-			width: 100%;
-			margin: 0;
-		}
-
-		// IE 7
-		// This needs to die but unfortunately the *= syntax is CSS3 and IE7/8 don't support it! :-o
-		@for $i from 1 through $gridColumns {
-	      > .span#{$i} { 
-			float: none;
-			display: block;
-			width: 100%;
-			margin: 0;
-		  }
-	   }
-	}
 }
 
 @mixin makeFluidColumn($columns) {

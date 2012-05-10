@@ -294,6 +294,8 @@ nav.section-nav {
 			width: 50%; // We don't want the gutter width so we won't use the grid here
 			padding: 5px 0;
 			border-bottom: 1px solid $this_borderColor;
+						
+			// Will not work in IE7/8
 			&:nth-child(even) { @include box-shadow(1px 0 $this_borderColor inset); } // Fake border between columns
 			&:nth-last-child(-n+2) { border-bottom: none; } // no border on the last two
 		}

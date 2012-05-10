@@ -46,10 +46,11 @@ $baseline:          $baseLineHeight;
 
 
 // Grid
-$gridColumns:       24;
-$gridColumnWidth: 32.5px;
-$gridGutterWidth: 15px;
-$gridRowWidth:      ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
+$gridColumns: 24;
+$gridColumnWidth: 37.084px; // We only use this value to calculate percentages for the fluid grid
+$gridGutterWidth: 10px;
+$gridRowWidth: ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
+$siteWidth: $gridRowWidth + $containerPadding * 2;
 
 // Fluid Grid
 $fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
@@ -117,6 +118,18 @@ $analog2:           spin($baseColor, -22);
 	padding-top: $vertical;
 	padding-bottom: $vertical;
 }
+
+
+// Visibility utilities
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+.visible-reader { display: none; }
+.hidden-reader { display: block; }
+
+
+
 .inner-container {
 	@include box-padding(10px, 10px);
 }

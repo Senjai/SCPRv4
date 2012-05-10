@@ -36,7 +36,7 @@ class scpr.MegaMenu
                 # stash a copy
                 @sections.push = sec
                 
-                el.mouseover =>                     
+                el.mouseover =>
                     sec.score += 1
                     #sec.func()
                     @_score(sec)
