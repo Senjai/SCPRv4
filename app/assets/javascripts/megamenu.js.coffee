@@ -4,7 +4,7 @@ class scpr.MegaMenu
     DefaultOptions:
         finder: "#megamenu .mega a"
         attr:   "data-section"
-        bucket: "#megamenu"
+        bucket: "#mega-bucket"
         hidden: []
         
     #----------
@@ -42,12 +42,13 @@ class scpr.MegaMenu
                     @_score(sec)
                     @expanded += 1
 
-                el.mouseout =>                 
+                el.mouseout =>   
                     sec.score -= 1
+                    #@_score(sec)
                     sec.func()
                     @expanded -= 1
                 
-                sec.drop.mouseover => 
+                sec.drop.mouseover =>
                     sec.score += 1
                     #sec.func()
                     @_score(sec)
@@ -56,9 +57,10 @@ class scpr.MegaMenu
                 sec.drop.mouseout =>
                     sec.score -= 1
                     sec.func()
+                    #@_score(sec)
                     @expanded -= 1                     
                     
-				# The following works sort-of. It still follows a link if you click it once, click somewhere else, and then click it again. It should show the menu again.
+                # The following works sort-of. It still follows a link if you click it once, click somewhere else, and then click it again. It should show the menu again.
                 $("body").on
                     touchstart: (event) =>
                         if sec.drop.is(":visible") and !$(event.target).is(sec.drop) and !$(event.target).closest(sec.drop).length
@@ -84,7 +86,8 @@ class scpr.MegaMenu
                 sec.drop.show()
             else
                 # anything that should be hidden during displays?
-                _(@hidden).each (el) -> el.css("visibility", "hidden")
+                _(@hidden).each (el) -> el.css
+                    visibility: "hidden"
             
                 sec.drop.fadeIn 100
                                 
@@ -97,7 +100,6 @@ class scpr.MegaMenu
                 sec.drop.hide()
             else
                 sec.drop.fadeOut("fast")
-                # anything that should be hidden during displays?
-                _(@hidden).each (el) -> el.css("visibility", "visible")
-                
-            
+                # show the stuff that was hidden during display
+                _(@hidden).each (el) -> el.css
+                    visibility: "visible"
