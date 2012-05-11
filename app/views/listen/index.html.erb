@@ -11,7 +11,48 @@
 	<style type="text/css">
 
 	</style>
+    <script>
+    	<!-- OAS SETUP BEGIN --> 
+    	 <!--//configuration 
+    	 OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/'; 
+    	 OAS_sitepage = 'scpr.org'; 
+    	 //OAS_sitepage = window.location.hostname + window.location.pathname; 
+    	 OAS_listpos = 'x61,x62,x63'; 
+    	 OAS_query = ''; 
+    	 OAS_target = '_top'; 
+    	 //end of configuration 
+    	 OAS_version = 10; 
+    	 OAS_rn = '001234567890'; OAS_rns = '1234567890'; 
+    	 OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11); 
+    	 function OAS_NORMAL(pos) { 
+    	   document.write('<a href="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" target=' + OAS_target + '>');
+    	   document.write('<img src="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" border="0" /></a>');
+    	 } 
+    	 //--> 
+    </script>
 
+    <script>
+    	 <!-- 
+    	 OAS_version = 11; 
+    	 if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)) 
+    	   OAS_version = 10; 
+    	 if (OAS_version >= 11) 
+    	   document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');//-->
+    </script>
+
+    <script>
+    	 <!-- 
+    	 document.write(''); 
+    	 function OAS_AD(pos) { 
+    	   if (OAS_version >= 11) 
+    	     OAS_RICH(pos); 
+    	   else 
+    	     OAS_NORMAL(pos); 
+    	 } 
+    	 //--> 
+    </script>
+
+<!--	
 	<script type='text/javascript'>
 	var googletag = googletag || {};
 	googletag.cmd = googletag.cmd || [];
@@ -34,6 +75,8 @@
 	googletag.enableServices();
 	});
 	</script>
+	
+-->
 	
 </head>
 <body class="minimal listen">
@@ -117,15 +160,32 @@
 <div class="ad" style="text-align:center; height:80px"> 
     <p><small>Sponsors</small></p>
 
-    <!-- listen_live -->
-	<div id='div-gpt-ad-1336163771924-0' style='width:234px; height:60px;'>
-	<script type='text/javascript'>
-	googletag.cmd.push(function() { googletag.display('div-gpt-ad-1336163771924-0'); });
-	</script>
-	</div>
+    <!-- OAS AD 'Center1' begin --> 
+    <script> 
+    <!-- 
+    OAS_AD('x61'); 
+    //--> 
+    </script> 
+    <!-- OAS AD 'Center1' end --> 
 
-    <br />
-	<p><small><a href="/support/underwriting/online_sponsorship/">Advertise with us</a></small></p>
+    <!-- OAS AD 'Center1' begin --> 
+    <script> 
+    <!-- 
+    OAS_AD('x62'); 
+    //--> 
+    </script> 
+    <!-- OAS AD 'Center1' end --> 
+
+    <!-- OAS AD 'Center1' begin --> 
+    <script> 
+    <!-- 
+    OAS_AD('x63'); 
+    //--> 
+    </script> 
+    <!-- OAS AD 'Center1' end -->
+    <p><small><a href="/support/underwriting/online_sponsorship/">Advertise with us</a></small></p>
+</div>
+
 
 </div>
   <footer>
