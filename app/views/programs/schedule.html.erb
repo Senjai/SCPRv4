@@ -26,7 +26,7 @@
 	</div> <!-- span -->
 	
 	<div class="span16">
-		<%# Group by day and then remove Tuesday, Wednesday, and Thursday (because they're the same as Monday) %>
+		<%# Group by day, remove Tuesday, Wednesday, and Thursday (because they're the same as Monday), sort, and then rotate to get Monday first %>
 		<% @schedule_slots.group_by(&:day).reject { |d| [2,3,4].include? d }.sort.rotate!.each do |day, slots| %>
 			<h2><%= Date::DAYNAMES[day.to_i] %> <%= " - Thursday" if day == 1 %></h2>
 			<% slots.each do |slot| %>
