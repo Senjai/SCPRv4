@@ -159,12 +159,13 @@ body {
 	.section {
 		width: 50%;
 		float: left;
+		padding-top: 10px;
 		
 		.program {
 			padding-left: 70px; // Room for the status badge
 			background-position: 0 0;
 			background-repeat: no-repeat;
-			height: 46px;
+			line-height: $baseLineHeight;
 			
 			&.current {
 				float: left;

@@ -1,5 +1,9 @@
 // Masthead container
 header#masthead {
+	// IE7 - These need to be set because IE7 doesn't do z-index properly. 
+	position: relative;
+	z-index: 1000;
+	
 	margin:0 0 $baseline 0;
 	.head-lead { 
 		height: 74px; 
@@ -167,15 +171,13 @@ $navHeight: 36px;
 	
 	nav.sections, .search-form {
 		@include ie-inline-block;
-		height:$navHeight;
-		white-space: nowrap; // This also prevents the search form dropping down while the rest of the nav is rendering
 	}
 	
 	.sections {
 		width:76%;
+		height:$navHeight;
 		ul {
-			margin-left: 0;
-			margin-top: 0;
+			margin: 0;
 			li {
 				width: 15%;
 				max-width: 109px;
@@ -222,13 +224,21 @@ $navHeight: 36px;
 	}
 	
 	.search-form {
+		float: right;
+		height: 36px;
+		width: 20%;
+		
+		// IE7 just a hack to pull the search form up
+		*margin-top: -36px;
+		
 		form {
 			width: 100%;
+			margin: 7px 0 0 0; // push the form down a bit to vertically center
 			label { display:none; }
 			input.search {
 				@include border-radius(20px);
-				margin-top:3px;
 				padding:0 8px;
+				width: 70%;
 				&:focus {
 					outline: none;
 				    border-color:#999;
@@ -238,7 +248,7 @@ $navHeight: 36px;
 			}
 			input.submit {
 				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
-				width:20px;
+				min-width:20px;
 				height:20px;
 				text-indent:-9999px;
 				border:0;
@@ -252,6 +262,7 @@ $navHeight: 36px;
 	}
 	
 	.section-mega {
+		display: none;
 		background-color:$white;
 		width:100%;
 		min-height:$baseline * 10;
@@ -259,8 +270,12 @@ $navHeight: 36px;
 		z-index: 900;
 		$mega-shadow:0 2px 3px lighten($gray, 10%);
 		@include box-shadow($mega-shadow);
-		display: none;
 		
+		// IE7 - Since IE7 doesn't support box-shadows, hack a border in
+		*border-left: 1px solid #000;
+		*border-right: 1px solid #000;
+		*border-bottom: 1px solid #000;
+				
 		h4 {
 			@include font-navigation(600, 14px, $baseLineHeight);
 			a { color: $nearBlack; }
@@ -324,6 +339,7 @@ $navHeight: 36px;
 			padding-right: $fluidGridGutterWidth;
 			&.last {
 				border-right: none;
+				padding-right: 0;
 			}
 		}
 		
@@ -339,7 +355,7 @@ $navHeight: 36px;
 		}
 		
 		&#events-mega .section { 
-			min-height: 280px;
+			min-height: 230px;
 			.event-link { color: $linkColor; }
 		}
 		
@@ -400,4 +416,8 @@ $navHeight: 36px;
 			}
 		}
 	}
+}
+
+.live-update, .hero {
+	
 }

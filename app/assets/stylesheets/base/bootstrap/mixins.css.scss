@@ -392,6 +392,9 @@
     > [class*="span"] {
       float: left;
       margin-left: $fluidGridGutterWidth * 2;
+	  
+	  // IE7 - Because it rounds half-pixels up and causes divs to wrap if this isn't set
+	  clear: right;
     }
     > [class*="span"]:first-child {
       margin-left: 0;
