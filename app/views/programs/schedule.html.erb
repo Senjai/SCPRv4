@@ -1,5 +1,6 @@
 <div class="row-fluid">
 	<div class="span8">
+		<!-- just some static content to fill the space for now -->
 		<h3>Regular Features</h3>
 		<ul>
 			<li>
@@ -21,7 +22,7 @@
 				<a href="/programs/dinner-party-download/">The Dinner Party Download</a><br />
 				Every other weekend during Off-Ramp
 			</li>
-</ul>
+		</ul>
 	</div> <!-- span -->
 	
 	<div class="span16">
@@ -31,7 +32,7 @@
 			<% slots.each do |slot| %>
 				<div class="row-fluid">
 					<div class="span6"><%= slot.format_time %></div>
-					<div class="span18"><%= slot.program %></div>
+					<div class="span18"><%= link_to slot.program, slot.programme.link_path %></div>
 				</div>
 			<% end %>
 			<br />
