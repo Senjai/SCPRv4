@@ -333,7 +333,7 @@ nav.section-nav {
 	position: relative;
 	top: -38px;
 	height: 468px;
-	//min-width:1110px;
+	min-width: $mediaDesktopSmall;
 	background-color:#2e2e2e;
 	@include background-image(linear-gradient(#2e2e2e, lighten(#2e2e2e, 10%)));
 	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
@@ -410,8 +410,9 @@ nav.section-nav {
 				z-index: 10;
 				@include opacity(1);
 			}
-			&.last-active {
+			&.last-active { 
 				z-index: 9;
+				@include opacity(1);
 			}
 		}
 	}

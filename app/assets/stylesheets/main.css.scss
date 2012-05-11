@@ -36,6 +36,14 @@ body {
 	&.navIn { position: absolute; }
 }
 
+// All layouts should have this class
+.main-content {
+  	// IE7 - need to set this so modals can be in front
+	position: relative;
+	z-index: -1;	
+}
+
+
 // #Main Body Content
 #main {
 	margin-top:1px;
@@ -127,8 +135,6 @@ body {
 		background:$grayBackground;
 		border-top:1px solid $white;
 		border-bottom:1px solid $white;
-		height: 46px;
-		display: table; // so the BB extends downwards when the text wraps
 		width: 100%;
 	}
 	
@@ -166,6 +172,7 @@ body {
 			background-position: 0 0;
 			background-repeat: no-repeat;
 			line-height: $baseLineHeight;
+			height: 36px; // Broadcast bar height minus padding... sorry
 			
 			&.current {
 				float: left;

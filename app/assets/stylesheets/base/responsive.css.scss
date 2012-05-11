@@ -543,10 +543,11 @@ $mediaSmallPortrait: 320px;
 	// default min-width (set to the $siteWidth) will keep the site 
 	// at that width.
 	.container-fluid { min-width: 300px; }
+	#events-header { min-width: 0; }
 }
 
 
 // Max width (normal screen) and above
 @media screen and (min-width: $mediaMax) {	
-	// Don't define desktop styles here, because they won't be seen by IE7.
+	// Don't define default desktop styles here, because they won't be seen by IE7.
 }
