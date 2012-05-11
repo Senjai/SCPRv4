@@ -3,7 +3,6 @@
 
 body {
 	width: auto;
-	min-width: $siteWidth; // This is so that the fluid grid is basically ignored if media queries aren't seen (IE 7)
 	height: auto;
 	position: static;
 	overflow: visible;
@@ -24,6 +23,7 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: $gridRowWidth;
+	min-width: $mediaDesktopSmall; // This is so that the fluid grid is basically ignored if media queries aren't seen (IE 7)
 	
 	&#footer-container {
 		position: static; // So we can pop out the footer into the side nav

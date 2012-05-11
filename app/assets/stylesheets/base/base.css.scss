@@ -52,6 +52,9 @@ $gridGutterWidth: 10px;
 $gridRowWidth: ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
 $siteWidth: $gridRowWidth + $containerPadding * 2;
 
+$mediaMax: $siteWidth; // The maximum we care about, after this it's just fixed-grid
+$mediaDesktopSmall: 960px;
+
 // Fluid Grid
 $fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
 $fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);

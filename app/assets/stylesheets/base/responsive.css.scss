@@ -2,13 +2,11 @@
 // If this file is removed, nothing should break - the default desktop style should remain intact.
 
 // Device sizes
-$mediaMax: $siteWidth; // The maximum we care about, after this it's just fixed-grid
-$mediaDesktopSmall: 960px;
+// Check base.css for desktop sizes
 $mediaMidLandscape: 1024px;
 $mediaMidPortrait: 768px;
 $mediaSmallLandscape: 480px;
 $mediaSmallPortrait: 320px;
-
 
 // These mixins are for responsive use only. Don't use them to define default styles (because they're not IE7/8-friendly).
 @mixin fluidPopup($margin: 4%, $top: 180px) {
