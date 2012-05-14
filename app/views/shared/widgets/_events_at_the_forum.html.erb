@@ -2,24 +2,22 @@
 	<% register_content "events/event:new" %>
 	<div class="events-forum cbase">
 		<h6>Events at the Crawford Family Forum</h6>
-		<div class="mq-row-fluid">
-			<% @g_upcoming_events_forum.first(2).each do |event| %>
-				<div class="span12">
-					<div class="event future">
-						<div class="row-fluid">
-							<div class="span8">
-								<%= render_asset event, 'thumb', true %>
-							</div>
-							
-							<div class="span16">
-								<h4><%= link_to event.title, event.link_path %></h4>
-								<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
-							</div> <!-- span -->
-						</div> <!-- row fluid -->
-					</div> <!-- event future -->
-				</div> <!-- span -->
-			<% end %>
-		</div> <!-- query row fluid -->
+		<% @g_upcoming_events_forum.first(2).each do |event| %>
+			<div class="span12">
+				<div class="event future">
+					<div class="row-fluid">
+						<div class="span8">
+							<%= render_asset event, 'thumb', true %>
+						</div>
+						
+						<div class="span16">
+							<h4><%= link_to event.title, event.link_path %></h4>
+							<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
+						</div> <!-- span -->
+					</div> <!-- row fluid -->
+				</div> <!-- event future -->
+			</div> <!-- span -->
+		<% end %>
 		<p class="more"><%= link_to "View More Forum Events", forum_events_path %></p>
 	</div> <!-- events-forum -->
 <% end %>
