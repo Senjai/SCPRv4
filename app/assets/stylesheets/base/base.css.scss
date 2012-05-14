@@ -59,6 +59,21 @@ $mediaDesktopSmall: 960px;
 $fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
 $fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
 
+// For aligning an asset. Apply to an asset-block.
+@mixin assetAlign($align: left) {
+	@if $align == left {
+		margin-left: 0;
+		margin-right: auto;
+	} @else if $align == center {
+		margin-left: auto;
+		margin-right: auto;
+	} @else if $align == right {
+		margin-left: auto;
+		margin-right: 0
+	}
+	
+	.contentasset { text-align: $align; }
+}
 
 // Clearfix for clearing floats like a boss h5bp.com/q
 @mixin clearfix {
@@ -264,8 +279,7 @@ a {
 
 // Buttons
 @mixin btnColor($primaryColor, $secondaryColor) {
-  background-color:$blueDark;
-  @include background-image(linear-gradient($primaryColor, $secondaryColor));
+  @include gradient-vertical($primaryColor, $secondaryColor);
   text-shadow: 0 -1px 0 rgba(0,0,0,.75);
   border-color: $secondaryColor $secondaryColor darken($secondaryColor, 15%);
   border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
@@ -275,7 +289,7 @@ a {
 	  // .button(#1174C6);
 	  cursor: pointer;
 	  @include ie-inline-block;
-	  @include background-image(linear-gradient(#fff, #fff 25%, darken(#fff, 10%)));
+	  @include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 10%));
 	  padding: 4px 14px;
 	  text-shadow: 0 1px 1px rgba(255,255,255,.75);
 	  color: #333;
@@ -291,7 +305,7 @@ a {
 	  &:hover {
 	    color: #333;
 	    text-decoration: none;
-		@include background-image(linear-gradient(#fff, #fff 25%, darken(#fff, 20%)))
+		@include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 20%));
 	  }
 	  @include transition(.1s linear all);
 	  &.primary,

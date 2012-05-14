@@ -84,6 +84,7 @@ body {
 	.homepage-bottom { margin:0; padding: 0;}
 	
 	.events-forum {
+		@include assetAlign(left);
 		border-left:1px solid $grayLighter;
 		padding-left: 20px;
 		h4 {

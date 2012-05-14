@@ -86,7 +86,12 @@ $mediaSmallPortrait: 320px;
 		.events-forum {
 			border: none !important;
 			padding-left: 0 !important;
-			.event > .row-fluid { @include makeFluidRow; }
+			.event > .row-fluid { 
+				@include makeFluidRow;
+				> .span8 { @include gridFluidSpan(6) }
+				> .span16 { @include gridFluidSpan(18) }
+				
+			}
 		}
 	}
 	
