@@ -471,11 +471,7 @@ $mediaSmallPortrait: 320px;
 @media screen and (max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
 	// vertify the lead stories //
 		#main {
-			.homepage-lead {
-				&.default, &.lead-right {
-					@include vertify;
-				}
-			}
+			.homepage-lead { @include vertify; }
 		}
 	// end //
 }
