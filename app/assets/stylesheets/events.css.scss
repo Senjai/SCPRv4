@@ -175,13 +175,12 @@ span.fake-link {
 		.banners {
 			margin-bottom: 10px;
 			border-bottom: 1px solid $grayLighter;
-			line-height: 0; // so the br between the links doesn't have any space
+			line-height: 0; // so the line break between the links doesn't have any space
 			a {
-				display: table-cell; // to vertically align the text.
+				display: block;
 				@include font-sans-serif(bold, 12px, 14px);
-				vertical-align: middle;
-				padding: 0 0 5px 30px;
-				height: 30px;
+				padding: 10px 0 5px 30px;
+				min-height: 30px;
 				background-repeat: no-repeat;
 				background-position: left 50%;
 				&.facebook { 
@@ -197,10 +196,10 @@ span.fake-link {
 		
 		.twitter-peeker {
 			color:$nearBlack;
-			display: table-cell;
+			display: block;
 			vertical-align: middle;
 			font-size:15px;
-			height: 41px;
+			min-height: 41px;
 			margin: 15px 0 10px 0;
 			padding: 10px 80px 10px 5px;
 			background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
@@ -312,14 +311,14 @@ nav.section-nav {
 
 /* FADER */
 
-.forum #megamenu {
+.forum .nav-primary {
 	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
 }
 
 .events-header-small {
 	text-align: center;
 	display: none;
-	@include background-image(linear-gradient(lighten(#2e2e2e, 10%), #2e2e2e));
+	@include gradient-vertical(lighten(#2e2e2e, 10%), #2e2e2e);
 	@include box-shadow($smallHeaderShadow);
 	margin-bottom: 20px;
 	margin-top: -22px;
@@ -334,8 +333,7 @@ nav.section-nav {
 	top: -38px;
 	height: 468px;
 	min-width: $mediaDesktopSmall;
-	background-color:#2e2e2e;
-	@include background-image(linear-gradient(#2e2e2e, lighten(#2e2e2e, 10%)));
+	@include gradient-vertical(#2e2e2e, lighten(#2e2e2e, 10%));
 	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
 	width:100%;
 	overflow: hidden;
