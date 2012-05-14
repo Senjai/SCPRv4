@@ -91,7 +91,6 @@ $analog2:           spin($baseColor, -22);
 // MIXINS
 // ------
 
-// mixin for getting IE to respect inline-block
 @mixin hide-text() {
 	text-indent: 100%;
 	white-space: nowrap;
