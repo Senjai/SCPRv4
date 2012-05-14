@@ -81,7 +81,7 @@ body.minimal {
 			}
 			li a:hover { color: $gray; }
 			li {
-				display: inline-block;
+				@include ie-inline-block;
 				padding: 0 10px 0 0;
 				margin: 0 0 0 10px;
 				border-right: 1px solid $grayLight;

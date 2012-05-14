@@ -1,7 +1,11 @@
-// Global styles for the slide-in nav & other effects
+// Global styles
+@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
+
 body {
 	width: auto;
 	height: auto;
+	position: static;
+	overflow: visible;
 	
 	&.navIn {
 		position: relative;
@@ -9,14 +13,36 @@ body {
 	}
 }
 
+
+// Default container behavior
+.container-fluid {
+	@include clearfix;
+	padding-left: $containerPadding;
+	padding-right: $containerPadding;
+	position: relative; // for modals
+	margin-left: auto;
+	margin-right: auto;
+	max-width: $gridRowWidth;
+	min-width: $mediaDesktopSmall; // This is so that the fluid grid is basically ignored if media queries aren't seen (IE 7)
+	
+	&#footer-container {
+		position: static; // So we can pop out the footer into the side nav
+	}
+}
+
 .viewport {
 	width: 100%;
 	height: auto;
-	
-	&.navIn {
-	    position: absolute;
-	}
+	&.navIn { position: absolute; }
 }
+
+// All layouts should have this class
+.main-content {
+  	// IE7 - need to set this so modals can be in front
+	position: relative;
+	z-index: -1;	
+}
+
 
 // #Main Body Content
 #main {
@@ -25,6 +51,30 @@ body {
 	.homepage-top {
 		border-bottom:1px solid $grayLighter;
 		margin-bottom:$baseline;
+		
+		.offleads {
+			// Override default .offlead to use border-top
+			// because IE7/8 do not support :last-child selector
+			.span8:first-child .cbase.offlead { 
+				border-top: none;
+				padding-top: 0;
+				margin-top: 0;
+			}
+
+
+			.cbase.offlead {
+				padding-top: 5px;
+				margin-top: 5px;
+				border-top: 1px solid $grayLighter;
+
+				// override
+				border-bottom: none;
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
+
+			margin-bottom: 10px;
+		}
 	}
 	.homepage-bottom { margin:0; padding: 0;}
 	
@@ -85,11 +135,7 @@ body {
 		background:$grayBackground;
 		border-top:1px solid $white;
 		border-bottom:1px solid $white;
-		height: 46px;
-		display: table; // so the BB extends downwards when the text wraps
 		width: 100%;
-		
-		.sections { display: table; width: 100%;}
 	}
 	
 	a.headshot {
@@ -117,15 +163,16 @@ body {
 	}
 	
 	.section {
-		display: table-cell;
 		width: 50%;
-		vertical-align: middle;
-		height: 46px;
-
+		float: left;
+		padding-top: 10px;
+		
 		.program {
 			padding-left: 70px; // Room for the status badge
 			background-position: 0 0;
 			background-repeat: no-repeat;
+			line-height: $baseLineHeight;
+			height: 36px; // Broadcast bar height minus padding... sorry
 			
 			&.current {
 				float: left;
@@ -202,16 +249,6 @@ body {
 	}
 }
 
-.offleads {
-	.span8:last-child .offlead {
-		border-bottom: none;
-	}
-	.offlead {
-		padding: 0 0 5px 0;
-		margin: 0 0 5px 0;
-		border-bottom: 1px solid $grayLighter;
-	}
-}
 // Join Conversation
 .join-conversation-container {
 	margin:10px 0;
@@ -386,7 +423,10 @@ nav.filters {
 		float:left;
 		list-style-type:none;
 		margin-right:3%;
+		
+		// Won't be seen in IE7, that's okay
 		&:last-child { margin: 0; }
+		
 		&.heading {
 			color:#575757;
 			margin-right:20px;
@@ -415,7 +455,7 @@ nav.filters {
 	form {
 		margin: 10px 0;
 
-		input { display: inline-block; }
+		input { @include ie-inline-block; }
 		input[type=text] {
 			max-width:450px;
 			width:100%;

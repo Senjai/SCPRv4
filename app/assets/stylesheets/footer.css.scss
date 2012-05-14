@@ -24,7 +24,7 @@ $footerBackground: #2e2e2e;
 	h2 {
 		color:#00b9f3;
 		@include font-shorthand($size: 16px, $weight: 200);
-		display: inline-block;
+		@include ie-inline-block;
 		margin-right:10px;
 		text-shadow:0 1px 0 #000;
 		text-transform:none;
@@ -59,7 +59,7 @@ $footerBackground: #2e2e2e;
 		}
 		
 		&.inline li {
-			display: inline-block;
+			@include ie-inline-block;
 			margin-right: 10px;
 		}
 		
@@ -69,14 +69,12 @@ $footerBackground: #2e2e2e;
 			li {
 				padding: 0 15px;
 				margin: 0;
-				border-right:1px solid #242424;
-				&:last-child {
-					border-right:none;
-				}
+				
+				// Using border-left because IE7/8 do not support :last-child selector
+				border-left: 1px solid #242424;				
+				&:first-child { border-left: none; }
 			}
-			a {
-				color:#717171;
-			}
+			a { color:#717171; }
 		}
 		
 		&.social-media {

@@ -7,8 +7,8 @@ $linkColorHover:    lighten($linkColor, 10);
 
 // Grays
 $black:             #000;
-$nearBlack:         lighten($black, 18%);
-$grayDark:          lighten($black, 24%);
+$nearBlack:         lighten($black, 17%);
+$grayDark:          lighten($black, 19%);
 $gray:              lighten($black, 50%);
 $grayLight:         lighten($black, 75%);
 $grayLighter:       lighten($black, 88%);
@@ -46,10 +46,14 @@ $baseline:          $baseLineHeight;
 
 
 // Grid
-$gridColumns:       24;
-$gridColumnWidth: 32.5px;
-$gridGutterWidth: 15px;
-$gridRowWidth:      ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
+$gridColumns: 24;
+$gridColumnWidth: 37.084px; // We only use this value to calculate percentages for the fluid grid
+$gridGutterWidth: 10px;
+$gridRowWidth: ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
+$siteWidth: $gridRowWidth + $containerPadding * 2;
+
+$mediaMax: $siteWidth; // The maximum we care about, after this it's just fixed-grid
+$mediaDesktopSmall: 960px;
 
 // Fluid Grid
 $fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
@@ -117,6 +121,18 @@ $analog2:           spin($baseColor, -22);
 	padding-top: $vertical;
 	padding-bottom: $vertical;
 }
+
+
+// Visibility utilities
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+.visible-reader { display: none; }
+.hidden-reader { display: block; }
+
+
+
 .inner-container {
 	@include box-padding(10px, 10px);
 }
@@ -259,7 +275,7 @@ a {
 	.btn {
 	  // .button(#1174C6);
 	  cursor: pointer;
-	  display: inline-block;
+	  @include ie-inline-block;
 	  @include background-image(linear-gradient(#fff, #fff 25%, darken(#fff, 10%)));
 	  padding: 4px 14px;
 	  text-shadow: 0 1px 1px rgba(255,255,255,.75);
@@ -373,7 +389,7 @@ input[type=submit].btn {
 
 // Buttons
 /*.button($color: #fff, $padding: 4px 14px, $textColor: #333, $textShadow: 0 1px 1px rgba(255,255,255,.75), $fontSize: 13px, $borderColor: rgba(0,0,0,.1), $borderRadius: 4px) {
-  display: inline-block;
+  @include ie-inline-block;
   #gradient > .vertical-three-colors($color, $color, 0.25, darken($color, 10%));
   padding: $padding;
   text-shadow: $textShadow;

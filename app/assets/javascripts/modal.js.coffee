@@ -18,8 +18,8 @@ class scpr.Modal
                         $(".modal-popup#"+$(event.target).attr(@options.modalId)).toggle()
                     else
                         if $(event.target).next(@options.modal).length then $(event.target).next(@options.modal).toggle() else $(event.target).closest(@options.modal).toggle()
-
-                    event.preventDefault()
+                    
+                    if event.preventDefault then event.preventDefault() else event.returnValue = false
                     return false
 
             $("body").on

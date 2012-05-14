@@ -72,6 +72,7 @@
 
 .modal-container { // Wrap this class around the modal-popup if you need to so the modal will be positioned properly
 	position: relative;
+	z-index: 800; // Under the megamenu
 }
 
 .modal-popup {

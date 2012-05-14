@@ -25,25 +25,33 @@ class scpr.HeroFader
         $(@options.slide).stop(true, true) # args: clearQueue, jumpToEnd
 
         # Figure out which slide is active
-        $active = $(@options.slide + "." + @options.activeClass)
-        $active = if $active.length then $active else $(@options.slide + ':last')
+        @active = $(@options.slide + "." + @options.activeClass)
+        @active = if @active.length then @active else $(@options.slide + ':last')
         
         # Figure out which slide is next
-        $next = next or (if $active.next().length then $active.next() else $(@options.slide + ':first'))
+        @next = next or (if @active.next().length then @active.next() else $(@options.slide + ':first'))
         
         # Don't do anything if the user clicked on the chooser for the slide that they're already on
-        if $next[0] isnt $active[0]
+        if @next[0] isnt @active[0]
             # Clear the timeout incase we clicked a button in the middle of one
             clearTimeout(@fader)
 
             # Hightlight the chooser for the active slide
-            $(@options.chooser + "[#{@options.slideId}='#{$next.attr("id")}']").addClass("active")
-            $(@options.chooser + "[#{@options.slideId}='#{$active.attr("id")}']").removeClass("active")
+            $(@options.chooser + "[#{@options.slideId}='#{@next.attr("id")}']").addClass("active")
+            $(@options.chooser + "[#{@options.slideId}='#{@active.attr("id")}']").removeClass("active")
 
             # Now fade in the next slide on top of the last-active slide
-            $active.css({opacity: 1.0}).addClass(@options.lastActiveClass).animate({opacity: 0.0}, @options.fadeSpeed)
-            $next.css({opacity: 0.0}).addClass(@options.activeClass).animate({opacity: 1.0}, @options.fadeSpeed, =>
-                $active.removeClass @options.activeClass + " " + @options.lastActiveClass
+            @active.css
+                opacity: 1.0
+            .addClass(@options.lastActiveClass)
+            .removeClass(@options.activeClass)
+            .animate({opacity: 0.0}, @options.fadeSpeed)
+            
+            @next.css
+                opacity: 0.0
+            .addClass(@options.activeClass)
+            .animate({opacity: 1.0}, @options.fadeSpeed, =>
+                @active.removeClass @options.activeClass + " " + @options.lastActiveClass
             )
 
             # Set the time until the next fade

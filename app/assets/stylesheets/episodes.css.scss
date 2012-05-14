@@ -11,7 +11,7 @@ header.episode {
 	
 	h4 {
 		color: $orangeDark;
-		display: inline-block;
+		@include ie-inline-block;
 		font-size:18px;
 		font-weight:500;
 		line-height:20px;
@@ -21,7 +21,7 @@ header.episode {
 	.story-audio {
 		&.inline {
 			margin: 0;
-			display: inline-block;
+			@include ie-inline-block;
 		}
 		a.play-btn {
 			margin-top:3px;

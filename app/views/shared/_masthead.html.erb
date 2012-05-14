@@ -58,7 +58,7 @@
 		</div>
 
 		<div id="megamenu" class="nav-primary">
-			<nav class="sections clearfix">
+			<nav class="sections">
 				<ul>
 				    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>
 					<li class="mega"><a href="/news/" data-section="news-mega"><span>News</span></a></li>
@@ -68,11 +68,14 @@
 					<li class="mega"><a href="/support/" data-section="support-mega"><span>Support Us</span></a></li>
 				</ul>
 			</nav>
-			<form action="/search/" method="get">
-				    <label>Search:</label>
-				    <input type="text" name="q" placeholder="Search" class="search" />
-				    <input type="submit" value="Submit" id="submit" class="submit" />
-			</form>
+			<div class="search-form">
+				<form action="/search/" method="get">
+					    <label>Search:</label>
+					    <input type="text" name="q" placeholder="Search" class="search" />
+					    <input type="submit" value="" id="submit" class="submit" />
+				</form>
+			</div>
+			<div id="mega-bucket" class="mega-bucket"></div>
 		</div> <!-- megamenu -->
 	</div> <!-- container fluid -->
 </header>

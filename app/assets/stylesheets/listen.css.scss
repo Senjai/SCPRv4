@@ -5,7 +5,7 @@ body.listen {
 		a {color:#2e2e2e;}
 	}
 	.pipe {
-		display:inline-block;
+		@include ie-inline-block;
 		zoom:1;
 		*display:inline;
 		padding:0 4px;
@@ -14,9 +14,10 @@ body.listen {
 		padding:0 10px;
 		position:relative;
 		h2 {
-			display:inline-block;
+			@include ie-inline-block;
 			zoom:1;
 			*display:inline;
+			float:left;
 			margin:4px 0;
 		}
 		.pledge {
@@ -35,6 +36,10 @@ body.listen {
 	.offlead p {
 		@include font-serif(normal, 13px);
 	}
+	.ad div {
+		margin:0 auto;
+		width:234px;
+	}
 }
 .player .jp-audio {
 	border-top:1px solid #e0e0e0;
@@ -49,7 +54,7 @@ body.listen {
 }
 .player .section-mid {
 	border-left:1px solid #fff;
-	width:355px;
+	width:353px;
 }
   .player.active {
     display: block; }
@@ -69,7 +74,7 @@ body.listen {
       line-height: 20px;
       margin: 0; }
       .player .jp-title p span {
-        display: inline-block;
+        @include ie-inline-block;
         zoom: 1;
         *display: inline;
         margin-right: 9px;

@@ -1,0 +1,41 @@
+<div class="row-fluid">
+	<div class="span8">
+		<!-- just some static content to fill the space for now -->
+		<h3>Regular Features</h3>
+		<ul>
+			<li>
+				<a href="/programs/marketplace-morning-report/">Marketplace Morning Report</a><br />
+				Weekdays at 4:50, 5:50, 6:50, and 8:50 a.m.
+			</li>
+		
+			<li>
+				<a href="/programs/loh-down-on-science/">The Loh Down on Science</a><br />
+				Weekdays at 7:49 a.m. & 9:04 p.m.
+			</li>
+			
+			<li>
+				<a href="/programs/loh-life/">The Loh Life</a><br />
+				Mon. 8:05 a.m. & during All Things Considered
+			</li>
+			
+			<li>
+				<a href="/programs/dinner-party-download/">The Dinner Party Download</a><br />
+				Every other weekend during Off-Ramp
+			</li>
+		</ul>
+	</div> <!-- span -->
+	
+	<div class="span16">
+		<%# Group by day, remove Tuesday, Wednesday, and Thursday (because they're the same as Monday), sort, and then rotate to get Monday first %>
+		<% @schedule_slots.group_by(&:day).reject { |d| [2,3,4].include? d }.sort.rotate!.each do |day, slots| %>
+			<h2><%= Date::DAYNAMES[day.to_i] %> <%= " - Thursday" if day == 1 %></h2>
+			<% slots.each do |slot| %>
+				<div class="row-fluid">
+					<div class="span6"><%= slot.format_time %></div>
+					<div class="span18"><%= link_to slot.program, slot.programme.link_path %></div>
+				</div>
+			<% end %>
+			<br />
+		<% end %>
+	</div> <!-- span -->
+</div> <!-- row-fluid -->

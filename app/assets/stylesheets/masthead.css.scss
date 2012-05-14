@@ -1,5 +1,9 @@
 // Masthead container
 header#masthead {
+	// IE7 - These need to be set because IE7 doesn't do z-index properly. 
+	position: relative;
+	z-index: 1000;
+	
 	margin:0 0 $baseline 0;
 	.head-lead { 
 		height: 74px; 
@@ -45,7 +49,7 @@ header#masthead {
 .logo {
 	white-space:nowrap;
 	a, .fb-like { 
-		display: inline-block;
+		@include ie-inline-block;
 		margin-top: 16px;
 		vertical-align: top;
 	}
@@ -62,7 +66,7 @@ header#masthead {
 
 // Pledge
 .pledge-container {
-	display: inline-block;
+	@include ie-inline-block;
 	background: url(image_path("pledge-container-bg.jpg")) no-repeat bottom;
 	height:72px;
 	max-height: 72px;
@@ -106,8 +110,11 @@ nav.utils {
 		margin: 0;
 		li {
 			border-right:1px solid #e9e9e9;
+			
+			// Won't be seen in IE7, that's okay.
 			&:last-child { border-right: none; }
-			display: inline-block;
+			
+			@include ie-inline-block;
 			padding: 0 8px 0 6px;
 			&.social {
 				img {
@@ -149,32 +156,34 @@ nav.utils {
 		padding: 5px;
 		margin-bottom: 4px;
 		white-space: nowrap;
-		display: inline-block;
+		@include ie-inline-block;
 	}
 }
 
+$navHeight: 36px;
 .nav-primary {
 	@include background-image(linear-gradient(darken($nearWhite, 10%) 1%, $nearWhite 2%, $grayLighter 98%, darken($grayLighter, 10%) 100%));
 	background-color:darken($grayLighter, 10%);
-	height:36px;
-	position:relative;
+	height:$navHeight;
 	border-left:1px solid #cb5f1d;
 	border-right:1px solid darken($nearWhite, 10%);
-	z-index: 1000; // Make sure the nav bar and mega menus are above anything that is absolutely positioned, or with a z-index set.
+	position: relative;
+	
+	nav.sections, .search-form {
+		@include ie-inline-block;
+	}
 	
 	.sections {
-		height: 36px;
-		white-space: nowrap;
 		width:76%;
+		height:$navHeight;
 		ul {
-			margin-left: 0;
-			margin-top: 0;
+			margin: 0;
 			li {
 				width: 15%;
 				max-width: 109px;
 				text-align: center;
 				height: 36px;
-				display: inline-block;
+				@include ie-inline-block;
 				&.listen-live {
 					@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
 					background-color:#cb5f1d;
@@ -214,46 +223,59 @@ nav.utils {
 		}
 	}
 	
-	nav, form {
-		display: inline-block;
-	}
-	
-	form {
-		white-space: nowrap; // for the icon
+	.search-form {
 		float: right;
-		margin: 5px 8px 0 0; /* Push the form down a little to vertically center it */
-		label { display:none; }
-		input.search {
-			@include border-radius(20px);
-			margin-top:3px;
-			padding:0 8px;
-			width: 75%;
-			&:focus {
-				outline: none;
-			    border-color:#999;
-				$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
-			    @include box-shadow($shadow);
+		height: 36px;
+		width: 20%;
+		
+		// IE7 just a hack to pull the search form up
+		*margin-top: -36px;
+		
+		form {
+			width: 100%;
+			margin: 7px 0 0 0; // push the form down a bit to vertically center
+			label { display:none; }
+			input.search {
+				@include border-radius(20px);
+				padding:0 8px;
+				width: 70%;
+				&:focus {
+					outline: none;
+				    border-color:#999;
+					$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
+				    @include box-shadow($shadow);
+				}
+			}
+			input.submit {
+				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+				min-width:20px;
+				height:20px;
+				text-indent:-9999px;
+				border:0;
 			}
 		}
-		input.submit {
-			background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
-			width:20px;
-			height:20px;
-			text-indent:-9999px;
-			border:0;
-		}
+	}
+	
+	.mega-bucket {
+		width: 100%;
+		top: $navHeight;
 	}
 	
 	.section-mega {
+		display: none;
 		background-color:$white;
 		width:100%;
 		min-height:$baseline * 10;
 		position:absolute;
-		top:36px;
-		left:0;
+		z-index: 900;
 		$mega-shadow:0 2px 3px lighten($gray, 10%);
 		@include box-shadow($mega-shadow);
 		
+		// IE7 - Since IE7 doesn't support box-shadows, hack a border in
+		*border-left: 1px solid #000;
+		*border-right: 1px solid #000;
+		*border-bottom: 1px solid #000;
+				
 		h4 {
 			@include font-navigation(600, 14px, $baseLineHeight);
 			a { color: $nearBlack; }
@@ -275,6 +297,8 @@ nav.utils {
 				border-bottom: 1px solid $grayLighter; 
 				margin: 5px 0;
 				padding-bottom: 5px;
+				
+				// Won't be seen in IE7
 				&:last-child { border-bottom: none; }
 			}
 		}
@@ -283,7 +307,7 @@ nav.utils {
 			color: lighten($gray, 20%);
 			@include font-sans-serif(normal, 11px);
 			text-transform:uppercase;
-			display: inline-block;
+			@include ie-inline-block;
 		}
 		
 		.featured {
@@ -315,20 +339,23 @@ nav.utils {
 			padding-right: $fluidGridGutterWidth;
 			&.last {
 				border-right: none;
+				padding-right: 0;
 			}
 		}
 		
 		ul.content-types {
 			li {
-				display: inline-block;
+				@include ie-inline-block;
 				padding: 0 8px;
 				border-right: 1px solid $grayLighter;
+				
+				// Won't be seen in IE7
 				&:last-child { border-right: none; }
 			}
 		}
 		
 		&#events-mega .section { 
-			min-height: 280px;
+			min-height: 230px;
 			.event-link { color: $linkColor; }
 		}
 		
@@ -389,4 +416,8 @@ nav.utils {
 			}
 		}
 	}
+}
+
+.live-update, .hero {
+	
 }
