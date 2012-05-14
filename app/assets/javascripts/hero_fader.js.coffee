@@ -28,6 +28,7 @@ class scpr.HeroFader
         @active = $(@options.slide + "." + @options.activeClass)
         @active = if @active.length then @active else $(@options.slide + ':last')
         
+
         # Figure out which slide is next
         @next = next or (if @active.next().length then @active.next() else $(@options.slide + ':first'))
         
@@ -41,18 +42,16 @@ class scpr.HeroFader
             $(@options.chooser + "[#{@options.slideId}='#{@active.attr("id")}']").removeClass("active")
 
             # Now fade in the next slide on top of the last-active slide
-            @active.css
-                opacity: 1.0
+            @active.show()
             .addClass(@options.lastActiveClass)
             .removeClass(@options.activeClass)
-            .animate({opacity: 0.0}, @options.fadeSpeed)
             
-            @next.css
-                opacity: 0.0
+            @next.hide()
             .addClass(@options.activeClass)
-            .animate({opacity: 1.0}, @options.fadeSpeed, =>
-                @active.removeClass @options.activeClass + " " + @options.lastActiveClass
+            .fadeIn(@options.fadeSpeed, =>
+                @active.removeClass(@options.lastActiveClass)
             )
+
 
             # Set the time until the next fade
             @fadeQueue()

@@ -349,13 +349,14 @@ nav.section-nav {
 		.chooser {
 			border:4px solid $white;
 			@include border-radius(10px);
-			@include hide-text();
+//			@include hide-text(); // IE7 - Messes up the choosers alignment
 			@include ie-inline-block;
-			margin:0 5px;
+			vertical-align: bottom;
+			margin:0 5px 5px 5px;
 			width: 10px;
 			height: 10px;
 			@include opacity(0.3);
-			
+
 			&:hover {
 				cursor: pointer;
 				background-color:$nearBlack;
@@ -374,7 +375,7 @@ nav.section-nav {
 		margin: 0 auto;
 		.slide {
 			z-index: 8;
-			@include opacity(0);
+			visibility: hidden;
 			position: relative; // to make opacity happy in IE
 			img {
 				width: 100%;
@@ -407,12 +408,12 @@ nav.section-nav {
 			}
 		
 			&.active {
+				visibility: visible;
 				z-index: 10;
-				@include opacity(1);
 			}
-			&.last-active { 
+			&.last-active {
+				visibility: visible;
 				z-index: 9;
-				@include opacity(1);
 			}
 		}
 	}

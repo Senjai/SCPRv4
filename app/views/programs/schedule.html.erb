@@ -29,7 +29,7 @@
 		<%# Group by day, remove Tuesday, Wednesday, and Thursday (because they're the same as Monday), sort, and then rotate to get Monday first %>
 		<% @schedule_slots.group_by(&:day).reject { |d| [2,3,4].include? d }.sort.rotate!.each do |day, slots| %>
 			<h2><%= Date::DAYNAMES[day.to_i] %> <%= " - Thursday" if day == 1 %></h2>
-			<% slots.each do |slot| %>
+			<% slots.sort_by(&:start_time).each do |slot| %>
 				<div class="row-fluid">
 					<div class="span6"><%= slot.format_time %></div>
 					<div class="span18"><%= link_to slot.program, slot.programme.link_path %></div>
