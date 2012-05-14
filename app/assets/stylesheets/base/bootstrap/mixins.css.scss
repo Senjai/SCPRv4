@@ -215,6 +215,17 @@
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($startColor)}', endColorstr='#{ie-hex-str($endColor)}', GradientType=0); // IE9 and down, gets no color-stop at all for proper fallback
 }
+@mixin gradient-vertical-four-stops($startColor: #fff, $colorStopTop: 1%, $midTopColor: #ddd, $colorStopMidTop: 2%, $midBottomColor: #999, $colorStopMidBottom: 98%, $endColor: #888, $colorStopBottom: 100%) {
+  background-color: mix($midTopColor, $endColor, 80%);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop($colorStopTop, $startColor), color-stop($colorStopMidTop, $midTopColor), color-stop($colorStopMidBottom, $midBottomColor), color-stop($colorStopBottom, $endColor));
+  background-image: -webkit-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -moz-linear-gradient(top, $startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -ms-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -o-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(lighten($startColor, 10%))}', endColorstr='#{ie-hex-str($endColor)}', GradientType=0); // IE9 and down, gets no color-stop at all for proper fallback
+}
 @mixin gradient-radial($innerColor: #555, $outerColor: #333)  {
   background-color: $outerColor;
   background-image: -webkit-gradient(radial, center center, 0, center center, 460, from($innerColor), to($outerColor));
