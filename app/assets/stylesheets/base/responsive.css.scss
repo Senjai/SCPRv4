@@ -86,9 +86,7 @@ $mediaSmallPortrait: 320px;
 		.events-forum {
 			border: none !important;
 			padding-left: 0 !important;
-			.mq-row-fluid {
-				@include makeFluidRow;
-			}
+			.event > .row-fluid { @include makeFluidRow; }
 		}
 	}
 	
@@ -471,24 +469,7 @@ $mediaSmallPortrait: 320px;
 @media screen and (max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
 	// vertify the lead stories //
 		#main {
-			.homepage-lead {
-				&.default, &.lead-right {
-					@include vertify;
-					.offleads {
-						@include makeFluidRow;
-						.span8:last-child .cbase.offlead { border-right: none; }
-						.cbase.offlead {
-							padding-right: 10px;
-							border-right: 1px solid $grayLighter;
-							
-							// override
-							border-top: none;
-							padding-top: 0;
-							margin-top: 0;
-						}
-					}
-				}
-			}
+			.homepage-lead { @include vertify; }
 		}
 	// end //
 }
