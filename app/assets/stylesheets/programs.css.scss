@@ -36,15 +36,11 @@ $headShotWidth: 90px;
 
 .programs-list {
 	@include font-serif;
-	a {
-		&:hover {
-			text-decoration: none;
-		}
-		li {
+	li {
+		&:hover { background-color: $nearWhite; }
+		a { 
+			display: block;
 			padding: 5px;
-			&:hover {
-				background-color: $nearWhite;
-			}
 		}
 	}
 }

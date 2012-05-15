@@ -50,7 +50,6 @@ GEM
     addressable (2.2.7)
     arel (3.0.2)
     blankslate (2.1.2.4)
-    bootstrap-sass (2.0.2)
     builder (3.0.0)
     capistrano (2.11.2)
       highline
@@ -276,7 +275,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass
   capistrano
   capybara
   chronic
@@ -310,7 +308,7 @@ DEPENDENCIES
   rspec-rails
   ruby-mp3info
   rubypython
-  sass (~> 3.2.0.alpha.35)
+  sass
   sass-rails
   shoulda-matchers
   therubyracer

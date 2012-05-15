@@ -53,7 +53,7 @@ Scprv4::Application.routes.draw do
   match '/programs/:show/:year/:month/:day/' => "programs#episode", :as => :episode
   match '/programs/:show(/page/:page)' => 'programs#show', :as => :program, :constraints => { :page => /\d+/ }
   match '/programs/' => 'programs#index', :as => :programs
-  
+  match '/schedule/' => 'programs#schedule', as: :schedule
   
   # -- Events -- #
   ## forum static pages

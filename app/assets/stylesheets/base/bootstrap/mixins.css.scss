@@ -33,6 +33,7 @@
   }
 }
 
+
 /* IE 7 */
 @mixin ie7-restore-right-whitespace() {
   *margin-right: .3em;
@@ -214,6 +215,17 @@
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($startColor)}', endColorstr='#{ie-hex-str($endColor)}', GradientType=0); // IE9 and down, gets no color-stop at all for proper fallback
 }
+@mixin gradient-vertical-four-stops($startColor: #fff, $colorStopTop: 1%, $midTopColor: #ddd, $colorStopMidTop: 2%, $midBottomColor: #999, $colorStopMidBottom: 98%, $endColor: #888, $colorStopBottom: 100%) {
+  background-color: mix($midTopColor, $endColor, 80%);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop($colorStopTop, $startColor), color-stop($colorStopMidTop, $midTopColor), color-stop($colorStopMidBottom, $midBottomColor), color-stop($colorStopBottom, $endColor));
+  background-image: -webkit-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -moz-linear-gradient(top, $startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -ms-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -o-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(lighten($startColor, 10%))}', endColorstr='#{ie-hex-str($endColor)}', GradientType=0); // IE9 and down, gets no color-stop at all for proper fallback
+}
 @mixin gradient-radial($innerColor: #555, $outerColor: #333)  {
   background-color: $outerColor;
   background-image: -webkit-gradient(radial, center center, 0, center center, 460, from($innerColor), to($outerColor));
@@ -343,48 +355,46 @@
 //   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
 // }
 
-// The Grid
-// @mixin gridCore($gridColumnWidth, $gridGutterWidth) {
-// 	.row {
-// 		margin-left: $gridGutterWidth * -1;
-// 	    @include clearfix();
-// 	
-// 		> [class*="span"] {
-// 		  float: left;
-// 		  margin-left: $gridGutterWidth;
-// 		}
-// 
-// 		@for $i from 1 through $gridColumns {
-// 		  > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
-// 		}
-// 
-// 		@for $i from 1 through $gridColumns {
-// 		  > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
-// 		}
-// 	}
-// 
-//   .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
-//     @include gridCoreSpan($gridColumns, $gridColumnWidth, $gridGutterWidth);
-//   }
-// }
 
-// @mixin gridCoreSpan($columns, $gridColumnWidth, $gridGutterWidth) {
-//   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
-// }
 
-// @mixin gridCoreOffset($columns, $gridColumnWidth, $gridGutterWidth) {
-//   margin-left: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)) + ($gridGutterWidth * 2);
-// }
+// Fixed Grid
+@mixin gridCore($gridColumnWidth, $gridGutterWidth) {
+	.row {
+		margin-left: $gridGutterWidth * -1;
+	    @include clearfix();
+	
+		> [class*="span"] {
+		  float: left;
+		  margin-left: $gridGutterWidth;
+		}
 
+		@for $i from 1 through $gridColumns {
+		  > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
+		}
+
+		@for $i from 1 through $gridColumns {
+		  > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
+		}
+	}
+
+  .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+    @include gridCoreSpan($gridColumns, $gridColumnWidth, $gridGutterWidth);
+  }
+}
+
+@mixin gridCoreSpan($columns, $gridColumnWidth, $gridGutterWidth) {
+  width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
+}
+
+@mixin gridCoreOffset($columns, $gridColumnWidth, $gridGutterWidth) {
+  margin-left: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)) + ($gridGutterWidth * 2);
+}
+
+
+
+// Fluid Grid
 @mixin gridFluidSpan($columns, $fluidGridColumnWidth, $fluidGridGutterWidth) {
 	width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 2));
-	// IE 7
-	// The following should go away, it's just here until we drop IE 7 support.
-	float: left;
-	margin: 0 $fluidGridGutterWidth;
-	&:first-child { margin-left: 0; }
-	&:last-child { margin-right: 0; }
-
 }
 
 @mixin makeFluidRow {
@@ -392,14 +402,14 @@
     @include clearfix();
     > [class*="span"] {
       float: left;
-      margin: 0 $fluidGridGutterWidth;
+      margin-left: $fluidGridGutterWidth * 2;
+	  
+	  // IE7 - Because it rounds half-pixels up and causes divs to wrap if this isn't set
+	  clear: right;
     }
     > [class*="span"]:first-child {
       margin-left: 0;
     }
-	> [class*="span"]:last-child {
-		margin-right: 0;
-	}
     @for $i from 1 through $gridColumns {
       > .span#{$i} { @include gridFluidSpan($i, $fluidGridColumnWidth, $fluidGridGutterWidth); }
     }
@@ -408,42 +418,6 @@
 
 @mixin gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth) {
 	.row-fluid { @include makeFluidRow; }
-}
-
-// @mixin gridInput($gridColumnWidth, $gridGutterWidth) {
-//   @for $i from 1 through $gridColumns {
-//     input.span#{$i}, textarea.span#{$i}, .uneditable-input.span#{$i} { @include gridInputSpan($i, $gridColumnWidth, $gridGutterWidth); }
-//   }
-// 
-//   input, textarea, .uneditable-input {
-//     margin-left: 0; // override margin-left from core grid system
-//   }
-// }
-
-// @mixin gridInputSpan($columns, $gridColumWidth, $gridGutterWidth) {
-//   width: (($gridColumnWidth) * $columns) + ($gridGutterWidth * ($columns - 1)) - 10;
-// }
-
-@mixin vertify {
-	> .row-fluid {
-		> [class*="span"] {
-	    	float: none;
-			display: block;
-			width: 100%;
-			margin: 0;
-		}
-
-		// IE 7
-		// This needs to die but unfortunately the *= syntax is CSS3 and IE7/8 don't support it! :-o
-		@for $i from 1 through $gridColumns {
-	      > .span#{$i} { 
-			float: none;
-			display: block;
-			width: 100%;
-			margin: 0;
-		  }
-	   }
-	}
 }
 
 @mixin makeFluidColumn($columns) {

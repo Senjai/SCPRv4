@@ -1,6 +1,6 @@
 /* DARK THEME FOR VIDEO SECTIONS & OTHER PLACES WHERE THE FOCUS IS ON VISUAL CONTENT */
 html {height:100%;}
-.dark-theme {	
+.dark-theme {
 	h1, h2, h3, h4, h5, h6, h7 {
 		color: $gray;
 	}
@@ -19,16 +19,16 @@ html {height:100%;}
 			@include opacity(1);
 		}
 	}
-	
-	background: $black;
-	@include background-image(linear-gradient(lighten($black, 13%), $black));
+
+	@include gradient-vertical(lighten($black, 13%), $black);
+	background-color: $black; // override since the disqus comments load after the gradient has already been calculated	
 	background-repeat: no-repeat;
 	color:$gray;
 	margin:0;
 	height:100%;
 	
 	.alert-message.warning {
-		@include background-image(linear-gradient(lighten($nearBlack, 13%), $nearBlack));
+		@include gradient-vertical(lighten($nearBlack, 13%), $nearBlack);
 		border:none;
 		border-radius:0;
 		border-bottom:1px solid $black;
@@ -62,89 +62,84 @@ html {height:100%;}
 				margin-left:0;
 			}
 		}
-		// Site Utilities
-		nav.utils {
-			a { color: $gray;}
-			ul li { border-color: $grayDark; }
+	}
+	// Site Utilities
+	nav.utils {
+		a { color: $gray;}
+		ul li { border-color: $grayDark; }
+	}
+
+	// Site Nav
+	.nav-primary {
+		$this_borderColor: lighten($black, 15%);
+		@include gradient-vertical-four-stops($this_borderColor, 1%, darken($nearBlack, 5%), 2%, $black, 98%, $this_borderColor, 99%);
+		border-color: $this_borderColor;
+
+		.sections ul li.listen-live {
+			@include gradient-vertical-four-stops($this_borderColor, 1%, $nearBlack, 2%, lighten($black, 5%), 98%, $this_borderColor, 99%);
+			&:hover {
+				@include gradient-vertical(darken(#cb5f1d, 5%), darken(#9b4816, 5%));
+			}
+			a {
+				background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+				@include opacity (0.7);
+				padding-left:33px;
+				padding-right:22px;
+				&:hover {
+					background-color:transparent;
+					color:$white;
+					@include opacity (1);
+				}
+			}
 		}
 	
-		// Site Nav
-		.nav-primary {
-			@include background-image(linear-gradient(darken($nearBlack, 5%), $black));
-			background-color:#7f7f7f;
-			border:1px solid $black;
-			border-left:1px solid lighten($black, 18%);
-			border-top:1px solid lighten($black, 18%);
-			.sections ul li.listen-live {
-				@include background-image(linear-gradient(darken($grayDark, 8%), darken($nearBlack, 10%)));
-				background-color:darken($grayDark, 5%);
-				&:hover {
-					@include background-image(linear-gradient(darken(#cb5f1d, 5%), darken(#9b4816, 5%)));
-				}
-				a {
-					background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
-					@include opacity (0.7);
-					padding-left:33px;
-					padding-right:22px;
-					&:hover {
-						background-color:transparent;
-						color:$white;
-						@include opacity (1);
-					}
-				}
-			}
-		
-			.sections ul li a {	
-				color:$gray;
-				&:hover, &.hover {
-					background-color:darken($nearBlack, 3%);
-					color:$white;
-					$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
-					@include box-shadow($nav-shadow);
-				}
-			}
-		
-			form fieldset {
-				input.search {
-					background-color:$nearBlack;
-					border:1px solid $black;
-					color:$nearWhite;
-					&:focus {
-					    border-color:$grayDark;
-						$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
-					    @include box-shadow($shadow);
-					}
-				}
-				input:-moz-placeholder {color: darken($gray, 10%);}
-				input::-webkit-input-placeholder {color: darken($gray, 10%);}
-				input.submit {
-					background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
-				}
-			}
-		
-			.section-mega {
+		.sections ul li a {	
+			color:$gray;
+			&:hover, &.hover {
 				background-color:darken($nearBlack, 3%);
-				$mega-shadow:0 5px 6px $black;
-				@include box-shadow($mega-shadow);
-				h6 { color:$white; }
-				a { color:$gray; }
-				.blog-title a { color:$grayLight; }
-				
-				ul.cbase li, 
-				.section, 
-				ul.content-types li, 
-				.section.programs a:first-child { border-color: $grayDark; }
-				
-				&#programs-mega .section.programs a {
-					&:hover { background-color: $nearBlack; }
-					p { color: $gray; }
-				}
-				
-				&#support-mega .section .pledge a { color: $white; }
-				
+				color:$white;
+				$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
+				@include box-shadow($nav-shadow);
 			}
-		} // nav-primary
-	} // masthead
+		}
+	
+		form {
+			input.search {
+				background-color:$nearBlack;
+				border:1px solid $black;
+				color:$nearWhite;
+				&:focus {
+				    border-color:$grayDark;
+					$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+				    @include box-shadow($shadow);
+				}
+			}
+			input:-moz-placeholder {color: darken($gray, 10%);}
+			input::-webkit-input-placeholder {color: darken($gray, 10%);}
+		}
+	}
+	
+	.section-mega {
+		background-color:darken($nearBlack, 3%);
+		$mega-shadow:0 5px 6px $black;
+		@include box-shadow($mega-shadow);
+		h6 { color:$white; }
+		a, .featured h4 a { color:$gray; }
+		.blog-title a { color:$grayLight; }
+		
+		ul.cbase li, 
+		.section, 
+		ul.content-types li, 
+		&#programs-mega .section.programs a:first-child { border-color: $grayDark; }
+		
+		&#programs-mega .section.programs a {
+			&:hover { background-color: $nearBlack; }
+			p { color: $gray; }
+		}
+		
+		&#support-mega .section .pledge a { color: $white; }
+		
+	}
 	
 	
 	// MAIN BODY
