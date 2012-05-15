@@ -544,6 +544,9 @@ $mediaSmallPortrait: 320px;
 	// at that width.
 	.container-fluid { min-width: 300px; }
 	#events-header { min-width: 0; }
+	#page-footer footer .footer-nav {
+		background:none;
+	}
 }
 
 
