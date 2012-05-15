@@ -239,6 +239,7 @@ $navHeight: 36px;
 				@include border-radius(20px);
 				padding:0px 8px;
 				line-height: 0; // Keep the text vertically-centered
+				*line-height: $baseLineHeight; // IE7 doesn't show text if its line-height is 0
 				width: 70%;
 				&:focus {
 					outline: none;
