@@ -33,6 +33,12 @@ $footerBackground: #2e2e2e;
 	.footer-mast {
 		border-bottom: 1px solid $grayAlt;
 		margin-bottom: 10px;
+		&:after {
+			content: "";
+			border-bottom: 1px solid #3D3D3D;
+			display:block;
+			margin-bottom: 3px;
+		}
 	}
 	
 	ul {
@@ -146,6 +152,9 @@ $footerBackground: #2e2e2e;
 	}
 	
 	.footer-nav {
+		background-image: url(image_path('footer-divider-bg.png'));
+		background-repeat: repeat-y;
+		background-position:-15px 0;
 		.compact-nav-head {
 			display: none;
 			@include clearfix;
@@ -155,8 +164,6 @@ $footerBackground: #2e2e2e;
 				margin-top: 7px;
 			}
 		}
-		
-		background: $footerBackground;
 		margin-bottom: 10px;
 		li a { color:#bfbfbf; }
 		nav { margin-bottom: 10px; }
@@ -164,9 +171,8 @@ $footerBackground: #2e2e2e;
 		.section {
 			min-height: 260px;
 			padding-left: 10px;
-			border-left: 1px solid $grayDark;
 			&.first {
-				border-left: none;
+				padding-left:0;
 			}
 		}
 	}

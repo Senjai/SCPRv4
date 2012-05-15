@@ -47,8 +47,8 @@ $baseline:          $baseLineHeight;
 
 // Grid
 $gridColumns: 24;
-$gridColumnWidth: 37.084px; // We only use this value to calculate percentages for the fluid grid
-$gridGutterWidth: 10px;
+$gridColumnWidth: 27.92px; // We only use this value to calculate percentages for the fluid grid
+$gridGutterWidth: 20px;
 $gridRowWidth: ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
 $siteWidth: $gridRowWidth + $containerPadding * 2;
 
