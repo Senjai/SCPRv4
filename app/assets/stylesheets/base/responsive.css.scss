@@ -144,14 +144,6 @@ $mediaSmallPortrait: 320px;
 	// end latest videos
 	
 	#program-external-header { @include makeFluidRow; }
-	
-	.archive-strip {
-		> .row-fluid .span8:last-child .event { border-bottom: none; }
-		.event { 
-			border-bottom: 1px solid $grayLighter; 
-			.row-fluid { @include makeFluidRow; }
-		}
-	}
 }
 
 
@@ -272,6 +264,18 @@ $mediaSmallPortrait: 320px;
 	
 		.events-header-small { display: block; }
 	// end Forum Events Header
+	
+	// Keep each archive strip event horizontal
+	.archive-strip {
+		@include vertify;
+		> .row-fluid .span8:last-child .event { border-bottom: none; }
+		.event { 
+			border-bottom: 1px solid $grayLighter; 
+			> .row-fluid { 
+				@include makeFluidRow;
+			}
+		}
+	}
 	
 	.section-nav-header { display: none; }
 	#events-event-detail { @include gridFluidSpan(24); }
