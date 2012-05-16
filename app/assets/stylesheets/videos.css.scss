@@ -13,6 +13,13 @@
 }
 
 #multimedia {
+	&.dark-theme #masthead {
+		.logo a.logo-img {
+			background-image: url(image_path('logo-masthead-video.png'));
+			width: 318px;
+		}
+	}
+		
 	.video {
 		margin-top: 60px;
 		.contentasset img { @include video-effects; }
