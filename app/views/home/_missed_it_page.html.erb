@@ -1,7 +1,7 @@
 <div class="carousel-section">
 	<div class="row-fluid">
 		<% contents.each do |extra_content| %>
-			<div class="span2">
+			<div class="span4">
 				<div class="carousel-item">
 					<%= render_asset extra_content.content, "lsquare", true %>
 					<span class="title"><%= link_to extra_content.content.headline, extra_content.content.link_path %></span>

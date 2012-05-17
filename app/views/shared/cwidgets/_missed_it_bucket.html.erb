@@ -4,10 +4,10 @@
 			<% object.missed_it_bucket.contents.limit(5).each do |content| %> <%# content is a MissedItContent object %>
 				<div class="missed-it-content carousel-item">
 					<div class="row-fluid">
-						<div class="span4">
+						<div class="span8">
 							<%= render_asset content.content, "thumb" %>
 						</div>
-						<div class="span8">
+						<div class="span16">
 							<%= link_to content.content.headline, content.content.link_path %>
 							<h4><%= format_date content.content.published_at, format: "event" %>
 						</div>

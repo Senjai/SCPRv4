@@ -56,7 +56,7 @@
 	}
 	
 	a.inline {
-		background: url(image_path('icons/tiny-listen.png')) no-repeat 2px 5px;
+		background: url(image_path('icons/tiny-listen.png')) no-repeat 2px 50%;
 		@include ie-inline-block;
 		padding-left: 17px;
 	}
@@ -124,6 +124,11 @@
 	display: none;
 	$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
 	@include box-shadow($nav-shadow);
+	
+	// IE7, doesn't know box-shadow so fallback to border
+	*border-top: 1px solid #000;
+	*border-left: 1px solid #000;
+	*border-right: 1px solid #000;
 		
 	&.active { display: block; }
 	
@@ -227,7 +232,7 @@
 			@include border-radius(6px);
 			@include box-shadow(inset 0 1px 0 rgba(0,0,0,.35));
 			.jp-play-bar {
-				@include background-image(linear-gradient(rgba(0,0,0,.35), #03b9f2 5%, darken(#03b9f2, 8%)));
+				@include gradient-vertical-three-colors(rgba(0,0,0,.35), #03b9f2, 5%, darken(#03b9f2, 8%));
 				background-color:#03b9f2;
 				height:8px;
 				@include border-radius(6px);
@@ -871,6 +876,7 @@ a.comment-count.inline {
 	input.email {
 		background:url(image_path('icons/newsletter-subscribe.png')) no-repeat 4px 3px;
 		padding-left:30px;
+		width:60%;
 		&[placeholder] {
 			color:#5f5f5f;
 		}
@@ -909,7 +915,7 @@ a.comment-count.inline {
 		line-height: 18px;
 	}
 	.count {
-		@include background-image(linear-gradient(#fff, $nearWhite));
+		@include gradient-vertical(#fff, $nearWhite);
 		@include border-radius(4px);
 		@include font-headline();
 		border:1px solid $grayLighter;

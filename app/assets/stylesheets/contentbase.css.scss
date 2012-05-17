@@ -119,11 +119,6 @@ time.smart {
 }
 
 .cbase.offlead {
-	&:last-child {
-		hr {
-			display:none;
-		}
-	}
     h3 {
 		@include font-headline();
     	margin-bottom:0;

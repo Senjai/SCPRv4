@@ -65,6 +65,11 @@ class ProgramsController < ApplicationController
     rescue
       redirect_to program_path(@program)
   end
+
+  def schedule
+    @schedule_slots = Schedule.all
+    render layout: "application"
+  end
   
   protected
     def get_ambiguous_program
@@ -81,4 +86,5 @@ class ProgramsController < ApplicationController
       @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
       @featured_programs.sort_by! { |program| KpccProgram::Featured.index(program.slug) } # Orders the returned records by the order of the KpccProgram::Featured array
     end
+    
 end

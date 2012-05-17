@@ -146,8 +146,7 @@ body.listen {
 		@include border-radius(6px);
 		position:relative;
 		&:after {
-			background-color:#e0e0e0;
-			@include background-image(linear-gradient(#fff, #dfe1e3));
+			@include gradient-vertical(#fff, #dfe1e3);
 			@include box-shadow(0 1px 0 rgba(0,0,0,.15));
 			border:1px solid #a1a5a5;
 			content: "";
