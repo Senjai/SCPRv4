@@ -18,7 +18,7 @@ $nearWhite: lighten(#000, 96%);
 	border: 1px solid darken($nearWhite, 10%);
 }
 
-.audio-bar {
+.audio-bar.active {
 	// IE7/8, don't know box-shadow so fallback to border
 	border-top: 1px solid #000;
 	border-left: 1px solid #000;
