@@ -1,7 +1,7 @@
 <h1>KPCC Programs</h1>
 
 <ul id="featured-programs" class="list-blocks">
-	<% @featured_programs.each do |program| %> <%# TODO Need to properly order these %>
+	<% @featured_programs.each do |program| %>
 		<a href="<%= program_path(program) %>">
 		    <li class="headshot <%=program.slug%>">
 				<h4><%= program.title %></h4>

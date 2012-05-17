@@ -46,15 +46,34 @@ $baseline:          $baseLineHeight;
 
 
 // Grid
-$gridColumns:       24;
-$gridColumnWidth: 32.5px;
-$gridGutterWidth: 15px;
-$gridRowWidth:      ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
+$gridColumns: 24;
+$gridColumnWidth: 27.92px; // We only use this value to calculate percentages for the fluid grid
+$gridGutterWidth: 20px;
+$gridRowWidth: ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
+$siteWidth: $gridRowWidth + $containerPadding * 2;
+
+$mediaMax: $siteWidth; // The maximum we care about, after this it's just fixed-grid
+$mediaDesktopSmall: 960px;
 
 // Fluid Grid
 $fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
 $fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
 
+// For aligning an asset. Apply to an asset-block.
+@mixin assetAlign($align: left) {
+	@if $align == left {
+		margin-left: 0;
+		margin-right: auto;
+	} @else if $align == center {
+		margin-left: auto;
+		margin-right: auto;
+	} @else if $align == right {
+		margin-left: auto;
+		margin-right: 0
+	}
+	
+	.contentasset { text-align: $align; }
+}
 
 // Clearfix for clearing floats like a boss h5bp.com/q
 @mixin clearfix {
@@ -87,7 +106,6 @@ $analog2:           spin($baseColor, -22);
 // MIXINS
 // ------
 
-// mixin for getting IE to respect inline-block
 @mixin hide-text() {
 	text-indent: 100%;
 	white-space: nowrap;
@@ -117,6 +135,18 @@ $analog2:           spin($baseColor, -22);
 	padding-top: $vertical;
 	padding-bottom: $vertical;
 }
+
+
+// Visibility utilities
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+.visible-reader { display: none; }
+.hidden-reader { display: block; }
+
+
+
 .inner-container {
 	@include box-padding(10px, 10px);
 }
@@ -249,8 +279,7 @@ a {
 
 // Buttons
 @mixin btnColor($primaryColor, $secondaryColor) {
-  background-color:$blueDark;
-  @include background-image(linear-gradient($primaryColor, $secondaryColor));
+  @include gradient-vertical($primaryColor, $secondaryColor);
   text-shadow: 0 -1px 0 rgba(0,0,0,.75);
   border-color: $secondaryColor $secondaryColor darken($secondaryColor, 15%);
   border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
@@ -260,7 +289,7 @@ a {
 	  // .button(#1174C6);
 	  cursor: pointer;
 	  @include ie-inline-block;
-	  @include background-image(linear-gradient(#fff, #fff 25%, darken(#fff, 10%)));
+	  @include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 10%));
 	  padding: 4px 14px;
 	  text-shadow: 0 1px 1px rgba(255,255,255,.75);
 	  color: #333;
@@ -276,7 +305,7 @@ a {
 	  &:hover {
 	    color: #333;
 	    text-decoration: none;
-		@include background-image(linear-gradient(#fff, #fff 25%, darken(#fff, 20%)))
+		@include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 20%));
 	  }
 	  @include transition(.1s linear all);
 	  &.primary,
