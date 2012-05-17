@@ -77,9 +77,11 @@ class scpr.Audio
                         
             if @playing == 1
                 @player.jPlayer "pause"
+                console.log "paused"
                 @playing = 2
             else
                 @player.jPlayer "play"
+                console.log "played"
                 @playing = 1
 
             return true

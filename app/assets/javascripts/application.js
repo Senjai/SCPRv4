@@ -6,7 +6,7 @@
 //= require jquery_ujs
 
 //= require jquery.mousewheel.3.0.4
-//= require jquery.jplayer.min
+//= require jquery.jplayer
 //= require spin.js
 //= require moment
 //= require moment-strftime
