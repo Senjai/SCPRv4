@@ -1,45 +1,48 @@
+<% current = Schedule.where(:kpcc_program_id => 3).first %>
 <div class="broadcast-bar<%= " with-headshot" if KpccProgram::Featured.include? current.programme.try(:slug) %>" id="broadcast-bar">
 	<div class="bb-inner-container">
 		<div class="container-fluid">
-			<div class="section current-program">
-				<div class="current program">
-					<% if KpccProgram::Featured.include? current.programme.try(:slug) %>
-						<a href="<%= program_path(current.programme.slug) %>" class="headshot <%= current.programme.slug %>">&nbsp;</a>
-					<% end %>
-				
-					<div class="program-info">
-						<% if current.programme %>
-								<a href="<%= program_path(current.programme.slug) %>" class="show-title<%= " modal-toggler" if current.show_modal? %>" data-modal-id="<%= "episode-guide" if current.show_modal? %>"><%= current.program %></a>
-						<% else %>
-							<%= current.program %>
+			<div class="row-fluid">
+				<div class="span12" id="bb-current-program">
+					<div class="current program">
+						<% if KpccProgram::Featured.include? current.programme.try(:slug) %>
+							<a href="<%= program_path(current.programme.slug) %>" class="headshot <%= current.programme.slug %>">&nbsp;</a>
 						<% end %>
-						<span class="show-time"><%= current.start_time.strftime(current.start_time.min == 0 ? "%l %P" : "%l:%M %P") %> - <%= current.end_time.strftime(current.end_time.min == 0 ? "%l %P" : "%l:%M %P") %></span>
-					</div> <!-- program-info -->
 			
-					<% if current.show_modal? %>
-						<div class="modal-container">
-							<%= modal("episode-guide", modal_id: "episode-guide") do %>
-								<%= render :partial => "shared/broadcast_bar/episode_guide", :object => current.programme.episodes.published.first, :as => :episode, :locals => { :program => current.programme } %>
-							<% end %>
-						</div>
-					<% end %>
-				</div> <!-- current program -->
-			</div> <!-- section -->
-	
-			<div class="section next-program">
-				<div class="next program">
-					<% if up_next = current.up_next %>
 						<div class="program-info">
-							<% if up_next.programme %>
-								<a href="<%= program_path(up_next.programme.slug) %>" class="show-title"><%= up_next.program %></a>
+							<% if current.programme %>
+									<a href="<%= program_path(current.programme.slug) %>" class="show-title<%= " modal-toggler" if current.show_modal? %>" data-modal-id="<%= "episode-guide" if current.show_modal? %>"><%= current.program %></a>
 							<% else %>
-								<%= up_next.program %>
+								<%= current.program %>
 							<% end %>
-							<span class="show-time"><%= up_next.start_time.strftime(up_next.start_time.min == 0 ? "%l %P" : "%l:%M %P") %> - <%= up_next.end_time.strftime(up_next.end_time.min == 0 ? "%l %P" : "%l:%M %P") %></span>
+							<span class="show-time"><%= current.start_time.strftime(current.start_time.min == 0 ? "%l %P" : "%l:%M %P") %> - <%= current.end_time.strftime(current.end_time.min == 0 ? "%l %P" : "%l:%M %P") %></span>
 						</div> <!-- program-info -->
-					<% end %>
-				</div> <!-- next program -->
-			</div> <!-- section -->
+		
+						<% if current.show_modal? %>
+							<div class="modal-container">
+								<%= modal("episode-guide", modal_id: "episode-guide") do %>
+									<%= render :partial => "shared/broadcast_bar/episode_guide", :object => current.programme.episodes.published.first, :as => :episode, :locals => { :program => current.programme } %>
+								<% end %>
+							</div>
+						<% end %>
+					</div> <!-- current program -->
+				</div> <!-- span -->
+	
+				<div class="span12" id="bb-next-program">
+					<div class="next program">
+						<% if up_next = current.up_next %>
+							<div class="program-info">
+								<% if up_next.programme %>
+									<a href="<%= program_path(up_next.programme.slug) %>" class="show-title"><%= up_next.program %></a>
+								<% else %>
+									<%= up_next.program %>
+								<% end %>
+								<span class="show-time"><%= up_next.start_time.strftime(up_next.start_time.min == 0 ? "%l %P" : "%l:%M %P") %> - <%= up_next.end_time.strftime(up_next.end_time.min == 0 ? "%l %P" : "%l:%M %P") %></span>
+							</div> <!-- program-info -->
+						<% end %>
+					</div> <!-- next program -->
+				</div> <!-- span -->
+			</div> <!-- row-fluid -->
 		</div> <!-- container-fluid -->
 	</div> <!-- bb-inner-container -->
 </div>

@@ -161,6 +161,7 @@ body {
 	}
 	
 	.program-info {
+		line-height: $baseLineHeight / 2;
 		a.show-title {
 			@include font-heading($weight: 600, $size: 22px);
 			text-shadow:1px 1px 0px #fff;
@@ -176,34 +177,31 @@ body {
 		}
 	}
 	
-	.section {
-		width: 50%;
-		float: left;
-		padding-top: 10px;
+	.program {
+		margin-top: 10px;
+		padding-left: 70px;// Room for the status badge
+		background-position: 0 0;
+		background-repeat: no-repeat;
+		line-height: $baseLineHeight;
+		min-height: 36px; // Broadcast bar height minus padding
 		
-		.program {
-			padding-left: 70px; // Room for the status badge
-			background-position: 0 0;
-			background-repeat: no-repeat;
-			line-height: $baseLineHeight;
-			height: 36px; // Broadcast bar height minus padding... sorry
+
 			
-			&.current {
-				float: left;
-				background-image: url(image_path("broadcast-bar/onair.png"));
-				a.modal-toggler {
-					background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
-					padding-right:15px;
-					&:hover {
-						background-position:right -34px;
-					}
+		&.current {
+			float: left;
+			background-image: url(image_path("broadcast-bar/onair.png"));
+			a.modal-toggler {
+				background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
+				padding-right:15px;
+				&:hover {
+					background-position:right -34px;
 				}
 			}
-	
-			&.next {
-				float: right;
-				background-image: url(image_path("broadcast-bar/upnext.png"));
-			}
+		}
+
+		&.next {
+			float: right;
+			background-image: url(image_path("broadcast-bar/upnext.png"));
 		}
 	}
 	

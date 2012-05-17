@@ -248,18 +248,17 @@ $mediaSmallPortrait: 320px;
 		
 			.missed-it-bucket {
 				.row-fluid hr:nth-of-type(3) { display: block; }
-				.span2 { 
-					@include gridFluidSpan(4);
+				.span4 { 
+					@include gridFluidSpan(8);
 					&:nth-of-type(4) { margin-left: 0; }
 				}
 			}
 		}
-		
-		.broadcast-bar .section {
-			width: 100%;
-			float: none;
-			&.next-program { display: none; }
-		}
+	}
+	
+	.broadcast-bar {
+		#bb-current-program { @include gridFluidSpan(24); }
+		#bb-next-program { display: none; }
 	}
 	
 	// since we're hiding the sidebars, remove the borders around more news
@@ -470,7 +469,7 @@ $mediaSmallPortrait: 320px;
 	
 	// Pledge Banner to Button & hide form
 		#masthead {
-			form { display: none; }
+			.search-form { display: none; }
 			.nav-primary .sections { width: 100%; }
 
 			#masthead-left-header-wrapper { @include gridFluidSpan(12); }			
