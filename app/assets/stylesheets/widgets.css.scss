@@ -121,11 +121,11 @@
 	position:fixed;
 	z-index:1000;
 	bottom: $baseline * -4;
-	display: none;
-	$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
-	@include box-shadow($nav-shadow);
-		
-	&.active { display: block; }
+
+	&.active { 
+		$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
+		@include box-shadow($nav-shadow);
+	}
 	
 	.section-left { 
 		@include gridFluidSpan(12);
