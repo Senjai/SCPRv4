@@ -48,11 +48,21 @@ header#masthead {
 // KPCC logo image
 .logo {
 	white-space:nowrap;
-	a, .fb-like { 
+	a, .fb-like {
 		@include ie-inline-block;
 		margin-top: 16px;
 		vertical-align: top;
 	}
+	
+	a.logo-img {
+		background-image: url(image_path('logo-masthead.png'));
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		text-decoration: none;
+		height: 42px;
+		width: 181px;
+	}
+	
 	.fb-like {
 		padding: 5px 0 0 10px;
 		min-width: 100px;
@@ -67,7 +77,7 @@ header#masthead {
 // Pledge
 .pledge-container {
 	@include ie-inline-block;
-	background: url(image_path("pledge-container-bg.jpg")) no-repeat bottom;
+	background: transparent url(image_path("pledge-container-bg.jpg")) no-repeat bottom;
 	height:72px;
 	max-height: 72px;
 	overflow: hidden;
@@ -167,9 +177,6 @@ $navHeight: 36px;
 	border-right:1px solid darken($nearWhite, 10%);
 	position: relative;
 	
-	// IE7 - Hacking a border onto the mega nav, since IE doesn't support color-stops
-	*border: 1px solid darken($nearWhite, 10%);
-	
 	nav.sections, .search-form {
 		@include ie-inline-block;
 	}
@@ -228,18 +235,16 @@ $navHeight: 36px;
 		height: 36px;
 		width: 20%;
 		
-		// IE7 just a hack to pull the search form up
-		*margin-top: -36px;
-		
 		form {
 			width: 100%;
-			margin: 7px 0 0 0; // push the form down a bit to vertically center
+			margin: 8px 0 0 0; // push the form down a bit to vertically center
+			line-height: 0; // Keep the text vertically-centered
+			
 			label { display:none; }
 			input.search {
 				@include border-radius(20px);
 				padding:0px 8px;
-				line-height: 0; // Keep the text vertically-centered
-				*line-height: $baseLineHeight; // IE7 doesn't show text if its line-height is 0
+				vertical-align: top;
 				width: 70%;
 				&:focus {
 					outline: none;
@@ -272,11 +277,6 @@ $navHeight: 36px;
 	z-index: 900;
 	$mega-shadow:0 2px 3px lighten($gray, 10%);
 	@include box-shadow($mega-shadow);
-	
-	// IE7 - Since IE7 doesn't support box-shadows, hack a border in
-	*border-left: 1px solid #000;
-	*border-right: 1px solid #000;
-	*border-bottom: 1px solid #000;
 			
 	li {
 		h4 {

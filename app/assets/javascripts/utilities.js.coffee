@@ -48,6 +48,11 @@ class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
 
     sizedCheck: (i) ->
         setTimeout () =>
+            # Use this opportunity to make the ad iframes have a transparent background, for IE7 / IE8
+            if $(".ad > iframe[allowtransparency!=allowtransparency]").length
+                console.log "adTransparent: attempt ##{i}:"
+                @makeTransparent()
+
             if $(".dfp:not(.adSized)").length
                 console.log "adSizer: Attempt ##{i}:"
                 @resizeIframes()
@@ -55,18 +60,21 @@ class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
 
     resizeIframes: ->
         $.each $(".dfp:not(.adSized) iframe"), (i, iframe) =>
-            console.log "Resizing #{$(iframe).attr("id")}..."
+            console.log "adSizer: Resizing #{$(iframe).attr("id")}..."
             $(iframe.contentWindow.document).ready () =>
                 ad = $(iframe.contentWindow.document).find("img, object, embed")[0]
-                console.log "ad is ", ad            
+                console.log "adSizer: ad is ", ad            
                 if $(ad).length
                     @resize(ad)
                     $(iframe).closest(".ad .dfp").addClass("adSized")
-                    console.log "Done."
+                    console.log "adSizer: Done."
 
     removeFixedDimensions: (element) ->
         $(element).removeAttr("width").removeAttr("height")
 
+    makeTransparent: ->
+        $(".ad > iframe[allowtransparency!=allowtransparency]").attr("allowtransparency", "allowtransparency")
+        console.log "adTransparent: Done."
 
 #----------
 

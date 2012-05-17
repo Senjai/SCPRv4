@@ -1,5 +1,4 @@
 /* DARK THEME FOR VIDEO SECTIONS & OTHER PLACES WHERE THE FOCUS IS ON VISUAL CONTENT */
-html {height:100%;}
 .dark-theme {
 	h1, h2, h3, h4, h5, h6, h7 {
 		color: $gray;
@@ -15,51 +14,41 @@ html {height:100%;}
 	.muted {
 		@include transition(opacity linear 0.2s);
 		@include opacity(0.4);
-		&:hover {
-			@include opacity(1);
-		}
+		&:hover { @include opacity(1); }
 	}
 
 	@include gradient-vertical(lighten($black, 13%), $black);
 	background-color: $black; // override since the disqus comments load after the gradient has already been calculated	
 	background-repeat: no-repeat;
 	color:$gray;
-	margin:0;
-	height:100%;
 	
 	.alert-message.warning {
 		@include gradient-vertical(lighten($nearBlack, 13%), $nearBlack);
 		border:none;
 		border-radius:0;
 		border-bottom:1px solid $black;
-		p {
-			color:$grayLighter;
-		}
+		p { color:$grayLighter; }
 	}
 	
 	#masthead {
-		.fb-like { display: none; }
-		.logo {
-			a {
-				background:url(image_path('logo-masthead-dark.png')) no-repeat 0 0;
-				text-decoration: none;
-				&:before { // So it doesn't wrap to the next line
-					content: url(image_path('video-masthead.png'));
-					margin-left:200px;
-				}
-				img { display:none; } // Hide the normal logo
+		#masthead-left-header-wrapper {
+			.logo a.logo-img {
+				background-image: url(image_path('logo-masthead-dark.png'));
 			}
+		
+			.fb-like { display: none; }
 		}
 
-		//Pledge Promo 
-		.pledge-container {
-			background:none;
-			img, .reporter {
-				display:none;
-			}
-			.pledge {
-				left:92px;
-				margin-left:0;
+		#masthead-mid-header-wrapper {
+			//Pledge Promo 
+			.pledge-container {
+				background:transparent;
+				iframe { background: transparent; }
+				
+				.pledge {
+					left:92px;
+					margin-left:0;
+				}
 			}
 		}
 	}

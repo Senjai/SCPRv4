@@ -541,7 +541,7 @@ $mediaSmallPortrait: 320px;
 	
 	// Basically, if this media query is being read by the browser, 
 	// then we can set a lower min-width than the default to allow 
-	// the responsive design to do its thing. Otherwise (IE 7), the 
+	// the responsive design to do its thing. Otherwise (IE7), the 
 	// default min-width (set to the $siteWidth) will keep the site 
 	// at that width.
 	.container-fluid { min-width: 300px; }
