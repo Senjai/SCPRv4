@@ -1,4 +1,3 @@
-<% current = Schedule.where(:kpcc_program_id => 3).first %>
 <div class="broadcast-bar<%= " with-headshot" if KpccProgram::Featured.include? current.programme.try(:slug) %>" id="broadcast-bar">
 	<div class="bb-inner-container">
 		<div class="container-fluid">
