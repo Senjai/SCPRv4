@@ -154,4 +154,18 @@ Scenario: Don't see a blog widget if the Kpcc Program doesn't have a blog
 	When I go to that program's page
 	Then I should not see the "recent posts" widget
 	
+Scenario: Quick Slug for a show
+	Given a kpcc program with the following attributes:
+	 | quick_slug | slug |
+	 | pm 		  | patt-morrison |
+	
+	When I visit the shallow path for that program
+	Then I should be on that program's page
 
+Scenario: Quick Slug is same as another page
+	Given a kpcc program with the following attributes:
+	 | quick_slug |
+	 | events 	  |
+	
+	When I visit the shallow path for that program
+	Then I should not be on that program's page

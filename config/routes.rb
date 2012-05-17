@@ -107,6 +107,11 @@ Scprv4::Application.routes.draw do
   match '/beta/' => "home#beta", :as => :beta
   match '/listen' => "home#listen", as: :listen
   match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
+  
+  KpccProgram.where("quick_slug != ?", '').each do |program|
+    match "/#{program.quick_slug}" => redirect("/programs/#{program.slug}")
+  end
+  
   root to: "home#index"
   
   # catch error routes

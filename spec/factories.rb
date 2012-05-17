@@ -45,6 +45,7 @@ end
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
     slug { title.parameterize }
+    quick_slug { title.parameterize.chars.first(5) }
     teaser "AirTalk, short teaser, etc."
     description "This is the description for AirTalk!"
     host "Larry Mantle"
