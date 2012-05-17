@@ -179,15 +179,13 @@ body {
 	
 	.program {
 		margin-top: 10px;
-		padding-left: 70px;// Room for the status badge
 		background-position: 0 0;
 		background-repeat: no-repeat;
 		line-height: $baseLineHeight;
 		min-height: 36px; // Broadcast bar height minus padding
-		
-
 			
 		&.current {
+			padding-left: 65px;// Room for the status badge
 			float: left;
 			background-image: url(image_path("broadcast-bar/onair.png"));
 			a.modal-toggler {
@@ -200,6 +198,7 @@ body {
 		}
 
 		&.next {
+			padding-left: 75px;// Room for the status badge
 			float: right;
 			background-image: url(image_path("broadcast-bar/upnext.png"));
 		}
