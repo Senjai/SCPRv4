@@ -118,22 +118,22 @@ namespace :scprv4 do
 end
 
 # testing tasks
-namespace :db do
-  namespace :test do |s|
-    s[:prepare].clear
-    
-    task :prepare => :environment do
-      if Rails.application.config.scpr.mercer_dump
-        # clear test database
-        s[:purge].invoke
-        
-        # load in mercer dump file
-        $stderr.puts "Dumping data from #{Rails.application.config.scpr.mercer_dump} into #{ActiveRecord::Base.configurations['test']['database']}"
-        `mysql #{ActiveRecord::Base.configurations['test']['database']} < #{Rails.application.config.scpr.mercer_dump}`
-        $stderr.puts "Mercer dump loaded."
-      else
-        raise "No mercer dump file specified for this environment."
-      end
-    end
-  end
-end
+# namespace :db do
+#   namespace :test do |s|
+#     s[:prepare].clear
+#     
+#     task :prepare => :environment do
+#       if Rails.application.config.scpr.mercer_dump
+#         # clear test database
+#         s[:purge].invoke
+#         
+#         # load in mercer dump file
+#         $stderr.puts "Dumping data from #{Rails.application.config.scpr.mercer_dump} into #{ActiveRecord::Base.configurations['test']['database']}"
+#         `mysql #{ActiveRecord::Base.configurations['test']['database']} < #{Rails.application.config.scpr.mercer_dump}`
+#         $stderr.puts "Mercer dump loaded."
+#       else
+#         raise "No mercer dump file specified for this environment."
+#       end
+#     end
+#   end
+# end

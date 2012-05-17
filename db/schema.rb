@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120327015211) do
+ActiveRecord::Schema.define(:version => 20120425181559) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -210,10 +210,6 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
 
   add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
-
-  create_table "blogs_remoteentry", :force => true do |t|
-    t.integer "comment_count", :default => 0, :null => false
-  end
 
   create_table "contentbase_category", :force => true do |t|
     t.string  "category",          :limit => 50,                   :null => false
@@ -712,56 +708,6 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
 
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
-  create_table "mailchimp_campaign", :force => true do |t|
-    t.text     "content",         :limit => 2147483647, :null => false
-    t.datetime "sent_date",                             :null => false
-    t.string   "name",                                  :null => false
-    t.string   "campaign_id",     :limit => 50,         :null => false
-    t.integer  "object_id"
-    t.integer  "content_type_id"
-    t.text     "extra_info",      :limit => 2147483647
-  end
-
-  add_index "mailchimp_campaign", ["content_type_id"], :name => "mailchimp_campaign_e4470c6e"
-
-  create_table "mailchimp_queue", :force => true do |t|
-    t.text    "type_opts",                  :limit => 2147483647,                    :null => false
-    t.boolean "segment_options_all",                              :default => false, :null => false
-    t.text    "contents",                   :limit => 2147483647,                    :null => false
-    t.string  "subject",                                                             :null => false
-    t.string  "campaign_type",              :limit => 50,                            :null => false
-    t.boolean "authenticate",                                     :default => false, :null => false
-    t.string  "title"
-    t.string  "from_email",                 :limit => 75,                            :null => false
-    t.boolean "segment_options",                                  :default => false, :null => false
-    t.string  "list_id",                    :limit => 50,                            :null => false
-    t.boolean "auto_tweet",                                       :default => false, :null => false
-    t.string  "from_name",                                                           :null => false
-    t.string  "folder_id",                  :limit => 50
-    t.boolean "generate_text",                                    :default => false, :null => false
-    t.string  "to_email",                   :limit => 75,                            :null => false
-    t.boolean "tracking_text_clicks",                             :default => false, :null => false
-    t.boolean "auto_footer",                                      :default => false, :null => false
-    t.boolean "tracking_html_clicks",                             :default => true,  :null => false
-    t.string  "google_analytics",           :limit => 100
-    t.text    "segment_options_conditions", :limit => 2147483647,                    :null => false
-    t.integer "template_id",                                                         :null => false
-    t.boolean "tracking_opens",                                   :default => true,  :null => false
-    t.integer "object_id"
-    t.integer "content_type_id"
-    t.boolean "locked",                                           :default => false, :null => false
-    t.text    "extra_info",                 :limit => 2147483647
-  end
-
-  add_index "mailchimp_queue", ["content_type_id"], :name => "mailchimp_queue_e4470c6e"
-
-  create_table "mailchimp_reciever", :force => true do |t|
-    t.integer "campaign_id",               :null => false
-    t.string  "email",       :limit => 75, :null => false
-  end
-
-  add_index "mailchimp_reciever", ["campaign_id"], :name => "mailchimp_reciever_8fd46b1a"
-
   create_table "media_audio", :force => true do |t|
     t.string  "mp3",             :limit => 100
     t.integer "size"
@@ -869,15 +815,6 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
   end
 
   add_index "news_category", ["slug"], :name => "news_category_slug"
-
-  create_table "news_imageorder", :force => true do |t|
-    t.integer "story_id",    :null => false
-    t.integer "image_id",    :null => false
-    t.integer "image_order", :null => false
-  end
-
-  add_index "news_imageorder", ["image_id"], :name => "news_imageorder_image_id"
-  add_index "news_imageorder", ["story_id"], :name => "news_imageorder_story_id"
 
   create_table "news_oldimageorder", :force => true do |t|
     t.integer "story_id",    :null => false
@@ -1022,22 +959,6 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
   add_index "podcasts_podcast", ["category_id"], :name => "podcasts_podcast_42dc49bc"
   add_index "podcasts_podcast", ["program_id"], :name => "podcasts_podcast_7eef53e3"
   add_index "podcasts_podcast", ["slug"], :name => "slug", :unique => true
-
-  create_table "podcasts_show", :force => true do |t|
-    t.string  "slug",        :limit => 40,                            :null => false
-    t.string  "title",       :limit => 140,                           :null => false
-    t.string  "link",        :limit => 250,                           :null => false
-    t.string  "podcast_url", :limit => 250,        :default => "",    :null => false
-    t.string  "itunes_url",  :limit => 250,        :default => "",    :null => false
-    t.text    "description", :limit => 2147483647,                    :null => false
-    t.string  "image_url",   :limit => 250,                           :null => false
-    t.string  "author",      :limit => 140,                           :null => false
-    t.string  "keywords",    :limit => 200,                           :null => false
-    t.string  "duration",    :limit => 10,                            :null => false
-    t.boolean "is_listed",                         :default => false, :null => false
-  end
-
-  add_index "podcasts_show", ["slug"], :name => "slug", :unique => true
 
   create_table "podcasts_show_categories", :force => true do |t|
     t.integer "show_id",     :null => false
@@ -1408,26 +1329,6 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
 
   add_index "shows_segmentimageorder", ["image_id"], :name => "shows_imageorder_image_id"
   add_index "shows_segmentimageorder", ["segment_id"], :name => "shows_imageorder_segment_id"
-
-  create_table "shows_series", :force => true do |t|
-    t.integer  "show_id",                                                   :null => false
-    t.date     "air_date",                                                  :null => false
-    t.string   "title",               :limit => 140,                        :null => false
-    t.string   "slug",                :limit => 50,         :default => "", :null => false
-    t.text     "short_summary",       :limit => 2147483647
-    t.text     "_teaser",             :limit => 2147483647,                 :null => false
-    t.text     "body",                :limit => 2147483647,                 :null => false
-    t.string   "locale",              :limit => 5,                          :null => false
-    t.integer  "enco_number"
-    t.datetime "published_at",                                              :null => false
-    t.boolean  "is_published",                                              :null => false
-    t.integer  "status",                                                    :null => false
-    t.integer  "comment_count",                                             :null => false
-    t.string   "series_asset_scheme", :limit => 10
-    t.string   "_short_headline",     :limit => 100
-  end
-
-  add_index "shows_series", ["show_id"], :name => "shows_series_show_id"
 
   create_table "shows_seriesimage", :force => true do |t|
     t.text     "caption",    :limit => 2147483647, :null => false

@@ -63,10 +63,16 @@ end
     ignore { missed_it_bucket Hash.new }
     ignore { episode_count 0 }
     ignore { segment_count 0 }
+    ignore { blog false }
     
     after_create do |object, evaluator|
       FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: object))
       FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: object))
+      
+      if evaluator.blog == "true"
+        object.blog = FactoryGirl.create :blog
+        object.save!
+      end
       
       if evaluator.missed_it_bucket_id.blank?
         object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: object.title))
@@ -102,6 +108,7 @@ end
 
 # Blog #########################################################
   factory :blog do
+    # TODO blog_authors
     sequence(:name) { |n| "Blog #{n}" }
     slug { name.parameterize }
     _teaser { "This is the teaser for #{name}!" }

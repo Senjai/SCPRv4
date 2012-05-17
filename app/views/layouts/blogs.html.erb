@@ -13,7 +13,7 @@
 
 <% content_for :sidebar_middle do %>
 	<%= render "shared/widgets/blog_about" %>
-	<%= render :partial => "blogs/recent_posts" %>
+	<%= render "blogs/recent_posts", blog: @blog %>
 	<%= render "shared/cwidgets/missed_it_bucket", object: @blog %>
 <% end %>
 

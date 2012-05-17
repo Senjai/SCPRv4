@@ -20,6 +20,19 @@ end
 
 
 
+
+# Generic
+Then /^I should see the "([^"]*)" widget$/ do |text|
+  widget = text.gsub(/\s+/, "-") # recent posts > recent-posts
+  page.should have_css ".widget.#{widget}"
+end
+
+Then /^I should not see the "([^"]*)" widget$/ do |text|
+  widget = text.gsub(/\s+/, "-") # recent posts > recent-posts
+  page.should_not have_css ".widget.#{widget}"
+end
+
+
 # Video
 Then /^I should see a video$/ do
   page.should have_css "object.BrightcoveExperience"
