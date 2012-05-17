@@ -11,3 +11,27 @@
 		</div>
 	</div>
 </div>
+
+<% if @authors.present? %>
+<div class="blog-about widget">
+	<h6>Blog Host<%="s" if @authors.length > 1 %></h6>
+	<% @authors.each do |author| %>
+		<div class="host">
+			<figure class="clearfix">
+				<% if author.headshot.present? %>
+					<div class="contentasset">
+						<%= author.headshot.thumb.tag %>
+					</div>
+				<% end %>
+		    	<figcaption>
+					<h6 class="host-name"><%= link_to author.name, author %></h6>
+					<p class="brief-bio">
+						<%= author.short_bio %>
+						<div><%= link_to("Follow #{author.twitter} on Twitter", author.twitter_url) if author.twitter.present? %></div>
+					</p>
+				</figcaption>
+			</figure>
+		</div>
+	<% end %>
+</div>
+<% end %>

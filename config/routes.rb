@@ -106,6 +106,11 @@ Scprv4::Application.routes.draw do
   match '/' => "home#index", :as => :home
   match '/beta/' => "home#beta", :as => :beta
   match '/listen' => "home#listen", as: :listen
+  match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
+  
+  KpccProgram.where("quick_slug != ?", '').each do |program|
+    match "/#{program.quick_slug}" => redirect("/programs/#{program.slug}")
+  end
   
   root to: "home#index"
   

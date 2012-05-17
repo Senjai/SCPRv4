@@ -460,22 +460,21 @@ a.with-icon {
 
 // Blog/Program Host Widget
 #sidebar .host, .host {
-	border-top:1px solid $grayLighter;
-	img {
-		float:left;
-		margin-right:18px;
+	border-bottom: 1px solid $nearWhite;
+	margin-bottom: 5px;
+	@include font-sans-serif(normal, 12px, 16px);
+	
+	&:last-child { border-bottom: none; }
+	.contentasset {
+		max-width: 60px;
+		float: left;
+		margin: 5px 10px 5px 0;
 	}
 	h6.host-name {
-		@include font-sans-serif();
 		font-weight:bold;
-		margin-bottom:10px;
+		margin-bottom: 5px;
 		text-transform:none;
-		a {
-			color:$grayDark;
-		}
-	}
-	p, ul {
-		@include font-sans-serif(normal, 12px, 16px);
+		a { color:$grayDark; }
 	}
 }
 
@@ -611,16 +610,13 @@ a.with-icon {
 	span { @include font-sans-serif(normal, 11px); }
 }
 
-// In Case You Missed It Carousel
-#missed-it {
-	margin-left:30px;
-	width:1111px;
-	hr {
-		border-color:$graydarkHR;
+.missed-it-bucket {
+	a {
+		@include font-headline();
+		@include font-shorthand(600, 15px);
+		color:$nearBlack;
 	}
-	h3 {
-		color:$orangeDark;
-	}
+	h4 { text-transform: none; }
 }
 
 // Content Carousel

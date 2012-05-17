@@ -50,8 +50,23 @@ body {
 	.homepage-top {
 		border-bottom:1px solid $grayLighter;
 		margin-bottom:$baseline;
+				
+		.missed-it-bucket {
+			.carousel { min-height: 259px; }
+			.row-fluid > hr { 
+				display: none; 
+				width: 100%;
+				clear: both;
+			}
+			.missed-it-content { 
+				text-align: center;
+				margin-bottom: 10px;
+			}
+		}
 		
 		.offleads {
+			margin-bottom: 10px;
+			
 			// Override default .offlead to use border-top
 			// because IE7/8 do not support :last-child selector
 			.span8:first-child .cbase.offlead { 
@@ -71,10 +86,9 @@ body {
 				margin-bottom: 0;
 				padding-bottom: 0;
 			}
-
-			margin-bottom: 10px;
 		}
 	}
+	
 	.homepage-bottom { margin:0; padding: 0;}
 	
 	.events-forum {

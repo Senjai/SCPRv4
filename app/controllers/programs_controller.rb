@@ -1,7 +1,6 @@
 class ProgramsController < ApplicationController  
   before_filter :get_ambiguous_program, only: :show
   before_filter :get_featured_programs, only: :index
-  #before_filter :get_program_segments, only: :show
   before_filter :get_kpcc_program, only: [:segment, :episode]
   
   def index
@@ -53,9 +52,11 @@ class ProgramsController < ApplicationController
       redirect_to @segment.link_path and return
     end
     
+    # If segment ID isn't correct, redirect to the segment's program path
     rescue
       redirect_to program_path @program
   end
+  
   
   #----------
   

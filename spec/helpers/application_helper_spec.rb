@@ -97,8 +97,8 @@ describe ApplicationHelper do
       end
     
       it "is ordered by published_at desc" do
-        @news[0].published_at.should be > @news[1].published_at
-        @news[10].published_at.should be < @news[9].published_at
+        @news[0].published_at.should be > @news[4].published_at
+        @news[10].published_at.should be < @news[5].published_at
       end
     
       it "only returns records where category_is_news" do

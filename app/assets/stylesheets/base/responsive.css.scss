@@ -93,6 +93,8 @@ $mediaSmallPortrait: 320px;
 				
 			}
 		}
+		
+		.missed-it-bucket { display: none; }
 	}
 	
 	// Fake the "pager"... hide all page number links, just show Previous and Next links.
@@ -239,15 +241,25 @@ $mediaSmallPortrait: 320px;
 		// end Minimal Header
 	}
 	
-	.broadcast-bar .section {
-		width: 100%;
-		float: none;
-		&.next-program { display: none; }
-	}
-	
-	.homepage-top {
-		border-bottom: none !important;
-		margin-bottom: 0 !important;
+	#main {
+		.homepage-top {
+			border-bottom: none !important;
+			margin-bottom: 0 !important;
+		
+			.missed-it-bucket {
+				.row-fluid hr:nth-of-type(3) { display: block; }
+				.span2 { 
+					@include gridFluidSpan(4);
+					&:nth-of-type(4) { margin-left: 0; }
+				}
+			}
+		}
+		
+		.broadcast-bar .section {
+			width: 100%;
+			float: none;
+			&.next-program { display: none; }
+		}
 	}
 	
 	// since we're hiding the sidebars, remove the borders around more news
