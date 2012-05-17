@@ -13,7 +13,7 @@
 	
 	.search-form {
 		// IE7 just a hack to pull the search form up
-		*margin-top: -36px;
+		margin-top: -36px;
 		
 		form {
 			line-height: $baseLineHeight; // IE7 doesn't show text if its line-height is 0
