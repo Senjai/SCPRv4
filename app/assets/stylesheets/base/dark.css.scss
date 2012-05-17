@@ -94,14 +94,22 @@ html {height:100%;}
 				}
 			}
 		
-			.sections ul li a {	
-				color:$gray;
-				&:hover, &.hover {
-					background-color:darken($nearBlack, 3%);
-					color:$white;
-					$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
-					@include box-shadow($nav-shadow);
+			.sections ul li {
+				a {
+					color:$gray;
+					&:hover, &.hover {
+						color:$white;
+					}
 				}
+				&.mega {
+					a {
+						&:hover {
+							background-color:darken($nearBlack, 3%);
+							$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
+							@include box-shadow($nav-shadow);
+						}
+					}
+				}	
 			}
 		
 			form fieldset {
@@ -110,8 +118,9 @@ html {height:100%;}
 					border:1px solid $black;
 					color:$nearWhite;
 					&:focus {
-					    border-color:$grayDark;
-						$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+						outline: none;
+					    border-color:#999;
+						$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
 					    @include box-shadow($shadow);
 					}
 				}
@@ -170,4 +179,7 @@ html {height:100%;}
 		}
 		.dsq-brlink {display:none;}
 	}
+	
+	//FOOTER
+	#page-footer footer #footer-container { background-image: url(image_path('footer-arrow-dark.png')); }
 }

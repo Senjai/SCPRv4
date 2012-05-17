@@ -20,10 +20,11 @@
 		
 		<section class="homepage-top">
 			<div class="row-fluid">
-				<section class="span16">
+				<section class="span16 relative">
 					<%= yield %>
+					<div class="vert-divider"></div>
 				</section>
-
+				
 				<div class="span8">
 					<div id="sidebar-top">
 						<%= render "shared/widgets/oas", :ad_id => 'x01' %>
@@ -40,10 +41,11 @@
 	
 		<section class="homepage-bottom">
 			<div class="row-fluid">
-				<div class="span16">
+				<div class="span16 relative">
 					<section class="more-news-container">
 						<%= yield :lower %>
 					</section>
+					<div class="vert-divider"></div>
 				</div> <!-- span16 -->
 				<div class="span8">
 					<div id="sidebar-bottom">

@@ -139,6 +139,12 @@ $mediaSmallPortrait: 320px;
 	// end latest videos
 	
 	#program-external-header { @include makeFluidRow; }
+	.sharing-tools.horizontal h5 {
+		float: none;
+		display: block;
+		width: 100%;
+		margin: 0;
+	}
 	
 	.archive-strip {
 		> .row-fluid .span8:last-child .event { border-bottom: none; }
@@ -180,8 +186,8 @@ $mediaSmallPortrait: 320px;
 // Below Portrait Tablet ("reader mode")
 @media screen and (max-width: $mediaMidPortrait - 1) {	
 	
-	.visible-reader { display: block !important; }
-	.hidden-reader { display: none !important; }
+	.visible-reader { display: block !important; visibility:visible !important }
+	.hidden-reader { display: none !important;;}
 	
 	.modal-popup { // using important flag here to cover all modals, since most of these rules are specified in more specific classes
 		@include fluidPopup;
@@ -259,6 +265,7 @@ $mediaSmallPortrait: 320px;
 		padding-right: none;
 		margin-bottom: 5px;
 	}
+	.vert-divider {display:none;}
 	
 	// Forum Events header switch
 		#events-header {
@@ -289,7 +296,9 @@ $mediaSmallPortrait: 320px;
 				left: $compactNavW * -1;		
 				width: $compactNavW;
 				&.active {
+					background-color: $footerBackground; 
 					@include box-shadow(3px 0 8px rgba(0,0,0,.4));
+					z-index:2000;
 				}
 				.compact-nav-head { display: block; }
 				h3, .pledge {
@@ -322,7 +331,7 @@ $mediaSmallPortrait: 320px;
 					nav { margin: 0; }
 					h4, ul li, ul li.bullet, address { padding-left: 16px; }
 					ul li, h4, h3, .social-media li {
-						border-top: 1px solid $grayDark;
+						border-top: 1px solid #3d3d3d;
 						border-bottom: 1px solid $black;
 						margin: 0;
 					}
@@ -449,8 +458,46 @@ $mediaSmallPortrait: 320px;
 	
 	// Pledge Banner to Button & hide form
 		#masthead {
-			form { display: none; }
-			.nav-primary .sections { width: 100%; }
+			#megamenu.search-takeover {
+				.sections {
+					width:20%;
+					overflow:hidden;
+					li {
+						opacity:0;
+						&.listen-live {
+							opacity:1;
+						}
+					}
+				}	
+				.search-form {
+					display:block;
+					width:79%;
+					form {
+						.search, .submit {
+							@include ie-inline-block();
+						}
+						.search {
+							width:87%;
+						}
+						.toggle-search {
+							background-image:url(image_path('icons/search-close.png'));
+						}
+					}
+				}
+			}
+			.search-form {
+				width:3%;
+				form {
+					.search, .submit { 
+						display: none; 
+					}
+					.toggle-search {
+						cursor:pointer;
+						@include ie-inline-block();
+					}
+				}
+			}
+			.nav-primary .sections { width: 96%; }
 
 			#masthead-left-header-wrapper { @include gridFluidSpan(12); }			
 			#masthead-right-header-wrapper { @include gridFluidSpan(12); }
@@ -523,10 +570,15 @@ $mediaSmallPortrait: 320px;
 	// the responsive design to do its thing. Otherwise (IE 7), the 
 	// default min-width (set to the $siteWidth) will keep the site 
 	// at that width.
+	.nav-primary .sections ul li a {padding: 8px 15px;}
+	.nav-primary .search-form { width:150px;}
 	.container-fluid { min-width: 300px; }
 	#events-header { min-width: 0; }
-	#page-footer footer .footer-nav {
-		background:none;
+	#page-footer {
+		footer {
+			#footer-container {background-position: 75% 0; }
+			.footer-nav {background:none;}
+		}
 	}
 }
 

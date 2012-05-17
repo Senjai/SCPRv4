@@ -174,20 +174,21 @@ $navHeight: 36px;
 	}
 	
 	.sections {
-		width:76%;
+		width:80%;
 		height:$navHeight;
+		float:left;
+		overflow:hidden;
 		ul {
 			margin: 0;
 			li {
-				width: 15%;
-				max-width: 109px;
-				text-align: center;
-				height: 36px;
-				@include ie-inline-block;
+				display: block;
+				float: left;
+				font-size: 13px;
+				opacity:1;
+				@include transition(opacity 1.2s linear);
 				&.listen-live {
 					@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
 					background-color:#cb5f1d;
-					width: 136px;
 					max-width: none; // Undo the max-width set above
 					&:hover {
 						@include background-image(linear-gradient(#cb5f1d, #9b4816));
@@ -210,13 +211,20 @@ $navHeight: 36px;
 					display: block;
 					@include font-navigation(600, 16px);
 					color:$grayDark;
-					padding:8px 0;
+					padding: 8px 24px;
 					text-transform:uppercase;
 					&:hover, &.hover {
-						background-color:$white;
 						color:$orangeDark;
-						$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
-						@include box-shadow($nav-shadow);
+						text-decoration:none;
+					}
+				}
+				&.mega {
+					a {
+						&:hover, &.hover {
+							background-color:$white;
+							$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
+							@include box-shadow($nav-shadow);
+						}
 					}
 				}
 			}
@@ -226,14 +234,14 @@ $navHeight: 36px;
 	.search-form {
 		float: right;
 		height: 36px;
-		width: 20%;
-		
+		width: 200px;
+		padding-right: 7px;
 		// IE7 just a hack to pull the search form up
 		*margin-top: -36px;
-		
 		form {
 			width: 100%;
-			margin: 7px 0 0 0; // push the form down a bit to vertically center
+			margin: 8px 0 0 0; // push the form down a bit to vertically center
+			text-align: right;
 			label { display:none; }
 			input.search {
 				@include border-radius(20px);
@@ -246,12 +254,16 @@ $navHeight: 36px;
 				    @include box-shadow($shadow);
 				}
 			}
-			input.submit {
+			input.submit, .toggle-search {
 				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
 				min-width:20px;
 				height:20px;
 				text-indent:-9999px;
 				border:0;
+			}
+			.toggle-search {
+				display:none;
+				margin-right:1px;
 			}
 		}
 	}
@@ -267,6 +279,7 @@ $navHeight: 36px;
 		width:100%;
 		min-height:$baseline * 10;
 		position:absolute;
+		top:36px;
 		z-index: 900;
 		$mega-shadow:0 2px 3px lighten($gray, 10%);
 		@include box-shadow($mega-shadow);
