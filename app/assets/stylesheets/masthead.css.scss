@@ -1,9 +1,5 @@
 // Masthead container
 header#masthead {
-	// IE7 - These need to be set because IE7 doesn't do z-index properly. 
-	position: relative;
-	z-index: 1000;
-	
 	margin:0 0 $baseline 0;
 	.head-lead { 
 		height: 74px; 
