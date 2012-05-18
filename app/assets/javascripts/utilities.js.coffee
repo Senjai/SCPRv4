@@ -206,26 +206,44 @@ class scpr.SocialTools
         @ids = (el.attr("data-url") for el in @fbelements)
         
         # set a timeout for signalling bad load
-        @fbTimeout = setTimeout (=> @_signalFbLoadFailure()), 5000
+#        @fbTimeout = setTimeout (=> @_signalFbLoadFailure("Failed to load FB Counts in 5 seconds")), 5000
         @fbPending = Number(new Date)
         
-        # fire an async request 
-        $.getJSON @options.fburl, { ids: @ids.join(',') }, (res) =>
-            # note load success
-            clearTimeout @fbTimeout
-            @fbTimeout = null
-            loadtime = Number(new Date) - @fbPending
-            console.log "fb counts load took #{loadtime/1000} seconds"
-            @gaq?.push ['_trackEvent','SocialTools','Facebook Load','',loadtime,true]
+        # fire an async request
+        $.ajax
+            type: "GET"
+            jsonp: 'callback'
+            url: @options.fburl
+            dataType: 'jsonp'
+            cache: false
+            data:
+                ids: @ids.join(',')
             
-            # fill in our numbers
-            for el in @fbelements
-                if fbobj = res[ el.attr("data-url") ]
-                    count = Number(fbobj.shares||0) + Number(fbobj.likes||0)
-                    $(@options.count,el).text count
+            beforeSend: () ->
+                console.log "sending request for fb counts..."
+
+            success: (res) =>
+                # note load success
+                clearTimeout @fbTimeout
+                @fbTimeout = null
+                loadtime = Number(new Date) - @fbPending
+                console.log "fb counts load took #{loadtime/1000} seconds"
+                @gaq?.push ['_trackEvent','SocialTools','Facebook Load','',loadtime,true]
             
-    _signalFbLoadFailure: ->
-        console.log "failed to load facebook counts in 5 seconds."
+                # fill in our numbers
+                for el in @fbelements
+                    if fbobj = res[ el.attr("data-url") ]
+                        count = Number(fbobj.shares||0) + Number(fbobj.likes||0)
+                        $(@options.count,el).text count
+
+            error: () =>
+                @_signalFbLoadFailure("Could not retrieve data from #{@options.fburl}")
+
+            complete: (xhr, status) ->
+                console.log "Requests complete. Status: #{status}"
+            
+    _signalFbLoadFailure: (message) ->
+        console.log message
         @gaq?.push ['_trackEvent','SocialTools','Facebook Failure',String(new Date),0,true]
     
     #----------    
