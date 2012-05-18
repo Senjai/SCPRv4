@@ -33,6 +33,7 @@ end
 
 #### Routing
 When /^I go to the home page$/ do
+  create(:homepage) unless Homepage.published.present?
   visit home_path
   current_path.should eq home_path
 end

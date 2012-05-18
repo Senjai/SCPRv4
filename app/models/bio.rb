@@ -3,6 +3,16 @@ class Bio < ActiveRecord::Base
   
   belongs_to :user
   
+  def to_param
+    "#{slugged_name}"
+  end
+  
+  def twitter_url
+    if twitter.present?
+      "http://twitter.com/#{twitter.gsub(/@/, '')}"
+    end
+  end
+  
   def headshot
     if self.asset_id?
       @_asset ||= Asset.find(self.asset_id)

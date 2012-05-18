@@ -28,6 +28,12 @@ class HomeController < ApplicationController
   
   #----------
   
+  def missed_it_content
+    @homepage = Homepage.find(params[:id])
+    @carousel_contents = @homepage.missed_it_bucket.contents.paginate(page: params[:page], per_page: 6)
+    render 'missed_it_content.js.erb'
+  end
+  
   def self._cache_homepage(obj_key=nil,pickle=nil)
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  
     

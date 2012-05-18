@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
@@ -37,8 +38,10 @@
 					</div> <!-- sidebar-top -->
 				</div> <!-- span8 -->
 			</div> <!-- row-fluid -->
+			
+			<%= yield :missed_it %>
 		</section> <!-- homepage-top -->
-	
+		
 		<section class="homepage-bottom">
 			<div class="row-fluid">
 				<div class="span16 relative">
@@ -61,6 +64,7 @@
 		</section> <!-- homepage-bottom -->
 		
 	</div> <!-- main container-fluid -->
+
 	<%= render :partial => "shared/footer" %>
 	<%= render :partial => "shared/footer/footer_js" %>
 </div> <!-- viewport -->

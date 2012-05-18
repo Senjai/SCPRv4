@@ -13,25 +13,34 @@
 }
 
 #multimedia {
+	&.dark-theme #masthead {
+		.logo a.logo-img {
+			background-image: url(image_path('logo-masthead-video.png'));
+			width: 318px;
+		}
+	}
+		
 	.video {
 		margin-top: 60px;
 		.contentasset img { @include video-effects; }
 	}
-	button.browse-all-videos {
-		background: #070707 url(image_path('browse-all-default.png')) no-repeat left center;
-		border: 1px solid #505050;
+	a.browse-all-videos {
+		background: #070707 url(image_path('browse-all-default.png')) no-repeat 0 50%;
 		@include border-radius(3px);
-		padding: 8px 7px 8px 30px;
+		padding: 8px 7px 8px 29px;
 		color: #777777;
 		@include font-heading(normal, 12px);
 		text-transform: uppercase;
 		text-align: center;
-		@include transition(all 0.15s ease-in-out);
 		white-space: nowrap;
+		cursor: pointer;
+		display: block;
+		max-width: 175px;
+		border: 1px solid $grayDark;
 		&:hover, &.active {
 			border-color:$grayLight;
 			color:$grayLight;
-			cursor: pointer;
+			text-decoration: none;
 		}
 	}
 	.videos-list {
@@ -115,7 +124,9 @@ div.list {
 	width: 100% !important; // So it doesn't use the fixed width
 	position: absolute !important; // So we can tell it to sit at the bottom of the .video div
 	top: 0 !important;
+	left: 0 !important;
 	height: 99% !important; // So it doesn't used the fixed height
+	margin: 0 !important; // IE7 sets margin: auto by default?
 	&:hover {
 	    @include opacity(0.9);
 	    @include transition(opacity linear 0.2s);

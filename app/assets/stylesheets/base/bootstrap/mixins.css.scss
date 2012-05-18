@@ -17,32 +17,6 @@
   outline-offset: -2px;
 }
 
-// IE7 likes to collapse whitespace on either side of the inline-block elements.
-// Ems because we're attempting to match the width of a space character. Left
-// version is for form buttons, which typically come after other elements, and
-// right version is for icons, which come before. Applying both is ok, but it will
-// mean that space between those elements will be .6em (~2 space characters) in IE7,
-// instead of the 1 space in other browsers.
-
-/* IE 7 */
-@mixin ie7-restore-left-whitespace() {
-  *margin-left: .3em;
-
-  &:first-child {
-    *margin-left: 0;
-  }
-}
-
-
-/* IE 7 */
-@mixin ie7-restore-right-whitespace() {
-  *margin-right: .3em;
-
-  &:last-child {
-    *margin-left: 0;
-  }
-}
-
 // Text overflow
 // ------------------------
 @mixin text-overflow() {
@@ -215,6 +189,17 @@
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($startColor)}', endColorstr='#{ie-hex-str($endColor)}', GradientType=0); // IE9 and down, gets no color-stop at all for proper fallback
 }
+@mixin gradient-vertical-four-stops($startColor: #fff, $colorStopTop: 1%, $midTopColor: #ddd, $colorStopMidTop: 2%, $midBottomColor: #999, $colorStopMidBottom: 98%, $endColor: #888, $colorStopBottom: 100%) {
+  background-color: mix($midTopColor, $endColor, 80%);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop($colorStopTop, $startColor), color-stop($colorStopMidTop, $midTopColor), color-stop($colorStopMidBottom, $midBottomColor), color-stop($colorStopBottom, $endColor));
+  background-image: -webkit-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -moz-linear-gradient(top, $startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -ms-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: -o-linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-image: linear-gradient($startColor $colorStopTop, $midTopColor $colorStopMidTop, $midBottomColor $colorStopMidBottom, $endColor $colorStopBottom);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str(lighten($startColor, 10%))}', endColorstr='#{ie-hex-str($endColor)}', GradientType=0); // IE9 and down, gets no color-stop at all for proper fallback
+}
 @mixin gradient-radial($innerColor: #555, $outerColor: #333)  {
   background-color: $outerColor;
   background-image: -webkit-gradient(radial, center center, 0, center center, 460, from($innerColor), to($outerColor));
@@ -244,21 +229,6 @@
 
 // Horizontal dividers
 // -------------------
-// Dividers (basically an hr) within dropdowns and nav lists
-@mixin nav-divider() {
-  height: 1px;
-  margin: (($baseLineHeight / 2) - 1) 1px; // 8px 1px
-  overflow: hidden;
-  background-color: #e5e5e5;
-  border-bottom: 1px solid $white;
-
-  // IE7 needs a set width since we gave a height. Restricting just
-  // to IE7 to keep the 1px left/right space in other browsers.
-  // It is unclear where IE is getting the extra space that we need
-  // to negative-margin away, but so it goes.
-  *width: 100%;
-  *margin: -5px 0 5px;
-}
 
 // Button backgrounds
 // ------------------
@@ -393,7 +363,8 @@
       float: left;
       margin-left: $fluidGridGutterWidth * 2;
 	  
-	  // IE7 - Because it rounds half-pixels up and causes divs to wrap if this isn't set
+	  // To make sure spans don't wrap in IE7 due to pixel/percentage discrepancies
+	  // Can stay here because it's fine to apply in other browsers as well
 	  clear: right;
     }
     > [class*="span"]:first-child {

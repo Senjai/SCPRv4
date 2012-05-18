@@ -11,18 +11,18 @@
 	</script>
 	<%= csrf_meta_tags %>
 </head>
-<body class="dark-theme" id="multimedia main-content">
+<body id="multimedia" class="dark-theme">
 <div class="viewport">
 	<!-- MASTHEAD-->
 	<%= render "shared/masthead" %>
 
-	<div id="video" class="container-fluid">
+	<div id="video" class="container-fluid main-content">
 		<% if content_for? :wide_content %>
 			<%= yield :wide_content %>
 		<% else %>
 			<div class="row-fluid">
 				<div class="span4 hidden-reader">
-					<button class="browse-all-videos modal-toggler" data-modal-id="videos_list">Browse All Videos</button>
+					<a class="browse-all-videos modal-toggler" data-modal-id="videos_list">Browse All Videos</a>
 			
 					<%= modal("videos-list", modal_id: "videos_list") do %>
 						<div class="row-fluid">

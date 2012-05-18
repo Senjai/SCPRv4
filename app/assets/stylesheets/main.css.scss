@@ -54,12 +54,6 @@ body {
 	z-index: 0;
 }
 
-#js-log {
-	background: blue;
-	color: white;
-}
-
-
 // #Main Body Content
 #main {
 	margin-top:1px;
@@ -67,9 +61,24 @@ body {
 	.homepage-top {
 		border-bottom:1px solid $grayLighter;
 		margin-bottom:$baseline;
+				
+		.missed-it-bucket {
+			.carousel { min-height: 259px; }
+			.row-fluid > hr { 
+				display: none; 
+				width: 100%;
+				clear: both;
+			}
+			.missed-it-content { 
+				text-align: center;
+				margin-bottom: 10px;
+			}
+		}
 		padding-bottom:$baseline;
 		
 		.offleads {
+			margin-bottom: 10px;
+			
 			// Override default .offlead to use border-top
 			// because IE7/8 do not support :last-child selector
 			.span8:first-child .cbase.offlead { 
@@ -89,13 +98,13 @@ body {
 				margin-bottom: 0;
 				padding-bottom: 0;
 			}
-
-			margin-bottom: 10px;
 		}
 	}
+	
 	.homepage-bottom { margin:0; padding: 0;}
 	
 	.events-forum {
+		@include assetAlign(left);
 		border-left:1px solid $grayLighter;
 		padding-left: 20px;
 		h4 {
@@ -164,6 +173,7 @@ body {
 	}
 	
 	.program-info {
+		line-height: $baseLineHeight / 2;
 		a.show-title {
 			@include font-heading($weight: 600, $size: 22px);
 			text-shadow:1px 1px 0px #fff;
@@ -179,35 +189,30 @@ body {
 		}
 	}
 	
-	.section {
-		width: 50%;
-		float: left;
-		padding-top: 10px;
-		
-		.program {
-			padding-left: 70px; // Room for the status badge
-			background-position: 0 0;
-			background-repeat: no-repeat;
-			line-height: $baseLineHeight;
-			height: 36px; // Broadcast bar height minus padding... sorry
+	.program {
+		margin-top: 10px;
+		background-position: 0 0;
+		background-repeat: no-repeat;
+		line-height: $baseLineHeight;
+		min-height: 36px; // Broadcast bar height minus padding
 			
-			&.current {
-				float: left;
-				background-image: url(image_path("broadcast-bar/onair.png"));
-				a.modal-toggler {
-					background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
-					padding-right:15px;
-					&:hover {
-						background-position:right -34px;
-					}
+		&.current {
+			padding-left: 65px;// Room for the status badge
+			float: left;
+			background-image: url(image_path("broadcast-bar/onair.png"));
+			a.modal-toggler {
+				background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
+				padding-right:15px;
+				&:hover {
+					background-position:right -34px;
 				}
 			}
-	
-			&.next {
-				float: right;
-				background-image: url(image_path("broadcast-bar/upnext.png"));
-				padding-left: 80px;
-			}
+		}
+		&.next {
+			float: right;
+			background-image: url(image_path("broadcast-bar/upnext.png"));
+			padding-left: 75px;
+			text-align:right;
 		}
 	}
 	

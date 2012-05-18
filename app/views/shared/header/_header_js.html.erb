@@ -1,5 +1,14 @@
 <%= stylesheet_link_tag    "application", media: "all" %>
 <%= stylesheet_link_tag "base/print", media: "print" %>
+
+<!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="/assets/browser-overrides/ie7.css" />
+<![endif]-->
+
+<!--[if IE 8]>
+  <link rel="stylesheet" type="text/css" href="/assets/browser-overrides/ie8.css" />
+<![endif]-->
+
 <%= javascript_include_tag "application" %>
 
 <meta name="viewport" content="width=1160">
@@ -63,11 +72,12 @@ node.parentNode.insertBefore(gads, node);
 
 <script type='text/javascript'>
 googletag.cmd.push(function() {
-googletag.defineSlot('/127204706/events_home', [728, 90], 'div-gpt-ad-1334030619228-0').addService(googletag.pubads());
-googletag.defineSlot('/127204706/membership_masthead', [286, 73], 'div-gpt-ad-1331935001948-0').addService(googletag.pubads());
-googletag.defineSlot('/127204706/membership_sidebar', [300, 100], 'div-gpt-ad-1331935001948-1').addService(googletag.pubads());
-googletag.pubads().enableSingleRequest();
-googletag.enableServices();
+	googletag.defineSlot('/127204706/events_home', [728, 90], 'div-gpt-ad-1334030619228-0').addService(googletag.pubads());
+	googletag.defineSlot('/127204706/membership_masthead', [286, 73], 'div-gpt-ad-1331935001948-0').addService(googletag.pubads());
+	googletag.defineSlot('/127204706/membership_sidebar', [300, 100], 'div-gpt-ad-1331935001948-1').addService(googletag.pubads());
+	
+	googletag.pubads().set("adsense_background_color", "#ffffff").enableSingleRequest();
+	googletag.enableServices();
 });
 </script>
 

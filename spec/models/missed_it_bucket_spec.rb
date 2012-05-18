@@ -1,5 +1,5 @@
 require "spec_helper"
 
 describe MissedItBucket do
-  pending
+  it { should have_many(:contents).class_name("MissedItContent") }
 end

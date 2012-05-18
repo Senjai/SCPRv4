@@ -86,8 +86,15 @@ $mediaSmallPortrait: 320px;
 		.events-forum {
 			border: none !important;
 			padding-left: 0 !important;
-			.event > .row-fluid { @include makeFluidRow; }
+			.event > .row-fluid { 
+				@include makeFluidRow;
+				> .span8 { @include gridFluidSpan(6) }
+				> .span16 { @include gridFluidSpan(18) }
+				
+			}
 		}
+		
+		.missed-it-bucket { display: none; }
 	}
 	
 	// Fake the "pager"... hide all page number links, just show Previous and Next links.
@@ -248,15 +255,24 @@ $mediaSmallPortrait: 320px;
 		// end Minimal Header
 	}
 	
-	.broadcast-bar .section {
-		width: 100%;
-		float: none;
-		&.next-program { display: none; }
+	#main {
+		.homepage-top {
+			border-bottom: none !important;
+			margin-bottom: 0 !important;
+		
+			.missed-it-bucket {
+				.row-fluid hr:nth-of-type(3) { display: block; }
+				.span4 { 
+					@include gridFluidSpan(8);
+					&:nth-of-type(4) { margin-left: 0; }
+				}
+			}
+		}
 	}
 	
-	.homepage-top {
-		border-bottom: none !important;
-		margin-bottom: 0 !important;
+	.broadcast-bar {
+		#bb-current-program { @include gridFluidSpan(24); }
+		#bb-next-program { display: none; }
 	}
 	
 	// since we're hiding the sidebars, remove the borders around more news
@@ -274,6 +290,18 @@ $mediaSmallPortrait: 320px;
 	
 		.events-header-small { display: block; }
 	// end Forum Events Header
+	
+	// Keep each archive strip event horizontal
+	.archive-strip {
+		@include vertify;
+		> .row-fluid .span8:last-child .event { border-bottom: none; }
+		.event { 
+			border-bottom: 1px solid $grayLighter; 
+			> .row-fluid { 
+				@include makeFluidRow;
+			}
+		}
+	}
 	
 	.section-nav-header { display: none; }
 	#events-event-detail { @include gridFluidSpan(24); }
@@ -567,7 +595,7 @@ $mediaSmallPortrait: 320px;
 	
 	// Basically, if this media query is being read by the browser, 
 	// then we can set a lower min-width than the default to allow 
-	// the responsive design to do its thing. Otherwise (IE 7), the 
+	// the responsive design to do its thing. Otherwise (IE7), the 
 	// default min-width (set to the $siteWidth) will keep the site 
 	// at that width.
 	.nav-primary .sections ul li a {padding: 8px 15px;}
