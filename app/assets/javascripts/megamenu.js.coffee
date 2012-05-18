@@ -1,5 +1,9 @@
 #= require scprbase
 
+$ -> $('.toggle-search').click ->
+    $('#megamenu').toggleClass('search-takeover')
+    $('#megamenu .search-form .search').focus()
+
 class scpr.MegaMenu
     DefaultOptions:
         finder: "#megamenu .mega a"

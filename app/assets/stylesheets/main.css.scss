@@ -12,7 +12,18 @@ body {
         overflow: hidden;
 	}
 }
-
+// Vertical divider solution
+.vert-divider {
+	background-color:$grayLighter;;
+	width:1px;
+	position:absolute;
+	height:100%;
+	right:-2.70225%;
+	top:0;
+}
+.relative {
+	position:relative;
+}
 
 // Default container behavior
 .container-fluid {
@@ -56,6 +67,7 @@ body {
 				margin-bottom: 10px;
 			}
 		}
+		padding-bottom:$baseline;
 		
 		.offleads {
 			margin-bottom: 10px;
@@ -189,11 +201,11 @@ body {
 				}
 			}
 		}
-
 		&.next {
-			padding-left: 75px;// Room for the status badge
 			float: right;
 			background-image: url(image_path("broadcast-bar/upnext.png"));
+			padding-left: 75px;
+			text-align:right;
 		}
 	}
 	
@@ -337,8 +349,6 @@ h6.more-news-title {
 }
 
 .more-news-container {
-	border-right:1px solid $grayLighter;
-	padding-right: 10px;
 	.more-news {
 		padding-bottom: $baseLineHeight / 2;
 		.more-news-content {
@@ -401,10 +411,10 @@ h6.more-news-title {
 			}
 			.comments-quotee {
 				@include font-sans-serif($size: 12px);
-				background:url("more-news-quotee-icon.png") no-repeat 100px top;
+				background:url("more-news-quotee-icon.png") no-repeat left top;
 				color:$grayLight;
 				height:35px;
-				padding:20px 0 0 20px;
+				padding:20px 0 0 60px;
 			}
 		}
 	}

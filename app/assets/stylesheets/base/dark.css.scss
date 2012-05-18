@@ -82,13 +82,21 @@
 			}
 		}
 	
-		.sections ul li a {	
-			color:$gray;
-			&:hover, &.hover {
-				background-color:darken($nearBlack, 3%);
-				color:$white;
-				$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
-				@include box-shadow($nav-shadow);
+		.sections ul li {
+			a {	
+				color:$gray;		
+				&:hover, &.hover {
+					color:$white;
+				}
+			}
+			&.mega {
+				a {
+					&:hover, &.hover {
+						background-color:darken($nearBlack, 3%);
+						$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
+						@include box-shadow($nav-shadow);
+					}
+				}
 			}
 		}
 	
@@ -108,7 +116,7 @@
 		}
 	}
 	
-	.section-mega {
+	.nav-primary .section-mega {
 		background-color:darken($nearBlack, 3%);
 		$mega-shadow:0 5px 6px $black;
 		@include box-shadow($mega-shadow);
@@ -154,4 +162,7 @@
 		}
 		.dsq-brlink {display:none;}
 	}
+	
+	//FOOTER
+	#page-footer footer #footer-container { background-image: url(image_path('footer-arrow-dark.png')); }
 }

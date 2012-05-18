@@ -173,24 +173,39 @@ $navHeight: 36px;
 	border-right:1px solid darken($nearWhite, 10%);
 	position: relative;
 	
+	nav {
+		width: 100%;
+		li a {
+			color:$nearBlack;
+			@include font-sans-serif(bold, 12px);
+			text-transform: uppercase;
+			&:hover {
+				time {
+					text-decoration:none;
+				}
+			}
+		}
+	} 
+	
 	nav.sections, .search-form {
 		@include ie-inline-block;
 	}
 	
 	.sections {
-		width:76%;
+		width:80%;
 		height:$navHeight;
+		float:left;
 		ul {
 			margin: 0;
 			li {
-				width: 15%;
-				max-width: 109px;
-				text-align: center;
-				height: 36px;
-				@include ie-inline-block;
+				display: block;
+				float: left;
+				font-size: 13px;
+				opacity:1;
+				@include transition(opacity 1.2s linear);
 				&.listen-live {
-					@include gradient-vertical-four-stops(#cb5f1d, 1%, lighten(#cb5f1d, 8%), 2%, lighten(#9b4816, 3%), 98%, #9b4816, 100%);
-					width: 136px;
+					@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
+					background-color:#cb5f1d;
 					max-width: none; // Undo the max-width set above
 					&:hover {
 						@include gradient-vertical(#cb5f1d, #9b4816);
@@ -213,13 +228,20 @@ $navHeight: 36px;
 					display: block;
 					@include font-navigation(600, 16px);
 					color:$grayDark;
-					padding:8px 0;
+					padding: 8px 24px;
 					text-transform:uppercase;
 					&:hover, &.hover {
-						background-color:$white;
 						color:$orangeDark;
-						$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
-						@include box-shadow($nav-shadow);
+						text-decoration:none;
+					}
+				}
+				&.mega {
+					a {
+						&:hover, &.hover {
+							background-color:$white;
+							$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
+							@include box-shadow($nav-shadow);
+						}
 					}
 				}
 			}
@@ -229,13 +251,14 @@ $navHeight: 36px;
 	.search-form {
 		float: right;
 		height: 36px;
-		width: 20%;
-		
+		width: 200px;
+		padding-right: 7px;
+		// IE7 just a hack to pull the search form up
+		*margin-top: -36px;
 		form {
 			width: 100%;
 			margin: 8px 0 0 0; // push the form down a bit to vertically center
-			line-height: 0; // Keep the text vertically-centered
-			
+			text-align: right;
 			label { display:none; }
 			input.search {
 				@include border-radius(20px);
@@ -249,36 +272,44 @@ $navHeight: 36px;
 				    @include box-shadow($shadow);
 				}
 			}
-			input.submit {
+			input.submit, .toggle-search {
 				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
 				min-width:20px;
 				height:20px;
 				text-indent:-9999px;
 				border:0;
 			}
+			.toggle-search {
+				display:none;
+				margin-right:1px;
+			}
 		}
 	}
-}
-
-.mega-bucket {
-	position: relative;
-}
-
-.section-mega {
-	display: none;
-	background-color:$white;
-	width:100%;
-	min-height:$baseline * 10;
-	position:absolute;
-	z-index: 900;
-	$mega-shadow:0 2px 3px lighten($gray, 10%);
-	@include box-shadow($mega-shadow);
-			
-	li {
-		h4 {
-			@include font-navigation(600, 14px, $baseLineHeight);
-			a { color: $nearBlack; }
-			text-transform: none; // for elements with the cbase class
+	
+	.mega-bucket {
+		position:relative;
+	}
+	
+	nav.section-mega {
+		display: none;
+		background-color:$white;
+		width:100%;
+		min-height:$baseline * 10;
+		position:absolute;
+		top:36px;
+		z-index: 900;
+		$mega-shadow:0 2px 3px lighten($gray, 10%);
+		@include box-shadow($mega-shadow);
+		.cbase {
+			li {
+				h4 {
+					a { 
+						color: $nearBlack; 
+						@include font-navigation(600, 14px, $baseLineHeight); 
+						text-transform: none; // for elements with the cbase class
+					}
+				}
+			}
 		}
 	}
 	
@@ -319,20 +350,6 @@ $navHeight: 36px;
 			text-transform: none; // for elements with the cbase class
 		}
 	}
-	
-	nav {
-		width: 100%;
-		li a {
-			color:$nearBlack;
-			@include font-sans-serif(bold, 12px);
-			text-transform: uppercase;
-			&:hover {
-				time {
-					text-decoration:none;
-				}
-			}
-		}
-	}
 
 	.section {
 		border-right: 1px solid $grayLighter;
@@ -354,9 +371,13 @@ $navHeight: 36px;
 		}
 	}
 	
-	&#events-mega .section { 
+	#events-mega .section { 
 		min-height: 230px;
-		.event-link { color: $linkColor; }
+		.event-link { 
+			color: $linkColor; 
+			@include font-serif(normal, 12px);
+			text-transform:none;
+		}
 		
 		// A lazy way to make the events-forum widget look better in the masthead
 		.events-forum .event > .row-fluid {
@@ -365,15 +386,15 @@ $navHeight: 36px;
 		}
 	}
 	
-	&#news-mega .section {
+	#news-mega .section {
 		min-height: 200px;
 	}
 	
-	&#arts-mega .section {
+	#arts-mega .section {
 		min-height: 200px;
 	}
 	
-	&#support-mega .section {
+	#support-mega .section {
 		min-height: 200px;
 		.pledge a {
 			background-position:8px 8px;
@@ -382,7 +403,7 @@ $navHeight: 36px;
 		}
 	}
 	
-	&#programs-mega .section {
+	#programs-mega .section {
 		&.programs {
 			a { 
 				display: block;

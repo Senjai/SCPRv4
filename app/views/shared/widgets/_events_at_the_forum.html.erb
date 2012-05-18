@@ -1,9 +1,9 @@
 <% content_cache("events:upcoming_forum") do %>
 	<% register_content "events/event:new" %>
-	<div class="events-forum cbase">
+	<div class="events-forum">
 		<h6>Events at the Crawford Family Forum</h6>
 		<% @g_upcoming_events_forum.first(2).each do |event| %>
-			<div class="span12">
+			<div class="span12 cbase">
 				<div class="event future">
 					<div class="row-fluid">
 						<div class="span8">

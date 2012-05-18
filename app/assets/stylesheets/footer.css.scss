@@ -1,17 +1,19 @@
 $footerBackground: #2e2e2e;
-.dark-theme #page-footer footer { background-image: url(image_path('footer-arrow-dark.png')); }
 
 #page-footer footer {
 	background-color: $footerBackground;
-	background-image: url(image_path('footer-arrow.png'));
-	background-repeat: no-repeat;
-	background-position: 75% 0;
-  	padding-top: $baseline - 1;
 	padding-bottom: 30px;
 	color:#bfbfbf;
 	margin-top: $baseline - 1;
 	@include font-sans-serif(normal, 11px);
 	text-transform:uppercase;
+	
+	#footer-container {
+		background-image: url(image_path('footer-arrow.png'));
+		background-repeat: no-repeat;
+		background-position: 1045px 0;
+	  	padding-top: $baseline - 1;
+	}
 	
 	h5 {
 		color:#5c5c5c;
@@ -162,6 +164,32 @@ $footerBackground: #2e2e2e;
 			.in-btn { 
 				float: right; 
 				margin-top: 7px;
+				margin-right:10px;
+			}
+		}
+		.search-form {
+			form {margin:10px;}
+			input.search {
+				background-color:#232323;
+				border:1px solid #333;
+				color:#444;
+				@include border-radius(20px);
+				padding:0 8px;
+				width: 80%;
+				@include placeholder($grayAlt);
+				&:focus {
+					outline: none;
+				    border-color:#555;
+					$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+				    @include box-shadow($shadow);
+				}
+			}
+			input.submit {
+				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+				min-width:20px;
+				height:20px;
+				text-indent:-9999px;
+				border:0;
 			}
 		}
 		margin-bottom: 10px;

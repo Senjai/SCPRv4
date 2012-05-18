@@ -27,7 +27,7 @@
 	a.browse-all-videos {
 		background: #070707 url(image_path('browse-all-default.png')) no-repeat 0 50%;
 		@include border-radius(3px);
-		padding: 8px 7px 8px 30px;
+		padding: 8px 7px 8px 29px;
 		color: #777777;
 		@include font-heading(normal, 12px);
 		text-transform: uppercase;
