@@ -1,9 +1,9 @@
 <article class="teaser">
 	<div class="row">
 		<div class="info divider span6">
-			<h3><%= link_to entry.title, entry.url %></h3>
+			<h3><%= link_to entry.title, entry.url || entry.enclosure_url %></h3>
 			<p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
-			<%= entry.summary.html_safe %>
+			<%= entry.summary.try(:html_safe) %>
 		</div>
 		<div class="interact span2">
 			<% if entry.enclosure_url.present? %>
