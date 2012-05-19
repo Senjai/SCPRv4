@@ -271,6 +271,25 @@ $navHeight: 36px;
 			z-index: 900;
 			$mega-shadow:0 2px 3px lighten($gray, 10%);
 			@include box-shadow($mega-shadow);
+			
+			nav {
+				width: 100%;
+				li {
+					margin-bottom: $baseLineHeight / 2;
+					line-height: 12px;
+					a {
+						color:$nearBlack;
+						@include font-sans-serif(bold, 12px, $baseLineHeight / 2);
+						text-transform: uppercase;
+						&:hover {
+							time {
+								text-decoration:none;
+							}
+						}
+					}
+				}
+			}
+			
 			.cbase {
 				li {
 					h4 {
@@ -280,20 +299,6 @@ $navHeight: 36px;
 							text-transform: none; // for elements with the cbase class
 						}
 					}
-				}
-			}
-		}
-	}
-	
-	nav {
-		width: 100%;
-		li a {
-			color:$nearBlack;
-			@include font-sans-serif(bold, 12px);
-			text-transform: uppercase;
-			&:hover {
-				time {
-					text-decoration:none;
 				}
 			}
 		}
@@ -348,9 +353,10 @@ $navHeight: 36px;
 	
 	ul.content-types {
 		li {
-			// Use border-left because of IE7
 			@include ie-inline-block;
 			padding: 0 8px;
+			
+			// Use border-left because of IE7
 			border-left: 1px solid $grayLighter;
 			
 			&:first-child { border-left: none; }
