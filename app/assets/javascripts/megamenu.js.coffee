@@ -1,8 +1,10 @@
 #= require scprbase
 
-$ -> $('.toggle-search').click ->
-    $('#megamenu').toggleClass('search-takeover')
-    $('#megamenu .search-form .search').focus()
+$ -> 
+    $('.toggle-search').on
+        click: ->
+            $('.nav-primary').toggleClass('search-takeover')
+            $('.nav-primary .search-form .search').focus()
 
 class scpr.MegaMenu
     DefaultOptions:

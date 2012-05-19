@@ -1,51 +1,30 @@
 <%= stylesheet_link_tag    "application", media: "all" %>
 <%= stylesheet_link_tag "base/print", media: "print" %>
-
-<!--[if IE 7]>
-  <link rel="stylesheet" type="text/css" href="/assets/browser-overrides/ie7.css" />
-<![endif]-->
-
-<!--[if IE 8]>
-  <link rel="stylesheet" type="text/css" href="/assets/browser-overrides/ie8.css" />
-<![endif]-->
-
 <%= javascript_include_tag "application" %>
 
 <meta name="viewport" content="width=1160">
 <script type="text/javascript">
-$(function() { compactNav = new scpr.CompactNav(); });
+$(function() { 
+	compactNav = new scpr.CompactNav(); 
+	
+	if (navigator.userAgent.match(/MSIE 7/)) {
+		$("body").addClass("ie7-fix");
+	} 
+	if (navigator.userAgent.match(/MSIE 8/)) {
+		$("body").addClass("ie8-fix");
+	}
 
-// Check for mobile
- if( navigator.userAgent.match(/Android/i)
- || navigator.userAgent.match(/webOS/i)
- || navigator.userAgent.match(/iPhone/i)
- || navigator.userAgent.match(/iPod/i)
- || navigator.userAgent.match(/BlackBerry/i)
- ){
-	$("meta[name=viewport]").attr("content", "width=device-width, minimum-scale=1");
- }
+	// Check for mobile
+	 if( navigator.userAgent.match(/Android/i)
+	 || navigator.userAgent.match(/webOS/i)
+	 || navigator.userAgent.match(/iPhone/i)
+	 || navigator.userAgent.match(/iPod/i)
+	 || navigator.userAgent.match(/BlackBerry/i)
+	 ){
+		$("meta[name=viewport]").attr("content", "width=device-width, minimum-scale=1");
+	 }
 
-// http://webdesignerwall.com/tutorials/iphone-safari-viewport-scaling-bug
-// (function(doc) {
-// 
-// 	var addEvent = 'addEventListener',
-// 	    type = 'gesturestart',
-// 	    qsa = 'querySelectorAll',
-// 	    scales = [1, 1],
-// 	    meta = qsa in doc ? doc[qsa]('meta[name=viewport]') : [];
-// 
-// 	function fix() {
-// 		meta.content = 'width=device-width,minimum-scale=' + scales[0] + ',maximum-scale=' + scales[1];
-// 		doc.removeEventListener(type, fix, true);
-// 	}
-// 
-// 	if ((meta = meta[meta.length - 1]) && addEvent in doc) {
-// 		fix();
-// 		scales = [.25, 1.6];
-// 		doc[addEvent](type, fix, true);
-// 	}
-// 
-// }(document));
+	});
 </script>
 
 <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js"></script>
@@ -76,7 +55,7 @@ googletag.cmd.push(function() {
 	googletag.defineSlot('/127204706/membership_masthead', [286, 73], 'div-gpt-ad-1331935001948-0').addService(googletag.pubads());
 	googletag.defineSlot('/127204706/membership_sidebar', [300, 100], 'div-gpt-ad-1331935001948-1').addService(googletag.pubads());
 	
-	googletag.pubads().set("adsense_background_color", "#ffffff").enableSingleRequest();
+	googletag.pubads().enableSingleRequest();
 	googletag.enableServices();
 });
 </script>

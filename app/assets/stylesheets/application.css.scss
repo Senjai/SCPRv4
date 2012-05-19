@@ -40,4 +40,7 @@
 @import "modals.css.scss";
 @import "slideshow.css.scss";
 
+@import "browser-overrides/ie7.css.scss";
+@import "browser-overrides/ie8.css.scss";
+
 @import "base/responsive.css.scss"; // Put this on the bottom for overriding

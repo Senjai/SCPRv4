@@ -486,7 +486,7 @@ $mediaSmallPortrait: 320px;
 	
 	// Pledge Banner to Button & hide form
 		#masthead {
-			#megamenu.search-takeover {
+			.nav-primary.search-takeover {
 				.sections {
 					width:20%;
 					overflow:hidden;
@@ -513,6 +513,7 @@ $mediaSmallPortrait: 320px;
 					}
 				}
 			}
+			
 			.search-form {
 				width:3%;
 				form {
