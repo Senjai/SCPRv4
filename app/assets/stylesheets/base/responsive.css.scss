@@ -430,6 +430,10 @@ $mediaSmallPortrait: 320px;
 		}
 		
 		#audio-bar {
+			// Since we can't hide it on bigger screens because of IE7
+			display: none;
+			&.active { display: block; }
+			
 			$barHeight: 140px;
 			@include fluidPopup;
 			min-height: $barHeight + 5;
