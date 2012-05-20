@@ -85,6 +85,23 @@ Scprv4::Application.routes.draw do
   # -- Search -- #
   match '/search/' => 'search#index', :as => :search
   
+  # -- Support -- #
+  match 'support' => 'high_voltage/pages#show', :id => 'support'
+  match 'support/car_donation/' => 'high_voltage/pages#show', :id => 'car_donation'
+  match 'support/foundations/' => 'high_voltage/pages#show', :id => 'foundations'
+  match 'support/leadership_circle/' => 'high_voltage/pages#show', :id => 'leadership_circle'
+  match 'support/legacy_society/' => 'high_voltage/pages#show', :id => 'legacy_society'
+  match 'support/matching_gifts/' => 'high_voltage/pages#show', :id => 'matching_gifts'
+  match 'support/member_benefits/' => 'high_voltage/pages#show', :id => 'member_benefits'
+  match 'support/member_benefits_card/' => 'high_voltage/pages#show', :id => 'member_benefits_card'
+  match 'support/stock_gifts/' => 'high_voltage/pages#show', :id => 'stock_gifts'
+  match 'support/sustainer/' => 'high_voltage/pages#show', :id => 'sustainer'
+  match 'support/sustaining_memberships/' => 'high_voltage/pages#show', :id => 'sustaining_memberships'
+  match 'support/sweeps_entry/' => 'high_voltage/pages#show', :id => 'sweeps_entry'
+  match 'support/underwriting/' => 'high_voltage/pages#show', :id => 'underwriting'
+  match 'support/volunteer/' => 'high_voltage/pages#show', :id => 'volunteer'
+  
+  
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
