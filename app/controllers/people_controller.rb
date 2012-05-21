@@ -1,5 +1,9 @@
 class PeopleController < ApplicationController
   
+  def index
+    @bios = Bio.where(:is_public => true).order("last_name")
+  end
+  
   def bio
     @bio = Bio.where(:slugged_name => params[:name]).first
     
