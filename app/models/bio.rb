@@ -3,6 +3,20 @@ class Bio < ActiveRecord::Base
   
   belongs_to :user
   
+  #----------
+  
+  def content(page=1)
+    ContentByline.search('', 
+      :order      => :published_at,
+      :sort_mode  => :desc,
+      :with       => { :user_id => self.id },
+      :per_page   => 15,
+      :page       => page
+    )
+  end
+  
+  #----------
+  
   def to_param
     "#{slugged_name}"
   end

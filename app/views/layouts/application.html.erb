@@ -15,8 +15,9 @@
 	<div id="main" class="container-fluid main-content">
 		<%= yield :title_bar %>
 		<div class="row-fluid">
-			<article class="span16">
+			<article class="span16 relative">
 				<%= content_for?(:content) ? yield(:content) : yield %>
+				<div class="vert-divider"></div>
 			</article>
 			<div class="span8">
 				<div id="sidebar">
