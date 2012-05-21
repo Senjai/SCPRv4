@@ -209,6 +209,16 @@
 	$("#llcontent a").attr("target","_blank")
 <% end %>
 
+<% content_for :footerga do %>
+	_gaq.push(['_setCustomVar',
+	      12,                   // This custom var is set to slot #2.  Required parameter.
+	      'Listen Live Visitor', // The name of the custom variable.  Required parameter.
+	      'Yes',               // The value of the custom variable.  Required parameter.
+	                           //  (you might set this value by default to No)
+	      2                    // Sets the scope to session-level.  Optional parameter.
+	   ]);
+<% end %>
+
 <%= render :partial => "shared/footer/footer_js" %>
 
 </body>

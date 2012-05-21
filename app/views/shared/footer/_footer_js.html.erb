@@ -38,6 +38,9 @@
    ]);
    // End Custom Variable
 
+  //Additional page or section-specific GA tracking goes here
+  <%= yield :footerga %>
+
   // track page view
   _gaq.push(['_trackPageview']);
 
