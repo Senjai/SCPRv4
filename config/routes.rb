@@ -87,6 +87,7 @@ Scprv4::Application.routes.draw do
   
   # -- Support -- #
   match 'support' => 'high_voltage/pages#show', :id => 'support'
+  match 'support/affiliates/' => 'high_voltage/pages#show', :id => 'affiliates'
   match 'support/car_donation/' => 'high_voltage/pages#show', :id => 'car_donation'
   match 'support/foundations/' => 'high_voltage/pages#show', :id => 'foundations'
   match 'support/leadership_circle/' => 'high_voltage/pages#show', :id => 'leadership_circle'
@@ -94,11 +95,15 @@ Scprv4::Application.routes.draw do
   match 'support/matching_gifts/' => 'high_voltage/pages#show', :id => 'matching_gifts'
   match 'support/member_benefits/' => 'high_voltage/pages#show', :id => 'member_benefits'
   match 'support/member_benefits_card/' => 'high_voltage/pages#show', :id => 'member_benefits_card'
+  match 'support/member_benefits_card/listing/' => 'high_voltage/pages#show', :id => 'member_benefits_card_listing'
   match 'support/stock_gifts/' => 'high_voltage/pages#show', :id => 'stock_gifts'
   match 'support/sustainer/' => 'high_voltage/pages#show', :id => 'sustainer'
   match 'support/sustaining_memberships/' => 'high_voltage/pages#show', :id => 'sustaining_memberships'
   match 'support/sweeps_entry/' => 'high_voltage/pages#show', :id => 'sweeps_entry'
   match 'support/underwriting/' => 'high_voltage/pages#show', :id => 'underwriting'
+  match 'support/underwriting/online_sponsorship' => 'high_voltage/pages#show', :id => 'online_sponsorship'
+  match 'support/underwriting/our_audience' => 'high_voltage/pages#show', :id => 'our_audience'
+  match 'support/underwriting/your_message' => 'high_voltage/pages#show', :id => 'your_message'
   match 'support/volunteer/' => 'high_voltage/pages#show', :id => 'volunteer'
   
   
