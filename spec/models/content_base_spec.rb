@@ -88,12 +88,13 @@ ContentBase.content_classes.each do |c|
     describe "#link_path" do
       it "can generate a link_path" do
         object = create symbolize(c)
+        object.should respond_to :link_path
         object.link_path.should_not be_nil
       end
       
       it "accepts an options hash" do
         object = create symbolize(c)
-        object.link_path(anchor: "comments").should_not be_blank
+        lambda { object.link_path(anchor: "comments") }.should_not raise_error
       end
       
       it "merges in an options hash unless it's a ContentShell" do

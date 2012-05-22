@@ -8,23 +8,23 @@
 				</header>
 			
 				<%= simple_format entry.summary %>
-			</div>
-		</div>
+			</div> <!-- info -->
+		</div> <!-- span -->
 		<% if entry.enclosure_url.present? %>
 			<div class="span6">
-					<aside class="story-audio">
-						<div class="inner-container clearfix">
-							<div class="audio-content">
-								<h4>Listen Now</h4>
-							</div>
-							<a href="<%= entry.enclosure_url %>" class="play-btn audio-toggler" title="<%= entry.title %>"></a>
-							<ul class="audio-tools">
-							    <li>
-							        <a href="<%= entry.enclosure_url %>">Download</a>
-							    </li>
-							</ul>
+				<aside class="story-audio">
+					<div class="inner-container clearfix">
+						<div class="audio-content">
+							<h4>Listen Now</h4>
 						</div>
-					</aside>
+						<a href="<%= entry.enclosure_url %>" class="play-btn audio-toggler" title="<%= entry.title %>"></a>
+						<ul class="audio-tools">
+						    <li>
+						        <a href="<%= entry.enclosure_url %>">Download</a>
+						    </li>
+						</ul>
+					</div>
+				</aside>
 			</div> <!-- span -->
 		<% end %>
 	</div> <!-- row-fluid -->

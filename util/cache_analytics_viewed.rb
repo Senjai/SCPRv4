@@ -83,7 +83,7 @@ rows.each do |row|
   obj = ContentBase.obj_by_url(row[0])
   # check whether row[0] is a content URL and that it doesn't already exist in the array
   if content.length < 5 && obj && !content.flatten.include?(obj)
-    puts "ga:pagePath is #{row[1]}"
+    puts "ga:pagePath is #{row[0]}"
     # yes... add it
     content << [ row[1], obj ]
   end

@@ -106,26 +106,3 @@ Scenario: Archive page
 	Then I should see 4 past events
 	And the events should be ordered by "starts_at asc"
 	And I should only see forum events
-
-Scenario Outline: Static Content
-	When I go to the forum page
-	And I click on "<link_text>" in the navigation
-	Then I should see static content
-	
-	Examples:
-	 | link_text    |
-	 | Directions   |
-	 | Partnerships |
-	 | About        |
-
-Scenario Outline: Other static pages
-	When I go to "<page>"
-	Then I should see static content
-	
-	Examples:
-	 | page            |
-	 | forum request   |
-	 | forum caterers  |
-	 | forum volunteer |
-	 | forum riots	   |
-

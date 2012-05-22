@@ -32,12 +32,16 @@ class Category < ActiveRecord::Base
   end
   
   #----------
-
+  
   def link_path(options={})
-    Rails.application.routes.url_helpers.section_path(options.merge!({
-      :category => self.slug,
+    Rails.application.routes.url_helpers.send("section_#{self.url_helper_slug}_path", options.merge!({
+      :id => self.id,
       :trailing_slash => true
     }))
+  end
+  
+  def url_helper_slug
+    self.slug.gsub(/-/, "_")
   end
   
   #----------
