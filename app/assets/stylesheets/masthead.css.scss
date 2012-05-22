@@ -9,31 +9,38 @@ header#masthead {
 	.head-lead-minimal {
 		display: none;
 		text-align: center;
-		padding: 20px 0;
+		padding: 13px 0;
 		margin: 0;
 		@include clearfix;
 		
-		a.antenna {
-			background: url(image_path("icons/antenna-orange.png")) no-repeat left top;
-			height: 28px;
-			color: $nearWhite;
-			@include font-navigation($size: 14px);
-			margin-top: 7px; // Push it down a bit... this shouldn't wrap so it's okay
-			padding: 5px 0 0 25px;
+		a.antenna, span.condensed-nav-link {
+			background: url(image_path("icons/antenna-dark.png")) no-repeat 8px 3px;
+			color: #b8b8b8;
+			cursor: pointer;
+			@include font-heading(600, 14px);
+			margin: 7px 0 0 0; // Push it down a bit... this shouldn't wrap so it's okay
+			opacity:0.8;
+			padding: 8px 8px 8px 30px;
 			display: block;
-			&:hover { text-decoration: none; }
+			text-shadow:0 1px 0 $black;
+			text-transform:uppercase;
+			&:hover, :active {
+				@include border-radius(4px); 
+				background-color:$black;
+				opacity:1;
+				text-decoration: none;
+			}
 		}
 		
 		a.dark-logo { margin: 0 auto; }
+		a.antenna {
+			margin-right:-8px;
+		}
 		span.condensed-nav-link {
-			margin: 6px 10px 0 0; 
 			float: left;
-			background: url(image_path("icons/nav-btn.png")) left top;
-			width: 35px;
-			height: 32px;
+			background: url(image_path("icons/menu-icon.png")) no-repeat 8px 10px;
+			margin-left:-8px;
 			text-align: text-top;
-			cursor: pointer;
-			&:hover { text-decoration: none; }
 		}
 	}	
 }

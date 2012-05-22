@@ -41,6 +41,30 @@ $mediaSmallPortrait: 320px;
 	}
 	
 	.hidden-phone { display: none; }
+	
+	// Make Masthead elements smaller 
+	header#masthead {
+		.head-lead-minimal {
+			.dark-logo img {
+				margin-top:6px;
+				max-width:130px;
+			}
+			a.antenna, span.condensed-nav-link {
+				font-size:13px;
+				padding:5px 5px 5px 23px;
+			}
+			a.antenna {
+				background-position:5px 3px;
+				background-size:15px 22px;
+				margin-right:-5px;
+			}
+			span.condensed-nav-link {
+				background-position:5px 9px;
+				background-size:15px 13px;
+				margin-left:-5px;
+			}
+		}
+	}
 
 	// Block level the page header small tag for readability
 	.page-header h1 small {
