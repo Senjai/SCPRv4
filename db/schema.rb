@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120521230056) do
+ActiveRecord::Schema.define(:version => 20120425181559) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
   end
 
   add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
+
+  create_table "ascertainment_ascertainmentrecord", :force => true do |t|
+    t.integer "content_type_id",                :null => false
+    t.integer "object_id",                      :null => false
+    t.string  "locations",       :limit => 200
+    t.string  "asc_types",       :limit => 200
+    t.string  "verticals",       :limit => 200
+  end
+
+  add_index "ascertainment_ascertainmentrecord", ["content_type_id"], :name => "ascertainment_ascertainmentrecord_e4470c6e"
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_type_id",                                       :null => false
@@ -531,6 +541,7 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
     t.text     "description",           :limit => 2147483647, :null => false
     t.boolean  "enable_in_new_site",                          :null => false
     t.boolean  "show_sidebar",                                :null => false
+    t.string   "redirect_url",          :limit => 250
   end
 
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"

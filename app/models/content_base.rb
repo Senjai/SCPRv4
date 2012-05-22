@@ -296,6 +296,10 @@ class ContentBase < ActiveRecord::Base
     self.published_at
   end
   
+  def auto_published_at
+    true
+  end
+  
   #----------
   
   def status_text

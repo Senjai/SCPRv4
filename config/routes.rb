@@ -30,6 +30,8 @@ Scprv4::Application.routes.draw do
   # -- Bios -- #
   match '/about/people/staff/:name' => 'people#bio', :as => :bio
 
+
+
   # -- Blogs -- #
   match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged", :as => :blog_entries_tagged,  trailing_slash: true
   match '/blogs/:blog/tagged/' => "blogs#blog_tags",                    :as => :blog_tags,            trailing_slash: true
@@ -37,12 +39,16 @@ Scprv4::Application.routes.draw do
   match '/blogs/:blog/(page/:page)' => 'blogs#show',                    :as => :blog,                 trailing_slash: true, :constraints => { :page => /\d+/ }
   match '/blogs/' => 'blogs#index',                                     :as => :blogs,                trailing_slash: true
   
+  
+  
   # -- Programs -- #
   match '/programs/:show/:year/:month/:day/:id/:slug/' => "programs#segment", :as => :segment  
   match '/programs/:show/:year/:month/:day/' => "programs#episode", :as => :episode
   match '/programs/:show(/page/:page)' => 'programs#show', :as => :program, :constraints => { :page => /\d+/ }
   match '/programs/' => 'programs#index', :as => :programs
   match '/schedule/' => 'programs#schedule', as: :schedule
+  
+  
   
   # -- Events -- #
   match '/events/forum/about/'              => 'events#about',      as: :forum_about,           trailing_slash: true
@@ -53,7 +59,8 @@ Scprv4::Application.routes.draw do
   match '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      trailing_slash: true, defaults: { list: "sponsored" }
   match '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event,                 trailing_slash: true
   match '/events/(list/:list)'              => 'events#index',      as: :events,                trailing_slash: true, defaults: { list: "all" }
-
+  
+  
   
   # -- Videos -- #
   resources :video, only: [:index, :show], trailing_slash: true do
@@ -61,15 +68,19 @@ Scprv4::Application.routes.draw do
     match 'list', on: :collection, as: :list
   end
   
+  
   # -- Listen Live -- #
   match '/listen_live/' => 'listen#index', :as => :listen
   
+  
   # -- Search -- #
   match '/search/' => 'search#index', :as => :search
+  
 
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
+  
   
   # -- RSS feeds -- #
   match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
@@ -101,13 +112,16 @@ Scprv4::Application.routes.draw do
   end
   
   Flatpage.all.each do |flatpage|
-    match flatpage.url => 'flatpages#show', id: flatpage.id
+    if flatpage.redirect_url.present?
+      match flatpage.url => redirect(flatpage.redirect_url)
+    else
+      match flatpage.url => 'flatpages#show', id: flatpage.id
+    end
   end
   
   KpccProgram.where("quick_slug != ?", '').each do |program|
     match "/#{program.quick_slug}" => redirect("/programs/#{program.slug}")
   end
-  
   
   root to: "home#index"
 end

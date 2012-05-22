@@ -1,7 +1,9 @@
 class AddViewForMissedItContent < ActiveRecord::Migration
   def up
     execute("
-      create or replace view rails_contentbase_misseditcontent as 
+      create or replace
+      SQL SECURITY INVOKER
+      view rails_contentbase_misseditcontent as 
       select 
         l.id,
         l.bucket_id,
