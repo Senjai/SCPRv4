@@ -7,4 +7,13 @@
 		assets: <%= raw assets.to_json %>,
 		el: "#asset_slideshow_<%= content.id %>"
 	})
+	
+	// add slide change listener for analytics
+	ahSlides.bind("slide",function(idx) {
+		_gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
+		dcsMultiTrack(
+			'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
+			'WT.ti', 'SlideShow PageView'
+		);
+	})
 </script>

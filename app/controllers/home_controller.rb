@@ -19,11 +19,11 @@ class HomeController < ApplicationController
   end
   
   def error
-    render :template => "/error/500.html", :status => 500, :layout => "error"
+    render :template => "/error/500.html", :status => 500, :layout => "app_nosidebar"
   end
   
   def not_found
-    render :template => "/error/404.html", :status => 404, :layout => "error"
+    render :template => "/error/404.html", :status => 404, :layout => "app_nosidebar"
   end
   
   #----------
