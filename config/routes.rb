@@ -104,7 +104,7 @@ Scprv4::Application.routes.draw do
   # catch error routes
   match '/404', :to => 'home#not_found'
   match '/500', :to => 'home#error'
-  
+  match '/fb_channel_file' => 'home#fb_channel_file'
   
   # -- Dynamic root-level routes -- #
   # FIXME: These requires a restart of the application if a slug is changed
