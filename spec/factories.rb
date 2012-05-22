@@ -30,14 +30,14 @@ end
   factory :user, class: "Bio", aliases: [:author, :bio] do
     bio "This is a bio"
     short_bio "Short!"
-    email "email@kpcc.org"
-    is_public true
-    last_name "Ricker"
     name "Bryan Ricker"
-    slugged_name "bryan-ricker"
+    last_name "Ricker"
+    email { "#{name.parameterize}@kpcc.org" }
+    is_public true
+    slugged_name { name.parameterize }
     title "Rails Developer"
-    twitter "@kpcc"
-    sequence(:user_id) 
+    twitter { "@#{slugged_name}" }
+    sequence(:user_id)
   end
   
 

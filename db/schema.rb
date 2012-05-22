@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425181559) do
+ActiveRecord::Schema.define(:version => 20120521230056) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -274,7 +274,7 @@ ActiveRecord::Schema.define(:version => 20120425181559) do
     t.text     "_teaser",       :limit => 2147483647,                                    :null => false
     t.string   "url",           :limit => 150,                                           :null => false
     t.integer  "status",                              :default => 0,                     :null => false
-    t.datetime "pub_at",                              :default => '2011-11-21 11:07:11', :null => false
+    t.datetime "published_at",                        :default => '2011-11-21 11:07:11', :null => false
   end
 
   create_table "contentbase_featuredcomment", :force => true do |t|
