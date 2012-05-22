@@ -100,7 +100,7 @@
 			}
 		}
 	
-		form {
+		.search-form form {
 			input.search {
 				background-color:$nearBlack;
 				border:1px solid $black;
@@ -116,7 +116,7 @@
 		}
 	}
 	
-	.nav-primary .section-mega {
+	.megamenu .mega-bucket .section-mega {
 		background-color:darken($nearBlack, 3%);
 		$mega-shadow:0 5px 6px $black;
 		@include box-shadow($mega-shadow);
@@ -135,7 +135,6 @@
 		}
 		
 		&#support-mega .section .pledge a { color: $white; }
-		
 	}
 	
 	
