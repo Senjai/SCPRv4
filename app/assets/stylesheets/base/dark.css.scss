@@ -120,9 +120,9 @@
 		background-color:darken($nearBlack, 3%);
 		$mega-shadow:0 5px 6px $black;
 		@include box-shadow($mega-shadow);
-		h6 { color:$white; }
-		a, .featured h4 a { color:$gray; }
-		.blog-title a { color:$grayLight; }
+		h6 { color: $white; }
+		a, .featured h4 a, ul.cbase li h4 a { color: $gray; }
+		.blog-title a { color: $grayLight; }
 		
 		ul.cbase li, 
 		.section, 
