@@ -41,13 +41,10 @@
 
 		#masthead-mid-header-wrapper {
 			//Pledge Promo 
-			.pledge-container {
+			.kpcc-personalities {
 				background:transparent;
-				iframe { background: transparent; }
-				
-				.pledge {
-					left:92px;
-					margin-left:0;
+				img {
+					display:none;
 				}
 			}
 		}
