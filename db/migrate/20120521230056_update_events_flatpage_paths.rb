@@ -1,6 +1,6 @@
 class UpdateEventsFlatpagePaths < ActiveRecord::Migration
   # Before: Flatpage.count == 96
-  # After: Flatpage.count == 
+  # After: Flatpage.count == 127
   MercerPages = %w{ /405/ /about/jobs/ /boyleheights/ /careers/ /laelections/ /lovela/ }
   DefaultValues = { 
     enable_comments: false, 
