@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
 
   add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
 
+  create_table "ascertainment_ascertainmentrecord", :force => true do |t|
+    t.integer "content_type_id",                :null => false
+    t.integer "object_id",                      :null => false
+    t.string  "locations",       :limit => 200
+    t.string  "asc_types",       :limit => 200
+    t.string  "verticals",       :limit => 200
+  end
+
+  add_index "ascertainment_ascertainmentrecord", ["content_type_id"], :name => "ascertainment_ascertainmentrecord_e4470c6e"
+
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_type_id",                                       :null => false
     t.integer "object_id",                                             :null => false
@@ -211,10 +221,6 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
   add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
 
-  create_table "blogs_remoteentry", :force => true do |t|
-    t.integer "comment_count", :default => 0, :null => false
-  end
-
   create_table "contentbase_category", :force => true do |t|
     t.string  "category",          :limit => 50,                   :null => false
     t.string  "slug",              :limit => 50,                   :null => false
@@ -264,7 +270,7 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
     t.text     "_teaser",       :limit => 2147483647,                                    :null => false
     t.string   "url",           :limit => 150,                                           :null => false
     t.integer  "status",                              :default => 0,                     :null => false
-    t.datetime "pub_at",                              :default => '2011-11-21 11:07:11', :null => false
+    t.datetime "published_at",                        :default => '2011-11-21 11:07:11', :null => false
   end
 
   create_table "contentbase_featuredcomment", :force => true do |t|
@@ -625,18 +631,6 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
 
   add_index "jobs_employee", ["department_id"], :name => "jobs_employee_2ae7390"
 
-  create_table "layout_breakingnewsalert", :force => true do |t|
-    t.string  "headline",     :limit => 140,                           :null => false
-    t.time    "alert_time"
-    t.string  "alert_type",   :limit => 5
-    t.boolean "is_published",                       :default => true,  :null => false
-    t.boolean "email_sent",                         :default => false, :null => false
-    t.time    "created_at",                                            :null => false
-    t.time    "updated_at",                                            :null => false
-    t.text    "teaser",       :limit => 2147483647,                    :null => false
-    t.string  "alert_link",   :limit => 200,                           :null => false
-  end
-
   create_table "layout_homepage", :force => true do |t|
     t.string   "base",                :limit => 10,                     :null => false
     t.string   "alert_type",          :limit => 5
@@ -883,15 +877,6 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
   end
 
   add_index "news_category", ["slug"], :name => "news_category_slug"
-
-  create_table "news_imageorder", :force => true do |t|
-    t.integer "story_id",    :null => false
-    t.integer "image_id",    :null => false
-    t.integer "image_order", :null => false
-  end
-
-  add_index "news_imageorder", ["image_id"], :name => "news_imageorder_image_id"
-  add_index "news_imageorder", ["story_id"], :name => "news_imageorder_story_id"
 
   create_table "news_oldimageorder", :force => true do |t|
     t.integer "story_id",    :null => false
