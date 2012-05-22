@@ -149,7 +149,7 @@ module ApplicationHelper
       end
       
       authors[i].collect! do |b|
-        if links && b.user
+        if links && b.user && b.user.is_public
           link_to(b.user.name, bio_path(b.user.slugged_name))
         elsif b.user
           b.user.name
