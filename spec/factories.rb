@@ -216,12 +216,33 @@ end
     end
 
     slug { category.parameterize }
-    sequence(:comment_bucket_id)
+    sequence(:comment_bucket_id)    
 
     factory :category_news, traits: [:is_news]
     factory :category_not_news, traits: [:is_not_news]
+    
+    ignore { content_count 0 }
+    ignore { content Hash.new }
+    
+    after_create do |object, evaluator|
+      FactoryGirl.create_list(:news_story, evaluator.content_count.to_i, evaluator.content.merge!(category: object))
+    end
   end
   
+# Flatpage #########################################################
+  factory :flatpage do
+    url "/about/"
+    title "About"
+    content "This is the about content"
+    enable_comments 0
+    registration_required 0
+    render_as_template 0
+    template_name ""
+    description "This is the description"
+    date_modified { Time.now }
+    enable_in_new_site 1
+    show_sidebar 1
+  end
 
 # ContentCategory #########################################################
   factory :content_category do

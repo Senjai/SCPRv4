@@ -1,14 +1,3 @@
-class CategoryConstraint
-  def initialize
-    # load up category list
-    @cats = Category.all.map { |c| c.slug }
-  end
-  
-  def matches?(request)
-    @cats.include?(request.params[:category])
-  end
-end
-
 Scprv4::Application.routes.draw do
   match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
   
@@ -56,13 +45,6 @@ Scprv4::Application.routes.draw do
   match '/schedule/' => 'programs#schedule', as: :schedule
   
   # -- Events -- #
-  ## forum static pages
-  match '/events/forum/space/request/'      => 'events#request',    as: :forum_request,         trailing_slash: true
-  match '/events/forum/request/caterers/'   => 'events#caterers',   as: :forum_caterers,        trailing_slash: true
-  match '/events/forum/space/'              => 'events#space',      as: :forum_space,           trailing_slash: true
-  match '/events/forum/riots/'              => 'events#riots',      as: :forum_riots,           trailing_slash: true
-  match '/events/forum/directions/'         => 'events#directions', as: :forum_directions,      trailing_slash: true
-  match '/events/forum/volunteer/'          => 'events#volunteer',  as: :forum_volunteer,       trailing_slash: true
   match '/events/forum/about/'              => 'events#about',      as: :forum_about,           trailing_slash: true
   
   ## Event lists/details
@@ -84,29 +66,7 @@ Scprv4::Application.routes.draw do
   
   # -- Search -- #
   match '/search/' => 'search#index', :as => :search
-  
-  # -- Support -- #
-  match 'support' => 'high_voltage/pages#show', :id => 'support'
-  match 'support/affiliates/' => 'high_voltage/pages#show', :id => 'affiliates'
-  match 'support/car_donation/' => 'high_voltage/pages#show', :id => 'car_donation'
-  match 'support/foundations/' => 'high_voltage/pages#show', :id => 'foundations'
-  match 'support/leadership_circle/' => 'high_voltage/pages#show', :id => 'leadership_circle'
-  match 'support/legacy_society/' => 'high_voltage/pages#show', :id => 'legacy_society'
-  match 'support/matching_gifts/' => 'high_voltage/pages#show', :id => 'matching_gifts'
-  match 'support/member_benefits/' => 'high_voltage/pages#show', :id => 'member_benefits'
-  match 'support/member_benefits_card/' => 'high_voltage/pages#show', :id => 'member_benefits_card'
-  match 'support/member_benefits_card/listing/' => 'high_voltage/pages#show', :id => 'member_benefits_card_listing'
-  match 'support/stock_gifts/' => 'high_voltage/pages#show', :id => 'stock_gifts'
-  match 'support/sustainer/' => 'high_voltage/pages#show', :id => 'sustainer'
-  match 'support/sustaining_memberships/' => 'high_voltage/pages#show', :id => 'sustaining_memberships'
-  match 'support/sweeps_entry/' => 'high_voltage/pages#show', :id => 'sweeps_entry'
-  match 'support/underwriting/' => 'high_voltage/pages#show', :id => 'underwriting'
-  match 'support/underwriting/online_sponsorship' => 'high_voltage/pages#show', :id => 'online_sponsorship'
-  match 'support/underwriting/our_audience' => 'high_voltage/pages#show', :id => 'our_audience'
-  match 'support/underwriting/your_message' => 'high_voltage/pages#show', :id => 'your_message'
-  match 'support/volunteer/' => 'high_voltage/pages#show', :id => 'volunteer'
-  
-  
+
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
@@ -119,7 +79,6 @@ Scprv4::Application.routes.draw do
   match '/podcasts/' => 'podcasts#index', :as => :podcasts
 
   # -- Sections -- #
-  match '/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new, :defaults => { :page => 1 }, :as => :section
   match '/category/carousel-content/:object_class/:id' => 'category#carousel_content', as: :category_carousel, defaults: { format: :js }
   match '/news/' => 'category#news', :as => :latest_news
   match '/arts-life/' => 'category#arts', :as => :latest_arts
@@ -130,13 +89,25 @@ Scprv4::Application.routes.draw do
   match '/listen' => "home#listen", as: :listen
   match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
   
+  # catch error routes
+  match '/404', :to => 'home#not_found'
+  match '/500', :to => 'home#error'
+  
+  
+  # -- Dynamic root-level routes -- #
+  # FIXME: These requires a restart of the application if a slug is changed
+  Category.all.each do |category|
+    match "/#{category.slug}(/:page)" => 'category#index', id: category.id, as: "section_#{category.url_helper_slug}"
+  end
+  
+  Flatpage.all.each do |flatpage|
+    match flatpage.url => 'flatpages#show', id: flatpage.id
+  end
+  
   KpccProgram.where("quick_slug != ?", '').each do |program|
     match "/#{program.quick_slug}" => redirect("/programs/#{program.slug}")
   end
   
-  root to: "home#index"
   
-  # catch error routes
-  match '/404', :to => 'home#not_found'
-  match '/500', :to => 'home#error'
+  root to: "home#index"
 end

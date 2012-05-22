@@ -1,0 +1,5 @@
+<% page_title @flatpage.title %>
+<% content_for :headerjs, @flatpage.extra_head.html_safe %>
+<%= @flatpage.content.html_safe %><br />
+<em>Last modified: <%= @flatpage.date_modified.strftime("c") %></em>
+<%= @flatpage.extra_tail.html_safe %>

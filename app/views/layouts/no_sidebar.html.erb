@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+	<title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
+	<%= render "shared/header/header_js" %>
+	<%= render "shared/header/opengraph" %>
+	<%= csrf_meta_tags %>
+</head>
+<body>
+<div class="viewport">
+	<!-- MASTHEAD-->
+	<%= render "shared/masthead" %>
+
+	<div id="no-sidebar" class="container-fluid main-content">
+		<article>
+			<%= content_for?(:content) ? yield(:content) : yield %>
+		</article>
+	</div> <!-- container fluid main -->
+
+	<%= render :partial => "shared/footer" %>
+	<%= render :partial => "shared/footer/footer_js" %>
+</div> <!-- viewport -->
+</body>
+</html>
