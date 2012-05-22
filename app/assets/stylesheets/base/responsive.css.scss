@@ -560,9 +560,6 @@ $mediaSmallPortrait: 320px;
 			#masthead-right-header-wrapper { @include gridFluidSpan(12); }
 			
 			#masthead-mid-header-wrapper { display: none; }
-			#masthead-right-header-wrapper {
-				.pledge-button-container { display: block; }
-			}
 		}
 	// end Pledge Banner to Button
 }
@@ -627,6 +624,15 @@ $mediaSmallPortrait: 320px;
 	// the responsive design to do its thing. Otherwise (IE7), the 
 	// default min-width (set to the $siteWidth) will keep the site 
 	// at that width.
+	#masthead-right-header-wrapper {
+		.pledge, nav.utils {
+			float:none;
+			li:first-child {
+				border-left:none;
+			}
+		}
+		.pledge-button-container { display: block;margin:0; }
+	}
 	.nav-primary .sections ul li a {padding: 8px 15px;}
 	.nav-primary .search-form { width:150px;}
 	.container-fluid { min-width: 300px; }
