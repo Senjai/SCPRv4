@@ -1,0 +1,14 @@
+.divider-donut {
+	border-top:1px solid $grayLight;
+	padding:40px 0;
+	position:relative;
+	.donut {
+		background: url(image_path('about/divider-donut.png')) no-repeat left top;
+		display:block;
+		width:31px;
+		height:31px;
+		position:absolute;
+		left:50%;
+		top:-16px;
+	}
+}

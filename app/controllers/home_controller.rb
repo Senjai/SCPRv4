@@ -18,6 +18,10 @@ class HomeController < ApplicationController
     render layout: 'application'
   end
   
+  def about_us
+    render :layout => "app_nosidebar"
+  end
+  
   def error
     render :template => "/error/500.html", :status => 500, :layout => "app_nosidebar"
   end
