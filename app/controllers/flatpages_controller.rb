@@ -4,7 +4,7 @@ class FlatpagesController < ApplicationController
     layout_template = 'application'
     
     if !@flatpage.show_sidebar?
-      layout_template = 'no_sidebar'
+      layout_template = 'app_nosidebar'
     end
 
     if @flatpage.render_as_template?
