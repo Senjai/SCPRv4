@@ -478,7 +478,7 @@ end
     sequence(:_teaser) { |n| "This is a teaser for the content #{n}" }
     url "http://blogdowntown.com/2011/11/6494-green-paint-welcomes-cyclists-to-a-reprioritized"
     
-    sequence(:pub_at) { |n| Time.now + 60*60*n }
+    sequence(:published_at) { |n| Time.now + 60*60*n }
     ignore { related_factory "video_shell" }
     ignore { category_type :category_news }
 

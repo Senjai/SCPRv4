@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120521230056) do
+ActiveRecord::Schema.define(:version => 20120425181559) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -537,6 +537,7 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
     t.text     "description",           :limit => 2147483647, :null => false
     t.boolean  "enable_in_new_site",                          :null => false
     t.boolean  "show_sidebar",                                :null => false
+    t.string   "redirect_url",          :limit => 250
   end
 
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"

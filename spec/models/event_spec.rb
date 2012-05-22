@@ -89,6 +89,11 @@ describe Event do
   end
   
   describe "current?" do
+    before :each do
+      noon = Chronic.parse("noon")
+      Time.stub(:now) { noon }
+    end
+    
     it "is true if Time.now is between the start and end times" do
       event = build :event, starts_at: Chronic.parse("1 hour ago"), ends_at: Chronic.parse("1 hour from now")
       event.current?.should be_true

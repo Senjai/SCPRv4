@@ -37,3 +37,6 @@
 <%= content_widget 'content_carousel', @story %>
 <%= comments_for @story %>
 
+<% content_for :footerga do %>
+	_gaq.push(['_setCustomVar',1,'Source','<%=@story.source%>',3]);
+<% end %>
