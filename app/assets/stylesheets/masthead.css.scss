@@ -164,6 +164,7 @@ $navHeight: 36px;
 	border-left:1px solid #cb5f1d;
 	border-right:1px solid darken($nearWhite, 10%);
 	position: relative;
+	z-index: 900;
 	
 	nav.sections, .search-form {
 		@include ie-inline-block;
