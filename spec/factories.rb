@@ -216,7 +216,7 @@ end
     end
 
     slug { category.parameterize }
-    sequence(:comment_bucket_id)    
+    comment_bucket
 
     factory :category_news, traits: [:is_news]
     factory :category_not_news, traits: [:is_not_news]
@@ -228,6 +228,24 @@ end
       FactoryGirl.create_list(:news_story, evaluator.content_count.to_i, evaluator.content.merge!(category: object))
     end
   end
+
+
+# FeaturedCommentBucket #########################################################
+  factory :featured_comment_bucket, aliases: [:comment_bucket] do
+    title "Comment Bucket"
+  end
+  
+  
+# FeaturedComment #########################################################
+  factory :featured_comment do
+    featured_comment_bucket
+    status 5
+    sequenced_published_at
+    username "bryanricker"
+    excert "This is an excerpt of the featured comment"
+    content { |mic| mic.association(:content_shell) }
+  end
+  
   
 # Flatpage #########################################################
   factory :flatpage do
