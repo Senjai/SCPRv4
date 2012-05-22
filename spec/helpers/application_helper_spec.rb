@@ -97,13 +97,37 @@ describe ApplicationHelper do
       end
     
       it "is ordered by published_at desc" do
-        @news[0].published_at.should be > @news[1].published_at
-        @news[10].published_at.should be < @news[9].published_at
+        @news[0].published_at.should be > @news[4].published_at
+        @news[10].published_at.should be < @news[5].published_at
       end
     
       it "only returns records where category_is_news" do
         @news.any? { |r| r.category.try(:is_news) == false }.should be_false # TODO Figure out why it's returning records without a category sometimes.
       end
+    end
+  end
+  
+  describe "render_asset" do
+    it "should render a fallback image if there are no assets and fallback is true" do
+      content = build :content_shell
+      content.stub(:assets) { [] }
+      render_asset(content, "thumb", true).should match "fallback"
+    end
+    
+    it "should move on to render_asset if there are assets" do
+      content = build :content_shell
+      content.stub(:assets) { [1, 2, 3] }
+      view.stub(:render) { "asset rendered" }
+      helper.render_asset(content, "thumb", true).should match "asset rendered"
+    end
+    
+    it "should return a blank string if object does not have assets method" do
+      helper.render_asset("string", "thumb").should eq ''
+    end
+    
+    it "should return a blank string if object does not have assets and no fallback is requested" do
+      content = create :content_shell
+      helper.render_asset(content, "thumb", false).should eq ''
     end
   end
   

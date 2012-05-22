@@ -1,12 +1,17 @@
-<article class="teaser">
-	<div class="row">
-		<div class="info divider span6">
-			<h3><%= link_to entry.title, entry.url || entry.enclosure_url %></h3>
-			<p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
-			<%= entry.summary.try(:html_safe) %>
-		</div>
-		<div class="interact span2">
-			<% if entry.enclosure_url.present? %>
+<article class="teaser program-external">
+	<div class="row-fluid">
+		<div class="<%= entry.enclosure_url.present? ? "span18" : "span24" %>">
+			<div class="info">
+				<header>
+					<h3><%= link_to entry.title, entry.url || entry.enclosure_url %></h3>
+					<p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
+				</header>
+			
+				<%= simple_format entry.summary %>
+			</div> <!-- info -->
+		</div> <!-- span -->
+		<% if entry.enclosure_url.present? %>
+			<div class="span6">
 				<aside class="story-audio">
 					<div class="inner-container clearfix">
 						<div class="audio-content">
@@ -20,7 +25,7 @@
 						</ul>
 					</div>
 				</aside>
-			<% end %>
-		</div>
-	</div>
+			</div> <!-- span -->
+		<% end %>
+	</div> <!-- row-fluid -->
 </article>

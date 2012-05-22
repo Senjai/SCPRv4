@@ -1,5 +1,81 @@
 #= require scprbase
-		
+
+class scpr.CompactNav
+    constructor: ->
+        @nav = $("#footer-nav")
+        @viewPort = $(".viewport")
+
+        $("#condensed-nav-link").on
+            click: => @slideRight()
+
+        $("#compact-nav-head .in-btn").on
+            click: => @slideLeft()
+
+    slideRight: ->
+        $("html").css("overflow-x": "hidden")
+        @nav.addClass("active")
+        @viewPort.addClass("navIn").css(height: @nav.height())
+
+        $("body").addClass("navIn").css
+            height: @nav.height()
+            width: $(window).width()
+
+        @viewPort.animate(left: @nav.width(), "fast")
+
+    slideLeft: ->
+        @viewPort.animate(left: 0, "fast", =>
+            @viewPort.removeClass("navIn").css(height: "auto")
+            $("body").removeClass("navIn").css
+                height: "auto"
+                width: "auto"
+            @nav.removeClass("active")
+        )
+
+#----------
+
+class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
+    constructor: ->
+        $(document).ready =>
+            # 5 times. If the ad hasn't loaded after that, then we're giving up.
+            for i in [1..5]
+                @sizedCheck(i)
+
+    resize: (element) ->
+        $(element).css
+            "max-width": "100%",
+            "height": "auto"
+        @removeFixedDimensions(element)
+
+    sizedCheck: (i) ->
+        setTimeout () =>
+            # Use this opportunity to make the ad iframes have a transparent background, for IE7 / IE8
+            if $(".ad > iframe[allowtransparency!=allowtransparency]").length
+                console.log "adTransparent: attempt ##{i}:"
+                @makeTransparent()
+
+            if $(".dfp:not(.adSized)").length
+                console.log "adSizer: Attempt ##{i}:"
+                @resizeIframes()
+        , 500*i
+
+    resizeIframes: ->
+        $.each $(".dfp:not(.adSized) iframe"), (i, iframe) =>
+            console.log "adSizer: Resizing #{$(iframe).attr("id")}..."
+            $(iframe.contentWindow.document).ready () =>
+                ad = $(iframe.contentWindow.document).find("img, object, embed")[0]
+                console.log "adSizer: ad is ", ad            
+                if $(ad).length
+                    @resize(ad)
+                    $(iframe).closest(".ad .dfp").addClass("adSized")
+                    console.log "adSizer: Done."
+
+    removeFixedDimensions: (element) ->
+        $(element).removeAttr("width").removeAttr("height")
+
+    makeTransparent: ->
+        $(".ad > iframe[allowtransparency!=allowtransparency]").attr("allowtransparency", "allowtransparency")
+        console.log "adTransparent: Done."
+
 #----------
 
 class scpr.SocialTools
@@ -130,26 +206,44 @@ class scpr.SocialTools
         @ids = (el.attr("data-url") for el in @fbelements)
         
         # set a timeout for signalling bad load
-        @fbTimeout = setTimeout (=> @_signalFbLoadFailure()), 5000
+#        @fbTimeout = setTimeout (=> @_signalFbLoadFailure("Failed to load FB Counts in 5 seconds")), 5000
         @fbPending = Number(new Date)
         
-        # fire an async request 
-        $.getJSON @options.fburl, { ids: @ids.join(',') }, (res) =>
-            # note load success
-            clearTimeout @fbTimeout
-            @fbTimeout = null
-            loadtime = Number(new Date) - @fbPending
-            console.log "fb counts load took #{loadtime/1000} seconds"
-            @gaq?.push ['_trackEvent','SocialTools','Facebook Load','',loadtime,true]
+        # fire an async request
+        $.ajax
+            type: "GET"
+            jsonp: 'callback'
+            url: @options.fburl
+            dataType: 'jsonp'
+            cache: false
+            data:
+                ids: @ids.join(',')
             
-            # fill in our numbers
-            for el in @fbelements
-                if fbobj = res[ el.attr("data-url") ]
-                    count = Number(fbobj.shares||0) + Number(fbobj.likes||0)
-                    $(@options.count,el).text count
+            beforeSend: () ->
+                console.log "sending request for fb counts..."
+
+            success: (res) =>
+                # note load success
+                clearTimeout @fbTimeout
+                @fbTimeout = null
+                loadtime = Number(new Date) - @fbPending
+                console.log "fb counts load took #{loadtime/1000} seconds"
+                @gaq?.push ['_trackEvent','SocialTools','Facebook Load','',loadtime,true]
             
-    _signalFbLoadFailure: ->
-        console.log "failed to load facebook counts in 5 seconds."
+                # fill in our numbers
+                for el in @fbelements
+                    if fbobj = res[ el.attr("data-url") ]
+                        count = Number(fbobj.shares||0) + Number(fbobj.likes||0)
+                        $(@options.count,el).text count
+
+            error: () =>
+                @_signalFbLoadFailure("Could not retrieve data from #{@options.fburl}")
+
+            complete: (xhr, status) ->
+                console.log "Requests complete. Status: #{status}"
+            
+    _signalFbLoadFailure: (message) ->
+        console.log message
         @gaq?.push ['_trackEvent','SocialTools','Facebook Failure',String(new Date),0,true]
     
     #----------    
@@ -184,105 +278,54 @@ class scpr.SocialTools
     _signalTwitLoadFailure: ->
         console.log "failed to load twitter counts in 5 seconds."
         @gaq?.push ['_trackEvent','SocialTools','Twitter Failure',String(new Date),0,true]
-            
-#----------
 
-class scpr.SectionCarousel
-	DefaultOptions:
-		el: "#sec_carousel"
-		items: 4
-		prev: "#sec_carousel_prev"
-		next: "#sec_carousel_next"
-		pages: "#sec_carousel_pag"
-		param: "page"
-		
-	#----------
-	
-	_template:
-		"""
-		<a href="<%= link_path %>">
-			<%= asset %>
-			<p><%= headline %></p>
-		</a>
-		"""
-
-	#----------
-	
-	constructor: (items,options) ->
-		@options = _(_({}).extend(this.DefaultOptions)).extend( options || {} )
-
-		# -- create our initial elements -- #
-		@el = $(@options.el)
-		
-		for i in items
-			tag = $ "<li/>"
-			tag.html _.template @_template, i
-			@el.append tag
-		
-		# -- instantiate our carousel -- #
-
-		$(@options.el).carouFredSel
-			circular:	false
-			infinite:	false
-			auto:		false
-			items:		@options.items
-			prev:		@options.prev
-			next:		@options.next
-			pagination: @options.pages
-			scroll:
-				onAfter: (oldI,newI) => @_loadItems(oldI,newI)
-
-	_loadItems: (oldI,newI) ->
-		console.log "oldI is ", oldI
-		console.log "newI is ", newI
-
-#----------	   
+#----------    
 
 class scpr.BetaToggle
-	DefaultOptions:
-		cookie: "scprbeta"
-		el: "#beta-button"
-		homeEl: "#beta-home"
-		onText: "Opt me in to the beta!"
-		offText: "Get me out of the beta!"
-	
-	constructor: (options) ->
-		@options = _(_({}).extend(this.DefaultOptions)).extend( options || {} )
-		
-		@current = if scpr.Cookie.get(@options.cookie) == "true" then true else false
+    DefaultOptions:
+        cookie: "scprbeta"
+        el: "#beta-button"
+        homeEl: "#beta-home"
+        onText: "Opt me in to the beta!"
+        offText: "Get me out of the beta!"
+    
+    constructor: (options) ->
+        @options = _(_({}).extend(this.DefaultOptions)).extend( options || {} )
+        
+        @current = if scpr.Cookie.get(@options.cookie) == "true" then true else false
 
-		$ => 
-			# attach click handler for cookie toggling
-			$(@options.el).click (e) =>
-				if @current
-					# opt out
-					console.log "opt out!"
-					scpr.Cookie.unset(@options.cookie)
-					@current = false
-				else
-					# opt in
-					console.log "opt in!"
-					scpr.Cookie.set(@options.cookie,true,86400*30)
-					@current = true
-				
-				@setText()
-				
-				# show the home page link
-				$(@options.homeEl).show()
-			
-				return false
-				
-			@setText()
+        $ => 
+            # attach click handler for cookie toggling
+            $(@options.el).click (e) =>
+                if @current
+                    # opt out
+                    console.log "opt out!"
+                    scpr.Cookie.unset(@options.cookie)
+                    @current = false
+                else
+                    # opt in
+                    console.log "opt in!"
+                    scpr.Cookie.set(@options.cookie,true,86400*30)
+                    @current = true
+                
+                @setText()
+                
+                # show the home page link
+                $(@options.homeEl).show()
+            
+                return false
+                
+            @setText()
 
-	setText: ->
-		if @current
-			$(@options.el).text @options.offText
-		else
-			$(@options.el).text @options.onText
+    setText: ->
+        if @current
+            $(@options.el).text @options.offText
+        else
+            $(@options.el).text @options.onText
 
-		
-	
-#----------		   
+        
+    
+#----------        
 
 ###
  cookie code originally from prototype-tidbits
@@ -290,27 +333,27 @@ class scpr.BetaToggle
 ###
 
 class scpr.Cookie
-	@set: (name,value,seconds) ->
-		if seconds
-			d = new Date()
-			d.setTime d.getTime() + (seconds * 1000)
-			expiry = '; expires=' + d.toGMTString()
-		else
-			expiry = ''
+    @set: (name,value,seconds) ->
+        if seconds
+            d = new Date()
+            d.setTime d.getTime() + (seconds * 1000)
+            expiry = '; expires=' + d.toGMTString()
+        else
+            expiry = ''
 
-		document.cookie = name + "=" + value + expiry + "; path=/"
+        document.cookie = name + "=" + value + expiry + "; path=/"
 
-	@get: (name) ->
-		nameEQ = name + "=";
-		ca = document.cookie.split(';');
-		for c in ca
-			while c.charAt(0) == ' '
-				c = c.substring(1,c.length)
+    @get: (name) ->
+        nameEQ = name + "=";
+        ca = document.cookie.split(';');
+        for c in ca
+            while c.charAt(0) == ' '
+                c = c.substring(1,c.length)
 
-			if c.indexOf(nameEQ) == 0
-				return c.substring(nameEQ.length,c.length)
+            if c.indexOf(nameEQ) == 0
+                return c.substring(nameEQ.length,c.length)
 
-		return null
+        return null
 
-	@unset: (name) ->
-		scpr.Cookie.set name, '', -1
+    @unset: (name) ->
+        scpr.Cookie.set name, '', -1

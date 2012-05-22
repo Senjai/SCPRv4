@@ -1,32 +1,40 @@
-<div class="row">
-<div class="audio-bar bar-inactive span12">
+<div class="audio-bar" id="audio-bar">
 	<div id="jquery_jplayer_1" class="jp-jplayer"></div>
-	  <div id="jp_container_1" class="jp-audio">
-	    <div class="jp-type-single">
-	      <div class="jp-gui jp-interface clearfix">
-	        <ul class="jp-controls clearfix">
-	          <li><a href="javascript:;" class="jp-play">play</a></li>
-			  <li><a href="javascript:;" class="jp-pause">pause</a></li>
-			  <li><a href="javascript:;" class="jp-mute">mute</a></li>
-			  <li><a href="javascript:;" class="jp-unmute">unmute</a></li>
-	        </ul>
-	        <div class="jp-progress">
-			  <div class="jp-current-time"></div>
-			  <div class="jp-bar">
-		          <div class="jp-seek-bar">
-		            <div class="jp-play-bar"></div>
-		          </div>
-			  </div>
-			  <div class="jp-duration"></div>
-	        </div>
-	      </div>
-	      <div class="jp-title">
-	        <p><span>Now Playing: </span><i id="jplayer1_title"></i></p>
-	      </div>
-		  <div class="bar-close">
-		  	<a href="#">Close &amp; Stop</a>
-		  </div>
-	    </div>
-	  </div>
-</div>
-</div>
+	<div id="jp_container_1" class="jp-audio">
+		<div class="jp-type-single">
+		
+			<!-- put bar-close first so it floats right properly when the widget switches to modal 
+				 On the normal layout, everything here is floated so it still gets pushed to the right properly -->
+			<div class="bar-close">
+				<a href="#">Close &amp; Stop</a>
+			</div>
+		
+			<div class="section-left">
+				<div class="jp-gui jp-interface clearfix">
+					<ul class="jp-controls clearfix">
+						<li><a href="javascript:;" class="jp-play">play</a></li>
+						<li><a href="javascript:;" class="jp-pause">pause</a></li>
+						<li><a href="javascript:;" class="jp-mute">mute</a></li>
+						<li><a href="javascript:;" class="jp-unmute">unmute</a></li>
+					</ul>
+					<div class="jp-progress">
+	  					<div class="jp-current-time"></div>
+						<div class="jp-bar">
+							<div class="jp-seek-bar">
+								<div class="jp-play-bar"></div>
+							</div>
+						</div> <!-- jp-bar -->
+	  					<div class="jp-duration"></div>
+					</div> <!-- jp-progress -->
+	  			</div> <!-- jp-gui -->
+			</div> <!-- section-left -->
+		
+			<div class="section-mid">
+				<div class="jp-title">
+					<p><span>Now Playing: </span><i id="jplayer1_title"></i></p>
+				</div>
+			</div> <!-- section-mid -->
+			
+		</div> <!-- jp-type-single -->
+	</div> <!-- jp-audio -->
+</div> <!-- audio-bar -->

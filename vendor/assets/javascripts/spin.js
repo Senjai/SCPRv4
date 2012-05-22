@@ -188,7 +188,9 @@
         ep = pos(el);
         css(el, {
           left: (target.offsetWidth >> 1) - ep.x+tp.x + 'px',
-          top: (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
+          top: (target.offsetHeight >> 1) - ep.y+tp.y + 'px',
+		  width: 0,
+		  height: 0
         });
       }
       el.setAttribute('aria-role', 'progressbar');

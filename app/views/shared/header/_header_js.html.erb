@@ -1,5 +1,31 @@
-<%= stylesheet_link_tag    "application" %>
+<%= stylesheet_link_tag    "application", media: "all" %>
+<%= stylesheet_link_tag "base/print", media: "print" %>
 <%= javascript_include_tag "application" %>
+
+<meta name="viewport" content="width=1160">
+<script type="text/javascript">
+$(function() { 
+	compactNav = new scpr.CompactNav(); 
+	
+	if (navigator.userAgent.match(/MSIE 7/)) {
+		$("body").addClass("ie7-fix");
+	} 
+	if (navigator.userAgent.match(/MSIE 8/)) {
+		$("body").addClass("ie8-fix");
+	}
+
+	// Check for mobile
+	 if( navigator.userAgent.match(/Android/i)
+	 || navigator.userAgent.match(/webOS/i)
+	 || navigator.userAgent.match(/iPhone/i)
+	 || navigator.userAgent.match(/iPod/i)
+	 || navigator.userAgent.match(/BlackBerry/i)
+	 ){
+		$("meta[name=viewport]").attr("content", "width=device-width, minimum-scale=1");
+	 }
+
+	});
+</script>
 
 <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js"></script>
 <script type="text/javascript">ahClient = new AssetHost.Client()</script>
@@ -25,9 +51,9 @@ node.parentNode.insertBefore(gads, node);
 
 <script type='text/javascript'>
 googletag.cmd.push(function() {
-googletag.defineSlot('/127204706/events_home', [728, 90], 'div-gpt-ad-1334030619228-0').addService(googletag.pubads());
-googletag.defineSlot('/127204706/membership_masthead', [286, 73], 'div-gpt-ad-1331935001948-0').addService(googletag.pubads());
-googletag.defineSlot('/127204706/membership_sidebar', [300, 100], 'div-gpt-ad-1331935001948-1').addService(googletag.pubads());
+googletag.defineSlot('/127204706/events_home', [728, 90], 'div-gpt-ad-1337671309327-0').addService(googletag.pubads());
+googletag.defineSlot('/127204706/membership_masthead', [123, 23], 'div-gpt-ad-1337671309327-1').addService(googletag.pubads());
+googletag.defineSlot('/127204706/membership_sidebar', [300, 100], 'div-gpt-ad-1337671309327-2').addService(googletag.pubads());
 googletag.pubads().enableSingleRequest();
 googletag.enableServices();
 });

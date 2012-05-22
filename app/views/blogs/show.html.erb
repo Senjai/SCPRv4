@@ -4,8 +4,6 @@
 	<%= render :partial => "entry", :collection => @entries, :as => :entry %>
 </div>
 
-<div class="row">
-	<div class="span6 offset2 blog-pag">
-		<%= will_paginate @entries, :page_links => false %>
-	</div>
+<div class="offset2 blog-pag">
+	<%= will_paginate @entries, :page_links => false %>
 </div>

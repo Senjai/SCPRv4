@@ -1,0 +1,19 @@
+<% if content.audio[1..-1].present? %>
+	<% for audio in content.audio[1..-1] %>
+		<aside class="story-audio">
+			<div class="inner-container clearfix">
+				<div class="audio-content">
+					<h4>Extra Audio</h4>
+					<p><%= audio.description %></p>
+				</div>
+				<a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h audio.description %>" data-duration="<%= audio.duration %>"></a>
+				<span class="duration">[<%= format_duration audio.duration %>]</span -->
+				<ul class="audio-tools">
+				    <li>
+				        <a href="<%= audio.url %>">Download</a>
+				    </li>
+				</ul>
+			</div>
+		</aside>
+	<% end %>
+<% end %>

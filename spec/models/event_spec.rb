@@ -78,34 +78,39 @@ describe Event do
   
   describe "upcoming?" do
     it "is true if the start time is greater than right now" do
-      event = build :event, ends_at: nil, starts_at: 1.hour.from_now
+      event = build :event, ends_at: nil, starts_at: Chronic.parse("1 hour from now")
       event.upcoming?.should be_true
     end
     
     it "is false if the event start time is in the past" do
-      event = build :event, ends_at: nil, starts_at: 1.hour.ago
+      event = build :event, ends_at: nil, starts_at: Chronic.parse("1 hour ago")
       event.upcoming?.should be_false
     end
   end
   
   describe "current?" do
+    before :each do
+      noon = Chronic.parse("noon")
+      Time.stub(:now) { noon }
+    end
+    
     it "is true if Time.now is between the start and end times" do
-      event = build :event, starts_at: 1.hour.ago, ends_at: 1.hour.from_now
+      event = build :event, starts_at: Chronic.parse("1 hour ago"), ends_at: Chronic.parse("1 hour from now")
       event.current?.should be_true
     end
     
     it "is true if ends_at is blank and Time.now is between start time and end of day" do
-      event = build :event, starts_at: 1.hour.ago, ends_at: nil
+      event = build :event, starts_at: Chronic.parse("1 hour ago"), ends_at: nil
       event.current?.should be_true
     end
     
     it "is false if start time is in the future" do
-      event = build :event, starts_at: 1.hour.from_now
+      event = build :event, starts_at: Chronic.parse("1 hour from now")
       event.current?.should be_false
     end
     
     it "is false if event ends_at is in the past" do
-      event = build :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
+      event = build :event, starts_at: 2.hours.ago, ends_at: Chronic.parse("1 hour ago")
       event.current?.should be_false
     end
     

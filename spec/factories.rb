@@ -9,6 +9,12 @@ end
 
 FactoryGirl.define do
 
+### Common Attributes
+trait :sequenced_published_at do
+  sequence(:published_at) { |n| Time.now + 60*60*n }
+end
+
+
 # Schedule #########################################################
   factory :schedule do # Requires us to pass in kpcc_proram_id or other_program_id and program. There must be a better way to do this.
     sequence(:day) { |n| (Time.now + 60*60*24*n).day }
@@ -21,24 +27,25 @@ FactoryGirl.define do
   
 
 # User #########################################################
-  factory :user, class: "Bio", aliases: [:author] do
+  factory :user, class: "Bio", aliases: [:author, :bio] do
     bio "This is a bio"
     short_bio "Short!"
-    email "email@kpcc.org"
-    is_public true
-    last_name "Ricker"
     name "Bryan Ricker"
-    slugged_name "bryan-ricker"
+    last_name "Ricker"
+    email { "#{name.parameterize}@kpcc.org" }
+    is_public true
+    slugged_name { name.parameterize }
     title "Rails Developer"
-    twitter "@kpcc"
-    sequence(:user_id) 
+    twitter { "@#{slugged_name}" }
+    sequence(:user_id)
   end
-
+  
 
 # KpccProgram #########################################################
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
     slug { title.parameterize }
+    quick_slug { title.parameterize.chars.first(5) }
     teaser "AirTalk, short teaser, etc."
     description "This is the description for AirTalk!"
     host "Larry Mantle"
@@ -54,12 +61,24 @@ FactoryGirl.define do
     
     ignore { segment Hash.new } # Ensures that `merge` has something to do in the after_create block
     ignore { episode Hash.new } # Ensures that `merge` has something to do in the after_create block
+    ignore { missed_it_bucket Hash.new }
     ignore { episode_count 0 }
     ignore { segment_count 0 }
+    ignore { blog false }
     
-    after_create do |kpcc_program, evaluator|
-      FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: kpcc_program))
-      FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: kpcc_program))
+    after_create do |object, evaluator|
+      FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: object))
+      FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: object))
+      
+      if evaluator.blog == "true"
+        object.blog = FactoryGirl.create :blog
+        object.save!
+      end
+      
+      if evaluator.missed_it_bucket_id.blank?
+        object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: object.title))
+        object.save!
+      end
     end
   end
   
@@ -90,6 +109,7 @@ FactoryGirl.define do
 
 # Blog #########################################################
   factory :blog do
+    # TODO blog_authors
     sequence(:name) { |n| "Blog #{n}" }
     slug { name.parameterize }
     _teaser { "This is the teaser for #{name}!" }
@@ -112,6 +132,19 @@ FactoryGirl.define do
     factory :remote_blog do
       is_remote true
       feed_url "http://oncentral.org/rss/latest"
+    end
+    
+    ignore { entry_count 0 }
+    ignore { entry Hash.new }
+    ignore { missed_it_bucket Hash.new }
+  
+    after_create do |object, evaluator|
+      FactoryGirl.create_list(:blog_entry, evaluator.entry_count.to_i, evaluator.entry.merge!(blog: object))
+      
+      if evaluator.missed_it_bucket_id.blank?
+        object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: object.name))
+        object.save!
+      end
     end
   end
   
@@ -148,7 +181,7 @@ FactoryGirl.define do
     
     ignore { asset_count 0 }
     after_create do |event, evaluator|
-      FactoryGirl.create_list(:asset, evaluator.asset_count.to_i.to_i, content: event)
+      FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: event)
     end
   end
   
@@ -183,12 +216,51 @@ FactoryGirl.define do
     end
 
     slug { category.parameterize }
-    sequence(:comment_bucket_id)
+    comment_bucket
 
     factory :category_news, traits: [:is_news]
     factory :category_not_news, traits: [:is_not_news]
+    
+    ignore { content_count 0 }
+    ignore { content Hash.new }
+    
+    after_create do |object, evaluator|
+      FactoryGirl.create_list(:news_story, evaluator.content_count.to_i, evaluator.content.merge!(category: object))
+    end
+  end
+
+
+# FeaturedCommentBucket #########################################################
+  factory :featured_comment_bucket, aliases: [:comment_bucket] do
+    title "Comment Bucket"
   end
   
+  
+# FeaturedComment #########################################################
+  factory :featured_comment do
+    featured_comment_bucket
+    status 5
+    sequenced_published_at
+    username "bryanricker"
+    excert "This is an excerpt of the featured comment"
+    content { |mic| mic.association(:content_shell) }
+  end
+  
+  
+# Flatpage #########################################################
+  factory :flatpage do
+    url "/about/"
+    title "About"
+    content "This is the about content"
+    enable_comments 0
+    registration_required 0
+    render_as_template 0
+    template_name ""
+    description "This is the description"
+    date_modified { Time.now }
+    enable_in_new_site 1
+    show_sidebar 1
+  end
 
 # ContentCategory #########################################################
   factory :content_category do
@@ -215,8 +287,57 @@ end
     link_type "website"
   end
 
+# Homepage #########################################################
+factory :homepage do
+  base "default"
+  sequenced_published_at
+  status 5
+  
+  # fields required marked "NOT NULL" in the database that, in fact, can be null
+  alert_link "http://www.scpr.org/news/2009/07/01/brush-fire-burning-in-angeles-national-forest/"
+  alert_text "A small fire has broken out in Castaic, closing the 5 in both directions."
+  local 1
+  national 1
+  world 1
+  flipper 1
+  is_published 1
+  blogs 1
+  rotator 1
+  
+  ignore { missed_it_bucket Hash.new }
+  ignore { contents_count 0 }
+  
+  after_create do |object, evaluator|
+    FactoryGirl.create_list(:homepage_content, evaluator.contents_count.to_i, homepage: object)
+    
+    if evaluator.missed_it_bucket_id.blank?
+      object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: "Homepage #{object.id}"))
+      object.save!
+    end
+  end
+end
 
+# HomepageContent #########################################################
+factory :homepage_content do
+  homepage
+  content { |hc| hc.association(:content_shell) }
+end
 
+# MissedItBucket #########################################################
+factory :missed_it_bucket do
+  title "Airtalk"
+  ignore { contents_count 0 }
+  after_create do |object, evaluator|
+    FactoryGirl.create_list(:missed_it_content, evaluator.contents_count.to_i, missed_it_bucket: object)
+  end
+end
+
+# MissedItContent #########################################################
+factory :missed_it_content do
+  missed_it_bucket
+  content { |mic| mic.association(:content_shell) }
+end
+  
 ##########################################################
 ### ContentBase Classes
 ##### *NOTE:* The name of the factory should eq `ClassName.to_s.underscore.to_sym`, i.e. NewsStory = :news_story
@@ -232,10 +353,6 @@ end
     ignore { with_category false }
     ignore { byline_count 0 }
     status 5
-  end
-  
-  trait :sequenced_published_at do
-    sequence(:published_at) { |n| Time.now + 60*60*n }
   end
   
 
@@ -361,7 +478,7 @@ end
     sequence(:_teaser) { |n| "This is a teaser for the content #{n}" }
     url "http://blogdowntown.com/2011/11/6494-green-paint-welcomes-cyclists-to-a-reprioritized"
     
-    sequence(:pub_at) { |n| Time.now + 60*60*n }
+    sequence(:published_at) { |n| Time.now + 60*60*n }
     ignore { related_factory "video_shell" }
     ignore { category_type :category_news }
 

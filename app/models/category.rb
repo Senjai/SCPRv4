@@ -9,6 +9,12 @@ class Category < ActiveRecord::Base
   #----------
 
   def content(page=1,per_page=10,without_obj=nil)
+    ts_max_matches = 1000 # Thinking Sphinx config 'max_matches', throws an error if the offset (from pagination) is higher than this number
+    
+    if page.to_i*per_page.to_i > ts_max_matches
+      return []
+    end
+    
     args = {
       :classes    => ContentBase.content_classes,
       :page       => page,
@@ -26,17 +32,23 @@ class Category < ActiveRecord::Base
   end
   
   #----------
-
+  
   def link_path(options={})
-    Rails.application.routes.url_helpers.section_path(options.merge!({
-      :category => self.slug,
+    Rails.application.routes.url_helpers.send("section_#{self.url_helper_slug}_path", options.merge!({
+      :id => self.id,
       :trailing_slash => true
     }))
+  end
+  
+  def url_helper_slug
+    self.slug.gsub(/-/, "_")
   end
   
   #----------
   
   def feature_candidates(args={})
+    # lower decay decays more slowly. eg. rate of -0.01 will have a lower score after 3 days than -0.05
+    
     candidates = []
 
     # -- first look for featured comments -- #
@@ -53,6 +65,30 @@ class Category < ActiveRecord::Base
       }        
     end
 
+
+    # -- then try to feature videos since they are less common --#
+    
+    video = ThinkingSphinx.search '',
+      :classes      => [VideoShell],
+      :page         => 1,
+      :per_page     => 1,
+      :order        => :published_at,
+      :sort_mode    => :desc,
+      :with         => { :category => self.id },
+      :without_any  => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+      
+    if video.present?
+      # Initial score: 15
+      # Decay rate: 0.05
+      video = video.first
+      candidates << {
+        :content  => video,
+        :score    => (15 * Math.exp( -0.05 * ((Time.now - video.published_at) / 3600) ) ),
+        :metric   => :video
+      }
+    end
+    
+    
     # -- now try slideshows -- #
 
     slideshow = ThinkingSphinx.search '',
@@ -89,7 +125,7 @@ class Category < ActiveRecord::Base
 
     if segments.any?
       # Initial score:  10
-      # Decay rate:     0.02  
+      # Decay rate:     0.02
       seg = segments.first
 
       candidates << {

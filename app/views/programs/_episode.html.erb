@@ -1,13 +1,13 @@
 <div class="show-episode episode">
-	<div class="row">
+	<div class="row-fluid">
 	<% if episode.assets.present? %>
-		<div class="span2">
+		<div class="span6">
 			<%= render_asset episode, 'lsquare' %>
 		</div>
 	
-		<div class="span6">
+		<div class="span18">
 	<% else %>
-		<div class="span8">
+		<div class="span24">
 	<% end %>
 			<h3><%= link_to episode.title, episode.link_path %></h3>
 			<p><%= episode.teaser %></p>

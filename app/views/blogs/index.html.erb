@@ -1,12 +1,14 @@
 <% page_title "Blogs" %>
 
 <h1>KPCC Blogs</h1>
-<div class="row">
-	<div class="span4 directory" id="news">
-		<h6>News &amp; Commentary</h6>
-		<%= render partial: "blog_thumb", collection: @news_blogs, as: "blog" %>
+<div class="row-fluid">
+	<div class="span12">
+		<div class="directory" id="news">
+			<h6>News &amp; Commentary</h6>
+			<%= render partial: "blog_thumb", collection: @news_blogs, as: "blog" %>
+		</div>
 	</div>
-	<div class="span4">
+	<div class="span12">
 		<div class="directory" id="arts-and-culture">
 			<h6>Arts &amp; Culture</h6>
 			<%= render partial: "blog_thumb", collection: @non_news_blogs, as: "blog" %>
@@ -16,5 +18,5 @@
 			<h6>KPCC Sites</h6>
 			<%= render partial: "remote_blog_thumb", collection: @remote_blogs, as: "blog" %>
 		</div>
-	</div> <!-- .span4 -->
+	</div> <!-- .span8 -->
 </div> <!-- .row -->

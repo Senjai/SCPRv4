@@ -1,17 +1,19 @@
-<div class="row cbase lead">
-	<div class="span4">
-		<%= render_asset content, "lead" %>
-	</div>
-	<div class="span4">
-		<h1 class="story-headline"><%= link_to content.short_headline, content.link_path %></h1>
-		<h4>
-			<%= render_byline content %>
-			<%= smart_date_js content, "data-relativefor" => "8h" %>
-		</h4>
+<div class="cbase lead">
+	<div class="row-fluid">
+		<div class="span12">
+			<%= render_asset content, "lead" %>
+		</div>
+		<div class="span12">
+			<h1 class="story-headline"><%= link_to content.short_headline, content.link_path %></h1>
+			<h4>
+				<%= render_byline content %>
+				<%= smart_date_js content, "data-relative" => "8h" %>
+			</h4>
 
-		<p><%=h strip_tags(content.teaser) %></p>
+			<p><%=h strip_tags(content.teaser) %></p>
 
-		<%= comment_count_for content %>
+			<%= comment_count_for content %>
 
-	</div>
-</div>
+		</div>
+	</div> <!-- row-fluid -->
+</div> <!-- cbase lead -->

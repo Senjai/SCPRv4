@@ -1,22 +1,30 @@
 <%= content_cache("episode:#{current_episode.id}:current") do %>
 <% register_content current_episode %>
-<div class="current-episode episode row">
-	<div class="span4">
-		<h2><%= link_to current_episode.title, current_episode.link_path %></h2>
-		
-		<%= simple_format current_episode.teaser %>	
+<div class="current-episode">
+	<div class="episode">
+		<div class="row-fluid">
+			<div class="span<%= current_episode.assets.present? ? "12" : "24" %>">
+				<h2><%= link_to current_episode.title, current_episode.link_path %></h2>
+				<%= simple_format current_episode.teaser %>	
+			</div>
+			<% if current_episode.assets.present? %>
+				<div class="span12">
+					<%= render_asset current_episode, "lead" %>
+				</div>
+			<% end %>
+		</div>
 	</div>
-	<div class="span4" style="margin-bottom: 8px">
-			<%= render_asset current_episode, "four_w_caption"%>
-	</div>
-</div>
-<div class="current-episode-segments row">
-	<% split_num = ( current_episode.segments.published.length.to_f / 2 ).ceil %>
-	<div class="span4">
-		<%= render_content current_episode.segments.published.first(split_num), "seg_headline" %>
-	</div>
-	<div class="span4">
-		<%= render_content current_episode.segments.published[split_num..-1], "seg_headline" %>		
+
+	<div class="current-episode-segments">
+		<div class="row-fluid">
+			<% split_num = ( current_episode.segments.published.length.to_f / 2 ).ceil %>
+			<div class="span12">
+				<%= render_content current_episode.segments.published.first(split_num), "seg_headline" %>
+			</div>
+			<div class="span12">
+				<%= render_content current_episode.segments.published[split_num..-1], "seg_headline" %>		
+			</div>
+		</div>
 	</div>
 </div>
 <% end %>

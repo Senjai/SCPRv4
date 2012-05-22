@@ -25,10 +25,10 @@ class scpr.GMapsLoader
             click: (event) =>
                 if $(event.target).attr(@options.mapId)
                     mapElement = $("#"+$(event.target).attr(@options.mapId))
-                    return false if mapElement.html().trim() # don't do anything if the element already has a map in it
+                    return false if $.trim(mapElement.html()) # don't do anything if the element already has a map in it
                 else
                     mapElement = $(@options.defaultMapId)
-                    return false if mapElement.html().trim() # don't do anything if the element already has a map in it
+                    return false if $.trim(mapElement.html()) # don't do anything if the element already has a map in it
                 
                 @mapInit mapElement, $(event.target).attr(@options.address)
 

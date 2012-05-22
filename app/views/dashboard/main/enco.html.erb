@@ -11,11 +11,11 @@
 <div class="cbase">
 <% for audio in @this_week %>
 	<div class="row">
-		<div class="span2">
+		<div class="span4">
 			<p><b><%= [audio.enco_date,audio.enco_number].join("/") %></b></p>		
 			<p><%= link_to "View in Admin", audio.content.admin_path %></p>
 		</div>
-		<div class="span6">
+		<div class="span12">
 			<% if audio.content.status == ContentBase::STATUS_LIVE %>
 				<%= render_content audio.content, "offlead_asset" %>
 			<% else %>

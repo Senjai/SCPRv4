@@ -44,33 +44,44 @@ class scpr.Audio
                     playBtn:    btn
                     mp3:        mp3
                     title:      title
-                    duration:	duration
+                    duration:   duration
                     
                 @widgets.push widget
         
         console.log "found #{@widgets.length} widgets."
         
         # register listener to close audio bar
-        $(".bar-close", @audiobar).click =>
-            @audiobar.animate {bottom:-70}, 300
-            @player.jPlayer "stop"
-            
-            @playing = false
-            @active = null
-            
-            return false
+        $("#{@options.audioBar} .bar-close, #opaque-cover").click => @closeAndStop()
+
+        # Hide the modal if the Esc key is pressed
+        $(document).keyup (event) =>
+            @closeAndStop() if event.keyCode is 27 and @audiobar.is(":visible")
     
     #----------
+    
+    closeAndStop: ->
+        @audiobar.animate { bottom: @audiobar.height() * -1 }, 300, =>
+            @audiobar.removeClass('active')
+            $("body").removeClass("with-audio-bar") # which also hides the opaque-cover
+
+        @player.jPlayer "stop"
         
+        @playing = false
+        @active = null
+        
+        return false
+
     play: (widget) ->
         if @playing && @active == widget
             console.log("pause/play")
                         
             if @playing == 1
                 @player.jPlayer "pause"
+                console.log "paused"
                 @playing = 2
             else
                 @player.jPlayer "play"
+                console.log "played"
                 @playing = 1
 
             return true
@@ -96,7 +107,10 @@ class scpr.Audio
                 false
         
         # animate the bar
-        @audiobar.animate {bottom:0}, 1000
+        @audiobar.addClass("active")        
+        $("body").addClass("with-audio-bar")
+
+        @audiobar.animate { bottom: 0 }, 1000
         
         # and hit play
         @player.jPlayer "play"
@@ -130,4 +144,4 @@ class scpr.Audio
             # ...
                 
         stop: () ->
-            # ...        
+            # ...

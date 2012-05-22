@@ -30,7 +30,7 @@ table {
 // --------------
 
 // Default zebra-stripe styles (alternating gray and transparent backgrounds)
-.zebra-striped {
+.table-striped {
   tbody {
     tr:nth-child(odd) td {
       background-color: #f9f9f9;

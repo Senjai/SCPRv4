@@ -1,13 +1,2 @@
-<div class="row">
-<div class="span2">
-	<div class="date">
-		<p><%= smart_date content %></p>
-	</div>
-</div>
-<div class="span6">
-	<h1 class="story-headline"><%= content.title %></h1>
-	<p class="byline"><%= render_byline content %></p>
-	<%= render_asset content, "blog" %>
-	<%= raw content.content %>
-</div>
-</div>
+<% @entry, @blog = content, content.blog %>
+<%= render template: "/blogs/entry" %>

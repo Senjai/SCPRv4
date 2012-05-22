@@ -1,43 +1,25 @@
 .show-segments {
+	h2 {
+		border-bottom: 1px solid $grayLighter;
+		color:$orangeDark;
+		font-size:18px;
+		font-weight:600;
+	}
+		
 	.teaser {
-		.contentasset {
-			margin-top: 6px;
-			width: 170px;
-			height: 170px;
-			overflow: hidden;
-		}
-		.span2+.info {
-			min-height:188px;
+		.info {
+			border-right: 1px solid $grayLighter;
+			padding-right: 10px;
 		}
 	}
 }
 
-section.segment-meta {
-	margin: 40px 0 0 0;
-	display: inline-block;
-	text-align: right;
-	time {
-		@include font-sans-serif($size: 10px, $weight: bold);
-	}
-	.sharing-tools {
-		margin-top: 20px;
-	}
-	.story-audio {
-		@include font-sans-serif($size: 10px);
-		.inner-container { /* This is because the audio widget as-is doesn't fit very well in the sidebar here */
-			padding: 5px;
+.segment {
+	border-bottom: 1px solid $grayLight;
+	article {
+		h1.story-title {
+			@include font-headline();
 		}
-		.audio-content {
-			margin-top: 5px;
-			margin-right: 5px;
-		}
-	}
-}
-
-article.segment {
-	display: inline-block;
-	h1.story-title {
-		@include font-headline();
 	}
 }
 
@@ -55,7 +37,5 @@ h5.episode-title {
 .other-segments ul {
 	@include font-headline($weight: normal);
 	font-size: 14px;
-	a {
-		color: $black;
-	}
+	a { color: $black; }
 }

@@ -1,28 +1,26 @@
 <% page_title [@episode.title,@program.title] %>
 
-<div class="row">
-	<header class="span8 episode">
-		<div class="row">
-		    <div class="span5">
-		    	<h4><%= @episode.title %></h4>
-		    </div>
-		    <div class="span3">
-		    	<% if @episode.audio.present? %>
-					<div class="right">
-						<aside class="story-audio inline">
-								<a href="<%= @episode.audio.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= @episode.audio.first.duration %>"></a>
-								<%= link_to "Listen to this episode", @episode.audio.first.url, :class => "audio-toggler play-text",  "data-duration" => @episode.audio.first.duration %>
-								<a href="<%= @episode.audio.first.url %>" class="download">Download</a>
-						</aside>
-					</div>
-				<% end %>
-		    </div>
-		</div>
-	</header>
-</div>
+<header class="episode">
+	<div class="row-fluid">
+	    <div class="span14">
+	    	<h4><%= @episode.title %></h4>
+	    </div>
+	    <div class="span10">
+	    	<% if @episode.audio.present? %>
+				<div class="right">
+					<aside class="story-audio inline">
+							<a href="<%= @episode.audio.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= @episode.audio.first.duration %>"></a>
+							<%= link_to "Listen to this episode", @episode.audio.first.url, :class => "audio-toggler play-text",  "data-duration" => @episode.audio.first.duration %>
+							<a href="<%= @episode.audio.first.url %>" class="download">Download</a>
+					</aside>
+				</div>
+			<% end %>
+	    </div>
+	</div>
+</header>
 
-<section class="show-segments episode span8">
+<section class="show-segments episode">
 	<%= any_to_list? @segments, title: "Segments" do %>
-  		<%= render partial: 'segment', collection: @segments %>
+  		<%= render partial: 'programs/segment', collection: @segments %>
 	<% end %>
 </section>

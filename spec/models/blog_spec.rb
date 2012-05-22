@@ -4,6 +4,8 @@ describe Blog do
   describe "associations" do
     it { should have_many :entries }
     it { should have_many(:tags).through(:entries) }
+    it { should belong_to(:missed_it_bucket) }
+    it { should have_many(:authors).through(:blog_authors) }
   end
     
   describe "teaser" do

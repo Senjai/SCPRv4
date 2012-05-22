@@ -1,10 +1,9 @@
 a.event-link {
 	@include font-shorthand($size: 12px);
-	display: inline-block;
+	@include ie-inline-block;
 	padding-left: 25px;
-	height: 19px;
+	min-height: 19px;
 	background: url(image_path("icons/calendar-icon.png")) no-repeat left top;
-	min-width: 120px;
 }
 
 span.fake-link {
@@ -23,11 +22,7 @@ span.fake-link {
 	}
 }
 
-.event-location {
-	margin-left: 10px;
-}
-
-.event-headers	 {
+@mixin event-headers {
 	h1, h2, h4.story-title {
 		a {
 			color: #000;
@@ -44,7 +39,7 @@ span.fake-link {
 		margin: 10px 0;
 	}
 	
-	h3, a.twitter-peeker {
+	h3 {
 		@include font-slab-headings($size: 15px, $lineHeight: 18px);
 		text-transform: uppercase;
 	}
@@ -53,14 +48,35 @@ span.fake-link {
 		@include font-navigation($weight: normal, $size: 15px);
 	}
 	
-	h6 {
+	h6.upcoming {
 		@include font-slab-headings($size: 18px, $lineHeight: 18px);
 		text-transform: uppercase;
 		margin-bottom: 10px;
 	}
 }
 
+#forum { @include event-headers; }
+
 .event {
+	@include event-headers;
+	
+	&.future {
+		margin: 10px 0;
+		@include font-serif($size: 13px);
+		h4 {
+			margin-top:0;
+			a { color:$nearBlack; }
+		}
+	}
+	
+	&.past {
+		padding: 15px 0;
+		.byline {
+			@include font-serif($size: 12px);
+		}
+	}
+	
+	
 	.story-headline.event-headline {
 		margin-bottom: 10px;
 	}
@@ -72,11 +88,7 @@ span.fake-link {
 			color:$nearBlack;
 		}
 	}
-	&.event-detail {
-		.sharing-tools.bottom {
-			border-bottom:none;
-			margin-bottom:0;
-		}
+	&.content-block {
 		.event-details {
 			padding: 5px 0;
 			margin-bottom: 10px;
@@ -99,7 +111,7 @@ span.fake-link {
 			}
 			.location-text {
 				@include font-heading($size: 12px, $lineHeight: 14px);
-				display: inline-block;
+				@include ie-inline-block;
 				vertical-align: top;
 				margin-right: 10px;
 				color: $gray;
@@ -107,7 +119,7 @@ span.fake-link {
 			ul.address {
 				padding: 0;
 				margin: 0;
-				display: inline-block;
+				@include ie-inline-block;
 				li {
 					@include font-heading($size: 13px, $weight: normal, $lineHeight: 16px);
 					list-style: none;
@@ -130,9 +142,11 @@ span.fake-link {
 
 .more-events {
 	border-bottom:1px solid $grayLight;
-	border-top:1px solid $grayLight;
 	margin-bottom: 10px;
-	padding:16px 0;
+	
+	.event { 
+		margin-bottom: 10px;
+	}
 	
 	h5 a {
 		color: $nearBlack;
@@ -142,77 +156,57 @@ span.fake-link {
 	}
 }
 
+.events-fold {
+	.comments, .comment-count { 
+		border-top: none;
+		padding-top: none;
+	}
+}
+
 .events {
 	.upcoming-events {
 		.event {
 			border-bottom: 1px solid $grayLighter;
-		}
-		
-		.closest {
-
-		}
-
-		.future {
-			padding: 10px 0;
-			.contentasset {
-				margin-top: 6px;
-				overflow: hidden;
-				width: 160px !important; /* FIXME hack */
-				height: 130px;
-				img {
-					width: 160px !important; /* FIXME hack */
-					height: 160px !important;
-				}
+			margin-bottom: 5px;
+			&.closest {
+				padding-bottom:10px;
 			}
-
-			.info {
-				@include font-serif($size: 13px);
-				vertical-align: top;
-				h3 {
-					@include font-headline();
-					font-size:20px;
-					line-height:22px;
-					a {
-						color:$nearBlack;
-					}
-				}
-			}
-			&:last-of-type {
-				border-bottom: none;
-			}
-		}
-		.closest {
-			padding-bottom:10px;
 		}
 	}
 
 	.social {
 		.banners {
-			margin:	 10px 0 10px 0;
-			padding-bottom: 15px;
+			margin-bottom: 10px;
 			border-bottom: 1px solid $grayLighter;
+			line-height: 0; // so the line break between the links doesn't have any space
 			a {
 				display: block;
-				width: 296px;
-				height: 24px;
-				margin: 10px 0 0 0;
-			}
-			.twitter-banner {
-				background: #fff url(image_path("facebook/twitter-banner.png")) no-repeat 0 0;
-			}
-			.facebook-banner {
-				background: #fff url(image_path("facebook/facebook-banner.png")) no-repeat 0 0;
+				@include font-sans-serif(bold, 12px, 14px);
+				padding: 10px 0 5px 30px;
+				min-height: 30px;
+				background-repeat: no-repeat;
+				background-position: left 50%;
+				&.facebook { 
+					background-image: url(image_path("facebook/facebook-icon.png")); 
+					color: $facebookBlue;
+				}
+				&.twitter {
+					background-image: url(image_path("facebook/twitter-icon.png")); 
+					color: $twitterBlue;
+				}
 			}
 		}
 		
 		.twitter-peeker {
 			color:$nearBlack;
 			display: block;
+			vertical-align: middle;
 			font-size:15px;
-			height: 41px;
+			min-height: 41px;
 			margin: 15px 0 10px 0;
-			padding: 10px 80px 7px 5px;
+			padding: 10px 80px 10px 5px;
 			background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
+			
 			color: inherit;
 			&:hover {
 				text-decoration: none;
@@ -224,26 +218,22 @@ span.fake-link {
 			border-bottom: 1px solid $grayLighter;
 			padding-bottom: 10px;
 			@include font-serif($size: 12px, $lineHeight: 15px);
-			h5 {
-				@include font-shorthand($size: 13px, $weight: bold);
-				margin-top:-5px;
-				a {
-					color:$nearBlack;
-				}
-			}
+			@include clearfix;
+			
 			img.tweet-image {
-				display: inline-block;
+				float: left;
 				vertical-align: top;
 				margin-right: 6px;
 			}
-			.tweet-content {
-				vertical-align: top;
-				width: 280px;
-				display: inline-block;
+
+			h5 {
+				@include ie-inline-block;
+				@include font-shorthand($size: 13px, $weight: bold);
+				margin-top:-5px;
+				a { color:$nearBlack; }
 			}
-			.byline {
-				font-size: 10px;
-			}
+			
+			.byline { font-size: 10px; }
 		}
 	}
 }
@@ -251,39 +241,17 @@ span.fake-link {
 .archive-strip {
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: 20px;
-	.past-events {
-		padding: 15px 0;
-		.byline {
-			@include font-serif($size: 12px);
-		}
-	}
-	h3.title {
-		background:url("section-headline-background.png") repeat-x;
-		height:35px;
-		line-height: 35px;
-		padding:2px 0 0 5px;
-		a {
-			
-		}
-	}
 }
 
 .events-list {
-	border-bottom: 1px solid $grayLight;
 	.teaser {
 		padding:18px 0;
-		img {
-			float:left;
-			margin-right:12px;
-		}
+		
 		.event-details {
-			margin-left:100px;
 			span.event-location {
-				/* display: inline-block; */
 				@include font-sans-serif(normal, 11px);
 				color: $gray;
 				text-transform: uppercase;
-				white-space:nowrap;
 				&.forum {
 					color:$orangeDark;
 				}
@@ -295,21 +263,80 @@ span.fake-link {
 	}
 }
 
+$smallHeaderShadow: 0 6px 10px rgba(0,0,0,.5);
+nav.section-nav {
+	@include font-navigation($size: 13px, $weight: 600);
+	&.vertical {
+		margin-bottom: 25px;
+		a {
+			display: block;
+			text-transform: uppercase;
+			border-bottom: 1px solid $grayLighter;
+			color: darken($gray, 20%);
+			padding: 8px;
+			&:hover {
+				color:$orangeDark;
+				text-decoration: underline;
+			}
+		}
+	}
+	
+	&.horizontal {
+		display: none;
+		@include clearfix;
+		background: lighten(#2e2e2e, 10%);
+		margin-top: -20px; // pull it up. alternative is to responsively remove bottom margin and shadow from events-header-small.
+		margin-bottom: 20px;
+		@include box-shadow($smallHeaderShadow); // mimic the events-header-small shadow
+		a { // Faking a two-column fluid grid here, so it's a little hacky
+			text-align: center;
+			$this_borderColor: #222;
+			float: left;
+			color: $nearWhite;
+			width: 50%; // We don't want the gutter width so we won't use the grid here
+			padding: 5px 0;
+			border-bottom: 1px solid $this_borderColor;
+						
+			// Will not work in IE7/8
+			&:nth-child(even) { @include box-shadow(1px 0 $this_borderColor inset); } // Fake border between columns
+			&:nth-last-child(-n+2) { border-bottom: none; } // no border on the last two
+		}
+	}
+}
+
+.forum nav.section-nav.vertical {
+	margin-bottom:10px;
+}
+
+#main nav.section-nav.vertical { 
+	margin-top: -21px;
+}
 
 /* FADER */
 
-.forum #megamenu {
-	$shadow: 0 6px 10px rgba(0,0,0,.5);
-	@include box-shadow($shadow);
+.forum .nav-primary {
+	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
+}
+
+.events-header-small {
+	text-align: center;
+	display: none;
+	@include gradient-vertical(lighten(#2e2e2e, 10%), #2e2e2e);
+	@include box-shadow($smallHeaderShadow);
+	margin-bottom: 20px;
+	margin-top: -22px;
+	img { 
+		max-width: 95%;
+		margin: 10px 10px 5px 10px;
+	}
 }
 
 #events-header {
 	position: relative;
 	top: -38px;
 	height: 468px;
-	min-width:1110px;
-	background-color:#2e2e2e;
-	@include background-image(linear-gradient(#2e2e2e, lighten(#2e2e2e, 10%)));
+	min-width: $mediaDesktopSmall;
+	@include gradient-vertical(#2e2e2e, lighten(#2e2e2e, 10%));
 	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
 	width:100%;
 	overflow: hidden;
@@ -323,20 +350,21 @@ span.fake-link {
 		.chooser {
 			border:4px solid $white;
 			@include border-radius(10px);
-			@include hide-text();
-			display: inline-block;
-			margin:0 5px;
+			@include ie-inline-block;
+			vertical-align: bottom;
+			margin:0 5px 5px 5px;
 			width: 10px;
 			height: 10px;
-			opacity:0.3;
+			@include opacity(0.3);
+
 			&:hover {
 				cursor: pointer;
 				background-color:$nearBlack;
-				opacity:0.5;
+				@include opacity(0.5);
 			}
 			&.active {
 				border-color: #b24401;
-				opacity: 0.8;
+				@include opacity(0.8);
 			}
 		}
 	}
@@ -347,7 +375,7 @@ span.fake-link {
 		margin: 0 auto;
 		.slide {
 			z-index: 8;
-			@include opacity(0);
+			visibility: hidden;
 			position: relative; // to make opacity happy in IE
 			img {
 				width: 100%;
@@ -357,9 +385,8 @@ span.fake-link {
 			.slide-text {
 				position: absolute;
 				z-index: 20;
-				top: 50px;
-				left: 50%;
-				margin-left:-554px;
+				top: 45px;
+				left: 5%;
 				width: 523px;
 				text-align: left;
 				padding: 35px 0 0 37px;
@@ -381,10 +408,11 @@ span.fake-link {
 			}
 		
 			&.active {
+				visibility: visible;
 				z-index: 10;
-				opacity: 1.0;
 			}
 			&.last-active {
+				visibility: visible;
 				z-index: 9;
 			}
 		}
@@ -408,83 +436,43 @@ span.fake-link {
 		}
 	}
 }
+
+
 h3.section-nav-header {
 	color:$gray;
 	font-size:16px;
 	margin-top:10px;
 }
-nav.section-nav {
-	margin-top:-20px;
-	margin-bottom: 25px;
-	h4 {
-		font-weight: 400;
-		color: lighten($gray, 30%);
-		border-bottom: 1px solid $grayLighter;
-	}
-	a {
+
+.forum #sidebar {
+	.widget {
 		display: block;
-		text-transform: uppercase;
-		border-bottom: 1px solid $grayLighter;
-		@include font-navigation($size: 13px, $weight: 600);
-		color: darken($gray, 20%);
-		padding: 8px;
-		@include transition(all .15s ease-in-out);
-		&:hover {
-			color:$orangeDark;
-			text-decoration: underline;
+		p { 
+			margin:20px 0 24px;
+			@include font-navigation($size: 14px, $lineHeight: 16px);
 		}
 	}
-}
-.forum nav.section-nav {
-	margin-bottom:10px;
-}
-.forum #sidebar .widget {
-	display: block;
-	p { 
-		margin:20px 0 24px;
-		@include font-navigation($size: 14px, $lineHeight: 16px);
+	
+	#getting-there {
+		background: url(image_path("cff-building.png")) no-repeat right 98%;
+		h3 {
+			background: url(image_path("icons/forum-directions.png")) no-repeat left top;
+			padding-left:46px;
+		}
+		p { 
+			padding-right: 115px;
+		}
 	}
-}
-.forum #sidebar #getting-there {
-	background: url(image_path("cff-building.png")) no-repeat right 98%;
-	h3 {
-		background: url(image_path("icons/forum-directions.png")) no-repeat left top;
-		padding-left:46px;
-	}
-	p { 
-		margin:20px 0 24px;
-		width:130px;
-	}
-}
-.forum #sidebar #community-partnerships {
-	h3 {
-		background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
-		height:26px;
-		padding-left:46px;
-	}
-	p { 
-		margin:14px 0;
+	
+	#community-partnerships {
+		h3 {
+			background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
+			height:26px;
+			padding-left:46px;
+		}
+		p { 
+			margin:14px 0;
+		}
 	}
 }
 
-.static-content {
-	img.left {
-		float: left;
-		margin: 0 10px 0 0;
-	}
-	
-	ul.info {
-		background: $nearWhite;
-		border: 1px solid $grayLighter;
-		margin: 5px 0;
-		padding: 15px 15px 5px 20px;
-		li {
-			list-style: none;
-			margin-bottom: 15px;
-		}
-	}
-	
-	.google-map {
-		text-align: center;
-	}
-}

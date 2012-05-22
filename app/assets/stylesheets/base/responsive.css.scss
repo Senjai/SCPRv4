@@ -1,0 +1,652 @@
+// This is a self-contained media query package with specific rules for SCPRv4's design.
+// If this file is removed, nothing should break - the default desktop style should remain intact.
+
+// Device sizes
+// Check base.css for desktop sizes
+$mediaMidLandscape: 1024px;
+$mediaMidPortrait: 768px;
+$mediaSmallLandscape: 480px;
+$mediaSmallPortrait: 320px;
+
+// These mixins are for responsive use only. Don't use them to define default styles (because they're not IE7/8-friendly).
+@mixin fluidPopup($margin: 4%, $top: 180px) {
+	position: fixed;
+	left: $margin !important;
+	top: $top !important; // Leave room for headers to show
+	width: 100% - $margin * 2 !important;
+	max-height: 75% !important;
+	overflow: scroll;
+}
+
+@mixin vertify {
+	> .row-fluid {
+		> [class*="span"] {
+	    	float: none;
+			display: block;
+			width: 100%;
+			margin: 0;
+		}
+	}
+}
+
+
+// Phone Landscape and below
+@media screen and (max-width: $mediaSmallLandscape) {	
+	// Make all columns even
+	.row-fluid > [class*="span"] {
+		float: none;
+		display: block;
+		width: auto;
+		margin: 0;
+	}
+	
+	.hidden-phone { display: none; }
+	
+	// Make Masthead elements smaller 
+	header#masthead {
+		.head-lead-minimal {
+			.dark-logo img {
+				margin-top:6px;
+				max-width:130px;
+			}
+			a.antenna, span.condensed-nav-link {
+				font-size:13px;
+				padding:5px 5px 5px 23px;
+			}
+			a.antenna {
+				background-position:5px 3px;
+				background-size:15px 22px;
+				margin-right:-5px;
+			}
+			span.condensed-nav-link {
+				background-position:5px 9px;
+				background-size:15px 13px;
+				margin-left:-5px;
+			}
+		}
+	}
+
+	// Block level the page header small tag for readability
+	.page-header h1 small {
+		display: block;
+		line-height: $baseLineHeight;
+	}
+	
+	.show-segments .teaser .info {
+		border-right: none !important;
+		padding-right: 0;
+	}
+	
+	
+	.more-news-content {
+		border-right: none !important;
+	}
+	
+	.cbase {
+		&.offlead .row-fluid { @include makeFluidRow; } // Assets are thumbnails so these can stay in multiple column format
+	}
+	
+	.next-prev .span9 .row-fluid { 
+		@include makeFluidRow; // It's just a few words, no need to make it vertical
+	}
+	
+	.related-content {
+		border-top: 1px solid $grayLighter;
+		padding-top: 10px;
+	}
+	
+	// Hide CFF vertical nav, show horizontal nav
+		nav.section-nav.vertical { display: none; }
+		nav.section-nav.horizontal { display: block; }
+	// end CFF navs
+	
+	.more-news-content {
+		border-right: none;
+		padding-right: none;
+		margin-bottom: 5px;
+	}
+	
+	.homepage-top {
+		.events-forum {
+			border: none !important;
+			padding-left: 0 !important;
+			.event > .row-fluid { 
+				@include makeFluidRow;
+				> .span8 { @include gridFluidSpan(6) }
+				> .span16 { @include gridFluidSpan(18) }
+				
+			}
+		}
+		
+		.missed-it-bucket { display: none; }
+	}
+	
+	// Fake the "pager"... hide all page number links, just show Previous and Next links.
+		.pagination { 
+			a, span, em {
+				display: none;
+				&.previous_page { display: inline; } 
+				&.next_page { 
+					display: inline;
+					float: right;
+				}
+			}
+		}
+	// End Pager
+	
+	// Make content carousel assets 2-columns instead of 1 column, since they're just thumbs
+		.content-carousel {
+			.row-fluid {
+				@include makeFluidRow;
+				> .span6 {					
+					@include gridFluidSpan(12);
+					&:nth-child(even) { margin-right: 0px; }
+					&:nth-child(odd) { margin-left: 0px; }
+				}
+			}
+		}
+	// end Content Carousel
+	
+	.event.content-block .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
+	
+	// latest videos: 2 cols
+		#multimedia .latest-videos {
+			.row-fluid { 
+				@include makeFluidRow; 
+				
+				> .span6 {
+					@include gridFluidSpan(12);
+					&:nth-of-type(2) { 
+						margin-right: 0; 
+						&:after { 
+							content: "."; 
+							visibility: none;
+						} 
+					}
+					&:nth-of-type(3) { margin-left: 0; }
+				}
+			}
+		}
+	// end latest videos
+	
+	#program-external-header { @include makeFluidRow; }
+	.sharing-tools.horizontal h5 {
+		float: none;
+		display: block;
+		width: 100%;
+		margin: 0;
+	}
+	
+	.archive-strip {
+		> .row-fluid .span8:last-child .event { border-bottom: none; }
+		.event { 
+			border-bottom: 1px solid $grayLighter; 
+			.row-fluid { @include makeFluidRow; }
+		}
+	}
+}
+
+
+// Between Tablet Portrait and Phone Landscape
+@media screen and (max-width: $mediaMidPortrait - 1) and (min-width: $mediaSmallLandscape + 1) {
+	.head-lead {
+		@include vertify;
+	}
+	
+	// Set new widths for main columns in CFF layout
+		#forum {
+			#forum-span-content { // main content
+				@include gridFluidSpan(14);
+			}
+			#forum-span-sidebar { // sidebar
+				@include gridFluidSpan(10);
+			}
+			
+			#forum-span-upcoming-events { // upcoming events
+				@include gridFluidSpan(24);
+			}
+			#forum-span-social { // social media
+				display: none;
+			}
+		}
+	// End CFF layout widths
+}
+
+
+
+// Below Portrait Tablet ("reader mode")
+@media screen and (max-width: $mediaMidPortrait - 1) {	
+	
+	.visible-reader { display: block !important; visibility:visible !important }
+	.hidden-reader { display: none !important;;}
+	
+	.modal-popup { // using important flag here to cover all modals, since most of these rules are specified in more specific classes
+		@include fluidPopup;
+		.arrow-up { display: none; }
+		.google-map { 
+			max-width: 100%; 
+			max-height: 85%;
+		} // For google maps modals
+	}
+	
+	.content-block, .fold, .blog-masthead {
+		.mq-solo-span { // Spans with this class will be by themselves at the "reader mode" breakpoint, so we need to tell them to span 100% and ditch their margin
+			@include gridFluidSpan(24);
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+	
+	.fold {
+		h6 {
+			margin-top: 0 !important;
+			text-align: left !important;
+		}
+		.comment-count {
+			display: none;
+		}
+	}
+	
+	.article-meta { display: none; }
+	
+	// hide Sidebars on "main" bodies
+		#main {
+			#sidebar, #sidebar-top, #sidebar-bottom {
+				display: none;
+			}
+		}
+	// end hide Sidebars
+		
+	#beta-bar {
+		display: none;
+	}
+	
+	// Vertify Layouts
+		#main, .homepage-top, .homepage-bottom { // Since we have different sections on the homepage and `vertify` looks for .row-fluid as direct descendants
+			@include vertify;
+		} 
+	// end Vertify
+	
+	#masthead { 
+		text-align: center;
+		
+		// Minimal Header
+			background: #2e2e2e;
+
+			#masthead-mid-header-wrapper, #masthead-right-header-wrapper { display: none; }
+			.head-lead, .nav-primary { display: none; }
+			.head-lead-minimal { display: block !important; }
+		// end Minimal Header
+	}
+	
+	#main {
+		.homepage-top {
+			border-bottom: none !important;
+			margin-bottom: 0 !important;
+		
+			.missed-it-bucket {
+				.row-fluid hr:nth-of-type(3) { display: block; }
+				.span4 { 
+					@include gridFluidSpan(8);
+					&:nth-of-type(4) { margin-left: 0; }
+				}
+			}
+		}
+	}
+	
+	.broadcast-bar {
+		#bb-current-program { @include gridFluidSpan(24); }
+		#bb-next-program { display: none; }
+	}
+	
+	// since we're hiding the sidebars, remove the borders around more news
+	.more-news-container {
+		border-right: none;
+		padding-right: none;
+		margin-bottom: 5px;
+	}
+	.vert-divider {display:none;}
+	
+	// Forum Events header switch
+		#events-header {
+			display: none;
+		}
+	
+		.events-header-small { display: block; }
+	// end Forum Events Header
+	
+	// Keep each archive strip event horizontal
+	.archive-strip {
+		@include vertify;
+		> .row-fluid .span8:last-child .event { border-bottom: none; }
+		.event { 
+			border-bottom: 1px solid $grayLighter; 
+			> .row-fluid { 
+				@include makeFluidRow;
+			}
+		}
+	}
+	
+	.section-nav-header { display: none; }
+	#events-event-detail { @include gridFluidSpan(24); }
+	
+	// Pop the footer nav out and turn it into the side-nav
+		html, body, .container-fluid, header, footer { margin: 0; } 
+		$compactNavW: 300px;
+		#page-footer footer {
+			background-image:none;
+			
+			#footer-bottom-partners, .mobile-apps { display:none; }
+			#footer-bottom-legal { 
+				@include gridFluidSpan(24);
+				text-align: center;
+			}
+			
+			.footer-nav {
+				position: absolute;
+				top: 0;
+				left: $compactNavW * -1;		
+				width: $compactNavW;
+				&.active {
+					background-color: $footerBackground; 
+					@include box-shadow(3px 0 8px rgba(0,0,0,.4));
+					z-index:2000;
+				}
+				.compact-nav-head { display: block; }
+				h3, .pledge {
+					margin-left:12px;
+				}
+				h3 { // Switch these to have the darker background
+					@include footer-h4;
+					color:#8f8f8f;
+					padding-left:12px;
+				}
+			
+				h4 { 
+					@include footer-h3;
+					font-size: 12px;
+					font-weight:bold;
+					color: #696969;
+				}
+			
+				[class*="span"] {
+					float: none;
+					display: block;
+					width: auto;
+					margin: 0;
+				}
+			
+				.section {
+					border: none;
+					display: block;
+					padding: 0;
+					nav { margin: 0; }
+					h4, ul li, ul li.bullet, address { padding-left: 16px; }
+					ul li, h4, h3, .social-media li {
+						border-top: 1px solid #3d3d3d;
+						border-bottom: 1px solid $black;
+						margin: 0;
+					}
+					ul.inline li.nav-label {
+						display:none;
+					}
+					ul li a {
+						color:#e0e0e0;
+						font-size:14px;
+						padding:4px 0;
+						
+						&.video-icon {
+							background-position-y: 5px;
+						}
+					}
+				
+					ul {
+						&.inline li { 
+							display: block;
+							margin: 0;
+						}
+						&.social-media {
+							margin-bottom:0;
+							li {
+								margin:0;
+								display: block;
+								a {
+									background-image:none;
+									text-indent:0;
+									height:auto;
+									width:100%;
+								}
+							}
+						}
+						li.bullet { background-image: none; }
+					}
+				}
+			}
+		
+			.bottom-links { border: none; }
+		}
+	// end sideNav
+	
+	#video { @include vertify; } // Make the video page stretch out
+	#multimedia {
+		.video { margin-top: 0; }
+	}
+	
+	.program-masthead {
+		@include vertify;
+		#program-masthead-title {
+			h1 { @include font-shorthand($size: 28px, $weight: bold, $lineHeight: $baseLineHeight + 5); }
+			.show-meta { display: none; }
+		}
+		#program-masthead-support { display: none; }
+	}
+	
+	
+	// Audio bar handler
+		// Dim body
+		body.with-audio-bar {
+			overflow: hidden;
+			#opaque-cover {
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+		}
+		
+		#audio-bar {
+			// Since we can't hide it on bigger screens because of IE7
+			display: none;
+			&.active { display: block; }
+			
+			$barHeight: 140px;
+			@include fluidPopup;
+			min-height: $barHeight + 5;
+		
+			.section-left, .section-mid {
+				width: 100%;
+				float: none;
+				display: block;
+			}
+			.bar-close { height: $barHeight; }
+		
+			.jp-gui { border-right: none; }
+			.jp-gui, .jp-controls {
+				height: $barHeight / 3;
+				min-height: $barHeight / 3;
+			}
+			
+			.jp-title {
+				height: $barHeight / 2;
+				min-height: $barHeight / 2;
+				padding-right: 10px;
+			}
+		}
+	// end Audio Bar
+	
+	// Hide floating shadow on minimal box
+		body.minimal {
+			.content-container { padding: 20px 0; }
+			.floating-shadow { display: none; }
+		}
+	//end floating shadow
+	
+	#uvTab { display: none !important; } // The "feedback" button... fixed position on touch screen, gets in the way
+} // end Reader mode
+
+
+
+
+
+// Tablet Portrait And Above
+@media screen and (min-width: $mediaMidPortrait) {	
+	// Don't define desktop styles here, because they won't be seen by IE7.
+}
+
+
+// Below Tablet Landscape
+@media screen and (max-width: $mediaDesktopSmall - 1) {
+	// Simplify Filters nav to allow for graceful wrapping
+		.filters {
+			li.heading { display: none !important; }
+			.active-arrow { display: none !important; }
+		}
+	// end Filters
+	
+	// Pledge Banner to Button & hide form
+		#masthead {
+			.nav-primary.search-takeover {
+				.sections {
+					width:20%;
+					overflow:hidden;
+					li {
+						opacity:0;
+						&.listen-live {
+							opacity:1;
+						}
+					}
+				}	
+				.search-form {
+					display:block;
+					width:79%;
+					form {
+						.search, .submit {
+							@include ie-inline-block();
+						}
+						.search {
+							width:87%;
+						}
+						.toggle-search {
+							background-image:url(image_path('icons/search-close.png'));
+						}
+					}
+				}
+			}
+			
+			.search-form {
+				width:3%;
+				form {
+					.search, .submit { 
+						display: none; 
+					}
+					.toggle-search {
+						cursor:pointer;
+						@include ie-inline-block();
+					}
+				}
+			}
+			.nav-primary .sections { width: 96%; }
+
+			#masthead-left-header-wrapper { @include gridFluidSpan(12); }			
+			#masthead-right-header-wrapper { @include gridFluidSpan(12); }
+			
+			#masthead-mid-header-wrapper { display: none; }
+		}
+	// end Pledge Banner to Button
+}
+
+
+
+// Small Landscape to desktop small
+@media screen and (max-width: $mediaDesktopSmall - 1) and (min-width: $mediaSmallLandscape) {
+	// vertify the lead stories //
+		#main {
+			.homepage-lead { @include vertify; }
+		}
+	// end //
+}
+
+// Below Small Desktop
+@media screen and (max-width: $mediaDesktopSmall - 1) {
+	.homepage-lead {
+		&.default {
+			.lead5 {
+				border-bottom: 1px solid $grayLighter;
+				padding-bottom: 5px;
+				margin-bottom: 5px;
+			}
+		}
+		
+		&.lead-right {
+			.offleads .span8:last-child .offlead { border-bottom: 1px solid $grayLighter; }
+			.lead5 {
+				padding-bottom: 5px;
+				margin-bottom: 5px;
+			}
+		}
+	}
+}
+
+
+
+
+
+// Below Max Width
+@media screen and (max-width: $mediaMax - 1) {
+	// This happens below maxWidth because the banner is an image.
+	// TODO Change the support banner to a more fluid div so it can scale nicely.
+	// Remove background from Support Banner to allow fluidity //
+		.program-masthead #program-masthead-support .support {
+			display: block;
+			background: none;
+			height: auto;
+			width: auto;
+			a {
+				display: block;
+				color: $black;
+				text-shadow: none;
+			}
+		}
+	// end Support Banner
+	
+	
+	// Basically, if this media query is being read by the browser, 
+	// then we can set a lower min-width than the default to allow 
+	// the responsive design to do its thing. Otherwise (IE7), the 
+	// default min-width (set to the $siteWidth) will keep the site 
+	// at that width.
+	#masthead-right-header-wrapper {
+		.pledge, nav.utils {
+			float:none;
+			li:first-child {
+				border-left:none;
+			}
+		}
+		.pledge-button-container { display: block;margin:0; }
+	}
+	.nav-primary .sections ul li a {padding: 8px 15px;}
+	.nav-primary .search-form { width:150px;}
+	.container-fluid { min-width: 300px; }
+	#events-header { min-width: 0; }
+	#page-footer {
+		footer {
+			#footer-container {background-position: 75% 0; }
+			.footer-nav {background:none;}
+		}
+	}
+}
+
+
+// Max width (normal screen) and above
+@media screen and (min-width: $mediaMax) {	
+	// Don't define default desktop styles here, because they won't be seen by IE7.
+}

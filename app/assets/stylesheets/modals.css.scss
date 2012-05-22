@@ -14,7 +14,7 @@
 		width: 28px;
 		height: 12px;
 		position: absolute;
-		left: 70px; // specify a new 'left' property on your specific class for the modal, flagged with !important to override the horizontal position of the arrow
+		left: 70px; // specify a new 'left' property on your specific class for the modal override this default horizontal position of the arrow
 		top: -12px;
 	}
 	.modal-close {
@@ -22,12 +22,12 @@
 		cursor: pointer;
 		width: 18px;
 		height: 16px;
-		opacity: 0.8;
+		@include opacity(0.8);
 		position: absolute;
 		right: 25px;
 		top: 20px;
 		&:hover {
-			opacity: 1.0;
+			@include opacity(1);
 		}
 	}
 	h6 {
@@ -40,12 +40,9 @@
 
 @mixin modal-dark {
 	@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
-	@include background-image(linear-gradient(#333, #1b1b1b));
+	@include gradient-vertical(#333, #1b1b1b);
 	border: 1px solid #4c4c4c;
 	margin-top: 14px;
-	
-	.inner-container {
-	}
 	
 	.arrow-up {
 		background: url(image_path('icons/dark-modal-arrow.png')) no-repeat;
@@ -60,18 +57,19 @@
 		cursor: pointer;
 		width: 18px;
 		height: 16px;
-		opacity: 0.8;
+		@include opacity(0.8);
 		position: absolute;
 		right: 25px;
 		top: 20px;
 		&:hover {
-			opacity: 1.0;
+			@include opacity(1);
 		}
 	}
 } // modal-dark
 
 .modal-container { // Wrap this class around the modal-popup if you need to so the modal will be positioned properly
 	position: relative;
+	z-index: 800; // Under the megamenu
 }
 
 .modal-popup {
@@ -89,7 +87,7 @@
 	// Example:
 	/*
 		 .google-maps {
-				@include font-sans-serif($weight:normal, $size:0.95em);
+				@include font-sans-serif($weight:normal, $size:13px);
 				color: $grayAlt;
 				width: 400px;
 				min-height: 350px;
@@ -111,7 +109,7 @@
 	// Use these classes for positioning, width, height, and any extra options you want on a specific modal (or a group of duplicate modals)
 	&.google-maps {
 		@include modal-light;
-		@include font-sans-serif($weight:normal, $size:0.95em);
+		@include font-sans-serif($weight:normal, $size:13px);
 		color: $grayAlt;
 		padding: 0 0 0 5px;
 		width: 400px;
@@ -134,13 +132,16 @@
 		@include modal-light;
 		width:650px;
 		min-height:300px;
-		left:-220px;
-		top:27px;
+		left:18px;
+		top:14px;
+		.arrow-up { 
+			left: 100px;
+		}
 	} // .episode-guide
 	
 	&.videos-list {
 		@include modal-dark;
-		min-height: 640px;
-		width: 1110px;
+		min-height: 700px;
+		@include gridFluidSpan(22);
 	} // .video-list
 }

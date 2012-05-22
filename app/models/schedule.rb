@@ -36,7 +36,7 @@ class Schedule < ActiveRecord::Base
   
   #----------
   
-  # Return a block of schedule, starting at the time given and lasting the duration fiven
+  # Return a block of schedule, starting at the time given and lasting the duration given
   # Inputs:
   # * :time -- Time object for start time. Defaults to Time.now()
   # * :hours -- Integer for number of hours. Defaults to 4.
@@ -61,6 +61,20 @@ class Schedule < ActiveRecord::Base
     end until ( s == pend )
         
     return programs
+  end
+  
+  def format_time
+    str_time = start_time.strftime("%H:%M")
+    
+    if str_time == "00:00"
+      "midnight"
+    elsif str_time == "12:00"
+      "noon"
+    elsif str_time.match /:00/
+      start_time.strftime("%l%P")
+    else
+      start_time.strftime("%l:%M%P")
+    end
   end
   
   #----------

@@ -59,23 +59,10 @@ module WidgetsHelper
   
   #----------
   
-  def related_for(object, options={})
+  def content_widget(partial, object, options={})
     if object.present? and object.is_a?(ContentBase)
-      render "shared/cwidgets/related_content_and_links", content: object
+      partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
+      render(partial, { content: object, cssClass: "" }.merge!(options))
     end
   end
-  
-  #----------
-  
-  def article_meta_for(object, options={})
-    render('shared/cwidgets/article_meta', { content: object }.merge!(options)) if object.present?
-  end
-  
-  #----------
-  
-  def social_tools_for(object, options={})
-    if object.present? and object.is_a?(ContentBase)
-      render "shared/cwidgets/social_tools", content:object, options:{ cssClass: "" }.merge!(options)
-    end
-	end
 end

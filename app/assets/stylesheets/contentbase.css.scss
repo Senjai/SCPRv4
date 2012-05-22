@@ -1,6 +1,6 @@
 .cbase {
 	h1, h2, h3, h4, h5, h6 {
-		line-height:1.1em;
+		line-height: $baseLineHeight;
 	}
 	p {
 		font-size:13px;
@@ -11,7 +11,7 @@
 	h4 {
 		color:$gray;
 		@include font-sans-serif(normal, 11px);
-	    line-height: 1.1em;
+	    line-height: $baseLineHeight;
         margin-top: 6px;
         text-transform: uppercase;
 	
@@ -35,7 +35,7 @@
 	}
 	
 	time, .shell-link {
-	    /* display: inline-block; */
+	    /* @include ie-inline-block; */
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;
@@ -51,10 +51,61 @@
 		background:transparent url(image_path('icons/link-offsite.png')) no-repeat right 0;
 		padding:1px 15px 0 0;
 	}
+	
+	&.lead, &.lead5 {
+		h4 { text-transform: none; }
+	    h1 {
+		  font-size:26px;
+	      margin-bottom: 0;
+		  line-height: $baseLineHeight * 1.5;
+	    }
+	}
+	
+	&.lead {
+		border-bottom: 1px solid $grayLighter;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+	}
+	
+	&.offlead {
+		border-bottom: 1px solid $grayLighter;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+	    h3 {
+			@include font-headline();
+	    	margin-bottom:0;
+	    	a {
+	    		color:$nearBlack;
+	    	}
+	    }
+	    h4 {
+	        font-weight:normal;
+			margin-bottom: 0;
+			color: #999;
+	    }
+	}
+
+	&.thumbnail {
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+	    h3 {
+	        font-weight:600;
+			margin-bottom: 0;
+	    }
+	    h4 {
+	        font-weight:normal;
+			margin-bottom: 0;
+			color: #999;
+	    }
+	}
 }
 
+// Add a bottom-border to the "thumbnails" on category index pages. Should probably not be using "thumbnail" partial for this.
+.category-page .cbase.thumbnail { border-bottom: 1px solid $grayLighter; }
+
+.homepage-lead.lead-right .lead { border-bottom: none; }
 time.smart {
-	/* display: inline-block; */
+	/* @include ie-inline-block; */
     @include font-sans-serif(normal, 11px);
     color: $orangeDark;
     text-transform: uppercase;
@@ -68,11 +119,6 @@ time.smart {
 }
 
 .cbase.offlead {
-	&:last-child {
-		hr {
-			display:none;
-		}
-	}
     h3 {
 		@include font-headline();
     	margin-bottom:0;
@@ -119,7 +165,7 @@ time.smart {
 	}
 }
 
-.span8.split {
+.span16.split {
 	@include clearfix();
 	margin-top:$baseline;
 	.offlead {
@@ -138,10 +184,9 @@ time.smart {
 .teaser {
 	border-bottom: 1px solid $grayLighter;
 	padding: 10px 0;
-	.info {
+	.info, header {
 		@include font-serif($size: 13px);
 		vertical-align: top;
-		padding-right: 5px;
 		h3 {
 			@include font-headline();
 			font-size:20px;
@@ -156,7 +201,6 @@ time.smart {
 	}
 	.interact {
 		@include font-sans-serif($size: 11px);
-		margin-right: 0;
 		.story-audio {
 			display:block;
 			margin-bottom:3px;

@@ -30,7 +30,7 @@ class AddCommentBoolAndTeaserToEventView < ActiveRecord::Migration
       created_at,modified_at,kpcc_event,for_program,
       archive_description,audio,is_published
     from 
-      events__event
+      events_event
     ")
   end
 end

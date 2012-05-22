@@ -1,14 +1,3 @@
-class CategoryConstraint
-  def initialize
-    # load up category list
-    @cats = Category.all.map { |c| c.slug }
-  end
-  
-  def matches?(request)
-    @cats.include?(request.params[:category])
-  end
-end
-
 Scprv4::Application.routes.draw do
   match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
   
@@ -39,7 +28,10 @@ Scprv4::Application.routes.draw do
   end
   
   # -- Bios -- #
+  match '/about/people/staff/' => 'people#index'
   match '/about/people/staff/:name' => 'people#bio', :as => :bio
+
+
 
   # -- Blogs -- #
   match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged", :as => :blog_entries_tagged,  trailing_slash: true
@@ -48,21 +40,18 @@ Scprv4::Application.routes.draw do
   match '/blogs/:blog/(page/:page)' => 'blogs#show',                    :as => :blog,                 trailing_slash: true, :constraints => { :page => /\d+/ }
   match '/blogs/' => 'blogs#index',                                     :as => :blogs,                trailing_slash: true
   
+  
+  
   # -- Programs -- #
   match '/programs/:show/:year/:month/:day/:id/:slug/' => "programs#segment", :as => :segment  
   match '/programs/:show/:year/:month/:day/' => "programs#episode", :as => :episode
   match '/programs/:show(/page/:page)' => 'programs#show', :as => :program, :constraints => { :page => /\d+/ }
   match '/programs/' => 'programs#index', :as => :programs
+  match '/schedule/' => 'programs#schedule', as: :schedule
+  
   
   
   # -- Events -- #
-  ## forum static pages
-  match '/events/forum/space/request/'      => 'events#request',    as: :forum_request,         trailing_slash: true
-  match '/events/forum/request/caterers/'   => 'events#caterers',   as: :forum_caterers,        trailing_slash: true
-  match '/events/forum/space/'              => 'events#space',      as: :forum_space,           trailing_slash: true
-  match '/events/forum/riots/'              => 'events#riots',      as: :forum_riots,           trailing_slash: true
-  match '/events/forum/directions/'         => 'events#directions', as: :forum_directions,      trailing_slash: true
-  match '/events/forum/volunteer/'          => 'events#volunteer',  as: :forum_volunteer,       trailing_slash: true
   match '/events/forum/about/'              => 'events#about',      as: :forum_about,           trailing_slash: true
   
   ## Event lists/details
@@ -71,24 +60,29 @@ Scprv4::Application.routes.draw do
   match '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      trailing_slash: true, defaults: { list: "sponsored" }
   match '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event,                 trailing_slash: true
   match '/events/(list/:list)'              => 'events#index',      as: :events,                trailing_slash: true, defaults: { list: "all" }
-
+  
+  
   
   # -- Videos -- #
   resources :video, only: [:index, :show], trailing_slash: true do
     match ':slug' => "video#show", on: :member
-    match 'list', on: :collection, defaults: { format: :js }
+    match 'list', on: :collection, as: :list
   end
+  
   
   # -- Listen Live -- #
   match '/listen_live/' => 'listen#index', :as => :listen
   
+  
   # -- Search -- #
   match '/search/' => 'search#index', :as => :search
   
+
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
-
+  
+  
   # -- RSS feeds -- #
   match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
   
@@ -97,17 +91,38 @@ Scprv4::Application.routes.draw do
   match '/podcasts/' => 'podcasts#index', :as => :podcasts
 
   # -- Sections -- #
-  match '/:category(/:page)' => "category#index", :constraints => CategoryConstraint.new, :defaults => { :page => 1 }, :as => :section
+  match '/category/carousel-content/:object_class/:id' => 'category#carousel_content', as: :category_carousel, defaults: { format: :js }
   match '/news/' => 'category#news', :as => :latest_news
   match '/arts-life/' => 'category#arts', :as => :latest_arts
   
   # -- Home -- #
   match '/' => "home#index", :as => :home
   match '/beta/' => "home#beta", :as => :beta
-  
-  root to: "home#index"
+  match '/listen' => "home#listen", as: :listen
+  match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
   
   # catch error routes
   match '/404', :to => 'home#not_found'
   match '/500', :to => 'home#error'
+  
+  
+  # -- Dynamic root-level routes -- #
+  # FIXME: These requires a restart of the application if a slug is changed
+  Category.all.each do |category|
+    match "/#{category.slug}(/:page)" => 'category#index', id: category.id, as: "section_#{category.url_helper_slug}"
+  end
+  
+  Flatpage.all.each do |flatpage|
+    if flatpage.redirect_url.present?
+      match flatpage.url => redirect(flatpage.redirect_url)
+    else
+      match flatpage.url => 'flatpages#show', id: flatpage.id
+    end
+  end
+  
+  KpccProgram.where("quick_slug != ?", '').each do |program|
+    match "/#{program.quick_slug}" => redirect("/programs/#{program.slug}")
+  end
+  
+  root to: "home#index"
 end

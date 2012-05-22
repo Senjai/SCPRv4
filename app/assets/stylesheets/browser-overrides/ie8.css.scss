@@ -1,0 +1,25 @@
+// IE8 rules
+.ie8-fix {
+	.section-mega {
+		// IE7/8 - Since IE7/8 don't support CSS3 box-shadows, stick a border around it
+		border-left: 1px solid #000;
+		border-right: 1px solid #000;
+		border-bottom: 1px solid #000;
+	}
+
+	.contentasset img {
+		width: auto; // otherwise height: auto is ignored
+	}
+
+	.nav-primary {
+		// IE7/8 - Hacking a border onto the mega nav, since IE 7/8 don't support color-stops
+		border: 1px solid darken($nearWhite, 10%);
+	}
+
+	.audio-bar.active {
+		// IE7/8, don't know box-shadow so fallback to border
+		border-top: 1px solid #000;
+		border-left: 1px solid #000;
+		border-right: 1px solid #000;
+	}
+}

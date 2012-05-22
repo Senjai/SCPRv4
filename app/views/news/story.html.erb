@@ -1,35 +1,42 @@
 <% page_title @story.headline %>
-
 <%= render_content @story, "opengraph" %>
 
-<% content_for :headline do %>
-	<%= social_tools_for @story, cssClass: "top" %>
-	<h1 class="story-headline"><%= @story.headline %></h1>
-	<p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
+<div class="story content-block">
+	<article>
+		<header>
+			<%= content_widget "social_tools", @story, cssClass: "top horizontal" %>
+			<h1 class="story-headline"><%= @story.headline %></h1>
+			<p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
+		</header>
 	
-	<hr/>
-<% end %>
+		<div class="story-body <%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
+			<div class="visible-reader"><%= content_widget "primary_audio", @story %></div>
+			<%= render_asset @story, "story" %>
 
-<div class="span6 <%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
-	<%= render_asset @story, "story" %>
+			<div class="storybar">
+				<%= comment_widget_for @story, cssClass: 'right-side' %>
+				<div class="hidden-reader"><%= content_widget "audio", @story %></div>
+				<%= render_asset(@story, "extra") if @story.extra_asset_scheme == "sidebar" %>
+			</div>
 
-	<div class="storybar" style="width: 160px;float: right;clear:right;margin-left: 12px">
-		<%= render "shared/cwidgets/comment_count", :cssClass => 'right-side', :content => @story %>
-		<%= render "shared/cwidgets/audio", :content => @story %>
-	</div>
+			<%= simple_format @story.body, {}, :sanitize => false %>
+		</div>
+	
+		<footer>
+			<p><i><%= render_contributing_byline @story %></i></p>
+			<div class="visible-reader"><%= content_widget "extra_audio", @story %></div>
+		</footer>
+	</article>
+	<%= content_widget "social_tools", @story, cssClass: "bottom horizontal" %>
+</div> <!-- story -->
 
-	<%= simple_format @story.body, {}, :sanitize => false %>
+<%= content_widget "related_content_and_links", @story %>
+<%= render "shared/cwidgets/pij_query", :content => @story %>
+<%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 
-	<p><i><%= render_contributing_byline @story %></i></p>
+<%= content_widget 'content_carousel', @story %>
+<%= comments_for @story %>
 
-	<%= related_for @story %>
-	<%= render "shared/cwidgets/pij_query", :content => @story %>
-	<%= social_tools_for @story, cssClass: "bottom" %>
-	<%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
-
-</div>
-
-<% content_for :postcontent do %>
-	<%= render "shared/cwidgets/content_carousel", :content => @story %>
-	<%= comments_for @story %>
+<% content_for :footerga do %>
+	_gaq.push(['_setCustomVar',1,'Source','<%=@story.source%>',3]);
 <% end %>

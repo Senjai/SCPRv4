@@ -2,6 +2,7 @@ class Homepage < ActiveRecord::Base
   self.table_name =  "layout_homepage"
   
   has_many :content, :class_name => "HomepageContent", :order => "position asc"
+  belongs_to :missed_it_bucket
   
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("published_at desc")
   

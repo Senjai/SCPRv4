@@ -1,21 +1,17 @@
 <% if content.category %>
-	<br style="clear: both;" />
-	<div class="content_carousel">
-		<div class="section-head">
-			<h3>More in <%= content.category.category %></h3>
-			<nav>
-				<a class="prev" id="sec_carousel_prev" href="#"><span>prev</span></a>
-				<a class="next" id="sec_carousel_next" href="#"><span>next</span></a>
-			</nav>
-		</div>
-		<ul class="carousel clearfix" id="sec_carousel">
-			
-		</ul>
-		<div class="carousel-page clearfix" id="sec_carousel_pag"></div>
-	</div>
-	
-	<% content_for :footerjss do %>
-		var secCarousel = new scpr.SectionCarousel(<%= raw content.category.content(1,4,content).to_json() %>);
+	<div class="content-carousel" id="article-content-carousel">
+		<h6 class="more-news-title">
+			More in <%= content.category.category %>
+			<div class="pager-nav">
+				<a class="prev"></a>
+				<a class="next"></a>
+			</div>
+		</h6>
 		
+			<div class="carousel" data-current-page="1"></div>
+	</div>
+
+	<% content_for :footerjss do %>
+		var carousel = new scpr.ContentCarousel({dataUrl: "<%= category_carousel_path(content.class.to_s, content.id) %>"});
 	<% end %>
 <% end %>
