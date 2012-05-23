@@ -32,6 +32,10 @@ $mediaSmallPortrait: 320px;
 
 // Phone Landscape and below
 @media screen and (max-width: $mediaSmallLandscape) {	
+	//reduce container padding when we get small
+	.container-fluid {
+		padding:0 10px;
+	}
 	// Make all columns even
 	.row-fluid > [class*="span"] {
 		float: none;

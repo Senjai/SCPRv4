@@ -98,9 +98,12 @@ header#masthead {
 	}
 }
 
-.pledge, nav.utils {
+nav.utils {
 	margin:10px 0;
 	float:right;
+}
+.pledge {
+	margin:10px 0;
 }
 
 .pledge-button-container { // For the responsive button
@@ -108,7 +111,7 @@ header#masthead {
 	margin:9px 7px 0 0;
 	text-align: right;
 	@include ie-inline-block();
-	.pledge { margin: 0; }
+	.pledge { float:right; }
 }
 
 nav.utils {

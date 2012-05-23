@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Bio do
+  it { should belong_to(:user) }
+  
   describe "twitter_url" do
     it "returns a twitter URL if twitter handle is present" do
       bio = build :bio, twitter: "@larrymantle"

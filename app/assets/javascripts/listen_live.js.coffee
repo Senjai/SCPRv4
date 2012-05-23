@@ -324,14 +324,20 @@ class scpr.ListenLive
         urlRoot: '/api/programs'
         initialize: ->
             # parse start and end times
-            @start	= moment 1000 * Number(@attributes['start'])
-            @end 	= moment 1000 * Number(@attributes['end'])
+            @start  = moment 1000 * Number(@attributes['start'])
+            @end    = moment 1000 * Number(@attributes['end'])
             
+            # Check if the show starts or ends between hours and choose format
+            if @start.format("mm") is "00" and @end.format("mm") is "00"
+                time_format = "ha"
+            else
+                time_format = "h:mma"
+
             @set 
                 start:      @start
                 end:        @end
-                start_time: @start.strftime("%I:%M%p")
-                end_time:   @end.strftime("%I:%M%p")
+                start_time: @start.format(time_format)
+                end_time:   @end.format(time_format)
                 
         isWhatsPlayingAt: (time) ->
             @start.toDate() <= time < @end.toDate()

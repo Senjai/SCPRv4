@@ -1,5 +1,5 @@
 <div class="jp-title">
-	<p><span>On now: </span><br /><i id="jplayer1_title"><a href="<%= @on_now.link %>" target="_blank"><%= @on_now.title %></a> <%= @on_now.start.format("ha") %> - <%= @on_now.end.format("ha") %></i></p>
+	<p><span>On now: </span><br /><i id="jplayer1_title"><a href="<%= @on_now.link %>" target="_blank"><%= @on_now.title %></a> <%= @on_now.start_time %> - <%= @on_now.end_time %></i></p>
 	<span class="small">
 		<span>Up next:</span> <a href="<%= @on_next?.link %>" target="_blank"><%= @on_next?.title %></a>
         <span class="pipe">|</span>

@@ -658,9 +658,11 @@ a.with-icon {
 			display: block;
 			text-align: center;
 			margin-bottom: 10px;
+			line-height: 15px;
 			a { 
 				@include font-navigation($size: 14px);
 				color: $nearBlack;
+				line-height: 15px;
 			}
 		}
 	}
