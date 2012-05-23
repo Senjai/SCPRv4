@@ -19,7 +19,7 @@
 				<%= render_asset(@story, "extra") if @story.extra_asset_scheme == "sidebar" %>
 			</div>
 
-			<%= simple_format @story.body, {}, :sanitize => false %>
+			<%= render_content_body @story %>
 		</div>
 	
 		<footer>

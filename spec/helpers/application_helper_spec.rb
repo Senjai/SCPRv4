@@ -107,6 +107,41 @@ describe ApplicationHelper do
     end
   end
   
+  describe "render_content_body" do
+    it "renders with simple_format when the content does not have format (i.e. no wysiwyg)" do
+      content = build :news_story, body: "This \n is \n a \n\n story"
+      helper.render_content_body(content).should match /br/
+      helper.render_content_body(content).should match /<p>/
+    end
+    
+    it "renders raw when the content has format (i.e. uses wysiwyg)" do
+      content = build :blog_entry, content: "This \n is \n an \n\n entry"
+      helper.render_content_body(content).should_not match /br/
+      helper.render_content_body(content).should_not match /<p>/
+    end
+    
+    it "renders an empty string if nil is passed in" do
+      helper.render_content_body(nil).should eq ""
+    end
+    
+    it "renders an emptry string if content does not have a body attribute" do
+      not_content = build :blog
+      not_content.stub("has_format?") { true }
+      helper.render_content_body(not_content).should eq ""
+    end
+    
+    it "renders an emptry string if content does not respond to has_format?" do
+      not_content = build :blog
+      not_content.stub(:body) { "hello" }
+      helper.render_content_body(not_content).should eq ""
+    end
+    
+    it "renders an emptry string if content body is nil" do
+      content = build :news_story, body: nil
+      helper.render_content_body(content).should eq ""
+    end
+  end
+  
   describe "render_asset" do
     it "should render a fallback image if there are no assets and fallback is true" do
       content = build :content_shell

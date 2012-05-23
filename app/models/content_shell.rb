@@ -57,4 +57,8 @@ class ContentShell < ContentBase
   def has_comments?
     false
   end
+  
+  def has_format?
+    false
+  end
 end

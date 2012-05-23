@@ -56,6 +56,18 @@ module ApplicationHelper
     return html.html_safe
   end
   
+  def render_content_body(content)
+    if !content || !content.respond_to?("body") || !content.respond_to?("has_format?") || !content.body.present?
+      return ""
+    end
+    
+    if content.has_format?
+      return content.body.html_safe
+    else
+      return simple_format(content.body, {}, sanitize: false)
+    end
+  end
+  
   #----------
   
   # render_asset takes a ContentBase object and a context, and renders using 

@@ -59,6 +59,10 @@ class Event < ActiveRecord::Base
     ForumTypes.include? self.etype
   end
   
+  def has_format?
+    false
+  end
+  
   #----------
   
   def obj_key

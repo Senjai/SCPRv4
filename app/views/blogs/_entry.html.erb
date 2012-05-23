@@ -13,7 +13,7 @@
 					<div class="visible-reader"><%= content_widget "primary_audio", @entry %></div>
 					
 					<%= render_asset entry, "blog" %>
-					<%= entry.content.html_safe %>
+					<%= render_content_body entry %>
 				</div>
 		
 				<footer>

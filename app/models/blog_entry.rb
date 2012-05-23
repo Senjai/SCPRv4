@@ -35,6 +35,10 @@ class BlogEntry < ContentBase
     []
   end
   
+  def has_format?
+    true
+  end
+  
   def headline
     title
   end

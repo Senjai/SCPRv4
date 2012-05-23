@@ -28,4 +28,8 @@ class VideoShell < ContentBase
   def link_path(options={})
     Rails.application.routes.url_helpers.video_path(self, options.merge!({ trailing_slash: true }))
   end
+  
+  def has_format?
+    false
+  end
 end
