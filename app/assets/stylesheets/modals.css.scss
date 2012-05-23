@@ -69,7 +69,7 @@
 
 .modal-container { // Wrap this class around the modal-popup if you need to so the modal will be positioned properly
 	position: relative;
-	z-index: 800; // Under the megamenu
+	z-index: 60;
 }
 
 .modal-popup {
@@ -104,7 +104,7 @@
 	
 	position: absolute;
 	display: none;
-	z-index: 30; // Pop-ups are greedy
+	z-index: 61;
 	
 	// Use these classes for positioning, width, height, and any extra options you want on a specific modal (or a group of duplicate modals)
 	&.google-maps {
@@ -116,13 +116,15 @@
 		min-height: 350px;
 		left: -250px;
 		top: 26px;
-
+		text-align: center;
+		
+		h5.address { padding-right: 30px; }
 		.arrow-up {
 			left: 300px !important; // To overide default arrow position
 		}
 
 		.google-map {
-			margin-top: 20px;
+			margin: 20px auto 0 auto;
 			width: 350px;
 			height: 350px;
 		}

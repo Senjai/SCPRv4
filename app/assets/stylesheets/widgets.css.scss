@@ -101,6 +101,7 @@
 		}
 	}
 }
+
 // Audio Bar
 #opaque-cover {
 	position: fixed;
@@ -110,7 +111,7 @@
 	width: 0;
 	display: none;
 	background: rgba(0,0,0,0.5);
-	z-index: 999;
+	z-index: 50;
 }
 
 .audio-bar {
@@ -119,7 +120,8 @@
 	background-color:#fff;
 	height:$baseline * 4;
 	position:fixed;
-	z-index:1000;
+	visibility: hidden;
+	z-index:55;
 	bottom: $baseline * -4;
 
 	&.active { 
@@ -668,105 +670,6 @@ a.with-icon {
 	}
 }
 
-// .content_carousel {
-// 	border-top:1px solid $grayLight;
-// 	.section-head { 
-// 		border-bottom:1px solid $grayLight;
-// 		margin-bottom:$baseline / 1;
-// 		position:relative;
-// 		h3 {
-// 	        line-height:$baseline * 1.5;
-// 		}
-// 		nav {
-// 			position:absolute;
-// 			top:4px;
-// 			right:0;
-// 			z-index:2;
-// 			a {
-// 				background:transparent url(image_path('icons/carousel-btns.png')) no-repeat;
-// 				display:block;
-// 				float:left;
-// 				margin:0 8px;
-// 				text-indent: -9999px;
-// 				width:22px;
-// 				height:22px;
-// 				&.prev {
-// 					background-position:0 0;
-// 					&:hover {
-// 						background-position:-62px 0;
-// 					}
-// 				}
-// 				&.prev.disabled {
-// 					background-position:0 0;
-// 				}
-// 				&.next {
-// 					background-position:-32px 0;
-// 					&:hover {
-// 						background-position:-94px 0;
-// 					}
-// 				}
-// 				&.next.disabled {
-// 					background-position:-32px 0;
-// 				}
-// 				&.disabled {
-// 					@include opacity(0.5);
-// 				}
-// 			}
-// 		}	
-// 	}
-// }
-// ul.carousel {
-// 	margin:0;
-// }
-// .carousel li {
-// 	display:block;
-// 	float:left;
-// 	min-height:200px;
-// 	margin:0 11px;
-// 	text-align:center;
-// 	width:160px;
-// 	a { 
-// 		color:$grayAlt;
-// 		display:block;
-// 	}
-// 	img {
-// 		width:140px;
-// 		height:140px;
-// 	}
-// 	p {
-// 		@include font-headline($weight:lighter);
-// 		color:$grayAlt;
-// 		font-size:15px;
-// 		line-height:16px;
-// 		margin:0 auto;
-// 		width:140px;
-// 	}
-// }
-// 
-// .carousel-page {
-// 	margin:0 auto 8px auto;
-// 	text-align:center;
-// 	width:57px;
-// 	a {
-// 		background:transparent url(image_path('icons/carousel-btns.png')) no-repeat -41px -27px;
-// 		display: block;
-// 		float: left;
-// 		margin:0 3px;
-// 		@include opacity(0.5);
-// 		width: 13px;
-// 		height: 13px;
-// 		text-indent: -9999px;
-// 		&:hover {
-// 			@include opacity(1);
-// 		}
-// 		&.selected {
-// 			background-position:-19px -27px;
-// 			&:hover {
-// 				@include opacity(0.5);
-// 			}
-// 		}
-// 	}
-// }
 //Comment Count Widget
 a.comment-count.inline {
 	background: url(image_path('icons/tiny-quotes.png')) no-repeat 2px 2px;
@@ -996,7 +899,8 @@ a.comment-count.inline {
 	padding-left:40px;
 }
 
-#uvTab { z-index: 999 !important; } // push feedback button under audio bar widget & megamenu
+#uvTab { z-index: 45 !important; } // push feedback button under audio bar widget & megamenu
+
 // Facebook
 .fb-like {
 	max-width: 90px;

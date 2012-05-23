@@ -45,3 +45,23 @@
 @import "browser-overrides/ie8.css.scss";
 
 @import "base/responsive.css.scss"; // Put this on the bottom for overriding
+
+// Global z-index Index:
+
+// 20	: #events-header
+// 45	: #uvTab
+// 50	: #opaque-cover
+// 60	: .modal-container
+// 61	: .modal-popup
+// 70	: .audio-bar
+// 80	: .nav-primary
+// 81	: .section-mega
+// 85	: .footer-nav.active (in media query)
+
+// 99	: .broadcast-bar (ie7 only)
+// 100	: #masthead (ie7 only)
+
+
+
+
+

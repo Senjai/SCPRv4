@@ -9,7 +9,7 @@ $mediaSmallLandscape: 480px;
 $mediaSmallPortrait: 320px;
 
 // These mixins are for responsive use only. Don't use them to define default styles (because they're not IE7/8-friendly).
-@mixin fluidPopup($margin: 4%, $top: 180px) {
+@mixin fluidPopup($margin: 4%, $top: 70px) {
 	position: fixed;
 	left: $margin !important;
 	top: $top !important; // Leave room for headers to show
@@ -224,7 +224,7 @@ $mediaSmallPortrait: 320px;
 	.visible-reader { display: block !important; visibility:visible !important }
 	.hidden-reader { display: none !important;;}
 	
-	.modal-popup { // using important flag here to cover all modals, since most of these rules are specified in more specific classes
+	.modal-popup {
 		@include fluidPopup;
 		.arrow-up { display: none; }
 		.google-map { 
@@ -360,7 +360,7 @@ $mediaSmallPortrait: 320px;
 				&.active {
 					background-color: $footerBackground; 
 					@include box-shadow(3px 0 8px rgba(0,0,0,.4));
-					z-index:2000;
+					z-index: 85;
 				}
 				.compact-nav-head { display: block; }
 				h3, .pledge {
