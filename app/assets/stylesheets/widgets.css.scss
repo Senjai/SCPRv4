@@ -120,13 +120,14 @@
 	background-color:#fff;
 	height:$baseline * 4;
 	position:fixed;
-	visibility: hidden;
+	display: none;
 	z-index:55;
 	bottom: $baseline * -4;
-
+	$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
+	@include box-shadow($nav-shadow);
+	
 	&.active { 
-		$nav-shadow: 0 -2px 9px -2px rgba(102,102,102,1), 0 -2px 9px -2px #666;
-		@include box-shadow($nav-shadow);
+		display: block;
 	}
 	
 	.section-left { 
