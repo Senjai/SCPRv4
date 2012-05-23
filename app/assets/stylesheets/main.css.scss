@@ -57,7 +57,7 @@ body {
 		margin-bottom:$baseline;
 				
 		.missed-it-bucket {
-			.carousel { min-height: 259px; }
+			.carousel { min-height: 2px; }
 			.row-fluid > hr { 
 				display: none; 
 				width: 100%;
@@ -68,7 +68,6 @@ body {
 				margin-bottom: 10px;
 			}
 		}
-		padding-bottom:$baseline;
 		
 		.offleads {
 			margin-bottom: 10px;
