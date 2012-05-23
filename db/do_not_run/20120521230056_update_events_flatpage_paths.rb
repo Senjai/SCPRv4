@@ -138,7 +138,7 @@ class UpdateEventsFlatpagePaths < ActiveRecord::Migration
     end
     
     puts "disabling all existing flatpages in new site..."
-    Flatpage.unscoped.update_all(enable_in_new_site: false)
+    # Flatpage.unscoped.update_all(enable_in_new_site: false)
     puts "Finished - Total Flatpages: #{Flatpage.unscoped.count} (before migration was #{FlatpageCount})"
   end
 end
