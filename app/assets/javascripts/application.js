@@ -22,4 +22,3 @@
 //= require megamenu
 //= require smart_time
 //= require utilities
-//= require zbase
