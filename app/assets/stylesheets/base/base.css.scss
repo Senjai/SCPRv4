@@ -214,7 +214,7 @@ $analog2:           spin($baseColor, -22);
   line-height: $lineHeight;
 }
 @mixin font-slab-headings($weight: normal, $size: 12px, $lineHeight: 20px) {
-  font-family: "Museo Slab", Helvetica, sans-serif;
+  font-family: "museo-slab", Helvetica, sans-serif;
   font-size: $size;
   font-weight: $weight;
   line-height: $lineHeight;
