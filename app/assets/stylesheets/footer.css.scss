@@ -161,7 +161,7 @@ $footerBackground: #2e2e2e;
 		.compact-nav-head {
 			display: none;
 			@include clearfix;
-			.pledge { float:left; }
+			.pledge { float:left;margin: 10px 15px; }
 			.in-btn { 
 				float: right; 
 				margin-top: 7px;
