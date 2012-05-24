@@ -7,7 +7,8 @@ class SetupRedirectsInFlatpages < ActiveRecord::Migration
     show_sidebar: true,
     template_name: "",
     title: "Redirect",
-    description: "Redirect only"
+    description: "Redirect only",
+    is_public: true
   }
   
   Redirects = [
@@ -15,7 +16,7 @@ class SetupRedirectsInFlatpages < ActiveRecord::Migration
     { url: "/forum/",                redirect_url: "http://scpr.org/events/forum/" },
     { url: "/crawfordfamilyforum/",  redirect_url: "http://scpr.org/events/forum/" },
     { url: "/podcast/",              redirect_url: "http://scpr.org/podcasts/" },
-      
+    { url: "/beta/",                 redirect_url: "http://scpr.org/"},
     { url: "/increase/",             redirect_url: "https://scprcontribute.publicradio.org/contribute.php?refId=sustup/" },
     { url: "/leadership/",           redirect_url: "https://scprcontribute.publicradio.org/contribute.php?refId=lcrenew/" },
     

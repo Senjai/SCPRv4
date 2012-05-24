@@ -7,13 +7,14 @@ class UpdateEventsFlatpagePaths < ActiveRecord::Migration
     show_sidebar: true,
     template_name: "",
     title: "Redirect",
-    description: "Redirect only"
+    description: "Redirect only",
+    is_public: true
   }
     
   def up
     # create returns the object no matter what
     # update_attribute does not run validations so is only useful if the database is enforcing data integrity
-    
+        
     Flatpage.unscoped.where("url LIKE ?", "/forum%").all.each do |old_forum_flatpage|
       old_url = old_forum_flatpage.url
       
@@ -53,6 +54,6 @@ class UpdateEventsFlatpagePaths < ActiveRecord::Migration
     end
     
     Scprv4::Application.reload_routes!
-    puts "Reloaded Routes and done. Total flatpages: #{Flatpage.unscoped.count}"
+    puts "Reloaded Routes and done (down). Total flatpages: #{Flatpage.unscoped.count}"
   end
 end

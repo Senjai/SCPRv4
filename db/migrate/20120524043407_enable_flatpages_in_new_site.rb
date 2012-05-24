@@ -1,6 +1,6 @@
 class EnableFlatpagesInNewSite < ActiveRecord::Migration
   # Before: Flatpage.count == 96
-  # After: Flatpage.count == 142
+  # After: Flatpage.count == 145
   
   MercerPages = %w{ /405/ /about/jobs/ /boyleheights/ /laelections/ /lovela/ }
   
