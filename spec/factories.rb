@@ -260,6 +260,7 @@ end
     date_modified { Time.now }
     enable_in_new_site 1
     show_sidebar 1
+    is_public 1
   end
 
 # ContentCategory #########################################################

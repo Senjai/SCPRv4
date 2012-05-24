@@ -64,7 +64,7 @@ module ApplicationHelper
     if content.has_format?
       return content.body.html_safe
     else
-      return simple_format(content.body, {}, sanitize: false)
+      return content.body.html_safe #simple_format(content.body, {}, sanitize: false)
     end
   end
   
