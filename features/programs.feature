@@ -169,3 +169,30 @@ Scenario: Quick Slug is same as another page
 	
 	When I visit the shallow path for that program
 	Then I should not be on that program's page
+
+Scenario: Archive
+	Given a kpcc program with the following attributes:
+	| episode_count | episode[air_date] | display_episodes |
+	| 1				| 2011-05-22 		| true 			   |
+	
+	When I go to that program's page
+	And I select the date for that episode in the archive select
+	And I submit the "archive date select" form
+	Then I should be on the episode's page
+
+Scenario: Archive episode doesn't exist
+	Given a kpcc program with the following attributes:
+	| episode_count | episode[air_date] | display_episodes |
+	| 1				| 2011-05-22 		| true 			   |
+	
+	When I go to that program's page
+	And I select a date that doesn't exist for an episode in the archive select
+	And I submit the "archive date select" form
+	Then I should be on the program's page
+
+Scenario: No Archive feature if the program doesn't display episodes
+	Given a kpcc program with the following attributes:
+	| display_episodes |
+	| false			   |
+	
+	Then I should not see the archive select

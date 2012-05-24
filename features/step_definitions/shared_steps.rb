@@ -59,3 +59,7 @@ end
 When /^I filter by "([^"]*)"$/ do |filter|
   find("nav.filters").find_link(filter).click
 end
+
+When /^I submit the "([^"]*)" form$/ do |text|
+  page.find("form##{text.gsub(/\s/, "-")} input[type=submit]").click
+end

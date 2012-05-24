@@ -1,0 +1,10 @@
+<% page_title ["Archive", @program.title] %>
+
+<%# This page shouldn't get rendered %>
+
+<section class="show-episodes">		
+	<%= any_to_list? @episode, title: "Episode" do %>
+		<h2>Episode for <%= @program.title %> on <%= @date.strftime("%A, %B %d, %Y") %></h2>
+		<%= render :partial => "episode", episode: @episode %>
+	<% end %>
+</section>

@@ -1,4 +1,4 @@
-header.episode {
+header.episode, .gray-strip {
 	margin-top: $baseline/2 * -1;
 	margin-left: 0px;
 	margin-right: 0px;
@@ -41,6 +41,20 @@ header.episode {
 			color:$grayDark;
 		}
 	}
+}
+
+.gray-strip {
+	.more { 
+		display: inline-block;
+		margin-right: 10px; 
+	}
+	
+}
+
+.archive-date-select {
+	margin-bottom: 0;
+	display: inline-block;
+	select { width: 100px; }
 }
 
 .show-episode {

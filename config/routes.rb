@@ -43,11 +43,12 @@ Scprv4::Application.routes.draw do
   
   
   # -- Programs -- #
-  match '/programs/:show/:year/:month/:day/:id/:slug/' => "programs#segment", :as => :segment  
-  match '/programs/:show/:year/:month/:day/' => "programs#episode", :as => :episode
-  match '/programs/:show(/page/:page)' => 'programs#show', :as => :program, :constraints => { :page => /\d+/ }
-  match '/programs/' => 'programs#index', :as => :programs
-  match '/schedule/' => 'programs#schedule', as: :schedule
+  match '/programs/:show/archive/'                       => "programs#archive",  as: :program_archive
+  match '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",  as: :segment  
+  match '/programs/:show/:year/:month/:day/'            => "programs#episode",  as: :episode
+  match '/programs/:show(/page/:page)'                  => 'programs#show',     as: :program,           constraints: { page: /\d+/ }
+  match '/programs/'                                    => 'programs#index',    as: :programs
+  match '/schedule/'                                    => 'programs#schedule', as: :schedule
   
   
   
