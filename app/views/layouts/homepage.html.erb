@@ -6,16 +6,27 @@
 	
   	<%= render "shared/header/header_js" %>
 	<%= render "shared/header/opengraph" %>
+	<script type="text/javascript" src="http://cdn.sublimevideo.net/js/cixcsaci.js"></script>
   	<%= csrf_meta_tags %>
 </head>
 <body>
 <div class="viewport">
+	<div id="beta-bar" class="alert-message inverse" style="text-align:center;margin-bottom:0;">
+		<p>Welcome to the all-new KPCC.org! <a class="modal-toggler" data-modal-id="new-site-video">Watch a quick tour</a> or start exploring.</p>
+	</div>
 	<!-- MASTHEAD-->
 	<%= render "shared/masthead" %>
-	<a class="modal-toggler" data-modal-id="new-site-video">Learn about the New KPCC.org</a>
-	<%= modal "new-site-video", modal_id: "new-site-video" do %>
-		Video embed Code
-	<% end %>
+	<div class="modal-popup new-site-video" id="new-site-video">
+		<div class="arrow-up"></div>
+		<div class="modal-close modal-toggler" onClick="sublimevideo.stop()"></div>
+		<div class="inner-container">
+
+			<video class="sublime" poster="http://media.scpr.org/assets/images/about/allnew-kpcc-poster.jpg" width="640" height="360" data-uid="1ca33967" preload="none">
+			  <source src="http://media.scpr.org/assets/images/about/allnew-kpcc-sm.mp4" />
+			</video>
+
+		</div>
+	</div>
 	<!-- BROADCAST BAR -->
 	<%= render("shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
 

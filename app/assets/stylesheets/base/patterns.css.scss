@@ -329,6 +329,16 @@ body {
   &.info {
     @include gradientBar(#5BC0DE, #339BB9); 
   }
+  &.inverse {
+	@include border-radius(0);
+	@include box-shadow(none);
+	border:0;
+    @include gradientBar($nearBlack, $nearBlack); 
+	text-shadow:none;
+	a {
+		color:$linkColorHover;
+	}
+  }
   .close {
     float: right;
     margin-top: -2px;

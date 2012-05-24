@@ -136,10 +136,12 @@ a.modal-toggler {
 	
 	&.new-site-video {
 		@include modal-light;
-		width: 650px;
-		min-height: 400px;
-		left: 50px;
-		top: 50px;
+		padding: 20px 0 0 28px;
+		width: 723px;
+		min-height: 425px;
+		margin-left:-361px;
+		left: 50%;
+		top: 100px;
 		.arrow-up { display: none; }
 	} // .new-site-video
 	
