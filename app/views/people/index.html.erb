@@ -8,7 +8,7 @@
     <tbody>
     	<% @bios.each do |bio| %>
 			<tr>
-				<td><%= link_to bio.name, bio.slugged_name %></td>
+				<td><%= link_to bio.name, bio_path(bio) %></td>
 				<td><%= bio.title %></td>
 			</tr>
 		<% end %>
