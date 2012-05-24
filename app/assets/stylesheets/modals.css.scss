@@ -67,9 +67,13 @@
 	}
 } // modal-dark
 
+a.modal-toggler {
+	cursor: pointer;
+}
+
 .modal-container { // Wrap this class around the modal-popup if you need to so the modal will be positioned properly
 	position: relative;
-	z-index: 60;
+	z-index: 81;
 }
 
 .modal-popup {
@@ -104,7 +108,7 @@
 	
 	position: absolute;
 	display: none;
-	z-index: 61;
+	z-index: 82;
 	
 	// Use these classes for positioning, width, height, and any extra options you want on a specific modal (or a group of duplicate modals)
 	&.google-maps {
@@ -129,6 +133,15 @@
 			height: 350px;
 		}
 	} // .google-maps
+	
+	&.new-site-video {
+		@include modal-light;
+		width: 650px;
+		min-height: 400px;
+		left: 50px;
+		top: 50px;
+		.arrow-up { display: none; }
+	} // .new-site-video
 	
 	&.episode-guide {
 		@include modal-light;

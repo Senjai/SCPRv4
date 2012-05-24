@@ -12,7 +12,10 @@
 <div class="viewport">
 	<!-- MASTHEAD-->
 	<%= render "shared/masthead" %>
-
+	<a class="modal-toggler" data-modal-id="new-site-video">Learn about the New KPCC.org</a>
+	<%= modal "new-site-video", modal_id: "new-site-video" do %>
+		Video embed Code
+	<% end %>
 	<!-- BROADCAST BAR -->
 	<%= render("shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
 
