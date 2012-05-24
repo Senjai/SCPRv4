@@ -11,37 +11,36 @@ class SetupRedirectsInFlatpages < ActiveRecord::Migration
   }
   
   Redirects = [
-    { url: "/forum/events/",         redirect_url: "/events/forum/" },
-    { url: "/forum/",                redirect_url: "/events/forum/" },
-    { url: "/crawfordfamilyforum/",  redirect_url: "/events/forum/" },
-      
-    { url: "/podcast/",              redirect_url: "/podcasts/" },
+    { url: "/forum/events/",         redirect_url: "http://scpr.org/events/forum/" },
+    { url: "/forum/",                redirect_url: "http://scpr.org/events/forum/" },
+    { url: "/crawfordfamilyforum/",  redirect_url: "http://scpr.org/events/forum/" },
+    { url: "/podcast/",              redirect_url: "http://scpr.org/podcasts/" },
       
     { url: "/increase/",             redirect_url: "https://scprcontribute.publicradio.org/contribute.php?refId=sustup/" },
     { url: "/leadership/",           redirect_url: "https://scprcontribute.publicradio.org/contribute.php?refId=lcrenew/" },
     
-    { url: "/careers/",              redirect_url: "/about/jobs" },
-    { url: "/jobs/",                 redirect_url: "/about/jobs" },
-    { url: "/benefits/",             redirect_url: "/support/member_benefits_card/" },
-    { url: "/car/",                  redirect_url: "/support/car_donation/" },
-    { url: "/cars/",                 redirect_url: "/support/car_donation/" },
-    { url: "/sustainer/",            redirect_url: "/support/sustainer/" },
-    { url: "/sustainingmembers/",    redirect_url: "/support/sustaining_memberships/" },
+    { url: "/careers/",              redirect_url: "http://scpr.org/about/jobs" },
+    { url: "/jobs/",                 redirect_url: "http://scpr.org/about/jobs" },
+    { url: "/benefits/",             redirect_url: "http://scpr.org/support/member_benefits_card/" },
+    { url: "/car/",                  redirect_url: "http://scpr.org/support/car_donation/" },
+    { url: "/cars/",                 redirect_url: "http://scpr.org/support/car_donation/" },
+    { url: "/sustainer/",            redirect_url: "http://scpr.org/support/sustainer/" },
+    { url: "/sustainingmembers/",    redirect_url: "http://scpr.org/support/sustaining_memberships/" },
       
-    { url: "/news/local/",           redirect_url: "/local/" },
-    { url: "/news/us/",              redirect_url: "/world/" },
-    { url: "/news/world/",           redirect_url: "/world/" },
-    { url: "/news/politics/",        redirect_url: "/politics/" },
-    { url: "/news/economy/",         redirect_url: "/money/" },
-    { url: "/news/law/",             redirect_url: "/crime/" },
-    { url: "/news/education/",       redirect_url: "/education/" },
-    { url: "/news/health/",          redirect_url: "/health/" },
-    { url: "/news/environment/",     redirect_url: "/environment/" },
-    { url: "/news/science/",         redirect_url: "/environment/" },
-    { url: "/news/transportation/",  redirect_url: "/local/" },
-    { url: "/news/arts/",            redirect_url: "/arts-life/" },
-    { url: "/news/living/",          redirect_url: "/culture/" },
-    { url: "/news/opinion/",         redirect_url: "/" }
+    { url: "/news/local/",           redirect_url: "http://scpr.org/local/" },
+    { url: "/news/us/",              redirect_url: "http://scpr.org/world/" },
+    { url: "/news/world/",           redirect_url: "http://scpr.org/world/" },
+    { url: "/news/politics/",        redirect_url: "http://scpr.org/politics/" },
+    { url: "/news/economy/",         redirect_url: "http://scpr.org/money/" },
+    { url: "/news/law/",             redirect_url: "http://scpr.org/crime/" },
+    { url: "/news/education/",       redirect_url: "http://scpr.org/education/" },
+    { url: "/news/health/",          redirect_url: "http://scpr.org/health/" },
+    { url: "/news/environment/",     redirect_url: "http://scpr.org/environment/" },
+    { url: "/news/science/",         redirect_url: "http://scpr.org/environment/" },
+    { url: "/news/transportation/",  redirect_url: "http://scpr.org/local/" },
+    { url: "/news/arts/",            redirect_url: "http://scpr.org/arts-life/" },
+    { url: "/news/living/",          redirect_url: "http://scpr.org/culture/" },
+    { url: "/news/opinion/",         redirect_url: "http://scpr.org/" }
   ]
   
   def up

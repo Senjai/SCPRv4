@@ -30,12 +30,12 @@
 		padding: 8px 7px 8px 29px;
 		color: #777777;
 		@include font-heading(normal, 12px);
+		line-height: 12px;
 		text-transform: uppercase;
 		text-align: center;
-		white-space: nowrap;
 		cursor: pointer;
 		display: block;
-		max-width: 175px;
+		width: 160px;
 		border: 1px solid $grayDark;
 		&:hover, &.active {
 			border-color:$grayLight;

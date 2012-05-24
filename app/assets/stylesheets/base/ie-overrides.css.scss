@@ -46,6 +46,10 @@
 
 
 .ie7-fix, .ie8-fix {
+	object { 
+		max-width: none !important;
+	}
+	
 	.section-mega {
 		// IE7/8 - Since IE7/8 don't support CSS3 box-shadows, stick a border around it
 		border-left: 1px solid #000;
