@@ -1,7 +1,4 @@
-class UpdateEventsFlatpagePaths < ActiveRecord::Migration
-  # Before: Flatpage.count == 96
-  # After: Flatpage.count == 127
-  MercerPages = %w{ /405/ /about/jobs/ /boyleheights/ /careers/ /laelections/ /lovela/ }
+class SetupRedirectsInFlatpages < ActiveRecord::Migration
   DefaultValues = { 
     enable_comments: false, 
     registration_required: false,
@@ -22,7 +19,9 @@ class UpdateEventsFlatpagePaths < ActiveRecord::Migration
       
     { url: "/increase/",             redirect_url: "https://scprcontribute.publicradio.org/contribute.php?refId=sustup/" },
     { url: "/leadership/",           redirect_url: "https://scprcontribute.publicradio.org/contribute.php?refId=lcrenew/" },
-      
+    
+    { url: "/careers/",              redirect_url: "/about/jobs" },
+    { url: "/jobs/",                 redirect_url: "/about/jobs" },
     { url: "/benefits/",             redirect_url: "/support/member_benefits_card/" },
     { url: "/car/",                  redirect_url: "/support/car_donation/" },
     { url: "/cars/",                 redirect_url: "/support/car_donation/" },
@@ -45,37 +44,7 @@ class UpdateEventsFlatpagePaths < ActiveRecord::Migration
     { url: "/news/opinion/",         redirect_url: "/" }
   ]
   
-  FlatpageCount = Flatpage.unscoped.count
-  
   def up
-    # create returns the object no matter what
-    # update_attribute does not run validations so is only useful if the database is enforcing data integrity
-    
-    Flatpage.unscoped.all.reject { |f| MercerPages.include? f.url}.each do |flatpage|
-      if flatpage.update_attributes(enable_in_new_site: true)
-        puts "(1) updated new_site bool for #{flatpage.url}"
-      else
-        puts "(2) failed: #{flatpage.url} (#{flatpage.errors.full_messages.join(", ")})"
-      end
-    end
-    
-    Flatpage.unscoped.where("url LIKE ?", "/forum%").all.each do |old_forum_flatpage|
-      old_url = old_forum_flatpage.url
-      
-      if old_forum_flatpage.update_attributes(url: "/events#{old_url}")
-        puts "(3) updated url to #{old_forum_flatpage.url}"
-      else
-        puts "(4) failed: #{old_forum_flatpage.url} (#{old_forum_flatpage.errors.full_messages.join(", ")})"
-      end
-        
-      new_forum_redirect = Flatpage.new({ url: old_url, redirect_url: "/events#{old_url}" }.reverse_merge!(DefaultValues))
-      if new_forum_redirect.save
-        puts "(5) created redirect at #{new_forum_redirect.url}"
-      else
-        puts "(6) failed: #{new_forum_redirect.url} (#{new_forum_redirect.errors.full_messages.join(", ")})"
-      end
-    end
-    
     Redirects.each do |attributes|
       existing_flatpages = Flatpage.unscoped.where(url: attributes[:url])
       if existing_flatpages.present?
@@ -95,13 +64,9 @@ class UpdateEventsFlatpagePaths < ActiveRecord::Migration
         end
       end
     end
-    
-    puts "Finished - Total Flatpages: #{Flatpage.unscoped.count} (before migration was #{FlatpageCount})"
   end
 
   def down
-    # note: object.delete uses the default_scope in its query, so we need to put the update_all call at the end
-    
     Redirects.each do |attributes|
       Flatpage.unscoped.where(url: attributes[:url]).each do |old_redirect|
         if old_redirect.content.present? or old_redirect.title != "Redirect"
@@ -118,27 +83,8 @@ class UpdateEventsFlatpagePaths < ActiveRecord::Migration
           end
         end
       end
-    end    
-    
-    Flatpage.unscoped.where("url LIKE ?", "/forum%").all.each do |old_forum_redirect|
-      if old_forum_redirect.delete
-        puts "(13) deleted #{old_forum_redirect.url}"
-      else
-        puts "(14) failed: #{old_forum_redirect.url} (#{old_forum_redirect.errors.full_messages.join(", ")})"
-      end
     end
     
-    Flatpage.unscoped.where("url LIKE ?", "/events%").all.each do |old_forum_flatpage|
-      old_url = old_forum_flatpage.url.gsub("/events", "")
-      if old_forum_flatpage.update_attributes(url: old_url)
-        puts "(11) downdated url to #{old_forum_flatpage.url}"
-      else
-        puts "(12) failed: #{old_forum_flatpage.url} (#{old_forum_flatpage.errors.full_messages.join(", ")})"
-      end
-    end
-    
-    puts "disabling all existing flatpages in new site..."
-    # Flatpage.unscoped.update_all(enable_in_new_site: false)
-    puts "Finished - Total Flatpages: #{Flatpage.unscoped.count} (before migration was #{FlatpageCount})"
+    Scprv4::Application.reload_routes!
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120521230056) do
+ActiveRecord::Schema.define(:version => 20120425181559) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -220,6 +220,10 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
 
   add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
+
+  create_table "blogs_remoteentry", :force => true do |t|
+    t.integer "comment_count", :default => 0, :null => false
+  end
 
   create_table "contentbase_category", :force => true do |t|
     t.string  "category",          :limit => 50,                   :null => false
@@ -538,6 +542,7 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
     t.boolean  "enable_in_new_site",                          :null => false
     t.boolean  "show_sidebar",                                :null => false
     t.string   "redirect_url",          :limit => 250
+    t.boolean  "is_public",                                   :null => false
   end
 
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
@@ -631,6 +636,18 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
   end
 
   add_index "jobs_employee", ["department_id"], :name => "jobs_employee_2ae7390"
+
+  create_table "layout_breakingnewsalert", :force => true do |t|
+    t.string  "headline",     :limit => 140,                           :null => false
+    t.time    "alert_time"
+    t.string  "alert_type",   :limit => 5
+    t.boolean "is_published",                       :default => true,  :null => false
+    t.boolean "email_sent",                         :default => false, :null => false
+    t.time    "created_at",                                            :null => false
+    t.time    "updated_at",                                            :null => false
+    t.text    "teaser",       :limit => 2147483647,                    :null => false
+    t.string  "alert_link",   :limit => 200,                           :null => false
+  end
 
   create_table "layout_homepage", :force => true do |t|
     t.string   "base",                :limit => 10,                     :null => false
@@ -878,6 +895,15 @@ ActiveRecord::Schema.define(:version => 20120521230056) do
   end
 
   add_index "news_category", ["slug"], :name => "news_category_slug"
+
+  create_table "news_imageorder", :force => true do |t|
+    t.integer "story_id",    :null => false
+    t.integer "image_id",    :null => false
+    t.integer "image_order", :null => false
+  end
+
+  add_index "news_imageorder", ["image_id"], :name => "news_imageorder_image_id"
+  add_index "news_imageorder", ["story_id"], :name => "news_imageorder_story_id"
 
   create_table "news_oldimageorder", :force => true do |t|
     t.integer "story_id",    :null => false

@@ -1,8 +1,11 @@
 class Flatpage < ActiveRecord::Base
   self.table_name = "flatpages_flatpage" 
-  default_scope where(enable_in_new_site: true)
+  
+  # Temporary default_scope, this should be removed eventually and replaced with named scopes.
+  default_scope where(enable_in_new_site: true, is_public: true)
 
   # TODO: Once Flatpages are handled in Rails CMS, we will need to reload routes after any page is updated or created.
+  # Or, come up with a better solution for routing them.
   validates :url, presence: true, uniqueness: true
   
   before_validation :slashify
