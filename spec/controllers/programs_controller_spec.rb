@@ -5,7 +5,7 @@ describe ProgramsController do
     it "finds the episode for the program on the given date" do
       episode = create :show_episode, air_date: Chronic.parse("March 22, 2012")
       get :archive, show: episode.show.slug, archive: { "date(1i)" => episode.air_date.year, "date(2i)" => episode.air_date.month, "date(3i)" => episode.air_date.day }
-      assigns(:episode).should be_present
+      assigns(:episode).should eq episode
     end
     
     it "assigns @date if date is given" do
