@@ -12,22 +12,20 @@ class scpr.CompactNav
             click: => @slideLeft()
 
     slideRight: ->
-        $("html").css("overflow-x": "hidden")
+        $("html").addClass "compactNav"
         @nav.addClass("active")
-        @viewPort.addClass("navIn").css(height: @nav.height())
+        @viewPort.css(height: @nav.height())
 
         $("body").addClass("navIn").css
             height: @nav.height()
-            width: $(window).width()
 
         @viewPort.animate(left: @nav.width(), "fast")
 
     slideLeft: ->
         @viewPort.animate(left: 0, "fast", =>
-            @viewPort.removeClass("navIn").css(height: "auto")
+            @viewPort.css(height: "auto")
             $("body").removeClass("navIn").css
                 height: "auto"
-                width: "auto"
             @nav.removeClass("active")
         )
 

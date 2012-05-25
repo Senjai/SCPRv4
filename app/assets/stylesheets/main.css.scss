@@ -6,11 +6,11 @@ body {
 	height: auto;
 	position: static;
 	overflow: visible;
-	
-	&.navIn {
-		position: relative;
-        overflow: hidden;
-	}
+}
+
+.viewport {
+	width: 100%;
+	height: auto;
 }
 
 // Vertical divider solution
@@ -40,12 +40,6 @@ body {
 	&#footer-container {
 		position: static; // So we can pop out the footer into the side nav
 	}
-}
-
-.viewport {
-	width: 100%;
-	height: auto;
-	&.navIn { position: absolute; }
 }
 
 // #Main Body Content
