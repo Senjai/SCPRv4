@@ -17,6 +17,13 @@ GIT
     redis-content-store (3.2.2)
       redis-activesupport (~> 3.2.2)
 
+GIT
+  remote: git://github.com/nex3/sass.git
+  revision: 167ee67e6a16423e95cf074074aea80ff9c828ca
+  branch: master
+  specs:
+    sass (3.2.0.alpha.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -99,17 +106,13 @@ GEM
       execjs
     eco-source (1.1.0.rc.1)
     erubis (2.7.0)
-    execjs (1.3.2)
+    execjs (1.4.0)
       multi_json (~> 1.0)
-    factory_girl (3.2.0)
-      activesupport (>= 3.0.0)
     factory_girl (3.3.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (3.2.0)
-      factory_girl (~> 3.2.0)
-      railties (>= 3.0.0)
     factory_girl_rails (3.3.0)
       factory_girl (~> 3.3.0)
+      railties (>= 3.0.0)
     fakeweb (1.3.0)
     faraday (0.7.6)
       addressable (~> 2.2)
@@ -134,7 +137,7 @@ GEM
     guard-cucumber (0.8.0)
       cucumber (>= 1.2.0)
       guard (>= 0.8.3)
-    guard-rspec (0.7.2)
+    guard-rspec (0.7.3)
       guard (>= 0.10.0)
     hashie (1.0.0)
     highline (1.6.12)
@@ -145,6 +148,7 @@ GEM
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
+    jruby-pageant (1.0.2)
     json (1.7.3)
     launchy (2.1.0)
       addressable (~> 2.2.6)
@@ -168,7 +172,8 @@ GEM
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
       net-ssh (>= 2.0.9)
-    net-ssh (2.3.0)
+    net-ssh (2.5.1)
+      jruby-pageant (>= 1.0.2)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     newrelic_rpm (3.3.4.1)
@@ -219,7 +224,7 @@ GEM
       rspec-core (~> 2.10.0)
       rspec-expectations (~> 2.10.0)
       rspec-mocks (~> 2.10.0)
-    rspec-core (2.10.0)
+    rspec-core (2.10.1)
     rspec-expectations (2.10.0)
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.10.1)
@@ -229,13 +234,10 @@ GEM
       railties (>= 3.0)
       rspec (~> 2.10.0)
     ruby-mp3info (0.7.1)
-    rubypython (0.6.0)
+    rubypython (0.6.2)
       blankslate (>= 2.1.2.3)
       ffi (~> 1.0.7)
-    rubyzip (0.9.6.1)
     rubyzip (0.9.8)
-    sass (3.1.18)
-    sass (3.2.0.alpha.101)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -318,7 +320,7 @@ DEPENDENCIES
   rspec-rails
   ruby-mp3info
   rubypython
-  sass
+  sass!
   sass-rails
   shoulda-matchers
   therubyracer
