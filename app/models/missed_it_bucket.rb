@@ -1,5 +1,5 @@
 class MissedItBucket < ActiveRecord::Base
   self.table_name = "contentbase_misseditbucket"
   
-  has_many :contents, class_name: "MissedItContent", foreign_key: "bucket_id"
+  has_many :contents, class_name: "MissedItContent", foreign_key: "bucket_id", order: "position asc"
 end
