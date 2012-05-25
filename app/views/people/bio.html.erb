@@ -5,11 +5,13 @@
 
 <div class="row-fluid">
 	<div class="span6">
-		<div class="asset-block" style="width:<%= @bio.headshot.three.width %>px">
-			<div class="contentasset">
-				<%= @bio.headshot.three.tag %>
+		<% if @bio.headshot %>
+			<div class="asset-block" style="width:<%= @bio.headshot.three.width %>px">
+				<div class="contentasset">
+					<%= @bio.headshot.three.tag %>
+				</div>
 			</div>
-		</div>
+		<% end %>
 		<strong>Contact <%= @bio.name %></strong>
 		<ul>
 			<% if @bio.twitter.present? %><li><%= link_to "Twitter", @bio.twitter_url, target: "_blank" %></li><% end %>
