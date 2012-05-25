@@ -270,6 +270,8 @@ end
 
 # Related #########################################################
 factory :related_content, class: Related do
+  sequence(:id, 1)
+
   factory :brel do # "brels" - needs content
     flag 0
     related { |brel| brel.association(:content_shell) } #TODO Need to be able to pass in any type of factory here
@@ -283,6 +285,7 @@ end
   
 # Link #########################################################
   factory :link do
+    sequence(:id, 1)
     title "A Related Link"
     link "http://oncentral.org"
     link_type "website"
