@@ -23,12 +23,14 @@
 	</div>
 </div>
 <hr />
-<div class="row-fluid">
-	<div class="span24">
-		<h2>Stories by <%= @bio.name %></h2>
-		<%= render_content @user_content, "thumbnail" %>
-		<%= will_paginate(@user_content, :previous_label => "« Newer", :next_label => "Older »", :inner_window => 2) %>
+<% if @user_content.present? %>
+	<div class="row-fluid">
+		<div class="span24">
+			<h2>Stories by <%= @bio.name %></h2>
+			<%= render_content @user_content, "thumbnail" %>
+			<%= will_paginate(@user_content, :previous_label => "« Newer", :next_label => "Older »", :inner_window => 2) %>
+		</div>
 	</div>
-</div>
+<% end %>
 
 </div> <!-- bio-detail -->
