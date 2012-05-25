@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120327015211) do
+ActiveRecord::Schema.define(:version => 20120524043407) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
   end
 
   add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
+
+  create_table "ascertainment_ascertainmentrecord", :force => true do |t|
+    t.integer "content_type_id",                :null => false
+    t.integer "object_id",                      :null => false
+    t.string  "locations",       :limit => 200
+    t.string  "asc_types",       :limit => 200
+    t.string  "verticals",       :limit => 200
+  end
+
+  add_index "ascertainment_ascertainmentrecord", ["content_type_id"], :name => "ascertainment_ascertainmentrecord_e4470c6e"
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_type_id",                                       :null => false
@@ -157,18 +167,20 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
   add_index "bios_imageorder", ["image_id"], :name => "bios_imageorder_image_id"
 
   create_table "blogs_blog", :force => true do |t|
-    t.string  "name",        :limit => 140,                           :null => false
-    t.string  "slug",        :limit => 50,                            :null => false
-    t.text    "description", :limit => 2147483647,                    :null => false
-    t.string  "head_image",  :limit => 200,        :default => "",    :null => false
-    t.boolean "is_active",                         :default => false, :null => false
-    t.string  "feed_url",    :limit => 200,        :default => "",    :null => false
-    t.boolean "is_remote",                                            :null => false
-    t.string  "custom_url",  :limit => 140,                           :null => false
-    t.boolean "is_news",                                              :null => false
-    t.string  "_teaser",     :limit => 115,                           :null => false
+    t.string  "name",                :limit => 140,                           :null => false
+    t.string  "slug",                :limit => 50,                            :null => false
+    t.text    "description",         :limit => 2147483647,                    :null => false
+    t.string  "head_image",          :limit => 200,        :default => "",    :null => false
+    t.boolean "is_active",                                 :default => false, :null => false
+    t.string  "feed_url",            :limit => 200,        :default => "",    :null => false
+    t.boolean "is_remote",                                                    :null => false
+    t.string  "custom_url",          :limit => 140,                           :null => false
+    t.boolean "is_news",                                                      :null => false
+    t.string  "_teaser",             :limit => 115,                           :null => false
+    t.integer "missed_it_bucket_id"
   end
 
+  add_index "blogs_blog", ["missed_it_bucket_id"], :name => "blogs_blog_d12628ce"
   add_index "blogs_blog", ["name"], :name => "name", :unique => true
   add_index "blogs_blog", ["slug"], :name => "slug", :unique => true
 
@@ -262,7 +274,7 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
     t.text     "_teaser",       :limit => 2147483647,                                    :null => false
     t.string   "url",           :limit => 150,                                           :null => false
     t.integer  "status",                              :default => 0,                     :null => false
-    t.datetime "pub_at",                              :default => '2011-11-21 11:07:11', :null => false
+    t.datetime "published_at",                        :default => '2011-11-21 11:07:11', :null => false
   end
 
   create_table "contentbase_featuredcomment", :force => true do |t|
@@ -527,6 +539,10 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
     t.datetime "date_modified"
     t.boolean  "render_as_template",                          :null => false
     t.text     "description",           :limit => 2147483647, :null => false
+    t.boolean  "enable_in_new_site",                          :null => false
+    t.boolean  "show_sidebar",                                :null => false
+    t.string   "redirect_url",          :limit => 250
+    t.boolean  "is_public",                                   :null => false
   end
 
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
@@ -630,27 +646,31 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
     t.time    "created_at",                                            :null => false
     t.time    "updated_at",                                            :null => false
     t.text    "teaser",       :limit => 2147483647,                    :null => false
+    t.string  "alert_link",   :limit => 200,                           :null => false
   end
 
   create_table "layout_homepage", :force => true do |t|
-    t.string   "base",            :limit => 10,                     :null => false
-    t.string   "alert_type",      :limit => 5
-    t.string   "alert_text",      :limit => 140,                    :null => false
-    t.string   "alert_link",      :limit => 200,                    :null => false
+    t.string   "base",                :limit => 10,                     :null => false
+    t.string   "alert_type",          :limit => 5
+    t.string   "alert_text",          :limit => 140,                    :null => false
+    t.string   "alert_link",          :limit => 200,                    :null => false
     t.time     "alert_time"
-    t.boolean  "local",                                             :null => false
-    t.boolean  "national",                                          :null => false
-    t.boolean  "world",                                             :null => false
-    t.boolean  "flipper",                                           :null => false
-    t.boolean  "blogs",                                             :null => false
-    t.boolean  "rotator",                                           :null => false
-    t.boolean  "announcements",                  :default => false, :null => false
-    t.boolean  "headlines",                      :default => false, :null => false
-    t.integer  "headlines_count",                :default => 0,     :null => false
-    t.datetime "published_at",                                      :null => false
-    t.boolean  "is_published",                                      :null => false
-    t.integer  "status",                                            :null => false
+    t.boolean  "local",                                                 :null => false
+    t.boolean  "national",                                              :null => false
+    t.boolean  "world",                                                 :null => false
+    t.boolean  "flipper",                                               :null => false
+    t.boolean  "blogs",                                                 :null => false
+    t.boolean  "rotator",                                               :null => false
+    t.boolean  "announcements",                      :default => false, :null => false
+    t.boolean  "headlines",                          :default => false, :null => false
+    t.integer  "headlines_count",                    :default => 0,     :null => false
+    t.datetime "published_at",                                          :null => false
+    t.boolean  "is_published",                                          :null => false
+    t.integer  "status",                                                :null => false
+    t.integer  "missed_it_bucket_id"
   end
+
+  add_index "layout_homepage", ["missed_it_bucket_id"], :name => "layout_homepage_d12628ce"
 
   create_table "layout_homepagecontent", :force => true do |t|
     t.integer "homepage_id",                     :null => false
@@ -1116,26 +1136,29 @@ ActiveRecord::Schema.define(:version => 20120327015211) do
   end
 
   create_table "programs_kpccprogram", :force => true do |t|
-    t.string  "slug",             :limit => 40,                            :null => false
-    t.string  "title",            :limit => 60,                            :null => false
-    t.text    "teaser",           :limit => 2147483647,                    :null => false
-    t.text    "description",      :limit => 2147483647,                    :null => false
-    t.string  "host",             :limit => 150,        :default => "",    :null => false
-    t.string  "airtime",          :limit => 300,                           :null => false
-    t.string  "air_status",       :limit => 10,                            :null => false
-    t.string  "podcast_url",      :limit => 300,        :default => "",    :null => false
-    t.string  "rss_url",          :limit => 300,        :default => "",    :null => false
-    t.string  "twitter_url",      :limit => 300,        :default => "",    :null => false
-    t.string  "facebook_url",     :limit => 300,        :default => "",    :null => false
-    t.text    "sidebar",          :limit => 2147483647,                    :null => false
-    t.boolean "display_episodes",                       :default => false, :null => false
-    t.boolean "display_segments",                                          :null => false
+    t.string  "slug",                :limit => 40,                            :null => false
+    t.string  "title",               :limit => 60,                            :null => false
+    t.text    "teaser",              :limit => 2147483647,                    :null => false
+    t.text    "description",         :limit => 2147483647,                    :null => false
+    t.string  "host",                :limit => 150,        :default => "",    :null => false
+    t.string  "airtime",             :limit => 300,                           :null => false
+    t.string  "air_status",          :limit => 10,                            :null => false
+    t.string  "podcast_url",         :limit => 300,        :default => "",    :null => false
+    t.string  "rss_url",             :limit => 300,        :default => "",    :null => false
+    t.string  "twitter_url",         :limit => 300,        :default => "",    :null => false
+    t.string  "facebook_url",        :limit => 300,        :default => "",    :null => false
+    t.text    "sidebar",             :limit => 2147483647,                    :null => false
+    t.boolean "display_episodes",                          :default => false, :null => false
+    t.boolean "display_segments",                                             :null => false
     t.integer "blog_id"
-    t.string  "video_player",     :limit => 20
-    t.string  "audio_dir",        :limit => 50
+    t.string  "video_player",        :limit => 20
+    t.string  "audio_dir",           :limit => 50
+    t.integer "missed_it_bucket_id"
+    t.string  "quick_slug",          :limit => 40
   end
 
   add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
+  add_index "programs_kpccprogram", ["missed_it_bucket_id"], :name => "programs_kpccprogram_d12628ce"
   add_index "programs_kpccprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_kpccprogram", ["title"], :name => "title", :unique => true
 

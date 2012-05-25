@@ -1,20 +1,17 @@
 <h1>KPCC Programs</h1>
 
-<div class="row">
-    <div class="span8">
-    	<ul id="featured-programs" class="list-blocks">
-			<% @featured_programs.each do |program| %> <%# TODO Need to properly order these %>
-			<a href="<%= program_path(program) %>">
-			    <li class="headshot <%=program.slug%>">
-					<h4><%= program.title %></h4>
-					<p><%= program.teaser.html_safe %></p>
-			    </li>
-			</a>
-			<% end %>
-		</ul>
-    </div>
-</div>
-<div class="row">
+<ul id="featured-programs" class="list-blocks">
+	<% @featured_programs.each do |program| %>
+		<a href="<%= program_path(program) %>">
+		    <li class="headshot <%=program.slug%>">
+				<h4><%= program.title %></h4>
+				<p><%= program.teaser.html_safe %></p>
+		    </li>
+		</a>
+	<% end %>
+</ul>
+
+<div class="row-fluid">
 	<%= render("programs_list", programs: @kpcc_programs, title: "KPCC Programs") if any_to_list? @kpcc_programs %>
 	<%= render("programs_list", programs: @other_programs, title: "Other Programs") if any_to_list? @other_programs %>
 </div>

@@ -46,6 +46,10 @@ class NewsStory < ContentBase
     end
     
   end
+  
+  def has_format?
+    false
+  end
     
   #----------
   

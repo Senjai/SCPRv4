@@ -8,6 +8,8 @@ log/
 tmp/
 .sass-cache/
 .DS_Store
+
 .rvmrc
 .rspec
+rerun.txt
 *.rdb

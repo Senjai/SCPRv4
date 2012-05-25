@@ -18,16 +18,22 @@ class scpr.Modal
                         $(".modal-popup#"+$(event.target).attr(@options.modalId)).toggle()
                     else
                         if $(event.target).next(@options.modal).length then $(event.target).next(@options.modal).toggle() else $(event.target).closest(@options.modal).toggle()
+                    
+                    $("body").toggleClass("with-audio-bar")
 
-                    event.preventDefault()
+                    if event.preventDefault then event.preventDefault() else event.returnValue = false
                     return false
 
-            $("body").on
+            $("body, #opaque-cover").on
                 # Decide when to close the modal, adapted from zbase.js
                 click: (event) =>
                     if $(@options.modal).is(":visible") and !$(event.target).is(@options.toggler) and !$(event.target).is(@options.modal) and !$(event.target).closest(@options.modal).length
                         $(@options.modal).hide()
+                        $("body").removeClass("with-audio-bar")
 
             # Hide the modal if the Esc key is pressed
             $(document).keyup (event) =>
-                $(@options.modal).hide() if event.keyCode is 27 and $(@options.modal).is(":visible")
+                if event.keyCode is 27 and $(@options.modal).is(":visible")
+                    $(@options.modal).hide()
+                    $("body").removeClass("with-audio-bar")
+           

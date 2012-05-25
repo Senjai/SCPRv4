@@ -1,10 +1,10 @@
-<% if content.queries.any? %>
+<% if content.queries.present? %>
 	<div class="pij-query">
 		<h6>Become a KPCC Source <small><a href="/network/about/">(What's this?)</a></small></h6>
-		<ul>
-			<% for q in content.queries do %>
-				<li><%= link_to q.title, q.link %></li>
-			<% end %>
-		</ul>
-	</div>
+			<ul>
+				<% for q in content.queries do %>
+					<li><%= link_to q.title, q.link %></li>
+				<% end %>
+			</ul>
+	</div> <!-- pij query -->
 <% end %>

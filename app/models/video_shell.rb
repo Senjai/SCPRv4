@@ -25,7 +25,11 @@ class VideoShell < ContentBase
     "#{id}/#{slug}"
   end
   
-  def link_path(options={}) # OPTIMIZE Dry this method up across ContentBase subclasses?
+  def link_path(options={})
     Rails.application.routes.url_helpers.video_path(self, options.merge!({ trailing_slash: true }))
+  end
+  
+  def has_format?
+    false
   end
 end

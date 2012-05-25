@@ -1,5 +1,5 @@
 /* Patterns.scss
- * Repeatable UI elements outside defined base styles
+ UI elements outside defined base styles
  * ---------------------------------------------------------------------------- */
 
 // Body style
@@ -20,237 +20,236 @@ body {
 // ------
 
 // Topbar for Branding and Nav
-.topbar {
-  height: 40px;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  overflow: visible;
-
-  // gradient is applied to it's own element because overflow visible is not honored by ie when filter is present
-  .fill {
-    background:#222;
-	@include background-image(linear-gradient(#333, #222));
-    $shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1);
-    @include box-shadow($shadow);
-  }
-
-  // Links get text shadow
-  a {
-    color: $grayLight;
-  }
-
-  // Hover and active states
-  a:hover,
-  ul li.active a {
-    background-color: #333;
-    background-color: rgba(255,255,255,.05);
-    color: $white;
-    text-decoration: none;
-  }
-
-  // Website name
-  h3 {
-    position:relative;
-    a {
-      float: left;
-      display: block;
-      padding: 4px 20px;
-      color: $white;
-      font-size: 20px;
-      font-weight: 200;
-      line-height: 1;
-    }
-  }
-
-  // Search Form
-  form {
-    float: left;
-    margin: 5px 0 0 0;
-    position: relative;
-    @include opacity(1);
-    input {
-      background-color: #fff;
-      @include font-sans-serif(normal, 13px, 1);
-      padding: 3px 9px;
-      color: #333;
-      border: 1px solid #111;
-	  width:160px;
-      @include transition(width 1s);
-
-	  
-      // Placeholder text gets special styles; can't be bundled together though for some reason
-      &:-moz-placeholder {
-        color: $grayLight;
-      }
-      &::-webkit-input-placeholder {
-        color: $grayLight;
-      }
-      // Focus states (we use .focused since IE8 and down doesn't support :focus)
-      &:focus,
-      &.focused {
-        outline: none;
-        color: $grayDark;
-        padding: 5px 10px;
-		width:220px;
-        @include box-shadow(0 0 3px rgba(0,0,0,.15));
-      }
-    }
-  }
-
-  // Navigation
-
-div.secondary-nav {
-    float: right;
-    margin:10px 0 0 10px;
-	font-size:12px;
-  }
-  ul {
-    display: block;
-    float: left;
-    margin: 0 10px 0 0;
-    position: relative;
-    &.secondary-nav {
-      float: right;
-      margin-left: 10px;
-      margin-right: 0;
-    }
-    li {
-      display: block;
-      float: left;
-      font-size: 13px;
-      a {
-        display: block;
-        float: none;
-        padding: 10px 10px 11px;
-        line-height: 19px;
-        text-decoration: none;
-        &:hover {
-          color: #fff;
-          text-decoration: none;
-        }
-      }
-      &.active a {
-        background-color: #222;
-        background-color: rgba(0,0,0,.5);
-      }
-    }
-
-    // Dropdowns
-    &.primary-nav li ul {
-      left: 0;
-    }
-    &.secondary-nav li ul {
-      right: 0;
-    }
-    li.menu {
-      position: relative;
-      a.menu {
-        &:after {
-          width: 0px;
-          height: 0px;
-          display: inline-block;
-          content: "&darr;";
-          text-indent: -99999px;
-          vertical-align: top;
-          margin-top: 8px;
-          margin-left: 4px;
-          border-left: 4px solid transparent;
-          border-right: 4px solid transparent;
-          border-top: 4px solid #fff;
-          @include opacity(0.5);
-        }
-      }
-      &.open {
-        a.menu,
-        a:hover {
-          background-color: #444;
-          background-color: rgba(255,255,255,.1);
-          *background-color: #444; /* IE6-7 */
-          color: #fff;
-        }
-        ul {
-          display: block;
-          li {
-            a {
-              background-color: transparent;
-              font-weight: normal;
-              &:hover {
-                background-color: rgba(255,255,255,.1);
-                *background-color: #444; /* IE6-7 */
-                color: #fff;
-              }
-            }
-            &.active a {
-              background-color: rgba(255,255,255,.1);
-              font-weight: bold;
-            }
-          }
-        }
-      }
-    }
-    li ul {
-      background-color: #333;
-      float: left;
-      display: none;
-      position: absolute;
-      top: 40px;
-      min-width: 160px;
-      max-width: 220px;
-      _width: 160px;
-      margin-left: 0;
-      margin-right: 0;
-      padding: 0;
-      text-align: left;
-      border: 0;
-      zoom: 1;
-      @include border-radius(0 0 5px 5px);
-      @include box-shadow(0 1px 2px rgba(0,0,0,0.6));
-      li {
-        float: none;
-        clear: both;
-        display: block;
-        background: none;
-        font-size: 12px;
-        a {
-          display: block;
-          padding: 6px 15px;
-          clear: both;
-          font-weight: normal;
-          line-height: 19px;
-          color: #bbb;
-          &:hover {
-            background-color: #333;
-            background-color: rgba(255,255,255,.25);
-            color: #fff;
-          }
-        }
-
-        // Dividers (basically an hr)
-        &.divider {
-          height: 1px;
-          overflow: hidden;
-          background: #222;
-          background: rgba(0,0,0,.2);
-          border-bottom: 1px solid rgba(255,255,255,.1);
-          margin: 5px 0;
-        }
-
-        // Section separaters
-        span {
-          clear: both;
-          display: block;
-          background: rgba(0,0,0,.2);
-          padding: 6px 15px;
-          cursor: default;
-          color: $gray;
-          border-top: 1px solid rgba(0,0,0,.2);
-        }
-      }
-    }
-  }
-}
+//header.topbar {
+//  height: 40px;
+//  top: 0;
+//  left: 0;
+//  right: 0;
+//  z-index: 1000;
+//  overflow: visible;
+//
+//  // gradient is applied to it's own element because overflow visible is not honored by ie when filter is present
+//  .fill {
+//	@include gradient-vertical(#333, #222);
+//    $shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1);
+//    @include box-shadow($shadow);
+//  }
+//
+//  // Links get text shadow
+//  a {
+//    color: $grayLight;
+//  }
+//
+//  // Hover and active states
+//  a:hover,
+//  ul li.active a {
+//    background-color: #333;
+//    background-color: rgba(255,255,255,.05);
+//    color: $white;
+//    text-decoration: none;
+//  }
+//
+//  // Website name
+//  h3 {
+//    position:relative;
+//    a {
+//      float: left;
+//      display: block;
+//      padding: 4px 20px;
+//      color: $white;
+//      font-size: 20px;
+//      font-weight: 200;
+//      line-height: 1;
+//    }
+//  }
+//
+//  // Search Form
+//  form {
+//    float: left;
+//    margin: 5px 0 0 0;
+//    position: relative;
+//    @include opacity(1);
+//    input {
+//      background-color: #fff;
+//      @include font-sans-serif(normal, 13px, 1);
+//      padding: 3px 9px;
+//      color: #333;
+//      border: 1px solid #111;
+//	  width:160px;
+//      @include transition(width 1s);
+//
+//	  
+//      // Placeholder text gets special styles; can't be bundled together though for some reason
+//      &:-moz-placeholder {
+//        color: $grayLight;
+//      }
+//      &::-webkit-input-placeholder {
+//        color: $grayLight;
+//      }
+//      // Focus states (we use .focused since IE8 and down doesn't support :focus)
+//      &:focus,
+//      &.focused {
+//        outline: none;
+//        color: $grayDark;
+//        padding: 5px 10px;
+//		width:220px;
+//        @include box-shadow(0 0 3px rgba(0,0,0,.15));
+//      }
+//    }
+//  }
+//
+//  // Navigation
+//
+//div.secondary-nav {
+//    float: right;
+//    margin:10px 0 0 10px;
+//	font-size:12px;
+//}
+//  ul {
+//    display: block;
+//    float: left;
+//    margin: 0 10px 0 0;
+//    position: relative;
+//    &.secondary-nav {
+//      float: right;
+//      margin-left: 10px;
+//      margin-right: 0;
+//    }
+//    li {
+//      display: block;
+//      float: left;
+//      font-size: 13px;
+//      a {
+//        display: block;
+//        float: none;
+//        padding: 10px 10px 11px;
+//        line-height: 19px;
+//        text-decoration: none;
+//        &:hover {
+//          color: #fff;
+//          text-decoration: none;
+//        }
+//      }
+//      &.active a {
+//        background-color: #222;
+//        background-color: rgba(0,0,0,.5);
+//      }
+//    }
+//
+//    // Dropdowns
+//    &.primary-nav li ul {
+//      left: 0;
+//    }
+//    &.secondary-nav li ul {
+//      right: 0;
+//    }
+//    li.menu {
+//      position: relative;
+//      a.menu {
+//        &:after {
+//          width: 0px;
+//          height: 0px;
+//          @include ie-inline-block;
+//          content: "&darr;";
+//          text-indent: -99999px;
+//          vertical-align: top;
+//          margin-top: 8px;
+//          margin-left: 4px;
+//          border-left: 4px solid transparent;
+//          border-right: 4px solid transparent;
+//          border-top: 4px solid #fff;
+//          @include opacity(0.5);
+//        }
+//      }
+//      &.open {
+//        a.menu,
+//        a:hover {
+//          background-color: #444;
+//          background-color: rgba(255,255,255,.1);
+//          *background-color: #444; /* IE6-7 */
+//          color: #fff;
+//        }
+//        ul {
+//          display: block;
+//          li {
+//            a {
+//              background-color: transparent;
+//              font-weight: normal;
+//              &:hover {
+//                background-color: rgba(255,255,255,.1);
+//                *background-color: #444; /* IE6-7 */
+//                color: #fff;
+//              }
+//            }
+//            &.active a {
+//              background-color: rgba(255,255,255,.1);
+//              font-weight: bold;
+//            }
+//          }
+//        }
+//      }
+//    }
+//    li ul {
+//      background-color: #333;
+//      float: left;
+//      display: none;
+//      position: absolute;
+//      top: 40px;
+//      min-width: 160px;
+//      max-width: 220px;
+//      _width: 160px;
+//      margin-left: 0;
+//      margin-right: 0;
+//      padding: 0;
+//      text-align: left;
+//      border: 0;
+//      zoom: 1;
+//      @include border-radius(0 0 5px 5px);
+//      @include box-shadow(0 1px 2px rgba(0,0,0,0.6));
+//      li {
+//        float: none;
+//        clear: both;
+//        display: block;
+//        background: none;
+//        font-size: 12px;
+//        a {
+//          display: block;
+//          padding: 6px 15px;
+//          clear: both;
+//          font-weight: normal;
+//          line-height: 19px;
+//          color: #bbb;
+//          &:hover {
+//            background-color: #333;
+//            background-color: rgba(255,255,255,.25);
+//            color: #fff;
+//          }
+//        }
+//
+//        // Dividers (basically an hr)
+//        &.divider {
+//          height: 1px;
+//          overflow: hidden;
+//          background: #222;
+//          background: rgba(0,0,0,.2);
+//          border-bottom: 1px solid rgba(255,255,255,.1);
+//          margin: 5px 0;
+//        }
+//
+//        // Section separaters
+//        span {
+//          clear: both;
+//          display: block;
+//          background: rgba(0,0,0,.2);
+//          padding: 6px 15px;
+//          cursor: default;
+//          color: $gray;
+//          border-top: 1px solid rgba(0,0,0,.2);
+//        }
+//      }
+//    }
+//  }
+//}
 
 
 // PAGE HEADERS
@@ -274,10 +273,6 @@ div.secondary-nav {
     line-height: $baseline * 1.5;
   }
 }
-footer {
-  margin-top: $baseline - 1;
-  padding-top: $baseline - 1;
-}
 
 // PAGE HEADERS
 // ------------
@@ -295,8 +290,7 @@ footer {
 // ERROR STYLES
 // ------------
 @mixin gradientBar($primaryColor, $secondaryColor) {
-	@include background-image(linear-gradient($primaryColor, $secondaryColor));
-	background-color:$secondaryColor;
+	@include gradient-vertical($primaryColor, $secondaryColor);
  	border-color: $secondaryColor $secondaryColor darken($secondaryColor, 15%);
  	border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
 }
@@ -305,9 +299,7 @@ footer {
 // One-liner alert bars
 .alert-message {
   // TODO: Ask cloudhead how to do this fancy filter elegantly. Less eval is returning strings with quotes ;_;
-  @include background-image(linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.15)));
-  filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#15000000')";
-  background-color: $grayLighter;
+  @include gradient-vertical(rgba(0,0,0,0), rgba(0,0,0,0.15));
   margin-bottom: $baseline;
   padding: 7px 14px;
   color: #fff;
@@ -336,6 +328,16 @@ footer {
   }
   &.info {
     @include gradientBar(#5BC0DE, #339BB9); 
+  }
+  &.inverse {
+	@include border-radius(0);
+	@include box-shadow(none);
+	border:0;
+    @include gradientBar($nearBlack, $nearBlack); 
+	text-shadow:none;
+	a {
+		color:$linkColorHover;
+	}
   }
   .close {
     float: right;
@@ -465,7 +467,7 @@ footer {
       font-size:12px;
 	  margin-bottom: -1px;
       margin-right: 2px;
-      padding: 0 15px;
+      padding: 0 12px;
       line-height: ($baseline * 1.5) - 1;
       &:hover {
         background-color: $grayLighter;
@@ -477,7 +479,7 @@ footer {
   }
     > .active > a {
       background-color: #fff;
-      padding: 0 14px;
+      padding: 0 13px;
       border: 1px solid #ccc;
       border-bottom: 0;
       color: $orangeDark;
@@ -515,28 +517,6 @@ footer {
       text-shadow: 0 1px 1px rgba(0,0,0,.25);
     }
   }
-}
-
-// Basic footer nav
-footer {
-	ul.menu {
-		font-size:11px;
-		text-align:center;		
- 		li {
-			color:$grayLight;
-			display:inline;
-		}
-		a {
-			color:$grayLight;
-		}
-		a:hover {
-			color:$gray;
-		}
-	}
-	.pipe {
-		display:inline-block;
-		padding:0 5px;
-	}	
 }
 
 // Dividers
@@ -579,7 +559,7 @@ footer {
   a, span, em {
     float: left;
 	font-size:12px;
-	margin:0 4px;
+	margin:4px;
     padding: 0 8px;
     line-height: $baseline * 1.2;
     border: 1px solid #ddd;

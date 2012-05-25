@@ -6,13 +6,13 @@ describe NewsStory do
       news_story = create :news_story
       news_story.link_path(slug: "wrong").should_not match "wrong"
     end
-    
-    describe "#published" do
-      it "orders published content by published_at descending" do
-        stories = create_list :news_story, 3, status: 5
-        NewsStory.published.first.should eq stories.last
-        NewsStory.published.last.should eq stories.first
-      end
+  end
+  
+  describe "#published" do
+    it "orders published content by published_at descending" do
+      stories = create_list :news_story, 3, status: 5
+      NewsStory.published.first.should eq stories.last
+      NewsStory.published.last.should eq stories.first
     end
   end
 end

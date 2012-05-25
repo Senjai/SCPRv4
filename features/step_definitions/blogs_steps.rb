@@ -1,20 +1,16 @@
 #### Blog Creation
-Given /^(\d+) news blogs?$/ do |num|
-  @blogs = create_list :news_blog, num.to_i
-  @blog = @blogs[rand(@blogs.length)]
-  @blogs.count.should eq num.to_i
-end
-
 Given /^(\d+) blogs?$/ do |num|
   @blogs = create_list :blog, num.to_i
   @blog = @blogs[rand(@blogs.length)]
-  @blogs.count.should eq num.to_i
+  @blogs.count.should eq Blog.all.count
 end
 
-Given /^(\d+) remote blogs?$/ do |num|
-  @blogs = create_list :remote_blog, num.to_i
-  @blog = @blogs[rand(@blogs.length)]
-  @blogs.count.should eq num.to_i
+Given /^(?:a )?blogs? with the following attributes?:$/ do |table|
+  @blogs = []
+  table.hashes.each do |attributes|
+    @blogs << create(:blog, Rack::Utils.parse_nested_query(attributes.to_query))
+  end
+  @blog = Blog.all[rand(Blog.count.to_i)]
 end
 
 
@@ -42,7 +38,7 @@ When /^I go to the blogs page$/ do
   visit blogs_path
 end
 
-When /^I go to that blog's page$/ do
+When /^I go to (?:the|that) blog's page$/ do
   visit blog_path(@blog)
 end
 

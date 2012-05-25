@@ -33,6 +33,7 @@ end
 
 #### Routing
 When /^I go to the home page$/ do
+  create(:homepage) unless Homepage.published.present?
   visit home_path
   current_path.should eq home_path
 end
@@ -57,4 +58,8 @@ end
 #### Actions
 When /^I filter by "([^"]*)"$/ do |filter|
   find("nav.filters").find_link(filter).click
+end
+
+When /^I submit the "([^"]*)" form$/ do |text|
+  page.find("form##{text.gsub(/\s/, "-")} input[type=submit]").click
 end

@@ -1,4 +1,4 @@
-header.episode {
+header.episode, .gray-strip {
 	margin-top: $baseline/2 * -1;
 	margin-left: 0px;
 	margin-right: 0px;
@@ -11,7 +11,7 @@ header.episode {
 	
 	h4 {
 		color: $orangeDark;
-		display: inline-block;
+		@include ie-inline-block;
 		font-size:18px;
 		font-weight:500;
 		line-height:20px;
@@ -21,7 +21,7 @@ header.episode {
 	.story-audio {
 		&.inline {
 			margin: 0;
-			display: inline-block;
+			@include ie-inline-block;
 		}
 		a.play-btn {
 			margin-top:3px;
@@ -43,53 +43,24 @@ header.episode {
 	}
 }
 
-.episodes {
-	margin: 8px 0 0 0;
-	padding: 0;
-	position: relative;
+.gray-strip {
+	.more { 
+		display: inline-block;
+		margin-right: 10px; 
+	}
 	
-	a.episode-teaser {
-		display: block;
-		&:hover {
-			text-decoration: none;
-			article {
-				background-color: $nearWhite;
-			}
-		}
-	}
-	.span4 {
-		margin: 0;
-		@include font-navigation($size: 13px);
-		color: $gray;
-		min-height: $headShotHeight;
-		.header {
-			@include font-heading($size: 10px, $weight: normal);
-			text-transform: uppercase;
-			color: $black;
-		}
-		&.current {
-			margin: 0;
-			padding: 0 0 0 14px;
-			border-right: 1px solid $grayLighter;
-			background: url(image_path('icons/arrow-left.png')) no-repeat left;
-		}
-		&.upcoming {
-			margin: 0;
-			text-align: right;
-			padding: 0 15px 0 0;
-			background: url(image_path('icons/arrow-right.png')) no-repeat right;
-		}
-	}
+}
+
+.archive-date-select {
+	margin-bottom: 0;
+	display: inline-block;
+	select { width: 100px; }
 }
 
 .show-episode {
 	border-bottom: 1px solid $grayLighter;
     margin-top: $baseline;
 	padding-bottom: 16px;
-    .span2 img {
-       width: 170px;
-       height: 170px;
-    }
 	h3 {
 		@include font-headline();
 		font-size:20px;
@@ -104,6 +75,9 @@ header.episode {
 }
 
 .current-episode {
+	border-bottom: 1px solid $grayLighter;
+	margin-bottom: $baseline/2;
+	
     h2 {
 		font-size:18px;
         font-weight: 600;
@@ -131,9 +105,9 @@ header.episode {
 }
 
 .upcoming-episode {
-    margin: 12px 0;
-    padding: 12px 0;
-    border-top: 1px solid $grayLight;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+	border-bottom: 1px solid $grayLighter;
     
     h3 {
         font-weight: 400;

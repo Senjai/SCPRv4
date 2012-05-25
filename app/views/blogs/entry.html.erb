@@ -1,25 +1,20 @@
-<% 
-	page_title [@blog.name, @entry.title], " : "
-	@OG_TYPE = "blog"
-%>
+<% page_title [@blog.name, @entry.title], " : "
+@OG_TYPE = "blog" %>
 
 <%= render_content @entry, "opengraph" %>
+<%= render "blogs/entry", entry: @entry %>
 
-<%= render :partial => "entry", :object => @entry %>
+<div class="fold" id="fold">
+	<%= content_widget "related_content_and_links", @entry %>
+	<%= content_widget "next_prev", @entry %>
+	
+	<div class="row-fluid">
+		<div class="span6" id="fold-comments-count-widget">
+			<%= comment_widget_for @entry, cssClass: "left-side", name: "comments" %>
+		</div>
+		<div class="span18 mq-solo-span">
+			<%= comments_for @entry, header: false %>
+		</div>
+	</div> <!-- row-fluid -->
+</div> <!-- fold -->
 
-<div class="row">
-	<div class="span2">&nbsp;</div>
-	<div class="span6">
-		<% if @entry.tags.any? %>
-			<p>
-				<i>Tagged:</i> 
-				<%= raw @entry.tags.collect {|t| link_to(t.name, blog_entries_tagged_path(@blog.slug,t.slug)) }.join(", ") %>
-			</p>
-		<% end %>
-		
-		<%= related_for @entry %>
-		<%= social_tools_for @entry, cssClass: "bottom" %>
-		<%= render "shared/cwidgets/next_prev" %>
-		<%= comments_for @entry %>
-	</div>
-</div>

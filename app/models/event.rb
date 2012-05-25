@@ -44,12 +44,12 @@ class Event < ActiveRecord::Base
       starts_at.strftime("%A, %B %e, #{timef}%P") # Wednesday, October 11, 11am
     elsif starts_at.day == ends_at.day # If the event starts and ends on the same day
       if starts_at.strftime("%P") != ends_at.strftime("%P") # If it starts in the AM and ends in the PM
-        starts_at.strftime("%A, %B %e, #{timef}%P-") + ends_at.strftime("#{timef}%P")
+        starts_at.strftime("%A, %B %e, #{timef}%P -") + ends_at.strftime("#{timef}%P")
       else
-        starts_at.strftime("%A, %B %e, #{timef}-") + ends_at.strftime("#{timef}%P")
+        starts_at.strftime("%A, %B %e, #{timef} -") + ends_at.strftime("#{timef}%P")
       end
     else # If the event starts and ends on different days
-      starts_at.strftime("%A, %B %e, #{timef}%P-") + ends_at.strftime("%A, %B %e, #{timef}%P")
+      starts_at.strftime("%A, %B %e, #{timef}%P -") + ends_at.strftime("%A, %B %e, #{timef}%P")
     end
   end
   
@@ -57,6 +57,10 @@ class Event < ActiveRecord::Base
   
   def is_forum_event?
     ForumTypes.include? self.etype
+  end
+  
+  def has_format?
+    false
   end
   
   #----------

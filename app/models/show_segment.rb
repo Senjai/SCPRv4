@@ -52,6 +52,10 @@ class ShowSegment < ContentBase
     self.assets.present?
   end
   
+  def has_format?
+    false
+  end
+  
   #----------
   
   def public_datetime

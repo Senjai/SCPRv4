@@ -1,12 +1,10 @@
-<div class="span4">
-	<h3><%= title %>
+<div class="span12">
+	<h3><%= title %></h3>
 	<ul class="list-basic programs-list">
 		<% programs.each do |program| %>
-			<a href="<%= program_path(program) %>">
-				<li>
-					<%= program.title %>
-				</li>
-			</a>
+			<li>
+				<a href="<%= program_path(program) %>"><%= program.title %></a>
+			</li>
 		<% end %>
 	</ul>
 </div>

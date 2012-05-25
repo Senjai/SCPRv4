@@ -1,9 +1,9 @@
-<div class="sharing-tools <%= options[:cssClass] %> clearfix">
+<div class="sharing-tools <%= cssClass ||= nil %> clearfix" id="article-sharing-tools">
 	<h5>Share this:</h5>
 	<ul>
 	    <li class="facebook social_fb" data-url="<%= URI.escape(content.remote_link_path) %>">Facebook (<span class="count">&nbsp;&nbsp;</span>)</a></li>
 	    <li class="twitter social_twit" data-url="<%= URI.escape(content.remote_link_path) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</a></li>
-		<li class="plus"><g:plusone size="small" annotation="none" href="<%= content.remote_link_path %>"></g:plusone>Google+</li>
+		<li class="plus"><g:plusone size="small" annotation="none" href="<%= content.remote_link_path %>"></g:plusone><span>Google+</span></li>
 	    <!-- <li class="email"><a href="">Email</a></li> -->
 		<li class="print"><a href="javascript:window.print()">Print</a></li>
 	</ul>

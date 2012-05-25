@@ -34,6 +34,10 @@ class ShowEpisode < ContentBase
   def body
     return ""
   end
+  
+  def has_format?
+    false
+  end
 
   #----------
   

@@ -1,64 +1,52 @@
-<div class="row">
-	<div class="categories span3">
-		<div class="inner-container clearfix">
-		<h6>Categories</h6>
-		<ul>
-		    <li><a href="/culture/">Culture</a></li>
-		    <li><a href="/film/">Film</a></li>
-		    <li><a href="/books/">Books</a></li>	
-		</ul>
-		<ul class="right">
-		    <li><a href="/arts/">Arts</a></li>
-		    <li><a href="/music/">Music</a></li>
-		    <li><a href="/food/">Food</a></li>	
-		</ul>
-		<ul class="content-types">
-		    <li class="videos"><a href="/video/">Videos</a></li>
-		    <li><a href="/blogs/">Blogs</a></li>
-		</ul>
+<div class="inner-container">
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="section first">
+				<h6>Categories</h6>
+				<nav>
+					<div class="row-fluid">
+						<div class="span12">
+							<ul>
+							    <li><a href="/culture/">Culture</a></li>
+							    <li><a href="/film/">Film</a></li>
+							    <li><a href="/books/">Books</a></li>	
+							</ul>
+						</div>
+						
+						<div class="span12">
+							<ul>
+							    <li><a href="/arts/">Arts</a></li>
+							    <li><a href="/music/">Music</a></li>
+							    <li><a href="/food/">Food</a></li>
+							</ul>
+						</div>
+					</div> <!-- row fluid -->
+					<ul class="content-types pull-down">
+					    <li><a href="/video/" class="video-icon">Videos</a></li>
+					    <li><a href="/blogs/">Blogs</a></li>
+					</ul>
+				</nav>
+			</div> <!-- section -->
+		</div> <!-- span -->
+	
+		<div class="span8">
+			<div class="section">
+			<h6>Latest Stories</h6>
+				<% content_cache("mega_arts_latest") do %>
+					<% register_content("contentbase:new") %>
+					<%= render "shared/header/featured", content: get_latest_arts.first(2) %>
+				<% end %>
+			</div>
 		</div>
-	</div>
-	<div class="featured span4">
-		<div class="inner-container clearfix">
-		<h6>Latest Stories</h6>
-		
-		<% content_cache("mega_arts_latest") do %>
-			<% register_content("contentbase:new") %>
-			<ul>
-			<% for c in get_latest_arts.first(2) do %>
-				<% register_content(c) %>
-				<li>
-					<a href="<%= c.link_path %>">
-					<%= render_asset(c,"thumb") %>
-					<p><%= c.headline %></p>
-					</a>
-				</li>
-			<% end %>
-			</ul>
-		<% end %>
-		
-		</div>
-	</div>
-	<div class="blogs span5">
-		<div class="inner-container clearfix">
-			<h6>From Our Blogs</h6>			
-			<ul class="cbase">
+	
+		<div class="span10">
+			<div class="section">
+				<h6>From Our Blogs</h6>			
 				<% content_cache("mega_arts_blogs") do %>
 					<% register_content("blogs/entry:new") %>
-					
-					<% for e in @g_latest_blogs_arts.limit(3) do %>
-						<% register_content(e) %>
-						<li><p class="entry-title">
-							<a href="<%= e.link_path %>">
-								<span class="headline"><%= e.headline %></span>
-								<span class="blog-name"><%= e.blog.name %></span>
-								<time class="smarttime" datetime="<%= e.published_at.strftime("%FT%R") %>" data-unixtime="<%= e.published_at.to_i %>"  data-window="8h"></time>
-							</a>
-						</p></li>
-					<% end %>
+					<%= render "shared/header/from_our_blogs", content: @g_latest_blogs_arts.limit(3) %>
 				<% end %>
-
-	    	</ul>
-		</div>
-	</div>
-</div>
+			</div> <!-- section -->
+		</div> <!-- span -->
+	</div> <!-- row fluid -->
+</div> <!-- inner-container -->

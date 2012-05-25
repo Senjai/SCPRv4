@@ -36,10 +36,35 @@ Then /^I should see the episode's primary asset$/ do
   page.should have_css ".episode .contentasset img"
 end
 
+Then /^I should not see the archive select$/ do
+  page.should_not have_css ".archive-select"
+end
+
+
+#### Actions
+When /^I select a date that doesn't exist for an episode in the archive select$/ do
+  @episode = @program.episodes.last
+  bad_date = @episode.air_date - 1
+  page.select bad_date.strftime("%B"), from: "archive_date_2i" # Month
+  page.select bad_date.strftime("%d"), from: "archive_date_3i" # Day
+  page.select bad_date.strftime("%Y"), from: "archive_date_1i" # Year
+end
+
+When /^I select the date for th(?:at|ose) episodes? in the archive select$/ do
+  @episode = @program.episodes.last
+  page.select @episode.air_date.strftime("%B"), from: "archive_date_2i" # Month
+  page.select @episode.air_date.strftime("%-d"), from: "archive_date_3i" # Day
+  page.select @episode.air_date.strftime("%Y"), from: "archive_date_1i" # Year
+end
+
 
 #### Routing
 When /^I go to (?:the|an|that) episode's page$/ do
   episode = ShowEpisode.last
   visit episode.link_path
   current_path.should eq episode.link_path
+end
+
+Then /^I should be on (?:the|that) episode's page$/ do
+  current_path.should eq @episode.link_path
 end

@@ -1,10 +1,16 @@
 #= require scprbase
 
+$ -> 
+    $('.toggle-search').on
+        click: ->
+            $('.nav-primary').toggleClass('search-takeover')
+            $('.nav-primary .search-form .search').focus()
+
 class scpr.MegaMenu
     DefaultOptions:
         finder: "#megamenu .mega a"
         attr:   "data-section"
-        bucket: "#megamenu"
+        bucket: "#mega-bucket"
         hidden: []
         
     #----------
@@ -36,18 +42,19 @@ class scpr.MegaMenu
                 # stash a copy
                 @sections.push = sec
                 
-                el.mouseover =>                     
+                el.mouseover =>
                     sec.score += 1
                     #sec.func()
                     @_score(sec)
                     @expanded += 1
 
-                el.mouseout =>                 
+                el.mouseout =>   
                     sec.score -= 1
+                    #@_score(sec)
                     sec.func()
                     @expanded -= 1
                 
-                sec.drop.mouseover => 
+                sec.drop.mouseover =>
                     sec.score += 1
                     #sec.func()
                     @_score(sec)
@@ -56,7 +63,17 @@ class scpr.MegaMenu
                 sec.drop.mouseout =>
                     sec.score -= 1
                     sec.func()
-                    @expanded -= 1
+                    #@_score(sec)
+                    @expanded -= 1                     
+                    
+                # The following works sort-of. It still follows a link if you click it once, click somewhere else, and then click it again. It should show the menu again.
+                $("body").on
+                    touchstart: (event) =>
+                        if sec.drop.is(":visible") and !$(event.target).is(sec.drop) and !$(event.target).closest(sec.drop).length
+                            sec.score -= 1
+                            sec.func()
+                            @expanded -= 1
+                        
                     
     _score: (sec) ->
         if sec.score > 0 && !sec.selected
@@ -75,7 +92,8 @@ class scpr.MegaMenu
                 sec.drop.show()
             else
                 # anything that should be hidden during displays?
-                _(@hidden).each (el) -> el.css("visibility", "hidden")
+                _(@hidden).each (el) -> el.css
+                    visibility: "hidden"
             
                 sec.drop.fadeIn 100
                                 
@@ -88,7 +106,6 @@ class scpr.MegaMenu
                 sec.drop.hide()
             else
                 sec.drop.fadeOut("fast")
-                # anything that should be hidden during displays?
-                _(@hidden).each (el) -> el.css("visibility", "visible")
-                
-            
+                # show the stuff that was hidden during display
+                _(@hidden).each (el) -> el.css
+                    visibility: "visible"

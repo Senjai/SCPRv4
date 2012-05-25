@@ -32,10 +32,48 @@ $purple:            #7a43b6;
 
 // Misc Colors
 $facebookBlue:		#3b5895;
+$twitterBlue:		#4099FF;
 
 // Baseline grid
-$basefont:          14px;
-$baseline:          21px;
+$baseFontSize: 14px;
+$baseLineHeight: 21px;
+$containerPadding: 25px;
+$baseFontFamily: "Georgia", Times New Roman, Times, serif;
+$textColor: $nearBlack;
+// Legacy
+$basefont:          $baseFontSize;
+$baseline:          $baseLineHeight;
+
+
+// Grid
+$gridColumns: 24;
+$gridColumnWidth: 27.92px; // We only use this value to calculate percentages for the fluid grid
+$gridGutterWidth: 20px;
+$gridRowWidth: ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 2));
+$siteWidth: $gridRowWidth + $containerPadding * 2;
+
+$mediaMax: $siteWidth; // The maximum we care about, after this it's just fixed-grid
+$mediaDesktopSmall: 960px;
+
+// Fluid Grid
+$fluidGridColumnWidth: percentage($gridColumnWidth / $gridRowWidth);
+$fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
+
+// For aligning an asset. Apply to an asset-block.
+@mixin assetAlign($align: left) {
+	@if $align == left {
+		margin-left: 0;
+		margin-right: auto;
+	} @else if $align == center {
+		margin-left: auto;
+		margin-right: auto;
+	} @else if $align == right {
+		margin-left: auto;
+		margin-right: 0
+	}
+	
+	.contentasset { text-align: $align; }
+}
 
 // Clearfix for clearing floats like a boss h5bp.com/q
 @mixin clearfix {
@@ -68,7 +106,6 @@ $analog2:           spin($baseColor, -22);
 // MIXINS
 // ------
 
-// mixin for getting IE to respect inline-block
 @mixin hide-text() {
 	text-indent: 100%;
 	white-space: nowrap;
@@ -98,6 +135,18 @@ $analog2:           spin($baseColor, -22);
 	padding-top: $vertical;
 	padding-bottom: $vertical;
 }
+
+
+// Visibility utilities
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+.visible-reader { display: none; }
+.hidden-reader { display: block; }
+
+
+
 .inner-container {
 	@include box-padding(10px, 10px);
 }
@@ -165,7 +214,7 @@ $analog2:           spin($baseColor, -22);
   line-height: $lineHeight;
 }
 @mixin font-slab-headings($weight: normal, $size: 12px, $lineHeight: 20px) {
-  font-family: "Museo Slab", Helvetica, sans-serif;
+  font-family: "museo-slab", Helvetica, sans-serif;
   font-size: $size;
   font-weight: $weight;
   line-height: $lineHeight;
@@ -230,99 +279,110 @@ a {
 
 // Buttons
 @mixin btnColor($primaryColor, $secondaryColor) {
-  background-color:$blueDark;
-  @include background-image(linear-gradient($primaryColor, $secondaryColor));
+  @include gradient-vertical($primaryColor, $secondaryColor);
   text-shadow: 0 -1px 0 rgba(0,0,0,.75);
   border-color: $secondaryColor $secondaryColor darken($secondaryColor, 15%);
   border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
 }
+@media screen { // The buttons don't play nice in print media because of the background color, so for print we'll just make them look like regular links
+	.btn {
+	  // .button(#1174C6);
+	  cursor: pointer;
+	  @include ie-inline-block;
+	  @include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 10%));
+	  padding: 4px 14px;
+	  text-shadow: 0 1px 1px rgba(255,255,255,.75);
+	  color: #333;
+	  font-size: 16px;
+	  font-weight:600;
+	  @include font-heading();
+	  line-height: $baseline;
+	  border: 1px solid #ccc;
+	  border-bottom-color: #bbb;
+	  @include border-radius(4px);
+	  $shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+	  @include box-shadow($shadow);
+	  &:hover {
+	    color: #333;
+	    text-decoration: none;
+		@include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 20%));
+	  }
+	  @include transition(.1s linear all);
+	  &.primary,
+	  &.danger,
+	  &.success,
+	  &.info,
+	  &.inverse {
+	    color: #fff;
+	    &:hover {
+	      color: #fff;
+	    }
+	  }
+	  &.primary {
+	    @include btnColor($blue, $blueDark);
+		background-color:$blueDark;
+		&:hover {
+			@include btnColor($blue, darken($blueDark, 10%));
+		}
+	  }
+	
+	  &.inverse {
+		color: $gray;
+	    @include btnColor($grayDark, $nearBlack);
+		background-color:$grayDark;
+		&:hover {
+			@include btnColor($grayDark, $nearBlack);
+		}
+	  }
+	
+	  &.success {
+	    @include btnColor(#62c462, #57a957);
+		background-color:#57a957;
+		&:hover {
+			@include btnColor(#62c462, darken(#57a957, 10%));
+		}
+	  }
+	  &.info {
+	    @include btnColor(#5bc0de, #339bb9);
+		background-color:#339bb9;
+		&:hover {
+			@include btnColor(#5bc0de, darken(#339bb9, 10%));
+		}
+	  }
+	  &.danger {
+	    @include btnColor(lighten($red, 15%), $red);
+	    &:hover {
+	    	@include btnColor(lighten($red, 15%), darken($red, 10%));
+	    }
+	  }
+	  &.large {
+	    font-size: 16px;
+	    line-height: 28px;
+	    @include border-radius(6px);
+	  }
+	  &.small {
+	    padding-right: 9px;
+	    padding-left: 9px;
+		line-height:16px;
+	    font-size: 11px;
+	  }
+	  &.disabled {
+	    background-image: none;
+	    @include opacity(0.65);
+	    cursor: default;
+	  }
 
-.btn {
-  // .button(#1174C6);
-  cursor: pointer;
-  display: inline-block;
-  @include background-image(linear-gradient(#fff, #fff 25%, darken(#fff, 10%)));
-  padding: 4px 14px;
-  text-shadow: 0 1px 1px rgba(255,255,255,.75);
-  color: #333;
-  font-size: 16px;
-  font-weight:600;
-  @include font-heading();
-  line-height: $baseline;
-  border: 1px solid #ccc;
-  border-bottom-color: #bbb;
-  @include border-radius(4px);
-  $shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-  @include box-shadow($shadow);
-  &:hover {
-    color: #333;
-    text-decoration: none;
-	@include background-image(linear-gradient(#fff, #fff 25%, darken(#fff, 20%)))
-  }
-  @include transition(.1s linear all);
-  &.primary,
-  &.danger,
-  &.success,
-  &.info {
-    color: #fff;
-    &:hover {
-      color: #fff;
-    }
-  }
-  &.primary {
-    @include btnColor($blue, $blueDark);
-	background-color:$blueDark;
-	&:hover {
-		@include btnColor($blue, darken($blueDark, 10%));
+	  // this can't be included with the .disabled def because IE8 and below will drop it ;_;
+	  &:disabled {
+	    background-image: none;
+	    @include opacity(0.65);
+	    cursor: default;
+	  }
+	  &:active {
+	    $shadow: inset 0 3px 7px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.05);
+	    @include box-shadow($shadow);
+	  }
 	}
-  }
-  &.success {
-    @include btnColor(#62c462, #57a957);
-	background-color:#57a957;
-	&:hover {
-		@include btnColor(#62c462, darken(#57a957, 10%));
-	}
-  }
-  &.info {
-    @include btnColor(#5bc0de, #339bb9);
-	background-color:#339bb9;
-	&:hover {
-		@include btnColor(#5bc0de, darken(#339bb9, 10%));
-	}
-  }
-  &.danger {
-    @include btnColor(lighten($red, 15%), $red);
-    &:hover {
-    	@include btnColor(lighten($red, 15%), darken($red, 10%));
-    }
-  }
-  &.large {
-    font-size: 16px;
-    line-height: 28px;
-    @include border-radius(6px);
-  }
-  &.small {
-    padding-right: 9px;
-    padding-left: 9px;
-	line-height:16px;
-    font-size: 11px;
-  }
-  &.disabled {
-    background-image: none;
-    @include opacity(0.65);
-    cursor: default;
-  }
-
-  // this can't be included with the .disabled def because IE8 and below will drop it ;_;
-  &:disabled {
-    background-image: none;
-    @include opacity(0.65);
-    cursor: default;
-  }
-  &:active {
-    $shadow: inset 0 3px 7px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.05);
-    @include box-shadow($shadow);
-  }
 }
 
 // Help Firefox not be a jerk about adding extra padding to buttons
@@ -342,7 +402,7 @@ input[type=submit].btn {
 
 // Buttons
 /*.button($color: #fff, $padding: 4px 14px, $textColor: #333, $textShadow: 0 1px 1px rgba(255,255,255,.75), $fontSize: 13px, $borderColor: rgba(0,0,0,.1), $borderRadius: 4px) {
-  display: inline-block;
+  @include ie-inline-block;
   #gradient > .vertical-three-colors($color, $color, 0.25, darken($color, 10%));
   padding: $padding;
   text-shadow: $textShadow;
@@ -370,20 +430,25 @@ input[type=submit].btn {
 	border-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
 	background-clip: padding-box;
 }
+
+
 #translucent {
 	@include background;
 	@include border;
 }
 
+// Utility
 .divider {
 	background:url(image_path('mega-divider.png')) repeat-y right top;
 	margin-right:-15px;
 }
 
+.pull-down {
+	position: absolute;
+	bottom: 0;
+}
+
+.pull-right { float: right; }
+
 // Margins & Padding
 $margin-center:             0 auto;
-
-// Constrain width of 3rd party embeds in articles
-.span6 object, .span6 embed, .span6 iframe {
-	max-width:100%;
-}

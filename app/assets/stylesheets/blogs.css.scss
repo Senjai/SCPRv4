@@ -43,20 +43,11 @@
 
 // Blog Branding
 .blog-masthead {
-	height:47px;
 	border-bottom: 1px solid $grayLighter;
 	margin-bottom: $baseline / 2;
 	
  	h2 {
-		color:$black;
-		font-size:28px;
-		font-weight:200;
-	}
-	span.orange {
-		color:$orange;
-	}
-	span.blue {
-		color:$linkColorHover;
+		@include font-shorthand(200, 28px, 30px);
 	}
 }
 
@@ -66,27 +57,17 @@
 	}
 }
 
-
-.blog-landing {
-	.entry {
+.entry {
+	article {
 		padding-top:$baseline / 2;
-		&:first-child {
-			.span6 {
-				border:none;
-			}
-			.span6, .span2 {
-				padding-top:0;
-			}
-		}
-		.span6 {
-		border-top:1px solid $grayLighter;
-		}
-		.span6, .span2 {
-			padding-top:$baseline / 2;
-		}
+		padding-bottom: $baseline / 2;
+	}
+	
+	&.li { 
+		border-bottom: 1px solid $grayLight;
+		margin-bottom: 10px;
 	}
 }
-
 
 // Blog Entry Date Styling
 .date {

@@ -1,10 +1,4 @@
 #= require scprbase
-#= require spin.js
-
-# OPTIMIZE this file a little more
-# FIXME: Modal doesn't go away on body click unless you hover over it first.
-# FIXME: Right nav button doesn't load until after the videos are fetched if the modal is opened quickly after page load 
-# TODO: Button animation needs some tweaking (border color starts on white when fading out)
 
 class scpr.VideoPage
     DefaultOptions:
@@ -41,16 +35,16 @@ class scpr.VideoPage
             beforeSend: (xhr) =>
                 if $(@options.overlay).css("display") is "none" # Wait for 200ms to spin, otherwise the spinner is off-center
                   setTimeout ( => 
-                    $(@options.overlay).spin()
+                    $(@options.overlay + " .list").spin()
                   ), 200
                 else
-                    $(@options.overlay).spin()
+                    $(@options.overlay + " .list").spin()
                 console.log "Sending Request..."
-            error: (xhr, status, error) -> 
+            error: (xhr, status, error) => 
                 $(@options.overlay + ' .list').html "Error loading videos. Please refresh the page and try again. (#{error})"
             complete: (xhr, status) => 
                 setTimeout ( => 
-                  $(@options.overlay).spin(false)
+                  $(@options.overlay + " .list").spin(false)
                 ), 200 # in case it takes less than 200ms to load the videos
                 console.log "Finished request. Status: #{status}"
         }

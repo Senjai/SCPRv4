@@ -1,6 +1,114 @@
+// Global styles
+@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
+
+body {
+	width: auto;
+	height: auto;
+	position: static;
+	overflow: visible;
+}
+
+.viewport {
+	width: 100%;
+	height: auto;
+}
+
+// Vertical divider solution
+.vert-divider {
+	background-color:$grayLighter;;
+	width:1px;
+	position:absolute;
+	height:100%;
+	right:-2.70225%;
+	top:0;
+}
+.relative {
+	position:relative;
+}
+
+// Default container behavior
+.container-fluid {
+	@include clearfix;
+	padding-left: $containerPadding;
+	padding-right: $containerPadding;
+	position: relative; // for modals
+	margin-left: auto;
+	margin-right: auto;
+	max-width: $gridRowWidth;
+	min-width: $mediaDesktopSmall; // This is so that the fluid grid is basically ignored if media queries aren't seen (IE 7)
+	
+	&#footer-container {
+		position: static; // So we can pop out the footer into the side nav
+	}
+}
+
 // #Main Body Content
 #main {
 	margin-top:1px;
+	
+	.homepage-top {
+		border-bottom:1px solid $grayLighter;
+		margin-bottom:$baseline;
+				
+		.missed-it-bucket {
+			.carousel { min-height: 220px; }
+			.row-fluid > hr { 
+				display: none; 
+				width: 100%;
+				clear: both;
+			}
+			.missed-it-content { 
+				text-align: center;
+				margin-bottom: 10px;
+			}
+		}
+		
+		.offleads {
+			margin-bottom: 10px;
+			
+			// Override default .offlead to use border-top
+			// because IE7/8 do not support :last-child selector
+			.span8:first-child .cbase.offlead { 
+				border-top: none;
+				padding-top: 0;
+				margin-top: 0;
+			}
+
+
+			.cbase.offlead {
+				padding-top: 5px;
+				margin-top: 5px;
+				border-top: 1px solid $grayLighter;
+
+				// override
+				border-bottom: none;
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
+		}
+	}
+	
+	.homepage-bottom { margin:0; padding: 0;}
+	
+	.events-forum {
+		@include assetAlign(left);
+		border-left:1px solid $grayLighter;
+		padding-left: 20px;
+		h4 {
+			@include font-headline;
+			@include font-shorthand(600, 15px, $baseLineHeight);
+			a { color: $nearBlack; }
+			text-transform: none; // for elements with the cbase class
+		}
+	}
+	
+	.homepage-lead {
+		&.lead-right {
+			// Make the first headline bigger in lead-right scheme
+			.offleads .span8:first-child .offlead h3.story-headline { @include font-shorthand(bold, 28px, 26px); }
+			.lead h1 { @include font-shorthand(600, 24px); }
+		}
+	}
 }
 
 // Trending Bar
@@ -13,7 +121,7 @@
 		float:left;
 		font-size:13px;
 		font-weight:normal;
-		line-height:1.8em;
+		line-height:$baseLineHeight * 1.5;
 		margin-right:10px;
 	}
 	ul li {
@@ -26,179 +134,149 @@
 }
 
 // Broadcast Bar
-#broadcast-bar-outer-container {
+.broadcast-bar {
 	border-top:1px solid $grayBorder;
 	border-bottom:1px solid $grayBorder;
-	margin:3px 0 25px 0;
-	&.headshot {
-		margin-top:12px;
+	margin-bottom: 25px;
+	
+	&.with-headshot { 
+		margin-top: 15px; // So the host isn't wearing the nav as a tophat
+		.program.current .program-info { margin-left: 100px; } // Push the show title link over since we have to absolutely-position the headshot
 	}
+	
+	.bb-inner-container {
+		background:$grayBackground;
+		border-top:1px solid $white;
+		border-bottom:1px solid $white;
+		width: 100%;
+	}
+	
+	a.headshot {
+		position: absolute; // Since we have to push it up a bit to extend above the bar, and we don't want any extra space below
+		bottom: 0;
+		width: 90px;
+		height: 70px;
+		&:hover { text-decoration: none; }
+	}
+	
+	.program-info {
+		line-height: $baseLineHeight / 2;
+		a.show-title {
+			@include font-heading($weight: 600, $size: 22px);
+			text-shadow:1px 1px 0px #fff;
+			color:$orangeDark;
+			margin-right: 5px; // Leave space for the show time
+		}
+		
+		.show-time {
+			@include font-sans-serif($weight:normal, $size:12px);
+			color:$gray;
+			letter-spacing:-0.15em;
+			white-space: nowrap; // Don't want the time getting split up onto different lines
+		}
+	}
+	
+	.program {
+		margin-top: 10px;
+		background-position: 0 0;
+		background-repeat: no-repeat;
+		line-height: $baseLineHeight;
+		min-height: 36px; // Broadcast bar height minus padding
+			
+		&.current {
+			padding-left: 65px;// Room for the status badge
+			float: left;
+			background-image: url(image_path("broadcast-bar/onair.png"));
+			a.modal-toggler {
+				background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
+				padding-right:15px;
+				&:hover {
+					background-position:right -34px;
+				}
+			}
+		}
+		&.next {
+			float: right;
+			background-image: url(image_path("broadcast-bar/upnext.png"));
+			padding-left: 75px;
+			text-align:right;
+		}
+	}
+	
 }
-#broadcast-bar-inner-container {
-	background:$grayBackground;
-	border-top:1px solid $white;
-	border-bottom:1px solid $white;
-	height:46px;
-	width:100%;
-}
-section.broadcastbar {
-	margin:$margin-center;
-	width:1112px;
-	@include clearfix();
-	.left {
-	    float: left;
-	    margin-top: 14px;
+
+.episode-guide {
+	@include font-sans-serif($weight:100, $size:14px);
+	color:$grayAlt;
+	img {
+		float:left;
+		width:58px;
+		height:58px;
 	}
-	.right {
-	    float:right;
-		margin-right:20px;
-	    margin-top: 14px;
-	}
-	ul {
-		list-style:none outside none;
-		margin:0;
+	ul.cbase {
 		li {
-			@include ie-inline-block();
-			&.on-air {
-				position:relative;
+			display:block;
+			list-style-image:url(image_path('mega-divider.png'));
+			margin-bottom:$baseline / 2;
+			&.lead {
+				list-style-image:none;
 			}
-			&.on-air img {
-				position:absolute;
-				left:0;
-				top:0;
-			}
-			.bbar_headshot {
-			    position: relative;
-			    top: -38px;
-				margin-bottom: -52px;
-			}
-			&.on-now {
-				float:left;
-				margin:0 0 0 90px;
-				padding:8px 0 0 0;
-			}
-			&.active-show-title {
-				@include font-heading($weight:normal, $size:1.5em);
-				color:$orangeDark;
+			&.more {
+				margin-bottom:0;
 				a {
-					color:$orangeDark;
-					font-weight:600;
-					text-shadow:1px 1px 0px #fff;
-					display: inline-block;
-					&.modal-toggler {
-						background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
-						padding-right:15px;
-						&:hover {
-							background-position:right -34px;
-						}
-					}
+					background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
+					font-size:11px;
+					padding-bottom:2px;
+					padding-right:17px;
 				}
 			}
-			&.show-status {
-				@include font-sans-serif($weight:bold, $size:1.05em);
-				color:$grayAlt;
-				padding:0 0 0 5px;
+			a.comment_link {
+				margin-left:0;
 			}
-			&.show-summary {
-				@include font-sans-serif($weight:normal, $size:0.95em);
-				color:$grayAlt;
-				padding:0 0 0 5px;
-				position:relative;
-				.episode-guide {
-					img {
-						float:left;
-						width:58px;
-						height:58px;
-					}
-					ul.cbase {
-						li {
-							display:block;
-							list-style-image:url(image_path('mega-divider.png'));
-							margin-bottom:$baseline / 2;
-							&.lead {
-								list-style-image:none;
-							}
-							&.more {
-								margin-bottom:0;
-								a {
-									background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
-									font-size:11px;
-									padding-bottom:2px;
-									padding-right:17px;
-								}
-							}
-							a.comment_link {
-								margin-left:0;
-							}
-						}
-						margin-left:80px;
-						h4 {
-							font-size:18px;
-							font-weight:bold;
-						}
-						h5 {
-							font-size:15px;
-						}
-						p {
-							color:$nearBlack;
-							font-size:13px;
-							line-height:18px;
-						}
-						.headline {
-							@include font-headline(600);
-							a {
-								color:$nearBlack;
-								}
-							a.comment_link {
-								color:$linkColor;
-							}
-						}
-					}
+		}
+		margin-left:80px;
+		h4 {
+			font-size:18px;
+			font-weight:bold;
+		}
+		h5 {
+			font-size:15px;
+		}
+		p {
+			color:$nearBlack;
+			font-size:13px;
+			line-height:18px;
+		}
+		.headline {
+			@include font-headline(600);
+			a {
+				color:$nearBlack;
 				}
-			}
-			&.join-conversation {
-				padding:0 0 0 12px;
-				a {
-					@include font-sans-serif($weight:bold, $size:1em);
-					background:url("broadcast-bar/comment-icon.png") no-repeat scroll transparent;	
-					color:$linkColor;
-					padding:0 18px;
-				}
-			}
-			&.up-next img {
-				padding:8px 0 0 60px;
-			}
-			&.upnext-show-title, .upnext-show-title a {			    
-				@include font-heading($weight:600, $size:1.5em);
-				color:$orangeDark;
-				text-shadow:1px 1px 0px #fff;
-			}
-			&.show-time {
-				@include font-sans-serif($weight:normal, $size:0.9em);
-				color:$gray;
-				letter-spacing:-0.15em;
-				padding:0 0 0 5px;
+			a.comment_link {
+				color:$linkColor;
 			}
 		}
 	}
 }
-.offleads hr {
-	margin: 6px 0;
-	&:last-child {
-		display:none;
-	}
-}
+
 // Join Conversation
 .join-conversation-container {
-	margin:6px 0 0 30px;
-	section.join_conversation {
+	margin:10px 0;
+	
+	&.home {
+		border-top: 1px solid $grayLighter;
+		border-bottom: 1px solid $grayLighter;
+	}
+	
+	.join_conversation {
 		background-color:$grayBackground;
+
 		h6 {
 			color:$black;
 			padding:5px 0 0 10px;	
 		}
 		blockquote {
-			@include font-serif($size:1.1em, $lineHeight:25px);
+			@include font-serif($size:16px, $lineHeight:25px);
 			background:url("join-conversation-blockquote.png") no-repeat scroll 2% 50% transparent;		
 			border:0 none;
 			font-style:italic;
@@ -207,9 +285,10 @@ section.broadcastbar {
 			padding:0 25px 0 55px;
 		}
 		p.quotee {
-			@include font-sans-serif($size:0.85em);
+			@include font-sans-serif($size:12px);
 			color:$grayLight;
 			padding:5px 25px 10px 55px;
+			margin: 0;
 			a {
 				color:$gray;
 			}
@@ -232,61 +311,13 @@ section.broadcastbar {
 	}
 }
 
-// Events at the Forum
-.events-forum {
-	border-left:1px solid $grayLighter;
-	padding:0 0 0 10px;
-	.event-date {
-		@include font-serif($size:0.90em);
-		background:url("events-forum-calendar-icon.png") no-repeat scroll 29% 90% transparent;				
-		color:$linkColor;
-		margin:10px 0 0 20px;
-		padding-left:112px;
-	}
-	h6 {
-		padding-left:5px;
-	}
-	.events-content {
-		@include clearfix();
-		margin:10px 0;
-		a {
-			color:$grayAlt;
-			&:hover .event-title {
-				color:$grayAlt;
-				text-decoration:underline;
-			}
-			&:hover {
-				text-decoration:none;
-			}
-		}
-		.event-title {
-			color:$grayAlt;
-			@include font-headline($weight:normal);
-			font-size:1.2em;
-			margin:0;
-		}
-		img {
-			float:left;
-			padding:0 15px 0 5px;			
-		}
-	}
-}
-
-#events-mega {
-    .events-content {
-        img {
-            float: left;
-           width: 65px;
-           height: 65px;
-           margin-right: 12px;
-        }
-    }
-}
-
-
-.top-half {
-	border-bottom:1px solid $grayLight;
-	margin-bottom:$baseline;
+p.more a {
+	color:$grayAlt;
+	@include font-sans-serif(bold, 11px);
+	padding:0;
+	margin: 0;
+	text-transform:uppercase;
+	&:hover { text-decoration:underline; }
 }
 
 // Cbase H3 - Applies styling to first headline - activated by jQuery
@@ -296,122 +327,95 @@ section.broadcastbar {
 }
 
 // More News
-section.more-news-container {
-	margin:0 !important;
-	width:770px !important;
-	div.more-news {
-		border-right:1px solid $grayLighter;
-		padding:0 10px ($baseline / 2) 0;
-		section.more-news-title {
-			background:url("section-headline-background.png") repeat-x;
-			height:35px;
-			h6 {	
-				color:$grayAlt;
-				float:left;
-				font-size:18px;
-				padding:4px 0 0 8px;
-				text-transform:none;
+h6.more-news-title {
+	background:url("section-headline-background.png") repeat-x 0 0;
+	@include font-shorthand($weight: bold, $size: 18px, $lineHeight: 35px);
+	color:$grayAlt;
+	padding-left:8px;
+	text-transform:none;
+	margin-bottom: 10px;
+}
+
+.more-link {
+	@include font-sans-serif($size:12px);
+	float:right;
+	padding: 7px 8px 0 0;
+}
+
+.more-news-container {
+	.more-news {
+		padding-bottom: $baseLineHeight / 2;
+		.more-news-content {
+			padding-right:5px;
+			border-right:1px solid $grayLighter;
+			.offlead { /* cbase offlead reset */ 
+				border-bottom: none;
+				margin-bottom: 0;
 			}
-			span {
-				@include font-sans-serif($size:0.85em);
-				float:right;
-				padding:8px 8px 0 0;
-			}
-		}
-		section.more-news-content {
-			float:left;
-			margin:10px 0 0 0;
-			padding-right:10px;
-			width:445px;
 			p.story-title {
 				@include font-headline($weight:bold);
-				font-size:1.2em;
+				font-size:16px;
 				margin:0;
 				a {
 					color:$grayAlt;
 				}
 			}
 			p.story-content {
-				font-size:13px;
-				line-height:18px;
-				padding:10px 0 0 100px;
+				@include font-shorthand($size: 13px, $lineHeight: 18px);
+				padding:10px 0 0 0;
 			}
 			ul {
-			    margin-top: 12px;
-				list-style-image:url("more-headlines-li.png");
+			    margin: 0 0 0 14px; /* Keep the bullets inside the box but wrap properly */
+				list-style: none url("more-headlines-li.png");
 				li {
-					margin:5px 0 0 -10px;
+					margin:5px 0 0 0;
 					a {
 						@include font-headline($weight:lighter);
 						color:$grayAlt;
-						font-size:1.05em;
+						font-size:15px;
 					}
 				}
 			}
 		}
-		div.related-content {
-			border-left:1px solid $grayLighter;
-			margin:10px 0 0 0;
-			padding:0 0 0 15px;
+		div.related-content {			
 			h6 {
-				font-size:0.90em;
-				padding:5px 3px 5px 0;
+				@include font-shorthand(bold, 13px, $baseLineHeight);
+				padding:5px 0;
 			}
 			img.segment {
 				padding:10px 0 0 0;
-			}
-			.contentasset {
-				a {
-					display:block;
-					max-height:170px;
-					overflow:hidden;
-				}
 			}
 			span.caption {
 				@include font-headline($weight:lighter);
 				color:$grayAlt;
 				display:block;
-				font-size:1.1em;
+				font-size:15px;
 				a {
 					color:$grayAlt;
 				}
 			}
 			blockquote {
-				@include font-headline($weight:lighter);
+				@include font-headline($weight: lighter);
+				@include font-shorthand($size: 16px, $lineHeight: 23px);
 				border:0 none;
-				font-size:1.5em;
 				font-style:italic;
-				line-height:23px;
 				margin:10px 0 5px 0;
 				padding:0;
+				word-wrap: break-word; // Big text, small area, best to force-break a word if necessary
 			}
-			div.comments-quotee {
-				@include font-sans-serif($size:0.85em);
-				background:url("more-news-quotee-icon.png") no-repeat scroll 60% 0 transparent;
+			.comments-quotee {
+				@include font-sans-serif($size: 12px);
+				background:url("more-news-quotee-icon.png") no-repeat left top;
 				color:$grayLight;
 				height:35px;
-				padding:20px 0 0 20px;
+				padding:20px 0 0 60px;
 			}
 		}
 	}
 }
 
 
-// Sidebar
-div#sidebar-top {
-	hr {
-		margin:0 0 10px 0;
-	}
-}
-div#sidebar-bottom {
-	margin:0 0 0 20px;
-	hr {
-		margin:0 0 10px 0;
-	}
-	h6 {
-		margin:0 0 10px 0;
-	}	
-}
+
 
 // Filters bar (please move this to a more appropriate file)
 nav.filters {
@@ -419,14 +423,18 @@ nav.filters {
 	border-top: 1px solid #bfbfbf;
 	border-bottom: 1px solid #bfbfbf;
 	margin: 10px 0;
-	padding:10px;
+	padding: 10px;
 	@include font-heading($size: 12px, $weight: 600);
 	text-transform: uppercase;
-	ul {margin:0;}
+	ul { margin:0; }
 	li {
 		float:left;
 		list-style-type:none;
-		margin-right:30px;
+		margin-right:3%;
+		
+		// Won't be seen in IE7, that's okay
+		&:last-child { margin: 0; }
+		
 		&.heading {
 			color:#575757;
 			margin-right:20px;
@@ -437,13 +445,6 @@ nav.filters {
 			color: #2e2e2e;
 			font-weight:600;
 			padding: 3px 5px;
-			margin: 0 25px;
-			&:first-of-type {
-				margin-left: 0;
-			}
-			&:last-of-type {
-				margin-right: 0;
-			}
 			&:hover, &.active {
 				background-color: $gray;
 				color: $nearWhite;
@@ -457,16 +458,17 @@ nav.filters {
 	}
 }
 
-// Global Styles
-.block-content { 
-	padding-right: 10px;
-}
+// Error
+#error {
+	form {
+		margin: 10px 0;
 
-section.fold {
-	h6 {
-		font-size: 12px;
-		margin-top: 5px;
-		text-align: right;
+		input { @include ie-inline-block; }
+		input[type=text] {
+			max-width:450px;
+			width:100%;
+			font-size:15px;
+			padding:5px;			
+		}
 	}
 }
-

@@ -1,5 +1,6 @@
 class NewsController < ApplicationController
-
+  respond_to :html, :js
+  
   def story
     begin
       @story = NewsStory.published.find(params[:id])

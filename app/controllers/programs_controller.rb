@@ -1,7 +1,6 @@
 class ProgramsController < ApplicationController  
-  before_filter :get_ambiguous_program, only: :show
+  before_filter :get_ambiguous_program, only: [:show, :archive]
   before_filter :get_featured_programs, only: :index
-  #before_filter :get_program_segments, only: :show
   before_filter :get_kpcc_program, only: [:segment, :episode]
   
   def index
@@ -43,6 +42,24 @@ class ProgramsController < ApplicationController
     end
   end
   
+  def archive
+    # If the date wasn't specified, send them to the program page's archive section
+    if params[:archive].blank?
+      redirect_to program_path(@program, anchor: "archive-select") and return
+      
+    else
+      @date = Time.new(params[:archive]["date(1i)"].to_i, params[:archive]["date(2i)"].to_i, params[:archive]["date(3i)"].to_i)
+      @episode = ShowEpisode.where(air_date: @date, show_id: @program.id).first
+     
+      if @episode.blank?
+        # TODO: Display some kind of notice that there is no episode
+        redirect_to program_path(@program, anchor: "archive-select") and return
+      else
+        redirect_to @episode.link_path
+      end
+    end
+  end
+  
   #----------
   
   def segment
@@ -53,9 +70,11 @@ class ProgramsController < ApplicationController
       redirect_to @segment.link_path and return
     end
     
+    # If segment ID isn't correct, redirect to the segment's program path
     rescue
       redirect_to program_path @program
   end
+  
   
   #----------
   
@@ -64,6 +83,11 @@ class ProgramsController < ApplicationController
     @segments = @episode.segments.published
     rescue
       redirect_to program_path(@program)
+  end
+
+  def schedule
+    @schedule_slots = Schedule.all
+    render layout: "application"
   end
   
   protected
@@ -81,4 +105,5 @@ class ProgramsController < ApplicationController
       @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
       @featured_programs.sort_by! { |program| KpccProgram::Featured.index(program.slug) } # Orders the returned records by the order of the KpccProgram::Featured array
     end
+    
 end

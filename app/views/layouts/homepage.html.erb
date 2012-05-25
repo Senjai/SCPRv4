@@ -6,48 +6,80 @@
 	
   	<%= render "shared/header/header_js" %>
 	<%= render "shared/header/opengraph" %>
+	<script type="text/javascript" src="http://cdn.sublimevideo.net/js/cixcsaci.js"></script>
   	<%= csrf_meta_tags %>
 </head>
 <body>
-<!-- MASTHEAD-->
-<%= render "shared/masthead" %>
-
-<!-- BROADCAST BAR -->
-<%= render "shared/broadcast_bar" %>
-
-<div id="main" class="container">
-	<div class="row">
-		<section class="span8">
-			<%= yield %>
-		</section>
-
-		<div id="sidebar-top" class="span4">
-			<div style="min-height:127px"><%= render "shared/widgets/oas", :ad_id => 'x01' %></div>
-			<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
-			<%= render "shared/widgets/newsletter_subscribe" %>	
-			<!-- div class="ad widget" style="border-bottom: 1px solid #E0E0E0;padding-bottom: 16px;">
-				<img src="http://media.scpr.org/assets/images/campaigns/2012/billboard_ideas_large.png" alt="" />
-			</div -->
-			<%= render "shared/widgets/most_popular" %>			
-		</div>
-		<div class="span12 top-half">&nbsp;</div>
+<div class="viewport">
+	<div id="beta-bar" class="alert-message inverse" style="text-align:center;margin-bottom:0;">
+		<p>Welcome to the all-new KPCC.org! <a class="modal-toggler" data-modal-id="new-site-video">Watch a quick tour</a> or start exploring.</p>
 	</div>
-	<div class="row">
-		<section class="span8 more-news-container">
-			<%= yield :lower %>
-		</section>
-		<div id="sidebar-bottom" class="span4">
-			<%= render "shared/widgets/oas", :ad_id => 'x02' %>
-			<%= render "shared/widgets/facebook" %>		
-			<%= render "shared/widgets/promo_mobile" %>
-			<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+	<!-- MASTHEAD-->
+	<%= render "shared/masthead" %>
+	<div class="modal-popup new-site-video" id="new-site-video">
+		<div class="arrow-up"></div>
+		<div class="modal-close modal-toggler" onClick="sublimevideo.stop()"></div>
+		<div class="inner-container">
+
+			<video class="sublime" poster="http://media.scpr.org/assets/images/about/allnew-kpcc-poster.jpg" width="640" height="360" data-uid="1ca33967" preload="none">
+			  <source src="http://media.scpr.org/assets/images/about/allnew-kpcc-sm.mp4" />
+			</video>
+
 		</div>
 	</div>
-	<br class="clearfix" />	
-	</div>
-</div>
-<%= render :partial => "shared/footer" %>
-<%= render :partial => "shared/footer/footer_js" %>
+	<!-- BROADCAST BAR -->
+	<%= render("shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
 
+	<div id="main" class="container-fluid main-content">
+		
+		<section class="homepage-top">
+			<div class="row-fluid">
+				<section class="span16 relative">
+					<%= yield %>
+					<div class="vert-divider"></div>
+				</section>
+				
+				<div class="span8">
+					<div id="sidebar-top">
+						<%= render "shared/widgets/oas", :ad_id => 'x01' %>
+						<%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>                        
+						<%= render "shared/widgets/newsletter_subscribe" %>
+						<!-- div class="ad widget" style="border-bottom: 1px solid #E0E0E0;padding-bottom: 16px;">
+							<img src="http://media.scpr.org/assets/images/campaigns/2012/billboard_ideas_large.png" alt="" />
+						</div -->
+						<%= render "shared/widgets/most_popular" %>
+					</div> <!-- sidebar-top -->
+				</div> <!-- span8 -->
+			</div> <!-- row-fluid -->
+			
+			<%= yield :missed_it %>
+		</section> <!-- homepage-top -->
+		
+		<section class="homepage-bottom">
+			<div class="row-fluid">
+				<div class="span16 relative">
+					<section class="more-news-container">
+						<%= yield :lower %>
+					</section>
+					<div class="vert-divider"></div>
+				</div> <!-- span16 -->
+				<div class="span8">
+					<div id="sidebar-bottom">
+						<%= render "shared/widgets/oas", :ad_id => 'x02' %>
+						<%= render "shared/widgets/facebook" %>
+                          
+						<%= render "shared/widgets/promo_mobile" %>
+						<%= render "shared/widgets/oas", :ad_id => 'x03' %>
+						<%= render "shared/widgets/recent_videos" %>
+					</div> <!-- sidebar bottom -->
+				</div> <!-- span8 -->
+			</div> <!-- row fluid -->
+		</section> <!-- homepage-bottom -->
+		
+	</div> <!-- main container-fluid -->
+
+	<%= render :partial => "shared/footer" %>
+	<%= render :partial => "shared/footer/footer_js" %>
+</div> <!-- viewport -->
 </body>
 </html>
