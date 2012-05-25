@@ -117,7 +117,7 @@ Scprv4::Application.routes.draw do
   # -- Dynamic root-level routes -- #
   # FIXME: These requires a restart of the application if a slug is changed
   Category.all.each do |category|
-    match "/#{category.slug}(/:page)" => 'category#index', id: category.id, as: "section_#{category.url_helper_slug}"
+    match "/#{category.slug}(/:page)" => 'category#index', slug: category.slug, id: category.id, as: "section_#{category.url_helper_slug}", constraints: { page: /\d+/ }
   end
   
   Flatpage.all.each do |flatpage|
