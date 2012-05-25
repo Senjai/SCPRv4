@@ -17,6 +17,13 @@ GIT
     redis-content-store (3.2.2)
       redis-activesupport (~> 3.2.2)
 
+GIT
+  remote: git://github.com/nex3/sass.git
+  revision: 167ee67e6a16423e95cf074074aea80ff9c828ca
+  branch: master
+  specs:
+    sass (3.2.0.alpha.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -231,7 +238,6 @@ GEM
       blankslate (>= 2.1.2.3)
       ffi (~> 1.0.7)
     rubyzip (0.9.8)
-    sass (3.1.18)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -314,7 +320,7 @@ DEPENDENCIES
   rspec-rails
   ruby-mp3info
   rubypython
-  sass
+  sass!
   sass-rails
   shoulda-matchers
   therubyracer
