@@ -138,7 +138,8 @@ class scpr.SocialTools
         # add share functionality for twitter
         $(@options.twitfinder).on "click", (evt) =>
             if url = $(evt.target).attr("data-url")
-                twurl = "https://twitter.com/intent/tweet?url=#{url}&text=Via+%40kpcc"
+                headline = $(evt.target).attr("data-text")
+                twurl = "https://twitter.com/intent/tweet?url=#{url}&text=#{headline}+Via+%40kpcc"
                 window.open twurl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'
             
     #----------
