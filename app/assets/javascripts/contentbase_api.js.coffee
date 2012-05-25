@@ -157,7 +157,7 @@ class scpr.ContentBaseAPI
                             if @options.order_key
                                 _(@objects).each (o) => 
                                     id = o.obj_key || @djangoToObjKey(o.content_type,o.object_id)
-                                    @contents.get(id)?.set { ORDER:o[@options.order_key] }, silent:true
+                                    @contents.get(id)?.set { ORDER:parseInt o[@options.order_key] }, silent:true
                                     console.log "set ORDER:#{o[@options.order_key]} for #{id}"
                                 
                                 console.log "done setting order"
