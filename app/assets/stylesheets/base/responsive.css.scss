@@ -342,6 +342,15 @@ $mediaSmallPortrait: 320px;
 	
 	// Pop the footer nav out and turn it into the side-nav
 		html, body, .container-fluid, header, footer { margin: 0; } 
+		
+		html.compactNav { overflow-x: hidden; }
+		
+		body.navIn {
+			position: relative;
+	        overflow: hidden;	
+			.viewport { position: absolute; }
+		}
+		
 		$compactNavW: 300px;
 		#page-footer footer {
 			background-image:none;

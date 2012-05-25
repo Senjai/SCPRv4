@@ -59,14 +59,14 @@ end
     display_segments 1
     display_episodes 1
     
-    ignore { segment Hash.new } # Ensures that `merge` has something to do in the after_create block
-    ignore { episode Hash.new } # Ensures that `merge` has something to do in the after_create block
+    ignore { segment Hash.new } # Ensures that `merge` has something to do in the after :create block
+    ignore { episode Hash.new } # Ensures that `merge` has something to do in the after :create block
     ignore { missed_it_bucket Hash.new }
     ignore { episode_count 0 }
     ignore { segment_count 0 }
     ignore { blog false }
     
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, evaluator.segment.merge!(show: object))
       FactoryGirl.create_list(:show_episode, evaluator.episode_count.to_i, evaluator.episode.merge!(show: object))
       
@@ -138,7 +138,7 @@ end
     ignore { entry Hash.new }
     ignore { missed_it_bucket Hash.new }
   
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       FactoryGirl.create_list(:blog_entry, evaluator.entry_count.to_i, evaluator.entry.merge!(blog: object))
       
       if evaluator.missed_it_bucket_id.blank?
@@ -180,7 +180,7 @@ end
     _teaser "This is a short teaser"
     
     ignore { asset_count 0 }
-    after_create do |event, evaluator|
+    after :create do |event, evaluator|
       FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: event)
     end
   end
@@ -224,7 +224,7 @@ end
     ignore { content_count 0 }
     ignore { content Hash.new }
     
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       FactoryGirl.create_list(:news_story, evaluator.content_count.to_i, evaluator.content.merge!(category: object))
     end
   end
@@ -270,6 +270,8 @@ end
 
 # Related #########################################################
 factory :related_content, class: Related do
+  sequence(:id, 1)
+
   factory :brel do # "brels" - needs content
     flag 0
     related { |brel| brel.association(:content_shell) } #TODO Need to be able to pass in any type of factory here
@@ -283,6 +285,7 @@ end
   
 # Link #########################################################
   factory :link do
+    sequence(:id, 1)
     title "A Related Link"
     link "http://oncentral.org"
     link_type "website"
@@ -308,7 +311,7 @@ factory :homepage do
   ignore { missed_it_bucket Hash.new }
   ignore { contents_count 0 }
   
-  after_create do |object, evaluator|
+  after :create do |object, evaluator|
     FactoryGirl.create_list(:homepage_content, evaluator.contents_count.to_i, homepage: object)
     
     if evaluator.missed_it_bucket_id.blank?
@@ -328,7 +331,7 @@ end
 factory :missed_it_bucket do
   title "Airtalk"
   ignore { contents_count 0 }
-  after_create do |object, evaluator|
+  after :create do |object, evaluator|
     FactoryGirl.create_list(:missed_it_content, evaluator.contents_count.to_i, missed_it_bucket: object)
   end
 end
@@ -369,7 +372,7 @@ end
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
     
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       content_base_associations(object, evaluator)
     end
   end
@@ -394,7 +397,7 @@ end
     ignore { related_factory "content_shell" }
     ignore { category_type :category_news }
     
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       content_base_associations(object, evaluator)
     end
   end
@@ -415,7 +418,7 @@ end
     ignore { related_factory "content_shell" }
     ignore { category_type nil }
     
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       content_base_associations(object, evaluator)
       segments = FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, show: object.show)
       segments.each { |segment| segment.episodes << object }
@@ -441,7 +444,7 @@ end
     ignore { related_factory "content_shell" }
     ignore { category_type :category_news }
     
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       content_base_associations(object, evaluator)
     end
   end
@@ -464,7 +467,7 @@ end
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
     
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       content_base_associations(object, evaluator)
     end
   end
@@ -483,7 +486,7 @@ end
     ignore { related_factory "video_shell" }
     ignore { category_type :category_news }
 
-    after_create do |object, evaluator|
+    after :create do |object, evaluator|
       content_base_associations(object, evaluator)
     end
   end

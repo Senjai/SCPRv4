@@ -21,6 +21,8 @@ class BlogsController < ApplicationController
   
   def entry
     @entry = @blog.entries.published.find(params[:id])
+    rescue
+      raise ActionController::RoutingError.new("Not Found")
   end
   
   #----------

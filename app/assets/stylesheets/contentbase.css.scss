@@ -101,7 +101,9 @@
 }
 
 // Add a bottom-border to the "thumbnails" on category index pages. Should probably not be using "thumbnail" partial for this.
-.category-page .cbase.thumbnail { border-bottom: 1px solid $grayLighter; }
+.category-page, .bio-detail {
+	.cbase.thumbnail { border-bottom: 1px solid $grayLighter; }
+}
 
 .homepage-lead.lead-right .lead { border-bottom: none; }
 time.smart {

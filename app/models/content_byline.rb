@@ -1,5 +1,6 @@
 class ContentByline < ActiveRecord::Base
   self.table_name =  "rails_contentbase_contentbyline"
+  self.primary_key = "id"
   
   ROLE_PRIMARY = 0
   ROLE_SECONDARY = 1
@@ -22,6 +23,7 @@ class ContentByline < ActiveRecord::Base
     has user_id
     has content_id
     has content.published_at, :as => :published_at, :type => :datetime
+    has content.status, as: :status, type: :integer
   end
   
 end

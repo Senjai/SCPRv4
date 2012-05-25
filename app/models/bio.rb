@@ -9,12 +9,12 @@ class Bio < ActiveRecord::Base
     ContentByline.search('', 
       :order      => :published_at,
       :sort_mode  => :desc,
-      :with       => { :user_id => self.id },
+      :with       => { :user_id => self.id, status: ContentBase::STATUS_LIVE },
       :per_page   => 15,
       :page       => page
     )
   end
-  
+
   #----------
   
   def to_param
