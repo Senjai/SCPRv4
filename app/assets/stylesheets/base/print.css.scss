@@ -1,0 +1,43 @@
+// deep breath...
+#megamenu, #masthead-mid-header-wrapper, #masthead-right-header-wrapper, 
+#beta-bar, #offscreen-header, #broadcast-bar,
+#sidebar, #sidebar-top, #sidebar-bottom,
+#dsq-reply, #dsq-global-toolbar, #dsq-realtime-options, #dsq-sort-by, #dsq-pagination, #dsq-reactions, .dsq-h3-reactions, #dsq-show-more-reactions,
+#article-content-carousel, #article-article-meta, #article-sharing-tools, #article-related-content, .comment-count.social_disq, .story-audio,
+#other-segments, #more-events, .slideview .nav, .slideview li,
+#program-masthead-support, #program-masthead-headshot, .section-nav-header,
+#fold-comments-count-widget, .sfy-story, #article-next-prev,
+#page-footer, #footer-nav, .hidden-reader,
+.audio-bar, #uvTab, object, embed, iframe { display: none !important; }
+
+.slideview li:first-child { display: block !important; } // We're hiding them above, and then showing just the first one here
+
+#fold .row-title h6 { text-align: left; }
+
+.head-lead { min-height: 0 !important; }
+#masthead { padding: 0 !important; margin: 0 !important; }
+
+article[class*=span], .mq-solo-span {
+	width: 100% !important;
+	float: none !important;
+	display: block !important;
+	margin: 0 !important;
+}
+
+.story-body, .event-details {
+	a, a#events-rsvp-btn {
+		&:link, &:visited {
+			color: darken(#007fa6, 15%);
+			font-weight: bold;
+		
+			&:after {
+			   content: " (" attr(href) ") ";
+			   font-size: 80%;
+			}
+		}
+	}
+}
+
+#comments {
+	page-break-before: always;
+}

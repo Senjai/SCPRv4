@@ -29,7 +29,9 @@ gem "oauth2"
 # in production environments by default.
 group :assets do
   gem "eco"
+  gem "sass", branch: 'master'
   gem 'sass-rails'
+#  gem 'bootstrap-sass'
   gem "compass-rails"
   gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'

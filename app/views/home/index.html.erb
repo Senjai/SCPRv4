@@ -6,24 +6,42 @@
 	end
 %>
 
-<div class="row">
-	<%= yield :conversation_slot %>
-	
-	<div class="span4">
-		<div class="headlines">
-			<h6>More Headlines</h6>
-			<ul class="cbase">
-				<%= raw Rails.cache.read("home/headlines") %>
-			</ul>
+<%= yield :conversation_slot %>
+<div class="more-content">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="headlines">
+				<h6>More Headlines</h6>
+				<ul class="cbase">
+					<%= raw Rails.cache.read("home/headlines") %>
+				</ul>
+			</div>
 		</div>
+		<div class="span12">
+			<%= render "shared/widgets/events_at_the_forum" %>
+		</div>	
 	</div>
-	<div class="span4">
-		<section class="events-forum">
-			<h6>Events at the Crawford Family Forum</h6>
-			<%= render "shared/widgets/events_at_the_forum" %>	
-		</section>
-	</div>	
 </div>
+
+<% content_for :missed_it do %>
+	<% if @homepage.missed_it_bucket.present? and @homepage.missed_it_bucket.contents.present? %>
+		<div class="more-news missed-it-bucket content-carousel">
+			<h6 class="more-news-title">
+				In Case You Missed It
+				<div class="pager-nav">
+					<a class="prev"></a>
+					<a class="next"></a>
+				</div>
+			</h6>
+
+			<div class="carousel" data-current-page="1"></div>
+		</div> <!-- missed-it-bucket -->
+		
+		<% content_for :footerjss do %>
+			var carousel = new scpr.ContentCarousel({dataUrl: "<%= homepage_missed_it_content_path(@homepage.id) %>"});
+		<% end %>
+	<% end %>
+<% end %>
 
 <% content_for :lower do %>
 	<%= raw Rails.cache.read("home/sections") %>

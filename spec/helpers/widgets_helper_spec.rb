@@ -3,13 +3,21 @@ require "spec_helper"
 describe WidgetsHelper do
   let(:object) { create :blog_entry }
   
-  describe "#article_meta_for" do # Should we test this a little more? It's really just a partial that renders a bunch of other partials, so maybe not. 
-    it "renders the article_meta partial" do
-      article_meta_for(object).should match "article-meta"
+  describe "content_widget" do
+    it "returns nil if object is not present" do
+      content_widget("anything", nil).should be_nil
     end
     
-    it "doesn't render anything if content isn't present" do
-      article_meta_for(nil).should be_nil
+    it "returns nil if object is not a contentbase" do
+      content_widget("anything", "a string").should be_nil
+    end
+    
+    it "uses the absolute path if the partial starts with a slash" do
+      content_widget("/shared/widgets/facebook", object).should match /Like KPCC on Facebook/ # Need to figure out a better way to test this
+    end
+    
+    it "looks in /shared/cwidgets if just the name of the partial is given" do
+      content_widget("social_tools", object).should match /Share this\:/
     end
   end
   
@@ -87,62 +95,6 @@ describe WidgetsHelper do
     
     it "passes along the cssClass" do
       comments_for(object, cssClass: "special_class").should match "special_class"
-    end
-  end
-
-
-  describe "#related_for" do
-    it "does not render anything if object is not present" do
-      related_for(nil).should be_nil
-    end
-    
-    it "does not render anything if the object is not a ContentBase" do
-      related_for(create :blog).should be_nil # blog is not a content bas
-    end
-    
-    it "does not render anything if the object does not have any relations or links" do
-      related_for(object).should be_blank
-    end
-    
-    it "renders the related_content_and_links partial" do
-      object_with_related_content = create :show_segment, brel_count: 1, frel_count: 1, link_count: 1
-      object_with_related_content.brels.should be_present
-      object_with_related_content.frels.should be_present
-      object_with_related_content.related_links.should be_present
-      related_partial = related_for(object_with_related_content)
-      related_partial.should match "More from KPCC"
-      related_partial.should match "Elsewhere on the Web"
-    end
-    
-    it "shows the related content for the object" do
-      object_with_related_content = create :show_segment, brel_count: 1, frel_count: 1
-      related_partial = related_for(object_with_related_content)
-      related_partial.should match object_with_related_content.frels.first.content.short_headline
-      related_partial.should match object_with_related_content.brels.first.related.short_headline
-    end
-    
-    it "shows the related links for the object" do
-      object_with_related_content = create :show_segment, link_count: 1
-      related_for(object_with_related_content).should match object_with_related_content.related_links.first.title
-    end
-  end
-  
-  
-  describe "#social_tools_for" do
-    it "doesn't render anything if the object is blank" do
-      social_tools_for([]).should be_nil
-    end
-    
-    it "doesn't render anything if the object is not a ContentBase" do
-      social_tools_for(create :blog).should be_nil
-    end
-    
-    it "renders the partial if the object is a ContentBase" do
-      social_tools_for(object).should_not be_blank # object is a blog entry
-    end
-    
-    it "uses the cssClass passed in" do
-      social_tools_for(object, cssClass: "someClass").should match "someClass"
     end
   end
 end

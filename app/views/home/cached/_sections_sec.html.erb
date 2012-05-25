@@ -1,20 +1,27 @@
-<div class="span8 more-news">
-	<section class="more-news-title">
-		<h6><%= link_to section[:section].category, section[:section].link_path %></h6>
-		<span><%= link_to "More", section[:section].link_path %></span>
-	</section>
-	<section class="more-news-content">
-		<%= render_content section[:content][0], "sec_lead" %>
+<div class="more-news">
+	<h6 class="more-news-title">
+		<%= link_to section[:section].category, section[:section].link_path %>
+		<span class="more-link"><%= link_to "More", section[:section].link_path %></span>
+	</h6>
+	
+	<div class="row-fluid">
+		<div class="span14">
+			<div class="more-news-content">
+				<%= render_content section[:content][0], "sec_lead" %>
 		
-		<ul class="additional-stories cbase">
-			<%= render_content section[:content][1..3], "headline" %>
-		</ul>
-	</section>
-	<div class="related-content span3">
-		<% if section[:right] && section[:right].is_a?(FeaturedComment) %>
-			<%= featured_comment :comment => section[:right], :style => "sec_right" %>
-		<% else %>
-			<%= render_content section[:right], "sec_right" %>
-		<% end %>
-	</div>
-</div>
+				<ul class="additional-stories cbase">
+					<%= render_content section[:content][1..3], "headline" %>
+				</ul>
+			</div> <!-- more news content -->
+		</div> <!-- span14 -->
+		<div class="span10">
+			<div class="related-content">
+				<% if section[:right] && section[:right].is_a?(FeaturedComment) %>
+					<%= featured_comment :comment => section[:right], :style => "sec_right" %>
+				<% else %>
+					<%= render_content section[:right], "sec_right" %>
+				<% end %>
+			</div> <!-- related content -->
+		</div><!-- span10 -->
+	</div> <!-- row fluid -->
+</div><!-- more news -->

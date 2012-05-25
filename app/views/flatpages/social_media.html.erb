@@ -1,0 +1,176 @@
+<!-- /social-media -->
+<!-- title KPCC Social Media -->
+<!-- description Connect with KPCC on Twitter, Facebook, and other social networks. -->
+
+
+<!-- extra tail -->
+	<script>
+		$(document).ready(function(){	
+			$("#flickr-slider").easySlider({
+				auto: true, 
+				continuous: true,
+				speed: 1000,
+				pause: 5000,
+				controlsShow: false
+			});		
+		});
+	</script>
+
+
+<!-- extra head -->
+<style>
+	div.twtr-ft{display:none;}
+	div.twtr-widget div.twtr-hd h3{
+		color: #666 !important;
+		font-size: 16px !important;
+		font-weight: normal !important;
+		margin-left:-10px !important;
+	}
+	ul.flickr-list li, ul.vimeo-list li{
+		list-style:none;
+		margin:10px 0;
+		padding:0;
+	}
+	ul.flickr-list img{width:300px;}
+</style>
+
+
+<div id="story">
+	
+	<h1>Find us on social media</h1>
+	
+	<p>Social media is an important channel for KPCC's journalists and staff to converse with the public. We put together this page to show you some of the things we’re doing on social media. You can find our latest tweets, find your favorite show on Facebook, and view our latest videos and photos.</p>
+
+	<div id="twitter" style="border-bottom:1px dashed #bbb;padding:0 0 15px 0;">
+		<h2>
+			<img src="http://media.scpr.org/assets/images/twitter_bird.png" style="margin-right:2px;height:36px;width:36px;vertical-align:-10px;" />
+			KPCC on Twitter
+		</h2>
+
+        <p style="font-size:16px;"><img src="http://media.scpr.org/assets/images/tiny.jpg" style="margin-right:5px;;vertical-align:-11px"/>Follow us (<a href="http://twitter.com/kpcc" title="@kpcc on Twitter">@kpcc</a>) or get all of our headlines in one place (<a href="http://twitter.com/kpccnews" title="@kpccnews on Twitter">@kpccnews</a>)</p>
+
+		<div style="width:300px;margin-right:20px;float:left;">
+			<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+			<script>
+				new TWTR.Widget({
+				  version: 2,
+				  type: 'list',
+				  rpp: 5,
+				  interval: 6000,
+				  title: 'People',
+				  subject: '',
+				  width: 300,
+				  height: 300,	  
+				  theme: {
+					shell: {
+					  background: '#ffffff',
+					  color: '#666666'
+					},
+					tweets: {
+					  background: '#ffffff',
+					  color: '#333333',
+					  links: '#128bac'
+					}
+				  },
+				  features: {
+					scrollbar: false,
+					loop: false,
+					live: false,
+					hashtags: true,
+					timestamp: true,
+					avatars: true,
+					behavior: 'all'
+				  }
+				}).render().setList('kpcc', 'kpccstaff').start();
+			</script>
+			<p><a href=" http://twitter.com/KPCC/kpccstaff">&raquo; Follow the KPCC People Twitter list</a></p>
+		</div>
+
+		<div style="width:300px;float:left;">
+			<script>
+				new TWTR.Widget({
+				  version: 2,
+				  type: 'list',
+				  rpp: 5,
+				  interval: 6000,
+				  title: 'Programs',
+				  subject: '',
+				  width: 300,
+				  height: 300,
+				  theme: {
+					shell: {
+					  background: '#ffffff',
+					  color: '#666666'
+					},
+					tweets: {
+					  background: '#ffffff',
+					  color: '#333333',
+					  links: '#128bac'
+					}
+				  },
+				  features: {
+					scrollbar: false,
+					loop: false,
+					live: false,
+					hashtags: true,
+					timestamp: true,
+					avatars: true,
+					behavior: 'all'
+				  }
+				}).render().setList('kpcc', 'kpccshows').start();
+			</script>
+			<p><a href=" http://twitter.com/KPCC/kpccshows">&raquo; Follow the KPCC Programs Twitter list</a></p>
+		</div>
+
+		<br style="clear:both;" />
+	</div>
+
+	  <div id="facebook" style="border-bottom:1px dashed #bbb;padding:15px 0;">
+		  <div style="width:300px;margin-right:20px;float:left;">
+			  <h2><img src="http://media.scpr.org/assets/images/facebook_f.png" style="margin-right:8px;height:24px;vertical-align:-5px;">Shows &amp; blogs on Facebook</h2>
+
+			  <p>Interesting in finding specific KPCC programs and blogs on Facebook? Here's a list of programs &amp; blogs that have their own Facebook page.</p>
+
+			  <ul>
+				  <li><a href="http://www.facebook.com/KPCC.AirTalk">AirTalk</a></li>
+				  <li><a href="http://www.facebook.com/kpccofframp">Off-Ramp</a></li>
+				  <li><a href="http://www.facebook.com/Patt.Morrison">Patt Morrison</a></li>
+				  <li><a href="http://www.facebook.com/TMBShow">The Madeleine Brand Show</a></li>
+				  <li><a href="http://www.facebook.com/pages/Multi-American/146884742012800">Multi-American</a></li>
+				  <li><a href="http://www.facebook.com/pacificswell">Pacific Swell</a></li>
+			  </ul>
+
+		  </div>
+
+		  <div style="width:300px;float:left;">
+			  <h2><img src="http://media.scpr.org/assets/images/facebook_f.png" style="margin-right:8px;height:24px;vertical-align:-5px;">Tell the world you like KPCC</h2>
+			  <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fkpccfm&amp;width=300&amp;colorscheme=light&amp;connections=10&amp;stream=false&amp;header=false&amp;height=255" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:255px;margin-top:10px;" allowTransparency="true"></iframe>
+		  </div>
+
+		  <br style="clear:both;" />
+
+	  </div>
+
+	  <div id="flickr-and-vimeo" style="border-bottom:1px dashed #bbb;padding:15px 0;">
+
+		  <div style="width:300px;margin-right:20px;float:left;">
+			  <h2><img src="http://media.scpr.org/assets/images/flickr_dots.png" style="margin-right:5px;height:36px;width:36px;vertical-align:-10px" />KPCC on Flickr</h2>
+			 <div id="flickr-slider">
+			  {% sm_photos 5 %}
+			  </div>
+			  <p><a href="http://www.flickr.com/photos/scpr">&raquo; More photos at Flickr</a></p>
+
+		  </div>
+
+		  <div style="width:300px;float:left;">
+			  <h2><img src="http://media.scpr.org/assets/images/vimeo.png" style="margin-right:8px;height:30px;vertical-align:-3px;" />Our latest videos</h2>
+			  {% sm_videos 3 %}
+			  <p><a href="http://vimeo.com/kpcc">&raquo; More videos at Vimeo</a></p>
+			 
+		  </div>
+
+		<br style="clear:both;" />
+
+	</div>
+	
+</div>

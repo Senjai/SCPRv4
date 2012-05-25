@@ -8,6 +8,7 @@ $headShotWidth: 90px;
 		font-weight:600;
 	}
 }
+
 #featured-programs {
 	h4 {
 		color:$orangeDark;
@@ -35,161 +36,91 @@ $headShotWidth: 90px;
 
 .programs-list {
 	@include font-serif;
-	a {
-		&:hover {
-			text-decoration: none;
-		}
-		li {
+	li {
+		&:hover { background-color: $nearWhite; }
+		a { 
+			display: block;
 			padding: 5px;
-			&:hover {
-				background-color: $nearWhite;
-			}
 		}
 	}
 }
 
 /* the following must match the slug of the program */
 .headshot {
+	background-repeat: no-repeat;
+	background-position: 0 0;
 	&.madeleine-brand {
 	    background-image: url(image_path('broadcast-bar/headshots/madeleine-brand.png'));
-		background-repeat: no-repeat;
 	}
 	&.airtalk {
 		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
-		background-repeat: no-repeat;
 	}
 	&.patt-morrison {
 		background-image: url(image_path('broadcast-bar/headshots/patt-morrison.png'));
-		background-repeat: no-repeat;
 	}
 	&.offramp {
 		background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
-		background-repeat: no-repeat;
+	}
+	
+	&.program-info { 
+		height: $headShotHeight;
+		min-height: $headShotHeight;
+		padding-right: $headShotWidth;
+		background-position: right top;
 	}
 }
 
 .program-masthead {
-	border-bottom: 1px solid #a2a2a2;
+	border-bottom: 1px solid $grayLighter;
 	margin-bottom: $baseline / 2;
-	margin-top: $baseline / 2 * -1;
-	padding: 0 0 10px 0;
-	.row {
-		position: relative;
-		min-height: $headShotHeight;
-	}
+	padding-bottom: 10px;
 	
-	.show-title {
-		min-height: $headShotHeight;
-	}
+	.program-info {
+		display: table-cell;
+		width: 700px; // table-cell needs pixels, but with max-width set it's fluid
+		max-width: 100%;
+		vertical-align: bottom;
 	
-	h1.page-title {
-		position: absolute;
-		bottom: 0;
-		line-height: 30px;
-		width: 400px;
-	}
-	
-	.show-meta {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		text-align: right;
-		min-height: $headShotHeight;
-		padding-right: $headShotWidth;
-		width: 240px;
-		background-position: right top;
-		.info {
-			position: absolute;
-			bottom: 0;
-			right: $headShotWidth;
+		h1 { 
+			float: left;
+			margin: 0;
+		}
+		.show-meta {
 			@include font-sans-serif($size: 11px, $lineHeight: 14px);
+			text-align: right;
+			float: right;
 		}
 		
 	}
 	
-	.span4 {
-		margin: 0;
-		.support {
-			position: relative;
-			top: 15px; /* hax */
-			left: 14px;
-			height: $headShotHeight - 7px;
-			background: url(image_path('support-banner.png')) no-repeat left top;
-			display: block;
-			padding: 7px 9px 0 63px;
-			margin: 0;
-			width: 240px;
+	.support {
+		display: table;
+		height: 55px;
+		background: url(image_path('support-banner.png')) no-repeat left top;
+		padding: 0 5px 0 63px;
+		width: 310px;
+		overflow: hidden;
+		@include font-slab-headings(300, 13px, 15px);		
+		a {
+			display: table-cell;
+			vertical-align: middle;
 			color: #fff;
 			text-shadow: 0 1px $orangeDark;
-			@include font-slab-headings(300, 13px);
-			overflow-y: hidden;
 			&.small {
 				font-size:11px;
-				line-height:15px;
 			}
 		}
 	}
 }
 
-.program-about {
-	padding: 0 0 5px 0;
-}
-
-.show-feature {
-	padding: 0;
-	margin-bottom:$baseline;
-	border-bottom: 1px solid $grayLight;
-}
-
-a.with-icon {
-	margin-left: 4px;
-	display: block;
-	line-height: 14px;
-	background-repeat: no-repeat;
-	background-position: left 3px;
-	color: lighten($black, 40%);
-	&.twitter {
-		background-image: url(image_path("icons/tiny-twitter.png"));
-	}
-	&.facebook {
-		background-image: url(image_path("icons/tiny-facebook.png"));
-	}
-	&.podcast {
-		background-image: url(image_path("icons/tiny-podcast.png"));
-	}
-	&.rss {
-		background-image: url(image_path("icons/tiny-rss.png"));
-	}
-	&.archive {
-		@include font-sans-serif($size: 12px, $weight: bold);
-		background-image: url(image_path("icons/archived.png"));
-		padding-left: 21px;
-	}
-	&:hover {
-		text-decoration: underline;
-	}
-}
-
-.connect {
-	.title {
-		display: block;
-		@include font-heading($size: 12px, $weight: 600, $lineHeight: 14px);
-		margin-bottom:5px;
-		text-transform: uppercase;
-	}
-	a {
-		@include font-sans-serif($weight: normal, $size: 12px);
-		margin-bottom:2px;
-		padding-left: 18px;
-	}
+header.episode {
+	background: #f5f5f5;
+	border-bottom: 1px solid #bfbfbf;
+	margin-left: 0px;
+	margin-right: 0px;
 	margin-bottom: 10px;
-}
-
-.about {
-	min-height: 100px;
-	margin: 0;
-	color: $gray;
-	@include font-sans-serif($size: 12px, $lineHeight: 16px);
+	padding: 8px 3px 8px 12px;
+	@include font-heading($size: 12px, $weight: 600);
 }
 
 .missed-it {
@@ -204,4 +135,22 @@ a.with-icon {
 		margin: 10px 0;
 		text-align: center;
 	}
+}
+
+.program-external-header {
+	p { 
+		border-right: 1px solid $grayLighter;
+		padding-right: 5px;
+		margin: 0;
+	}
+	.connect { 
+		border-right: none;
+		min-height: 0px; 
+	}
+}
+
+.teaser.program-external {
+	// scoping span18/span24 here for different style if there is audio (span18) or not (span24) 
+	.span18 .info { min-height: 100px; }
+	.span24 .info { border-right: none; }
 }

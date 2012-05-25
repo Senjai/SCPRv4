@@ -14,6 +14,7 @@ class Related < ActiveRecord::Base
       FLAG_UPDATE: "Update"
   }
 
+  default_scope where("content_type != 'ShowSeries' and related_type != 'ShowSeries'")
   scope :tiein, where(:flag => FLAG_TIEIN)
   scope :updates, where(:flag => FLAG_UPDATE)
   scope :normal, where(:flag => FLAG_NORMAL)

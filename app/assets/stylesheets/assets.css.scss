@@ -1,5 +1,10 @@
-.contentasset, .cbase .contentasset {
-    img {max-width:100%;}
+.asset-block {
+	max-width: 100% !important;
+	height: auto !important;
+	
+	margin-left: auto;
+	margin-right: auto;
+	
 	h4 {
 	   text-transform: none;
        text-align: right;
@@ -8,27 +13,61 @@
        margin-bottom: $baseline / 4;
        color: #999;
     }
+
     p {
         color: #777;
 		@include font-sans-serif(normal, 11px, 14px);
 		margin-bottom:0;
     }
+
+	&.right {
+	    display: inline;
+	    float: right;
+	    margin-left: $gridGutterWidth;
+	    margin-bottom: $gridGutterWidth;
+	}
+
+	&.wide { 
+		margin-bottom: $gridGutterWidth;
+	}
+	
+	&.multimedia {
+		margin-bottom: $baseLineHeight / 2;
+	}
+
+	&.caOL {
+	    display: inline;
+	    float: left;
+	    margin-right: 6px;
+	}
+
+	&.sidebar { 
+		margin-bottom: 10px; 
+		p { text-align: center; }
+	}
+	
+	&.video-three {
+		.video-play {
+			background:transparent url(image_path('icons/video-play-btn-tiny.png')) no-repeat 0 0;
+			width:24px;
+			height:16px;
+			@include opacity (0.7);
+			position:absolute;
+			bottom:20%;
+			right:10%;
+			text-indent:-9999px;
+		}
+		&:hover .video-play { opacity:1; }
+	}
 }
 
-.contentasset.caR {
-    display: inline;
-    float: right;
-    margin-left: $gridGutterWidth;
-    margin-bottom: $gridGutterWidth;
-}
-
-.contentasset.caW {
-    margin: 0 auto;
-    margin-bottom: $gridGutterWidth;
-}
-
-.contentasset.caOL {
-    display: inline;
-    float: left;
-    margin-right: 6px;
+.contentasset {
+	height: auto;
+	position: relative; // to allow video overlays and other fun stuff
+	text-align: center;
+	
+	img {
+		max-width: 100% !important;
+		height: auto !important;
+	}
 }

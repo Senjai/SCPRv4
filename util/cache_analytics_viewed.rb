@@ -65,6 +65,7 @@ resp = conn.get do |req|
     "metrics"     => "ga:pageviews",
     "dimensions"  => "ga:pagePath",
     "max-results" => "30",
+    "filters"      => "ga:pagePath!~/photos/.+$",
     "sort"        => "-ga:pageviews",
     "pp"          => "1",
     "start-date"  => start_date.to_s,
@@ -79,8 +80,10 @@ rows = resp.body['rows']
 content = []
 
 rows.each do |row|
-  # check whether row[0] is a content URL
-  if content.length < 5 && obj = ContentBase.obj_by_url(row[0])
+  obj = ContentBase.obj_by_url(row[0])
+  # check whether row[0] is a content URL and that it doesn't already exist in the array
+  if content.length < 5 && obj && !content.flatten.include?(obj)
+    puts "ga:pagePath is #{row[0]}"
     # yes... add it
     content << [ row[1], obj ]
   end
@@ -98,10 +101,3 @@ Rails.cache.write("widget/popular_viewed",top_traffic)
   pickle.dumps(top_traffic),
   :raw => true
 )
-
-
-
-
-
-
-

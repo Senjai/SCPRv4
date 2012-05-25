@@ -3,25 +3,48 @@ class HomeController < ApplicationController
   
   def index
     @homepage = Homepage.published.first
+    @schedule_current = Schedule.on_now
   end
   
   #----------
 
   def beta
-    render :layout => "beta"
+    render :layout => false
   end
   
   #----------
   
+  def listen
+    render layout: 'application'
+  end
+  
+  def about_us
+    render :layout => "app_nosidebar"
+  end
+  
   def error
-    render :template => "/error/500.html", :status => 500, :layout => "error"
+    render :template => "/error/500.html", :status => 500, :layout => "app_nosidebar"
   end
   
   def not_found
-    render :template => "/error/404.html", :status => 404, :layout => "error"
+    render :template => "/error/404.html", :status => 404, :layout => "app_nosidebar"
+  end
+  
+  def fb_channel_file
+    cache_expire = 1.year
+    response.headers["Pragma"] = "public"
+    response.headers["Cache-Control"] = "max-age=#{cache_expire.to_i}"
+    response.headers["Expires"] = (Time.now + cache_expire).strftime("%d %m %Y %H:%I:%S %Z")
+    render :layout => false, :inline => "<script src='//connect.facebook.net/en_US/all.js'></script>"
   end
   
   #----------
+  
+  def missed_it_content
+    @homepage = Homepage.find(params[:id])
+    @carousel_contents = @homepage.missed_it_bucket.contents.paginate(page: params[:page], per_page: 6)
+    render 'missed_it_content.js.erb'
+  end
   
   def self._cache_homepage(obj_key=nil,pickle=nil)
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  

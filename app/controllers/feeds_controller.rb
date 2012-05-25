@@ -10,7 +10,7 @@ class FeedsController < ApplicationController
     end
     
     @feed = {
-      :title => "All News || 89.3 KPCC",
+      :title => "All News | 89.3 KPCC",
       :description => "All news from KPCC's reporters, bloggers and shows."
     }
     
@@ -26,7 +26,7 @@ class FeedsController < ApplicationController
       :without    => { :category => '' }
     )
     
-    xml = render_to_string :action => "feed", :formats => :xml
+    xml = render_to_string(:action => "feed", :formats => :xml)
     Rails.cache.write_entry( "feeds:all_news", xml, :objects => (@content + ["contentbase:new"]) )
     render :text => xml, :format => :xml    
   end

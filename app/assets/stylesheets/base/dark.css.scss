@@ -1,111 +1,103 @@
 /* DARK THEME FOR VIDEO SECTIONS & OTHER PLACES WHERE THE FOCUS IS ON VISUAL CONTENT */
-html {height:100%;}
-.dark-theme {	
-	// DEFINE FOCUS TRANSITIONS
-	.muted {
-		-webkit-transition: opacity linear 0.2s;
-		-moz-transition: opacity linear 0.2s;
-		transition: opacity linear 0.2s;
-		filter: alpha(opacity=40);
-		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-		opacity:0.4;
-		&:hover {
-			-webkit-transition: opacity linear 0.2s;
-			-moz-transition: opacity linear 0.2s;
-			transition: opacity linear 0.2s;
-			filter: alpha(opacity=100);
-			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-			opacity:1;
+.dark-theme {
+	h1, h2, h3, h4, h5, h6, h7 {
+		color: $gray;
+	}
+	
+	.pagination {
+		a:hover, &.active a {
+	    	background-color: $nearBlack;
 		}
 	}
 	
-	// MASTHEAD
-	// Logo
-	/* background:lighten($black, 10%); */
-	background: $black;
-	@include background-image(linear-gradient(lighten($black, 13%), $black));
+	// DEFINE FOCUS TRANSITIONS
+	.muted {
+		@include transition(opacity linear 0.2s);
+		@include opacity(0.4);
+		&:hover { @include opacity(1); }
+	}
+
+	@include gradient-vertical(lighten($black, 13%), $black);
+	background-color: $black; // override since the disqus comments load after the gradient has already been calculated	
 	background-repeat: no-repeat;
 	color:$gray;
-	margin:0;
-	height:100%;
-	.logo h1 {
-		&:after {
-			content: url(image_path('video-masthead.png'));
-			margin-left:8px;
-		}
-		a {
-			background:url(image_path('logo-masthead-dark.png')) no-repeat 0 0;
-			text-decoration: none;
-			img {
-				visibility:hidden;
-			}
-		}
-	}
+	
 	.alert-message.warning {
-		@include background-image(linear-gradient(lighten($nearBlack, 13%), $nearBlack));
+		@include gradient-vertical(lighten($nearBlack, 13%), $nearBlack);
 		border:none;
 		border-radius:0;
 		border-bottom:1px solid $black;
-		p {
-			color:$grayLighter;
-		}
+		p { color:$grayLighter; }
 	}
-	.logo #kpcc-fb-like {
-		display:none;
-	}
-	//Pledge Promo 
-	.pledge-container {
-		background:none;
-		img, .reporter {
-			display:none;
+	
+	#masthead {
+		#masthead-left-header-wrapper {
+			.logo a.logo-img {
+				background-image: url(image_path('logo-masthead-dark.png'));
+			}
+		
+			.fb-like { display: none; }
 		}
-		.pledge {
-			left:92px;
-			margin-left:0;
+
+		#masthead-mid-header-wrapper {
+			//Pledge Promo 
+			.kpcc-personalities {
+				background:transparent;
+				img {
+					display:none;
+				}
+			}
 		}
 	}
 	// Site Utilities
-	nav.utils ul li {
-		border-right:1px solid $grayDark;
-		a {
-			color:$gray;
-		}
+	nav.utils {
+		a { color: $gray;}
+		ul li { border-color: $grayDark; }
 	}
+
 	// Site Nav
 	.nav-primary {
-		@include background-image(linear-gradient(darken($nearBlack, 5%), $black));
-		background-color:#7f7f7f;
-		border:1px solid $black;
-		border-left:1px solid lighten($black, 18%);
-		border-top:1px solid lighten($black, 18%);
+		$this_borderColor: lighten($black, 15%);
+		@include gradient-vertical-four-stops($this_borderColor, 1%, darken($nearBlack, 5%), 2%, $black, 98%, $this_borderColor, 99%);
+		border-color: $this_borderColor;
+
 		.sections ul li.listen-live {
-			@include background-image(linear-gradient(darken($grayDark, 8%), darken($nearBlack, 10%)));
-			background-color:darken($grayDark, 5%);
+			@include gradient-vertical-four-stops($this_borderColor, 1%, $nearBlack, 2%, lighten($black, 5%), 98%, $this_borderColor, 99%);
 			&:hover {
-				@include background-image(linear-gradient(darken(#cb5f1d, 5%), darken(#9b4816, 5%)));
+				@include gradient-vertical(darken(#cb5f1d, 5%), darken(#9b4816, 5%));
 			}
 			a {
 				background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
-				opacity:0.7;
+				@include opacity (0.7);
 				padding-left:33px;
 				padding-right:22px;
 				&:hover {
 					background-color:transparent;
 					color:$white;
-					opacity:1;
+					@include opacity (1);
 				}
 			}
 		}
-		.sections ul li a {	
-			color:$gray;
-			&:hover, &.hover {
-				background-color:darken($nearBlack, 3%);
-				color:$white;
-				$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
-				@include box-shadow($nav-shadow);
+	
+		.sections ul li {
+			a {	
+				color:$gray;		
+				&:hover, &.hover {
+					color:$white;
+				}
+			}
+			&.mega {
+				a {
+					&:hover, &.hover {
+						background-color:darken($nearBlack, 3%);
+						$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
+						@include box-shadow($nav-shadow);
+					}
+				}
 			}
 		}
-		form fieldset {
+	
+		.search-form form {
 			input.search {
 				background-color:$nearBlack;
 				border:1px solid $black;
@@ -118,70 +110,46 @@ html {height:100%;}
 			}
 			input:-moz-placeholder {color: darken($gray, 10%);}
 			input::-webkit-input-placeholder {color: darken($gray, 10%);}
-			input.submit {
-				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
-			}
-		}
-		.section-mega {
-			background-color:darken($nearBlack, 3%);
-			$mega-shadow:0 5px 6px $black;
-			@include box-shadow($mega-shadow);
-			h6 {
-				color:$white;
-			}
-			ul li a {
-				color:$gray;
-			}
-			.categories, .featured, .kpcc-programs, .events-nav, .events-forum {
-				background:url(image_path('mega-divider-dark.png')) no-repeat right 10px;
-			}
-			.categories {
-				ul.content-types {
-					li {
-						border-right:1px solid $grayDark;
-					}
-					li.videos {
-						background-image:none;
-						padding-left:0;
-					}
-				}
-			}
-			.blogs {
-				li {
-					border-bottom:1px solid $grayDark;
-				}
-			}
-			.kpcc-programs {
-				ul {
-					&.first {
-						border-right:1px solid $grayDark;
-					}
-					li {
-						&:first-child {
-							border-bottom:1px solid $grayDark;
-						}
-						&:hover {
-							background-color:darken($grayDark, 10%);
-						}
-					}
-				}
-			}
-			.events-forum .events-content .event-title { 
-				color:$gray;
-			}
 		}
 	}
 	
+	.megamenu .mega-bucket .section-mega {
+		background-color:darken($nearBlack, 3%);
+		$mega-shadow:0 5px 6px $black;
+		@include box-shadow($mega-shadow);
+		h6 { color: $white; }
+		a, .featured h4 a, ul.cbase li h4 a { color: $gray; }
+		.blog-title a { color: $grayLight; }
+		
+		ul.cbase li, 
+		.section, 
+		ul.content-types li, 
+		&#programs-mega .section.programs a:first-child { border-color: $grayDark; }
+		
+		&#programs-mega .section.programs a {
+			&:hover { background-color: $nearBlack; }
+			p { color: $gray; }
+		}
+		
+		&#support-mega .section .pledge a { color: $white; }
+	}
+	
+	
 	// MAIN BODY
 	// Headlines & Body Copy
-	.story-headline {
-		color:$grayLight;
-	} 
+	.story-headline { color:$grayLight; } 
 
 	
 	// Comments
 	.comments {
 		border-top:1px solid $nearBlack;
+		.dsq-mobile { 
+			background-color: $nearBlack !important; 
+			#dsq-topbar, #dsq-comments { background-color: $nearBlack !important; }
+			#dsq-comments {
+				.dsq-comment, .dsq-comment-body, .dsq-comment-message, .dsq-comment-text { color: $white; }
+			}
+		}
 		.dsq-options, #dsq-footer, #dsq-account-dropdown {
 			@include font-sans-serif(normal, 12px);
 		}
@@ -190,7 +158,7 @@ html {height:100%;}
 		}
 		.dsq-brlink {display:none;}
 	}
-	#site-footer .container {
-		background:url(image_path('footer-arrow-dark.png')) no-repeat 1045px 0;
-	}
+	
+	//FOOTER
+	#page-footer footer #footer-container { background-image: url(image_path('footer-arrow-dark.png')); }
 }

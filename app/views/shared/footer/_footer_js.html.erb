@@ -9,13 +9,13 @@
 		social = new scpr.SocialTools();
 		audio = new scpr.Audio();
 		modal = new scpr.Modal();
+		adSizer = new scpr.adSizer();
 	  
 	   (function() {
 	     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
 	     po.src = 'https://apis.google.com/js/plusone.js';
 	     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 	   })();
-		
 	})
 	
 	<%= yield :footerjss %>
@@ -38,6 +38,9 @@
    ]);
    // End Custom Variable
 
+  //Additional page or section-specific GA tracking goes here
+  <%= yield :footerga %>
+
   // track page view
   _gaq.push(['_trackPageview']);
 
@@ -48,6 +51,28 @@
   })();
 
 </script>
+
+<!-- Stats: WebTrends -->
+<script src="http://media.scpr.org/assets/scripts/webtrends.v2.js"></script>
+<script>
+    //<![CDATA[
+        var _tag=new WebTrends();
+        _tag.dcsGetId();
+    //]]>
+</script>
+<script>
+    //<![CDATA[
+        _tag.dcsCustom=function(){
+            // Add custom parameters here.
+            //_tag.DCSext.param_name=param_value;
+        }
+    _tag.dcsCollect();
+    //]]>
+</script>
+<noscript>
+    <div><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcsyqctzwuz5bdsebpmwhwe8w_2p8d/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=9.3.0&amp;WT.dcssip=www.scpr.org"/></div>
+</noscript>
+<!-- /WebTrends -->
 
 <!-- chartbeat -->
 <script type="text/javascript">
@@ -68,4 +93,30 @@ var _sf_async_config={uid:2825,domain:"scpr.org"};
      loadChartbeat : function() { oldonload(); loadChartbeat(); };
 })();
 
+</script>
+
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '129848480405753', // App ID
+      //channelUrl : "//www.scpr.org/fb_channel_file", // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+    // Additional initialization code here
+  };
+  // Load the SDK Asynchronously
+  (function(d){
+	if(!navigator.userAgent.match(/MSIE 7/)){
+		console.log("loading FB...");
+	     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement('script'); js.id = id; js.async = true;
+	     js.src = "//connect.facebook.net/en_US/all.js";
+		 js.type = "text/javascript";
+	     ref.parentNode.insertBefore(js, ref);
+	}
+   }(document));
 </script>

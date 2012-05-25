@@ -19,7 +19,7 @@ module ApplicationHelper
     
     html = ''
     
-    [content].flatten.each do |c|
+    (content.is_a?(Array) ? content : [content]).each do |c|
       if c.respond_to?(:content) && c.content.is_a?(ContentBase)
         c = c.content
       end
@@ -56,6 +56,18 @@ module ApplicationHelper
     return html.html_safe
   end
   
+  def render_content_body(content)
+    if !content || !content.respond_to?("body") || !content.respond_to?("has_format?") || !content.body.present?
+      return ""
+    end
+    
+    if content.has_format?
+      return content.body.html_safe
+    else
+      return simple_format(content.body, {}, sanitize: false)
+    end
+  end
+  
   #----------
   
   # render_asset takes a ContentBase object and a context, and renders using 
@@ -70,12 +82,11 @@ module ApplicationHelper
   # * shared/assets/story/default
   # * shared/assets/default/default
   
-  def render_asset(content,context)
-    # short circuit if it's obvious we're getting nowhere
-    if !content || !content.respond_to?("assets") || !content.assets.any?
-      return ''
+  def render_asset(content,context, fallback=false)
+    if !content || !content.respond_to?("assets") || !content.assets.present?
+      return fallback ? render("shared/assets/#{context}/fallback", content: content) : ''
     end
-
+    
     # look for a scheme on the content object
     scheme = content["#{context}_asset_scheme"] || "default"
 
@@ -93,6 +104,11 @@ module ApplicationHelper
   end
   
   #----------
+  
+  def random_headshot
+    images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "cohen.png", "guzman-lopez.png", "julian.png", "watt.png"]
+    image_tag "personalities/#{images[rand(images.size)]}"
+  end
   
   def smart_date(content,options={})
     options = {
@@ -150,7 +166,7 @@ module ApplicationHelper
       end
       
       authors[i].collect! do |b|
-        if links && b.user
+        if links && b.user && b.user.is_public
           link_to(b.user.name, bio_path(b.user.slugged_name))
         elsif b.user
           b.user.name

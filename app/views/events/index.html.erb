@@ -3,13 +3,13 @@
 <nav class="filters events">
 	<ul class="clearfix">
 		<li class="heading">View:</li>
-	    <li><%= link_to(raw("All Events<span></span>"), events_path(list: "all"), id: "all", class: %w{sponsored forum}.include?(params[:list]) ? nil : "active") %></li>
-	    <li><%= link_to(raw("Crawford Family Forum Events<span></span>"), events_path(list: "forum"), id: "forum", class: params[:list] == "forum" ? "active" : nil) %></li>
-	    <li><%= link_to(raw("Sponsored Events<span></span>"), sponsored_events_path, id: "sponsored", class: params[:list] == "sponsored" ? "active" : nil) %></li>
+	    <li><%= link_to(raw("All Events<span class='active-arrow'></span>"), events_path(list: "all"), id: "all", class: %w{sponsored forum}.include?(params[:list]) ? nil : "active") %></li>
+	    <li><%= link_to(raw("Crawford Family Forum Events<span class='active-arrow'></span>"), events_path(list: "forum"), id: "forum", class: params[:list] == "forum" ? "active" : nil) %></li>
+	    <li><%= link_to(raw("Sponsored Events<span class='active-arrow'></span>"), sponsored_events_path, id: "sponsored", class: params[:list] == "sponsored" ? "active" : nil) %></li>
 	</ul>
 </nav>
 <!-- events_home -->
-<div id='div-gpt-ad-1334030619228-0' style='width:728px; height:90px;'>
+<div class="dfp" id='div-gpt-ad-1334030619228-0' style='width:728px; height:90px; max-width: 100%; overflow: hidden;'>
 <script type='text/javascript'>
 googletag.cmd.push(function() { googletag.display('div-gpt-ad-1334030619228-0'); });
 </script>

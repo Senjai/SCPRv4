@@ -1,6 +1,6 @@
 class CategoryController < ApplicationController  
   def index
-    @category = Category.find_by_slug(params[:category])
+    @category = Category.find_by_id(params[:id])
     
     @content = ThinkingSphinx.search '',
       :classes    => ContentBase.content_classes,
@@ -54,6 +54,12 @@ class CategoryController < ApplicationController
     # sending @top and @sections to render    
   end
 
+  def carousel_content
+    @content = params[:object_class].constantize.find(params[:id])
+    @carousel_contents = @content.category.content(params[:page], 4, @content)
+    render 'shared/cwidgets/content_carousel.js.erb'
+  end
+  
   protected
   def generate_sections_for(secobjs,without)
     

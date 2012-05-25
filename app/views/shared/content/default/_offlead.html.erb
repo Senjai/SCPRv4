@@ -1,12 +1,13 @@
-<div class="cbase offlead clearfix">
-	<h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
-	<h4>
-		<%= render_byline content %> 
-		<%= smart_date_js content, "data-window" => "8h" %>
-	</h4>
+<div class="span8">
+	<div class="cbase offlead clearfix">
+		<h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
+		<h4>
+			<%= render_byline content %> 
+			<%= smart_date_js content, "data-window" => "8h" %>
+		</h4>
 
-	<p><%= h strip_tags(content.teaser) %></p>
-	
-	<%= comment_count_for content %>
-</div>
-<hr/>
+		<p><%= h strip_tags(content.teaser) %></p>
+
+		<%= comment_count_for content %>
+	</div>
+</div> <!-- mq span8 -->

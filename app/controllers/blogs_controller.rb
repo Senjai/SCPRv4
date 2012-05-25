@@ -21,6 +21,8 @@ class BlogsController < ApplicationController
   
   def entry
     @entry = @blog.entries.published.find(params[:id])
+    rescue
+      raise ActionController::RoutingError.new("Not Found")
   end
   
   #----------
@@ -48,6 +50,8 @@ class BlogsController < ApplicationController
     def load_blog
       unless @blog = Blog.local.find_by_slug(params[:blog])
         redirect_to blogs_path
+      else
+        @authors = @blog.authors
       end
     end    
 end

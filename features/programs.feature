@@ -112,3 +112,87 @@ Scenario: See a video player if the program has a dedicated Brightcove player
 	
 	When I go to that program's page
 	Then I should see a video
+
+Scenario: See the program's missed it bucket if it has one
+	Given a kpcc program with the following attributes:
+	 | missed_it_bucket[contents_count] |
+	 | 3                   			    |
+	
+	When I go to the program's page
+	Then I should see a missed it bucket
+	And the missed it bucket should have 3 items in it
+	
+Scenario: Do not show a missed it bucket if the program doesn't have one
+	Given a kpcc program with the following attributes:
+	 | missed_it_bucket_id |
+	 |                     |
+	
+	When I go to that program's page
+	Then I should not see a missed it bucket
+	
+Scenario: Do not show a missed it bucket if the bucket has no contents
+	Given a kpcc program with the following attributes:
+	 | missed_it_bucket[contents_count] |
+	 | 0                                |
+
+	When I go to that program's page
+	Then I should not see a missed it bucket
+	
+Scenario: See a Kpcc Program's associated blog's entries
+	Given a kpcc program with the following attributes:
+	 | blog |
+	 | true |
+	
+	When I go to that program's page
+	Then I should see the "recent posts" widget
+
+Scenario: Don't see a blog widget if the Kpcc Program doesn't have a blog
+	Given a kpcc program with the following attributes:
+	 | blog |
+	 | false |
+
+	When I go to that program's page
+	Then I should not see the "recent posts" widget
+	
+Scenario: Quick Slug for a show
+	Given a kpcc program with the following attributes:
+	 | quick_slug | slug |
+	 | pm 		  | patt-morrison |
+	
+	When I visit the shallow path for that program
+	Then I should be on that program's page
+
+Scenario: Quick Slug is same as another page
+	Given a kpcc program with the following attributes:
+	 | quick_slug |
+	 | events 	  |
+	
+	When I visit the shallow path for that program
+	Then I should not be on that program's page
+
+Scenario: Archive
+	Given a kpcc program with the following attributes:
+	| episode_count | episode[air_date] | display_episodes |
+	| 1				| 2011-05-22 		| true 			   |
+	
+	When I go to that program's page
+	And I select the date for that episode in the archive select
+	And I submit the "archive date select" form
+	Then I should be on the episode's page
+
+Scenario: Archive episode doesn't exist
+	Given a kpcc program with the following attributes:
+	| episode_count | episode[air_date] | display_episodes |
+	| 1				| 2011-05-22 		| true 			   |
+	
+	When I go to that program's page
+	And I select a date that doesn't exist for an episode in the archive select
+	And I submit the "archive date select" form
+	Then I should be on the program's page
+
+Scenario: No Archive feature if the program doesn't display episodes
+	Given a kpcc program with the following attributes:
+	| display_episodes |
+	| false			   |
+	
+	Then I should not see the archive select

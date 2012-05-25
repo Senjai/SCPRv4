@@ -1,8 +1,8 @@
-<nav class="section-nav">
+<nav class="section-nav <%= navClass ||= "vertical" %>">
 	<%= link_to "Events Home", events_path %>
 	<%= link_to "The Crawford Family Forum", forum_events_path %>
-	<%= link_to "Directions & Parking", forum_directions_path %>
-	<%= link_to "Community Partnerships", forum_space_path %>
+	<%= link_to "Directions & Parking", '/events/forum/directions'%>
+	<%= link_to "Community Partnerships", '/events/forum/space' %>
 	<%= link_to "Past Events", forum_events_archive_path %>
-	<%= link_to "About the Crawford Family Forum", forum_about_path %>
+	<%= link_to "About the Crawford Family Forum", '/events/forum/about' %>
 </nav>

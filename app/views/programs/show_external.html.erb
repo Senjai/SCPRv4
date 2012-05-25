@@ -1,19 +1,21 @@
 <% page_title @program.title %>
 
-<div class="row">
-	<div class="span6">
-		<%= @program.description.html_safe %>
-	</div>
-	<div class="span2 connect">
-		<%= link_to "Website", @program.web_url, target: "_blank", class: "archive with-icon" if @program.web_url? %>		
-		<%= link_to "RSS Feed", @program.rss_url, target: "_blank", class: "rss with-icon" if @program.rss_url? %>
-		<%= link_to "Podcast", @program.podcast_url, target: "_blank", class: "podcast with-icon" if @program.podcast_url? %>
-	</div>
-</div>
+<div class="program-external-header">
+	<div class="row-fluid" id="program-external-header">
+		<div class="span18">
+			<p><%= @program.description.html_safe %></p>
+		</div>
+		<div class="span6">
+			<nav class="connect">
+				<%= link_to "Website", @program.web_url, target: "_blank", class: "archive with-icon" if @program.web_url? %>		
+				<%= link_to "RSS Feed", @program.rss_url, target: "_blank", class: "rss with-icon" if @program.rss_url? %>
+				<%= link_to "Podcast", @program.podcast_url, target: "_blank", class: "podcast with-icon" if @program.podcast_url? %>
+			</nav>
+		</div>
+	</div> <!-- row fluid -->
+</div> <!-- .program-ext-header -->
 
-<br style="clear: both"/>
-
-<section class="show-segments">
+<div class="show-segments">
 	<% if @program.podcast_url? && podcast = Rails.cache.fetch("ext_program:#{@program.slug}:podcast") %>
 			<h2>Recently</h2>
 			<%= raw podcast %>
@@ -25,6 +27,4 @@
 	<% else %>
 		<span class="none-to-list">There is currently no feed available for this program.</span>
 	<% end %>
-</section>
-
-<br style="clear: both"/>
+</div>

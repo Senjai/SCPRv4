@@ -5,7 +5,7 @@ body.listen {
 		a {color:#2e2e2e;}
 	}
 	.pipe {
-		display:inline-block;
+		@include ie-inline-block;
 		zoom:1;
 		*display:inline;
 		padding:0 4px;
@@ -14,7 +14,7 @@ body.listen {
 		padding:0 10px;
 		position:relative;
 		h2 {
-			display:inline-block;
+			@include ie-inline-block;
 			zoom:1;
 			*display:inline;
 			float:left;
@@ -22,7 +22,7 @@ body.listen {
 		}
 		.pledge {
 			position:absolute;
-			top:9px;
+			top: -10px;
 			right:10px;
 		}
 		.small {
@@ -74,7 +74,7 @@ body.listen {
       line-height: 20px;
       margin: 0; }
       .player .jp-title p span {
-        display: inline-block;
+        @include ie-inline-block;
         zoom: 1;
         *display: inline;
         margin-right: 9px;
@@ -106,9 +106,10 @@ body.listen {
     width: 18px;
     height: 11px;
     margin-top: 25px;
-    opacity: 0.6; }
+   	@include opacity(0.6);
+ }
   .player .jp-rw:hover, .player .jp-ff:hover, .player .jp-mute:hover, .player .jp-unmute:hover, .player .jp-volume-max:hover {
-    opacity: 1; }
+	@include opacity(1); }
   .player .jp-rw {
     background-position: -97px -17px; }
   .player .jp-ff {
@@ -145,8 +146,7 @@ body.listen {
 		@include border-radius(6px);
 		position:relative;
 		&:after {
-			background-color:#e0e0e0;
-			@include background-image(linear-gradient(#fff, #dfe1e3));
+			@include gradient-vertical(#fff, #dfe1e3);
 			@include box-shadow(0 1px 0 rgba(0,0,0,.15));
 			border:1px solid #a1a5a5;
 			content: "";
@@ -171,13 +171,13 @@ body.listen {
   .player .jp-mute, .player .jp-unmute {
     background-position: -167px -10px;
     margin-top:2px;
-    opacity: 0.6;
+	@include opacity(0.6);
     width: 25px;
     height: 25px; }
   .player .jp-volume-max {
     background-position: -147px -10px;
     margin-top:2px;
-    opacity: 0.6;
+	@include opacity(0.6);
     width: 25px;
     height: 25px; }
   .player .jp-bar {

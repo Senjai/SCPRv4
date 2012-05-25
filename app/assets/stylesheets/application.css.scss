@@ -1,4 +1,4 @@
- /*
+/*
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
@@ -11,18 +11,18 @@
 @import "compass/css3/images";
 @import "compass/utilities/sprites/base";
 @import "base/reset.css.scss";
+@import "base/bootstrap/mixins";
 @import "base/base.css.scss";
 @import "base/type.css.scss";
-@import "base/grids.css.scss";
 @import "base/patterns.css.scss";
 @import "base/forms.css.scss";
 @import "base/tables.css.scss";
 
-//Section-Specific Stylesheets
+// Layouts
 @import "base/minimal.css.scss";
 @import "base/dark.css.scss";
-@import "base/slider.css.scss";
 
+// Section-Specific Stylesheets
 @import "main.css.scss";
 @import "masthead.css.scss";
 @import "footer.css.scss";
@@ -36,7 +36,31 @@
 @import "segments.css.scss";
 @import "videos.css.scss";
 @import "listen.css.scss";
+@import "about.css.scss";
 @import "widgets.css.scss";
 @import "modals.css.scss";
 @import "slideshow.css.scss";
+
+// Put these at the bottom for overriding
+@import "base/ie-overrides.css.scss";
+@import "base/responsive.css.scss";
+
+// Global z-index Index:
+
+// 20	: #events-header
+// 45	: #uvTab
+// 50	: #opaque-cover
+// 70	: .audio-bar
+// 80	: .nav-primary
+// 81	: .modal-container
+// 82	: .modal-popup
+// 84	: .section-mega
+// 85	: .footer-nav.active (in media query)
+
+// 99	: .broadcast-bar (ie7 only)
+// 100	: #masthead (ie7 only)
+
+
+
+
 
