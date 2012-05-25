@@ -16,7 +16,7 @@ describe BlogsController do
       p = entry_unpublished.published_at
       lambda {
         get :entry, blog: blog.slug, year: p.year, month: p.month, day: p.day, id: entry_unpublished.id, slug: entry_unpublished.slug
-      }.should raise_error ActionConroller::RoutingError
+      }.should raise_error ActionController::RoutingError
     end
   end
 end
