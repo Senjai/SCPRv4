@@ -83,7 +83,7 @@ module ApplicationHelper
   # * shared/assets/default/default
   
   def render_asset(content,context, fallback=false)
-    if !content || !content.respond_to?("assets") || !content.assets.present?
+    if content.blank? || !content.respond_to?(:assets) || content.assets.blank?
       return fallback ? render("shared/assets/#{context}/fallback", content: content) : ''
     end
     
