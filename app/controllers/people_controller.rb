@@ -5,7 +5,7 @@ class PeopleController < ApplicationController
   end
   
   def bio
-    @bio = Bio.where(:slugged_name => params[:name]).first
+    @bio = Bio.where(is_public: true, :slugged_name => params[:name]).first
     
     if !@bio
       raise ActionController::RoutingError.new("Not Found")
