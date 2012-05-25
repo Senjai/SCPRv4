@@ -154,6 +154,7 @@ end
     teaser "This is breaking news"
     alert_time { Time.now }
     alert_type "break"
+    alert_link "http://scpr.org/"
     is_published 1
     email_sent 0
   end
