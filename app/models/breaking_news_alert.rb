@@ -1,14 +1,14 @@
 class BreakingNewsAlert < ActiveRecord::Base
   self.table_name = 'layout_breakingnewsalert'
   
+  ALERT_TYPES = {
+    "break" => "Breaking News",
+    "audio" => "Listen Live",
+    "now" => "Happening Now"
+  }
+  
   def break_type
-    if alert_type = "break"
-      "Breaking News"
-    elsif alert_type = "audio"
-      "Listen Live"
-    elsif alert_type = "now"
-      "Happening Now"
-    end  
+    ALERT_TYPES[alert_type]
   end
   
   def self.get_alert
