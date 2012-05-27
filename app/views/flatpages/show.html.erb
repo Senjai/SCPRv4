@@ -2,5 +2,4 @@
 <% content_for :headerjs, @flatpage.extra_head.html_safe %>
 <h1><%= @flatpage.title %></h1>
 <%= @flatpage.content.html_safe %><br />
-<em>Last modified: <%= @flatpage.date_modified.strftime("%b %e, %Y at %l:%M%P") %></em>
 <%= @flatpage.extra_tail.html_safe %>
