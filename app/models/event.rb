@@ -22,6 +22,10 @@ class Event < ActiveRecord::Base
     upcoming.first
   end
   
+  def short_headline
+    headline
+  end
+  
   def upcoming? # Still display maps, details, etc. if the event is currently happening
     starts_at > Time.now
   end
