@@ -5,6 +5,16 @@ describe Event do
     it { should have_many :assets }
   end
   
+  describe "content base attributes" do
+    it { should respond_to :headline }
+    it { should respond_to :short_headline }
+    it { should respond_to :obj_key }
+    it { should respond_to :remote_link_path }
+    it { should respond_to :teaser }
+    it { should respond_to :link_path }
+  end
+    
+  
   describe "inline_address" do
     it "returns the full address if all address fields are present" do
       event = build :event, address_1: "123 Fake St.", address_2: "Apt. A", city: "Pasadena", state: "CA", zip_code: "12345"
