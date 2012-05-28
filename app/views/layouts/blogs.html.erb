@@ -14,7 +14,7 @@
 <% content_for :sidebar_middle do %>
 	<%= render "shared/widgets/blog_about" %>
 	<%= render "blogs/recent_posts", blog: @blog %>
-	<%= render "shared/widgets/missed_it_bucket", object: @program %>
+	<%= render "shared/widgets/missed_it_bucket", object: @blog %>
 <% end %>
 
 <%= render :template => "layouts/application" %>
