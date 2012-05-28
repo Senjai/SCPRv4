@@ -1,4 +1,4 @@
-<%= content_cache bucket.obj_key do %>
+<%= content_cache "#{bucket.obj_key}:#{params[:page]}" do %>
 	<div class="carousel-section">
 		<div class="row-fluid">
 			<% contents.each do |extra_content| %>
