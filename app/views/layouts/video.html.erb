@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
-<head>
-	<title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
-	<meta name="viewport" content="width=1134">
-	
-	<%= render "shared/header/header_js" %>
-	<%= render "shared/header/opengraph" %>
+<% content_for :headerjs do %>
 	<script language="JavaScript">
 	  GA_googleAddAttr("section", "video");
 	</script>
-	<%= csrf_meta_tags %>
-</head>
+<% end %>
+
+<%= render 'shared/header/document_header' %>
+
 <body id="multimedia" class="dark-theme">
 <div class="viewport">
 	<!-- MASTHEAD-->

@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
-<head>
-  	<title>89.3 KPCC - Southern California Public Radio</title>
-	<meta name="viewport" content="width=1134">
-	
-  	<%= render "shared/header/header_js" %>
-	<%= render "shared/header/opengraph" %>
+<% content_for :headerjs do %>
 	<script type="text/javascript" src="http://cdn.sublimevideo.net/js/cixcsaci.js"></script>
-  	<%= csrf_meta_tags %>
-</head>
+<% end %>
+
+<%= render 'shared/header/document_header' %>
+
 <body>
 <div class="viewport">
 	<div id="beta-bar" class="alert-message inverse" style="text-align:center;margin-bottom:0;">
