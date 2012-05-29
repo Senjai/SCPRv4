@@ -31,15 +31,15 @@ class Lyris
             puts "Response does not contain a valid message ID."
             return false
           end
-        else
+        else # ! request
           puts "Error: #{@error}"
           return false
         end
-      else
+      else # ! render_message
         puts "Error: Templates could not be rendered."
         return false
       end
-    else
+    else # !alert
       puts "Error: Can't send an e-mail without an alert."
       return false
     end

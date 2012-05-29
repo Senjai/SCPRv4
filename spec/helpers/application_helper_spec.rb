@@ -276,7 +276,7 @@ describe ApplicationHelper do
     
     it "finds the google maps API key and uses that in the API script reference" do
       helper.watch_gmaps
-      helper.content_for(:headerjs).should match API_KEYS["google_maps"]
+      helper.content_for(:headerjs).should match API_KEYS["google"]["maps"]
     end
     
     it "adds a GMapsLoader object to the footer js" do
