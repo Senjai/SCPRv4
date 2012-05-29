@@ -41,6 +41,7 @@ class scpr.ContentCarousel
             dataType: "script"
             beforeSend: (xhr) =>
                 $(@carousel).spin("large")
+                $(@carousel).css({ opacity: 0.5 })
                 console.log "Sending Request..."
             error: (xhr, status, error) => 
                 $(@carousel).html "Error loading content. Please refresh the page and try again. (#{error})"

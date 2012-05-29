@@ -63,7 +63,12 @@ class HomeController < ApplicationController
     if model = ContentBase.get_model_for_obj_key(obj_key)
       idx = model.sphinx_index_names
       
-      if idx && idx.any?
+      # For now, we'll update the byline index every time.
+      # TODO: Put a check to see if the byline has updated, and only index then
+      byline_idx = ContentByline.sphinx_index_names
+      idx += byline_idx
+      
+      if idx && idx.present?
         tsc = ThinkingSphinx::Configuration.instance
         # run index
         out = tsc.controller.index idx

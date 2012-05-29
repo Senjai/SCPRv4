@@ -8,7 +8,7 @@
 	<%= content_widget "related_content_and_links", @entry %>
 	<%= content_widget "next_prev", @entry %>
 	
-	<div class="row-fluid">
+	<div class="row-fluid comment-wrap">
 		<div class="span6" id="fold-comments-count-widget">
 			<%= comment_widget_for @entry, cssClass: "left-side", name: "comments" %>
 		</div>
