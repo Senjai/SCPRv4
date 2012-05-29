@@ -4,7 +4,7 @@ class EmailWorker
   
   attr_accessor :verbose
     
-  def initialize
+  def initialize(attributes={})
     @redis = Redis.connect :url => (Rails.cache.instance_variable_get :@data).id
     self.log "Connected to Redis: #{@redis}"
   end
@@ -12,19 +12,42 @@ class EmailWorker
   def work
     @redis.subscribe("scpremail") do |on|
       on.subscribe do |channel,subscriptions|
-        self.log "Subscribed to #{channel}"
+        self.log "Subscribed to #{channel}, in #{Rails.env}"
       end
       
       on.message do |channel,message|
-        # message is just the id of the BreakingNewsAlert that was added
+        self.log "got message"
+        # message is a JSON object:
+        # data = {
+        #     'key': obj.obj_key(),
+        #     'id': obj.id,
+        #     'published': obj.is_published,
+        #     'send_email': obj.send_email,
+        #     'email_sent': obj.email_sent
+        # }
+        # All we really need is the ID, because mercer is doing the boolean checking, but why not.
         begin
           obj = JSON.load(message)
+          self.log "obj is #{obj}"
           alert = BreakingNewsAlert.find(obj['id'])
-          lyris = Lyris.new(API_KEYS["lyris"]["site_id"], API_KEYS["lyris"]["password"], API_KEYS["lyris"]["mlid"], alert)
-          lyris.add_message
-          lyris.send_message
-        rescue
-          self.log "BreakingNewsAlert not found"
+          self.log "alert is #{alert}"
+          
+          if alert.is_published and alert.send_email and !alert.email_sent
+            lyris = Lyris.new(API_KEYS["lyris"]["site_id"], API_KEYS["lyris"]["password"], API_KEYS["lyris"]["mlid"], alert)
+            if lyris.add_message(alert)
+              if lyris.send_message(API_KEYS["lyris"]["segment_id"])
+                self.log "Sent email!"
+                alert.update_attribute(:email_sent, true)
+                self.log "Set email_sent=true for #{alert}. Finished."
+              end
+            end
+          else
+            self.log "Alert isn't published!" if !alert.is_published
+            self.log "Send Email boolean is false!" if !alert.send_email
+            self.log "Email has already been sent for this alert!" if alert.email_sent
+          end
+        rescue Exception => e
+          self.log "Error: #{e.message}"
         end
       end
       

@@ -1,6 +1,6 @@
 class BreakingNewsAlert < ActiveRecord::Base
   self.table_name = 'layout_breakingnewsalert'
-  
+    
   ALERT_TYPES = {
     "break" => "Breaking News",
     "audio" => "Listen Live",
@@ -9,6 +9,10 @@ class BreakingNewsAlert < ActiveRecord::Base
   
   def break_type
     ALERT_TYPES[alert_type]
+  end
+  
+  def email_subject
+    @email_subject = "#{break_type}: #{headline}"
   end
   
   def self.get_alert
