@@ -470,7 +470,6 @@ a.with-icon {
 
 // Blog/Program Host Widget
 #sidebar .host, .host {
-	border-bottom: 1px solid $nearWhite;
 	margin-bottom: 5px;
 	@include font-sans-serif(normal, 12px, 16px);
 	
@@ -742,6 +741,9 @@ a.comment-count.inline {
 #sidebar .widget, #sidebar-bottom .widget, #sidebar-top .widget {
 	@include sidebar-widget();
 }
+#sidebar-top .widget:last-child {
+	border-bottom:none;
+}
 
 // Ad units
 .ad {
@@ -756,7 +758,8 @@ a.comment-count.inline {
 		padding-top:0;
 	}
 	p {
-		margin-bottom:0;
+		margin-bottom: 5px;
+		margin-top: -7px;
 		small {@include font-sans-serif(normal, 9px, 0px);}
 		a {color:#999;}
 	}
@@ -874,7 +877,7 @@ a.comment-count.inline {
 	img { 
 		max-width: 100%;
 		position: relative;
-		top: -30px;
+		top: -35px;
 		z-index: 9;
 	}
 	a { 

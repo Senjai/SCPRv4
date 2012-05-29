@@ -47,6 +47,12 @@
 		text-align: right;
 		line-height: $baseLineHeight;
 	}
+	.comment-wrap {
+		border-top:1px solid $grayLight;
+		.comment-count, .comments {
+			border:none;
+		}
+	}
 }
 
 article {

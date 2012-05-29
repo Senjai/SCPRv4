@@ -43,7 +43,11 @@ body.listen {
 }
 .player .jp-audio {
 	border-top:1px solid #e0e0e0;
+	border-bottom:1px solid #fff;
 	margin:0;
+}
+.player .jp-type-single {
+	border-bottom:1px solid #e0e0e0;
 }
 .player .section-left, .player .section-mid {
 	border-top:1px solid #fff;
