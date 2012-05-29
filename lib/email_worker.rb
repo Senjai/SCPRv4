@@ -18,14 +18,11 @@ class EmailWorker
       on.message do |channel,message|
         # message is just the id of the BreakingNewsAlert that was added
         begin
-          alert = BreakingNewsAlert.find(message)
-          self.log "BreakingNewsAlert is '#{alert.headline}'"
+          obj = JSON.load(message)
+          alert = BreakingNewsAlert.find(obj['id'])
           lyris = Lyris.new(API_KEYS["lyris"]["site_id"], API_KEYS["lyris"]["password"], API_KEYS["lyris"]["mlid"], alert)
-          self.log "Adding message..."
           lyris.add_message
-          self.log "Sending message..."
           lyris.send_message
-          self.log "Done."
         rescue
           self.log "BreakingNewsAlert not found"
         end
