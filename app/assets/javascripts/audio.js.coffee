@@ -7,6 +7,7 @@ class scpr.Audio
         widgetClass:    ".story-audio"
         playBtn:        ".audio-toggler"
         audioBar:       ".audio-bar"
+        solution:       "flash, html"
     
     constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend( options || {} )

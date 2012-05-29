@@ -4,11 +4,11 @@
 			<% register_content("layout/homepage") %>
 			<div class="span12">
 				<div class="offleads">
-					<%= render_content @homepage.content[1..-1], "offlead" %>
+					<%= render_content @homepage.content[0..2], "offlead" %>
 				</div>
 			</div>
 			<div class="span12">
-				<%= render_content @homepage.content[0], "lead" %>
+				<%= render_content @homepage.content[3], "lead" %>
 			</div>
 		<% end %>
 	</div>

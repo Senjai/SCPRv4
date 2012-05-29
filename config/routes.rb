@@ -106,7 +106,6 @@ Scprv4::Application.routes.draw do
   # -- Home -- #
   match '/' => "home#index", :as => :home
   match '/about' => "home#about_us", as: :about
-  match '/beta/' => "home#beta", :as => :beta
   match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
   
   # catch error routes
