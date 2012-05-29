@@ -552,7 +552,7 @@ $mediaSmallPortrait: 320px;
 							@include ie-inline-block();
 						}
 						.search {
-							width:87%;
+							width:85%;
 						}
 						.toggle-search {
 							background-image:url(image_path('icons/search-close.png'));
@@ -652,7 +652,7 @@ $mediaSmallPortrait: 320px;
 		}
 		.pledge-button-container { display: block;margin:0; }
 	}
-	.nav-primary .sections ul li a {padding: 8px 15px;}
+	.nav-primary .sections ul li a {padding: 8px 14px;}
 	.nav-primary .search-form { width:150px;}
 	.container-fluid { min-width: 300px; }
 	#events-header { min-width: 0; }
