@@ -342,7 +342,7 @@ module ApplicationHelper
   end
   
   def watch_gmaps(options={})
-    content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_Keys["google_maps"]}&sensor=true")
+    content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_KEYS["google_maps"]}&sensor=true")
     content_for :footerjss, "var gmapsLoader = new scpr.GMapsLoader(#{raw options.to_json});".html_safe
   end
 end
