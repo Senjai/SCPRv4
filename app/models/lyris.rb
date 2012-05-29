@@ -61,6 +61,7 @@ class Lyris
         
     else 
       puts "Message not yet added."
+      return false
     end
   end
 
