@@ -286,7 +286,14 @@
 				text-decoration: underline;
 			}
 			
-			&.facebook { background-image:url(image_path('icons/share-facebook.png')); }
+			// Have to work around the facebook iframe
+			&.facebook { 
+				background-image: url(image_path('icons/share-facebook.png')); 
+				background-position: right 3px !important;
+				padding-left: 0 !important; 
+				padding-right: 0 !important; 
+				margin-left: 0 !important;
+			}
 			&.twitter { background-image:url(image_path('icons/share-twitter.png')); }
 			&.print { background-image:url(image_path('icons/share-print.png')); }
 			&.email { background-image:url(image_path('icons/share-email.png')); }
@@ -322,7 +329,6 @@
 		ul li {
 			text-align: right;
 			padding: 0 26px 0 0;
-			&.facebook { background-position:right 3px; }
 			&.twitter { background-position:right 2px; }
 			&.plus { 
 				> div:first-child { 
@@ -904,11 +910,6 @@ a.comment-count.inline {
 #uvTab { z-index: 45 !important; } // push feedback button under audio bar widget & megamenu
 
 // Facebook
-.fb-like {
-	max-width: 90px;
-	overflow: hidden;
-}
-
 .fb-recommendations {
 	width: 100%;
 	max-width: 346px;

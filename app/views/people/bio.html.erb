@@ -15,7 +15,7 @@
 			<strong>Contact <%= @bio.name %></strong>
 			<ul>
 				<% if @bio.twitter.present? %><li><%= link_to "Twitter", @bio.twitter_url, target: "_blank" %></li><% end %>
-				<% if @bio.email.present? %><li><%= mail_to "Email", @bio.email %></li><% end %>
+				<% if @bio.email.present? %><li><%= mail_to @bio.email, "Email", :encode => "javascript" %></li><% end %>
 			</ul>
 		</div>
 		<div class="span18">

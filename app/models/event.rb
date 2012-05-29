@@ -132,6 +132,10 @@ class Event < ActiveRecord::Base
     title
   end
   
+  def short_headline
+    headline
+  end
+  
   def has_comments?
     self.show_comments
   end

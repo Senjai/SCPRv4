@@ -13,7 +13,6 @@
 $(".carousel").animate({opacity: 0}, 300);
 
 setTimeout(function() {
-	$(".carousel").html("<%= escape_javascript(render 'missed_it_page', contents: @carousel_contents) %>").animate({opacity: 1}, 300);
+	$(".carousel").html("<%= escape_javascript(render 'missed_it_page', contents: @carousel_contents, bucket: @homepage.missed_it_bucket) %>").animate({opacity: 1}, 300);
 	$(".carousel").attr("data-current-page", <%= params[:page] %>);
 }, 300);
-

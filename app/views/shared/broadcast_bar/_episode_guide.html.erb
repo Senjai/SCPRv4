@@ -1,4 +1,4 @@
-<% content_cache("broadcast_bar:episode_guide:#{episode.id}") do %>
+<%= content_cache("broadcast_bar:episode_guide:#{episode.id}") do %>
 	<% register_content episode %>
 	<h6><%= link_to episode.title, episode.link_path %></h6>
 	<%= render_asset episode, "thumb" %>
