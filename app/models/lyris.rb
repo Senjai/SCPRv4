@@ -1,11 +1,12 @@
 class Lyris
   require 'builder'
-  attr_reader :site_id, :password, :mlid, :response
+  attr_reader :site_id, :password, :mlid, :alert, :response
   
-  def initialize(site_id, password, mlid, attributes={})
+  def initialize(site_id, password, mlid, alert, attributes={})
     @site_id = site_id
     @password = password
     @mlid = mlid
+    @alert = alert
   end
   
   def add_message
