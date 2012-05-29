@@ -1,1 +1,1 @@
-API_Keys = YAML.load_file("#{Rails.root}/config/api_keys.yml")
+API_KEYS = YAML.load_file("#{Rails.root}/config/api_keys.yml")[Rails.env]
