@@ -27,6 +27,13 @@ Scprv4::Application.routes.draw do
     match '/' => 'main#index', :as => :home
   end
   
+  scope "r" do
+    namespace :admin do
+      resources :sessions, only: [:new, :create, :destroy]
+      root to: 'home#index'
+    end
+  end
+  
   # -- Bios -- #
   match '/about/people/staff/' => 'people#index'
   match '/about/people/staff/:name' => 'people#bio', :as => :bio

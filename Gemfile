@@ -25,13 +25,14 @@ gem "twitter"
 gem 'twitter-text' # text processing for things like urls, hashtags, and @replies in twitter feeds
 gem "oauth2"
 
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem "eco"
   gem "sass", branch: 'master', git: 'git://github.com/nex3/sass.git'
   gem 'sass-rails'
-#  gem 'bootstrap-sass'
+  gem 'bootstrap-sass'
   gem "compass-rails"
   gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
