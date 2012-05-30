@@ -3,12 +3,14 @@ require "spec_helper"
 describe Lyris do
   describe "#add_message" do
     before :each do
-      alert = create :breaking_news_alert, send_email: true
-      @lyris = Lyris.new(API_KEYS["lyris"]["site_id"], API_KEYS["lyris"]["password"], API_KEYS["lyris"]["mlid"], alert)
+      @alert = create :breaking_news_alert, send_email: true
+      @lyris = Lyris.new(@alert)
     end
     
-    it "Returns false if no alert is provided" do
-      @lyris.add_message().should be_false
+    it "returns message id" do
+      FakeWeb.register_uri(:post, Lyris::API_ENDPOINT, body: xml_response("success"))
+      @msg_id = @lyris.add_message
+      @msg_id.should eq "12345"
     end
   end
 end

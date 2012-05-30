@@ -2,6 +2,9 @@ class Lyris
   require 'builder'
   
   LYRIS_API = API_KEYS["lyris"]
+  API_ENDPOINT = "https://#{LYRIS_API["api_host"]}#{LYRIS_API["api_path"]}"
+  
+  attr_reader :message_id
   
   def initialize(alert)
     @site_id = LYRIS_API["site_id"]
@@ -33,7 +36,7 @@ class Lyris
     end
     
     [message_formats].flatten.each do |format|
-      message = view.render(template: "breaking_news_alerts/email/template.#{format}", locals: { alert: @alert })
+      message = view.render(template: "breaking_news_alerts/email/template", format: format, locals: { alert: @alert })
       instance_variable_set "@#{format}_message", message.to_str
     end
   end
