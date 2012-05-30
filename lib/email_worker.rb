@@ -24,14 +24,13 @@ class EmailWorker
         #     'send_email': obj.send_email,
         #     'email_sent': obj.email_sent
         # }
-        # All we really need is the ID, because mercer is doing the boolean checking.
+        # Mercer is doing boolean checking, but we'll do it here too just to be extra-safe.
         
         obj = JSON.load(message)
         self.log "obj is #{obj}"
         alert = BreakingNewsAlert.find(obj['id'])
         self.log "alert is #{alert}"
         
-        # Check just incase
         if alert.is_published and alert.send_email and !alert.email_sent
           lyris = Lyris.new(alert)
           if lyris.add_message and lyris.send_message
