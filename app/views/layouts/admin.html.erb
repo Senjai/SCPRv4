@@ -37,16 +37,23 @@
 
 <% if admin_user %>
 	<div class="container-fluid">
-	<% if @breadcrumbs %>
-		<ul class="breadcrumb">
-			<% @breadcrumbs.each do |crumb| %>
-				<li>
-					<%= link_to crumb[:title], crumb[:link] %>
-					<span class="divider">/</span>
-				</li>
-			<% end %>
-		</ul>
-	<% end %>
+		<% if @breadcrumbs %>
+			<ul class="breadcrumb">
+				<% @breadcrumbs.each do |crumb| %>
+					<li>
+						<%= link_to crumb[:title], crumb[:link] %>
+						<span class="divider">/</span>
+					</li>
+				<% end %>
+			</ul>
+		<% end %>
+	
+	    <% flash.each do |name, msg| %>
+	    	<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+				<%= msg.html_safe %>
+				<a class="close" data-dismiss="alert">&times;</a>
+			</div>
+	    <% end %>
 	</div>
 <% end %>
 
