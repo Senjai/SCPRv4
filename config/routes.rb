@@ -34,6 +34,8 @@ Scprv4::Application.routes.draw do
       resources :sessions, only: [:create, :destroy]
       
       resources :news_stories
+      resources :blogs
+      resources :blog_entries
       
       root to: 'home#index'
     end

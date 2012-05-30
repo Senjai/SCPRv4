@@ -1,13 +1,13 @@
-class Admin::NewsStoriesController < Admin::BaseController
+class Admin::BlogsController < Admin::BaseController
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
   respond_to :html
   
   def index
-    @news_stories = NewsStory.order("published_at desc").paginate(page: params[:page], per_page: 25)
+    @blogs = Blog.order("name")
   end
 
   def new
-    @news_story = NewsStory.new
+    @blog = Blog.new
   end
   
   def show
@@ -28,7 +28,7 @@ class Admin::NewsStoriesController < Admin::BaseController
   protected
   def get_record
     begin
-      @news_story = NewsStory.find(params[:id])
+      @blog = Blog.find(params[:id])
     rescue
       raise ActionController::RoutingError.new("Not Found")
     end

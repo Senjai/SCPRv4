@@ -1,0 +1,25 @@
+<% page_title "Blogs" %>
+<table class="table table-striped">
+	<%= any_to_list? @blogs, title: "Blogs" do %>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Tagline</th>
+				<th>Slug</th>
+				<th>Description</th>
+				<th>Active</th>
+			</tr>
+		</thead>
+		<tbody class="list">
+			<% @blogs.each do |blog| %>
+				<tr class="news-story">
+					<td><%= link_to blog.name, edit_admin_blog_path(blog) %></td>
+					<td><%= blog.teaser %></td>
+					<td><%= blog.slug %></td>
+					<td><%= blog.description %></td>
+					<td><%= blog.is_active ? "Active" : "Inactive" %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	<% end %>
+</table>
