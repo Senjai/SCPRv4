@@ -10,12 +10,12 @@
 	
 <div class="navbar">
 	<div class="navbar-inner">
-		<div class="container">
+		<div class="container-fluid">
 			<%= link_to "KPCC Admin", admin_root_path, class: "brand" %>
 			
 			<% if admin_user %>
 				<ul class="nav">
-					<li><%= link_to "News Stories", admin_root_path %></li>
+					<li><%= link_to "News Stories", admin_news_stories_path %></li>
 					<li><%= link_to "Blog Entries", admin_root_path %></li>
 					<li><%= link_to "Events", admin_root_path %></li>
 					<li><%= link_to "Content Shells", admin_root_path %></li>
@@ -36,7 +36,7 @@
 </div>
 
 <% if admin_user %>
-	<div class="container">
+	<div class="container-fluid">
 	<% if @breadcrumbs %>
 		<ul class="breadcrumb">
 			<% @breadcrumbs.each do |crumb| %>
@@ -50,17 +50,15 @@
 	</div>
 <% end %>
 
-<div id="main" class="container">
-	<div class="row">
+<div id="main" class="container-fluid">
+	<div class="row-fluid">
 		<div class="span12">
-			<div class="well">
-				<% if @PAGE_TITLE %>
-					<div class="page-header">
-						<h1><%= @PAGE_TITLE %></h1>
-					</div>
-				<% end %>
-				<%= yield %>
-			</div>
+			<% if @PAGE_TITLE %>
+				<div class="page-header">
+					<h1><%= @PAGE_TITLE %></h1>
+				</div>
+			<% end %>
+			<%= yield %>
 		</div>
 	</div> <!-- row-fluid -->
 </div> <!-- container fluid main -->

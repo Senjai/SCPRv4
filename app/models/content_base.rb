@@ -147,6 +147,10 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
+  def status_text
+    STATUS_TEXT[self.status]
+  end
+  
   def slideshow?
     if self.class::PRIMARY_ASSET_SCHEME
       return self[ self.class::PRIMARY_ASSET_SCHEME ] == "slideshow" ? true : false
