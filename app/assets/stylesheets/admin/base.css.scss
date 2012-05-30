@@ -1,3 +1,9 @@
 .container-fluid {
 	min-width: 700px;
 }
+
+.simple_form {
+	input.long, textarea {
+		@extend .span8;
+	}
+}

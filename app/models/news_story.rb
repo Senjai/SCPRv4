@@ -1,11 +1,41 @@
 class NewsStory < ContentBase
   self.table_name =  'news_story'
   
+  # TODO: Remove fields:
+    # primary_reporter_id
+    # secondary_reporter_id
+    # byline
+    # first_graf
+    # remaining_grafs
+    # editing_status
+    # is_published
+  
+  validates :headline,  presence: true
+  validates :body,      presence: true
+  validates :slug,      presence: true, format: { with: /^[a-zA-Z0-9\-_]+$/, message: "not correctly formatted. 0-9, a-z, A-Z, -, _" }
+  
   CONTENT_TYPE = 'news/story'
   CONTENT_TYPE_ID = 15
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
-      
+  
+  LOCALES = [ 
+    ["CA/Local",  "local"],
+    ["U.S.",      "natnl"],
+    ["World",     "world"]
+  ]
+  
+  SOURCES = [
+    ['KPCC',                'kpcc'],
+    ['KPCC & wires',        'kpcc_plus_wire'],
+    ['AP',                  'ap'],
+    ['KPCC wire services',  'kpcc_wire'],
+    ['NPR',                 'npr'],
+    ['NPR & wire services', 'npr_wire'],
+    ['New America Media',   'new_america'],
+    ['NPR & KPCC',          'npr_kpcc'],
+  ]
+  
   define_index do
     indexes headline
     indexes lede

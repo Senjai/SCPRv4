@@ -1,8 +1,2 @@
 <% page_title "Add News Story" %>
-<%= simple_form_for [:admin, @news_story], class: "form-horizontal" do |f| %>
-	<%= f.input :headline %>
-	<%= f.input :slug %>
-	<%= f.input :byline %>
-	<%= f.input :news_agency %>
-	<%= f.input :status %>
-<% end %>
+<%= render 'form_fields', news_story: @news_story%>
