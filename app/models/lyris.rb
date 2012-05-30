@@ -36,7 +36,7 @@ class Lyris
     end
     
     [message_formats].flatten.each do |format|
-      message = view.render(template: "breaking_news_alerts/email/template", format: format, locals: { alert: @alert })
+      message = view.render(template: "breaking_news_alerts/email/template", formats: [format.to_sym], locals: { alert: @alert })
       instance_variable_set "@#{format}_message", message.to_str
     end
   end
@@ -67,12 +67,9 @@ class Lyris
     end
     
     if @response =~ /<TYPE>error<\/TYPE><DATA>(.+?)<\/DATA>/
-      puts "Error: #{$~[1]}"
       return false
     elsif @response =~ /<TYPE>success<\/TYPE><DATA>(.+?)<\/DATA>/
-      @response_data = $~[1]
-      puts "Success: #{@response_data}"
-      return @response_data
+      return @response_data = $~[1]
     end
   end
   

@@ -1,6 +1,18 @@
 require "spec_helper"
 
 describe BreakingNewsAlert do
+  describe "email_subject" do
+    it "contains break-type" do
+      alert = build :breaking_news_alert
+      alert.email_subject.should match alert.break_type
+    end
+    
+    it "contains headline" do
+      alert = build :breaking_news_alert
+      alert.email_subject.should match alert.headline
+    end
+  end
+  
   describe "get_alert" do
     it "returns the first alert if it is published" do
       create :breaking_news_alert, is_published: true
