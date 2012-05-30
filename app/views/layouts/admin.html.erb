@@ -12,31 +12,43 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<%= link_to "KPCC Admin", admin_root_path, class: "brand" %>
-			<ul class="nav">
-				<li><%= link_to "News Stories", admin_root_path %></li>
-				<li><%= link_to "Blog Entries", admin_root_path %></li>
-				<li><%= link_to "Events", admin_root_path %></li>
-				<li><%= link_to "Content Shells", admin_root_path %></li>
-			</ul>
 			
-			<ul class="nav pull-right">
-				<li><%= link_to "<i class='icon-user icon-white'></i> Profile".html_safe, admin_root_path %></li>
+			<% if admin_user %>
+				<ul class="nav">
+					<li><%= link_to "News Stories", admin_root_path %></li>
+					<li><%= link_to "Blog Entries", admin_root_path %></li>
+					<li><%= link_to "Events", admin_root_path %></li>
+					<li><%= link_to "Content Shells", admin_root_path %></li>
+				</ul>
+			
+			
+				<ul class="nav pull-right">
+					<li><%= link_to "<i class='icon-user icon-white'></i> Profile".html_safe, admin_root_path %></li>
+					<li><%= link_to "Logout", admin_logout_path %></li>
+				</ul>
+			<% else %>
+				<ul class="nav pull-right">
+					<li><%= link_to "Login", admin_login_path %></li>
+				</ul>
+			<% end %>
 		</div>
 	</div>
 </div>
 
-<div class="container">
-<% if @breadcrumbs %>
-	<ul class="breadcrumb">
-		<% @breadcrumbs.each do |crumb| %>
-			<li>
-				<%= link_to crumb[:title], crumb[:link] %>
-				<span class="divider">/</span>
-			</li>
-		<% end %>
-	</ul>
+<% if admin_user %>
+	<div class="container">
+	<% if @breadcrumbs %>
+		<ul class="breadcrumb">
+			<% @breadcrumbs.each do |crumb| %>
+				<li>
+					<%= link_to crumb[:title], crumb[:link] %>
+					<span class="divider">/</span>
+				</li>
+			<% end %>
+		</ul>
+	<% end %>
+	</div>
 <% end %>
-</div>
 
 <div id="main" class="container">
 	<div class="row">

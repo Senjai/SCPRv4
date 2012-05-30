@@ -24,7 +24,7 @@ gem "feedzirra"
 gem "twitter"
 gem 'twitter-text' # text processing for things like urls, hashtags, and @replies in twitter feeds
 gem "oauth2"
-
+gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.

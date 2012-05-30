@@ -28,8 +28,11 @@ Scprv4::Application.routes.draw do
   end
   
   scope "r" do
-    namespace :admin do
-      resources :sessions, only: [:new, :create, :destroy]
+    namespace :admin do      
+      get 'login' => "sessions#new", as: :login
+      get 'logout' => "sessions#destroy", as: :logout
+      resources :sessions, only: [:create, :destroy]
+      
       root to: 'home#index'
     end
   end
