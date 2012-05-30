@@ -3,9 +3,7 @@ class Lyris
   
   LYRIS_API = API_KEYS["lyris"]
   API_ENDPOINT = "https://#{LYRIS_API["api_host"]}#{LYRIS_API["api_path"]}"
-  
-  attr_reader :message_id
-  
+    
   def initialize(alert)
     @site_id = LYRIS_API["site_id"]
     @password = LYRIS_API["password"]
@@ -16,14 +14,14 @@ class Lyris
   def add_message
     render_message("html", "text")
     @message_id = send_request('message', 'add') do |body|
-      body.DATA 'membership@kpcc.org',        type: "from-email"
-      body.DATA '89.3 KPCC',                  type: "from-name"
+      body.DATA LYRIS_API["from_email"],      type: "from-email"
+      body.DATA LYRIS_API["from_name"],       type: "from-name"
       body.DATA 'HTML',                       type: "message-format"
       body.DATA @html_message,                type: "message-html"
       body.DATA @text_message,                type: "message-text"
       body.DATA @alert.email_subject,         type: "subject"
       body.DATA "UTF-8",                      type: "charset"
-      body.DATA "Newsletter/Relationship",    type: "category"
+      body.DATA LYRIS_API["category"],        type: "category"
     end
   end
   
@@ -45,7 +43,7 @@ class Lyris
     send_request('message', 'schedule') do |body|
       body.MID  @message_id
       body.DATA 'schedule', type: "action"
-      body.DATA API_KEYS["lyris"]["segment_id"], type: "rule"
+      body.DATA LYRIS_API["segment_id"], type: "rule"
     end
   end
 
@@ -75,7 +73,7 @@ class Lyris
   
   def connection
     if !@connection
-      @connection = Net::HTTP.new(API_KEYS["lyris"]["api_host"], 443)
+      @connection = Net::HTTP.new(LYRIS_API["api_host"], 443)
       @connection.use_ssl = true
       @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
