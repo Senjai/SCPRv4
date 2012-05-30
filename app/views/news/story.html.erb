@@ -27,12 +27,12 @@
 			<div class="visible-reader"><%= content_widget "extra_audio", @story %></div>
 		</footer>
 	</article>
+	<%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 	<%= content_widget "social_tools", @story, cssClass: "bottom horizontal" %>
 </div> <!-- story -->
 
 <%= content_widget "related_content_and_links", @story %>
 <%= render "shared/cwidgets/pij_query", :content => @story %>
-<%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
 
 <%= content_widget 'content_carousel', @story %>
 <%= comments_for @story %>
