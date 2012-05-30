@@ -33,6 +33,8 @@ Scprv4::Application.routes.draw do
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
       
+      resources :news_stories
+      
       root to: 'home#index'
     end
   end
