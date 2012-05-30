@@ -1,10 +1,12 @@
 class Lyris
   require 'builder'
   
-  def initialize(site_id, password, mlid, alert, attributes={})
-    @site_id = site_id
-    @password = password
-    @mlid = mlid
+  LYRIS_API = API_KEYS["lyris"]
+  
+  def initialize(alert)
+    @site_id = LYRIS_API["site_id"]
+    @password = LYRIS_API["password"]
+    @mlid = LYRIS_API["mlid"]
     @alert = alert
   end
   

@@ -16,7 +16,6 @@ class EmailWorker
       end
       
       on.message do |channel,message|
-        self.log "got message"
         # message is a JSON object:
         # data = {
         #     'key': obj.obj_key(),
@@ -25,29 +24,23 @@ class EmailWorker
         #     'send_email': obj.send_email,
         #     'email_sent': obj.email_sent
         # }
-        # All we really need is the ID, because mercer is doing the boolean checking, but why not.
-        begin
-          obj = JSON.load(message)
-          self.log "obj is #{obj}"
-          alert = BreakingNewsAlert.find(obj['id'])
-          self.log "alert is #{alert}"
-          
-          if alert.is_published and alert.send_email and !alert.email_sent
-            lyris = Lyris.new(API_KEYS["lyris"]["site_id"], API_KEYS["lyris"]["password"], API_KEYS["lyris"]["mlid"], alert)
-            if lyris.add_message
-              if lyris.send_message
-                self.log "Sent email!"
-                alert.update_attribute(:email_sent, true)
-                self.log "Set email_sent=true for #{alert}. Finished."
-              end
-            end
-          else
-            self.log "Alert isn't published!" if !alert.is_published
-            self.log "Send Email boolean is false!" if !alert.send_email
-            self.log "Email has already been sent for this alert!" if alert.email_sent
+        # All we really need is the ID, because mercer is doing the boolean checking.
+        
+        obj = JSON.load(message)
+        self.log "obj is #{obj}"
+        alert = BreakingNewsAlert.find(obj['id'])
+        self.log "alert is #{alert}"
+        
+        # Check just incase
+        if alert.is_published and alert.send_email and !alert.email_sent
+          lyris = Lyris.new(alert)
+          if lyris.add_message and lyris.send_message
+            alert.update_attribute(:email_sent, true)
+            self.log "Set email_sent=true for #{alert}. Finished."
           end
-        rescue Exception => e
-          self.log "Error: #{e.message}"
+        else
+          self.log "Alert not ready to send e-mail. Check attributes."
+          return false
         end
       end
       
