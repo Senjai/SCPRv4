@@ -34,8 +34,8 @@ class EmailWorker
           
           if alert.is_published and alert.send_email and !alert.email_sent
             lyris = Lyris.new(API_KEYS["lyris"]["site_id"], API_KEYS["lyris"]["password"], API_KEYS["lyris"]["mlid"], alert)
-            if lyris.add_message(alert)
-              if lyris.send_message(API_KEYS["lyris"]["segment_id"])
+            if lyris.add_message
+              if lyris.send_message
                 self.log "Sent email!"
                 alert.update_attribute(:email_sent, true)
                 self.log "Set email_sent=true for #{alert}. Finished."
