@@ -86,7 +86,7 @@ lines.each do |line|
   arr = line.split(" ", 2)
   asset_id = arr[0]
   name = arr[1]
-  if bio = Bio.where(name: arr[1])
+  if bio = Bio.find_by_name(arr[1])
     puts "Found bio: #{bio.name}"
     if bio.asset_id.blank?
       if bio.update_attributes(asset_id: name)
@@ -96,6 +96,7 @@ lines.each do |line|
       end
     else
       puts "#{bio.name} already has an asset_id."
+    end
   else
     puts "Missed bio for #{name}"
   end
