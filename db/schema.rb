@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120524043407) do
+ActiveRecord::Schema.define(:version => 20120530214758) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(:version => 20120524043407) do
     t.boolean  "is_published",                                                 :null => false
     t.boolean  "show_comments",                                                :null => false
     t.text     "_teaser",             :limit => 2147483647,                    :null => false
+    t.string   "event_asset_scheme",  :limit => 10
   end
 
   add_index "events_event", ["slug"], :name => "events_event_slug"
@@ -1259,6 +1260,7 @@ ActiveRecord::Schema.define(:version => 20120524043407) do
     t.boolean  "is_published",                                                 :null => false
     t.boolean  "show_comments",                                                :null => false
     t.text     "_teaser",             :limit => 2147483647,                    :null => false
+    t.string   "event_asset_scheme",  :limit => 10
   end
 
   create_table "rails_layout_homepagecontent", :id => false, :force => true do |t|
