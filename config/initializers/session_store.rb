@@ -1,19 +1,6 @@
 # Be sure to restart your server when you modify this file.
 
-class JSONVerifier < ActiveSupport::MessageVerifier
-  def verify(signed_message)
-    raise InvalidSignature if signed_message.blank?
-
-    data, digest = signed_message.split("--")
-    
-    if data.present? && digest.present? && secure_compare(digest, generate_digest(data))      
-      @serializer.load(::Base64.decode64(data))
-      #@serializer.load(Base64.decode64(data.gsub('%3D','=')))
-    else
-      raise InvalidSignature
-    end
-  end
-
+class YAMLVerifier < ActiveSupport::MessageVerifier
   def generate(value)
     # If it isn't present, add in session_expiry to support django
     if value.is_a?(Hash) && !value.has_key?("_session_expiry")
@@ -32,7 +19,7 @@ module ActionDispatch
       def initialize(parent_jar, secret)
         ensure_secret_secure(secret)
         @parent_jar = parent_jar
-        @verifier   = JSONVerifier.new(secret, serializer: YAML)
+        @verifier   = YAMLVerifier.new(secret, serializer: YAML)
       end
     end
   end
