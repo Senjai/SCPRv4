@@ -1,21 +1,9 @@
 class NewsStory < ContentBase
   self.table_name =  'news_story'
-  
-  # TODO: Remove fields:
-    # primary_reporter_id
-    # secondary_reporter_id
-    # byline
-    # first_graf
-    # remaining_grafs
-    # editing_status
-    # is_published
     
-  before_save :fill_old_fields, on: :create
+  before_save :fill_fields, on: :create
   def fill_old_fields
-    self.byline = ""
     self.comment_count = 0
-    self.editing_status = 0
-    self.is_published = 0
     self.published_at = Time.now
   end
   
