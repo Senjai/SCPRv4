@@ -394,10 +394,8 @@
 	}
 	ul {margin:0;}
 	li {
-		@include nav-horiz();
 		@include font-sans-serif(normal, 11px);
-		padding-left:0;
-		padding-right:20px;
+		list-style-type:none;
 	}
 }
 // About Blog Widget

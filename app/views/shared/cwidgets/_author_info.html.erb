@@ -6,12 +6,12 @@
     	<figcaption>
 			<h6><%= link_to byline.user.name, bio_path(byline.user.slugged_name) %>, <em><%= byline.user.title %></em></h6>
 			<p class="brief-bio"><%= byline.user.short_bio %></p>
+			<ul class="tease clearfix">
+				<% if byline.user.twitter? %><li class="follow"><%= link_to "Follow on Twitter", byline.user.twitter_url, target: "_blank" %></li><% end %>
+				<li><%= link_to "More from this author", bio_path(byline.user.slugged_name) %></li>
+			</ul>
 		</figcaption>
 	</figure>
-	<ul class="tease clearfix">
-		<% if byline.user.twitter? %><li class="follow"><a href="#">Follow on Twitter</a></li><% end %>
-		<li class="more"><a href="#">More from this author</a></li>
-	</ul>
 </div>
 
 <% end %>

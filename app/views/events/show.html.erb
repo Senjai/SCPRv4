@@ -79,8 +79,8 @@
 					</div> <!-- event-details -->
 				</header>
 			
-				<div class="story-body">			
-					<%= render_asset @event, "wide" %>
+				<div class="story-body">
+					<%= render_asset @event, "event" %>
 					<%= simple_format(@event.description, {}, sanitize: false) %>
 					<br style="clear: both" />
 				</div>
