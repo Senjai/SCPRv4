@@ -381,17 +381,13 @@ end
 # NewsStory #########################################################
   factory :news_story do
     content_base
-    primary_reporter_id 7
     sequence(:headline) { |n| "This is news story ##{n}" }
     slug { headline.parameterize }
     news_agency "KPCC"
     _teaser "This is a teaser"
     body "This is a big block of text for the news story"
     locale "local"
-    editing_status 2
-    is_published 1 # required field by db but not used anymore
-    byline "Local Byline"
-    comment_count 1
+    comment_count 0
     
     sequenced_published_at
     ignore { related_factory "content_shell" }
