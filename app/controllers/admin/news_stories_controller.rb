@@ -23,9 +23,13 @@ class Admin::NewsStoriesController < Admin::BaseController
   end
   
   def update
+    flash[:notice] = "Saved News Story" if @news_story.update_attributes(params[:news_story])
+    respond_with [:admin, @news_story]
   end
   
   def destroy
+    flash[:notice] = "Deleted News Story" if @news_story.delete
+    respond_with [:admin, @news_story]
   end
   
   protected

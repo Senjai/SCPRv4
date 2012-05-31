@@ -40,6 +40,28 @@ class ContentBase < ActiveRecord::Base
     %r{^/admin/contentbase/videoshell/(\d+)/}      => 'content/video'    
   }
 
+  STORY_SCHEMES = [
+    ["Float Right (default)", ""],
+    ["Wide", "wide"],
+    ["Slideshow", "slideshow"]
+  ]
+
+  STORY_EXTRA_SCHEMES = [
+    ["Hide (default)", ""],
+    ["Sidebar Display", "sidebar"]
+  ]
+
+  LEAD_SCHEMES = [
+    ["Default", ""],
+    ["Wide", "wide"]
+  ]
+
+  BLOG_SCHEMES = [
+    ["Full Width (default)", ""],
+    ["Float Right", "right"],
+    ["Slideshow", "slideshow"]
+  ]
+  
   # All ContentBase objects have assets and alarms
   has_many :assets, :class_name => "ContentAsset", :as => :content, :order => "asset_order asc"
   has_many :bylines, :class_name => "ContentByline", :as => :content

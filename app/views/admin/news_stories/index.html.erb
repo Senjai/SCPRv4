@@ -6,7 +6,6 @@
 				<th>ID</th>
 				<th>Headline</th>
 				<th>Slug</th>
-				<th>Byline</th>
 				<th>News Agency</th>
 				<th>Audio?</th>
 				<th>Status</th>
@@ -19,14 +18,13 @@
 					<td><%= news_story.id %></td>
 					<td><%= link_to news_story.headline, edit_admin_news_story_path(news_story) %></td>
 					<td><%= news_story.slug %></td>
-					<td><%= news_story.byline %></td>
 					<td><%= news_story.news_agency %></td>
-					<td>...</td>
+					<td>fixme</td>
 					<td><%= news_story.status_text %></td>
-					<td><%= news_story.published_at %></td>
+					<td><%= format_date news_story.published_at, time: true %></td>
 				</tr>
 			<% end %>
 		</tbody>
 	<% end %>
 </table>
-<%= will_paginate @news_stories %>
+<%= will_paginate @news_stories, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

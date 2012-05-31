@@ -221,7 +221,7 @@ describe ApplicationHelper do
   
   describe "#format_date" do
     before :each do
-      @date = Time.at(0) # December 31, 1969
+      @date = Time.at(0) # 1969-12-31 16:00:00 -0800
     end
     
     it "returns a `numbers` format" do
@@ -238,6 +238,14 @@ describe ApplicationHelper do
     
     it "accepts a custom format" do
       format_date(@date, with: "%D").should match "12/31/69"
+    end
+    
+    it "prefers the custom format if a premade format is also specified" do
+      format_date(@date, with: "%D", format: :event).should match "12/31/69"
+    end
+    
+    it "includes the time if specified" do
+      format_date(@date, format: :event, time: true).should match "4:00pm"
     end
   end
   

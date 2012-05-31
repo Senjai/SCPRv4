@@ -2,7 +2,7 @@ class NewsStory < ContentBase
   self.table_name =  'news_story'
     
   before_save :fill_fields, on: :create
-  def fill_old_fields
+  def fill_fields
     self.comment_count = 0
     self.published_at = Time.now
   end

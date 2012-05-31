@@ -322,18 +322,30 @@ module ApplicationHelper
     content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
   end
   
+  # easy date formatting
+  # options:
+  # * format: numbers (10-11-11)
+  # * format: full_date (October 11th, 2011)
+  # * format: event (Wednesday, October 11)
+  # * no format specified: Oct 11, 2011
+  # * time: true (9:35pm)
+  # * with: (custom strftime string)
   def format_date(date, options={})
     return nil if !date.respond_to?(:strftime)
-    formatted = date.strftime(options[:with]) if options[:with].present?
+    
     case options[:format].to_s
       when "numbers"
-        formatted = date.strftime("%m-%e-%y") # 10-11-11
+        format_str = "%m-%e-%y"
       when "full_date"
-        formatted = date.strftime("%B #{date.day.ordinalize}, %Y") # October 11th, 2011
+        format_str = "%B #{date.day.ordinalize}, %Y"
       when "event"
-        formatted = date.strftime("%A, %B %e") # Wednesday, October 11
+        format_str = "%A, %B %e"
     end
-    formatted ||= date.strftime("%b %e, %Y") # Oct 11, 2011
+    
+    format_str = options[:with] if options[:with].present?
+    format_str ||= "%b %e, %Y"
+    format_str += ", %l:%M%P" if options[:time] == true
+    date.strftime(format_str)
   end
   
   def modal(cssClass, options={}, &block)

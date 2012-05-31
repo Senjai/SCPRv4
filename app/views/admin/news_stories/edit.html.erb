@@ -1,0 +1,10 @@
+<% page_title "Edit News Story: #{@news_story.short_headline}" %>
+
+<%= simple_form_for [:admin, @news_story], html: { class: "form-horizontal" } do |f| %>
+	<%= render 'form_fields', news_story: @news_story, f: f %>
+	
+	<div class="form-actions">
+		<%= submit_tag "Save", class: "btn btn-primary" %>
+		<%= button_tag "Delete", class: "btn btn-alert pull-right" %>
+	</div>
+<% end %>

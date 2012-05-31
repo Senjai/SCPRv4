@@ -1,26 +1,33 @@
-<%= simple_form_for [:admin, news_story], html: { class: "form-horizontal" } do |f| %>
-	<%= f.error_notification %>
-	<fieldset>
-		<legend>Full Details</legend>
-		<%= f.input :headline, input_html: { class: "long" } %>
-		<%= f.input :body %>
-	</fieldset>
+<%= f.error_notification %>
+<fieldset>
+	<legend>Full Details</legend>
+	<%= f.input :headline, input_html: { class: "long" } %>
+	<%= f.input :body %>
+</fieldset>
+
+<fieldset>
+	<legend>Short Details</legend>
+	<%= f.input :short_headline, input_html: { class: "long" } %>
+	<%= f.input :teaser, as: :text, input_html: { rows: "5" } %>
+	<%= f.input :slug %>
+</fieldset>
+
+<fieldset>
+	<legend>Publish Status</legend>
+	<%= f.input :status, collection: ContentBase.status_text_collect, selected: ContentBase.status_text_collect[1]  %>
+</fieldset>
+
+<fieldset>
+	<legend>Meta</legend>
+	<%= f.input :locale, collection: NewsStory::LOCALES, include_blank: true, selected: news_story.new_record? ? NewsStory::LOCALES[0] : news_story.locale %>
+	<%= f.input :source, collection: NewsStory::SOURCES, include_blank: true, selected: news_story.new_record? ? NewsStory::SOURCES[0] : news_story.source %>
+	<%= f.input :news_agency %>
+</fieldset>
+
+<fieldset>
+	<legend>Assets</legend>
+	<%= f.input :story_asset_scheme, collection: ContentBase::STORY_SCHEMES, selected: news_story.new_record? ? ContentBase::STORY_SCHEMES[0] : news_story.story_asset_scheme %>
+	<%= f.input :extra_asset_scheme, collection: ContentBase::STORY_EXTRA_SCHEMES, selected: news_story.new_record? ? ContentBase::STORY_EXTRA_SCHEMES[0] : news_story.extra_asset_scheme %>
+	<%= f.input :lead_asset_scheme, collection: ContentBase::LEAD_SCHEMES, selected: news_story.new_record? ? ContentBase::LEAD_SCHEMES[0] : news_story.lead_asset_scheme %>
 	
-	<fieldset>
-		<legend>Short Details</legend>
-		<%= f.input :short_headline, input_html: { class: "long" } %>
-		<%= f.input :teaser, as: :text, input_html: { rows: "5" } %>
-	</fieldset>
-	
-	<fieldset>
-		<%= f.input :slug %>
-		<%= f.input :locale, collection: NewsStory::LOCALES, include_blank: true, selected: NewsStory::LOCALES[0] %>
-		<%= f.input :source, collection: NewsStory::SOURCES, include_blank: true, selected: news_story.new_record? ? NewsStory::SOURCES[0] : nil %>
-		<%= f.input :news_agency %>
-		<%= f.input :status, collection: ContentBase.status_text_collect, selected: ContentBase.status_text_collect[1]  %>
-	</fieldset>
-	
-	<div class="form-actions">
-		<%= submit_tag "Save", class: "btn btn-primary" %>
-	</div>
-<% end %>
+</fieldset>
