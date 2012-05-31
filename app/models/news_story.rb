@@ -4,7 +4,7 @@ class NewsStory < ContentBase
   before_save :fill_fields, on: :create
   def fill_fields
     self.comment_count = 0
-    self.published_at = Time.now
+    self.published_at = Time.now unless published_at
   end
   
   validates :headline,  presence: true
@@ -30,7 +30,7 @@ class NewsStory < ContentBase
     ['NPR',                 'npr'],
     ['NPR & wire services', 'npr_wire'],
     ['New America Media',   'new_america'],
-    ['NPR & KPCC',          'npr_kpcc'],
+    ['NPR & KPCC',          'npr_kpcc']
   ]
   
   define_index do

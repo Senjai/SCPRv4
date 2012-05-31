@@ -43,7 +43,6 @@ When /^I go to "([^"]*)"$/ do |path|
 end
 
 
-
 #### Assertions
 When /^I'm looking at the "[^"]*" section$/ do
   true # This is just to provide context while reading the scenario, doesn't actually do anything.
