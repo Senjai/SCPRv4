@@ -11,10 +11,10 @@
 				{ title: "Blog Entries",	index_path: admin_blog_entries_path,	new_path: new_admin_blog_entry_path }
 			].each do |admin_section| %>
 			<tr>
-				<td><%= link_to admin_section[:title], admin_section[:path] %></td>
+				<td><%= link_to admin_section[:title], admin_section[:index_path] %></td>
 				<td>
 					<%= link_to "Add", admin_section[:new_path], class: "btn btn-primary" %>
-					<%= link_to "List", admin_section[:path], class: "btn" %>
+					<%= link_to "List", admin_section[:index_path], class: "btn" %>
 				</td>
 			</tr>
 			<% end %>
