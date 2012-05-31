@@ -19,7 +19,7 @@ class Admin::NewsStoriesController < Admin::BaseController
   def create
     @news_story = NewsStory.new(params[:news_story])
     flash[:notice] = "Saved News Story" if @news_story.save
-    respond_with @news_story
+    respond_with [:admin, @news_story]
   end
   
   def update

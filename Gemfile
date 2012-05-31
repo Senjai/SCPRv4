@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.2'
+gem 'rails'
 gem 'mysql2'
 
 #gem 'redis-content-store', :path => "/Users/eric/projects/scpr/redis-content-store"

@@ -9,6 +9,15 @@ class NewsStory < ContentBase
     # remaining_grafs
     # editing_status
     # is_published
+    
+  before_save :fill_old_fields, on: :create
+  def fill_old_fields
+    self.byline = ""
+    self.comment_count = 0
+    self.editing_status = 0
+    self.is_published = 0
+    self.published_at = Time.now
+  end
   
   validates :headline,  presence: true
   validates :body,      presence: true

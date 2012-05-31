@@ -316,7 +316,7 @@ DEPENDENCIES
   newrelic_rpm
   oauth2
   oily_png
-  rails (= 3.2.2)
+  rails
   rb-fsevent
   redis-content-store!
   rspec
