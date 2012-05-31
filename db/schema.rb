@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120524043407) do
+ActiveRecord::Schema.define(:version => 20120530214758) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(:version => 20120524043407) do
     t.boolean  "is_published",                                                 :null => false
     t.boolean  "show_comments",                                                :null => false
     t.text     "_teaser",             :limit => 2147483647,                    :null => false
+    t.string   "event_asset_scheme",  :limit => 10
   end
 
   add_index "events_event", ["slug"], :name => "events_event_slug"
@@ -638,15 +639,16 @@ ActiveRecord::Schema.define(:version => 20120524043407) do
   add_index "jobs_employee", ["department_id"], :name => "jobs_employee_2ae7390"
 
   create_table "layout_breakingnewsalert", :force => true do |t|
-    t.string  "headline",     :limit => 140,                           :null => false
-    t.time    "alert_time"
-    t.string  "alert_type",   :limit => 5
-    t.boolean "is_published",                       :default => true,  :null => false
-    t.boolean "email_sent",                         :default => false, :null => false
-    t.time    "created_at",                                            :null => false
-    t.time    "updated_at",                                            :null => false
-    t.text    "teaser",       :limit => 2147483647,                    :null => false
-    t.string  "alert_link",   :limit => 200,                           :null => false
+    t.string   "headline",     :limit => 140,                           :null => false
+    t.time     "alert_time"
+    t.string   "alert_type",   :limit => 5
+    t.boolean  "is_published",                       :default => true,  :null => false
+    t.boolean  "email_sent",                         :default => false, :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.text     "teaser",       :limit => 2147483647,                    :null => false
+    t.string   "alert_link",   :limit => 200,                           :null => false
+    t.boolean  "send_email",                                            :null => false
   end
 
   create_table "layout_homepage", :force => true do |t|
@@ -1258,6 +1260,7 @@ ActiveRecord::Schema.define(:version => 20120524043407) do
     t.boolean  "is_published",                                                 :null => false
     t.boolean  "show_comments",                                                :null => false
     t.text     "_teaser",             :limit => 2147483647,                    :null => false
+    t.string   "event_asset_scheme",  :limit => 10
   end
 
   create_table "rails_layout_homepagecontent", :id => false, :force => true do |t|
