@@ -13,13 +13,13 @@ include FormFillers
 Capybara.default_selector = :css
 ActionController::Base.allow_rescue = false
 
-DatabaseCleaner.clean_with :truncation
 DatabaseCleaner.strategy = :transaction
 
 Cucumber::Rails::Database.javascript_strategy = :truncation
 Cucumber::Rails::World.use_transactional_fixtures = false
-Cucumber::ThinkingSphinx::ExternalWorld.new
 
+Cucumber::ThinkingSphinx::ExternalWorld.new
+DatabaseCleaner.clean_with :truncation
 FactoryGirl.reload
 
 Before do
