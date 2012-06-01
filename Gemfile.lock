@@ -19,45 +19,56 @@ GIT
 
 GIT
   remote: git://github.com/nex3/sass.git
-  revision: 167ee67e6a16423e95cf074074aea80ff9c828ca
+  revision: b255878dc6283a5cb4c03879de4eb25f7621f82d
   branch: master
   specs:
     sass (3.2.0.alpha.0)
 
+GIT
+  remote: git://github.com/pauldix/feedzirra.git
+  revision: 59ba34b20f1b91b3504778bf6746b068efb73a29
+  specs:
+    feedzirra (0.2.0.rc1)
+      curb (~> 0.8.0)
+      gorillib (~> 0.1.9)
+      loofah (~> 1.2.1)
+      nokogiri (~> 1.5.2)
+      sax-machine (~> 0.1.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
-    actionmailer (3.2.2)
-      actionpack (= 3.2.2)
-      mail (~> 2.4.0)
-    actionpack (3.2.2)
-      activemodel (= 3.2.2)
-      activesupport (= 3.2.2)
+    actionmailer (3.2.3)
+      actionpack (= 3.2.3)
+      mail (~> 2.4.4)
+    actionpack (3.2.3)
+      activemodel (= 3.2.3)
+      activesupport (= 3.2.3)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.1)
       rack (~> 1.4.0)
-      rack-cache (~> 1.1)
+      rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.1.2)
-    activemodel (3.2.2)
-      activesupport (= 3.2.2)
+    activemodel (3.2.3)
+      activesupport (= 3.2.3)
       builder (~> 3.0.0)
-    activerecord (3.2.2)
-      activemodel (= 3.2.2)
-      activesupport (= 3.2.2)
+    activerecord (3.2.3)
+      activemodel (= 3.2.3)
+      activesupport (= 3.2.3)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.2)
-      activemodel (= 3.2.2)
-      activesupport (= 3.2.2)
-    activesupport (3.2.2)
+    activeresource (3.2.3)
+      activemodel (= 3.2.3)
+      activesupport (= 3.2.3)
+    activesupport (3.2.3)
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.2.8)
     arel (3.0.2)
     blankslate (2.1.2.4)
-    bootstrap-sass (2.0.2)
+    bootstrap-sass (2.0.3.1)
     builder (3.0.0)
     capistrano (2.12.0)
       highline
@@ -121,17 +132,12 @@ GEM
       rack (~> 1.1)
     faraday_middleware (0.8.7)
       faraday (>= 0.7.4, < 0.9)
-    feedzirra (0.0.24)
-      activesupport (>= 2.3.8)
-      builder (>= 2.1.2)
-      curb (>= 0.2.3)
-      loofah (>= 0.3.1)
-      nokogiri (> 0.0.0)
-      sax-machine (>= 0.0.12)
     ffi (1.0.11)
     fssm (0.2.9)
     gherkin (2.10.0)
       json (>= 1.4.6)
+    gorillib (0.1.9)
+      json
     guard (1.0.3)
       ffi (>= 0.5.0)
       thor (>= 0.14.6)
@@ -161,10 +167,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    metaclass (0.0.1)
     mime-types (1.18)
-    mocha (0.11.4)
-      metaclass (~> 0.0.1)
     multi_json (1.0.4)
     multipart-post (1.1.5)
     mysql2 (0.3.11)
@@ -175,7 +178,7 @@ GEM
     net-ssh (2.5.2)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
-    newrelic_rpm (3.3.4.1)
+    newrelic_rpm (3.3.5)
     nokogiri (1.5.2)
     oauth2 (0.6.0)
       faraday (~> 0.7)
@@ -191,17 +194,17 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
-    rails (3.2.2)
-      actionmailer (= 3.2.2)
-      actionpack (= 3.2.2)
-      activerecord (= 3.2.2)
-      activeresource (= 3.2.2)
-      activesupport (= 3.2.2)
+    rails (3.2.3)
+      actionmailer (= 3.2.3)
+      actionpack (= 3.2.3)
+      activerecord (= 3.2.3)
+      activeresource (= 3.2.3)
+      activesupport (= 3.2.3)
       bundler (~> 1.0)
-      railties (= 3.2.2)
-    railties (3.2.2)
-      actionpack (= 3.2.2)
-      activesupport (= 3.2.2)
+      railties (= 3.2.3)
+    railties (3.2.3)
+      actionpack (= 3.2.3)
+      activesupport (= 3.2.3)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
@@ -213,8 +216,8 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     redis (2.2.2)
-    redis-activesupport (3.2.2)
-      activesupport (= 3.2.2)
+    redis-activesupport (3.2.3)
+      activesupport (~> 3.2.3)
       redis-store (~> 1.1.0)
     redis-store (1.1.0)
       redis (~> 2.2.0)
@@ -243,7 +246,7 @@ GEM
       tilt (~> 1.3)
     sax-machine (0.1.0)
       nokogiri (> 0.0.0)
-    selenium-webdriver (2.21.2)
+    selenium-webdriver (2.22.1)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
       libwebsocket (~> 0.1.3)
@@ -261,10 +264,10 @@ GEM
       tilt (~> 1.1, != 1.3.0)
     therubyracer (0.10.1)
       libv8 (~> 3.3.10)
-    thinking-sphinx (2.0.10)
+    thinking-sphinx (2.0.12)
       activerecord (>= 3.0.3)
       builder (>= 2.1.2)
-      riddle (>= 1.5.0)
+      riddle (>= 1.5.2)
     thor (0.14.6)
     tilt (1.3.3)
     treetop (1.4.10)
@@ -295,31 +298,26 @@ DEPENDENCIES
   chronic
   coffee-rails
   compass-rails
-  cucumber
-  cucumber-rails (= 1.3.0)
+  cucumber-rails
   database_cleaner
   disqussion!
   eco
-  factory_girl
   factory_girl_rails
   fakeweb
   faraday (= 0.7.6)
   faraday_middleware
-  feedzirra
-  guard
+  feedzirra!
   guard-cucumber
   guard-rspec
   jquery-rails
   launchy
-  mocha
   mysql2
   newrelic_rpm
   oauth2
   oily_png
-  rails
+  rails (= 3.2.3)
   rb-fsevent
   redis-content-store!
-  rspec
   rspec-rails
   ruby-mp3info
   rubypython
@@ -328,7 +326,7 @@ DEPENDENCIES
   shoulda-matchers
   simple_form
   therubyracer
-  thinking-sphinx (= 2.0.10)
+  thinking-sphinx (~> 2.0.10)
   twitter
   twitter-text
   uglifier (>= 1.0.3)

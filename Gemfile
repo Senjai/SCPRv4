@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+gem 'rails', "3.2.3"
 gem 'mysql2'
 
 #gem 'redis-content-store', :path => "/Users/eric/projects/scpr/redis-content-store"
@@ -11,7 +11,7 @@ gem 'will_paginate'
 gem 'capistrano'
 gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
 #gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
-gem 'thinking-sphinx', '2.0.10'
+gem 'thinking-sphinx', '~> 2.0.10'
 
 gem 'therubyracer'
 gem 'newrelic_rpm'
@@ -20,14 +20,14 @@ gem "faraday", "0.7.6"
 gem "faraday_middleware"
 
 gem "ruby-mp3info"
-gem "feedzirra"
+gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
 gem "twitter"
-gem 'twitter-text' # text processing for things like urls, hashtags, and @replies in twitter feeds
+gem 'twitter-text'
 gem "oauth2"
 gem 'simple_form'
+gem 'chronic'
 
-# Gems used only for assets and not required
-# in production environments by default.
+
 group :assets do
   gem "eco"
   gem "sass", branch: 'master', git: 'git://github.com/nex3/sass.git'
@@ -40,25 +40,19 @@ group :assets do
 end
 
 group :test, :development do
-  gem 'rspec'
 	gem "rspec-rails"
-	gem 'guard'
-	gem 'guard-rspec' # Automatically run tests
-	gem 'guard-cucumber' # Automatically run tests
-	gem 'rb-fsevent', require: false # For file-watching on Mac
-	gem 'launchy' # For quick debugging
+	gem 'guard-rspec'
+	gem 'guard-cucumber'
+	gem 'rb-fsevent', require: false
+	gem 'launchy'
 end
 
 group :test do
-  gem 'cucumber'
-  gem 'cucumber-rails', '1.3.0', require: false # Integration testing
-  gem 'factory_girl'
-  gem 'factory_girl_rails' # Factories for test data
-  gem 'database_cleaner' # Database cleaning strategy
-  gem 'mocha' # cross-framework mocking
-  gem 'capybara' # Acceptance/Integration testing
-  gem 'shoulda-matchers' # For quickly writing common tests
-  gem 'chronic' # useful time parsing from human-readable formats
+  gem "cucumber-rails", require: false
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'shoulda-matchers'
   gem 'fakeweb'
 end
 
