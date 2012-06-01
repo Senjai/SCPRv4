@@ -1,3 +1,11 @@
 .bio-detail {
-	
+	.contact {
+		@include font-sans-serif();
+		font-size:13px;
+	}
+	.contentasset {
+		img {
+			border:1px solid #bfbfbf;
+		}
+	}
 }
