@@ -6,6 +6,12 @@ describe Blog do
     it { should have_many(:tags).through(:entries) }
     it { should belong_to(:missed_it_bucket) }
     it { should have_many(:authors).through(:blog_authors) }
+    
+    it "orders by position on authors" do
+      blog = create :blog
+      create_list :blog_author, 3, blog: blog
+      blog.authors.to_sql.should match /order by position/i
+    end
   end
   
   describe "to_param" do

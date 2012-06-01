@@ -109,7 +109,6 @@ end
 
 # Blog #########################################################
   factory :blog do
-    # TODO blog_authors
     sequence(:name) { |n| "Blog #{n}" }
     slug { name.parameterize }
     _teaser { "This is the teaser for #{name}!" }
@@ -120,6 +119,7 @@ end
     is_news true
     feed_url "http://oncentral.org/rss/latest"
     custom_url "http://scpr.org" # it's a required field?
+    author { |blog| blog.association :blog_author }
     
     factory :news_blog do
       is_news true
@@ -147,8 +147,15 @@ end
       end
     end
   end
-  
 
+# BlogAuthor #########################################################
+  factory :blog_author do
+    blog
+    author
+    sequence(:position)
+  end
+
+  
 # Event #########################################################
   factory :event do
     sequence(:id, 1) # Not auto-incrementing in database?
@@ -388,6 +395,7 @@ end
     _teaser "This is a teaser"
     body "This is a big block of text for the news story"
     locale "local"
+    comment_count 0
     
     sequenced_published_at
     ignore { related_factory "content_shell" }
