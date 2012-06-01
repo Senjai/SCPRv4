@@ -11,7 +11,7 @@ describe FlatpagesController do
     it "assigns @flatpage" do
       flatpage = create :flatpage
       get :show, id: flatpage.id
-      assigns(:flatpage).should eq Flatpage.find(controller.params[:id])
+      assigns(:flatpage).should eq flatpage
     end
     
     it "renders application layout by default" do

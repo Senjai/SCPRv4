@@ -197,8 +197,9 @@ end
 
 # ContentByline #########################################################
   factory :byline, class: "ContentByline" do # Requires we pass in "content"
-    role 0
+    role ContentByline::ROLE_PRIMARY
     user
+    content { |byline| byline.association(:news_story) } #TODO Need to be able to pass in any type of factory here
     name "Dan Jones"
   end
   

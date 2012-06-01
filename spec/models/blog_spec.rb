@@ -7,7 +7,14 @@ describe Blog do
     it { should belong_to(:missed_it_bucket) }
     it { should have_many(:authors).through(:blog_authors) }
   end
-    
+  
+  describe "to_param" do
+    it "returns the slug" do
+      blog = build :blog
+      blog.to_param.should eq blog.slug
+    end
+  end
+  
   describe "teaser" do
     it "Returns _teaser" do
       blog = build :blog
@@ -78,8 +85,7 @@ describe Blog do
       it "returns only active blogs" do
         active_blogs = create_list :blog, 1, is_active: true
         inactive_blogs = create_list :blog, 2, is_active: false
-        Blog.active.count.should eq 1
-        Blog.active.first.should eq active_blogs.first # sort of passively testing order too, probably not good
+        Blog.active.should eq active_blogs
       end
     end
     
@@ -87,8 +93,7 @@ describe Blog do
       it "returns only news blogs" do
         news_blogs = create_list :blog, 1, is_news: true
         non_news_blogs = create_list :blog, 2, is_news: false
-        Blog.is_news.count.should eq 1
-        Blog.is_news.first.should eq news_blogs.first
+        Blog.is_news.should eq news_blogs
       end
     end
     
@@ -96,8 +101,7 @@ describe Blog do
       it "returns only non-news blogs" do
         news_blogs = create_list :blog, 1, is_news: true
         non_news_blogs = create_list :blog, 2, is_news: false
-        Blog.is_not_news.count.should eq 2
-        Blog.is_not_news.first.should eq non_news_blogs.first
+        Blog.is_not_news.should eq non_news_blogs
       end
     end
     
@@ -105,8 +109,7 @@ describe Blog do
       it "returns only local blogs" do
         local_blogs = create_list :blog, 1, is_remote: false
         remote_blogs = create_list :blog, 2, is_remote: true
-        Blog.local.count.should eq 1
-        Blog.local.first.should eq local_blogs.first
+        Blog.local.should eq local_blogs
       end
     end
     
@@ -114,8 +117,7 @@ describe Blog do
       it "returns only remote blogs" do
         local_blogs = create_list :blog, 1, is_remote: false
         remote_blogs = create_list :blog, 2, is_remote: true
-        Blog.remote.count.should eq 2
-        Blog.remote.first.should eq remote_blogs.first
+        Blog.remote.should eq remote_blogs
       end
     end
   end
