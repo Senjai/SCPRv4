@@ -1,6 +1,22 @@
 # Be sure to restart your server when you modify this file.
 
 class YAMLVerifier < ActiveSupport::MessageVerifier
+  def verify(signed_message)
+    raise InvalidSignature if signed_message.blank?
+
+    data, digest = signed_message.split("--")
+    if data.present? && digest.present? && secure_compare(digest, generate_digest(data))
+      # First load with @serializer (YAML), if there is a YAML syntax error, then decode with JSON
+      begin
+        @serializer.load(::Base64.decode64(data))
+      rescue Psych::SyntaxError
+        ActiveSupport::JSON.decode(Base64.decode64(data.gsub('%3D','=')))    
+      end
+    else
+      raise InvalidSignature
+    end
+  end
+  
   def generate(value)
     # If it isn't present, add in session_expiry to support django
     if value.is_a?(Hash) && !value.has_key?("_session_expiry")
