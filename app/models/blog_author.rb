@@ -1,6 +1,6 @@
 class BlogAuthor < ActiveRecord::Base
-  self.table_name = "blogs_blog_authors"
+  self.table_name = "blogs_blogauthor"
   
   belongs_to :blog
-  belongs_to :author, class_name: "Bio", foreign_key: "bio_id"
+  belongs_to :author, class_name: "Bio"
 end
