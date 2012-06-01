@@ -35,8 +35,9 @@ class Category < ActiveRecord::Base
   
   def link_path(options={})
     Rails.application.routes.url_helpers.send("section_#{self.url_helper_slug}_path", options.merge!({
-      :id => self.id,
-      :trailing_slash => true
+      id: self.id,
+      slug: self.slug,
+      trailing_slash: true,
     }))
   end
   
