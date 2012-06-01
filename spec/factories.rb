@@ -38,6 +38,7 @@ end
     title "Rails Developer"
     twitter { "@#{slugged_name}" }
     sequence(:user_id)
+    phone_number "123-456-7890"
   end
   
 
@@ -119,7 +120,6 @@ end
     is_news true
     feed_url "http://oncentral.org/rss/latest"
     custom_url "http://scpr.org" # it's a required field?
-    author { |blog| blog.association :blog_author }
     
     factory :news_blog do
       is_news true
@@ -134,12 +134,14 @@ end
       feed_url "http://oncentral.org/rss/latest"
     end
     
+    ignore { author_count 0 }
     ignore { entry_count 0 }
     ignore { entry Hash.new }
     ignore { missed_it_bucket Hash.new }
   
     after :create do |object, evaluator|
       FactoryGirl.create_list(:blog_entry, evaluator.entry_count.to_i, evaluator.entry.merge!(blog: object))
+      FactoryGirl.create_list(:blog_author, evaluator.author_count.to_i, blog: object)
       
       if evaluator.missed_it_bucket_id.blank?
         object.missed_it_bucket = FactoryGirl.create(:missed_it_bucket, evaluator.missed_it_bucket.reverse_merge!(title: object.name))
@@ -204,8 +206,9 @@ end
 
 # ContentByline #########################################################
   factory :byline, class: "ContentByline" do # Requires we pass in "content"
-    role 0
+    role ContentByline::ROLE_PRIMARY
     user
+    content { |byline| byline.association(:news_story) } #TODO Need to be able to pass in any type of factory here
     name "Dan Jones"
   end
   

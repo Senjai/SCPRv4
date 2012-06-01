@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
     t.string  "twitter",      :limit => 30,                         :null => false
     t.integer "asset_id"
     t.string  "short_bio",    :limit => 200,                        :null => false
+    t.string  "phone_number", :limit => 30,                         :null => false
   end
 
   add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true
@@ -192,6 +193,16 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "blogs_blog_authors", ["bio_id"], :name => "blogs_blog_authors_64afdb51"
   add_index "blogs_blog_authors", ["blog_id", "bio_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
   add_index "blogs_blog_authors", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
+
+  create_table "blogs_blogauthor", :force => true do |t|
+    t.integer "blog_id",   :null => false
+    t.integer "author_id", :null => false
+    t.integer "position",  :null => false
+  end
+
+  add_index "blogs_blogauthor", ["author_id"], :name => "blogs_blog_authors_64afdb51"
+  add_index "blogs_blogauthor", ["blog_id", "author_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
+  add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
 
   create_table "blogs_entry", :force => true do |t|
     t.string   "title",             :limit => 140,                        :null => false
@@ -914,32 +925,24 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   end
 
   create_table "news_story", :force => true do |t|
-    t.string   "headline",              :limit => 200,                        :null => false
-    t.string   "slug",                  :limit => 50,         :default => "", :null => false
-    t.integer  "primary_reporter_id"
-    t.integer  "secondary_reporter_id"
-    t.string   "byline",                :limit => 50,                         :null => false
-    t.string   "news_agency",           :limit => 50
-    t.text     "_teaser",               :limit => 2147483647,                 :null => false
-    t.text     "body",                  :limit => 2147483647,                 :null => false
-    t.text     "first_graf",            :limit => 2147483647,                 :null => false
-    t.text     "remaining_grafs",       :limit => 2147483647,                 :null => false
-    t.string   "locale",                :limit => 5,          :default => "", :null => false
+    t.string   "headline",           :limit => 200,                        :null => false
+    t.string   "slug",               :limit => 50,         :default => "", :null => false
+    t.string   "news_agency",        :limit => 50
+    t.text     "_teaser",            :limit => 2147483647,                 :null => false
+    t.text     "body",               :limit => 2147483647,                 :null => false
+    t.string   "locale",             :limit => 5,          :default => "", :null => false
     t.integer  "enco_number"
     t.date     "audio_date"
-    t.datetime "published_at",                                                :null => false
-    t.string   "editing_status",        :limit => 1,                          :null => false
-    t.boolean  "is_published",                                                :null => false
-    t.string   "source",                :limit => 20
-    t.string   "story_asset_scheme",    :limit => 10
-    t.string   "extra_asset_scheme",    :limit => 10
-    t.string   "lead_asset_scheme",     :limit => 10
-    t.integer  "status",                                                      :null => false
-    t.integer  "comment_count",                                               :null => false
-    t.string   "_short_headline",       :limit => 100
+    t.datetime "published_at",                                             :null => false
+    t.string   "source",             :limit => 20
+    t.string   "story_asset_scheme", :limit => 10
+    t.string   "extra_asset_scheme", :limit => 10
+    t.string   "lead_asset_scheme",  :limit => 10
+    t.integer  "status",                                                   :null => false
+    t.integer  "comment_count",                                            :null => false
+    t.string   "_short_headline",    :limit => 100
   end
 
-  add_index "news_story", ["primary_reporter_id"], :name => "news_story_kpcc_reporter_id"
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
 
   create_table "news_storycategories", :force => true do |t|
