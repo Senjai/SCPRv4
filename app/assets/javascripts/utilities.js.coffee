@@ -96,7 +96,7 @@ class scpr.SocialTools
         @options = _.defaults options||{}, @DefaultOptions
                     
         # look for facebook elements so that we can fetch counts and add functionality
-        #@fbelements = ($ el for el in $ @options.fbfinder)
+        @fbelements = ($ el for el in $ @options.fbfinder)
         @fbTimeout = null
 
         # look for twitter elements
@@ -113,8 +113,8 @@ class scpr.SocialTools
         if window[@options.gaq]
             @gaq = window[@options.gaq]
             
-        #if @fbelements.length > 0 
-        #    @_getFbCounts()
+        if @fbelements.length > 0 
+            @_getFbCounts()
             
         if @twit_elements.length > 0
             @_getTwitCounts()
