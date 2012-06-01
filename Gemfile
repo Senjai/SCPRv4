@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', "3.2.3"
+gem 'rails', "~> 3.2.3"
 gem 'mysql2'
 
 #gem 'redis-content-store', :path => "/Users/eric/projects/scpr/redis-content-store"
@@ -12,7 +12,6 @@ gem 'capistrano'
 gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
 #gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
 gem 'thinking-sphinx', '~> 2.0.10'
-
 gem 'therubyracer'
 gem 'newrelic_rpm'
 
