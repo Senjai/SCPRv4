@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
     t.string  "twitter",      :limit => 30,                         :null => false
     t.integer "asset_id"
     t.string  "short_bio",    :limit => 200,                        :null => false
+    t.string  "phone_number", :limit => 30,                         :null => false
   end
 
   add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true
@@ -183,6 +184,16 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "blogs_blog", ["missed_it_bucket_id"], :name => "blogs_blog_d12628ce"
   add_index "blogs_blog", ["name"], :name => "name", :unique => true
   add_index "blogs_blog", ["slug"], :name => "slug", :unique => true
+
+  create_table "blogs_blogauthor", :force => true do |t|
+    t.integer "blog_id",   :null => false
+    t.integer "author_id", :null => false
+    t.integer "position",  :null => false
+  end
+
+  add_index "blogs_blogauthor", ["author_id"], :name => "blogs_blog_authors_64afdb51"
+  add_index "blogs_blogauthor", ["blog_id", "author_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
+  add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
 
   create_table "blogs_blogauthor", :force => true do |t|
     t.integer "blog_id",   :null => false

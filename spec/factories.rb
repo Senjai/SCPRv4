@@ -38,6 +38,7 @@ end
     title "Rails Developer"
     twitter { "@#{slugged_name}" }
     sequence(:user_id)
+    phone_number "123-456-7890"
   end
   
 
