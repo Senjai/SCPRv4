@@ -10,6 +10,7 @@ class YAMLVerifier < ActiveSupport::MessageVerifier
       begin
         @serializer.load(::Base64.decode64(data))
       rescue Psych::SyntaxError
+        Rails.logger.debug "Caught YAML syntax error. Decoding with JSON."
         ActiveSupport::JSON.decode(Base64.decode64(data.gsub('%3D','=')))    
       end
     else
