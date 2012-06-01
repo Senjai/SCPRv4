@@ -1,7 +1,7 @@
 <div class="sharing-tools <%= cssClass ||= nil %> clearfix" id="article-sharing-tools">
 	<h5>Share this:</h5>
 	<ul>
-		<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-href="<%= URI.escape(content.remote_link_path) %>"></div></li>
+		<div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-href="<%= URI.escape(content.remote_link_path) %>"></div>
 	    <li class="twitter social_twit" data-url="<%= URI.escape(content.remote_link_path) %>" data-text="<%= URI.escape(content.short_headline) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</a></li>
 		<li class="plus"><g:plusone size="small" annotation="none" href="<%= content.remote_link_path %>"></g:plusone><span>Google+</span></li>
 	    <!-- <li class="email"><a href="">Email</a></li> -->
