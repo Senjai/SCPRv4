@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
-	<title><%= @PAGE_TITLE ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
+	<title><%= @PAGE_TITLE.present? ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
 	<meta id="meta-viewport" name="viewport" content="width=device-width, minimum-scale=1">
 	<%= render "shared/header/header_js" %>
 	<%= render "shared/header/opengraph" %>
