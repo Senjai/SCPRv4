@@ -21,7 +21,6 @@ Cucumber::Rails::World.use_transactional_fixtures = false
 Cucumber::ThinkingSphinx::ExternalWorld.new
 
 FactoryGirl.reload
-Scprv4::Application.reload_routes!
 
 Before do
   DatabaseCleaner.start
