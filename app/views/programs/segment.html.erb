@@ -51,13 +51,14 @@
 			</div>
 		</div> <!-- row fluid -->
 	</aside>
-		
-	<div class="row-fluid comment-wrap">
-		<div class="span6 row-title" id="fold-comments-count-widget">
-			<%= comment_widget_for @segment, cssClass: "left-side", name: "comments" %>
-		</div>
-		<div class="span18 mq-solo-span">
-			<%= comments_for @segment, header: false %>
-		</div>
-	</div> <!-- row-fluid -->
+	<div class="comment-wrap">
+		<div class="row-fluid">
+			<div class="span6 row-title" id="fold-comments-count-widget">
+				<%= comment_widget_for @segment, cssClass: "left-side", name: "comments" %>
+			</div>
+			<div class="span18 mq-solo-span">
+				<%= comments_for @segment, header: false %>
+			</div>
+		</div> <!-- row-fluid -->
+	</div>
 </div>

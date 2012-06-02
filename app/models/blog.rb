@@ -5,7 +5,7 @@ class Blog < ActiveRecord::Base
   has_many :tags, :through => :entries
   belongs_to :missed_it_bucket
   
-  has_many :authors, through: :blog_authors
+  has_many :authors, through: :blog_authors, order: "position"
   has_many :blog_authors
     
   scope :active, where(:is_active => true)

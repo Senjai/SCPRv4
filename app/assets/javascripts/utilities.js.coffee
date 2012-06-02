@@ -36,7 +36,8 @@ class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
         $(document).ready =>
             # 5 times. If the ad hasn't loaded after that, then we're giving up.
             for i in [1..5]
-                @sizedCheck(i)
+            	@sizedCheck(i)
+            
 
     resize: (element) ->
         $(element).css
@@ -46,13 +47,7 @@ class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
 
     sizedCheck: (i) ->
         setTimeout () =>
-            # Use this opportunity to make the ad iframes have a transparent background, for IE7 / IE8
-            if $(".ad > iframe[allowtransparency!=allowtransparency]").length
-                console.log "adTransparent: attempt ##{i}:"
-                @makeTransparent()
-
             if $(".dfp:not(.adSized)").length
-                console.log "adSizer: Attempt ##{i}:"
                 @resizeIframes()
         , 500*i
 
@@ -61,18 +56,12 @@ class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
             console.log "adSizer: Resizing #{$(iframe).attr("id")}..."
             $(iframe.contentWindow.document).ready () =>
                 ad = $(iframe.contentWindow.document).find("img, object, embed")[0]
-                console.log "adSizer: ad is ", ad            
                 if $(ad).length
                     @resize(ad)
                     $(iframe).closest(".ad .dfp").addClass("adSized")
-                    console.log "adSizer: Done."
 
     removeFixedDimensions: (element) ->
         $(element).removeAttr("width").removeAttr("height")
-
-    makeTransparent: ->
-        $(".ad > iframe[allowtransparency!=allowtransparency]").attr("allowtransparency", "allowtransparency")
-        console.log "adTransparent: Done."
 
 #----------
 
@@ -85,7 +74,7 @@ class scpr.SocialTools
         
         gaq:         "_gaq"
         
-        fburl:      "http://graph.facebook.com/"
+        fburl:      "http://graph.facebook.com/fql"
         twiturl:    "http://urls.api.twitter.com/1/urls/count.json"
         disqurl:    "http://kpcc.disqus.com/count.js?q=1&"
         
@@ -96,7 +85,7 @@ class scpr.SocialTools
         @options = _.defaults options||{}, @DefaultOptions
                     
         # look for facebook elements so that we can fetch counts and add functionality
-        #@fbelements = ($ el for el in $ @options.fbfinder)
+        @fbelements = ($ el for el in $ @options.fbfinder)
         @fbTimeout = null
 
         # look for twitter elements
@@ -113,8 +102,8 @@ class scpr.SocialTools
         if window[@options.gaq]
             @gaq = window[@options.gaq]
             
-        #if @fbelements.length > 0 
-        #    @_getFbCounts()
+        if @fbelements.length > 0 
+            @_getFbCounts()
             
         if @twit_elements.length > 0
             @_getTwitCounts()
@@ -201,25 +190,21 @@ class scpr.SocialTools
     #----------
         
     _getFbCounts: ->
-        # collect the element urls
-        @ids = (el.attr("data-url") for el in @fbelements)
-        
         # set a timeout for signalling bad load
-#        @fbTimeout = setTimeout (=> @_signalFbLoadFailure("Failed to load FB Counts in 5 seconds")), 5000
+        @fbTimeout = setTimeout (=> @_signalFbLoadFailure("Failed to load FB Counts in 5 seconds")), 5000
         @fbPending = Number(new Date)
+        
+        # Setup the FQL query by mapping all of the URLS from @fbelements and joining with "OR"
+        query = "SELECT url, total_count FROM link_stat WHERE " + _.map(@fbelements, (el) ->("url='#{el.attr("data-url")}'")).join(" OR ") + ""
         
         # fire an async request
         $.ajax
             type: "GET"
-            jsonp: 'callback'
             url: @options.fburl
-            dataType: 'jsonp'
+            dataType: 'json'
             cache: false
-            data:
-                ids: @ids.join(',')
-            
-            beforeSend: () ->
-                console.log "sending request for fb counts..."
+            data: 
+                q: query
 
             success: (res) =>
                 # note load success
@@ -228,18 +213,15 @@ class scpr.SocialTools
                 loadtime = Number(new Date) - @fbPending
                 console.log "fb counts load took #{loadtime/1000} seconds"
                 @gaq?.push ['_trackEvent','SocialTools','Facebook Load','',loadtime,true]
-            
+                
                 # fill in our numbers
                 for el in @fbelements
-                    if fbobj = res[ el.attr("data-url") ]
-                        count = Number(fbobj.shares||0) + Number(fbobj.likes||0)
+                    if fbobj = _.find(res.data, (obj) -> obj.url == el.attr("data-url"))
+                        count = fbobj.total_count
                         $(@options.count,el).text count
 
-            error: () =>
-                @_signalFbLoadFailure("Could not retrieve data from #{@options.fburl}")
-
-            complete: (xhr, status) ->
-                console.log "Requests complete. Status: #{status}"
+            error: (xhr, status, err) =>
+                @_signalFbLoadFailure("Could not retrieve data from #{@options.fburl}. Error: #{err}")
             
     _signalFbLoadFailure: (message) ->
         console.log message

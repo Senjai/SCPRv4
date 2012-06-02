@@ -8,13 +8,15 @@
 	<%= content_widget "related_content_and_links", @entry %>
 	<%= content_widget "next_prev", @entry %>
 	
-	<div class="row-fluid comment-wrap">
-		<div class="span6" id="fold-comments-count-widget">
-			<%= comment_widget_for @entry, cssClass: "left-side", name: "comments" %>
-		</div>
-		<div class="span18 mq-solo-span">
-			<%= comments_for @entry, header: false %>
-		</div>
-	</div> <!-- row-fluid -->
+	<div class="comment-wrap">
+		<div class="row-fluid">
+			<div class="span6" id="fold-comments-count-widget">
+				<%= comment_widget_for @entry, cssClass: "left-side", name: "comments" %>
+			</div>
+			<div class="span18 mq-solo-span">
+				<%= comments_for @entry, header: false %>
+			</div>
+		</div> <!-- row-fluid -->
+	</div>
 </div> <!-- fold -->
 
