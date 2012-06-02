@@ -37,8 +37,8 @@ end
 
 # This assumes that the ID of the form uses underscores, which is how FormBuilder does it by default.
 Then /^I should see (an?|the) "([^"]*)" (?:section|form)$/ do |selector, text|
-  s = %w{a an}.include?(selector) ? "." : "#"
-  @css_finder = s + text.gsub(/\s/, "_")
+  s = %w{a an}.include?(selector) ? [".", "-"] : ["#", "_"]
+  @css_finder = s[0] + text.gsub(/\s/, s[1])
   page.should have_css @css_finder
 end
 
