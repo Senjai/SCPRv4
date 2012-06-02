@@ -85,6 +85,33 @@ namespace :scprv4 do
     
       worker.work()
     end
+    
+    desc "Start an Email listener"
+    task :email => [ :environment ] do 
+      require 'email_worker'
+    
+      begin
+        worker = EmailWorker.new()
+        worker.verbose = ENV['LOGGING'] || ENV['VERBOSE']
+      rescue
+        abort "Failed to launch EmailWorker!"
+      end
+    
+      if ENV['BACKGROUND']
+        unless Process.respond_to?('daemon')
+          abort "env var BACKGROUND is set, which requires ruby >= 1.9"
+        end
+        Process.daemon(true)
+      end
+    
+      if ENV['PIDFILE']
+        File.open(ENV['PIDFILE'], 'w') { |f| f << worker.pid }
+      end
+    
+      worker.log "Starting worker #{worker}"
+    
+      worker.work()
+    end
   
     #----------
   
@@ -118,22 +145,20 @@ namespace :scprv4 do
 end
 
 # testing tasks
-# namespace :db do
-#   namespace :test do |s|
-#     s[:prepare].clear
-#     
-#     task :prepare => :environment do
-#       if Rails.application.config.scpr.mercer_dump
-#         # clear test database
-#         s[:purge].invoke
-#         
-#         # load in mercer dump file
-#         $stderr.puts "Dumping data from #{Rails.application.config.scpr.mercer_dump} into #{ActiveRecord::Base.configurations['test']['database']}"
-#         `mysql #{ActiveRecord::Base.configurations['test']['database']} < #{Rails.application.config.scpr.mercer_dump}`
-#         $stderr.puts "Mercer dump loaded."
-#       else
-#         raise "No mercer dump file specified for this environment."
-#       end
-#     end
-#   end
-# end
+namespace :db do
+  namespace :test do |s|    
+    task :load_mercer => :environment do
+      if Rails.application.config.scpr.mercer_dump
+        # clear test database
+        s[:purge].invoke
+        
+        # load in mercer dump file
+        $stderr.puts "Dumping data from #{Rails.application.config.scpr.mercer_dump} into #{ActiveRecord::Base.configurations['test']['database']}"
+        `mysql #{ActiveRecord::Base.configurations['test']['database']} < #{Rails.application.config.scpr.mercer_dump}`
+        $stderr.puts "Mercer dump loaded."
+      else
+        raise "No mercer dump file specified for this environment."
+      end
+    end
+  end
+end

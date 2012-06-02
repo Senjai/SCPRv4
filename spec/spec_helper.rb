@@ -7,8 +7,14 @@ require 'rspec/autorun'
 require 'thinking_sphinx/test'
 require 'database_cleaner'
 require 'chronic'
+require 'fakeweb'
 
+<<<<<<< HEAD
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+=======
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+FakeWeb.allow_net_connect = false
+>>>>>>> origin/master
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
@@ -17,14 +23,16 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include ContentBaseHelpers
   config.include RemoteStubs
+  config.include LyrisXMLResponse
   
   config.before :all do
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.strategy = :transaction
     FactoryGirl.reload
   end
 
   config.before :each do
+    FakeWeb.clean_registry
     DatabaseCleaner.start
   end
   
