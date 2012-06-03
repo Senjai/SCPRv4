@@ -6,7 +6,7 @@
 			<% for entry in blog.entries.published.first(5) %>
 			    <li>
 					<% register_content entry %>
-			        <p><%= link_to entry.title, entry.link_path %></p>
+			        <p><%= link_to entry.short_headline, entry.link_path %></p>
 					<span class="date-posted"><%= smart_date entry %></span>
 			    </li>
 			<% end %>

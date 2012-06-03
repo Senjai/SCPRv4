@@ -5,7 +5,7 @@
 		<% if entry = blog.entries.published.first %>
 			<div class="latest-post">
 				<h5>Latest Post</h5>
-				<%= link_to entry.title, entry.link_path %> <%= smart_date_js entry %>
+				<%= link_to entry.short_headline, entry.link_path %> <%= smart_date_js entry %>
 			</div>
 		<% end %>
 	</div>

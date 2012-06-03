@@ -252,7 +252,7 @@ class scpr.ListenLive
             url:                "http://live.scpr.org:80/;stream.nsv"
             player:             "#jquery_jplayer_1"
             swf_path:           "/assets-flash"
-            pause_timeout:      60
+            pause_timeout:      300
             schedule_finder:    "#llschedule"
             schedule_template:  JST["t_listen/currentgen_schedule"]
             solution:           "flash, html"
