@@ -1,5 +1,4 @@
 module FormFillers
-  
   def fill_required_fields_with_attributes_from(record)
     class_str = record.class.to_s.underscore
     record.attributes.keys.each do |attrib|
@@ -9,5 +8,4 @@ module FormFillers
       end
     end
   end
-  
 end

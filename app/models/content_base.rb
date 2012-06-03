@@ -169,10 +169,6 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
-  def status_text
-    STATUS_TEXT[self.status]
-  end
-  
   def self.status_text_collect
     ContentBase::STATUS_TEXT.map { |p| [p[1], p[0]] }
   end

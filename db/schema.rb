@@ -195,16 +195,6 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "blogs_blogauthor", ["blog_id", "author_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
   add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
 
-  create_table "blogs_blogauthor", :force => true do |t|
-    t.integer "blog_id",   :null => false
-    t.integer "author_id", :null => false
-    t.integer "position",  :null => false
-  end
-
-  add_index "blogs_blogauthor", ["author_id"], :name => "blogs_blog_authors_64afdb51"
-  add_index "blogs_blogauthor", ["blog_id", "author_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
-  add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
-
   create_table "blogs_entry", :force => true do |t|
     t.string   "title",             :limit => 140,                        :null => false
     t.string   "slug",              :limit => 50,                         :null => false
@@ -647,15 +637,16 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "jobs_employee", ["department_id"], :name => "jobs_employee_2ae7390"
 
   create_table "layout_breakingnewsalert", :force => true do |t|
-    t.string  "headline",     :limit => 140,                           :null => false
-    t.time    "alert_time"
-    t.string  "alert_type",   :limit => 5
-    t.boolean "is_published",                       :default => true,  :null => false
-    t.boolean "email_sent",                         :default => false, :null => false
-    t.time    "created_at",                                            :null => false
-    t.time    "updated_at",                                            :null => false
-    t.text    "teaser",       :limit => 2147483647,                    :null => false
-    t.string  "alert_link",   :limit => 200,                           :null => false
+    t.string   "headline",     :limit => 140,                           :null => false
+    t.time     "alert_time"
+    t.string   "alert_type",   :limit => 5
+    t.boolean  "is_published",                       :default => true,  :null => false
+    t.boolean  "email_sent",                         :default => false, :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.text     "teaser",       :limit => 2147483647,                    :null => false
+    t.string   "alert_link",   :limit => 200,                           :null => false
+    t.boolean  "send_email",                                            :null => false
   end
 
   create_table "layout_homepage", :force => true do |t|
@@ -746,6 +737,56 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   end
 
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
+
+  create_table "mailchimp_campaign", :force => true do |t|
+    t.text     "content",         :limit => 2147483647, :null => false
+    t.datetime "sent_date",                             :null => false
+    t.string   "name",                                  :null => false
+    t.string   "campaign_id",     :limit => 50,         :null => false
+    t.integer  "object_id"
+    t.integer  "content_type_id"
+    t.text     "extra_info",      :limit => 2147483647
+  end
+
+  add_index "mailchimp_campaign", ["content_type_id"], :name => "mailchimp_campaign_e4470c6e"
+
+  create_table "mailchimp_queue", :force => true do |t|
+    t.text    "type_opts",                  :limit => 2147483647,                    :null => false
+    t.boolean "segment_options_all",                              :default => false, :null => false
+    t.text    "contents",                   :limit => 2147483647,                    :null => false
+    t.string  "subject",                                                             :null => false
+    t.string  "campaign_type",              :limit => 50,                            :null => false
+    t.boolean "authenticate",                                     :default => false, :null => false
+    t.string  "title"
+    t.string  "from_email",                 :limit => 75,                            :null => false
+    t.boolean "segment_options",                                  :default => false, :null => false
+    t.string  "list_id",                    :limit => 50,                            :null => false
+    t.boolean "auto_tweet",                                       :default => false, :null => false
+    t.string  "from_name",                                                           :null => false
+    t.string  "folder_id",                  :limit => 50
+    t.boolean "generate_text",                                    :default => false, :null => false
+    t.string  "to_email",                   :limit => 75,                            :null => false
+    t.boolean "tracking_text_clicks",                             :default => false, :null => false
+    t.boolean "auto_footer",                                      :default => false, :null => false
+    t.boolean "tracking_html_clicks",                             :default => true,  :null => false
+    t.string  "google_analytics",           :limit => 100
+    t.text    "segment_options_conditions", :limit => 2147483647,                    :null => false
+    t.integer "template_id",                                                         :null => false
+    t.boolean "tracking_opens",                                   :default => true,  :null => false
+    t.integer "object_id"
+    t.integer "content_type_id"
+    t.boolean "locked",                                           :default => false, :null => false
+    t.text    "extra_info",                 :limit => 2147483647
+  end
+
+  add_index "mailchimp_queue", ["content_type_id"], :name => "mailchimp_queue_e4470c6e"
+
+  create_table "mailchimp_reciever", :force => true do |t|
+    t.integer "campaign_id",               :null => false
+    t.string  "email",       :limit => 75, :null => false
+  end
+
+  add_index "mailchimp_reciever", ["campaign_id"], :name => "mailchimp_reciever_8fd46b1a"
 
   create_table "media_audio", :force => true do |t|
     t.string  "mp3",             :limit => 100

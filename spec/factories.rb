@@ -379,17 +379,17 @@ end
     ignore { with_category false }
     ignore { byline_count 0 }
     status 5
+    sequence(:published_at) { |n| Time.now + 60*60*n }
   end
   
 
 # VideoShell ##########################################################
   factory :video_shell do
     content_base
+    
     sequence(:headline) { |n| "This is a video #{n}" }
     slug { headline.parameterize }
-    body "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet non congue libero commodo. Vestibulum dolor nibh, eleifend eu suscipit eget, egestas sed diam. Proin cursus rutrum nibh eget consequat. Donec viverra augue sed nisl ultrices venenatis id eget quam. Cras id dui a magna tristique fermentum in sit amet lacus. Curabitur urna metus, mattis vel mollis quis, placerat vitae turpis.
-    Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
-    sequenced_published_at
+    body { "Body for #{headline}" }
     
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
@@ -403,15 +403,15 @@ end
 # NewsStory #########################################################
   factory :news_story do
     content_base
+    
     sequence(:headline) { |n| "This is news story ##{n}" }
     slug { headline.parameterize }
     news_agency "KPCC"
-    _teaser "This is a teaser"
-    body "This is a big block of text for the news story"
+    _teaser { "Teaser for #{headline}" }
+    body { "Body for #{headline}" }
     locale "local"
     comment_count 0
     
-    sequenced_published_at
     ignore { related_factory "content_shell" }
     ignore { category_type :category_news }
     
@@ -425,12 +425,11 @@ end
   factory :show_episode, aliases: [:episode] do
     content_base
     show
+    
     sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
-    title "AirTalk for May 22, 2009"
-    _teaser "This is a short summary of the show"
+    sequence(:title) { "AirTalk for #{air_date}" }
+    _teaser { "Teaser for #{title}" }
     comment_count 0
-
-    sequenced_published_at
     
     ignore { segment_count 0 }
     ignore { related_factory "content_shell" }
@@ -446,19 +445,19 @@ end
 
 # ShowSegment #########################################################
   factory :show_segment, aliases: [:segment] do
-    content_base
+    content_base    
     show
+    
     sequence(:title) { |n| "Show Segment #{n}" }
     slug { title.parameterize }
-    _teaser "This is a teaser for the show segment"
-    body "This is a description of the show segment"
+    _teaser { "Teaser for #{title}" }
+    body { "Body for #{title}" }
     locale "local"
     comment_count 1
-    _short_headline "Short Headline"
+    _short_headline { "Short #{title}" }
     audio_date { Time.now }
     enco_number 999
 
-    sequenced_published_at
     ignore { related_factory "content_shell" }
     ignore { category_type :category_news }
     
@@ -470,18 +469,17 @@ end
 
 # BlogEntry #########################################################
   factory :blog_entry do
-    content_base
-    sequence(:title) { |n| "Blog Entry #{n}" }
-    slug { title.parameterize }
-    content "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet non congue libero commodo. Vestibulum dolor nibh, eleifend eu suscipit eget, egestas sed diam. Proin cursus rutrum nibh eget consequat. Donec viverra augue sed nisl ultrices venenatis id eget quam. Cras id dui a magna tristique fermentum in sit amet lacus. Curabitur urna metus, mattis vel mollis quis, placerat vitae turpis.
-    Phasellus et tortor eget mauris imperdiet fermentum. Mauris a rutrum augue. Quisque at fringilla libero. Phasellus vitae nisl turpis, at sodales erat. Duis et risus orci, at placerat quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam sed nibh non odio pretium rhoncus et nec ipsum. Nam sed dignissim velit."
+    content_base    
     author
     blog
-    blog_slug { slug }
+    
+    sequence(:title) { |n| "Blog Entry #{n}" }
+    slug { title.parameterize }
+    content { "Content for #{title}" }
+    blog_slug { blog.slug }
     is_published 1 # required field by db but not used anymore
     comment_count 1
 
-    sequenced_published_at
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
     
@@ -494,13 +492,13 @@ end
 # ContentShell #########################################################
   factory :content_shell do
     content_base
+    
     comment_count 2
     sequence(:headline) { |n| "This is some outside Content #{n}" }
     site "blogdowntown"
-    sequence(:_teaser) { |n| "This is a teaser for the content #{n}" }
-    url "http://blogdowntown.com/2011/11/6494-green-paint-welcomes-cyclists-to-a-reprioritized"
+    _teaser { "Teaser for #{headline}" }
+    url { "http://blogdowntown.com/2011/11/6494-#{headline.parameterize}" }
     
-    sequence(:published_at) { |n| Time.now + 60*60*n }
     ignore { related_factory "video_shell" }
     ignore { category_type :category_news }
 

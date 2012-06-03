@@ -51,10 +51,10 @@ class NewsStory < ContentBase
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   #----------
-  
+      
   def link_path(options={})
     Rails.application.routes.url_helpers.news_story_path(options.merge!({
-      :year => self.published_at.year, 
+      :year => self.published_at.year.to_s, 
       :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :id => self.id,

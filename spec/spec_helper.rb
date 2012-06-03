@@ -9,12 +9,8 @@ require 'database_cleaner'
 require 'chronic'
 require 'fakeweb'
 
-<<<<<<< HEAD
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
-=======
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 FakeWeb.allow_net_connect = false
->>>>>>> origin/master
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
