@@ -34,7 +34,7 @@ class Lyris
       include Rails.application.routes.url_helpers
     end
     
-    view.render(template: "breaking_news_alerts/email/template", formats: [format.to_sym], locals: { alert: @alert }).to_str
+    view.render(template: "breaking_news/email/template", formats: [format.to_sym], locals: { alert: @alert }).to_str
   end
   
   def send_message
