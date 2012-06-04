@@ -9,8 +9,12 @@
 		    <td>
 		    	<table cellspacing="0" cellpadding="0" width="450px" align="center" style="border-bottom:1px solid #ccc;margin-bottom:18px;">
 				    <tr>
-				        <td width="181"><%= image_tag('logo-masthead.png')%></td>
-				        <td><%= image_tag('breaking-news/breaking.png')%></td>
+				        <td width="181">
+				            <img src="<%= 'http://scpr.org#{image_path('logo_masthead')}' %>" alt="89.3 KPCC, Southern California Public Radio" />
+				        </td>
+				        <td>
+							<img src="<%= 'http://scpr.org#{image_path('breaking-news/breaking')}' %>" alt="News Update" />
+						</td>
 				    </tr>
 				</table>
 				<table cellspacing="0" cellpadding="0" width="450px" align="center">
@@ -28,19 +32,19 @@
 					<tr>
 					    <td>
 					    	<a href="http://facebook.com/kpccfm">
-					    		<%= image_tag('icons/tiny-facebook.png')%>
+								<img src="<%= 'http://scpr.org#{image_path('icons/tiny-facebook')}' %>" alt="Facebook" />
 								KPCC on Facebook
 					    	</a>
 					    </td>
 					    <td>
 					    	<a href="http://twitter.com/kpcc">
-					    		<%= image_tag('icons/tiny-twitter.png')%>
+					    		<img src="<%= 'http://scpr.org#{image_path('icons/tiny-twitter')}' %>" alt="Twitter" />
 								KPCC on Twitter
 					    	</a>
 					    </td>
 					    <td>
 					    	<a href="#">
-					    		<%= image_tag('icons/newsletter-subscribe.png')%>
+								<img src="<%= 'http://scpr.org#{image_path('icons/newsletter-subscribe')}' %>" alt="Unsubscribe" />
 								Unsubscribe
 					    	</a>
 					    </td>
