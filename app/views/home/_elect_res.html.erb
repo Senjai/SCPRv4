@@ -1,0 +1,149 @@
+<div class="stacked">
+	<div class="row-fluid">
+		<%= content_cache("home_leads") do %>
+			<% register_content("layout/homepage") %>
+			<div class="span24">
+				<%= render_content @homepage.content[0], "lead8" if @homepage %>
+			</div>
+	</div>
+	<div class="row-fluid">
+			<div class="span24 offleads split">
+				<%= render_content @homepage.content[1..-1], "offlead_asset" if @homepage %>
+			</div>
+		<% end %>
+	</div>
+	<hr />
+</div>
+<% content_for :conversation_slot do %>
+<% end %>
+
+<% content_for :hero_roadblock do %>
+<style type="text/css">
+	.lacey {
+		background-image:url(<%= image_path('specials/election/head-lacey.png') %>);
+	}
+	.trutanich {
+		background-image:url(<%= image_path('specials/election/head-trutanich.png') %>);
+	}
+	.grace {
+		background-image:url(<%= image_path('specials/election/head-grace.png') %>);
+	}
+	.meyers {
+		background-image:url(<%= image_path('specials/election/head-meyers.png') %>);
+	}
+	.jackson {
+		background-image:url(<%= image_path('specials/election/head-jackson.png') %>);
+	}
+	.berman {
+		background-image:url(<%= image_path('specials/election/head-berman.png') %>);
+	}
+	.sherman {
+		background-image:url(<%= image_path('specials/election/head-sherman.png') %>);
+	}
+</style>
+<div class="hero-election">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span24">
+				<h1 class="center-block"><%= image_tag('specials/election/header-results.png') %></h1>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6 relative">
+				<div class="candidates clearfix">
+					<div class="split lacey">
+						<h4>Lacey</h4>
+					</div>
+					<div class="split trutanich">
+						<h4>Trutanich</h4>
+					</div>
+				</div>
+				<div class="banner">
+					<h3>LA County D.A.</h3>
+					<a href="#">Full Results</a>
+					<span class="pennant"></span>
+				</div>
+				<div class="results clearfix">
+					<div class="split">
+						<h4>30% <small class="place">1st</small></h4>
+					</div>
+					<div class="split">
+						<h4>29% <small  class="place">2nd</small></h4>
+					</div>
+				</div>
+				<footer>
+					<span>29% reporting</span>
+				</footer>
+				<div class="vert-divider"></div>
+			</div>
+			<div class="span6 relative">
+				<div class="candidates clearfix">
+					<div class="split berman">
+						<h4>Berman</h4>
+					</div>
+					<div class="split sherman">
+						<h4>Sherman</h4>
+					</div>
+				</div>
+				<div class="banner">
+					<h3>30th Congressional District</h3>
+					<span class="pennant"></span>
+				</div>
+				<div class="results clearfix">
+					<div class="split">
+						<h4>30%</h4>
+					</div>
+					<div class="split">
+						<h4>29%</h4>
+					</div>
+				</div>
+				<footer>
+					<span>29% reporting</span>
+				</footer>
+				<div class="vert-divider"></div>
+			</div>
+			<div class="span6 relative">
+				<div class="proposition">
+					<h2 class="passed">Prop 28</h2>
+				</div>
+				<div class="banner">
+					<h3>Change in Term Limits</h3>
+					<span class="pennant"></span>
+				</div>
+				<div class="results clearfix">
+					<div class="split">
+						<h4>30% <small>Yes</small></h4>
+					</div>
+					<div class="split">
+						<h4>29% <small>No</small></h4>
+					</div>
+				</div>
+				<footer>
+					<span>29% reporting</span>
+				</footer>
+				<div class="vert-divider"></div>
+			</div>
+			<div class="span6 relative">
+				<div class="proposition">
+					<h2 class="failed">Prop 29</h2>
+				</div>
+				<div class="banner">
+					<h3>Cigarette Tax Increase</h3>
+					<span class="pennant"></span>
+				</div>
+				<div class="results clearfix">
+					<div class="split">
+						<h4>30% <small>Yes</small></h4>
+					</div>
+					<div class="split">
+						<h4>29% <small>No</small></h4>
+					</div>
+				</div>
+				<footer>
+					<span>29% reporting</span>
+				</footer>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>
