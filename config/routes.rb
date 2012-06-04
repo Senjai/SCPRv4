@@ -95,6 +95,8 @@ Scprv4::Application.routes.draw do
   # -- Listen Live -- #
   match '/listen_live/' => 'listen#index', :as => :listen
   
+  # -- Breaking News --#
+  match '/breaking_email' => 'breaking_news#show'
   
   # -- Search -- #
   match '/search/' => 'search#index', :as => :search
