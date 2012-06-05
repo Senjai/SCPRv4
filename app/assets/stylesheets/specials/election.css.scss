@@ -105,6 +105,23 @@
 			font-weight:normal;
 		}
 	}
+	.list {
+		ul {
+			text-align:left;
+			margin:0;
+			li {
+				background:url(image_path('specials/election/bullet-star.png')) no-repeat 0 12px;
+				@include font-heading();
+				list-style-type:none;
+				padding-left:20px;
+				border-bottom:1px solid $grayLighter;
+				a {
+					display:block;
+					padding:9px 0;
+				}
+			}
+		}
+	}
 }
 
 // Below Max Width

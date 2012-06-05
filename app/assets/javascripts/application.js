@@ -10,6 +10,7 @@
 //= require spin.js
 //= require moment
 //= require moment-strftime
+//= require bootstrap-dropdown
 //= require bootstrap-tab
 //= require content_carousel
 
