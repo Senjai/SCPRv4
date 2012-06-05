@@ -24,7 +24,7 @@
 			
 				<ul class="nav pull-right">
 					<li><%= link_to "<i class='icon-user icon-white'></i> Profile".html_safe, admin_root_path %></li>
-					<li><%= link_to "Logout", admin_logout_path %></li>
+					<li><%= link_to "Logout", admin_logout_path, id: "logout" %></li>
 				</ul>
 			<% else %>
 				<ul class="nav pull-right">
@@ -50,15 +50,6 @@
 	</div>
 <% end %>
 
-<% flash.each do |name, msg| %>
-	<div class="container-fluid">
-		<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
-			<%= msg.html_safe %>
-			<a class="close" data-dismiss="alert">&times;</a>
-		</div>
-	</div>
-<% end %>
-
 <div id="main" class="container-fluid">
 	<% if @PAGE_TITLE %>
 		<div class="page-header">
@@ -68,6 +59,13 @@
 	
 	<div class="row-fluid">
 		<div class="span9">
+			<% flash.each do |name, msg| %>
+				<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+					<%= msg.html_safe %>
+					<a class="close" data-dismiss="alert">&times;</a>
+				</div>
+			<% end %>
+			
 			<%= yield %>
 		</div>
 		<div class="span3">

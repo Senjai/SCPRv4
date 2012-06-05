@@ -1,0 +1,8 @@
+<div class="index-header">
+	<%= form_tag "", class: "form-search pull-left" do %>
+		<%= text_field_tag "query", nil, class: "search-query" %>
+		<%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
+	<% end %>
+
+	<%= link_to "Add News Story", new_admin_news_story_path, class: "btn btn-success pull-right" %>
+</div>

@@ -7,6 +7,11 @@ describe Admin::NewsStoriesController do
   end
   
   describe "GET /index" do
+    it "responds with success" do
+      get :index
+      response.should be_success
+    end
+    
     it "assigns @news_stories" do
       get :index
       assigns(:news_stories).should_not be_nil
@@ -14,14 +19,25 @@ describe Admin::NewsStoriesController do
   end
   
   describe "GET /show" do
-    it "assigns @news_story" do
+    it "responds with success" do
       news_story = create :news_story
       get :show, id: news_story.id
-      assigns(:news_story).should_not be_nil
+      response.should be_success
+    end
+    
+    it "assigns @news_story using the params ID" do
+      news_story = create :news_story
+      get :show, id: news_story.id
+      assigns(:news_story).should eq news_story
     end
   end
   
   describe "GET /new" do
+    it "responds with success" do
+      get :new
+      response.should be_success
+    end
+    
     it "assigns @news_story to a new NewsStory object" do
       get :new
       assigns(:news_story).new_record?.should be_true
@@ -29,10 +45,21 @@ describe Admin::NewsStoriesController do
   end
   
   describe "GET /edit" do
-    pending
+    it "responds with success" do
+      news_story = create :news_story
+      get :edit, id: news_story.id
+      response.should be_success
+    end
+    
+    it "assigns @news_story using the params" do
+      news_story = create :news_story
+      get :edit, id: news_story.id
+      assigns(:news_story).should eq news_story
+    end
   end
   
   describe "POST /create" do
+    let(:news_story) { build :news_story }
     pending
   end
   

@@ -80,10 +80,13 @@ end
 
 # This assumes that the ID of the form uses underscores, which is how FormBuilder does it by default.
 When /^I submit the "([^"]*)" form$/ do |text|
-  page.find("form##{text.gsub(/\s/, "_")} input[type=submit]").click
+  page.find("form[id*=#{text.gsub(/\s/, "_")}] input[type=submit]").click
 end
 
 When /^I click "(.*?)"$/ do |text|
   click_link text
 end
 
+When /^I update the required fields with valid information$/ do
+  fill_required_fields_with_attributes_from build(:news_story)
+end

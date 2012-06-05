@@ -2,8 +2,5 @@
 
 <%= simple_form_for [:admin, @news_story], html: { class: "form-horizontal" } do |f| %>
 	<%= render 'form_fields', news_story: @news_story, f: f %>
-	
-	<div class="form-actions">
-		<%= submit_tag "Save", class: "btn btn-primary" %>
-	</div>
+	<%= submit_row @news_story %>
 <% end %>

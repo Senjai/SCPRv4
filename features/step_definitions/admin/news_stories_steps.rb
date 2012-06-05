@@ -37,6 +37,6 @@ end
 
 
 #### Routing
-When /^I go to edit that news story$/ do
-  visit @news_story.link_path
+When /^I go to edit (?:that|a) news story$/ do
+  visit edit_admin_news_story_path(@news_story.id)
 end

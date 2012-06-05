@@ -33,7 +33,7 @@ Scenario: Visit login page while already logged in
 	
 Scenario: Logout
 	Given I am logged in
-	When I click "logout"
+	When I click "Logout"
 	Then I should see a success message
 	And I should be on "admin login"
 	And I should not be logged in

@@ -1,23 +1,19 @@
 #### Setup
 Given /^I am an admin user$/ do
-  @user ||= create :admin_user
+  @admin_user ||= create :admin_user
 end
 
-When /^I update the required fields with valid information$/ do
-  pending # express the regexp above with the code you wish you had
-end
-
-
+# The factory is_superuser by default so we can test anything
+# Test permissions separately
 Given /^I am logged in$/ do
-  @user ||= create :admin_user
+  @admin_user ||= create :admin_user
   visit admin_login_path
-  fill_in 'email', with: @user.email
-  fill_in 'password', with: @user.password
+  fill_in 'username', with: @admin_user.username
+  fill_in 'password', with: @admin_user.password
   find("input[type=submit]").click
   current_path.should eq admin_root_path
   page.should have_css ".alert-success"
 end
-
 
 Given /^I am logged out$/ do
   visit admin_logout_path
@@ -35,22 +31,22 @@ end
 
 #### Assertions
 Then /^I should be logged in$/ do
-  pending
+  cookies[:auth_token].should be_present
 end
 
 Then /^I should not be logged in$/ do
-  pending
+  cookies[:auth_token].should be_nil
 end
 
 
 
 #### Actions
 When /^I fill in the login fields with invalid information$/ do
-  fill_in 'email', with: @user.email
+  fill_in 'username', with: @admin_user.username
   fill_in 'password', with: 'incorrect'
 end
 
 When /^I fill in the login fields with valid information$/ do
-  fill_in "email", with: @user.email
+  fill_in "username", with: @admin_user.username
   fill_in "password", with: "secret"
 end
