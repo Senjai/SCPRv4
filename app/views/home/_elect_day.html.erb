@@ -1,0 +1,113 @@
+<div class="homepage-lead default">
+	<div class="row-fluid">
+		<%= content_cache("home_leads") do %>
+			<% register_content("layout/homepage") %>
+			<div class="span15">
+				<%= render_content @homepage.content[0], "lead5" if @homepage %>
+			</div>
+			<div class="span9">
+				<div class="offleads">
+					<%= render_content @homepage.content[1..-1], "offlead" if @homepage %>
+				</div>
+			</div>
+		<% end %>	
+	</div>
+</div> <!-- homepage default -->
+
+<% content_for :conversation_slot do %>
+	<div class="join-conversation-container home">
+		<%= featured_comment :bucket => nil, :style => "home" %>
+	</div>
+<% end %>
+
+
+<% content_for :hero_roadblock do %>
+<div class="hero-election">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span24">
+				<h1 class="center-block"><%= image_tag('specials/election/header-primary.png') %></h1>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span7 relative">
+				<div class="banner">
+					<h3>Voter Tools</h3>
+					<span class="pennant"></span>
+				</div>
+				<div class="list">
+					<ul id="voter-tools" class="nav nav-pills">
+					        <li class="dropdown">
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Am I a registered voter? <b class="caret"></b></a>
+					          <ul class="dropdown-menu">
+					            <li><a href="https://lavote.net/SECURED/VOTER_REG/">Los Angeles County</a></li>
+					            <li><a href="https://www.ocvote.com/registration/verify-your-voter-registration/">Orange County</a></li>
+					            <li><a href="http://www.voteinfo.net/AmIRegistered/">Riverside County</a></li>
+					          </ul>
+					        </li>
+					                <li class="dropdown">
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">What district am I in? <b class="caret"></b></a>
+					          <ul class="dropdown-menu">
+					            <li><a href="http://www.lavote.net/OnlineDistrictmapApp/">Los Angeles County</a></li>
+					            <li><a href="http://electionmapping.ocgov.com/OCdistrictmap2/MapDistrict-layout.aspx">Orange County</a></li>
+					            <li><a href="http://cms.sbcounty.gov/rov/RegistrationVotingInfo/DistrictLookupApplication.aspx">San Bernardino County</a></li>
+					          </ul>
+					        </li>
+					        <li class="dropdown">
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Where's my polling place? <b class="caret"></b></a>
+					          <ul class="dropdown-menu">
+					            <li><a href="http://www.lavote.net/LOCATOR/">Los Angeles County</a></li>
+					            <li><a href="http://bos.ocgov.com/pollfind/index.asp">Orange County</a></li>
+					            <li><a href="http://www.voteinfo.net/voterInformation/root0605/pollplac.htm">Riverside County</a></li>
+					            <li><a href="http://cms.sbcounty.gov/rov/RegistrationVotingInfo/FindYourPollingPlace/FindYourPollingPlaceApplication.aspx">San Bernardino County</a></li>
+					          </ul>
+					        </li>
+					      </ul>
+				</div>
+			</div>
+			<div class="span10 relative">
+				<div class="banner">
+					<h3>Get Informed: The Races</h3>
+					<a href="/elections/2012/05/">Full coverage</a>
+					<span class="pennant"></span>
+				</div>
+				<div class="list">
+					<ul>
+					    <li>
+					        <a href="/elections/2012/05/#lada">Los Angeles District Attorney</a>
+					    </li>
+					    <li>
+					        <a href="/elections/2012/05/#district30">Congressional District 30</a>
+					    </li>
+					    <li>
+					        <a href="/elections/2012/05/#district44">Congressional District 44</a>
+					    </li>
+					</ul>
+				</div>
+			</div>
+			<div class="span7 relative">
+				<div class="banner">
+					<h3>Get Informed: The Propositions</h3>
+					<span class="pennant"></span>
+				</div>
+				<div class="list">
+					<ul>
+					    <li>
+					        <a href="/elections/2012/05/#prop28">Proposition 28</a>
+					    </li>
+					    <li>
+					        <a href="/elections/2012/05/#prop29">Proposition 29</a>
+					    </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$('.dropdown-toggle').dropdown();	
+	});
+</script>
+<% end %>

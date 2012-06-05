@@ -101,7 +101,11 @@ body {
 			text-transform: none; // for elements with the cbase class
 		}
 	}
-	
+	.stacked {
+		.cbase.lead {
+			border-bottom:0;
+		}
+	}
 	.homepage-lead {
 		&.lead-right {
 			// Make the first headline bigger in lead-right scheme

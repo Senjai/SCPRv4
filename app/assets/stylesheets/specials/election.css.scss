@@ -1,0 +1,198 @@
+.hero-election {
+	box-shadow: inset 0 -24px 24px -24px rgba(0,0,0,0.22), inset 0  24px 24px -24px rgba(0,0,0,0.22);
+	@include font-heading();
+	margin:-25px 0 $baseline 0;
+	h2, h3 {
+		@include font-slab-headings();
+	}
+	h1 {
+		margin-bottom:($baseline /2);
+		margin-top:($baseline /2);
+		width:367px;
+		height:24px;
+		img {
+			max-width:100%;
+		}
+	}
+	h2 {
+		color:#585858;
+		font-size:2.571428571em;
+		font-weight:700;
+		padding-top:15px;
+		&.passed {
+			background:url(image_path('specials/election/ballot-passed.png')) no-repeat right 16px;
+		}
+		&.failed {
+			background:url(image_path('specials/election/ballot-failed.png')) no-repeat right 16px;
+		}
+	}
+	.vert-divider {
+		right:-7.702%;
+	}
+	.split {
+		display:block;
+		float:left;
+		width:49%;
+		margin-left:2%;
+		&:first-child {
+			margin-left:0;
+		}
+	}
+	.candidates, .proposition {
+		height:55px;
+	}
+	.candidates {
+		.split {
+			background-position:0 1px;
+			background-repeat:no-repeat;
+			height:55px;
+			h4 {
+				color:#585858;
+				font-size:.928571429em;
+				padding:1.071428571em 0 0 48px;
+				text-transform:uppercase;
+			}
+		}
+	}
+	.banner {
+		background-color:$black;
+		position:relative;
+		h3 {
+			@include ie-inline-block();
+			color:$white;
+			font-size:1.071428571em;
+			font-weight:300;
+			padding:4px 8px;
+		}
+		a {
+			@include font-sans-serif(normal, .857142857em);
+			padding-left:8px;
+			padding-right:8px;
+			white-space:nowrap;
+		}
+		.pennant {
+			width:0px; 
+			height:0px; 
+			border-bottom:13px solid transparent;
+			border-top:13px solid transparent;
+			border-right:13px solid $white; 
+			font-size:0px;
+			line-height:0px;
+			position:absolute;
+			right:0;
+			top:1px;
+		}
+	}
+	.results {
+		padding:8px 0;
+		h4 {
+			color:#b82227;
+			font-size:2.142857143em;
+			text-shadow:0 1px 0 $white;
+			small {
+				font-size:.8em;
+				font-weight:800;
+				&.place {
+					font-size:.6em;
+				}
+			}
+		}
+	}
+	footer {
+		text-align:center;
+		span {
+			font-size:.785714286em;
+			font-weight:normal;
+		}
+	}
+	.list {
+		ul, ul#voter-tools {
+			text-align:left;
+			margin:0;
+			&.dropdown-menu {
+				margin-left:17px;
+			}
+			li {
+				background:url(image_path('specials/election/bullet-star.png')) no-repeat 0 12px;
+				@include font-heading();
+				list-style-type:none;
+				padding-left:20px;
+				border-bottom:1px solid $grayLighter;
+				li {
+					background:none;
+					padding-left:8px;
+				}
+				&.open a {
+					background-color:transparent;
+					color:$linkColorHover;
+					.caret {
+						border-bottom-color:$linkColorHover;
+						border-top-color:$linkColorHover;
+					}
+				}
+				a {
+					display:block;
+					line-height:20px;
+					padding:9px 0;
+					&:hover {
+						background-color:transparent;
+						color:$linkColorHover;
+					}
+					.caret {
+						margin-top:8px;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Below Max Width
+@media screen and (max-width: $mediaMax - 1) and (min-width: 769px) {
+	.hero-election {
+		h2 {
+			font-size:1.714285714em;
+		}
+		.pennant {
+			display:none;
+		}
+		.candidates {
+			.split {
+				background-image:none;
+				h4 {
+					padding-left:0;
+				}
+			}
+		}
+	}
+}
+
+// At Tablet breakpoint we drop down to one column
+@media screen and (max-width: 768px) {
+	.hero-election {
+		// Make all columns even
+		.row-fluid > [class*="span"] {
+			float: none;
+			display: block;
+			width: auto;
+			margin: 0;
+			border-bottom:1px solid $grayLight;
+			&:last-child {
+				border-bottom:none;
+			}
+		}
+		footer {
+			text-align:left;
+		}
+	}
+}
+@media screen and (max-width: 480px) {
+	.hero-election {
+		h1 {
+			width:300px;
+			img {
+				width:300px;
+			}
+		}
+	}
+}
