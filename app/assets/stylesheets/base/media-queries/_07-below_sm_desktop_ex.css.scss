@@ -1,0 +1,20 @@
+// Below Small Desktop (Exclusive)
+@media screen and (max-width: $mediaDesktopSmall - 1) {
+	.homepage-lead {
+		&.default {
+			.lead5 {
+				border-bottom: 1px solid $grayLighter;
+				padding-bottom: 5px;
+				margin-bottom: 5px;
+			}
+		}
+		
+		&.lead-right {
+			.offleads .span8:last-child .offlead { border-bottom: 1px solid $grayLighter; }
+			.lead5 {
+				padding-bottom: 5px;
+				margin-bottom: 5px;
+			}
+		}
+	}
+}

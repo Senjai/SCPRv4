@@ -1,0 +1,293 @@
+// Below Portrait Tablet ("reader mode") (Exclusive)
+@media screen and (max-width: $mediaMidPortrait - 1) {	
+	
+	.visible-reader { display: block !important; visibility:visible !important }
+	.hidden-reader { display: none !important;;}
+	
+	.modal-popup {
+		@include fluidPopup;
+		.arrow-up { display: none; }
+		.google-map { 
+			max-width: 100%; 
+			max-height: 85%;
+		} // For google maps modals
+	}
+	
+	.content-block, .fold, .blog-masthead {
+		.mq-solo-span { // Spans with this class will be by themselves at the "reader mode" breakpoint, so we need to tell them to span 100% and ditch their margin
+			@include gridFluidSpan(24);
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+	.about-us .connect-list li {
+		float:none;
+		width:100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+	
+	.fold {
+		h6 {
+			margin-top: 0 !important;
+			text-align: left !important;
+		}
+		.comment-count {
+			display: none;
+		}
+	}
+	
+	.article-meta { display: none; }
+	
+	// hide Sidebars on "main" bodies
+		#main {
+			#sidebar, #sidebar-top, #sidebar-bottom {
+				display: none;
+			}
+		}
+	// end hide Sidebars
+		
+	#beta-bar {
+		display: none;
+	}
+	
+	// Vertify Layouts
+		#main, .homepage-top, .homepage-bottom { // Since we have different sections on the homepage and `vertify` looks for .row-fluid as direct descendants
+			@include vertify;
+		} 
+	// end Vertify
+	
+	#masthead { 
+		text-align: center;
+		
+		// Minimal Header
+			background: #2e2e2e;
+
+			#masthead-mid-header-wrapper, #masthead-right-header-wrapper { display: none; }
+			.head-lead, .nav-primary { display: none; }
+			.head-lead-minimal { display: block !important; }
+		// end Minimal Header
+	}
+	
+	#main {
+		.homepage-top {
+			border-bottom: none !important;
+			margin-bottom: 0 !important;
+		
+			.missed-it-bucket {
+				.row-fluid hr:nth-of-type(3) { display: block; }
+				.span4 { 
+					@include gridFluidSpan(8);
+					&:nth-of-type(4) { margin-left: 0; }
+				}
+			}
+		}
+	}
+	
+	.broadcast-bar {
+		#bb-current-program { @include gridFluidSpan(24); }
+		#bb-next-program { display: none; }
+	}
+	
+	// since we're hiding the sidebars, remove the borders around more news
+	.more-news-container {
+		border-right: none;
+		padding-right: none;
+		margin-bottom: 5px;
+	}
+	.vert-divider {display:none;}
+	
+	// Forum Events header switch
+		#events-header {
+			display: none;
+		}
+	
+		.events-header-small { display: block; }
+	// end Forum Events Header
+	
+	// Keep each archive strip event horizontal
+	.archive-strip {
+		@include vertify;
+		> .row-fluid .span8:last-child .event { border-bottom: none; }
+		.event { 
+			border-bottom: 1px solid $grayLighter; 
+			> .row-fluid { 
+				@include makeFluidRow;
+			}
+		}
+	}
+	
+	.section-nav-header { display: none; }
+	#events-event-detail { @include gridFluidSpan(24); }
+	
+	// Pop the footer nav out and turn it into the side-nav
+		html, body, .container-fluid, header, footer { margin: 0; } 
+		
+		html.compactNav { overflow-x: hidden; }
+		
+		body.navIn {
+			position: relative;
+	        overflow: hidden;	
+			.viewport { position: absolute; }
+		}
+		
+		$compactNavW: 300px;
+		#page-footer footer {
+			background-image:none;
+			
+			#footer-bottom-partners, .mobile-apps { display:none; }
+			#footer-bottom-legal { 
+				@include gridFluidSpan(24);
+				text-align: center;
+			}
+			
+			.footer-nav {
+				position: absolute;
+				top: 0;
+				left: $compactNavW * -1;		
+				width: $compactNavW;
+				&.active {
+					background-color: $footerBackground; 
+					@include box-shadow(3px 0 8px rgba(0,0,0,.4));
+					z-index: 85;
+				}
+				.compact-nav-head { display: block; }
+				h3, .pledge {
+					margin-left:12px;
+				}
+				h3 { // Switch these to have the darker background
+					@include footer-h4;
+					color:#8f8f8f;
+					padding-left:12px;
+				}
+			
+				h4 { 
+					@include footer-h3;
+					font-size: 12px;
+					font-weight:bold;
+					color: #696969;
+				}
+			
+				[class*="span"] {
+					float: none;
+					display: block;
+					width: auto;
+					margin: 0;
+				}
+			
+				.section {
+					border: none;
+					display: block;
+					padding: 0;
+					nav { margin: 0; }
+					h4, ul li, ul li.bullet, address { padding-left: 16px; }
+					ul li, h4, h3, .social-media li {
+						border-top: 1px solid #3d3d3d;
+						border-bottom: 1px solid $black;
+						margin: 0;
+					}
+					ul.inline li.nav-label {
+						display:none;
+					}
+					ul li a {
+						color:#e0e0e0;
+						font-size:14px;
+						padding:4px 0;
+						
+						&.video-icon {
+							background-position-y: 5px;
+						}
+					}
+				
+					ul {
+						&.inline li { 
+							display: block;
+							margin: 0;
+						}
+						&.social-media {
+							margin-bottom:0;
+							li {
+								margin:0;
+								display: block;
+								a {
+									background-image:none;
+									text-indent:0;
+									height:auto;
+									width:100%;
+								}
+							}
+						}
+						li.bullet { background-image: none; }
+					}
+				}
+			}
+		
+			.bottom-links { border: none; }
+		}
+	// end sideNav
+	
+	#video { @include vertify; } // Make the video page stretch out
+	#multimedia {
+		.video { margin-top: 0; }
+	}
+	
+	.program-masthead {
+		@include vertify;
+		#program-masthead-title {
+			h1 { @include font-shorthand($size: 28px, $weight: bold, $lineHeight: $baseLineHeight + 5); }
+			.show-meta { display: none; }
+		}
+		#program-masthead-support { display: none; }
+	}
+	
+	
+	// Audio bar handler
+		// Dim body
+		body.with-audio-bar {
+			overflow: hidden;
+			#opaque-cover {
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+		}
+		
+		#audio-bar {
+			// Since we can't hide it on bigger screens because of IE7
+			display: none;
+			&.active { display: block; }
+			
+			$barHeight: 140px;
+			@include fluidPopup;
+			min-height: $barHeight + 5;
+		
+			.section-left, .section-mid {
+				width: 100%;
+				float: none;
+				display: block;
+			}
+			.bar-close { height: $barHeight; }
+		
+			.jp-gui { border-right: none; }
+			.jp-gui, .jp-controls {
+				height: $barHeight / 3;
+				min-height: $barHeight / 3;
+			}
+			
+			.jp-title {
+				height: $barHeight / 2;
+				min-height: $barHeight / 2;
+				padding-right: 10px;
+			}
+		}
+	// end Audio Bar
+	
+	// Hide floating shadow on minimal box
+		body.minimal {
+			.content-container { padding: 20px 0; }
+			.floating-shadow { display: none; }
+		}
+	//end floating shadow
+	
+	#uvTab { display: none !important; } // The "feedback" button... fixed position on touch screen, gets in the way
+} // end Reader mode

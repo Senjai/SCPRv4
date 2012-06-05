@@ -1,0 +1,24 @@
+// Between Tablet Portrait and Phone Landscape (Exclusive)
+@media screen and (min-width: $mediaSmallLandscape + 1) and (max-width: $mediaMidPortrait - 1) {
+	.head-lead {
+		@include vertify;
+	}
+	
+	// Set new widths for main columns in CFF layout
+		#forum {
+			#forum-span-content { // main content
+				@include gridFluidSpan(14);
+			}
+			#forum-span-sidebar { // sidebar
+				@include gridFluidSpan(10);
+			}
+			
+			#forum-span-upcoming-events { // upcoming events
+				@include gridFluidSpan(24);
+			}
+			#forum-span-social { // social media
+				display: none;
+			}
+		}
+	// End CFF layout widths
+}

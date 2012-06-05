@@ -1,0 +1,8 @@
+// Small Landscape (Inclusive) to small desktop (Exclusive)
+@media screen and (min-width: $mediaSmallLandscape) and (max-width: $mediaDesktopSmall - 1) {
+	// vertify the lead stories //
+		#main {
+			.homepage-lead { @include vertify; }
+		}
+	// end //
+}
