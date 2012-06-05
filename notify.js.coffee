@@ -7,6 +7,19 @@ app.listen 13002
 
 connections = {}
 users = {}
+
+available_colors = [
+    'red',
+    'blue',
+    'green',
+    'yellow',
+    'purple',
+    'orange',
+    'pink'
+]
+
+used_colors = []
+
 # express.js
 app.get '/', (req, res) ->
   res.send 404
@@ -28,15 +41,26 @@ io.sockets.on 'connection', (socket) ->
         user = JSON.parse(user_str)
         socket.username = user.username
         connections[user.username] = socket
-        users[user.username] = user
         
+        user.color = available_colors[Math.floor(Math.random()*available_colors.length)]
+        used_colors.push user.color
+        available_colors.splice(available_colors.indexOf(user.color), 1)
+        
+        users[user.username] = user
         socket.join(object.id)
         socket.emit("load_viewers", users)
         socket.broadcast.emit("add_viewer", user)
 
+    socket.on 'focus', (field_id) ->
+        socket.emit 'highlight_field', field_id, user[socket.username].color
+    
     socket.on 'disconnect', ->
         user = users[socket.username]
         io.sockets.emit('remove_viewer', user)
+        
+        used_colors.splice(used_colors.indexOf(user.color), 1)
+        available_colors.push user.color
+        
         delete users[socket.username]
         delete connections[socket.username]
         socket.leave socket.room

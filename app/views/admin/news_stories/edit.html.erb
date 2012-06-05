@@ -13,14 +13,22 @@
 	var socket = io.connect('http://localhost:13002');
 	socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @news_story.to_json.html_safe %>");
 
+	$("input").on("focus", function(event) {
+		socket.emit('focus', $(event.target).attr('id'));
+	});
+	
+	socket.on('highlight_field', function(field_id, color) {
+		$(field_id).css({"border-color": color});
+	});
+	
 	socket.on('load_viewers', function(users) {
 		_.each(users, function(user) {
-	    	$('#viewers').append("<li id=\"user-" + user.id + "\">" + user.name + "</li>");
+	    	$('#viewers').append("<li id=\"user-" + user.id + "\" style=\"color: " + user.color + "\">" + user.name + "</li>");
 		});
 	});
 	
 	socket.on('add_viewer', function(user) {
-    	$('#viewers').append("<li id=\"user-" + user.id + "\">" + user.name + "</li>");
+    	$('#viewers').append("<li id=\"user-" + user.id + "\" style=\"color: " + user.color + "\">" + user.name + "</li>");
   	});
 
 	socket.on('remove_viewer', function(user) {
