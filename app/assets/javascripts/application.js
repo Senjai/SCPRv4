@@ -12,6 +12,7 @@
 //= require moment-strftime
 //= require bootstrap-dropdown
 //= require bootstrap-tab
+//= require bootstrap-dropdown
 //= require content_carousel
 
 //= require audio
