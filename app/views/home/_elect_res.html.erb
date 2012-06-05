@@ -62,17 +62,31 @@
 <script>
 jQuery(document).ready(function() {
 	// Make AJAX request and get JSON data
-	var electionResults = $.getJSON("http://sharp-mist-4353.herokuapp.com/ballot.js?callback=scpr");
+	$.ajax({
+		type: "GET",
+		url: "http://sharp-mist-4353.herokuapp.com/ballot.js",
+		dataType: 'json',
+		cache: false,
+		callback: 'scpr',
+		
+		success: function(res) {
+			var source   = $("#some-template").html();
+			var template = Handlebars.compile(source);
+			console.log(res);
+			$("#results").html(template(res));
+		},
+		
+		error: function(res) {
+			console.log("error");
+		}
+	});
+		
 	//$.getJSON("http://sharp-mist-4353.herokuapp.com/ballot.js?callback=scpr", function(data){
 	//  $.each(data.items, function(i,item){
 	//    $('#results').html("<p>item1="+data.item1+" item2="+data.item2+" item3="+data.item3+"</p>");
 	//  });
 	
-	var source   = $("#some-template").html();
-	  var template = Handlebars.compile(source);
-	  var data = electionResults;
-	  console.log(data);
-	  $("#results").html(template(data));
+
 }); 
 </script>
 
