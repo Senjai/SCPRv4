@@ -1,38 +1,48 @@
 <% page_title "Edit News Story: #{@news_story.short_headline}" %>
 
-<ul id="viewers">
-	<h3>Currently Editing this story:</h3>	
-</ul>
-
 <%= simple_form_for [:admin, @news_story], html: { class: "form-horizontal" } do |f| %>
 	<%= render 'form_fields', news_story: @news_story, f: f %>
 	<%= submit_row @news_story %>
+<% end %>
+
+<% content_for :sidebar do %>
+	<h3>Currently Editing this Story</h3>
+	<ul id="viewers" class="viewers">
+	</ul>
 <% end %>
 
 <script type="text/javascript">
 	var socket = io.connect('http://localhost:13002');
 	socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @news_story.to_json.html_safe %>");
 
-	$("input").on("focus", function(event) {
+	$("input, textarea").on("focus", function(event) {
 		socket.emit('focus', $(event.target).attr('id'));
 	});
 	
 	socket.on('highlight_field', function(field_id, color) {
-		$(field_id).css({"border-color": color});
+		$("#"+field_id).closest(".control-group").css({"background-color": color});
+	});
+	
+	$("input, textarea").on("blur", function(event) {
+		socket.emit('blur', $(event.target).attr('id'));
+	});
+
+	socket.on('unhighlight_field', function(field_id) {
+		console.log(field_id);
+		$("#"+field_id).closest(".control-group").css({"background-color": 'white'});
 	});
 	
 	socket.on('load_viewers', function(users) {
 		_.each(users, function(user) {
-	    	$('#viewers').append("<li id=\"user-" + user.id + "\" style=\"color: " + user.color + "\">" + user.name + "</li>");
+	    	$('#viewers').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
 		});
 	});
 	
 	socket.on('add_viewer', function(user) {
-    	$('#viewers').append("<li id=\"user-" + user.id + "\" style=\"color: " + user.color + "\">" + user.name + "</li>");
+    	$('#viewers').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
   	});
 
 	socket.on('remove_viewer', function(user) {
 		$("#viewers li#user-" + user.id).remove();
 	});
-	
 </script>

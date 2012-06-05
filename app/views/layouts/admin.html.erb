@@ -51,23 +51,29 @@
 <% end %>
 
 <% flash.each do |name, msg| %>
-	<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
-		<%= msg.html_safe %>
-		<a class="close" data-dismiss="alert">&times;</a>
+	<div class="container-fluid">
+		<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+			<%= msg.html_safe %>
+			<a class="close" data-dismiss="alert">&times;</a>
+		</div>
 	</div>
 <% end %>
 
 <div id="main" class="container-fluid">
+	<% if @PAGE_TITLE %>
+		<div class="page-header">
+			<h1><%= @PAGE_TITLE %></h1>
+		</div>
+	<% end %>
+	
 	<div class="row-fluid">
-		<div class="span12">
-			<% if @PAGE_TITLE %>
-				<div class="page-header">
-					<h1><%= @PAGE_TITLE %></h1>
-				</div>
-			<% end %>
+		<div class="span9">
 			<%= yield %>
 		</div>
-	</div> <!-- row-fluid -->
+		<div class="span3">
+			<%= yield :sidebar %>
+		</div>
+	</div> <!-- row fluid -->
 </div> <!-- container fluid main -->
 
 </body>
