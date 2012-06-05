@@ -41,6 +41,41 @@
 		background-image:url(<%= image_path('specials/election/head-sherman.png') %>);
 	}
 </style>
+
+<script id="some-template" type="text/x-handlebars-template">
+  <table>
+    <thead>
+      <th>Race</th>
+    </thead>
+    <tbody>
+      {{#ballots}}
+        <tr>
+          <td>Race: {{race}}</td>
+        </tr>
+      {{/ballots}}
+    </tbody>
+  </table>
+</script>
+
+<div id="results"></div>
+
+<script>
+jQuery(document).ready(function() {
+	// Make AJAX request and get JSON data
+	var electionResults = $.getJSON("http://election_results.dev/ballot.js?callback=scpr");
+	//$.getJSON("http://sharp-mist-4353.herokuapp.com/ballot.js?callback=scpr", function(data){
+	//  $.each(data.items, function(i,item){
+	//    $('#results').html("<p>item1="+data.item1+" item2="+data.item2+" item3="+data.item3+"</p>");
+	//  });
+	
+	var source   = $("#some-template").html();
+	  var template = Handlebars.compile(source);
+	  var data = electionResults;
+	  console.log(data);
+	  $("#results").html(template(data));
+}); 
+</script>
+
 <div class="hero-election">
 	<div class="container-fluid">
 		<div class="row-fluid">
