@@ -34,14 +34,15 @@ function open_popup(url) {
 }
 
 
-$(function() { 
+$(document).ready(function() { 
 	compactNav = new scpr.CompactNav(); 
+	megaM = new scpr.MegaMenu({hidden:["#oas_x01"]});
 	
 	if (navigator.userAgent.match(/MSIE 7/)) {
-		$("body").addClass("ie7-fix");
+		$("html").addClass("ie7-fix");
 	} 
 	if (navigator.userAgent.match(/MSIE 8/)) {
-		$("body").addClass("ie8-fix");
+		$("html").addClass("ie8-fix");
 	}
 });
 </script>
