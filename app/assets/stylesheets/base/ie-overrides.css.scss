@@ -1,13 +1,20 @@
 // IE7 rules
-.ie7-fix {
+html.ie7-fix {
 	.nav-primary {
-		.search-form {
-			// IE7 just a hack to pull the search form up
-			margin-top: -36px;
+		.search-form form {
+			// IE7 doesn't show text if its line-height is 0
+			line-height: $baseLineHeight;
+		}
 		
-			form {
-				line-height: $baseLineHeight; // IE7 doesn't show text if its line-height is 0
-			}
+		nav.sections, .search-form {
+			// Prevent wrapping in navbar
+			clear: both;
+		}
+
+		nav.sections ul {
+			// Keep the navbar in ie7 from wrapping all over the place
+			white-space: nowrap;
+			li { clear: right; }
 		}
 	}
 
@@ -37,16 +44,38 @@
 
 
 // IE8 rules
-.ie8-fix {
+html.ie8-fix {
 	.contentasset img {
 		width: auto; // otherwise 'height: auto' is ignored
+	}
+	
+	nav.sections, .search-form {
+		white-space: nowrap;
+		display: inline-block;
+		float: none;
+	}
+	
+	.nav-primary {
+		white-space: nowrap;
+		nav.sections {
+			// Hack this because ie8 handles inline-block weird
+			position: relative;
+			top: -5px;
+			
+			// Keep the navbar in ie7 from wrapping all over the place
+			ul li { 
+				float: none;
+				display: inline-block;
+			}
+		}
 	}
 }
 
 
 
-.ie7-fix, .ie8-fix {
-	object { 
+html.ie7-fix, html.ie8-fix {
+	object {
+		// Videos don't show in IE if max-width is set to 100%
 		max-width: none !important;
 	}
 	
@@ -61,7 +90,7 @@
 		// IE7/8 won't load the audio if the audio bar is hidden
 		display: block;
 		&.active {
-			// IE7/8, don't know box-shadow so fallback to border
+			// IE7/8, no box-shadow so fallback to border
 			border-top: 1px solid #000;
 			border-left: 1px solid #000;
 			border-right: 1px solid #000;
