@@ -496,19 +496,24 @@ body {
 }
 
 // Basic pill nav
-.pills {
+.nav-pills {
+	@include font-sans-serif();
+	@include clearfix();
+	margin:0;
   li {
+	@include nav-horiz();
+	display:block;
+	float:none;
+	padding:0;
     a {
-      margin: 5px 3px 5px 0;
-      padding: 0 15px;
-      text-shadow: 0 1px 1px #fff;
+      margin: 0;
+      padding: 5px 15px;
       line-height: 30px;
-      @include border-radius(15px);
+      @include border-radius(3px);
       &:hover {
-        background: $linkColorHover;
+        background: $grayLighter;
         color: #fff;
         text-decoration: none;
-        text-shadow: 0 1px 1px rgba(0,0,0,.25);
       }
     }
     &.ui-tabs-selected a {
@@ -518,6 +523,171 @@ body {
     }
   }
 }
+// Pills
+.nav-pills.nav-stacked > li > a {
+  margin-bottom: 3px;
+}
+.nav-pills.nav-stacked > li:last-child > a {
+  margin-bottom: 1px; // decrease margin to match sizing of stacked tabs
+}
+
+// DROPDOWNS
+// ---------
+
+.nav-tabs .dropdown-menu {
+  @include border-radius(0 0 5px 5px); // remove the top rounded corners here since there is a hard edge above the menu
+}
+.nav-pills .dropdown-menu {
+  @include border-radius(4px); // make rounded corners match the pills
+}
+
+// Default dropdown links
+// -------------------------
+// Make carets use linkColor to start
+.nav-tabs .dropdown-toggle .caret, .nav-pills .dropdown-toggle .caret {
+  border-top-color: $linkColor;
+  border-bottom-color: $linkColor;
+  margin-top: 12px;
+}
+.nav-tabs .dropdown-toggle:hover .caret, .nav-pills .dropdown-toggle:hover .caret {
+  border-top-color: $linkColorHover;
+  border-bottom-color: $linkColorHover;
+}
+
+// Active dropdown links
+// -------------------------
+.nav-tabs .active .dropdown-toggle .caret, .nav-pills .active .dropdown-toggle .caret {
+  border-top-color: $grayDark;
+  border-bottom-color: $grayDark;
+}
+
+// Active:hover dropdown links
+// -------------------------
+.nav > .dropdown.active > a:hover {
+  color: $black;
+  cursor: pointer;
+}
+
+// Open dropdowns
+// -------------------------
+.nav-tabs .open .dropdown-toggle, .nav-pills .open .dropdown-toggle, .nav > li.dropdown.open.active > a:hover {
+  color: $white;
+  background-color: $grayLight;
+  border-color: $grayLight;
+}
+.nav li.dropdown.open .caret, .nav li.dropdown.open.active .caret, .nav li.dropdown.open a:hover .caret {
+  border-top-color: $white;
+  border-bottom-color: $white;
+  @include opacity(1);
+}
+
+// Dropdowns in stacked tabs
+.tabs-stacked .open > a:hover {
+  border-color: $grayLight;
+}
+// DROPDOWN MENUS
+// --------------
+
+// Use the .menu class on any <li> element within the topbar or ul.tabs and you'll get some superfancy dropdowns
+.dropup, .dropdown {
+  position: relative;
+}
+.dropdown-toggle {
+  // The caret makes the toggle a bit too tall in IE7
+  *margin-bottom: -3px;
+}
+.dropdown-toggle:active, .open .dropdown-toggle {
+  outline: 0;
+}
+
+// Dropdown arrow/caret
+// --------------------
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: top;
+  border-top:   4px solid $black;
+  border-right: 4px solid transparent;
+  border-left:  4px solid transparent;
+  content: "";
+  @include opacity(0.3);
+}
+
+// Place the caret
+.dropdown .caret {
+  margin-top: 8px;
+  margin-left: 2px;
+}
+.dropdown:hover .caret, .open .caret {
+  @include opacity(1);
+}
+
+// The dropdown menu (ul)
+// ----------------------
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none; // none by default, but block on "open" of the menu
+  float: left;
+  min-width: 160px;
+  padding: 4px 0;
+  margin: 1px 0 0; // override default ul
+  list-style: none;
+  background-color: $white;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.2);
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  @include border-radius(5px);
+  @include box-shadow(0 5px 10px rgba(0,0,0,.2));
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+
+  // Aligns the dropdown menu to right
+  &.pull-right {
+    right: 0;
+    left: auto;
+  }
+
+  // Dividers (basically an hr) within the dropdown
+  .divider {
+  }
+
+  // Links within the dropdown menu
+  a {
+    display: block;
+    padding: 3px 15px;
+    clear: both;
+    font-weight: normal;
+    line-height: $baseline;
+    white-space: nowrap;
+  }
+}
+
+// Hover state
+// -----------
+.dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
+  text-decoration: none;
+  background-color: $grayLighter;
+color:$nearBlack;
+}
+
+// Open state for the dropdown
+// ---------------------------
+.open {
+  // IE7's z-index only goes to the nearest positioned ancestor, which would
+  // make the menu appear below buttons that appeared later on the page
+  *z-index: 1000;
+
+  & > .dropdown-menu {
+    display: block;
+  }
+}
+
 
 // Dividers
 // --------
