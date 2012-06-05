@@ -1,6 +1,30 @@
 <% page_title "Edit News Story: #{@news_story.short_headline}" %>
 
+<ul id="viewers">
+	<h3>Currently Editing this story:</h3>	
+</ul>
+
 <%= simple_form_for [:admin, @news_story], html: { class: "form-horizontal" } do |f| %>
 	<%= render 'form_fields', news_story: @news_story, f: f %>
 	<%= submit_row @news_story %>
 <% end %>
+
+<script type="text/javascript">
+	var socket = io.connect('http://localhost:13002');
+	socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @news_story.to_json.html_safe %>");
+
+	socket.on('load_viewers', function(users) {
+		_.each(users, function(user) {
+	    	$('#viewers').append("<li id=\"user-" + user.id + "\">" + user.name + "</li>");
+		});
+	});
+	
+	socket.on('add_viewer', function(user) {
+    	$('#viewers').append("<li id=\"user-" + user.id + "\">" + user.name + "</li>");
+  	});
+
+	socket.on('remove_viewer', function(user) {
+		$("#viewers li#user-" + user.id).remove();
+	});
+	
+</script>

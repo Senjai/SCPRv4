@@ -1,6 +1,6 @@
 <% page_title "Login" %>
 
-<%= form_tag admin_sessions_path do %>
+<%= form_tag admin_sessions_path, id: "login" do %>
 	<%= label_tag :username %>
 	<%= text_field_tag :username %>
 	

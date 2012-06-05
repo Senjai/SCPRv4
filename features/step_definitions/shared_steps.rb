@@ -59,6 +59,9 @@ Then /^I should be on "([^"]*)"$/ do |path|
   current_path.should eq Rails.application.routes.url_helpers.send(path.gsub("\s", "_") + "_path")
 end
 
+
+
+
 #### Assertions
 When /^I'm looking at the "[^"]*" section$/ do
   true # This is just to provide context while reading the scenario, doesn't actually do anything.
@@ -78,5 +81,9 @@ end
 # This assumes that the ID of the form uses underscores, which is how FormBuilder does it by default.
 When /^I submit the "([^"]*)" form$/ do |text|
   page.find("form##{text.gsub(/\s/, "_")} input[type=submit]").click
+end
+
+When /^I click "(.*?)"$/ do |text|
+  click_link text
 end
 

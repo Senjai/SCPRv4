@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120530214758) do
+ActiveRecord::Schema.define(:version => 20120604221411) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -85,16 +85,20 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "auth_permission", ["content_type_id"], :name => "auth_permission_content_type_id"
 
   create_table "auth_user", :force => true do |t|
-    t.string   "username",     :limit => 30,  :null => false
-    t.string   "first_name",   :limit => 30,  :null => false
-    t.string   "last_name",    :limit => 30,  :null => false
-    t.string   "email",        :limit => 75,  :null => false
-    t.string   "password",     :limit => 128, :null => false
-    t.boolean  "is_staff",                    :null => false
-    t.boolean  "is_active",                   :null => false
-    t.boolean  "is_superuser",                :null => false
-    t.datetime "last_login",                  :null => false
-    t.datetime "date_joined",                 :null => false
+    t.string   "username",           :limit => 30,  :null => false
+    t.string   "first_name",         :limit => 30,  :null => false
+    t.string   "last_name",          :limit => 30,  :null => false
+    t.string   "email",              :limit => 75,  :null => false
+    t.string   "encrypted_password", :limit => 128, :null => false
+    t.boolean  "is_staff",                          :null => false
+    t.boolean  "is_active",                         :null => false
+    t.boolean  "is_superuser",                      :null => false
+    t.datetime "last_login",                        :null => false
+    t.datetime "date_joined",                       :null => false
+    t.string   "password_digest"
+    t.string   "auth_token"
+    t.datetime "created_at"
+    t.string   "name"
   end
 
   add_index "auth_user", ["username"], :name => "username", :unique => true
@@ -185,6 +189,15 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "blogs_blog", ["name"], :name => "name", :unique => true
   add_index "blogs_blog", ["slug"], :name => "slug", :unique => true
 
+  create_table "blogs_blog_authors", :force => true do |t|
+    t.integer "blog_id", :null => false
+    t.integer "bio_id",  :null => false
+  end
+
+  add_index "blogs_blog_authors", ["bio_id"], :name => "blogs_blog_authors_64afdb51"
+  add_index "blogs_blog_authors", ["blog_id", "bio_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
+  add_index "blogs_blog_authors", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
+
   create_table "blogs_blogauthor", :force => true do |t|
     t.integer "blog_id",   :null => false
     t.integer "author_id", :null => false
@@ -222,6 +235,10 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
 
   add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
+
+  create_table "blogs_remoteentry", :force => true do |t|
+    t.integer "comment_count", :default => 0, :null => false
+  end
 
   create_table "contentbase_category", :force => true do |t|
     t.string  "category",          :limit => 50,                   :null => false
@@ -896,6 +913,15 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
 
   add_index "news_category", ["slug"], :name => "news_category_slug"
 
+  create_table "news_imageorder", :force => true do |t|
+    t.integer "story_id",    :null => false
+    t.integer "image_id",    :null => false
+    t.integer "image_order", :null => false
+  end
+
+  add_index "news_imageorder", ["image_id"], :name => "news_imageorder_image_id"
+  add_index "news_imageorder", ["story_id"], :name => "news_imageorder_story_id"
+
   create_table "news_oldimageorder", :force => true do |t|
     t.integer "story_id",    :null => false
     t.integer "image_id",    :null => false
@@ -1031,6 +1057,22 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "podcasts_podcast", ["category_id"], :name => "podcasts_podcast_42dc49bc"
   add_index "podcasts_podcast", ["program_id"], :name => "podcasts_podcast_7eef53e3"
   add_index "podcasts_podcast", ["slug"], :name => "slug", :unique => true
+
+  create_table "podcasts_show", :force => true do |t|
+    t.string  "slug",        :limit => 40,                            :null => false
+    t.string  "title",       :limit => 140,                           :null => false
+    t.string  "link",        :limit => 250,                           :null => false
+    t.string  "podcast_url", :limit => 250,        :default => "",    :null => false
+    t.string  "itunes_url",  :limit => 250,        :default => "",    :null => false
+    t.text    "description", :limit => 2147483647,                    :null => false
+    t.string  "image_url",   :limit => 250,                           :null => false
+    t.string  "author",      :limit => 140,                           :null => false
+    t.string  "keywords",    :limit => 200,                           :null => false
+    t.string  "duration",    :limit => 10,                            :null => false
+    t.boolean "is_listed",                         :default => false, :null => false
+  end
+
+  add_index "podcasts_show", ["slug"], :name => "slug", :unique => true
 
   create_table "podcasts_show_categories", :force => true do |t|
     t.integer "show_id",     :null => false
@@ -1403,6 +1445,26 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
 
   add_index "shows_segmentimageorder", ["image_id"], :name => "shows_imageorder_image_id"
   add_index "shows_segmentimageorder", ["segment_id"], :name => "shows_imageorder_segment_id"
+
+  create_table "shows_series", :force => true do |t|
+    t.integer  "show_id",                                                   :null => false
+    t.date     "air_date",                                                  :null => false
+    t.string   "title",               :limit => 140,                        :null => false
+    t.string   "slug",                :limit => 50,         :default => "", :null => false
+    t.text     "short_summary",       :limit => 2147483647
+    t.text     "_teaser",             :limit => 2147483647,                 :null => false
+    t.text     "body",                :limit => 2147483647,                 :null => false
+    t.string   "locale",              :limit => 5,                          :null => false
+    t.integer  "enco_number"
+    t.datetime "published_at",                                              :null => false
+    t.boolean  "is_published",                                              :null => false
+    t.integer  "status",                                                    :null => false
+    t.integer  "comment_count",                                             :null => false
+    t.string   "series_asset_scheme", :limit => 10
+    t.string   "_short_headline",     :limit => 100
+  end
+
+  add_index "shows_series", ["show_id"], :name => "shows_series_show_id"
 
   create_table "shows_seriesimage", :force => true do |t|
     t.text     "caption",    :limit => 2147483647, :null => false

@@ -15,7 +15,7 @@ end
 
 
 #### Actions
-When /^I (?:fill|update) in all of the required fields with valid information$/ do
+When /^I (?:fill in|update) all of the required fields with valid information$/ do
   fill_required_fields_with_attributes_from build(:news_story)
 end
 

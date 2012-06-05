@@ -41,6 +41,25 @@ end
     phone_number "123-456-7890"
   end
   
+# AdminUser #########################################################
+  factory :admin_user do
+    # To be removed:
+    first_name "Bryan"
+    last_name "Ricker"
+    encrypted_password "xxxxxx"
+    date_joined { Time.now }
+    #
+    
+    name "Bryan Ricker"
+    password "secret"
+    password_confirmation { password }
+    last_login { Time.now }
+    sequence(:email) { |i| "user#{i}@scpr.org" }
+    is_staff 1
+    is_active 1
+    is_superuser 1
+  end
+  
 
 # KpccProgram #########################################################
   factory :kpcc_program, aliases: [:show] do

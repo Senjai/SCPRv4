@@ -1,5 +1,6 @@
 class Admin::BaseController < ActionController::Base
   protect_from_forgery
+  before_filter :require_admin
   layout 'admin'
   
   SAVE_OPTIONS = [
@@ -10,8 +11,13 @@ class Admin::BaseController < ActionController::Base
   
   helper_method :admin_user
   def admin_user
-    @admin_user
-    return true # temporary for development
+    @admin_user ||= AdminUser.find_by_auth_token!(cookies[:auth_token]) if cookies[:auth_token]
+  end
+  
+  def require_admin
+    return true if admin_user
+    session[:return_to] = request.fullpath
+    redirect_to admin_login_path and return false
   end
   
   # FIXME: The requirements for this method to work are too specific (it assumes a lot)

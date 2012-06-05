@@ -30,7 +30,7 @@ class UpdateViewForEvents < ActiveRecord::Migration
       location_name,location_link,rsvp_link,
       show_map,address_1,address_2,city,state,zip_code,
       created_at,modified_at,kpcc_event,for_program,
-      archive_description,audio,is_published, show_comments, _teaser,
+      archive_description,audio,is_published, show_comments, _teaser
     from 
       events_event
     ")
