@@ -1,6 +1,6 @@
-<% page_title "Add News Story" %>
+<% page_title "Add #{resource_title}" %>
 
-<%= simple_form_for [:admin, @news_story], html: { class: "form-horizontal" } do |f| %>
-	<%= render 'form_fields', news_story: @news_story, f: f %>
-	<%= submit_row @news_story %>
+<%= simple_form_for [:admin, @record], html: { class: "form-horizontal" } do |f| %>
+	<%= render 'form_fields', record: @record, f: f %>
+	<%= submit_row @record %>
 <% end %>

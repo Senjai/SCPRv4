@@ -1,8 +1,8 @@
-<% page_title "Edit News Story: #{@news_story.short_headline}" %>
+<% page_title "Editing: #{@record.short_headline}" %>
 
-<%= simple_form_for [:admin, @news_story], html: { class: "form-horizontal" } do |f| %>
-	<%= render 'form_fields', news_story: @news_story, f: f %>
-	<%= submit_row @news_story %>
+<%= simple_form_for [:admin, @record], html: { class: "form-horizontal" } do |f| %>
+	<%= render 'form_fields', record: @record, f: f %>
+	<%= submit_row @record %>
 <% end %>
 
 <% content_for :sidebar do %>
@@ -19,7 +19,7 @@
 	} else {
 
 		var socket = io.connect('http://localhost:13002');
-		socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @news_story.to_json.html_safe %>");
+		socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @record.to_json.html_safe %>");
 
 		$("input, textarea").on("focus", function(event) {
 			socket.emit('focus', $(event.target).attr('id'));

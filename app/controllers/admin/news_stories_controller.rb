@@ -1,48 +1,65 @@
-class Admin::NewsStoriesController < Admin::BaseController
+class Admin::NewsStoriesController < Admin::BaseController  
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
-  respond_to :html
+  before_filter :get_records, only: :index
+  before_filter { |c| c.send(:breadcrumb, [resource_title.pluralize, Rails.application.routes.url_helpers.send("admin_#{klass.to_s.tableize}_path")]) }
   
+  respond_to :html
+    
   def index
-    @news_stories = NewsStory.order("published_at desc").paginate(page: params[:page], per_page: 25)
+    respond_with :admin, @record
   end
 
   def new
-    @news_story = NewsStory.new
+    breadcrumb ["New", nil]
+    @record = klass.new
+    respond
   end
   
   def show
+    respond
   end
   
   def edit
+    breadcrumb ["Edit", nil]
+    respond
   end
   
   def create
-    @news_story = NewsStory.new(params[:news_story])
-    flash[:notice] = "Saved News Story" if @news_story.save
-    respond_with_resource
+    @record = klass.new(resource_param)
+    flash[:notice] = "Saved #{resource_title}" if @record.save
+    respond
   end
   
   def update
-    flash[:notice] = "Saved News Story" if @news_story.update_attributes(params[:news_story])
-    respond_with_resource
+    flash[:notice] = "Saved #{resource_title}" if @record.update_attributes(params[resource_param])
+    respond
   end
   
   def destroy
-    flash[:notice] = "Deleted News Story" if @news_story.delete
-    respond_with_resource
+    flash[:notice] = "Deleted #{resource_title}" if @record.delete
+    respond
   end
   
-  protected
+  helper_method :resource_title
+  def resource_title
+    klass.to_s.titleize
+  end
+
+  def klass
+    NewsStory
+  end
+  
+  def resource_param
+    params[klass.to_s.underscore.to_sym]
+  end
+  
+  private  
+  ## Move these to base_controller
   def get_record
-    begin
-      @news_story = NewsStory.find(params[:id])
-    rescue
-      raise ActionController::RoutingError.new("Not Found")
-    end
+    super(klass)
   end
   
-  private
-  def respond_with_resource
-    respond_with :admin, @news_story, location: requested_location(params[:commit_action], @news_story)
+  def get_records
+    super(klass)
   end
 end

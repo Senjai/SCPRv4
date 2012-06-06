@@ -2,6 +2,6 @@
 	Action: <%= select_tag :commit_action, options_for_select(Admin::BaseController::SAVE_OPTIONS) %>
 	<%= submit_tag "Save", class: "btn btn-primary" %>
 	<% unless record.new_record? %>
-		<%= link_to "Delete", [:admin, record], class: "btn btn-danger pull-right", method: :delete, confirm: "Click OK to delete this #{record.class.to_s.titleize}.\nClick CANCEL to return to editing."  %>
+		<%= link_to "Delete", [:admin, record], class: "btn btn-danger pull-right", method: :delete, confirm: "Click OK to delete this #{resource_title}.\nClick CANCEL to return to editing."  %>
 	<% end %>
 </div>

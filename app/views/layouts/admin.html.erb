@@ -41,8 +41,15 @@
 			<ul class="breadcrumb">
 				<% @breadcrumbs.each do |crumb| %>
 					<li>
-						<%= link_to crumb[:title], crumb[:link] %>
-						<span class="divider">/</span>
+						<% if crumb[1].present? %>
+							<%= link_to crumb[0], crumb[1] %>
+						<% else %>
+							<%= crumb[0] %>
+						<% end %>
+						
+						<% unless crumb == @breadcrumbs.last %>
+							<span class="divider">/</span>
+						<% end %>
 					</li>
 				<% end %>
 			</ul>

@@ -1,7 +1,7 @@
-<% page_title "News Stories" %>
-<%= index_header NewsStory %>
+<% page_title resource_title.pluralize %>
+<%= index_header controller.klass %>
 <table class="table table-striped">
-	<%= any_to_list? @news_stories, title: "News Stories" do %>
+	<%= any_to_list? @records, title: resource_title.pluralize do %>
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -14,7 +14,7 @@
 			</tr>
 		</thead>
 		<tbody class="list">
-			<% @news_stories.each do |news_story| %>
+			<% @records.each do |news_story| %>
 				<tr class="news-story">
 					<td><%= news_story.id %></td>
 					<td><%= link_to news_story.headline, edit_admin_news_story_path(news_story) %></td>
@@ -28,4 +28,4 @@
 		</tbody>
 	<% end %>
 </table>
-<%= will_paginate @news_stories, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<%= will_paginate @records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
