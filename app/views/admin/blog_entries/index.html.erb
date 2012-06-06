@@ -1,0 +1,23 @@
+<% page_title resource_title.pluralize %>
+<%= index_header controller.klass %>
+<table class="table table-striped">
+	<%= any_to_list? @records, title: resource_title.pluralize do %>
+		<thead>
+			<tr>
+				<% controller.klass.list.each do |item| %>
+					<th><%= item[:attr].titleize %></th>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody class="list">
+			<% @records.each do |record| %>
+				<tr class="<%= controller.klass.to_s.underscore.dasherize %>">
+					<% controller.klass.list.each do |item| %>
+						<td><%= record.send(item[:attr]) %></td>
+					<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+	<% end %>
+</table>
+<%= will_paginate @records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

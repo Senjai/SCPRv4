@@ -1,4 +1,17 @@
 class NewsStory < ContentBase
+  
+    def self.list
+      [
+        { attr: 'id' },
+        { attr: 'headline' },
+        { attr: 'slug' },
+        { attr: 'news_agency' },
+        { attr: 'audio' },
+        { attr: 'status' },
+        { attr: 'published_at' }
+      ]
+    end    
+    
   self.table_name =  'news_story'
     
   before_save :fill_fields, on: :create

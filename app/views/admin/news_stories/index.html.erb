@@ -4,25 +4,17 @@
 	<%= any_to_list? @records, title: resource_title.pluralize do %>
 		<thead>
 			<tr>
-				<th>ID</th>
-				<th>Headline</th>
-				<th>Slug</th>
-				<th>News Agency</th>
-				<th>Audio?</th>
-				<th>Status</th>
-				<th>Published At</th>
+				<% controller.klass.list.each do |item| %>
+					<th><%= item[:attr].titleize %></th>
+				<% end %>
 			</tr>
 		</thead>
 		<tbody class="list">
-			<% @records.each do |news_story| %>
-				<tr class="news-story">
-					<td><%= news_story.id %></td>
-					<td><%= link_to news_story.headline, edit_admin_news_story_path(news_story) %></td>
-					<td><%= news_story.slug %></td>
-					<td><%= news_story.news_agency %></td>
-					<td>fixme</td>
-					<td><%= news_story.status_text %></td>
-					<td><%= format_date news_story.published_at, time: true %></td>
+			<% @records.each do |record| %>
+				<tr class="<%= controller.klass.to_s.underscore.dasherize %>">
+					<% controller.klass.list.each do |item| %>
+						<td><%= record.send(item[:attr]) %></td>
+					<% end %>
 				</tr>
 			<% end %>
 		</tbody>

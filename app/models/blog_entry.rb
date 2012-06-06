@@ -1,4 +1,15 @@
 class BlogEntry < ContentBase
+  
+    def self.list
+      [
+        { attr: 'id' },
+        { attr: 'headline' },
+        { attr: 'slug' },
+        { attr: 'status' },
+        { attr: 'published_at' }
+      ]
+    end    
+  
   self.table_name =  "blogs_entry"
   
   CONTENT_TYPE = "blogs/entry"
