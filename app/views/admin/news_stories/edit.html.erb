@@ -1,5 +1,4 @@
 <% page_title "Editing: #{@record.short_headline}" %>
-
 <%= simple_form_for [:admin, @record], html: { class: "form-horizontal" } do |f| %>
 	<%= render 'form_fields', record: @record, f: f %>
 	<%= submit_row @record %>
