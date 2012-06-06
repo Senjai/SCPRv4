@@ -14,16 +14,17 @@
 			max-width:100%;
 		}
 	}
-	h2 {
-		color:#585858;
-		font-size:2.571428571em;
-		font-weight:700;
-		padding-top:15px;
+	.outcome {
+		@include ie-inline-block();
+		@include hide-text();
+		width:67px;
+		height:18px;
+		margin-left:6px;
 		&.passed {
-			background:url(image_path('specials/election/ballot-passed.png')) no-repeat right 16px;
+			background:url(image_path('specials/election/ballot-passed.png')) no-repeat 0 0;
 		}
 		&.failed {
-			background:url(image_path('specials/election/ballot-failed.png')) no-repeat right 16px;
+			background:url(image_path('specials/election/ballot-failed.png')) no-repeat 0 0;
 		}
 	}
 	.vert-divider {
@@ -38,10 +39,10 @@
 			margin-left:0;
 		}
 	}
-	.candidates, .proposition {
+	.candidate, .proposition {
 		height:55px;
 	}
-	.candidates {
+	.candidate {
 		.split {
 			background-position:0 1px;
 			background-repeat:no-repeat;
@@ -49,9 +50,18 @@
 			h4 {
 				color:#585858;
 				font-size:.928571429em;
-				padding:1.071428571em 0 0 48px;
+				padding:1.071428571em 0 0 53px;
 				text-transform:uppercase;
 			}
+		}
+	}
+	.proposition {
+		h4 {
+			@include font-slab-headings();
+			color:#585858;
+			font-size:2.571428571em;
+			font-weight:700;
+			padding-top:15px;
 		}
 	}
 	.banner {

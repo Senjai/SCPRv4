@@ -19,28 +19,30 @@
 
 <% content_for :hero_roadblock do %>
 <style type="text/css">
-	.lacey {
+	.Lacey {
 		background-image:url(<%= image_path('specials/election/head-lacey.png') %>);
 	}
-	.trutanich {
+	.Trutanich {
 		background-image:url(<%= image_path('specials/election/head-trutanich.png') %>);
 	}
-	.grace {
+	.Grace {
 		background-image:url(<%= image_path('specials/election/head-grace.png') %>);
 	}
-	.meyers {
+	.Meyers {
 		background-image:url(<%= image_path('specials/election/head-meyers.png') %>);
 	}
-	.jackson {
+	.Jackson {
 		background-image:url(<%= image_path('specials/election/head-jackson.png') %>);
 	}
-	.berman {
+	.Berman {
 		background-image:url(<%= image_path('specials/election/head-berman.png') %>);
 	}
-	.sherman {
+	.Sherman {
 		background-image:url(<%= image_path('specials/election/head-sherman.png') %>);
 	}
 </style>
+
+<script id="some-template" type="text/x-handlebars-template">
 <div class="hero-election">
 	<div class="container-fluid">
 		<div class="row-fluid">
@@ -49,101 +51,75 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span6 relative">
-				<div class="candidates clearfix">
-					<div class="split lacey">
-						<h4>Lacey</h4>
+      		{{#ballots}}
+				<div class="span6 relative">
+					<div class="{{race_type}} clearfix">
+					{{#ballot_items}}
+						<div class="split {{item_title}}">
+							<h4>{{item_title}}</h4>
+						</div>
+					{{/ballot_items}}
 					</div>
-					<div class="split trutanich">
-						<h4>Trutanich</h4>
+				  	<div class="banner">
+						<h3>{{race}}</h3>
+						{{#if outcome}}<span class="outcome {{outcome}}">{{outcome}}</span>{{/if}}
+						<span class="pennant"></span>
 					</div>
-				</div>
-				<div class="banner">
-					<h3>LA County D.A.</h3>
-					<a href="#">Full Results</a>
-					<span class="pennant"></span>
-				</div>
-				<div class="results clearfix">
-					<div class="split">
-						<h4>30% <small class="place">1st</small></h4>
+					<div class="results clearfix">
+					{{#ballot_items}}
+						<div class="split">
+						    <div class="results">
+								<h4>{{vote_percentage}}%</h4>
+							</div>
+						</div>
+					{{/ballot_items}}
 					</div>
-					<div class="split">
-						<h4>29% <small  class="place">2nd</small></h4>
-					</div>
+					<footer>
+						<span>{{percentage_reporting}}% reporting</span>
+					</footer>
+					<div class="vert-divider"></div>
 				</div>
-				<footer>
-					<span>29% reporting</span>
-				</footer>
-				<div class="vert-divider"></div>
-			</div>
-			<div class="span6 relative">
-				<div class="candidates clearfix">
-					<div class="split berman">
-						<h4>Berman</h4>
-					</div>
-					<div class="split sherman">
-						<h4>Sherman</h4>
-					</div>
-				</div>
-				<div class="banner">
-					<h3>30th Congressional District</h3>
-					<span class="pennant"></span>
-				</div>
-				<div class="results clearfix">
-					<div class="split">
-						<h4>30%</h4>
-					</div>
-					<div class="split">
-						<h4>29%</h4>
-					</div>
-				</div>
-				<footer>
-					<span>29% reporting</span>
-				</footer>
-				<div class="vert-divider"></div>
-			</div>
-			<div class="span6 relative">
-				<div class="proposition">
-					<h2 class="passed">Prop 28</h2>
-				</div>
-				<div class="banner">
-					<h3>Change in Term Limits</h3>
-					<span class="pennant"></span>
-				</div>
-				<div class="results clearfix">
-					<div class="split">
-						<h4>30% <small>Yes</small></h4>
-					</div>
-					<div class="split">
-						<h4>29% <small>No</small></h4>
-					</div>
-				</div>
-				<footer>
-					<span>29% reporting</span>
-				</footer>
-				<div class="vert-divider"></div>
-			</div>
-			<div class="span6 relative">
-				<div class="proposition">
-					<h2 class="failed">Prop 29</h2>
-				</div>
-				<div class="banner">
-					<h3>Cigarette Tax Increase</h3>
-					<span class="pennant"></span>
-				</div>
-				<div class="results clearfix">
-					<div class="split">
-						<h4>30% <small>Yes</small></h4>
-					</div>
-					<div class="split">
-						<h4>29% <small>No</small></h4>
-					</div>
-				</div>
-				<footer>
-					<span>29% reporting</span>
-				</footer>
-			</div>
+		      {{/ballots}}
 		</div>
 	</div>
 </div>
+</script>
+
+<div id="results"></div>
+
+<script>
+jQuery(document).ready(function() {
+	// Make AJAX request and get JSON data
+	$.ajax({
+		type: "GET",
+		url: "http://sharp-mist-4353.herokuapp.com/ballot.js",
+		dataType: 'json',
+		cache: false,
+		callback: 'scpr',
+		
+		success: function(res) {
+			var source   = $("#some-template").html();
+			var template = Handlebars.compile(source);
+			console.log(res);
+			
+			$("#results").html(template(res));
+		},
+		
+		error: function(res) {
+			console.log("error");
+		}
+		
+		
+	});
+		
+	//$.getJSON("http://sharp-mist-4353.herokuapp.com/ballot.js?callback=scpr", function(data){
+	//  $.each(data.items, function(i,item){
+	//    $('#results').html("<p>item1="+data.item1+" item2="+data.item2+" item3="+data.item3+"</p>");
+	//  });
+	
+
+}); 
+</script>
+
+
 <% end %>
