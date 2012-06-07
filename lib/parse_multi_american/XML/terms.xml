@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+	xmlns:excerpt="http://wordpress.org/export/1.1/excerpt/"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:wp="http://wordpress.org/export/1.1/"
+>
+
+<channel>
+	
+	<wp:term><wp:term_id>23</wp:term_id><wp:term_taxonomy>prominence</wp:term_taxonomy><wp:term_slug>featured</wp:term_slug><wp:term_parent></wp:term_parent><wp:term_name><![CDATA[Featured]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>381</wp:term_id><wp:term_taxonomy>feature</wp:term_taxonomy><wp:term_slug>immigration-nation</wp:term_slug><wp:term_parent></wp:term_parent><wp:term_name><![CDATA[Immigration Nation]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>357</wp:term_id><wp:term_taxonomy>feature</wp:term_taxonomy><wp:term_slug>in-case-you-missed-it</wp:term_slug><wp:term_parent></wp:term_parent><wp:term_name><![CDATA[In case you missed it]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>24</wp:term_id><wp:term_taxonomy>prominence</wp:term_taxonomy><wp:term_slug>national</wp:term_slug><wp:term_parent></wp:term_parent><wp:term_name><![CDATA[National]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>595</wp:term_id><wp:term_taxonomy>feature</wp:term_taxonomy><wp:term_slug>slideshow</wp:term_slug><wp:term_parent></wp:term_parent><wp:term_name><![CDATA[Slideshow]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>3</wp:term_id><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug>station-navigation</wp:term_slug><wp:term_name><![CDATA[Station Navigation]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>4</wp:term_id><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug>categories-list</wp:term_slug><wp:term_name><![CDATA[Categories List]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>5</wp:term_id><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug>dont-miss</wp:term_slug><wp:term_name><![CDATA[Don&#039;t Miss]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>6</wp:term_id><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug>read-more-about</wp:term_slug><wp:term_name><![CDATA[Read More About]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>7</wp:term_id><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug>footer-navigation</wp:term_slug><wp:term_name><![CDATA[Footer Navigation]]></wp:term_name></wp:term>
+	<wp:term><wp:term_id>387</wp:term_id><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug>greatest-hits</wp:term_slug><wp:term_name><![CDATA[GREATEST HITS]]></wp:term_name></wp:term>
+
+</channel>
+</rss>
