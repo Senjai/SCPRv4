@@ -1,4 +1,4 @@
-module MultiAmerican
+module WP
   class Tag < ActiveRecord::Base
     self.table_name = "taggit_tag"
     before_save :strip_cdata

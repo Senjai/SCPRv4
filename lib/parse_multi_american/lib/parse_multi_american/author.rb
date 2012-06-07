@@ -1,2 +1,4 @@
-class Author < ActiveRecord::Base
+module WP
+  class Author < ActiveRecord::Base
+  end
 end

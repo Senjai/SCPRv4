@@ -1,4 +1,4 @@
-module MultiAmerican
+module WP
   include ActiveSupport::Inflector
   
   NODE_MAP = {
