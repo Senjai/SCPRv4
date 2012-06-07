@@ -1,25 +1,29 @@
-<% page_title "Blogs" %>
+<% page_title resource_title.pluralize %>
+<%= index_header controller.resource_class %>
 <table class="table table-striped">
-	<%= any_to_list? @blogs, title: "Blogs" do %>
+	<%= any_to_list? @records, title: resource_title.pluralize do %>
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Tagline</th>
-				<th>Slug</th>
-				<th>Description</th>
-				<th>Active</th>
+				<% controller.resource_class.list_fields.each do |item| %>
+					<th><%= item[:title] %></th>
+				<% end %>
 			</tr>
 		</thead>
 		<tbody class="list">
-			<% @blogs.each do |blog| %>
-				<tr class="news-story">
-					<td><%= link_to blog.name, edit_admin_blog_path(blog) %></td>
-					<td><%= blog.teaser %></td>
-					<td><%= blog.slug %></td>
-					<td><%= blog.description %></td>
-					<td><%= blog.is_active ? "Active" : "Inactive" %></td>
+			<% @records.each do |record| %>
+				<tr class="<%= controller.resource_class.to_s.underscore.dasherize %>">
+					<% controller.resource_class.list_fields.each do |item| %>
+						<td>
+							<% if item[:link] %>
+								<%= link_to record.send(item[:attr]), url_for([:edit, :admin, record]) %>
+							<% else %>
+								<%= record.send(item[:attr]) %>
+							<% end %>
+						</td>
+					<% end %>
 				</tr>
 			<% end %>
 		</tbody>
 	<% end %>
 </table>
+<%= will_paginate @records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

@@ -14,24 +14,10 @@ describe Blog do
     end
   end
   
-  describe "to_param" do
-    it "returns the slug" do
-      blog = build :blog
-      blog.to_param.should eq blog.slug
-    end
-  end
-  
   describe "teaser" do
     it "Returns _teaser" do
       blog = build :blog
       blog.teaser.should eq blog._teaser
-    end
-  end
-  
-  describe "to_param" do
-    it "return the slug" do
-      blog = build :blog
-      blog.to_param.should eq blog.slug
     end
   end
   

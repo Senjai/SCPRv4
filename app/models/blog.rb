@@ -1,4 +1,23 @@
 class Blog < ActiveRecord::Base
+  administrate!
+  
+  def self.list_fields
+    fields = [
+      { attr: 'name', link: true },
+      { attr: 'slug' },
+      { attr: 'description' },
+      { attr: 'is_active', title: "Active?" },
+      { attr: 'is_remote', title: "Remote?" }
+    ]
+    
+    fields.each { |f| f.reverse_merge!(title: f[:attr].titleize) }
+    fields
+  end
+  
+  def self.list_order
+    "name"
+  end
+  
   self.table_name =  'blogs_blog'
   
   has_many :entries, :order => 'published_at desc', class_name: "BlogEntry"
@@ -13,11 +32,7 @@ class Blog < ActiveRecord::Base
   scope :is_not_news, where(:is_news => false)
   scope :local, where(is_remote: false)
   scope :remote, where(is_remote: true)
-  
-  def to_param
-    slug
-  end
-  
+
   def teaser
     _teaser
   end

@@ -1,4 +1,3 @@
-class Admin::BlogEntriesController < Admin::BaseController
+class Admin::BlogEntriesController < Admin::ResourceController
   respond_to :html
-  
 end

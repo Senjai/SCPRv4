@@ -1,7 +1,7 @@
-class Admin::SessionsController < Admin::BaseController
-  skip_before_filter :require_admin, except: :destroy
+class Admin::SessionsController < Admin::BaseController  
+  skip_before_filter :require_admin
   respond_to :html
-  
+
   def new
     redirect_to admin_root_path if admin_user
   end

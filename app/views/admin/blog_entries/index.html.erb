@@ -1,19 +1,25 @@
 <% page_title resource_title.pluralize %>
-<%= index_header controller.klass %>
+<%= index_header controller.resource_class %>
 <table class="table table-striped">
 	<%= any_to_list? @records, title: resource_title.pluralize do %>
 		<thead>
 			<tr>
-				<% controller.klass.list.each do |item| %>
-					<th><%= item[:attr].titleize %></th>
+				<% controller.resource_class.list_fields.each do |item| %>
+					<th><%= item[:title] %></th>
 				<% end %>
 			</tr>
 		</thead>
 		<tbody class="list">
 			<% @records.each do |record| %>
-				<tr class="<%= controller.klass.to_s.underscore.dasherize %>">
-					<% controller.klass.list.each do |item| %>
-						<td><%= record.send(item[:attr]) %></td>
+				<tr class="<%= controller.resource_class.to_s.underscore.dasherize %>">
+					<% controller.resource_class.list_fields.each do |item| %>
+						<td>
+							<% if item[:link] %>
+								<%= link_to record.send(item[:attr]), url_for([:edit, :admin, record]) %>
+							<% else %>
+								<%= record.send(item[:attr]) %>
+							<% end %>
+						</td>
 					<% end %>
 				</tr>
 			<% end %>

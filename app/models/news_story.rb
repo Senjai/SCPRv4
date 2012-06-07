@@ -1,17 +1,25 @@
 class NewsStory < ContentBase
-  
-    def self.list
-      [
-        { attr: 'id' },
-        { attr: 'headline' },
-        { attr: 'slug' },
-        { attr: 'news_agency' },
-        { attr: 'audio' },
-        { attr: 'status' },
-        { attr: 'published_at' }
-      ]
-    end    
+  administrate!
+      
+  def self.list_fields
+    fields = [
+      { attr: 'id' },
+      { attr: 'headline', link: true },
+      { attr: 'slug' },
+      { attr: 'news_agency' },
+      { attr: 'audio' },
+      { attr: 'status' },
+      { attr: 'published_at' }
+    ]
     
+    fields.each { |f| f.reverse_merge!(title: f[:attr].titleize) }
+    fields
+  end
+  
+  def self.list_order
+    "published_at desc"
+  end
+      
   self.table_name =  'news_story'
     
   before_save :fill_fields, on: :create
