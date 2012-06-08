@@ -1,8 +1,6 @@
 class NewsController < ApplicationController
   respond_to :html, :js
-  
-  caches_action :story, :if => Proc.new { params[:id] == "32724" }
-  
+    
   def story
     begin
       @story = NewsStory.published.find(params[:id])
