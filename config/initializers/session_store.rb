@@ -63,8 +63,8 @@ module ActionDispatch
       def initialize(parent_jar, secret)
         ensure_secret_secure(secret)
         @parent_jar = parent_jar
-        #@verifier   = YAMLVerifier.new(secret, serializer: YAML)
-        @verifier   = JSONVerifier.new(secret)
+        @verifier   = YAMLVerifier.new(secret, serializer: YAML)
+        #@verifier   = JSONVerifier.new(secret)
       end
     end
   end
