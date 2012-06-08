@@ -100,12 +100,14 @@ class scpr.MegaMenu
         else if sec.score == 0 && sec.selected
             # hide section
             sec.selected = false
-            sec.item.removeClass("hover")
+            sec.item.delay(25).queue -> 
+                $(this).removeClass("hover")
+                $(this).dequeue()
             
             if @expanded
                 sec.drop.hide()
             else
-                sec.drop.fadeOut("fast")
+                sec.drop.fadeOut("25")
                 # show the stuff that was hidden during display
                 _(@hidden).each (el) -> el.css
                     visibility: "visible"
