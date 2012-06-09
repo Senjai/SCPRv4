@@ -33,11 +33,9 @@ class OtherProgram < ActiveRecord::Base
     class << view  
       include ApplicationHelper
     end
-    puts "Attempting to cache feeds for #{self.title}..."
     
     if self.podcast_url?
       begin
-        puts "Fetching podcast from #{self.podcast_url}"
         podcast = Feedzirra::Feed.fetch_and_parse self.podcast_url
       rescue
         podcast = nil
@@ -46,13 +44,11 @@ class OtherProgram < ActiveRecord::Base
       if podcast.present? && !podcast.is_a?(Fixnum)
         podcast_html = view.render :partial => "programs/cached/podcast_entry", :collection => podcast.entries.first(5), :as => :entry
         Rails.cache.write("ext_program:#{self.slug}:podcast", podcast_html)
-        puts "Cached Podcast."
       end
     end
     
     if self.rss_url?
       begin
-        puts "Fetching podcast from #{self.rss_url}"
         rss = Feedzirra::Feed.fetch_and_parse self.rss_url
       rescue
         rss = nil
@@ -63,7 +59,6 @@ class OtherProgram < ActiveRecord::Base
           "ext_program:#{self.slug}:rss", 
            view.render(:partial => "programs/cached/podcast_entry", :collection => rss.entries.first(5), :as => :entry)
         )
-        puts "Cached RSS."
       end
     end # rss_url?
     return podcast.present? || rss.present?

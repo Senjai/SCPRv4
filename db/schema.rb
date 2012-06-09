@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120604221411) do
+ActiveRecord::Schema.define(:version => 20120604195452) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -85,17 +85,17 @@ ActiveRecord::Schema.define(:version => 20120604221411) do
   add_index "auth_permission", ["content_type_id"], :name => "auth_permission_content_type_id"
 
   create_table "auth_user", :force => true do |t|
-    t.string   "username",           :limit => 30,  :null => false
-    t.string   "first_name",         :limit => 30,  :null => false
-    t.string   "last_name",          :limit => 30,  :null => false
-    t.string   "email",              :limit => 75,  :null => false
-    t.string   "encrypted_password", :limit => 128, :null => false
-    t.boolean  "is_staff",                          :null => false
-    t.boolean  "is_active",                         :null => false
-    t.boolean  "is_superuser",                      :null => false
-    t.datetime "last_login",                        :null => false
-    t.datetime "date_joined",                       :null => false
-    t.string   "password_digest"
+    t.string   "username",     :limit => 30,  :null => false
+    t.string   "first_name",   :limit => 30,  :null => false
+    t.string   "last_name",    :limit => 30,  :null => false
+    t.string   "email",        :limit => 75,  :null => false
+    t.string   "password",     :limit => 128, :null => false
+    t.boolean  "is_staff",                    :null => false
+    t.boolean  "is_active",                   :null => false
+    t.boolean  "is_superuser",                :null => false
+    t.datetime "last_login",                  :null => false
+    t.datetime "date_joined",                 :null => false
+    t.string   "passw_digest"
     t.string   "auth_token"
     t.datetime "created_at"
     t.string   "name"
@@ -208,6 +208,17 @@ ActiveRecord::Schema.define(:version => 20120604221411) do
   add_index "blogs_blogauthor", ["blog_id", "author_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
   add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
 
+  create_table "blogs_blogcategory", :force => true do |t|
+    t.integer  "blog_id",                                                      :null => false
+    t.string   "title",      :limit => 140,                                    :null => false
+    t.string   "slug",       :limit => 50,                                     :null => false
+    t.datetime "created_at",                :default => '2012-06-08 02:03:41', :null => false
+    t.datetime "updated_at",                :default => '2012-06-08 02:03:41', :null => false
+  end
+
+  add_index "blogs_blogcategory", ["blog_id"], :name => "blogs_blogcategory_472bc96c"
+  add_index "blogs_blogcategory", ["slug"], :name => "blogs_blogcategory_a951d5d6"
+
   create_table "blogs_entry", :force => true do |t|
     t.string   "title",             :limit => 140,                        :null => false
     t.string   "slug",              :limit => 50,                         :null => false
@@ -226,6 +237,17 @@ ActiveRecord::Schema.define(:version => 20120604221411) do
 
   add_index "blogs_entry", ["author_id"], :name => "blogs_entry_author_id"
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
+
+  create_table "blogs_entryblogcategory", :force => true do |t|
+    t.integer  "entry_id",                                            :null => false
+    t.integer  "blog_category_id",                                    :null => false
+    t.boolean  "is_primary",       :default => false,                 :null => false
+    t.datetime "created_at",       :default => '2012-06-08 02:03:41', :null => false
+    t.datetime "updated_at",       :default => '2012-06-08 02:03:41', :null => false
+  end
+
+  add_index "blogs_entryblogcategory", ["blog_category_id"], :name => "blogs_entryblogcategory_c81f43a6"
+  add_index "blogs_entryblogcategory", ["entry_id"], :name => "blogs_entryblogcategory_38a62041"
 
   create_table "blogs_entrycategories", :force => true do |t|
     t.integer "entry_id",    :null => false
