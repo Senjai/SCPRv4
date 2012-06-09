@@ -46,7 +46,7 @@ end
     # To be removed:
     first_name "Bryan"
     last_name "Ricker"
-    password "sha1$ce99e$8afb9610eb86e0b47e77c43fce10d0ef44f78d8f"
+    password "sha1$vxA3aP5quIgd$aa7c53395bf8d6126c02ec8ef4e8a9b784c9a2f7" # `secret`, salted & digested
     date_joined { Time.now }
     #
     
@@ -238,7 +238,7 @@ end
 # ContentByline #########################################################
   factory :byline, class: "ContentByline" do # Requires we pass in "content"
     role ContentByline::ROLE_PRIMARY
-    user
+    user { |byline| byline.association :author }
     content { |byline| byline.association(:news_story) } #TODO Need to be able to pass in any type of factory here
     name "Dan Jones"
   end

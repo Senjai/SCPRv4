@@ -1,4 +1,6 @@
-class AdminUser < ActiveRecord::Base  
+class AdminUser < ActiveRecord::Base
+  require 'digest/sha1'
+  
   self.table_name = "auth_user"
   
   include ActiveModel::SecureAttribute
@@ -10,23 +12,23 @@ class AdminUser < ActiveRecord::Base
   validates :name, presence: true
   validates :email, uniqueness: true, allow_blank: true
 
-  before_create :generate_username
+  before_create :generate_username, if: -> { username.blank? }
   before_create { generate_token(:auth_token) }
   
   scope :active, where(:is_active => true)
   
-  def self.authenticate(username, password)
+  def self.authenticate(username, unencrypted_password)
     if user = find_by_username(username)
-      user.authenticate_legacy(password)
+      user.authenticate_legacy(unencrypted_password)
     else
       false
     end
   end
   
-  def authenticate_legacy(password)
+  def authenticate_legacy(unencrypted_password)
     algorithm, salt, hash = self.password.split('$')
-    if hash == Digest::SHA1.hexdigest(salt + password)
-      self.passw, self.passw_confirmation = password
+    if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
+      self.passw, self.passw_confirmation = unencrypted_password
       generate_token(:auth_token)
       save!
       self
@@ -44,25 +46,36 @@ class AdminUser < ActiveRecord::Base
       is_superuser: self.is_superuser
     }
   end
-      
+  
+  def generate_username
+    # Bryan Ricker            #=> bricker
+    # Blake Ricker            #=> bricker1
+    # Bob Ricker              #=> bricker2
+    # Bryan Cameron Ricker    #=> bcricker
+    # Adolfo Guzman-Lopez     #=> aguzmanlopez
+    
+    names = self.name.split(" ")
+    username = ""
+    names[0..-2].each { |n| username += n.chars.first }
+    username += names.last
+    username = username.gsub(/\W/, "").downcase
+
+    if !AdminUser.find_by_username(username)
+      self.username = username
+    else
+      i = 1
+      begin
+        self.username = username + i.to_s
+        i += 1
+      end while AdminUser.exists?(username: self.username)
+    end
+    self.username
+  end
+  
   protected
   
     def downcase_email # This helps us validate that e-mails are unique, because the case_sensitive validation is slow.
       self.email = email.downcase if email.present?
-    end
-    
-    def generate_username
-      split_name = self.name.split(" ", 2)
-      username = (split_name[0].chars.first + split_name[1].gsub(/\W/, "")).downcase
-      if !AdminUser.find_by_username(username)
-        self.username = username
-      else
-        i = 1
-        begin
-          self.username = username + i.to_s
-          i += 1
-        end while AdminUser.exists?(username: self.username)
-      end
     end
     
     def generate_token(column)

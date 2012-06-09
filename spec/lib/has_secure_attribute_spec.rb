@@ -34,7 +34,6 @@ describe ActiveModel::SecureAttribute do
 
  it "authenticate" do
    user = create :admin_user, passw: "secret"
-   
    user.authenticate("wrong").should be_false
    user.authenticate("secret").should eq user
  end
