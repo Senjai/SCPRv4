@@ -9,7 +9,7 @@ Given /^I am logged in$/ do
   @admin_user ||= create :admin_user
   visit admin_login_path
   fill_in 'username', with: @admin_user.username
-  fill_in 'password', with: @admin_user.password
+  fill_in 'password', with: @admin_user.passw
   find("input[type=submit]").click
   current_path.should eq admin_root_path
   page.should have_css ".alert-success"
