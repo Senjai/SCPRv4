@@ -184,18 +184,18 @@ $analog2:           spin($baseColor, -22);
   font-weight: $weight;
   line-height: $lineHeight;
 }
-@mixin font-headline($weight: bold) {
+@mixin font-headline($weight: 700) {
   font-family: "proxima-nova-condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: $weight;
 }
-@mixin font-navigation($weight: normal, $size: 18px, $lineHeight: 20px) {
+@mixin font-navigation($weight: 600, $size: 18px, $lineHeight: 20px) {
   font-family: "proxima-nova-alt-condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: $size;
   font-weight: $weight;
   line-height: $lineHeight;
   -webkit-font-smoothing: antialiased;
 }
-@mixin font-heading($weight: bold, $size: 14px, $lineHeight: 20px) {
+@mixin font-heading($weight: 700, $size: 14px, $lineHeight: 20px) {
   font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: $size;
   font-weight: $weight;
@@ -213,7 +213,7 @@ $analog2:           spin($baseColor, -22);
   font-weight: $weight;
   line-height: $lineHeight;
 }
-@mixin font-slab-headings($weight: normal, $size: 12px, $lineHeight: 20px) {
+@mixin font-slab-headings($weight: 300, $size: 12px, $lineHeight: 20px) {
   font-family: "museo-slab", Helvetica, sans-serif;
   font-size: $size;
   font-weight: $weight;

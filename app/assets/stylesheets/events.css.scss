@@ -30,12 +30,14 @@ span.fake-link {
 	}
 		
 	h1.story-title {
-		@include font-navigation($weight: bold, $size: 22px);
+		@include font-headline($weight: 600);
+		font-size:22px;
 		margin: 4px 0;
 	}
 	
 	h2.story-title {
-		@include font-navigation($weight: normal, $size: 18px);
+		@include font-headline($weight: 600);
+		font-size:18px;
 		margin: 10px 0;
 	}
 	
@@ -45,7 +47,8 @@ span.fake-link {
 	}
 	
 	h4.story-title {
-		@include font-navigation($weight: normal, $size: 15px);
+		@include font-headline($weight: 600);
+		font-size:15px;
 	}
 	
 	h6.upcoming {
@@ -82,7 +85,7 @@ span.fake-link {
 	}
 	.sponsor {
 		color:$gray;
-		@include font-heading($size: 11px, $weight: normal);
+		@include font-heading($size: 11px, $weight: 400);
 		margin-bottom:0;
 		a {
 			color:$nearBlack;
@@ -121,7 +124,7 @@ span.fake-link {
 				margin: 0;
 				@include ie-inline-block;
 				li {
-					@include font-heading($size: 13px, $weight: normal, $lineHeight: 16px);
+					@include font-heading($size: 13px, $weight: 400, $lineHeight: 16px);
 					list-style: none;
 				}
 
