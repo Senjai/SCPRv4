@@ -46,7 +46,6 @@ describe ApplicationHelper do
   describe "get latest using sphinx" do
     describe "#get_latest_arts" do
       before :all do
-        puts "Starting Sphinx and indexing..."
         DatabaseCleaner.strategy = :truncation
         make_content(7)
         ThinkingSphinx::Test.start
@@ -79,7 +78,6 @@ describe ApplicationHelper do
   
     describe "#get_latest_news" do
        before :all do
-         puts "Starting Sphinx and indexing..."
          DatabaseCleaner.strategy = :truncation
          make_content(7)
          ThinkingSphinx::Test.start

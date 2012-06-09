@@ -63,19 +63,19 @@ describe BlogsController do
   describe "GET /show" do
     it "responds with success" do
       blog = create :blog
-      get :show, blog: blog
+      get :show, blog: blog.slug
       response.should be_success
     end
     
     it "assigns @blog" do
       blog = create :blog, is_remote: false
-      get :show, blog: blog
+      get :show, blog: blog.slug
       assigns(:blog).should eq blog
     end
     
     it "assigns @entries" do
       blog = create :blog
-      get :show, blog: blog
+      get :show, blog: blog.slug
       assigns(:entries).should_not be_nil
     end
     
@@ -83,13 +83,13 @@ describe BlogsController do
       blog = create :blog
       entry_pending = create :blog_entry, blog: blog, status: ContentBase::STATUS_PENDING
       entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
-      get :show, blog: blog
+      get :show, blog: blog.slug
       assigns(:entries).should eq [entry_published]
     end
     
     it "paginates" do
       blog = create(:blog, entry_count: 10)
-      get :show, blog: blog, page: 1
+      get :show, blog: blog.slug, page: 1
       assigns(:entries).size.should be < 10
     end
   end
@@ -97,19 +97,19 @@ describe BlogsController do
   describe "GET /blog_tags" do
     it "responds with success" do
       blog = create :blog
-      get :blog_tags, blog: blog
+      get :blog_tags, blog: blog.slug
       response.should be_success
     end
     
     it "assigns @blog" do
       blog = create :blog, is_remote: false
-      get :show, blog: blog
+      get :show, blog: blog.slug
       assigns(:blog).should eq blog
     end
     
     it "assigns @recent" do
       blog = create :blog
-      get :blog_tags, blog: blog
+      get :blog_tags, blog: blog.slug
       assigns(:recent).should_not be_nil
     end
     
@@ -119,7 +119,7 @@ describe BlogsController do
     
     it "orders tags by blog entry published desc" do
       blog = create :blog
-      get :blog_tags, blog: blog
+      get :blog_tags, blog: blog.slug
       assigns(:recent).to_sql.should match /blogs_entry.published_at desc/i
     end
   end
@@ -128,20 +128,20 @@ describe BlogsController do
     it "responds with success" do
       pending "Need Tag factory"
       blog = create :blog
-      get :blog_tagged, blog: blog, tag: "news"
+      get :blog_tagged, blog: blog.slug, tag: "news"
       response.should be_success
     end
     
     it "redirects if tag doesn't exist" do
       blog = create :blog
-      get :blog_tagged, blog: blog, tag: "nonsense"
-      response.should redirect_to blog_tags_path(blog)
+      get :blog_tagged, blog: blog.slug, tag: "nonsense"
+      response.should redirect_to blog_tags_path(blog.slug)
     end
     
     it "assigns @tag" do
       pending "Need Tag factory"
       blog = create :blog
-      get :blog_tagged, blog: blog, tag: "news"
+      get :blog_tagged, blog: blog.slug, tag: "news"
       assigns(:tag).should_not be_nil
     end
   end
@@ -160,12 +160,12 @@ describe BlogsController do
     
     %w{ show entry blog_tags blog_tagged }.each do |action|
       it "assigns @blog for #{action}" do
-        get action, { blog: @blog, tag: "news" }.merge!(@entry_attr)
+        get action, { blog: @blog.slug, tag: "news" }.merge!(@entry_attr)
         assigns(:blog).should eq @blog
       end
 
       it "assigns @authors for #{action}" do
-        get action, { blog: @blog, tag: "news" }.merge!(@entry_attr)
+        get action, { blog: @blog.slug, tag: "news" }.merge!(@entry_attr)
         assigns(:authors).should_not be_nil
       end
       
@@ -177,12 +177,12 @@ describe BlogsController do
     
     %w{ index }.each do |action|
       it "does not assign @blog for #{action}" do
-        get action, blog: @blog
+        get action, blog: @blog.slug
         assigns(:blog).should be_nil
       end
 
       it "does not assign @authors for #{action}" do
-        get action, blog: @blog
+        get action, blog: @blog.slug
         assigns(:authors).should be_nil
       end      
     end
@@ -193,13 +193,13 @@ describe BlogsController do
       blog = create :blog
       entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
       p = entry_published.published_at
-      get :entry, blog: blog, year: p.year, month: p.month, day: p.day, id: entry_published.id, slug: entry_published.slug
+      get :entry, blog: blog.slug, year: p.year, month: p.month, day: p.day, id: entry_published.id, slug: entry_published.slug
       response.should be_success
     end
     
     it "assigns @blog" do
       blog = create :blog, is_remote: false
-      get :show, blog: blog
+      get :show, blog: blog.slug
       assigns(:blog).should eq blog
     end
     
@@ -207,7 +207,7 @@ describe BlogsController do
       blog = create :blog
       entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
       p = entry_published.published_at
-      get :entry, blog: blog, year: p.year, month: p.month, day: p.day, id: entry_published.id, slug: entry_published.slug
+      get :entry, blog: blog.slug, year: p.year, month: p.month, day: p.day, id: entry_published.id, slug: entry_published.slug
       assigns(:entry).should eq entry_published
     end
     
@@ -215,8 +215,8 @@ describe BlogsController do
       blog = create :blog
       entry_unpublished = create :blog_entry, blog: blog, status: ContentBase::STATUS_PENDING
       p = entry_unpublished.published_at
-      lambda {
-        get :entry, blog: blog, year: p.year, month: p.month, day: p.day, id: entry_unpublished.id, slug: entry_unpublished.slug
+      -> {
+        get :entry, blog: blog.slug, year: p.year, month: p.month, day: p.day, id: entry_unpublished.id, slug: entry_unpublished.slug
       }.should raise_error ActionController::RoutingError
     end
   end

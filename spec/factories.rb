@@ -27,7 +27,7 @@ end
   
 
 # User #########################################################
-  factory :user, class: "Bio", aliases: [:author, :bio] do
+  factory :bio, class: "Bio", aliases: [:author] do
     bio "This is a bio"
     short_bio "Short!"
     name "Bryan Ricker"
@@ -46,13 +46,13 @@ end
     # To be removed:
     first_name "Bryan"
     last_name "Ricker"
-    encrypted_password "xxxxxx"
+    password "sha1$ce99e$8afb9610eb86e0b47e77c43fce10d0ef44f78d8f"
     date_joined { Time.now }
     #
     
     name "Bryan Ricker"
-    password "secret"
-    password_confirmation { password }
+    passw "secret"
+    passw_confirmation { passw }
     last_login { Time.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
     is_staff 1

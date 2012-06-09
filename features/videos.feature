@@ -34,22 +34,3 @@ Scenario: Comments for a video
 	When I go to that video's page
 	Then I should see a comments section
 
-
-@javascript
-Scenario: Show 9 most recently published videos in the modal pop-up
-	Given there are 10 video shells
-	When I go to the videos page
-	And I click on the Browse All Videos button
-	Then I should see the 9 most recently published videos in the pop-up
-	And there should be modal pagination
-	
-	When I click the Next Page button
-	Then I should be on page 2 of the videos list
-	And I should see different videos than the first page
-	
-@javascript
-Scenario: No videos in modal
-	Given there are 0 video shells
-	When I go to the videos page
-	And I click on the Browse All Videos button
-	Then I should see that there is nothing to list in the pop-up with the message "There are currently no Videos"
