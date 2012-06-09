@@ -7,7 +7,7 @@ class Admin::SessionsController < Admin::BaseController
   end
   
   def create
-    if user = AdminUser.authenticate(params[:username], params[:password])
+    if user = AdminUser.authenticate(params[:username], params[:passw])
       cookies[:auth_token] = user.auth_token
       redirect_to admin_root_path, notice: "Logged in."
     else
