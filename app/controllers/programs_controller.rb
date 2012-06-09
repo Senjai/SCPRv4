@@ -2,6 +2,8 @@ class ProgramsController < ApplicationController
   before_filter :get_ambiguous_program, only: [:show, :archive]
   before_filter :get_featured_programs, only: :index
   before_filter :get_kpcc_program, only: [:segment, :episode]
+
+  caches_action :segment, :if => Proc.new { params[:id] == "26866" }
   
   def index
     @kpcc_programs = KpccProgram.active.order("title")
