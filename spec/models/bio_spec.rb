@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe Bio do
-  it { should belong_to(:user) }
+  it { should belong_to(:user).class_name("AdminUser") }
+  it { should have_many(:bylines).class_name("ContentByline") }
   
   describe "twitter_url" do
     it "returns a twitter URL if twitter handle is present" do
@@ -17,6 +18,86 @@ describe Bio do
     it "returns nil if twitter handle is not present" do
       bio = build :bio, twitter: ""
       bio.twitter_url.should be_nil
+    end
+  end
+  
+  describe "indexed_bylines" do
+    describe "max_results checking" do
+      let(:bio) { create :bio }
+      
+      it "typecasts page and per_page to integers" do
+        # TypeError, ArgumentError, or NoMethodError possible here... 
+        # we'll just test for *any* error.
+        -> { bio.indexed_bylines("1", 9999) }.should_not raise_error
+        -> { bio.indexed_bylines("1", "9999") }.should_not raise_error
+      end
+        
+      it "uses Sphinx if page number will not cause offset error" do
+        ContentByline.should_receive(:search)
+        bio.should_not_receive(:content)
+        bio.indexed_bylines(1)
+      end
+  
+      it "returns an array using sphinx" do
+        bio.indexed_bylines(1).should be_a Array
+      end
+      
+      it "doesn't raise error if offset is exceeded" do
+        -> { bio.indexed_bylines(9999) }.should_not raise_error
+      end
+    
+      it "fallsback to SQL if offset will exceed SPHINX_MAX_MATCHES" do
+        ContentByline.should_not_receive(:search)
+        content = create(:news_story)
+        byline = create :byline, user: bio, content: content
+        bio.indexed_bylines(1, 9999).should eq [byline] 
+      end
+      
+      it "returns an array using SQL even if no records found" do
+        bio.indexed_bylines(1, 9999).should be_a Array
+      end
+    end
+    
+    describe "mysql method" do
+      let(:bio) { create :bio }
+  
+      it "only returns published content" do
+        unpub = create :news_story, status: 4
+        pub = create :news_story, status: 5
+        byline_pub = create :content_byline, user: bio, content: pub
+        byline_unpub = create :content_byline, user: bio, content: unpub
+        bio.indexed_bylines(1, 9999).should eq [byline_pub]
+      end
+      
+      it "sorts by published_at desc" do
+        news_older = create :news_story, published_at: Chronic.parse("3 days ago") 
+        news_newer = create :news_story, published_at: Chronic.parse("2 days ago")
+        byline_older = create :content_byline, user: bio, content: news_older
+        byline_newer = create :content_byline, user: bio, content: news_newer
+        bio.indexed_bylines(1, 9999).first.should eq byline_newer
+      end
+    end
+  end
+  
+  describe "headshot" do
+    before :each do
+      Asset.stub(:find) { "asset image" }
+    end
+    
+    it "returns the asset if asset_id is set" do
+      bio = create :bio, asset_id: 9999
+      bio.headshot.should eq "asset image"
+    end
+    
+    it "returns false if asset_id isn't set" do
+      bio = create :bio, asset_id: nil
+      bio.headshot.should be_false
+    end
+    
+    it "uses the instance's cached asset if it's already been looked up" do
+      bio = create :bio, asset_id: 999999
+      bio.instance_variable_set(:@_asset, "cached asset image")
+      bio.headshot.should eq "cached asset image"
     end
   end
 end

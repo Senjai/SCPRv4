@@ -11,6 +11,6 @@ class PeopleController < ApplicationController
       raise ActionController::RoutingError.new("Not Found")
     end
     
-    @user_content = @bio.content(params[:page])
+    @bylines = @bio.indexed_bylines(params[:page])
   end
 end
