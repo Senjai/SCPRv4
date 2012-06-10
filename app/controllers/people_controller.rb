@@ -1,5 +1,4 @@
-class PeopleController < ApplicationController
-  
+class PeopleController < ApplicationController  
   def index
     @bios = Bio.where(:is_public => true).order("last_name")
   end
