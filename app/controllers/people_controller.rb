@@ -4,6 +4,8 @@ class PeopleController < ApplicationController
   end
   
   def bio
+    NewRelic::Agent.add_custom_parameters(referrer: request.referer)
+    
     @bio = Bio.where(is_public: true, :slugged_name => params[:name]).first
     
     if !@bio

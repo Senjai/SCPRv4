@@ -22,4 +22,14 @@ describe ProgramsController do
       assigns(:episode).should be_nil
     end
   end
+  
+  describe "GET /show" do
+    describe "with XML" do
+      it "renders xml template when requested" do
+        program = create :kpcc_program
+        get :show, show: program, format: :xml
+        response.should render_template 'programs/show'
+      end
+    end
+  end
 end
