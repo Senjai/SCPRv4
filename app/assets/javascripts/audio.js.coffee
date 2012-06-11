@@ -49,7 +49,6 @@ class scpr.Audio
                     
                 @widgets.push widget
         
-        console.log "found #{@widgets.length} widgets."
         
         # register listener to close audio bar
         $("#{@options.audioBar} .bar-close, #opaque-cover").click => @closeAndStop()
