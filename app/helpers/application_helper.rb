@@ -346,4 +346,8 @@ module ApplicationHelper
     content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_KEYS["google"]["maps"]}&sensor=true")
     content_for :footerjss, "var gmapsLoader = new scpr.GMapsLoader(#{raw options.to_json});".html_safe
   end
+  
+  def flash_bootstrap(flash_name)
+    "alert-message " + { alert: "error", notice: "success", info: "info", warning: "warning" }[flash_name]
+  end
 end

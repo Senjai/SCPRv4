@@ -204,6 +204,17 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "blogs_blogauthor", ["blog_id", "author_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
   add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
 
+  create_table "blogs_blogcategory", :force => true do |t|
+    t.integer  "blog_id",                                                      :null => false
+    t.string   "title",      :limit => 140,                                    :null => false
+    t.string   "slug",       :limit => 50,                                     :null => false
+    t.datetime "created_at",                :default => '2012-06-08 02:03:41', :null => false
+    t.datetime "updated_at",                :default => '2012-06-08 02:03:41', :null => false
+  end
+
+  add_index "blogs_blogcategory", ["blog_id"], :name => "blogs_blogcategory_472bc96c"
+  add_index "blogs_blogcategory", ["slug"], :name => "blogs_blogcategory_a951d5d6"
+
   create_table "blogs_entry", :force => true do |t|
     t.string   "title",             :limit => 140,                        :null => false
     t.string   "slug",              :limit => 50,                         :null => false
@@ -222,6 +233,17 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
 
   add_index "blogs_entry", ["author_id"], :name => "blogs_entry_author_id"
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
+
+  create_table "blogs_entryblogcategory", :force => true do |t|
+    t.integer  "entry_id",                                            :null => false
+    t.integer  "blog_category_id",                                    :null => false
+    t.boolean  "is_primary",       :default => false,                 :null => false
+    t.datetime "created_at",       :default => '2012-06-08 02:03:41', :null => false
+    t.datetime "updated_at",       :default => '2012-06-08 02:03:41', :null => false
+  end
+
+  add_index "blogs_entryblogcategory", ["blog_category_id"], :name => "blogs_entryblogcategory_c81f43a6"
+  add_index "blogs_entryblogcategory", ["entry_id"], :name => "blogs_entryblogcategory_38a62041"
 
   create_table "blogs_entrycategories", :force => true do |t|
     t.integer "entry_id",    :null => false
