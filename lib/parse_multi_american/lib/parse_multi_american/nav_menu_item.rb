@@ -1,6 +1,6 @@
 module WP
-  module Post
-    class NavMenuItem
+    class NavMenuItem < ActiveRecord::Base
+      self.table_name = "wp_posts"
+      
     end
-  end
 end

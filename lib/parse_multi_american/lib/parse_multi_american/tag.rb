@@ -1,6 +1,7 @@
 module WP
   class Tag < ActiveRecord::Base
-    self.table_name = "taggit_tag"
+    self.table_name = "wp_tags"
+    
     before_save :strip_cdata
     def strip_cdata
       stripped_name = MultiAmerican::Parser.strip_cdata(self.name)

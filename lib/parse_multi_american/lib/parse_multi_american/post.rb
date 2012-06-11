@@ -1,8 +1,18 @@
 module WP
-  module Post
-    class Post < ActiveRecord::Base
-      has_many :tagged_items, foreign_key: object_id, 
-      has_many :tags, through: :tagged_items 
+  class Post
+    DEFAULTS = {
+      blog_id: WP::BLOG_ID,
+      blog_slug: WP::BLOG_SLUG,
+      is_published: 0
+    }
+    
+    def initialize(attributes={})
+      attributes.reverse_merge! DEFAULTS
+    end
+    
+    def save
+      b = ::BlogEntry.new(attributes)
+      b.save
     end
   end
 end

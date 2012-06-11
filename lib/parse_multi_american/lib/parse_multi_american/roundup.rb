@@ -1,6 +1,6 @@
 module WP
-  module Post
-    class Roundup < ActiveRecord::Base
-    end
+  class Roundup < ActiveRecord::Base
+    self.table_name = "wp_posts"
+    
   end
 end

@@ -1,6 +1,6 @@
 module WP
-  module Post
-    class Attachment < ActiveRecord::Base
-    end
+  class Attachment < ActiveRecord::Base
+    self.table_name = "wp_attachment"
+    belongs_to :post
   end
 end

@@ -1,6 +1,5 @@
 module WP
-  module Post
-    class Topic < ActiveRecord::Base
-    end
+  class Topic < ActiveRecord::Base
+    self.table_name = "wp_posts"
   end
 end

@@ -2,36 +2,37 @@ module WP
   include ActiveSupport::Inflector
   
   NODE_MAP = {
-    posts: { xpath: "item",
-             scprv4_class: BlogEntry,
+    post: { xpath: "item",             
              xml_ar_map: {
-        
+               title: :title,
+               pubDate: :published_at,
+               "content:encoded" => :content,
+               excerpt: :teaser,
+               status: :status,
+               post_name: :slug
              }
            },
     
-    authors: { xpath: "wp:author",
-               scprv4_class: Bio,
+    author: { xpath: "wp:author",
                xml_ar_map: { 
                  
                }
              },
                
-    categories: { xpath: "wp:category",
-                  scprv4_class: Category,
+    category: { xpath: "wp:category",
                   xml_ar_map: {
                     
                   }
                 },
                   
-    tags: { xpath: "wp:tag",
-            scprv4_class: Tag,
+    tag: { xpath: "wp:tag",
             xml_ar_map: {
               tag_slug: :slug,
               tag_name: :name
             }
           },
             
-    terms: { xpath: "wp:term" }
+    term: { xpath: "wp:term" }
   }
   
   class Parser
@@ -48,16 +49,14 @@ module WP
     
     def parse_to_objects(attrib)
       nattr = NODE_MAP[attrib.to_sym]
-      klass = nattr[:scprv4_class]
+      klass = ['WP', attrib.to_s.camelize].join("::").constantize
+      
       new_records = []
-              
       @doc.xpath("//#{nattr[:xpath]}").each do |element|
         builder = {}
         
         element.children.reject { |c| !nattr[:xml_ar_map].keys.include? c.name.to_sym }.each do |child|
-          puts "#{child.name} : #{child.content}"
           builder.merge!(nattr[:xml_ar_map][child.name.to_sym] => child.content)
-          puts builder
         end
         
         new_records.push klass.new(builder)
