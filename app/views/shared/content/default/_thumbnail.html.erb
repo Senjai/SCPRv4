@@ -2,7 +2,7 @@
 	<h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
 	<h4>
 		<%= render_byline content %>
-		<%= smart_date_js content %>
+		| <%= smart_date content %>
 	</h4>
 
 	<p><%= strip_tags content.teaser %></p>

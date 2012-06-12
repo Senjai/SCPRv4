@@ -26,7 +26,8 @@ describe PeopleController do
     end
   end
   
-#  describe "GET /bio" do
+  describe "GET /bio" do
+    let(:bio) { create :bio }
 #    before :all do
 #      DatabaseCleaner.strategy = :truncation
 #      ThinkingSphinx::Test.start
@@ -44,14 +45,17 @@ describe PeopleController do
 #      DatabaseCleaner.strategy = :transation
 #    end
 #  
-#    it "returns a Bio object" do
-#      get :bio, name: @bio.slugged_name
-#      assigns(:bio).should be_a Bio
-#    end
-#    
-#    it "raises a routing error if the bio isn't found" do
-#      get :bio, name: "badname"
-#      response.should be_not_found
-#    end
-#  end
+    it "returns a Bio object" do
+      pending "Thining Sphinx"
+      #get :bio, name: bio.slugged_name
+      #assigns(:bio).should be_a Bio
+    end
+    
+    it "redirects with flash message if the bio isn't found" do
+      pending "Thinking Sphinx"
+      #get :bio, name: "noname"
+      #response.should be_redirect
+      #flash[:alert].should be_present 
+    end
+  end
 end

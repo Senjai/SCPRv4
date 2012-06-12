@@ -307,7 +307,7 @@ body {
 		li {
 			margin:5px 0 0 -10px;
 			a {
-				@include font-headline($weight:lighter);
+				@include font-headline($weight:400);
 				color:$grayAlt;
 				font-size:15px;
 			}
@@ -357,7 +357,7 @@ h6.more-news-title {
 				margin-bottom: 0;
 			}
 			p.story-title {
-				@include font-headline($weight:bold);
+				@include font-headline($weight:700);
 				font-size:16px;
 				margin:0;
 				a {
@@ -374,7 +374,7 @@ h6.more-news-title {
 				li {
 					margin:5px 0 0 0;
 					a {
-						@include font-headline($weight:lighter);
+						@include font-headline($weight:400);
 						color:$grayAlt;
 						font-size:15px;
 					}
@@ -390,7 +390,7 @@ h6.more-news-title {
 				padding:10px 0 0 0;
 			}
 			span.caption {
-				@include font-headline($weight:lighter);
+				@include font-headline($weight:400);
 				color:$grayAlt;
 				display:block;
 				font-size:15px;
@@ -399,7 +399,7 @@ h6.more-news-title {
 				}
 			}
 			blockquote {
-				@include font-headline($weight: lighter);
+				@include font-headline($weight: 400);
 				@include font-shorthand($size: 16px, $lineHeight: 23px);
 				border:0 none;
 				font-style:italic;

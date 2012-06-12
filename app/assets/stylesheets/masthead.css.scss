@@ -221,6 +221,7 @@ $navHeight: 36px;
 							background-color:$white;
 							$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
 							@include box-shadow($nav-shadow);
+							@include transition(background-color 0.2s);
 						}
 					}
 				}

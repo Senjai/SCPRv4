@@ -135,7 +135,8 @@ module ApplicationHelper
   end
   
   def smart_date_js(content, options={})
-    # If we pass in something that's not a Time-y object, then look for a "published_at" attribute. Only create the time tag if there is a time-y object to work with, otherwise the tag is useless.
+    # If we pass in something that's not a Time-y object, then look for a "published_at" attribute. 
+    # Only create the time tag if there is a time-y object to work with, otherwise the tag is useless.
     if content.respond_to?(:strftime) # This is a Time or DateTime object (or something similar)
       datetime = content
     elsif content.respond_to?(:published_at) # This is an object with a published_at attribute
@@ -317,7 +318,7 @@ module ApplicationHelper
   
   def link_to_audio(title, object, options={}) # This needs to be more useful
     options[:class] = "audio-toggler #{options[:class]}"
-    options[:title] ||= object.headline
+    options[:title] ||= object.short_headline
     options["data-duration"] = object.audio.first.duration
     content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
   end
@@ -356,5 +357,9 @@ module ApplicationHelper
   def watch_gmaps(options={})
     content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_KEYS["google"]["maps"]}&sensor=true")
     content_for :footerjss, "var gmapsLoader = new scpr.GMapsLoader(#{raw options.to_json});".html_safe
+  end
+  
+  def flash_bootstrap(flash_name)
+    "alert-message " + { alert: "error", notice: "success", info: "info", warning: "warning" }[flash_name]
   end
 end

@@ -44,7 +44,7 @@ Scprv4::Application.routes.draw do
   end
   
   # -- Bios -- #
-  match '/about/people/staff/' => 'people#index'
+  match '/about/people/staff/' => 'people#index', as: :staff_index
   match '/about/people/staff/:name' => 'people#bio', :as => :bio
 
 

@@ -236,7 +236,7 @@ end
 
 
 # ContentByline #########################################################
-  factory :byline, class: "ContentByline" do # Requires we pass in "content"
+  factory :byline, class: "ContentByline", aliases: [:content_byline] do # Requires we pass in "content"
     role ContentByline::ROLE_PRIMARY
     user { |byline| byline.association :author }
     content { |byline| byline.association(:news_story) } #TODO Need to be able to pass in any type of factory here

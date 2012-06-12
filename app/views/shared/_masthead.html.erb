@@ -84,4 +84,12 @@
 <% end %>
 
 <div class="hero"></div>
+<div class="container-fluid">
+	<% flash.each do |name, msg| %>
+		<div class="<%= flash_bootstrap(name) %>">
+			<button class="close" data-dismiss="alert"></button>
+			<%= msg %>
+		</div>
+	<% end %>
+</div>
 <!-- end MASTHEAD-->

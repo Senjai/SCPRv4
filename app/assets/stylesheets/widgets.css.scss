@@ -812,7 +812,7 @@ a.comment-count.inline {
 		padding:0 $baseline / 2 10px;
 		position:relative;
 		z-index:4;
-		@include font-headline($weight:lighter);
+		@include font-headline($weight:400);
 		color:$grayAlt;
 		font-size:15px;
 		line-height: 18px;
@@ -856,7 +856,7 @@ a.comment-count.inline {
 		}
 		a {
 			color:$grayAlt;
-			@include font-headline(lighter);
+			@include font-headline(400);
 			font-size:15px;
 		}
 	}
