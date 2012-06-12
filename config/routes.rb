@@ -28,7 +28,7 @@ Scprv4::Application.routes.draw do
   end
   
   scope "r" do
-    namespace :admin do      
+    namespace :admin do  
       get 'login' => "sessions#new", as: :login
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
@@ -36,6 +36,8 @@ Scprv4::Application.routes.draw do
       resources :news_stories
       resources :blogs
       resources :blog_entries
+      
+      get "multi_american" => "multi_american#index"
       
       root to: 'home#index'
     end

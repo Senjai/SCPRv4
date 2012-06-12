@@ -5,5 +5,7 @@ class AddWpIdColumns < ActiveRecord::Migration
   end
 
   def down
+    remove_column :blogs_entry, :wp_id
+    remove_column :taggit_tag, :wp_id
   end
 end

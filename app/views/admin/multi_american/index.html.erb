@@ -1,0 +1,86 @@
+<% content_for :sidebar do %>
+	<h3>Quick Stats</h3>
+	<ul>
+		<li><%= @doc.title %></li>
+		<li>pubDate: <%= format_date @doc.pubDate, time: true %></li>
+		<li>
+			<b>Total Items:</b> <%= @all_posts.size %>
+			<ul>
+				<li>Attachments: <b></b></li>
+				<li>Jiffy-Posts: <b></b></li>
+				<li>Nav Menu Items: <b></b></li>
+				<li>Roundups: <b></b></li>
+				<li>Posts: <b></b></li>
+			</ul>
+		</li>
+		
+		<li><b>Total Tags:</b> <%= @all_tags.size %></li>
+	</ul>
+<% end %>
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#posts" data-toggle="tab">Posts</a></li>
+    <li><a href="#tags" data-toggle="tab">Tags</a></li>
+    <li><a href="#categories" data-toggle="tab">Categories</a></li>
+    <li><a href="#attachments" data-toggle="tab">Attachments</a></li>
+</ul>
+<div class="tab-content">
+	<div class="tab-pane active" id="posts">
+		<h2>Posts</h2>
+		<h4>Total count: <%= @all_posts.size %></h4>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>WP-ID</th>
+					<th>Post Type</th>
+					<th>Title</th>
+					<th>Slug</th>
+					<th>Published</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody class="list">
+					<% @posts.each do |post| %>
+						<tr>
+							<td><%= post.wp_id %></td>
+							<td><%= post.post_type %></td>
+							<td><%= post.title %></td>
+							<td><%= post.slug %></td>
+							<td><%= format_date(post.published_at, time: true) %></td>
+							<td><%= ContentBase::STATUS_TEXT[post.status] %></td>
+						</tr>
+					<% end %>
+			</tbody>
+		</table>
+		<%= will_paginate @posts, param_name: :posts_page, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, params: { anchor: "posts"} %>
+	</div>
+	<div class="tab-pane" id="tags">
+		<h2>Tags</h2>
+		<h4>Total Count: <%= @all_tags.size %></h4>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>WP-ID</th>
+					<th>Name</th>
+					<th>Slug</th>
+				</tr>
+			</thead>
+			<tbody class="list">
+					<% @tags.each do |tag| %>
+						<tr>
+							<td><%= tag.wp_id %></td>
+							<td><%= tag.name %></td>
+							<td><%= tag.slug %></td>
+						</tr>
+					<% end %>
+			</tbody>
+		</table>
+		<%= will_paginate @tags, param_name: :tags_page, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, params: { anchor: "tags"} %>
+	</div>
+	<div class="tab-pane" id="categories">
+	</div>
+	<div class="tab-pane" id="attachments">
+	</div>
+</div>
+
+<br /><br /><br />

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120604195452) do
+ActiveRecord::Schema.define(:version => 20120607182919) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -233,6 +233,7 @@ ActiveRecord::Schema.define(:version => 20120604195452) do
     t.integer  "comment_count",                                           :null => false
     t.string   "_short_headline",   :limit => 100
     t.text     "_teaser",           :limit => 2147483647
+    t.integer  "wp_id"
   end
 
   add_index "blogs_entry", ["author_id"], :name => "blogs_entry_author_id"
@@ -1532,8 +1533,9 @@ ActiveRecord::Schema.define(:version => 20120604195452) do
   add_index "specials_page", ["slug"], :name => "slug", :unique => true
 
   create_table "taggit_tag", :force => true do |t|
-    t.string "name", :limit => 100, :null => false
-    t.string "slug", :limit => 100, :null => false
+    t.string  "name",  :limit => 100, :null => false
+    t.string  "slug",  :limit => 100, :null => false
+    t.integer "wp_id"
   end
 
   add_index "taggit_tag", ["slug"], :name => "slug", :unique => true

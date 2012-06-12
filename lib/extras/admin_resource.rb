@@ -13,7 +13,7 @@ module AdminResource
     
     attr_reader :list_fields, :list_order, :list_per_page
     
-    def list_fields=(fields*)
+    def list_fields=(*fields)
       # If no fields are passed in, just use every column.
       if !fields
         fields = column_names.map { |col| [col.to_s] }
@@ -27,8 +27,8 @@ module AdminResource
       end
       
       # The first column will be linked if no link is specified
-      if !fields.any? { |f| f[1]['link'] == true) }
-        fields[0][1].merge! { link: true }
+      if !fields.any? { |f| f[1]['link'] == true }
+        fields[0][1].merge!(link: true)
       end
       
       @list_fields = fields

@@ -1,4 +1,9 @@
 class BlogEntry < ContentBase
+  
+  # Temporary
+  attr_accessor :post_type
+  #
+  
   administrate!
   
   def self.list_fields
