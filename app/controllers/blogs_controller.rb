@@ -20,6 +20,7 @@ class BlogsController < ApplicationController
   #----------
   
   def entry
+    NewRelic::Agent.add_custom_parameters(c_referer: request.referer)
     @entry = @blog.entries.published.find(params[:id])
     rescue
       raise ActionController::RoutingError.new("Not Found")
