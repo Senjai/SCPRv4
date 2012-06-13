@@ -5,7 +5,7 @@
 		<thead>
 			<tr>
 				<% controller.resource_class.list_fields.each do |item| %>
-					<th><%= item[:title] %></th>
+					<th><%= item[1][:title] %></th>
 				<% end %>
 			</tr>
 		</thead>
@@ -14,10 +14,10 @@
 				<tr class="<%= controller.resource_class.to_s.underscore.dasherize %>">
 					<% controller.resource_class.list_fields.each do |item| %>
 						<td>
-							<% if item[:link] %>
-								<%= link_to record.send(item[:attr]), url_for([:edit, :admin, record]) %>
+							<% if item[1][:link] %>
+								<%= link_to record.send(item[0]), url_for([:edit, :admin, record]) %>
 							<% else %>
-								<%= record.send(item[:attr]) %>
+								<%= record.send(item[0]) %>
 							<% end %>
 						</td>
 					<% end %>
