@@ -1,7 +1,7 @@
 class NewsStory < ContentBase
   administrate!
       
-  list_fields = [
+  self.list_fields = [
     ['id'],
     ['headline', link: true ],
     ['slug'],

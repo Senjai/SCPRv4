@@ -13,16 +13,16 @@ module AdminResource
     
     attr_reader :list_fields, :list_order, :list_per_page
     
-    def list_fields=(*fields)
+    def list_fields=(fields=[])
       # If no fields are passed in, just use every column.
-      if !fields
+      if fields.blank?
         fields = column_names.map { |col| [col.to_s] }
       end
       
       # Force a hash into the array if one wasn't given,
       # and then reverse-merge some default values.
       fields.each do |f|
-        f.push {} if !f[1]
+        f.push({}) if !f[1]
         f[1].reverse_merge!(title: f[0].titleize)
       end
       
@@ -33,7 +33,6 @@ module AdminResource
       
       @list_fields = fields
     end
-    
         
     def list_order=(order)
       order ||= DEFAULTS[:order]
