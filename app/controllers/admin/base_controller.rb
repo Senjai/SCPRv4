@@ -1,7 +1,7 @@
 class Admin::BaseController < ActionController::Base  
   protect_from_forgery
   before_filter :require_admin
-  before_filter { |c| c.send(:breadcrumb, ["KPCC Admin", admin_root_path]) }  
+  before_filter { |c| c.send(:breadcrumb, "KPCC Admin", admin_root_path) }  
   
   layout 'admin'
   
@@ -26,8 +26,9 @@ class Admin::BaseController < ActionController::Base
   end
   
   
-  def breadcrumb(pair=[])
+  def breadcrumb(*args)
     @breadcrumbs ||= []
-    @breadcrumbs.push(pair) if pair.present?
+    pairs = args.each_slice(2).to_a
+    pairs.each { |pair| @breadcrumbs.push(pair) }
   end
 end

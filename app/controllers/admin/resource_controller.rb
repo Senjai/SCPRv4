@@ -10,7 +10,7 @@ class Admin::ResourceController < Admin::BaseController
   end
 
   def new
-    breadcrumb ["New", nil]
+    breadcrumb "New", nil
     @record = resource_class.new
     respond
   end
@@ -20,7 +20,7 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def edit
-    breadcrumb ["Edit", nil]
+    breadcrumb "Edit", nil
     respond
   end
   
@@ -115,6 +115,6 @@ class Admin::ResourceController < Admin::BaseController
   # -- Breadcrumbs -- #
   
   def extend_breadcrumbs_with_resource_root
-    breadcrumb [resource_title.pluralize, resource_path_helper]
+    breadcrumb resource_title.pluralize, resource_path_helper
   end
 end
