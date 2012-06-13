@@ -11,8 +11,13 @@ require "uri"
 module WP
   BLOG_ID = 22 # For Multi-American
   BLOG_SLUG = 'multi-american'
-  INTEGER_NAMEPSACE = "0000"
   CONTENT_TYPE_ID = 44 # BlogEntry (in mercer)
+  
+  POST_DEFAULTS = {
+    blog_id:      WP::BLOG_ID,
+    blog_slug:    WP::BLOG_SLUG,
+    is_published: 0
+  }
 end
 
 require 'multi_american/lib/multi_american/attachment.rb'

@@ -1,0 +1,13 @@
+<h2><%= @post.title %></h2>
+<% @post.instance_variables.each do |sym| %>
+	<b><%= sym.to_s.gsub("@", "").titleize %></b>:
+	<% if [:@categories, :@post_meta].include? sym %>
+		<% @post.instance_variable_get(sym).each do |set| %>
+			<%= set %><br />
+		<% end %>
+	<% else %>
+		<%= simple_format @post.instance_variable_get(sym).to_s %><br />
+	<% end %>
+<% end %>
+
+<br /><br /><br />

@@ -37,8 +37,12 @@ Scprv4::Application.routes.draw do
       resources :blogs
       resources :blog_entries
       
-      get "multi_american" => "multi_american#index"
-      
+      scope "multi_american" do
+        get "/" => "multi_american#index", as: :multi_american
+        get "posts" => "multi_american#posts", as: :multi_american_posts
+        get "posts/:id" => "multi_american#show_post", as: :multi_american_post
+      end
+
       root to: 'home#index'
     end
   end

@@ -1,8 +1,8 @@
 class BlogEntry < ContentBase
   
-  # Temporary
-  attr_accessor :post_type
-  #
+  # MULTI-AMERICAN
+  attr_accessor :postmeta, :categories
+  # END
   
   administrate!
   

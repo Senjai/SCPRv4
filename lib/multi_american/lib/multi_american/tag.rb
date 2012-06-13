@@ -1,5 +1,9 @@
 module WP
   class Tag
+    # tag_slug: :slug,
+    # tag_name: :name,
+    # term_id: :wp_id
+    
     DEFAULTS = { }
     
     METHODS = {
