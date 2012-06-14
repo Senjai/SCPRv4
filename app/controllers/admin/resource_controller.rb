@@ -3,6 +3,8 @@ class Admin::ResourceController < Admin::BaseController
   before_filter :get_records, only: :index
   before_filter :extend_breadcrumbs_with_resource_root
   
+  respond_to :html
+  
   # -- Basic CRUD -- #
   
   def index
