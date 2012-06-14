@@ -5,26 +5,17 @@ class BlogEntry < ContentBase
   # END
   
   administrate!
-  
-  def self.list_fields
-    fields = [
-      { attr: 'id' },
-      { attr: 'headline', link: true },
-      { attr: 'slug' },
-      { attr: 'status' },
-      { attr: 'published_at' }
-    ]
-    
-    fields.each { |f| f.reverse_merge!(title: f[:attr].titleize) }
-    fields
-  end
-  
-  def self.list_order
-    "published_at desc"
-  end
-  
-  
   self.table_name =  "blogs_entry"
+  self.list_order = "published_at desc"
+  
+  self.list_fields = [
+    ['id'],
+    ['headline', link: true],
+    ['blog'],
+    ['bylines'],
+    ['status'],
+    ['published_at']
+  ] 
   
   CONTENT_TYPE = "blogs/entry"
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
@@ -65,7 +56,7 @@ class BlogEntry < ContentBase
   end
   
   def headline
-    title
+    self.title
   end
   
   def body

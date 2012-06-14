@@ -3,8 +3,16 @@
 }
 
 .simple_form {
+	input:not([type=submit]) {
+		@extend .span4;
+	}
+	
 	input.long, textarea {
 		@extend .span8;
+	}
+	
+	textarea.short {
+		height: 200px;
 	}
 }
 

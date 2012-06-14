@@ -93,6 +93,7 @@ class Admin::ResourceController < Admin::BaseController
   
   # -- Resource Class helpers -- #
   
+  helper_method :resource_class
   def resource_class
     @resource_class ||= params[:controller].camelize.demodulize.singularize.constantize
   end

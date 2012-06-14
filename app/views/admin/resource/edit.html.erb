@@ -1,11 +1,11 @@
-<% page_title "Editing: #{@record.short_headline}" %>
+<% page_title "Editing: #{@record.to_title}" %>
 <%= simple_form_for [:admin, @record], html: { class: "form-horizontal" } do |f| %>
 	<%= render 'form_fields', record: @record, f: f %>
 	<%= submit_row @record %>
 <% end %>
 
 <% content_for :sidebar do %>
-	<h3>Currently Editing this Story</h3>
+	<h3>Currently Editing on This Page</h3>
 	<ul id="viewers" class="viewers">
 	</ul>
 <% end %>

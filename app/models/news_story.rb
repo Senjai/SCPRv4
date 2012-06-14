@@ -1,20 +1,19 @@
 class NewsStory < ContentBase
   administrate!
-      
+  self.table_name =  'news_story'
+  self.list_order = "published_at desc"
+    
   self.list_fields = [
     ['id'],
-    ['headline', link: true ],
+    ['headline',      link: true ],
     ['slug'],
     ['news_agency'],
     ['audio'],
     ['status'],
-    ['published_at']
+    ['published_at' ]
   ]
   
-  list_order = "published_at desc"
   
-  
-  self.table_name =  'news_story'
     
   before_save :fill_fields, on: :create
   def fill_fields

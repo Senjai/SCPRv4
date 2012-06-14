@@ -29,11 +29,14 @@ module WP
           
           element.children.reject { |c| invalid_child(c) }.each do |child|
             if child.name == "category"
-              category = { title: child.content, domain: child[:domain], nicename: child[:nicename] }
+              category = {  title: child.content, 
+                            domain: child[:domain], 
+                            nicename: child[:nicename] }
               builder[:categories].push category
             
             elsif child.name == "postmeta"
-              postmeta = { meta_key: child.at_xpath("./wp:meta_key").content, meta_value: child.at_xpath("./wp:meta_value").content }
+              postmeta = {  meta_key: child.at_xpath("./wp:meta_key").content, 
+                            meta_value: child.at_xpath("./wp:meta_value").content }
               builder[:post_meta].push postmeta
 
             elsif child.namespace.present? && !%w{ wp }.include?(child.namespace.prefix)
@@ -48,6 +51,7 @@ module WP
         
         new_records
       end
+      
       
       def invalid_child(node)
         %w{text comment}.include?(node.name)

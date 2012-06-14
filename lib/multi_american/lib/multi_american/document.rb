@@ -1,5 +1,4 @@
 module WP
-#  include ActiveSupport::Inflector
   
   XPATH_MAP = {
     posts:        "//item/wp:post_type[text()='post']/..",

@@ -1,6 +1,7 @@
 class Admin::MultiAmericanController < Admin::BaseController
   require 'will_paginate/array'
   before_filter :load_doc
+  before_filter { |c| c.send(:breadcrumb, "Multi American Import", admin_multi_american_path) }  
   
   def index    
     

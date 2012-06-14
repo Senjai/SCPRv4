@@ -16,9 +16,8 @@
 			<% if admin_user %>
 				<ul class="nav">
 					<li><%= link_to "News Stories", admin_news_stories_path %></li>
-					<li><%= link_to "Blog Entries", admin_root_path %></li>
-					<li><%= link_to "Events", admin_root_path %></li>
-					<li><%= link_to "Content Shells", admin_root_path %></li>
+					<li><%= link_to "Blog Entries", admin_blog_entries_path %></li>
+					<li><%= link_to "Blogs", admin_blogs_path %></li>
 				</ul>
 			
 			
@@ -65,7 +64,7 @@
 	<% end %>
 	
 	<div class="row-fluid">
-		<div class="span9">
+		<div class="span<%= content_for?(:sidebar) ? "9" : "12" %>">
 			<% flash.each do |name, msg| %>
 				<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
 					<%= msg.html_safe %>
@@ -75,9 +74,11 @@
 			
 			<%= yield %>
 		</div>
-		<div class="span3">
-			<%= yield :sidebar %>
-		</div>
+		<% if content_for?(:sidebar) %>
+			<div class="span3">
+				<%= yield :sidebar %>
+			</div>
+		<% end %>
 	</div> <!-- row fluid -->
 </div> <!-- container fluid main -->
 
