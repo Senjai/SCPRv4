@@ -34,7 +34,7 @@ class EmailWorker
         if alert.is_published and alert.send_email and !alert.email_sent
           lyris = Lyris.new(alert)
           if lyris.add_message and lyris.send_message
-            alert.update_attribute(:email_sent, true)
+            alert.update_column(:email_sent, true)
             self.log "Set email_sent=true for #{alert}. Finished."
           end
         else
