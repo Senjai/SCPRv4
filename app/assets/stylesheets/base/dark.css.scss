@@ -124,6 +124,7 @@
 		ul.cbase li, 
 		.section, 
 		ul.content-types li, 
+		#about-mega #about-hero,
 		&#programs-mega .section.programs a:first-child { border-color: $grayDark; }
 		
 		&#programs-mega .section.programs a {
@@ -132,6 +133,16 @@
 		}
 		
 		&#support-mega .section .pledge a { color: $white; }
+	}
+	.megamenu #about-mega {
+		#about-hero {border-color: $grayDark; }
+		h6 {
+			&.heading-about, &.heading-connect, &.heading-people {
+				&:before {
+				    opacity:0.4;
+				}
+			}
+		}
 	}
 	
 	
