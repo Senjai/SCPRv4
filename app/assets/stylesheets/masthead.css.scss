@@ -410,6 +410,7 @@ $navHeight: 36px;
 	#about-mega {
 		#about-hero {
 			background:url(image_path('about/menu-hero-bg.png')) no-repeat right bottom;
+			border-right:1px solid $grayLighter;
 			height:210px;
 			margin-right:-4%;
 			hgroup {
@@ -431,16 +432,49 @@ $navHeight: 36px;
 		}
 		h6 {
 			&.heading-about {
-				background:url(image_path('icons/menu-about-kpcc.png')) no-repeat 0 0;
 				padding:8px 0 7px 36px;
+				position:relative;
+				z-index:1;
+				&:before {
+					background:url(image_path('icons/menu-about-kpcc.png')) no-repeat 0 0;
+					content:"";
+				    position:absolute;
+				    z-index:-1;
+				    top:0;
+				    bottom:0;
+				    left:0;
+				    right:0;
+				}
 			}
 			&.heading-connect {
-				background:url(image_path('icons/menu-about-connect.png')) no-repeat 0 0;
 				padding:8px 0 7px 36px;
+				position:relative;
+				z-index:1;
+				&:before {
+					background:url(image_path('icons/menu-about-connect.png')) no-repeat 0 0;
+					content:"";
+				    position:absolute;
+				    z-index:-1;
+				    top:0;
+				    bottom:0;
+				    left:0;
+				    right:0;
+				}
 			}
 			&.heading-people {
-				background:url(image_path('icons/menu-about-people.png')) no-repeat 0 0;
 				padding:8px 0 7px 36px;
+				position:relative;
+				z-index:1;
+				&:before {
+					background:url(image_path('icons/menu-about-people.png')) no-repeat 0 0;
+					content:"";
+				    position:absolute;
+				    z-index:-1;
+				    top:0;
+				    bottom:0;
+				    left:0;
+				    right:0;
+				}
 			}
 		}
 		nav {

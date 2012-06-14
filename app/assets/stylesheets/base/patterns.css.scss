@@ -318,6 +318,11 @@ body {
   }
   &.error {
 	@include gradientBar(#EE5F5B, #C43C35); 
+	a {
+		color:$white;
+		font-weight:bold;
+		text-decoration:underline;
+	}
   }
   &.warning {
     @include gradientBar(lighten(#fceec1, 10%), lighten(#eedc94, 10%)); 

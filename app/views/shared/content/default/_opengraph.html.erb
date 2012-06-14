@@ -5,6 +5,11 @@
     <meta property="og:title" content="<%= h content.headline %>">
     <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
 	<meta property="og:url" content="<%= content.remote_link_path %>"/>
+	<meta name="twitter:card" value="summary">
+	<meta name="twitter:site" value="@kpcc">
+	<meta name="twitter:url" value="<%= content.remote_link_path %>">
+	<meta name="twitter:title" value="<%= h content.headline %>">
+	<meta name="twitter:description" value="<%= h content.teaser %>">
 	
 	<% if content.is_a?(VideoShell) %>
 	  	<meta property="og:video:width" content="300" />
@@ -14,10 +19,14 @@
 	  	<meta property="og:video:type" content="application/x-shockwave-flash"/>
 		<!-- <meta property="og:video" content="<%# content.assets.first.asset.native.flvurl %>"> -->
 	  	<!-- <meta property="og:video:type" content="video/mp4"/> -->
+		<meta name="twitter:player" value="https://secure.brightcove.com/services/viewer/federated_f9/bcpid1247178207001?isVid=1&amp;isUI=1&amp;playerKey=AQ~~,AAAAmtVKbGE~,pW41hkPiaos27C7knwyeOWQgVlG4w7v5&videoId=<%=content.assets.first.asset.native["videoid"] %>&secureConnections=true">
+		<meta name="twitter:player:width" value="300">
+		<meta name="twitter:player:height" value="200">
 	<% end %>
 	
 	<% if content.assets.any? %>
 		<meta property="og:image" content="<%= content.assets.first.asset.lead.url %>" />
 		<link rel="image_src" href="<%= content.assets.first.asset.lead.url %>" />
+		<meta name="twitter:image" value="<%= content.assets.first.asset.lead.url %>">
 	<% end %>
 <% end %>
