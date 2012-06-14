@@ -1,4 +1,5 @@
 class KpccProgram < ActiveRecord::Base
+  administrate!
   self.table_name =  'programs_kpccprogram'
   
   # Validation for later

@@ -1,4 +1,5 @@
 class Homepage < ActiveRecord::Base
+  administrate!
   self.table_name =  "layout_homepage"
   
   has_many :content, :class_name => "HomepageContent", :order => "position asc"

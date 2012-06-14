@@ -1,4 +1,5 @@
 class OtherProgram < ActiveRecord::Base
+  administrate!
   self.table_name =  'programs_otherprogram'  
   
   has_many :schedules, :foreign_key => "other_program_id", :class_name => "Schedule"

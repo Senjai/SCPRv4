@@ -1,4 +1,6 @@
 class ContentShell < ContentBase
+  administrate!
+  
   self.table_name =  "contentbase_contentshell"
   
   CONTENT_TYPE = "content/shell"

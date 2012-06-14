@@ -1,4 +1,5 @@
 class ShowEpisode < ContentBase
+  administrate!
   self.table_name =  "shows_episode"
   
   CONTENT_TYPE = 'shows/episode'

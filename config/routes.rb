@@ -33,9 +33,20 @@ Scprv4::Application.routes.draw do
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
       
+      ## -- AdminResource -- ##
+      resources :tags
+      resources :other_programs
+      resources :show_segments
+      resources :show_episodes
+      resources :kpcc_programs
       resources :news_stories
       resources :blogs
       resources :blog_entries
+      resources :flatpages
+      resources :video_shells
+      resources :events
+      resource :homepages
+      ## -- END AdminResource --  ##
       
       scope "multi_american" do
         get "/" => "multi_american#index", as: :multi_american

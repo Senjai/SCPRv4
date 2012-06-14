@@ -1,4 +1,5 @@
 class VideoShell < ContentBase
+  administrate!
   self.table_name = "contentbase_videoshell"
   CONTENT_TYPE = "content/video"
   CONTENT_TYPE_ID = 125

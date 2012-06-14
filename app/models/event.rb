@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  administrate!
   self.table_name =  'rails_events_event'
   self.primary_key = :id
   
