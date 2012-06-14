@@ -14,9 +14,10 @@ class Event < ActiveRecord::Base
 
   scope :published, where(:is_published => true)
   scope :upcoming, lambda { published.where("starts_at > ?", Time.now).order("starts_at") }
+  scope :upcoming_and_current, lambda { published.where("ends_at > ?", Time.now).order("starts_at") }
   scope :forum, published.where("etype IN (?)", ForumTypes)
   scope :sponsored, published.where("etype = ?", "spon")
-  scope :past, lambda { published.where("starts_at < ?", Time.now).order("starts_at desc") }
+  scope :past, lambda { published.where("ends_at < ?", Time.now).order("starts_at desc") }
   
   def self.closest
     upcoming.first

@@ -205,9 +205,7 @@ describe Event do
       it "only selects published content" do
         published = create :event, is_published: 1
         unpublished = create :event, is_published: 0
-        published_events = Event.published
-        published_events.count.should eq 1
-        published_events.first.should eq published
+        Event.published.should eq [published]
       end
     end
     
@@ -215,9 +213,20 @@ describe Event do
       it "only selects future events" do
         past_event = create :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
         future_event = create :event, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now
-        upcoming_events = Event.upcoming
-        upcoming_events.count.should eq 1
-        upcoming_events.first.should eq future_event
+        Event.upcoming.should eq [future_event]
+      end
+    end
+    
+    describe "upcoming_and_current" do
+      it "selects event that are future or currently happening" do
+        past_event = create :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
+        current_event = create :event, starts_at: 2.hours.ago, ends_at: 2.hours.from_now
+        future_event = create :event, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now
+        Event.upcoming_and_current.should eq [current_event, future_event]
+      end
+      
+      it "orders by starts_at" do
+        Event.upcoming_and_current.to_sql.should match /order by starts_at/i
       end
     end
     
@@ -225,9 +234,13 @@ describe Event do
       it "only selects past events" do
         past_event = create :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
         future_event = create :event, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now
-        past_events = Event.past
-        past_events.count.should eq 1
-        past_events.first.should eq past_event
+        Event.past.should eq [past_event]
+      end
+      
+      it "does not include current events" do
+        past_event = create :event, starts_at: 3.hours.ago, ends_at: 2.hours.ago
+        current_event = create :event, starts_at: 1.hours.ago, ends_at: 3.hours.from_now
+        Event.past.should eq [past_event]
       end
     end
     
@@ -237,8 +250,7 @@ describe Event do
         pick_event = create :event, etype: "pick"
         comm_event = create :event, etype: "comm"
         forum_events = Event.forum
-        forum_events.count.should eq 1
-        forum_events.first.should eq comm_event
+        forum_events.should eq [comm_event]
       end
     end
     
@@ -248,8 +260,7 @@ describe Event do
         pick_event = create :event, etype: "pick"
         comm_event = create :event, etype: "comm"
         spon_events = Event.sponsored
-        spon_events.count.should eq 1
-        spon_events.first.should eq spon_event
+        spon_events.should eq [spon_event]
       end
     end
   end

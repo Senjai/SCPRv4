@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   respond_to :html
   
   def index
-    @events = Event.upcoming.paginate(page: params[:page], per_page: 10)
+    @events = Event.upcoming_and_current.paginate(page: params[:page], per_page: 10)
     if params[:list] == "forum"
       @events = @events.forum
     elsif params[:list] == "sponsored"
@@ -25,7 +25,7 @@ class EventsController < ApplicationController
   end
   
   def forum
-    @upcoming_events = Event.forum.upcoming.limit(3)
+    @upcoming_events = Event.forum.upcoming_and_current.limit(3)
     @closest_event = @upcoming_events.first
     @future_events = @upcoming_events[1..-1]
     @past_events = Event.forum.past.limit(3)
