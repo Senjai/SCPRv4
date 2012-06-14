@@ -1,10 +1,20 @@
 class Homepage < ActiveRecord::Base
-  administrate!
   self.table_name =  "layout_homepage"
+
+  # -- Administration -- #
+  administrate!
+  self.list_order = "published_at desc"
+  self.list_fields = [
+    ['published_at'],
+    ['status'],
+    ['base', title: "Base Template"]
+  ]
   
+  # -- Associations -- #
   has_many :content, :class_name => "HomepageContent", :order => "position asc"
   belongs_to :missed_it_bucket
   
+  # -- Scopes -- #
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("published_at desc")
   
   #----------

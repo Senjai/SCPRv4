@@ -19,7 +19,7 @@ module AdminListHelper
   # -- Custom Render methods -- #
   
   def display_audio(audio)
-    return audio if !audio.is_a? Audio
+    return audio if !audio.is_a? Array
     
     if audio = audio.first
       if audio.mp3.present?
@@ -40,10 +40,19 @@ module AdminListHelper
     format_date(published_at, format: :full_date, time: true)
   end
   
+  def display_date(date)
+    format_date(date, format: :full_date)
+  end
+  
+  
+  def display_show(show)
+    show.title
+  end
   
   def display_blog(blog)
     blog.name
   end
+  
   
   def display_bylines(bylines)
     if bylines.present?
