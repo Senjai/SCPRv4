@@ -285,11 +285,12 @@ $navHeight: 36px;
 			nav {
 				width: 100%;
 				li {
-					margin-bottom: $baseLineHeight / 2;
+					margin-bottom: $baseLineHeight / 4;
 					line-height: 12px;
 					a {
 						color:$nearBlack;
-						@include font-sans-serif(bold, 12px, $baseLineHeight / 2);
+						@include font-navigation($size: 14px, $weight: 600);
+						line-height:18px;
 						text-transform: uppercase;
 						&:hover {
 							time {
@@ -316,7 +317,8 @@ $navHeight: 36px;
 	
 	h6 {
 		color:$orangeDark;
-		font-size:11px;
+		font-size:13px;
+		font-weight:700;
 		line-height: 14px;
 		margin-bottom: 5px;
 	}
@@ -402,6 +404,81 @@ $navHeight: 36px;
 			background-position:8px 8px;
 			font-weight:bold;
 			padding:6px 9px 7px 34px;
+		}
+	}
+	
+	#about-mega {
+		#about-hero {
+			background:url(image_path('about/menu-hero-bg.png')) no-repeat right bottom;
+			border-right:1px solid $grayLighter;
+			height:210px;
+			margin-right:-4%;
+			hgroup {
+				padding:10px 20px 20px;
+			}
+			h3, a {
+				@include font-slab-headings();
+				font-size:20px;
+				line-height:36px;
+			}
+			a {
+				color:$orangeDark;
+				font-size:16px;
+				&.learn-more {
+					background:url(image_path('icons/bullet-donut.png')) no-repeat 0 2px;
+					padding-left:18px;
+				}
+			}
+		}
+		h6 {
+			&.heading-about {
+				padding:8px 0 7px 36px;
+				position:relative;
+				z-index:1;
+				&:before {
+					background:url(image_path('icons/menu-about-kpcc.png')) no-repeat 0 0;
+					content:"";
+				    position:absolute;
+				    z-index:-1;
+				    top:0;
+				    bottom:0;
+				    left:0;
+				    right:0;
+				}
+			}
+			&.heading-connect {
+				padding:8px 0 7px 36px;
+				position:relative;
+				z-index:1;
+				&:before {
+					background:url(image_path('icons/menu-about-connect.png')) no-repeat 0 0;
+					content:"";
+				    position:absolute;
+				    z-index:-1;
+				    top:0;
+				    bottom:0;
+				    left:0;
+				    right:0;
+				}
+			}
+			&.heading-people {
+				padding:8px 0 7px 36px;
+				position:relative;
+				z-index:1;
+				&:before {
+					background:url(image_path('icons/menu-about-people.png')) no-repeat 0 0;
+					content:"";
+				    position:absolute;
+				    z-index:-1;
+				    top:0;
+				    bottom:0;
+				    left:0;
+				    right:0;
+				}
+			}
+		}
+		nav {
+			padding-left:32px;
 		}
 	}
 	
