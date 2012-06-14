@@ -1,6 +1,5 @@
 module WP
-    class NavMenuItem < ActiveRecord::Base
-      self.table_name = "wp_posts"
-      
+    class NavMenuItem < Post
+      XPATH = "//item/wp:post_type[text()='nav_menu_item']/.."
     end
 end

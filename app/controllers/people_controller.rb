@@ -8,6 +8,6 @@ class PeopleController < ApplicationController
       redirect_to staff_index_path, alert: "That staff bio no longer exists." and return false
     end
     
-    @bylines = @bio.indexed_bylines(params[:page])
+    @bylines = @bio.indexed_bylines(verify_natural(params[:page]))
   end
 end

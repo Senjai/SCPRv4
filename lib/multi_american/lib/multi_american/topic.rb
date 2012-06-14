@@ -1,5 +1,5 @@
 module WP
-  class Topic < ActiveRecord::Base
-    self.table_name = "wp_posts"
+  class Topic < Post
+    XPATH = "//item/wp:post_type[text()='topic']/.."
   end
 end

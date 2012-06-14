@@ -1,6 +1,6 @@
 module WP
-  class Roundup < ActiveRecord::Base
-    self.table_name = "wp_posts"
+  class Roundup < Post
+    XPATH = "//item/wp:post_type[text()='roundup']/.."
     
   end
 end

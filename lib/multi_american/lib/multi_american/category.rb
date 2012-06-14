@@ -1,6 +1,5 @@
 module WP
-  class Category < ActiveRecord::Base
-    self.table_name = "wp_categories"
-    
+  class Category
+    XPATH = "/rss/channel/wp:category"
   end
 end

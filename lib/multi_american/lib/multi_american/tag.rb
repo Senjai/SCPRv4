@@ -1,11 +1,7 @@
 module WP
   class Tag
-    # tag_slug: :slug,
-    # tag_name: :name,
-    # term_id: :wp_id
-    
-    DEFAULTS = { }
-    
+    XPATH = "/rss/channel/wp:tag"
+
     METHODS = {
       tag_slug: 'slug',
       tag_name: "name",

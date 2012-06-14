@@ -1,13 +1,4 @@
 module WP
-  
-  XPATH_MAP = {
-    posts:        "//item/wp:post_type[text()='post']/..",
-    attachments:  "//item/wp:post_type[text()='attachment']/..",
-    jiffyposts:   "//item/wp:post_type[text()='jiffypost']/..",
-    categories:   "/rss/channel/wp:category",
-    tags:         "/rss/channel/wp:tag"
-  }
-  
   class Document
     attr_reader :title, :pubDate
     
