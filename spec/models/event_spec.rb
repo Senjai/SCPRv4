@@ -205,8 +205,7 @@ describe Event do
       it "only selects published content" do
         published = create :event, is_published: 1
         unpublished = create :event, is_published: 0
-        published_events = Event.published
-        published_events.should eq [published]
+        Event.published.should eq [published]
       end
     end
     
@@ -214,8 +213,7 @@ describe Event do
       it "only selects future events" do
         past_event = create :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
         future_event = create :event, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now
-        upcoming_events = Event.upcoming
-        upcoming_events.should eq [future_event]
+        Event.upcoming.should eq [future_event]
       end
     end
     
@@ -224,8 +222,7 @@ describe Event do
         past_event = create :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
         current_event = create :event, starts_at: 2.hours.ago, ends_at: 2.hours.from_now
         future_event = create :event, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now
-        upcoming_and_current_events = Event.upcoming_and_current
-        upcoming_and_current_events.should eq [current_event, future_event]
+        Event.upcoming_and_current.should eq [current_event, future_event]
       end
       
       it "orders by starts_at" do
@@ -237,8 +234,13 @@ describe Event do
       it "only selects past events" do
         past_event = create :event, starts_at: 2.hours.ago, ends_at: 1.hour.ago
         future_event = create :event, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now
-        past_events = Event.past
-        past_events.should eq [past_event]
+        Event.past.should eq [past_event]
+      end
+      
+      it "does not include current events" do
+        past_event = create :event, starts_at: 3.hours.ago, ends_at: 2.hours.ago
+        current_event = create :event, starts_at: 1.hours.ago, ends_at: 3.hours.from_now
+        Event.past.should eq [past_event]
       end
     end
     
