@@ -8,14 +8,13 @@ module AdminResource
   TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
   
   def administrate!
-    Scprv4::Application.config.admin_models.push self
     extend ClassMethods
     include InstanceMethods
   end
   
   module ClassMethods
     attr_reader :list_fields, :list_order, :list_per_page
-        
+
     def list_fields=(fields=[])
       if fields.present? 
         fields.each do |f|
@@ -45,12 +44,12 @@ module AdminResource
     end
         
     def list_order=(order)
-      order ||= DEFAULTS[:list_order]
+      order ||= LIST_DEFAULTS[:list_order]
       @list_order = order
     end
     
     def list_per_page=(per_page)
-      per_page ||= DEFAULTS[:list_per_page]
+      per_page ||= LIST_DEFAULTS[:list_per_page]
       @list_per_page = per_page.to_i
     end
   end

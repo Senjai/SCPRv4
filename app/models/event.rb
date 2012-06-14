@@ -11,6 +11,8 @@ class Event < ActiveRecord::Base
     "hall"
   ]
   
+  validates_presence_of :id, :title, :slug, :etype, :starts_at
+  
   #----------
 
   scope :published, where(:is_published => true)

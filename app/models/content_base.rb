@@ -61,7 +61,7 @@ class ContentBase < ActiveRecord::Base
     ["Float Right", "right"],
     ["Slideshow", "slideshow"]
   ]
-  
+    
   # All ContentBase objects have assets and alarms
   has_many :assets, :class_name => "ContentAsset", :as => :content, :order => "asset_order asc"
   has_many :bylines, :class_name => "ContentByline", :as => :content

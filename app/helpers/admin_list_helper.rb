@@ -19,6 +19,8 @@ module AdminListHelper
   # -- Custom Render methods -- #
   
   def display_audio(audio)
+    return audio if !audio.is_a? Audio
+    
     if audio = audio.first
       if audio.mp3.present?
         "Live"

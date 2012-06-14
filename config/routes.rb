@@ -45,7 +45,8 @@ Scprv4::Application.routes.draw do
       resources :flatpages
       resources :video_shells
       resources :events
-      resource :homepages
+      resources :homepages
+      resources :content_shells
       ## -- END AdminResource --  ##
       
       scope "multi_american" do
