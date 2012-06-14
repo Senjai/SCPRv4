@@ -6,17 +6,12 @@
 		</tr>
 	</thead>
 	<tbody class="list">
-		<% [ 	{ title: "News Stories", 	index_path: admin_news_stories_path,	new_path: new_admin_news_story_path },
-				{ title: "Blogs",			index_path: admin_blogs_path,			new_path: new_admin_blog_path },
-				{ title: "Blog Entries",	index_path: admin_blog_entries_path,	new_path: new_admin_blog_entry_path }
-			].each do |admin_section| %>
+		<% @admin_models.each do |resource| %>
 			<tr>
-				<td><%= link_to admin_section[:title], admin_section[:index_path] %></td>
+				<td><%= link_to resource.name.titleize.pluralize, url_for([:admin, resource.name.underscore.pluralize]) %></td>
 				<td>
-					<%= link_to "Add", admin_section[:new_path], class: "btn btn-primary" %>
-					<%= link_to "List", admin_section[:index_path], class: "btn" %>
 				</td>
 			</tr>
-			<% end %>
+		<% end %>
 	</tbody>
 </table>

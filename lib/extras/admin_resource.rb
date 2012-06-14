@@ -1,15 +1,19 @@
 module AdminResource
+
+  LIST_DEFAULTS = {
+    list_order: "id desc",
+    list_per_page: 25
+  }
+
+  TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
+  
   def administrate!
+    Scprv4::Application.config.admin_models.push self
     extend ClassMethods
     include InstanceMethods
   end
   
-  module ClassMethods    
-    DEFAULTS = {
-      list_order: "id desc",
-      list_per_page: 25
-    }
-    
+  module ClassMethods
     attr_reader :list_fields, :list_order, :list_per_page
         
     def list_fields=(fields=[])
@@ -52,11 +56,9 @@ module AdminResource
   end
   
   module InstanceMethods
-    TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
-    
     def to_title
       title_method = TITLE_ATTRIBS.find { |a| self.respond_to?(a) }
-      title_method ? self.send(title_method) : self.class.name.titleize
+      title_method ? self.send(title_method) : "#{self.class.name.titleize} ##{self.id}"
     end
   end
 end

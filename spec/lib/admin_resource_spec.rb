@@ -64,12 +64,12 @@ describe AdminResource do
     end
     
     it "has a default" do
-      AdminResource::ClassMethods::DEFAULTS[:list_order].should_not be_nil
+      AdminResource::LIST_DEFAULTS[:list_order].should_not be_nil
     end
     
     it "returns the defined default if nothing set" do
       NewsStory.list_order = nil
-      NewsStory.list_order.should eq AdminResource::ClassMethods::DEFAULTS[:list_order]
+      NewsStory.list_order.should eq AdminResource::LIST_DEFAULTS[:list_order]
     end
   end
   
@@ -80,12 +80,12 @@ describe AdminResource do
     end
     
     it "has a default" do
-      AdminResource::ClassMethods::DEFAULTS[:list_per_page].should_not be_nil
+      AdminResource::LIST_DEFAULTS[:list_per_page].should_not be_nil
     end
     
     it "returns the defined default if nothing set" do
       NewsStory.list_per_page = nil
-      NewsStory.list_per_page.should eq AdminResource::ClassMethods::DEFAULTS[:list_per_page]
+      NewsStory.list_per_page.should eq AdminResource::LIST_DEFAULTS[:list_per_page]
     end
   end
   

@@ -64,4 +64,25 @@ describe Flatpage do
       flatpage.url.should eq "/hello/whats/up/"
     end
   end
+  
+  describe "after save reload routes" do
+    it "reloads application routes after save if URL is changed" do
+      page = create :flatpage
+      page.url = "/testpage"
+      Scprv4::Application.should_receive(:reload_routes!)
+      page.save!
+    end
+    
+    it "does not reload routes after save if URL has not changed" do
+      page = create :flatpage
+      page.url = page.url
+      Scprv4::Application.should_not_receive(:reload_routes!)
+      page.save!
+    end
+    
+    it "reloads routes after create" do
+      Scprv4::Application.should_receive(:reload_routes!)
+      page = create :flatpage
+    end
+  end
 end

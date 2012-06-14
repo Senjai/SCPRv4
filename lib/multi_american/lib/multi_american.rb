@@ -19,14 +19,14 @@ module WP
     is_published: 0
   }
 end
-
-require 'multi_american/lib/multi_american/attachment.rb'
-require 'multi_american/lib/multi_american/author.rb'
-require 'multi_american/lib/multi_american/jiffy_post.rb'
-require 'multi_american/lib/multi_american/nav_menu_item.rb'
 require 'multi_american/lib/multi_american/document.rb'
 require 'multi_american/lib/multi_american/post.rb'
+
+require 'multi_american/lib/multi_american/jiffy_post.rb'
+require 'multi_american/lib/multi_american/attachment.rb'
+require 'multi_american/lib/multi_american/nav_menu_item.rb'
 require 'multi_american/lib/multi_american/roundup.rb'
-require 'multi_american/lib/multi_american/tag.rb'
-require 'multi_american/lib/multi_american/tagged_item.rb'
 require 'multi_american/lib/multi_american/topic.rb'
+
+require 'multi_american/lib/multi_american/author.rb'
+require 'multi_american/lib/multi_american/tag.rb'
