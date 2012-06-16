@@ -829,6 +829,9 @@ color:$nearBlack;
   }
   .modal-body {
     padding: 20px;
+	img {
+		max-width:100%;
+	}
   }
   .modal-footer {
     background-color: #f5f5f5;
