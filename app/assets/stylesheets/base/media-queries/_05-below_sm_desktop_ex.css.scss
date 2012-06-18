@@ -57,4 +57,19 @@
 			#masthead-mid-header-wrapper { display: none; }
 		}
 	// end Pledge Banner to Button
+	
+	// Modals
+	  .modal.wide {
+	    position: absolute;
+	    top:   10px;
+	    left:  10px;
+	    right: 10px;
+	    width: 300px;
+	    margin: 0;
+	    &.fade.in { top: auto; }
+		iframe {
+			width:260px !important;
+			height:235px !important;
+		}
+	  }
 }
