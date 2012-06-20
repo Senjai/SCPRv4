@@ -42,7 +42,6 @@ group :test, :development do
 	gem "rspec-rails"
 	gem 'guard-rspec'
 	gem 'guard-cucumber'
-	gem 'rb-fsevent', require: false
 	gem 'launchy'
 end
 
