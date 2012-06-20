@@ -12,11 +12,8 @@ class Flatpage < ActiveRecord::Base
   before_validation :downcase_url
   
   def slashify
-    if url.present?
-      stripped = url.gsub(/^\//, "").gsub(/\/$/, "")
-      if stripped.present?
-        self.url = "/#{stripped}/"
-      end
+    if url.present? and path.present?
+      self.url = "/#{path}/"
     end
   end
   
