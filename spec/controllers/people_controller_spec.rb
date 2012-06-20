@@ -4,9 +4,7 @@ describe PeopleController do
   describe "GET /index" do
     before :all do
       create_list :bio, 2, is_public: false
-      create :bio, is_public: true, last_name: "Cacker"
-      create :bio, is_public: true, last_name: "Acker"
-      create :bio, is_public: true, last_name: "Backer"
+      create_list :bio, 2, is_public: true
     end
     
     before :each do
@@ -22,7 +20,7 @@ describe PeopleController do
     end
     
     it "orders by last name" do
-      assigns(:bios).map(&:last_name).should eq ["Acker", "Backer", "Cacker"]
+      assigns(:bios).to_sql.should match /order by last_name/i
     end
   end
   

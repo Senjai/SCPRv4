@@ -20,6 +20,7 @@ RSpec.configure do |config|
   config.include ContentBaseHelpers
   config.include RemoteStubs
   config.include LyrisXMLResponse
+  config.include DatePathHelper
   
   config.before :suite do
     ThinkingSphinx::Test.start

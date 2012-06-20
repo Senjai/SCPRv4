@@ -259,10 +259,6 @@ ActiveRecord::Schema.define(:version => 20120607182919) do
   add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
 
-  create_table "blogs_remoteentry", :force => true do |t|
-    t.integer "comment_count", :default => 0, :null => false
-  end
-
   create_table "contentbase_category", :force => true do |t|
     t.string  "category",          :limit => 50,                   :null => false
     t.string  "slug",              :limit => 50,                   :null => false

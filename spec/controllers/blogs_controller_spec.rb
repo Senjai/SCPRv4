@@ -1,12 +1,7 @@
 require "spec_helper"
 
 describe BlogsController do
-  describe "GET /index" do
-    it "responds with success" do
-      get :index
-      response.should be_success
-    end
-    
+  describe "GET /index" do    
     it "renders the application layout" do
       get :index
       response.should render_template "layouts/application"
@@ -151,26 +146,26 @@ describe BlogsController do
       @blog = create :blog
       entry_published = create :blog_entry, blog: @blog
       p = entry_published.published_at
-      @entry_attr = { id: entry_published.id, year: p.year, month: p.month, day: p.day }
+      @entry_attr = { blog: @blog.slug, tag: "news", id: entry_published.id, slug: entry_published.slug }.merge(date_path(p))
     end
     
     after :all do
-      @date, @blog = nil
+      @blog = nil
     end
     
     %w{ show entry blog_tags blog_tagged }.each do |action|
       it "assigns @blog for #{action}" do
-        get action, { blog: @blog.slug, tag: "news" }.merge!(@entry_attr)
+        get action, @entry_attr
         assigns(:blog).should eq @blog
       end
 
       it "assigns @authors for #{action}" do
-        get action, { blog: @blog.slug, tag: "news" }.merge!(@entry_attr)
+        get action, @entry_attr
         assigns(:authors).should_not be_nil
       end
       
       it "redirects to blogs_path if blog isn't found" do
-        get action, blog: "nonsense"
+        get action, @entry_attr.merge(blog: "nonsense")
         response.should redirect_to blogs_path
       end
     end
@@ -193,7 +188,7 @@ describe BlogsController do
       blog = create :blog
       entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
       p = entry_published.published_at
-      get :entry, blog: blog.slug, year: p.year, month: p.month, day: p.day, id: entry_published.id, slug: entry_published.slug
+      get :entry, { blog: blog.slug, id: entry_published.id, slug: entry_published.slug }.merge!(date_path(p))
       response.should be_success
     end
     
@@ -207,7 +202,7 @@ describe BlogsController do
       blog = create :blog
       entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
       p = entry_published.published_at
-      get :entry, blog: blog.slug, year: p.year, month: "%02d" % p.month, day: "%02d" % p.day, id: entry_published.id, slug: entry_published.slug
+      get :entry, { blog: blog.slug, id: entry_published.id, slug: entry_published.slug }.merge!(date_path(p))
       assigns(:entry).should eq entry_published
     end
     
@@ -216,7 +211,7 @@ describe BlogsController do
       entry_unpublished = create :blog_entry, blog: blog, status: ContentBase::STATUS_PENDING
       p = entry_unpublished.published_at
       -> {
-        get :entry, blog: blog.slug, year: p.year, month: "%02d" % p.month, day: "%02d" % p.day, id: entry_unpublished.id, slug: entry_unpublished.slug
+        get :entry, { blog: blog.slug, id: entry_unpublished.id, slug: entry_unpublished.slug }.merge!(date_path(p))
       }.should raise_error ActionController::RoutingError
     end
   end
