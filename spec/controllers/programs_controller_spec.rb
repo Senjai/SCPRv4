@@ -23,6 +23,26 @@ describe ProgramsController do
     end
   end
   
+  describe "GET /index" do
+    it "assigns @kpcc_programs to active ordered by title" do
+      active = create :kpcc_program, air_status: "onair"
+      inactive = create :kpcc_program, air_status: "hidden"
+
+      get :index
+      assigns(:kpcc_programs).to_sql.should match /order by title/i
+      assigns(:kpcc_programs).should eq [active]
+    end
+    
+    it "assigns @other_programs to active ordered by title" do
+      active = create :other_program, air_status: "onair"
+      inactive = create :other_program, air_status: "hidden"
+
+      get :index
+      assigns(:other_programs).to_sql.should match /order by title/i
+      assigns(:other_programs).should eq [active]
+    end
+  end
+  
   describe "GET /show" do
     describe "with XML" do
       it "renders xml template when requested" do
@@ -31,5 +51,30 @@ describe ProgramsController do
         response.should render_template 'programs/show'
       end
     end
-  end
+    
+    describe "get_program" do
+      it "assigns a KPCC program if slug matches" do
+        program = create :kpcc_program
+        get :show, show: program
+        assigns(:program).should eq program
+      end
+      
+      it "redirects using the quick slug if present" do
+        program = create :kpcc_program, quick_slug: "pm"
+        get :show, quick_slug: program.quick_slug
+        response.should redirect_to program_path(program)
+      end
+      
+      it "finds an other program if requested" do
+        program = create :other_program
+        get :show, show: program
+        assigns(:program).should eq program
+      end
+      
+      it "redirects if nothing found" do
+        get :show, show: "nonsense"
+        response.should be_redirect
+      end
+    end
+  end  
 end

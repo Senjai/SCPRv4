@@ -26,6 +26,10 @@ class Flatpage < ActiveRecord::Base
     end
   end
   
+  def path
+    url.gsub(/^\//, "").gsub(/\/$/, "")
+  end
+  
   # Just to be safe while the URLs are still being created in mercer
   def url
     if self[:url].present?

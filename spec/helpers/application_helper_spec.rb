@@ -48,14 +48,12 @@ describe ApplicationHelper do
       before :all do
         puts "Starting Sphinx and indexing..."
         DatabaseCleaner.strategy = :truncation
-        make_content(7)
-        ThinkingSphinx::Test.start
+        make_content(15)
         ThinkingSphinx::Test.index
         @arts = get_latest_arts
       end
       
       after :all do
-        ThinkingSphinx::Test.stop
         DatabaseCleaner.strategy = :transaction
       end
       
@@ -81,14 +79,12 @@ describe ApplicationHelper do
        before :all do
          puts "Starting Sphinx and indexing..."
          DatabaseCleaner.strategy = :truncation
-         make_content(7)
-         ThinkingSphinx::Test.start
+         make_content(15)
          ThinkingSphinx::Test.index
          @news = get_latest_news
        end
        
        after :all do
-         ThinkingSphinx::Test.stop
          DatabaseCleaner.strategy = :transaction
        end
        

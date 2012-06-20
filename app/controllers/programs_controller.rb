@@ -1,7 +1,6 @@
 class ProgramsController < ApplicationController  
-  before_filter :get_ambiguous_program, only: [:show, :archive]
+  before_filter :get_program, except: :index
   before_filter :get_featured_programs, only: :index
-  before_filter :get_kpcc_program, only: [:segment, :episode]
   
   def index
     @kpcc_programs = KpccProgram.active.order("title")
@@ -91,15 +90,41 @@ class ProgramsController < ApplicationController
   end
   
   protected
-    def get_ambiguous_program
-      @program = KpccProgram.find_by_slug(params[:show]) || OtherProgram.find_by_slug(params[:show])
-      redirect_to programs_path if @program.blank?
+    
+    # Try various ways to fetch the program the person requested
+    # If nothing is found, just redirect to programs path
+    def get_program
+      @program = get_kpcc_program_by_quick_slug || get_kpcc_program_by_slug || get_other_program
+      if !@program
+        redirect_to programs_path
+      end
     end
     
-    def get_kpcc_program
-      @program = KpccProgram.find_by_slug(params[:show])
-      redirect_to programs_path if @program.blank?
+    # ---------------
+    
+    def get_kpcc_program_by_slug
+      if params[:show]
+        KpccProgram.find_by_slug(params[:show])
+      else
+        return false
+      end
     end
+    
+    def get_kpcc_program_by_quick_slug
+      if params[:quick_slug]
+        if program = KpccProgram.find_by_quick_slug(params[:quick_slug])
+          redirect_to program_path(program) and return program
+        end
+      else
+        return false
+      end
+    end
+    
+    def get_other_program
+      OtherProgram.find_by_slug(params[:show])
+    end
+    
+    # ---------------
     
     def get_featured_programs
       @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)

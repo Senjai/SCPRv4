@@ -1,3 +1,35 @@
+class CategoryConstraint
+  def initialize
+    @categories = Category.all.map { |c| c.slug }
+  end
+  
+  def matches?(request)
+    @categories.include?(request.params[:category])
+  end
+end
+
+class FlatpageConstraint
+  def initialize
+    @flatpages = Flatpage.all.map { |f| f.path }
+  end
+  
+  def matches?(request)
+    @flatpages.include?(request.params[:flatpage_path])
+  end
+end
+
+class QuickSlugConstraint
+  def initialize
+    @quick_slugs = KpccProgram.where("quick_slug != ''").all.map { |f| f.quick_slug }.compact
+  end
+  
+  def matches?(request)
+    @quick_slugs.include?(request.params[:quick_slug])
+  end
+end
+
+
+
 Scprv4::Application.routes.draw do
   match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
   
@@ -34,11 +66,11 @@ Scprv4::Application.routes.draw do
 
 
   # -- Blogs -- #
-  match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged", :as => :blog_entries_tagged,  trailing_slash: true
-  match '/blogs/:blog/tagged/' => "blogs#blog_tags",                    :as => :blog_tags,            trailing_slash: true
-  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry",   :as => :blog_entry,           trailing_slash: true, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
-  match '/blogs/:blog/(page/:page)' => 'blogs#show',                    :as => :blog,                 trailing_slash: true, :constraints => { :page => /\d+/ }
-  match '/blogs/' => 'blogs#index',                                     :as => :blogs,                trailing_slash: true
+  match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged", :as => :blog_entries_tagged
+  match '/blogs/:blog/tagged/' => "blogs#blog_tags",                    :as => :blog_tags
+  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry",   :as => :blog_entry,           :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w-]+/ }
+  match '/blogs/:blog/(page/:page)' => 'blogs#show',                    :as => :blog,                 :constraints => { :page => /\d+/ }
+  match '/blogs/' => 'blogs#index',                                     :as => :blogs
   
   
   
@@ -56,23 +88,23 @@ Scprv4::Application.routes.draw do
   match '/events/forum/about/'              => 'events#about',      as: :forum_about,           trailing_slash: true
   
   ## Event lists/details
-  match '/events/forum/archive/'            => 'events#archive',    as: :forum_events_archive,  trailing_slash: true
-  match '/events/forum/'                    => 'events#forum',      as: :forum_events,          trailing_slash: true
-  match '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      trailing_slash: true, defaults: { list: "sponsored" }
-  match '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event,                 trailing_slash: true
-  match '/events/(list/:list)'              => 'events#index',      as: :events,                trailing_slash: true, defaults: { list: "all" }
-  
-  match '/events/forum/space/request/'      => 'events#request',    as: :forum_request,         trailing_slash: true
-  match '/events/forum/request/caterers/'   => 'events#caterers',   as: :forum_caterers,        trailing_slash: true
-  match '/events/forum/space/'              => 'events#space',      as: :forum_space,           trailing_slash: true
-  match '/events/forum/riots/'              => 'events#riots',      as: :forum_riots,           trailing_slash: true
-  match '/events/forum/directions/'         => 'events#directions', as: :forum_directions,      trailing_slash: true
-  match '/events/forum/volunteer/'          => 'events#volunteer',  as: :forum_volunteer,       trailing_slash: true
-  match '/events/forum/about/'              => 'events#about',      as: :forum_about,           trailing_slash: true
+  match '/events/forum/archive/'            => 'events#archive',    as: :forum_events_archive
+  match '/events/forum/'                    => 'events#forum',      as: :forum_events
+  match '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }
+  match '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event
+  match '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }
+
+  match '/events/forum/space/request/'      => 'events#request',    as: :forum_request
+  match '/events/forum/request/caterers/'   => 'events#caterers',   as: :forum_caterers
+  match '/events/forum/space/'              => 'events#space',      as: :forum_space
+  match '/events/forum/riots/'              => 'events#riots',      as: :forum_riots
+  match '/events/forum/directions/'         => 'events#directions', as: :forum_directions
+  match '/events/forum/volunteer/'          => 'events#volunteer',  as: :forum_volunteer
+  match '/events/forum/about/'              => 'events#about',      as: :forum_about
   
   
   # -- Videos -- #
-  resources :video, only: [:index, :show], trailing_slash: true do
+  resources :video, only: [:index, :show] do
     match ':slug' => "video#show", on: :member
     match 'list', on: :collection, as: :list
   end
@@ -116,22 +148,9 @@ Scprv4::Application.routes.draw do
   match '/fb_channel_file' => 'home#fb_channel_file'
   
   # -- Dynamic root-level routes -- #
-  # FIXME: These requires a restart of the application if a slug is changed
-  Category.all.each do |category|
-    match "/#{category.slug}(/:page)" => 'category#index', slug: category.slug, id: category.id, as: "section_#{category.url_helper_slug}", constraints: { page: /\d+/ }
-  end
-  
-  Flatpage.all.each do |flatpage|
-    if flatpage.redirect_url.present?
-      match flatpage.url => redirect(flatpage.redirect_url)
-    else
-      match flatpage.url => 'flatpages#show', id: flatpage.id
-    end
-  end
-  
-  KpccProgram.where("quick_slug != ?", '').each do |program|
-    match "/#{program.quick_slug}" => redirect("/programs/#{program.slug}")
-  end
+  match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new, defaults: { page: 1 }, as: :section
+  match '*flatpage_path' => "flatpages#show", constraints: FlatpageConstraint.new
+  match '/:quick_slug' => "programs#show", constraints: QuickSlugConstraint.new
   
   root to: "home#index"
 end
