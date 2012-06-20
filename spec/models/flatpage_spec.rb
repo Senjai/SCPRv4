@@ -16,6 +16,13 @@ describe Flatpage do
       flatpage.url.should match /\//
     end
   end
+  
+  describe "path" do
+    it "strips leading and trailing slashes" do
+      flatpage = build :flatpage, url: "/about/people/"
+      flatpage.path.should eq "about/people"
+    end
+  end
     
   describe "downcase_url" do
     it "runs before validation" do

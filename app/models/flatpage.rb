@@ -29,11 +29,8 @@ class Flatpage < ActiveRecord::Base
   end
   
   def slashify
-    if url.present?
-      stripped = url.gsub(/^\//, "").gsub(/\/$/, "")
-      if stripped.present?
-        self.url = "/#{stripped}/"
-      end
+    if url.present? and path.present?
+      self.url = "/#{path}/"
     end
   end
   
@@ -43,6 +40,10 @@ class Flatpage < ActiveRecord::Base
     end
   end
 
+  def path
+    url.gsub(/^\//, "").gsub(/\/$/, "")
+  end
+  
   # Just to be safe while the URLs are still being created in mercer
   def url
     if self[:url].present?

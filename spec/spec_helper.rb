@@ -21,12 +21,13 @@ RSpec.configure do |config|
   config.include RemoteStubs
   config.include LyrisXMLResponse
   
-  config.before :all do
+  config.before :suite do
+    ThinkingSphinx::Test.start
     DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.strategy = :transaction
     FactoryGirl.reload
   end
-
+  
   config.before :each do
     FakeWeb.clean_registry
     DatabaseCleaner.start
@@ -34,5 +35,9 @@ RSpec.configure do |config|
   
   config.after :each do
     DatabaseCleaner.clean
+  end
+  
+  config.after :suite do
+    ThinkingSphinx::Test.stop
   end
 end

@@ -1,6 +1,13 @@
 class FlatpagesController < ApplicationController  
   def show
-    @flatpage = Flatpage.find(params[:id])
+    # params[:flatpage_path] gets its slashes stripped by route globbing
+    @flatpage = Flatpage.find_by_url("/#{params[:flatpage_path]}/")
+    
+    # Is this a redirect? Send them on their way.
+    if @flatpage.redirect_url.present?
+      redirect_to @flatpage.redirect_url and return
+    end
+    
     layout_template = 'application'
     
     if !@flatpage.show_sidebar?

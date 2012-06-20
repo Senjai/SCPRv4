@@ -1,6 +1,6 @@
 class CategoryController < ApplicationController  
   def index
-    @category = Category.find_by_id(params[:id])
+    @category = Category.find_by_slug(params[:category])
     
     @content = ThinkingSphinx.search '',
       :classes    => ContentBase.content_classes,
