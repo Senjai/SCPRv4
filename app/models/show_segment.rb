@@ -7,7 +7,7 @@ class ShowSegment < ContentBase
   
   belongs_to :show, :class_name => "KpccProgram"
   
-  has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id" 
+  has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id"
   has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
 
   define_index do

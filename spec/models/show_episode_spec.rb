@@ -8,8 +8,8 @@ describe ShowEpisode do
   end
   
   describe "associations" do
-    it { should have_one :rundown }
-    it { should have_many(:segments).through(:rundown) }
+    it { should have_many :rundowns }
+    it { should have_many(:segments).through(:rundowns) }
     it { should belong_to :show }
   end
   

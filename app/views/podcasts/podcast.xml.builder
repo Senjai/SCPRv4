@@ -1,4 +1,4 @@
-content_cache "podcast:#{@podcast.slug}" do
+content_cache("podcast:#{@podcast.slug}") do
   register_content @obj_type
   
   xml.rss('version' => "2.0", 'xmlns:itunes' => "http://www.itunes.com/dtds/podcast-1.0.dtd") do
@@ -47,5 +47,5 @@ content_cache "podcast:#{@podcast.slug}" do
         end
       end
     end
-  end
+  end.html_safe
 end

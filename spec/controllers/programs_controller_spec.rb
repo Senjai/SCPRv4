@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe ProgramsController do
+  
+  # ----------------------
+  
   describe "GET /archive" do
     it "finds the episode for the program on the given date" do
       episode = create :show_episode, air_date: Chronic.parse("March 22, 2012")
@@ -23,6 +26,18 @@ describe ProgramsController do
     end
   end
   
+  # ----------------------
+
+  describe "GET /schedule" do
+    it "assigns @schedule_slots to all Schedule objects" do
+      create_list :schedule, 3
+      get :schedule
+      assigns(:schedule_slots).should eq Schedule.all
+    end
+  end
+
+  # ----------------------
+   
   describe "GET /index" do
     it "assigns @kpcc_programs to active ordered by title" do
       active = create :kpcc_program, air_status: "onair"
@@ -43,6 +58,8 @@ describe ProgramsController do
     end
   end
   
+  # ----------------------
+
   describe "GET /show" do
     describe "with XML" do
       it "renders xml template when requested" do
@@ -76,5 +93,8 @@ describe ProgramsController do
         response.should be_redirect
       end
     end
-  end  
+  end
+  
+  # ----------------------
+  
 end

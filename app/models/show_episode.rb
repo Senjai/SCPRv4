@@ -17,8 +17,8 @@ class ShowEpisode < ContentBase
   
   # -- Associations --#
   belongs_to :show, :class_name => "KpccProgram"
-  has_one :rundown, :class_name => "ShowRundown", :foreign_key => "episode_id"
-  has_many :segments, :through => :rundown, :order => "segment_order asc", :class_name => "ShowSegment", :foreign_key => "segment_id"
+  has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "episode_id"
+  has_many :segments, :through => :rundowns, :order => "segment_order asc", :class_name => "ShowSegment", :foreign_key => "segment_id"
     
   # -- Scopes -- #
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")

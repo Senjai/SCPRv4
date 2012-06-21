@@ -47,13 +47,9 @@ class PodcastsController < ApplicationController
       # Set up the actual podcast listing, only items with audio
       # Limit it to 15 items
       @audio_content = @content.select { |c| c.audio.present? }.first(15)
-    end    
-        
-    xml = render_to_string :formats => [:xml]    
-    render :text => xml, :formats => [:xml]
+    end
+
+    render_to_string formats: [:xml]
   end
-  
-  #----------
-  
-  
+
 end
