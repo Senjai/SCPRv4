@@ -16,7 +16,8 @@ class AdminUser < ActiveRecord::Base
   before_create { generate_token(:auth_token) }
   
   scope :active, where(:is_active => true)
-  
+
+  # Temporarily authenticate with SHA1 for Mercer
   def self.authenticate(username, unencrypted_password)
     if user = find_by_username(username)
       user.authenticate_legacy(unencrypted_password)
