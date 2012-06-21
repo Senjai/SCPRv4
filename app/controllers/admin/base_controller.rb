@@ -1,8 +1,6 @@
 class Admin::BaseController < ActionController::Base  
   protect_from_forgery
-  before_filter :require_admin
-  before_filter { |c| c.send(:breadcrumb, "KPCC Admin", admin_root_path) }  
-  
+  before_filter :require_admin, :root_breadcrumb  
   layout 'admin'
   
   SAVE_OPTIONS = [
@@ -34,13 +32,17 @@ class Admin::BaseController < ActionController::Base
     redirect_to admin_login_path and return false
   end
   
-  
   def breadcrumb(*args)
     @breadcrumbs ||= []
-    pairs = args.each_slice(2).to_a
+    pairs = args.each_slice(2).map { |pair| { title: pair[0], link: pair[1] } }
     pairs.each { |pair| @breadcrumbs.push(pair) }
   end
-
+  
   attr_reader :breadcrumbs  
   helper_method :breadcrumbs
+  
+  protected
+    def root_breadcrumb
+      breadcrumb "KPCC Admin", admin_root_path
+    end
 end

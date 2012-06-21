@@ -38,10 +38,10 @@
 			<ul class="breadcrumb">
 				<% breadcrumbs.each do |crumb| %>
 					<li>
-						<% if crumb[1].present? %>
-							<%= link_to crumb[0], crumb[1] %>
+						<% if crumb[:link].present? %>
+							<%= link_to crumb[:title], crumb[:link] %>
 						<% else %>
-							<%= crumb[0] %>
+							<%= crumb[:title] %>
 						<% end %>
 						
 						<% unless crumb == breadcrumbs.last %>

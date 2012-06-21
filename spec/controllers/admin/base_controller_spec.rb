@@ -54,15 +54,15 @@ describe Admin::BaseController do
   end
   
   describe "breadcrumb" do
-    it "pushes the arguments, grouped in pairs, into @breadcrumbs" do
-      controller.breadcrumb(1, 2, 3)
-      controller.instance_variable_get(:@breadcrumbs).should eq [[1, 2], [3]]
+    it "pushes the arguments, grouped in pairs as a hash, into @breadcrumbs" do
+      controller.breadcrumb("Home", "/home", "New")
+      controller.breadcrumbs.should eq [{title: "Home", link: "/home"}, {title: "New", link: nil}]
     end
     
     it "appends to @breadcrumbs if the variable already exists" do
-      controller.instance_variable_set(:@breadcrumbs, [[1, 2]])
-      controller.breadcrumb(3, 4, 5)
-      controller.instance_variable_get(:@breadcrumbs).should eq [[1, 2], [3, 4], [5]]
+      controller.instance_variable_set(:@breadcrumbs, [{title: "Home", link: "/home"}])
+      controller.breadcrumb("New", nil, "Blogs", "/blogs")
+      controller.breadcrumbs.should eq [{title: "Home", link: "/home"}, {title: "New", link: nil}, {title: "Blogs", link: "/blogs"}]
     end
   end
   
