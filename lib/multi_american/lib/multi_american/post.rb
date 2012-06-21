@@ -105,6 +105,10 @@ module WP
       instance_variable_set("@#{SCPR_CLASS.underscore}", SCPR_CLASS.constantize.new(builder))
     end
     
+    def status
+      @status == 5 ? "published" : "unpublished"
+    end
+    
     def status=(value)
       @status = value == "publish" ? 5 : 0
     end

@@ -11,7 +11,7 @@ class Admin::MultiAmericanController < Admin::BaseController
   
   def posts
     breadcrumb "Posts"
-    @posts = @doc.posts.paginate(page: params[:page], per_page: 20)
+    @posts = list(@doc.posts)
     @total_posts = @doc.posts.size
   end
   
@@ -24,7 +24,7 @@ class Admin::MultiAmericanController < Admin::BaseController
   
   def jiffy_posts
     breadcrumb "Jiffy Posts"
-    @posts = @doc.jiffy_posts.paginate(page: params[:page], per_page: 20)
+    @posts = list(@doc.jiffy_posts)
     @total_posts = @doc.jiffy_posts.size
     render 'posts'
   end
@@ -42,4 +42,9 @@ class Admin::MultiAmericanController < Admin::BaseController
       @@doc ||= WP::Document.new("#{Rails.root}/lib/multi_american/XML/full_dump.xml")
       @doc = @@doc
     end
+    
+    def list(posts)
+      posts.sort_by { |p| Time.parse(p.pubDate) }.reverse.paginate(page: params[:page], per_page: 20)
+    end
+
 end
