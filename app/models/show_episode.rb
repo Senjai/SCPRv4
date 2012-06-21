@@ -5,8 +5,8 @@ class ShowEpisode < ContentBase
   
   belongs_to :show, :class_name => "KpccProgram"
   
-  has_one :rundown, :class_name => "ShowRundown", :foreign_key => "episode_id"
-  has_many :segments, :through => :rundown, :order => "segment_order asc", :class_name => "ShowSegment", :foreign_key => "segment_id"
+  has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "episode_id"
+  has_many :segments, :through => :rundowns, :order => "segment_order asc", :class_name => "ShowSegment", :foreign_key => "segment_id"
     
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
   scope :upcoming, where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc")
