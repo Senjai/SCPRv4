@@ -75,7 +75,9 @@ class AdminUser < ActiveRecord::Base
   
   protected
   
-    def downcase_email # This helps us validate that e-mails are unique, because the case_sensitive validation is slow.
+    # This helps us validate that e-mails are unique,
+    # because the case_sensitive validation is slow.
+    def downcase_email
       self.email = email.downcase if email.present?
     end
     

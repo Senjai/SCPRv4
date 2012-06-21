@@ -16,7 +16,16 @@ class Admin::BaseController < ActionController::Base
   
   helper_method :admin_user
   def admin_user
-    @admin_user ||= AdminUser.find_by_auth_token!(cookies[:auth_token]) if cookies[:auth_token]
+    begin
+      if session['_auth_user_id']
+        @admin_user ||= AdminUser.find(session['_auth_user_id'])
+      else
+        return false
+      end
+    rescue
+      session['_auth_user_id'] = nil
+      return false
+    end
   end
   
   def require_admin
@@ -31,4 +40,7 @@ class Admin::BaseController < ActionController::Base
     pairs = args.each_slice(2).to_a
     pairs.each { |pair| @breadcrumbs.push(pair) }
   end
+
+  attr_reader :breadcrumbs  
+  helper_method :breadcrumbs
 end

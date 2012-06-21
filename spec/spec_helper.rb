@@ -14,7 +14,7 @@ FakeWeb.allow_net_connect = false
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
-  config.infer_base_class_for_anonymous_controllers = false
+  config.infer_base_class_for_anonymous_controllers = true
   
   config.include FactoryGirl::Syntax::Methods
   config.include ContentBaseHelpers
