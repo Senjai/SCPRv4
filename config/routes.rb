@@ -84,7 +84,9 @@ Scprv4::Application.routes.draw do
       scope "multi_american" do
         get "/" => "multi_american#index", as: :multi_american
         get "posts" => "multi_american#posts", as: :multi_american_posts
-        get "posts/:id" => "multi_american#show_post", as: :multi_american_post
+        get "posts/:id" => "multi_american#post", as: :multi_american_post
+        get "jiffy_posts" => "multi_american#jiffy_posts", as: :multi_american_jiffy_posts
+        get "jiffy_posts/:id" => "multi_american#jiffy_post", as: :multi_american_jiffy_post
       end
 
       root to: 'home#index'

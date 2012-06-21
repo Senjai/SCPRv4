@@ -5,26 +5,41 @@ class Admin::MultiAmericanController < Admin::BaseController
   
   def index    
     
-    # @all_attachments = @all_posts.select { |item| item.post_type == "attachment" }
-    # @attachments = @all_attachments.paginate(page: params[:attachments_page], per_page: 20)
-    # 
-    # 
-    # @all_tags = @doc.parse_to_objects(:tag)
-    # @tags = @all_tags.paginate(page: params[:tags_page], per_page: 100)
   end
+
+  # ---------------
   
   def posts
     breadcrumb "Posts"
-    @posts = @doc.posts.paginate(page: params[:posts_page], per_page: 20)
+    @posts = @doc.posts.paginate(page: params[:page], per_page: 20)
+    @total_posts = @doc.posts.size
   end
   
-  def show_post
+  def post
     breadcrumb "Posts", admin_multi_american_posts_path
     @post = @doc.posts.find { |p| p.post_id == params[:id] }
   end
   
+  # ---------------
+  
+  def jiffy_posts
+    breadcrumb "Jiffy Posts"
+    @posts = @doc.jiffy_posts.paginate(page: params[:page], per_page: 20)
+    @total_posts = @doc.jiffy_posts.size
+    render 'posts'
+  end
+  
+  def jiffy_post
+    breadcrumb "Jiffy Posts", admin_multi_american_jiffy_posts_path
+    @post = @doc.jiffy_posts.find { |p| p.post_id == params[:id] }
+    render 'post'
+  end
+  
+  # ---------------
+
   protected
     def load_doc
-      @doc = WP::Document.new("#{Rails.root}/lib/multi_american/XML/full_dump.xml")
+      @@doc ||= WP::Document.new("#{Rails.root}/lib/multi_american/XML/full_dump.xml")
+      @doc = @@doc
     end
 end

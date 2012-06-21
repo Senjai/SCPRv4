@@ -1,0 +1,25 @@
+<h2><%= @post.title %></h2>
+<% @post.instance_variables.each do |sym| %>
+	<% attrib = @post.instance_variable_get(sym) %>
+	<h4 style="background: #eee"><%= sym.to_s.gsub("@", "").titleize %></h4>
+	
+	<% if attrib.blank? %>
+		<p><i>[empty]</i></p>
+	<% next; end %>
+	
+	<% if @post.class::NESTED_ATTRIBUTES.include? sym %>
+		<% attrib.each do |set| %>
+			<p>
+				<% set.each do |k,v| %>
+					<i><%= k.to_s.titleize %></i>: <%= v %><br />
+				<% end %>
+			</p>
+		<% end %>
+		
+	<% else %>
+		<%= simple_format attrib.to_s %>
+	<% end %>
+	
+<% end %>
+
+<br /><br /><br />

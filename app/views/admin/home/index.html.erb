@@ -1,7 +1,8 @@
+<h3>Resources</h3>
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Object</th>
+			<th>Resource</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
@@ -11,6 +12,22 @@
 				<td><%= link_to resource.name.titleize.pluralize, url_for([:admin, resource.name.underscore.pluralize]) %></td>
 				<td>
 				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<h3>Extra Links</h3>
+<table class="table table-striped">
+	<thead>
+		<th>Extra Link</th>
+		<th>Info</th>
+	</thead>
+	<tbody class="list">
+		<% @extra_links.each do |link| %>
+			<tr>
+				<td><%= link_to link[:title], link[:path] %></td>
+				<td><%= link[:info] %></td>
 			</tr>
 		<% end %>
 	</tbody>

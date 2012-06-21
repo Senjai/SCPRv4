@@ -2,6 +2,7 @@ module WP
   class Post
     SCPR_CLASS = "BlogEntry"
     XPATH = "//item/wp:post_type[text()='post']/.."
+    NESTED_ATTRIBUTES = [:@categories, :@post_meta] # For the views
     
     AR_XML_MAP = {
       title:              "title",
@@ -21,37 +22,52 @@ module WP
     }
 
     class << self
+      def elements(doc)
+        doc.xpath(XPATH)
+      end
+
+      # -------------------
+      
       def find(doc)
         new_records = []
       
-        doc.xpath(XPATH).reject { |i| invalid_item(i) }.each do |element|
-          builder = { categories: [], post_meta: [] }
-          
-          element.children.reject { |c| invalid_child(c) }.each do |child|
-            if child.name == "category"
-              category = {  title: child.content, 
-                            domain: child[:domain], 
-                            nicename: child[:nicename] }
-              builder[:categories].push category
-            
-            elsif child.name == "postmeta"
-              postmeta = {  meta_key: child.at_xpath("./wp:meta_key").content, 
-                            meta_value: child.at_xpath("./wp:meta_value").content }
-              builder[:post_meta].push postmeta
-
-            elsif child.namespace.present? && !%w{ wp }.include?(child.namespace.prefix)
-              builder.merge!(child.namespace.prefix => child.children.first.content)
-            else
-              builder.merge!(child.name.gsub(/\W/, "_") => child.content)
-            end
-
-          end
-          new_records.push self.new(builder)
+        elements(doc).reject { |i| invalid_item(i) }.each do |element|
+          new_records.push build_object(element)
         end
         
         new_records
       end
       
+      # -------------------
+      
+      def build_object(element)
+        builder = { categories: [], post_meta: [] }
+        
+        element.children.reject { |c| invalid_child(c) }.each do |child|
+          if child.name == "category"
+            category = {  title: child.content, 
+                          domain: child[:domain], 
+                          nicename: child[:nicename] }
+            builder[:categories].push category
+          
+          elsif child.name == "postmeta"
+            postmeta = {  meta_key: child.at_xpath("./wp:meta_key").content, 
+                          meta_value: child.at_xpath("./wp:meta_value").content }
+            builder[:post_meta].push postmeta
+
+          elsif child.namespace.present? && !%w{ wp }.include?(child.namespace.prefix)
+            builder.merge!(child.namespace.prefix => child.children.first.content)
+          else
+            builder.merge!(child.name.gsub(/\W/, "_") => child.content)
+          end
+
+        end
+        
+        # Return a new object
+        self.new(builder)
+      end
+
+      # -------------------      
       
       def invalid_child(node)
         %w{text comment}.include?(node.name)
@@ -63,7 +79,7 @@ module WP
       end
     end
     
-    
+    # -------------------
     
     def initialize(attributes={})
       attributes.each { |a, v| send("#{a}=", v) }
@@ -78,6 +94,7 @@ module WP
       end
     end
     
+    # -------------------
     
     def build_for_scpr
       builder = {}

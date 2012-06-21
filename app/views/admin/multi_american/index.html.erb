@@ -1,23 +1,26 @@
 <% content_for :sidebar do %>
 	<h3>Quick Stats</h3>
 	<ul>
-		<li><%= @doc.title %></li>
-		<li>pubDate: <%= format_date(Time.parse(@doc.pubDate), time: true) %></li>
+		<li><b>RSS Title:</b> <%= @doc.title %></li>
+		<li><b>pubDate:</b> <%= format_date(Time.parse(@doc.pubDate), time: true) %></li>
 		<li>
-			<b>Total Items:</b>
+			Totals:
 			<ul>
-				<li>Attachments: <b></b></li>
-				<li>Jiffy-Posts: <b></b></li>
-				<li>Nav Menu Items: <b></b></li>
-				<li>Roundups: <b></b></li>
-				<li>Posts: <b><%= @doc.posts.size %></b></li>
+				<li><b>Attachments:</b> </li>
+				<li><b>Jiffy-Posts:</b> <%= @doc.jiffy_posts.size %></li>
+				<li><b>Nav Menu Items:</b> </li>
+				<li><b>Roundups:</b> </li>
+				<li><b>Posts:</b> <%= @doc.posts.size %></li>
+				<li><b>Tags:</b></li>
 			</ul>
 		</li>
 		
-		<li><b>Total Tags:</b></li>
 	</ul>
 <% end %>
 
 <h2>Multi American Import UI</h2>
 
-<%= link_to "Posts", multi_american_posts_path %>
+<ul>
+	<li><%= link_to "Posts", admin_multi_american_posts_path %></li>
+	<li><%= link_to "Jiffy Posts", admin_multi_american_jiffy_posts_path %></li>
+</ul>

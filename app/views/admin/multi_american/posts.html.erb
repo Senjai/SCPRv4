@@ -1,5 +1,5 @@
-<h2>Posts</h2>
-<h4>Total count: <%= @doc.posts.size %></h4>
+<h2><%= @breadcrumbs.last[0] %></h2>
+<h4>Total count: <%= @total_posts %></h4>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -16,7 +16,7 @@
 				<tr>
 					<td><%= post.post_id %></td>
 					<td><%= post.post_type %></td>
-					<td><%= link_to post.title, admin_multi_american_post_path(post.post_id) %></td>
+					<td><%= link_to post.title, send("admin_multi_american_#{post.class.to_s.demodulize.underscore}_path", post.post_id) %></td>
 					<td><%= post.post_name %></td>
 					<td><%= format_date(Time.parse(post.pubDate), time: true) %></td>
 					<td><%= post.status %></td>
@@ -24,4 +24,4 @@
 			<% end %>
 	</tbody>
 </table>
-<%= will_paginate @posts, param_name: :posts_page, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, params: { anchor: "posts"} %>
+<%= will_paginate @posts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
