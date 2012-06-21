@@ -1,5 +1,5 @@
 class ProgramsController < ApplicationController  
-  before_filter :get_program, except: :index
+  before_filter :get_program, except: [:index, :schedule]
   before_filter :get_featured_programs, only: :index
   
   def index
