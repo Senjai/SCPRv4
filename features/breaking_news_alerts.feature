@@ -16,3 +16,11 @@ Scenario: Latest Breaking News Alert is not published
 
 	When I go to the home page
 	Then I should not see breaking news
+	
+Scenario: Latest Breaking News Alert is not published
+	Given breaking news alerts with the following attributes:
+	 | headline             | is_published | created_at | visible |
+	 | Older Breaking News	| 1			   | yesterday  | 0		  |
+
+	When I go to the home page
+	Then I should not see breaking news

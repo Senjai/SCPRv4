@@ -13,26 +13,30 @@ describe BreakingNewsAlert do
     end
   end
   
-  describe "get_alert" do
-    it "returns the first alert if it is published" do
-      create :breaking_news_alert, is_published: true
-      BreakingNewsAlert.get_alert.should be_present
+  describe "published" do
+    it "only returns published alerts" do
+      pub = create :breaking_news_alert, is_published: true
+      unpub = create :breaking_news_alert, is_published: false
+      BreakingNewsAlert.published.should eq [pub]
     end
     
-    it "returns nil if the first alert is not published" do
-      create :breaking_news_alert, created_at: Chronic.parse("yesterday"), is_published: true # Older alert, published
-      create :breaking_news_alert, created_at: Chronic.parse("now"), is_published: false # Latest alert, not published
-      BreakingNewsAlert.get_alert.should be_nil # Only looking at the latest alert
+    it "orders by created_at desc" do
+      BreakingNewsAlert.published.to_sql.should match /order by created_at desc/i
     end
-    
-    it "returns nil if there are no alerts" do
-      BreakingNewsAlert.count.should eq 0
-      BreakingNewsAlert.get_alert.should be_nil
+  end
+  
+  describe "visible" do
+    it "only returns visible alerts" do
+      visible = create :breaking_news_alert, visible: true
+      invisible = create :breaking_news_alert, visible: false
+      BreakingNewsAlert.visible.should eq [visible]
     end
-    
-    it "orders by the created_at date" do
+  end
+  
+  describe "latest_alert" do
+    it "only returns one result" do
       create_list :breaking_news_alert, 3
-      BreakingNewsAlert.get_alert.should eq BreakingNewsAlert.order("created_at desc").first
+      BreakingNewsAlert.latest_alert.should be_a BreakingNewsAlert
     end
   end
 end

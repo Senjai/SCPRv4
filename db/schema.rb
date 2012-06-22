@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120530214758) do
+ActiveRecord::Schema.define(:version => 20120607182919) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
     t.integer  "comment_count",                                           :null => false
     t.string   "_short_headline",   :limit => 100
     t.text     "_teaser",           :limit => 2147483647
+    t.integer  "wp_id"
   end
 
   add_index "blogs_entry", ["author_id"], :name => "blogs_entry_author_id"
@@ -253,10 +254,6 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
 
   add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
-
-  create_table "blogs_remoteentry", :force => true do |t|
-    t.integer "comment_count", :default => 0, :null => false
-  end
 
   create_table "contentbase_category", :force => true do |t|
     t.string  "category",          :limit => 50,                   :null => false
@@ -682,6 +679,7 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
     t.text     "teaser",       :limit => 2147483647,                    :null => false
     t.string   "alert_link",   :limit => 200,                           :null => false
     t.boolean  "send_email",                                            :null => false
+    t.boolean  "visible",                                               :null => false
   end
 
   create_table "layout_homepage", :force => true do |t|
@@ -1528,8 +1526,9 @@ ActiveRecord::Schema.define(:version => 20120530214758) do
   add_index "specials_page", ["slug"], :name => "slug", :unique => true
 
   create_table "taggit_tag", :force => true do |t|
-    t.string "name", :limit => 100, :null => false
-    t.string "slug", :limit => 100, :null => false
+    t.string  "name",  :limit => 100, :null => false
+    t.string  "slug",  :limit => 100, :null => false
+    t.integer "wp_id"
   end
 
   add_index "taggit_tag", ["slug"], :name => "slug", :unique => true

@@ -7,6 +7,9 @@ class BreakingNewsAlert < ActiveRecord::Base
     "now" => "Happening Now"
   }
   
+  scope :published, order("created_at desc").where(is_published: true)
+  scope :visible, where(visible: true)
+  
   def break_type
     ALERT_TYPES[alert_type]
   end
@@ -15,12 +18,7 @@ class BreakingNewsAlert < ActiveRecord::Base
     @email_subject = "#{break_type}: #{headline}"
   end
   
-  def self.get_alert
-    alert = self.order("created_at desc").first
-    if alert.present? and alert.is_published
-      alert
-    else
-      nil
-    end
+  def self.latest_alert
+    published.visible.first
   end
 end
