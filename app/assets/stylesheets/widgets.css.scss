@@ -620,35 +620,35 @@ a.with-icon {
 	h4 { text-transform: none; }
 }
 
+.pager-nav {
+	float: right;
+	a {
+		cursor: pointer;
+		margin-top: 7px;
+		background: url(image_path('icons/carousel-btns.png')) no-repeat;
+		@include ie-inline-block;
+		width:22px;
+		height:22px;
+		&.disabled { 
+			@include opacity(0.5);
+			cursor: default;
+		}
+		&.prev {
+			background-position:0 0;
+			&:hover { background-position:-62px 0; }
+			&.disabled { background-position:0 0; }
+		}
+		&.next {
+			background-position:-32px 0;
+			&:hover { background-position:-94px 0; }
+			&.disabled { background-position:-32px 0; }
+		}
+	}
+}
+
 // Content Carousel
 .content-carousel {
 	@include clearfix; 
-	
-	.pager-nav {
-		float: right;
-		a {
-			cursor: pointer;
-			margin-top: 7px;
-			background: url(image_path('icons/carousel-btns.png')) no-repeat;
-			@include ie-inline-block;
-			width:22px;
-			height:22px;
-			&.disabled { 
-				@include opacity(0.5);
-				cursor: default;
-			}
-			&.prev {
-				background-position:0 0;
-				&:hover { background-position:-62px 0; }
-				&.disabled { background-position:0 0; }
-			}
-			&.next {
-				background-position:-32px 0;
-				&:hover { background-position:-94px 0; }
-				&.disabled { background-position:-32px 0; }
-			}
-		}
-	}
 	
 	.carousel {
 		min-height: 156px;
