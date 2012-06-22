@@ -683,6 +683,7 @@ ActiveRecord::Schema.define(:version => 20120607182919) do
     t.text     "teaser",       :limit => 2147483647,                    :null => false
     t.string   "alert_link",   :limit => 200,                           :null => false
     t.boolean  "send_email",                                            :null => false
+    t.boolean  "visible",                                               :null => false
   end
 
   create_table "layout_homepage", :force => true do |t|

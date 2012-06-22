@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   def set_up_finders
     @g_upcoming_events_forum = Event.published.upcoming.forum.limit(4)
     @g_upcoming_events_sponsored = Event.published.upcoming.sponsored
-    @g_breaking_news_alert = BreakingNewsAlert.get_alert
+    @g_breaking_news_alert = BreakingNewsAlert.latest_alert
     @latest_videos = VideoShell.published.limit(5)
     
     # FIXME: Isn't there a way to do this without hardcoding the table name in the where clause?
