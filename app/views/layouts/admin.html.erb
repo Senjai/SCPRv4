@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+	<title><%= @PAGE_TITLE ? @PAGE_TITLE + " | KPCC Admin" : "KPCC Admin" %></title>
+	<%= stylesheet_link_tag "admin/admin" %>
+	<%= javascript_include_tag "admin/admin", "http://localhost:13002/socket.io/socket.io.js" %>
+	<%= csrf_meta_tags %>
+</head>
+<body>
+	
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<%= link_to "KPCC Admin", admin_root_path, class: "brand" %>
+			
+			<% if admin_user %>
+				<ul class="nav">
+
+				</ul>
+			
+			
+				<ul class="nav pull-right">
+					<li><%= link_to "<i class='icon-user icon-white'></i> Profile".html_safe, admin_root_path %></li>
+					<li><%= link_to "Logout", admin_logout_path, id: "logout" %></li>
+				</ul>
+			<% else %>
+				<ul class="nav pull-right">
+					<li><%= link_to "Login", admin_login_path %></li>
+				</ul>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<% if admin_user %>
+	<div class="container-fluid">
+		<% if breadcrumbs %>
+			<ul class="breadcrumb">
+				<% breadcrumbs.each do |crumb| %>
+					<li>
+						<% if crumb[:link].present? %>
+							<%= link_to crumb[:title], crumb[:link] %>
+						<% else %>
+							<%= crumb[:title] %>
+						<% end %>
+						
+						<% unless crumb == breadcrumbs.last %>
+							<span class="divider">/</span>
+						<% end %>
+					</li>
+				<% end %>
+			</ul>
+		<% end %>
+	</div>
+<% end %>
+
+<div id="main" class="container-fluid">
+	<% if @PAGE_TITLE %>
+		<div class="page-header">
+			<h1><%= @PAGE_TITLE %></h1>
+		</div>
+	<% end %>
+	
+	<div class="row-fluid">
+		<div class="span<%= content_for?(:sidebar) ? "9" : "12" %>">
+			<% flash.each do |name, msg| %>
+				<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+					<%= msg.html_safe %>
+					<a class="close" data-dismiss="alert">&times;</a>
+				</div>
+			<% end %>
+			
+			<%= yield %>
+		</div>
+		<% if content_for?(:sidebar) %>
+			<div class="span3">
+				<%= yield :sidebar %>
+			</div>
+		<% end %>
+	</div> <!-- row fluid -->
+</div> <!-- container fluid main -->
+
+</body>
+</html>

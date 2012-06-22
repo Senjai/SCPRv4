@@ -19,6 +19,11 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
   
   def self.latest_alert
-    published.visible.first
+    alert = self.order("created_at desc").first
+    if alert.present? and alert.is_published and alert.visible
+      alert
+    else
+      nil
+    end
   end
 end
