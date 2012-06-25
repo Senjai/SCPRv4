@@ -1,0 +1,44 @@
+<section class="pledge-pushdown relative hidden">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span24">
+				<div class="clearfix">
+					<div class="thermometer">
+						<div class="thermometer-tab-counter"><span>--</span></div>
+						<div class="thermometer-progress">
+							<div class="overlay-container">
+								<div class="thermometer-overlay"></div>
+								<span class="overlay-lines"></span>
+							</div>
+						</div>
+						<div class="thermometer-goal-number"><strong>--</strong> Members</div>
+					</div>
+
+					<div class="goal">
+						<h6>To unlock</h6>
+						<div class="goal-number">
+							<h2 class="locked">$60,000</h2>
+						</div>
+						<div class="countdown">
+							<span class="days"><b>-</b> d</span>
+							<span class="hours"><b>--</b> h</span>
+							<span class="mins"><b>--</b> m</span>
+							<span class="secs"><b>--</b> s</span>
+							<span>Remain</span>
+						</div>
+					</div>
+					<div class="pledge-divider">&nbsp;</div>
+					<div class="call-to-action clearfix">
+						<a class="contribute" href="https://scprcontribute.scpr.org/?utm_source=scpr.org&utm_medium=banner&utm_campaign=pledge_thermometer" >
+						    <%= image_tag "specials/pledge/btn-contribute.png" %>
+						</a>
+						<span class="pushdown-close">No thanks</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script type="text/javascript" src="http://media.scpr.org/assets/scripts/pledge/pledge_pushdown.js?<%= rand(99999).to_s.center(5, rand(9).to_s) %>"></script>
