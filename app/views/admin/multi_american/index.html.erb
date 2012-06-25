@@ -6,12 +6,9 @@
 		<li>
 			Totals:
 			<ul>
-				<li><b>Attachments:</b> </li>
-				<li><b>Jiffy-Posts:</b> <%= @doc.jiffy_posts.size %></li>
-				<li><b>Nav Menu Items:</b> </li>
-				<li><b>Roundups:</b> </li>
-				<li><b>Posts:</b> <%= @doc.posts.size %></li>
-				<li><b>Tags:</b></li>
+				<% WP::RESOURCES.each do |resource| %>
+					<li><b><%= resource.titleize %></b>: <%= @doc.send(resource).size %></li>
+				<% end %>
 			</ul>
 		</li>
 		
@@ -21,6 +18,7 @@
 <h2>Multi American Import UI</h2>
 
 <ul>
-	<li><%= link_to "Posts", admin_multi_american_posts_path %></li>
-	<li><%= link_to "Jiffy Posts", admin_multi_american_jiffy_posts_path %></li>
+	<% WP::RESOURCES.each do |resource| %>
+		<li><%= link_to resource.titleize, send("admin_multi_american_#{resource}_path") %></li>
+	<% end %>
 </ul>

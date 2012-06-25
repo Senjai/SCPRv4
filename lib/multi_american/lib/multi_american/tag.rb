@@ -1,29 +1,22 @@
 module WP
-  class Tag
+  class Tag < Node
     XPATH = "/rss/channel/wp:tag"
-
-    METHODS = {
-      tag_slug: 'slug',
-      tag_name: "name",
-      term_id: "wp_id"
-    }
-
+    
+    # -------------------
+    # Class
+    
     class << self
-      def filter_values(key, value)
-        { METHODS[key].to_sym => send(METHODS[key], value) }
+      def elements(doc)
+        @elements ||= doc.xpath(XPATH)
       end
-      
-      def wp_id(value)
-        value
-      end
-      
-      def name(value)
-        value
-      end
-      
-      def slug(value)
-        value
-      end
+    end
+    
+    
+    # -------------------
+    # Instance
+    
+    def id
+      term_id
     end
   end
 end

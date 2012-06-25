@@ -1,0 +1,33 @@
+<h2><%= @resource.title %></h2>
+[ <a class="fake" id="toggle_raw">Raw</a> | <a class="fake" id="toggle_formatted">Formatted</a> ]
+
+<% @resource.attributes.each do |sym| %>
+	<% attrib = @resource.instance_variable_get(sym) %>
+	<h4 style="background: #eee"><%= sym.to_s.gsub("@", "").titleize %></h4>
+	
+	<% if attrib.blank? %>
+		<p><i>[empty]</i></p>
+	<% next; end %>
+	
+	<% if @resource.class::NESTED_ATTRIBUTES.include? sym %>
+		<% attrib.each do |set| %>
+			<p>
+				<% set.each do |k,v| %>
+					<b><%= k.to_s.titleize %></b>: <%= v %><br />
+				<% end %>
+			</p>
+		<% end %>
+		
+	<% else %>
+		<p>
+			<div data-role="content-formatted">
+				<%= simple_format attrib.to_s %>
+			</div>
+		
+			<pre data-role="content-raw"><%= attrib.to_s %></pre>
+		</p>
+	<% end %>
+	
+<% end %>
+
+<br /><br /><br />

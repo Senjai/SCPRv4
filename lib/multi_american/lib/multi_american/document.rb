@@ -12,9 +12,5 @@ module WP
       instance_variable_get("@#{method}") || 
         instance_variable_set("@#{method}", ["WP", method.to_s.singularize.camelize].join("::").constantize.find(@@doc))
     end
-
-    def self.strip_cdata(attrib)
-      match = attrib.match(/<!\[CDATA\[(.+?)\]\]>/)[1]
-    end
   end
 end

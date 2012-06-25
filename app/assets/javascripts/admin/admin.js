@@ -7,3 +7,5 @@
 //= require spin.js
 // require moment
 // require moment-strftime
+
+//= require admin/utilities

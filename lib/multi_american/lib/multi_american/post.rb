@@ -1,8 +1,8 @@
 module WP
-  class Post
+  class Post < Node
     SCPR_CLASS = "BlogEntry"
     XPATH = "//item/wp:post_type[text()='post']/.."
-    NESTED_ATTRIBUTES = [:@categories, :@post_meta] # For the views
+    NESTED_ATTRIBUTES = [:@categories, :@postmeta] # For the views
     
     AR_XML_MAP = {
       title:              "title",
@@ -21,81 +21,91 @@ module WP
       wp_id:              "post_id"
     }
 
+    # -------------------
+    # Class
+    
     class << self
-      def elements(doc)
-        doc.xpath(XPATH)
-      end
-
-      # -------------------
       
-      def find(doc)
-        new_records = []
-      
-        elements(doc).reject { |i| invalid_item(i) }.each do |element|
-          new_records.push build_object(element)
-        end
-        
-        new_records
-      end
-      
-      # -------------------
-      
-      def build_object(element)
-        builder = { categories: [], post_meta: [] }
-        
-        element.children.reject { |c| invalid_child(c) }.each do |child|
-          if child.name == "category"
-            category = {  title: child.content, 
-                          domain: child[:domain], 
-                          nicename: child[:nicename] }
-            builder[:categories].push category
-          
-          elsif child.name == "postmeta"
-            postmeta = {  meta_key: child.at_xpath("./wp:meta_key").content, 
-                          meta_value: child.at_xpath("./wp:meta_value").content }
-            builder[:post_meta].push postmeta
-
-          elsif child.namespace.present? && !%w{ wp }.include?(child.namespace.prefix)
-            builder.merge!(child.namespace.prefix => child.children.first.content)
-          else
-            builder.merge!(child.name.gsub(/\W/, "_") => child.content)
-          end
-
-        end
-        
-        # Return a new object
-        self.new(builder)
-      end
-
       # -------------------      
+      # Templates
+      
+      def index_template
+        "posts_index"
+      end
+      
+      def detail_template
+        "obj_detail"
+      end
+      
+      
+      # -------------------      
+      # Elements
+      
+      def elements(doc)
+        @elements ||= doc.xpath(XPATH)
+      end
+      
+      
+      # -------------------      
+      # Node rejectors
       
       def invalid_child(node)
         %w{text comment}.include?(node.name)
-        
       end
       
       def invalid_item(node)
+        # Only published content
         node.at_xpath("./wp:status").content != "publish"
       end
     end
     
+
     # -------------------
+    # Instance
     
-    def initialize(attributes={})
-      attributes.each { |a, v| send("#{a}=", v) }
+    def initialize(element)
+      @builder = { categories: [], postmeta: [] }
+      super(element)
     end
     
-    # Dynammic accessor
-    def method_missing(method, *args, &block)
-      if method =~ /=$/
-        return instance_variable_set("@#{method.to_s.chomp("=")}", args.first)
+    def sorter
+      Time.parse(self.pubDate)
+    end
+    
+    
+    # -------------------
+    # Builder populator
+    
+    def check_and_merge_nodes(child)
+      if is_category(child)
+        merge_category(child)
       else
-        return instance_variable_get("@#{method}")
+        super
       end
     end
     
-    # -------------------
     
+    # -------------------      
+    # Merge in extra attributes
+    
+    def merge_category(child)
+      category = {  title: child.content, 
+                    domain: child[:domain], 
+                    nicename: child[:nicename] }
+      builder[:categories].push category
+    end
+    
+    
+    # -------------------
+    # Node inspectors
+    
+    def is_category(child)
+      child.name == "category"
+    end
+    
+    
+    # -------------------    
+
     def build_for_scpr
       builder = {}
       XML_AR_MAP.each do |scpr_a, wp_a|
@@ -103,6 +113,10 @@ module WP
       end
       
       instance_variable_set("@#{SCPR_CLASS.underscore}", SCPR_CLASS.constantize.new(builder))
+    end
+    
+    def id
+      post_id
     end
     
     def status

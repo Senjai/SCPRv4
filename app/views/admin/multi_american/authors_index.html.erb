@@ -1,0 +1,23 @@
+<h2><%= @breadcrumbs.last[:title] %></h2>
+<h4>Total count: <%= @total %></h4>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Author ID</th>
+			<th>Login</th>
+			<th>E-mail</th>
+			<th>Display Name</th>
+		</tr>
+	</thead>
+	<tbody class="list">
+			<% @resources.each do |author| %>
+				<tr>
+					<td><%= author.id %></td>
+					<td><%= link_to author.author_login, send("admin_multi_american_#{author.class.to_s.demodulize.underscore}_path", author.author_id) %></td>
+					<td><%= author.author_email %></td>
+					<td><%= author.author_display_name %></td>
+				</tr>
+			<% end %>
+	</tbody>
+</table>
+<%= will_paginate @resources, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

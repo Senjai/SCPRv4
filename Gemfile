@@ -39,6 +39,10 @@ group :assets do
   gem 'oily_png'
 end
 
+group :development do
+  gem 'bullet'
+end
+
 group :test, :development do
 	gem "rspec-rails"
 	gem 'guard-rspec'
