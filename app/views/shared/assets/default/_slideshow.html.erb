@@ -9,7 +9,7 @@
 		})
 		
 		// add slide change listener for analytics
-		ahSlides.bind("slide",function(idx) {
+		ahSlides.bind("switch",function(idx) {
 			_gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
 			dcsMultiTrack(
 				'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
