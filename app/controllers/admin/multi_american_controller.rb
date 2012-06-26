@@ -6,6 +6,18 @@ class Admin::MultiAmericanController < Admin::BaseController
   def index    
     # Have to put this here so action_missing doesn't catch it
   end
+
+  # ---------------
+  
+  def import
+    # do stuff
+    redirect_to url_for([:admin, :multi_american, params[:resource_class].demodulize.underscore.pluralize]), notice: "Something happened"
+  end
+  
+  def abort
+    # do stuff
+    redirect_to url_for([:admin, :multi_american, params[:resource_class].demodulize.underscore.pluralize]), notice: "Something happened"
+  end
   
   # ---------------
   # action_missing catches all

@@ -1,5 +1,9 @@
 <h2><%= @breadcrumbs.last[:title] %></h2>
 <h4>Total count: <%= @total %></h4>
+<div class="form-actions">
+	<%= link_to "Import #{resource_class.to_s.demodulize.pluralize}", admin_multi_american_import_path(resource_class), class: "btn btn-primary", method: "post" %>
+	<%= link_to "Delete all imported #{resource_class.to_s.demodulize.pluralize}", admin_multi_american_abort_path(resource_class), class: "btn btn-danger", method: "delete", data: { confirm: "Are you sure?" } %>
+</div>
 <table class="table table-striped">
 	<thead>
 		<tr>

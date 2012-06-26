@@ -87,6 +87,8 @@ Scprv4::Application.routes.draw do
           get title => "multi_american##{title}", as: "multi_american_#{title}"
           get "#{title}/:id" => "multi_american##{title.singularize}", as: "multi_american_#{title.singularize}"
         end
+        post "import/:resource_class" => "multi_american#import", as: "multi_american_import"
+        delete "abort/:resource_class" => "multi_american#abort", as: "multi_american_abort"
       end
 
       root to: 'home#index'
