@@ -30,8 +30,8 @@ class Admin::MultiAmericanController < Admin::BaseController
       @doc = @@doc
     end
     
-    def list(posts)
-      posts.sort_by { |p| p.sorter }.reverse.paginate(page: params[:page], per_page: resource_class.list_per_page)
+    def list(items)
+      items.sort_by { |p| p.sorter }.reverse.paginate(page: params[:page], per_page: resource_class.list_per_page)
     end
     
     def resource_index(resources)

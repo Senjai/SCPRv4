@@ -1,7 +1,7 @@
 module WP
   class Other < Node
-    registered = %w{ post attachment jiffyopost nav_menu_item roundup topic}.map { |x| "text()='#{x}'" }
-    XPATH = "//item/wp:post_type[not(#{registered.join(" and ")})]/.."
+    registered = %w{ post attachment jiffypost nav_menu_item roundup topic}.map { |x| "not(text()='#{x}')" }
+    XPATH = "//item/wp:post_type[#{registered.join(" and ")}]/..  "
     
     administrate!
     self.list_fields = [
@@ -23,6 +23,10 @@ module WP
       def column_names
         @elements.first.attributes
       end
+      
+      def nested_attributes
+        [:@postmeta]
+      end
     end
     
     
@@ -38,7 +42,7 @@ module WP
     # Convenience Methods
     
     def id
-      attributes[0]
+      post_id
     end
   end
 end
