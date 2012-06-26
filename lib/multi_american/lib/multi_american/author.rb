@@ -1,7 +1,15 @@
 module WP
   class Author < Node
     XPATH = "/rss/channel/wp:author"
-    
+
+    administrate!    
+    self.list_fields = [
+      ['id', title: "Author ID"],
+      ['author_display_name', link: true, title: "Name"],
+      ['author_login'],
+      ['author_email']
+    ]
+        
     # -------------------
     # Class
     

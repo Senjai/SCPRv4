@@ -1,6 +1,14 @@
 module WP
   class Tag < Node
     XPATH = "/rss/channel/wp:tag"
+
+    administrate!    
+    self.list_fields = [
+      ['id', title: "Term ID"],
+      ['tag_slug', link: true, title: "Name"],
+      ['tag_name']
+    ]
+    self.list_per_page = 50
     
     # -------------------
     # Class

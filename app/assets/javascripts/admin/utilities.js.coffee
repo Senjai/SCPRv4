@@ -1,22 +1,28 @@
 $(document).ready ->
-    raw = "content-raw"
-    formatted = "content-formatted"
-    toggled = "toggled"
+    rawRole = "content-raw"
+    formattedRole = "content-formatted"
 
+    raw = "[data-role='#{rawRole}']"
+    formatted = "[data-role='#{formattedRole}']"
+    
+    toggled = "toggled"
+    wrapper = ".resource_attribute"
+    
     # Formatted by default
-    $("[data-role='#{raw}']").hide()
-    $("#toggle_formatted").addClass(toggled)
+    $(raw).hide()
+    $(".toggle_formatted").addClass(toggled)
     
-    $("#toggle_raw").on
+    # events
+    $(".toggle_raw").on
         click: (event) =>
-            $(".#{toggled}").removeClass(toggled)
+            $(event.target).siblings(".#{toggled}").removeClass(toggled)
             $(event.target).addClass(toggled)
-            $("[data-role='#{raw}']").show()
-            $("[data-role='#{formatted}']").hide()
+            $(event.target).closest(wrapper).find(raw).show()
+            $(event.target).closest(wrapper).find(formatted).hide()
     
-    $("#toggle_formatted").on
+    $(".toggle_formatted").on
         click: (event) =>
-            $(".#{toggled}").removeClass(toggled)
+            $(event.target).siblings(".#{toggled}").removeClass(toggled)
             $(event.target).addClass(toggled)
-            $("[data-role='#{formatted}']").show()
-            $("[data-role='#{raw}']").hide()
+            $(event.target).closest(wrapper).find(formatted).show()
+            $(event.target).closest(wrapper).find(raw).hide()

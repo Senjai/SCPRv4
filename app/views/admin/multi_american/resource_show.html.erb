@@ -1,33 +1,37 @@
 <h2><%= @resource.to_title %></h2>
-[ <a class="fake" id="toggle_raw">Raw</a> | <a class="fake" id="toggle_formatted">Formatted</a> ]
 
 <% @resource.attributes.each do |sym| %>
-	<% attrib = @resource.instance_variable_get(sym) %>
-	<h4 style="background: #eee"><%= sym.to_s.gsub("@", "").titleize %></h4>
+	<div class="resource_attribute">
+		<% attrib = @resource.instance_variable_get(sym) %>
+		<h4 style="background: #eee"><%= sym.to_s.gsub("@", "").titleize %>
+			<div class="pull-right" style="font-size: 11px; font-weight: normal;">[ <a class="fake toggle_raw">Raw</a> | <a class="fake toggle_formatted">Formatted</a> ]</div>
+		</h4>
 	
-	<% if attrib.blank? %>
-		<p><i>[empty]</i></p>
-	<% next; end %>
+		<% if attrib.blank? %>
+			<p><div><i>[empty]</i></div></p>
+		<% next; end %>
 	
-	<% if @resource.class.nested_attributes.include? sym %>
-		<% attrib.each do |set| %>
-			<p>
-				<% set.each do |k,v| %>
-					<b><%= k.to_s.titleize %></b>: <%= v %><br />
-				<% end %>
+		<% if @resource.class.nested_attributes.include? sym %>
+			<% attrib.each do |set| %>
+				<div class="data">
+					<% set.each do |k,v| %>
+						<b><%= k.to_s.titleize %></b>: 
+						<span data-role="content-formatted"><%= v %><br /></span>
+						<div data-role="content-raw"><pre><%= v %></pre></div>
+					<% end %><br />
+				</div>
+			<% end %>
+		
+		<% else %>
+			<p class="data">
+				<div data-role="content-formatted">
+					<%= simple_format attrib.to_s %>
+				</div>
+		
+				<pre data-role="content-raw"><%= attrib.to_s %></pre>
 			</p>
 		<% end %>
-		
-	<% else %>
-		<p>
-			<div data-role="content-formatted">
-				<%= simple_format attrib.to_s %>
-			</div>
-		
-			<pre data-role="content-raw"><%= attrib.to_s %></pre>
-		</p>
-	<% end %>
-	
+	</div>
 <% end %>
 
 <br /><br /><br />

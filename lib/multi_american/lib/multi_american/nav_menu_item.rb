@@ -5,7 +5,7 @@ module WP
     
     class << self
       def elements(doc)
-        doc.xpath(XPATH)
+        @elements ||= doc.xpath(XPATH)
       end
     end
   end

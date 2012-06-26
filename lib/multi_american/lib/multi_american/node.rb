@@ -70,7 +70,7 @@ module WP
     
     def initialize(element)
       # Default builder
-      @builder ||= { postmeta: [] }
+      @builder ||= { }
       
       element.children.reject { |c| self.class.invalid_child(c) }.each do |child|
         check_and_merge_nodes(child)
@@ -100,7 +100,7 @@ module WP
     # Builder populator
     
     def check_and_merge_nodes(child)
-      if is_postmeta(child)
+      if is_postmeta(child) and builder.has_key? :postmeta
         # Grab the post meta and merge it into the hash appropriately
         merge_postmeta(child)
       

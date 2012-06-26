@@ -2,6 +2,13 @@ module WP
   class Category < Node
     XPATH = "/rss/channel/wp:category"
     
+    administrate!
+    self.list_fields = [
+      ['id', title: "Term ID"],
+      ['cat_name', link: true, title: "Name"],
+      ['category_nicename', title: "Slug"]
+    ]
+    
     # -------------------
     # Class
     

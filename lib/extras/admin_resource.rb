@@ -7,14 +7,25 @@ module AdminResource
 
   TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
   
+  # -----------------------
+  
   def administrate!
     extend ClassMethods
     include InstanceMethods
   end
   
+  # -----------------------
+  
   module ClassMethods
-    attr_reader :list_fields, :list_order, :list_per_page
-
+    # -----------------------
+    
+    def list_fields
+      if !@list_fields
+        self.list_fields = column_names.map { |col| [col] }
+      end
+      @list_fields
+    end
+    
     def list_fields=(fields=[])
       if fields.present? 
         fields.each do |f|
@@ -35,26 +46,36 @@ module AdminResource
       
       @list_fields = fields
     end
-    
-    def list_fields
-      if !@list_fields
-        self.list_fields = column_names.map { |col| [col] }
-      end
-      @list_fields
-    end
         
+    # -----------------------
+    
+    def list_order
+      @list_order || LIST_DEFAULTS[:list_order]
+    end
+    
     def list_order=(order)
-      order ||= LIST_DEFAULTS[:list_order]
       @list_order = order
+    end
+
+    # -----------------------
+    
+    def list_per_page
+      @list_per_page || LIST_DEFAULTS[:list_per_page]
     end
     
     def list_per_page=(per_page)
-      per_page ||= LIST_DEFAULTS[:list_per_page]
       @list_per_page = per_page.to_i
     end
+
+    # -----------------------
+
   end
   
+  # -----------------------
+  
   module InstanceMethods
+    # -----------------------
+    
     def to_title
       title_method = TITLE_ATTRIBS.find { |a| self.respond_to?(a) }
       title_method ? self.send(title_method) : "#{self.class.name.titleize} ##{self.id}"
