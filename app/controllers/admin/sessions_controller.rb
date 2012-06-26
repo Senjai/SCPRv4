@@ -8,10 +8,14 @@ class Admin::SessionsController < Admin::BaseController
   
   def create
     if user = AdminUser.authenticate(params[:username], params[:unencrypted_password])
-      session['_auth_user_id'] = user.id
-      # For Django
-      session['_auth_user_backend'] = 'django.contrib.auth.backends.ModelBackend'
-      redirect_to admin_root_path, notice: "Logged in."
+      if user.is_superuser
+        session['_auth_user_id'] = user.id
+        # For Django
+        session['_auth_user_backend'] = 'django.contrib.auth.backends.ModelBackend'
+        redirect_to admin_root_path, notice: "Logged in."
+      else
+        redirect_to admin_login_path, alert: "Access is limited to superuser's only."
+      end
     else
       flash.now[:alert] = "Invalid login information."
       render 'new'
