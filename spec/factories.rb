@@ -50,9 +50,8 @@ end
     date_joined { Time.now }
     #
     
-    name "Bryan Ricker"
-    passw "secret"
-    passw_confirmation { passw }
+    unencrypted_password "secret"
+    unencrypted_password_confirmation { unencrypted_password }
     last_login { Time.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
     is_staff 1

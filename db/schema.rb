@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607182919) do
+ActiveRecord::Schema.define(:version => 20120626170514) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -234,6 +234,7 @@ ActiveRecord::Schema.define(:version => 20120607182919) do
     t.string   "_short_headline",   :limit => 100
     t.text     "_teaser",           :limit => 2147483647
     t.integer  "wp_id"
+    t.integer  "dsq_thread_id"
   end
 
   add_index "blogs_entry", ["author_id"], :name => "blogs_entry_author_id"

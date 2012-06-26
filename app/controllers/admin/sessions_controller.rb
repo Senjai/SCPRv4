@@ -7,7 +7,7 @@ class Admin::SessionsController < Admin::BaseController
   end
   
   def create
-    if user = AdminUser.authenticate(params[:username], params[:passw])
+    if user = AdminUser.authenticate(params[:username], params[:unencrypted_password])
       session['_auth_user_id'] = user.id
       # For Django
       session['_auth_user_backend'] = 'django.contrib.auth.backends.ModelBackend'

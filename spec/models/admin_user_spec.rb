@@ -12,23 +12,14 @@ describe AdminUser do
   describe "validations" do
     before(:each) { @user = create :admin_user, name: "Ryan Bicker" }
     
-    it { should validate_presence_of(:name) }
+    it { should validate_confirmation_of(:unencrypted_password) }
     it { should validate_uniqueness_of(:email).case_insensitive }
     
     it "should not care about case in the e-mail uniqueness validation" do
       other_user = build :admin_user, email: @user.email.upcase
       other_user.should_not be_valid
       other_user.errors[:email].should include "has already been taken"
-    end
-  end
-  
-  describe "callbacks" do
-    it "generates an auth_token on user creation" do
-      user = build :admin_user
-      user.auth_token.should be_blank
-      user.save
-      user.auth_token.should be_present
-    end
+    end 
   end
   
   describe "downcase_email" do
@@ -59,13 +50,13 @@ describe AdminUser do
     end
     
     it "splits the name and return an approximation of first names letters + last-name" do
-      user = build :admin_user, name: "Bryan Cameron Ricker"
-      user.generate_username.should eq "bcricker"
+      user = build :admin_user, first_name: "Bryan", last_name: "Cameron Ricker"
+      user.send(:generate_username).should eq "bcricker"
     end
     
     it "removes non-word characters" do
       user = build :admin_user, name: "Adolfo Guzman-Lopez"
-      user.generate_username.should_not match /\W/
+      user.send(:generate_username).should_not match /\W/
     end
     
     it "appends and increments an integer if username already exists" do
@@ -82,63 +73,59 @@ describe AdminUser do
       user.username.should eq "darthvader"
     end
   end
-    
-  describe "generate_password" do
-    it "generates a password on user creation" do
-      pending "Removed this method temporarily"
-      user = create :admin_user
-      user.passw_digest.should be_present
-    end
-    
-    it "generates a different password every time" do
-      pending
-    end
-    
-    it "does not generate a password when the user is updated" do
-      pending "Removed this method temporarily"
-      password = "qxqxqx" # generator will never generate this password
-      user = create :admin_user, passw: password
-      user.update_attributes(name: "Leslie Knope")
-      AdminUser.authenticate(user.email, password).should eq user
-    end
-  end
   
-  describe "authenticate" do
-    it "returns false if the username does not exist" do
-      user = create :admin_user, passw: "secret", name: "Bryan Ricker"
-      AdminUser.authenticate("nobody", "secret").should be_false
-    end
-    
-    it "hands it off to authenticate_legacy" do
-      pending "not stubbing correctly, need to fix"
-      user = create :admin_user, passw: "secret"
-      user.stub(:authenticate_legacy) { "authenticate_legacy" }
-      AdminUser.authenticate(user.username, user.passw).should eq "authenticate_legacy"
-    end
-  end
-  
-  describe "authenticate_legacy" do 
-    it "returns the user if the password is correct" do
-      user = build :admin_user, passw: "secret"
-      user.authenticate_legacy(user.passw).should eq user
-    end
-    
-    it "generates passw_digest if the password is correct" do
-      user = build :admin_user, passw: "secret"
-      user.authenticate_legacy(user.passw)
-      user.passw_digest.should be_present
+  describe "authenticate" do 
+    it "returns the user if the username and password are correct" do
+      user = create :admin_user, unencrypted_password: "secret"
+      AdminUser.authenticate(user.username, user.unencrypted_password).should eq user
     end
     
     it "returns false if the password is incorrect" do
-      user = build :admin_user, passw: "secret"
-      user.authenticate_legacy("wrong").should be_false
+      user = create :admin_user, unencrypted_password: "secret"
+      AdminUser.authenticate(user.username, "wrong").should be_false
     end
     
-    it "generates an auth_token if the password is correct" do
-      user = build :admin_user, passw: "secret"
-      user.auth_token.should be_blank
-      user.authenticate_legacy(user.passw)
-      user.auth_token.should be_present
+    it "returns false if the username isn't found" do
+      user = create :admin_user, username: "bricker"
+      AdminUser.authenticate("wrong", "secret")
+    end
+  end
+  
+  describe "generate_password" do
+    it "does not run if unencrypted_password is passed in" do
+      user = build :admin_user, unencrypted_password: "hello"
+      user.should_not_receive(:generate_password)
+      user.save!
+    end
+    
+    it "runs before validation on create" do
+      user = build :admin_user, unencrypted_password: nil, unencrypted_password_confirmation: nil
+      user.unencrypted_password.should be_nil
+      user.save!
+      user.unencrypted_password.should be_present
+    end
+    
+    it "sets unencrypted_password and confirmation to a string" do
+      user = create :admin_user, unencrypted_password: nil, unencrypted_password_confirmation: nil
+      user.unencrypted_password.should be_a String
+      user.unencrypted_password_confirmation.should eq user.unencrypted_password
+    end
+  end
+  
+  describe "digest_password" do
+    it "runs before creation" do
+      user = build :admin_user, password: nil
+      user.password.should be_nil
+      user.save!
+      user.password.should be_present
+    end
+    
+    it "generates a string that Mercer can understand" do
+      user = create :admin_user, unencrypted_password: "secret"
+      algorithm, salt, hash = user.password.split("$")
+      algorithm.should eq "sha1"
+      salt.should be_present
+      hash.should be_present
     end
   end
 end

@@ -36,10 +36,10 @@ describe Admin::SessionsController do
     end
     
     describe "authentication passes" do
-      let(:admin_user) { create :admin_user, passw: "secret" }
+      let(:admin_user) { create :admin_user }
 
       before :each do
-        post :create, passw: "secret", passw_confirmation: "secret", username: admin_user.username
+        post :create, unencrypted_password: "secret", username: admin_user.username
       end
       
       it "sets the session" do

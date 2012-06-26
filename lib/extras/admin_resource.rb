@@ -64,7 +64,7 @@ module AdminResource
     end
     
     def list_per_page=(per_page)
-      @list_per_page = per_page.to_i
+      @list_per_page = per_page
     end
 
     # -----------------------
