@@ -2,7 +2,6 @@ module WP
   class Post < Node
     SCPR_CLASS = "BlogEntry"
     XPATH = "//item/wp:post_type[text()='post']/.."
-    NESTED_ATTRIBUTES = [:@categories, :@postmeta] # For the views
     
     AR_XML_MAP = {
       title:              "title",
@@ -20,24 +19,22 @@ module WP
       _teaser:            "excerpt_encoded",
       wp_id:              "post_id"
     }
+    
+    administrate!    
+    self.list_fields = [
+      ['id', title: "WP-ID"],
+      ['post_type'],
+      ['title', link: true, display_helper: :display_or_fallback],
+      ['post_name', title: "Slug"],
+      ['pubDate'],
+      ['status']
+    ]
 
     # -------------------
     # Class
     
     class << self
-      
-      # -------------------      
-      # Templates
-      
-      def index_template
-        "posts_index"
-      end
-      
-      def detail_template
-        "obj_detail"
-      end
-      
-      
+
       # -------------------      
       # Elements
       
@@ -56,6 +53,12 @@ module WP
       def invalid_item(node)
         # Only published content
         node.at_xpath("./wp:status").content != "publish"
+      end
+      
+      # -------------------      
+      
+      def nested_attributes
+        [:@categories, :@postmeta]
       end
     end
     
@@ -115,12 +118,16 @@ module WP
       instance_variable_set("@#{SCPR_CLASS.underscore}", SCPR_CLASS.constantize.new(builder))
     end
     
-    def id
-      post_id
+    
+    # -------------------
+    # Convenience Methods
+    
+    def to_title
+      title
     end
     
-    def status
-      @status == 5 ? "published" : "unpublished"
+    def id
+      post_id
     end
     
     def status=(value)

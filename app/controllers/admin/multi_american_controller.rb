@@ -44,9 +44,15 @@ class Admin::MultiAmericanController < Admin::BaseController
     
     def resource_detail(resource)
       resources = resource.pluralize
-      @raw = @doc.send(resources)
       breadcrumb resources.titleize, send("admin_multi_american_#{resources}_path")
+      @raw = @doc.send(resources)
       @resource = @raw.find { |p| p.id == params[:id] }
       render @resource.class.detail_template
+    end
+
+      
+    helper_method :resource_class
+    def resource_class
+      @resource_class ||= ["WP", params[:action].camelize.demodulize.singularize].join("::").constantize
     end
 end

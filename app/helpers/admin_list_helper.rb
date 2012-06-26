@@ -2,13 +2,15 @@ module AdminListHelper
   
   # -- Used by index view -- #
   
-  def render_attribute(item, record)
-    attrib = record.send(item[0])
-    options = item[1]
-    rendered_item = send(options[:display_helper], attrib)
+  def render_attribute(item, record, options={})
+    options[:path] ||= url_for([:edit, :admin, record])
     
-    if options[:link]
-      rendered_item = link_to(rendered_item, url_for([:edit, :admin, record]))
+    attrib = record.send(item[0])
+    attrib_options = item[1]
+    rendered_item = send(attrib_options[:display_helper], attrib)
+    
+    if attrib_options[:link]
+      rendered_item = link_to(rendered_item, options[:path])
     end
     
     return rendered_item  
@@ -40,10 +42,19 @@ module AdminListHelper
     format_date(published_at, format: :full_date, time: true)
   end
   
+  # for MultiAmerican
+  def display_pubDate(pubDate)
+    format_date(Time.parse(pubDate), time: true)
+  end
+  
   def display_date(date)
     format_date(date, format: :full_date)
   end
   
+  
+  def display_or_fallback(attrib)
+    attrib.present? ? attrib : content_tag(:em, "[blank]")
+  end
   
   def display_show(show)
     show.title

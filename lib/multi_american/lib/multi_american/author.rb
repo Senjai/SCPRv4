@@ -1,23 +1,11 @@
 module WP
   class Author < Node
     XPATH = "/rss/channel/wp:author"
-
+    
     # -------------------
     # Class
     
     class << self
-      
-      # -------------------      
-      # Templates
-      
-      def index_template
-        "authors_index"
-      end
-      
-      def detail_template
-        "obj_detail"
-      end
-      
       
       # -------------------      
       # Elements
@@ -31,8 +19,15 @@ module WP
     # -------------------
     # Instance
     
+    # -------------------
+    # Convenience Methods
+    
     def id
       author_id
+    end
+    
+    def to_title
+      author_display_name
     end
     
   end

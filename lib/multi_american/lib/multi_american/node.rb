@@ -1,5 +1,6 @@
 module WP
   class Node
+    extend AdminResource
     
     # -------------------
     # Class
@@ -10,11 +11,11 @@ module WP
       # Templates
       
       def index_template
-        "#{self.name.underscore.pluralize}_index"
+        "resource_index"
       end
       
       def detail_template
-        "#{self.name.underscore.pluralize}_detail"
+        "resource_show"
       end
       
       
@@ -51,6 +52,14 @@ module WP
         # Accept all by default
         false
       end
+      
+      
+      # -------------------      
+      # Dummy NESTED_ATTRIBUTES for classes that don't need it
+      
+      def nested_attributes
+        []
+      end
     end
     
     
@@ -73,6 +82,14 @@ module WP
     # Assume all instance variables
     def attributes
       instance_variables - [:@builder]
+    end
+    
+    def id
+      send("#{self.class.name.underscore}_id")
+    end
+    
+    def to_title
+      "#{self.class.to_s.titleize} ##{id}"
     end
     
     def sorter

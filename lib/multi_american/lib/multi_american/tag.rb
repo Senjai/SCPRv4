@@ -6,6 +6,10 @@ module WP
     # Class
     
     class << self
+
+      # -------------------      
+      # Elements
+      
       def elements(doc)
         @elements ||= doc.xpath(XPATH)
       end
@@ -15,8 +19,15 @@ module WP
     # -------------------
     # Instance
     
+    # -------------------
+    # Convenience Methods
+    
     def id
       term_id
+    end
+    
+    def to_title
+      tag_name
     end
   end
 end

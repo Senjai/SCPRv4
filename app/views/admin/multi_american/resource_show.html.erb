@@ -1,4 +1,4 @@
-<h2><%= @resource.title %></h2>
+<h2><%= @resource.to_title %></h2>
 [ <a class="fake" id="toggle_raw">Raw</a> | <a class="fake" id="toggle_formatted">Formatted</a> ]
 
 <% @resource.attributes.each do |sym| %>
@@ -9,7 +9,7 @@
 		<p><i>[empty]</i></p>
 	<% next; end %>
 	
-	<% if @resource.class::NESTED_ATTRIBUTES.include? sym %>
+	<% if @resource.class.nested_attributes.include? sym %>
 		<% attrib.each do |set| %>
 			<p>
 				<% set.each do |k,v| %>
