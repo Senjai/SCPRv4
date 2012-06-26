@@ -1,11 +1,14 @@
 class BlogEntry < ContentBase
   self.table_name =  "blogs_entry"
+  CONTENT_TYPE = "blogs/entry"
+  PRIMARY_ASSET_SCHEME = :blog_asset_scheme
   
-  # MULTI-AMERICAN
+  # ------------------
+  # Temporary Multi-American
   attr_accessor :postmeta, :categories
-  # END
   
-  # -- Administration -- #
+  # ------------------
+  # Administration
   administrate!
   self.list_order = "published_at desc"
   self.list_fields = [
@@ -17,21 +20,24 @@ class BlogEntry < ContentBase
     ['published_at']
   ] 
 
-  # -- Validations -- #
+  # ------------------
+  # Validation
   validates_presence_of :title, :slug, :blog_id, :short_headline
   
-  # -- Associations -- #
+  # ------------------
+  # Association
   belongs_to :blog
   belongs_to :author, :class_name => "Bio"
   has_many :tagged, :class_name => "TaggedContent", :as => :content
   has_many :tags, :through => :tagged  
   
-  # -- Scopes -- #
+  has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
+  has_many :blog_categories, through: :blog_entry_blog_categories
+  
+  # ------------------
+  # Scopification
   default_scope includes(:bylines)
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
-
-  CONTENT_TYPE = "blogs/entry"
-  PRIMARY_ASSET_SCHEME = :blog_asset_scheme
   
   define_index do
     indexes title

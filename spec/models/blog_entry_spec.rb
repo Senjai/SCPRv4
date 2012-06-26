@@ -11,6 +11,8 @@ describe BlogEntry do
     it { should belong_to :author }
     it { should have_many :tagged }
     it { should have_many(:tags).through(:tagged) }
+    it { should have_many(:blog_entry_blog_categories) }
+    it { should have_many(:blog_categories).through(:blog_entry_blog_categories) }
   end
   
   describe "scopes" do
