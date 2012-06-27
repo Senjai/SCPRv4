@@ -30,7 +30,7 @@ class Admin::MultiAmericanController < Admin::BaseController
   def set_doc
     @@doc = WP::Document.new(params[:document_path])
     session[:doc_url] = @@doc.url
-    redirect_to admin_multi_american_path, notice: "Changed document to #{@@doc.url}"
+    redirect_to admin_multi_american_path, notice: "Changed document to <b>#{@@doc.url}</b>"
   end
     
   # ---------------
@@ -85,11 +85,22 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     # Set the flash.now with some info about the parsed file
     def set_parse_info_flash
-      if session[:doc_url] == document.url
-        flash.now[:info] = "This data was parsed from <b>#{document.url}</b>"
+      if session[:doc_url]
+        
+        # If a new document was set, an old one was already set, 
+        # and they do not match, warn the user.
+        if @new_doc_url and @new_doc_url != session[:doc_url]
+          flash.now[:warning] = "<b>Warning:</b> The source file has unexpectedly changed to <b>#{document.url}</b><br />
+            This probably means the server was reloaded."
+        
+          # Unset the new_doc_url
+          @new_doc_url = nil
+        end
       else
-        flash.now[:warning] = "<b>Warning:</b> The source file has changed to <b>#{document.url}</b>"
+        session[:doc_url] = document.url
       end
+      
+      flash.now[:info] = "This data was parsed from <b>#{document.url}</b>"
     end
     
     # ---------------
@@ -136,7 +147,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     def load_doc
       @@doc ||= begin
         d = WP::Document.new(DUMP_FILE)
-        session[:doc_url] = d.url
+        @new_doc_url = d.url
         d
       end
     end
