@@ -1,40 +1,44 @@
 class Admin::MultiAmericanController < Admin::BaseController
   require 'will_paginate/array'
+  
+  before_filter :verify_resource, except: :index
   before_filter :load_doc
   before_filter { |c| c.send(:breadcrumb, "Multi American Import", admin_multi_american_path) }  
-  
-  def index    
-    # Have to put this here so action_missing doesn't catch it
+
+  # ---------------
+  # Actions
+  def resource_index
+    breadcrumb resource_name.titleize
+    @objects = @doc.send(resource_name)
+    @resources = list(@objects)
+    render resource_class.index_template
   end
 
   # ---------------
   
+  def resource_show
+    breadcrumb resource_name.titleize, send("admin_index_multi_american_resource_path", resource_name)
+    @raw = @doc.send(resource_name)
+    @resource = @raw.find { |p| p.id == params[:id] }
+    render resource_class.detail_template
+  end
+  
+  # ---------------
+
   def import
     # do stuff
-    redirect_to url_for([:admin, :multi_american, params[:resource_class].demodulize.underscore.pluralize]), notice: "Something happened"
-  end
-  
-  def abort
-    # do stuff
-    redirect_to url_for([:admin, :multi_american, params[:resource_class].demodulize.underscore.pluralize]), notice: "Something happened"
+    # redirect_to url_for([:admin, :multi_american, resou.demodulize.underscore.pluralize]), notice: "Something happened"
   end
   
   # ---------------
-  # action_missing catches all
-  # So we don't have to define every resource manually
-  
-  def action_missing(method)
-    plurals = WP::RESOURCES
-    singulars = plurals.map { |r| r.singularize }
 
-    if plurals.include? method.to_s
-      resource_index(method.to_s)
-    elsif singulars.include? method.to_s
-      resource_detail(method.to_s)
-    else
-      super
-    end
+  def abort
+    # do stuff
+    # redirect_to url_for([:admin, :multi_american, params[:resource_class].demodulize.underscore.pluralize]), notice: "Something happened"
   end
+  
+  # ---------------
+  
   
   protected
     def load_doc
@@ -42,29 +46,25 @@ class Admin::MultiAmericanController < Admin::BaseController
       @doc = @@doc
     end
     
+    # ---------------
+    
     def list(items)
       items.sort_by { |p| p.sorter }.reverse.paginate(page: params[:page], per_page: resource_class.list_per_page)
     end
-    
-    def resource_index(resources)
-      breadcrumb resources.titleize
-      @raw = @doc.send(resources)
-      @resources = list(@raw)
-      @total = @raw.size
-      render @resources.first.class.index_template
-    end
-    
-    def resource_detail(resource)
-      resources = resource.pluralize
-      breadcrumb resources.titleize, send("admin_multi_american_#{resources}_path")
-      @raw = @doc.send(resources)
-      @resource = @raw.find { |p| p.id == params[:id] }
-      render @resource.class.detail_template
-    end
 
-      
-    helper_method :resource_class
-    def resource_class
-      @resource_class ||= ["WP", params[:action].camelize.demodulize.singularize].join("::").constantize
+    # ---------------
+
+    def verify_resource
+      if WP::RESOURCES.include? params[:resource_name]
+        @resource_name = params[:resource_name]
+        @resource_class = ["WP", @resource_name.camelize.demodulize.singularize].join("::").constantize
+      else
+        raise "Invalid Resource" and return false
+      end
     end
+    
+    # ---------------
+    
+    attr_reader :resource_class, :resource_name
+    helper_method :resource_class, :resource_name    
 end

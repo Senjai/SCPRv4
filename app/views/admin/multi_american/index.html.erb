@@ -18,6 +18,6 @@
 <h2>Multi American Import UI</h2>
 <ul>
 	<% WP::RESOURCES.each do |resource| %>
-		<li><%= link_to resource.titleize, send("admin_multi_american_#{resource}_path") %></li>
+		<li><%= link_to resource.titleize, send("admin_index_multi_american_resource_path", resource) %></li>
 	<% end %>
 </ul>
