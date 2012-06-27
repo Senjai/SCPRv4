@@ -62,8 +62,8 @@
 	
 	<div class="row-fluid">
 		<div class="span<%= content_for?(:sidebar) ? "9" : "12" %>">
-			<% flash.each do |name, msg| %>
-				<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+			<% flash.select { |k, v| v.is_a? String }.each do |name, msg| %>
+				<div class="alert alert-<%= flash_alert_type(name) %>">
 					<%= msg.html_safe %>
 					<a class="close" data-dismiss="alert">&times;</a>
 				</div>

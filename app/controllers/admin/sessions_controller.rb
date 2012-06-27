@@ -12,7 +12,7 @@ class Admin::SessionsController < Admin::BaseController
         session['_auth_user_id'] = user.id
         # For Django
         session['_auth_user_backend'] = 'django.contrib.auth.backends.ModelBackend'
-        redirect_to admin_root_path, notice: "Logged in."
+        redirect_to session[:return_to] || admin_root_path, notice: "Logged in."
       else
         redirect_to admin_login_path, alert: "Access is limited to superuser's only."
       end

@@ -1,5 +1,7 @@
-# So the paths work
 $: << "."
+
+# Dependencies
+require "open-uri"
 
 #------------------
 # Hard-coded values for Multi-American
@@ -11,7 +13,7 @@ end
 
 
 #------------------
-# Requires
+# Lib files
 # Order of groups is important
 require 'multi_american/lib/multi_american/document.rb'
 

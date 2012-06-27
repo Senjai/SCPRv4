@@ -1,13 +1,13 @@
 <% content_for :sidebar do %>
 	<h3>Quick Stats</h3>
 	<ul>
-		<li><b>RSS Title:</b> <%= @doc.title %></li>
-		<li><b>pubDate:</b> <%= format_date(Time.parse(@doc.pubDate), time: true) %></li>
+		<li><b>RSS Title:</b> <%= document.title %></li>
+		<li><b>pubDate:</b> <%= format_date(Time.parse(document.pubDate), time: true) %></li>
 		<li>
 			Totals:
 			<ul>
 				<% WP::RESOURCES.each do |resource| %>
-					<li><b><%= resource.titleize %></b>: <%= @doc.send(resource).size %></li>
+					<li><b><%= resource.titleize %></b>: <%= document.send(resource).size %></li>
 				<% end %>
 			</ul>
 		</li>
@@ -21,3 +21,23 @@
 		<li><%= link_to resource.titleize, send("admin_index_multi_american_resource_path", resource) %></li>
 	<% end %>
 </ul>
+
+<hr />
+
+<%= form_tag admin_multi_american_set_doc_path, multipart: true, class: "form-horizontal" do %>
+	<fieldset>
+		<legend>Load Another Document</legend>
+		<p>The data in this section was parsed from <b><%= document.url %></b></p>
+
+		<div class="control-group">
+			<%= label_tag :document_path, "URL or local path", class: "control-label" %>
+			<div class="controls">
+				<%= text_field_tag :document_path, nil, class: "long" %>
+			</div>
+		</div>
+	</fieldset>
+		
+	<div class="form-actions">
+		<%= submit_tag "Submit", class: "btn btn-primary" %>
+	</div>
+<% end %>

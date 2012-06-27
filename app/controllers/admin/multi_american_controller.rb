@@ -1,15 +1,19 @@
 class Admin::MultiAmericanController < Admin::BaseController
   require 'will_paginate/array'
-  
-  before_filter :verify_resource, except: :index
-  before_filter :load_doc, :load_objects
-  before_filter { |c| c.send(:breadcrumb, "Multi American Import", admin_multi_american_path) }  
+    
+  before_filter :verify_resource, except: [:index, :set_doc]
+  before_filter :load_doc, except: [:set_doc]
+  before_filter :load_objects, except: [:index, :set_doc]
+  before_filter :set_parse_info_flash, except: [:set_doc]
+  before_filter :set_root_breadcrumb, except: [:set_doc]  
+
+  DUMP_FILE = "#{Rails.root}/lib/multi_american/XML/full_dump.xml"
 
   # ---------------
   # Actions
   def resource_index
     breadcrumb resource_name.titleize
-    @resources = list(@objects)
+    @resources = list(resource_objects)
     render resource_class.index_template
   end
 
@@ -22,19 +26,41 @@ class Admin::MultiAmericanController < Admin::BaseController
   end
   
   # ---------------
+  
+  def set_doc
+    @@doc = WP::Document.new(params[:document_path])
+    session[:doc_url] = @@doc.url
+    redirect_to admin_multi_american_path, notice: "Changed document to #{@@doc.url}"
+  end
+    
+  # ---------------
 
   def import
+    # Setup an array to loop through
     if params[:id]
-      object = load_object
-      if object.import
-        msg = { notice: "Successfully imported #{object.to_title}" }
-      else
-        alert
+      objects = [load_object]
     else
-      objects = load_objects
+      objects = @objects
     end
     
-    redirect_to url_for([:admin, :multi_american, resou.demodulize.underscore.pluralize]), msg
+    # Import objects and prepare flash messages
+    success, failure = []
+    objects.each do |object|
+      if object.import
+        success.push object
+      else
+        failure.push object
+      end
+    end
+    
+    # Setup flash messages & send success/failure arrays to next request
+    flash.merge!( notice: "Successfully imported #{pluralize "object", success.size}",
+                  alert: "Failed to import #{pluralize "object", failure.size}",
+                  failures: failure,
+                  successes: success )
+    
+    # Redirect
+    redirect_to url_for([:admin, :multi_american, resource_name])
   end
   
   # ---------------
@@ -48,29 +74,43 @@ class Admin::MultiAmericanController < Admin::BaseController
   
   
   protected
-    def load_doc
-      @@doc ||= WP::Document.new("#{Rails.root}/lib/multi_american/XML/full_dump.xml")
-      @doc = @@doc
+
+    # ---------------  
+    
+    def set_root_breadcrumb
+      breadcrumb "Multi American Import", admin_multi_american_path
     end
+    
+    
+    # ---------------
+    # Set the flash.now with some info about the parsed file
+    def set_parse_info_flash
+      if session[:doc_url] == document.url
+        flash.now[:info] = "This data was parsed from <b>#{document.url}</b>"
+      else
+        flash.now[:warning] = "<b>Warning:</b> The source file has changed to <b>#{document.url}</b>"
+      end
+    end
+    
+    # ---------------
+    # Readers & Helpers for resource names    
+    attr_reader :resource_class, :resource_name
+    helper_method :resource_class, :resource_name, :resource_objects, :document
+    
+    def document
+      @@doc
+    end
+    
 
     # ---------------
-    
-    def load_objects
-      @objects = @@doc.send(resource_name)
-    end
-    
-    def load_object
-      @objects.find { |p| p.id == params[:id] }
-    end
-    
-    # ---------------
-    
+    # Fake AR order & pagination
     def list(items)
       items.sort_by { |p| p.sorter }.reverse.paginate(page: params[:page], per_page: resource_class.list_per_page)
     end
-
+  
+  
     # ---------------
-
+    # Make sure the class is one of the WP module, or raise error
     def verify_resource
       if WP::RESOURCES.include? params[:resource_name]
         @resource_name = params[:resource_name]
@@ -79,9 +119,45 @@ class Admin::MultiAmericanController < Admin::BaseController
         raise "Invalid Resource" and return false
       end
     end
+            
+    # ---------------
+    # Dynamic reader for objects
+    def resource_objects
+      @resource_objects ||= document.instance_variable_get("@#{resource_name}")
+    end
+
+    # ---------------
+  
+  
+  private
+    
+    # ---------------
+    # Loaders
+    def load_doc
+      @@doc ||= begin
+        d = WP::Document.new(DUMP_FILE)
+        session[:doc_url] = d.url
+        d
+      end
+    end
+
+    # ---------------
+    
+    def load_objects
+      resource_objects ||= document.send(resource_name)
+    end
     
     # ---------------
     
-    attr_reader :resource_class, :resource_name
-    helper_method :resource_class, :resource_name    
+    def load_object
+      resource_objects.find { |p| p.id == params[:id] }
+    end
+    
+    
+    # ---------------
+    # resource_object writer
+    def resource_objects=(val)
+      @resource_objects = document.instance_variable_set("@#{resource_name}", val)
+    end
+    
 end

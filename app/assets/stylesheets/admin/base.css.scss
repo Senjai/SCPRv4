@@ -2,11 +2,14 @@
 	min-width: 700px;
 }
 
+// We want content input to always be pretty big
 .simple_form {
 	input:not([type=submit]) {
 		@extend .span4;
 	}
-	
+}
+
+form {
 	input.long, textarea {
 		@extend .span8;
 	}

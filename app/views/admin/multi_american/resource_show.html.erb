@@ -16,7 +16,7 @@
 				<div class="data">
 					<% set.each do |k,v| %>
 						<b><%= k.to_s.titleize %></b>: 
-						<span data-role="content-formatted"><%= v %><br /></span>
+						<div data-role="content-formatted"><%= simple_format v, {}, sanitize: false %></div>
 						<div data-role="content-raw"><pre><%= v %></pre></div>
 					<% end %><br />
 				</div>
@@ -25,7 +25,7 @@
 		<% else %>
 			<p class="data">
 				<div data-role="content-formatted">
-					<%= simple_format attrib.to_s %>
+					<%= simple_format attrib.to_s, {}, sanitize: false %>
 				</div>
 		
 				<pre data-role="content-raw"><%= attrib.to_s %></pre>
