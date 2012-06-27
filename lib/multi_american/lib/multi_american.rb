@@ -1,19 +1,18 @@
+# So the paths work
 $: << "."
 
-module WP
-  BLOG_ID = 22 # For Multi-American
+#------------------
+# Hard-coded values for Multi-American
+# These are from Mercer
+module MultiAmerican
+  BLOG_ID = 22
   BLOG_SLUG = 'multi-american'
-  CONTENT_TYPE_ID = 44 # BlogEntry (in mercer)
-  
-  POST_DEFAULTS = {
-    blog_id:      WP::BLOG_ID,
-    blog_slug:    WP::BLOG_SLUG,
-    is_published: 0
-  }
 end
 
-# Order of groups are important
 
+#------------------
+# Requires
+# Order of groups is important
 require 'multi_american/lib/multi_american/document.rb'
 
 require 'multi_american/lib/multi_american/node.rb'
@@ -31,8 +30,10 @@ require 'multi_american/lib/multi_american/author.rb'
 require 'multi_american/lib/multi_american/tag.rb'
 require 'multi_american/lib/multi_american/other.rb'
 
-# Setup our resources based on WP classes and remove ones we don't
-# want listed.
+
+#------------------
+# Setup our resources based on WP classes and 
+# remove ones we don't want listed.
 ignores = %w{documents nodes}
 WP::RESOURCES = WP.constants.select { |c| WP.const_get(c).is_a? Class }
                             .map { |r| r.to_s.demodulize.underscore.pluralize } - ignores
