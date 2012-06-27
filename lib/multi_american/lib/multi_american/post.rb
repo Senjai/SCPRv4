@@ -1,7 +1,15 @@
 module WP
   class Post < Node
     SCPR_CLASS = "BlogEntry"
+    CONTENT_TYPE_ID = 44 # BlogEntry (in mercer)
+    
     XPATH = "//item/wp:post_type[text()='post']/.."
+    
+    DEFAULTS = {
+      blog_id:      MultiAmerican::BLOG_ID,
+      blog_slug:    MultiAmerican::BLOG_SLUG,
+      is_published: 0 # otherwise mercer cries
+    }
     
     AR_XML_MAP = {
       title:              "title",
