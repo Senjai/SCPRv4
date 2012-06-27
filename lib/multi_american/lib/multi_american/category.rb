@@ -40,8 +40,9 @@ module WP
       end
       
       object_builder.reverse_merge!(DEFAULTS)
+      object = SCPR_CLASS.constantize.new(object_builder)
       
-      instance_variable_set("@#{SCPR_CLASS.underscore}", SCPR_CLASS.constantize.create(object_builder))
+      object.save
     end
     
     # -------------------
