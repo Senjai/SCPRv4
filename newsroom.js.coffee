@@ -1,9 +1,8 @@
 express = require 'express'
-app = express.createServer()
-io = require('socket.io').listen(app)
-
+app = express()
+server = app.listen 13002
+io = require('socket.io').listen server
 app.use express.bodyParser()
-app.listen 13002
 
 connections = {}
 users = {}
@@ -21,7 +20,7 @@ used_colors = []
 app.get '/', (req, res) ->
   res.send 404
 
-app.post '/watcher/:action/:to', (req, res) ->
+app.post '/notify/:action/:to', (req, res) ->
   target = connections[req.params.to]
   if target
     connections[req.params.to].emit(req.params.action, req.body)
@@ -32,7 +31,12 @@ app.post '/watcher/:action/:to', (req, res) ->
 # socket.io
 io.sockets.on 'connection', (socket) ->
     console.log "connected: ", socket.id
-    
+
+    socket.on "import_wait", (user_str) ->
+        user = JSON.parse(user_str)
+        socket.username = user.username
+        connections[user.username] = socket
+
     socket.on 'entered', (user_str, object_str) ->
         object = JSON.parse(object_str)
         user = JSON.parse(user_str)
@@ -56,11 +60,12 @@ io.sockets.on 'connection', (socket) ->
         
     socket.on 'disconnect', ->
         user = users[socket.username]
-        io.sockets.emit('remove_viewer', user)
+        if user
+            io.sockets.emit('remove_viewer', user)
         
-        used_colors.splice(used_colors.indexOf(user.color), 1)
-        available_colors.push user.color
+            used_colors.splice(used_colors.indexOf(user.color), 1)
+            available_colors.push user.color
         
-        delete users[socket.username]
-        delete connections[socket.username]
-        socket.leave socket.room
+            delete users[socket.username]
+            delete connections[socket.username]
+            socket.leave socket.room

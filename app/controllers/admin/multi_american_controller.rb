@@ -46,27 +46,30 @@ class Admin::MultiAmericanController < Admin::BaseController
     if params[:id]
       objects = [load_object]
     else
-      objects = @objects
+      objects = resource_objects
     end
+    
+    # Queue the job
+    Resque.enqueue(resource_class, { objects: objects, to: admin_user.username })
     
     # Import objects and prepare flash messages
-    success, failure = []
-    objects.each do |object|
-      if object.import
-        success.push object
-      else
-        failure.push object
-      end
-    end
-    
-    # Setup flash messages & send success/failure arrays to next request
-    flash.merge!( notice: "Successfully imported #{pluralize "object", success.size}",
-                  alert: "Failed to import #{pluralize "object", failure.size}",
-                  failures: failure,
-                  successes: success )
-    
+    # success, failure = [], []
+    # objects.each do |object|
+    #   if object.import
+    #     success.push object
+    #   else
+    #     failure.push object
+    #   end
+    # end
+    # 
+    # # Setup flash messages & send success/failure arrays to next request
+    # flash.merge!( notice: "Successfully imported #{pluralize "object", success.size}",
+    #               alert: "Failed to import #{pluralize "object", failure.size}",
+    #               failures: failure,
+    #               successes: success )
+    # 
     # Redirect
-    redirect_to url_for([:admin, :multi_american, resource_name])
+    render 'importing'
   end
   
   # ---------------
@@ -108,9 +111,12 @@ class Admin::MultiAmericanController < Admin::BaseController
         if self.class.new_doc_url and self.class.new_doc_url != session[:doc_url]
           flash.now[:warning] = "<b>Warning!</b> The source file has unexpectedly changed to <b>#{document.url}</b><br />
             This probably means the server was restarted."
+
+          # Set session[:doc_url] to the new one
+          session[:doc_url] = self.class.new_doc_url
         
           # Unset the new_doc_url
-          @new_doc_url = nil
+          self.class.new_doc_url = nil
         end
       else
         session[:doc_url] = document.url
@@ -149,7 +155,9 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     # Accessor for document
     class << self
-      attr_reader :document, :new_doc_url
+      attr_reader :document
+      attr_accessor :new_doc_url
+      
       def document=(wp_doc)
         @new_doc_url = wp_doc.url
         @document = wp_doc

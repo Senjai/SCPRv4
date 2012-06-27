@@ -1,0 +1,26 @@
+<script type="text/javascript" charset="utf-8">
+	if(typeof io === "undefined") {
+		$(document).ready(function() {
+			console.log("no connection");
+		});
+	} else {
+		var socket = io.connect('http://localhost:13002');
+		socket.emit('import_wait', "<%= j admin_user.to_json.html_safe %>");
+		
+		socket.on('finished_queue', function(status) {
+			$("#import_status").html("Finished!");
+			$("#spinner").spin(false);
+			window.location = "<%= j admin_index_multi_american_resource_path(resource_name) %>";
+		});
+	}
+	
+	$(document).ready(function() {
+		$("#spinner").spin();
+	});
+</script>
+
+<h2 id="import_status" style="text-align: center; height: 60px;">
+	Importing...
+</h2>
+
+<div id="spinner"></div>

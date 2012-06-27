@@ -61,6 +61,7 @@ Scprv4::Application.configure do
   
   config.scpr.host = "staging.scprdev.org"
   config.scpr.media_root = "/home/kpcc/media"
+  config.scpr.resque_queue   = :scprv4
   
   config.assethost.server = "a.scpr.org"
   config.assethost.token = "droQQ2LcESKeGPzldQr7"
