@@ -82,8 +82,8 @@ Scprv4::Application.routes.draw do
       ## -- END AdminResource --  ##
       
       scope "multi_american" do
-        get "/" => "multi_american#index", as: :multi_american
-        post "/set_doc" => "multi_american#set_doc", as: :multi_american_set_doc
+        get "/"         => "multi_american#index",    as: :multi_american
+        post "/set_doc" => "multi_american#set_doc",  as: :multi_american_set_doc
         
         get     ":resource_name"             => "multi_american#resource_index",       as: "index_multi_american_resource"
         post    ":resource_name/import"      => "multi_american#import",               as: "multi_american_multiple_import"

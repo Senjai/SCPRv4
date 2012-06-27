@@ -22,6 +22,7 @@ module WP
     
     # -------------------
     # Class
+    
     class << self
 
       # -------------------      
@@ -33,6 +34,7 @@ module WP
     
     # -------------------
     # Instance
+    
     def import
       object_builder = {}
       XML_AR_MAP.each do |wp_attr, ar_attr|
@@ -47,6 +49,7 @@ module WP
     
     # -------------------
     # Convenience Methods
+    
     def id
       term_id
     end

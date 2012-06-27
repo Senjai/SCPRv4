@@ -18,7 +18,7 @@
 		</tr>
 	</thead>
 	<tbody class="list">
-		<% resource_objects.each do |record| %>
+		<% @resources.each do |record| %>
 			<tr class="<%= resource_name.dasherize %>">
 				<% resource_class.list_fields.each do |item| %>
 					<td>

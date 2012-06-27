@@ -9,6 +9,8 @@ class Admin::MultiAmericanController < Admin::BaseController
 
   DUMP_FILE = "#{Rails.root}/lib/multi_american/XML/full_dump.xml"
 
+  helper_method :resource_class, :resource_name, :resource_objects, :document
+
   # ---------------
   # Actions
   def resource_index
@@ -25,16 +27,20 @@ class Admin::MultiAmericanController < Admin::BaseController
     render resource_class.detail_template
   end
   
-  # ---------------
   
+  # ---------------
+  # Utility Actions
+  
+  # ---------------
+  # POST
   def set_doc
-    @@doc = WP::Document.new(params[:document_path])
-    session[:doc_url] = @@doc.url
-    redirect_to admin_multi_american_path, notice: "Changed document to <b>#{@@doc.url}</b>"
+    self.class.document = WP::Document.new(params[:document_path])
+    session[:doc_url] = document.url
+    redirect_to admin_multi_american_path, notice: "Changed document to <b>#{document.url}</b>"
   end
     
   # ---------------
-
+  # POST
   def import
     # Setup an array to loop through
     if params[:id]
@@ -64,21 +70,31 @@ class Admin::MultiAmericanController < Admin::BaseController
   end
   
   # ---------------
-
+  # DELETE
   def remove
     # do stuff
     # redirect_to url_for([:admin, :multi_american, params[:resource_class].demodulize.underscore.pluralize]), notice: "Something happened"
   end
-  
-  # ---------------
-  
-  
-  protected
 
-    # ---------------  
+
+  # ---------------  
+
+  protected
     
     def set_root_breadcrumb
       breadcrumb "Multi American Import", admin_multi_american_path
+    end
+    
+    
+    # ---------------
+    # Make sure the class is one of the WP module, or raise error
+    def verify_resource
+      if WP::RESOURCES.include? params[:resource_name]
+        self.resource_name = params[:resource_name]
+        self.resource_class = ["WP", resource_name.camelize.demodulize.singularize].join("::").constantize
+      else
+        raise "Invalid Resource" and return false
+      end
     end
     
     
@@ -89,9 +105,9 @@ class Admin::MultiAmericanController < Admin::BaseController
         
         # If a new document was set, an old one was already set, 
         # and they do not match, warn the user.
-        if @new_doc_url and @new_doc_url != session[:doc_url]
-          flash.now[:warning] = "<b>Warning:</b> The source file has unexpectedly changed to <b>#{document.url}</b><br />
-            This probably means the server was reloaded."
+        if self.class.new_doc_url and self.class.new_doc_url != session[:doc_url]
+          flash.now[:warning] = "<b>Warning!</b> The source file has unexpectedly changed to <b>#{document.url}</b><br />
+            This probably means the server was restarted."
         
           # Unset the new_doc_url
           @new_doc_url = nil
@@ -103,59 +119,54 @@ class Admin::MultiAmericanController < Admin::BaseController
       flash.now[:info] = "This data was parsed from <b>#{document.url}</b>"
     end
     
-    # ---------------
-    # Readers & Helpers for resource names    
-    attr_reader :resource_class, :resource_name
-    helper_method :resource_class, :resource_name, :resource_objects, :document
     
-    def document
-      @@doc
-    end
-    
-
     # ---------------
     # Fake AR order & pagination
     def list(items)
       items.sort_by { |p| p.sorter }.reverse.paginate(page: params[:page], per_page: resource_class.list_per_page)
     end
-  
-  
+    
+    
     # ---------------
-    # Make sure the class is one of the WP module, or raise error
-    def verify_resource
-      if WP::RESOURCES.include? params[:resource_name]
-        @resource_name = params[:resource_name]
-        @resource_class = ["WP", @resource_name.camelize.demodulize.singularize].join("::").constantize
-      else
-        raise "Invalid Resource" and return false
+    # Readers & Helpers for resource names    
+    attr_accessor :resource_class, :resource_name
+    
+    # ---------------
+    # Dynamic accessor for objects
+    attr_reader :resource_objects
+    def resource_objects=(val)
+      @resource_objects = document.instance_variable_set("@#{resource_name}", val)
+    end
+    
+    
+    # ---------------
+    # Convenience method for accessing class document    
+    def document
+      self.class.document
+    end
+    
+    
+    # ---------------
+    # Accessor for document
+    class << self
+      attr_reader :document, :new_doc_url
+      def document=(wp_doc)
+        @new_doc_url = wp_doc.url
+        @document = wp_doc
       end
     end
-            
-    # ---------------
-    # Dynamic reader for objects
-    def resource_objects
-      @resource_objects ||= document.instance_variable_get("@#{resource_name}")
-    end
-
-    # ---------------
-  
-  
-  private
+      
     
     # ---------------
     # Loaders
     def load_doc
-      @@doc ||= begin
-        d = WP::Document.new(DUMP_FILE)
-        @new_doc_url = d.url
-        d
-      end
+      self.class.document ||= WP::Document.new(DUMP_FILE)
     end
 
     # ---------------
     
     def load_objects
-      resource_objects ||= document.send(resource_name)
+      self.resource_objects ||= document.send(resource_name)
     end
     
     # ---------------
@@ -163,12 +174,5 @@ class Admin::MultiAmericanController < Admin::BaseController
     def load_object
       resource_objects.find { |p| p.id == params[:id] }
     end
-    
-    
-    # ---------------
-    # resource_object writer
-    def resource_objects=(val)
-      @resource_objects = document.instance_variable_set("@#{resource_name}", val)
-    end
-    
+
 end

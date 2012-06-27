@@ -139,7 +139,13 @@ module WP
     end
     
     def status=(value)
-      @status = value == "publish" ? 5 : 0
+      status_map = {
+        "publish" => 5,
+        "inherit" => 5,
+        "draft"   => 0
+      }
+      
+      @status = status_map[value]
     end
   end
 end
