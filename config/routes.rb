@@ -83,12 +83,14 @@ Scprv4::Application.routes.draw do
       
       scope "multi_american" do
         get "/" => "multi_american#index", as: :multi_american
-        WP::RESOURCES.each do |title|
-          get title => "multi_american##{title}", as: "multi_american_#{title}"
-          get "#{title}/:id" => "multi_american##{title.singularize}", as: "multi_american_#{title.singularize}"
-        end
-        post "import/:resource_class" => "multi_american#import", as: "multi_american_import"
-        delete "abort/:resource_class" => "multi_american#abort", as: "multi_american_abort"
+        
+        get     ":resource_name"             => "multi_american#resource_index",       as: "index_multi_american_resource"
+        post    ":resource_name/import"      => "multi_american#import",               as: "multi_american_multiple_import"
+        delete  ":resource_name/remove"      => "multi_american#remove",               as: "multi_american_multiple_remove"
+
+        get     ":resource_name/:id"         => "multi_american#resource_show",        as: "show_multi_american_resource"
+        post    ":resource_name/:id/import"  => "multi_american#import",               as: "multi_american_import"
+        delete  ":resource_name/:id/remove"  => "multi_american#remove",               as: "multi_american_remove"
       end
 
       root to: 'home#index'
