@@ -1,19 +1,17 @@
 <div id="asset_slideshow_<%= content.id %>"></div>
 <br/>
 <script type="text/javascript">
-		ahSlides = new AssetHost.Slideshow({
-			imgwidth: $("#asset_slideshow_<%= content.id %>").width(),
-			imgheight: <%= assets.first.asset.six.height.to_i + 40 %>,
-			assets: <%= raw assets.to_json %>,
-			el: "#asset_slideshow_<%= content.id %>"
-		})
-		
-		// add slide change listener for analytics
-		ahSlides.bind("slide",function(idx) {
-			_gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
-			dcsMultiTrack(
-				'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
-				'WT.ti', 'SlideShow PageView'
-			);
-		})
+	ahSlides = new AssetHost.Slideshow({
+		assets: <%= raw assets.to_json %>,
+		el: "#asset_slideshow_<%= content.id %>"
+	})
+	
+	// add slide change listener for analytics
+	ahSlides.bind("switch",function(idx) {
+		_gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
+		dcsMultiTrack(
+			'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
+			'WT.ti', 'SlideShow PageView'
+		);
+	})
 </script>

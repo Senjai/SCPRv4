@@ -7,7 +7,7 @@
 	<table cellspacing="0" cellpadding="0" width="100%" bgcolor="ffffff">
 		<tr>
 		    <td>
-		    	<table cellspacing="0" cellpadding="0" width="450px" align="center" style="border-bottom:1px solid #ccc;padding-bottom:18px;">
+		    	<table cellspacing="0" cellpadding="0" width="90%" align="center" style="border-bottom:1px solid #ccc;padding-bottom:18px;">
 				    <tr>
 				        <td width="240">
 				            <img src="<%= "http://scpr.org#{image_path('logo-masthead.png')}" %>" alt="89.3 KPCC, Southern California Public Radio" />
@@ -17,10 +17,10 @@
 						</td>
 				    </tr>
 				</table>
-				<table cellspacing="0" cellpadding="0" width="450px" align="center">
+				<table cellspacing="0" cellpadding="0" width="90%" align="center">
 					<tr>
 						<td>
-							<h1 style="color:#000;font-family:Helvetica, sans-serif;font-size:28px;font-weight:bold;"><%= alert.email_subject %></h1>
+							<h1 style="color:#000;font-family:Helvetica, sans-serif;font-size:28px;font-weight:bold;"><%= alert.headline %></h1>
 							<p style="color:#000;font-family:Georgia, serif;font-size:16px;line-height:26px;"><%= alert.teaser %></p>
 							<% if alert.alert_link.present? %>
 								<p style="color:#000;font-family:Helvetica, sans-serif;font-size:18px;font-weight:bold;">For more information: <%= link_to alert.alert_link, alert.alert_link %></p>
@@ -28,22 +28,22 @@
 						</td>
 					</tr>
 				</table>
-				<table cellspacing="0" cellpadding="0" width="450px" align="center">
+				<table cellspacing="0" cellpadding="0" width="90%" style="margin-top:30px;" align="center">
 					<tr>
 					    <td>
-					    	<a href="http://facebook.com/kpccfm" style="color:#000;font-family:Helvetica, sans-serif;font-size:11px;text-decoration:none;">
+					    	<a href="http://facebook.com/kpccfm" style="color:#000;font-family:Helvetica, sans-serif;font-size:11px;text-decoration:none;padding:8px 8px 8px 0;">
 								<img src="<%= "http://scpr.org#{image_path('icons/tiny-facebook.png')}" %>" alt="Facebook" />
 								KPCC on Facebook
 					    	</a>
 					    </td>
 					    <td>
-					    	<a href="http://twitter.com/kpcc" style="color:#000;font-family:Helvetica, sans-serif;font-size:11px;text-decoration:none;">
+					    	<a href="http://twitter.com/kpcc" style="color:#000;font-family:Helvetica, sans-serif;font-size:11px;text-decoration:none;padding:8px;">
 					    		<img src="<%= "http://scpr.org#{image_path('icons/tiny-twitter.png')}" %>" alt="Twitter" />
 								KPCC on Twitter
 					    	</a>
 					    </td>
 					    <td>
-					    	<a href="#" style="color:#000;font-family:Helvetica, sans-serif;font-size:11px;text-decoration:none;">
+					    	<a href="#" style="color:#000;font-family:Helvetica, sans-serif;font-size:11px;text-decoration:none;padding:8px;">
 								<img src="<%= "http://scpr.org#{image_path('icons/newsletter-subscribe.png')}" %>" alt="Unsubscribe" />
 								Unsubscribe
 					    	</a>

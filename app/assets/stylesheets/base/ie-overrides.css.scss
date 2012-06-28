@@ -40,6 +40,11 @@ html.ie7-fix {
 		// Some of the fonts in the mega menus is a little hard to read in IE7
 		font-size: 16px;
 	}
+	
+	.pager-nav {
+		position: relative;
+		top: -35px;
+	}
 }
 
 
