@@ -6,26 +6,22 @@ module WP
     XPATH = "//item/wp:post_type[text()='post']/.."
     
     DEFAULTS = {
-      blog_id:      MultiAmerican::BLOG_ID,
-      blog_slug:    MultiAmerican::BLOG_SLUG,
-      is_published: 0 # otherwise mercer cries
+      blog_id: MultiAmerican::BLOG_ID,
+      blog_slug: MultiAmerican::BLOG_SLUG,
+      author_id: MultiAmerican::AUTHOR_ID,
+      is_published: 0,
+      blog_asset_scheme: "",
+      comment_count: 0
     }
     
-    XML_AR_MAP = { 
-      title:              "title",
-      post_name:          "slug"
-    #  content:            "content_encoded",
-    #  author_id:          "author_id",
-    #  blog_id:            "blog_id",
-    #  blog_slug:          "blog_slug",
-    #  published_at:       "pubDate",
-    #  is_published:       "is_published",
-    #  status:             "status",
-    #  blog_asset_scheme:  "blog_asset_scheme",
-    #  comment_count:      "comment_count",
-    #  _short_headline:    "short_headline",
-    #  _teaser:            "excerpt_encoded",
-    #  wp_id:              "post_id"
+    XML_AR_MAP = {
+      id:                 :wp_id,
+      post_name:          :slug,
+      title:              :title,
+      content:            :content,
+      pubDate:            :published_at,
+      status:             :status,
+      excerpt:            :_teaser
     }
     
     administrate!    
@@ -124,14 +120,42 @@ module WP
     
     
     # -------------------    
-
-    def build_for_scpr
-      builder = {}
-      XML_AR_MAP.each do |scpr_a, wp_a|
-        builder.merge!(scpr_a => send(wp_a))
+    # Import
+    
+    def import
+      if self.imported
+        return false
       end
       
-      instance_variable_set("@#{SCPR_CLASS.underscore}", SCPR_CLASS.constantize.new(builder))
+      object = SCPR_CLASS.constantize.send("find_or_initialize_by_#{self.class.xml_ar_map.first[1]}", send(self.class.xml_ar_map.first[0]))
+      
+      if !object.new_record?
+        self.ar_record = object
+        return false
+      end
+      
+      object_builder = {}
+      XML_AR_MAP.each do |wp_attr, ar_attr|
+        object_builder.merge!(ar_attr => send(wp_attr))
+      end
+      
+      # Merge in existing author_id if user exists
+      # Otherwise it will just use Leslie's ID
+      if existing = AdminUser.where(username: self.dc).first
+        object_builder[:author_id] = Bio.where(user_id: existing.id).first.id
+      end
+            
+      object_builder.reverse_merge!(DEFAULTS)
+      object.attributes = object_builder
+            
+      if object.save
+        # Unset @ar_records so it's forced to reload
+        self.class.ar_records = nil
+        self.ar_record = object
+        return self
+      else
+        return false
+      end
     end
     
     
@@ -143,7 +167,7 @@ module WP
     end
     
     def id
-      post_id
+      post_id.to_i
     end
     
     def status=(value)

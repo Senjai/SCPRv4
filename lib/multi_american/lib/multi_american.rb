@@ -9,6 +9,7 @@ require "open-uri"
 module MultiAmerican
   BLOG_ID = 22
   BLOG_SLUG = 'multi-american'
+  AUTHOR_ID = 105 # Leslie's Bio ID, use by default
 end
 
 

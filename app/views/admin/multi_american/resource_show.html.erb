@@ -3,12 +3,12 @@
 	<div class="pull-right">
 		<% if !@resource.imported %>
 			<%= link_to "Import", 
-						admin_multi_american_import_path(@resource.id), 
+						admin_multi_american_import_path(resource_name, @resource.id), 
 						class: "btn btn-primary", method: "post" %>
 		<% else %>
 			<%= button_tag "Imported", class: "btn btn-success", disabled: "disabled" %>
 			<%= link_to "Delete", 
-						admin_multi_american_remove_path(@resource.id), 
+						admin_multi_american_remove_path(resource_name, @resource.id), 
 						class: "btn btn-danger", method: "delete", data: { confirm: "Are you sure?" } %>
 		<% end %>
 	</div>

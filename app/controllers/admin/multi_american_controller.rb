@@ -42,16 +42,21 @@ class Admin::MultiAmericanController < Admin::BaseController
   # ---------------
   # POST
   def import
+    breadcrumb resource_name.titleize, send("admin_index_multi_american_resource_path", resource_name)
+    
     # Queue the job
-    Resque.enqueue(resource_class, document.url, admin_user.username)
-    render 'importing'
+    Resque.enqueue(resource_class::ImportJob, resource_class.name, document.url, admin_user.username, params[:id])
+    render 'working'
   end
   
   # ---------------
   # DELETE
   def remove
-    # do stuff
-    # redirect_to url_for([:admin, :multi_american, params[:resource_class].demodulize.underscore.pluralize]), notice: "Something happened"
+    breadcrumb resource_name.titleize, send("admin_index_multi_american_resource_path", resource_name)
+    
+    # Queue the job
+    Resque.enqueue(resource_class::RemoveJob, resource_class.name, document.url, admin_user.username, params[:id])
+    render 'working'
   end
 
 
@@ -155,7 +160,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     
     def load_object
-      resource_objects.find { |p| p.id == params[:id] }
+      resource_objects.find { |p| p.id == params[:id].to_i }
     end
     
     # ---------------

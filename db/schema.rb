@@ -95,10 +95,6 @@ ActiveRecord::Schema.define(:version => 20120626170514) do
     t.boolean  "is_superuser",                :null => false
     t.datetime "last_login",                  :null => false
     t.datetime "date_joined",                 :null => false
-    t.string   "passw_digest"
-    t.string   "auth_token"
-    t.datetime "created_at"
-    t.string   "name"
   end
 
   add_index "auth_user", ["username"], :name => "username", :unique => true
@@ -214,6 +210,7 @@ ActiveRecord::Schema.define(:version => 20120626170514) do
     t.string   "slug",       :limit => 50,                                     :null => false
     t.datetime "created_at",                :default => '2012-06-08 02:03:41', :null => false
     t.datetime "updated_at",                :default => '2012-06-08 02:03:41', :null => false
+    t.integer  "wp_id"
   end
 
   add_index "blogs_blogcategory", ["blog_id"], :name => "blogs_blogcategory_472bc96c"

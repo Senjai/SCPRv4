@@ -18,7 +18,7 @@
 			<th>Imported?</th>
 		</tr>
 	</thead>
-	<tbody class="list">
+	<tbody class="list">		
 		<% @resources.each do |record| %>
 			<tr class="<%= resource_name.dasherize %>">
 				<% resource_class.list_fields.each do |item| %>
@@ -31,7 +31,9 @@
 				<td>
 					<% if record.imported %>
 						<span style='color: green'>Imported</span>
-					<% else %>
+					<% elsif record.exists_in_db and !record.imported %>
+						<span style='color: orange'>Already Exists</span>
+					<% elsif !record.exists_in_db and !record.imported %>
 						<span style='color: red'>Not Imported</span>
 					<% end %>
 				</td>

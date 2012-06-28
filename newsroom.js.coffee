@@ -32,7 +32,7 @@ app.post '/notify/:action/:to', (req, res) ->
 io.sockets.on 'connection', (socket) ->
     console.log "connected: ", socket.id
 
-    socket.on "import_wait", (user_str) ->
+    socket.on "queue_wait", (user_str) ->
         user = JSON.parse(user_str)
         socket.username = user.username
         connections[user.username] = socket

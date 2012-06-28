@@ -1,7 +1,72 @@
 module WP
   class Node
     extend AdminResource
-    
+        
+    # -------------------      
+    # Resque
+
+    class ImportJob
+      @queue = Rails.application.config.scpr.resque_queue
+      
+      class << self
+        def after_perform(resource_class, document_path, username, id)
+          Rails.logger.info "Performed ImportJob for #{@queue}, sending to #{username}"
+          NodePusher.publish("finished_queue", username, { wp_id: id, resource_class: resource_class } )
+        end
+
+        def perform(resource_class, document_path, username, id)
+          @doc = WP::Document.new(document_path)            
+          @objects = resource_class.constantize.find(@doc)
+          
+          # If we're given an id, only import that one
+          if id
+            if obj = @objects.find { |r| r.id == id.to_i }
+              return obj.import
+            else
+              return false
+            end
+          else
+            # Otherwise import all of them
+            @objects.each do |obj|
+              obj.import
+            end
+            return true
+          end
+        end
+      end
+    end
+
+    class RemoveJob
+      @queue = Rails.application.config.scpr.resque_queue
+      
+      class << self
+        def after_perform(resource_class, document_path, username, id)
+          Rails.logger.info "Performed RemoveJob for #{@queue}, sending to #{username}"
+          NodePusher.publish("finished_queue", username, { wp_id: id, resource_class: resource_class } )
+        end
+
+        def perform(resource_class, document_path, username, id)
+          @doc = WP::Document.new(document_path)
+          @objects = resource_class.constantize.find(@doc)
+          
+          # If we're given an id, only remove that one
+          if id
+            if obj = @objects.find { |r| r.id == id.to_i }
+              return obj.remove
+            else
+              return false
+            end
+          else
+            # Otherwise remove all
+            @objects.each do |obj|
+              obj.remove
+            end
+            return true
+          end
+        end
+      end
+    end
+        
     # -------------------
     # Class
     
@@ -26,8 +91,11 @@ module WP
         @elements ||= doc.xpath(XPATH)
       end
       
+      # Set initial AR Records
+      # This will update when something is imported
+      attr_writer :ar_records
       def ar_records
-        @ar_records ||= self.scpr_class.constantize.all.map { |r| r.send(self.xml_ar_map.first[1]) }
+        @ar_records ||= self.scpr_class.constantize.unscoped.reload.all.map { |r| { wp_id: r.wp_id, identifier: r.send(self.xml_ar_map.first[1]) } }
       end
       
 
@@ -43,7 +111,7 @@ module WP
         
         new_records
       end
-      
+
 
       # -------------------      
       # Node rejectors
@@ -70,7 +138,7 @@ module WP
     # -------------------
     # Instance
     
-    attr_accessor :builder, :imported
+    attr_accessor :builder
     
     def initialize(element)
       # Default builder
@@ -79,10 +147,44 @@ module WP
       element.children.reject { |c| self.class.invalid_child(c) }.each do |child|
         check_and_merge_nodes(child)
       end
-
-      builder.each { |a, v| send("#{a}=", v) }
-      @imported = self.class.ar_records.include?(send(self.class.xml_ar_map.first[0]))
+      
+      @builder.each { |a, v| send("#{a}=", v) }
     end
+    
+    
+    # -------------------            
+    # Remove (opposite of Import)
+    def remove
+      ::Rails.logger.info "Removing...."
+      
+      if self.ar_record.blank?
+        Rails.logger.info "no record"
+        return false
+      else
+        # Only remove objects if they have a wp_id
+        if !self.ar_record.wp_id or self.ar_record.delete
+          self.class.ar_records = nil
+          return self
+        else
+          return false
+        end
+      end
+    end
+    
+    
+    # Some checks to see if it's already been imported or it already exists
+    def ar_record
+      self.class.scpr_class.constantize.where(self.class.xml_ar_map.first[1] => send(self.class.xml_ar_map.first[0])).reload.first
+    end
+      
+    def exists_in_db
+      self.ar_record.present?
+    end
+    
+    def imported
+      self.exists_in_db and self.ar_record.wp_id.present?
+    end
+    
     
     # Assume all instance variables
     def attributes
@@ -100,7 +202,8 @@ module WP
     def sorter
       id
     end
-        
+    
+    
     # -------------------
     # Builder populator
     
