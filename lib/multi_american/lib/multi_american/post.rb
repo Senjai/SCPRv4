@@ -11,21 +11,21 @@ module WP
       is_published: 0 # otherwise mercer cries
     }
     
-    AR_XML_MAP = {
+    XML_AR_MAP = { 
       title:              "title",
-      slug:               "post_name",
-      content:            "content_encoded",
-      author_id:          "author_id",
-      blog_id:            "blog_id",
-      blog_slug:          "blog_slug",
-      published_at:       "pubDate",
-      is_published:       "is_published",
-      status:             "status",
-      blog_asset_scheme:  "blog_asset_scheme",
-      comment_count:      "comment_count",
-      _short_headline:    "short_headline",
-      _teaser:            "excerpt_encoded",
-      wp_id:              "post_id"
+      post_name:          "slug"
+    #  content:            "content_encoded",
+    #  author_id:          "author_id",
+    #  blog_id:            "blog_id",
+    #  blog_slug:          "blog_slug",
+    #  published_at:       "pubDate",
+    #  is_published:       "is_published",
+    #  status:             "status",
+    #  blog_asset_scheme:  "blog_asset_scheme",
+    #  comment_count:      "comment_count",
+    #  _short_headline:    "short_headline",
+    #  _teaser:            "excerpt_encoded",
+    #  wp_id:              "post_id"
     }
     
     administrate!    
@@ -48,6 +48,14 @@ module WP
       
       def elements(doc)
         @elements ||= doc.xpath(XPATH)
+      end
+      
+      def scpr_class
+        SCPR_CLASS
+      end
+      
+      def xml_ar_map
+        XML_AR_MAP
       end
       
       

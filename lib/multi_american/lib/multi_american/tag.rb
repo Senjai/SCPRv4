@@ -1,7 +1,13 @@
 module WP
   class Tag < Node
     XPATH = "/rss/channel/wp:tag"
-
+    
+    SCPR_CLASS = "Tag"
+    XML_AR_MAP = {
+      tag_slug:   "slug",
+      tag_name:   "name"
+    }
+    
     administrate!    
     self.list_fields = [
       ['id', title: "Term ID"],
@@ -20,6 +26,14 @@ module WP
       
       def elements(doc)
         @elements ||= doc.xpath(XPATH)
+      end
+      
+      def scpr_class
+        SCPR_CLASS
+      end
+      
+      def xml_ar_map
+        XML_AR_MAP
       end
     end
     

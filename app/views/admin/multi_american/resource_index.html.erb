@@ -15,6 +15,7 @@
 			<% resource_class.list_fields.each do |item| %>
 				<th><%= item[1][:title] %></th>
 			<% end %>
+			<th>Imported?</th>
 		</tr>
 	</thead>
 	<tbody class="list">
@@ -26,6 +27,14 @@
 								path: send("admin_show_multi_american_resource_path", resource_name, record.id) %>
 					</td>
 				<% end %>
+				
+				<td>
+					<% if record.imported %>
+						<span style='color: green'>Imported</span>
+					<% else %>
+						<span style='color: red'>Not Imported</span>
+					<% end %>
+				</td>
 			</tr>
 		<% end %>
 	</tbody>

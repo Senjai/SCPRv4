@@ -28,9 +28,7 @@ require 'multi_american/lib/multi_american/nav_menu_item.rb'
 require 'multi_american/lib/multi_american/topic.rb'
 
 require 'multi_american/lib/multi_american/category.rb'
-require 'multi_american/lib/multi_american/author.rb'
 require 'multi_american/lib/multi_american/tag.rb'
-require 'multi_american/lib/multi_american/other.rb'
 
 
 #------------------

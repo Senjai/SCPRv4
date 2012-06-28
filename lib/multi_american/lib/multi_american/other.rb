@@ -3,6 +3,9 @@ module WP
     registered = %w{ post attachment jiffypost nav_menu_item roundup topic}.map { |x| "not(text()='#{x}')" }
     XPATH = "//item/wp:post_type[#{registered.join(" and ")}]/..  "
     
+    SCPR_CLASS = ""
+    XML_AR_MAP = {}
+    
     administrate!
     self.list_fields = [
       ['post_type']
@@ -18,6 +21,14 @@ module WP
       
       def elements(doc)
         @elements ||= doc.xpath(XPATH)
+      end
+      
+      def scpr_class
+        SCPR_CLASS
+      end
+      
+      def xml_ar_map
+        XML_AR_MAP
       end
       
       def column_names

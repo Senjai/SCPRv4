@@ -26,6 +26,10 @@ module WP
         @elements ||= doc.xpath(XPATH)
       end
       
+      def ar_records
+        @ar_records ||= self.scpr_class.constantize.all.map { |r| r.send(self.xml_ar_map.first[1]) }
+      end
+      
 
       # -------------------
       # Node Finder
@@ -66,17 +70,18 @@ module WP
     # -------------------
     # Instance
     
-    attr_accessor :builder
+    attr_accessor :builder, :imported
     
     def initialize(element)
       # Default builder
       @builder ||= { }
-      
+
       element.children.reject { |c| self.class.invalid_child(c) }.each do |child|
         check_and_merge_nodes(child)
       end
-      
+
       builder.each { |a, v| send("#{a}=", v) }
+      @imported = self.class.ar_records.include?(send(self.class.xml_ar_map.first[0]))
     end
     
     # Assume all instance variables
@@ -146,9 +151,9 @@ module WP
     
     def method_missing(method, *args, &block)
       if method =~ /=$/
-        return instance_variable_set("@#{method.to_s.chomp("=")}", args.first)
+        return instance_variable_set("@#{method.to_s.gsub(/\W/, "")}", args.first)
       else
-        if var = instance_variable_get("@#{method}")
+        if var = instance_variable_get("@#{method.to_s.gsub(/\W/, "")}")
           return var
         else
           super

@@ -42,33 +42,8 @@ class Admin::MultiAmericanController < Admin::BaseController
   # ---------------
   # POST
   def import
-    # Setup an array to loop through
-    if params[:id]
-      objects = [load_object]
-    else
-      objects = resource_objects
-    end
-    
     # Queue the job
-    Resque.enqueue(resource_class, { objects: objects, to: admin_user.username })
-    
-    # Import objects and prepare flash messages
-    # success, failure = [], []
-    # objects.each do |object|
-    #   if object.import
-    #     success.push object
-    #   else
-    #     failure.push object
-    #   end
-    # end
-    # 
-    # # Setup flash messages & send success/failure arrays to next request
-    # flash.merge!( notice: "Successfully imported #{pluralize "object", success.size}",
-    #               alert: "Failed to import #{pluralize "object", failure.size}",
-    #               failures: failure,
-    #               successes: success )
-    # 
-    # Redirect
+    Resque.enqueue(resource_class, document.url, admin_user.username)
     render 'importing'
   end
   
@@ -143,7 +118,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     def resource_objects=(val)
       @resource_objects = document.instance_variable_set("@#{resource_name}", val)
     end
-    
+        
     
     # ---------------
     # Convenience method for accessing class document    
@@ -182,5 +157,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     def load_object
       resource_objects.find { |p| p.id == params[:id] }
     end
+    
+    # ---------------
 
 end

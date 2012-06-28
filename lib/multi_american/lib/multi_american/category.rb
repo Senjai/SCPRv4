@@ -11,7 +11,7 @@ module WP
     
     XML_AR_MAP = {
       # XML                 # AR
-      category_nicename:    :slug,
+      category_nicename:    :slug, # Primary
       cat_name:             :title
     }
     
@@ -33,17 +33,27 @@ module WP
         @elements ||= doc.xpath(XPATH)
       end
       
+      def scpr_class
+        SCPR_CLASS
+      end
+      
+      def xml_ar_map
+        XML_AR_MAP
+      end
+      
       # -------------------      
       # Resque
-      def after_perform(*args)
-        Rails.logger.info "Performed #{@queue}, sending to #{args[0]["to"]}"
-        NodePusher.publish("finished_queue", args[0]["to"], args)
+      def after_perform(document_path, username)
+        Rails.logger.info "Performed #{@queue}, sending to #{username}}"
+        NodePusher.publish("finished_queue", username, {})
       end
         
-      def perform(*args)
-        Rails.logger.info "Performing #{@queue} with #{args}"
-        sleep 5
-        true
+      def perform(document_path, username)
+        @doc = WP::Document.new(document_path)
+        @objects = self.find(@doc)
+        @objects.each do |obj|
+          obj.import
+        end
       end
       
     end
