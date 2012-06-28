@@ -80,7 +80,7 @@ module WP
     # Convenience Methods
     
     def id
-      term_id
+      term_id.to_i
     end
     
     def to_title
