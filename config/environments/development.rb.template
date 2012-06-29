@@ -32,6 +32,7 @@ Scprv4::Application.configure do
   
   config.scpr.mercer_dump = "#{Rails.root}/../mercer-data/mercer.dump"
   config.scpr.host = "scprv4.dev"
+  config.scpr.resque_queue   = :scprv4
 
   config.node.server = "http://localhost:13002"
 
