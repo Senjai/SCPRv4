@@ -6,8 +6,21 @@ Scprv4::Application.configure do
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = true
+  
+  
+  # There's nothing expiring the cache on scprdev so don't use it
+  # If you change this to true, manually expire the cache
+  # by SSHing to the server and running `Rails.cache.clear`
+  # from the Rails console.
+  
+  # You can also switch this to true, change the Redis path to point to cache1,
+  # and change scprdev in database.yml to use mercer_new (production).
+  # That would be good for figuring out a problem that was only occurring
+  # in production.
+  
+  config.action_controller.perform_caching = false
   config.cache_store = :redis_content_store, "redis://localhost:6379/6"
+
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
