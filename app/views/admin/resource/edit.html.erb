@@ -17,7 +17,7 @@
 		});
 	} else {
 
-		var socket = io.connect('http://localhost:13002');
+		var socket = io.connect('<%= j Rails.application.config.node.server %>');
 		socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @record.to_json.html_safe %>");
 
 		$("input, textarea").on("focus", function(event) {
