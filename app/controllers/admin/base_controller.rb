@@ -27,9 +27,12 @@ class Admin::BaseController < ActionController::Base
   end
   
   def require_admin
-    return true if admin_user
-    session[:return_to] = request.fullpath
-    redirect_to admin_login_path and return false
+    if admin_user and admin_user.is_superuser
+      return true
+    else
+      session[:return_to] = request.fullpath
+      redirect_to admin_login_path and return false
+    end
   end
   
   def breadcrumb(*args)

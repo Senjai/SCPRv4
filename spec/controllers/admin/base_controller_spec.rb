@@ -27,11 +27,12 @@ describe Admin::BaseController do
   end
   
   describe "require_admin" do
-    controller { def index; end }
+    controller { def index; render nothing: true; end }
     
     describe "admin_user true" do
       it "returns true" do
-        controller.stub(:admin_user) { true }
+        user = create :admin_user
+        controller.stub(:admin_user) { user }
         controller.require_admin.should eq true
       end
     end
