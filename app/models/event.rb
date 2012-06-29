@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  administrate!
   self.table_name =  'rails_events_event'
   self.primary_key = :id
   
@@ -9,6 +10,8 @@ class Event < ActiveRecord::Base
     "cult",
     "hall"
   ]
+  
+  validates_presence_of :id, :title, :slug, :etype, :starts_at
   
   #----------
 

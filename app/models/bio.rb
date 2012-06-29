@@ -33,7 +33,7 @@ class Bio < ActiveRecord::Base
   #----------
   
   def to_param
-    "#{slugged_name}"
+    self.slugged_name
   end
   
   def twitter_url

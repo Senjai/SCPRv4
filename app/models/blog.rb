@@ -1,25 +1,39 @@
 class Blog < ActiveRecord::Base
   self.table_name =  'blogs_blog'
   
+  # -- Administration -- #
+  administrate!  
+  self.list_order = "is_active desc, name"  
+  self.list_fields = [
+    ['name'],
+    ['slug'],
+    ['teaser',    title: "Tagline"],
+    ['is_active', title: "Active?",   display_helper: :display_boolean]
+  ]
+  
+  # -- Validations --#
+  validates_presence_of :name, :slug
+  
+  # -- Associations -- #
   has_many :entries, :order => 'published_at desc', class_name: "BlogEntry"
   has_many :tags, :through => :entries
   belongs_to :missed_it_bucket
-  
   has_many :authors, through: :blog_authors, order: "position"
   has_many :blog_authors
-    
+  
+  # -- Scopes -- #
   scope :active, where(:is_active => true)
   scope :is_news, where(:is_news => true)
   scope :is_not_news, where(:is_news => false)
   scope :local, where(is_remote: false)
   scope :remote, where(is_remote: true)
   
-  def to_param
-    slug
+  def teaser
+    self._teaser
   end
   
-  def teaser
-    _teaser
+  def teaser=(txt)
+    self._teaser = txt
   end
   
   def self.cache_remote_entries

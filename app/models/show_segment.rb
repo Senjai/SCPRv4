@@ -1,4 +1,5 @@
 class ShowSegment < ContentBase
+  administrate!
   self.table_name =  'shows_segment'
   
   CONTENT_TYPE = "shows/segment"

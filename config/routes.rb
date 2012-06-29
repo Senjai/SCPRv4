@@ -59,6 +59,45 @@ Scprv4::Application.routes.draw do
     match '/' => 'main#index', :as => :home
   end
   
+  scope "r" do
+    namespace :admin do  
+      get 'login' => "sessions#new", as: :login
+      get 'logout' => "sessions#destroy", as: :logout
+      resources :sessions, only: [:create, :destroy]
+      
+      ## -- AdminResource -- ##
+      resources :tags
+      resources :other_programs
+      resources :show_segments
+      resources :show_episodes
+      resources :kpcc_programs
+      resources :news_stories
+      resources :blogs
+      resources :blog_entries
+      resources :flatpages
+      resources :video_shells
+      resources :events
+      resources :homepages
+      resources :content_shells
+      ## -- END AdminResource --  ##
+      
+      scope "multi_american" do
+        get "/"         => "multi_american#index",    as: :multi_american
+        post "/set_doc" => "multi_american#set_doc",  as: :multi_american_set_doc
+        
+        get     ":resource_name"             => "multi_american#resource_index",       as: "index_multi_american_resource"
+        post    ":resource_name/import"      => "multi_american#import",               as: "multi_american_multiple_import"
+        delete  ":resource_name/remove"      => "multi_american#remove",               as: "multi_american_multiple_remove"
+
+        get     ":resource_name/:id"         => "multi_american#resource_show",        as: "show_multi_american_resource"
+        post    ":resource_name/:id/import"  => "multi_american#import",               as: "multi_american_import"
+        delete  ":resource_name/:id/remove"  => "multi_american#remove",               as: "multi_american_remove"
+      end
+
+      root to: 'home#index'
+    end
+  end
+  
   # -- Bios -- #
   match '/about/people/staff/' => 'people#index', as: :staff_index
   match '/about/people/staff/:name' => 'people#bio', :as => :bio

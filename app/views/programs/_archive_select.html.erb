@@ -1,6 +1,6 @@
 <div class="gray-strip archive-select" id="archive-select">
 	<span class="more">Find an archived Episode:</span>
-	<%= form_tag program_archive_path(@program), id: "archive-date-select", class: "archive-date-select" do %>
+	<%= form_tag program_archive_path(@program), id: "archive_date_select", class: "archive-date-select" do %>
 		<%= date_select 'archive', 'date', order: [:month, :day, :year] %>
 		<%= submit_tag "Go", class: "btn" %>
 	<% end %>

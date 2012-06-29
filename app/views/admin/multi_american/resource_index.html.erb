@@ -1,0 +1,45 @@
+<h2><%= resource_name.titleize %></h2>
+<h4>Total count: <%= resource_objects.size %></h4>
+<div class="form-actions">
+	<%= link_to "Import All #{resource_name.titleize}", 
+				admin_multi_american_multiple_import_path(resource_name), 
+				class: "btn btn-primary", method: "post" %>
+				
+	<%= link_to "Delete All Imported #{resource_name.titleize}", 
+				admin_multi_american_multiple_remove_path(resource_name), 
+				class: "btn btn-danger", method: "delete", data: { confirm: "Are you sure?" } %>
+</div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<% resource_class.list_fields.each do |item| %>
+				<th><%= item[1][:title] %></th>
+			<% end %>
+			<th>Imported?</th>
+		</tr>
+	</thead>
+	<tbody class="list">		
+		<% @resources.each do |record| %>
+			<tr class="<%= resource_name.dasherize %>">
+				<% resource_class.list_fields.each do |item| %>
+					<td>
+						<%= render_attribute item, record, 
+								path: send("admin_show_multi_american_resource_path", resource_name, record.id) %>
+					</td>
+				<% end %>
+				
+				<td>
+					<% if record.imported %>
+						<span style='color: green'>Imported</span>
+					<% elsif record.exists_in_db and !record.imported %>
+						<span style='color: orange'>Already Exists</span>
+					<% elsif !record.exists_in_db and !record.imported %>
+						<span style='color: red'>Not Imported</span>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<%= will_paginate @resources, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

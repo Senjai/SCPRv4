@@ -1,5 +1,16 @@
 class ContentShell < ContentBase
   self.table_name =  "contentbase_contentshell"
+
+  # -- Administration -- #
+  administrate!
+  self.list_order = "published_at desc"
+  self.list_fields = [
+    ['headline'],
+    ['site'],
+    ['bylines'],
+    ['status'],
+    ['published_at']
+  ]
   
   CONTENT_TYPE = "content/shell"
   CONTENT_TYPE_ID = 115

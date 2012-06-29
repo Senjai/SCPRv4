@@ -11,6 +11,8 @@ describe BlogEntry do
     it { should belong_to :author }
     it { should have_many :tagged }
     it { should have_many(:tags).through(:tagged) }
+    it { should have_many(:blog_entry_blog_categories) }
+    it { should have_many(:blog_categories).through(:blog_entry_blog_categories) }
   end
   
   describe "scopes" do
@@ -34,38 +36,6 @@ describe BlogEntry do
     it "is the title" do
       entry = build :blog_entry
       entry.headline.should eq entry.title
-    end
-  end
-  
-  describe "#short_headline" do
-    it "returns short_headline if defined" do
-      short_headline = "Short"
-      entry = build :blog_entry, _short_headline: short_headline
-      entry.short_headline.should eq short_headline
-    end
-  
-    it "returns title if not defined" do
-      entry = build :blog_entry
-      entry.short_headline.should eq entry.title
-    end
-  end
-  
-  describe "#teaser" do
-    it "returns teaser if defined" do
-      teaser = "This is a short teaser"
-      entry = build :blog_entry, _teaser: teaser
-      entry.teaser.should eq teaser
-    end
-  
-    it "creates teaser from long paragraph if not defined" do
-      entry = build :blog_entry
-      entry.teaser.should eq "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a enim a leo auctor lobortis. Etiam aliquam metus sit amet nulla blandit molestie. Cras lobortis odio non turpis laoreet..."
-    end
-    
-    it "returns the full first paragraph if it's short enough" do
-      short_first_paragraph = "This is just a short paragraph."
-      entry = build :blog_entry, content: "#{short_first_paragraph}\n And some more!"
-      entry.teaser.should eq short_first_paragraph
     end
   end
 end

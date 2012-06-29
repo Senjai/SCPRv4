@@ -1,13 +1,24 @@
 class VideoShell < ContentBase
   self.table_name = "contentbase_videoshell"
+  
+  # -- Administration -- #
+  administrate!
+  self.list_order = "published_at desc"
+  self.list_fields = [
+    ['headline'],
+    ['slug'],
+    ['bylines'],
+    ['status'],
+    ['published_at']
+  ]
+  
+  # -- Validation -- #
+  validates_presence_of :headline
+  
   CONTENT_TYPE = "content/video"
   CONTENT_TYPE_ID = 125
   ADMIN_PREFIX = "contentbase/videoshell"
-  
-  # Validations for the future
-  # validates :headline, presence: true
-  # validates :body, presence: true
-  
+    
   define_index do
     indexes headline
     indexes _teaser

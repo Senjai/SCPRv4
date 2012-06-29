@@ -1,0 +1,13 @@
+<% page_title "Login" %>
+
+<%= form_tag admin_sessions_path, id: "login" do %>
+	<%= label_tag :username %>
+	<%= text_field_tag :username, nil, autofocus: "autofocus" %>
+	
+	<%= label_tag "Password" %>
+	<%= password_field_tag :unencrypted_password, nil, id: "password" %>
+	
+	<div class="form-actions">
+		<%= submit_tag "Submit", class: "btn" %>
+	</div>
+<% end %>

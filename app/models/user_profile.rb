@@ -1,5 +1,3 @@
 class UserProfile < ActiveRecord::Base
-  self.table_name =  'users_userprofile'
-  
-  
+  self.table_name =  'users_userprofile'  
 end

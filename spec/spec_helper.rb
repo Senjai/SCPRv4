@@ -9,16 +9,18 @@ require 'database_cleaner'
 require 'chronic'
 require 'fakeweb'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 FakeWeb.allow_net_connect = false
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
-  config.infer_base_class_for_anonymous_controllers = false
+  config.infer_base_class_for_anonymous_controllers = true
+  
   config.include FactoryGirl::Syntax::Methods
   config.include ContentBaseHelpers
   config.include RemoteStubs
   config.include LyrisXMLResponse
+  config.include DatePathHelper
   
   config.before :suite do
     ThinkingSphinx::Test.start

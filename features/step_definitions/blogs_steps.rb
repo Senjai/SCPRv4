@@ -39,7 +39,7 @@ When /^I go to the blogs page$/ do
 end
 
 When /^I go to (?:the|that) blog's page$/ do
-  visit blog_path(@blog)
+  visit blog_path(@blog.slug)
 end
 
 Then /^I should be redirected to the blogs page$/ do

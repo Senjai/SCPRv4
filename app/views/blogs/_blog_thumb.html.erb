@@ -1,6 +1,6 @@
 <% if blog ||= nil %>
 	<div class="thumbnail">
-		<h2><%= link_to blog.name, blog_path(blog) %></h2>
+		<h2><%= link_to blog.name, blog_path(blog.slug) %></h2>
 		<p class="description"><%= blog.teaser %></p>
 		<% if entry = blog.entries.published.first %>
 			<div class="latest-post">

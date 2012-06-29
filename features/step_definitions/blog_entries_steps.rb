@@ -46,8 +46,8 @@ end
 
 #### Routing
 When /^I go to their blog's page$/ do
-  visit blog_path @blog
-  current_path.should eq blog_path(@blog)
+  visit blog_path @blog.slug
+  current_path.should eq blog_path(@blog.slug)
 end
 
 When /^I go to that blog entry's page$/ do

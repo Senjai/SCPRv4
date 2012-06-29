@@ -40,6 +40,28 @@ class ContentBase < ActiveRecord::Base
     %r{^/admin/contentbase/videoshell/(\d+)/}      => 'content/video'    
   }
 
+  STORY_SCHEMES = [
+    ["Float Right (default)", ""],
+    ["Wide", "wide"],
+    ["Slideshow", "slideshow"]
+  ]
+
+  STORY_EXTRA_SCHEMES = [
+    ["Hide (default)", ""],
+    ["Sidebar Display", "sidebar"]
+  ]
+
+  LEAD_SCHEMES = [
+    ["Default", ""],
+    ["Wide", "wide"]
+  ]
+
+  BLOG_SCHEMES = [
+    ["Full Width (default)", ""],
+    ["Float Right", "right"],
+    ["Slideshow", "slideshow"]
+  ]
+    
   # All ContentBase objects have assets and alarms
   has_many :assets, :class_name => "ContentAsset", :as => :content, :order => "asset_order asc"
   has_many :bylines, :class_name => "ContentByline", :as => :content
@@ -147,6 +169,10 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
+  def self.status_text_collect
+    ContentBase::STATUS_TEXT.map { |p| [p[1], p[0]] }
+  end
+  
   def slideshow?
     if self.class::PRIMARY_ASSET_SCHEME
       return self[ self.class::PRIMARY_ASSET_SCHEME ] == "slideshow" ? true : false
@@ -244,6 +270,10 @@ class ContentBase < ActiveRecord::Base
     self._short_headline? ? self._short_headline : self.headline
   end
   
+  def short_headline=(val)
+    self._short_headline = val
+  end
+  
   #----------
   
   def _short_headline?
@@ -280,6 +310,10 @@ class ContentBase < ActiveRecord::Base
       return ''
     end    
     
+  end
+  
+  def teaser=(val)
+    self._teaser = val
   end
 
   #----------

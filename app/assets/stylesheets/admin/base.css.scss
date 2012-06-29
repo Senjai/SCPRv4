@@ -1,0 +1,34 @@
+.container-fluid {
+	min-width: 700px;
+}
+
+// We want content input to always be pretty big
+.simple_form {
+	input:not([type=submit]) {
+		@extend .span4;
+	}
+}
+
+form {
+	input.long, textarea {
+		@extend .span8;
+	}
+	
+	textarea.short {
+		height: 200px;
+	}
+}
+
+.user-badge {
+	padding: 5px;
+	@include border-radius(5px);
+}
+
+ul.viewers {
+	margin-left: 0;
+	list-style: none;
+	li { 
+		margin-bottom: 5px;
+		font-weight: bold;
+	}
+}

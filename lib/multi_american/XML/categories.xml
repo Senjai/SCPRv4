@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+	xmlns:excerpt="http://wordpress.org/export/1.1/excerpt/"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:wp="http://wordpress.org/export/1.1/"
+>
+
+<channel>
+	
+
+	<wp:category><wp:term_id>42</wp:term_id><wp:category_nicename>cultureidentity</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Culture/Identity]]></wp:cat_name><wp:category_description><![CDATA[A category relating to stories about ethnic identity and the immigrant experience, and how both are represented in the arts.]]></wp:category_description></wp:category>
+	<wp:category><wp:term_id>29</wp:term_id><wp:category_nicename>economy</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Economy]]></wp:cat_name><wp:category_description><![CDATA[Stories about business and labor, entrepreneurs and those who power the economy.]]></wp:category_description></wp:category>
+	<wp:category><wp:term_id>30</wp:term_id><wp:category_nicename>health-education</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Health/Education]]></wp:cat_name><wp:category_description><![CDATA[Stories about health issues, education, and the politics of both.]]></wp:category_description></wp:category>
+	<wp:category><wp:term_id>28</wp:term_id><wp:category_nicename>politics-justice</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Politics/Justice]]></wp:cat_name><wp:category_description><![CDATA[Stories about the politics, policies, and law enforcement issues surrounding immigration.]]></wp:category_description></wp:category>
+	<wp:category><wp:term_id>1</wp:term_id><wp:category_nicename>uncategorized</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Uncategorized]]></wp:cat_name></wp:category>
+
+</channel>
+</rss>

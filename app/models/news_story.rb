@@ -1,11 +1,52 @@
 class NewsStory < ContentBase
+  administrate!
   self.table_name =  'news_story'
+  self.list_order = "published_at desc"
+    
+  self.list_fields = [
+    ['id'],
+    ['headline',      link: true ],
+    ['slug'],
+    ['news_agency'],
+    ['audio'],
+    ['status'],
+    ['published_at' ]
+  ]
+  
+  
+    
+  before_save :fill_fields, on: :create
+  def fill_fields
+    self.comment_count = 0
+    self.published_at = Time.now unless published_at
+  end
+  
+  validates :headline,  presence: true
+  validates :body,      presence: true
+  validates :slug,      presence: true, format: { with: /^[a-zA-Z0-9\-_]+$/, message: "not correctly formatted. 0-9, a-z, A-Z, -, _" }
   
   CONTENT_TYPE = 'news/story'
   CONTENT_TYPE_ID = 15
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
-      
+  
+  LOCALES = [ 
+    ["CA/Local",  "local"],
+    ["U.S.",      "natnl"],
+    ["World",     "world"]
+  ]
+  
+  SOURCES = [
+    ['KPCC',                'kpcc'],
+    ['KPCC & wires',        'kpcc_plus_wire'],
+    ['AP',                  'ap'],
+    ['KPCC wire services',  'kpcc_wire'],
+    ['NPR',                 'npr'],
+    ['NPR & wire services', 'npr_wire'],
+    ['New America Media',   'new_america'],
+    ['NPR & KPCC',          'npr_kpcc']
+  ]
+  
   define_index do
     indexes headline
     indexes lede
@@ -24,10 +65,10 @@ class NewsStory < ContentBase
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   #----------
-  
+      
   def link_path(options={})
     Rails.application.routes.url_helpers.news_story_path(options.merge!({
-      :year => self.published_at.year, 
+      :year => self.published_at.year.to_s, 
       :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
       :id => self.id,

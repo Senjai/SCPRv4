@@ -1,0 +1,22 @@
+<%= f.error_notification %>
+<fieldset>
+	<legend>Basic Info</legend>
+	<%= f.input :name %>
+	<%= f.input :is_active %>
+	<%= f.input :slug %>
+	<%= f.input :teaser, label: "Tagline", input_html: { class: "long" } %>
+	<%= f.input :description, input_html: { class: "short" } %>
+</fieldset>
+
+<fieldset>
+	<legend>Media</legend>
+	<%= f.input :head_image %>
+	<%= f.input :feed_url %>
+	<%= f.input :is_news %>
+</fieldset>
+
+<fieldset>
+	<legend>Remote</legend>
+	<%= f.input :is_remote %>
+	<%= f.input :custom_url %>
+</fieldset>

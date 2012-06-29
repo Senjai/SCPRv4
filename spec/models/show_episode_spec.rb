@@ -1,6 +1,12 @@
 require "spec_helper"
 
 describe ShowEpisode do
+  describe "validations" do
+    it { should validate_presence_of :title }
+    it { should validate_presence_of :air_date }
+    it { should validate_presence_of :show_id }
+  end
+  
   describe "associations" do
     it { should have_many :rundowns }
     it { should have_many(:segments).through(:rundowns) }

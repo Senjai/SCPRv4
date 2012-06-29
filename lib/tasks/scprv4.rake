@@ -12,7 +12,7 @@ namespace :scprv4 do
     task :remote_blogs => :environment do
       puts "Caching remote blogs..."
       cached = Blog.cache_remote_entries
-      puts "Done!\n"
+      puts "Finished.\n"
     end
     
     #----------
@@ -27,14 +27,18 @@ namespace :scprv4 do
       # These options will be applied to all the feeds being cached. See module TwitterCacher for default options.
       # See the Twitter API docs for more available options: https://dev.twitter.com/docs/api/1/get/statuses/user_timeline
       ## Example usage: cache_tweets("KPCCForum", "SCPR", count: 10, include_rts: false)
+      puts "Caching tweets...."
       cache_tweets("KPCCForum")
+      puts "Finished.\n"
     end
     
     #----------
     
     desc "Cache external programs"
     task :programs => [ :environment ] do
+      puts "Caching remote programs..."
       OtherProgram.active.each { |p| p.cache }
+      puts "Finished.\n"
     end
     
     #----------
@@ -49,7 +53,7 @@ namespace :scprv4 do
       pickle = RubyPython.import("cPickle")
     
       HomeController._cache_homepage(nil,pickle)
-      puts "Done!"
+      puts "Finished.\n"
     end
     
     desc "Cache everything"
@@ -144,20 +148,42 @@ namespace :scprv4 do
   end
 end
 
-# testing tasks
-namespace :db do
-  namespace :test do |s|    
-    task :load_mercer => :environment do
-      if Rails.application.config.scpr.mercer_dump
-        # clear test database
-        s[:purge].invoke
-        
-        # load in mercer dump file
-        $stderr.puts "Dumping data from #{Rails.application.config.scpr.mercer_dump} into #{ActiveRecord::Base.configurations['test']['database']}"
-        `mysql #{ActiveRecord::Base.configurations['test']['database']} < #{Rails.application.config.scpr.mercer_dump}`
-        $stderr.puts "Mercer dump loaded."
-      else
+# Easy database syncing for development
+
+db_namespace = namespace :db do
+  namespace :mercer do
+    task :pull => [:fetch, :merge] # rsync and merge
+    task :clone => [:clone_dump, :purge, :merge] # scp, purge and merge
+    
+    # rsync the dump file on db1
+    task :fetch => :dump_file_config do
+      $stderr.puts "Fetching mercer.dump from 66.226.4.229 using rsync"
+      `rsync -v 66.226.4.229:~scprdb/mercer.dump #{Rails.application.config.scpr.mercer_dump}`
+      $stderr.puts "Finished."
+    end
+  
+    # Merge dump file schema into current database.
+    task :merge => :dump_file_config do
+      $stderr.puts "Dumping data from #{Rails.application.config.scpr.mercer_dump} into #{ActiveRecord::Base.configurations[Rails.env]['database']}"
+      `mysql #{ActiveRecord::Base.configurations[Rails.env]['database']} < #{Rails.application.config.scpr.mercer_dump}`
+      $stderr.puts "Finished."
+    end
+  
+    task :purge do
+      db_namespace[:purge].invoke
+    end
+            
+    task :clone_dump => :dump_file_config do
+      $stderr.puts "Fetching mercer.dump from 66.226.4.229 using scp"
+      `scp 66.226.4.229:~scprdb/mercer.dump #{Rails.application.config.scpr.mercer_dump.split("/").tap { |a| a.pop }.join("/")}/`
+      $stderr.puts "Finished."
+    end
+  
+    task :dump_file_config => :environment do
+      if Rails.application.config.scpr.mercer_dump.blank?
         raise "No mercer dump file specified for this environment."
+      else
+        $stderr.puts Rails.application.config.scpr.mercer_dump
       end
     end
   end

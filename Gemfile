@@ -26,6 +26,8 @@ gem "oauth2"
 gem 'simple_form'
 gem 'chronic'
 
+gem "bcrypt-ruby", "~> 3.0.0"
+gem "resque", "~> 1.20"
 
 group :assets do
   gem "eco"
