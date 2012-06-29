@@ -61,9 +61,10 @@ class BlogEntry < ContentBase
   end
   
   def has_format?
-    true
+    # true
+    !wp_id # Temporary
   end
-  
+    
   def headline
     self.title
   end
