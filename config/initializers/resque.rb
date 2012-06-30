@@ -1,2 +1,2 @@
-# Make Resque use the same Redis instance as the rest of the app
+# Use whatever the environment's cache is for Resque
 Resque.redis = Rails.cache.instance_variable_get(:@data)
