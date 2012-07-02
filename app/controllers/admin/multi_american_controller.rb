@@ -139,7 +139,6 @@ class Admin::MultiAmericanController < Admin::BaseController
       attr_accessor :new_doc_url
       
       def document=(wp_doc)
-        Rails.logger.info "*** Setting new document"
         @new_doc_url = wp_doc.url
         @document = wp_doc
       end

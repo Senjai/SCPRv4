@@ -103,7 +103,6 @@ module WP
       # Node Finder
       
       def find(doc)
-        Rails.logger.info "*** Finding #{self.name} in #{doc.url}"
         new_records = []
       
         elements(doc).reject { |i| invalid_item(i) }.each do |element|
@@ -142,7 +141,6 @@ module WP
     attr_accessor :builder
     
     def initialize(element)
-      Rails.logger.info "*** Initializing a new #{self.class.name}"
       # Default builder
       @builder ||= { }
 
@@ -157,10 +155,7 @@ module WP
     # -------------------            
     # Remove (opposite of Import)
     def remove
-      ::Rails.logger.info "Removing...."
-      
       if self.ar_record.blank?
-        Rails.logger.info "no record"
         return false
       else
         # Only remove objects if they have a wp_id
