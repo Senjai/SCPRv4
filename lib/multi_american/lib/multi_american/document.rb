@@ -18,8 +18,8 @@ module WP
 
     def method_missing(method, *args, &block)
       if WP::RESOURCES.include? method.to_s
-        instance_variable_get("@#{method}")
         Rails.logger.info "*** Got #{method}"
+        instance_variable_get("@#{method}")
       else
         super
       end
