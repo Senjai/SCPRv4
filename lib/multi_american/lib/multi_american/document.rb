@@ -4,6 +4,8 @@ module WP
     delegate :url, to: :doc
     
     def initialize(file)
+      Rails.logger.info "*** Initialized document with #{file}"
+      
       @doc = Nokogiri::XML::Document.parse(open(file))
       @title = @doc.at_xpath("/rss/channel/title").content
       @pubDate = @doc.at_xpath("/rss/channel/pubDate").content
@@ -17,6 +19,7 @@ module WP
     def method_missing(method, *args, &block)
       if WP::RESOURCES.include? method.to_s
         instance_variable_get("@#{method}")
+        Rails.logger.info "*** Got #{method}"
       else
         super
       end

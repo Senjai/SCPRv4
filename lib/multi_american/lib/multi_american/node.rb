@@ -103,6 +103,7 @@ module WP
       # Node Finder
       
       def find(doc)
+        Rails.logger.info "*** Finding #{self.name} in #{doc.url}"
         new_records = []
       
         elements(doc).reject { |i| invalid_item(i) }.each do |element|
@@ -141,6 +142,7 @@ module WP
     attr_accessor :builder
     
     def initialize(element)
+      Rails.logger.info "*** Initializing a new #{self.class.name}"
       # Default builder
       @builder ||= { }
 
