@@ -1,14 +1,12 @@
 module WP
   class Document
-    attr_reader :title, :pubDate, :doc
-    delegate :url, to: :doc
+    attr_reader :title, :pubDate, :doc, :url
     
     def initialize(file)
-      Rails.logger.info "*** Initialized document with #{file}"
-      
       @doc = Nokogiri::XML::Document.parse(open(file))
-      @title = @doc.at_xpath("/rss/channel/title").content
-      @pubDate = @doc.at_xpath("/rss/channel/pubDate").content
+      @url = Rails.cache.write "ma:doc:url", @doc.url
+      @title = Rails.cache.write "ma:doc:title", @doc.at_xpath("/rss/channel/title").content
+      @pubDate = Rails.cache.write "ma:doc:pubDate", @doc.at_xpath("/rss/channel/pubDate").content
       
       # Eager-load all classes
       WP::RESOURCES.each do |resource|
@@ -18,7 +16,6 @@ module WP
 
     def method_missing(method, *args, &block)
       if WP::RESOURCES.include? method.to_s
-        Rails.logger.info "*** Got #{method}"
         instance_variable_get("@#{method}")
       else
         super
