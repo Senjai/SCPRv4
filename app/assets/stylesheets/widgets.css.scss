@@ -564,13 +564,14 @@ a.with-icon {
 	}
 }
 
-// Related Articles
-.related-articles {
-	h6 {
-		color:$orangeDark;
-		
+.related-links {
+	.small a {
+		font-size: 11px;
+		color: $linkColor;
+		font-style: italic;
 	}
 }
+
 .bottom {
 	// background-color:$nearWhite;
 	border-top:2px solid $grayLight;

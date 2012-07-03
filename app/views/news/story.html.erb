@@ -31,11 +31,13 @@
 	<%= content_widget "social_tools", @story, cssClass: "bottom horizontal" %>
 </div> <!-- story -->
 
-<%= content_widget "related_content_and_links", @story %>
-<%= render "shared/cwidgets/pij_query", :content => @story %>
+<div class="fold inline" id="fold">
+	<%= content_widget "related_content_and_links", @story %>
+	<%= content_widget "pij_query", @story %>
 
-<%= content_widget 'content_carousel', @story %>
-<%= comments_for @story %>
+	<%= content_widget 'content_carousel', @story %>
+	<%= comments_for @story %>
+</div>
 
 <% content_for :footerga do %>
 	_gaq.push(['_setCustomVar',1,'Source','<%=@story.source%>',3]);

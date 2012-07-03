@@ -53,6 +53,15 @@
 			border:none;
 		}
 	}
+	
+	ul li {
+		@include font-headline($weight: normal);
+		a { color: $black; }
+	}
+	
+	&.inline {
+		h6 { text-align: left; }
+	}
 }
 
 article {
