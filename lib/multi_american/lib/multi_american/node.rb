@@ -5,72 +5,48 @@ module WP
     # -------------------      
     # Resque
 
-    class ImportJob
+    class ResqueJob
       @queue = Rails.application.config.scpr.resque_queue
       
       class << self
-        def after_perform(resource_class, document_path, username, id)
-          Rails.logger.info "Performed ImportJob for #{@queue}, sending to #{username}"
+        def after_perform(resource_class, document_path, action, id, username)
+          Rails.logger.info "Performed #{action} for #{@queue}, sending to #{username}"
           NodePusher.publish("finished_queue", username, { wp_id: id, resource_class: resource_class } )
         end
 
-        def perform(resource_class, document_path, username, id)
-          @doc = WP::Document.new(document_path)            
+        def perform(resource_class, document_path, action, id, username)
+          @doc = Rails.cache.fetch(WP::Document.cache_key) || WP::Document.new(document_path)
           @objects = resource_class.constantize.find(@doc)
           
-          # If we're given an id, only import that one
+          # If we're given an id, only import/deport that one
           if id
             if obj = @objects.find { |r| r.id == id.to_i }
-              return obj.import
+              return obj.send action
             else
               return false
             end
           else
-            # Otherwise import all of them
+            # Otherwise import/remove all of them
             @objects.each do |obj|
-              obj.import
+              obj.send action
             end
             return true
           end
         end
       end
     end
-
-    class RemoveJob
-      @queue = Rails.application.config.scpr.resque_queue
-      
-      class << self
-        def after_perform(resource_class, document_path, username, id)
-          Rails.logger.info "Performed RemoveJob for #{@queue}, sending to #{username}"
-          NodePusher.publish("finished_queue", username, { wp_id: id, resource_class: resource_class } )
-        end
-
-        def perform(resource_class, document_path, username, id)
-          @doc = WP::Document.new(document_path)
-          @objects = resource_class.constantize.find(@doc)
-          
-          # If we're given an id, only remove that one
-          if id
-            if obj = @objects.find { |r| r.id == id.to_i }
-              return obj.remove
-            else
-              return false
-            end
-          else
-            # Otherwise remove all
-            @objects.each do |obj|
-              obj.remove
-            end
-            return true
-          end
-        end
-      end
-    end
-        
+    
+    
     # -------------------
     # Class
     
     class << self
+      
+      CACHE_KEY = self.name.pluralize
+      
+      def cache_key
+        [WP::CACHE_KEY, WP::Document::CACHE_KEY, CACHE_KEY].join(":")
+      end
       
       # -------------------      
       # Templates
@@ -103,13 +79,19 @@ module WP
       # Node Finder
       
       def find(doc)
-        new_records = []
+        @objects = Rails.cache.fetch "doc:#{self.name.underscore.pluralize}" do 
+          new_records = []
       
-        elements(doc).reject { |i| invalid_item(i) }.each do |element|
-          new_records.push self.new(element)
+          elements(doc).reject { |i| invalid_item(i) }.each do |element|
+            new_records.push self.new(element)
+          end
+        
+          new_records.each do |r|
+            Rails.cache.sadd "#{self.cache_key}:#{r.id}"
+          end
         end
         
-        new_records
+        YAML.load(@objects)
       end
 
 
@@ -149,6 +131,11 @@ module WP
       end
       
       @builder.each { |a, v| send("#{a}=", v) }
+    end
+    
+    
+    def cache_key
+      [WP::CACHE_KEY, WP::Document::CACHE_KEY, self.class.name.underscore, self.id].join(":")
     end
     
     

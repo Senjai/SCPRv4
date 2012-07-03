@@ -10,6 +10,9 @@ module MultiAmerican
   BLOG_ID = 22
   BLOG_SLUG = 'multi-american'
   AUTHOR_ID = 105 # Leslie's Bio ID, use by default
+  CACHE_KEY = "wp"
+  
+  @@cache = Rails.cache.instance_variable_get(:@data)
 end
 
 

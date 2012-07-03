@@ -1,17 +1,29 @@
 module WP
   class Document
-    attr_reader :title, :pubDate, :doc, :url
+    CACHE_KEY = "doc"
+    
+    class << self
+      def cache_key
+        [WP::CACHE_KEY, CACHE_KEY].join(":")
+      end
+    end
+    
+    attr_reader :title, :pubDate, :doc, :url    
     
     def initialize(file)
       @doc = Nokogiri::XML::Document.parse(open(file))
-      @url = Rails.cache.write "ma:doc:url", @doc.url
-      @title = Rails.cache.write "ma:doc:title", @doc.at_xpath("/rss/channel/title").content
-      @pubDate = Rails.cache.write "ma:doc:pubDate", @doc.at_xpath("/rss/channel/pubDate").content
+      @url = @doc.url
+      @title = @doc.at_xpath("/rss/channel/title").content
+      @pubDate = @doc.at_xpath("/rss/channel/pubDate").content
       
       # Eager-load all classes
       WP::RESOURCES.each do |resource|
         instance_variable_set("@#{resource}", ["WP", resource.to_s.singularize.camelize].join("::").constantize.find(@doc))
       end
+      
+      # Build the doc object and write to cache
+      obj = { url: @doc.url, title: @title, pubDate: @pubDate }
+      @@cache.set self.class.cache_key, obj.to_yaml
     end
 
     def method_missing(method, *args, &block)
