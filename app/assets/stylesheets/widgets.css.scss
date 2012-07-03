@@ -566,7 +566,7 @@ a.with-icon {
 
 .related-links {
 	.small a {
-		font-size: 11px;
+		@include font-sans-serif(normal, 11px);
 		color: $linkColor;
 		font-style: italic;
 	}
@@ -585,6 +585,7 @@ a.with-icon {
 		background: url(image_path('icons/pij-query.png')) no-repeat 0 4px;
 		color:$grayDark;
 		padding-left:30px;
+		text-align: left;
 		line-height: $baseLineHeight;
 		small {
 			@include font-sans-serif(normal, 11px);
