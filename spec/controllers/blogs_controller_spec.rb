@@ -56,36 +56,50 @@ describe BlogsController do
   end
   
   describe "GET /show" do
-    it "responds with success" do
-      blog = create :blog
-      get :show, blog: blog.slug
-      response.should be_success
+    describe "for invalid blogs" do
+      it "responds with RoutingError on invalid slug" do
+        blog = create :blog
+        -> { get :show, blog: "nonsense" }.should raise_error ActionController::RoutingError
+      end
+  
+      it "responds with RoutingError for a remote blog" do
+        blog = create :blog, is_remote: true
+        -> { get :show, blog: blog.slug }.should raise_error ActionController::RoutingError
+      end
     end
     
-    it "assigns @blog" do
-      blog = create :blog, is_remote: false
-      get :show, blog: blog.slug
-      assigns(:blog).should eq blog
-    end
+    describe "for valid blogs" do
+      it "responds with success" do
+        blog = create :blog
+        get :show, blog: blog.slug
+        response.should be_success
+      end
     
-    it "assigns @entries" do
-      blog = create :blog
-      get :show, blog: blog.slug
-      assigns(:entries).should_not be_nil
-    end
+      it "assigns @blog" do
+        blog = create :blog, is_remote: false
+        get :show, blog: blog.slug
+        assigns(:blog).should eq blog
+      end
     
-    it "only gets published entries" do
-      blog = create :blog
-      entry_pending = create :blog_entry, blog: blog, status: ContentBase::STATUS_PENDING
-      entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
-      get :show, blog: blog.slug
-      assigns(:entries).should eq [entry_published]
-    end
+      it "assigns @entries" do
+        blog = create :blog
+        get :show, blog: blog.slug
+        assigns(:entries).should_not be_nil
+      end
     
-    it "paginates" do
-      blog = create(:blog, entry_count: 10)
-      get :show, blog: blog.slug, page: 1
-      assigns(:entries).size.should be < 10
+      it "only gets published entries" do
+        blog = create :blog
+        entry_pending = create :blog_entry, blog: blog, status: ContentBase::STATUS_PENDING
+        entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
+        get :show, blog: blog.slug
+        assigns(:entries).should eq [entry_published]
+      end
+    
+      it "paginates" do
+        blog = create(:blog, entry_count: 10)
+        get :show, blog: blog.slug, page: 1
+        assigns(:entries).size.should be < 10
+      end
     end
   end
   
@@ -164,9 +178,8 @@ describe BlogsController do
         assigns(:authors).should_not be_nil
       end
       
-      it "redirects to blogs_path if blog isn't found" do
-        get action, @entry_attr.merge(blog: "nonsense")
-        response.should redirect_to blogs_path
+      it "raises RoutingEror if blog isn't found" do
+        -> { get action, @entry_attr.merge(blog: "nonsense") }.should raise_error ActionController::RoutingError
       end
     end
     
@@ -184,35 +197,36 @@ describe BlogsController do
   end
   
   describe "GET /entry" do
-    it "responds with success" do
-      blog = create :blog
-      entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
-      p = entry_published.published_at
-      get :entry, { blog: blog.slug, id: entry_published.id, slug: entry_published.slug }.merge!(date_path(p))
-      response.should be_success
+    describe "for invalid entry" do
+      it "raises a routing error for unpublished" do
+        entry = create :blog_entry, status: ContentBase::STATUS_PENDING
+        -> {
+          get :entry, { blog: entry.blog.slug, id: entry.id, slug: entry.slug }.merge!(date_path(entry.published_at))
+        }.should raise_error ActionController::RoutingError
+      end
+      
+      it "raises a routing error for invalid ID" do
+        entry = create :blog_entry
+        -> {
+          get :entry, { blog: entry.blog.slug, id: "999999", slug: entry.slug }.merge!(date_path(entry.published_at))
+        }.should raise_error ActionController::RoutingError
+      end
     end
     
-    it "assigns @blog" do
-      blog = create :blog, is_remote: false
-      get :show, blog: blog.slug
-      assigns(:blog).should eq blog
-    end
+    describe "for valid entry" do
+      let(:entry) { create :blog_entry }
+      
+      before :each do
+        get :entry, { blog: entry.blog.slug, id: entry.id, slug: entry.slug }.merge!(date_path(entry.published_at))
+      end
+      
+      it "responds with success" do
+        response.should be_success
+      end
     
-    it "assigns @entry" do
-      blog = create :blog
-      entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
-      p = entry_published.published_at
-      get :entry, { blog: blog.slug, id: entry_published.id, slug: entry_published.slug }.merge!(date_path(p))
-      assigns(:entry).should eq entry_published
-    end
-    
-    it "raises a routing error if entry isn't found" do
-      blog = create :blog
-      entry_unpublished = create :blog_entry, blog: blog, status: ContentBase::STATUS_PENDING
-      p = entry_unpublished.published_at
-      -> {
-        get :entry, { blog: blog.slug, id: entry_unpublished.id, slug: entry_unpublished.slug }.merge!(date_path(p))
-      }.should raise_error ActionController::RoutingError
+      it "assigns @entry" do
+        assigns(:entry).should eq entry
+      end
     end
   end
 end

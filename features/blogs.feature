@@ -27,14 +27,6 @@ Scenario: See latest entry for a remote blog
 	Then I should see the latest entry for that remote blog
 	And I should see a timestamp for the latest entry
 
-Scenario: Remote Blogs do not have their own page
-	Given a blog with the following attribute:
-	 | is_remote |
-	 | 1         |
-	
-	When I go to that blog's page
-	Then I should be redirected to the blogs page
-
 Scenario: Blog Teaser on Blogs Index page
 	Given 1 blog
 	When I go to the blogs page

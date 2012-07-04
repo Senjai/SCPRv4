@@ -1,7 +1,8 @@
 class BlogsController < ApplicationController
   require 'will_paginate/array'
-  
   before_filter :load_blog, :except => :index
+
+  respond_to :html, :xml, :rss
   
   def index
     @blogs = Blog.active.order("name")
@@ -14,7 +15,10 @@ class BlogsController < ApplicationController
   #----------
   
   def show
-    @entries = @blog.entries.published.paginate(page: params[:page], per_page: 5)
+    # Only want to paginate for HTML response
+    @scoped_entries = @blog.entries.published
+    @entries = @scoped_entries.paginate(page: params[:page], per_page: 5)
+    respond_with @scoped_entries
   end
   
   #----------
@@ -51,7 +55,7 @@ class BlogsController < ApplicationController
       if @blog = Blog.local.find_by_slug(params[:blog])
         @authors = @blog.authors
       else
-        redirect_to blogs_path and return false
+        raise ActionController::RoutingError.new("Not Found")
       end
     end    
 end

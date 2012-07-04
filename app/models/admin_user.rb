@@ -52,11 +52,20 @@ class AdminUser < ActiveRecord::Base
   end
     
   # ----------------
-  # This should eventually replace the first_name and last_name columns
-  
+  # Getter and Setter for name
+  # Should eventually be stored in database
   def name
-    name = [first_name, last_name].join(" ")
-    name.present? ? name : "Anonymous"
+    @name ||= begin
+      name = [first_name, last_name].join(" ")
+      name.present? ? name : "Anonymous"
+    end
+  end
+  
+  def name=(name)
+    split_name = name.split(" ", 2)
+    self.first_name = name[0]
+    self.last_name = name[1]
+    @name = name
   end
   
   protected

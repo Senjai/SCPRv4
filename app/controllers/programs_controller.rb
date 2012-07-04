@@ -1,6 +1,8 @@
 class ProgramsController < ApplicationController  
   before_filter :get_program, except: [:index, :schedule]
   before_filter :get_featured_programs, only: :index
+
+  respond_to :html, :xml, :rss
   
   def index
     @kpcc_programs = KpccProgram.active.order("title")
@@ -35,7 +37,8 @@ class ProgramsController < ApplicationController
       
       @segments = @segments.paginate(page: params[:page], per_page: 10)
       @episodes = @episodes.paginate(page: params[:page], per_page: 6)
-      render :action => "show"
+      
+      respond_with @segments
     else
       render :action => "show_external"
     end
@@ -69,9 +72,8 @@ class ProgramsController < ApplicationController
       redirect_to @segment.link_path and return
     end
     
-    # If segment ID isn't correct, redirect to the segment's program path
     rescue
-      redirect_to program_path @program
+      raise ActionController::RoutingError.new("Not Found")
   end
   
   
@@ -81,7 +83,7 @@ class ProgramsController < ApplicationController
     @episode = @program.episodes.published.where(air_date: Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)).first
     @segments = @episode.segments.published
     rescue
-      redirect_to program_path(@program)
+      raise ActionController::RoutingError.new("Not Found")
   end
 
   def schedule

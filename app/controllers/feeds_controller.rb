@@ -4,7 +4,7 @@ class FeedsController < ApplicationController
   def all_news
     response.headers["Content-Type"] = 'text/xml'
     
-    # check if we have a cached podcast.  If so, short-circuit and return it
+    # check if we have a cached feed.  If so, short-circuit and return it
     if cache = Rails.cache.fetch("feeds:all_news")
       render :text => cache, :formats => :xml and return
     end

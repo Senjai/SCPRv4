@@ -165,7 +165,7 @@ db_namespace = namespace :db do
     # Merge dump file schema into current database.
     task :merge => :dump_file_config do
       $stderr.puts "Dumping data from #{Rails.application.config.scpr.mercer_dump} into #{ActiveRecord::Base.configurations[Rails.env]['database']}"
-      `mysql #{ActiveRecord::Base.configurations[Rails.env]['database']} < #{Rails.application.config.scpr.mercer_dump}`
+      `mysql -u root #{ActiveRecord::Base.configurations[Rails.env]['database']} < #{Rails.application.config.scpr.mercer_dump}`
       $stderr.puts "Finished."
     end
   
