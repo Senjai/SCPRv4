@@ -41,7 +41,7 @@
 }
 
 .fold { // related content below the main content - comments, "more from"s, etc.
-	h6 {
+	.row-title h6 {
 		font-size: 12px;
 		margin-top: 5px;
 		text-align: right;
