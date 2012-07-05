@@ -7,20 +7,25 @@ describe CategoryController do
       get :index, category: category.slug
       assigns(:category).should eq category
     end
+    
+    describe "with XML" do
+      it "renders xml template when requested" do
+        category = create :category_news
+        get :index, category: category.slug, format: :xml
+        response.should render_template 'category/index', format: :xml
+      end
+    end
   end
   
 #   describe "GET /news" do
 #     before :all do
-#       puts "Starting Sphinx and indexing..."
 #       DatabaseCleaner.strategy = :truncation
 #       make_content(7)
 #       categories = create_list :category_news, 2
-#       ThinkingSphinx::Test.start
 #       ThinkingSphinx::Test.index
 #     end
 #     
 #     after :all do
-#       ThinkingSphinx::Test.stop
 #       DatabaseCleaner.strategy = :transaction
 #     end
 #     
@@ -32,16 +37,13 @@ describe CategoryController do
 #   
 #   describe "GET /arts" do
 #     before :all do
-#       puts "Starting Sphinx and indexing..."
 #       DatabaseCleaner.strategy = :truncation
-#       categories = create_list :category_not_news, 2
 #       make_content(7)
-#       ThinkingSphinx::Test.start
+#       categories = create_list :category_not_news, 2
 #       ThinkingSphinx::Test.index
 #     end
 #     
 #     after :all do
-#       ThinkingSphinx::Test.stop
 #       DatabaseCleaner.strategy = :transaction
 #     end
 #     

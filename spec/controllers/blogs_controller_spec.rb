@@ -69,6 +69,14 @@ describe BlogsController do
     end
     
     describe "for valid blogs" do
+      describe "with XML" do
+        it "renders xml template when requested" do
+          blog = create :blog
+          get :show, blog: blog.slug, format: :xml
+          response.should render_template 'blogs/show', format: :xml
+        end
+      end
+      
       it "responds with success" do
         blog = create :blog
         get :show, blog: blog.slug
