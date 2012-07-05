@@ -17,13 +17,6 @@ Scenario: See the featured programs on the index page
 	When I go to the programs page
 	Then I should see the featured programs in the correct order
 
-Scenario: Attempt to go to a program page that doesn't exist
-	Given a kpcc program with the following attributes:
-	| slug           |
-	| some-cool-show |
-	When I go to a program page with slug "not-a-show"
-	Then I should be on the programs page
-
 Scenario Outline: View a Featured Program's page
 	Given a program titled "<title>" with slug "<slug>"
 	When I go to the program's page

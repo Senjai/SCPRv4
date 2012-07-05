@@ -89,8 +89,9 @@ describe ProgramsController do
       end
       
       it "redirects if nothing found" do
-        get :show, show: "nonsense"
-        response.should be_redirect
+        -> {
+          get :show, show: "nonsense"
+        }.should raise_error ActionController::RoutingError
       end
     end
   end

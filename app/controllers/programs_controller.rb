@@ -94,11 +94,12 @@ class ProgramsController < ApplicationController
   protected
     
     # Try various ways to fetch the program the person requested
-    # If nothing is found, just redirect to programs path
+    # If nothing is found, 404
     def get_program
       @program = get_kpcc_program_by_quick_slug || get_kpcc_program_by_slug || get_other_program
+      
       if !@program
-        redirect_to programs_path
+        raise ActionController::RoutingError.new("Not Found")
       end
     end
     
