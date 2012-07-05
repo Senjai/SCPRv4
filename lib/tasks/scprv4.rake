@@ -46,13 +46,7 @@ namespace :scprv4 do
     desc "Cache homepage one time"
     task :homepage => [ :environment ] do
       puts "Caching homepage..."
-      require 'rubypython'
-    
-      # load python
-      RubyPython.start()      
-      pickle = RubyPython.import("cPickle")
-    
-      HomeController._cache_homepage(nil,pickle)
+      HomeController._cache_homepage(nil)
       puts "Finished.\n"
     end
     
