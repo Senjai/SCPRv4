@@ -23,7 +23,7 @@ module WP
       
       # Build the doc object and write to cache
       obj = { url: @doc.url, title: @title, pubDate: @pubDate }
-      @@cache.set self.class.cache_key, obj.to_yaml
+      WP.rcache.set self.class.cache_key, obj.to_yaml
     end
 
     def method_missing(method, *args, &block)

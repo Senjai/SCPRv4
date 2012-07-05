@@ -5,7 +5,7 @@ module WP
     
     class << self
       def elements(doc)
-        @elements ||= doc.xpath(XPATH)
+        doc.xpath(XPATH)
       end
       
       # Return false so they're all taken

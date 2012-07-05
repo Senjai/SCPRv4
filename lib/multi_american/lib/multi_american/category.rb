@@ -2,7 +2,8 @@ module WP
   class Category < Node
     XPATH = "/rss/channel/wp:category"
     SCPR_CLASS = "BlogCategory"
-        
+    CACHE_KEY = "categories"
+    
     DEFAULTS = {
       blog_id: MultiAmerican::BLOG_ID
     }
@@ -29,7 +30,7 @@ module WP
       # -------------------      
       # Elements
       def elements(doc)
-        @elements ||= doc.xpath(XPATH)
+        doc.xpath(XPATH)
       end
       
       def scpr_class
@@ -67,8 +68,6 @@ module WP
       object.attributes = object_builder
         
       if object.save
-        # Unset @ar_records so it's forced to reload
-        self.class.ar_records = nil
         self.ar_record = object
         return self
       else

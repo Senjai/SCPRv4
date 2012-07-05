@@ -31,10 +31,12 @@
 				<td>
 					<% if record.imported %>
 						<span style='color: green'>Imported</span>
-					<% elsif record.exists_in_db and !record.imported %>
-						<span style='color: orange'>Already Exists</span>
-					<% elsif !record.exists_in_db and !record.imported %>
-						<span style='color: red'>Not Imported</span>
+					<% else %>
+						<% if record.ar_record %>
+							<span style='color: orange'>Already Exists</span>
+						<% else %>
+							<span style='color: red'>Not Imported</span>
+						<% end %>
 					<% end %>
 				</td>
 			</tr>

@@ -45,7 +45,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     breadcrumb resource_name.titleize, send("admin_index_multi_american_resource_path", resource_name)
     
     # Queue the job
-    Resque.enqueue(resource_class::ResqueJob, resource_class.name, document.url, "import", params[:id], admin_user.username)
+    Resque.enqueue(WP::ResqueJob, resource_class.name, document.url, "import", params[:id], admin_user.username)
     render 'working'
   end
   
@@ -55,7 +55,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     breadcrumb resource_name.titleize, send("admin_index_multi_american_resource_path", resource_name)
     
     # Queue the job
-    Resque.enqueue(resource_class::ResqueJob, resource_class.name, document.url, "remove", params[:id], admin_user.username)
+    Resque.enqueue(WP::ResqueJob, resource_class.name, document.url, "remove", params[:id], admin_user.username)
     render 'working'
   end
 
@@ -160,7 +160,11 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     
     def load_object
-      resource_objects.find { |p| p.id == params[:id].to_i }
+      obj = Rails.cache.fetch [resource_class.cache_key, params[:id]].join(":") do
+        resource_objects.find { |p| p.id == params[:id].to_i }
+      end
+      
+      YAML.load(obj)
     end
     
     # ---------------

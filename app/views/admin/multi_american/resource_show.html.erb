@@ -1,7 +1,7 @@
 <h2>
 	<%= @resource.to_title %>
 	<div class="pull-right">
-		<% if !@resource.exists_in_db %>
+		<% if !@resource.ar_record %>
 			<%= link_to "Import", 
 						admin_multi_american_import_path(resource_name, @resource.id), 
 						class: "btn btn-primary", method: "post" %>

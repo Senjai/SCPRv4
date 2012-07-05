@@ -2,6 +2,7 @@ module WP
   class Post < Node
     SCPR_CLASS = "BlogEntry"
     CONTENT_TYPE_ID = 44 # BlogEntry (in mercer)
+    CACHE_KEY = "posts"
     
     XPATH = "//item/wp:post_type[text()='post']/.."
     
@@ -43,7 +44,7 @@ module WP
       # Elements
       
       def elements(doc)
-        @elements ||= doc.xpath(XPATH)
+        doc.xpath(XPATH)
       end
       
       def scpr_class
@@ -90,7 +91,6 @@ module WP
     
     # -------------------
     # Builder populator
-    
     def check_and_merge_nodes(child)
       if is_category(child)
         merge_category(child)
@@ -107,7 +107,7 @@ module WP
       category = {  title: child.content, 
                     domain: child[:domain], 
                     nicename: child[:nicename] }
-      builder[:categories].push category
+      @builder[:categories].push category
     end
     
     
@@ -121,7 +121,6 @@ module WP
     
     # -------------------    
     # Import
-    
     def import
       if self.imported
         return false
@@ -149,8 +148,6 @@ module WP
       object.attributes = object_builder
             
       if object.save
-        # Unset @ar_records so it's forced to reload
-        self.class.ar_records = nil
         self.ar_record = object
         return self
       else
