@@ -567,7 +567,6 @@ a.with-icon {
 .related-links {
 	.small {
 		@include font-sans-serif(normal, 11px);
-		font-style: italic;
 		color: $orangeDark;
 	}
 }
