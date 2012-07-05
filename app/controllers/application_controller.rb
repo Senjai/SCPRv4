@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
   
   before_filter :check_session, :set_up_finders
   
+  before_filter :add_params_for_newrelic
+  def add_params_for_newrelic
+    NewRelic::Agent.add_custom_parameters(referer: request.referer, agent: request.env['HTTP_USER_AGENT'])
+  end
+  
   #----------
   
   helper_method :current_user, :admin_user, :verify_natural
