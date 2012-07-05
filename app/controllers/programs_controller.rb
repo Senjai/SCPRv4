@@ -20,25 +20,29 @@ class ProgramsController < ApplicationController
       
       # depending on what type of show this is, we need to filter some elements out of the 
       # @segments and @episodes selectors
-      
-      if @program.display_episodes?
-        @current_episode = @program.episodes.published.first
+      # Only for HTML response
+      if request.format.html?
+        if @program.display_episodes?
+          @current_episode = @episodes.first
         
-        if @current_episode
-          # don't return the current episode in the episodes list
-          @episodes = @episodes.where("id != ?",@current_episode.id)
+          if @current_episode
+            # don't return the current episode in the episodes list
+            @episodes = @episodes.where("id != ?",@current_episode.id)
           
-          if @current_episode.segments.published.any?
-            # don't include the current episodes segments in the segments list
-            @segments = @segments.where("id not in (?)", @current_episode.segments.published.collect(&:id) )
-          end
-        end        
+            if @current_episode.segments.published.any?
+              # don't include the current episodes segments in the segments list
+              @segments = @segments.where("id not in (?)", @current_episode.segments.published.collect(&:id) )
+            end
+          end        
+        end
       end
       
+      # Don't want to paginate for XML response
+      @segments_scoped = @segments
       @segments = @segments.paginate(page: params[:page], per_page: 10)
       @episodes = @episodes.paginate(page: params[:page], per_page: 6)
       
-      respond_with @segments
+      respond_with @segments_scoped
     else
       render :action => "show_external"
     end

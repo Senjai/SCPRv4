@@ -4,6 +4,6 @@ xml.rss('version' => '2.0', 'xmlns:dc' => "http://purl.org/dc/elements/1.1/") do
     xml.link        @program.remote_link_path
     xml.description @program.teaser
   
-    xml << render_content(@segments.first(15),"feedxml")
+    xml << render_content(@segments_scoped.first(15),"feedxml")
   end
 end
