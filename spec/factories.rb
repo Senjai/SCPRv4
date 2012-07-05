@@ -244,7 +244,7 @@ end
   factory :asset, class: ContentAsset do
     sequence(:id, 1)
     asset_order 1
-    asset_id 33585 # This is an actual BrightCove asset on AssetHost. This is not the best way to test this but it'll do for now.
+    asset_id 33585 # Doesn't matter what this is because the response gets mocked
     sequence(:caption) { |n| "Caption #{n}" } 
   end
 

@@ -10,7 +10,10 @@ require 'chronic'
 require 'fakeweb'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
+# Stub AssetHost and other HTTP requests
 FakeWeb.allow_net_connect = false
+FakeWeb.register_uri(:any, %r{#{Rails.application.config.assethost.server}}, body: File.read("#{Rails.root}/spec/fixtures/assethost.json"))
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
