@@ -565,10 +565,10 @@ a.with-icon {
 }
 
 .related-links {
-	.small a {
+	.small {
 		@include font-sans-serif(normal, 11px);
-		color: $linkColor;
 		font-style: italic;
+		color: $orangeDark;
 	}
 }
 
