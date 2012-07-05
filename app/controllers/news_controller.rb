@@ -1,19 +1,13 @@
-class NewsController < ApplicationController
-  respond_to :html, :js
-    
+class NewsController < ApplicationController    
   def story
-    begin
-      @story = NewsStory.published.find(params[:id])
-    rescue
-      # if this story doesn't exist or hasn't been published, send them to the home page
-      redirect_to home_path and return
-    end
-    
+    @story = NewsStory.published.find(params[:id])
+
     if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @story.link_path
       redirect_to @story.link_path and return
     end
     
-    # otherwise, just render
+  rescue
+    raise ActionController::RoutingError.new("Not Found")
   end
   
   #----------
@@ -23,9 +17,13 @@ class NewsController < ApplicationController
     date = Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)
     
     stories = NewsStory.published.where("published_at > ? and published_at < ? and slug = ?",date,(date+1),params[:slug])
+    if stories.present?
+      redirect_to stories.first.link_path, permanent: true
+    else
+      raise ActionController::RoutingError.new("Not Found")
+    end
     
-    redirect_to stories.any? ? stories.first.link_path : home_path, :permanent => true
   rescue
-    redirect_to home_path    
+    raise ActionController::RoutingError.new("Not Found")
   end
 end
