@@ -55,12 +55,21 @@ class CategoryController < ApplicationController
     def get_content_from(categories, options={})
       # make sure categories is an array
       categories = [categories].flatten
+      options[:limit] ||= 15
+      params[:page] ||= 1
+      
+      # Reset to page 1 if the requested page is too high
+      # Otherwise an error will occur
+      # TODO: Fallback to SQL query instead of just cutting it off.
+      if params[:page].to_i > (SPHINX_MAX_MATCHES / options[:limit].to_i)
+        params[:page] = 1 
+      end
       
       ThinkingSphinx.search(
         '',
         :classes    => ContentBase.content_classes,
-        :page       => params[:page] || 1,
-        :per_page   => options[:limit] || 15,
+        :page       => params[:page],
+        :per_page   => options[:limit],
         :order      => :published_at,
         :sort_mode  => :desc,
         :with => { :category => categories.map { |c| c.id } }
