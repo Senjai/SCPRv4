@@ -17,39 +17,23 @@ describe CategoryController do
     end
   end
   
-#   describe "GET /news" do
-#     before :all do
-#       DatabaseCleaner.strategy = :truncation
-#       make_content(7)
-#       categories = create_list :category_news, 2
-#       ThinkingSphinx::Test.index
-#     end
-#     
-#     after :all do
-#       DatabaseCleaner.strategy = :transaction
-#     end
-#     
-#     it "responds with success" do
-#       get :news
-#       response.should be_success
-#     end
-#   end
-#   
-#   describe "GET /arts" do
-#     before :all do
-#       DatabaseCleaner.strategy = :truncation
-#       make_content(7)
-#       categories = create_list :category_not_news, 2
-#       ThinkingSphinx::Test.index
-#     end
-#     
-#     after :all do
-#       DatabaseCleaner.strategy = :transaction
-#     end
-#     
-#     it "responds with success" do
-#       get :arts
-#       response.should be_success
-#     end
-#   end
+  describe "respond_by_format" do
+    pending
+  end
+  
+  describe "get_content_from" do
+    pending
+  end
+  
+  describe "generate_sections_for" do
+    pending
+  end
+  
+   describe "GET /news" do
+     pending
+   end
+   
+   describe "GET /arts" do
+     pending
+   end
 end
