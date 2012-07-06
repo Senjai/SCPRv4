@@ -565,8 +565,7 @@ a.with-icon {
 }
 
 .related-links {
-	.small {
-		@include font-sans-serif(normal, 11px);
+	.domain {
 		color: $orangeDark;
 	}
 }
