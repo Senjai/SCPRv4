@@ -2,6 +2,7 @@ module WP
   class Post < Node
     SCPR_CLASS = "BlogEntry"
     CONTENT_TYPE_ID = 44 # BlogEntry (in mercer)
+    CACHE_KEY = "posts"
     
     XPATH = "//item/wp:post_type[text()='post']/.."
     
@@ -38,23 +39,6 @@ module WP
     # Class
     
     class << self
-
-      # -------------------      
-      # Elements
-      
-      def elements(doc)
-        @elements ||= doc.xpath(XPATH)
-      end
-      
-      def scpr_class
-        SCPR_CLASS
-      end
-      
-      def xml_ar_map
-        XML_AR_MAP
-      end
-      
-      
       # -------------------      
       # Node rejectors
       
@@ -90,7 +74,6 @@ module WP
     
     # -------------------
     # Builder populator
-    
     def check_and_merge_nodes(child)
       if is_category(child)
         merge_category(child)
@@ -98,64 +81,36 @@ module WP
         super
       end
     end
-    
-    
-    # -------------------      
-    # Merge in extra attributes
-    
-    def merge_category(child)
-      category = {  title: child.content, 
-                    domain: child[:domain], 
-                    nicename: child[:nicename] }
-      builder[:categories].push category
-    end
-    
-    
-    # -------------------
-    # Node inspectors
-    
-    def is_category(child)
-      child.name == "category"
-    end
-    
+
     
     # -------------------    
     # Import
-    
-    def import
-      if self.imported
-        return false
-      end
-      
-      object = SCPR_CLASS.constantize.send("find_or_initialize_by_#{self.class.xml_ar_map.first[1]}", send(self.class.xml_ar_map.first[0]))
-      
-      if !object.new_record?
-        self.ar_record = object
-        return false
-      end
-      
-      object_builder = {}
-      XML_AR_MAP.each do |wp_attr, ar_attr|
-        object_builder.merge!(ar_attr => send(wp_attr))
-      end
-      
+    def build_extra_attributes(object, object_builder)
       # Merge in existing author_id if user exists
       # Otherwise it will just use Leslie's ID
-      if existing = AdminUser.where(username: self.dc).first
-        object_builder[:author_id] = Bio.where(user_id: existing.id).first.id
+      if existing_user = AdminUser.where(username: self.dc).first
+        object_builder[:author_id] = Bio.where(user_id: existing_user.id).first.id
       end
-            
-      object_builder.reverse_merge!(DEFAULTS)
-      object.attributes = object_builder
-            
-      if object.save
-        # Unset @ar_records so it's forced to reload
-        self.class.ar_records = nil
-        self.ar_record = object
-        return self
-      else
-        return false
+      
+      tags = self.categories.select { |c| c[:domain] == "post_tag" }
+      cats = self.categories.select { |c| c[:domain] == "category" }
+
+      # Merge in Tags
+      tags.each do |tag|
+        existing = ::Tag.where(slug: tag[:nicename]).first
+        #object.tags.push existing
       end
+
+      # Merge in Categories   
+      cats.each do |cat|     
+        existing = BlogCategory.where(slug: cat[:nicename]).first
+        object.blog_categories.push existing
+      end
+      
+      # Merge in Disqus thread ID (or nil)
+      object.dsq_thread_id = self.postmeta.find({}) { |p| p[:meta_key] == "dsq_thread_id" }[:meta_value]
+      
+      return [object, object_builder]
     end
     
     

@@ -1,6 +1,7 @@
 module WP
   class Tag < Node
     XPATH = "/rss/channel/wp:tag"
+    CACHE_KEY = "tags"
     
     SCPR_CLASS = "Tag"
     XML_AR_MAP = {
@@ -18,28 +19,7 @@ module WP
       ['tag_name']
     ]
     self.list_per_page = 50
-    
-    # -------------------
-    # Class
-    
-    class << self
 
-      # -------------------      
-      # Elements
-      
-      def elements(doc)
-        @elements ||= doc.xpath(XPATH)
-      end
-      
-      def scpr_class
-        SCPR_CLASS
-      end
-      
-      def xml_ar_map
-        XML_AR_MAP
-      end
-    end
-    
     
     # -------------------
     # Instance
@@ -67,8 +47,6 @@ module WP
       object.attributes = object_builder
         
       if object.save
-        # Unset @ar_records so it's forced to reload
-        self.class.ar_records = nil
         self.ar_record = object
         return self
       else

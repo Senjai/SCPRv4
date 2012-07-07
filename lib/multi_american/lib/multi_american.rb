@@ -12,10 +12,19 @@ module MultiAmerican
   AUTHOR_ID = 105 # Leslie's Bio ID, use by default
 end
 
+module WP
+  CACHE_KEY = "wp"
+  def self.rcache
+    @@cache ||= Rails.cache.instance_variable_get(:@data)
+  end
+end
+
 
 #------------------
 # Lib files
 # Order of groups is important
+require 'multi_american/lib/multi_american/builder.rb'
+
 require 'multi_american/lib/multi_american/document.rb'
 
 require 'multi_american/lib/multi_american/node.rb'
@@ -31,10 +40,11 @@ require 'multi_american/lib/multi_american/topic.rb'
 require 'multi_american/lib/multi_american/category.rb'
 require 'multi_american/lib/multi_american/tag.rb'
 
+require 'multi_american/lib/multi_american/resque_job.rb'
 
 #------------------
 # Setup our resources based on WP classes and 
 # remove ones we don't want listed.
-ignores = %w{documents nodes}
+ignores = %w{documents nodes builders resque_jobs}
 WP::RESOURCES = WP.constants.select { |c| WP.const_get(c).is_a? Class }
                             .map { |r| r.to_s.demodulize.underscore.pluralize } - ignores

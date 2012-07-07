@@ -4,10 +4,6 @@ module WP
     self.list_fields = Post.list_fields
     
     class << self
-      def elements(doc)
-        @elements ||= doc.xpath(XPATH)
-      end
-      
       # Return false so they're all taken
       def invalid_item(node)
         false

@@ -1,12 +1,8 @@
 module WP
   class Roundup < Post
     XPATH = "//item/wp:post_type[text()='roundup']/.."
-    self.list_fields = Post.list_fields
+    CACHE_KEY = "roundups"
     
-    class << self
-      def elements(doc)
-        @elements ||= doc.xpath(XPATH)
-      end
-    end
+    self.list_fields = Post.list_fields
   end
 end

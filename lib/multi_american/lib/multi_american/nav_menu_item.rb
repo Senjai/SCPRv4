@@ -1,12 +1,8 @@
 module WP
   class NavMenuItem < Post
     XPATH = "//item/wp:post_type[text()='nav_menu_item']/.."
-    self.list_fields = Post.list_fields
+    CACHE_KEY = "nav_menu_items"
     
-    class << self
-      def elements(doc)
-        @elements ||= doc.xpath(XPATH)
-      end
-    end
+    self.list_fields = Post.list_fields
   end
 end

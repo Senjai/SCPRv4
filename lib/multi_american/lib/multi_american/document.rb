@@ -1,25 +1,39 @@
 module WP
   class Document
-    attr_reader :title, :pubDate, :doc
-    delegate :url, to: :doc
+    CACHE_KEY = "doc"
+    
+    class << self
+      def cache_key
+        [WP::CACHE_KEY, CACHE_KEY].join(":")
+      end
+      
+      def cached
+        Rails.logger.info("*** Getting document...")
+        @cached ||= YAML.load(WP.rcache.get(self.cache_key).to_s)
+      end
+    end
+    
+    attr_reader :title, :pubDate, :url    
     
     def initialize(file)
-      Rails.logger.info "*** Initialized document with #{file}"
-      
-      @doc = Nokogiri::XML::Document.parse(open(file))
-      @title = @doc.at_xpath("/rss/channel/title").content
-      @pubDate = @doc.at_xpath("/rss/channel/pubDate").content
+      doc = Nokogiri::XML::Document.parse(open(file))
+      @url = doc.url
+      @title = doc.at_xpath("/rss/channel/title").content
+      @pubDate = doc.at_xpath("/rss/channel/pubDate").content
       
       # Eager-load all classes
       WP::RESOURCES.each do |resource|
-        instance_variable_set("@#{resource}", ["WP", resource.to_s.singularize.camelize].join("::").constantize.find(@doc))
+        instance_variable_set("@#{resource}", ["WP", resource.to_s.singularize.camelize].join("::").constantize.find(doc))
       end
+      
+      # Write to cache
+      WP.rcache.set self.class.cache_key, self.to_yaml
     end
 
     def method_missing(method, *args, &block)
       if WP::RESOURCES.include? method.to_s
-        Rails.logger.info "*** Got #{method}"
-        instance_variable_get("@#{method}")
+        Rails.logger.info("*** Getting #{method}")
+        instance_variable_get("@#{method}") || ["WP", method.to_s.singularize.camelize].join("::").constantize.find
       else
         super
       end

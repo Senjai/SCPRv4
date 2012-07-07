@@ -1,76 +1,26 @@
 module WP
   class Node
     extend AdminResource
-        
-    # -------------------      
-    # Resque
-
-    class ImportJob
-      @queue = Rails.application.config.scpr.resque_queue
-      
-      class << self
-        def after_perform(resource_class, document_path, username, id)
-          Rails.logger.info "Performed ImportJob for #{@queue}, sending to #{username}"
-          NodePusher.publish("finished_queue", username, { wp_id: id, resource_class: resource_class } )
-        end
-
-        def perform(resource_class, document_path, username, id)
-          @doc = WP::Document.new(document_path)            
-          @objects = resource_class.constantize.find(@doc)
-          
-          # If we're given an id, only import that one
-          if id
-            if obj = @objects.find { |r| r.id == id.to_i }
-              return obj.import
-            else
-              return false
-            end
-          else
-            # Otherwise import all of them
-            @objects.each do |obj|
-              obj.import
-            end
-            return true
-          end
-        end
-      end
-    end
-
-    class RemoveJob
-      @queue = Rails.application.config.scpr.resque_queue
-      
-      class << self
-        def after_perform(resource_class, document_path, username, id)
-          Rails.logger.info "Performed RemoveJob for #{@queue}, sending to #{username}"
-          NodePusher.publish("finished_queue", username, { wp_id: id, resource_class: resource_class } )
-        end
-
-        def perform(resource_class, document_path, username, id)
-          @doc = WP::Document.new(document_path)
-          @objects = resource_class.constantize.find(@doc)
-          
-          # If we're given an id, only remove that one
-          if id
-            if obj = @objects.find { |r| r.id == id.to_i }
-              return obj.remove
-            else
-              return false
-            end
-          else
-            # Otherwise remove all
-            @objects.each do |obj|
-              obj.remove
-            end
-            return true
-          end
-        end
-      end
-    end
-        
+    include WP::Builder
+    
+    DEFAULTS = {}
+    
     # -------------------
     # Class
     
     class << self
+      
+      # -------------------
+      # Class cache key
+      def cache_key
+        [WP::CACHE_KEY, WP::Document::CACHE_KEY, self::CACHE_KEY].join(":")
+      end
+      
+      attr_writer :cached
+      def cached
+        @cached ||= WP.rcache.smembers(self.cache_key).map { |c| YAML.load(WP.rcache.get c) }
+      end
+      
       
       # -------------------      
       # Templates
@@ -88,58 +38,56 @@ module WP
       # Elements
       
       def elements(doc)
-        @elements ||= doc.xpath(XPATH)
+        doc.xpath(self::XPATH)
       end
       
-      # Set initial AR Records
-      # This will update when something is imported
-      attr_writer :ar_records
-      def ar_records
-        @ar_records ||= self.scpr_class.constantize.unscoped.reload.all.map { |r| { wp_id: r.wp_id, identifier: r.send(self.xml_ar_map.first[1]) } }
+      def scpr_class
+        self::SCPR_CLASS
+      end
+      
+      def xml_ar_map
+        self::XML_AR_MAP
+      end
+      
+      def defaults
+        self::DEFAULTS
       end
       
 
       # -------------------
       # Node Finder
+      def find(doc=nil)
+        # IF we pass in a doc, force a reload of the resources
+        if doc.present?
+          new_records = []
       
-      def find(doc)
-        new_records = []
-      
-        elements(doc).reject { |i| invalid_item(i) }.each do |element|
-          new_records.push self.new(element)
+          self.elements(doc).reject { |i| invalid_item(i) }.each do |element|
+            new_records.push self.new(element)
+          end
+          
+          self.total = new_records.size
+          Rails.logger.info "*** #{self.name} loaded."
+          return new_records
+        else
+          # Otherwise, just return the cache (which may be blank)
+          return self.cached
         end
+      end
+      
+      def total
+        WP.rcache.get([self.cache_key, "total"].join(":"))
+      end
+      
+      def total=(val)
+        WP.rcache.set([self.cache_key, "total"].join(":"), val)
+      end
         
-        new_records
-      end
-
-
-      # -------------------      
-      # Node rejectors
-      
-      def invalid_child(node)
-        %w{text}.include?(node.name)
-      end
-    
-      def invalid_item(node)
-        # Accept all by default
-        false
-      end
-      
-      
-      # -------------------      
-      # Dummy NESTED_ATTRIBUTES for classes that don't need it
-      
-      def nested_attributes
-        []
-      end
     end
     
     
     # -------------------
     # Instance
-    
-    attr_accessor :builder
-    
+        
     def initialize(element)
       # Default builder
       @builder ||= { }
@@ -149,43 +97,86 @@ module WP
       end
       
       @builder.each { |a, v| send("#{a}=", v) }
+
+      # No need to store the info from @builder
+      self.send(:remove_instance_variable, :@builder)
+      
+      # Write to cache & Add to set
+      WP.rcache.sadd self.class.cache_key, self.cache_key
+      WP.rcache.set self.cache_key, self.to_yaml
+    end
+    
+    
+    # -------------------
+    # Instance cache key
+    def cache_key
+      [self.class.cache_key, self.id].join(":")
     end
     
     
     # -------------------            
+    # Import
+    def import
+      # Don't want to duplicate objects
+      if self.imported
+        return false
+      end
+      
+      object = self.class.scpr_class.constantize.send("find_or_initialize_by_#{self.class.xml_ar_map.first[1]}", send(self.class.xml_ar_map.first[0]))
+      
+      if !object.new_record?
+        self.ar_record = object
+        return false
+      end
+      
+      object_builder = {}
+      self.class.xml_ar_map.each do |wp_attr, ar_attr|
+        object_builder.merge!(ar_attr => send(wp_attr))
+      end
+      
+      # Setup any extra stuff that needs to be setup
+      object, object_builder = build_extra_attributes(object, object_builder)
+      
+      object_builder.reverse_merge!(self.class.defaults)
+      object.attributes = object_builder
+            
+      object.save
+    end
+    
+    def build_extra_attributes(object, object_builder)
+      true
+    end
+    
+    # -------------------            
     # Remove (opposite of Import)
     def remove
-      if self.ar_record.blank?
+      # Only remove objects that were imported
+      if !self.imported
         return false
-      else
-        # Only remove objects if they have a wp_id
-        if !self.ar_record.wp_id or self.ar_record.delete
-          self.class.ar_records = nil
-          return self
-        else
-          return false
-        end
       end
+
+      self.ar_record.delete
     end
     
     
-    # Some checks to see if it's already been imported or it already exists
+    # -------------------
+    # Find the AR record based on the XML_AR_MAP hash
     def ar_record
       self.class.scpr_class.constantize.where(self.class.xml_ar_map.first[1] => send(self.class.xml_ar_map.first[0])).reload.first
     end
-      
-    def exists_in_db
-      self.ar_record.present?
-    end
-    
+
+    # -------------------    
+    # Check to see if it was imported
+    # Based on the presence of wp_id
     def imported
-      self.exists_in_db and self.ar_record.wp_id.present?
+      self.ar_record and self.ar_record.wp_id.present?
     end
     
     
-    # Assume all instance variables
+    # -------------------
+    # Attributes
     def attributes
-      instance_variables - [:@builder]
+      instance_variables
     end
     
     def id
@@ -202,53 +193,7 @@ module WP
     
     
     # -------------------
-    # Builder populator
-    
-    def check_and_merge_nodes(child)
-      if is_postmeta(child) and builder.has_key? :postmeta
-        # Grab the post meta and merge it into the hash appropriately
-        merge_postmeta(child)
-      
-      elsif has_other_namespace(child)
-        # This is for stuff like content:encoded, excerpt:encoded
-        merge_other_namespaces(child)
-      
-      else
-        # Basic behavior
-        builder.merge!(child.name.gsub(/\W/, "_") => child.content)
-      end
-    end
-    
-    
-    # -------------------      
-    # Merge in extra attributes
-    
-    def merge_postmeta(child)
-      postmeta = {  meta_key: child.at_xpath("./wp:meta_key").content, 
-                    meta_value: child.at_xpath("./wp:meta_value").content }
-      builder[:postmeta].push postmeta
-    end
-
-    def merge_other_namespaces(child)
-      builder.merge!(child.namespace.prefix => child.children.first.content)
-    end
-    
-    
-    # -------------------
-    # Node inspectors
-    
-    def is_postmeta(child)
-      child.name == "postmeta"
-    end
-    
-    def has_other_namespace(child)
-      child.namespace.present? && !%w{ wp }.include?(child.namespace.prefix)
-    end
-    
-    
-    # -------------------
     # Dynammic accessor
-    
     def method_missing(method, *args, &block)
       if method =~ /=$/
         return instance_variable_set("@#{method.to_s.gsub(/\W/, "")}", args.first)

@@ -1,5 +1,5 @@
 <h2><%= resource_name.titleize %></h2>
-<h4>Total count: <%= resource_objects.size %></h4>
+<h4>Total count: <%= resource_class.total %></h4>
 <div class="form-actions">
 	<%= link_to "Import All #{resource_name.titleize}", 
 				admin_multi_american_multiple_import_path(resource_name), 
@@ -31,10 +31,12 @@
 				<td>
 					<% if record.imported %>
 						<span style='color: green'>Imported</span>
-					<% elsif record.exists_in_db and !record.imported %>
-						<span style='color: orange'>Already Exists</span>
-					<% elsif !record.exists_in_db and !record.imported %>
-						<span style='color: red'>Not Imported</span>
+					<% else %>
+						<% if record.ar_record %>
+							<span style='color: orange'>Already Exists</span>
+						<% else %>
+							<span style='color: red'>Not Imported</span>
+						<% end %>
 					<% end %>
 				</td>
 			</tr>

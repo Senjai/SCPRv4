@@ -1,12 +1,8 @@
 module WP
   class Topic < Post
     XPATH = "//item/wp:post_type[text()='topic']/.."
+    CACHE_KEY = "topics"
+
     self.list_fields = Post.list_fields
-    
-    class << self
-      def elements(doc)
-        @elements ||= doc.xpath(XPATH)
-      end
-    end
   end
 end

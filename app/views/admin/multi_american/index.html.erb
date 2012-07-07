@@ -7,7 +7,7 @@
 			Totals:
 			<ul>
 				<% WP::RESOURCES.each do |resource| %>
-					<li><b><%= resource.titleize %></b>: <%= document.send(resource).size %></li>
+					<li><b><%= resource.titleize %></b>: <%= ["WP", resource.singularize.camelize].join("::").constantize.total %></li>
 				<% end %>
 			</ul>
 		</li>
