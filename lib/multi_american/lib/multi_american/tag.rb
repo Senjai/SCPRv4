@@ -19,28 +19,7 @@ module WP
       ['tag_name']
     ]
     self.list_per_page = 50
-    
-    # -------------------
-    # Class
-    
-    class << self
 
-      # -------------------      
-      # Elements
-      
-      def elements(doc)
-        doc.xpath(XPATH)
-      end
-      
-      def scpr_class
-        SCPR_CLASS
-      end
-      
-      def xml_ar_map
-        XML_AR_MAP
-      end
-    end
-    
     
     # -------------------
     # Instance

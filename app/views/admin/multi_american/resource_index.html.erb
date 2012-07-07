@@ -1,5 +1,5 @@
 <h2><%= resource_name.titleize %></h2>
-<h4>Total count: <%= resource_objects.size %></h4>
+<h4>Total count: <%= resource_class.total %></h4>
 <div class="form-actions">
 	<%= link_to "Import All #{resource_name.titleize}", 
 				admin_multi_american_multiple_import_path(resource_name), 

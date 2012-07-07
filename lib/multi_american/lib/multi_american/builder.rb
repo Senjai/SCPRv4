@@ -56,8 +56,13 @@ module WP
                     meta_value: child.at_xpath("./wp:meta_value").content }
       @builder[:postmeta].push postmeta
     end
-
-    # -------------------      
+    
+    def merge_category(child)
+      category = {  title: child.content, 
+                    domain: child[:domain], 
+                    nicename: child[:nicename] }
+      @builder[:categories].push category
+    end
 
     def merge_other_namespaces(child)
       @builder.merge!(child.namespace.prefix => child.children.first.content)
@@ -69,6 +74,10 @@ module WP
     
     def is_postmeta(child)
       child.name == "postmeta"
+    end
+    
+    def is_category(child)
+      child.name == "category"
     end
     
     # -------------------      

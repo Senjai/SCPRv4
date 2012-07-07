@@ -9,8 +9,10 @@ module WP
       end
 
       def perform(resource_class, document_path, action, id, username)
-        @doc = Rails.cache.fetch(WP::Document.cache_key) || WP::Document.new(document_path)
-        @objects = resource_class.constantize.find(@doc)
+        if (@objects = resource_class.constantize.cached).empty?
+          doc = WP::Document.new(document_path)
+          @objects = resource_class.constantize.find(doc)
+        end
       
         # If we're given an id, only import/deport that one
         if id

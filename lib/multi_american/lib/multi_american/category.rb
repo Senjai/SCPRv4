@@ -23,26 +23,6 @@ module WP
     ]
     
     # -------------------
-    # Class
-    
-    class << self
-
-      # -------------------      
-      # Elements
-      def elements(doc)
-        doc.xpath(XPATH)
-      end
-      
-      def scpr_class
-        SCPR_CLASS
-      end
-      
-      def xml_ar_map
-        XML_AR_MAP
-      end
-    end
-    
-    # -------------------
     # Instance
     
     def import

@@ -3,7 +3,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     
   before_filter :verify_resource, except: [:index, :set_doc]
   before_filter :load_doc, except: [:set_doc]
-  before_filter :load_objects, except: [:index, :set_doc]
+  before_filter :load_objects, except: [:index, :resource_show, :set_doc]
   before_filter :set_parse_info_flash, except: [:set_doc]
   before_filter :set_root_breadcrumb, except: [:set_doc]  
 
@@ -11,6 +11,8 @@ class Admin::MultiAmericanController < Admin::BaseController
 
   helper_method :resource_class, :resource_name, :resource_objects, :document
 
+  @@rcache = Rails.cache.instance_variable_get(:@data)
+  
   # ---------------
   # Actions
   def resource_index
@@ -34,8 +36,16 @@ class Admin::MultiAmericanController < Admin::BaseController
   # ---------------
   # POST
   def set_doc
-    self.class.document = WP::Document.new(params[:document_path])
-    session[:doc_url] = document.url
+    # Clear the cache
+    @@rcache.keys("wp:*").each { |k| @@rcache.del k }
+    WP::Document.cached = nil
+    
+    # Set a new document
+    self.document = WP::Document.new(params[:document_path])
+
+    # Set the known url to avoid a warning
+    self.known_url = self.document.url
+    
     redirect_to admin_multi_american_path, notice: "Changed document to <b>#{document.url}</b>"
   end
     
@@ -70,36 +80,16 @@ class Admin::MultiAmericanController < Admin::BaseController
     
     
     # ---------------
-    # Make sure the class is one of the WP module, or raise error
-    def verify_resource
-      if WP::RESOURCES.include? params[:resource_name]
-        self.resource_name = params[:resource_name]
-        self.resource_class = ["WP", resource_name.camelize.demodulize.singularize].join("::").constantize
-      else
-        raise "Invalid Resource" and return false
-      end
-    end
-    
-    
-    # ---------------
     # Set the flash.now with some info about the parsed file
     def set_parse_info_flash
-      if session[:doc_url]
-        
-        # If a new document was set, an old one was already set, 
-        # and they do not match, warn the user.
-        if self.class.new_doc_url and self.class.new_doc_url != session[:doc_url]
-          flash.now[:warning] = "<b>Warning!</b> The source file has unexpectedly changed to <b>#{document.url}</b><br />
-            This probably means the server was restarted."
+      # If the actual URL of the document and the stored URL do not match,
+      # Warn the user      
+      if self.known_url and document.url != self.known_url
+        flash.now[:warning] = "<b>Warning!</b> The source file has unexpectedly changed to <b>#{document.url}</b><br />
+          This probably means the server was restarted."
 
-          # Set session[:doc_url] to the new one
-          session[:doc_url] = self.class.new_doc_url
-        
-          # Unset the new_doc_url
-          self.class.new_doc_url = nil
-        end
-      else
-        session[:doc_url] = document.url
+        # Set known_url to the new one
+        self.known_url = self.document.url
       end
       
       flash.now[:info] = "This data was parsed from <b>#{document.url}</b>"
@@ -114,41 +104,40 @@ class Admin::MultiAmericanController < Admin::BaseController
     
     
     # ---------------
-    # Readers & Helpers for resource names    
-    attr_accessor :resource_class, :resource_name
-    
-    # ---------------
-    # Dynamic accessor for objects
-    attr_reader :resource_objects
-    def resource_objects=(val)
-      @resource_objects = document.instance_variable_set("@#{resource_name}", val)
-    end
-        
-    
-    # ---------------
-    # Convenience method for accessing class document    
-    def document
-      self.class.document
-    end
-    
-    
-    # ---------------
-    # Accessor for document
-    class << self
-      attr_reader :document
-      attr_accessor :new_doc_url
-      
-      def document=(wp_doc)
-        @new_doc_url = wp_doc.url
-        @document = wp_doc
+    # Make sure the class is one of the WP module, or raise error
+    def verify_resource
+      if WP::RESOURCES.include? params[:resource_name]
+        self.resource_name = params[:resource_name]
+        self.resource_class = ["WP", resource_name.camelize.demodulize.singularize].join("::").constantize
+      else
+        raise "Invalid Resource" and return false
       end
     end
-      
     
+    
+    # ---------------
+    # Accessors
+    attr_accessor :resource_class, :resource_name, :resource_objects, :document
+    
+    # ---------------
+    # Accessor for known_url
+    def known_url
+      @@rcache.get([WP::Document.cache_key, "known_url"].join(":"))
+    end
+    
+    def known_url=(url)
+      @@rcache.set([WP::Document.cache_key, "known_url"].join(":"), url)
+    end
+
+
     # ---------------
     # Loaders
     def load_doc
-      self.class.document ||= WP::Document.new(DUMP_FILE)
+      # If the document cache is blank,
+      # Initialize a new document
+      if !(self.document = WP::Document.cached)
+        self.document = WP::Document.new(DUMP_FILE)
+      end      
     end
 
     # ---------------
@@ -160,11 +149,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     
     def load_object
-      obj = Rails.cache.fetch [resource_class.cache_key, params[:id]].join(":") do
-        resource_objects.find { |p| p.id == params[:id].to_i }
-      end
-      
-      YAML.load(obj)
+      YAML.load(@@rcache.get([resource_class.cache_key, params[:id]].join(":")).to_s)
     end
     
     # ---------------
