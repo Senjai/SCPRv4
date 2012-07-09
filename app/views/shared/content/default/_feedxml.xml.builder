@@ -9,7 +9,9 @@ xml.item do
   end
   
   if content.audio.present?
-    xml.enclosure url: content.audio.first.url, type: "audio/mpeg", length: content.audio.first.size
+    audio = content.audio.first
+    xml.enclosure url: audio.url, type: "audio/mpeg", 
+                  length: audio.size.present? ? audio.size : "0"
   end
   
   descript = ""
