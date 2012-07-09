@@ -15,7 +15,7 @@ xml.item do
   descript = ""
   
   descript << render_asset(content,"feedxml")
-  descript << render_content_body(content)
+  descript << sanitize(render_content_body(content), tags: %w{ br p i b s img em strong span div table tr td th })
   
   if content.is_a? ContentShell
     descript << content_tag(:p, link_to("Read the full article at #{content.site}".html_safe, content.link_path))
