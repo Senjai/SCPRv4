@@ -8,10 +8,6 @@ xml.item do
     xml.dc :creator, b
   end
   
-  if content.assets.present?
-    xml.enclosure :url => content.assets.first.asset.thumb.url, :type => "image/jpeg", :length => ""
-  end
-  
   if content.audio.present?
     xml.enclosure url: content.audio.first.url, type: "audio/mpeg", length: content.audio.first.size
   end
