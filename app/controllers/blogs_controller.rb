@@ -46,7 +46,7 @@ class BlogsController < ApplicationController
     
     # now we have to limit tagged content to only this blog
     @entries = @tag.tagged.where(:content_type => BlogEntry).joins(
-      "left join blogs_entry on blogs_entry.id = rails_taggit_taggeditem.content_id"
+      "left join blogs_entry on blogs_entry.id = taggit_taggeditem.content_id"
     ).where("blogs_entry.blog_id = ? and blogs_entry.status = ?",@blog.id, BlogEntry::STATUS_LIVE).order("blogs_entry.published_at desc").paginate(:page => params[:page] || 1, :per_page => 5)
   end
   
