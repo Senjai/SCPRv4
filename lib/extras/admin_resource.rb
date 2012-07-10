@@ -60,10 +60,18 @@ module AdminResource
     # -----------------------
     
     def list_per_page
-      @list_per_page || LIST_DEFAULTS[:list_per_page]
+      # Need to check if defined, because we might want to
+      # pass `nil` to limit (specifying no limit).
+      defined?(@list_per_page) ? @list_per_page : LIST_DEFAULTS[:list_per_page]
     end
     
     def list_per_page=(per_page)
+      if per_page == "all"
+        per_page = nil
+      else
+        per_page = per_page.to_i
+      end
+      
       @list_per_page = per_page
     end
 
