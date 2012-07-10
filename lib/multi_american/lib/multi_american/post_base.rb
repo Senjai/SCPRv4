@@ -40,7 +40,9 @@ module WP
       # Node rejectors
       
       def invalid_child(node)
-        %w{text comment}.include?(node.name)
+        %w{comment}.include?(node.name) || 
+        (Builder.is_postmeta(node) and node.at_xpath("./wp:meta_value").content == "{{unknown}}" ) ||
+        super
       end
       
       def invalid_item(node)
@@ -67,20 +69,9 @@ module WP
     def sorter
       Time.parse(self.pubDate)
     end
-    
-    
-    # -------------------
-    # Builder populator
-    def check_and_merge_nodes(child)
-      if is_category(child)
-        merge_category(child)
-      else
-        super
-      end
-    end
 
     
-    # -------------------    
+    # -------------------
     # Builder for class-specific attributes
     def build_extra_attributes(object, object_builder)
       # Merge in existing author_id if user exists
@@ -89,6 +80,7 @@ module WP
         object_builder[:author_id] = Bio.where(user_id: existing_user.id).first.id
       end
 
+      # -------------------
       # Merge in Tags and Categories
       associations = [
         { name: :tags, class_name: "WP::Tag", records: self.categories.select { |c| c[:domain] == "post_tag" } },
@@ -120,8 +112,34 @@ module WP
         end
       end
       
+      # -------------------
+      # Get the embeds, and insert them into body if referenced
+      # Note that the video won't necessarily be referenced in the body,
+      # in which case gsub! won't do anything (return nil)
+      self.postmeta.select { |pm| pm[:meta_key] =~ /_oembed/ }.each do |pm|
+        if (match = pm[:meta_value].match(/youtube\.com\/(?:.+?\/)?(?<vid>[\w-]+)/))
+          # Got a YouTube embed
+          object_builder[:content].gsub!(/^http.+?youtube.+?#{match[:vid]}.*$/, pm[:meta_value])
+        
+        elsif (match = pm[:meta_value].match(/vimeo\.com\/video\/(?<vid>\d+)/))
+          # Got a vimeo iframe
+          object_builder[:content].gsub!(/^http.+?vimeo.+?#{match[:vid]}.*$/, pm[:meta_value])
+          
+        elsif (match = pm[:meta_value].match(/vimeo\.com\/moogaloop.+?clip_id=(?<vid>\d+)/))
+          # Got old-style vimeo embed
+          object_builder[:content].gsub!(/^http.+?vimeo.+?#{match[:vid]}.*$/, pm[:meta_value])
+        end
+      end
+      
+      
+      # -------------------
+      # Change the [caption] tags into the standard HTML
+
+      # -------------------
       # Merge in Disqus thread ID (or nil)
-      object.dsq_thread_id = self.postmeta.find({}) { |p| p[:meta_key] == "dsq_thread_id" }[:meta_value]
+      if dsq_meta = self.postmeta.find { |p| p[:meta_key] == "dsq_thread_id" }
+        object.dsq_thread_id = dsq_meta[:meta_value]
+      end
       
       return [object, object_builder]
     end

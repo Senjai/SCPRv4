@@ -1,8 +1,28 @@
 module WP
   module Builder
-    def self.included(base)
-      base.extend(ClassMethods)
+    class << self
+      def included(base)
+        base.extend(ClassMethods)
+      end
+      
+      # -------------------
+      # Node inspectors
+
+      def is_postmeta(child)
+        child.name == "postmeta"
+      end
+
+      def is_category(child)
+        child.name == "category"
+      end
+
+      # -------------------      
+
+      def has_other_namespace(child)
+        child.namespace.present? && !%w{ wp }.include?(child.namespace.prefix)
+      end
     end
+    
     
     module ClassMethods
       # -------------------      
@@ -23,7 +43,7 @@ module WP
       # Dummy NESTED_ATTRIBUTES for classes that don't need it
       def nested_attributes
         []
-      end      
+      end
     end
 
 
@@ -33,13 +53,16 @@ module WP
     # -------------------
     # Builder populator
     def check_and_merge_nodes(child)
-      if is_postmeta(child) and @builder.has_key? :postmeta
+      if Builder.is_postmeta(child) and @builder.has_key? :postmeta
         # Grab the post meta and merge it into the hash appropriately
-        merge_postmeta(child)
+        self.merge_postmeta(child)
       
-      elsif has_other_namespace(child)
+      elsif Builder.is_category(child) and @builder.has_key? :categories
+        self.merge_category(child)
+        
+      elsif Builder.has_other_namespace(child)
         # This is for stuff like content:encoded, excerpt:encoded
-        merge_other_namespaces(child)
+        self.merge_other_namespaces(child)
       
       else
         # Basic behavior
@@ -47,16 +70,15 @@ module WP
       end
     end
     
-    
     # -------------------      
     # Merge in extra attributes
-    
+
     def merge_postmeta(child)
       postmeta = {  meta_key: child.at_xpath("./wp:meta_key").content, 
                     meta_value: child.at_xpath("./wp:meta_value").content }
       @builder[:postmeta].push postmeta
     end
-    
+
     def merge_category(child)
       category = {  title: child.content, 
                     domain: child[:domain], 
@@ -67,24 +89,5 @@ module WP
     def merge_other_namespaces(child)
       @builder.merge!(child.namespace.prefix => child.children.first.content)
     end
-    
-    
-    # -------------------
-    # Node inspectors
-    
-    def is_postmeta(child)
-      child.name == "postmeta"
-    end
-    
-    def is_category(child)
-      child.name == "category"
-    end
-    
-    # -------------------      
-    
-    def has_other_namespace(child)
-      child.namespace.present? && !%w{ wp }.include?(child.namespace.prefix)
-    end
-    
   end
 end
