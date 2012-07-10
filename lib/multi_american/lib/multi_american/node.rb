@@ -13,7 +13,11 @@ module WP
       # -------------------
       # Class cache key
       def cache_key
-        [WP::CACHE_KEY, WP::Document::CACHE_KEY, self::CACHE_KEY].join(":")
+        [WP.cache_namespace, WP::Document.cache_namespace, self.cache_namespace].join(":")
+      end
+      
+      def cache_namespace
+        self.name.underscore.pluralize
       end
       
       attr_writer :cached
@@ -114,19 +118,21 @@ module WP
     end
     
     
-    # -------------------            
+    # -------------------
     # Import
     def import
-      # Don't want to duplicate objects
+      # Don't want to duplicate imported objects
       if self.imported
-        return false
+        return self.ar_record
       end
       
       object = self.class.scpr_class.constantize.send("find_or_initialize_by_#{self.class.xml_ar_map.first[1]}", send(self.class.xml_ar_map.first[0]))
       
+      # Don't want to overwrite objects which existed before import
+      # We can assume that if it exists now, it wasn't imported, because
+      # we short-circuited that above.
       if !object.new_record?
-        self.ar_record = object
-        return false
+        return object
       end
       
       object_builder = {}
@@ -140,11 +146,17 @@ module WP
       object_builder.reverse_merge!(self.class.defaults)
       object.attributes = object_builder
             
-      object.save
+      if object.save
+        return object
+      else
+        return false
+      end
     end
     
+    # -------------------
+    
     def build_extra_attributes(object, object_builder)
-      true
+      return [object, object_builder]
     end
     
     # -------------------            
@@ -152,10 +164,19 @@ module WP
     def remove
       # Only remove objects that were imported
       if !self.imported
-        return false
+        return self
       end
-
-      self.ar_record.delete
+      
+      # Use `destroy` so it calls callbacks
+      # Such as deleting category and tag associations
+      # `delete` will just delete the record, no callbacks.
+      self.ar_record.destroy
+    end
+    
+    # -------------------
+    
+    def remove_associations
+      true
     end
     
     

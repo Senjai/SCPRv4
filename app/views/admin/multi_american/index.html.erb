@@ -16,11 +16,24 @@
 <% end %>
 
 <h2>Multi American Import UI</h2>
-<ul class="nav nav-tabs nav-stacked" style="width: 200px">
-	<% WP::RESOURCES.each do |resource| %>
-		<li><%= link_to resource.titleize, send("admin_index_multi_american_resource_path", resource) %></li>
-	<% end %>
-</ul>
+<div class="row-fluid">
+	<div class="span3">
+		<ul class="nav nav-tabs nav-stacked">
+			<% WP::RESOURCES.each do |resource| %>
+				<li><%= link_to resource.titleize, send("admin_index_multi_american_resource_path", resource) %></li>
+			<% end %>
+		</ul>
+	</div>
+	
+	<div class="span9">
+		<h3>Notes</h3>
+		<ul>
+			<li>Importing a post will also import any tags and categories associated with it that have not yet been imported, or associate it with tags and categories that already exist.</li>
+			<li>Deleting an imported post will remove its association with a tag or category, but will not remove the tag or category itself.</li>
+			<li>Post imports will be much faster if Tags and Categories have already been imported.</li>
+		</ul>
+	</div> <!-- span -->
+</div> <!-- row fluid -->
 
 <hr />
 

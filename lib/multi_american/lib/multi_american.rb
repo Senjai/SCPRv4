@@ -13,7 +13,10 @@ module MultiAmerican
 end
 
 module WP
-  CACHE_KEY = "wp"
+  def self.cache_namespace
+    "wp"
+  end
+  
   def self.rcache
     @@cache ||= Rails.cache.instance_variable_get(:@data)
   end
@@ -29,8 +32,10 @@ require 'multi_american/lib/multi_american/document.rb'
 
 require 'multi_american/lib/multi_american/node.rb'
 
-require 'multi_american/lib/multi_american/post.rb'
+require 'multi_american/lib/multi_american/post_base.rb'
 
+# Post types
+require 'multi_american/lib/multi_american/post.rb'
 require 'multi_american/lib/multi_american/jiffy_post.rb'
 require 'multi_american/lib/multi_american/roundup.rb'
 require 'multi_american/lib/multi_american/attachment.rb'
@@ -45,6 +50,6 @@ require 'multi_american/lib/multi_american/resque_job.rb'
 #------------------
 # Setup our resources based on WP classes and 
 # remove ones we don't want listed.
-ignores = %w{documents nodes builders resque_jobs}
+ignores = %w{documents nodes builders resque_jobs post_bases}
 WP::RESOURCES = WP.constants.select { |c| WP.const_get(c).is_a? Class }
                             .map { |r| r.to_s.demodulize.underscore.pluralize } - ignores

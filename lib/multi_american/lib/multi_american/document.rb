@@ -1,10 +1,13 @@
 module WP
   class Document
-    CACHE_KEY = "doc"
     
     class << self
       def cache_key
-        [WP::CACHE_KEY, CACHE_KEY].join(":")
+        [WP.cache_namespace, self.cache_namespace].join(":")
+      end
+      
+      def cache_namespace
+        "doc"
       end
       
       def cached

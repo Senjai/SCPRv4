@@ -15,6 +15,19 @@ module WP
       cat_name:             :title
     }
     
+    # What's stored under the Post item
+    # vs. what's stored in the Category item
+    RAW_REAL_MAP = { 
+      nicename: :category_nicename,
+      title:    :cat_name
+    }
+    
+    class << self
+      def raw_real_map
+        self::RAW_REAL_MAP
+      end
+    end
+    
     administrate!
     self.list_fields = [
       ['id', title: "Term ID"],
@@ -24,36 +37,6 @@ module WP
     
     # -------------------
     # Instance
-    
-    def import
-      # Short circuit so we can be sure not to overwrite anything
-      if self.imported
-        return false
-      end
-      
-      object = SCPR_CLASS.constantize.send("find_or_initialize_by_#{self.class.xml_ar_map.first[1]}", send(self.class.xml_ar_map.first[0]))
-      
-      # Handle what to do if the object already exists
-      if !object.new_record?
-        self.ar_record = object
-        return false
-      end
-      
-      object_builder = {}
-      XML_AR_MAP.each do |wp_attr, ar_attr|
-        object_builder.merge!(ar_attr => send(wp_attr))
-      end
-          
-      object_builder.reverse_merge!(DEFAULTS)
-      object.attributes = object_builder
-        
-      if object.save
-        self.ar_record = object
-        return self
-      else
-        return false
-      end
-    end
     
     # -------------------
     # Convenience Methods

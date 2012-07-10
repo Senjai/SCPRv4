@@ -1,8 +1,6 @@
 module WP
-  class Topic < Post
+  class Topic < PostBase
     XPATH = "//item/wp:post_type[text()='topic']/.."
-    CACHE_KEY = "topics"
-
-    self.list_fields = Post.list_fields
+    self.list_fields = PostBase.list_fields
   end
 end
