@@ -1,8 +1,9 @@
 class ContentShell < ContentBase
   self.table_name =  "contentbase_contentshell"
 
-  # -- Administration -- #
-  administrate!
+  # -------------------
+  # Administration
+  administrate
   self.list_order = "published_at desc"
   self.list_fields = [
     ['headline'],
@@ -29,7 +30,7 @@ class ContentShell < ContentBase
     where "status = #{STATUS_LIVE}"
   end
   
-  #----------
+  # -------------------
   
   def auto_published_at
     false

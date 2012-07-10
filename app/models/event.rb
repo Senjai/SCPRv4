@@ -1,9 +1,6 @@
 class Event < ActiveRecord::Base
-  administrate!
   self.table_name =  'rails_events_event'
   self.primary_key = :id
-  
-  has_many :assets, :class_name => "ContentAsset", :as => :content
   
   ForumTypes = [
     "comm",
@@ -11,16 +8,28 @@ class Event < ActiveRecord::Base
     "hall"
   ]
   
+  # -------------------
+  # Administration
+  administrate
+  
+  # -------------------
+  # Associations
+  has_many :assets, :class_name => "ContentAsset", :as => :content
+
+  # -------------------
+  # Validations
   validates_presence_of :id, :title, :slug, :etype, :starts_at
   
-  #----------
-
+  # -------------------
+  # Scopes
   scope :published, where(:is_published => true)
   scope :upcoming, lambda { published.where("starts_at > ?", Time.now).order("starts_at") }
   scope :upcoming_and_current, lambda { published.where("ends_at > ?", Time.now).order("starts_at") }
   scope :forum, published.where("etype IN (?)", ForumTypes)
   scope :sponsored, published.where("etype = ?", "spon")
   scope :past, lambda { published.where("ends_at < ?", Time.now).order("starts_at desc") }
+
+  # -------------------
   
   def self.closest
     upcoming.first

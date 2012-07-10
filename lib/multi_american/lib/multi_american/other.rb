@@ -6,7 +6,7 @@ module WP
     SCPR_CLASS = ""
     XML_AR_MAP = {}
     
-    administrate!
+    administrate
     self.list_fields = [
       ['post_type']
     ]

@@ -1,8 +1,10 @@
 class NewsStory < ContentBase
-  administrate!
   self.table_name =  'news_story'
+
+  # -------------------
+  # Administration
+  administrate
   self.list_order = "published_at desc"
-    
   self.list_fields = [
     ['id'],
     ['headline',      link: true ],
@@ -13,17 +15,23 @@ class NewsStory < ContentBase
     ['published_at' ]
   ]
   
-  
-    
+  # -------------------
+  # Callbacks  
   before_save :fill_fields, on: :create
   def fill_fields
     self.comment_count = 0
     self.published_at = Time.now unless published_at
   end
   
+  # -------------------
+  # Validations
   validates :headline,  presence: true
   validates :body,      presence: true
   validates :slug,      presence: true, format: { with: /^[a-zA-Z0-9\-_]+$/, message: "not correctly formatted. 0-9, a-z, A-Z, -, _" }
+
+  # -------------------
+  # Scopes
+  scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   CONTENT_TYPE = 'news/story'
   CONTENT_TYPE_ID = 15
@@ -61,9 +69,7 @@ class NewsStory < ContentBase
     where "status = #{STATUS_LIVE}"
     join audio
   end
-  
-  scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
-  
+    
   #----------
       
   def link_path(options={})

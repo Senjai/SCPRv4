@@ -1,8 +1,9 @@
 class Flatpage < ActiveRecord::Base
   self.table_name = "flatpages_flatpage" 
   
-  # -- Administration --#
-  administrate!
+  # -------------------
+  # Administration
+  administrate
   self.list_order = "url"
   self.list_fields = [
     ['url'],
@@ -12,13 +13,16 @@ class Flatpage < ActiveRecord::Base
     ['date_modified', display_helper: :display_date ]
   ]
   
-  # -- Scopes -- #
+  # -------------------
+  # Scopes
   default_scope where(enable_in_new_site: true, is_public: true)
 
-  # -- Validations -- #
+  # -------------------
+  # Validations
   validates :url, presence: true, uniqueness: true
   
-  # -- Callbacks -- #
+  # -------------------
+  # Callbacks
   before_validation :slashify
   before_validation :downcase_url
   after_save :reload_routes, if: -> { self.url_changed? }

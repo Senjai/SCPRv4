@@ -1,8 +1,11 @@
 class ShowEpisode < ContentBase
   self.table_name =  "shows_episode"
   
-  # -- Administration -- #
-  administrate!
+  CONTENT_TYPE = 'shows/episode'
+  
+  # -------------------
+  # Administration
+  administrate
   self.list_order = "published_at desc"
   self.list_fields = [
     ['title'],
@@ -12,19 +15,21 @@ class ShowEpisode < ContentBase
     ['published_at']
   ]
   
-  # -- Validations --#
+  # -------------------
+  # Validations
   validates_presence_of :show_id, :air_date, :title
   
-  # -- Associations --#
+  # -------------------
+  # Associations
   belongs_to :show, :class_name => "KpccProgram"
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "episode_id"
   has_many :segments, :through => :rundowns, :order => "segment_order asc", :class_name => "ShowSegment", :foreign_key => "segment_id"
     
-  # -- Scopes -- #
+  # -------------------
+  # Scopes
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
   scope :upcoming, where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc")
   
-  CONTENT_TYPE = 'shows/episode'
   
   define_index do
     indexes title

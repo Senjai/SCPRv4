@@ -1,8 +1,13 @@
 class VideoShell < ContentBase
   self.table_name = "contentbase_videoshell"
   
-  # -- Administration -- #
-  administrate!
+  CONTENT_TYPE = "content/video"
+  CONTENT_TYPE_ID = 125
+  ADMIN_PREFIX = "contentbase/videoshell"
+  
+  # -------------------
+  # Administration
+  administrate
   self.list_order = "published_at desc"
   self.list_fields = [
     ['headline'],
@@ -12,12 +17,9 @@ class VideoShell < ContentBase
     ['published_at']
   ]
   
-  # -- Validation -- #
+  # -------------------
+  # Validation
   validates_presence_of :headline
-  
-  CONTENT_TYPE = "content/video"
-  CONTENT_TYPE_ID = 125
-  ADMIN_PREFIX = "contentbase/videoshell"
     
   define_index do
     indexes headline
