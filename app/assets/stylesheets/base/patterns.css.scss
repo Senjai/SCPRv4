@@ -472,7 +472,7 @@ body {
       font-size:12px;
 	  margin-bottom: -1px;
       margin-right: 2px;
-      padding: 0 12px;
+      padding: 0 13px;
       line-height: ($baseline * 1.5) - 1;
       &:hover {
         background-color: $grayLighter;
@@ -484,10 +484,15 @@ body {
   }
     > .active > a {
       background-color: #fff;
-      padding: 0 13px;
+      padding: 0 12px;
       border: 1px solid #ccc;
       border-bottom: 0;
       color: $orangeDark;
+	  &:hover {
+		background-color: #fff;
+		border-bottom: 0;
+		color: $orangeDark;
+	  }
     }
 }
 

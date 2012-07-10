@@ -767,7 +767,21 @@ a.comment-count.inline {
 // Newsletter Subscribe
 .newsletter {
 	h6 { margin-bottom:$baseline / 2; }
-	a { text-transform:uppercase; }
+	a.action-link { text-transform:uppercase; }
+	.or {
+		background-color:#00b9f3;
+		@include border-radius(20px);
+		color:$white;
+		float:left;
+		font-size:12px;
+		font-weight:bold;
+		@include ie-inline-block();
+		line-height:20px;
+		margin:3px 6px 0;
+		padding:2px;
+		text-align:center;
+		width:20px;
+	}
 	form { margin-bottom:$baseline / 2; }
 	p {
 		color:$grayDark;
@@ -778,6 +792,7 @@ a.comment-count.inline {
 	}
 	input.email {
 		background:url(image_path('icons/newsletter-subscribe.png')) no-repeat 4px 3px;
+		margin-bottom:5px;
 		padding-left:30px;
 		width:60%;
 		&[placeholder] {
