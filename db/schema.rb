@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626170514) do
+ActiveRecord::Schema.define(:version => 20120710021101) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -1342,13 +1342,6 @@ ActiveRecord::Schema.define(:version => 20120626170514) do
     t.integer "size"
   end
 
-  create_table "rails_taggit_taggeditem", :id => false, :force => true do |t|
-    t.integer "id",           :default => 0, :null => false
-    t.integer "tag_id",                      :null => false
-    t.integer "content_id",                  :null => false
-    t.string  "content_type"
-  end
-
   create_table "schedule_program", :force => true do |t|
     t.integer "day",                             :null => false
     t.integer "kpcc_program_id"
@@ -1536,13 +1529,14 @@ ActiveRecord::Schema.define(:version => 20120626170514) do
   add_index "taggit_tag", ["slug"], :name => "slug", :unique => true
 
   create_table "taggit_taggeditem", :force => true do |t|
-    t.integer "tag_id",          :null => false
-    t.integer "object_id",       :null => false
-    t.integer "content_type_id", :null => false
+    t.integer "tag_id",                                                 :null => false
+    t.integer "content_id",                                             :null => false
+    t.integer "content_type_id",                                        :null => false
+    t.string  "content_type",    :limit => 20, :default => "BlogEntry", :null => false
   end
 
+  add_index "taggit_taggeditem", ["content_id"], :name => "taggit_taggeditem_829e37fd"
   add_index "taggit_taggeditem", ["content_type_id"], :name => "taggit_taggeditem_e4470c6e"
-  add_index "taggit_taggeditem", ["object_id"], :name => "taggit_taggeditem_829e37fd"
   add_index "taggit_taggeditem", ["tag_id"], :name => "taggit_taggeditem_3747b463"
 
   create_table "tickets_ticket", :force => true do |t|
