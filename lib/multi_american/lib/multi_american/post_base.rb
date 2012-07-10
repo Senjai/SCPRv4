@@ -22,7 +22,7 @@ module WP
       excerpt:            :_teaser
     }
     
-    administrate!    
+    administrate  
     self.list_fields = [
       ['id', title: "WP-ID"],
       ['post_type'],

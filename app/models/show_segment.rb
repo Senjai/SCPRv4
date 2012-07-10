@@ -1,12 +1,16 @@
 class ShowSegment < ContentBase
-  administrate!
   self.table_name =  'shows_segment'
   
   CONTENT_TYPE = "shows/segment"
   PRIMARY_ASSET_SCHEME = :segment_asset_scheme
+
+  # -------------------
+  # Administration
+  administrate
   
+  # -------------------
+  # Associations  
   belongs_to :show, :class_name => "KpccProgram"
-  
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id"
   has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
 

@@ -1,5 +1,5 @@
 module AdminResource
-
+  
   LIST_DEFAULTS = {
     list_order: "id desc",
     list_per_page: 25
@@ -7,9 +7,10 @@ module AdminResource
 
   TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
   
+  
   # -----------------------
   
-  def administrate!
+  def administrate
     extend ClassMethods
     include InstanceMethods
   end
@@ -17,8 +18,7 @@ module AdminResource
   # -----------------------
   
   module ClassMethods
-    # -----------------------
-    
+        
     def list_fields
       if !@list_fields
         self.list_fields = column_names.map { |col| [col] }
@@ -74,7 +74,6 @@ module AdminResource
   # -----------------------
   
   module InstanceMethods
-    # -----------------------
     
     def to_title
       title_method = TITLE_ATTRIBS.find { |a| self.respond_to?(a) }

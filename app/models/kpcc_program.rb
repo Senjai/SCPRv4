@@ -1,10 +1,6 @@
 class KpccProgram < ActiveRecord::Base
-  administrate!
   self.table_name =  'programs_kpccprogram'
-  
-  # Validation for later
-  # validates :slug, uniqueness: true
-  
+    
   ConnectDefaults = {
     facebook: "http://www.facebook.com/kpccfm",
     twitter: "kpcc",
@@ -19,12 +15,24 @@ class KpccProgram < ActiveRecord::Base
     'offramp'
   ]
   
+  # -------------------
+  # Administration
+  administrate
+  
+  # -------------------
+  # Validations
+  validates :slug, uniqueness: true
+  
+  # -------------------
+  # Associations
   has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
   has_many :episodes, :foreign_key => "show_id", :class_name => "ShowEpisode"
   has_many :schedules, :foreign_key => "kpcc_program_id", :class_name => "Schedule"
   belongs_to :missed_it_bucket
   belongs_to :blog
   
+  # -------------------
+  # Scopes
   scope :active, where(:air_status => ['onair','online'])
   
   def to_param

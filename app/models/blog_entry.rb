@@ -1,15 +1,12 @@
 class BlogEntry < ContentBase
   self.table_name =  "blogs_entry"
   CONTENT_TYPE = "blogs/entry"
+  CONTENT_TYPE_ID = 44
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
-  
-  # ------------------
-  # Temporary Multi-American
-  attr_accessor :postmeta, :categories
-  
+    
   # ------------------
   # Administration
-  administrate!
+  administrate
   self.list_order = "published_at desc"
   self.list_fields = [
     ['id'],

@@ -2,7 +2,6 @@ class AdminUser < ActiveRecord::Base
   require 'digest/sha1'
   self.table_name = "auth_user"
   
-  
   # ----------------
   
   before_validation :downcase_email

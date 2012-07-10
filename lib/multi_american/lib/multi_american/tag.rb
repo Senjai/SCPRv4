@@ -14,7 +14,7 @@ module WP
       title:    :tag_name
     }
         
-    administrate!    
+    administrate 
     self.list_fields = [
       ['id', title: "Term ID"],
       ['tag_slug', link: true, title: "Name"],

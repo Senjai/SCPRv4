@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe AdminResource do
   it "extends AR::Base with the administrate class method" do
-    ActiveRecord::Base.methods.should include :administrate!
+    ActiveRecord::Base.methods.should include :administrate
   end
   
   describe "list_fields" do    

@@ -28,7 +28,7 @@ module WP
       end
     end
     
-    administrate!
+    administrate
     self.list_fields = [
       ['id', title: "Term ID"],
       ['cat_name', link: true, title: "Name"],
