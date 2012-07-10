@@ -5,8 +5,9 @@ class TaggedContent < ActiveRecord::Base
   belongs_to :content, :polymorphic => true
   
   before_save :setup_mercer_attributes
-    
+  
+  # Hard-code for now...
   def setup_mercer_attributes
-    self.content_type_id = RailsContentMap.find_by_class_name(self.content_type).try(:id)
+    self.content_type_id = "44"
   end
 end

@@ -285,6 +285,19 @@ end
   end
 
 
+# Tag #########################################################
+  factory :tag do
+    sequence(:name) { |n| "Some Cool Slug #{n}"}
+    slug { name.parameterize }
+  end
+
+# TaggedContent #########################################################
+  factory :tagged_content do
+    # Content must be passed in
+    tag
+  end
+    
+
 # FeaturedCommentBucket #########################################################
   factory :featured_comment_bucket, aliases: [:comment_bucket] do
     title "Comment Bucket"
@@ -515,9 +528,11 @@ end
 
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
-    
+    ignore { tag_count 0 }
+
     after :create do |object, evaluator|
       content_base_associations(object, evaluator)
+      FactoryGirl.create_list :tagged_content, evaluator.tag_count, content: object
     end
   end
 

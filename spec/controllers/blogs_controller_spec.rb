@@ -142,24 +142,29 @@ describe BlogsController do
   end
   
   describe "GET /blog_tagged" do
+    let(:blog) { create :blog }
     it "responds with success" do
-      pending "Need Tag factory"
-      blog = create :blog
-      get :blog_tagged, blog: blog.slug, tag: "news"
+      tag = create :tag
+      get :blog_tagged, blog: blog.slug, tag: tag.slug
       response.should be_success
     end
     
     it "redirects if tag doesn't exist" do
-      blog = create :blog
       get :blog_tagged, blog: blog.slug, tag: "nonsense"
       response.should redirect_to blog_tags_path(blog.slug)
     end
     
     it "assigns @tag" do
-      pending "Need Tag factory"
-      blog = create :blog
-      get :blog_tagged, blog: blog.slug, tag: "news"
-      assigns(:tag).should_not be_nil
+      tag = create :tag
+      get :blog_tagged, blog: blog.slug, tag: tag.slug
+      assigns(:tag).should eq tag
+    end
+    
+    it "assigns @entries" do
+      blog_entry = create :blog_entry, tag_count: 1, blog: blog
+      get :blog_tagged, blog: blog.slug, tag: blog_entry.tags.first.slug
+      assigns(:entries).should eq blog_entry.tagged.all
+      assigns(:entries).collect { |e| e.content }.should eq [blog_entry]
     end
   end
   
