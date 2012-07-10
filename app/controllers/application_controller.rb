@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   
   before_filter :add_params_for_newrelic
   def add_params_for_newrelic
-    NewRelic::Agent.add_custom_parameters(referer: request.referer, agent: request.env['HTTP_USER_AGENT'])
+    NewRelic::Agent.add_custom_parameters(request_referer: request.referer, agent: request.env['HTTP_USER_AGENT'])
   end
   
   #----------
