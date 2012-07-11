@@ -1,57 +1,39 @@
 require "bundler/capistrano"
 require 'thinking_sphinx/deploy/capistrano'
-require 'new_relic/recipes'
-require 'san_juan'
+
+set :stages, %w{ production staging }
+set :default_stage, "production"
+require 'capistrano/ext/multistage'
+
+# --------------
+# Variables for all stages
 
 set :application, "scprv4"
 set :scm, :git
 set :repository,  "git@github.com:SCPR/SCPRv4.git"
-set :branch, "master"
 set :scm_verbose, true
 set :deploy_via, :remote_cache
-
 set :deploy_to, "/web/scprv4"
-set :rails_env, :production
+
 set :user, "scprv4"
 set :use_sudo, false
 
-role :app, "web1.scpr.org", "web2.scpr.org"
-role :web, "web1.scpr.org", "web2.scpr.org"
-role :db,  "web2.scpr.org", :primary => true
-role :sphinx, "media.scpr.org"
-role :god, "media.scpr.org"
-
-set :god_config_path "/etc/god/config"
-san_juan.role :god, "scprv4-resque"
-
 # --------------
-# cap staging deploy
-task :staging do
-  roles.clear
-  set :rails_env, :scprdev
-  set :branch, "master"
-  role :app, "scprdev.org"
-  role :web, "scprdev.org"
-  role :db,  "scprdev.org", :primary => true
-  role :sphinx, "scprdev.org"
-  
-  after "deploy:update_code", "thinking_sphinx:index"
-end
-
+# Tasks for all stages
 
 namespace :deploy do
   # --------------
   # Restart app
-  task :start, :roles => :app do
+  task :start, :roles => [:app, :workers] do
     run "touch #{current_release}/tmp/restart.txt"
   end
 
-  task :stop, :roles => :app do
+  task :stop, :roles => [:app, :workers] do
     # Do nothing.
   end
 
   desc "Restart Application"
-  task :restart, :roles => :app do
+  task :restart, :roles => [:app, :workers] do
     run "touch #{current_release}/tmp/restart.txt"
   end
   
@@ -87,8 +69,3 @@ namespace :remote_ts do
     thinking_sphinx.index
   end
 end
-
-
-after "deploy:update_code", "thinking_sphinx:configure"
-after "deploy:update_code", "god:app:scprv4-resque:restart"
-after "deploy:update", "newrelic:notice_deployment"
