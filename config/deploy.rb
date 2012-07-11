@@ -40,14 +40,15 @@ namespace :deploy do
   # --------------  
   # Skip asset precompile if no assets were changed
   namespace :assets do
-    task :precompile, :roles => :web, :except => { :no_release => true } do
+    task :precompile, :roles => :web do
       from = source.next_revision(current_revision) rescue nil
       
-      # Previous revision is blank or git log doesn't have any new lines mentioning assets
+      # Previous revision is blank or git log doesn't 
+      # have any new lines mentioning assets
       if from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
         run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
       else
-        logger.info "No changes in assets - Skipping asset pre-compilation"
+        logger.info "No changes in assets - SKIPPING asset pre-compilation"
       end
     end
   end
