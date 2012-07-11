@@ -134,7 +134,15 @@ module WP
       
       # -------------------
       # Change the [caption] tags into the standard HTML
-
+      self.content.gsub!(/\[caption(.+?)\](.+?)\[\/caption\]/) do |match|
+        properties = {}
+        $1.split("\"").each_slice(2) { |pair| properties[pair[0].lstrip.chomp("=").to_sym] = pair[1] }
+        
+        view = ActionView::Base.new(ActionController::Base.view_paths, {})        
+        view.render("/admin/multi_american/attachment", properties: properties, content: $2)
+      end
+      
+      
       # -------------------
       # Merge in Disqus thread ID (or nil)
       if dsq_meta = self.postmeta.find { |p| p[:meta_key] == "dsq_thread_id" }
