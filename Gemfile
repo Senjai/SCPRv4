@@ -8,7 +8,6 @@ gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.gi
 
 gem 'jquery-rails'
 gem 'will_paginate'
-gem 'capistrano'
 gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
 #gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
 gem 'thinking-sphinx', '~> 2.0.10'
@@ -28,6 +27,9 @@ gem 'chronic'
 
 gem "bcrypt-ruby", "~> 3.0.0"
 gem "resque", "~> 1.20"
+
+gem 'capistrano'
+gem "san_juan"
 
 group :assets do
   gem "eco"

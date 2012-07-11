@@ -1,6 +1,7 @@
 require "bundler/capistrano"
 require 'thinking_sphinx/deploy/capistrano'
 require 'new_relic/recipes'
+require 'san_juan'
 
 set :application, "scprv4"
 set :scm, :git
@@ -18,7 +19,10 @@ role :app, "web1.scpr.org", "web2.scpr.org"
 role :web, "web1.scpr.org", "web2.scpr.org"
 role :db,  "web2.scpr.org", :primary => true
 role :sphinx, "media.scpr.org"
+role :god, "media.scpr.org"
 
+set :god_config_path "/etc/god/config"
+san_juan.role :god, "scprv4-resque"
 
 # --------------
 # cap staging deploy
@@ -86,4 +90,5 @@ end
 
 
 after "deploy:update_code", "thinking_sphinx:configure"
+after "deploy:update_code", "god:app:scprv4-resque:restart"
 after "deploy:update", "newrelic:notice_deployment"
