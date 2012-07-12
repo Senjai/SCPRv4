@@ -1,5 +1,5 @@
 class FeedsController < ApplicationController
-  layout nil
+  layout false
   
   def all_news
     response.headers["Content-Type"] = 'text/xml'
