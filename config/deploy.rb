@@ -1,3 +1,6 @@
+# --------------
+# Requires and Multistage setup
+
 require "bundler/capistrano"
 require 'thinking_sphinx/deploy/capistrano'
 
@@ -15,14 +18,22 @@ set :repository,  "git@github.com:SCPR/SCPRv4.git"
 set :scm_verbose, true
 set :deploy_via, :remote_cache
 set :deploy_to, "/web/scprv4"
+set :keep_releases, 25
 
 set :user, "scprv4"
 set :use_sudo, false
+set :group_writable, false
 
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true -s force_npm=true
 set :force_assets, false
 set :force_npm, false
+
+
+# --------------
+# Universal Callbacks
+after "deploy:update", "deploy:cleanup"
+
 
 # --------------
 # Universal Tasks
@@ -70,7 +81,7 @@ namespace :deploy do
       if force_assets || from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
         run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
       else
-        logger.info "No changes in assets - SKIPPING asset pre-compilation"
+        logger.info "No changes in assets. SKIPPING asset pre-compilation"
       end
     end
   end
