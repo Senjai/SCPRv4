@@ -45,11 +45,8 @@ namespace :deploy do
   
   # --------------
   # Install & Rebuild packages if package.json was updated
-  # This installs everything into #{latest_release}/node_modules,
-  # moves it to #{shared_path}/node_modules, and then symlinks
-  # #{shared_path}/node_modules into #{latest_release}
-  # This allows the application to share packages between
-  # deploys if possible.
+  # Symlinks to shared folder to allow packages to be shared
+  # between deployment if possible.
   task :npm, roles: :web do
     from = source.next_revision(current_revision) rescue nil
     if force_npm || from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} package.json | wc -l").to_i > 0
