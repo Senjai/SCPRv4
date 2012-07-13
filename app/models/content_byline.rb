@@ -7,9 +7,9 @@ class ContentByline < ActiveRecord::Base
   ROLE_CONTRIBUTING = 2
   
   ROLE_TEXT = {
-      ROLE_PRIMARY: "Primary",
-      ROLE_SECONDARY: "Secondary",
-      ROLE_CONTRIBUTING: "Contributing"
+      ROLE_PRIMARY => "Primary",
+      ROLE_SECONDARY => "Secondary",
+      ROLE_CONTRIBUTING => "Contributing"
   }
   
   scope :primary, where(role: ROLE_PRIMARY)
