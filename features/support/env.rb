@@ -27,4 +27,5 @@ end
 
 After do
   DatabaseCleaner.clean
+  Rails.cache.clear
 end

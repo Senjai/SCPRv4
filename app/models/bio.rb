@@ -21,20 +21,16 @@ class Bio < ActiveRecord::Base
              .paginate(page: page, per_page: per_page)
     else
       ContentByline.search('', 
-        :order      => :published_at,
-        :sort_mode  => :desc,
-        :with       => { :user_id => self.id, status: ContentBase::STATUS_LIVE },
-        :per_page   => per_page,
-        :page       => page
+        order:      :published_at,
+        sort_mode:  :desc,
+        with:       { user_id: self.id, status: ContentBase::STATUS_LIVE },
+        per_page:   per_page,
+        page:       page
       )
     end
   end
 
   #----------
-  
-  def to_param
-    self.slugged_name
-  end
   
   def twitter_url
     if twitter.present?

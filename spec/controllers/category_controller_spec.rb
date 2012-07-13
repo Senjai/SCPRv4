@@ -2,6 +2,8 @@ require "spec_helper"
 
 describe CategoryController do
   describe "GET /index" do
+    sphinx_spec
+    
     it "assigns @category" do
       category = create :category_news
       get :index, category: category.slug
