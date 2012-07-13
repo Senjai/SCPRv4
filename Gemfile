@@ -9,7 +9,7 @@ gem 'jquery-rails'
 gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git", :ref => "dcb7843b10afc68a85c105fd58eaa76cf71e250f"
 gem "resque", "~> 1.20"
 
-gem 'thinking-sphinx', '~> 2.0.10'
+gem 'thinking-sphinx', '~> 2.0.10', require: "thinking_sphinx"
 gem 'will_paginate'
 gem "bcrypt-ruby", "~> 3.0.0"
 gem "faraday", "~> 0.7.6"

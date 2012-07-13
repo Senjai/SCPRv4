@@ -12,6 +12,7 @@ require 'fakeweb'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 FakeWeb.allow_net_connect = false
+AH_JSON = File.read("#{Rails.root}/spec/fixtures/assethost.json")
 
 RSpec.configure do |config|  
   config.use_transactional_fixtures = false
@@ -32,7 +33,7 @@ RSpec.configure do |config|
   
   config.before :each do
     FakeWeb.clean_registry
-    FakeWeb.register_uri(:any, %r|a\.scpr\.org|, body: File.read("#{Rails.root}/spec/fixtures/assethost.json"))
+    FakeWeb.register_uri(:any, %r|a\.scpr\.org|, body: AH_JSON)
     DatabaseCleaner.start
   end
   
