@@ -86,6 +86,16 @@ class Event < ActiveRecord::Base
     "events/event:#{self.id}"
   end
   
+  def disqus_identifier
+    obj_key
+  end
+  
+  def disqus_shortname
+    'kpcc'
+  end
+
+  #----------
+  
   def inline_address(separator=", ")
     [address_1, address_2, city, state, zip_code].reject { |element| element.blank? }.join(separator)
   end

@@ -202,7 +202,17 @@ class ContentBase < ActiveRecord::Base
   def remote_link_path
     "http://www.scpr.org#{self.link_path}"
   end
+
+  #----------
+
+  def disqus_identifier
+    obj_key
+  end
   
+  def disqus_shortname
+    'kpcc'
+  end
+
   #----------
   
   def sorted_bylines
