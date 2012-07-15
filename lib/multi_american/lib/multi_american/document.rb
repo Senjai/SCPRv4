@@ -10,10 +10,11 @@ module WP
         "doc"
       end
       
+      attr_writer :cached
       def cached
         Rails.logger.info("*** Getting document...")
         @cached ||= YAML.load(WP.rcache.get(self.cache_key).to_s)
-      end
+      end      
     end
     
     attr_reader :title, :pubDate, :url    

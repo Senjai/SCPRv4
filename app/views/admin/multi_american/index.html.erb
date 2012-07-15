@@ -7,7 +7,10 @@
 			Totals:
 			<ul>
 				<% WP::RESOURCES.each do |resource| %>
-					<li><b><%= resource.titleize %></b>: <%= ["WP", resource.singularize.camelize].join("::").constantize.total %></li>
+					<li>
+						<b><%= resource.titleize %></b>: 
+						<%= ["WP", resource.singularize.camelize].join("::").constantize.total %>
+					</li>
 				<% end %>
 			</ul>
 		</li>
@@ -20,7 +23,10 @@
 	<div class="span3">
 		<ul class="nav nav-tabs nav-stacked">
 			<% WP::RESOURCES.each do |resource| %>
-				<li><%= link_to resource.titleize, send("admin_index_multi_american_resource_path", resource) %></li>
+				<li>
+					<%= link_to resource.titleize, 
+						admin_index_multi_american_resource_path(resource) %>
+				</li>
 			<% end %>
 		</ul>
 	</div>
@@ -28,16 +34,35 @@
 	<div class="span9">
 		<h3>Notes</h3>
 		<ul>
-			<li>Importing a post will also import any tags and categories associated with it that have not yet been imported, or associate it with tags and categories that already exist.</li>
-			<li>Deleting an imported post will remove its association with a tag or category, but will not remove the tag or category itself.</li>
-			<li>Post imports will be much faster if Tags and Categories have already been imported.</li>
+			<li>
+				Importing a post will also import any tags and categories associated 
+				with it that have not yet been imported, or associate it with tags 
+				and categories that already exist.
+			</li>
+				
+			<li>
+				Deleting an imported post will remove its association with a tag or 
+				category, but will not remove the tag or category itself.
+			</li>
+				
+			<li>
+				Post imports will be much faster if Tags and Categories have already 
+				been imported.
+			</li>
+			
+			<li>
+				Node isn't currently working in production. You'll get to the "Working" 
+				page but it will never do anything. You can safely navigate away from 
+				that page.
+			</li>
 		</ul>
 	</div> <!-- span -->
 </div> <!-- row fluid -->
 
 <hr />
 
-<%= form_tag admin_multi_american_set_doc_path, multipart: true, class: "form-horizontal" do %>
+<%= form_tag admin_multi_american_set_doc_path, 
+	multipart: true, class: "form-horizontal" do %>
 	<fieldset>
 		<legend>Load Another Document</legend>
 		<p>The data in this section was parsed from <b><%= document.url %></b></p>

@@ -8,6 +8,10 @@ module WP
       def invalid_item(node)
         false
       end
+      
+      def importable
+        false
+      end
     end
   end
 end

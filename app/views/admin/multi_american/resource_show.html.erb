@@ -1,22 +1,24 @@
 <h2>
 	<%= @resource.to_title %>
-	<div class="pull-right">
-		<% if !@resource.ar_record %>
-			<%= link_to "Import", 
-						admin_multi_american_import_path(resource_name, @resource.id), 
-						class: "btn btn-primary", method: "post" %>
-		<% else %>
-			<% if @resource.imported %>
-				<%= button_tag "Imported", class: "btn btn-success", disabled: "disabled" %>
-				<%= link_to "Delete", 
-							admin_multi_american_remove_path(resource_name, @resource.id), 
-							class: "btn btn-danger", method: "delete", data: { confirm: "Are you sure?" } %>
+	<% if resource_class.importable%>
+		<div class="pull-right">
+			<% if !@resource.ar_record %>
+				<%= link_to "Import", 
+							admin_multi_american_import_path(resource_name, @resource.id), 
+							class: "btn btn-primary", method: "post" %>
 			<% else %>
-				<%= button_tag "Already Exists", class: "btn btn-warning", disabled: "disabled" %>
-			<% end %>
+				<% if @resource.imported? %>
+					<%= button_tag "Imported", class: "btn btn-success", disabled: "disabled" %>
+					<%= link_to "Delete", 
+								admin_multi_american_remove_path(resource_name, @resource.id), 
+								class: "btn btn-danger", method: "delete", data: { confirm: "Are you sure?" } %>
+				<% else %>
+					<%= button_tag "Already Exists", class: "btn btn-warning", disabled: "disabled" %>
+				<% end %>
 			
-		<% end %>
-	</div>
+			<% end %>
+		</div>
+	<% end %>
 </h2>
 <hr />
 
