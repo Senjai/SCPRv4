@@ -2,14 +2,13 @@
 <% align = %w{left right}.include?(properties[:align]) ? properties[:align] : "none" %>
 
 <div id="<%=properties[:id]%>" style="width:<%=width%>; float: <%=align%>">
-<%= content.html_safe %>
+	<%= content.html_safe %>
 
-<% if properties[:credit].present? %>
-	<p class="wp-media-credit"><%=properties[:credit]%></p> 
-<% end %>
+	<% if properties[:credit].present? %>
+		<p class="wp-media-credit"><%= properties[:credit].html_safe %></p> 
+	<% end %>
 
-<% if properties[:caption].present? %>
-	<p><%=properties[:caption]%></p>
-<% end %>
-
+	<% if properties[:caption].present? %>
+		<p><%= properties[:caption].html_safe %></p>
+	<% end %>
 </div>

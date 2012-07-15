@@ -22,9 +22,14 @@ module WP
       
       attr_writer :cached
       def cached
-        @cached ||= WP.rcache.smembers(self.cache_key).map { |c| YAML.load(WP.rcache.get c) }
+        @cached ||= WP.rcache.smembers(self.cache_key).map do |c|
+          YAML.load(WP.rcache.get c) 
+        end
       end
       
+      def importable
+        true
+      end
       
       # -------------------      
       # Templates
@@ -122,17 +127,20 @@ module WP
     # Import
     def import
       # Don't want to duplicate imported objects
-      if self.imported
-        return self.ar_record
+      if self.imported?
+        return false
       end
       
-      object = self.class.scpr_class.constantize.send("find_or_initialize_by_#{self.class.xml_ar_map.first[1]}", send(self.class.xml_ar_map.first[0]))
+      object = self.class.scpr_class.constantize.send(
+                "find_or_initialize_by_#{self.class.xml_ar_map.first[1]}", 
+                send(self.class.xml_ar_map.first[0])
+              )
       
       # Don't want to overwrite objects which existed before import
       # We can assume that if it exists now, it wasn't imported, because
       # we short-circuited that above.
       if !object.new_record?
-        return object
+        return false
       end
       
       object_builder = {}
@@ -163,8 +171,8 @@ module WP
     # Remove (opposite of Import)
     def remove
       # Only remove objects that were imported
-      if !self.imported
-        return self
+      if !self.imported?
+        return false
       end
       
       # Use `destroy` so it calls callbacks
@@ -183,14 +191,16 @@ module WP
     # -------------------
     # Find the AR record based on the XML_AR_MAP hash
     def ar_record
-      self.class.scpr_class.constantize.where(self.class.xml_ar_map.first[1] => send(self.class.xml_ar_map.first[0])).reload.first
+      self.class.scpr_class.constantize.where(
+        self.class.xml_ar_map.first[1] => send(self.class.xml_ar_map.first[0])
+      ).reload.first
     end
 
     # -------------------    
     # Check to see if it was imported
     # Based on the presence of wp_id
-    def imported
-      self.ar_record and self.ar_record.wp_id.present?
+    def imported?
+      self.ar_record.present? and self.ar_record.wp_id.present?
     end
     
     
