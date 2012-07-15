@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe FeedsController do
   describe "GET /all_news" do
+    sphinx_spec(num: 1)
     
     it "doesn't render a layout" do
       get :all_news
@@ -32,14 +33,10 @@ describe FeedsController do
         Rails.cache.should_receive(:write_entry)
         get :all_news
       end
-    
-      describe "sphinx" do
-        sphinx_spec(num: 2)
       
-        it "uses sphinx to populate @content" do
-          get :all_news
-          assigns(:content).should_not be_blank
-        end
+      it "uses sphinx to populate @content" do
+        get :all_news
+        assigns(:content).should_not be_blank
       end
     end
   end

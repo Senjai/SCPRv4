@@ -49,7 +49,9 @@ module ContentBaseHelpers
     
     @generated_content = []
     ContentBase.content_classes.each do |klass|
-      @generated_content.push FactoryGirl.create_list(klass.to_s.underscore.to_sym, num.to_i, options.reverse_merge!(with_category: true))
+      @generated_content.push FactoryGirl.create_list(
+        klass.to_s.underscore.to_sym, num.to_i, options.reverse_merge!(with_category: true)
+      )
     end
     
     @generated_content = @generated_content.flatten
@@ -60,6 +62,7 @@ module ContentBaseHelpers
   def setup_sphinx(content_options={})
     DatabaseCleaner.strategy = :truncation
     make_content(content_options[:num], content_options[:options])
+    ThinkingSphinx::Configuration.instance.build
     ThinkingSphinx::Test.index
   end
   

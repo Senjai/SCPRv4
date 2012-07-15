@@ -22,11 +22,17 @@ describe PeopleController do
   end
   
   describe "GET /bio" do
-    let(:bio) { create :bio }
-    sphinx_spec(num: 3)
+    before :each do
+      @bio = create :bio
+      setup_sphinx(num: 1)
+    end
+    
+    after :each do
+      teardown_sphinx
+    end
     
     it "returns a Bio object" do
-      get :bio, name: bio.slugged_name
+      get :bio, name: @bio.slugged_name
       assigns(:bio).should be_a Bio
     end
     
