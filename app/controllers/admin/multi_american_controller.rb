@@ -8,7 +8,7 @@ class Admin::MultiAmericanController < Admin::BaseController
   before_filter :set_root_breadcrumb, except: [:set_doc]
   before_filter :set_result_flash_messages, only: [:resource_index, :resource_show]
 
-  DUMP_FILE = "http://media.scpr.org/multi_american/dump.xml"
+  DUMP_FILE = "#{Rails.root}/lib/multi_american/XML/multiamerican_dump.xml"
 
   helper_method :resource_class, :resource_name, :resource_objects, :document
 
