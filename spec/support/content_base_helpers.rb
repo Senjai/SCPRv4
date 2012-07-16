@@ -59,13 +59,17 @@ module ContentBaseHelpers
   
   # -----------
   
-  def setup_sphinx(content_options={})
+  def setup_sphinx
     DatabaseCleaner.strategy = :truncation
-    make_content(content_options[:num], content_options[:options])
-    ThinkingSphinx::Configuration.instance.build
-    ThinkingSphinx::Test.index
   end
   
+  # -----------
+  
+  def generate_and_index_content(content_options={})
+    make_content(content_options[:num], content_options[:options])
+    ThinkingSphinx::Test.index
+  end
+
   # -----------
   
   def teardown_sphinx
@@ -78,8 +82,17 @@ module ContentBaseHelpers
     # Takes the same arguments as make_content, but in hash form
     # spinx_spec(num: 10, options: { title: "Something"})
     def sphinx_spec(content_options={})
-      before(:all)  { setup_sphinx(content_options) }
-      after(:all)   { teardown_sphinx }
+      before :all do
+        setup_sphinx
+      end
+      
+      before :each do
+          generate_and_index_content(content_options)
+      end
+      
+      after :all do
+        teardown_sphinx
+      end
     end
   end
 end

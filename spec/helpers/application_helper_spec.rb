@@ -47,7 +47,11 @@ describe ApplicationHelper do
   
   describe "get latest using sphinx" do
     before :all do
-      setup_sphinx(num: 15)
+      setup_sphinx
+    end
+    
+    before :each do
+      generate_and_index_content(num: 7)
       @arts = get_latest_arts
       @news = get_latest_news
     end
