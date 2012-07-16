@@ -9,15 +9,18 @@ connection = Net::HTTP.new(url.host, url.port)
 errors = []
 successes = []
 
-WP::Post.find.each_with_index do |post, pindex|
-  pindex += 1
-  poutof = "[#{pindex}/#{WP::Post.total}]"
-  blog_entry = post.ar_record
+blog_entries = BlogEntry.where('wp_id is not null').all
+total_entries = blog_entries.size
+
+blog_entries.each_with_index do |blog_entry, bindex|
+  bindex += 1
+  boutof = "[#{bindex}/#{total_entries}]"
+  post = WP::Post.find.find { |p| p.id == blog_entry.wp_id }
   parsed_content = Nokogiri::HTML::DocumentFragment.parse(blog_entry.content)
   fake_assets = post.fake_assets(parsed_content)
   
   if fake_assets.blank?
-    puts "#{poutof} No fake assets for WP::Post ##{post.id}"
+    puts "#{boutof} No fake assets for WP::Post ##{post.id}"
     next
   end
   
@@ -96,7 +99,7 @@ WP::Post.find.each_with_index do |post, pindex|
       asset.remove
       blog_entry.content = parsed_content.to_html
       successes.push ["Saved", post.class.name, post.id]
-      puts "#{poutof}#{aoutof} Saved #{asset_desc}"      
+      puts "#{boutof}#{aoutof} Saved #{asset_desc}"      
     else
       errors.push ["Can't Save", post.class.name, post.id]
       puts "Couldn't save #{asset_desc} (#{content_asset.errors})"
