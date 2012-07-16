@@ -17,7 +17,7 @@ module WP
       end
       
       def cache_namespace
-        self.name.underscore.pluralize
+        self.name.demodulize.underscore.pluralize
       end
       
       attr_writer :cached

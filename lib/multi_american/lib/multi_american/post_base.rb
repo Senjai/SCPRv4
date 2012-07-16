@@ -188,6 +188,13 @@ module WP
           credit.name = "h4"
         end
         
+        # Nowe remove any ghost p's caused by invalid HTML or blank caption
+        parsed_content.css('p').each do |p|
+          if p.content.blank?
+            p.remove
+          end
+        end
+        
         # -------------------
         # Extract the inline style from the div
         style = {}
@@ -216,7 +223,7 @@ module WP
             credit: credit.try(:to_html), caption: caption.try(:to_html),
             cssClass: cssClass).to_s
             
-          # Finally, get rid of the main div by replacing it with its own children
+          # Finally, get rid of the main div from WP by replacing it with its own children
           div.swap(div.children)
         end
       end
@@ -224,6 +231,22 @@ module WP
       self.content = parsed_content.to_html
       return self.content.html_safe
     end
+    
+    # -------------------
+    # Fake asset finder
+    def fake_assets(parsed_content=nil)
+      # Don't even bother with posts that haven't been imported
+      # Because they don't have the fake asset pushed in yet
+      if !self.imported?
+        raise "Can't find fake assets if Post isn't imported."
+      end
+      
+      # Get the ar_record for this post and parse its content,
+      # then return an array of the entry's fake assets
+      pc = parsed_content || Nokogiri::HTML::DocumentFragment.parse(self.ar_record.content)
+      @fake_assets = pc.xpath("./div[@data-wp-attachment-id]")
+    end
+    
     
     # -------------------
     # Convenience Methods

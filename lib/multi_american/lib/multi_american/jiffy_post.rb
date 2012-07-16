@@ -35,15 +35,13 @@ module WP
       end
 
       parsed_content.css('p').each do |p|
-        # Remove the ghost p caused by invalid HTML
-        if p.content.blank?
-          p.remove
-          next
-        end
-        
         # Now simple_format the content
         dup = p.inner_html.dup
         p.inner_html = WP.view.simple_format(dup)
+        
+        # Now remove/replace the characters that shouldn't be there...
+#        dup = p.inner_html.dup
+#        p.inner_html = dup.gsub(/Â/, "").gsub(/â\?\??/, "")
       end
             
       # remove style from some elements to conform to our styles
