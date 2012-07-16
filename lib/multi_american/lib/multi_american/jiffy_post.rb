@@ -51,7 +51,7 @@ module WP
       
       self.content = parsed_content.to_html
       
-      #super
+      super
     end
   end
 end
