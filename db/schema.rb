@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120710021101) do
+ActiveRecord::Schema.define(:version => 20120715235616) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -44,15 +44,16 @@ ActiveRecord::Schema.define(:version => 20120710021101) do
   add_index "ascertainment_ascertainmentrecord", ["content_type_id"], :name => "ascertainment_ascertainmentrecord_e4470c6e"
 
   create_table "assethost_contentasset", :force => true do |t|
-    t.integer "content_type_id",                                       :null => false
-    t.integer "object_id",                                             :null => false
-    t.integer "asset_order",                           :default => 99, :null => false
-    t.integer "asset_id",                                              :null => false
-    t.text    "caption",         :limit => 2147483647,                 :null => false
+    t.integer "django_content_type_id",                                       :null => false
+    t.integer "content_id",                                                   :null => false
+    t.integer "asset_order",                                  :default => 99, :null => false
+    t.integer "asset_id",                                                     :null => false
+    t.text    "caption",                :limit => 2147483647,                 :null => false
+    t.string  "content_type",           :limit => 20
   end
 
-  add_index "assethost_contentasset", ["content_type_id", "object_id"], :name => "content_type_id"
-  add_index "assethost_contentasset", ["content_type_id"], :name => "assethost_contentasset_e4470c6e"
+  add_index "assethost_contentasset", ["django_content_type_id", "content_id"], :name => "content_type_id"
+  add_index "assethost_contentasset", ["django_content_type_id"], :name => "assethost_contentasset_e4470c6e"
 
   create_table "auth_group", :force => true do |t|
     t.string "name", :limit => 80, :null => false
@@ -1206,15 +1207,6 @@ ActiveRecord::Schema.define(:version => 20120710021101) do
 
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
-
-  create_table "rails_assethost_contentasset", :id => false, :force => true do |t|
-    t.integer "id",                                 :default => 0,  :null => false
-    t.integer "content_id",                                         :null => false
-    t.string  "content_type",                                       :null => false
-    t.integer "asset_order",                        :default => 99, :null => false
-    t.integer "asset_id",                                           :null => false
-    t.text    "caption",      :limit => 2147483647,                 :null => false
-  end
 
   create_table "rails_content_map", :id => false, :force => true do |t|
     t.integer "id",         :null => false
