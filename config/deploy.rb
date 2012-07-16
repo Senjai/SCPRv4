@@ -60,7 +60,9 @@ namespace :deploy do
   # between deployment if possible.
   task :npm, roles: :web do
     from = source.next_revision(current_revision) rescue nil
-    if force_npm || from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} package.json | wc -l").to_i > 0
+    if force_npm || 
+        from.nil? || 
+        capture("cd #{latest_release} && #{source.local.log(from)} package.json | wc -l").to_i > 0
       run "cd #{latest_release} && npm install && npm rebuild"
       run "mv -f #{lateset_release}/node_modules/ #{shared_path}"
     else
@@ -78,7 +80,9 @@ namespace :deploy do
       
       # Previous revision is blank or git log doesn't 
       # have any new lines mentioning assets
-      if force_assets || from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
+      if force_assets || 
+          from.nil? || 
+          capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
         run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
       else
         logger.info "No changes in assets. SKIPPING asset pre-compilation"
