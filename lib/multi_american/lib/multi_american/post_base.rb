@@ -80,6 +80,16 @@ module WP
       if existing_user = AdminUser.where(username: self.dc).first
         object_builder[:author_id] = Bio.where(user_id: existing_user.id).first.id
       end
+      
+      # Create the byline
+      byline = ContentByline.new(
+        content: object, 
+        user_id: object_builder[:author_id],
+        name: ""
+      )
+      
+      object_builder[:bylines] = [byline]
+      
 
       # -------------------
       # Merge in Tags and Categories

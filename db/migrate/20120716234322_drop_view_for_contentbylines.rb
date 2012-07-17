@@ -1,5 +1,9 @@
-class AddViewForContentByline < ActiveRecord::Migration
+class DropViewForContentbylines < ActiveRecord::Migration
   def up
+    execute("drop view rails_contentbase_contentbyline")
+  end
+  
+  def down
     execute("
       create view rails_contentbase_contentbyline as 
       select 
@@ -14,9 +18,5 @@ class AddViewForContentByline < ActiveRecord::Migration
         rails_content_map as m 
       where l.content_type_id = m.id
     ")
-  end
-
-  def down
-    execute("drop view rails_contentbase_contentbyline")
   end
 end

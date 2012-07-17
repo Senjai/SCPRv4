@@ -147,11 +147,12 @@ module WP
       self.class.xml_ar_map.each do |wp_attr, ar_attr|
         object_builder.merge!(ar_attr => send(wp_attr))
       end
+
+      object_builder.reverse_merge!(self.class.defaults)
       
       # Setup any extra stuff that needs to be setup
       object, object_builder = build_extra_attributes(object, object_builder)
       
-      object_builder.reverse_merge!(self.class.defaults)
       object.attributes = object_builder
             
       if object.save

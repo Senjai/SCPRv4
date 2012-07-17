@@ -26,7 +26,7 @@ describe PeopleController do
     let(:bio) { create :bio }
     
     it "returns a Bio object" do
-      pending "Thinking sphinx"
+      pending
       #get :bio, name: bio.slugged_name
       #assigns(:bio).should be_a Bio
     end

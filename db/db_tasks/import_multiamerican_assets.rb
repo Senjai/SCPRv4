@@ -87,7 +87,7 @@ blog_entries.each_with_index do |blog_entry, bindex|
     # Hardcode 44 because that's all it will be, no need
     # to make another DB request
     content_asset = ContentAsset.new(
-      django_content_type_id: 44,
+      django_content_type_id: WP::PostBase::CONTENT_TYPE_ID,
       content:                blog_entry,
       asset_order:            aindex,
       asset_id:               new_asset["id"],
