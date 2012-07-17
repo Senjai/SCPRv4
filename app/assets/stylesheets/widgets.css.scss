@@ -406,6 +406,12 @@
 	}
 }
 
+.blog-categories {
+	li {
+		@include font-heading;		
+	}
+}
+
 .connect {
 	.title {
 		display: block;

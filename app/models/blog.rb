@@ -24,6 +24,7 @@ class Blog < ActiveRecord::Base
   belongs_to :missed_it_bucket
   has_many :authors, through: :blog_authors, order: "position"
   has_many :blog_authors
+  has_many :blog_categories
   
   # -------------------
   # Scopes

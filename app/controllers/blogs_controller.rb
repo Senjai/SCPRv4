@@ -71,6 +71,28 @@ class BlogsController < ApplicationController
                    .paginate(:page => params[:page] || 1, :per_page => 5)
   end
   
+  #----------
+  
+  def category
+    if @category = BlogCategory.where(slug: params[:category],
+                                      blog_id: @blog.id).first
+                                      
+      @entries = @category.blog_entries
+                          .published
+                          .order("blogs_entry.published_at desc")
+                          .paginate(page: params[:page] || 1, per_page: 5)
+    else
+      raise ActionController::RoutingError.new("Not Found")
+    end
+  end
+  
+  #----------
+  
+  def categories
+  end
+  
+  #----------
+  
   protected
     def load_blog
       if @blog = Blog.local.find_by_slug(params[:blog])

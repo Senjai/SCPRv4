@@ -6,15 +6,47 @@ describe BlogEntry do
     entry.any? { |e| e.category == nil }.should be_false
   end
   
+  # ----------------
+  
   describe "associations" do
     it { should belong_to :blog }
     it { should belong_to :author }
     it { should have_many :tagged }
-    it { should have_many(:tags).through(:tagged).dependent(:delete_all) }
+    it { should have_many(:tags).through(:tagged).dependent(:destroy) }
     it { should have_many(:blog_entry_blog_categories) }
-    it { should have_many(:blog_categories).through(:blog_entry_blog_categories).dependent(:delete_all) }
+    it { should have_many(:blog_categories).through(:blog_entry_blog_categories).dependent(:destroy) }
+    
+    it "deletes tags in the join model when it's deleted" do
+      entry = create :blog_entry, tag_count: 1
+      TaggedContent.count.should eq 1
+      entry.destroy
+      TaggedContent.count.should eq 0
+    end
+    
+    it "doesn't delete the tag when the entry is deleted" do
+      entry = create :blog_entry, tag_count: 1
+      Tag.count.should eq 1
+      entry.destroy
+      Tag.count.should eq 1
+    end
+    
+    it "deletes categories in the join model when it's deleted" do
+      entry = create :blog_entry, blog_category_count: 1
+      BlogEntryBlogCategory.count.should eq 1
+      entry.destroy
+      BlogEntryBlogCategory.count.should eq 0
+    end
+    
+    it "doesn't delete the category when the entry is deleted" do
+      entry = create :blog_entry, blog_category_count: 1
+      BlogCategory.count.should eq 1
+      entry.destroy
+      BlogCategory.count.should eq 1
+    end
   end
   
+  # ----------------
+
   describe "scopes" do
     describe "#published" do    
       it "orders published content by published_at descending" do
@@ -24,6 +56,8 @@ describe BlogEntry do
       end
     end
   end
+
+  # ----------------
   
   describe "link_path" do
     it "does not override hard-coded options" do
@@ -32,6 +66,8 @@ describe BlogEntry do
     end
   end
   
+  # ----------------
+
   describe "headline" do
     it "is the title" do
       entry = build :blog_entry

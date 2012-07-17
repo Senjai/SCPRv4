@@ -25,11 +25,12 @@ class BlogEntry < ContentBase
   # Association
   belongs_to :blog
   belongs_to :author, :class_name => "Bio"
+
   has_many :tagged, :class_name => "TaggedContent", :as => :content
-  has_many :tags, :through => :tagged, dependent: :delete_all
+  has_many :tags, :through => :tagged, dependent: :destroy
   
   has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
-  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :delete_all
+  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
   
   # ------------------
   # Scopification
