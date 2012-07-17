@@ -4,7 +4,8 @@ class Blog < ActiveRecord::Base
   # -------------------
   # Administration
   administrate
-  self.list_order = "is_active desc, name"  
+  self.list_order = "is_active desc, name"
+  self.list_per_page = "all"
   self.list_fields = [
     ['name'],
     ['slug'],

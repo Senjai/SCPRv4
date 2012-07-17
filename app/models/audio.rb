@@ -1,6 +1,6 @@
 class Audio < ActiveRecord::Base
   self.table_name =  'rails_media_audio'
-  self.primary_key = :id
+  self.primary_key = "id"
   
   belongs_to :content, :polymorphic => true
 

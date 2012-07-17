@@ -20,6 +20,11 @@ module WP
   def self.rcache
     @@cache ||= Rails.cache.instance_variable_get(:@data)
   end
+  
+  # An easy way to use the text helpers
+  def self.view
+    ActionView::Base.new(ActionController::Base.view_paths, {})
+  end
 end
 
 
@@ -40,7 +45,6 @@ require 'multi_american/lib/multi_american/jiffy_post.rb'
 require 'multi_american/lib/multi_american/roundup.rb'
 require 'multi_american/lib/multi_american/attachment.rb'
 require 'multi_american/lib/multi_american/nav_menu_item.rb'
-require 'multi_american/lib/multi_american/topic.rb'
 
 require 'multi_american/lib/multi_american/category.rb'
 require 'multi_american/lib/multi_american/tag.rb'

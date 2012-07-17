@@ -29,6 +29,25 @@ class BlogsController < ApplicationController
       raise ActionController::RoutingError.new("Not Found")
   end
   
+  # Map old paths from "other blogs"
+  def legacy_path
+    date = Date.new(params[:year].to_i, params[:month].to_i)
+    blog_entry = BlogEntry.published
+      .where(
+        "published_at > ? and published_at < ? and slug = ?", 
+        date, date + 1.month, params[:slug]
+      ).first
+
+    if blog_entry.present?
+      redirect_to blog_entry.link_path, permanent: true
+    else
+      raise ActionController::RoutingError.new("Not Found")
+    end
+
+  rescue
+    raise ActionController::RoutingError.new("Not Found")
+  end
+  
   #----------
   
   def blog_tags

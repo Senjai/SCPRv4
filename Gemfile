@@ -2,32 +2,32 @@ source 'http://rubygems.org'
 
 gem 'rails', "~> 3.2.3"
 gem 'mysql2'
+gem 'therubyracer'
+gem 'jquery-rails'
 
 #gem 'redis-content-store', :path => "/Users/bryan/projects/redis-content-store"
 gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git", :ref => "dcb7843b10afc68a85c105fd58eaa76cf71e250f"
+gem "resque", "~> 1.20"
 
-gem 'jquery-rails'
+gem 'thinking-sphinx', '~> 2.0.10', require: "thinking_sphinx"
 gem 'will_paginate'
-gem 'capistrano'
-gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
-#gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
-gem 'thinking-sphinx', '~> 2.0.10'
-gem 'therubyracer'
-gem 'newrelic_rpm'
+gem "bcrypt-ruby", "~> 3.0.0"
+gem "faraday", "~> 0.7.6"
+gem "faraday_middleware", "~> 0.8"
 
-gem "faraday", "0.7.6"
-gem "faraday_middleware"
+gem 'newrelic_rpm'
 
 gem "ruby-mp3info"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
+gem "oauth2"
+gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
+#gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
 gem "twitter"
 gem 'twitter-text'
-gem "oauth2"
 gem 'simple_form'
 gem 'chronic'
 
-gem "bcrypt-ruby", "~> 3.0.0"
-gem "resque", "~> 1.20"
+gem 'capistrano'
 
 group :assets do
   gem "eco"

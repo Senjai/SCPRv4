@@ -1,13 +1,10 @@
 require "spec_helper"
 
 describe PeopleController do
-  describe "GET /index" do
-    before :all do
+  describe "GET /index" do    
+    before :each do
       create_list :bio, 2, is_public: false
       create_list :bio, 2, is_public: true
-    end
-    
-    before :each do
       get :index
     end
     
@@ -25,26 +22,11 @@ describe PeopleController do
   end
   
   describe "GET /bio" do
+    sphinx_spec(num: 1)
     let(:bio) { create :bio }
-#    before :all do
-#      DatabaseCleaner.strategy = :truncation
-#      ThinkingSphinx::Test.start
-#    end
-#    
-#    before :each do
-#      @bio = create :bio
-#      puts "indexing..."
-#      make_content(3)
-#      ThinkingSphinx::Test.index
-#    end
-#    
-#    after :all do
-#      ThinkingSphinx::Test.stop      
-#      DatabaseCleaner.strategy = :transation
-#    end
-#  
+    
     it "returns a Bio object" do
-      pending "Thining Sphinx"
+      pending
       #get :bio, name: bio.slugged_name
       #assigns(:bio).should be_a Bio
     end

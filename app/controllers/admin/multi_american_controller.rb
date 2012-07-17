@@ -5,9 +5,10 @@ class Admin::MultiAmericanController < Admin::BaseController
   before_filter :load_doc, except: [:set_doc]
   before_filter :load_objects, except: [:index, :resource_show, :set_doc]
   before_filter :set_parse_info_flash, except: [:set_doc]
-  before_filter :set_root_breadcrumb, except: [:set_doc]  
+  before_filter :set_root_breadcrumb, except: [:set_doc]
+  before_filter :set_result_flash_messages, only: [:resource_index, :resource_show]
 
-  DUMP_FILE = "#{Rails.root}/lib/multi_american/XML/full_dump.xml"
+  DUMP_FILE = "#{Rails.root}/lib/multi_american/XML/multiamerican_dump.xml"
 
   helper_method :resource_class, :resource_name, :resource_objects, :document
 
@@ -17,7 +18,7 @@ class Admin::MultiAmericanController < Admin::BaseController
   # Actions
   def resource_index
     breadcrumb resource_name.titleize
-    @resources = list(resource_objects)
+    @resources = list(resource_objects, params)
     render resource_class.index_template
   end
 
@@ -41,7 +42,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     WP::Document.cached = nil
     
     # Set a new document
-    self.document = WP::Document.new(params[:document_path])
+    self.document = WP::Document.new(params[:document_path].strip)
 
     # Set the known url to avoid a warning
     self.known_url = self.document.url
@@ -97,8 +98,32 @@ class Admin::MultiAmericanController < Admin::BaseController
     
     
     # ---------------
+    # Set flash messages with results parsed from query string
+    def set_result_flash_messages
+      if @@rcache.get WP::ResqueJob.finished_cache_key
+        if params[:errors].to_i > 0
+          flash.now[:alert] = "<b>Alert!</b> There #{params[:errors] == "1" ? "was" : "were"} \
+          <b>#{WP.view.pluralize(params[:errors], 'error')}</b> during the #{params[:job]} process."
+        end
+      
+        if params[:successes].to_i > 0
+          flash.now[:notice] = "<b>Success!</b> #{params[:job].capitalize} job succeeded for \
+          #{WP.view.pluralize(params[:successes], resource_name.singularize)}"
+        end
+        
+        # Set the stat to 0 so we don't get messages again
+        @@rcache.del WP::ResqueJob.finished_cache_key
+      end
+    end
+    
+    
+    # ---------------
     # Fake AR order & pagination
-    def list(items)
+    def list(items, params={})
+      if params[:filter].present?
+        items = items.select { |i| i.imported? == (params[:filter] == "imported" ? true : false) }
+      end
+      
       items.sort_by { |p| p.sorter }.reverse.paginate(page: params[:page], per_page: resource_class.list_per_page)
     end
     
@@ -149,7 +174,11 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     
     def load_object
-      YAML.load(@@rcache.get([resource_class.cache_key, params[:id]].join(":")).to_s)
+      cached = YAML.load(@@rcache.get([resource_class.cache_key, params[:id]].join(":")).to_s)
+      if !cached
+        raise ActionController::RoutingError.new("Not Found")
+      end
+      return cached
     end
     
     # ---------------

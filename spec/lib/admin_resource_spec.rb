@@ -84,8 +84,18 @@ describe AdminResource do
     end
     
     it "returns the defined default if nothing set" do
-      NewsStory.list_per_page = nil
+      NewsStory.send(:remove_instance_variable, :@list_per_page)
       NewsStory.list_per_page.should eq AdminResource::LIST_DEFAULTS[:list_per_page]
+    end
+    
+    it "accepts `all` keyword" do
+      NewsStory.list_per_page = "all"
+      NewsStory.list_per_page.should eq nil
+    end
+    
+    it "converts anything else to an integer" do
+      NewsStory.list_per_page = "something"
+      NewsStory.list_per_page.should eq 0
     end
   end
   

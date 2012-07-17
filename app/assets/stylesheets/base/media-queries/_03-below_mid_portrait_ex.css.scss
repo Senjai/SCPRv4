@@ -1,8 +1,8 @@
 // Below Portrait Tablet ("reader mode") (Exclusive)
 @media screen and (max-width: $mediaMidPortrait - 1) {	
 	
-	.visible-reader { display: block !important; visibility:visible !important }
-	.hidden-reader { display: none !important;;}
+	.visible-reader { display: block !important; visibility:visible !important; }
+	.hidden-reader { display: none !important; }
 	
 	.modal-popup {
 		@include fluidPopup;

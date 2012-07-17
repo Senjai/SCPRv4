@@ -1,5 +1,7 @@
 class ContentByline < ActiveRecord::Base
-  self.table_name =  "rails_contentbase_contentbyline"
+  map_content_type_for_django
+  
+  self.table_name =  "contentbase_contentbyline"
   self.primary_key = "id"
   
   ROLE_PRIMARY = 0
@@ -7,23 +9,22 @@ class ContentByline < ActiveRecord::Base
   ROLE_CONTRIBUTING = 2
   
   ROLE_TEXT = {
-      ROLE_PRIMARY: "Primary",
-      ROLE_SECONDARY: "Secondary",
-      ROLE_CONTRIBUTING: "Contributing"
+      ROLE_PRIMARY => "Primary",
+      ROLE_SECONDARY => "Secondary",
+      ROLE_CONTRIBUTING => "Contributing"
   }
   
-  scope :primary, where(:role => ROLE_PRIMARY)
+  scope :primary, where(role: ROLE_PRIMARY)
     
-  belongs_to :content, :polymorphic => true
-  belongs_to :user, :class_name => "Bio"
+  belongs_to :content, polymorphic: true
+  belongs_to :user, class_name: "Bio"
   
   define_index do
-    indexes user.name, :as => :name
+    indexes user.name, as: :name
     has role
     has user_id
     has content_id
-    has content.published_at, :as => :published_at, :type => :datetime
+    has content.published_at, as: :published_at, type: :datetime
     has content.status, as: :status, type: :integer
   end
-  
 end

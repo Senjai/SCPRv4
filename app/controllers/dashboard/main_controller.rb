@@ -12,14 +12,14 @@ class Dashboard::MainController < ApplicationController
     ).order("published_at desc")
     
     @no_assets = @baseline.joins(
-      "left join `rails_assethost_contentasset` on `rails_assethost_contentasset`.content_id = news_story.id and `rails_assethost_contentasset`.content_type = 'NewsStory'"
-    ).where("rails_assethost_contentasset.id is null").order("published_at desc")
+      "left join `assethost_contentasset` on `assethost_contentasset`.content_id = news_story.id and `assethost_contentasset`.content_type = 'NewsStory'"
+    ).where("assethost_contentasset.id is null").order("published_at desc")
     
     @blog_no_assets = BlogEntry.published.this_week.joins(
-      "left join rails_contentbase_contentcategory on `rails_contentbase_contentcategory`.`content_id` = `blogs_entry`.`id` AND `rails_contentbase_contentcategory`.`content_type` = 'BlogEntry'"
+      "left join contentbase_contentcategory on `contentbase_contentcategory`.`content_id` = `blogs_entry`.`id` AND `contentbase_contentcategory`.`content_type` = 'BlogEntry'"
     ).joins(
-      "left join `rails_assethost_contentasset` on `rails_assethost_contentasset`.content_id = blogs_entry.id and `rails_assethost_contentasset`.content_type = 'BlogEntry'"
-    ).where("`rails_contentbase_contentcategory`.id is not null").where("rails_assethost_contentasset.id is null").order("published_at desc")
+      "left join `assethost_contentasset` on `assethost_contentasset`.content_id = blogs_entry.id and `assethost_contentasset`.content_type = 'BlogEntry'"
+    ).where("`rails_contentbase_contentcategory`.id is not null").where("assethost_contentasset.id is null").order("published_at desc")
   end
 
   #----------

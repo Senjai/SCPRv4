@@ -58,8 +58,23 @@ class BlogEntry < ContentBase
   end
   
   def has_format?
-    # true
-    !wp_id # Temporary
+    true
+  end
+  
+  def disqus_identifier
+    if dsq_thread_id.present? && wp_id.present?
+      "#{wp_id} http://multiamerican.scpr.org/?p=#{wp_id}"
+    else
+      obj_key
+    end
+  end
+  
+  def disqus_shortname
+    if dsq_thread_id.present? && wp_id.present?
+      'scprmultiamerican'
+    else
+      super
+    end
   end
     
   def headline

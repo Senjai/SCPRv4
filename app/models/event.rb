@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
   self.table_name =  'rails_events_event'
-  self.primary_key = :id
+  self.primary_key = "id"
   
   ForumTypes = [
     "comm",
@@ -85,6 +85,16 @@ class Event < ActiveRecord::Base
   def obj_key
     "events/event:#{self.id}"
   end
+  
+  def disqus_identifier
+    obj_key
+  end
+  
+  def disqus_shortname
+    'kpcc'
+  end
+
+  #----------
   
   def inline_address(separator=", ")
     [address_1, address_2, city, state, zip_code].reject { |element| element.blank? }.join(separator)

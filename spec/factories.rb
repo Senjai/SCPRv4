@@ -4,7 +4,11 @@ def content_base_associations(object, evaluator)
   FactoryGirl.create_list(:brel, evaluator.brel_count.to_i, content: object)
   FactoryGirl.create_list(:frel, evaluator.frel_count.to_i, related: object)
   FactoryGirl.create_list(:byline, evaluator.byline_count.to_i, content: object)
-  FactoryGirl.create(:content_category, content: object, category: FactoryGirl.create(evaluator.category_type)) if evaluator.category_type.present? && evaluator.with_category
+  
+  if evaluator.category_type.present? && evaluator.with_category
+    category = FactoryGirl.create(evaluator.category_type)
+    FactoryGirl.create(:content_category, content: object, category: category)
+  end
 end
 
 FactoryGirl.define do
@@ -243,9 +247,10 @@ end
 # ContentAsset#########################################################
   factory :asset, class: ContentAsset do
     sequence(:id, 1)
-    asset_order 1
+    sequence(:asset_order, 1)
     asset_id 33585 # Doesn't matter what this is because the response gets mocked
-    sequence(:caption) { |n| "Caption #{n}" } 
+    sequence(:caption) { |n| "Caption #{n}" }
+    content { |asset| asset.association :content_shell }
   end
 
 
@@ -256,7 +261,7 @@ end
     content { |byline| byline.association(:news_story) } #TODO Need to be able to pass in any type of factory here
     name "Dan Jones"
   end
-  
+
   
 # Category #########################################################
   factory :category do
@@ -413,7 +418,7 @@ end
 ##########################################################
 ### ContentBase Classes
 ##### *NOTE:* The name of the factory should eq `ClassName.to_s.underscore.to_sym`, i.e. NewsStory = :news_story
-##### This is to please `#make_content` in /spec/support/content_base_helpers.rb
+##### This is to please `#make_content` / `#sphinx_spec` in /spec/support/content_base_helpers.rb
 ##########################################################
 
 # ContentBase - Common attributes ##########################################################

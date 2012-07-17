@@ -12,10 +12,11 @@
 			$("#spinner").spin(false);
 			
 			var location;
+			var queryStr = "?job="+data.job+"&errors="+data.errors+"&successes="+data.successes;
 			<% if params[:id] %>
-				location = "<%= j admin_show_multi_american_resource_path(resource_name, params[:id]) %>";
+				location = "<%= j admin_show_multi_american_resource_path(resource_name, params[:id]) %>"+queryStr;
 			<% else %>
-				location = "<%= j admin_index_multi_american_resource_path(resource_name) %>";
+				location = "<%= j admin_index_multi_american_resource_path(resource_name) %>"+queryStr;
 			<% end %>
 			window.location = location;
 		});

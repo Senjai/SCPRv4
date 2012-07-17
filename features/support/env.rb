@@ -19,6 +19,7 @@ Cucumber::Rails::World.use_transactional_fixtures = false
 
 Cucumber::ThinkingSphinx::ExternalWorld.new
 DatabaseCleaner.clean_with :truncation
+load "#{Rails.root}/db/seeds.rb"
 FactoryGirl.reload
 
 Before do
@@ -27,4 +28,5 @@ end
 
 After do
   DatabaseCleaner.clean
+  Rails.cache.clear
 end

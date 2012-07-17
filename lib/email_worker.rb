@@ -55,7 +55,7 @@ class EmailWorker
     
   def log(msg)
     if verbose
-      $stderr.puts "*** #{msg}"
+      $stderr.puts "*** [#{Time.now}] #{msg}"
     end
   end
 end

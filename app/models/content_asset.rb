@@ -1,13 +1,13 @@
 class ContentAsset < ActiveRecord::Base
-  self.table_name =  "rails_assethost_contentasset"
-  self.primary_key = 'id'
+  map_content_type_for_django
   
+  self.table_name =  "assethost_contentasset"
+  self.primary_key = "id"
+    
   belongs_to :content, :polymorphic => true
-  #belongs_to :asset
   
   @@loaded = false
   
-    
   #----------
   
   def asset
@@ -23,7 +23,7 @@ class ContentAsset < ActiveRecord::Base
   #----------
   
   # Fetch asset JSON and then merge in our caption and position
-  def as_json(options)
+  def as_json(options={})
     # grab asset as_json, merge in our values, then call to_json on that
     self.asset.as_json(options).merge({"caption" => self.caption, "ORDER" => self.asset_order, "credit" => self.asset.owner })
   end

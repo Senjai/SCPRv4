@@ -248,34 +248,26 @@ module ApplicationHelper
   #----------
   
   def get_latest_arts
-    begin
-      ThinkingSphinx.search '',
-        :classes    => ContentBase.content_classes,
-        :page       => 1,
-        :per_page   => 12,
-        :order      => :published_at,
-        :sort_mode  => :desc,
-        :with       => { :category_is_news => false },
-        :without    => { :category => '' }
-    rescue Riddle::ConnectionError # If Sphinx is not running.
-      return "Arts currently unavailable."
-    end
+    ThinkingSphinx.search('',
+      :classes    => ContentBase.content_classes,
+      :page       => 1,
+      :per_page   => 12,
+      :order      => :published_at,
+      :sort_mode  => :desc,
+      :with       => { :category_is_news => false },
+      :without    => { :category => '' })[0..-1]
   end
   
   #----------
   
   def get_latest_news
-    begin
-      ThinkingSphinx.search '',
-        :classes    => ContentBase.content_classes,
-        :page       => 1,
-        :per_page   => 12,
-        :order      => :published_at,
-        :sort_mode  => :desc,
-        :with       => { :category_is_news => true }
-    rescue Riddle::ConnectionError # If Sphinx is not running.
-      return "News currently unavailable."
-    end
+    ThinkingSphinx.search('',
+      :classes    => ContentBase.content_classes,
+      :page       => 1,
+      :per_page   => 12,
+      :order      => :published_at,
+      :sort_mode  => :desc,
+      :with       => { :category_is_news => true })[0..-1]
   end
   
   # any_to_list?: A graceful fail-safe for any Enumerable that might be blank
