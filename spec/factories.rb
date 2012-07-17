@@ -247,10 +247,10 @@ end
 # ContentAsset#########################################################
   factory :asset, class: ContentAsset do
     sequence(:id, 1)
-    asset_order 1
+    sequence(:asset_order, 1)
     asset_id 33585 # Doesn't matter what this is because the response gets mocked
     sequence(:caption) { |n| "Caption #{n}" }
-    django_content_type_id 44 # Doesn't matter what this is because we don't use it 
+    content { |asset| asset.association :content_shell }
   end
 
 
@@ -261,7 +261,7 @@ end
     content { |byline| byline.association(:news_story) } #TODO Need to be able to pass in any type of factory here
     name "Dan Jones"
   end
-  
+
   
 # Category #########################################################
   factory :category do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120715235616) do
+ActiveRecord::Schema.define(:version => 20120716234322) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -279,15 +279,16 @@ ActiveRecord::Schema.define(:version => 20120715235616) do
   add_index "contentbase_contentalarm", ["content_type_id"], :name => "contentbase_contentalarm_e4470c6e"
 
   create_table "contentbase_contentbyline", :force => true do |t|
-    t.integer "content_type_id",                              :null => false
-    t.integer "object_id",                                    :null => false
+    t.integer "django_content_type_id",                              :null => false
+    t.integer "content_id",                                          :null => false
     t.integer "user_id"
-    t.string  "name",            :limit => 50,                :null => false
-    t.integer "role",                          :default => 0, :null => false
+    t.string  "name",                   :limit => 50,                :null => false
+    t.integer "role",                                 :default => 0, :null => false
+    t.string  "content_type",           :limit => 20
   end
 
-  add_index "contentbase_contentbyline", ["content_type_id", "object_id"], :name => "content_key"
-  add_index "contentbase_contentbyline", ["content_type_id"], :name => "contentbase_contentbyline_e4470c6e"
+  add_index "contentbase_contentbyline", ["django_content_type_id", "content_id"], :name => "content_key"
+  add_index "contentbase_contentbyline", ["django_content_type_id"], :name => "contentbase_contentbyline_e4470c6e"
   add_index "contentbase_contentbyline", ["user_id"], :name => "contentbase_contentbyline_fbfc09f1"
 
   create_table "contentbase_contentcategory", :force => true do |t|
@@ -1211,15 +1212,6 @@ ActiveRecord::Schema.define(:version => 20120715235616) do
   create_table "rails_content_map", :id => false, :force => true do |t|
     t.integer "id",         :null => false
     t.string  "class_name", :null => false
-  end
-
-  create_table "rails_contentbase_contentbyline", :id => false, :force => true do |t|
-    t.integer "id",                         :default => 0, :null => false
-    t.integer "user_id"
-    t.string  "name",         :limit => 50,                :null => false
-    t.integer "content_id",                                :null => false
-    t.string  "content_type",                              :null => false
-    t.integer "role",                       :default => 0, :null => false
   end
 
   create_table "rails_contentbase_contentcategory", :id => false, :force => true do |t|

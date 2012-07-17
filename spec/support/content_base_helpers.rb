@@ -24,7 +24,7 @@
 # method.
 # 
 #    before :all do
-#      DatabaseCleaner.strategy = :truncation
+#      DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
 #      make_content(7)
 #      ThinkingSphinx::Test.start
 #    end
@@ -60,7 +60,7 @@ module ContentBaseHelpers
   # -----------
   
   def setup_sphinx
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   end
   
   # -----------

@@ -1,5 +1,7 @@
 class ContentByline < ActiveRecord::Base
-  self.table_name =  "rails_contentbase_contentbyline"
+  map_content_type_for_django
+  
+  self.table_name =  "contentbase_contentbyline"
   self.primary_key = "id"
   
   ROLE_PRIMARY = 0

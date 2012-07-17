@@ -15,5 +15,12 @@ describe ContentByline do
         ContentByline.primary.should eq [primary]
       end
     end
-  end 
+  end
+  
+  it "assigns django_content_type_id before it is created" do
+    byline = build :byline
+    byline.django_content_type_id.should be_nil
+    byline.save
+    byline.django_content_type_id.should be_a Fixnum
+  end
 end

@@ -82,8 +82,8 @@ ContentBase.content_classes.each do |c|
     end
     
     describe "associations" do
-      it { should have_many :assets }
-      it { should have_many :bylines }
+      it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
+      it { should have_many(:bylines).class_name("ContentByline").dependent(:destroy) }
       it { should have_many :brels }
       it { should have_many :frels }
       it { should have_many :related_links }
