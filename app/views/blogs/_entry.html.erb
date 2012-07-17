@@ -6,7 +6,15 @@
 			<article>
 				<header>
 					<h1 class="story-headline"><%= link_to entry.title, entry.link_path %></h1>
-					<p class="byline"><%= render_byline entry %></p>
+					<div class="categories">
+						<%= entry.blog_categories.map { |c|
+							link_to(c.title, blog_category_path(entry.blog.slug, c.slug))
+						}.join(" | ").html_safe %>
+					</div>
+					
+					<p class="byline">
+						<%= render_byline entry %>
+					</p>
 				</header>
 		
 				<div class="story-body">

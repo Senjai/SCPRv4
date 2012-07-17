@@ -1,14 +1,15 @@
 <% page_title "Entries tagged '#{@tag.name}' at #{@blog.name}" %>
+<% @blogtitle_extra = ": Tagged '#{@tag.name}'" %>
 
 <div class="row-fluid">
 	<div class="span6">&nbsp;</div>
 	<div class="span18">
-		<h1><%= @entries.total_entries %> Entries tagged '<%= @tag.name %>'</h1>
+		<h3><i><%= pluralize @entries.total_entries, "entry" %> tagged '<%= @tag.name %>'</i></h3>
 	</div>
 </div>
 
 <div class="blog-landing">
-<%= render :partial => "entry", :collection => @entries.collect {|e| e.content }, :as => :entry %>
+	<%= render :partial => "entry", :collection => @entries.collect {|e| e.content }, :as => :entry %>
 </div>
 
 <div class="offset2 blog-pag">
