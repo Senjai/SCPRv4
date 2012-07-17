@@ -8,6 +8,6 @@ class TaggedContent < ActiveRecord::Base
   
   # Hard-code for now...
   def setup_mercer_attributes
-    self.content_type_id = BlogEntry::CONTENT_TYPE_ID
+    self.django_content_type_id = BlogEntry::CONTENT_TYPE_ID
   end
 end
