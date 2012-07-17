@@ -174,7 +174,11 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     
     def load_object
-      YAML.load(@@rcache.get([resource_class.cache_key, params[:id]].join(":")).to_s)
+      cached = YAML.load(@@rcache.get([resource_class.cache_key, params[:id]].join(":")).to_s)
+      if !cached
+        raise ActionController::RoutingError.new("Not Found")
+      end
+      return cached
     end
     
     # ---------------
