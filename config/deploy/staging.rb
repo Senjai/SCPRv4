@@ -42,7 +42,7 @@ namespace :db do
   namespace :mercer do
     task :pull, roles: :dbcopy do
       if dbcopy
-        logged.info "dbcopy not yet implemented."
+        logger.info "dbcopy not yet implemented."
       else
         logger.info "SKIPPING dbcopy (dbcopy false)"
       end
