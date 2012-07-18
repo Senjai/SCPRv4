@@ -14,7 +14,8 @@ describe CategoryController do
       it "renders xml template when requested" do
         category = create :category_news
         get :index, category: category.slug, format: :xml
-        response.should render_template 'category/index', format: :xml
+        response.should render_template 'category/index'
+        response.header['Content-Type'].should match /xml/
       end
     end
   end

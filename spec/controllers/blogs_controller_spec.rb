@@ -82,7 +82,8 @@ describe BlogsController do
         it "renders xml template when requested" do
           blog = create :blog
           get :show, blog: blog.slug, format: :xml
-          response.should render_template 'blogs/show', format: :xml
+          response.should render_template 'blogs/show'
+          response.header['Content-Type'].should match /xml/
         end
       end
       

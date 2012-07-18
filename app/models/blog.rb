@@ -42,6 +42,10 @@ class Blog < ActiveRecord::Base
     self._teaser = txt
   end
   
+  def remote_link_path
+    Rails.application.routes.url_helpers.blog_url(self.slug)
+  end
+  
   def self.cache_remote_entries
     view = ActionView::Base.new(ActionController::Base.view_paths, {})
     class << view # So the partial can use the smart_date_js helper

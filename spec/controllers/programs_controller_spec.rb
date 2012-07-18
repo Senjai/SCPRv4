@@ -65,7 +65,8 @@ describe ProgramsController do
       it "renders xml template when requested" do
         program = create :kpcc_program
         get :show, show: program, format: :xml
-        response.should render_template 'programs/show', format: :xml
+        response.should render_template 'programs/show'
+        response.header['Content-Type'].should match /xml/
       end
     end
     

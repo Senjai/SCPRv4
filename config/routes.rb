@@ -187,7 +187,13 @@ Scprv4::Application.routes.draw do
   # catch error routes
   match '/404', :to => 'home#not_found'
   match '/500', :to => 'home#error'
+  
+  # Extra
   match '/fb_channel_file' => 'home#fb_channel_file'
+  
+  # Sitemaps
+  match '/sitemap' => "sitemaps#index", as: :sitemaps, defaults: { format: :xml }
+  match '/sitemap/:action', controller: "sitemaps", as: :sitemap, defaults: { format: :xml }
   
   # -- Dynamic root-level routes -- #
   match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new, defaults: { page: 1 }, as: :section
