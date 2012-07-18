@@ -73,15 +73,13 @@
 		</div> <!-- megamenu -->
 	</div> <!-- container fluid -->
 </header>
-<% if @g_breaking_news_alert.present? %>
-	<div class="container-fluid" id="breaking-news">
-		<div class="live-update <%= @g_breaking_news_alert.alert_type %>">
-			<div class="inner-container">
-				<strong><%= @g_breaking_news_alert.break_type %></strong><%= link_to @g_breaking_news_alert.headline, @g_breaking_news_alert.alert_link %>
-			</div>
-		</div>
-	</div>
+
+<!-- breaking news -->
+<% content_cache "breaking_news" do %>
+  <% register_content "layout/breaking_news_alert" %>
+  <%= render "/breaking_news/breaking_news_alert" %>
 <% end %>
+
 
 <div class="hero"></div>
 <div class="container-fluid">
