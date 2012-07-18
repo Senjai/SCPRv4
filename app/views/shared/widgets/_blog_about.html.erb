@@ -12,18 +12,16 @@
 	</div>
 </div>
 
-<!-- THIS WILL DISPLAY BLOG CATEGORIES
-<div class="blog-about widget">
+<div class="blog-categories widget blog">
 	<h6>Browse posts by category</h6>
 	<ul>
-	    <li><a href="#"><strong>LA Unified</strong></a></li>
-		<li><a href="#"><strong>Higher Ed</strong></a></li>
-		<li><a href="#"><strong>State Education Policy</strong></a></li>
-		<li><a href="#"><strong>School Safety</strong></a></li>
-		<li><a href="#"><strong>Classroom Performance</strong></a></li>
+		<% @blog.blog_categories.each do |category| %>
+			<li><%= link_to category.title, blog_category_path(@blog.slug, category.slug) %></li>
+		<% end %>
+		
+		<li><%= link_to "Browse All", blog_path(@blog.slug) %></li>
 	</ul>
-	<br>
-</div>-->
+</div>
 
 
 <% if @authors.present? %>

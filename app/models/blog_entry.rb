@@ -25,11 +25,12 @@ class BlogEntry < ContentBase
   # Association
   belongs_to :blog
   belongs_to :author, :class_name => "Bio"
+
   has_many :tagged, :class_name => "TaggedContent", :as => :content
-  has_many :tags, :through => :tagged, dependent: :delete_all
+  has_many :tags, :through => :tagged, dependent: :destroy
   
   has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
-  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :delete_all
+  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
   
   # ------------------
   # Scopification
@@ -96,14 +97,19 @@ class BlogEntry < ContentBase
   #----------
   
   def link_path(options={})
-    Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
-      :blog => self.blog.slug,
-      :year => self.published_at.year, 
-      :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
-      :id => self.id,
-      :slug => self.slug,
-      :trailing_slash => true
-    }))
+    # Temporary workaround for MA until we flip the switch
+    if self.wp_id.present?
+      "http://multiamerican.scpr.org/#{self.published_at.year}/#{"%02d" % self.published_at.month}/#{self.slug}"
+    else
+      Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
+        :blog => self.blog.slug,
+        :year => self.published_at.year, 
+        :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+        :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+        :id => self.id,
+        :slug => self.slug,
+        :trailing_slash => true
+      }))
+    end
   end
 end

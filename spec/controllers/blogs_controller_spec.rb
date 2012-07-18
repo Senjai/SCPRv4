@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe BlogsController do
+  
+  # ------------------------
+  
   describe "GET /index" do    
     it "renders the application layout" do
       get :index
@@ -55,19 +58,25 @@ describe BlogsController do
     end
   end
   
+  # ------------------------
+  
   describe "GET /show" do
     describe "for invalid blogs" do
       it "responds with RoutingError on invalid slug" do
         blog = create :blog
-        -> { get :show, blog: "nonsense" }.should raise_error ActionController::RoutingError
+        -> { 
+          get :show, blog: "nonsense"
+        }.should raise_error ActionController::RoutingError
       end
   
       it "responds with RoutingError for a remote blog" do
         blog = create :blog, is_remote: true
-        -> { get :show, blog: blog.slug }.should raise_error ActionController::RoutingError
+        -> { 
+          get :show, blog: blog.slug 
+        }.should raise_error ActionController::RoutingError
       end
     end
-    
+      
     describe "for valid blogs" do
       describe "with XML" do
         it "renders xml template when requested" do
@@ -111,6 +120,8 @@ describe BlogsController do
     end
   end
   
+  # ------------------------
+  
   describe "GET /blog_tags" do
     it "responds with success" do
       blog = create :blog
@@ -141,6 +152,8 @@ describe BlogsController do
     end
   end
   
+  # ------------------------
+  
   describe "GET /blog_tagged" do
     let(:blog) { create :blog }
     it "responds with success" do
@@ -168,12 +181,17 @@ describe BlogsController do
     end
   end
   
+  # ------------------------
+  
   describe "load_blog" do
     before :all do
       @blog = create :blog
       entry_published = create :blog_entry, blog: @blog
       p = entry_published.published_at
-      @entry_attr = { blog: @blog.slug, tag: "news", id: entry_published.id, slug: entry_published.slug }.merge(date_path(p))
+      @entry_attr = { blog: @blog.slug, 
+                      tag: "news", 
+                      id: entry_published.id, 
+                      slug: entry_published.slug }.merge(date_path(p))
     end
     
     after :all do
@@ -192,7 +210,9 @@ describe BlogsController do
       end
       
       it "raises RoutingEror if blog isn't found" do
-        -> { get action, @entry_attr.merge(blog: "nonsense") }.should raise_error ActionController::RoutingError
+        -> { 
+          get action, @entry_attr.merge(blog: "nonsense") 
+        }.should raise_error ActionController::RoutingError
       end
     end
     
@@ -209,19 +229,25 @@ describe BlogsController do
     end
   end
   
+  # ------------------------
+  
   describe "GET /entry" do
     describe "for invalid entry" do
       it "raises a routing error for unpublished" do
         entry = create :blog_entry, status: ContentBase::STATUS_PENDING
         -> {
-          get :entry, { blog: entry.blog.slug, id: entry.id, slug: entry.slug }.merge!(date_path(entry.published_at))
+          get :entry, { blog: entry.blog.slug, 
+                        id: entry.id, 
+                        slug: entry.slug }.merge!(date_path(entry.published_at))
         }.should raise_error ActionController::RoutingError
       end
       
       it "raises a routing error for invalid ID" do
         entry = create :blog_entry
         -> {
-          get :entry, { blog: entry.blog.slug, id: "999999", slug: entry.slug }.merge!(date_path(entry.published_at))
+          get :entry, { blog: entry.blog.slug, 
+                        id: "999999", 
+                        slug: entry.slug }.merge!(date_path(entry.published_at))
         }.should raise_error ActionController::RoutingError
       end
     end
@@ -230,7 +256,9 @@ describe BlogsController do
       let(:entry) { create :blog_entry }
       
       before :each do
-        get :entry, { blog: entry.blog.slug, id: entry.id, slug: entry.slug }.merge!(date_path(entry.published_at))
+        get :entry, { blog: entry.blog.slug, 
+                      id: entry.id, 
+                      slug: entry.slug }.merge!(date_path(entry.published_at))
       end
       
       it "responds with success" do
@@ -242,12 +270,87 @@ describe BlogsController do
       end
     end
   end
+
+  # ------------------------
+
+  describe "GET /category" do
+    before :each do
+      @blog = create :blog
+      @category = create :blog_category, blog: @blog
+    end
+  
+    it "raises 404 if category isn't found" do
+      -> {
+        get :category, blog: @blog.slug, category: "nonsense"
+      }.should raise_error ActionController::RoutingError
+    end
+  
+    it "assigns category if it's found with the correct blog id" do
+      get :category, blog: @blog.slug, category: @category.slug
+      assigns(:category).should eq @category
+    end
+  
+    it "only searches in the scope of the blog id and category together" do
+      other_blog = create :blog
+      -> {
+        get :category, blog: other_blog.slug, category: @category.slug
+      }.should raise_error ActionController::RoutingError
+    end
+  
+    it "assigns entries if category is found" do
+      get :category, blog: @blog.slug, category: @category.slug
+      assigns(:entries).should_not be_nil
+    end
+    
+    it "only selects entries with that category" do
+      entries = create_list :blog_entry, 3, blog: @blog
+      other_category = create :blog_category, blog: @blog
+      
+      @category.blog_entries.push entries.first
+      other_category.blog_entries.push entries.last(2)
+              
+      get :category, blog: @blog.slug, category: @category.slug
+      assigns(:entries).should eq [entries.first]
+    end
+    
+    it "only select published content" do
+      pub_entries = create_list :blog_entry, 2, blog: @blog
+      unpub_entries = create_list :blog_entry, 2,
+                        blog: @blog,
+                        status: ContentBase::STATUS_DRAFT
+                        
+      @category.blog_entries.push (pub_entries + unpub_entries)
+      get :category, blog: @blog.slug, category: @category.slug
+      
+      assigns(:entries).select { |e| 
+        e.status != ContentBase::STATUS_LIVE 
+      }.should be_blank
+    end
+    
+    it "orders by published_at desc" do
+      get :category, blog: @blog.slug, category: @category.slug
+      assigns(:entries).to_sql.should match /order by published_at desc/i
+    end
+    
+    it "paginates" do
+      entries = create_list :blog_entry, 15
+      @category.blog_entries.push entries
+      
+      get :category, blog: @blog.slug, category: @category.slug
+      assigns(:entries).size.should be < 15
+    end
+  end
+  
+  # ------------------------
   
   describe "GET /legacy_path" do
     it "redirects if blog entry is found" do
       entry = create :blog_entry
       date = entry.published_at
-      get :legacy_path, blog: entry.blog.slug, year: date.year.to_s, month: "%02d" % date.month, slug: entry.slug
+      get :legacy_path, blog: entry.blog.slug, 
+                        year: date.year.to_s, 
+                        month: "%02d" % date.month, 
+                        slug: entry.slug
       controller.should redirect_to entry.link_path
     end
     
@@ -261,7 +364,10 @@ describe BlogsController do
       entry = create :blog_entry, status: ContentBase::STATUS_PENDING
       date = entry.published_at
       -> {
-        get :legacy_path, blog: entry.blog.slug, year: date.year.to_s, month: "%02d" % date.month, slug: entry.slug
+        get :legacy_path, blog: entry.blog.slug, 
+                          year: date.year.to_s, 
+                          month: "%02d" % date.month, 
+                          slug: entry.slug
       }.should raise_error ActionController::RoutingError
     end
   end

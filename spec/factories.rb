@@ -290,6 +290,26 @@ end
   end
 
 
+# BlogCategory #########################################################
+  factory :blog_category do
+    blog
+    sequence(:title) { |n| "Category #{n}" }
+    slug { title.parameterize }
+    
+    ignore { entry_count 0 }
+    
+    after :create do |object, evaluator|
+      FactoryGirl.create_list(:blog_entry_blog_category, evaluator.entry_count.to_i, blog_category: object)
+    end
+  end
+  
+# BlogEntryBlogCategory #########################################################
+  factory :blog_entry_blog_category do
+    blog_category
+    blog_entry
+  end
+  
+  
 # Tag #########################################################
   factory :tag do
     sequence(:name) { |n| "Some Cool Slug #{n}"}
@@ -534,10 +554,12 @@ end
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
     ignore { tag_count 0 }
+    ignore { blog_category_count 0 }
 
     after :create do |object, evaluator|
       content_base_associations(object, evaluator)
-      FactoryGirl.create_list :tagged_content, evaluator.tag_count, content: object
+      FactoryGirl.create_list :tagged_content, evaluator.tag_count.to_i, content: object
+      FactoryGirl.create_list :blog_entry_blog_category, evaluator.blog_category_count.to_i, blog_entry: object
     end
   end
 

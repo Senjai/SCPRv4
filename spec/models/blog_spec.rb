@@ -11,6 +11,7 @@ describe Blog do
     it { should have_many(:tags).through(:entries) }
     it { should belong_to(:missed_it_bucket) }
     it { should have_many(:authors).through(:blog_authors) }
+    it { should have_many(:blog_categories) }
     
     it "orders by position on authors" do
       blog = create :blog
