@@ -788,7 +788,6 @@ a.comment-count.inline {
 		@include font-sans-serif($size:12px, $weight: bold);
 		line-height:16px;
 		margin-bottom:$baseline / 2;
-		width:240px;
 	}
 	input.email {
 		background:url(image_path('icons/newsletter-subscribe.png')) no-repeat 4px 3px;
