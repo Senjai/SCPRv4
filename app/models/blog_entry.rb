@@ -96,6 +96,14 @@ class BlogEntry < ContentBase
   
   #----------
   
+  def remote_link_path
+    if self.wp_id.present?
+      self.link_path
+    else
+      super
+    end
+  end
+  
   def link_path(options={})
     # Temporary workaround for MA until we flip the switch
     if self.wp_id.present?

@@ -32,6 +32,10 @@ class Bio < ActiveRecord::Base
 
   #----------
   
+  def remote_link_path
+    Rails.application.routes.url_helpers.bio_url(self.slugged_name, trailing_slash: true)
+  end
+  
   def twitter_url
     if twitter.present?
       "http://twitter.com/#{twitter.gsub(/@/, '')}"

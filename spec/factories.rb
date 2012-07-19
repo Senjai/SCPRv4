@@ -434,7 +434,23 @@ factory :missed_it_content do
   missed_it_bucket
   content { |mic| mic.association(:content_shell) }
 end
+
+# PijQuery #########################################################
+factory :pij_query do
+  sequence(:title) { |n| "PIJ Query ##{n}"}
+  slug { title.parameterize }
+  query_url "http://www.publicradio.org/applications/formbuilder/user/form_display.php?isPIJ=Y&form_code=2dc7d243ce2c"
+  query_type "evergreen"
   
+  form_height "2300"
+  
+  trait :visible do
+    is_active true
+    published_at  { 1.day.ago }
+    expires_at    { 1.day.from_now }
+  end
+end
+
 ##########################################################
 ### ContentBase Classes
 ##### *NOTE:* The name of the factory should eq `ClassName.to_s.underscore.to_sym`, i.e. NewsStory = :news_story

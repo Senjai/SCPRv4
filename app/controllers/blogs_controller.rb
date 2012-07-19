@@ -3,6 +3,8 @@ class BlogsController < ApplicationController
   before_filter :load_blog, :except => :index
 
   respond_to :html, :xml, :rss
+
+  #----------
   
   def index
     @blogs = Blog.active.order("name")
@@ -84,11 +86,6 @@ class BlogsController < ApplicationController
     else
       raise ActionController::RoutingError.new("Not Found")
     end
-  end
-  
-  #----------
-  
-  def categories
   end
   
   #----------

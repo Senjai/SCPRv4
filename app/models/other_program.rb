@@ -29,6 +29,10 @@ class OtherProgram < ActiveRecord::Base
   
   #----------
   
+  def remote_link_path
+    "http://www.scpr.org#{link_path}"
+  end
+  
   def link_path
     Rails.application.routes.url_helpers.program_path(self,:trailing_slash => true)
   end
