@@ -344,6 +344,40 @@ describe BlogsController do
   
   # ------------------------
   
+  describe "GET /process_archive_select" do
+    let(:blog) { create :blog }
+    it "redirects to blog_archive_path with the processed date" do
+      get :process_archive_select, blog: blog.slug, 
+        archive: { "date(1i)" => "2012", "date(2i)" => "4", "date(3i)" => "1" }
+      response.should redirect_to blog_archive_path(blog.slug, "2012", "04")
+    end
+  end
+  
+  describe "GET /archive" do
+    let(:blog) { create :blog }
+    
+    it "only select entries in the correct date range" do
+      entry_jan = create :blog_entry, blog: blog, published_at: Chronic.parse("January 10, 2012")
+      entry_feb = create :blog_entry, blog: blog, published_at: Chronic.parse("February 10, 2012")
+      get :archive, blog: blog.slug, year: "2012", month: "01"
+      assigns(:entries).should eq [entry_jan]
+    end
+    
+    it "only selects published entries" do
+      date = Time.new("2012", "07")
+      entry_pub = create :blog_entry, blog: blog, 
+                          status: ContentBase::STATUS_LIVE,
+                          published_at: date
+      entry_unpub = create :blog_entry, blog: blog, 
+                            status: ContentBase::STATUS_DRAFT,
+                            published_at: date
+      get :archive, { blog: blog.slug }.merge!(date_path(date))
+      assigns(:entries).should eq [entry_pub]
+    end
+  end
+  
+  # ------------------------
+  
   describe "GET /legacy_path" do
     it "redirects if blog entry is found" do
       entry = create :blog_entry

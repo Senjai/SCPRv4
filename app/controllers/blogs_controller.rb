@@ -83,9 +83,39 @@ class BlogsController < ApplicationController
                           .published
                           .order("blogs_entry.published_at desc")
                           .paginate(page: params[:page] || 1, per_page: 5)
+      
+      @BLOGTITLE_EXTRA = ": #{@category.title}"
+      @MESSAGE = "There are no blog posts for <b>#{@blog.name}</b> " \
+                 "listed under <b>#{@category.title}</b>.".html_safe
+                 
+      render 'show'
     else
       raise ActionController::RoutingError.new("Not Found")
     end
+  end
+  
+  #----------
+  
+  # Process the form values for Archive and redirect to canonical URL
+  def process_archive_select
+    year = params[:archive]["date(1i)"].to_i
+    month = "%02d" % params[:archive]["date(2i)"].to_i
+    
+    redirect_to blog_archive_path(@blog.slug, year, month) and return
+  end
+  
+  def archive
+    date = Date.new(params[:year].to_i, params[:month].to_i)
+    @entries = @blog.entries.published.where(
+                "published_at >= ? AND published_at < ?", date.beginning_of_month, date.end_of_month
+              ).paginate(page: params[:page] || 1, per_page: 5)
+   
+    datestr = "#{date.strftime("%B")}, #{date.year}"
+    @BLOGTITLE_EXTRA = ": #{datestr}"
+    @MESSAGE = "There are no blog posts for <b>#{@blog.name}</b> " \
+              "for <b>#{datestr}</b>.".html_safe
+  
+    render 'show'
   end
   
   #----------

@@ -271,7 +271,7 @@ module ApplicationHelper
   end
   
   # any_to_list?: A graceful fail-safe for any Enumerable that might be blank
-  # With block: t will return the block if there are records, or a message if there are no records.
+  # With block: returns the block if there are records, or a message if there are no records.
   # Without block: Behaves the same as `.present?`
   # Options: 
   ### wrapper: a tag to use for the wrapper. Pass false if you do not want a wrapper
@@ -299,6 +299,10 @@ module ApplicationHelper
   end
   
   def page_title(elements, separator=" | ")
+    if @PAGE_TITLE.present?
+      return @PAGE_TITLE
+    end
+    
     if elements.is_a? Array
       @PAGE_TITLE = elements.join(separator)
     else

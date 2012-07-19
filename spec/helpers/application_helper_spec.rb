@@ -171,6 +171,11 @@ describe ApplicationHelper do
     it "Return the first argument as a string if it is not an array" do
       helper.page_title("Page").should eq "Page"
     end
+    
+    it "returns @PAGE_TITLE if it exists" do
+      @PAGE_TITLE = "some title"
+      helper.page_title("anything else").should eq "some title"
+    end
   end  
   
   #------------------------

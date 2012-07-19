@@ -105,13 +105,15 @@ Scprv4::Application.routes.draw do
 
 
   # -- Blogs -- #
-  match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged",     as: :blog_entries_tagged
-  match '/blogs/:blog/tagged/' => "blogs#blog_tags",                        as: :blog_tags
-  match '/blogs/:blog/category/:category/(page/:page)' => "blogs#category", as: :blog_category
-  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry",       as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
-  match '/blogs/:blog/:year/:month/:slug' => 'blogs#legacy_path',           as: :legacy_path,          constraints: { year: /\d{4}/, month: /\d{2}/, slug: /[\w-]+/ }
-  match '/blogs/:blog/(page/:page)' => 'blogs#show',                        as: :blog,                 constraints: { page: /\d+/ }
-  match '/blogs/' => 'blogs#index',                                         as: :blogs
+  match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged",           as: :blog_entries_tagged
+  match '/blogs/:blog/tagged/' => "blogs#blog_tags",                              as: :blog_tags
+  match '/blogs/:blog/archive/:year/:month/(page/:page)' => "blogs#archive",    as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
+  post  '/blogs/:blog/process_archive_select' => "blogs#process_archive_select",  as: :blog_process_archive_select
+  match '/blogs/:blog/category/:category/(page/:page)' => "blogs#category",       as: :blog_category
+  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry",             as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
+  match '/blogs/:blog/:year/:month/:slug' => 'blogs#legacy_path',                 as: :legacy_path,          constraints: { year: /\d{4}/, month: /\d{2}/, slug: /[\w-]+/ }
+  match '/blogs/:blog/(page/:page)' => 'blogs#show',                              as: :blog,                 constraints: { page: /\d+/ }
+  match '/blogs/' => 'blogs#index',                                               as: :blogs
   
   
   
