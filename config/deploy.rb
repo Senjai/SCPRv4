@@ -23,7 +23,7 @@ set :keep_releases, 25
 set :user, "scprv4"
 set :use_sudo, false
 set :group_writable, false
-set :maintenance_template_path, "/web/scprv4/current/public/maintenance.erb"
+set :maintenance_template_path, "public/maintenance.erb"
 
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true -s force_npm=true
