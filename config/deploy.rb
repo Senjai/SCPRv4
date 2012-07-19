@@ -23,7 +23,9 @@ set :keep_releases, 25
 set :user, "scprv4"
 set :use_sudo, false
 set :group_writable, false
+
 set :maintenance_template_path, "public/maintenance.erb"
+set :disable_all, false
 
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true -s force_npm=true
@@ -54,6 +56,37 @@ namespace :deploy do
   task :restart, roles: [:app, :workers] do
     run "touch #{current_release}/tmp/restart.txt"
   end
+  
+  
+  # --------------
+  # Override disable/enable
+  # https://github.com/capistrano/capistrano/blob/master/lib/capistrano/recipes/deploy.rb
+  namespace :web do
+    # To disable all:
+    #   cap deploy:web:disable ALL=true
+    # By default it will allow admin
+    task :disable, :roles => :web, :except => { :no_release => true } do
+      require 'erb'
+      on_rollback { run "rm -f #{shared_path}/system/maintenance/*" }
+
+      reason = ENV['REASON']
+      deadline = ENV['UNTIL']
+      disable_mode = ENV['ALL'] == ("true"||"1") ? "HARD" : "SOFT"
+
+      template = File.read(maintenance_template_path)
+      result = ERB.new(template).result(binding)
+
+      run "mkdir -p #{shared_path}/system/maintenance/"      
+      put result, "#{shared_path}/system/maintenance/#{maintenance_basename}.html", :mode => 0644
+      
+      run "touch #{shared_path}/system/maintenance/DISABLE_#{disable_mode}.txt"
+    end
+
+    task :enable, :roles => :web, :except => { :no_release => true } do
+      run "rm -rf #{shared_path}/system/maintenance/*"
+    end
+  end
+  
   
   # --------------
   # Install & Rebuild packages if package.json was updated
