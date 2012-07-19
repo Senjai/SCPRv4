@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+	<title>Down for Maintenance | 89.3 KPCC</title>
+	<meta id="meta-viewport" name="viewport" content="width=device-width, minimum-scale=1">
+	
+	<script type="text/javascript" src="http://use.typekit.com/mhc7oxs.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	
+	<script type="text/javascript">
+	(function(doc) {
+
+		// Resize on orientation change
+	    var addEvent = 'addEventListener',
+	        type = 'gesturestart',
+	        qsa = 'querySelectorAll',
+	        scales = [1, 1],
+	        meta = qsa in doc ? doc[qsa]('meta[name=viewport]') : [];
+
+	    function fix() {
+	        meta.content = 'width=device-width,minimum-scale=' + scales[0] + ',maximum-scale=' + scales[1];
+	        doc.removeEventListener(type, fix, true);
+	    }
+
+	    if ((meta = meta[meta.length - 1]) && addEvent in doc) {
+	        fix();
+	        scales = [.25, 1.6];
+	        doc[addEvent](type, fix, true);
+	    }
+
+	}(document));
+	</script>
+	
+	<link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" />
+	<link rel="apple-touch-icon-precomposed" href="http://media.scpr.org/apple-touch-icon.png" />
+	<link href="/assets/application.css" rel="stylesheet" media="all" type="text/css">
+</head>
+
+<body class="minimal">
+	<header>
+		<div class="container-fluid">
+			<h3 id="site-title"><a href="/">KPCC 89.3</a></h3>
+		</div>
+	</header>
+
+	<div class="content-container">
+		<div class="container-fluid">
+			<div class="box">
+				<h3 class="logo-mark-sm">KPCC.org is currently down for maintenance</h3>
+				<% if !reason.nil? %>
+					<p><%= reason %></p>
+				<% end %>
+				<p>We should be back <%= deadline ? "by #{deadline}" : "shortly" %>.</p>
+				<p>In the meantime, the following sites are available:</p>
+				<ul>
+					<li><a href="http://americanpublicmedia.publicradio.org/">American Public Media</a></li>
+					<li><a href="http://www.npr.org/">NPR</a></li>
+					<li><a href="http://www.bbc.co.uk/">BBC</a></li>
+					<li><a href="http://pri.org/">Public Radio International</a></li>
+					<li><a href="http://www.nbclosangeles.com/">NBC Los Angeles</a></li>
+				</ul>
+			</div>
+		
+			<div class="floating-shadow">&nbsp;</div>
+	  	</div> <!-- container-fluid -->
+	</div>
+
+	<footer>
+		<div class="container-fluid">
+			<ul>
+				<li><a href="/terms/">Terms &amp; Conditions</a></li>
+				<li><a href="/privacy/">Privacy</a></li>
+				<li><a href="/web_site_feedback">Website Feedback</a></li>
+				<li>Copyright 2001 &copy; Southern California Public Radio</li>
+			</ul>
+		</div>
+	</footer>
+</body>
+</html>
