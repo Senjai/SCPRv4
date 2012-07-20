@@ -84,6 +84,8 @@ namespace :scprv4 do
       worker.work()
     end
     
+    #----------
+    
     desc "Start an Email listener"
     task :email => [ :environment ] do 
       require 'email_worker'
@@ -93,6 +95,35 @@ namespace :scprv4 do
         worker.verbose = ENV['LOGGING'] || ENV['VERBOSE']
       rescue
         abort "Failed to launch EmailWorker!"
+      end
+    
+      if ENV['BACKGROUND']
+        unless Process.respond_to?('daemon')
+          abort "env var BACKGROUND is set, which requires ruby >= 1.9"
+        end
+        Process.daemon(true)
+      end
+    
+      if ENV['PIDFILE']
+        File.open(ENV['PIDFILE'], 'w') { |f| f << worker.pid }
+      end
+    
+      worker.log "Starting worker #{worker}"
+    
+      worker.work()
+    end
+    
+    #----------
+    
+    desc "Start an Routse listener"
+    task :routes => [ :environment ] do 
+      require 'routes_worker'
+    
+      begin
+        worker = RoutesWorker.new()
+        worker.verbose = ENV['LOGGING'] || ENV['VERBOSE']
+      rescue
+        abort "Failed to launch RoutesWorker!"
       end
     
       if ENV['BACKGROUND']
