@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717075942) do
+ActiveRecord::Schema.define(:version => 20120720000709) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -171,17 +171,19 @@ ActiveRecord::Schema.define(:version => 20120717075942) do
   add_index "bios_imageorder", ["image_id"], :name => "bios_imageorder_image_id"
 
   create_table "blogs_blog", :force => true do |t|
-    t.string  "name",                :limit => 140,                           :null => false
-    t.string  "slug",                :limit => 50,                            :null => false
-    t.text    "description",         :limit => 2147483647,                    :null => false
-    t.string  "head_image",          :limit => 200,        :default => "",    :null => false
-    t.boolean "is_active",                                 :default => false, :null => false
-    t.string  "feed_url",            :limit => 200,        :default => "",    :null => false
-    t.boolean "is_remote",                                                    :null => false
-    t.string  "custom_url",          :limit => 140,                           :null => false
-    t.boolean "is_news",                                                      :null => false
-    t.string  "_teaser",             :limit => 115,                           :null => false
-    t.integer "missed_it_bucket_id"
+    t.string   "name",                :limit => 140,                           :null => false
+    t.string   "slug",                :limit => 50,                            :null => false
+    t.text     "description",         :limit => 2147483647,                    :null => false
+    t.string   "head_image",          :limit => 200,        :default => "",    :null => false
+    t.boolean  "is_active",                                 :default => false, :null => false
+    t.string   "feed_url",            :limit => 200,        :default => "",    :null => false
+    t.boolean  "is_remote",                                                    :null => false
+    t.string   "custom_url",          :limit => 140,                           :null => false
+    t.boolean  "is_news",                                                      :null => false
+    t.string   "_teaser",             :limit => 115,                           :null => false
+    t.integer  "missed_it_bucket_id"
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
   end
 
   add_index "blogs_blog", ["missed_it_bucket_id"], :name => "blogs_blog_d12628ce"
