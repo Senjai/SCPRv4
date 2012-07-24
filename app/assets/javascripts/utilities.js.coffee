@@ -53,7 +53,6 @@ class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
 
     resizeIframes: ->
         $.each $(".dfp:not(.adSized) iframe"), (i, iframe) =>
-            console.log "adSizer: Resizing #{$(iframe).attr("id")}..."
             $(iframe.contentWindow.document).ready () =>
                 ad = $(iframe.contentWindow.document).find("img, object, embed")[0]
                 if $(ad).length
