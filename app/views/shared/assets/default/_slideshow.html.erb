@@ -2,7 +2,7 @@
 <br/>
 <script type="text/javascript">
     ahSlides = new AssetHost.Slideshow({
-        start: <%= params[:slide] || 0 %>,
+        start: window.location.hash.substring(6), // eg. "#slide5"
         el: "#asset_slideshow_<%= content.id %>",
         assets: <%= raw assets.to_json %>
     });
