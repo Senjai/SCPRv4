@@ -160,17 +160,12 @@
 	
 	// Make the slideshow target arrows a little smaller here
 	.slideview .overlay-nav div.bar {
-		.arrow {
-			width: 16px;
-			height: 13px;
+		&.prev {
+			background-image: url(image_path('overlay-prev-dark-sm.png'));
 		}
 		
-		&.prev .arrow {
-			background-image: url(image_path('arrow-left.gif'));
-		}
-		
-		&.next .arrow {
-			background-image: url(image_path('arrow-right.gif'));			
+		&.next {
+			background-image: url(image_path('overlay-next-dark-sm.png'));			
 		}
 	}
 }

@@ -2,8 +2,6 @@
 //  .slideview: auto
 //    .slides: 5
 //    .overlay-nav: 10
-//      .bar: 5
-//      .arrow: 10
 
 .slideview {    
 	position: relative;
@@ -28,11 +26,16 @@
 		z-index: 5;
 		clear: both;
 		width: 100%;
-	
+
 		.slide {
 			text-align: center;
 			width: 100%;
-
+			display: none;
+			
+			&.active {
+				display: block;
+			}
+			
 			.text {
 				text-align: left;
 				
@@ -60,69 +63,36 @@
 	
 		div.bar {
 			position: absolute;
-			z-index: 5;
 			cursor: pointer;
-			background: none;
 			display: block;
-	
-			.arrow {
-		        position: absolute;
-				z-index: 10;
-		        width: 48px;
-		        height: 48px;
-				background-position: 0 0;
-				background-color: transparent;
-				background-repeat: no-repeat;
-		    }
+			background-color: transparent;
+			background-repeat: no-repeat;
+			@include opacity(1);
 		
 			&.prev {
 				left: 0;
 				width: 30%;
-		
-				.arrow {
-					left: 10px;
-			        background-image: url(image_path('overlay-prev-dark.png'));
-				}
+				background-position-x: 6%;
+		        background-image: url(image_path('overlay-prev-dark.png'));
 			}
 	
 			&.next {
 				right: 0;
 				width: 70%;
-		
-				.arrow {
-					right: 10px;
-			        background-image: url(image_path('overlay-next-dark.png'));
-				}
+				background-position-x: 98%;
+		        background-image: url(image_path('overlay-next-dark.png'));
 			}
-	
-			&.disabled .arrow {
+			
+			&.disabled {
 				@include opacity(0.1);
 			}
-	
+			
 			&.active {
-				.arrow {
-		        	@include opacity(0.5);
-				}
-		
-				&:hover .arrow {
+		        @include opacity(0.5);
+				&:hover {
 		            @include opacity(0.7);
 		        }
 			}
 		}
 	}
-}
-
-
-
-
-#slidetest {
-    margin: 20px auto;
-    border: 1px solid #aaa;
-    padding: 8px;
-    
-    #lead_photo {
-        font: 12px normal Arial, Helvetica, sans-serif;
-        margin: 4px 0;
-        padding-bottom: 4px;       
-    }
 }
