@@ -4,6 +4,7 @@
 	.container-fluid {
 		padding:0 10px;
 	}
+	
 	// Make all columns even
 	.row-fluid > [class*="span"] {
 		float: none;
@@ -154,6 +155,22 @@
 		.event { 
 			border-bottom: 1px solid $grayLighter; 
 			.row-fluid { @include makeFluidRow; }
+		}
+	}
+	
+	// Make the slideshow target arrows a little smaller here
+	.slideview .overlay-nav div.bar {
+		.arrow {
+			width: 16px;
+			height: 13px;
+		}
+		
+		&.prev .arrow {
+			background-image: url(image_path('arrow-left.gif'));
+		}
+		
+		&.next .arrow {
+			background-image: url(image_path('arrow-right.gif'));			
 		}
 	}
 }
