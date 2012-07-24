@@ -48,7 +48,7 @@ class scpr.MegaMenu
                     @_score(sec)
                     @expanded += 1
 
-                el.mouseout =>   
+                el.mouseout =>
                     sec.score -= 1
                     #@_score(sec)
                     sec.func()
@@ -64,7 +64,7 @@ class scpr.MegaMenu
                     sec.score -= 1
                     sec.func()
                     #@_score(sec)
-                    @expanded -= 1                     
+                    @expanded -= 1
                     
                 # The following works sort-of. It still follows a link if you click it once, click somewhere else, and then click it again. It should show the menu again.
                 $("body").on
@@ -73,7 +73,7 @@ class scpr.MegaMenu
                             sec.score -= 1
                             sec.func()
                             @expanded -= 1
-                        
+                    
                     
     _score: (sec) ->
         if sec.score > 0 && !sec.selected
@@ -96,11 +96,11 @@ class scpr.MegaMenu
                     visibility: "hidden"
             
                 sec.drop.fadeIn 100
-                                
+            
         else if sec.score == 0 && sec.selected
             # hide section
             sec.selected = false
-            sec.item.delay(25).queue -> 
+            sec.item.delay(25).queue ->
                 $(this).removeClass("hover")
                 $(this).dequeue()
             

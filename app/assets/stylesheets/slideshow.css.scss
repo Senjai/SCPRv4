@@ -1,3 +1,61 @@
+.slides {
+	position: relative;
+}
+
+.overlay-nav {
+	div.bar {
+		position: absolute;
+		cursor: pointer;
+		background: none;
+		display: block;
+		top: 40px; // Height for the header
+		height: 85%; // Approximately the height of the image
+					// NOTE: This height is hard-coded into the Slideshow script.
+		
+		&.prev {
+			left: 0;
+			width: 30%;
+			
+			.arrow {
+				left:10px;
+		        background: url(image_path('overlay-prev-dark.png')) 0 0;
+			}
+		}
+		
+		&.next {
+			right: 0;
+			width: 70%;
+			
+			.arrow {
+				right: 10px;
+		        background: url(image_path('overlay-next-dark.png')) 0 0;
+			}
+		}
+		
+		&.disabled .arrow {
+			@include opacity(0.1);
+		}
+		
+		&.active {
+			.arrow {
+	        	@include opacity(0.5);
+			}
+			
+			&:hover .arrow {
+	            @include opacity(0.7);
+	        }
+		}
+		
+		.arrow {
+	        position:absolute;
+	        top:40%;
+	        width:48px;
+	        height:48px;
+	    }
+	}
+}
+
+
 #slidetest {
     margin: 20px auto;
     border: 1px solid #aaa;
@@ -11,24 +69,10 @@
 }
 
 .slideview {
-    position: relative;
-    background: #fff;
     overflow: hidden;
     margin: 0 auto;
 
     font: 12px normal Arial, Helvetica, sans-serif;
-
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-    
-    li {
-        position: absolute;
-        margin: 0;
-        padding: 0;
-    }    
     
     .nav {
         padding-top: 8px;
@@ -42,24 +86,24 @@
         
         button {
             background: none;
-        	@include ie-inline-block; 
-        	padding: 3px 5px; 
-        	color: #555; 
-        	text-decoration: none;
-        	border: none;
-        	position: relative;
-        	cursor: pointer;
+            @include ie-inline-block; 
+            padding: 3px 5px; 
+            color: #555; 
+            text-decoration: none;
+            border: none;
+            position: relative;
+            cursor: pointer;
         }
         
         button.prev-arrow {
-    	   background: image_url("arrow-left.gif") no-repeat 0 4px;
-    	   padding-left: 20px;
-    	}
-    	
-    	button.next-arrow {
-    	    background: image_url("arrow-right.gif") no-repeat 100% 4px;
-    	    padding-right: 20px;
-    	}
+           background: image_url("arrow-left.gif") no-repeat 0 4px;
+           padding-left: 20px;
+        }
+        
+        button.next-arrow {
+            background: image_url("arrow-right.gif") no-repeat 100% 4px;
+            padding-right: 20px;
+        }
         
         button.disabled {
             color: #bbb;
@@ -71,12 +115,9 @@
     }
 }
 
-.slideview:focus {
-    border: inherit;
-    outline: none;
-}
-
 .slide {
+	display: none;
+
     .credit {
         font-size: 10px;
         text-align: right;
@@ -84,8 +125,8 @@
     }
     
     p {
-		color: #777;
-		@include font-sans-serif(normal, 11px, 14px);
+        color: #777;
+        @include font-sans-serif(normal, 11px, 14px);
         margin: 0;
         padding: 4px 4px;
     }
