@@ -1,59 +1,105 @@
-.slides {
-	position: relative;
-}
+// z-index:
+//  .slideview: auto
+//    .slides: 5
+//    .overlay-nav: 10
+//      .bar: 5
+//      .arrow: 10
 
-.overlay-nav {
-	div.bar {
+.slideview {    
+	position: relative;
+	
+	h6 {
+		display: inline-block;
+		font-family:'Helvetica Neue', Helvetica, Arial, sans-serif
+	}
+
+	.slides {
+		position: relative;
+		z-index: 5;
+		clear: both;
+		width: 100%;
+	
+		.slide {
+			text-align: center;
+			width: 100%;
+
+			.text {
+				text-align: left;
+				
+			    .credit {
+			        font-size: 10px;
+			        text-align: right;
+			        color: #777;
+			    }
+
+			    p {
+			        color: #777;
+			        @include font-sans-serif(normal, 11px, 14px);
+			        margin: 0;
+			        padding: 4px 4px;
+			    }
+			}
+		}
+	}
+	
+	.overlay-nav {
 		position: absolute;
-		cursor: pointer;
-		background: none;
-		display: block;
-		top: 40px; // Height for the header
-		height: 85%; // Approximately the height of the image
-					// NOTE: This height is hard-coded into the Slideshow script.
-		
-		&.prev {
-			left: 0;
-			width: 30%;
-			
+		z-index: 10;
+		top: 41px; // for the top nav
+		width: 100%;
+	
+		div.bar {
+			position: absolute;
+			z-index: 5;
+			cursor: pointer;
+			background: none;
+			display: block;
+	
 			.arrow {
-				left:10px;
-		        background: url(image_path('overlay-prev-dark.png')) 0 0;
+		        position: absolute;
+				z-index: 10;
+		        width: 48px;
+		        height: 48px;
+		    }
+		
+			&.prev {
+				left: 0;
+				width: 30%;
+		
+				.arrow {
+					left: 10px;
+			        background: url(image_path('overlay-prev-dark.png')) 0 0;
+				}
+			}
+	
+			&.next {
+				right: 0;
+				width: 70%;
+		
+				.arrow {
+					right: 10px;
+			        background: url(image_path('overlay-next-dark.png')) 0 0;
+				}
+			}
+	
+			&.disabled .arrow {
+				@include opacity(0.1);
+			}
+	
+			&.active {
+				.arrow {
+		        	@include opacity(0.5);
+				}
+		
+				&:hover .arrow {
+		            @include opacity(0.7);
+		        }
 			}
 		}
-		
-		&.next {
-			right: 0;
-			width: 70%;
-			
-			.arrow {
-				right: 10px;
-		        background: url(image_path('overlay-next-dark.png')) 0 0;
-			}
-		}
-		
-		&.disabled .arrow {
-			@include opacity(0.1);
-		}
-		
-		&.active {
-			.arrow {
-	        	@include opacity(0.5);
-			}
-			
-			&:hover .arrow {
-	            @include opacity(0.7);
-	        }
-		}
-		
-		.arrow {
-	        position:absolute;
-	        top:40%;
-	        width:48px;
-	        height:48px;
-	    }
 	}
 }
+
+
 
 
 #slidetest {
@@ -65,69 +111,5 @@
         font: 12px normal Arial, Helvetica, sans-serif;
         margin: 4px 0;
         padding-bottom: 4px;       
-    }
-}
-
-.slideview {
-    overflow: hidden;
-    margin: 0 auto;
-
-    font: 12px normal Arial, Helvetica, sans-serif;
-    
-    .nav {
-        padding-top: 8px;
-        padding-bottom: 4px;
-        
-        div {
-           display: inline;
-           float: left;
-           text-align: center;
-        }
-        
-        button {
-            background: none;
-            @include ie-inline-block; 
-            padding: 3px 5px; 
-            color: #555; 
-            text-decoration: none;
-            border: none;
-            position: relative;
-            cursor: pointer;
-        }
-        
-        button.prev-arrow {
-           background: image_url("arrow-left.gif") no-repeat 0 4px;
-           padding-left: 20px;
-        }
-        
-        button.next-arrow {
-            background: image_url("arrow-right.gif") no-repeat 100% 4px;
-            padding-right: 20px;
-        }
-        
-        button.disabled {
-            color: #bbb;
-        }
-        
-        button.current {
-            border: 1px solid #ea6;
-        }
-    }
-}
-
-.slide {
-	display: none;
-
-    .credit {
-        font-size: 10px;
-        text-align: right;
-        color: #777;
-    }
-    
-    p {
-        color: #777;
-        @include font-sans-serif(normal, 11px, 14px);
-        margin: 0;
-        padding: 4px 4px;
     }
 }
