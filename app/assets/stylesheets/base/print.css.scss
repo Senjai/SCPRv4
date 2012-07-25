@@ -4,13 +4,11 @@
 #sidebar, #sidebar-top, #sidebar-bottom,
 #dsq-reply, #dsq-global-toolbar, #dsq-realtime-options, #dsq-sort-by, #dsq-pagination, #dsq-reactions, .dsq-h3-reactions, #dsq-show-more-reactions,
 #article-content-carousel, #article-article-meta, #article-sharing-tools, #article-related-content, .comment-count.social_disq, .story-audio,
-#other-segments, #more-events, .slideview .nav, .slideview li,
+#other-segments, #more-events, .slideview .overlay-nav, .slideview h6, .slideview .pager-nav, 
 #program-masthead-support, #program-masthead-headshot, .section-nav-header,
 #fold-comments-count-widget, .sfy-story, #article-next-prev,
 #page-footer, #footer-nav, .hidden-reader,
 .audio-bar, #uvTab, object, embed, iframe { display: none !important; }
-
-.slideview li:first-child { display: block !important; } // We're hiding them above, and then showing just the first one here
 
 #fold .row-title h6 { text-align: left; }
 
