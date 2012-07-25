@@ -72,14 +72,14 @@
 			&.prev {
 				left: 0;
 				width: 30%;
-				background-position-x: 6%;
+				background-position: 6% 48%;
 		        background-image: url(image_path('overlay-prev-dark.png'));
 			}
 	
 			&.next {
 				right: 0;
 				width: 70%;
-				background-position-x: 98%;
+				background-position: 98% 48%;
 		        background-image: url(image_path('overlay-next-dark.png'));
 			}
 			
