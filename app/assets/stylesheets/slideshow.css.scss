@@ -63,7 +63,6 @@
 	
 		div.bar {
 			position: absolute;
-			cursor: pointer;
 			display: block;
 			background-color: transparent;
 			background-repeat: no-repeat;
@@ -88,6 +87,7 @@
 			}
 			
 			&.active {
+				cursor: pointer;
 		        @include opacity(0.5);
 				&:hover {
 		            @include opacity(0.7);
