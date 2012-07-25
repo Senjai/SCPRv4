@@ -38,19 +38,6 @@
 			
 			.text {
 				text-align: left;
-				
-			    .credit {
-			        font-size: 10px;
-			        text-align: right;
-			        color: #777;
-			    }
-
-			    p {
-			        color: #777;
-			        @include font-sans-serif(normal, 11px, 14px);
-			        margin: 0;
-			        padding: 4px 4px;
-			    }
 			}
 		}
 	}

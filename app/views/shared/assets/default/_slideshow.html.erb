@@ -6,6 +6,7 @@
 <% if params[:id].present? %>
         start: window.location.hash.substring(6), // eg. "#slide5"
 <% end %>
+
         el: "#asset_slideshow_<%= content.id %>",
         assets: <%= raw assets.to_json %>
     });
