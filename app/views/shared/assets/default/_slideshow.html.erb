@@ -1,10 +1,14 @@
 <div id="asset_slideshow_<%= content.id %>" class="slideview"></div>
 <br/>
 <script type="text/javascript">
-    ahSlides = new AssetHost.Slideshow({
+	var query, keyval;
+	var params = {};
+	query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
 	
+    ahSlides = new AssetHost.Slideshow({
 <% if params[:id].present? %>
-        start: window.location.hash.substring(6), // eg. "#slide5"
+        start: params["slide"],
+		deeplink: true,
 <% end %>
 
         el: "#asset_slideshow_<%= content.id %>",

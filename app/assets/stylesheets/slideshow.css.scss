@@ -108,7 +108,7 @@
 					@include ie-inline-block();
 				}
 				
-				&.active {
+				&.active, &:hover {
 					border-color: $orange;
 				}
 	        }
