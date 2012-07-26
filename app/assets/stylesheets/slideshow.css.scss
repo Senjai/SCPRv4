@@ -9,10 +9,11 @@
     
 	.slideshow-header {
 		margin-bottom: 5px;
-		
+		height: 21px;
+
 	    h6 {
 			display: inline;
-			line-height: 20px;
+			line-height: 21px;
 	        font-family:'Helvetica Neue', Helvetica, Arial, sans-serif
 	    }
     
@@ -54,12 +55,15 @@
 		margin: 10px 0;
 		text-align: center;
 		display: none;
+		@extend .well;
+		padding: 5px 0 0 0 ;
+		@include border-radius(0px);
 		
         .nav {
 			position: absolute;
 			top: 0;
 			max-width: 48px;
-			width: 5%;
+			width: 7%;
 			height: 100%;
 			background-color: transparent;
 			background-repeat: no-repeat;
@@ -91,13 +95,21 @@
         
 		.thumbnails {
 			@include opacity(1);
-			width: 90%;
+			width: 86%;
 			margin: 0 auto;
 	        .thumbnail {
 	            cursor: pointer;
 	            margin: 0 5px;
 				display: none;
 				width: 13%;
+				
+				&.current-set {
+					@include ie-inline-block();
+				}
+				
+				&.active {
+					border-color: $orange;
+				}
 	        }
 		}
     }
