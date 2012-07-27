@@ -33,9 +33,7 @@ class scpr.Audio
                 mp3 = $(btn).attr("href")
                 title = $(btn).attr("title")
                 duration = Number($(btn).attr("data-duration"))
-                
-                console.log "#{@widgets.length}: #{mp3}", btn
-                
+                                
                 # take the URL out of the href
                 $(btn).attr "href", "javascript:void(0);"
                 
@@ -72,22 +70,17 @@ class scpr.Audio
         return false
 
     play: (widget) ->
-        if @playing && @active == widget
-            console.log("pause/play")
-                        
+        if @playing && @active == widget                        
             if @playing == 1
                 @player.jPlayer "pause"
-                console.log "paused"
                 @playing = 2
             else
                 @player.jPlayer "play"
-                console.log "played"
                 @playing = 1
 
             return true
         
         if @playing
-            console.log "stopping existing play."
             # tell the player to stop
             @player.jPlayer "stop"
             
@@ -95,7 +88,6 @@ class scpr.Audio
             @active?.stop()
         
         # set our new mp3
-        console.log "setting mp3 to ", widget.options.mp3
         @player.jPlayer "setMedia", mp3:widget.options.mp3
         $(@options.titleEl).text widget.options.title
 
