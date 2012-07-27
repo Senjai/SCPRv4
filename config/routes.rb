@@ -162,11 +162,14 @@ Scprv4::Application.routes.draw do
   # -- Search -- #
   match '/search/' => 'search#index', :as => :search
   
+  # -- Article Email Sharing -- #
+  match '/content/share' => 'content_email#new', :as => :content_email, :via => :get
+  match '/content/share' => 'content_email#send', :as => :content_email, :via => :post
+  
 
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
-  
   
   # -- RSS feeds -- #
   match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed

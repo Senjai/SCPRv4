@@ -288,6 +288,7 @@
 			
 			&.facebook { background-image:url(image_path('icons/share-facebook.png')); }
 			&.twitter { background-image:url(image_path('icons/share-twitter.png')); }
+			&.gplus { background-image:url(image_path('icons/share-plus.png')); }
 			&.print { background-image:url(image_path('icons/share-print.png')); }
 			&.email { background-image:url(image_path('icons/share-email.png')); }
 			&.plus { 
@@ -324,14 +325,9 @@
 			padding: 0 26px 0 0;
 			&.facebook { background-position:right 3px; }
 			&.twitter { background-position:right 2px; }
-			&.plus { 
-				> div:first-child { 
-					float: right !important;
-					margin-left: 5px !important; 
-				}
-			}
+			&.gplus { background-position:right 2px; }
 			&.print { background-position:right 3px; }
-			&.email { background-position:right 4px; }
+			&.email { background-position:right 5px; }
 		}
 	}
 	
@@ -346,11 +342,8 @@
 			margin-right: 8px;
 			background-position: left top;
 			padding-left:20px;
-			&.plus {
-				> div:first-child {
-					margin: 0 5px 0 0 !important;
-				}
-			}
+			&.email { background-position:left 3px; }
+			&.print { background-position:left 2px; }
 		}
 	}
 	
