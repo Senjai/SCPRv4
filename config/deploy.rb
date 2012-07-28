@@ -28,9 +28,8 @@ set :maintenance_template_path, "public/maintenance.erb"
 set :disable_all, false
 
 # Pass these in with -s to override: 
-#    cap deploy -s force_assets=true -s force_npm=true
+#    cap deploy -s force_assets=true
 set :force_assets, false
-set :force_npm, false
 
 
 # --------------
@@ -85,25 +84,6 @@ namespace :deploy do
     task :enable, :roles => :web, :except => { :no_release => true } do
       run "rm -rf #{shared_path}/system/maintenance/*"
     end
-  end
-  
-  
-  # --------------
-  # Install & Rebuild packages if package.json was updated
-  # Symlinks to shared folder to allow packages to be shared
-  # between deployment if possible.
-  task :npm, roles: :web do
-    from = source.next_revision(current_revision) rescue nil
-    if force_npm || 
-        from.nil? || 
-        capture("cd #{latest_release} && #{source.local.log(from)} package.json | wc -l").to_i > 0
-      run "cd #{latest_release} && npm install && npm rebuild"
-      run "mv -f #{lateset_release}/node_modules/ #{shared_path}"
-    else
-      logger.info "package.json not updated. SKIPPING npm install"
-    end
-    
-    run "ln -nsf #{shared_path}/node_modules/ #{latest_release}"
   end
   
   # --------------
