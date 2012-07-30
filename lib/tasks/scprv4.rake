@@ -21,12 +21,6 @@ namespace :scprv4 do
     task :tweets => :environment do
       require 'twitter_cacher'
       include TwitterCacher
-      # Add any more feeds you want to cache. Each feed will be in a cache named `twitter:#{screen_name}`
-      ## Ex. twitter:KPCCForum
-      # The last argument can optionally be a hash of options to pass the to the Twitter.user_timeline method.
-      # These options will be applied to all the feeds being cached. See module TwitterCacher for default options.
-      # See the Twitter API docs for more available options: https://dev.twitter.com/docs/api/1/get/statuses/user_timeline
-      ## Example usage: cache_tweets("KPCCForum", "SCPR", count: 10, include_rts: false)
       puts "Caching tweets...."
       cache_tweets("KPCCForum")
       puts "Finished.\n"
@@ -140,47 +134,6 @@ namespace :scprv4 do
       worker.log "Starting worker #{worker}"
     
       worker.work()
-    end
-  end
-end
-
-# Easy database syncing for development
-
-db_namespace = namespace :db do
-  namespace :mercer do
-    task :pull => [:fetch, :merge] # rsync and merge
-    task :clone => [:clone_dump, :purge, :merge] # scp, purge and merge
-    
-    # rsync the dump file on db1
-    task :fetch => :dump_file_config do
-      $stderr.puts "Fetching mercer.dump from 66.226.4.229 using rsync"
-      `rsync -v 66.226.4.229:~scprdb/mercer.dump #{Rails.application.config.scpr.mercer_dump}`
-      $stderr.puts "Finished."
-    end
-  
-    # Merge dump file schema into current database.
-    task :merge => :dump_file_config do
-      $stderr.puts "Dumping data from #{Rails.application.config.scpr.mercer_dump} into #{ActiveRecord::Base.configurations[Rails.env]['database']}"
-      `mysql -u root #{ActiveRecord::Base.configurations[Rails.env]['database']} < #{Rails.application.config.scpr.mercer_dump}`
-      $stderr.puts "Finished."
-    end
-  
-    task :purge do
-      db_namespace[:purge].invoke
-    end
-            
-    task :clone_dump => :dump_file_config do
-      $stderr.puts "Fetching mercer.dump from 66.226.4.229 using scp"
-      `scp 66.226.4.229:~scprdb/mercer.dump #{Rails.application.config.scpr.mercer_dump.split("/").tap { |a| a.pop }.join("/")}/`
-      $stderr.puts "Finished."
-    end
-  
-    task :dump_file_config => :environment do
-      if Rails.application.config.scpr.mercer_dump.blank?
-        raise "No mercer dump file specified for this environment."
-      else
-        $stderr.puts Rails.application.config.scpr.mercer_dump
-      end
     end
   end
 end
