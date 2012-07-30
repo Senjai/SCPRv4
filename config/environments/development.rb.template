@@ -12,7 +12,7 @@ Scprv4::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
   config.cache_store = :redis_content_store, "redis://localhost:6379/5"
 
   # Don't care if the mailer can't send
@@ -28,9 +28,16 @@ Scprv4::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
+  config.serve_static_assets = false
   
-  config.scpr.mercer_dump = "#{Rails.root}/../mercer-data/mercer.dump"
+  default_url_options[:host] = "scprv4.dev"
+  
+  config.dbsync.dir   = "#{Rails.root}/../mercer-data"
+  config.dbsync.file  = "mercer.dump" # Remote and local use this
+  config.dbsync.host  = "66.226.4.229"
+  config.dbsync.user  = "scprdb" # Remote user
+  
   config.scpr.host = "scprv4.dev"
   config.scpr.resque_queue   = :scprv4
 
