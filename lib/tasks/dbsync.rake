@@ -1,5 +1,10 @@
 # Easy database syncing for development
 
+desc "Alias for dbsync:pull"
+task :dbsync do
+  Rake::Task["dbsync:pull"].invoke
+end
+
 namespace :dbsync do
   task :dump_file_config => :environment do
     if Rails.env == 'production'

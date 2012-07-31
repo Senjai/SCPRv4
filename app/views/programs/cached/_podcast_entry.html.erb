@@ -7,7 +7,7 @@
 					<p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
 				</header>
 			
-				<%= simple_format entry.summary %>
+				<%= simple_format relaxed_sanitize(entry.summary) %>
 			</div> <!-- info -->
 		</div> <!-- span -->
 		<% if entry.enclosure_url.present? %>

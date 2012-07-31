@@ -358,4 +358,8 @@ module ApplicationHelper
   def flash_bootstrap(flash_name)
     "alert-message " + { alert: "error", notice: "success", info: "info", warning: "warning" }[flash_name]
   end
+  
+  def relaxed_sanitize(html)
+    Sanitize.clean(html.html_safe, Sanitize::Config::RELAXED)
+  end
 end

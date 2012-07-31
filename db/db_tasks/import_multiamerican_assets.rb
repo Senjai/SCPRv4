@@ -67,7 +67,7 @@ blog_entries.each_with_index do |blog_entry, bindex|
       data = {
         auth_token: ah.token,
         url:        src,
-        hidden:     "true", 
+        hidden:     "true",
         title:      attachment.title,
         note:       "Imported from Multi American (#{post.cache_key})",
         owner:      owner,

@@ -24,6 +24,7 @@ gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
 #gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
 gem "twitter"
 gem 'twitter-text'
+gem 'sanitize', "~> 2.0.3"
 gem 'simple_form'
 gem 'chronic'
 

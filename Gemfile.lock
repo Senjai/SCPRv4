@@ -254,6 +254,8 @@ GEM
       blankslate (>= 2.1.2.3)
       ffi (~> 1.0.7)
     rubyzip (0.9.9)
+    sanitize (2.0.3)
+      nokogiri (>= 1.4.4, < 1.6)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -341,6 +343,7 @@ DEPENDENCIES
   rspec-rails
   ruby-mp3info
   rubypython
+  sanitize (~> 2.0.3)
   sass!
   sass-rails
   shoulda-matchers
