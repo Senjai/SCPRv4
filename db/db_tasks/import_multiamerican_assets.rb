@@ -66,8 +66,9 @@ blog_entries.each_with_index do |blog_entry, bindex|
       # Setup the data for the POST request to assethost
       data = {
         auth_token: ah.token,
-        url:        src, 
+        url:        src,
         hidden:     "true", 
+        title:      attachment.title,
         note:       "Imported from Multi American (#{post.cache_key})",
         owner:      owner,
         caption:    caption
