@@ -44,7 +44,10 @@ class ProgramsController < ApplicationController
       
       respond_with @segments_scoped
     else
-      render :action => "show_external"
+      respond_to do |format|
+        format.html { render :action => "show_external" }
+        format.xml  { redirect_to @program.podcast_url.present? ? @program.podcast_url : @program.rss_url }
+      end
     end
   end
   
@@ -109,6 +112,13 @@ class ProgramsController < ApplicationController
     
     # ---------------
     
+    def get_featured_programs
+      @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
+      @featured_programs.sort_by! { |program| KpccProgram::Featured.index(program.slug) } # Orders the returned records by the order of the KpccProgram::Featured array
+    end
+    
+    # ---------------
+    
     def get_kpcc_program_by_slug
       if params[:show]
         KpccProgram.find_by_slug(params[:show])
@@ -130,12 +140,4 @@ class ProgramsController < ApplicationController
     def get_other_program
       OtherProgram.find_by_slug(params[:show])
     end
-    
-    # ---------------
-    
-    def get_featured_programs
-      @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
-      @featured_programs.sort_by! { |program| KpccProgram::Featured.index(program.slug) } # Orders the returned records by the order of the KpccProgram::Featured array
-    end
-    
 end
