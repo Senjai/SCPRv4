@@ -482,3 +482,32 @@ nav.filters {
 		}
 	}
 }
+
+// Archive page
+
+.program-group {
+	margin-bottom: 15px;
+	.show-title {
+		color: $gray;
+	}
+}
+
+.jump-nav {
+	@include font-sans-serif($size: 12px);
+	margin: 10px 0 5px 0;
+	padding-bottom: 5px;
+	border-bottom: 1px solid $grayLighter;
+	
+	ul {
+		margin: 0;
+		li {
+			@include ie-inline-block;
+			padding: 0 10px;
+			margin: 0;
+			border-right: 1px solid $grayLight;
+			&:last-child, &:first-child {
+				border-right: none;
+			}
+		}
+	}
+}
