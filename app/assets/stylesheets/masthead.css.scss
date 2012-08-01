@@ -266,6 +266,12 @@ $navHeight: 36px;
 	}
 }
 
+.blog-title a {
+	color: lighten($gray, 20%);
+	@include font-sans-serif(normal, 11px);
+	text-transform:uppercase;
+	@include ie-inline-block;
+}
 
 // Mega Menu Pop-ups
 .megamenu {
@@ -335,13 +341,6 @@ $navHeight: 36px;
 			// Won't be seen in IE7
 			&:last-child { border-bottom: none; }
 		}
-	}
-	
-	.blog-title a {
-		color: lighten($gray, 20%);
-		@include font-sans-serif(normal, 11px);
-		text-transform:uppercase;
-		@include ie-inline-block;
 	}
 	
 	.featured {

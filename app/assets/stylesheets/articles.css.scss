@@ -25,6 +25,13 @@
 	}
 }
 
+.categories a {
+	color: lighten($gray, 20%);
+	@include font-sans-serif(normal, 11px);
+	text-transform:uppercase;
+	@include ie-inline-block;
+}
+
 .story-body { @include clearfix; }
 
 .slideview { // Temporarily overriding the fixed-size slideshow elements

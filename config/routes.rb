@@ -162,7 +162,10 @@ Scprv4::Application.routes.draw do
   # -- Search -- #
   match '/search/' => 'search#index', :as => :search
   
-
+  # -- Archive -- #
+  post  '/archive/process_archive_select' => "home#process_archive_select",  as: :process_archive_select
+  match '/archive(/:year/:month/:day)/' => "home#archive", as: :archive, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }
+  
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
