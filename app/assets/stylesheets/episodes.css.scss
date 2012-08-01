@@ -54,7 +54,12 @@ header.episode, .gray-strip {
 .archive-date-select {
 	margin-bottom: 0;
 	display: inline-block;
-	select { width: 100px; }
+	select { 
+		width: 100px;
+		&#archive_date_3i {
+			width:60px;
+		}
+	}
 }
 
 .show-episode {
