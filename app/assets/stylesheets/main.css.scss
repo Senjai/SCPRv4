@@ -444,6 +444,12 @@ nav.filters {
 			margin-right:20px;
 			text-transform:none;
 		}
+		&.active a {
+			background-color: $gray;
+			color: $nearWhite;
+			text-shadow: 0 1px #000;
+			text-decoration: none;
+		}
 		a {
 			@include border-radius(3px);
 			color: #2e2e2e;

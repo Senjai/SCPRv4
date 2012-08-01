@@ -1,0 +1,13 @@
+<div class="archive widget">
+	<h6>Browse All by Date</h6>
+	<div class="archive-select" id="archive-select">
+		<p>
+			<%= form_tag process_archive_select_path, id: "archive_date_select", class: "archive-date-select" do %>
+				<%= date_select 'archive', 'date', order: [:month, :year, :day], 
+								start_year: 2002, 
+								end_year: Time.now.year %>
+				<%= submit_tag "Go", class: "btn" %>
+			<% end %>
+		</p>
+	</div>
+</div>
