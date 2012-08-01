@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/SCPR/disqussion.git
-  revision: b354726c7dd97428101965db6be9398ce86e8c01
+  revision: ba61d6df2548083eae73267aaa2854cdca88c39f
   specs:
     disqussion (0.0.5)
       faraday (~> 0.7.6)
