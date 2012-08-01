@@ -3,8 +3,6 @@
 	<strong>Select a date:</strong>
 <% else %>
 
-<% date_is_today = @date == Time.now.beginning_of_day %>
-
 <h1><%= page_title "Archive for #{format_date @date, format: :full_date}" %></h1>
 
 <nav class="filters">
@@ -68,7 +66,7 @@
 	
 	<%= any_to_list? @blog_entries, message: "There were no blog entries published on this date." do %>
 		<% @blog_entries.each do |content| %>
-			<% register_content(content) if @date == Time.now.beginning_of_day %>
+			<% register_content content %>
 		
 			<div class="teaser cbase">
 				<div class="row-fluid">
@@ -108,7 +106,7 @@
 
 	<%= any_to_list? @video_shells, message: "There were no videos published on this date." do %>
 		<% @video_shells.each do |content| %>
-			<% register_content(content) if @date == Time.now.beginning_of_day %>
+			<% register_content content %>
 
 			<div class="teaser cbase">
 				<div class="row-fluid">
