@@ -66,6 +66,11 @@ body {
 		.offleads {
 			margin-bottom: 10px;
 			
+			&.split {
+				.cbase.offlead {
+					border-top:none;
+				}
+			}
 			// Override default .offlead to use border-top
 			// because IE7/8 do not support :last-child selector
 			.span8:first-child .cbase.offlead { 
