@@ -20,7 +20,6 @@ role :sphinx,   "scprdev.org"
 # Callbacks
 after "deploy:update_code", "db:mercer:pull"
 after "deploy:update_code", "thinking_sphinx:staging:index"
-after "deploy:update_code", "deploy:npm"
 
 
 # --------------
