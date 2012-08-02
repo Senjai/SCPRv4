@@ -30,6 +30,8 @@ set :disable_all, false
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true
 set :force_assets, false
+set :ts_index, true # Staging only
+set :dbsync, false # Staging only
 
 
 # --------------
@@ -120,4 +122,18 @@ namespace :remote_ts do
   task :index, roles: :sphinx do 
     thinking_sphinx.index
   end
+end
+
+def as_user(new_user, &block)
+  old_user = user
+  set :user, new_user
+  close_sessions
+  yield
+  set :user, old_user
+  close_sessions
+end
+ 
+def close_sessions
+  sessions.values.each { |session| session.close }
+  sessions.clear
 end
