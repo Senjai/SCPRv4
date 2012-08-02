@@ -6,7 +6,7 @@ class ContentEmailController < ApplicationController
   end
 
   def send
-
+    ContentMailer.email_content().deliver
   end
 
 end

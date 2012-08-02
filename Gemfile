@@ -26,6 +26,7 @@ gem "twitter"
 gem 'twitter-text'
 gem 'simple_form'
 gem 'chronic'
+gem 'simple_postmark'
 
 gem 'capistrano'
 
