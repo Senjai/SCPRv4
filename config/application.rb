@@ -44,9 +44,9 @@ module Scprv4
     config.filter_parameters += [:unencrypted_password, :unencrypted_password_confirmation]
 
     # Enable Postmark for transactional mail sending
+    config.action_mailer.delivery_method = :simple_postmark
+    config.action_mailer.simple_postmark_settings = { api_key: '899a8982-87b7-47e9-aba9-c49f29f70cdb' }
     config.action_mailer.raise_delivery_errors = true
-    config.action_mailer.delivery_method   = :postmark
-    config.action_mailer.postmark_settings = { :api_key => "899a8982-87b7-47e9-aba9-c49f29f70cdb" }
     
     # Enable the asset pipeline
     config.assets.enabled = true
