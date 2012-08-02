@@ -37,9 +37,7 @@ end
 namespace :dbsync do
   task :pull do
     if dbsync
-      as_user "dbsync" do
-        Rake::Task.invoke["dbsync:pull"]
-      end
+      "*** dbsync not yet implemented"
     else
       logger.info "SKIPPING dbsync (dbsync false)"
     end

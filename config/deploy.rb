@@ -123,17 +123,3 @@ namespace :remote_ts do
     thinking_sphinx.index
   end
 end
-
-def as_user(new_user, &block)
-  old_user = user
-  set :user, new_user
-  close_sessions
-  yield
-  set :user, old_user
-  close_sessions
-end
- 
-def close_sessions
-  sessions.values.each { |session| session.close }
-  sessions.clear
-end
