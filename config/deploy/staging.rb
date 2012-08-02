@@ -2,8 +2,6 @@
 # Variables
 set :branch, "master"
 set :rails_env, :scprdev
-set :ts_index, true
-set :dbcopy, true
 
 
 # --------------
@@ -13,14 +11,12 @@ role :web,      "scprdev.org"
 role :workers,  "scprdev.org"
 role :db,       "scprdev.org", :primary => true
 role :sphinx,   "scprdev.org"
-#role :dbcopy,   "66.226.4.229"
 
 
 # --------------
 # Callbacks
-after "deploy:update_code", "db:mercer:pull"
+after "deploy:update_code", "dbsync:pull"
 after "deploy:update_code", "thinking_sphinx:staging:index"
-after "deploy:update_code", "deploy:npm"
 
 
 # --------------
@@ -38,14 +34,13 @@ namespace :thinking_sphinx do
   end
 end
 
-namespace :db do
-  namespace :mercer do
-    task :pull, roles: :dbcopy do
-      if dbcopy
-        logger.info "dbcopy not yet implemented."
-      else
-        logger.info "SKIPPING dbcopy (dbcopy false)"
-      end
+namespace :dbsync do
+  task :pull do
+    if dbsync
+      "*** dbsync not yet implemented"
+    else
+      logger.info "SKIPPING dbsync (dbsync false)"
     end
   end
 end
+

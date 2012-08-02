@@ -72,6 +72,11 @@ Scprv4::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
+  config.dbsync.filename    = "mercer.dump"
+  config.dbsync.local_dir   = "/home/dbsync" # No trailing slash
+  config.dbsync.remote_host = "66.226.4.229"
+  config.dbsync.remote_dir  = "~scprdb"
+  
   config.scpr.host = "staging.scprdev.org"
   config.scpr.media_root = "/home/kpcc/media"
   config.scpr.resque_queue   = :scprv4

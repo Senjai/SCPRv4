@@ -30,6 +30,8 @@ set :disable_all, false
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true
 set :force_assets, false
+set :ts_index, true # Staging only
+set :dbsync, false # Staging only
 
 
 # --------------

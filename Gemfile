@@ -5,8 +5,8 @@ gem 'mysql2'
 gem 'therubyracer'
 gem 'jquery-rails'
 
-#gem 'redis-content-store', :path => "/Users/bryan/projects/redis-content-store"
-gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git", :ref => "dcb7843b10afc68a85c105fd58eaa76cf71e250f"
+# gem 'redis-content-store', :path => "/Users/bryan/projects/redis-content-store"
+gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
 gem "resque", "~> 1.20"
 
 gem 'thinking-sphinx', '~> 2.0.10', require: "thinking_sphinx"
