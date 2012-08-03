@@ -345,12 +345,9 @@ end
     content "This is the about content"
     enable_comments 0
     registration_required 0
-    render_as_template 0
-    template_name ""
     description "This is the description"
-    enable_in_new_site 1
-    show_sidebar 1
     is_public 1
+    template ""
   end
 
 # ContentCategory #########################################################

@@ -12,10 +12,18 @@ class Flatpage < ActiveRecord::Base
     ['title'],
     ['updated_at', display_helper: :display_date ]
   ]
+
+  # -------------------
+
+  TEMPLATE_OPTIONS = [
+    ["Normal (with sidebar)",   "inherit"],
+    ["Full Width (no sidebar)", "full"],
+    ["No Template",             "none"]
+  ]
   
   # -------------------
   # Scopes
-  default_scope where(enable_in_new_site: true, is_public: true)
+  default_scope where(is_public: true)
 
   # -------------------
   # Validations
@@ -26,12 +34,6 @@ class Flatpage < ActiveRecord::Base
   before_validation :slashify
   before_validation :downcase_url
   after_save :reload_routes, if: -> { self.url_changed? }
-  
-  # -------------------
-  
-  def reload_routes
-    Scprv4::Application.reload_routes!
-  end
   
   # -------------------
   
@@ -67,4 +69,16 @@ class Flatpage < ActiveRecord::Base
       end
     end
   end
+  
+  def remote_link_path
+    "http://www.scpr.org#{url}"
+  end
+
+  # -------------------
+  
+  private
+  
+    def reload_routes
+      Scprv4::Application.reload_routes!
+    end
 end

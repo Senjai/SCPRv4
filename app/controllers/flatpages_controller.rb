@@ -7,17 +7,16 @@ class FlatpagesController < ApplicationController
     if @flatpage.redirect_url.present?
       redirect_to @flatpage.redirect_url and return
     end
-    
-    layout_template = 'application'
-    
-    if !@flatpage.show_sidebar?
+        
+    case @flatpage.template
+    when "full"
       layout_template = 'app_nosidebar'
-    end
-
-    if @flatpage.render_as_template?
+    when "none"
       layout_template = false
+    else
+      layout_template = 'application'
     end
-    
+      
     render layout: layout_template
   end
 end

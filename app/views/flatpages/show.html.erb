@@ -1,5 +1,17 @@
-<% page_title @flatpage.title %>
 <% content_for :headerjs, @flatpage.extra_head.html_safe %>
-<h1><%= @flatpage.title %></h1>
+
+<% content_for :opengraph do %>
+	<meta property="og:description" content="<%= j @flatpage.description %>">
+    <meta property="og:title" content="<%= j @flatpage.title %>">
+    <meta property="og:type" content="article">
+	<meta property="og:url" content="<%= @flatpage.remote_link_path %>"/>
+	<meta name="twitter:card" value="summary">
+	<meta name="twitter:site" value="@kpcc">
+	<meta name="twitter:url" value="<%= @flatpage.remote_link_path %>">
+	<meta name="twitter:title" value="<%= j @flatpage.title %>">
+	<meta name="twitter:description" value="<%= j @flatpage.description %>">
+<% end %>
+
+<h1><%= page_title @flatpage.title %></h1>
 <%= @flatpage.content.html_safe %><br />
 <%= @flatpage.extra_tail.html_safe %>

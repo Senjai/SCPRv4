@@ -20,14 +20,14 @@ describe FlatpagesController do
       response.should render_template(layout: "layouts/application")
     end
     
-    it "render no_sidebar if show_sidebar is false" do
-      flatpage = create :flatpage, show_sidebar: false
+    it "render no_sidebar if template is full" do
+      flatpage = create :flatpage, template: "full"
       get :show, flatpage_path: flatpage.path
       response.should render_template(layout: "layouts/app_nosidebar")
     end
     
-    it "does not render a template if render_as_template is true" do
-      flatpage = create :flatpage, render_as_template: true
+    it "does not render a template if template is none" do
+      flatpage = create :flatpage, template: "none"
       get :show, flatpage_path: flatpage.path
       response.should render_template(layout: false)
     end

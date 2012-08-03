@@ -72,6 +72,13 @@ describe Flatpage do
     end
   end
   
+  describe "remote_link_path" do
+    it "returns the full url for scpr.org" do
+      page = create :flatpage
+      page.remote_link_path.should match /www\.scpr\.org/
+    end
+  end
+  
   describe "after save reload routes" do
     it "reloads application routes after save if URL is changed" do
       page = create :flatpage
