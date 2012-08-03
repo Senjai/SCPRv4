@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120802220257) do
+ActiveRecord::Schema.define(:version => 20120803214120) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -348,68 +348,6 @@ ActiveRecord::Schema.define(:version => 20120802220257) do
     t.datetime "expire_date",                        :null => false
   end
 
-  create_table "election_candidate", :force => true do |t|
-    t.string   "candidate_id", :limit => 30,  :null => false
-    t.string   "name",         :limit => 100, :null => false
-    t.string   "sort_letter",  :limit => 1,   :null => false
-    t.integer  "race_id",                     :null => false
-    t.string   "race_name",    :limit => 100, :null => false
-    t.string   "party",        :limit => 2,   :null => false
-    t.boolean  "is_incumbent",                :null => false
-    t.boolean  "is_winner",                   :null => false
-    t.integer  "vote_count"
-    t.float    "vote_percent"
-    t.datetime "last_updated",                :null => false
-    t.boolean  "top_tier",                    :null => false
-  end
-
-  add_index "election_candidate", ["candidate_id"], :name => "candidate_id", :unique => true
-  add_index "election_candidate", ["race_id"], :name => "election_candidate_3548c065"
-
-  create_table "election_measure", :force => true do |t|
-    t.string   "contest_id",          :limit => 30,         :null => false
-    t.string   "name",                :limit => 100,        :null => false
-    t.text     "simple_description",  :limit => 2147483647, :null => false
-    t.string   "category",            :limit => 100,        :null => false
-    t.integer  "total_votes",                               :null => false
-    t.datetime "last_updated",                              :null => false
-    t.boolean  "top_tier",                                  :null => false
-    t.integer  "precincts_reporting",                       :null => false
-    t.integer  "total_precincts",                           :null => false
-    t.float    "percent_precincts",                         :null => false
-    t.integer  "yes_votes"
-    t.float    "yes_percent",                               :null => false
-    t.integer  "no_votes"
-    t.float    "no_percent",                                :null => false
-    t.string   "winner",              :limit => 1
-  end
-
-  add_index "election_measure", ["contest_id"], :name => "contest_id", :unique => true
-
-  create_table "election_race", :force => true do |t|
-    t.string   "contest_id",          :limit => 30,         :null => false
-    t.string   "name",                :limit => 100,        :null => false
-    t.text     "simple_description",  :limit => 2147483647, :null => false
-    t.string   "category",            :limit => 100,        :null => false
-    t.integer  "total_votes",                               :null => false
-    t.datetime "last_updated",                              :null => false
-    t.boolean  "top_tier",                                  :null => false
-    t.integer  "precincts_reporting",                       :null => false
-    t.integer  "total_precincts",                           :null => false
-    t.float    "percent_precincts",                         :null => false
-    t.integer  "sort_order"
-  end
-
-  add_index "election_race", ["contest_id"], :name => "contest_id", :unique => true
-
-  create_table "election_tweetqueue", :force => true do |t|
-    t.string   "contest_id",      :limit => 30,  :null => false
-    t.string   "content",         :limit => 140, :null => false
-    t.float    "percent_counted",                :null => false
-    t.datetime "queued_at",                      :null => false
-    t.boolean  "is_sent",                        :null => false
-  end
-
   create_table "events_event", :force => true do |t|
     t.string   "title",               :limit => 140,                           :null => false
     t.string   "slug",                :limit => 50,                            :null => false
@@ -443,35 +381,6 @@ ActiveRecord::Schema.define(:version => 20120802220257) do
 
   add_index "events_event", ["slug"], :name => "events_event_slug"
 
-  create_table "fires_dashboard", :force => true do |t|
-    t.text     "stats",           :limit => 2147483647, :null => false
-    t.boolean  "breaking",                              :null => false
-    t.integer  "breaking_number",                       :null => false
-    t.boolean  "radio",                                 :null => false
-    t.integer  "radio_number",                          :null => false
-    t.boolean  "blog",                                  :null => false
-    t.integer  "blog_number",                           :null => false
-    t.boolean  "photos",                                :null => false
-    t.boolean  "map",                                   :null => false
-    t.datetime "updated_at"
-  end
-
-  create_table "fires_dashboard_feeds", :force => true do |t|
-    t.integer "dashboard_id", :null => false
-    t.integer "feed_id",      :null => false
-  end
-
-  add_index "fires_dashboard_feeds", ["dashboard_id", "feed_id"], :name => "dashboard_id", :unique => true
-  add_index "fires_dashboard_feeds", ["feed_id"], :name => "feed_id_refs_id_3d28545a"
-
-  create_table "fires_feed", :force => true do |t|
-    t.integer "dashboard_id",                :null => false
-    t.string  "url",          :limit => 250, :null => false
-    t.string  "type",         :limit => 10,  :null => false
-  end
-
-  add_index "fires_feed", ["dashboard_id"], :name => "fires_feed_dashboard_id"
-
   create_table "flatpages_flatpage", :force => true do |t|
     t.string   "url",                   :limit => 100,        :null => false
     t.string   "title",                 :limit => 200,        :null => false
@@ -479,83 +388,16 @@ ActiveRecord::Schema.define(:version => 20120802220257) do
     t.text     "extra_head",            :limit => 2147483647, :null => false
     t.text     "extra_tail",            :limit => 2147483647, :null => false
     t.boolean  "enable_comments",                             :null => false
-    t.string   "template_name",         :limit => 70,         :null => false
     t.boolean  "registration_required",                       :null => false
     t.datetime "updated_at"
-    t.boolean  "render_as_template",                          :null => false
     t.text     "description",           :limit => 2147483647, :null => false
-    t.boolean  "enable_in_new_site",                          :null => false
-    t.boolean  "show_sidebar",                                :null => false
     t.string   "redirect_url",          :limit => 250
     t.boolean  "is_public",                                   :null => false
     t.datetime "created_at",                                  :null => false
+    t.string   "template",              :limit => 10,         :null => false
   end
 
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
-
-  create_table "friends_card_discount", :force => true do |t|
-    t.string  "business_name",  :limit => 200,        :null => false
-    t.string  "street_address", :limit => 200,        :null => false
-    t.string  "city",           :limit => 200,        :null => false
-    t.string  "state",          :limit => 2,          :null => false
-    t.integer "zip_code",                             :null => false
-    t.string  "phone_number",   :limit => 20,         :null => false
-    t.string  "website",        :limit => 200,        :null => false
-    t.string  "business_type",  :limit => 1,          :null => false
-    t.text    "discount",       :limit => 2147483647, :null => false
-  end
-
-  create_table "general_election_candidate", :force => true do |t|
-    t.string  "name",        :limit => 100, :null => false
-    t.integer "race_id",                    :null => false
-    t.string  "race_name",   :limit => 100, :null => false
-    t.string  "party",       :limit => 1,   :null => false
-    t.string  "sort_letter", :limit => 1,   :null => false
-  end
-
-  add_index "general_election_candidate", ["race_id"], :name => "general_election_candidate_3548c065"
-
-  create_table "general_election_coverage", :force => true do |t|
-    t.integer "program_fk_id",                    :null => false
-    t.string  "program",           :limit => 100, :null => false
-    t.integer "proposition_fk_id",                :null => false
-    t.string  "proposition",       :limit => 100, :null => false
-    t.string  "url",               :limit => 200, :null => false
-    t.date    "air_date",                         :null => false
-  end
-
-  add_index "general_election_coverage", ["program_fk_id"], :name => "general_election_coverage_3a30d0b4"
-  add_index "general_election_coverage", ["proposition_fk_id"], :name => "general_election_coverage_103c3d84"
-
-  create_table "general_election_profile", :force => true do |t|
-    t.integer "program_fk_id",                  :null => false
-    t.string  "program",         :limit => 100, :null => false
-    t.integer "candidate_fk_id",                :null => false
-    t.string  "candidate",       :limit => 100, :null => false
-    t.integer "race_fk_id"
-    t.string  "url",             :limit => 200, :null => false
-    t.date    "air_date",                       :null => false
-  end
-
-  add_index "general_election_profile", ["candidate_fk_id"], :name => "general_election_profile_1cd32709"
-  add_index "general_election_profile", ["program_fk_id"], :name => "general_election_profile_3a30d0b4"
-  add_index "general_election_profile", ["race_fk_id"], :name => "general_election_profile_d5924670"
-
-  create_table "general_election_proposition", :force => true do |t|
-    t.integer "number",                                   :null => false
-    t.text    "simple_description", :limit => 2147483647, :null => false
-  end
-
-  create_table "general_election_race", :force => true do |t|
-    t.string "name", :limit => 100, :null => false
-  end
-
-  create_table "jackson_photo", :force => true do |t|
-    t.string "flickr_id",     :limit => 100,        :null => false
-    t.text   "caption",       :limit => 2147483647, :null => false
-    t.string "thumb_source",  :limit => 300,        :null => false
-    t.string "medium_source", :limit => 300,        :null => false
-  end
 
   create_table "jobs_department", :force => true do |t|
     t.string "slug",       :limit => 150, :null => false
@@ -874,32 +716,6 @@ ActiveRecord::Schema.define(:version => 20120802220257) do
 
   add_index "press_releases_release", ["slug"], :name => "press_releases_release_slug"
 
-  create_table "primary_candidate", :force => true do |t|
-    t.string  "first_name", :limit => 100,                    :null => false
-    t.string  "last_name",  :limit => 100,                    :null => false
-    t.string  "full_name",  :limit => 200,                    :null => false
-    t.integer "race_id",                                      :null => false
-    t.integer "votes"
-    t.float   "percent"
-    t.boolean "winner",                    :default => false, :null => false
-  end
-
-  add_index "primary_candidate", ["race_id"], :name => "primary_candidate_race_id"
-
-  create_table "primary_proposition", :force => true do |t|
-    t.string  "title",     :limit => 100, :null => false
-    t.integer "sort"
-    t.integer "yes_votes"
-    t.integer "no_votes"
-    t.string  "winner",    :limit => 1
-  end
-
-  create_table "primary_race", :force => true do |t|
-    t.string  "title", :limit => 100, :null => false
-    t.integer "sort"
-    t.string  "party", :limit => 1,   :null => false
-  end
-
   create_table "programs_kpccprogram", :force => true do |t|
     t.string  "slug",                :limit => 40,                            :null => false
     t.string  "title",               :limit => 60,                            :null => false
@@ -1087,17 +903,6 @@ ActiveRecord::Schema.define(:version => 20120802220257) do
     t.string   "migration", :null => false
     t.datetime "applied",   :null => false
   end
-
-  create_table "specials_page", :force => true do |t|
-    t.string  "title",          :limit => 200,                           :null => false
-    t.string  "slug",           :limit => 100,                           :null => false
-    t.text    "body",           :limit => 2147483647,                    :null => false
-    t.boolean "is_public",                                               :null => false
-    t.boolean "allow_comments",                       :default => false, :null => false
-    t.string  "template_name",  :limit => 200,        :default => "",    :null => false
-  end
-
-  add_index "specials_page", ["slug"], :name => "slug", :unique => true
 
   create_table "taggit_tag", :force => true do |t|
     t.string  "name",  :limit => 100, :null => false
