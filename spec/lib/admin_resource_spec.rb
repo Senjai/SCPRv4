@@ -5,9 +5,12 @@ describe AdminResource do
     ActiveRecord::Base.methods.should include :administrate
   end
   
-  describe "list_fields" do    
-    it "uses all of the model's columns if no list_fields are specified" do
+  describe "list_fields" do  
+    before :each do
       NewsStory.list_fields = nil
+    end
+      
+    it "uses all of the model's columns if no list_fields are specified" do
       NewsStory.list_fields.map { |f| f[0] }.should eq NewsStory.column_names
     end
     
@@ -58,34 +61,41 @@ describe AdminResource do
   end
   
   describe "list_order" do
+    before :each do
+      NewsStory.list_order = nil
+    end
+    
     it "returns what was passed in if anything" do
       NewsStory.list_order = "published_at"
       NewsStory.list_order.should eq "published_at"
     end
     
     it "has a default" do
-      AdminResource::LIST_DEFAULTS[:list_order].should_not be_nil
+      AdminResource::DEFAULTS[:list_order].should_not be_nil
     end
     
     it "returns the defined default if nothing set" do
-      NewsStory.list_order = nil
-      NewsStory.list_order.should eq AdminResource::LIST_DEFAULTS[:list_order]
+      NewsStory.list_order.should eq AdminResource::DEFAULTS[:list_order]
     end
   end
   
   describe "list_per_page" do
+    before :each do
+      NewsStory.list_per_page = nil
+    end
+    
     it "returns what was passed in if anything" do
       NewsStory.list_per_page = 5
       NewsStory.list_per_page.should eq 5
     end
     
     it "has a default" do
-      AdminResource::LIST_DEFAULTS[:list_per_page].should_not be_nil
+      AdminResource::DEFAULTS[:list_per_page].should_not be_nil
     end
     
     it "returns the defined default if nothing set" do
       NewsStory.send(:remove_instance_variable, :@list_per_page)
-      NewsStory.list_per_page.should eq AdminResource::LIST_DEFAULTS[:list_per_page]
+      NewsStory.list_per_page.should eq AdminResource::DEFAULTS[:list_per_page]
     end
     
     it "accepts `all` keyword" do
@@ -107,6 +117,27 @@ describe AdminResource do
       news_story.to_title.should eq news_story.short_headline
       blog.to_title.should eq blog.name
       blog_entry.to_title.should eq blog_entry.short_headline
+    end
+  end
+  
+  describe "fields" do
+    after :each do
+      NewsStory.only_fields = nil
+      NewsStory.excluded_fields = nil
+    end
+    
+    it "uses only_fields if specified" do
+      NewsStory.only_fields = ["headline"]
+      NewsStory.fields.should eq ["headline"]
+    end
+    
+    it "uses all columns minus excluded_fields if specified" do
+      NewsStory.excluded_fields = ["headline"]
+      NewsStory.fields.should include "body"
+      NewsStory.fields.should_not include "headline"
+    end
+    
+    it "uses all columns minus default excluded_fields if nothing specified" do
     end
   end
 end

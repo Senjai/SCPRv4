@@ -1,8 +1,9 @@
 module AdminResource
   
-  LIST_DEFAULTS = {
+  DEFAULTS = {
     list_order: "id desc",
-    list_per_page: 25
+    list_per_page: 25,
+    excluded_fields: ["id"]
   }
 
   TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
@@ -18,7 +19,7 @@ module AdminResource
   # -----------------------
   
   module ClassMethods
-        
+    
     def list_fields
       if !@list_fields
         self.list_fields = column_names.map { |col| [col] }
@@ -50,7 +51,7 @@ module AdminResource
     # -----------------------
     
     def list_order
-      @list_order || LIST_DEFAULTS[:list_order]
+      @list_order || DEFAULTS[:list_order]
     end
     
     def list_order=(order)
@@ -62,7 +63,7 @@ module AdminResource
     def list_per_page
       # Need to check if defined, because we might want to
       # pass `nil` to limit (specifying no limit).
-      defined?(@list_per_page) ? @list_per_page : LIST_DEFAULTS[:list_per_page]
+      defined?(@list_per_page) ? @list_per_page : DEFAULTS[:list_per_page]
     end
     
     def list_per_page=(per_page)
@@ -74,9 +75,22 @@ module AdminResource
       
       @list_per_page = per_page
     end
-
+    
+    # -----------------------    
+    
+    def fields
+      if only_fields.present?
+        only_fields
+      elsif excluded_fields.present?
+        column_names - excluded_fields
+      else
+        column_names - DEFAULTS[:excluded_fields]
+      end
+    end
+    
     # -----------------------
 
+    attr_accessor :excluded_fields, :only_fields
   end
   
   # -----------------------

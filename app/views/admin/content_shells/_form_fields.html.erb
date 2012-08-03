@@ -1,0 +1,14 @@
+<%= f.error_notification %>
+<fieldset>
+	<legend>Details</legend>
+	<%= f.input :url %>
+	<%= f.input :site %>
+	<%= f.input :headline, input_html: { class: "long" } %>
+	<%= f.input :teaser, as: :text, input_html: { rows: "5" } %>
+</fieldset>
+
+<fieldset>
+	<legend>Publishing</legend>
+	<%= f.input :status, collection: ContentBase.status_text_collect, selected: ContentBase.status_text_collect[1] %>
+	<%= f.input :published_at %>
+</fieldset>
