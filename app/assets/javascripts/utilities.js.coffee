@@ -142,8 +142,9 @@ class scpr.SocialTools
         $(@options.emailfinder).on "click", (evt) =>
             if url = $(evt.target).attr("data-url")
                 headline = $(evt.target).attr("data-text")
-                emurl = "/content/share?url=#{url}&headline=#{headline}"
-                window.open emurl, 'pop_up','height=400,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'
+                teaser = $(evt.target).attr("data-teaser")
+                emurl = "/content/share?url=#{url}&headline=#{headline}&teaser=#{teaser}"
+                window.open emurl, 'pop_up','height=650,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'
 
     #----------
     

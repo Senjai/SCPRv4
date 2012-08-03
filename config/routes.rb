@@ -164,7 +164,7 @@ Scprv4::Application.routes.draw do
   
   # -- Article Email Sharing -- #
   match '/content/share' => 'content_email#new', :as => :content_email, :via => :get
-  match '/content/share' => 'content_email#send', :as => :content_email, :via => :post
+  match '/content/share' => 'content_email#create', :as => :content_email, :via => :post
   
 
   # -- News Stories -- #

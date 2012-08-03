@@ -4,7 +4,7 @@
 	    <li class="facebook social_fb" data-url="<%= URI.escape(content.remote_link_path) %>">Facebook (<span class="count">&nbsp;&nbsp;</span>)</li>
 	    <li class="twitter social_twit" data-url="<%= URI.escape(content.remote_link_path) %>" data-text="<%= URI.escape(content.short_headline) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</li>
 		<li class="gplus social_gplus" data-url="<%= URI.escape(content.remote_link_path) %>">Google+</li>
-	    <li class="email" data-url="<%= URI.escape(content.remote_link_path) %>" data-text="<%= URI.escape(content.short_headline) %>">Email</li>
+	    <li class="email" data-url="<%= URI.escape(content.remote_link_path) %>" data-text="<%= URI.escape(content.short_headline) %>" data-teaser="<%= content.teaser %>">Email</li>
 		<li class="print"><a href="javascript:window.print()">Print</a></li>
 	</ul>
 </div>
