@@ -10,7 +10,7 @@ class Flatpage < ActiveRecord::Base
     ['is_public', title: "Public?", display_helper: :display_boolean],
     ['redirect_url'],
     ['title'],
-    ['date_modified', display_helper: :display_date ]
+    ['updated_at', display_helper: :display_date ]
   ]
   
   # -------------------
@@ -27,10 +27,13 @@ class Flatpage < ActiveRecord::Base
   before_validation :downcase_url
   after_save :reload_routes, if: -> { self.url_changed? }
   
+  # -------------------
   
   def reload_routes
     Scprv4::Application.reload_routes!
   end
+  
+  # -------------------
   
   def slashify
     if url.present? and path.present?
@@ -38,15 +41,21 @@ class Flatpage < ActiveRecord::Base
     end
   end
   
+  # -------------------
+  
   def downcase_url
     if url.present? 
       self.url = url.downcase
     end
   end
 
+  # -------------------
+
   def path
     url.gsub(/^\//, "").gsub(/\/$/, "")
   end
+  
+  # -------------------
   
   # Just to be safe while the URLs are still being created in mercer
   def url
