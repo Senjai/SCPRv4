@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  self.table_name =  'rails_events_event'
+  self.table_name =  'events_event'
   self.primary_key = "id"
   
   ForumTypes = [
