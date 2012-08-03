@@ -8,7 +8,7 @@ end
 
 #### Routing
 When /^I go to that video's page$/ do
-  visit video_path @video_shell
+  visit @video_shell.link_path
 end
 
 When /^I go to the videos page$/ do
@@ -16,7 +16,7 @@ When /^I go to the videos page$/ do
 end
 
 When /^I go to the page for one of the videos$/ do
-  visit video_path @video_shell
+  visit @video_shell.link_path
 end
 
 

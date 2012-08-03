@@ -1,6 +1,6 @@
 class CategoryConstraint
   def initialize
-    @categories = Category.all.map { |c| c.slug }
+    @categories = Category.all.map { |c| c.slug } rescue []
   end
   
   def matches?(request)
@@ -10,7 +10,7 @@ end
 
 class FlatpageConstraint
   def initialize
-    @flatpages = Flatpage.all.map { |f| f.path }
+    @flatpages = Flatpage.all.map { |f| f.path } rescue []
   end
   
   def matches?(request)
@@ -20,7 +20,7 @@ end
 
 class QuickSlugConstraint
   def initialize
-    @quick_slugs = KpccProgram.where("quick_slug != ''").all.map { |f| f.quick_slug }.compact
+    @quick_slugs = KpccProgram.where("quick_slug != ''").all.map { |f| f.quick_slug }.compact rescue []
   end
   
   def matches?(request)
@@ -147,10 +147,9 @@ Scprv4::Application.routes.draw do
   
   
   # -- Videos -- #
-  resources :video, only: [:index, :show] do
-    match ':slug' => "video#show", on: :member
-    match 'list', on: :collection, as: :list
-  end
+  match '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
+  match '/video/'           => "video#index",   as: :video_index
+  match '/video/list/'      => "videos#list",   as: :video_list
   
   
   # -- Listen Live -- #

@@ -7,7 +7,7 @@
 	<div class="span8">
 		<div class="video-thumb">
 			<%= render_asset video_thumb, "three_video" %>
-			<%= link_to video_thumb.short_headline, video_path(video_thumb) %>
+			<%= link_to video_thumb.short_headline, video_thumb.link_path %>
 		</div>
 	</div>
 <% end %>

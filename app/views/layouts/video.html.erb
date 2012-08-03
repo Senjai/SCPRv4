@@ -44,7 +44,7 @@
 						<div class="multimedia latest-videos muted">
 							<h3>
 								Latest Videos
-								<span class="more-link"><%= link_to "More Videos", list_video_index_path %></span>
+								<span class="more-link"><%= link_to "More Videos", video_list_path %></span>
 							</h3>
 							<div class="list">
 								<div class="row-fluid">
@@ -53,7 +53,7 @@
 											<div class="span6">
 												<div class="video-thumb">
 													<%= render_asset video, "three_video" %>
-													<span class="title"><%= link_to video.short_headline, video_path(video) %></span>
+													<span class="title"><%= link_to video.short_headline, video.link_path %></span>
 												</div> <!-- video-thumb -->
 											</div>
 										<% end %>
