@@ -74,7 +74,7 @@ namespace :dbsync do
   #-----------------------
   
   task :reset do
-    $stderr.puts "Resetting Database..."
-    Rake::Task["db:reset"].invoke
+    Rake::Task["db:drop"].invoke
+    Rake::Task["db:create"].invoke
   end
 end
