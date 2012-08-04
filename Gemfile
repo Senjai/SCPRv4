@@ -46,6 +46,8 @@ group :test, :development do
 	gem 'guard-rspec'
 	gem 'guard-cucumber'
 	gem 'launchy'
+	gem 'jasminerice'
+	gem 'guard-jasmine'
 end
 
 group :test do
