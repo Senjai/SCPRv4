@@ -5,6 +5,8 @@ describe Event do
     it { should have_many :assets }
   end
   
+  #-------------------
+  
   describe "content base attributes" do
     it { should respond_to :headline }
     it { should respond_to :short_headline }
@@ -14,6 +16,7 @@ describe Event do
     it { should respond_to :link_path }
   end
     
+  #-------------------
   
   describe "inline_address" do
     it "returns the full address if all address fields are present" do
@@ -31,6 +34,100 @@ describe Event do
       event.inline_address(" | ").should match " | "
     end
   end
+  
+  #-------------------
+  
+  describe "Event.sorted" do
+    before :each do
+      freeze_time_at "noon"
+    end
+    
+    # Is there a more reliable way to test this?
+    it "sorts based on instance sorter" do
+      past_one      = build :event, starts_at: 2.hours.ago,      ends_at: 1.hour.ago
+      past_many     = build :event, starts_at: 3.days.ago,       ends_at: 1.day.ago
+      current_one   = build :event, starts_at: 1.hour.ago,       ends_at: 1.hour.from_now
+      current_many  = build :event, starts_at: 1.day.ago,        ends_at: 1.day.from_now
+      future_one    = build :event, starts_at: 1.hour.from_now,  ends_at: 2.hours.from_now
+      future_many   = build :event, starts_at: 2.days.from_now,  ends_at: 4.days.from_now
+      
+      events = [past_one, past_many, current_one, current_many, future_one, future_many].shuffle
+      Event.sorted(events).should eq [past_many, past_one, current_one, future_one, current_many, future_many]
+    end
+  end
+  
+  #-------------------
+  
+  describe "sorter" do
+    before :each do
+      freeze_time_at "noon"
+    end
+    
+    it "returns the event's ends_at if it's multiple days and current" do
+      event = build :event, :multiple_days_current
+      event.sorter.should eq event.ends_at
+    end
+    
+    it "returns the event's starts_at if it's < 24 hours" do
+      event = build :event, :current
+      event.sorter.should eq event.starts_at
+    end
+    
+    it "returns the event's starts_at if it's multiple days in the future" do
+      event = build :event, :multiple_days_future
+      event.sorter.should eq event.starts_at
+    end
+    
+    it "returns the event's starts_at if it's multiple days in the past" do
+      event = build :event, :multiple_days_past
+      event.sorter.should eq event.starts_at
+    end
+  end
+  
+  #-------------------
+
+  describe "is_multiple_days?" do
+    it "is true if > 24 hours" do
+      event = Event.new
+      event.stub(:minutes) { 60*48 }
+      event.is_multiple_days?.should be_true
+    end
+    
+    it "is false if < 24 hours" do
+      event = Event.new
+      event.stub(:minutes) { 60*12 }
+      event.is_multiple_days?.should be_false
+    end
+    
+    it "is false if == 24 hours" do
+      event = Event.new
+      event.stub(:minutes) { 60*24 }
+      event.is_multiple_days?.should be_false
+    end
+  end
+  
+  #-------------------
+
+  describe "minutes" do
+    it "calculates the minutes of the event" do
+      event = build :event, starts_at: 2.minutes.ago, ends_at: 3.minutes.from_now
+      event.minutes.should be_a Fixnum
+      event.minutes.should eq 5
+    end
+  end
+  
+  #-------------------
+
+  describe "ongoing?" do
+    it "is true if multiple day and current" do
+      event = Event.new
+      event.stub(:is_multiple_days?) { true }
+      event.stub(:current?) { true }
+      event.ongoing?.should be_true
+    end
+  end
+  
+  #-------------------
   
   describe "consoli_dated" do
     it "uses the start date only if is_all_day is true" do
@@ -86,6 +183,8 @@ describe Event do
     end
   end
   
+  #-------------------
+  
   describe "upcoming?" do
     it "is true if the start time is greater than right now" do
       event = build :event, ends_at: nil, starts_at: Chronic.parse("1 hour from now")
@@ -98,14 +197,15 @@ describe Event do
     end
   end
   
+  #-------------------
+  
   describe "current?" do
     before :each do
-      noon = Chronic.parse("noon")
-      Time.stub(:now) { noon }
+      freeze_time_at "noon"
     end
     
     it "is true if Time.now is between the start and end times" do
-      event = build :event, starts_at: Chronic.parse("1 hour ago"), ends_at: Chronic.parse("1 hour from now")
+      event = build :event, :current
       event.current?.should be_true
     end
     
@@ -115,12 +215,12 @@ describe Event do
     end
     
     it "is false if start time is in the future" do
-      event = build :event, starts_at: Chronic.parse("1 hour from now")
+      event = build :event, :future
       event.current?.should be_false
     end
     
     it "is false if event ends_at is in the past" do
-      event = build :event, starts_at: 2.hours.ago, ends_at: Chronic.parse("1 hour ago")
+      event = build :event, :past
       event.current?.should be_false
     end
     
@@ -129,6 +229,8 @@ describe Event do
       event.current?.should be_false
     end
   end
+
+  #-------------------
 
   describe "description" do
     it "returns the description if the event is upcoming" do
@@ -149,6 +251,8 @@ describe Event do
       event.description.should match "Future"
     end
   end
+
+  #-------------------
   
   describe "audio_url" do
     it "has the SCPR media url" do
@@ -161,6 +265,8 @@ describe Event do
       event.audio_url.should match event.audio
     end
   end
+
+  #-------------------
   
   describe "#link_path" do
     it "can generate a link_path" do
@@ -183,6 +289,8 @@ describe Event do
       entry.link_path(slug: "wrong").should_not match "wrong"
     end
   end
+
+  #-------------------
   
   describe "obj_key" do
     it "returns an object key" do
@@ -190,6 +298,8 @@ describe Event do
       event.obj_key.should eq "events/event:#{event.id}"
     end
   end
+
+  #-------------------
   
   describe "closest" do # TODO All the scopes are ugly and inefficient
     it "returns the closest published future event" do
@@ -199,6 +309,8 @@ describe Event do
       closest.should eq events.first
     end
   end
+
+  #-------------------
   
   describe "scopes" do
     describe "published" do
@@ -264,12 +376,16 @@ describe Event do
       end
     end
   end
+
+  #-------------------
   
   describe "audio" do
     it "responds to audio" do
       build(:event).should respond_to :audio
     end
   end
+
+  #-------------------
   
   describe "asset" do
     it "can have an asset" do # TODO Stub the assethost requests
@@ -277,6 +393,8 @@ describe Event do
       event.assets.first.asset.should be_present
     end
   end
+
+  #-------------------
   
   describe "is_forum_event" do
     it "is true if event type in the ForumTypes variable" do
@@ -292,6 +410,8 @@ describe Event do
     end
   end
   
+  #-------------------
+
   describe "#remote_link_path" do
     it "can generate a remote_link_path" do
       event = create :event

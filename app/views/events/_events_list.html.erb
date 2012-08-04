@@ -4,7 +4,7 @@
 <h2><%= title %></h2>
 <%= any_to_list? events, title: title do %>
 <section class="events-list <%= cssClass %>">
-	<% events.each do |event| %>
+	<% Event.sorted(events).each do |event| %>
   		<div class="cbase event teaser">
 			<div class="row-fluid">
 				<% if event.assets.present? %>
@@ -21,7 +21,8 @@
 					<div class="event-details">
 						<div class="row-fluid">
 							<div class="span8">
-								<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %>
+								<% text = event.is_multiple_days? ? "Through " : "" %>
+								<%= link_to text + format_date(event.sorter, format: :event), event.link_path, class: "event-link" %>
 							</div>
 							<div class="span16">
 								<% if event.location_name.present? %>

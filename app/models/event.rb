@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
   
   # -------------------
   # Associations
-  has_many :assets, :class_name => "ContentAsset", :as => :content
+  has_many :assets, class_name: "ContentAsset", as: :content
 
   # -------------------
   # Validations
@@ -22,22 +22,53 @@ class Event < ActiveRecord::Base
   
   # -------------------
   # Scopes
-  scope :published, where(:is_published => true)
-  scope :upcoming, lambda { published.where("starts_at > ?", Time.now).order("starts_at") }
-  scope :upcoming_and_current, lambda { published.where("ends_at > ?", Time.now).order("starts_at") }
-  scope :forum, published.where("etype IN (?)", ForumTypes)
-  scope :sponsored, published.where("etype = ?", "spon")
-  scope :past, lambda { published.where("ends_at < ?", Time.now).order("starts_at desc") }
+  scope :published,             where(is_published: true)
+  scope :forum,                 published.where("etype IN (?)", ForumTypes)
+  scope :sponsored,             published.where("etype = ?", "spon")
+  
+  scope :upcoming,              -> { published.where("starts_at > ?", Time.now).order("starts_at") }
+  scope :upcoming_and_current,  -> { published.where("ends_at > ?", Time.now).order("starts_at") }
+  scope :past,                  -> { published.where("ends_at < ?", Time.now).order("starts_at desc") }
 
+  # -------------------
+  
+  def self.sorted(events)
+    events.sort { |a,b| a.sorter <=> b.sorter }
+  end
+  
+  def sorter
+    ongoing? ? ends_at : starts_at
+  end
+  
+  # -------------------
+
+  def ongoing?
+    is_multiple_days? and current?
+  end
+  
+  def is_multiple_days?
+    minutes > 24*60
+  end
+  
+  def minutes
+    ((ends_at - starts_at) / 60).floor
+  end
+  
   # -------------------
   
   def self.closest
     upcoming.first
   end
   
+  def headline
+    title
+  end
+  
   def short_headline
     headline
   end
+  
+  # -------------------
   
   def upcoming? # Still display maps, details, etc. if the event is currently happening
     starts_at > Time.now
@@ -50,6 +81,8 @@ class Event < ActiveRecord::Base
       Time.now.between? starts_at, starts_at.end_of_day
     end
   end
+  
+  # -------------------
   
   def consoli_dated # should probably be a helper.
     # If one needs minutes, use that format for the other as well, for consistency
@@ -78,6 +111,10 @@ class Event < ActiveRecord::Base
   
   def has_format?
     false
+  end
+  
+  def has_comments?
+    self.show_comments
   end
   
   #----------
@@ -123,9 +160,10 @@ class Event < ActiveRecord::Base
     }))
   end
   
-  
-  ### ContentBase methods
-  
+  def remote_link_path
+    "http://www.scpr.org#{self.link_path}"
+  end
+    
   def teaser
     if self._teaser?
       return self._teaser
@@ -153,25 +191,5 @@ class Event < ActiveRecord::Base
     else
       return ''
     end    
-  end
-  
-  def headline
-    title
-  end
-  
-  def short_headline
-    headline
-  end
-  
-  def has_comments?
-    self.show_comments
-  end
-  
-  def remote_link_path
-    "http://www.scpr.org#{self.link_path}"
-  end
-  
-  def obj_key
-    "events/event:#{self.id}"
   end
 end

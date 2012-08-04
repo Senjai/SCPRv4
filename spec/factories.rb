@@ -234,7 +234,37 @@ end
     is_published 1
     show_comments 1
     _teaser "This is a short teaser"
+
+    trait :multiple_days_past do
+      starts_at { 3.days.ago }
+      ends_at   { 1.day.ago }
+    end
     
+    trait :multiple_days_current do
+      starts_at { 1.day.ago }
+      ends_at   { 1.day.from_now }
+    end
+    
+    trait :multiple_days_future do
+      starts_at { 1.day.from_now }
+      ends_at   { 3.days.from_now }
+    end
+    
+    trait :past do
+      starts_at { 3.hours.ago }
+      ends_at   { 2.hours.ago }
+    end
+    
+    trait :current do
+      sequence(:starts_at) { |n| n.hours.ago }
+      sequence(:ends_at)   { |n| n.hours.from_now }
+    end
+    
+    trait :future do
+      starts_at { 2.hours.from_now }
+      ends_at   { 3.hours.from_now }
+    end
+      
     ignore { asset_count 0 }
     after :create do |event, evaluator|
       FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: event)
