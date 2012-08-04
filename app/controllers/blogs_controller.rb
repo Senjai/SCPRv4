@@ -1,5 +1,4 @@
 class BlogsController < ApplicationController
-  require 'will_paginate/array'
   before_filter :load_blog, :except => :index
 
   respond_to :html, :xml, :rss
