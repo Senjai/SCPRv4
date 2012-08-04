@@ -43,10 +43,10 @@ class Event < ActiveRecord::Base
   # -------------------
 
   def ongoing?
-    is_multiple_days? and current?
+    multiple_days? and current?
   end
   
-  def is_multiple_days?
+  def multiple_days?
     minutes > 24*60
   end
   

@@ -21,7 +21,7 @@
 					<div class="event-details">
 						<div class="row-fluid">
 							<div class="span8">
-								<% text = event.is_multiple_days? ? "Through " : "" %>
+								<% text = event.ongoing? ? "Through " : "" %>
 								<%= link_to text + format_date(event.sorter, format: :event), event.link_path, class: "event-link" %>
 							</div>
 							<div class="span16">

@@ -86,23 +86,23 @@ describe Event do
   
   #-------------------
 
-  describe "is_multiple_days?" do
+  describe "multiple_days?" do
     it "is true if > 24 hours" do
       event = Event.new
       event.stub(:minutes) { 60*48 }
-      event.is_multiple_days?.should be_true
+      event.multiple_days?.should be_true
     end
     
     it "is false if < 24 hours" do
       event = Event.new
       event.stub(:minutes) { 60*12 }
-      event.is_multiple_days?.should be_false
+      event.multiple_days?.should be_false
     end
     
     it "is false if == 24 hours" do
       event = Event.new
       event.stub(:minutes) { 60*24 }
-      event.is_multiple_days?.should be_false
+      event.multiple_days?.should be_false
     end
   end
   
@@ -121,7 +121,7 @@ describe Event do
   describe "ongoing?" do
     it "is true if multiple day and current" do
       event = Event.new
-      event.stub(:is_multiple_days?) { true }
+      event.stub(:multiple_days?) { true }
       event.stub(:current?) { true }
       event.ongoing?.should be_true
     end
