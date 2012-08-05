@@ -66,6 +66,7 @@ Scprv4::Application.routes.draw do
       resources :sessions, only: [:create, :destroy]
       
       ## -- AdminResource -- ##
+      resources :pij_queries
       resources :tags
       resources :other_programs
       resources :show_segments
@@ -168,6 +169,11 @@ Scprv4::Application.routes.draw do
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
+  
+  #----------
+  # PIJ Queries
+  match '/network/:slug/' => "pij_queries#show",  as: :pij_query
+  match '/network/'       => "pij_queries#index", as: :pij_queries
   
   
   # -- RSS feeds -- #

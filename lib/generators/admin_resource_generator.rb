@@ -9,7 +9,7 @@ class AdminResourceGenerator < Rails::Generators::Base
   end
   
   def add_method_to_model
-    inject_into_class "app/models/#{resource.underscore.singularize}.rb", resource.singularize.camelize.constantize, "  administrate!\n"
+    inject_into_class "app/models/#{resource.underscore.singularize}.rb", resource.singularize.camelize.constantize, "  administrate\n"
   end
   
   def add_resource_to_routes
