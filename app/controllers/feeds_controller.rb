@@ -24,7 +24,7 @@ class FeedsController < ApplicationController
       :sort_mode  => :desc,
       :with       => { :is_source_kpcc => true },
       :without    => { :category => '' }
-    )[0..-1]
+    ).compact
         
     xml = render_to_string(:action => "feed", :formats => :xml)
     Rails.cache.write_entry( "feeds:all_news", xml, :objects => (@content + ["contentbase:new"]) )

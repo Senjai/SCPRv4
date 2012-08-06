@@ -1,6 +1,6 @@
 class CategoryController < ApplicationController
   respond_to :html, :xml, :rss
-  
+    
   def index
     @category = Category.find_by_slug(params[:category])
     @content = get_content_from(@category, limit: 15)
@@ -65,15 +65,12 @@ class CategoryController < ApplicationController
         params[:page] = 1 
       end
       
-      ThinkingSphinx.search(
-        '',
+      ThinkingSphinx.search('',
         :classes    => ContentBase.content_classes,
-        :page       => params[:page],
-        :per_page   => options[:limit],
         :order      => :published_at,
         :sort_mode  => :desc,
         :with => { :category => categories.map { |c| c.id } }
-      )
+      ).compact.paginate(page: params[:page], per_page: options[:limit])
     end
   
     #------------------
@@ -83,7 +80,7 @@ class CategoryController < ApplicationController
     
       categories.each do |sec|
         # get stories in this section
-        content = ThinkingSphinx.search '',
+        content = ThinkingSphinx.search('',
           :classes    => ContentBase.content_classes,
           :page       => 1,
           :per_page   => 5,
@@ -91,7 +88,8 @@ class CategoryController < ApplicationController
           :sort_mode  => :desc,
           :with       => { :category => sec.id },
           :without_any => { :obj_key => without.obj_key.to_crc32 }
-        
+        ).compact
+                
         top = nil
         more = []
         sorttime = nil
