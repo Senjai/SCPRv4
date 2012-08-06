@@ -177,8 +177,8 @@ Scprv4::Application.routes.draw do
   
   
   # -- RSS feeds -- #
-  #match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
-  #match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
+  match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
+  match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
   
   # -- podcasts -- #
   match '/podcasts/:slug/' => 'podcasts#podcast', :as => :podcast
