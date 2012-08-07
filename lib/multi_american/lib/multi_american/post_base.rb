@@ -7,9 +7,7 @@ module WP
       blog_id: MultiAmerican::BLOG_ID,
       blog_slug: MultiAmerican::BLOG_SLUG,
       author_id: MultiAmerican::AUTHOR_ID,
-      is_published: 0,
       blog_asset_scheme: "",
-      comment_count: 0
     }
     
     XML_AR_MAP = {

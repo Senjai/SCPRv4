@@ -1,5 +1,7 @@
 class PijQuery < ActiveRecord::Base
   self.table_name = 'pij_query'
+
+  administrate
   
   scope :visible, where(
     'is_active = :is_active and published_at < :time and ' \

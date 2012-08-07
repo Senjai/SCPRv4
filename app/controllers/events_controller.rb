@@ -1,14 +1,13 @@
 class EventsController < ApplicationController
-  respond_to :html
-  
   def index
-    @events = Event.upcoming_and_current.paginate(page: params[:page], per_page: 10)
+    @scoped_events = Event.upcoming_and_current
     if params[:list] == "forum"
-      @events = @events.forum
+      @scoped_events = @scoped_events.forum
     elsif params[:list] == "sponsored"
-      @events = @events.sponsored
+      @scoped_events = @scoped_events.sponsored
     end
-    respond_with @events  
+    
+    @events = Event.sorted(@scoped_events).paginate(page: params[:page], per_page: 10)
   end
   
   def archive

@@ -43,7 +43,8 @@
 					    <li><a href="/programs/">Programs A-Z</a></li>
 					    <li><a href="/schedule/">Program Schedule</a></li>
 						<li><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live">Listen Live</a></li>	
-					    <li><a href="/podcasts/">Podcasts</a></li>	
+					    <li><a href="/podcasts/">Podcasts</a></li>
+						<li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs">Archive</a></li>
 					</ul>
 				</nav>
 			</div> <!-- section -->

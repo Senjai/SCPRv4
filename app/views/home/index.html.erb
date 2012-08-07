@@ -24,7 +24,7 @@
 </div>
 
 <% content_for :missed_it do %>
-	<% if @homepage.missed_it_bucket.present? and @homepage.missed_it_bucket.contents.present? %>
+	<% if @homepage and @homepage.missed_it_bucket.present? and @homepage.missed_it_bucket.contents.present? %>
 		<div class="more-news missed-it-bucket content-carousel">
 			<h6 class="more-news-title">
 				In Case You Missed It

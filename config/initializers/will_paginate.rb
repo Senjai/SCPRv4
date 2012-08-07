@@ -1,6 +1,7 @@
 # Fix for will_paginate for bootstrap, until we switch to Kaminari
 
 require 'will_paginate/view_helpers/action_view'
+require 'will_paginate/array'
 
 module WillPaginate
   module ActionView

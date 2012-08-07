@@ -154,6 +154,10 @@
 	// Comments
 	.comments {
 		border-top:1px solid $nearBlack;
+		
+		.dsq-comment-header, .dsq-comment-text {
+			color: $grayLight;
+		}
 		.dsq-mobile { 
 			background-color: $nearBlack !important; 
 			#dsq-topbar, #dsq-comments { background-color: $nearBlack !important; }

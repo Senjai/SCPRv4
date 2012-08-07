@@ -9,6 +9,9 @@
 	<hr />
 
   <fieldset class="fields">
+	<% unless flash[:alert].blank? %>
+		<div class="error"><%=h flash[:alert] %></div>
+	<% end %>
     <ul class="inputs-list">
     	<li class="field">
 	      <%= f.label :email, "Send This To:" %>

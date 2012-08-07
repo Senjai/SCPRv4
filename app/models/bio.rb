@@ -1,6 +1,4 @@
-class Bio < ActiveRecord::Base
-  require 'will_paginate/array'
-  
+class Bio < ActiveRecord::Base  
   self.table_name =  'bios_bio'
   
   belongs_to  :user,    class_name: "AdminUser"

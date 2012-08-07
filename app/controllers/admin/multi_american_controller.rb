@@ -1,6 +1,4 @@
-class Admin::MultiAmericanController < Admin::BaseController
-  require 'will_paginate/array'
-    
+class Admin::MultiAmericanController < Admin::BaseController    
   before_filter :verify_resource, except: [:index, :set_doc]
   before_filter :load_doc, except: [:set_doc]
   before_filter :load_objects, except: [:index, :resource_show, :set_doc]

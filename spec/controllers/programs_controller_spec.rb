@@ -89,7 +89,19 @@ describe ProgramsController do
         assigns(:program).should eq program
       end
       
-      it "redirects if nothing found" do
+      it "redirects to podcast_url if other program is present and request format is xml" do
+        program = create :other_program
+        get :show, show: program, format: :xml
+        response.should redirect_to program.podcast_url
+      end
+      
+      it "redirects to rss_url if no podcast_url present" do
+        program = create :other_program, podcast_url: ""
+        get :show, show: program, format: :xml
+        response.should redirect_to program.rss_url
+      end
+      
+      it "raises error if nothing found" do
         -> {
           get :show, show: "nonsense"
         }.should raise_error ActionController::RoutingError

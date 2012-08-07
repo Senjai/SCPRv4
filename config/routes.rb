@@ -1,6 +1,6 @@
 class CategoryConstraint
   def initialize
-    @categories = Category.all.map { |c| c.slug }
+    @categories = Category.all.map { |c| c.slug } rescue []
   end
   
   def matches?(request)
@@ -10,7 +10,7 @@ end
 
 class FlatpageConstraint
   def initialize
-    @flatpages = Flatpage.all.map { |f| f.path }
+    @flatpages = Flatpage.all.map { |f| f.path } rescue []
   end
   
   def matches?(request)
@@ -20,7 +20,7 @@ end
 
 class QuickSlugConstraint
   def initialize
-    @quick_slugs = KpccProgram.where("quick_slug != ''").all.map { |f| f.quick_slug }.compact
+    @quick_slugs = KpccProgram.where("quick_slug != ''").all.map { |f| f.quick_slug }.compact rescue []
   end
   
   def matches?(request)
@@ -66,6 +66,7 @@ Scprv4::Application.routes.draw do
       resources :sessions, only: [:create, :destroy]
       
       ## -- AdminResource -- ##
+      resources :pij_queries
       resources :tags
       resources :other_programs
       resources :show_segments
@@ -147,10 +148,9 @@ Scprv4::Application.routes.draw do
   
   
   # -- Videos -- #
-  resources :video, only: [:index, :show] do
-    match ':slug' => "video#show", on: :member
-    match 'list', on: :collection, as: :list
-  end
+  match '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
+  match '/video/'           => "video#index",   as: :video_index
+  match '/video/list/'      => "videos#list",   as: :video_list
   
   
   # -- Listen Live -- #
@@ -165,15 +165,24 @@ Scprv4::Application.routes.draw do
   # -- Article Email Sharing -- #
   match '/content/share' => 'content_email#new', :as => :content_email, :via => :get
   match '/content/share' => 'content_email#create', :as => :content_email, :via => :post
-  
 
+  # -- Archive -- #
+  post  '/archive/process_archive_select' => "home#process_archive_select",  as: :process_archive_select
+  match '/archive(/:year/:month/:day)/' => "home#archive", as: :archive, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }
+  
   # -- News Stories -- #
   match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
   match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
   
+  #----------
+  # PIJ Queries
+  match '/network/:slug/' => "pij_queries#show",  as: :pij_query
+  match '/network/'       => "pij_queries#index", as: :pij_queries
+  
+  
   # -- RSS feeds -- #
-  match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
-  match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
+  #match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
+  #match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
   
   # -- podcasts -- #
   match '/podcasts/:slug/' => 'podcasts#podcast', :as => :podcast

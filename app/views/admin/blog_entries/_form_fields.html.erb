@@ -1,7 +1,7 @@
 <%= f.error_notification %>
 <fieldset>
 	<legend>Source</legend>
-	<%= f.input :blog, collection: Blog.active.all %>
+	<%= f.association :blog, collection: Blog.active.all %>
 </fieldset>
 
 <fieldset>
@@ -20,6 +20,7 @@
 <fieldset>
 	<legend>Publish Status</legend>
 	<%= f.input :status, collection: ContentBase.status_text_collect, selected: ContentBase.status_text_collect[1]  %>
+	<%= f.input :published_at %>
 </fieldset>
 
 <fieldset>

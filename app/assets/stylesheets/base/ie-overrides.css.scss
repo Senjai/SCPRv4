@@ -41,9 +41,15 @@ html.ie7-fix {
 		font-size: 16px;
 	}
 	
-	.pager-nav {
+	// Just a hacky clean-up
+	.content-carousel .pager-nav {
 		position: relative;
 		top: -35px;
+	}
+	
+	// IE7 doesn't honor display: inline on this h6 tag
+	.slideview .slideshow-header h6 {
+		float: left;
 	}
 }
 

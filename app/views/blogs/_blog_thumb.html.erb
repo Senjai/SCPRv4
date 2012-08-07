@@ -2,7 +2,7 @@
 	<h2><%= link_to blog.name, blog_path(blog.slug) %></h2>
 	<p class="description"><%= blog.teaser %></p>
 	
-	<%= content_cache "blogs:#{blog.slug}:thumb:latest" do%>
+	<%= content_cache "blogs:#{blog.slug}:thumb:latest" do %>
 		<% register_content "blogs/entry:new" %>
 		
 		<% if entry = blog.entries.published.first %>

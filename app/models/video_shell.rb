@@ -34,12 +34,12 @@ class VideoShell < ContentBase
     where "status = #{STATUS_LIVE}"
   end
   
-  def to_param
-    "#{id}/#{slug}"
-  end
-  
   def link_path(options={})
-    Rails.application.routes.url_helpers.video_path(self, options.merge!({ trailing_slash: true }))
+    Rails.application.routes.url_helpers.video_path(options.merge!({
+      id: self.id,
+      slug: self.slug,
+      trailing_slash: true
+    }))
   end
   
   def has_format?

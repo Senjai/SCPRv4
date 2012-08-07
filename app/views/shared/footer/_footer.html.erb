@@ -52,6 +52,7 @@
 								    <li><a href="/crime/">Crime &amp; Safety</a></li>
 								    <li><a href="/education/">Education</a></li>
 								    <li><a href="/health/">Health</a></li>
+									<li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=news">Archive</a></li>
 							    </ul>
 							</div> <!-- row fluid -->
 						</nav>
@@ -87,6 +88,8 @@
 							<ul class="inline">
 								<li><a href="/programs/">Programs A-Z</a></li>
 								<li><a href="/schedule/">Program Schedule</a></li>
+								<li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs">Program Archive</a></li>
+								
 							</ul>
 						</nav>
 						<nav>

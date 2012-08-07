@@ -36,3 +36,7 @@ When /^I go to (?:that|the) flatpage's url$/ do
   Scprv4::Application.reload_routes!
   visit @flatpage.url
 end
+
+Then /^I should be redirected to the redirect url$/ do
+  current_path.should eq @flatpage.redirect_url
+end

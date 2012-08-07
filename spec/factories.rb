@@ -228,15 +228,43 @@ end
     city "Pasadena"
     state "CA"
     zip_code "91105"
-    created_at Time.now
-    modified_at Time.now
     for_program "airtalk"
     audio "audio/events/2011/05/23/Father_Boyle.mp3"
     archive_description "This is the description that shows after the event has happened"
     is_published 1
     show_comments 1
     _teaser "This is a short teaser"
+
+    trait :multiple_days_past do
+      starts_at { 3.days.ago }
+      ends_at   { 1.day.ago }
+    end
     
+    trait :multiple_days_current do
+      starts_at { 1.day.ago }
+      ends_at   { 1.day.from_now }
+    end
+    
+    trait :multiple_days_future do
+      starts_at { 1.day.from_now }
+      ends_at   { 3.days.from_now }
+    end
+    
+    trait :past do
+      starts_at { 3.hours.ago }
+      ends_at   { 2.hours.ago }
+    end
+    
+    trait :current do
+      sequence(:starts_at) { |n| n.hours.ago }
+      sequence(:ends_at)   { |n| n.hours.from_now }
+    end
+    
+    trait :future do
+      starts_at { 2.hours.from_now }
+      ends_at   { 3.hours.from_now }
+    end
+      
     ignore { asset_count 0 }
     after :create do |event, evaluator|
       FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: event)
@@ -347,13 +375,9 @@ end
     content "This is the about content"
     enable_comments 0
     registration_required 0
-    render_as_template 0
-    template_name ""
     description "This is the description"
-    date_modified { Time.now }
-    enable_in_new_site 1
-    show_sidebar 1
     is_public 1
+    template ""
   end
 
 # ContentCategory #########################################################
@@ -389,17 +413,6 @@ factory :homepage do
   base "default"
   sequenced_published_at
   status 5
-  
-  # fields required marked "NOT NULL" in the database that, in fact, can be null
-  alert_link "http://www.scpr.org/news/2009/07/01/brush-fire-burning-in-angeles-national-forest/"
-  alert_text "A small fire has broken out in Castaic, closing the 5 in both directions."
-  local 1
-  national 1
-  world 1
-  flipper 1
-  is_published 1
-  blogs 1
-  rotator 1
   
   ignore { missed_it_bucket Hash.new }
   ignore { contents_count 0 }
@@ -497,7 +510,6 @@ end
     _teaser { "Teaser for #{headline}" }
     body { "Body for #{headline}" }
     locale "local"
-    comment_count 0
     
     ignore { related_factory "content_shell" }
     ignore { category_type :category_news }
@@ -516,7 +528,6 @@ end
     sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
     sequence(:title) { "AirTalk for #{air_date}" }
     _teaser { "Teaser for #{title}" }
-    comment_count 0
     
     ignore { segment_count 0 }
     ignore { related_factory "content_shell" }
@@ -540,7 +551,6 @@ end
     _teaser { "Teaser for #{title}" }
     body { "Body for #{title}" }
     locale "local"
-    comment_count 1
     _short_headline { "Short #{title}" }
     audio_date { Time.now }
     enco_number 999
@@ -564,8 +574,6 @@ end
     slug { title.parameterize }
     content { "Content for #{title}" }
     blog_slug { blog.slug }
-    is_published 1 # required field by db but not used anymore
-    comment_count 1
 
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
@@ -584,7 +592,6 @@ end
   factory :content_shell do
     content_base
     
-    comment_count 2
     sequence(:headline) { |n| "This is some outside Content #{n}" }
     site "blogdowntown"
     _teaser { "Teaser for #{headline}" }

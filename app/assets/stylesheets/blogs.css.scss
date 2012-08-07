@@ -58,13 +58,6 @@
 }
 
 .entry {
-	.categories a {
-		color: lighten($gray, 20%);
-		@include font-sans-serif(normal, 11px);
-		text-transform:uppercase;
-		@include ie-inline-block;
-	}
-	
 	article {
 		padding-top:$baseline / 2;
 		padding-bottom: $baseline / 2;

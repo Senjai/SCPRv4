@@ -10,7 +10,7 @@ class ContentEmailController < ApplicationController
   end
 
   def create
-    @message = ContentEmail.new(params[:message])
+    @message = ContentEmail.new(params[:content_email])
     
     if @message.valid?
           ContentMailer.email_content(@message).deliver
