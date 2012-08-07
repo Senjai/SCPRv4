@@ -1,0 +1,17 @@
+<div class="queries">
+	<div class="row-fluid">
+		<div class="span12">
+			<h2>Questions we're asking Now:</h2>
+			<div class="news-queries">
+				<%= render '/pij_queries/list', queries: @news %>
+			</div>
+		</div> <!-- span 12 -->
+	
+		<div class="span12">
+			<h2>Questions we're always asking:</h2>
+			<div class="evergreen">
+				<%= render '/pij_queries/list', queries: @evergreen %>
+			</div>
+		</div> <!-- span12 -->
+	</div> <!-- row fluid -->
+</div> <!-- queries -->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803214120) do
+ActiveRecord::Schema.define(:version => 20120806171758) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -599,17 +599,15 @@ ActiveRecord::Schema.define(:version => 20120803214120) do
   end
 
   create_table "pij_query", :force => true do |t|
-    t.string   "slug",         :limit => 50,                         :null => false
-    t.string   "title",        :limit => 200,                        :null => false
-    t.text     "teaser",       :limit => 2147483647,                 :null => false
-    t.text     "body",         :limit => 2147483647,                 :null => false
-    t.string   "query_type",   :limit => 20,                         :null => false
-    t.string   "image_file",   :limit => 100,        :default => "", :null => false
-    t.string   "image_credit", :limit => 150,        :default => "", :null => false
-    t.integer  "form_height",                                        :null => false
-    t.string   "query_url",    :limit => 200,                        :null => false
-    t.boolean  "is_active",                                          :null => false
-    t.datetime "published_at",                                       :null => false
+    t.string   "slug",         :limit => 50,         :null => false
+    t.string   "title",        :limit => 200,        :null => false
+    t.text     "teaser",       :limit => 2147483647, :null => false
+    t.text     "body",         :limit => 2147483647, :null => false
+    t.string   "query_type",   :limit => 20,         :null => false
+    t.integer  "form_height",                        :null => false
+    t.string   "query_url",    :limit => 200,        :null => false
+    t.boolean  "is_active",                          :null => false
+    t.datetime "published_at",                       :null => false
     t.datetime "expires_at"
   end
 

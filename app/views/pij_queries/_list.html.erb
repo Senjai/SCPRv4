@@ -1,0 +1,14 @@
+<ul class="featured">
+<% queries.first(5).each do |query| %>
+	<li>
+		<h4><%= link_to query.title, pij_query_path(query.slug) %></h4>
+		<p><%= query.teaser %></p>
+	</li>
+<% end %>
+</ul>
+
+<ul>
+<% queries[5..-1].each do |query| %>
+	<li><%= link_to query.title, pij_query_path(query.slug) %></li>
+<% end %>
+</ul>
