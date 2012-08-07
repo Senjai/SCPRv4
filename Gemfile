@@ -26,8 +26,8 @@ gem "twitter"
 gem 'twitter-text'
 gem 'sanitize', "~> 2.0.3"
 gem 'simple_form'
-gem 'chronic'
 gem 'simple_postmark'
+gem 'chronic'
 
 gem 'capistrano'
 
