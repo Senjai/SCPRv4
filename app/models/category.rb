@@ -21,14 +21,15 @@ class Category < ActiveRecord::Base
       :per_page   => per_page,
       :order      => :published_at,
       :sort_mode  => :desc,
-      :with       => { :category => self.id }      
+      :with       => { :category => self.id },
+      retry_stale: true
     }
     
     if without_obj && without_obj.respond_to?("obj_key")
       args[:without] = { :obj_key => without_obj.obj_key.to_crc32 }
     end
     
-    ThinkingSphinx.search('', args).compact
+    ThinkingSphinx.search('', args)
   end
   
   #----------
@@ -70,8 +71,9 @@ class Category < ActiveRecord::Base
       :order        => :published_at,
       :sort_mode    => :desc,
       :with         => { :category => self.id },
-      :without_any  => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
-    ).compact
+      :without_any  => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      retry_stale: true
+    )
       
     if video.present?
       # Initial score: 15
@@ -94,8 +96,9 @@ class Category < ActiveRecord::Base
       :order      => :published_at,
       :sort_mode  => :desc,
       :with       => { :category => self.id, :is_slideshow => true },
-      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
-    ).compact
+      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      retry_stale: true
+    )
 
     if slideshow.any?
       # Initial score:  5 + number of slides
@@ -118,8 +121,9 @@ class Category < ActiveRecord::Base
       :order      => :published_at,
       :sort_mode  => :desc,
       :with       => { :category => self.id },
-      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
-    ).compact
+      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      retry_stale: true
+    )
 
     if segments.any?
       # Initial score:  10

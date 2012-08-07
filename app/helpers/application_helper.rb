@@ -109,6 +109,8 @@ module ApplicationHelper
     images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "cohen.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png"]
     image_tag "personalities/#{images[rand(images.size)]}"
   end
+
+  #----------
   
   def smart_date(content,options={})
     options = {
@@ -133,6 +135,8 @@ module ApplicationHelper
       return content.public_datetime.strftime(options[:template])
     end
   end
+  
+  #----------
   
   def smart_date_js(content, options={})
     # If we pass in something that's not a Time-y object, then look for a "published_at" attribute. 
@@ -257,7 +261,7 @@ module ApplicationHelper
       with:         { :category_is_news => false },
       without:      { :category => '' },
       retry_stale:  true
-      ).compact
+      )
   end
   
   #----------
@@ -271,7 +275,7 @@ module ApplicationHelper
       sort_mode:    :desc,
       with:         { :category_is_news => true },
       retry_stale:  true
-    ).compact
+    )
   end
   
   # any_to_list?: A graceful fail-safe for any Enumerable that might be blank

@@ -38,8 +38,9 @@ class Homepage < ActiveRecord::Base
       :order      => :published_at,
       :sort_mode  => :desc,
       :without    => { :category => '' },
-      :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } }
-    ).compact
+      :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } },
+      retry_stale: true
+    )
         
     # -- Section Blocks -- #
     
@@ -55,8 +56,9 @@ class Homepage < ActiveRecord::Base
         :order      => :published_at,
         :sort_mode  => :desc,
         :with       => { :category => cat.id },
-        :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } }
-      ).compact
+        :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } },
+        retry_stale: true
+      )
       
       top = nil
       more = []

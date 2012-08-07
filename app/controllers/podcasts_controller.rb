@@ -35,8 +35,10 @@ class PodcastsController < ApplicationController
         :order      => :published_at, 
         :page       => 1, 
         :per_page   => 15, 
-        :sort_mode  => :desc
-      ).compact
+        :sort_mode  => :desc,
+        retry_stale: true
+
+      )
     else
       # nothing...
     end
