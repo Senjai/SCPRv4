@@ -35,6 +35,10 @@ class PijQuery < ActiveRecord::Base
   
   #------------
   
+  def obj_key
+    "pij/query:#{self.id}"
+  end
+  
   def headline
     title
   end
