@@ -1,9 +1,9 @@
-<% page_title [@episode.title,@program.title] %>
+<% page_title [@episode.headline,@program.title] %>
 
 <header class="episode">
 	<div class="row-fluid">
 	    <div class="span14">
-	    	<h4><%= @episode.title %></h4>
+	    	<h4><%= @episode.headline %></h4>
 	    </div>
 	    <div class="span10">
 	    	<% if @episode.audio.present? %>

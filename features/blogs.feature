@@ -12,7 +12,7 @@ Scenario: List News Blogs
 Scenario: See latest entry for a local blog
 	Given a blog with the following attribute:
 	 | entry_count |
-	 | 2             |
+	 | 2           |
 
 	When I go to the blogs page
 	Then I should see the latest entry for that blog

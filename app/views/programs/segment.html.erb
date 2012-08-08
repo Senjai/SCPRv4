@@ -10,7 +10,7 @@
 				<header>
 					<h5 class="episode-title">
 						<% if @segment.episode.present? %>
-							<%= link_to @segment.episode.title, @segment.episode.link_path %>
+							<%= link_to @segment.episode.headline, @segment.episode.link_path %>
 						<% else %>
 							<%= link_to @program.title, program_path(@program) %>
 						<% end %>

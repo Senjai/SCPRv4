@@ -1,6 +1,5 @@
 class ContentBase < ActiveRecord::Base
   include ApplicationHelper
-  
   self.abstract_class = true
   
   STATUS_KILLED   = -1
@@ -63,7 +62,6 @@ class ContentBase < ActiveRecord::Base
   ]
     
   # All ContentBase objects have assets and alarms
-  has_many :assets, :class_name => "ContentAsset", :as => :content, :order => "asset_order asc", dependent: :destroy
   has_many :bylines, :class_name => "ContentByline", :as => :content, dependent: :destroy
   
   has_many :brels, :class_name => "Related", :as => :content
@@ -133,20 +131,12 @@ class ContentBase < ActiveRecord::Base
       end
     end
     
-    puts "key is #{key}"
-    
     if key
       # now make sure that content exists
       return self.obj_by_key(key)
     else
       return nil
     end
-  end
-  
-  #----------
-    
-  def obj_key
-    return [self.class::CONTENT_TYPE,self.id].join(":")
   end
   
   #----------
@@ -195,22 +185,6 @@ class ContentBase < ActiveRecord::Base
         return ''
       end
     end
-  end
-  
-  #----------
-  
-  def remote_link_path
-    "http://www.scpr.org#{self.link_path}"
-  end
-
-  #----------
-
-  def disqus_identifier
-    obj_key
-  end
-  
-  def disqus_shortname
-    'kpcc'
   end
 
   #----------
@@ -261,70 +235,6 @@ class ContentBase < ActiveRecord::Base
   def byline_elements
     ["KPCC"]
   end
-  
-  #----------
-  
-  def has_comments?
-    true
-  end
-  
-  #----------
-  
-  def headline
-    self[:headline]
-  end
-  
-  #----------
-
-  def short_headline
-    self._short_headline? ? self._short_headline : self.headline
-  end
-  
-  def short_headline=(val)
-    self._short_headline = val
-  end
-  
-  #----------
-  
-  def _short_headline?
-    self.respond_to?(:_short_headline) && self._short_headline.present?
-  end
-  
-  #----------
-  
-  def teaser
-    if self._teaser?
-      return self._teaser
-    end
-    
-    # -- cut down body to get teaser -- #
-    
-    l = 180    
-    
-    # first test if the first paragraph is an acceptable length
-    fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,''))
-    
-    if fp && fp[1].length < l
-      # cool, return this
-      return fp[1]
-    elsif fp
-      # try shortening this paragraph
-      short = /^(.{#{l}}\w*)\W/.match(fp[1])
-      
-      if short
-        return "#{short[1]}..."
-      else
-        return fp[1]
-      end
-    else
-      return ''
-    end    
-    
-  end
-  
-  def teaser=(val)
-    self._teaser = val
-  end
 
   #----------
   
@@ -340,14 +250,9 @@ class ContentBase < ActiveRecord::Base
     self.published_at
   end
   
-  def auto_published_at
-    true
-  end
-  
   #----------
   
   def status_text
     ContentBase::STATUS_TEXT[ self.status ]
   end
-    
 end

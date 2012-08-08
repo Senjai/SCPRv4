@@ -1,5 +1,7 @@
 class BlogEntry < ContentBase
   self.table_name =  "blogs_entry"
+  acts_as_content has_format: true
+  
   CONTENT_TYPE = "blogs/entry"
   CONTENT_TYPE_ID = 44
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
@@ -19,7 +21,7 @@ class BlogEntry < ContentBase
 
   # ------------------
   # Validation
-  validates_presence_of :title, :slug, :blog_id, :short_headline
+  validates_presence_of :headline, :slug
   
   # ------------------
   # Association
@@ -38,8 +40,8 @@ class BlogEntry < ContentBase
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   define_index do
-    indexes title
-    indexes content
+    indexes headline
+    indexes body
     has blog.id, :as => :blog
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
@@ -58,15 +60,11 @@ class BlogEntry < ContentBase
     []
   end
   
-  def has_format?
-    true
-  end
-  
   def disqus_identifier
     if dsq_thread_id.present? && wp_id.present?
       "#{wp_id} http://multiamerican.scpr.org/?p=#{wp_id}"
     else
-      obj_key
+      super
     end
   end
   
@@ -76,14 +74,6 @@ class BlogEntry < ContentBase
     else
       super
     end
-  end
-    
-  def headline
-    self.title
-  end
-  
-  def body
-    self.content
   end
     
   def previous

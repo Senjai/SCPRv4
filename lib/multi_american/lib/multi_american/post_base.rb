@@ -17,7 +17,7 @@ module WP
       content:            :content,
       pubDate:            :published_at,
       status:             :status,
-      excerpt:            :_teaser
+      excerpt:            :teaser
     }
     
     administrate  

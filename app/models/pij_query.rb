@@ -1,6 +1,10 @@
 class PijQuery < ActiveRecord::Base
   self.table_name = 'pij_query'
-
+  CONTENT_TYPE = "pij/query"
+  
+  acts_as_content headline:       :title, 
+                  comments:       false
+  
   QUERY_TYPES = [
     ["Evergreen",             "evergreen"],
     ["News",                  "news"],
@@ -10,10 +14,6 @@ class PijQuery < ActiveRecord::Base
   #------------
   # Administration
   administrate
-
-  #------------
-  # Association
-  has_many :assets, class_name: "ContentAsset", as: :content
   
   #------------
   # Scopes
@@ -32,35 +32,13 @@ class PijQuery < ActiveRecord::Base
   validates :query_type,  presence: true
   validates :query_url,   presence: true
   validates :title,       presence: true
-  
+
   #------------
-  
-  def obj_key
-    "pij/query:#{self.id}"
-  end
-  
-  def headline
-    title
-  end
-  
-  def short_headline
-    title
-  end
-  
-  def has_format?
-    false
-  end
   
   def link_path(options={})
     Rails.application.routes.url_helpers.pij_query_path(options.merge!({
       :slug => self.slug,
       :trailing_slash => true
     }))
-  end
-  
-  #------------
-  
-  def remote_link_path
-    "http://www.scpr.org#{self.link_path}"
   end
 end

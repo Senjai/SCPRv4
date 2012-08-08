@@ -54,7 +54,7 @@ end
 
 #### Assertions
 Then /^that section should not have the current segment listed$/ do
-  page.find(@css_finder).should_not have_content @segment.title
+  page.find(@css_finder).should_not have_content @segment.headline
 end
 
 

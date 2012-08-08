@@ -34,7 +34,7 @@ module WidgetsHelper
   #----------
   
   def comment_widget_for(object, options={})
-    if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
+    if object.present? and object.respond_to?(:disqus_identifier)
       render('shared/cwidgets/comment_count', { content: object, cssClass: "" }.merge!(options))
     end
   end
@@ -42,7 +42,7 @@ module WidgetsHelper
   #----------
   
   def comment_count_for(object, options={})
-    if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
+    if object.present? and object.respond_to?(:disqus_identifier)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.obj_key
       link_to( "Add your comments", object.link_path(anchor: "comments"), options )
@@ -52,7 +52,7 @@ module WidgetsHelper
   #----------
   
   def comments_for(object, options={})
-    if object.present? && object.respond_to?(:has_comments?) && object.has_comments?
+    if object.present? && object.respond_to?(:disqus_identifier)
       render('shared/cwidgets/comments', { content: object, cssClass: "", header: true }.merge!(options))
     end
   end
@@ -60,7 +60,7 @@ module WidgetsHelper
   #----------
   
   def content_widget(partial, object, options={})
-    if object.present? and object.is_a?(ContentBase)
+    if object.present?
       partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
       render(partial, { content: object, cssClass: "" }.merge!(options))
     end

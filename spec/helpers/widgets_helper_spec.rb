@@ -8,10 +8,6 @@ describe WidgetsHelper do
       content_widget("anything", nil).should be_nil
     end
     
-    it "returns nil if object is not a contentbase" do
-      content_widget("anything", "a string").should be_nil
-    end
-    
     it "uses the absolute path if the partial starts with a slash" do
       content_widget("/shared/widgets/facebook", object).should match /Like KPCC on Facebook/ # Need to figure out a better way to test this
     end
@@ -39,15 +35,8 @@ describe WidgetsHelper do
       comment_count_for(nil).should be_nil
     end
     
-    it "doesn't render anything if it doesn't respond to has_comments?" do
+    it "doesn't render anything if it doesn't respond to disqus_identifier" do
       comment_count_for(create :blog).should be_nil
-    end
-    
-    it "doesn't render anything if has_comments? is false" do
-      comment_count_for(create :content_shell).should be_nil
-      blog_entry = create :blog_entry
-      blog_entry.stub(:has_comments?) { false }
-      comment_count_for(blog_entry).should be_nil
     end
   end
   
@@ -67,15 +56,8 @@ describe WidgetsHelper do
       comment_widget_for(nil).should be_nil
     end
     
-    it "doesn't render anything if it doesn't respond to has_comments?" do
+    it "doesn't render anything if it doesn't respond to disqus_identifier" do
       comment_widget_for(create :blog).should be_nil
-    end
-    
-    it "doesn't render anything if has_comments? is false" do
-      comment_widget_for(create :content_shell).should be_nil
-      blog_entry = create :blog_entry
-      blog_entry.stub(:has_comments?) { false }
-      comment_widget_for(blog_entry).should be_nil
     end
     
     it "passes in the cssClass" do

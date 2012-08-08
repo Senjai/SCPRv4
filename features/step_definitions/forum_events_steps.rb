@@ -20,12 +20,12 @@ end
 #### Finders
 Then /^I should see the (\d+) closest events?$/ do |num|
   page.should have_css ".upcoming-events .event", count: num.to_i
-  page.first(".upcoming-events .event").should have_content Event.forum.upcoming.first.title
+  page.first(".upcoming-events .event").should have_content Event.forum.upcoming.first.headline
 end
 
 Then /^I should see the closest event featured$/ do
   page.should have_css ".event.closest"
-  page.find(".event.closest").should have_content Event.forum.upcoming.first.title
+  page.find(".event.closest").should have_content Event.forum.upcoming.first.headline
 end
 
 Then /^I should see future events listed below the closest event$/ do
@@ -33,7 +33,7 @@ Then /^I should see future events listed below the closest event$/ do
 end
 
 Then /^the closest event should not be in the list of future events$/ do
-  page.find(".event.future").should_not have_content Event.forum.closest.title
+  page.find(".event.future").should_not have_content Event.forum.closest.headline
 end
 
 Then /^I should see a list of archived events in the archive strip$/ do
@@ -43,7 +43,7 @@ end
 Then /^I should only see forum events$/ do
   non_forum_events = Event.all - Event.sponsored.all
   non_forum.events.each do |event|
-    page.should_not match event.title
+    page.should_not match event.headline
   end
 end
 
@@ -52,7 +52,7 @@ Then /^I should see (\d+) more upcoming events listed$/ do |num|
 end
 
 Then /^that event should not be in the upcoming events$/ do
-  find(".more-events").should_not have_content @event.title
+  find(".more-events").should_not have_content @event.headline
 end
 
 
@@ -63,7 +63,7 @@ Then /^the events should be ordered by "([^"]*)"$/ do |order|
   # page.first(".event").should match events.first
   # page.last(".event").should match events.last
   # Event.forum.past.order(order).each_with_index do |event, i|
-  #   page.find(".event")[i].should have_content event.title
+  #   page.find(".event")[i].should have_content event.headline
   # end
 end
 

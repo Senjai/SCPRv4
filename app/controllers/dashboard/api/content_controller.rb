@@ -40,7 +40,7 @@ class Dashboard::Api::ContentController < ApplicationController
     # is this valid content?
     @content = ContentBase.obj_by_key(params[:id])
     
-    [:headline, :_short_headline, :_teaser, :body, :content].each do |f|
+    [:headline, :short_headline, :teaser, :body, :content].each do |f|
       if params[ f ]
         @content[ f ] = params[ f ]
       end
