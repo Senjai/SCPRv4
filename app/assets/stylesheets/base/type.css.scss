@@ -66,6 +66,18 @@ h1.page-title {
 	}
 }
 
+.heading-block {
+	padding:3px 6px;
+	&.dark {
+		background:$grayDark;
+		color:$white;
+	}
+	&.light {
+		background:$grayLighter;
+		color:$nearBlack;
+	}
+}
+
 @mixin footer-h4 { // so we can switch h3 and h4 easily in responsive
 	background-color:#232323;
 	border-bottom:1px solid $grayAlt;
