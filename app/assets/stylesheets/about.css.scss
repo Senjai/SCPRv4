@@ -1,8 +1,4 @@
 .about-us {
-	h1, h2, h3, h4, h5 {
-		color:$orangeDark;
-		@include font-slab-headings(300, 32px);
-	}
 	h1 {
 		background:url(image_path('about/hero-header.png')) no-repeat 0 0;
 		margin:0 auto 20px auto;
