@@ -200,28 +200,19 @@ module ActsAsContent
         # Cut down body to get teaser
         def generate_teaser
           length = 180
-          stripped_body = ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,'')
+          first_paragraph = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,''))
 
-          # first test if the first paragraph is an acceptable length
-          paragraphs = stripped_body.match /^(.+)/
-          
-          if !paragraphs
-            return ""
-          end
-          
-          first = paragraphs[1]
-          
-          if !first
-            return ""
-          end
-
-          if first.length < length
-            # cool, return this
-            return first
+          if first_paragraph
+            if first_paragraph[1].length < length
+              # cool, return this
+              return first_paragraph[1]
+            else
+              # try shortening this paragraph
+              short = /^(.{#{length}}\w*)\W/.match(first_paragraph[1])
+              return short ? "#{short[1]}..." : first_paragraph
+            end
           else
-            # try shortening this paragraph
-            short = /^(.{#{length}}\w*)\W/.match(first)
-            return short ? "#{short[1]}..." : first
+            return ""
           end
         end # generate_teaser
       # private
