@@ -209,7 +209,7 @@ module ActsAsContent
             else
               # try shortening this paragraph
               short = /^(.{#{length}}\w*)\W/.match(first_paragraph[1])
-              return short ? "#{short[1]}..." : first_paragraph
+              return short ? "#{short[1]}..." : first_paragraph[1]
             end
           else
             return ""
