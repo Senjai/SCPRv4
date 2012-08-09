@@ -504,6 +504,16 @@ end
 ##########################################################
 
 # ContentBase - Common attributes ##########################################################
+  trait :required_cb_fields do
+    sequence(:headline) { |n| "Some Content #{n}" }
+    body    { "Body for #{headline}" }
+  end
+
+  trait :optional_cb_fields do
+    sequence(:short_headline) { |n| "Short #{n}" }
+    teaser  { "Teaser for #{headline}" }
+  end
+  
   trait :content_base do
     ignore { asset_count 0 }
     ignore { link_count 0 }
@@ -513,13 +523,7 @@ end
     ignore { byline_count 0 }
     status 5
     sequence(:published_at) { |n| Time.now + 60*60*n }
-  end
-  
-  trait :all_cb_fields do
-    sequence(:headline)       { |n| "Some Content #{n}" }
-    sequence(:short_headline) { |n| "Short #{n}" }
-    teaser  { "Teaser for #{headline}" }
-    body    { "Body for #{headline}" }
+    required_cb_fields
   end
     
 
@@ -527,9 +531,7 @@ end
   factory :video_shell do
     content_base
     
-    sequence(:headline)   { |n| "Some Content #{n}" }
-    teaser                { "Teaser for #{headline}" }    
-    slug                  { headline.parameterize }
+    slug { headline.parameterize }
     
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
@@ -543,7 +545,7 @@ end
 # NewsStory #########################################################
   factory :news_story do
     content_base
-    all_cb_fields
+    optional_cb_fields
     
     slug { headline.parameterize }
     news_agency "KPCC"
@@ -562,9 +564,6 @@ end
   factory :show_episode, aliases: [:episode] do
     content_base
     show
-
-    sequence(:headline)       { |n| "Some Content #{n}" }
-    teaser  { "Teaser for #{headline}" }
     
     sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
     
@@ -582,9 +581,9 @@ end
 
 # ShowSegment #########################################################
   factory :show_segment, aliases: [:segment] do
-    content_base    
+    content_base
+    optional_cb_fields
     show
-    all_cb_fields
     
     slug { headline.parameterize }
     locale "local"
@@ -602,10 +601,10 @@ end
 
 # BlogEntry #########################################################
   factory :blog_entry do
-    content_base    
+    content_base
+    optional_cb_fields 
     author
     blog
-    all_cb_fields
     
     slug { headline.parameterize }
     blog_slug { blog.slug }
@@ -626,9 +625,6 @@ end
 # ContentShell #########################################################
   factory :content_shell do
     content_base
-    
-    sequence(:headline) { |n| "Some Content #{n}" }
-    teaser { "Teaser for #{headline}" }
     
     site "blogdowntown"
     url { "http://blogdowntown.com/2011/11/6494-#{headline.parameterize}" }

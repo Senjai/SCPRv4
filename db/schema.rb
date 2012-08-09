@@ -277,7 +277,7 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   create_table "contentbase_contentshell", :force => true do |t|
     t.string   "headline",     :limit => 200,                                           :null => false
     t.string   "site",         :limit => 50,         :default => "KPCC",                :null => false
-    t.text     "teaser",       :limit => 2147483647,                                    :null => false
+    t.text     "body",         :limit => 2147483647,                                    :null => false
     t.string   "url",          :limit => 150,                                           :null => false
     t.integer  "status",                             :default => 0,                     :null => false
     t.datetime "published_at",                       :default => '2011-11-21 11:07:11', :null => false
@@ -318,7 +318,7 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
 
   create_table "contentbase_videoshell", :force => true do |t|
     t.string   "headline",     :limit => 200,                                           :null => false
-    t.text     "teaser",       :limit => 2147483647,                                    :null => false
+    t.text     "body",         :limit => 2147483647,                                    :null => false
     t.integer  "status",                             :default => 0,                     :null => false
     t.datetime "published_at",                       :default => '2012-03-02 15:14:07', :null => false
     t.string   "slug",         :limit => 50,                                            :null => false
@@ -869,7 +869,7 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
     t.integer  "show_id",                            :null => false
     t.date     "air_date",                           :null => false
     t.string   "headline",     :limit => 140,        :null => false
-    t.text     "teaser",       :limit => 2147483647, :null => false
+    t.text     "body",         :limit => 2147483647, :null => false
     t.datetime "published_at",                       :null => false
     t.integer  "status",                             :null => false
     t.datetime "created_at",                         :null => false

@@ -6,7 +6,6 @@ class ContentShell < ContentBase
   ADMIN_PREFIX = "contentbase/contentshell"
   
   acts_as_content comments:           false, 
-                  body:               :teaser, 
                   link_path:          false, # Defining them here
                   auto_published_at:  false
   
@@ -24,7 +23,7 @@ class ContentShell < ContentBase
   
   define_index do
     indexes headline
-    indexes teaser
+    indexes body
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at

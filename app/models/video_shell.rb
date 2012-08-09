@@ -5,7 +5,7 @@ class VideoShell < ContentBase
   CONTENT_TYPE_ID = 125
   ADMIN_PREFIX = "contentbase/videoshell"
   
-  acts_as_content body: :teaser
+  acts_as_content
   
   # -------------------
   # Administration
@@ -25,7 +25,7 @@ class VideoShell < ContentBase
     
   define_index do
     indexes headline
-    indexes teaser
+    indexes body
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at

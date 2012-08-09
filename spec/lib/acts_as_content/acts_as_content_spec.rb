@@ -181,21 +181,43 @@ describe ActsAsContent::InstanceMethods::Teaser do
       content.teaser.should eq content[:teaser]
     end
     
-    it "creates teaser from long paragraph if not defined" do
-      long_body = load_response_fixture_file("long_text.txt")
-      long_body.should match /\n/
-      content = build :news_story, body: long_body, teaser: nil
-      content.teaser.should match /^Lorem ipsum (.+)\.{3,}$/
-      content.teaser.should_not match /\n/
-    end
-    
-    it "returns the full first paragraph if it's short enough" do
-      short_first_paragraph = "This is just a short paragraph."
-      content = build :news_story, body: "#{short_first_paragraph}\n And some more!", teaser: nil
-      content.teaser.should eq short_first_paragraph
+    it "sends to generate_teaser if not defined" do
+      content = build :news_story, teaser: nil
+      ActsAsContent::Generators::Teaser.should_receive(:generate_teaser).with(content.body).and_return("Teaser")
+      content.teaser.should eq "Teaser"
     end
   end
 end
 
 #--------------
 
+describe ActsAsContent::Generators::Teaser do
+  describe "generate_teaser" do
+    it "returns empty string if text is blank" do
+      ActsAsContent::Generators::Teaser.generate_teaser("").should eq ""
+    end
+    
+    it "returns the full first paragraph if it's short enough" do
+      first   = "This is just a short paragraph."
+      body    = "#{first}\n And some more!"
+      teaser  = ActsAsContent::Generators::Teaser.generate_teaser(body)
+      teaser.should eq first
+    end
+    
+    it "creates teaser from long paragraph if not defined" do
+      long_body = load_response_fixture_file("long_text.txt")
+      long_body.should match /\n/
+      teaser = ActsAsContent::Generators::Teaser.generate_teaser(long_body)
+      teaser.should match /^Lorem ipsum (.+)\.{3,}$/
+      teaser.should_not match /\n/
+    end
+    
+    it "uses the length passed in as a guideline for cutting off the text" do
+      teaser1 = ActsAsContent::Generators::Teaser.generate_teaser("Testing a Teaser.", 1)
+      teaser1.should eq "Testing..."
+      
+      teaser2 = ActsAsContent::Generators::Teaser.generate_teaser("Testing a Teaser.", 10)
+      teaser2.should eq "Testing a Teaser..."      
+    end
+  end
+end

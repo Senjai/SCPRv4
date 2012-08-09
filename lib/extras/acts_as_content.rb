@@ -89,6 +89,35 @@ module ActsAsContent
 
   #----------
 
+  module Generators
+    
+    module Teaser
+      #--------------------
+      # Cut down body to get teaser
+      def self.generate_teaser(text, length=180)
+        stripped_body = ActionController::Base.helpers.strip_tags(text).gsub("&nbsp;"," ").gsub(/\r/,'')
+        match = stripped_body.match(/^(.+)/)
+        
+        if !match
+          return ""
+        else
+          first = match[1]
+          if first.length < length
+            return first
+          else
+            # try shortening this paragraph
+            short = first.match /^(.{#{length}}\w*)\W/
+            return short ? "#{short[1]}..." : first
+          end
+        end
+        
+      end # generate_teaser
+    end # Teaser
+    
+  end # Generators
+  
+  #------------------
+  
   module InstanceMethods
     
     module HasFormat
@@ -183,39 +212,20 @@ module ActsAsContent
     #----------
     
     module Teaser
+      
       def teaser
         if !self.respond_to? :body
           raise "teaser needs body. Missing from #{self.class.name}."
         end
-        
+
+        # If teaser column is present, use it
+        # Otherwise try to generate the teaser from the body
         if self[:teaser].present?
           self[:teaser]
         else
-          generate_teaser
-        end  
+          ActsAsContent::Generators::Teaser.generate_teaser(self.body)
+        end
       end # teaser
-      
-      private
-        #--------------------
-        # Cut down body to get teaser
-        def generate_teaser
-          length = 180
-          first_paragraph = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,''))
-
-          if first_paragraph
-            if first_paragraph[1].length < length
-              # cool, return this
-              return first_paragraph[1]
-            else
-              # try shortening this paragraph
-              short = /^(.{#{length}}\w*)\W/.match(first_paragraph[1])
-              return short ? "#{short[1]}..." : first_paragraph[1]
-            end
-          else
-            return ""
-          end
-        end # generate_teaser
-      # private
     end # Teaser
   end # InstanceMethods
 end # ActsAsContent
