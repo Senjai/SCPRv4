@@ -163,12 +163,12 @@ Scprv4::Application.routes.draw do
   match '/search/' => 'search#index', :as => :search
   
   # -- Archive -- #
-  post  '/archive/process_archive_select' => "home#process_archive_select",  as: :process_archive_select
-  match '/archive(/:year/:month/:day)/' => "home#archive", as: :archive, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }
+  post  '/archive/process/'               => "archive#process_form",  as: :archive_process_form
+  match '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }
   
   # -- News Stories -- #
-  match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
-  match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
+  match '/news/:year/:month/:day/:id/:slug/'  => 'news#story',      :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
+  match '/news/:year/:month/:day/:slug/'      => 'news#old_story',  :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
   
   #----------
   # PIJ Queries
@@ -180,8 +180,8 @@ Scprv4::Application.routes.draw do
   match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
   
   # -- podcasts -- #
-  match '/podcasts/:slug/' => 'podcasts#podcast', :as => :podcast
-  match '/podcasts/' => 'podcasts#index', :as => :podcasts
+  match '/podcasts/:slug/'  => 'podcasts#podcast', :as => :podcast
+  match '/podcasts/'        => 'podcasts#index', :as => :podcasts
 
   # -- Sections -- #
   match '/category/carousel-content/:object_class/:id' => 'category#carousel_content', as: :category_carousel, defaults: { format: :js }

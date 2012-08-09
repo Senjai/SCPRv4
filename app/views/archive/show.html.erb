@@ -15,7 +15,7 @@
 	</ul>
 </nav>
 
-<div class="tab-content">
+<div class="tab-content" id="archive_tabs">
 	
 <!-- News Stories -->
 <div id="news" class="tab-pane active">
@@ -170,7 +170,7 @@
 			<% if type_group["ShowEpisode"].present? %>
 				<% type_group["ShowEpisode"].each do |content| %>
 					<% register_content content %>
-					<h5>Episode: <%= link_to content.headline, content.link_path %></h5>
+					<h5>Episode: <%= link_to content.short_headline, content.link_path %></h5>
 				<% end %>
 			<% end %>
 		

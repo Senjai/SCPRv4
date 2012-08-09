@@ -37,40 +37,7 @@ class HomeController < ApplicationController
     response.headers["Expires"] = (Time.now + cache_expire).strftime("%d %m %Y %H:%I:%S %Z")
     render :layout => false, :inline => "<script src='//connect.facebook.net/en_US/all.js'></script>"
   end
-  
-  #----------
-  
-  # Process the form values for Archive and redirect to canonical URL
-  def process_archive_select
-    year = params[:archive]["date(1i)"].to_i
-    month = "%02d" % params[:archive]["date(2i)"].to_i
-    day = "%02d" % params[:archive]["date(3i)"].to_i
     
-    redirect_to archive_path(year, month, day) and return
-  end
-
-  #----------
-  
-  def archive
-    if params[:year] and params[:month] and params[:day]
-      @date = Time.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-    end
-
-    if @date
-      condition = ["published_at between :today and :tomorrow", today: @date, tomorrow: @date.tomorrow]
-      @news_stories   = NewsStory.published.where(condition)
-      @show_segments  = ShowSegment.published.where(condition)
-      @show_episodes  = ShowEpisode.published.where("air_date=?", @date)
-      @blog_entries   = BlogEntry.published.where(condition)
-                                  .includes(:blog)
-                                  .where("blogs_blog.is_remote = ?", false) # Keep out Multi-American, temporarily
-      @video_shells   = VideoShell.published.where(condition)
-      @content_shells = ContentShell.published.where(condition)
-    end
-    
-    render layout: 'application'
-  end
-  
   #----------
   
   def missed_it_content
