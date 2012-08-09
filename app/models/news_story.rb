@@ -1,6 +1,7 @@
 class NewsStory < ContentBase
   self.table_name =  'news_story'
-
+  acts_as_content
+  
   # -------------------
   # Administration
   administrate
@@ -56,7 +57,6 @@ class NewsStory < ContentBase
   
   define_index do
     indexes headline
-    indexes lede
     indexes body
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
@@ -90,13 +90,6 @@ class NewsStory < ContentBase
     if self.news_agency
       bylines << self.news_agency
     end
-    
   end
-  
-  def has_format?
-    false
-  end
-    
-  #----------
   
 end

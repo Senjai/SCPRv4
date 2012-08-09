@@ -62,7 +62,7 @@
 					<div class="event closest">
 						<%= render_asset @closest_event, 'lead5' %>
 						<%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.link_path, class: "event-link" %>
-						<h1 class="story-title"><%= link_to @closest_event.title, @closest_event.link_path %></h1>
+						<h1 class="story-title"><%= link_to @closest_event.headline, @closest_event.link_path %></h1>
 						<%= @closest_event.teaser %>
 					</div>
 				<% end %>
@@ -81,7 +81,7 @@
 								<% end %>
 									<div class="info">
 										<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
-										<h2 class="story-title"><%= link_to event.title, event.link_path %></h2>
+										<h2 class="story-title"><%= link_to event.headline, event.link_path %></h2>
 										<%= event.teaser %>
 									</div>
 								</div> <!-- span -->
@@ -135,10 +135,10 @@
 									<div class="span24">
 								<% end %>
 									<div class="info">
-										<h4 class="story-title"><%= link_to event.title, event.link_path %></h4>
+										<h4 class="story-title"><%= link_to event.headline, event.link_path %></h4>
 										<p class="byline"><%= format_date event.starts_at, format: :full_date %></p>
 										<% if event.audio.present? %>
-											<%= content_tag :div, link_to("Listen to this event", event.audio_url, class: "inline audio-toggler", title: event.title), class: "story-audio inline" %>
+											<%= content_tag :div, link_to("Listen to this event", event.audio_url, class: "inline audio-toggler", title: event.headline), class: "story-audio inline" %>
 										<% elsif event.show_comments %>
 											<%= comment_count_for event %>
 										<% end %>

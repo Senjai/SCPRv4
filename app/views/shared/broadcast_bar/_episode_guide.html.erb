@@ -1,6 +1,6 @@
 <%= content_cache("broadcast_bar:episode_guide:#{episode.id}") do %>
 	<% register_content episode %>
-	<h6><%= link_to episode.title, episode.link_path %></h6>
+	<h6><%= link_to episode.headline, episode.link_path %></h6>
 	<%= render_asset episode, "thumb" %>
 	<ul class="cbase">
 		<li><%= render partial: "shared/broadcast_bar/segment_lead", object: episode.segments.published.first, :as => :segment %></li>		

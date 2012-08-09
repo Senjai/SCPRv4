@@ -7,12 +7,16 @@ describe ShowSegment do
     it { should have_many(:episodes).through(:rundowns) }
   end
   
+  #------------------
+  
   describe "link_path" do
     it "does not override the hard-coded options" do
       segment = create :show_segment
       segment.link_path(slug: "wrong").should_not match "wrong"
     end
   end
+  
+  #------------------
   
   describe "episode" do
     it "uses the first episode the segment is associated with" do
@@ -22,6 +26,8 @@ describe ShowSegment do
       segment.episode.should eq segment.episodes.first
     end
   end
+  
+  #------------------
   
   describe "sister_segments" do
     it "uses the other segments from the episode if episodes exist" do
@@ -40,13 +46,8 @@ describe ShowSegment do
       program.segments.first.sister_segments.should_not include program.segments.first
     end
   end
-  
-  describe "headline" do
-    it "is the title" do
-      segment = build :show_segment
-      segment.headline.should eq segment.title
-    end
-  end
+
+  #------------------
 
   describe "byline_elements" do
     it "is an array with the show's title" do
@@ -54,6 +55,8 @@ describe ShowSegment do
       segment.byline_elements.should eq [segment.show.title]
     end
   end 	 	
+
+  #------------------
  	 	
   describe "canFeature?" do
     it "returns true if there are assets" do
@@ -66,13 +69,33 @@ describe ShowSegment do
       segment.canFeature?.should be_false
     end
   end
- 	 	 	 	
+
+ 	#------------------
+
   describe "public_datetime" do
     it "is the published_at date" do
       segment = create :show_segment
       segment.public_datetime.should eq segment.published_at
     end
   end
+  
+  # ----------------
+
+  describe "has_format?" do
+    it "is true" do
+      create(:show_segment).has_format?.should be_false
+    end
+  end
+
+  # ----------------
+  
+  describe "auto_published_at" do
+    it "is true" do
+      create(:show_segment).auto_published_at.should be_true
+    end
+  end
+  
+  #------------------
   
   describe "#published" do
     it "orders published content by published_at descending" do

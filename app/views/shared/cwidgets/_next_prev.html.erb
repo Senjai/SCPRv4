@@ -8,13 +8,13 @@
 				<div class="span12 left">
 					<% if @entry.previous.present? %>
 						<div class="arrow">&larr;</div>
-						<%= link_to @entry.previous.title, @entry.previous.link_path %>
+						<%= link_to @entry.previous.headline, @entry.previous.link_path %>
 					<% end %>
 				</div>
 				<div class="span12 right">
 					<% if @entry.next.present? %>
 						<div class="arrow">&rarr;</div>
-						<%= link_to @entry.next.title, @entry.next.link_path %>
+						<%= link_to @entry.next.headline, @entry.next.link_path %>
 					<% end %>
 				</div>
 			</div> <!-- row fluid -->

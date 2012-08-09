@@ -2,23 +2,23 @@ class Event < ActiveRecord::Base
   self.table_name =  'events_event'
   self.primary_key = "id"
   
+  acts_as_content auto_published_at: false
+  
   ForumTypes = [
     "comm",
     "cult",
     "hall"
   ]
   
+  CONTENT_TYPE = "events/event"
+  
   # -------------------
   # Administration
   administrate
-  
-  # -------------------
-  # Associations
-  has_many :assets, class_name: "ContentAsset", as: :content
 
   # -------------------
   # Validations
-  validates_presence_of :id, :title, :slug, :etype, :starts_at
+  validates_presence_of :id, :headline, :slug, :etype, :starts_at
   
   # -------------------
   # Scopes
@@ -58,14 +58,6 @@ class Event < ActiveRecord::Base
   
   def self.closest
     upcoming.first
-  end
-  
-  def headline
-    title
-  end
-  
-  def short_headline
-    headline
   end
   
   # -------------------
@@ -109,41 +101,23 @@ class Event < ActiveRecord::Base
     ForumTypes.include? self.etype
   end
   
-  def has_format?
-    false
-  end
-  
-  def has_comments?
-    self.show_comments
-  end
-  
-  #----------
-  
-  def obj_key
-    "events/event:#{self.id}"
-  end
-  
-  def disqus_identifier
-    obj_key
-  end
-  
-  def disqus_shortname
-    'kpcc'
-  end
-
   #----------
   
   def inline_address(separator=", ")
     [address_1, address_2, city, state, zip_code].reject { |element| element.blank? }.join(separator)
   end
+
+  #----------
   
   def description
     if self.upcoming? or archive_description.blank?
-      self[:description]
+      self.body
     else
       archive_description
     end
   end
+
+  #----------
   
   def audio_url
     "http://media.scpr.org/#{self.audio}"
@@ -158,38 +132,5 @@ class Event < ActiveRecord::Base
       :slug => self.slug,
       :trailing_slash => true
     }))
-  end
-  
-  def remote_link_path
-    "http://www.scpr.org#{self.link_path}"
-  end
-    
-  def teaser
-    if self._teaser?
-      return self._teaser
-    end
-    
-    # -- cut down body to get teaser -- #
-    
-    l = 180    
-    
-    # first test if the first paragraph is an acceptable length
-    fp = /^(.+)/.match(ActionController::Base.helpers.strip_tags(self.description).gsub("&nbsp;"," ").gsub(/\r/,''))
-    
-    if fp && fp[1].length < l
-      # cool, return this
-      return fp[1]
-    elsif fp
-      # try shortening this paragraph
-      short = /^(.{#{l}}\w*)\W/.match(fp[1])
-      
-      if short
-        return "#{short[1]}..."
-      else
-        return fp[1]
-      end
-    else
-      return ''
-    end    
   end
 end

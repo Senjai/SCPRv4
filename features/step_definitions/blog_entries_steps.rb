@@ -27,7 +27,7 @@ Then /^I should see article meta for each entry$/ do
 end
 
 Then /^I should see the latest entry for that blog$/ do
-  page.find(".thumbnail .latest-post").should have_content @blog.entries.first.title
+  page.find(".thumbnail .latest-post").should have_content @blog.entries.first.short_headline
 end
 
 Then /^I should see the latest entry for that remote blog$/ do
@@ -36,7 +36,7 @@ end
 
 Then /^I should see the blog's entries listed$/ do
   page.should have_css ".entry", count: @blog.entries.count # FIXME: Need to account for pagination
-  page.should have_content @blog.entries.first.title
+  page.should have_content @blog.entries.first.headline
 end
 
 Then /^I should see a timestamp for the latest entry$/ do

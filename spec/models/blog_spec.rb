@@ -20,13 +20,6 @@ describe Blog do
     end
   end
   
-  describe "teaser" do
-    it "Returns _teaser" do
-      blog = build :blog
-      blog.teaser.should eq blog._teaser
-    end
-  end
-  
   describe "entries" do
     it "returns the local entries if the blog is local" do
       blog = create :blog

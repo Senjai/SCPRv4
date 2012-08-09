@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
     t.boolean  "is_remote",                                                    :null => false
     t.string   "custom_url",          :limit => 140,                           :null => false
     t.boolean  "is_news",                                                      :null => false
-    t.string   "_teaser",             :limit => 115,                           :null => false
+    t.string   "teaser",              :limit => 115,                           :null => false
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
@@ -165,9 +165,11 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   add_index "blogs_blog", ["slug"], :name => "slug", :unique => true
 
   create_table "blogs_blogauthor", :force => true do |t|
-    t.integer "blog_id",   :null => false
-    t.integer "author_id", :null => false
-    t.integer "position",  :null => false
+    t.integer  "blog_id",    :null => false
+    t.integer  "author_id",  :null => false
+    t.integer  "position",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "blogs_blogauthor", ["author_id"], :name => "blogs_blog_authors_64afdb51"
@@ -187,19 +189,21 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   add_index "blogs_blogcategory", ["slug"], :name => "blogs_blogcategory_a951d5d6"
 
   create_table "blogs_entry", :force => true do |t|
-    t.string   "title",             :limit => 140,                        :null => false
+    t.string   "headline",          :limit => 140,                        :null => false
     t.string   "slug",              :limit => 50,                         :null => false
-    t.text     "content",           :limit => 2147483647,                 :null => false
+    t.text     "body",              :limit => 2147483647,                 :null => false
     t.integer  "author_id"
     t.integer  "blog_id",                                                 :null => false
     t.string   "blog_slug",         :limit => 50,         :default => "", :null => false
     t.datetime "published_at",                                            :null => false
     t.integer  "status",                                                  :null => false
     t.string   "blog_asset_scheme", :limit => 10
-    t.string   "_short_headline",   :limit => 100
-    t.text     "_teaser",           :limit => 2147483647
+    t.string   "short_headline",    :limit => 100
+    t.text     "teaser",            :limit => 2147483647
     t.integer  "wp_id"
     t.integer  "dsq_thread_id"
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
   end
 
   add_index "blogs_entry", ["author_id"], :name => "blogs_entry_author_id"
@@ -273,10 +277,12 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   create_table "contentbase_contentshell", :force => true do |t|
     t.string   "headline",     :limit => 200,                                           :null => false
     t.string   "site",         :limit => 50,         :default => "KPCC",                :null => false
-    t.text     "_teaser",      :limit => 2147483647,                                    :null => false
+    t.text     "teaser",       :limit => 2147483647,                                    :null => false
     t.string   "url",          :limit => 150,                                           :null => false
     t.integer  "status",                             :default => 0,                     :null => false
     t.datetime "published_at",                       :default => '2011-11-21 11:07:11', :null => false
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
   end
 
   create_table "contentbase_featuredcomment", :force => true do |t|
@@ -311,13 +317,13 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   add_index "contentbase_misseditcontent", ["content_type_id"], :name => "contentbase_misseditcontent_e4470c6e"
 
   create_table "contentbase_videoshell", :force => true do |t|
-    t.string   "headline",        :limit => 200,                                           :null => false
-    t.text     "body",            :limit => 2147483647,                                    :null => false
-    t.text     "_teaser",         :limit => 2147483647,                                    :null => false
-    t.integer  "status",                                :default => 0,                     :null => false
-    t.datetime "published_at",                          :default => '2012-03-02 15:14:07', :null => false
-    t.string   "_short_headline", :limit => 100
-    t.string   "slug",            :limit => 50,                                            :null => false
+    t.string   "headline",     :limit => 200,                                           :null => false
+    t.text     "teaser",       :limit => 2147483647,                                    :null => false
+    t.integer  "status",                             :default => 0,                     :null => false
+    t.datetime "published_at",                       :default => '2012-03-02 15:14:07', :null => false
+    t.string   "slug",         :limit => 50,                                            :null => false
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
   end
 
   add_index "contentbase_videoshell", ["slug"], :name => "contentbase_videoshell_a951d5d6"
@@ -349,9 +355,9 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   end
 
   create_table "events_event", :force => true do |t|
-    t.string   "title",               :limit => 140,                           :null => false
+    t.string   "headline",            :limit => 140,                           :null => false
     t.string   "slug",                :limit => 50,                            :null => false
-    t.text     "description",         :limit => 2147483647,                    :null => false
+    t.text     "body",                :limit => 2147483647,                    :null => false
     t.string   "etype",               :limit => 4,                             :null => false
     t.string   "sponsor",             :limit => 140,                           :null => false
     t.string   "sponsor_link",        :limit => 200,                           :null => false
@@ -375,7 +381,7 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
     t.string   "audio",               :limit => 100,        :default => "",    :null => false
     t.boolean  "is_published",                                                 :null => false
     t.boolean  "show_comments",                                                :null => false
-    t.text     "_teaser",             :limit => 2147483647,                    :null => false
+    t.text     "teaser",              :limit => 2147483647,                    :null => false
     t.string   "event_asset_scheme",  :limit => 10
   end
 
@@ -573,7 +579,7 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
     t.string   "headline",           :limit => 200,                        :null => false
     t.string   "slug",               :limit => 50,         :default => "", :null => false
     t.string   "news_agency",        :limit => 50
-    t.text     "_teaser",            :limit => 2147483647,                 :null => false
+    t.text     "teaser",             :limit => 2147483647,                 :null => false
     t.text     "body",               :limit => 2147483647,                 :null => false
     t.string   "locale",             :limit => 5,          :default => "", :null => false
     t.integer  "enco_number"
@@ -584,7 +590,9 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
     t.string   "extra_asset_scheme", :limit => 10
     t.string   "lead_asset_scheme",  :limit => 10
     t.integer  "status",                                                   :null => false
-    t.string   "_short_headline",    :limit => 100
+    t.string   "short_headline",     :limit => 100
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
   end
 
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
@@ -860,10 +868,12 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
     t.date     "air_date",                           :null => false
-    t.string   "title",        :limit => 140,        :null => false
-    t.text     "_teaser",      :limit => 2147483647, :null => false
+    t.string   "headline",     :limit => 140,        :null => false
+    t.text     "teaser",       :limit => 2147483647, :null => false
     t.datetime "published_at",                       :null => false
     t.integer  "status",                             :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "shows_episode", ["show_id"], :name => "shows_episode_show_id"
@@ -879,18 +889,19 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
 
   create_table "shows_segment", :force => true do |t|
     t.integer  "show_id",                                                    :null => false
-    t.string   "title",                :limit => 200,                        :null => false
+    t.string   "headline",             :limit => 200,                        :null => false
     t.string   "slug",                 :limit => 50,                         :null => false
-    t.text     "_teaser",              :limit => 2147483647,                 :null => false
+    t.text     "teaser",               :limit => 2147483647,                 :null => false
     t.text     "body",                 :limit => 2147483647,                 :null => false
     t.string   "locale",               :limit => 5,          :default => "", :null => false
     t.datetime "created_at"
     t.integer  "status",                                                     :null => false
     t.string   "segment_asset_scheme", :limit => 10
-    t.string   "_short_headline",      :limit => 100
+    t.string   "short_headline",       :limit => 100
     t.datetime "published_at",                                               :null => false
     t.integer  "enco_number"
     t.date     "audio_date",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
   end
 
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"

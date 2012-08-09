@@ -2,7 +2,7 @@ Feature: Events
 
 Background:
 	Given events with the following attributes:
-	 | title         | etype | starts_at     | is_published |
+	 | headline      | etype | starts_at     | is_published |
 	 | A Rad Event   | comm  | tomorrow 2pm  | 1            |
 	 | A Cool Event  | comm  | tomorrow 1pm  | 1            |
 	 | Future Event  | spon  | tomorrow 8pm  | 1            |
@@ -42,7 +42,7 @@ Scenario: Pagination
 
 Scenario: View an individual event without comments
 	Given an event with the following attributes:
-	 | title     | show_comments |
+	 | headline  | show_comments |
 	 | CFF Event | 0             |
 
 	When I go to that event's page
@@ -52,7 +52,7 @@ Scenario: View an individual event without comments
 	
 Scenario: View an individual event with comments
 	Given an event with the following attributes:
-	 | title     | show_comments |
+	 | headline  | show_comments |
 	 | CFF Event | 1             |
 
 	When I go to that event's page
@@ -107,7 +107,7 @@ Scenario: See more upcoming events
 	
 Scenario: View detail for a past event
 	Given an event with the following attributes:
-	 | starts_at   | description                | archive_description    | show_map | rsvp_link       | audio                                    |
+	 | starts_at   | body                       | archive_description    | show_map | rsvp_link       | audio                                    |
 	 | 2 weeks ago | This event will be awesome | This event was awesome | 1        | http://scpr.org | audio/events/2011/05/23/Father_Boyle.mp3 |
 
 	When I go to that event's page

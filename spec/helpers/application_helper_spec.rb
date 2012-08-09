@@ -120,7 +120,7 @@ describe ApplicationHelper do
     end
     
     it "renders raw when the content has format (i.e. uses wysiwyg)" do
-      content = build :blog_entry, content: "This \n is \n an \n\n entry"
+      content = build :blog_entry, body: "This \n is \n an \n\n entry"
       helper.render_content_body(content).should_not match /br/
       helper.render_content_body(content).should_not match /<p>/
     end

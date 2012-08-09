@@ -27,11 +27,11 @@
 				<% content_cache("events:upcoming_sponsored") do %>
 					<% register_content "events/event:new" %>
 					<ul class="cbase">
-						<% for e in @g_upcoming_events_sponsored.first(3) do %>
-							<% register_content e %>
+						<% @g_upcoming_events_sponsored.first(3).each do |event| %>
+							<% register_content event %>
 							<li>
-								<h4><%= link_to e.title, e.link_path %></h4>
-								<%= link_to format_date(e.starts_at, format: :event), e.link_path, class: "event-link" %>
+								<h4><%= link_to event.headline, event.link_path %></h4>
+								<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %>
 								
 							</li>
 						<% end %>

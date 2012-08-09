@@ -1,4 +1,4 @@
-<% page_title [@event.title, "Events"] %>
+<% page_title [@event.headline, "Events"] %>
 <% watch_gmaps %>
 
 <div class="event content-block">
@@ -15,7 +15,7 @@
 							<div class="audio-content">
 								<h4>Listen Now</h4>
 							</div>
-							<a href="<%= @event.audio_url %>" class="play-btn audio-toggler" title="<%= h @event.short_headline %>" data-duration="<%= nil %>"></a>
+							<a href="<%= @event.audio_url %>" class="play-btn audio-toggler" title="<%= h @event.headline %>" data-duration="<%= nil %>"></a>
 							<span class="duration"><%= nil %></span>
 							<ul class="audio-tools">
 							    <li>
@@ -31,7 +31,7 @@
 		<div class="span18 mq-solo-span" id="events-event-detail">
 			<article>
 				<header>
-					<h1 class="story-headline event-headline"><%= link_to @event.title, @event.link_path %></h1>
+					<h1 class="story-headline event-headline"><%= link_to @event.headline, @event.link_path %></h1>
 					<% if @event.sponsor? %>
 						<p class="sponsor">Sponsor: 
 							<% if @event.sponsor_link? %>

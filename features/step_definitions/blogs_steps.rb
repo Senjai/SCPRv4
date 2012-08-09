@@ -1,7 +1,7 @@
 #### Blog Creation
 Given /^(\d+) blogs?$/ do |num|
   @blogs = create_list :blog, num.to_i
-  @blog = @blogs[rand(@blogs.length)]
+  @blog = @blogs[rand(@blogs.size)]
   @blogs.count.should eq Blog.all.count
 end
 

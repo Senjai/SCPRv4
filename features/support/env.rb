@@ -9,6 +9,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 include FactoryGirl::Syntax::Methods
 include FormFillers
+include DatePathHelper
 
 Capybara.default_selector = :css
 ActionController::Base.allow_rescue = false

@@ -1,2 +1,3 @@
 #= require jquery
-#= require_tree .
+#= require content_carousel
+#= require_tree ./

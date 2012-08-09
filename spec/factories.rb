@@ -148,7 +148,7 @@ end
   factory :blog do
     sequence(:name) { |n| "Blog #{n}" }
     slug { name.parameterize }
-    _teaser { "This is the teaser for #{name}!" }
+    teaser { "This is the teaser for #{name}!" }
     description "This is a description for this blog."
     head_image "http://media.scpr.org/assets/images/heads/larry_transparent.png"
     is_active true
@@ -210,9 +210,9 @@ end
 # Event #########################################################
   factory :event do
     sequence(:id, 1) # Not auto-incrementing in database?
-    sequence(:title) { |n| "A Very Special Event #{n}" }
-    slug { title.parameterize }
-    description "This is a very special event."
+    sequence(:headline) { |n| "A Very Special Event #{n}" }
+    slug { headline.parameterize }
+    body "This is a very special event."
     etype "comm" # This is actually "type" in mercer
     sponsor "Patt Morrison"
     sponsor_link "http://oncentral.org"
@@ -233,7 +233,7 @@ end
     archive_description "This is the description that shows after the event has happened"
     is_published 1
     show_comments 1
-    _teaser "This is a short teaser"
+    teaser "This is a short teaser"
 
     trait :multiple_days_past do
       starts_at { 3.days.ago }
@@ -515,14 +515,21 @@ end
     sequence(:published_at) { |n| Time.now + 60*60*n }
   end
   
+  trait :all_cb_fields do
+    sequence(:headline)       { |n| "Some Content #{n}" }
+    sequence(:short_headline) { |n| "Short #{n}" }
+    teaser  { "Teaser for #{headline}" }
+    body    { "Body for #{headline}" }
+  end
+    
 
 # VideoShell ##########################################################
   factory :video_shell do
     content_base
     
-    sequence(:headline) { |n| "This is a video #{n}" }
-    slug { headline.parameterize }
-    body { "Body for #{headline}" }
+    sequence(:headline)   { |n| "Some Content #{n}" }
+    teaser                { "Teaser for #{headline}" }    
+    slug                  { headline.parameterize }
     
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
@@ -536,12 +543,10 @@ end
 # NewsStory #########################################################
   factory :news_story do
     content_base
+    all_cb_fields
     
-    sequence(:headline) { |n| "This is news story ##{n}" }
     slug { headline.parameterize }
     news_agency "KPCC"
-    _teaser { "Teaser for #{headline}" }
-    body { "Body for #{headline}" }
     locale "local"
     
     ignore { related_factory "content_shell" }
@@ -557,10 +562,11 @@ end
   factory :show_episode, aliases: [:episode] do
     content_base
     show
+
+    sequence(:headline)       { |n| "Some Content #{n}" }
+    teaser  { "Teaser for #{headline}" }
     
     sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
-    sequence(:title) { "AirTalk for #{air_date}" }
-    _teaser { "Teaser for #{title}" }
     
     ignore { segment_count 0 }
     ignore { related_factory "content_shell" }
@@ -578,13 +584,10 @@ end
   factory :show_segment, aliases: [:segment] do
     content_base    
     show
+    all_cb_fields
     
-    sequence(:title) { |n| "Show Segment #{n}" }
-    slug { title.parameterize }
-    _teaser { "Teaser for #{title}" }
-    body { "Body for #{title}" }
+    slug { headline.parameterize }
     locale "local"
-    _short_headline { "Short #{title}" }
     audio_date { Time.now }
     enco_number 999
 
@@ -602,10 +605,9 @@ end
     content_base    
     author
     blog
+    all_cb_fields
     
-    sequence(:title) { |n| "Blog Entry #{n}" }
-    slug { title.parameterize }
-    content { "Content for #{title}" }
+    slug { headline.parameterize }
     blog_slug { blog.slug }
 
     ignore { related_factory "content_shell" }
@@ -625,9 +627,10 @@ end
   factory :content_shell do
     content_base
     
-    sequence(:headline) { |n| "This is some outside Content #{n}" }
+    sequence(:headline) { |n| "Some Content #{n}" }
+    teaser { "Teaser for #{headline}" }
+    
     site "blogdowntown"
-    _teaser { "Teaser for #{headline}" }
     url { "http://blogdowntown.com/2011/11/6494-#{headline.parameterize}" }
     
     ignore { related_factory "video_shell" }
