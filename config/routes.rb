@@ -150,7 +150,7 @@ Scprv4::Application.routes.draw do
   # -- Videos -- #
   match '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
   match '/video/'           => "video#index",   as: :video_index
-  match '/video/list/'      => "videos#list",   as: :video_list
+  match '/video/list/'      => "video#list",   as: :video_list
   
   
   # -- Listen Live -- #
@@ -176,13 +176,12 @@ Scprv4::Application.routes.draw do
   
   #----------
   # PIJ Queries
-  match '/network/:slug/' => "pij_queries#show",  as: :pij_query
-  match '/network/'       => "pij_queries#index", as: :pij_queries
-  
+  match '/network/questions/:slug/' => "pij_queries#show",  as: :pij_query
+  match '/network/'                 => "pij_queries#index", as: :pij_queries
   
   # -- RSS feeds -- #
-  #match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
-  #match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
+  match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
+  match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
   
   # -- podcasts -- #
   match '/podcasts/:slug/' => 'podcasts#podcast', :as => :podcast

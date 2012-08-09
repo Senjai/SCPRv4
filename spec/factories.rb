@@ -451,16 +451,49 @@ end
 # PijQuery #########################################################
 factory :pij_query do
   sequence(:title) { |n| "PIJ Query ##{n}"}
-  slug { title.parameterize }
-  query_url "http://www.publicradio.org/applications/formbuilder/user/form_display.php?isPIJ=Y&form_code=2dc7d243ce2c"
-  query_type "evergreen"
-  
+  slug        { title.parameterize }
+  query_url   "http://www.publicradio.org/applications/formbuilder/user/form_display.php?isPIJ=Y&form_code=2dc7d243ce2c"
   form_height "2300"
+  
+  # Defaults
+  is_active     true
+  published_at  { 1.day.ago }
+  query_type    "news"
+    
+  trait :utility do
+    query_type "utility"
+  end
+  
+  trait :evergreen do
+    query_type "evergreen"
+  end
+  
+  trait :news do
+    query_type "news"
+  end
   
   trait :visible do
     is_active true
     published_at  { 1.day.ago }
     expires_at    { 1.day.from_now }
+  end
+  
+  trait :inactive do
+    is_active     false
+    published_at  { 1.day.ago }
+    expires_at    { 1.day.from_now }
+  end
+  
+  trait :unpublished do
+    is_active     true
+    published_at  { 1.day.from_now }
+    expires_at    { 2.days.from_now }
+  end
+  
+  trait :expired do
+    is_active     { true }
+    published_at  { 2.days.ago }
+    expires_at    { 1.day.ago }
   end
 end
 
