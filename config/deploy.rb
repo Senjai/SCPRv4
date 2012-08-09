@@ -67,23 +67,19 @@ namespace :deploy do
     # By default it will allow admin
     task :disable, :roles => :web, :except => { :no_release => true } do
       require 'erb'
-      on_rollback { run "rm -f #{shared_path}/system/maintenance/*" }
+      on_rollback { run "rm -f #{shared_path}/system/#{maintenance_basename}.html" }
 
       reason = ENV['REASON']
       deadline = ENV['UNTIL']
-      disable_mode = ENV['ALL'] == ("true"||"1") ? "HARD" : "SOFT"
 
       template = File.read(maintenance_template_path)
       result = ERB.new(template).result(binding)
 
-      run "mkdir -p #{shared_path}/system/maintenance/"      
-      put result, "#{shared_path}/system/maintenance/#{maintenance_basename}.html", :mode => 0644
-      
-      run "touch #{shared_path}/system/maintenance/DISABLE_#{disable_mode}.txt"
+      put result, "#{shared_path}/system/#{maintenance_basename}.html", :mode => 0644      
     end
 
     task :enable, :roles => :web, :except => { :no_release => true } do
-      run "rm -rf #{shared_path}/system/maintenance/*"
+      run "rm -f #{shared_path}/system/#{maintenance_basename}.html"
     end
   end
   
