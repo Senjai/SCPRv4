@@ -41,6 +41,10 @@ group :assets do
   gem 'oily_png'
 end
 
+group :development do
+  gem "rack-mini-profiler"
+end
+
 group :test, :development do
 	gem "rspec-rails"
 	gem 'guard-rspec'

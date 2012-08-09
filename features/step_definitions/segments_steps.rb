@@ -1,12 +1,12 @@
 #### Setup
 Given /^the program has (\d+) segments?$/ do |num|
   @segments = create_list :show_segment, num.to_i, show: @program, asset_count: 1
-  @segment = @segments[rand(@segments.length)]
+  @segment = @segments[rand(@segments.size)]
 end
 
 Given /^there (?:is|are) (\d+) segments?$/ do |num|
   @segments = create_list :show_segment, num.to_i
-  @segment = @segments[rand(@segments.length)]
+  @segment = @segments[rand(@segments.size)]
 end
 
 Given /^(?:each|the) episode has (\d+) segments?$/ do |num|

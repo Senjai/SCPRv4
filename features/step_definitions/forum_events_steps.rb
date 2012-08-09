@@ -1,7 +1,7 @@
 #### Setup
 Given /^there (?:is|are) (\d+) upcoming forum events?$/ do |num|
   @events = create_list :event, num.to_i
-  @event = @events[rand(@events.length)]
+  @event = @events[rand(@events.size)]
   Event.all.count.should eq num.to_i
 end
 

@@ -8,7 +8,7 @@ end
 
 Given /^(\d+) news stor(?:ies|y)$/ do |num|
   @news_stories = create_list :news_story, num.to_i
-  @news_story = @news_stories[rand(@news_stories.length)]
+  @news_story = @news_stories[rand(@news_stories.size)]
   @news_stories.count.should eq num.to_i
 end
 

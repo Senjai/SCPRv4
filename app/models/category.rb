@@ -107,7 +107,7 @@ class Category < ActiveRecord::Base
 
       candidates << {
         :content  => slideshow,
-        :score    => (5 + slideshow.assets.length) * Math.exp( -0.01 * ((Time.now - slideshow.public_datetime) / 3600) ),
+        :score    => (5 + slideshow.assets.size) * Math.exp( -0.01 * ((Time.now - slideshow.public_datetime) / 3600) ),
         :metric   => :slideshow
       }
     end
