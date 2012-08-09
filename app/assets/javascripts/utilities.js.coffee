@@ -140,10 +140,8 @@ class scpr.SocialTools
         
         # add share functionality for email
         $(@options.emailfinder).on "click", (evt) =>
-            if url = $(evt.target).attr("data-url")
-                headline = $(evt.target).attr("data-text")
-                teaser = $(evt.target).attr("data-teaser")
-                emurl = "/content/share?url=#{url}&headline=#{headline}&teaser=#{teaser}"
+            if url = $(evt.target).attr("data-obj-key")
+                emurl = "/content/share?obj_key=#{obj_key}"
                 window.open emurl, 'pop_up','height=650,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'
 
     #----------

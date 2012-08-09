@@ -1,4 +1,4 @@
-<%= simple_form_for @message, :url => content_email_path do |f| %>
+<%= simple_form_for @message, :url => content_email_path(obj_key: @content.obj_key) do |f| %>
 
 	<h6>Email this to a friend:</h6>
 	<hr />
@@ -14,25 +14,21 @@
 	<% end %>
     <ul class="inputs-list">
     	<li class="field">
-	      <%= f.label :email, "Send This To:" %>
-	      <%= f.text_field :email, :class => "xlarge", :placeholder => "Email address" %>
+	      <%= f.label 		:email, "Send This To:" %>
+	      <%= f.text_field 	:email, :class => "xlarge", :placeholder => "Email address" %>
 	    </li>
 		<li class="field">
-	      <%= f.label :name, "From:" %>
-	      <%= f.text_field :name, :class => "xlarge", :placeholder => "Your name" %>
+	      <%= f.label 		:name, 	"From:" %>
+	      <%= f.text_field 	:name, 	:class => "xlarge", :placeholder => "Your name" %>
 	    </li>
 		<li class="field">
-	      <%= f.label :body, "Add a personal message:" %>
-	      <%= f.text_area :body, :class => "xlarge" %>
+	      <%= f.label 		:body, 	"Add a personal message:" %>
+	      <%= f.text_area 	:body, 	:class => "xlarge" %>
 	    </li>
     </ul>
-	
-	<%= f.hidden_field :url, :value => @content.remote_link_path %>
-	<%= f.hidden_field :headline, :value => @content.headline %>
-	<%= f.hidden_field :teaser, :value => @content.teaser %>
   </fieldset>
   
   <fieldset>
-    <%= f.submit "Share", :class => "btn primary" %>
+    <%= f.submit "Share", 	:class => "btn primary" %>
   </fieldset>
 <% end %>

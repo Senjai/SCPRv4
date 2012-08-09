@@ -31,7 +31,7 @@
 							</tr>
 							<tr>
 								<td height="20" valign="top" width="600" colspan="2">
-									<img src="<%= "http://scpr.org#{image_path('breaking-news/breaker.jpg')}" %>" height="20" alt="" style="border: 0;" width="600" />
+									<img src="<%= image_path('breaking-news/breaker.jpg') %>" height="20" alt="" style="border: 0;" width="600" />
 								</td>
 							</tr>
 							<tr>
@@ -41,7 +41,7 @@
 							</tr>
 								<tr>
 									<td height="20" valign="top" width="600" colspan="2">
-										<img src="<%= "http://scpr.org#{image_path('breaking-news/breaker.jpg')}" %>" height="20" alt="" style="border: 0;" width="600" />
+										<img src="<%= image_path('breaking-news/breaker.jpg') %>" height="20" alt="" style="border: 0;" width="600" />
 									</td>
 								</tr>
 						</table>
@@ -67,9 +67,9 @@
 									<table cellspacing="0" border="0" cellpadding="0">
 										<tr>
 											<td class="floated-copy" valign="top" style="padding: 0 20px 20px 20px; color: #000; font-size: 14px; font-family: Georgia; line-height: 20px;" width="600">				
-												<h1 style="color:#000;font-family:Helvetica, sans-serif;font-size:28px;font-weight:bold;line-height:28px;"><%= @message.headline %></h1>
-												<p style="color:#000;font-family:Georgia, serif;font-size:16px;line-height:26px;"><%= @message.teaser %></p>
-												<p style="font-family:Helvetica, sans-serif;font-weight:bold;">Read the full story: <a href="<%= @message.url %>" style="font-weight:bold;"><%= @message.url %></a></p>
+												<h1 style="color:#000;font-family:Helvetica, sans-serif;font-size:28px;font-weight:bold;line-height:28px;"><%= @content.headline %></h1>
+												<p style="color:#000;font-family:Georgia, serif;font-size:16px;line-height:26px;"><%= @content.teaser %></p>
+												<p style="font-family:Helvetica, sans-serif;font-weight:bold;">Read the full story: <a href="<%= @content.remote_link_path %>" style="font-weight:bold;"><%= @content.remote_link_path %></a></p>
 											</td>
 										</tr>
 									</table>

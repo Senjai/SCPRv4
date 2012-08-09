@@ -271,7 +271,13 @@ end
     end
   end
   
-
+# ContentEmail#########################################################
+  factory :content_email do # Must pass in content
+    name  "Bryan"
+    email "bricker@scpr.org"
+  end
+  
+  
 # ContentAsset#########################################################
   factory :asset, class: ContentAsset do
     sequence(:id, 1)

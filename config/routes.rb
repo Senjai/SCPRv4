@@ -163,8 +163,8 @@ Scprv4::Application.routes.draw do
   match '/search/' => 'search#index', :as => :search
   
   # -- Article Email Sharing -- #
-  match '/content/share' => 'content_email#new', :as => :content_email, :via => :get
-  match '/content/share' => 'content_email#create', :as => :content_email, :via => :post
+  get   '/content/share' => 'content_email#new',    :as => :content_email
+  post  '/content/share' => 'content_email#create', :as => :content_email
 
   # -- Archive -- #
   post  '/archive/process/'               => "archive#process_form",  as: :archive_process_form
