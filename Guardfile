@@ -1,4 +1,4 @@
-guard 'rspec', cli: "-c -f progress", all_after_pass: false do
+guard :rspec, cli: "-c -f progress", all_after_pass: false do
   # --format nested --profile --fail-fast
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
@@ -13,13 +13,13 @@ guard 'rspec', cli: "-c -f progress", all_after_pass: false do
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }  
 end
 
-guard 'cucumber', cli: "-p default", all_after_pass: false do
+guard :cucumber, cli: "-p default", all_after_pass: false do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
 end
 
-guard 'jasmine' do
+guard :jasmine, port: 3000, all_after_pass: false do
   watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$})         { "spec/javascripts" }
   watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
   watch(%r{app/assets/javascripts/(.+?)\.(js\.coffee|js|coffee)$})  { |m| "spec/javascripts/#{m[1]}_spec.#{m[2]}" }
