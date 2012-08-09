@@ -317,15 +317,13 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   add_index "contentbase_misseditcontent", ["content_type_id"], :name => "contentbase_misseditcontent_e4470c6e"
 
   create_table "contentbase_videoshell", :force => true do |t|
-    t.string   "headline",       :limit => 200,                                           :null => false
-    t.text     "body",           :limit => 2147483647,                                    :null => false
-    t.text     "teaser",         :limit => 2147483647,                                    :null => false
-    t.integer  "status",                               :default => 0,                     :null => false
-    t.datetime "published_at",                         :default => '2012-03-02 15:14:07', :null => false
-    t.string   "short_headline", :limit => 100
-    t.string   "slug",           :limit => 50,                                            :null => false
-    t.datetime "created_at",                                                              :null => false
-    t.datetime "updated_at",                                                              :null => false
+    t.string   "headline",     :limit => 200,                                           :null => false
+    t.text     "teaser",       :limit => 2147483647,                                    :null => false
+    t.integer  "status",                             :default => 0,                     :null => false
+    t.datetime "published_at",                       :default => '2012-03-02 15:14:07', :null => false
+    t.string   "slug",         :limit => 50,                                            :null => false
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
   end
 
   add_index "contentbase_videoshell", ["slug"], :name => "contentbase_videoshell_a951d5d6"

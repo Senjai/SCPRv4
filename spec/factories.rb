@@ -526,9 +526,10 @@ end
 # VideoShell ##########################################################
   factory :video_shell do
     content_base
-    all_cb_fields
     
-    slug { headline.parameterize }
+    sequence(:headline)   { |n| "Some Content #{n}" }
+    teaser                { "Teaser for #{headline}" }    
+    slug                  { headline.parameterize }
     
     ignore { related_factory "content_shell" }
     ignore { category_type :category_not_news }
