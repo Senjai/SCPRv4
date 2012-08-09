@@ -3,12 +3,15 @@ class ShowEpisode < ContentBase
   
   CONTENT_TYPE = 'shows/episode'
   
+  acts_as_content body:     :teaser, 
+                  comments: false
+                  
   # -------------------
   # Administration
   administrate
   self.list_order = "published_at desc"
   self.list_fields = [
-    ['title'],
+    ['headline'],
     ['show'],
     ['air_date', display_helper: :display_date],
     ['status'],
@@ -17,23 +20,29 @@ class ShowEpisode < ContentBase
   
   # -------------------
   # Validations
-  validates_presence_of :show_id, :air_date, :title
+  validates_presence_of :show_id, :air_date, :headline
   
   # -------------------
   # Associations
-  belongs_to :show, :class_name => "KpccProgram"
-  has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "episode_id"
-  has_many :segments, :through => :rundowns, :order => "segment_order asc", :class_name => "ShowSegment", :foreign_key => "segment_id"
+  belongs_to  :show,      class_name:   "KpccProgram"
+  
+  has_many    :rundowns,  class_name:   "ShowRundown", 
+                          foreign_key:  "episode_id"
+  
+  has_many    :segments,  class_name:   "ShowSegment", 
+                          foreign_key:  "segment_id", 
+                          through:      :rundowns, 
+                          order:        "segment_order asc"
     
   # -------------------
   # Scopes
   scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
-  scope :upcoming, where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc")
+  scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
   
   
   define_index do
-    indexes title
-    indexes _teaser
+    indexes headline
+    indexes teaser
     has "''", :as => :category, :type => :integer
     has "0", :as => :category_is_news, :type => :boolean
     has published_at
@@ -43,20 +52,6 @@ class ShowEpisode < ContentBase
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
     where "status = #{STATUS_LIVE}"
     join audio
-  end
-      
-  #----------
-  
-  def headline
-    self.title
-  end
-  
-  def body
-    return ""
-  end
-  
-  def has_format?
-    false
   end
 
   #----------

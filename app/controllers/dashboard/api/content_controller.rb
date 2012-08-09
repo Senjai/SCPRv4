@@ -40,7 +40,7 @@ class Dashboard::Api::ContentController < ApplicationController
     # is this valid content?
     @content = ContentBase.obj_by_key(params[:id])
     
-    [:headline, :_short_headline, :_teaser, :body, :content].each do |f|
+    [:headline, :short_headline, :teaser, :body, :content].each do |f|
       if params[ f ]
         @content[ f ] = params[ f ]
       end
@@ -75,13 +75,13 @@ class Dashboard::Api::ContentController < ApplicationController
     
     # nope -- build a new cache
     
-    contents = ThinkingSphinx.search(
-      '',
+    contents = ThinkingSphinx.search('',
       :classes    => ContentBase.content_classes,
       :page       => 1,
       :per_page   => 20,
       :order      => :published_at,
       :sort_mode  => :desc,
+      retry_stale: true
     )
         
     json = contents.to_json

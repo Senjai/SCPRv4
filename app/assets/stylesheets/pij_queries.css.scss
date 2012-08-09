@@ -1,0 +1,11 @@
+.queries {
+	ul.featured {
+		list-style-type: none;
+		margin: 0;
+		li {
+			margin-bottom: 10px;
+			background:$nearWhite;
+			padding:$baseline / 2;
+		}
+	}
+}

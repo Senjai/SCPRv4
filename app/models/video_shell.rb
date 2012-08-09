@@ -5,6 +5,8 @@ class VideoShell < ContentBase
   CONTENT_TYPE_ID = 125
   ADMIN_PREFIX = "contentbase/videoshell"
   
+  acts_as_content body: :teaser
+  
   # -------------------
   # Administration
   administrate
@@ -23,7 +25,7 @@ class VideoShell < ContentBase
     
   define_index do
     indexes headline
-    indexes _teaser
+    indexes teaser
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
@@ -34,15 +36,13 @@ class VideoShell < ContentBase
     where "status = #{STATUS_LIVE}"
   end
   
+  #--------------------
+  
   def link_path(options={})
     Rails.application.routes.url_helpers.video_path(options.merge!({
       id: self.id,
       slug: self.slug,
       trailing_slash: true
     }))
-  end
-  
-  def has_format?
-    false
   end
 end
