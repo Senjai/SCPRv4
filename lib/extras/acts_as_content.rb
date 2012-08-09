@@ -203,9 +203,13 @@ module ActsAsContent
           stripped_body = ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,'')
 
           # first test if the first paragraph is an acceptable length
-          if paragraphs = stripped_body.match /^(.+)/
-            first = paragraphs[1]
+          paragraphs = stripped_body.match /^(.+)/
+          
+          if !paragraphs
+            return ""
           end
+          
+          first = paragraphs[1]
           
           if !first
             return ""
