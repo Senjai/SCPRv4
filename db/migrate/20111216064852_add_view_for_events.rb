@@ -3,7 +3,7 @@ class AddViewForEvents < ActiveRecord::Migration
     execute("
       CREATE VIEW rails_events_event as 
         select
-          id,title,slug,description,
+          id,title,slug,body,
           type as etype,
           sponsor,sponsor_link,starts_at,ends_at,is_all_day,
           location_name,location_link,rsvp_link,

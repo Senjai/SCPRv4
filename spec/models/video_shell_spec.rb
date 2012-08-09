@@ -8,6 +8,8 @@ describe VideoShell do
     end
   end
   
+  #--------------------
+  
   describe "scopes" do
     it "#published only selects published content" do
       published = create_list :video_shell, 3, status: 5
@@ -16,10 +18,36 @@ describe VideoShell do
     end
   
     it "#published orders by published_at descending" do
-      video_shells = 3.times { |n| create :video_shell, status: 5, published_at: Time.now + 60*n }
-      VideoShell.published.first.should eq VideoShell.where(status: ContentBase::STATUS_LIVE).order("published_at desc").first
+      VideoShell.published.to_sql.should match /published_at desc/i
     end
   end
+
+  # ----------------
+
+  describe "has_format?" do
+    it "is true" do
+      create(:video_shell).has_format?.should be_false
+    end
+  end
+
+  # ----------------
+  
+  describe "auto_published_at" do
+    it "is true" do
+      create(:video_shell).auto_published_at.should be_true
+    end
+  end
+    
+  #--------------------
+
+  describe "body" do
+    it "is the teaser" do
+      video = build :video_shell
+      video.body.should eq video.teaser
+    end
+  end
+  
+  #--------------------
   
   describe "link_path" do
     it "does not override the hard-coded options" do

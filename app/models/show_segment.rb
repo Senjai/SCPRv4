@@ -4,6 +4,8 @@ class ShowSegment < ContentBase
   CONTENT_TYPE = "shows/segment"
   PRIMARY_ASSET_SCHEME = :segment_asset_scheme
 
+  acts_as_content
+  
   # -------------------
   # Administration
   administrate
@@ -15,8 +17,8 @@ class ShowSegment < ContentBase
   has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
 
   define_index do
-    indexes title
-    indexes _teaser
+    indexes headline
+    indexes teaser
     indexes body
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
@@ -43,10 +45,6 @@ class ShowSegment < ContentBase
     end
   end
   
-  def headline
-    self.title
-  end
-  
   def byline_elements
     [self.show.title]
   end
@@ -55,10 +53,6 @@ class ShowSegment < ContentBase
   
   def canFeature?
     self.assets.present?
-  end
-  
-  def has_format?
-    false
   end
   
   #----------

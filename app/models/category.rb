@@ -21,14 +21,15 @@ class Category < ActiveRecord::Base
       :per_page   => per_page,
       :order      => :published_at,
       :sort_mode  => :desc,
-      :with       => { :category => self.id }      
+      :with       => { :category => self.id },
+      retry_stale: true
     }
     
     if without_obj && without_obj.respond_to?("obj_key")
       args[:without] = { :obj_key => without_obj.obj_key.to_crc32 }
     end
     
-    ThinkingSphinx.search '', args
+    ThinkingSphinx.search('', args)
   end
   
   #----------
@@ -63,14 +64,16 @@ class Category < ActiveRecord::Base
 
     # -- then try to feature videos since they are less common --#
     
-    video = ThinkingSphinx.search '',
+    video = ThinkingSphinx.search('',
       :classes      => [VideoShell],
       :page         => 1,
       :per_page     => 1,
       :order        => :published_at,
       :sort_mode    => :desc,
       :with         => { :category => self.id },
-      :without_any  => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+      :without_any  => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      retry_stale: true
+    )
       
     if video.present?
       # Initial score: 15
@@ -86,14 +89,16 @@ class Category < ActiveRecord::Base
     
     # -- now try slideshows -- #
 
-    slideshow = ThinkingSphinx.search '',
+    slideshow = ThinkingSphinx.search('',
       :classes    => ContentBase.content_classes,
       :page       => 1,
       :per_page   => 1,
       :order      => :published_at,
       :sort_mode  => :desc,
       :with       => { :category => self.id, :is_slideshow => true },
-      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      retry_stale: true
+    )
 
     if slideshow.any?
       # Initial score:  5 + number of slides
@@ -102,21 +107,23 @@ class Category < ActiveRecord::Base
 
       candidates << {
         :content  => slideshow,
-        :score    => (5 + slideshow.assets.length) * Math.exp( -0.01 * ((Time.now - slideshow.public_datetime) / 3600) ),
+        :score    => (5 + slideshow.assets.size) * Math.exp( -0.01 * ((Time.now - slideshow.public_datetime) / 3600) ),
         :metric   => :slideshow
       }
     end
 
     # -- segment in the last two days? -- #
 
-    segments = ThinkingSphinx.search '',
+    segments = ThinkingSphinx.search('',
       :classes    => [ShowSegment],
       :page       => 1,
       :per_page   => 1,
       :order      => :published_at,
       :sort_mode  => :desc,
       :with       => { :category => self.id },
-      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      retry_stale: true
+    )
 
     if segments.any?
       # Initial score:  10

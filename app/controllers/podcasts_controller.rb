@@ -28,14 +28,17 @@ class PodcastsController < ApplicationController
     elsif @podcast.item_type == "content"
       @obj_type = "contentbase:new"
       
-      @content = ThinkingSphinx.search '', 
+      @content = ThinkingSphinx.search('', 
         :with       => { :has_audio => true }, 
         :without    => { :category => '' },
         :classes    => ContentBase.content_classes, 
         :order      => :published_at, 
         :page       => 1, 
         :per_page   => 15, 
-        :sort_mode  => :desc
+        :sort_mode  => :desc,
+        retry_stale: true
+
+      )
     else
       # nothing...
     end

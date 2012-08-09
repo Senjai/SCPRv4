@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe BlogEntry do
-  it "responds to category" do
-    entry = create_list :blog_entry, 3, with_category: true
-    entry.any? { |e| e.category == nil }.should be_false
+  
+  describe "validations" do
+    it { should validate_presence_of :headline }
+    it { should validate_presence_of :slug }  
   end
   
   # ----------------
@@ -46,7 +47,14 @@ describe BlogEntry do
   end
   
   # ----------------
+  
+  it "responds to category" do
+    entry = create_list :blog_entry, 3, with_category: true
+    entry.any? { |e| e.category == nil }.should be_false
+  end
 
+  # ----------------
+  
   describe "scopes" do
     describe "#published" do    
       it "orders published content by published_at descending" do
@@ -58,20 +66,27 @@ describe BlogEntry do
   end
 
   # ----------------
+
+  describe "has_format?" do
+    it "is true" do
+      create(:blog_entry).has_format?.should be_true
+    end
+  end
+
+  # ----------------
+  
+  describe "auto_published_at" do
+    it "is true" do
+      create(:blog_entry).auto_published_at.should be_true
+    end
+  end
+  
+  # ----------------
   
   describe "link_path" do
     it "does not override hard-coded options" do
       entry = create :blog_entry
       entry.link_path(slug: "wrong").should_not match "wrong"
-    end
-  end
-  
-  # ----------------
-
-  describe "headline" do
-    it "is the title" do
-      entry = build :blog_entry
-      entry.headline.should eq entry.title
     end
   end
 end

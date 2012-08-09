@@ -34,14 +34,6 @@ class Blog < ActiveRecord::Base
   scope :local, where(is_remote: false)
   scope :remote, where(is_remote: true)
   
-  def teaser
-    self._teaser
-  end
-  
-  def teaser=(txt)
-    self._teaser = txt
-  end
-  
   def remote_link_path
     Rails.application.routes.url_helpers.blog_url(self.slug)
   end

@@ -150,7 +150,7 @@ Scprv4::Application.routes.draw do
   # -- Videos -- #
   match '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
   match '/video/'           => "video#index",   as: :video_index
-  match '/video/list/'      => "videos#list",   as: :video_list
+  match '/video/list/'      => "video#list",   as: :video_list
   
   
   # -- Listen Live -- #
@@ -167,26 +167,25 @@ Scprv4::Application.routes.draw do
   match '/content/share' => 'content_email#create', :as => :content_email, :via => :post
 
   # -- Archive -- #
-  post  '/archive/process_archive_select' => "home#process_archive_select",  as: :process_archive_select
-  match '/archive(/:year/:month/:day)/' => "home#archive", as: :archive, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }
+  post  '/archive/process/'               => "archive#process_form",  as: :archive_process_form
+  match '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }
   
   # -- News Stories -- #
-  match '/news/:year/:month/:day/:id/:slug/' => 'news#story', :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
-  match '/news/:year/:month/:day/:slug/' => 'news#old_story', :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
+  match '/news/:year/:month/:day/:id/:slug/'  => 'news#story',      :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
+  match '/news/:year/:month/:day/:slug/'      => 'news#old_story',  :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
   
   #----------
   # PIJ Queries
-  match '/network/:slug/' => "pij_queries#show",  as: :pij_query
-  match '/network/'       => "pij_queries#index", as: :pij_queries
-  
+  match '/network/questions/:slug/' => "pij_queries#show",  as: :pij_query
+  match '/network/'                 => "pij_queries#index", as: :pij_queries
   
   # -- RSS feeds -- #
-  #match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
-  #match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
+  match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
+  match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
   
   # -- podcasts -- #
-  match '/podcasts/:slug/' => 'podcasts#podcast', :as => :podcast
-  match '/podcasts/' => 'podcasts#index', :as => :podcasts
+  match '/podcasts/:slug/'  => 'podcasts#podcast', :as => :podcast
+  match '/podcasts/'        => 'podcasts#index', :as => :podcasts
 
   # -- Sections -- #
   match '/category/carousel-content/:object_class/:id' => 'category#carousel_content', as: :category_carousel, defaults: { format: :js }

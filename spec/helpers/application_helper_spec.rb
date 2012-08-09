@@ -44,6 +44,26 @@ describe ApplicationHelper do
   end
   
   #------------------------
+
+  describe "retry stale for sphinx" do
+    before :all do
+      setup_sphinx
+    end
+
+    after :all do
+      teardown_sphinx
+    end
+
+    it "doesn't return a nil value" do
+      generate_and_index_content(num: 1)
+      ContentShell.all.first.destroy
+      ContentShell.count.should eq 0
+      arts = get_latest_arts
+      arts.should_not include nil
+    end
+  end
+  
+  #------------------------
   
   describe "get latest using sphinx" do
     before :all do
@@ -81,7 +101,7 @@ describe ApplicationHelper do
       @arts.any? { |r| r.category.try(:is_news) == true }.should be_false # TODO Figure out why it's returning records without a category sometimes.
     end
 
-    it "does not return ShowEpisodes" do
+    it "arts does not return ShowEpisodes" do
       @arts.any? { |r| r.is_a? ShowEpisode }.should be_false
     end
     
@@ -100,7 +120,7 @@ describe ApplicationHelper do
     end
     
     it "renders raw when the content has format (i.e. uses wysiwyg)" do
-      content = build :blog_entry, content: "This \n is \n an \n\n entry"
+      content = build :blog_entry, body: "This \n is \n an \n\n entry"
       helper.render_content_body(content).should_not match /br/
       helper.render_content_body(content).should_not match /<p>/
     end

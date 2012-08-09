@@ -1,7 +1,7 @@
 #### Setup
 Given /^there (?:is|are) (\d+) video shells?$/ do |num|
   @video_shells = create_list :video_shell, num.to_i, asset_count: 1
-  @video_shell = @video_shells[rand(@video_shells.length)]
+  @video_shell = @video_shells[rand(@video_shells.size)]
   VideoShell.all.count.should eq num.to_i
 end
 

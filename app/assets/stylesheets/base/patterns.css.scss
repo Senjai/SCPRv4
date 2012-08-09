@@ -698,6 +698,23 @@ color:$nearBlack;
   }
 }
 
+// Collapsible items
+.collapse {
+	display:none;
+	&.in {
+		display:block;
+	}
+}
+.collapse-toggle {
+	&:hover {
+		cursor:pointer;
+		text-decoration:underline;
+	}
+	.caret {
+		margin:10px 2px 0 0;
+	}
+}
+
 
 // Dividers
 // --------
@@ -758,6 +775,23 @@ color:$nearBlack;
   &.next a {
     border: 0;
   }
+}
+
+// HEROS
+// -----
+.section-hero {
+	background:url(image_path('about/bg-hero.png')) no-repeat 30px bottom;
+	padding-top:40px;
+	h1, h2, h3, h4, h5 {
+		color:$orangeDark;
+		@include font-slab-headings(300, 32px);
+	}
+	p {
+		@include font-slab-headings(300, 24px, 36px);
+		strong {
+			font-weight:800;
+		}
+	}
 }
 
 

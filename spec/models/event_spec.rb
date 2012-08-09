@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Event do  
   describe "associations" do
-    it { should have_many :assets }
+    it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
   end
   
   #-------------------
@@ -10,12 +10,33 @@ describe Event do
   describe "content base attributes" do
     it { should respond_to :headline }
     it { should respond_to :short_headline }
-    it { should respond_to :obj_key }
-    it { should respond_to :remote_link_path }
+    it { should respond_to :body }
     it { should respond_to :teaser }
     it { should respond_to :link_path }
+    it { should respond_to :remote_link_path }
+    it { should respond_to :obj_key }
+    it { should respond_to :auto_published_at }
+    it { should respond_to :has_format? }
+    it { should respond_to :disqus_identifier }
+    it { should respond_to :disqus_shortname }
   end
-    
+  
+  # ----------------
+
+  describe "has_format?" do
+    it "is true" do
+      create(:event).has_format?.should be_false
+    end
+  end
+
+  # ----------------
+  
+  describe "auto_published_at" do
+    it "is true" do
+      create(:event).auto_published_at.should be_false
+    end
+  end
+  
   #-------------------
   
   describe "inline_address" do
@@ -233,20 +254,20 @@ describe Event do
   #-------------------
 
   describe "description" do
-    it "returns the description if the event is upcoming" do
-      event = build :event, description: "Future", archive_description: "Past"
+    it "returns the body if the event is upcoming" do
+      event = build :event, body: "Future", archive_description: "Past"
       event.stub(:upcoming?) { true }
       event.description.should match "Future"
     end
     
     it "returns the archive description if the event is in the past and it has an archive description" do
-      event = build :event, description: "Future", archive_description: "Past"
+      event = build :event, body: "Future", archive_description: "Past"
       event.stub(:upcoming?) { false }
       event.description.should match "Past"
     end
     
-    it "returns the description if the event is in the past and it does not have an archive description" do
-      event = build :event, description: "Future", archive_description: nil
+    it "returns the body if the event is in the past and it does not have an archive description" do
+      event = build :event, body: "Future", archive_description: nil
       event.stub(:upcoming?) { false }
       event.description.should match "Future"
     end
@@ -287,15 +308,6 @@ describe Event do
     it "does not override the hard-coded options" do
       entry = create :event
       entry.link_path(slug: "wrong").should_not match "wrong"
-    end
-  end
-
-  #-------------------
-  
-  describe "obj_key" do
-    it "returns an object key" do
-      event = create :event
-      event.obj_key.should eq "events/event:#{event.id}"
     end
   end
 
@@ -387,15 +399,6 @@ describe Event do
 
   #-------------------
   
-  describe "asset" do
-    it "can have an asset" do # TODO Stub the assethost requests
-      event = create :event, asset_count: 1
-      event.assets.first.asset.should be_present
-    end
-  end
-
-  #-------------------
-  
   describe "is_forum_event" do
     it "is true if event type in the ForumTypes variable" do
       Event::ForumTypes.each do |etype|
@@ -407,20 +410,6 @@ describe Event do
     it "is false if event is something else" do
       event = build :event, etype: "spon"
       event.is_forum_event?.should be_false
-    end
-  end
-  
-  #-------------------
-
-  describe "#remote_link_path" do
-    it "can generate a remote_link_path" do
-      event = create :event
-      event.remote_link_path.should_not be_nil
-    end
-
-    it "points to scpr.org" do
-      event = create :event
-      event.remote_link_path.should match "http://www.scpr.org"
     end
   end
 end
