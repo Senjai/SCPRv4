@@ -1,9 +1,13 @@
 class ContentMailer < ActionMailer::Base
   
   def email_content(message)
-    
-    mail :to => "sdillingham@scpr.org", :from => "scprweb@scpr.org", :subject => "Test Email Share", :body => "This is a sample shared article"
-    
+    @message = message
+    mail( 
+      :to => message.email, 
+      :from => "scprweb@scpr.org", 
+      :subject => "#{message.name} has shared an article with you from 89.3 KPCC", 
+      :template_path => 'content_email/email',
+      :template_name => 'template')
   end
   
 end

@@ -6,7 +6,7 @@ class ContentEmail
 
   attr_accessor :name, :email, :subject, :body, :url, :headline, :teaser
 
-  validates :name, :email, :body, :presence => true
+  validates :name, :email, :presence => true
   validates :email, :format => { :with => %r{.+@.+\..+} }, :allow_blank => true
  
  def initialize(attributes = {})

@@ -3,8 +3,8 @@
 	<h6>Email this to a friend:</h6>
 	<hr />
 	<div class="cbase">
-		<h2 class="story-headline"><%= @headline %></h2>
-		<p><%= @teaser %></p>
+		<h2 class="story-headline"><%= @content.headline %></h2>
+		<p><%= @content.teaser %></p>
 	</div>
 	<hr />
 
@@ -27,9 +27,9 @@
 	    </li>
     </ul>
 	
-	<%= f.hidden_field :url, :value => @url %>
-	<%= f.hidden_field :headline, :value => @headline %>
-	<%= f.hidden_field :teaser, :value => @teaser %>
+	<%= f.hidden_field :url, :value => @content.remote_link_path %>
+	<%= f.hidden_field :headline, :value => @content.headline %>
+	<%= f.hidden_field :teaser, :value => @content.teaser %>
   </fieldset>
   
   <fieldset>
