@@ -11,6 +11,9 @@ module ApplicationHelper
   # * shared/content/news/lead
   # * shared/content/default/lead
 
+  def acts_as_content?(content)
+    content.class.acting_as_content
+  end
   
   def render_content(content,context,options={})
     if !content
@@ -20,12 +23,12 @@ module ApplicationHelper
     html = ''
     
     (content.is_a?(Array) ? content : [content]).each do |c|
-      if c.respond_to?(:content) && c.content.is_a?(ContentBase)
+      if c.respond_to?(:content) && acts_as_content?(c.content)
         c = c.content
       end
       
       # if this isn't a contentbase object, assume it is broken and move on
-      if !c.is_a?(ContentBase)
+      if !acts_as_content?(c)
         next
         
         # FIXME: Should we also be raising a notification?
@@ -46,10 +49,7 @@ module ApplicationHelper
         ['default',context].join("/")
       ]
 
-      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }
-      
-      Rails.logger.debug "calling partial #{partial} for #{c}"
-      
+      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }      
       html << render(options.merge({:partial => "shared/content/#{partial}", :object => c, :as => :content}))
     end
     
@@ -369,5 +369,12 @@ module ApplicationHelper
   
   def relaxed_sanitize(html)
     Sanitize.clean(html.html_safe, Sanitize::Config::RELAXED)
+  end
+  
+  def split_collection(array, num)
+    last_num  = array.size - num
+    first     = array.first(num)
+    last      = array.last(last_num < 0 ? 0 : last_num)
+    return [first, last]
   end
 end

@@ -8,24 +8,38 @@ describe PijQueriesController do
       create :pij_query, :utility
     end
     
-    it "@evergreen only gets visible evergreen" do
-      queries   = create_list :pij_query, 3, :evergreen, :visible
+    it "@evergreen only gets non-featured visible evergreen" do
+      queries = create_list :pij_query, 3, :evergreen, :visible
       create :pij_query, :news, :visible
+      create :pij_query, :evergreen, :featured, :visible
 
       get :index
       evergreen = assigns(:evergreen)
       (evergreen & queries).should eq evergreen
     end
     
-    it "@news only gets visible news" do
+    it "@news only gets non-featured visible news" do
       queries = create_list :pij_query, 3, :news, :visible
       create :pij_query, :evergreen, :visible
+      create :pij_query, :news, :featured, :visible
 
       get :index
       news = assigns(:news)
       (news & queries).should eq news
     end
+    
+    it "@featured only gets featured queries" do
+      queries = create_list :pij_query, 3, :featured
+      create :pij_query, :evergreen, :unpublished
+      create :pij_query, :news, :visible
+      
+      get :index
+      featured = assigns(:featured)
+      (featured & queries).should eq featured
+    end
   end
+  
+  #-----------------
   
   describe "GET /show" do
     it "assigns the query based on slug" do

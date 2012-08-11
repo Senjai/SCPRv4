@@ -450,12 +450,13 @@ end
 
 # PijQuery #########################################################
 factory :pij_query do
-  sequence(:title) { |n| "PIJ Query ##{n}"}
-  slug        { title.parameterize }
+  sequence(:headline) { |n| "PIJ Query ##{n}"}
+  slug        { headline.parameterize }
   query_url   "http://www.publicradio.org/applications/formbuilder/user/form_display.php?isPIJ=Y&form_code=2dc7d243ce2c"
   form_height "2300"
   
   # Defaults
+  is_featured   false
   is_active     true
   published_at  { 1.day.ago }
   query_type    "news"
@@ -470,6 +471,10 @@ factory :pij_query do
   
   trait :news do
     query_type "news"
+  end
+  
+  trait :featured do
+    is_featured true
   end
   
   trait :visible do

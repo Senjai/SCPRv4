@@ -62,18 +62,15 @@ namespace :deploy do
   # Override disable/enable
   # https://github.com/capistrano/capistrano/blob/master/lib/capistrano/recipes/deploy.rb
   namespace :web do
-    # To disable all:
-    #   cap deploy:web:disable ALL=true
-    # By default it will allow admin
     task :disable, :roles => :web, :except => { :no_release => true } do
       require 'erb'
       on_rollback { run "rm -f #{shared_path}/system/#{maintenance_basename}.html" }
 
-      reason = ENV['REASON']
-      deadline = ENV['UNTIL']
+      reason    = ENV['REASON']
+      deadline  = ENV['UNTIL']
 
       template = File.read(maintenance_template_path)
-      result = ERB.new(template).result(binding)
+      result   = ERB.new(template).result(binding)
 
       put result, "#{shared_path}/system/#{maintenance_basename}.html", :mode => 0644      
     end

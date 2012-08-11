@@ -36,7 +36,7 @@ class ContentBase < ActiveRecord::Base
     %r{^/admin/shows/segment/(\d+)/}                 => 'shows/segment',
     %r{^/admin/shows/episode/(\d+)/}                 => 'shows/episode',
     %r{^/admin/contentbase/contentshell/(\d+)/}      => 'content/shell',
-    %r{^/admin/contentbase/videoshell/(\d+)/}      => 'content/video'    
+    %r{^/admin/contentbase/videoshell/(\d+)/}        => 'content/video'    
   }
 
   STORY_SCHEMES = [

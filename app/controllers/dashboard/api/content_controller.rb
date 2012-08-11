@@ -1,9 +1,9 @@
 class Dashboard::Api::ContentController < ApplicationController
   include ApplicationHelper
   
-  before_filter :require_admin
-  before_filter :set_access_control_headers
-  skip_before_filter :verify_authenticity_token, :only=>[:preview]
+  before_filter       :require_admin
+  before_filter       :set_access_control_headers
+  skip_before_filter  :verify_authenticity_token, only: :preview
   
   def options
     head :ok
@@ -35,7 +35,7 @@ class Dashboard::Api::ContentController < ApplicationController
   end
   
   #----------
-  
+
   def preview
     # is this valid content?
     @content = ContentBase.obj_by_key(params[:id])
@@ -68,7 +68,7 @@ class Dashboard::Api::ContentController < ApplicationController
   #----------
   
   def recent
-    # check if we have a cached podcast.  If so, short-circuit and return it
+    # Check if cache is already written. If so, short-circuit and return it
     if cache = Rails.cache.fetch("cbaseapi:recent")
       render :json => cache and return
     end

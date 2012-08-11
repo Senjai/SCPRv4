@@ -608,7 +608,7 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
 
   create_table "pij_query", :force => true do |t|
     t.string   "slug",         :limit => 50,         :null => false
-    t.string   "title",        :limit => 200,        :null => false
+    t.string   "headline",     :limit => 200,        :null => false
     t.text     "teaser",       :limit => 2147483647, :null => false
     t.text     "body",         :limit => 2147483647, :null => false
     t.string   "query_type",   :limit => 20,         :null => false
@@ -617,6 +617,7 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
     t.boolean  "is_active",                          :null => false
     t.datetime "published_at",                       :null => false
     t.datetime "expires_at"
+    t.boolean  "is_featured",                        :null => false
   end
 
   add_index "pij_query", ["slug"], :name => "slug", :unique => true

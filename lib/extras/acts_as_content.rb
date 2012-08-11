@@ -42,7 +42,23 @@ module ActsAsContent
   #
   # For the most part, the options can (and should) be left alone.
   #
+  
+  # Provides a reliable way for us to check if 
+  # the object has acts_as_content, also useful
+  # when stubbed in tests!
+  def self.extended(base)
+    class << base
+      attr_accessor :acting_as_content
+    end
+    # FIXME This returns nil, not false, for inherited classes
+    base.acting_as_content = false
+  end
+  
+  #-------------------
+  
   def acts_as_content(options={})
+    self.acting_as_content = true
+    
     only    = options.delete :only
     except  = options.delete :except
     
