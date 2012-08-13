@@ -13,6 +13,15 @@ class PijQuery < ActiveRecord::Base
   #------------
   # Administration
   administrate
+  self.list_fields = [
+    ['id'],
+    ['headline', link: true],
+    ['slug'],
+    ['query_type'],
+    ['is_active', title: "Active?"],
+    ['is_featured', title: "Featured?"],
+    ['published_at']
+  ]
   
   #------------
   # Scopes

@@ -27,6 +27,11 @@ class ContentBase < ActiveRecord::Base
     'content/shell' => "ContentShell"
   }
   
+  AS_CONTENT_CLASSES = {
+    'pij/query'     => "PijQuery",
+    'events/event'  => "Event"
+  }
+  
   CONTENT_MATCHES = {
     %r{^/news/\d+/\d\d/\d\d/(\d+)/.*}                => 'news/story',
     %r{^/admin/news/story/(\d+)/}                    => 'news/story',
@@ -62,21 +67,22 @@ class ContentBase < ActiveRecord::Base
   ]
     
   # All ContentBase objects have assets and alarms
-  has_many :bylines, :class_name => "ContentByline", :as => :content, dependent: :destroy
+  has_many :bylines,          as: :content, class_name: "ContentByline",  dependent: :destroy
   
-  has_many :brels, :class_name => "Related", :as => :content
-  has_many :frels, :class_name => "Related", :as => :related
+  has_many :brels,            as: :content, class_name: "Related"
+  has_many :frels,            as: :related, class_name: "Related"
   
-  has_many :related_links, class_name: "Link", as: :content, conditions: "link_type != 'query'"
-  has_many :queries, :class_name => "Link", :as => :content, :conditions => { :link_type => "query" }
+  has_many :related_links,    as: :content, class_name: "Link",           conditions: "link_type != 'query'"
+  has_many :queries,          as: :content, class_name: "Link",           conditions: { link_type: "query" }
   
-  has_one :content_category, :as => "content"
-  has_one :category, :through => :content_category
+  has_many :audio,            as: :content, order: "position asc"
+
+  has_one :content_category,  as: :content  
+  has_one :category,          through: :content_category
   
-  has_many :audio, :as => :content, :order => "position asc"
     
   def self.published
-    where(:status => STATUS_LIVE).order("published_at desc")
+    where(status: STATUS_LIVE).order("published_at desc")
   end
   
   #----------

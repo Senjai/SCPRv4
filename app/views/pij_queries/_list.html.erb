@@ -6,7 +6,7 @@
 	<% top.each do |query| %>
 		<li>
 			<h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
-			<p id="<%= query.slug %>"><%= query.teaser %></p>
+			<p><%= query.teaser %></p>
 		</li>
 	<% end %>
 </ul>

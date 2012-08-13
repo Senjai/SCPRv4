@@ -1,11 +1,38 @@
 .queries {
-	ul.featured {
-		list-style-type: none;
-		margin: 0;
-		li {
+	.featured {		
+		.pager-nav {
+			float: none;
+			text-align: center;
 			margin-bottom: 10px;
-			background:$nearWhite;
-			padding:$baseline / 2;
+			padding-top: 10px;
+			@include font-sans-serif;
+			border-top: 1px solid $grayLighter;
+			
+			a.chooser {
+				padding: 0;
+				margin: 0 5px;
+			}
+			
+			span.chooser {
+				vertical-align: top;
+				cursor: pointer;
+				padding: 5px;
+				margin: 2px;
+				
+				&:hover, &.active {
+					color: $orange;
+				}
+			}
+		}
+		
+		.card {
+			padding: 10px 14px;
+			display: none;
+			min-height: 100px;
+			
+			&.last-active, &.active {
+				display: block;
+			}
 		}
 	}
 }
