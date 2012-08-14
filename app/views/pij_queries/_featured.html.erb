@@ -1,0 +1,15 @@
+<div class="featured presentation" id="featured_queries">
+	<h2 class="heading-block dark">Featured</h2>
+	<div class="cards">
+		<% @featured.each do |query| %>
+				<div class="card" id="featured_query_<%=query.id%>">
+					<h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
+					<p><%= query.teaser %></p>
+				</div>
+		<% end %>
+	</div>
+</div>
+
+<% content_for :footerjss do %>
+	var featuredQueries = new scpr.Presentation({el: "#featured_queries"});
+<% end %>

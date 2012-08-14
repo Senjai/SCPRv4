@@ -7,17 +7,9 @@
 		</div>
 	</div>
 	
-	<div class="featured presentation" id="featured_queries">
-		<h2 class="heading-block dark">Featured</h2>
-		<div class="cards">
-			<% @featured.each do |query| %>
-					<div class="card" id="featured_query_<%=query.id%>">
-						<h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
-						<p><%= query.teaser %></p>
-					</div>
-			<% end %>
-		</div>
-	</div>
+	<% if @featured.present? %>
+		<%= render "/pij_queries/featured", queries: @featured %>
+	<% end %>
 	
 	<h2 class="heading-block dark">Questions we're asking now:</h2>
 	<div class="news-queries">
@@ -31,7 +23,3 @@
 		<%= render '/pij_queries/list', queries: @evergreen %>
 	</div>
 </div> <!-- queries -->
-
-<% content_for :footerjss do %>
-	var featuredQueries = new scpr.Presentation({el: "#featured_queries"});
-<% end %>
