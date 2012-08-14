@@ -18,7 +18,7 @@ describe Dashboard::Api::ContentController do
     
     it "doesn't include nil elements" do
       get :index, ids: [contents.first.obj_key, "nope/bad:9999"]
-      puts JSON.parse(response.body).size.should eq 1
+      JSON.parse(response.body).size.should eq 1
     end
   end
   
