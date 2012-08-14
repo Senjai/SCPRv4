@@ -15,7 +15,9 @@ class Dashboard::Api::ContentController < ApplicationController
     contents = []
     
     [params[:ids]].flatten.each do |id|
-        contents << ContentBase.obj_by_key(id) || {}
+      if content = ContentBase.obj_by_key(id)
+        contents.push content
+      end
     end
     
     render :json => contents.as_json
@@ -39,7 +41,6 @@ class Dashboard::Api::ContentController < ApplicationController
   def preview
     # is this valid content?
     @content = ContentBase.obj_by_key(params[:id])
-    
     [:headline, :short_headline, :teaser, :body, :content].each do |f|
       if params[ f ]
         @content[ f ] = params[ f ]
@@ -47,7 +48,7 @@ class Dashboard::Api::ContentController < ApplicationController
     end
     
     if @content
-      render "preview.js", :status => 200
+      render "preview", formats: [:js], :status => 200
     else
       render :text => "Not Found", :status => :not_found      
     end
@@ -85,20 +86,19 @@ class Dashboard::Api::ContentController < ApplicationController
     )
         
     json = contents.to_json
-    Rails.cache.write_entry("cbaseapi:recent", json,:objects => [contents,"contentbase:new"].flatten)
+    Rails.cache.write_entry("cbaseapi:recent", json, :objects => [contents,"contentbase:new"].flatten)
     render :json => json
-    
   end
   
   #----------
   
   private
-  def set_access_control_headers 
-    headers['Access-Control-Allow-Origin'] = request.env['HTTP_ORIGIN'] || "*"
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-    headers['Access-Control-Max-Age'] = '1000'
-    headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type,X-CSRF-Token'
-    headers['Access-Control-Allow-Credentials'] = "true"
-  end
-  
+    def set_access_control_headers 
+      headers['Access-Control-Allow-Origin']      = request.env['HTTP_ORIGIN'] || "*"
+      headers['Access-Control-Allow-Methods']     = 'POST, GET, OPTIONS'
+      headers['Access-Control-Max-Age']           = '1000'
+      headers['Access-Control-Allow-Headers']     = 'x-requested-with,content-type,X-CSRF-Token'
+      headers['Access-Control-Allow-Credentials'] = "true"
+    end
+    
 end
