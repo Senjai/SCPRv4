@@ -7,7 +7,7 @@
 		<% if upcoming = @program.episodes.upcoming.first %>
 			<div class="upcoming-episode">
 				<h3><b>Coming Up:</b> <%= upcoming.title %></h3>
-				<p><%= upcoming.teaser %></p>
+				<p><%= upcoming.body %></p>
 			</div>
 		<% end %>
 	</section>
