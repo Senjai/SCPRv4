@@ -17,7 +17,8 @@ class PodcastsController < ApplicationController
     end
     
     response.headers["Content-Type"] = 'text/xml'
-    
+    setup_range_headers if request.headers["Range"].present?
+
     @content = nil
     if @podcast.item_type == "episodes"
       @content = ( @podcast.program ? @podcast.program.episodes : ShowEpisode ).published
@@ -54,5 +55,18 @@ class PodcastsController < ApplicationController
 
     render_to_string formats: [:xml]
   end
-
+  
+  protected
+    def setup_range_headers
+      # Fake the headers for iTunes.
+      response.headers["Status"]         = "206 Partial Content"
+      response.headers["Accept-Ranges"]  = "bytes"
+      
+      request.headers["Range"].match(/bytes ?= ?(\d+)-(\d+)?/) do |match|        
+        rangeStart, rangeEnd        = match[1].to_i, match[2].to_i
+        rangeLength                 = (rangeEnd - rangeStart).to_i
+        response.headers["Content-Range"]  = "bytes #{rangeStart}-#{rangeEnd == 0 ? "" : rangeEnd}/*"
+      end
+    end
+    
 end
