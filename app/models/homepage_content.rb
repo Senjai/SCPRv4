@@ -1,5 +1,6 @@
 class HomepageContent < ActiveRecord::Base
-  self.table_name =  "rails_layout_homepagecontent"
+  self.table_name =  "layout_homepagecontent"
+  map_content_type_for_django
   
   belongs_to :homepage
   belongs_to :content, :polymorphic => true  

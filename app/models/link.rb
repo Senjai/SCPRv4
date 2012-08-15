@@ -1,6 +1,7 @@
 class Link < ActiveRecord::Base
-  self.table_name =  'rails_media_link'
+  self.table_name =  'media_link'
   self.primary_key = "id"
+  map_content_type_for_django
   
   belongs_to :content, :polymorphic => true
   

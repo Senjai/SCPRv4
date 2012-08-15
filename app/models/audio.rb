@@ -1,6 +1,7 @@
 class Audio < ActiveRecord::Base
-  self.table_name =  'rails_media_audio'
+  self.table_name =  'media_audio'
   self.primary_key = "id"
+  map_content_type_for_django
   
   belongs_to :content, :polymorphic => true
 
