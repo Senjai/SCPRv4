@@ -113,7 +113,7 @@ class scpr.ContentBaseAPI
     class ContentBaseAPI.ContentDropZone
         DefaultOptions:
             key: "contents"
-            fields: ['content_type','object_id','position']
+            fields: ['django_content_type','content_id','position']
             order_key: 'position'
             autofill: null
             del_key: 'DELETE'
@@ -149,14 +149,14 @@ class scpr.ContentBaseAPI
                 if @objects.length > 0
                     @contents.fetch 
                         data: 
-                            ids: (o.obj_key || @djangoToObjKey(o.content_type,o.object_id) for o in @objects)
+                            ids: (o.obj_key || @djangoToObjKey(o.django_content_type,o.content_id) for o in @objects)
                         silent: true
                         success: =>
                             console.log "collection fetch success"
                             # if we're doing ordering, add the ORDER attribute
                             if @options.order_key
                                 _(@objects).each (o) => 
-                                    id = o.obj_key || @djangoToObjKey(o.content_type,o.object_id)
+                                    id = o.obj_key || @djangoToObjKey(o.django_content_type,o.content_id)
                                     @contents.get(id)?.set { ORDER:parseInt o[@options.order_key] }, silent:true
                                     console.log "set ORDER:#{o[@options.order_key]} for #{id}"
                                 
@@ -185,7 +185,7 @@ class scpr.ContentBaseAPI
 
                         console.log "converted #{m.get('obj_key')} into ", type, id
 
-                        obj = content_type:type, object_id:id
+                        obj = django_content_type:type, content_id:id
 
                         if @options.order_key
                             obj[@options.order_key] = String m.get("ORDER")
@@ -478,7 +478,7 @@ class scpr.ContentBaseAPI
     class ContentBaseAPI.DjangoAdminParser
         DefaultOptions:
             key: "contents"
-            fields: ['content_type','object_id','position']
+            fields: ['django_content_type','content_id','position']
             autofill: null
             del_key: 'DELETE'
 

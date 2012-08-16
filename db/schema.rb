@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815083509) do
+ActiveRecord::Schema.define(:version => 20120816182600) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -507,17 +507,6 @@ ActiveRecord::Schema.define(:version => 20120815083509) do
     t.datetime "uploaded_at",                         :null => false
   end
 
-  create_table "media_encoaudio", :force => true do |t|
-    t.integer "enco_number",                 :null => false
-    t.string  "url",          :limit => 250, :null => false
-    t.date    "publish_date",                :null => false
-    t.string  "notes",        :limit => 100
-    t.integer "size"
-    t.integer "duration"
-  end
-
-  add_index "media_encoaudio", ["enco_number", "publish_date"], :name => "media_encoaudio_enco_number_6948cf1d7886f6e3_uniq", :unique => true
-
   create_table "media_image", :force => true do |t|
     t.text     "caption",    :limit => 2147483647, :null => false
     t.string   "credit",     :limit => 150,        :null => false
@@ -545,44 +534,18 @@ ActiveRecord::Schema.define(:version => 20120815083509) do
   add_index "media_link", ["django_content_type_id", "content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
   add_index "media_link", ["django_content_type_id"], :name => "media_link_content_type_id"
 
-  create_table "media_programaudio", :force => true do |t|
-    t.string  "name",         :limit => 140, :null => false
-    t.string  "slug",         :limit => 50,  :null => false
-    t.string  "url",          :limit => 250, :null => false
-    t.date    "publish_date",                :null => false
-    t.string  "notes",        :limit => 100, :null => false
-    t.integer "duration"
-    t.integer "size"
-  end
-
-  add_index "media_programaudio", ["slug", "publish_date"], :name => "media_programaudio_slug_3ba28574ecbcfebe_uniq", :unique => true
-
   create_table "media_related", :force => true do |t|
-    t.integer "content_type_id",                    :null => false
-    t.integer "object_id",                          :null => false
-    t.integer "rel_content_type_id",                :null => false
-    t.integer "rel_object_id",                      :null => false
-    t.integer "flag",                :default => 0, :null => false
+    t.integer "django_content_type_id",                                  :null => false
+    t.integer "content_id",                                              :null => false
+    t.integer "rel_django_content_type_id",                              :null => false
+    t.integer "related_id",                                              :null => false
+    t.integer "flag",                                     :default => 0, :null => false
+    t.string  "content_type",               :limit => 20
+    t.string  "related_type",               :limit => 20
   end
 
-  add_index "media_related", ["content_type_id"], :name => "media_related_e4470c6e"
-  add_index "media_related", ["rel_content_type_id"], :name => "media_related_76fb6e42"
-
-  create_table "media_uploadedaudio", :force => true do |t|
-    t.string  "mp3_file",               :limit => 100,        :null => false
-    t.text    "description",            :limit => 2147483647, :null => false
-    t.string  "source",                 :limit => 150,        :null => false
-    t.boolean "allow_download",                               :null => false
-    t.string  "sort_order",             :limit => 2,          :null => false
-    t.integer "django_content_type_id",                       :null => false
-    t.integer "content_id",                                   :null => false
-    t.integer "duration"
-    t.integer "size"
-    t.string  "content_type",           :limit => 20
-  end
-
-  add_index "media_uploadedaudio", ["django_content_type_id", "content_id"], :name => "media_uploadedaudio_content_type_id_229fd3799cc99e4f"
-  add_index "media_uploadedaudio", ["django_content_type_id"], :name => "media_uploadedaudio_content_type_id"
+  add_index "media_related", ["django_content_type_id"], :name => "media_related_e4470c6e"
+  add_index "media_related", ["rel_django_content_type_id"], :name => "media_related_76fb6e42"
 
   create_table "news_story", :force => true do |t|
     t.string   "headline",           :limit => 200,                        :null => false
@@ -778,17 +741,8 @@ ActiveRecord::Schema.define(:version => 20120815083509) do
   add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
 
   create_table "rails_content_map", :id => false, :force => true do |t|
-    t.integer "id",         :null => false
-    t.string  "class_name", :null => false
-  end
-
-  create_table "rails_media_related", :id => false, :force => true do |t|
-    t.integer "id",           :default => 0, :null => false
-    t.integer "content_id",                  :null => false
-    t.string  "content_type"
-    t.integer "related_id",                  :null => false
-    t.string  "related_type"
-    t.integer "flag",         :default => 0, :null => false
+    t.integer "django_content_type_id", :null => false
+    t.string  "rails_class_name",       :null => false
   end
 
   create_table "schedule_program", :force => true do |t|
@@ -833,7 +787,7 @@ ActiveRecord::Schema.define(:version => 20120815083509) do
     t.text     "teaser",               :limit => 2147483647,                 :null => false
     t.text     "body",                 :limit => 2147483647,                 :null => false
     t.string   "locale",               :limit => 5,          :default => "", :null => false
-    t.datetime "created_at"
+    t.datetime "created_at",                                                 :null => false
     t.integer  "status",                                                     :null => false
     t.string   "segment_asset_scheme", :limit => 10
     t.string   "short_headline",       :limit => 100

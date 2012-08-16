@@ -3,7 +3,6 @@ class BlogEntry < ContentBase
   acts_as_content has_format: true
   
   CONTENT_TYPE = "blogs/entry"
-  CONTENT_TYPE_ID = 44
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
     
   # ------------------

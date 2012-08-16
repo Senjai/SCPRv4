@@ -2,7 +2,6 @@ class ContentShell < ContentBase
   self.table_name =  "contentbase_contentshell"
   
   CONTENT_TYPE = "content/shell"
-  CONTENT_TYPE_ID = 115
   ADMIN_PREFIX = "contentbase/contentshell"
   
   acts_as_content comments:           false, 

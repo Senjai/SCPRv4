@@ -8,15 +8,19 @@ class CategoryConstraint
   end
 end
 
+#---------
+
 class FlatpageConstraint
   def initialize
-    @flatpages = Flatpage.all.map { |f| f.path } rescue []
+    @flatpages = Flatpage.visible.all.map { |f| f.path } rescue []
   end
   
   def matches?(request)
     @flatpages.include?(request.params[:flatpage_path])
   end
 end
+
+#---------
 
 class QuickSlugConstraint
   def initialize
@@ -100,31 +104,31 @@ Scprv4::Application.routes.draw do
   end
   
   # -- Bios -- #
-  match '/about/people/staff/' => 'people#index', as: :staff_index
+  match '/about/people/staff/'      => 'people#index', as: :staff_index
   match '/about/people/staff/:name' => 'people#bio', :as => :bio
 
 
 
   # -- Blogs -- #
-  match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged",           as: :blog_entries_tagged
-  match '/blogs/:blog/tagged/' => "blogs#blog_tags",                              as: :blog_tags
-  match '/blogs/:blog/archive/:year/:month/(page/:page)' => "blogs#archive",      as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
-  post  '/blogs/:blog/process_archive_select' => "blogs#process_archive_select",  as: :blog_process_archive_select
-  match '/blogs/:blog/category/:category/(page/:page)' => "blogs#category",       as: :blog_category
-  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry",             as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
-  match '/blogs/:blog/:year/:month/:slug' => 'blogs#legacy_path',                 as: :legacy_path,          constraints: { year: /\d{4}/, month: /\d{2}/, slug: /[\w-]+/ }
-  match '/blogs/:blog/(page/:page)' => 'blogs#show',                              as: :blog,                 constraints: { page: /\d+/ }
-  match '/blogs/' => 'blogs#index',                                               as: :blogs
+  match '/blogs/:blog/tagged/:tag/(page/:page)'          => "blogs#blog_tagged", as: :blog_entries_tagged
+  match '/blogs/:blog/tagged/'                           => "blogs#blog_tags", as: :blog_tags
+  match '/blogs/:blog/archive/:year/:month/(page/:page)' => "blogs#archive", as: :blog_archive, constraints: { year: /\d{4}/, month: /\d{2}/ }
+  post  '/blogs/:blog/process_archive_select'            => "blogs#process_archive_select", as: :blog_process_archive_select
+  match '/blogs/:blog/category/:category/(page/:page)'   => "blogs#category", as: :blog_category
+  match '/blogs/:blog/:year/:month/:day/:id/:slug/'      => "blogs#entry", as: :blog_entry, constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
+  match '/blogs/:blog/:year/:month/:slug'                => 'blogs#legacy_path', as: :legacy_path, constraints: { year: /\d{4}/, month: /\d{2}/, slug: /[\w-]+/ }
+  match '/blogs/:blog/(page/:page)'                      => 'blogs#show', as: :blog, constraints: { page: /\d+/ }
+  match '/blogs/'                                        => 'blogs#index', as: :blogs
   
   
   
   # -- Programs -- #
-  match '/programs/:show/archive/'                       => "programs#archive",   as: :program_archive
-  match '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",    as: :segment  
-  match '/programs/:show/:year/:month/:day/'            => "programs#episode",    as: :episode
-  match '/programs/:show(/page/:page)'                  => 'programs#show',       as: :program,           constraints: { page: /\d+/ }
-  match '/programs/'                                    => 'programs#index',      as: :programs
-  match '/schedule/'                                    => 'programs#schedule',   as: :schedule
+  match '/programs/:show/archive/'                     => "programs#archive",   as: :program_archive
+  match '/programs/:show/:year/:month/:day/:id/:slug/' => "programs#segment",    as: :segment  
+  match '/programs/:show/:year/:month/:day/'           => "programs#episode",    as: :episode
+  match '/programs/:show(/page/:page)'                 => 'programs#show',       as: :program,           constraints: { page: /\d+/ }
+  match '/programs/'                                   => 'programs#index',      as: :programs
+  match '/schedule/'                                   => 'programs#schedule',   as: :schedule
   
   
   
@@ -185,12 +189,12 @@ Scprv4::Application.routes.draw do
 
   # -- Sections -- #
   match '/category/carousel-content/:object_class/:id' => 'category#carousel_content', as: :category_carousel, defaults: { format: :js }
-  match '/news/' => 'category#news', :as => :latest_news
-  match '/arts-life/' => 'category#arts', :as => :latest_arts
+  match '/news/'                                       => 'category#news', :as => :latest_news
+  match '/arts-life/'                                  => 'category#arts', :as => :latest_arts
   
   # -- Home -- #
-  match '/' => "home#index", :as => :home
-  match '/about' => "home#about_us", as: :about
+  match '/'                                => "home#index", :as => :home
+  match '/about'                           => "home#about_us", as: :about
   match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
   
   # catch error routes
@@ -206,8 +210,8 @@ Scprv4::Application.routes.draw do
   
   # -- Dynamic root-level routes -- #
   match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new, defaults: { page: 1 }, as: :section
-  match '*flatpage_path' => "flatpages#show", constraints: FlatpageConstraint.new
-  match '/:quick_slug' => "programs#show", constraints: QuickSlugConstraint.new
+  match '*flatpage_path'     => "flatpages#show", constraints: FlatpageConstraint.new
+  match '/:quick_slug'       => "programs#show", constraints: QuickSlugConstraint.new
   
   root to: "home#index"
 end

@@ -1,21 +1,20 @@
-class ContentByline < ActiveRecord::Base
-  map_content_type_for_django
-  
+class ContentByline < ActiveRecord::Base  
   self.table_name =  "contentbase_contentbyline"
   self.primary_key = "id"
   
-  ROLE_PRIMARY = 0
-  ROLE_SECONDARY = 1
+  ROLE_PRIMARY      = 0
+  ROLE_SECONDARY    = 1
   ROLE_CONTRIBUTING = 2
-  
+
   ROLE_TEXT = {
-      ROLE_PRIMARY => "Primary",
-      ROLE_SECONDARY => "Secondary",
+      ROLE_PRIMARY      => "Primary",
+      ROLE_SECONDARY    => "Secondary",
       ROLE_CONTRIBUTING => "Contributing"
   }
   
   scope :primary, where(role: ROLE_PRIMARY)
-    
+  
+  map_content_type_for_django
   belongs_to :content, polymorphic: true
   belongs_to :user, class_name: "Bio"
   
