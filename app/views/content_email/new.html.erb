@@ -1,4 +1,4 @@
-<%= simple_form_for @message, :url => content_email_path do |f| %>
+<%= simple_form_for @message, :url => content_email_path(:obj_key => @content.obj_key) do |f| %>
 
 	<h6>Email this to a friend:</h6>
 	<hr />
@@ -26,12 +26,10 @@
 	      <%= f.text_area :body, :class => "xlarge" %>
 	    </li>
     </ul>
-	
-	<%= f.hidden_field :url, :value => @content.remote_link_path %>
-	<%= f.hidden_field :headline, :value => @content.headline %>
-	<%= f.hidden_field :teaser, :value => @content.teaser %>
   </fieldset>
-  
+
+	<%= f.text_field :lname, :class => "hidden" %>
+
   <fieldset>
     <%= f.submit "Share", :class => "btn primary" %>
   </fieldset>

@@ -7,10 +7,10 @@ A personal message from <%= @message.name %>: <%= @message.body %>
 <% end %>
 ========================
 
-<%= @message.headline %>
-<%= @message.teaser %>
+<%= @content.headline %>
+<%= @content.teaser %>
 
-Read the full story: <%= @message.url %>
+Read the full story: <%= @content.remote_link_path %>
 
 
 ========================

@@ -2,6 +2,7 @@ class ContentMailer < ActionMailer::Base
   
   def email_content(message)
     @message = message
+    @content = @message.content
     mail( 
       :to => message.email, 
       :from => "scprweb@scpr.org", 
