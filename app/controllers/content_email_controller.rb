@@ -1,6 +1,5 @@
 class ContentEmailController < ApplicationController
   layout "minimal"
-
   before_filter :get_content
 
   def new
