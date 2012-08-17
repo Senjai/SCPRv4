@@ -1,28 +1,25 @@
 <div class="queries">
 	<div class="section-hero">
-		<div class="row-fluid">
-			<div class="span24 center-contents">
-				<h2>Public Insight Network: Share your story</h2>
-				<br>
-				<p>Become a source for KPCC and share what you know about our world to help reporters understand what's really going on - and why it matters.</p>
-			</div>
+		<div class="center-contents">
+			<h2>Public Insight Network: Share your story</h2>
+			<br>
+			<p>Become a source for KPCC and share what you know about our world to help reporters understand what's really going on - and why it matters.</p>
 		</div>
 	</div>
-	<div class="row-fluid">
-		<div class="span24">
-			<h2 class="heading-block dark">Questions we're asking now:</h2>
-			<div class="news-queries">
-				<%= render '/pij_queries/list', cssClass: "collapse", queries: @news %>
-			</div>
-		</div> <!-- span 24 -->
-	</div> <!-- row fluid -->
+	
+	<% if @featured.present? %>
+		<%= render "/pij_queries/featured", queries: @featured %>
+	<% end %>
+	
+	<h2 class="heading-block dark">Questions we're asking now:</h2>
+	<div class="news-queries">
+		<%= render '/pij_queries/list', cssClass: "collapse", queries: @news %>
+	</div>
+
 	<hr />
-	<div class="row-fluid">
-		<div class="span24">
-			<h2 class="heading-block dark">Questions we're always asking:</h2>
-			<div class="evergreen">
-				<%= render '/pij_queries/list', cssClass: "", queries: @evergreen %>
-			</div>
-		</div> <!-- span24 -->
-	</div> <!-- row fluid -->
+
+	<h2 class="heading-block dark">Questions we're always asking:</h2>
+	<div class="evergreen">
+		<%= render '/pij_queries/list', queries: @evergreen %>
+	</div>
 </div> <!-- queries -->
