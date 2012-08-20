@@ -54,6 +54,9 @@ $headShotWidth: 90px;
 	background-position: 0 0;
 	&.brand-martinez {
 	    background-image: url(image_path('broadcast-bar/headshots/brand-martinez.png'));
+		&.program-info {
+			padding-right:150px;
+		}
 	}
 	&.airtalk {
 		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
