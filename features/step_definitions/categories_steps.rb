@@ -12,6 +12,9 @@ Then /^I should see the category's title$/ do
   page.should have_content @category.category
 end
 
+Then /^I should not see the category's title$/ do
+  page.should_not have_content @category.category
+end
 
 
 #### Routing
