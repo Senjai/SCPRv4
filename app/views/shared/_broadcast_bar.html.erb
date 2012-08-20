@@ -8,7 +8,7 @@
 							<a href="<%= program_path(current.programme.slug) %>" class="headshot <%= current.programme.slug %>">&nbsp;</a>
 						<% end %>
 			
-						<div class="program-info">
+						<div class="program-info <%= current.programme.slug %>">
 							<% if current.programme %>
 									<a href="<%= program_path(current.programme.slug) %>" class="show-title<%= " modal-toggler" if current.show_modal? %>" data-modal-id="<%= "episode-guide" if current.show_modal? %>"><%= current.program %></a>
 							<% else %>

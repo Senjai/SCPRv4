@@ -506,8 +506,9 @@ $navHeight: 36px;
 					background-color: $nearWhite;
 					text-decoration: none;
 				}
-				&.madeleine-brand {
-					background-image:url(image_path('broadcast-bar/madeleine-brand-sm.png'));
+				&.brand-martinez {
+					background-image:url(image_path('broadcast-bar/brand-martinez-sm.png'));
+					padding-left:128px;
 				}
 				&.airtalk {
 					background-image:url(image_path('broadcast-bar/larry-airtalk-sm.png'));

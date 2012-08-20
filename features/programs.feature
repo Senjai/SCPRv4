@@ -9,7 +9,7 @@ Scenario: No Programs
 Scenario: See the featured programs on the index page
 	Given kpcc programs with the following attributes:
 		| slug				| title						|
-		| madeleine-brand	| The Madeleine Brand Show	|
+		| brand-martinez	| Brand & Martinez			|
 		| airtalk			| Airtalk					|
 		| patt-morrison		| Patt Morrison				|
 		| offramp			| Off-Ramp					|
@@ -25,7 +25,7 @@ Scenario Outline: View a Featured Program's page
 	
 	Examples:
 		| slug				| title						|
-		| madeleine-brand	| The Madeleine Brand Show	|
+		| brand-martinez	| Brand & Martinez			|
 		| airtalk			| Airtalk					|
 		| patt-morrison		| Patt Morrison				|
 		| offramp			| Off-Ramp					|

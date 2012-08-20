@@ -23,7 +23,10 @@ $headShotWidth: 90px;
 	li {
 		background-position: left 6px;
 		min-height:60px;
-		padding-left:100px;
+		padding-left:150px;
+		&.brand-martinez {
+			padding-left:150px;
+		}
 		&:hover {
 			background-color:$nearWhite;
 			cursor: pointer;
@@ -49,8 +52,11 @@ $headShotWidth: 90px;
 .headshot {
 	background-repeat: no-repeat;
 	background-position: 0 0;
-	&.madeleine-brand {
-	    background-image: url(image_path('broadcast-bar/headshots/madeleine-brand.png'));
+	&.brand-martinez {
+	    background-image: url(image_path('broadcast-bar/headshots/brand-martinez.png'));
+		&.program-info {
+			padding-right:150px;
+		}
 	}
 	&.airtalk {
 		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
