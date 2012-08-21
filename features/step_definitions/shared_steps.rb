@@ -74,6 +74,10 @@ end
 
 
 #### Actions
+Then /^show me the page$/ do
+  save_and_open_page
+end
+
 When /^I filter by "([^"]*)"$/ do |filter|
   find("nav.filters").find_link(filter).click
 end

@@ -5,6 +5,7 @@ class Flatpage < ActiveRecord::Base
   # Administration
   administrate
   self.list_order = "url"
+  self.list_per_page = 100
   self.list_fields = [
     ['url'],
     ['is_public', title: "Public?", display_helper: :display_boolean],

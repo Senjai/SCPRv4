@@ -121,7 +121,7 @@ describe Dashboard::Api::ContentController do
         get :recent
         response.body.should match @generated_content.first.to_json
         response.body.should match @generated_content.last.to_json
-        response.header['Content-Type'].should match /json/        
+        response.header['Content-Type'].should match /json/
       end
       
       it "writes the json to the cache" do

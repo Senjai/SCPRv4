@@ -99,27 +99,32 @@ Scprv4::Application.routes.draw do
     end
   end
   
+  
+  # Flatpage paths will override anything below this route.
+  match '*flatpage_path'     => "flatpages#show", constraints: FlatpageConstraint.new
+  
+  
   # -- Bios -- #
-  match '/about/people/staff/' => 'people#index', as: :staff_index
-  match '/about/people/staff/:name' => 'people#bio', :as => :bio
+  match '/about/people/staff/'      => 'people#index',  as: :staff_index
+  match '/about/people/staff/:name' => 'people#bio',    as: :bio
 
 
 
   # -- Blogs -- #
-  match '/blogs/:blog/tagged/:tag/(page/:page)' => "blogs#blog_tagged",           as: :blog_entries_tagged
-  match '/blogs/:blog/tagged/' => "blogs#blog_tags",                              as: :blog_tags
-  match '/blogs/:blog/archive/:year/:month/(page/:page)' => "blogs#archive",      as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
-  post  '/blogs/:blog/process_archive_select' => "blogs#process_archive_select",  as: :blog_process_archive_select
-  match '/blogs/:blog/category/:category/(page/:page)' => "blogs#category",       as: :blog_category
-  match '/blogs/:blog/:year/:month/:day/:id/:slug/' => "blogs#entry",             as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
-  match '/blogs/:blog/:year/:month/:slug' => 'blogs#legacy_path',                 as: :legacy_path,          constraints: { year: /\d{4}/, month: /\d{2}/, slug: /[\w-]+/ }
-  match '/blogs/:blog/(page/:page)' => 'blogs#show',                              as: :blog,                 constraints: { page: /\d+/ }
-  match '/blogs/' => 'blogs#index',                                               as: :blogs
+  match '/blogs/:blog/tagged/:tag/(page/:page)'          => "blogs#blog_tagged",            as: :blog_entries_tagged
+  match '/blogs/:blog/tagged/'                           => "blogs#blog_tags",              as: :blog_tags
+  match '/blogs/:blog/archive/:year/:month/(page/:page)' => "blogs#archive",                as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
+  post  '/blogs/:blog/process_archive_select'            => "blogs#process_archive_select", as: :blog_process_archive_select
+  match '/blogs/:blog/category/:category/(page/:page)'   => "blogs#category",               as: :blog_category
+  match '/blogs/:blog/:year/:month/:day/:id/:slug/'      => "blogs#entry",                  as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
+  match '/blogs/:blog/:year/:month/:slug'                => 'blogs#legacy_path',            as: :legacy_path,          constraints: { year: /\d{4}/, month: /\d{2}/, slug: /[\w-]+/ }
+  match '/blogs/:blog/(page/:page)'                      => 'blogs#show',                   as: :blog,                 constraints: { page: /\d+/ }
+  match '/blogs/'                                        => 'blogs#index',                  as: :blogs
   
   
   
   # -- Programs -- #
-  match '/programs/:show/archive/'                       => "programs#archive",   as: :program_archive
+  match '/programs/:show/archive/'                      => "programs#archive",    as: :program_archive
   match '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",    as: :segment  
   match '/programs/:show/:year/:month/:day/'            => "programs#episode",    as: :episode
   match '/programs/:show(/page/:page)'                  => 'programs#show',       as: :program,           constraints: { page: /\d+/ }
@@ -147,20 +152,22 @@ Scprv4::Application.routes.draw do
   match '/events/forum/about/'              => 'events#about',      as: :forum_about
   
   
+  
   # -- Videos -- #
   match '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
   match '/video/'           => "video#index",   as: :video_index
-  match '/video/list/'      => "video#list",   as: :video_list
+  match '/video/list/'      => "video#list",    as: :video_list
+  
   
   
   # -- Listen Live -- #
-  match '/listen_live/' => 'listen#index', :as => :listen
+  match '/listen_live/' => 'listen#index', as: :listen
   
   # -- Breaking News --#
   match '/breaking_email' => 'breaking_news#show'
   
   # -- Search -- #
-  match '/search/' => 'search#index', :as => :search
+  match '/search/' => 'search#index', as: :search
   
   # -- Article Email Sharing -- #
   get   '/content/share' => 'content_email#new',    :as => :content_email
@@ -168,11 +175,11 @@ Scprv4::Application.routes.draw do
 
   # -- Archive -- #
   post  '/archive/process/'               => "archive#process_form",  as: :archive_process_form
-  match '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }
+  match '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
   
   # -- News Stories -- #
-  match '/news/:year/:month/:day/:id/:slug/'  => 'news#story',      :as => :news_story, :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :id => /\d+/, :slug => /[\w_-]+/}
-  match '/news/:year/:month/:day/:slug/'      => 'news#old_story',  :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/, :slug => /[\w_-]+/ }
+  match '/news/:year/:month/:day/:id/:slug/'  => 'news#story',      as: :news_story,  constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
+  match '/news/:year/:month/:day/:slug/'      => 'news#old_story',                    constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/ }
   
   #----------
   # PIJ Queries
@@ -180,38 +187,37 @@ Scprv4::Application.routes.draw do
   match '/network/'                 => "pij_queries#index", as: :pij_queries
   
   # -- RSS feeds -- #
-  match '/feeds/all_news' => 'feeds#all_news', :as => :all_news_feed
+  match '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
   match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
   
   # -- podcasts -- #
-  match '/podcasts/:slug/'  => 'podcasts#podcast', :as => :podcast
-  match '/podcasts/'        => 'podcasts#index', :as => :podcasts
+  match '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast
+  match '/podcasts/'       => 'podcasts#index',   as: :podcasts
 
   # -- Sections -- #
-  match '/category/carousel-content/:object_class/:id' => 'category#carousel_content', as: :category_carousel, defaults: { format: :js }
-  match '/news/' => 'category#news', :as => :latest_news
-  match '/arts-life/' => 'category#arts', :as => :latest_arts
+  match '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
+  match '/news/'                                       => 'category#news',              as: :latest_news
+  match '/arts-life/'                                  => 'category#arts',              as: :latest_arts
   
   # -- Home -- #
-  match '/' => "home#index", :as => :home
-  match '/about' => "home#about_us", as: :about
+  match '/'                                => "home#index",             as: :home
+  match '/about'                           => "home#about_us",          as: :about
   match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
   
   # catch error routes
-  match '/404', :to => 'home#not_found'
-  match '/500', :to => 'home#error'
+  match '/404', to: 'home#not_found'
+  match '/500', to: 'home#error'
   
   # Extra
   match '/fb_channel_file' => 'home#fb_channel_file'
   
   # Sitemaps
-  match '/sitemap' => "sitemaps#index", as: :sitemaps, defaults: { format: :xml }
-  match '/sitemap/:action', controller: "sitemaps", as: :sitemap, defaults: { format: :xml }
+  match '/sitemap' => "sitemaps#index", as: :sitemaps,  defaults: { format: :xml }
+  match '/sitemap/:action',             as: :sitemap,   defaults: { format: :xml }, controller: "sitemaps"
   
   # -- Dynamic root-level routes -- #
   match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new, defaults: { page: 1 }, as: :section
-  match '*flatpage_path' => "flatpages#show", constraints: FlatpageConstraint.new
-  match '/:quick_slug' => "programs#show", constraints: QuickSlugConstraint.new
+  match '/:quick_slug'       => "programs#show",  constraints: QuickSlugConstraint.new
   
   root to: "home#index"
 end

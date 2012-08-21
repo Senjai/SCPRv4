@@ -150,7 +150,12 @@ body {
 	
 	&.with-headshot { 
 		margin-top: 15px; // So the host isn't wearing the nav as a tophat
-		.program.current .program-info { margin-left: 100px; } // Push the show title link over since we have to absolutely-position the headshot
+		.program.current .program-info { 
+			margin-left: 100px; 
+			&.brand-martinez {
+				margin-left:150px;
+			}
+		} // Push the show title link over since we have to absolutely-position the headshot
 	}
 	
 	.bb-inner-container {
@@ -166,6 +171,9 @@ body {
 		width: 90px;
 		height: 70px;
 		&:hover { text-decoration: none; }
+		&.brand-martinez {
+			width:147px;
+		}
 	}
 	
 	.program-info {
