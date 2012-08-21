@@ -20,6 +20,7 @@ describe ContentEmail do
     it { should validate_presence_of :email }
     it { should validate_presence_of :name }
     it { should validate_format_of(:email).with(/.+@.+\..+/) }
+    it { should ensure_length_of(:lname).is_at_most(0) }
   end
 
   #-----------

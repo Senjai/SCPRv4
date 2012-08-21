@@ -277,7 +277,6 @@ end
     email "bricker@scpr.org"
   end
 
-
 # ContentAsset#########################################################
   factory :asset, class: ContentAsset do
     sequence(:id, 1)

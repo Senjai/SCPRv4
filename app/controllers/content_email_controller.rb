@@ -3,25 +3,25 @@ class ContentEmailController < ApplicationController
   before_filter :get_content
 
   def new
-    # initialize email sharing form and query for content by URL to get headline and teaser
+    # initialize email sharing form
     @message = ContentEmail.new
   end
 
   def create
     @message = ContentEmail.new(params[:content_email])
     @message.content = @content
-    
-    # Check if data validates
+
     if @message.save
-      render :create
+      render :success
     else
       flash.alert = "Please fill out all fields."
       render :new
     end
   end
 
- protected
-   def get_content
-       @content = ContentBase.obj_by_key(params[:obj_key])
-   end
+  protected
+    def get_content
+      @content = ContentBase.obj_by_key(params[:obj_key])
+      raise_404 if !@content
+    end
 end
