@@ -87,6 +87,10 @@ When /^I submit the "([^"]*)" form$/ do |text|
   page.find("form[id*=#{text.gsub(/\s/, "_")}] input[type=submit]").click
 end
 
+When /^I am a robot that is fooled by hidden text fields$/ do
+  fill_in "content_email_lname", with: "Why, yes, I am a robot!"
+end
+
 When /^I click "(.*?)"$/ do |text|
   click_link text
 end

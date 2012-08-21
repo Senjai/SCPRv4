@@ -43,6 +43,11 @@ module Scprv4
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:unencrypted_password, :unencrypted_password_confirmation]
 
+    # Enable Postmark for transactional mail sending
+    config.action_mailer.delivery_method = :simple_postmark
+    config.action_mailer.simple_postmark_settings = { api_key: '899a8982-87b7-47e9-aba9-c49f29f70cdb' }
+    config.action_mailer.raise_delivery_errors = true
+    
     # Enable the asset pipeline
     config.assets.enabled = true
 

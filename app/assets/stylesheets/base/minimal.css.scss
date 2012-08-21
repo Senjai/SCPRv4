@@ -5,7 +5,10 @@
 body.minimal {
 	background-color:darken($white, 2%);
 	@include font-sans-serif;
-	p { @include font-sans-serif(200); }	
+	p { @include font-sans-serif(200);}	
+	.cbase p {
+		@include font-serif(normal, 13px);	
+	}
 
 	header {
 		padding-top: 10px;

@@ -139,8 +139,7 @@ $analog2:           spin($baseColor, -22);
 
 // Visibility utilities
 .hidden {
-  display: none;
-  visibility: hidden;
+  display: none !important;
 }
 .visible-reader { display: none; }
 .hidden-reader { display: block; }

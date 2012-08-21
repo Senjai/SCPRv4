@@ -169,6 +169,10 @@ Scprv4::Application.routes.draw do
   # -- Search -- #
   match '/search/' => 'search#index', as: :search
   
+  # -- Article Email Sharing -- #
+  get   '/content/share' => 'content_email#new',    :as => :content_email
+  post  '/content/share' => 'content_email#create', :as => :content_email
+
   # -- Archive -- #
   post  '/archive/process/'               => "archive#process_form",  as: :archive_process_form
   match '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }

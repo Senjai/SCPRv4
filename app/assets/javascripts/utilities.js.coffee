@@ -68,6 +68,8 @@ class scpr.SocialTools
     DefaultOptions:
         fbfinder:   ".social_fb"
         twitfinder: ".social_twit"
+        gplusfinder: ".social_gplus"
+        emailfinder: ".email"
         disqfinder: ".social_disq"
         count:      ".count"
         
@@ -122,6 +124,12 @@ class scpr.SocialTools
             if url = $(evt.target).attr("data-url")
                 fburl = "http://www.facebook.com/sharer.php?u=#{url}"
                 window.open fburl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'                
+
+        # add share functionality on google plus
+        $(@options.gplusfinder).on "click", (evt) =>
+            if url = $(evt.target).attr("data-url")
+                gpurl = "https://plusone.google.com/_/+1/confirm?hl=en&url=#{url}"
+                window.open gpurl, 'pop_up','height=400,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'               
         
         # add share functionality for twitter
         $(@options.twitfinder).on "click", (evt) =>
@@ -129,7 +137,13 @@ class scpr.SocialTools
                 headline = $(evt.target).attr("data-text")
                 twurl = "https://twitter.com/intent/tweet?url=#{url}&text=#{headline}&via=kpcc"
                 window.open twurl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'
-            
+        
+        # add share functionality for email
+        $(@options.emailfinder).on "click", (evt) =>
+            if key = $(evt.target).attr("data-key")
+                emurl = "/content/share?obj_key=#{key}"
+                window.open emurl, 'pop_up','height=650,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'
+
     #----------
     
     _getDisqusCounts: ->
