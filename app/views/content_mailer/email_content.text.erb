@@ -1,0 +1,19 @@
+A message from 89.3 KPCC
+========================
+
+<%= @message.name %> shared an article with you.
+<% if @message.body.present? %>
+A personal message from <%= @message.name %>: <%= @message.body %>
+<% end %>
+========================
+
+<%= @content.headline %>
+<%= @content.teaser %>
+
+Read the full story: <%= @content.remote_link_path %>
+
+
+========================
+2012 Southern California Public Radio
+474 South Raymond Avenue
+Pasadena, CA 91105

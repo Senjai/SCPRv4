@@ -74,6 +74,10 @@ end
 
 
 #### Actions
+Then /^show me the page$/ do
+  save_and_open_page
+end
+
 When /^I filter by "([^"]*)"$/ do |filter|
   find("nav.filters").find_link(filter).click
 end
@@ -81,6 +85,10 @@ end
 # This assumes that the ID of the form uses underscores, which is how FormBuilder does it by default.
 When /^I submit the "([^"]*)" form$/ do |text|
   page.find("form[id*=#{text.gsub(/\s/, "_")}] input[type=submit]").click
+end
+
+When /^I am a robot that is fooled by hidden text fields$/ do
+  fill_in "content_email_lname", with: "Why, yes, I am a robot!"
 end
 
 When /^I click "(.*?)"$/ do |text|

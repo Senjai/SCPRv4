@@ -37,6 +37,7 @@ RSpec.configure do |config|
     FakeWeb.clean_registry
     FakeWeb.register_uri(:any, %r|a\.scpr\.org|, body: AH_JSON)
     DatabaseCleaner.start
+    ActionMailer::Base.deliveries = []
   end
   
   config.after :each do

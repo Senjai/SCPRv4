@@ -5,6 +5,10 @@ Given /^(\d+) blog entr(?:ies|y)$/ do |num|
   @blog_entries.count.should eq num.to_i
 end
 
+Given /^a blog entry$/ do
+  @blog_entry = create :blog_entry
+end
+
 Given /^(\d+) entr(?:ies|y) for that blog$/ do |num|
   @entries = create_list :blog_entry, num.to_i, blog: @blog
 end

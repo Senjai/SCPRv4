@@ -5,12 +5,7 @@ class HomeController < ApplicationController
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_now
   end
-  
-  #----------
 
-  def beta
-    render :layout => false
-  end
   
   #----------
   
