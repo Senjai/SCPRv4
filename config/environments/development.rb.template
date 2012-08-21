@@ -15,9 +15,6 @@ Scprv4::Application.configure do
   config.action_controller.perform_caching = false
   config.cache_store = :redis_content_store, "redis://localhost:6379/5"
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
-
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
@@ -33,6 +30,19 @@ Scprv4::Application.configure do
   
   default_url_options[:host] = "scprv4.dev"
   
+  # Gmail
+  config.action_mailer.delivery_method       = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings         = {
+    address:               'smtp.gmail.com',
+    port:                  587,
+    domain:               'kpcc.org',
+    user_name:             'kpccdev@gmail.com',
+    password:              'scprdev474',
+    authentication:        'plain',
+    enable_starttls_auto:  true  
+  }
+
   config.dbsync.filename    = "mercer.dump"
   config.dbsync.local_dir   = "#{Rails.root}/../dbsync" # No trailing slash
   config.dbsync.remote_host = "66.226.4.229"

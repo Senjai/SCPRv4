@@ -68,7 +68,7 @@
 										<tr>
 											<td class="floated-copy" valign="top" style="padding: 0 20px 20px 20px; color: #000; font-size: 14px; font-family: Georgia; line-height: 20px;" width="600">				
 												<h1 style="color:#000;font-family:Helvetica, sans-serif;font-size:28px;font-weight:bold;line-height:28px;"><%= @content.headline %></h1>
-												<p style="color:#000;font-family:Georgia, serif;font-size:16px;line-height:26px;"><%= @content.teaser %></p>
+												<p style="color:#000;font-family:Georgia, serif;font-size:16px;line-height:26px;"><%= @content.teaser.html_safe %></p>
 												<p style="font-family:Helvetica, sans-serif;font-weight:bold;">Read the full story: <a href="<%= @content.remote_link_path %>" style="font-weight:bold;"><%= @content.remote_link_path %></a></p>
 											</td>
 										</tr>

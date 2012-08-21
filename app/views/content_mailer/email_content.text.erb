@@ -8,7 +8,7 @@ A personal message from <%= @message.name %>: <%= @message.body %>
 ========================
 
 <%= @content.headline %>
-<%= @content.teaser %>
+<%= strip_tags @content.teaser %>
 
 Read the full story: <%= @content.remote_link_path %>
 
