@@ -24,6 +24,7 @@ load "#{Rails.root}/db/seeds.rb"
 FactoryGirl.reload
 
 Before do
+  ActionMailer::Base.deliveries = []
   DatabaseCleaner.start
 end
 

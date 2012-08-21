@@ -20,7 +20,7 @@ describe PijQuery do
   end
   
   #---------------
-  
+    
   describe "validations" do
     it "validates uniqueness" do
       create :pij_query
@@ -31,15 +31,6 @@ describe PijQuery do
     it { should validate_presence_of :query_type }
     it { should validate_presence_of :query_url }
     it { should validate_presence_of :query_type }
-  end
-  
-  #---------------
-  
-  describe "headline" do
-    it "should be the title" do
-      query = build :pij_query
-      query.headline.should eq query.title
-    end
   end
   
   # ----------------
@@ -79,6 +70,26 @@ describe PijQuery do
       end
     end
 
+    #---------------
+    
+    describe "featured" do
+      it "only selects featured queries" do
+        featured     = create :pij_query, is_featured: true
+        not_featured = create :pij_query, is_featured: false
+        PijQuery.featured.should eq [featured]
+      end
+    end
+    
+    #---------------
+    
+    describe "not_featured" do
+      it "only selects not featured queries" do
+        featured     = create :pij_query, is_featured: true
+        not_featured = create :pij_query, is_featured: false
+        PijQuery.not_featured.should eq [not_featured]
+      end
+    end
+    
     #---------------
     
     describe "visible" do

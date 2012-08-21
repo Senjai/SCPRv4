@@ -298,6 +298,31 @@ describe ApplicationHelper do
   
   #------------------------
   
+  describe "split_collection" do
+    it "returns an array" do
+      helper.split_collection([], 5).should be_a Array
+    end
+    
+    it "sets the first slice to the first `num` elements" do
+      arr = (1..10).to_a
+      helper.split_collection(arr, 5)[0].should eq (1..5).to_a
+    end
+    
+    it "sets the last slice to the rest of the array" do
+      arr = (1..10).to_a
+      helper.split_collection(arr, 5)[1].should eq (6..10).to_a
+    end
+    
+    it "returns an empty array for the last portion if collection is smaller `num`" do
+      arr = (1..5).to_a
+      split = helper.split_collection(arr, 10)
+      split[0].should eq (1..5).to_a
+      split[1].should eq []
+    end
+  end
+  
+  #------------------------
+  
   describe "watch_gmaps" do
     it "adds the google maps API script reference to the header" do
       helper.watch_gmaps

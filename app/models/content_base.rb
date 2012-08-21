@@ -19,14 +19,22 @@ class ContentBase < ActiveRecord::Base
   }
   
   CONTENT_CLASSES = {
-    'news/story'    => "NewsStory",
-    'shows/segment' => "ShowSegment",
-    'shows/episode' => "ShowEpisode",
-    'blogs/entry'   => "BlogEntry",
-    'content/video' => "VideoShell",
-    'content/shell' => "ContentShell"
+    content: {
+      'news/story'    => "NewsStory",
+      'shows/segment' => "ShowSegment",
+      'shows/episode' => "ShowEpisode",
+      'blogs/entry'   => "BlogEntry",
+      'content/video' => "VideoShell",
+      'content/shell' => "ContentShell"
+    },
+    other: {
+      'pij/query'     => "PijQuery",
+      'events/event'  => "Event"
+    }
   }
   
+  ALL_CLASSES = CONTENT_CLASSES[:content].merge CONTENT_CLASSES[:other]
+      
   CONTENT_MATCHES = {
     %r{^/news/\d+/\d\d/\d\d/(\d+)/.*}                => 'news/story',
     %r{^/admin/news/story/(\d+)/}                    => 'news/story',
@@ -36,7 +44,8 @@ class ContentBase < ActiveRecord::Base
     %r{^/admin/shows/segment/(\d+)/}                 => 'shows/segment',
     %r{^/admin/shows/episode/(\d+)/}                 => 'shows/episode',
     %r{^/admin/contentbase/contentshell/(\d+)/}      => 'content/shell',
-    %r{^/admin/contentbase/videoshell/(\d+)/}      => 'content/video'    
+    %r{^/video/(\d+)/.*}                             => 'content/video',
+    %r{^/admin/contentbase/videoshell/(\d+)/}        => 'content/video'
   }
 
   STORY_SCHEMES = [
@@ -62,36 +71,47 @@ class ContentBase < ActiveRecord::Base
   ]
     
   # All ContentBase objects have assets and alarms
-  has_many :bylines, :class_name => "ContentByline", :as => :content, dependent: :destroy
+  has_many :bylines,          as: :content, class_name: "ContentByline",  dependent: :destroy
   
-  has_many :brels, :class_name => "Related", :as => :content
-  has_many :frels, :class_name => "Related", :as => :related
+  has_many :brels,            as: :content, class_name: "Related"
+  has_many :frels,            as: :related, class_name: "Related"
   
-  has_many :related_links, class_name: "Link", as: :content, conditions: "link_type != 'query'"
-  has_many :queries, :class_name => "Link", :as => :content, :conditions => { :link_type => "query" }
+  has_many :related_links,    as: :content, class_name: "Link",           conditions: "link_type != 'query'"
+  has_many :queries,          as: :content, class_name: "Link",           conditions: { link_type: "query" }
   
-  has_one :content_category, :as => "content"
-  has_one :category, :through => :content_category
+  has_many :audio,            as: :content, order: "position asc"
+
+  has_one :content_category,  as: :content  
+  has_one :category,          through: :content_category
   
-  has_many :audio, :as => :content, :order => "position asc"
     
   def self.published
-    where(:status => STATUS_LIVE).order("published_at desc")
+    where(status: STATUS_LIVE).order("published_at desc")
   end
   
   #----------
   
   def self.content_classes
-    self::CONTENT_CLASSES.collect {|k,v| v.constantize }
+    self::CONTENT_CLASSES[:content].collect {|k,v| v.constantize }
   end
   
+  def self.other_classes
+    self::CONTENT_CLASSES[:other].collect {|k,v| v.constantize }
+  end
+  
+  def self.all_classes
+    self.content_classes + self.other_classes
+  end
+  
+  #----------
+  
   def self.get_model_for_obj_key(key)
-    # convert key from "app/model:id" to AppModel.find(id)
+    # convert key from "app/model:id" to AppModel
     key =~ /([^:]+):(\d+)/
     
     if $~
-      if CONTENT_CLASSES[ $~[1] ]
-        return CONTENT_CLASSES[ $~[1] ].constantize
+      if ALL_CLASSES[ $~[1] ]
+        return ALL_CLASSES[ $~[1] ].constantize
       end
     end
   end
@@ -103,9 +123,9 @@ class ContentBase < ActiveRecord::Base
     key =~ /([^:]+):(\d+)/
     
     if $~
-      if CONTENT_CLASSES[ $~[1] ]
+      if ALL_CLASSES[ $~[1] ]
         begin
-          return CONTENT_CLASSES[ $~[1] ].constantize.find($~[2])
+          return ALL_CLASSES[ $~[1] ].constantize.find($~[2])
         rescue
           return nil
         end
@@ -148,7 +168,7 @@ class ContentBase < ActiveRecord::Base
       :headline       => self.headline,
       :short_headline => self.short_headline,
       :teaser         => self.teaser,
-      :asset          => self.assets.any? ? self.first_asset_square : nil,
+      :asset          => self.assets.present? ? self.assets.first.asset.lsquare.tag : nil,
       :byline         => render_byline(self,false),
       :published_at   => self.published_at,
       :link_path      => self.link_path,
@@ -234,14 +254,6 @@ class ContentBase < ActiveRecord::Base
   
   def byline_elements
     ["KPCC"]
-  end
-
-  #----------
-  
-  def first_asset_square
-    if self.assets.any?
-      self.assets.first.asset.lsquare.tag
-    end
   end
   
   #----------

@@ -1,3 +1,3 @@
-describe "ContentCarousel", ->
+describe "Presentation", ->
     it "is alive", ->
         true

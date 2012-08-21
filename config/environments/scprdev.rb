@@ -72,6 +72,9 @@ Scprv4::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
+  config.assets.precompile += %w( admin/admin.css admin/admin.js base/print.css contentbase_api.js cbaseapi.css )
+  config.assets.initialize_on_precompile = false
+  
   config.dbsync.filename    = "mercer.dump"
   config.dbsync.local_dir   = "/home/dbsync" # No trailing slash
   config.dbsync.remote_host = "66.226.4.229"

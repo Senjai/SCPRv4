@@ -42,7 +42,23 @@ module ActsAsContent
   #
   # For the most part, the options can (and should) be left alone.
   #
+  
+  # Provides a reliable way for us to check if 
+  # the object has acts_as_content, also useful
+  # when stubbed in tests!
+  def self.extended(base)
+    class << base
+      attr_accessor :acting_as_content
+    end
+    # FIXME This returns nil, not false, for inherited classes
+    base.acting_as_content = false
+  end
+  
+  #-------------------
+  
   def acts_as_content(options={})
+    self.acting_as_content = true
+    
     only    = options.delete :only
     except  = options.delete :except
     
@@ -89,6 +105,35 @@ module ActsAsContent
 
   #----------
 
+  module Generators
+    
+    module Teaser
+      #--------------------
+      # Cut down body to get teaser
+      def self.generate_teaser(text, length=180)
+        stripped_body = ActionController::Base.helpers.strip_tags(text).gsub("&nbsp;"," ").gsub(/\r/,'')
+        match = stripped_body.match(/^(.+)/)
+        
+        if !match
+          return ""
+        else
+          first = match[1]
+          if first.length < length
+            return first
+          else
+            # try shortening this paragraph
+            short = first.match /^(.{#{length}}\w*)\W/
+            return short ? "#{short[1]}..." : first
+          end
+        end
+        
+      end # generate_teaser
+    end # Teaser
+    
+  end # Generators
+  
+  #------------------
+  
   module InstanceMethods
     
     module HasFormat
@@ -183,43 +228,20 @@ module ActsAsContent
     #----------
     
     module Teaser
+      
       def teaser
         if !self.respond_to? :body
           raise "teaser needs body. Missing from #{self.class.name}."
         end
-        
+
+        # If teaser column is present, use it
+        # Otherwise try to generate the teaser from the body
         if self[:teaser].present?
           self[:teaser]
         else
-          generate_teaser
-        end  
+          ActsAsContent::Generators::Teaser.generate_teaser(self.body)
+        end
       end # teaser
-      
-      private
-        #--------------------
-        # Cut down body to get teaser
-        def generate_teaser
-          length = 180
-          stripped_body = ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,'')
-
-          # first test if the first paragraph is an acceptable length
-          paragraphs = stripped_body.match /^(.+)/
-          first = paragraphs[1]
-
-          if !first
-            return ""
-          end
-
-          if first.length < length
-            # cool, return this
-            return first
-          else
-            # try shortening this paragraph
-            short = /^(.{#{length}}\w*)\W/.match(first)
-            return short ? "#{short[1]}..." : first
-          end
-        end # generate_teaser
-      # private
     end # Teaser
   end # InstanceMethods
 end # ActsAsContent

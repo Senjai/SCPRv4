@@ -3,8 +3,7 @@ class ShowEpisode < ContentBase
   
   CONTENT_TYPE = 'shows/episode'
   
-  acts_as_content body:     :teaser, 
-                  comments: false
+  acts_as_content comments: false
                   
   # -------------------
   # Administration
@@ -42,7 +41,7 @@ class ShowEpisode < ContentBase
   
   define_index do
     indexes headline
-    indexes teaser
+    indexes body
     has "''", :as => :category, :type => :integer
     has "0", :as => :category_is_news, :type => :boolean
     has published_at
