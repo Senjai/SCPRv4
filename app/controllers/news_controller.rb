@@ -1,13 +1,12 @@
-class NewsController < ApplicationController    
+class NewsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :raise_404
+
   def story
     @story = NewsStory.published.find(params[:id])
 
     if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @story.link_path
       redirect_to @story.link_path and return
     end
-    
-  rescue
-    raise ActionController::RoutingError.new("Not Found")
   end
   
   #----------
@@ -20,10 +19,7 @@ class NewsController < ApplicationController
     if stories.present?
       redirect_to stories.first.link_path, permanent: true
     else
-      raise ActionController::RoutingError.new("Not Found")
+      raise_404
     end
-    
-  rescue
-    raise ActionController::RoutingError.new("Not Found")
   end
 end

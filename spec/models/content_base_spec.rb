@@ -171,7 +171,7 @@ ContentBase.content_classes.each do |c|
       end
       
       it "only selects published content" do
-        published = create_list symbolize(c), 3, status: 5
+        published   = create_list symbolize(c), 3, status: 5
         unpublished = create_list symbolize(c), 2, status: 3
         c.published.count.should eq 3
       end

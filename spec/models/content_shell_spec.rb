@@ -53,10 +53,8 @@ describe ContentShell do
   #-----------------
   
   describe "#published" do      
-    it "orders published content by published_at descending" do
-      content_shells = create_list :content_shell, 3, status: 5
-      ContentShell.published.first.should eq content_shells.last
-      ContentShell.published.last.should eq content_shells.first
+    it "orders published content by published_at descending" do      
+      ContentShell.published.to_sql.should match /order by published_at desc/i
     end
   end
 end

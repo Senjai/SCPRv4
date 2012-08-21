@@ -1,13 +1,6 @@
 require 'spec_helper'
 
 describe VideoShell do
-  describe "#published" do
-    it "orders published content by published_at descending" do
-      video_shells = create_list :video_shell, 3, status: 5
-      VideoShell.published.to_sql.should match /published_at desc/
-    end
-  end
-  
   #--------------------
   
   describe "scopes" do
@@ -18,7 +11,7 @@ describe VideoShell do
     end
   
     it "#published orders by published_at descending" do
-      VideoShell.published.to_sql.should match /published_at desc/i
+      VideoShell.published.to_sql.should match /order by published_at desc/i
     end
   end
 

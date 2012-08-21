@@ -1,0 +1,27 @@
+<% top, bottom = split_collection(@content, 3) %>
+
+<div class="section-page">
+	<h1><%= page_title @section.title %></h1>
+	<% nav = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
+	
+	<% if @content.current_page == 1 %>
+		
+		<%= render_content top[0], "twocol" %>
+		<%= render_content top[1..2], "offlead_asset" %>
+		
+		<div>
+			<% @section.promotions.each do |promotion| %>
+				<%= render "/shared/widgets/promotion", promotion: promotion %>
+			<% end %>
+		</div>
+		
+		<h6>More Headlines from <%= @section.title %></h6>
+		<%= render_content bottom, "thumbnail" %>
+		
+	<% else %>
+		<%= nav %>
+		<%= render_content @content[0..-1], "thumbnail" %>
+	<% end %>
+
+	<%= nav %>
+</div>
