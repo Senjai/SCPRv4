@@ -1,7 +1,7 @@
 class ContentEmail
   include ActiveModel::Validations
   include ActiveModel::Conversion
-  extend ActiveModel::Naming
+  extend  ActiveModel::Naming
 
   attr_accessor :name, :email, :subject, :body, :lname, :content
 
