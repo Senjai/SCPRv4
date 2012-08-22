@@ -6,12 +6,20 @@
 		<a href="<%=blog_path(blog.slug)%>"><span class="title"><%= blog.name %></span>
 		<% if tagline.present? %> - <span class="tagline"><%= tagline %></span></a><% end %>
 	</h3>
-	
-	<div class="content">
-		<div class="blog-title">
-			<%= link_to "Read the Latest Post", latest_entry.link_path %>
-		</div>
 
-		<%= render_content latest_entry, "sec_lead" %>
-	</div>
+	<%= content_cache "blogs:#{blog.slug}:thumb:latest" do %>
+		<% register_content "blogs/entry:new" %>
+			
+		<% if latest_entry.present? %>
+			<% register_content latest_entry %>
+			<div class="content">
+				<div class="blog-title">
+					<%= link_to "Read the Latest Post", latest_entry.link_path %>
+				</div>
+
+				<%= render_content latest_entry, "sec_lead" %>
+			</div>
+		<% end %>
+		
+	<% end %>
 </div>
