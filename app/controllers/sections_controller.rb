@@ -3,6 +3,6 @@ class SectionsController < ApplicationController
   
   def show
     @section = Section.find_by_slug!(params[:slug])
-    @content = @section.content
+    @content = @section.content(page: params[:page])
   end
 end
