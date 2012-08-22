@@ -9,10 +9,20 @@
 		<%= render_content top[0], "twocol" %>
 		<%= render_content top[1..2], "offlead_asset" %>
 		
-		<div>
-			<% @section.promotions.each do |promotion| %>
-				<%= render "/shared/widgets/promotion", promotion: promotion %>
-			<% end %>
+		<div class="section-widgets">
+			<div class="row-fluid">
+				<% @section.promotions.each do |promotion| %>
+					<div class="span12">
+						<%= render "/shared/widgets/promotion", promotion: promotion %>
+					</div>
+				<% end %>
+			
+				<% @section.promotions.each do |promotion| %>
+					<div class="span12">
+						<%= render "/shared/widgets/promotion", promotion: promotion %>
+					</div>
+				<% end %>
+			</div> <!-- row-fluid -->
 		</div>
 		
 		<h6>More Headlines from <%= @section.title %></h6>

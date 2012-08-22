@@ -1,3 +1,12 @@
 <div class="promotion">
-	<h3><%= link_to promotion.title, promotion.url %></h3>
+	<% if asset = promotion.asset %>
+		<div class="asset-block" style="width:<%= asset.four.width %>px">
+			<div class="contentasset">
+				<span class="title">
+					<%= link_to promotion.title, promotion.url %>
+				</span>
+				<%= link_to asset.four.tag, promotion.url %>
+			</div>
+		</div>
+	<% end %>
 </div>
