@@ -33,14 +33,18 @@ describe ContentEmailController do
     before :each do
       post :create, 
             obj_key:        content.obj_key,
-            content_email:  { name: "Bryan", email: "bricker@scpr.org" }
+            content_email:  { from_name:  "Bryan", 
+                              from_email: "bricker@scpr.org",
+                              to_email:   "bricker@kpcc.org" 
+                            }
     end
 
     it "initializes a new ContentEmail with the form params" do
       message = assigns(:message)
       message.should be_a ContentEmail
-      message.name.should eq "Bryan"
-      message.email.should eq "bricker@scpr.org"
+      message.from_name.should eq   "Bryan"
+      message.from_email.should eq  "bricker@scpr.org"
+      message.to_email.should eq    "bricker@kpcc.org"
     end
     
     it "sets @message.content to @content" do
@@ -57,7 +61,7 @@ describe ContentEmailController do
       before :each do
         post :create, 
               obj_key:        content.obj_key,
-              content_email:  { email: "invalid" }
+              content_email:  { to_email: "invalid" }
       end
       
       it "sets the flash alert" do

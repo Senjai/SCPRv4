@@ -273,8 +273,9 @@ end
 
 # ContentEmail#########################################################
   factory :content_email do # Must pass in content
-    name  "Bryan"
-    email "bricker@scpr.org"
+    from_email  "bricker@kpcc.org"
+    to_email    "bricker@scpr.org"
+    content { |email| email.association :content_shell }
   end
 
 # ContentAsset#########################################################

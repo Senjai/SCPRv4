@@ -2,14 +2,18 @@ require "spec_helper"
 
 describe ContentEmail do
   describe "attributes" do
-    it { should respond_to :name }
-    it { should respond_to :name= }
-    it { should respond_to :email }
-    it { should respond_to :email= }
+    it { should respond_to :from_name }
+    it { should respond_to :from_name= }
+    it { should respond_to :from_email }
+    it { should respond_to :from_email= }
+    it { should respond_to :to_email }
+    it { should respond_to :to_email= }
     it { should respond_to :subject }
     it { should respond_to :subject= }
     it { should respond_to :body }
     it { should respond_to :body= }
+    it { should respond_to :lname }
+    it { should respond_to :lname= }
     it { should respond_to :content }
     it { should respond_to :content= }
   end
@@ -17,9 +21,11 @@ describe ContentEmail do
   #-----------
 
   describe "validations" do
-    it { should validate_presence_of :email }
-    it { should validate_presence_of :name }
-    it { should validate_format_of(:email).with(/.+@.+\..+/) }
+    it { should validate_presence_of :from_email }
+    it { should validate_presence_of :to_email }
+    it { should validate_presence_of :content }
+    it { should validate_format_of(:to_email).with(/.+@.+\..+/) }
+    it { should validate_format_of(:from_email).with(/.+@.+\..+/) }
     it { should ensure_length_of(:lname).is_at_most(0) }
   end
 
@@ -37,13 +43,15 @@ describe ContentEmail do
     it "sets all attributes passed in" do
       content       = create :news_story
       content_email = build :content_email, 
-                            name: "Bricker", 
-                            email: "bricker@bricker.com", 
-                            content: content
+                            from_name:  "Bricker", 
+                            from_email: "bricker@bricker.com", 
+                            to_email:   "bricker@scpr.org", 
+                            content:    content
                         
-      content_email.name.should     eq "Bricker"
-      content_email.email.should    eq "bricker@bricker.com"
-      content_email.content.should  eq content
+      content_email.from_name.should  eq "Bricker"
+      content_email.from_email.should eq "bricker@bricker.com"
+      content_email.to_email.should   eq "bricker@scpr.org"
+      content_email.content.should    eq content
     end
   end
   
@@ -53,9 +61,9 @@ describe ContentEmail do
     context "valid" do
       let(:content)       { create :news_story }
       let(:content_email) { build :content_email, 
-                            name: "Bricker", 
-                            email: "bricker@bricker.com", 
-                            content: content
+                            from_email: "bricker@bricker.com", 
+                            to_email:   "bricker@scpr.org",
+                            content:    content
                           }
                           
       it "delivers the email" do
@@ -70,7 +78,7 @@ describe ContentEmail do
     end
     
     context "invalid" do
-      let(:content_email) { build :content_email, email: "invalid" }
+      let(:content_email) { build :content_email, to_email: "invalid" }
 
       it "returns false" do
         content_email.save.should eq false
@@ -79,6 +87,20 @@ describe ContentEmail do
       it "does not deliver the e-mail" do
         ActionMailer::Base.deliveries.size.should eq 0
       end
+    end
+  end
+  
+  #-----------
+  
+  describe "from" do
+    it "returns the from_name if it's available" do
+      content_email = build :content_email, from_name: "Bryan"
+      content_email.from.should eq content_email.from_name
+    end
+    
+    it "returns the from_email if from_name isn't available" do
+      content_email = build :content_email, from_name: nil
+      content_email.from.should eq content_email.from_email
     end
   end
 end

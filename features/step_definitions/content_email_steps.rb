@@ -4,14 +4,14 @@ end
 
 When /^I fill in the "([^"]*)" form with invalid data$/ do |id|
   within "form##{id.gsub(/\s/, "_")}" do
-    fill_in "content_email_email", with: "invalid"
+    fill_in "content_email_to_email", with: "invalid"
   end
 end
 
 When /^I fill in the "([^"]*)" form with valid data$/ do |id|
   within "form##{id.gsub(/\s/, "_")}" do
-    fill_in "content_email_email",  with: "valid@scpr.org"
-    fill_in "content_email_name",   with: "Bryan Ricker"
+    fill_in "content_email_to_email",   with: "valid@scpr.org"
+    fill_in "content_email_from_email", with: "someguy@somesite.com"
   end
 end
 

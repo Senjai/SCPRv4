@@ -3,11 +3,11 @@ class ContentEmail
   include ActiveModel::Conversion
   extend  ActiveModel::Naming
 
-  attr_accessor :name, :email, :subject, :body, :lname, :content
+  attr_accessor :from_name, :from_email, :to_email, :subject, :body, :lname, :content
 
-  validates :name, :email, :presence => true
-  validates :lname, length: { maximum: 0 }
-  validates :email, :format => { :with => %r{.+@.+\..+} }
+  validates :from_email, :to_email, presence: true, format: { with: %r{.+@.+\..+} }
+  validates :content,               presence: true
+  validates :lname,                 length: { maximum: 0 }
  
   #---------------
   
@@ -22,14 +22,6 @@ class ContentEmail
   def persisted?
    false
   end
-  
-  def save
-    if self.valid?
-      ContentMailer.email_content(self).deliver
-    else
-      false
-    end
-  end
 
   #---------------
   
@@ -39,6 +31,16 @@ class ContentEmail
       self
     else
       false
+    end
+  end
+  
+  #---------------
+  
+  def from
+    if self.from_name.present?
+      self.from_name
+    else
+      self.from_email
     end
   end
 end

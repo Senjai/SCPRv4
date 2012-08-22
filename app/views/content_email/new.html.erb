@@ -1,6 +1,6 @@
 <%= flash[:alert] %>
 
-<%= form_for @message, :url => content_email_path(:obj_key => @content.obj_key) do |f| %>
+<%= simple_form_for @message, :url => content_email_path(:obj_key => @content.obj_key) do |f| %>
 	<h6>Email this to a friend:</h6>
 	<hr />
 	<div class="cbase">
@@ -15,12 +15,14 @@
 	<% end %>
     <ul class="inputs-list">
     	<li class="field">
-	      <%= f.label 		:email, "Send This To:" %>
-	      <%= f.text_field 	:email, :class => "xlarge", :placeholder => "Email address" %>
+	      <%= f.label 		:to_email, "Send This To:" %>
+	      <%= f.text_field 	:to_email, :class => "xlarge", :placeholder => "Email address" %>
 	    </li>
 		<li class="field">
-	      <%= f.label 		:name, 	"From:" %>
-	      <%= f.text_field 	:name, 	:class => "xlarge", :placeholder => "Your name" %>
+	      <%= f.label 		:from_name, 	"From:" %>
+	      <%= f.text_field 	:from_name, 	:class => "xlarge", :placeholder => "Your name" %>
+	      <%= f.text_field 	:from_email, 	:class => "xlarge", :placeholder => "Your e-mail" %>
+	
 	    </li>
 		<li class="field">
 	      <%= f.label 		:body, 	"Add a personal message:" %>
