@@ -1,6 +1,6 @@
 <%= flash[:alert] %>
 
-<%= simple_form_for @message, :url => content_email_path(:obj_key => @content.obj_key) do |f| %>
+<%= form_for @message, :url => content_email_path(:obj_key => @content.obj_key) do |f| %>
 	<h6>Email this to a friend:</h6>
 	<hr />
 	<div class="cbase">
@@ -20,7 +20,7 @@
 	    </li>
 		<li class="field">
 	      <%= f.label 		:from_name, 	"From:" %>
-	      <%= f.text_field 	:from_name, 	:class => "xlarge", :placeholder => "Your name" %>
+	      <%= f.text_field 	:from_name, 	:class => "xlarge stacked", :placeholder => "Your name" %>
 	      <%= f.text_field 	:from_email, 	:class => "xlarge", :placeholder => "Your e-mail" %>
 	
 	    </li>

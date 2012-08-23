@@ -164,6 +164,9 @@ form {
   .input-xlarge, input.xlarge, textarea.xlarge, select.xlarge {
     width: 300px;
   }
+  input.stacked {
+	margin-bottom: 5px;
+  }
   .input-xxlarge, input.xxlarge, textarea.xxlarge, select.xxlarge {
     width: 530px;
   }
