@@ -10,12 +10,14 @@ class Section < ActiveRecord::Base
   
   #----------
   # Association
-  has_many :section_categories
-  has_many :section_blogs
-  has_many :section_promotions
-  has_many :categories, through: :section_categories
-  has_many :blogs,      through: :section_blogs
-  has_many :promotions, through: :section_promotions
+  has_many    :section_categories
+  has_many    :section_blogs
+  has_many    :section_promotions
+  
+  has_many    :categories,      through: :section_categories
+  has_many    :blogs,           through: :section_blogs
+  has_many    :promotions,      through: :section_promotions
+  belongs_to  :missed_it_bucket
   
   #----------
   # Validation

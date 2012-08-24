@@ -82,6 +82,7 @@ Scprv4::Application.routes.draw do
       resources :sessions, only: [:create, :destroy]
       
       ## -- AdminResource -- ##
+      resources :missed_it_buckets
       resources :promotions
       resources :sections
       resources :pij_queries

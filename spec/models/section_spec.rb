@@ -7,6 +7,7 @@ describe Section do
     it { should have_many(:section_blogs) }
     it { should have_many(:blogs).through(:section_blogs) }
     it { should have_many(:promotions) }
+    it { should belong_to(:missed_it_bucket) }
   end
   
   describe "validations" do

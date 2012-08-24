@@ -27,6 +27,10 @@
 			</div> <!-- section-widgets -->
 		<% end %>
 		
+		<% content_for :sidebar_middle do %>
+			<%= render "/shared/widgets/missed_it_bucket", object: @section %>
+		<% end %>
+		
 		<h6>More Headlines from <%= @section.title %></h6>
 		<%= render_content bottom, "thumbnail" %>
 		
