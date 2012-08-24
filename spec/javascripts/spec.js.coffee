@@ -1,4 +1,4 @@
 #= require jquery
-#= require content_carousel
 #= require presentation
-#= require_tree ./
+#= require content_carousel
+#= require_tree .

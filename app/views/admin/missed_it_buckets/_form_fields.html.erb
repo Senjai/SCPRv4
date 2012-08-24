@@ -1,0 +1,18 @@
+<fieldset>
+	<legend>Details</legend>
+	<%= f.input :title %>
+</fieldset>
+
+<fieldset>
+	<legend>Content</legend>
+	<%= f.association :contents %>
+</fieldset>
+
+<script type="text/javascript">
+    (function($) {
+        $.getScript("http://<%=Rails.application.config.scpr.host%>/assets/contentbase_api.js",function() {            
+            cbAPI = new scpr.ContentBaseAPI()
+            dropzone = cbAPI.buildContentDropZone({el:"#contents-group"{% if original.model_content_type == "content/missed" %},autofill:{bucket:{{ original.id }}}{% endif %}})
+        });
+    })(django.jQuery);
+</script>

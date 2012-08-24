@@ -41,7 +41,7 @@
 							<h3><%= link_to content.short_headline, content.link_path %></h3>
 							<p class="byline">
 								<% if content.category.present? %>
-									<span class="categories"><%= link_to content.category.category, section_path(content.category.slug) %></span> 
+									<span class="categories"><%= link_to content.category.category, category_path(content.category.slug) %></span> 
 									<span class="pipe">|</span> 
 								<% end %>
 								<time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
@@ -125,7 +125,7 @@
 							<h3><%= link_to content.short_headline, content.link_path %></h3>
 							<p class="byline">
 								<% if content.category.present? %>
-									<span class="categories"><%= link_to content.category.category, section_path(content.category.slug) %></span> 
+									<span class="categories"><%= link_to content.category.category, category_path(content.category.slug) %></span> 
 									<span class="pipe">|</span>
 								<% end %>
 								<time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
@@ -191,7 +191,7 @@
 									<h3><%= link_to content.short_headline, content.link_path %></h3>
 									<p class="byline">
 										<% if content.category.present? %>
-											<span class="categories"><%= link_to content.category.category, section_path(content.category.slug) %></span> 
+											<span class="categories"><%= link_to content.category.category, category_path(content.category.slug) %></span> 
 											<span class="pipe">|</span>
 										<% end %>
 										<time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 

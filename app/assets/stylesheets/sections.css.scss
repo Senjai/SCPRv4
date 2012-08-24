@@ -1,0 +1,8 @@
+.section-page {
+	.section-widgets {
+		padding-bottom: 7px;
+		margin-bottom: 15px;
+		border-bottom: 1px solid $grayLight;
+		min-height: 40px; // Just to give the floating headers room to breath while the assets are loading
+	}
+}

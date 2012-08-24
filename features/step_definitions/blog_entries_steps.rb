@@ -31,7 +31,7 @@ Then /^I should see article meta for each entry$/ do
 end
 
 Then /^I should see the latest entry for that blog$/ do
-  page.find(".thumbnail .latest-post").should have_content @blog.entries.first.short_headline
+  page.find(".blog-widget").should have_content @blog.entries.first.short_headline
 end
 
 Then /^I should see the latest entry for that remote blog$/ do

@@ -58,9 +58,7 @@ describe BlogEntry do
   describe "scopes" do
     describe "#published" do    
       it "orders published content by published_at descending" do
-        entries = create_list :blog_entry, 3, status: 5
-        BlogEntry.published.first.should eq entries.last
-        BlogEntry.published.last.should eq entries.first
+        BlogEntry.published.to_sql.should match /order by published_at desc/i
       end
     end
   end
