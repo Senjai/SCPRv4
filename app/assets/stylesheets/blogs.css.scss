@@ -1,5 +1,12 @@
 // Blog Directory Page
 .directory {
+	.blog-widget {
+		margin-bottom: 10px;
+		.header .title {
+			color: inherit;
+		}
+	}
+	
 	h6 {
 		margin-bottom: 9px;
 		border-bottom: 1px solid $grayLight;
@@ -38,6 +45,31 @@
 				font-size:12px;
 			}
 		}
+	}
+}
+
+.blog-widget {	
+	h3.header {
+		background: $grayLighter url(image_path("icons/blog-header-icon.png")) no-repeat 5px center;
+		border-top: 1px solid $grayLight;
+		border-bottom: 1px solid $grayLight;
+		padding: 10px 5px 10px 40px;
+		line-height: inherit;
+		font-size: 16px;
+		a:hover { 
+			text-decoration: none;
+		}
+	
+		.title {
+			color: red;
+		}		
+	}
+	
+	.content {
+		background: $nearWhite;
+		padding: 10px;
+		h3.story-headline { line-height: inherit; }
+		.offlead { border-bottom: none; }
 	}
 }
 

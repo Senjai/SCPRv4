@@ -1,0 +1,16 @@
+.promotion {
+	.title {
+		position: absolute;
+		width: 100%;
+		text-align: left;
+		background: $black;
+		@include opacity(0.8);
+		a { 
+			@include font-heading($weight: 800, $size: 18px);
+			display: block;
+			color: $white;
+			padding: 10px;
+		}
+		
+	}
+}

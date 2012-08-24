@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806171758) do
+ActiveRecord::Schema.define(:version => 20120824175718) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -768,6 +768,14 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
 
+  create_table "promotions", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.integer  "asset_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "rails_content_map", :id => false, :force => true do |t|
     t.integer "id",         :null => false
     t.string  "class_name", :null => false
@@ -865,6 +873,35 @@ ActiveRecord::Schema.define(:version => 20120806171758) do
 
   add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"
   add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
+
+  create_table "section_blogs", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "blog_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "section_categories", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "section_promotions", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "promotion_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "sections", :force => true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "missed_it_bucket_id"
+  end
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false

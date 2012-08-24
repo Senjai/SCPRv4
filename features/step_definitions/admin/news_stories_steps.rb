@@ -4,23 +4,14 @@ Given /^(?:a? )?news stor(?:ies|y) with the following attributes?:$/ do |table|
     create(:news_story, Rack::Utils.parse_nested_query(attributes.to_query))
   end
   @news_story = NewsStory.all[rand(NewsStory.count.to_i)]
+  @object     = @news_story
 end
 
 Given /^(\d+) news stor(?:ies|y)$/ do |num|
   @news_stories = create_list :news_story, num.to_i
-  @news_story = @news_stories[rand(@news_stories.size)]
-  @news_stories.count.should eq num.to_i
-end
-
-
-
-#### Actions
-When /^I (?:fill in|update) all of the required fields with valid information$/ do
-  fill_required_fields_with_attributes_from build(:news_story)
-end
-
-When /^I do not fill in the required fields$/ do
-  fill_required_fields_with_attributes_from NewsStory.new
+  @news_story   = @news_stories[rand(@news_stories.size)]
+  @object       = @news_story
+  NewsStory.count.should eq num.to_i
 end
 
 
@@ -31,7 +22,10 @@ Then /^there should be (\d+) news stor(?:y|ies)$/ do |num|
 end
 
 Then /^the news story's attributes should be updated$/ do
-  pending
+  visit @news_story.link_path
+  within ".story article" do
+    page.should have_content @updated_object.headline
+  end
 end
 
 

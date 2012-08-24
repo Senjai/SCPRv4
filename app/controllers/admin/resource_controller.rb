@@ -95,16 +95,16 @@ class Admin::ResourceController < Admin::BaseController
   
   # -- Resource Class helpers -- #
   
-  helper_method :resource_class
+  helper_method :resource_class, :resource_title, :resource_param, :resource_path_helper
+  
   def resource_class
     @resource_class ||= params[:controller].camelize.demodulize.singularize.constantize
   end
   
-  helper_method :resource_title
   def resource_title
     @resource_title ||= resource_class.to_s.titleize
   end
-  
+
   def resource_param
     @resource_param ||= resource_class.to_s.underscore.to_sym
   end
