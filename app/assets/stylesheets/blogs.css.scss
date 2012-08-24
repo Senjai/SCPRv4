@@ -50,18 +50,27 @@
 
 .blog-widget {	
 	h3.header {
-		background: $grayLighter url(image_path("icons/blog-header-icon.png")) no-repeat 5px center;
+		background: $grayLighter;
 		border-top: 1px solid $grayLight;
 		border-bottom: 1px solid $grayLight;
-		padding: 10px 5px 10px 40px;
+		padding:5px;
 		line-height: inherit;
 		font-size: 16px;
-		a:hover { 
-			text-decoration: none;
+		a {
+			color:$nearBlack;
+			&:hover {
+				text-decoration: none;
+			}
 		}
-	
 		.title {
-			color: red;
+			&.politics {
+				background:url(image_path("blogs/represent_sm.png")) no-repeat 0 0;
+				@include ie-inline-block();
+				width:112px;
+				height:30px;
+				@include hide-text();
+				vertical-align:bottom;
+			}
 		}		
 	}
 	
@@ -80,6 +89,15 @@
 	
  	h2 {
 		@include font-shorthand(200, 28px, 30px);
+		&.politics {
+			a {
+				background:url(image_path("blogs/represent_lg.png")) no-repeat 0 0;
+				@include ie-inline-block();
+				width:160px;
+				height:42px;
+				@include hide-text();
+			}
+		}
 	}
 }
 

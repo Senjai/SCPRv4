@@ -12,15 +12,15 @@
 		<% if @section.blogs or @section.promotions %>
 			<div class="section-widgets">
 				<div class="row-fluid">
-					<% @section.promotions.each do |promotion| %>
-						<div class="span12">
-							<%= render "/shared/widgets/promotion", promotion: promotion %>
-						</div>
-					<% end %>
-
 					<% @section.blogs.each do |blog| %>
 						<div class="span12">
 							<%= render "/shared/widgets/blog_module", blog: blog, tagline: "KPCC's #{@section.title} Blog" %>
+						</div>
+					<% end %>
+					
+					<% @section.promotions.each do |promotion| %>
+						<div class="span12">
+							<%= render "/shared/widgets/promotion", promotion: promotion %>
 						</div>
 					<% end %>
 				</div> <!-- row-fluid -->

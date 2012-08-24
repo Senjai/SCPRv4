@@ -1,9 +1,8 @@
 <% content_for :content do %>
 	<div class="blog-masthead">
 		<div class="row-fluid">
-			<div class="span6 hidden-reader">&nbsp;</div>
-			<div class="span18 mq-solo-span">
-				<h2><%= link_to @blog.name + @BLOGTITLE_EXTRA.to_s, blog_path(@blog.slug) %></h2>
+			<div class="span24 mq-solo-span">
+				<h2 class="<%=@blog.slug%>"><%= link_to @blog.name + @BLOGTITLE_EXTRA.to_s, blog_path(@blog.slug) %></h2>
 			</div>
 		</div>
 	</div>

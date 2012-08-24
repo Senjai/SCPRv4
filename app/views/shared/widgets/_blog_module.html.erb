@@ -3,7 +3,7 @@
 
 <div class="blog-widget">
 	<h3 class="header">
-		<a href="<%=blog_path(blog.slug)%>"><span class="title"><%= blog.name %></span>
+		<a href="<%=blog_path(blog.slug)%>"><span class="title <%=blog.slug%>"><%= blog.name %></span>
 		<% if tagline.present? %> - <span class="tagline"><%= tagline %></span></a><% end %>
 	</h3>
 
