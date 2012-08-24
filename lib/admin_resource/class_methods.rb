@@ -1,23 +1,4 @@
 module AdminResource
-  
-  DEFAULTS = {
-    list_order: "id desc",
-    list_per_page: 25,
-    excluded_fields: ["id"]
-  }
-
-  TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
-  
-  
-  # -----------------------
-  
-  def administrate
-    extend ClassMethods
-    include InstanceMethods
-  end
-  
-  # -----------------------
-  
   module ClassMethods
     
     def list_fields
@@ -92,16 +73,4 @@ module AdminResource
 
     attr_accessor :excluded_fields, :only_fields
   end
-  
-  # -----------------------
-  
-  module InstanceMethods
-    
-    def to_title
-      title_method = TITLE_ATTRIBS.find { |a| self.respond_to?(a) }
-      title_method ? self.send(title_method) : "#{self.class.name.titleize} ##{self.id}"
-    end
-  end
 end
-
-ActiveRecord::Base.extend AdminResource
