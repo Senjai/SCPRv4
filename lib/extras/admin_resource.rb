@@ -8,6 +8,10 @@ module AdminResource
       resource.singularize.demodulize.titleize
     end
 
+    def self.as_param(resource)
+      resource.demodulize.parameterize
+    end
+    
     def self.to_param(resource)
       resource.singularize.demodulize.parameterize.underscore.to_sym
     end

@@ -77,9 +77,11 @@ Scprv4::Application.routes.draw do
   
   scope "r" do
     namespace :admin do  
-      get 'login' => "sessions#new", as: :login
+      get 'login'  => "sessions#new", as: :login
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
+      
+      get '/search(/:resource)' => "search#index", as: :search
       
       ## -- AdminResource -- ##
       resources :missed_it_buckets
