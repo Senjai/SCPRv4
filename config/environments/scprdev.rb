@@ -84,7 +84,7 @@ Scprv4::Application.configure do
   config.scpr.media_root   = "/home/kpcc/media"
   config.scpr.resque_queue = :scprv4
   
-  config.node.server = "http://newsroomdev.scprdev.org"
+  config.node.server = "http://scprdev.org"
   
   config.assethost.server = "a.scpr.org"
   config.assethost.token  = "droQQ2LcESKeGPzldQr7"
