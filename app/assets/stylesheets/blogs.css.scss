@@ -48,6 +48,18 @@
 	}
 }
 
+// Temporary implementation of Multi-American logo while it's a Remote Blog
+.thumbnail {
+	.multi-american a {
+		background:url(image_path("blogs/multiamerican_sm.png")) no-repeat 0 0;
+		@include ie-inline-block();
+		width:160px;
+		height:30px;
+		@include hide-text();
+		vertical-align:bottom;
+	}
+} 
+
 .blog-widget {	
 	h3.header {
 		background: $grayLighter;
@@ -62,11 +74,43 @@
 				text-decoration: none;
 			}
 		}
-		.title {
+		.blog-header {
 			&.politics {
 				background:url(image_path("blogs/represent_sm.png")) no-repeat 0 0;
 				@include ie-inline-block();
 				width:112px;
+				height:30px;
+				@include hide-text();
+				vertical-align:bottom;
+			}
+			&.education {
+				background:url(image_path("blogs/passfail_sm.png")) no-repeat 0 0;
+				@include ie-inline-block();
+				width:112px;
+				height:30px;
+				@include hide-text();
+				vertical-align:bottom;
+			}
+			&.multi-american, &.multi-american a {
+				background:url(image_path("blogs/multiamerican_sm.png")) no-repeat 0 0;
+				@include ie-inline-block();
+				width:112px;
+				height:30px;
+				@include hide-text();
+				vertical-align:bottom;
+			}
+			&.newmedia {
+				background:url(image_path("blogs/withoutanet_sm.png")) no-repeat 0 0;
+				@include ie-inline-block();
+				width:140px;
+				height:21px;
+				@include hide-text();
+				vertical-align:bottom;
+			}
+			&.news {
+				background:url(image_path("blogs/latest_sm.png")) no-repeat 0 0;
+				@include ie-inline-block();
+				width:120px;
 				height:30px;
 				@include hide-text();
 				vertical-align:bottom;
@@ -89,13 +133,51 @@
 	
  	h2 {
 		@include font-shorthand(200, 28px, 30px);
-		&.politics {
-			a {
-				background:url(image_path("blogs/represent_lg.png")) no-repeat 0 0;
-				@include ie-inline-block();
-				width:160px;
-				height:42px;
-				@include hide-text();
+		&.blog-header {
+			&.politics {
+				a {
+					background:url(image_path("blogs/represent_lg.png")) no-repeat 0 0;
+					@include ie-inline-block();
+					width:160px;
+					height:42px;
+					@include hide-text();
+				}
+			}
+			&.education {
+				a {
+					background:url(image_path("blogs/passfail_lg.png")) no-repeat 0 0;
+					@include ie-inline-block();
+					width:160px;
+					height:46px;
+					@include hide-text();
+				}
+			}
+			&.multi-american {
+				a {
+					background:url(image_path("blogs/multiamerican_lg.png")) no-repeat 0 0;
+					@include ie-inline-block();
+					width:160px;
+					height:42px;
+					@include hide-text();
+				}
+			}
+			&.newmedia {
+				a {
+					background:url(image_path("blogs/withoutanet_lg.png")) no-repeat 0 0;
+					@include ie-inline-block();
+					width:187px;
+					height:32px;
+					@include hide-text();
+				}
+			}
+			&.news {
+				a {
+					background:url(image_path("blogs/latest_lg.png")) no-repeat 0 0;
+					@include ie-inline-block();
+					width:160px;
+					height:46px;
+					@include hide-text();
+				}
 			}
 		}
 	}
