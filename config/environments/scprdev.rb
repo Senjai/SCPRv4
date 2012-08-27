@@ -80,12 +80,14 @@ Scprv4::Application.configure do
   config.dbsync.remote_host = "66.226.4.229"
   config.dbsync.remote_dir  = "~scprdb"
   
-  config.scpr.host = "staging.scprdev.org"
-  config.scpr.media_root = "/home/kpcc/media"
-  config.scpr.resque_queue   = :scprv4
+  config.scpr.host         = "staging.scprdev.org"
+  config.scpr.media_root   = "/home/kpcc/media"
+  config.scpr.resque_queue = :scprv4
+  
+  config.node.server = "http://newsroomdev.scprdev.org"
   
   config.assethost.server = "a.scpr.org"
-  config.assethost.token = "droQQ2LcESKeGPzldQr7"
+  config.assethost.token  = "droQQ2LcESKeGPzldQr7"
   config.assethost.prefix = "/api"
   
 end
