@@ -7,7 +7,6 @@ def content_base_associations(object, evaluator)
   
   if evaluator.category_type.present? && evaluator.with_category
     category = FactoryGirl.create(evaluator.category_type)
-    $stdout.puts RailsContentMap.all.map { |m| [m.django_content_type_id, m.rails_class_name] }
     FactoryGirl.create(:content_category, content: object, category: category)
   end
 end
