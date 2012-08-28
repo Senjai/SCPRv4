@@ -150,7 +150,6 @@ end
     slug { name.parameterize }
     teaser { "This is the teaser for #{name}!" }
     description "This is a description for this blog."
-    head_image "http://media.scpr.org/assets/images/heads/larry_transparent.png"
     is_active true
     is_remote false
     is_news true

@@ -148,7 +148,6 @@ ActiveRecord::Schema.define(:version => 20120824175718) do
     t.string   "name",                :limit => 140,                           :null => false
     t.string   "slug",                :limit => 50,                            :null => false
     t.text     "description",         :limit => 2147483647,                    :null => false
-    t.string   "head_image",          :limit => 200,        :default => "",    :null => false
     t.boolean  "is_active",                                 :default => false, :null => false
     t.string   "feed_url",            :limit => 200,        :default => "",    :null => false
     t.boolean  "is_remote",                                                    :null => false
