@@ -58,7 +58,7 @@ describe Blog do
     
     it "Does not cache if the feed_url isn't found" do
       Feedzirra::Feed.stub!(:fetch_and_parse) { 0 }
-      blog = create :blog, feed_url: "Invalid URL", :remote
+      blog = create :blog, :remote, feed_url: "Invalid URL"
       Blog.cache_remote_entries.should be_blank
     end
     
@@ -66,7 +66,7 @@ describe Blog do
       pending "Need to solve the stubbing here"
       Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
       create :blog, :remote
-      create :blog, feed_url: "Invalid", :remote
+      create :blog, :remote, feed_url: "Invalid"
       Blog.cache_remote_entries.count.should eq 1
     end
   end
