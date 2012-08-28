@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120816182600) do
+ActiveRecord::Schema.define(:version => 20120824175718) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -149,7 +149,6 @@ ActiveRecord::Schema.define(:version => 20120816182600) do
     t.string   "name",                :limit => 140,                           :null => false
     t.string   "slug",                :limit => 50,                            :null => false
     t.text     "description",         :limit => 2147483647,                    :null => false
-    t.string   "head_image",          :limit => 200,        :default => "",    :null => false
     t.boolean  "is_active",                                 :default => false, :null => false
     t.string   "feed_url",            :limit => 200,        :default => "",    :null => false
     t.boolean  "is_remote",                                                    :null => false
@@ -594,42 +593,6 @@ ActiveRecord::Schema.define(:version => 20120816182600) do
 
   add_index "pij_query", ["slug"], :name => "slug", :unique => true
 
-  create_table "podcasts_category", :force => true do |t|
-    t.string  "name",      :limit => 140, :null => false
-    t.integer "parent_id"
-  end
-
-  add_index "podcasts_category", ["parent_id"], :name => "podcasts_category_parent_id"
-
-  create_table "podcasts_episode", :force => true do |t|
-    t.integer  "show_id",                                            :null => false
-    t.string   "title",        :limit => 140,                        :null => false
-    t.text     "summary",      :limit => 2147483647,                 :null => false
-    t.string   "url",          :limit => 250,        :default => "", :null => false
-    t.string   "mp3_url",      :limit => 250,                        :null => false
-    t.integer  "mp3_size",                                           :null => false
-    t.datetime "published_at",                                       :null => false
-    t.string   "guid",         :limit => 150,        :default => "", :null => false
-  end
-
-  add_index "podcasts_episode", ["show_id"], :name => "podcasts_episode_show_id"
-
-  create_table "podcasts_news", :force => true do |t|
-    t.integer  "category_id",                                        :null => false
-    t.string   "title",        :limit => 140,                        :null => false
-    t.text     "summary",      :limit => 2147483647,                 :null => false
-    t.string   "url",          :limit => 250,        :default => "", :null => false
-    t.string   "mp3_url",      :limit => 250
-    t.integer  "mp3_size"
-    t.datetime "published_at",                                       :null => false
-    t.integer  "story_id"
-    t.integer  "encoaudio_id"
-  end
-
-  add_index "podcasts_news", ["category_id"], :name => "podcasts_news_category_id"
-  add_index "podcasts_news", ["encoaudio_id"], :name => "podcasts_news_220021d6"
-  add_index "podcasts_news", ["story_id"], :name => "podcasts_news_f5ae222e"
-
   create_table "podcasts_podcast", :force => true do |t|
     t.string  "slug",        :limit => 40,                            :null => false
     t.string  "title",       :limit => 140,                           :null => false
@@ -650,40 +613,6 @@ ActiveRecord::Schema.define(:version => 20120816182600) do
   add_index "podcasts_podcast", ["category_id"], :name => "podcasts_podcast_42dc49bc"
   add_index "podcasts_podcast", ["program_id"], :name => "podcasts_podcast_7eef53e3"
   add_index "podcasts_podcast", ["slug"], :name => "slug", :unique => true
-
-  create_table "podcasts_show_categories", :force => true do |t|
-    t.integer "show_id",     :null => false
-    t.integer "category_id", :null => false
-  end
-
-  add_index "podcasts_show_categories", ["category_id"], :name => "category_id_refs_id_27ff6d7cb17b0c56"
-  add_index "podcasts_show_categories", ["show_id", "category_id"], :name => "show_id", :unique => true
-
-  create_table "podcasts_topic", :force => true do |t|
-    t.string  "slug",        :limit => 40,                            :null => false
-    t.string  "title",       :limit => 140,                           :null => false
-    t.string  "link",        :limit => 250,                           :null => false
-    t.string  "podcast_url", :limit => 250,        :default => "",    :null => false
-    t.string  "itunes_url",  :limit => 250,        :default => "",    :null => false
-    t.text    "description", :limit => 2147483647,                    :null => false
-    t.string  "image_url",   :limit => 250,                           :null => false
-    t.string  "author",      :limit => 140,                           :null => false
-    t.string  "keywords",    :limit => 200,                           :null => false
-    t.string  "duration",    :limit => 10,                            :null => false
-    t.boolean "is_listed",                         :default => false, :null => false
-    t.integer "category_id"
-  end
-
-  add_index "podcasts_topic", ["category_id"], :name => "podcasts_topic_42dc49bc"
-  add_index "podcasts_topic", ["slug"], :name => "slug", :unique => true
-
-  create_table "podcasts_topic_categories", :force => true do |t|
-    t.integer "topic_id",    :null => false
-    t.integer "category_id", :null => false
-  end
-
-  add_index "podcasts_topic_categories", ["category_id"], :name => "category_id_refs_id_159cb4f1192b4e5f"
-  add_index "podcasts_topic_categories", ["topic_id", "category_id"], :name => "topic_id", :unique => true
 
   create_table "press_releases_release", :force => true do |t|
     t.string   "short_title",  :limit => 240,        :default => "", :null => false
@@ -740,6 +669,14 @@ ActiveRecord::Schema.define(:version => 20120816182600) do
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
 
+  create_table "promotions", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.integer  "asset_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "rails_content_map", :id => false, :force => true do |t|
     t.integer "django_content_type_id", :null => false
     t.string  "rails_class_name",       :null => false
@@ -757,6 +694,35 @@ ActiveRecord::Schema.define(:version => 20120816182600) do
 
   add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"
   add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
+
+  create_table "section_blogs", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "blog_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "section_categories", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "section_promotions", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "promotion_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "sections", :force => true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "missed_it_bucket_id"
+  end
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false

@@ -45,28 +45,28 @@ describe Blog do
     
     it "returns the blogs it cached" do
       Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
-      blogs = create_list :remote_blog, 2
+      blogs = create_list :blog, 2, :remote
       Blog.cache_remote_entries.count.should eq 2
     end
     
     it "creates a cache for each remote blog" do
       Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
-      blogs = create_list :remote_blog, 2
+      blogs = create_list :blog, 2, :remote
       Blog.cache_remote_entries
       blogs.each { |blog| Rails.cache.fetch("remote_blog:#{blog.slug}").should_not be_blank }
     end
     
     it "Does not cache if the feed_url isn't found" do
       Feedzirra::Feed.stub!(:fetch_and_parse) { 0 }
-      blog = create :remote_blog, feed_url: "Invalid URL"
+      blog = create :blog, feed_url: "Invalid URL", :remote
       Blog.cache_remote_entries.should be_blank
     end
     
     it "responds with all the successful caches" do
       pending "Need to solve the stubbing here"
       Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
-      create :remote_blog
-      create :remote_blog, feed_url: "Invalid"
+      create :blog, :remote
+      create :blog, feed_url: "Invalid", :remote
       Blog.cache_remote_entries.count.should eq 1
     end
   end
@@ -74,7 +74,7 @@ describe Blog do
   describe "scopes" do
     describe "#active" do
       it "returns only active blogs" do
-        active_blogs = create_list :blog, 1, is_active: true
+        active_blogs   = create_list :blog, 1, is_active: true
         inactive_blogs = create_list :blog, 2, is_active: false
         Blog.active.should eq active_blogs
       end
@@ -82,7 +82,7 @@ describe Blog do
     
     describe "#is_news" do
       it "returns only news blogs" do
-        news_blogs = create_list :blog, 1, is_news: true
+        news_blogs     = create_list :blog, 1, is_news: true
         non_news_blogs = create_list :blog, 2, is_news: false
         Blog.is_news.should eq news_blogs
       end
@@ -90,7 +90,7 @@ describe Blog do
     
     describe "#is_not_news" do
       it "returns only non-news blogs" do
-        news_blogs = create_list :blog, 1, is_news: true
+        news_blogs     = create_list :blog, 1, is_news: true
         non_news_blogs = create_list :blog, 2, is_news: false
         Blog.is_not_news.should eq non_news_blogs
       end
@@ -98,7 +98,7 @@ describe Blog do
     
     describe "#local" do
       it "returns only local blogs" do
-        local_blogs = create_list :blog, 1, is_remote: false
+        local_blogs  = create_list :blog, 1, is_remote: false
         remote_blogs = create_list :blog, 2, is_remote: true
         Blog.local.should eq local_blogs
       end
@@ -106,7 +106,7 @@ describe Blog do
     
     describe "#remote" do
       it "returns only remote blogs" do
-        local_blogs = create_list :blog, 1, is_remote: false
+        local_blogs  = create_list :blog, 1, is_remote: false
         remote_blogs = create_list :blog, 2, is_remote: true
         Blog.remote.should eq remote_blogs
       end

@@ -6,11 +6,11 @@ class BlogsController < ApplicationController
   #----------
   
   def index
-    @blogs = Blog.active.order("name")
-    @news_blogs = @blogs.local.is_news
+    @blogs          = Blog.active.order("name")
+    @news_blogs     = @blogs.local.is_news
     @non_news_blogs = @blogs.local.is_not_news
-    @remote_blogs = Blog.remote.order("name")
-    render :layout => "application"
+    @remote_blogs   = Blog.remote.order("name")
+    render layout:    "application"
   end
   
   #----------

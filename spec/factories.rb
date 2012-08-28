@@ -158,15 +158,7 @@ end
     feed_url "http://oncentral.org/rss/latest"
     custom_url "http://scpr.org" # it's a required field?
     
-    factory :news_blog do
-      is_news true
-    end
-    
-    factory :non_news_blog do
-      is_news false
-    end
-    
-    factory :remote_blog do
+    trait :remote do
       is_remote true
       feed_url "http://oncentral.org/rss/latest"
     end
