@@ -1,14 +1,14 @@
 A message from 89.3 KPCC
 ========================
 
-<%= @message.name %> shared an article with you.
+<%= @message.from %> shared an article with you.
 <% if @message.body.present? %>
-A personal message from <%= @message.name %>: <%= @message.body %>
+A personal message from <%= @message.from %>: <%= @message.body %>
 <% end %>
 ========================
 
 <%= @content.headline %>
-<%= @content.teaser %>
+<%= strip_tags @content.teaser %>
 
 Read the full story: <%= @content.remote_link_path %>
 

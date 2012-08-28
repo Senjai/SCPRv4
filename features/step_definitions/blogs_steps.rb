@@ -20,7 +20,7 @@ Then /^I should see the blog's information$/ do
 end
 
 Then /^I should see (\d+) blogs? listed in the News section$/ do |num|
-  page.find("#news").should have_css ".thumbnail", count: num.to_i
+  page.find("#news").should have_css ".blog-widget", count: num.to_i
 end
 
 Then /^I should see that blog's teaser$/ do

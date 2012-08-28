@@ -40,7 +40,7 @@ class CategoryController < ApplicationController
       # Only need to setup the sections if we're going to
       # render them as HTML
       if request.format.html?
-        @top = get_content_from(@categories, limit: 1).first
+        @top      = get_content_from(@categories, limit: 1).first
         @sections = generate_sections_for(@categories,@top)
 
       # Otherwise just return the latest 15 news items

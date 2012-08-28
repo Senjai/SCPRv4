@@ -17,7 +17,7 @@ module Scprv4
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/extras)
-
+    
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -42,11 +42,6 @@ module Scprv4
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:unencrypted_password, :unencrypted_password_confirmation]
-
-    # Enable Postmark for transactional mail sending
-    config.action_mailer.delivery_method = :simple_postmark
-    config.action_mailer.simple_postmark_settings = { api_key: '899a8982-87b7-47e9-aba9-c49f29f70cdb' }
-    config.action_mailer.raise_delivery_errors = true
     
     # Enable the asset pipeline
     config.assets.enabled = true

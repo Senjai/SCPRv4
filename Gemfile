@@ -47,12 +47,12 @@ group :development do
 end
 
 group :test, :development do
-	gem "rspec-rails"
-	gem 'guard-rspec'
-	gem 'guard-cucumber'
-	gem 'launchy'
-	gem 'jasminerice'
-	gem 'guard-jasmine'
+  gem "rspec-rails"
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
+  gem 'launchy'
+#  gem 'jasminerice'
+#  gem 'guard-jasmine'
 end
 
 group :test do

@@ -149,7 +149,7 @@ describe BlogsController do
     it "orders tags by blog entry published desc" do
       blog = create :blog
       get :blog_tags, blog: blog.slug
-      assigns(:recent).to_sql.should match /blogs_entry.published_at desc/i
+      assigns(:recent).to_sql.should match /order by blogs_entry.published_at desc/i
     end
   end
   

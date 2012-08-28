@@ -141,14 +141,8 @@ GEM
     guard-cucumber (1.2.0)
       cucumber (>= 1.2.0)
       guard (>= 1.1.0)
-    guard-jasmine (1.7.0)
-      childprocess
-      guard (>= 1.1.0)
-      multi_json
-      thor
     guard-rspec (1.2.1)
       guard (>= 1.1)
-    haml (3.1.7)
     hashie (1.0.0)
     highline (1.6.14)
     hike (1.2.1)
@@ -157,9 +151,6 @@ GEM
       multi_xml
     httpauth (0.1)
     i18n (0.6.0)
-    jasminerice (0.0.9)
-      coffee-rails
-      haml
     journey (1.0.4)
     jquery-rails (2.1.1)
       railties (>= 3.1.0, < 5.0)
@@ -350,9 +341,7 @@ DEPENDENCIES
   faraday_middleware (~> 0.8)
   feedzirra!
   guard-cucumber
-  guard-jasmine
   guard-rspec
-  jasminerice
   jquery-rails
   launchy
   mysql2

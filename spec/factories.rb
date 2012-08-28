@@ -151,7 +151,6 @@ end
     slug { name.parameterize }
     teaser { "This is the teaser for #{name}!" }
     description "This is a description for this blog."
-    head_image "http://media.scpr.org/assets/images/heads/larry_transparent.png"
     is_active true
     is_remote false
     is_news true
@@ -267,8 +266,9 @@ end
 
 # ContentEmail#########################################################
   factory :content_email do # Must pass in content
-    name  "Bryan"
-    email "bricker@scpr.org"
+    from_email  "bricker@kpcc.org"
+    to_email    "bricker@scpr.org"
+    content { |email| email.association :content_shell }
   end
 
 # ContentAsset#########################################################
@@ -378,6 +378,36 @@ end
     is_public             1
     template              ""
   end
+
+
+# Section #########################################################
+  factory :section do
+    sequence(:title)  { |n| "Section #{n}" }
+    slug              { title.parameterize }    
+  end
+  
+  factory :section_blog do
+    section
+    blog
+  end
+  
+  factory :section_category do
+    section
+    category
+  end
+  
+  factory :section_promotion do
+    section
+    promotion
+  end
+
+  
+# Promotion #########################################################
+  factory :promotion do
+    sequence(:title)  { |n| "Promotion #{n}" }
+    url               { "http://scpr.org/promotions/#{title.parameterize}" }
+  end
+  
 
 # ContentCategory #########################################################
   factory :content_category do
@@ -526,7 +556,7 @@ end
     ignore { with_category  false }
     ignore { byline_count   0 }
     status 5
-    sequence(:published_at) { |n| Time.now + 60*60*n }
+    sequence(:published_at) { |n| Time.now - 60*60*n }
     required_cb_fields
   end
     

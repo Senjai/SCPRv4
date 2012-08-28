@@ -99,9 +99,7 @@ describe ShowSegment do
   
   describe "#published" do
     it "orders published content by published_at descending" do
-      segments = create_list :show_segment, 3, status: 5
-      ShowSegment.published.first.should eq segments.last
-      ShowSegment.published.last.should eq segments.first
+      ShowSegment.published.to_sql.should match /order by published_at desc/i
     end
   end
 end

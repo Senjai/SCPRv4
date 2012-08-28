@@ -15,9 +15,6 @@ Scprv4::Application.configure do
   config.action_controller.perform_caching = false
   config.cache_store = :redis_content_store, "redis://localhost:6379/5"
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
-
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
@@ -33,18 +30,31 @@ Scprv4::Application.configure do
   
   default_url_options[:host] = "scprv4.dev"
   
+  # Gmail
+  config.action_mailer.delivery_method       = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings         = {
+    address:               'smtp.gmail.com',
+    port:                  587,
+    domain:               'kpcc.org',
+    user_name:             'kpccdev@gmail.com',
+    password:              'scprdev474',
+    authentication:        'plain',
+    enable_starttls_auto:  true  
+  }
+
   config.dbsync.filename    = "mercer.dump"
   config.dbsync.local_dir   = "#{Rails.root}/../dbsync" # No trailing slash
   config.dbsync.remote_host = "66.226.4.229"
   config.dbsync.remote_dir  = "~scprdb"
   
-  config.scpr.host = "scprv4.dev"
-  config.scpr.resque_queue   = :scprv4
+  config.scpr.host         = "scprv4.dev"
+  config.scpr.resque_queue = :scprv4
 
-  config.node.server = "http://localhost:13002"
+  config.node.server = "http://localhost:8888"
 
 #  config.assethost.server = "ahhost-scpr.dev"
-  config.assethost.server = ENV["AH_SERVER"] || "a.scpr.org"
-  config.assethost.token = "droQQ2LcESKeGPzldQr7"
-  config.assethost.prefix = "/api"
+  config.assethost.server  = ENV["AH_SERVER"] || "a.scpr.org"
+  config.assethost.token   = "droQQ2LcESKeGPzldQr7"
+  config.assethost.prefix  = "/api"
 end

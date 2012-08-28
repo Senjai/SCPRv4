@@ -43,8 +43,8 @@ module ContentBaseHelpers
   
   # Creates `num` of each ContentBase subclass for 
   # helping with Sphinx tests
-  def make_content(num=nil, options=nil)
-    num ||= 5
+  def make_content(num = nil, options=nil)
+    num     ||= 5
     options ||= {}
     
     @generated_content = []
@@ -64,10 +64,14 @@ module ContentBaseHelpers
   end
   
   # -----------
+
+  def index_sphinx
+    ThinkingSphinx::Test.index
+  end
   
   def generate_and_index_content(content_options={})
     make_content(content_options[:num], content_options[:options])
-    ThinkingSphinx::Test.index
+    index_sphinx
   end
 
   # -----------
@@ -87,7 +91,7 @@ module ContentBaseHelpers
       end
       
       before :each do
-          generate_and_index_content(content_options)
+        generate_and_index_content(content_options)
       end
       
       after :all do

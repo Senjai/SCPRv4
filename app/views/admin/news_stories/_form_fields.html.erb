@@ -14,7 +14,7 @@
 
 <fieldset>
 	<legend>Publish Status</legend>
-	<%= f.input :status, collection: ContentBase.status_text_collect, selected: ContentBase.status_text_collect[1]  %>
+	<%= f.input :status, collection: ContentBase.status_text_collect, selected: record.new_record? ? ContentBase::STATUS_DRAFT : record.status %>
 </fieldset>
 
 <fieldset>

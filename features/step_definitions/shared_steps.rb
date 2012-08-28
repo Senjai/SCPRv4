@@ -64,7 +64,9 @@ end
 
 #### Assertions
 When /^I'm looking at the "[^"]*" section$/ do
-  true # This is just to provide context while reading the scenario, doesn't actually do anything.
+  # Contextual
+  # TODO Replace with capybara's "within" block
+  true
 end
 
 Then /^that section should have (\d+) items$/ do |num|
@@ -74,6 +76,16 @@ end
 
 
 #### Actions
+When /^I (?:fill in|update) all of the "([^"]*)" required fields with valid information$/ do |resource|
+  @updated_object = build(AdminResource::Helpers.to_param(resource))
+  fill_required_fields_with_attributes_from @updated_object
+end
+
+When /^I leave the fields empty$/ do
+  # Contextual
+  true
+end
+
 Then /^show me the page$/ do
   save_and_open_page
 end
@@ -93,8 +105,4 @@ end
 
 When /^I click "(.*?)"$/ do |text|
   click_link text
-end
-
-When /^I update the required fields with valid information$/ do
-  fill_required_fields_with_attributes_from build(:news_story)
 end
