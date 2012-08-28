@@ -1,6 +1,6 @@
 class RemoveSeriesFromContentmap < ActiveRecord::Migration
   def up
-    RailsContentMap.find_by_rails_class_name("ShowSeries").delete
+    RailsContentMap.delete_all(rails_class_name: "ShowSeries")
   end
 
   def down
