@@ -1,4 +1,4 @@
-class AddBioToRailsContentMap < ActiveRecord::Migration
+class AddModelsToRailsContentMap < ActiveRecord::Migration
   def up
     RailsContentMap.create django_content_type_id: 13, rails_class_name: "Bio"
     RailsContentMap.create django_content_type_id: 18, rails_class_name: "KpccProgram"
