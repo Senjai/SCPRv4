@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829193419) do
+ActiveRecord::Schema.define(:version => 20120829203615) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -551,8 +551,6 @@ ActiveRecord::Schema.define(:version => 20120829193419) do
     t.text     "teaser",             :limit => 2147483647,                 :null => false
     t.text     "body",               :limit => 2147483647,                 :null => false
     t.string   "locale",             :limit => 5,          :default => "", :null => false
-    t.integer  "enco_number"
-    t.date     "audio_date"
     t.datetime "published_at",                                             :null => false
     t.string   "source",             :limit => 20
     t.string   "story_asset_scheme", :limit => 10
