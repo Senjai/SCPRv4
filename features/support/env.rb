@@ -7,15 +7,13 @@ require 'database_cleaner'
 require 'database_cleaner/cucumber'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-include FactoryGirl::Syntax::Methods
-include FormFillers
-include DatePathHelper
+World(FactoryGirl::Syntax::Methods, FormFillers, DatePathHelper)
 
-Capybara.default_selector = :css
+Capybara.default_selector           = :css
 ActionController::Base.allow_rescue = false
-DatabaseCleaner.strategy = :transaction
+DatabaseCleaner.strategy            = :transaction
 
-Cucumber::Rails::Database.javascript_strategy = :truncation
+Cucumber::Rails::Database.javascript_strategy     = :truncation
 Cucumber::Rails::World.use_transactional_fixtures = false
 
 Cucumber::ThinkingSphinx::ExternalWorld.new
