@@ -104,10 +104,13 @@ describe Dashboard::Api::ContentController do
   describe "GET /recent" do
     context "cache hit" do
       let(:content) { create :blog_entry }
+      let(:cache)   { content.to_json.to_s }
+      
+      before :each do
+        Rails.cache.should_receive(:fetch).with("cbaseapi:recent").and_return(cache)
+      end
       
       it "returns the cache as json" do
-        cache = content.to_json.to_s
-        Rails.cache.should_receive(:fetch).with("cbaseapi:recent").and_return(cache)
         get :recent
         response.body.should eq cache
         response.header['Content-Type'].should match /json/
@@ -116,6 +119,10 @@ describe Dashboard::Api::ContentController do
     
     context "cache miss" do
       sphinx_spec(num: 2)
+      
+      before :each do
+        Rails.cache.should_receive(:fetch).with("cbaseapi:recent").and_return(nil)
+      end
       
       it "returns the sphinx results as json" do
         get :recent

@@ -11,9 +11,10 @@ describe Link do
     it "does not return null associations" do
       content = create :news_story
       link    = create :link, content: content
-      link.update_attribute(:content_type, nil)
-      Link.count should eq 0
-      content.links.should be_blank
+      Link.count.should eq 1
+      link.update_column(:content_type, nil)
+      Link.count.should eq 0
+      content.related_links.should be_blank
     end
   end
 

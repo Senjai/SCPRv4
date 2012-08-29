@@ -55,7 +55,8 @@ describe ApplicationHelper do
     end
 
     it "doesn't return a nil value" do
-      generate_and_index_content(num: 1)
+      make_content(1)
+      index_sphinx
       ContentShell.all.first.destroy
       ContentShell.count.should eq 0
       arts = get_latest_arts
@@ -71,7 +72,8 @@ describe ApplicationHelper do
     end
     
     before :each do
-      generate_and_index_content(num: 7)
+      make_content(7)
+      index_sphinx
       @arts = get_latest_arts
       @news = get_latest_news
     end

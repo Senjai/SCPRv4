@@ -368,7 +368,7 @@ end
   
 # Flatpage #########################################################
   factory :flatpage do
-    url                   "/about/"
+    sequence(:url)        { |n| "/about-#{n}/" }
     title                 "About"
     content               "This is the about content"
     enable_comments       0
