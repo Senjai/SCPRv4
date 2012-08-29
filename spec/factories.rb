@@ -620,8 +620,6 @@ end
     
     slug        { headline.parameterize }
     locale      "local"
-    audio_date  { Time.now }
-    enco_number 999
 
     ignore { related_factory  "content_shell" }
     ignore { category_type    :category_news }
@@ -636,7 +634,6 @@ end
   factory :blog_entry do
     content_base
     optional_cb_fields 
-    author
     blog
     
     slug      { headline.parameterize }
