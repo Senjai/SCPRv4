@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829191429) do
+ActiveRecord::Schema.define(:version => 20120829193419) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -675,8 +675,9 @@ ActiveRecord::Schema.define(:version => 20120829191429) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "rails_content_map", :primary_key => "django_content_type_id", :force => true do |t|
-    t.string "rails_class_name", :null => false
+  create_table "rails_content_map", :id => false, :force => true do |t|
+    t.integer "django_content_type_id", :null => false
+    t.string  "rails_class_name",       :null => false
   end
 
   create_table "schedule_program", :force => true do |t|
