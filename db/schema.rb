@@ -192,7 +192,6 @@ ActiveRecord::Schema.define(:version => 20120829175841) do
     t.string   "headline",          :limit => 140,                        :null => false
     t.string   "slug",              :limit => 50,                         :null => false
     t.text     "body",              :limit => 2147483647,                 :null => false
-    t.integer  "author_id"
     t.integer  "blog_id",                                                 :null => false
     t.string   "blog_slug",         :limit => 50,         :default => "", :null => false
     t.datetime "published_at",                                            :null => false
@@ -206,7 +205,6 @@ ActiveRecord::Schema.define(:version => 20120829175841) do
     t.datetime "updated_at",                                              :null => false
   end
 
-  add_index "blogs_entry", ["author_id"], :name => "blogs_entry_author_id"
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
 
   create_table "blogs_entryblogcategory", :force => true do |t|

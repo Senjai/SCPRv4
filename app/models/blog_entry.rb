@@ -25,7 +25,6 @@ class BlogEntry < ContentBase
   # ------------------
   # Association
   belongs_to :blog
-  belongs_to :author, :class_name => "Bio"
 
   has_many :tagged, :class_name => "TaggedContent", :as => :content
   has_many :tags, :through => :tagged, dependent: :destroy
