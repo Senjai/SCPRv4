@@ -3,7 +3,7 @@
 #= require jquery
 #= require underscore
 #= require backbone
-#= require jquery-ui-1.8.17.sortable_w_effects
+#= require jquery-ui-1.8.23.custom.min
 #= require strftime
 
 #= require t_cbase/style
