@@ -352,7 +352,7 @@
 
 
 // Fluid Grid
-@mixin gridFluidSpan($columns, $fluidGridColumnWidth, $fluidGridGutterWidth) {
+@mixin gridFluidSpan($columns) {
 	width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 2));
 }
 
