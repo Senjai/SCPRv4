@@ -371,7 +371,7 @@
       margin-left: 0;
     }
     @for $i from 1 through $gridColumns {
-      > .span#{$i} { @include gridFluidSpan($i, $fluidGridColumnWidth, $fluidGridGutterWidth); }
+      > .span#{$i} { @include gridFluidSpan($i); }
     }
 }
 
@@ -384,5 +384,5 @@
   // This isn't perfect, but it's better than nothing.
   float: left;
   margin-left: $fluidGridGutterWidth;
-  @include gridFluidSpan($columns, $fluidGridColumnWidth, $fluidGridGutterWidth);
+  @include gridFluidSpan($columns);
 }
