@@ -8,21 +8,39 @@ class AddIndexToTables < ActiveRecord::Migration
     
   def up
     INDEX_TABLES.each do |table|
-      add_index table,  :content_id
-      add_index table,  [:content_type, :content_id]
+      begin
+        add_index table,  :content_id
+        add_index table,  [:content_type, :content_id]
+      rescue Exception => e
+        puts "*** #{e}"
+        next
+      end
     end
-
-    add_index "media_related",  :related_id
-    add_index "media_related",  [:related_type, :related_id]
+    
+    begin
+      add_index "media_related",  :related_id
+      add_index "media_related",  [:related_type, :related_id]
+    rescue Exception => e
+      puts "*** #{e}"
+    end
   end
   
   def down
     INDEX_TABLES.each do |table|
-      remove_index table,  :content_id
-      remove_index table,  [:content_type, :content_id]
+      begin
+        remove_index table,  :content_id
+        remove_index table,  [:content_type, :content_id]
+      rescue Exception => e
+        puts "*** #{e}"
+        next
+      end
     end
-
-    remove_index "media_related",  :related_id
-    remove_index "media_related",  [:related_type, :related_id]
+    
+    begin
+      remove_index "media_related",  :related_id
+      remove_index "media_related",  [:related_type, :related_id]
+    rescue Exception => e
+      puts "*** #{e}"
+    end
   end
 end
