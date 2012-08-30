@@ -73,6 +73,8 @@ class ContentBase < ActiveRecord::Base
   # All ContentBase objects have assets and alarms
   has_many :bylines,          as: :content, class_name: "ContentByline",  dependent: :destroy
   
+  has_many :alarms,           as: :content, class_name: "ContentAlarm",   dependent: :destroy
+  
   has_many :brels,            as: :content, class_name: "Related"
   has_many :frels,            as: :related, class_name: "Related"
   

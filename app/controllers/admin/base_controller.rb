@@ -1,5 +1,7 @@
 class Admin::BaseController < ActionController::Base  
   protect_from_forgery
+  abstract!
+  
   before_filter :require_admin, :root_breadcrumb  
   layout 'admin'
   

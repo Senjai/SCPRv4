@@ -20,9 +20,9 @@ module WP
     attr_reader :title, :pubDate, :url
     
     def initialize(file)
-      doc = Nokogiri::XML::Document.parse(open(file))
-      @url = doc.url
-      @title = doc.at_xpath("/rss/channel/title").content
+      doc      = Nokogiri::XML::Document.parse(open(file))
+      @url     = doc.url
+      @title   = doc.at_xpath("/rss/channel/title").content
       @pubDate = doc.at_xpath("/rss/channel/pubDate").content
       
       # Eager-load all classes

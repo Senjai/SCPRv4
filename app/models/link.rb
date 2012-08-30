@@ -1,11 +1,12 @@
 class Link < ActiveRecord::Base
-  self.table_name =  'rails_media_link'
+  self.table_name   = 'media_link'
   self.primary_key = "id"
-  
-  belongs_to :content, :polymorphic => true
-  
-  default_scope where("content_type != 'ShowSeries'")
-  
+
+  default_scope where("content_type is not null")
+
+  map_content_type_for_django  
+  belongs_to :content, polymorphic: true
+    
   #----------
   
   def domain

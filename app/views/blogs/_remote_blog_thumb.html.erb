@@ -1,5 +1,5 @@
 <div class="thumbnail">
-	<h2><%= link_to blog.name, blog.custom_url %></h2>
+	<h2 class="blog-header <%= blog.slug %>"><%= link_to blog.name, blog.custom_url %></h2>
 	<p class="description"><%= blog.teaser %></p>
 	<% if cached_entry = Rails.cache.fetch("remote_blog:#{blog.slug}") %>
 		<div class="latest-post">

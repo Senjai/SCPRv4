@@ -2,7 +2,6 @@ class VideoShell < ContentBase
   self.table_name = "contentbase_videoshell"
   
   CONTENT_TYPE = "content/video"
-  CONTENT_TYPE_ID = 125
   ADMIN_PREFIX = "contentbase/videoshell"
   
   acts_as_content

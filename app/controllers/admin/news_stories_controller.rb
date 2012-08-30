@@ -1,3 +1,2 @@
-class Admin::NewsStoriesController < Admin::ResourceController  
-  def create; super; end
+class Admin::NewsStoriesController < Admin::ResourceController
 end
