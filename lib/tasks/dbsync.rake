@@ -26,7 +26,7 @@ namespace :dbsync do
   
   #-----------------------
   
-  desc "Show the configuration"
+  desc "Show the dbsync configuration"
   task :config => :dump_file_config do
     $stderr.puts "Config: "
     $stderr.puts DUMP.to_yaml
