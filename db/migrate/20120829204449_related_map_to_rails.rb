@@ -18,7 +18,7 @@ class RelatedMapToRails < ActiveRecord::Migration
         obj.update_attribute(:related_type, related_type.rails_class_name)
         puts "Updated related_type for Related ##{obj.id}"
       rescue ActiveRecord::RecordNotFound
-        puts "Could not update related_type for #{KLASS} ##{obj.id} (No rails_class_name for django ID #{obj.django_content_type_id})"
+        puts "Could not update related_type for #{KLASS} ##{obj.id} (No rails_class_name for django ID #{obj.rel_django_content_type_id})"
       rescue Exception => e
         puts "An unexpected error occurred: #{e}"
       end
