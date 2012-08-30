@@ -6,7 +6,6 @@ module WP
     DEFAULTS = {
       blog_id: MultiAmerican::BLOG_ID,
       blog_slug: MultiAmerican::BLOG_SLUG,
-      author_id: MultiAmerican::AUTHOR_ID,
       blog_asset_scheme: "",
     }
     
@@ -76,17 +75,22 @@ module WP
       # Merge in existing author_id if user exists
       # Otherwise it will just use Leslie's ID
       if existing_user = AdminUser.where(username: self.dc).first
-        object_builder[:author_id] = Bio.where(user_id: existing_user.id).first.id
+        # This user exists in our CMS. Find their Bio.
+        author_id = Bio.where(user_id: existing_user.id).first.id
+      else
+        # No user with that username in our CMS.
+        # Use Leslie's Bio ID
+        author_id = MultiAmerican::AUTHOR_ID
       end
       
-      # Create the byline
+      # Create a byline
       byline = ContentByline.new(
         content: object, 
-        user_id: object_builder[:author_id],
+        user_id: author_id,
         name: ""
       )
-      
-      object_builder[:bylines] = [byline]
+    
+      object_builder[:bylines] = [byline]      
       
 
       # -------------------
