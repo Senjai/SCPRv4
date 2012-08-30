@@ -1,6 +1,8 @@
-class RelatedMapToRails < ActiveRecord::Migration  
+class RelatedMapToRails < ActiveRecord::Migration
+  KLASS = Related
+  
   def up
-    Related.unscoped.all.each do |obj|
+    KLASS.unscoped.all.each do |obj|
       begin
         content_type = RailsContentMap.find_by_django_content_type_id!(obj.django_content_type_id)
         obj.update_attribute(:content_type, content_type.rails_class_name)
@@ -24,6 +26,6 @@ class RelatedMapToRails < ActiveRecord::Migration
   end
 
   def down
-    Related.unscoped.update_all(content_type: nil, related_type: nil)
+    KLASS.unscoped.update_all(content_type: nil, related_type: nil)
   end
 end
