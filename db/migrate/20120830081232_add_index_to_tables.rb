@@ -1,7 +1,7 @@
 class AddIndexToTables < ActiveRecord::Migration
   INDEX_TABLES = %w{ 
       media_audio media_link media_related contentbase_contentalarm 
-      contentbase_featuredcomment contentbase_homepagecontent 
+      contentbase_featuredcomment layout_homepagecontent 
       contentbase_misseditcontent contentbase_contentcategory
       taggit_taggeditem ascertainment_ascertainmentrecord 
     }
