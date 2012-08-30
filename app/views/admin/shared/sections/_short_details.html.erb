@@ -1,0 +1,5 @@
+<%= form_block "Short Details" do %>
+	<%= f.input :short_headline, input_html: { class: "long" } %>
+	<%= f.input :teaser, as: :text, input_html: { rows: "5" } %>
+	<%= extra %>
+<% end %>

@@ -53,7 +53,7 @@ module Scprv4
     config.assethost  = ActiveSupport::OrderedOptions.new
     config.node       = ActiveSupport::OrderedOptions.new
     config.dbsync     = ActiveSupport::OrderedOptions.new
-        
+    
     Disqussion.configure do |disq|
       disq.api_key    = "n5QMkXRJa76bdBYruPhtYDvKe6wx7Vo0MqKlCypJdnh7lj6FNnFt1Lr9XAtpU2oe"
       disq.api_secret = "YsiHTacdYNGWn2tzaMKSptmJcA5jM3t0ScazSws2yDMHJJZJamkDC3a3249gfmQR"

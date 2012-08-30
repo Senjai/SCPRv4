@@ -1,29 +1,17 @@
 <%= f.error_notification %>
-<fieldset>
-	<legend>Source</legend>
+
+<%= form_block "Source" do %>
 	<%= f.association :blog, collection: Blog.active.all %>
-</fieldset>
+<% end %>
 
-<fieldset>
-	<legend>Full Details</legend>
-	<%= f.input :title, input_html: { class: "long" } %>
-	<%= f.input :content %>
-</fieldset>
+<%= form_block "Full Details" do %>
+	<%= f.input :headline, input_html: { class: "long" } %>
+	<%= f.input :body %>
+<% end %>
 
-<fieldset>
-	<legend>Short Details</legend>
-	<%= f.input :short_headline, input_html: { class: "long" } %>
-	<%= f.input :teaser, as: :text, input_html: { rows: "5" } %>
-	<%= f.input :slug %>
-</fieldset>
+<%= section "short_details", f, record %>
+<%= section "publishing", f, record%>
 
-<fieldset>
-	<legend>Publish Status</legend>
-	<%= f.input :status, collection: ContentBase.status_text_collect, selected: ContentBase.status_text_collect[1]  %>
-	<%= f.input :published_at %>
-</fieldset>
-
-<fieldset>
-	<legend>Assets</legend>
-	<%= f.input :blog_asset_scheme, collection: ContentBase::BLOG_SCHEMES, selected: record.new_record? ? ContentBase::BLOG_SCHEMES[0] : record.blog_asset_scheme %>
-</fieldset>
+<%= section "assets", f, record do %>
+	<%= f.input :blog_asset_scheme, collection: ContentBase::BLOG_SCHEMES, selected: record.blog_asset_scheme || ContentBase::BLOG_SCHEMES[0] %>
+<% end %>
