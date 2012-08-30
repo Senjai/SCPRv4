@@ -754,8 +754,6 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string   "segment_asset_scheme", :limit => 10
     t.string   "short_headline",       :limit => 100
     t.datetime "published_at",                                               :null => false
-    t.integer  "enco_number"
-    t.date     "audio_date",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
   end
 
