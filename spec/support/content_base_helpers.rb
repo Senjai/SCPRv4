@@ -68,11 +68,6 @@ module ContentBaseHelpers
   def index_sphinx
     ThinkingSphinx::Test.index
   end
-  
-  def generate_and_index_content(content_options={})
-    make_content(content_options[:num], content_options[:options])
-    index_sphinx
-  end
 
   # -----------
   
@@ -91,7 +86,8 @@ module ContentBaseHelpers
       end
       
       before :each do
-        generate_and_index_content(content_options)
+        make_content(content_options[:num], content_options[:options])
+        index_sphinx
       end
       
       after :all do

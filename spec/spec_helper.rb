@@ -30,7 +30,7 @@ RSpec.configure do |config|
     load "#{Rails.root}/db/seeds.rb"
     DatabaseCleaner.strategy = :transaction
     FactoryGirl.reload
-    ThinkingSphinx::Test.start
+    ThinkingSphinx::Test.start_with_autostop
   end
   
   config.before :each do
@@ -46,6 +46,6 @@ RSpec.configure do |config|
   end
   
   config.after :suite do
-    ThinkingSphinx::Test.stop
+    #
   end
 end

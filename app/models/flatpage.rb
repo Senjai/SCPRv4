@@ -24,7 +24,7 @@ class Flatpage < ActiveRecord::Base
   
   # -------------------
   # Scopes
-  default_scope where(is_public: true)
+  scope :visible, where(is_public: true)
 
   # -------------------
   # Validations
@@ -34,7 +34,7 @@ class Flatpage < ActiveRecord::Base
   # Callbacks
   before_validation :slashify
   before_validation :downcase_url
-  after_save :reload_routes, if: -> { self.url_changed? }
+  after_save        :reload_routes, if: -> { self.url_changed? }
   
   # -------------------
   

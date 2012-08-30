@@ -11,7 +11,6 @@ describe BlogEntry do
   
   describe "associations" do
     it { should belong_to :blog }
-    it { should belong_to :author }
     it { should have_many :tagged }
     it { should have_many(:tags).through(:tagged).dependent(:destroy) }
     it { should have_many(:blog_entry_blog_categories) }

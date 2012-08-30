@@ -2,13 +2,13 @@ class BreakingNewsAlert < ActiveRecord::Base
   self.table_name = 'layout_breakingnewsalert'
     
   ALERT_TYPES = {
-    "break" => "Breaking News",
-    "audio" => "Listen Live",
-    "now" => "Happening Now"
+    "break"   => "Breaking News",
+    "audio"   => "Listen Live",
+    "now"     => "Happening Now"
   }
   
   scope :published, order("created_at desc").where(is_published: true)
-  scope :visible, where(visible: true)
+  scope :visible,   where(visible: true)
   
   def break_type
     ALERT_TYPES[alert_type]
