@@ -18,6 +18,7 @@ Disqussion::Client.threads.listPopular(:forum => "kpcc",:interval => "3d").respo
   count = p.posts_in_interval
     
   if cobj
+    puts "content, count is #{cobj}, #{count}"
     content << [count,cobj]
   end
 end
