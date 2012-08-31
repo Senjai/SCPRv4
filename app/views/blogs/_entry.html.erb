@@ -1,3 +1,9 @@
+<% 
+  if !defined?(full) 
+    full = params[:id].present?
+  end
+%>
+
 <div class="entry content-block">
 	<div class="row-fluid">
 		<%= content_widget "article_meta", entry %>
@@ -21,7 +27,7 @@
 					<div class="visible-reader"><%= content_widget "primary_audio", @entry %></div>
 					
 					<%= render_asset entry, "blog" %>
-					<%= render_content_body entry %>
+					<%= render_content_body(entry, full ? :body : :extended_teaser) %>
 				</div>
 		
 				<footer>
@@ -33,7 +39,7 @@
 					<% end %>
 				</footer>
 			</article>
-			<%= content_widget "social_tools", entry, cssClass: "horizontal bottom" %>
+			<%= content_widget("social_tools", entry, cssClass: "horizontal bottom") if full %>
 		</div> <!-- span18 -->
 	</div> <!-- row fluid -->
 </div> <!-- entry -->

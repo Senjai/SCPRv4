@@ -56,15 +56,11 @@ module ApplicationHelper
     return html.html_safe
   end
   
-  def render_content_body(content)
-    if !content || !content.respond_to?("body") || !content.respond_to?("has_format?") || !content.body.present?
-      return ""
-    end
-    
-    if content.has_format?
-      return content.body.html_safe
+  def render_content_body(content, text_method = :body)    
+    if content.respond_to?(:has_format?) && content.has_format?
+      return content.send(text_method).html_safe
     else
-      return simple_format(content.body, {}, sanitize: false)
+      return simple_format(content.send(text_method), {}, sanitize: false)
     end
   end
   
