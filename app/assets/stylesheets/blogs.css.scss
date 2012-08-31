@@ -133,10 +133,11 @@
 	
  	h2 {
 		@include font-shorthand(200, 28px, 30px);
+		@include ie-inline-block();
 		&.blog-header {
 			&.politics {
 				a {
-					background:url(image_path("blogs/represent_lg.png")) no-repeat 0 0;
+					background:url(image_path("blogs/represent_lg.png")) no-repeat -4px 0;
 					@include ie-inline-block();
 					width:160px;
 					height:42px;
@@ -180,6 +181,11 @@
 				}
 			}
 		}
+	}
+	.blog-tagline {
+		@include font-heading();
+		font-weight:400;
+		margin-bottom:0;
 	}
 }
 

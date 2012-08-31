@@ -3,6 +3,7 @@
 		<div class="row-fluid">
 			<div class="span24 mq-solo-span">
 				<h2 class="blog-header <%=@blog.slug%>"><%= link_to @blog.name + @BLOGTITLE_EXTRA.to_s, blog_path(@blog.slug) %></h2>
+				<p class="blog-tagline"><%=@blog.teaser%></p>
 			</div>
 		</div>
 	</div>
