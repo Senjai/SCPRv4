@@ -63,7 +63,3 @@ group :test do
   gem 'shoulda-matchers'
   gem 'fakeweb'
 end
-
-group :worker do
-  gem 'rubypython'
-end
