@@ -7,9 +7,9 @@ require "open-uri"
 # Hard-coded values for Multi-American
 # These are from Mercer
 module MultiAmerican
-  BLOG_ID = 22
+  BLOG_ID   = 22
   BLOG_SLUG = 'multi-american'
-  AUTHOR_ID = 105 # Leslie's Bio ID, use by default
+  AUTHOR_ID = 71 # Leslie's Bio ID, use by default
 end
 
 module WP

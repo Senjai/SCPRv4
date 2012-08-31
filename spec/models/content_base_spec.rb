@@ -152,6 +152,7 @@ ContentBase.content_classes.each do |c|
     
     describe "associations" do
       it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
+      it { should have_many(:alarms).class_name("ContentAlarm").dependent(:destroy) }
       it { should have_many(:bylines).class_name("ContentByline").dependent(:destroy) }
       it { should have_many :brels }
       it { should have_many :frels }
@@ -171,9 +172,9 @@ ContentBase.content_classes.each do |c|
       end
       
       it "only selects published content" do
-        published = create_list symbolize(c), 3, status: 5
+        published   = create_list symbolize(c), 3, status: 5
         unpublished = create_list symbolize(c), 2, status: 3
-        c.published.count.should eq 3
+        c.published.all.sort.should eq published.sort
       end
     end
     

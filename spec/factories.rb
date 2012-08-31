@@ -1,9 +1,9 @@
 def content_base_associations(object, evaluator)
-  FactoryGirl.create_list(:asset, evaluator.asset_count.to_i, content: object)
-  FactoryGirl.create_list(:link, evaluator.link_count.to_i, content: object)
-  FactoryGirl.create_list(:brel, evaluator.brel_count.to_i, content: object)
-  FactoryGirl.create_list(:frel, evaluator.frel_count.to_i, related: object)
-  FactoryGirl.create_list(:byline, evaluator.byline_count.to_i, content: object)
+  FactoryGirl.create_list(:asset,   evaluator.asset_count.to_i,   content: object)
+  FactoryGirl.create_list(:link,    evaluator.link_count.to_i,    content: object)
+  FactoryGirl.create_list(:brel,    evaluator.brel_count.to_i,    content: object)
+  FactoryGirl.create_list(:frel,    evaluator.frel_count.to_i,    related: object)
+  FactoryGirl.create_list(:byline,  evaluator.byline_count.to_i,  content: object)
   
   if evaluator.category_type.present? && evaluator.with_category
     category = FactoryGirl.create(evaluator.category_type)
@@ -109,16 +109,16 @@ end
 # OtherProgram #########################################################
   factory :other_program do
     sequence(:title) { |n| "Other Program #{n}" }
-    slug { title.parameterize }
-    teaser "Outside Program"
+    slug        { title.parameterize }
+    teaser      "Outside Program"
     description "This is the description for the outside program!"
-    host "Larry Mantle"
-    airtime "Weekdays 10 a.m.-12 p.m."
-    air_status "onair"
+    host        "Larry Mantle"
+    airtime     "Weekdays 10 a.m.-12 p.m."
+    air_status  "onair"
     podcast_url "http://www.npr.org/rss/podcast.php?id=510294"
-    rss_url "http://oncentral.org/rss/latest" # This column cannot be null?
-    sidebar "Sidebar Content"
-    web_url "http://www.bbc.co.uk/worldservice/"
+    rss_url     "http://oncentral.org/rss/latest" # This column cannot be null?
+    sidebar     "Sidebar Content"
+    web_url     "http://www.bbc.co.uk/worldservice/"
     produced_by "BBC"
   end
   
@@ -132,15 +132,15 @@ end
 # Podcast #########################################################
   factory :podcast do
     sequence(:title) { |n| "Podcast #{n}" }
-    slug { title.parameterize }
+    slug      { title.parameterize }
     is_listed 1
-    author "KPCC 89.3 | Southern California Public Radio"
-    program { |p| p.association :kpcc_program }
+    author    "KPCC 89.3 | Southern California Public Radio"
+    program   { |p| p.association :kpcc_program }
     item_type 'episodes'
     image_url { "http://media.scpr.org/assets/images/podcasts/#{slug}.png" }
-    keywords "KPCC, Los Angeles, Southern California, LA"
-    link { "http://www.scpr.org/programs/#{slug}" }
-    duration 0 # Needs to be removed from database
+    keywords  "KPCC, Los Angeles, Southern California, LA"
+    link      { "http://www.scpr.org/programs/#{slug}" }
+    duration  0 # Needs to be removed from database
   end
 
 
@@ -150,22 +150,13 @@ end
     slug { name.parameterize }
     teaser { "This is the teaser for #{name}!" }
     description "This is a description for this blog."
-    head_image "http://media.scpr.org/assets/images/heads/larry_transparent.png"
     is_active true
     is_remote false
     is_news true
     feed_url "http://oncentral.org/rss/latest"
     custom_url "http://scpr.org" # it's a required field?
     
-    factory :news_blog do
-      is_news true
-    end
-    
-    factory :non_news_blog do
-      is_news false
-    end
-    
-    factory :remote_blog do
+    trait :remote do
       is_remote true
       feed_url "http://oncentral.org/rss/latest"
     end
@@ -188,15 +179,15 @@ end
 
 # BreakingNewsAlert #########################################################
   factory :breaking_news_alert do
-    headline "Breaking news!"
-    teaser "This is breaking news"
-    alert_time { Time.now }
-    alert_type "break"
-    alert_link "http://scpr.org/"
-    is_published 1
-    visible 1
-    email_sent 0
-    send_email 0
+    headline      "Breaking news!"
+    teaser        "This is breaking news"
+    alert_time    { Time.now }
+    alert_type    "break"
+    alert_link    "http://scpr.org/"
+    is_published  1
+    visible       1
+    email_sent    0
+    send_email    0
   end
 
 # BlogAuthor #########################################################
@@ -210,30 +201,31 @@ end
 # Event #########################################################
   factory :event do
     sequence(:id, 1) # Not auto-incrementing in database?
-    sequence(:headline) { |n| "A Very Special Event #{n}" }
-    slug { headline.parameterize }
-    body "This is a very special event."
-    etype "comm" # This is actually "type" in mercer
-    sponsor "Patt Morrison"
-    sponsor_link "http://oncentral.org"
-    sequence(:starts_at) { |n| Time.now + 60*60*24*n }
-    ends_at { starts_at + 60*60*1 }
-    is_all_day 0
-    location_name "The Crawford Family Forum"
-    location_link "http://www.scpr.org/crawfordfamilyforum"
-    rsvp_link "http://kpcc.ticketleap.com/connie-rice/"
-    show_map 1
-    address_1 "474 South Raymond Avenue"
-    address_2 "Second Level" # required column?
-    city "Pasadena"
-    state "CA"
-    zip_code "91105"
-    for_program "airtalk"
-    audio "audio/events/2011/05/23/Father_Boyle.mp3"
+    sequence(:headline)   { |n| "A Very Special Event #{n}" }
+    sequence(:starts_at)  { |n| Time.now + 60*60*24*n }
+    ends_at               { starts_at + 60*60*1 }
+    
+    slug                { headline.parameterize }
+    body                "This is a very special event."
+    etype               "comm"
+    sponsor             "Patt Morrison"
+    sponsor_link        "http://oncentral.org"
+    is_all_day          0
+    location_name       "The Crawford Family Forum"
+    location_link       "http://www.scpr.org/crawfordfamilyforum"
+    rsvp_link           "http://kpcc.ticketleap.com/connie-rice/"
+    show_map            1
+    address_1           "474 South Raymond Avenue"
+    address_2           "Second Level" # required column?
+    city                "Pasadena"
+    state               "CA"
+    zip_code            "91105"
+    for_program         "airtalk"
+    audio               "audio/events/2011/05/23/Father_Boyle.mp3"
     archive_description "This is the description that shows after the event has happened"
-    is_published 1
-    show_comments 1
-    teaser "This is a short teaser"
+    is_published        1
+    show_comments       1
+    teaser              "This is a short teaser"
 
     trait :multiple_days_past do
       starts_at { 3.days.ago }
@@ -290,10 +282,10 @@ end
 
 # ContentByline #########################################################
   factory :byline, class: "ContentByline", aliases: [:content_byline] do # Requires we pass in "content"
-    role ContentByline::ROLE_PRIMARY
-    user { |byline| byline.association :author }
+    role    ContentByline::ROLE_PRIMARY
+    user    { |byline| byline.association :author }
     content { |byline| byline.association(:news_story) } #TODO Need to be able to pass in any type of factory here
-    name "Dan Jones"
+    name    "Dan Jones"
   end
 
   
@@ -366,25 +358,55 @@ end
 # FeaturedComment #########################################################
   factory :featured_comment do
     featured_comment_bucket
-    status 5
     sequenced_published_at
-    username "bryanricker"
-    excert "This is an excerpt of the featured comment"
-    content { |mic| mic.association(:content_shell) }
+    status    5
+    username  "bryanricker"
+    excert    "This is an excerpt of the featured comment"
+    content   { |mic| mic.association(:content_shell) }
   end
   
   
 # Flatpage #########################################################
   factory :flatpage do
-    url "/about/"
-    title "About"
-    content "This is the about content"
-    enable_comments 0
+    sequence(:url)        { |n| "/about-#{n}/" }
+    title                 "About"
+    content               "This is the about content"
+    enable_comments       0
     registration_required 0
-    description "This is the description"
-    is_public 1
-    template ""
+    description           "This is the description"
+    is_public             1
+    template              ""
   end
+
+
+# Section #########################################################
+  factory :section do
+    sequence(:title)  { |n| "Section #{n}" }
+    slug              { title.parameterize }    
+  end
+  
+  factory :section_blog do
+    section
+    blog
+  end
+  
+  factory :section_category do
+    section
+    category
+  end
+  
+  factory :section_promotion do
+    section
+    promotion
+  end
+
+  
+# Promotion #########################################################
+  factory :promotion do
+    sequence(:title)  { |n| "Promotion #{n}" }
+    url               { "http://scpr.org/promotions/#{title.parameterize}" }
+  end
+  
 
 # ContentCategory #########################################################
   factory :content_category do
@@ -409,8 +431,8 @@ end
 # Link #########################################################
   factory :link do
     sequence(:id, 1)
-    title "A Related Link"
-    link "http://oncentral.org"
+    title     "A Related Link"
+    link      "http://oncentral.org"
     link_type "website"
   end
 
@@ -526,14 +548,14 @@ end
   end
   
   trait :content_base do
-    ignore { asset_count 0 }
-    ignore { link_count 0 }
-    ignore { brel_count 0 }
-    ignore { frel_count 0 }
-    ignore { with_category false }
-    ignore { byline_count 0 }
+    ignore { asset_count    0 }
+    ignore { link_count     0 }
+    ignore { brel_count     0 }
+    ignore { frel_count     0 }
+    ignore { with_category  false }
+    ignore { byline_count   0 }
     status 5
-    sequence(:published_at) { |n| Time.now + 60*60*n }
+    sequence(:published_at) { |n| Time.now - 60*60*n }
     required_cb_fields
   end
     
@@ -542,10 +564,10 @@ end
   factory :video_shell do
     content_base
     
-    slug { headline.parameterize }
+    slug    { headline.parameterize }
     
-    ignore { related_factory "content_shell" }
-    ignore { category_type :category_not_news }
+    ignore  { related_factory  "content_shell" }
+    ignore  { category_type    :category_not_news }
     
     after :create do |object, evaluator|
       content_base_associations(object, evaluator)
@@ -558,12 +580,12 @@ end
     content_base
     optional_cb_fields
     
-    slug { headline.parameterize }
+    slug        { headline.parameterize }
     news_agency "KPCC"
-    locale "local"
+    locale      "local"
     
-    ignore { related_factory "content_shell" }
-    ignore { category_type :category_news }
+    ignore { related_factory  "content_shell" }
+    ignore { category_type    :category_news }
     
     after :create do |object, evaluator|
       content_base_associations(object, evaluator)
@@ -578,9 +600,9 @@ end
     
     sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
     
-    ignore { segment_count 0 }
-    ignore { related_factory "content_shell" }
-    ignore { category_type nil }
+    ignore { segment_count    0 }
+    ignore { related_factory  "content_shell" }
+    ignore { category_type    nil }
     
     after :create do |object, evaluator|
       content_base_associations(object, evaluator)
@@ -596,13 +618,11 @@ end
     optional_cb_fields
     show
     
-    slug { headline.parameterize }
-    locale "local"
-    audio_date { Time.now }
-    enco_number 999
+    slug        { headline.parameterize }
+    locale      "local"
 
-    ignore { related_factory "content_shell" }
-    ignore { category_type :category_news }
+    ignore { related_factory  "content_shell" }
+    ignore { category_type    :category_news }
     
     after :create do |object, evaluator|
       content_base_associations(object, evaluator)
@@ -614,16 +634,15 @@ end
   factory :blog_entry do
     content_base
     optional_cb_fields 
-    author
     blog
     
-    slug { headline.parameterize }
+    slug      { headline.parameterize }
     blog_slug { blog.slug }
 
-    ignore { related_factory "content_shell" }
-    ignore { category_type :category_not_news }
-    ignore { tag_count 0 }
-    ignore { blog_category_count 0 }
+    ignore { related_factory      "content_shell" }
+    ignore { category_type        :category_not_news }
+    ignore { tag_count            0 }
+    ignore { blog_category_count  0 }
 
     after :create do |object, evaluator|
       content_base_associations(object, evaluator)
@@ -637,11 +656,11 @@ end
   factory :content_shell do
     content_base
     
-    site "blogdowntown"
-    url { "http://blogdowntown.com/2011/11/6494-#{headline.parameterize}" }
+    site  "blogdowntown"
+    url   { "http://blogdowntown.com/2011/11/6494-#{headline.parameterize}" }
     
-    ignore { related_factory "video_shell" }
-    ignore { category_type :category_news }
+    ignore { related_factory  "video_shell" }
+    ignore { category_type    :category_news }
 
     after :create do |object, evaluator|
       content_base_associations(object, evaluator)

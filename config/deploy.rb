@@ -28,9 +28,10 @@ set :maintenance_template_path, "public/maintenance.erb"
 
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true
-set :force_assets, false
-set :ts_index, true # Staging only
-set :dbsync, false # Staging only
+set :force_assets, false # If assets wouldn't normally be precompiled, force them to
+set :skip_assets, false # If assets are going to be precompuled, force them NOT to
+set :ts_index, true # Staging only - Whether or not to run the sphinx index on drop
+set :dbsync, false # Staging only - Whether or not to run a dbsync to mercer_staging
 
 
 # --------------
@@ -88,10 +89,13 @@ namespace :deploy do
       
       # Previous revision is blank or git log doesn't 
       # have any new lines mentioning assets
-      if force_assets || 
-          from.nil? || 
+      if force_assets || from.nil? || 
           capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-        run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
+          if !skip_assets
+            run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
+          else
+            logger.info "SKIPPING asset pre-compilation (skip_assets true)"
+          end
       else
         logger.info "No changes in assets. SKIPPING asset pre-compilation"
       end

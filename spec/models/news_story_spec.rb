@@ -37,9 +37,7 @@ describe NewsStory do
   
   describe "#published" do
     it "orders published content by published_at descending" do
-      stories = create_list :news_story, 3, status: 5
-      NewsStory.published.first.should eq stories.last
-      NewsStory.published.last.should eq stories.first
+      NewsStory.published.to_sql.should match /order by published_at desc/i
     end
   end
 end

@@ -18,14 +18,14 @@ class SitemapsController < ApplicationController
   
   def stories
     @changefreq = "hourly"
-    @priority = "1"
-    @content = NewsStory.published.where("published_at > ?", 30.days.ago)
+    @priority   = "1"
+    @content    = NewsStory.published.where("published_at > ?", 30.days.ago)
     render 'sitemap', formats: :xml
   end
   
   def blog_entries
     @changefreq = "hourly"
-    @priority = "0.9"
+    @priority   = "0.9"
     # Temporary workaround for Multi-American posts
     @content = BlogEntry.published.joins(:blog)
                         .where("blogs_entry.published_at > ?", 30.days.ago)
@@ -35,44 +35,44 @@ class SitemapsController < ApplicationController
   
   def episodes
     @changefreq = "daily"
-    @priority = "0.5"
-    @content = ShowEpisode.published.where("published_at > ?", 30.days.ago)
+    @priority   = "0.5"
+    @content    = ShowEpisode.published.where("published_at > ?", 30.days.ago)
     render 'sitemap', formats: :xml
   end
   
   def segments
     @changefreq = "hourly"
-    @priority = "0.7"
-    @content = ShowSegment.published.where("published_at > ?", 30.days.ago)
+    @priority   = "0.7"
+    @content    = ShowSegment.published.where("published_at > ?", 30.days.ago)
     render 'sitemap', formats: :xml
   end
   
   
   def queries
     @changefreq = "weekly"
-    @priority = "0.3"
-    @content = PijQuery.visible.where("published_at > ?", 30.days.ago)
+    @priority   = "0.3"
+    @content    = PijQuery.visible.where("published_at > ?", 30.days.ago)
     render 'sitemap', formats: :xml
   end
 
   def blogs
     @changefreq = "daily"
-    @priority = "0.3"
-    @content = Blog.active.local.order(:name)
+    @priority   = "0.3"
+    @content    = Blog.active.local.order(:name)
     render 'sitemap', formats: :xml
   end
   
   def programs
     @changefreq = "daily"
-    @priority = "0.3"
-    @content = KpccProgram.active.order(:title) + OtherProgram.active.order(:title)
+    @priority   = "0.3"
+    @content    = KpccProgram.active.order(:title) + OtherProgram.active.order(:title)
     render 'sitemap', formats: :xml
   end
   
   def bios
     @changefreq = "daily"
-    @priority = "0.4"
-    @content = Bio.where(is_public: true).order(:last_name)
+    @priority   = "0.4"
+    @content    = Bio.where(is_public: true).order(:last_name)
     render 'sitemap', formats: :xml
   end
 end

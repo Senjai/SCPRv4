@@ -11,7 +11,6 @@ describe BlogEntry do
   
   describe "associations" do
     it { should belong_to :blog }
-    it { should belong_to :author }
     it { should have_many :tagged }
     it { should have_many(:tags).through(:tagged).dependent(:destroy) }
     it { should have_many(:blog_entry_blog_categories) }
@@ -58,9 +57,7 @@ describe BlogEntry do
   describe "scopes" do
     describe "#published" do    
       it "orders published content by published_at descending" do
-        entries = create_list :blog_entry, 3, status: 5
-        BlogEntry.published.first.should eq entries.last
-        BlogEntry.published.last.should eq entries.first
+        BlogEntry.published.to_sql.should match /order by published_at desc/i
       end
     end
   end

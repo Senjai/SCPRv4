@@ -1,15 +1,24 @@
+<% options ||= {} %>
+
 <div class="cbase offlead">
+	<h3><%= link_to content.short_headline, content.link_path %></h3>
+	
 	<div class="row-fluid">
-		<div class="span6">
-			<%= render_asset(content,"thumb") %>
-		</div>
-		
-		<div class="span18">
-			<h3><%= link_to content.short_headline, content.link_path %></h3>
-			<h4>
-				<%= render_byline content %> 
-				<%= smart_date_js content, "data-window" => "8h" %>
-			</h4>
+		<% if content.assets.present? %>
+			<div class="span6">
+				<%= render_asset(content,"thumb") %>
+			</div>
+			<div class="span18">
+		<% else %>
+			<div class="span24">
+		<% end %>
+			<% if options[:show_byline] %>
+				<h4>
+					<%= render_byline content %> 
+					<%= smart_date_js content, "data-window" => "8h" %>
+				</h4>
+			<% end %>
+			
 			<p class="story-content clearfix"><%= h strip_tags(content.teaser) %></p>
 		</div> <!-- span -->
 	</div> <!-- row -->

@@ -9,6 +9,20 @@ describe Flatpage do
     
     it("validates presence") { should validate_presence_of(:url) }
   end
+
+  #--------------------
+  
+  describe "scopes" do
+    describe "visible" do
+      it "only selects flatpages with is_public true" do
+        is_public  = create :flatpage, is_public: true
+        not_public = create :flatpage, is_public: false
+        Flatpage.visible.should eq [is_public]
+      end
+    end
+  end
+  
+  #--------------------
   
   describe "url" do
     it "appends a slash if there isn't one" do
@@ -16,6 +30,8 @@ describe Flatpage do
       flatpage.url.should match /\//
     end
   end
+
+  #--------------------
   
   describe "path" do
     it "strips leading and trailing slashes" do
@@ -23,6 +39,8 @@ describe Flatpage do
       flatpage.path.should eq "about/people"
     end
   end
+
+  #--------------------
     
   describe "downcase_url" do
     it "runs before validation" do
@@ -32,6 +50,8 @@ describe Flatpage do
       flatpage.url.should match /hello/
     end
   end
+
+  #--------------------
   
   describe "slashify" do
     it "runs before validations" do
@@ -71,6 +91,8 @@ describe Flatpage do
       flatpage.url.should eq "/hello/whats/up/"
     end
   end
+
+  #--------------------
   
   describe "remote_link_path" do
     it "returns the full url for scpr.org" do
@@ -78,6 +100,8 @@ describe Flatpage do
       page.remote_link_path.should match /www\.scpr\.org/
     end
   end
+
+  #--------------------
   
   describe "after save reload routes" do
     it "reloads application routes after save if URL is changed" do

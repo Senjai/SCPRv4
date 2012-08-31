@@ -1,3 +1,27 @@
+class FlatpageConstraint
+  def initialize
+    @flatpages = Flatpage.all.map { |f| f.path } rescue []
+  end
+  
+  def matches?(request)
+    @flatpages.include?(request.params[:flatpage_path])
+  end
+end
+
+#---------
+
+class SectionConstraint
+  def initialize
+    @sections = Section.all.map { |s| s.slug } rescue []
+  end
+  
+  def matches?(request)
+    @sections.include?(request.params[:slug])
+  end
+end
+
+#---------
+
 class CategoryConstraint
   def initialize
     @categories = Category.all.map { |c| c.slug } rescue []
@@ -8,15 +32,7 @@ class CategoryConstraint
   end
 end
 
-class FlatpageConstraint
-  def initialize
-    @flatpages = Flatpage.all.map { |f| f.path } rescue []
-  end
-  
-  def matches?(request)
-    @flatpages.include?(request.params[:flatpage_path])
-  end
-end
+#---------
 
 class QuickSlugConstraint
   def initialize
@@ -28,7 +44,7 @@ class QuickSlugConstraint
   end
 end
 
-
+#---------
 
 Scprv4::Application.routes.draw do
   match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
@@ -60,12 +76,17 @@ Scprv4::Application.routes.draw do
   end
   
   scope "r" do
-    namespace :admin do  
-      get 'login' => "sessions#new", as: :login
+    namespace :admin do
+      get 'login'  => "sessions#new", as: :login
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
       
+      get '/search(/:resource)' => "search#index", as: :search
+      
       ## -- AdminResource -- ##
+      resources :missed_it_buckets
+      resources :promotions
+      resources :sections
       resources :pij_queries
       resources :tags
       resources :other_programs
@@ -216,7 +237,8 @@ Scprv4::Application.routes.draw do
   match '/sitemap/:action',             as: :sitemap,   defaults: { format: :xml }, controller: "sitemaps"
   
   # -- Dynamic root-level routes -- #
-  match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new, defaults: { page: 1 }, as: :section
+  match '/:slug(/:page)'     => "sections#show",  constraints: SectionConstraint.new,   defaults: { page: 1 }, as: :section
+  match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new,  defaults: { page: 1 }, as: :category
   match '/:quick_slug'       => "programs#show",  constraints: QuickSlugConstraint.new
   
   root to: "home#index"

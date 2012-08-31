@@ -27,11 +27,6 @@ Scenario: See latest entry for a remote blog
 	Then I should see the latest entry for that remote blog
 	And I should see a timestamp for the latest entry
 
-Scenario: Blog Teaser on Blogs Index page
-	Given 1 blog
-	When I go to the blogs page
-	Then I should see that blog's teaser
-
 Scenario: Local Blog
 	Given a blog with the following attribute:
 	 | entry_count |
@@ -41,14 +36,6 @@ Scenario: Local Blog
 	Then I should see the blog's information
 	And I should see the blog's entries listed
 	And I should see the recent posts widget for that blog
-	
-Scenario: See time stamps
-	Given a blog with the following attribute:
-	 | entry_count |
-	 | 1           |
-
-	When I go to the blogs page
-	Then I should see a timestamp for the latest entry
 
 Scenario: See the blog's missed it bucket if it has one
 	Given a blog with the following attributes:

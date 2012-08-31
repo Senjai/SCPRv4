@@ -3,7 +3,6 @@ class BlogEntry < ContentBase
   acts_as_content has_format: true
   
   CONTENT_TYPE = "blogs/entry"
-  CONTENT_TYPE_ID = 44
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
     
   # ------------------
@@ -26,7 +25,6 @@ class BlogEntry < ContentBase
   # ------------------
   # Association
   belongs_to :blog
-  belongs_to :author, :class_name => "Bio"
 
   has_many :tagged, :class_name => "TaggedContent", :as => :content
   has_many :tags, :through => :tagged, dependent: :destroy
@@ -42,14 +40,14 @@ class BlogEntry < ContentBase
   define_index do
     indexes headline
     indexes body
-    has blog.id, :as => :blog
-    has category.id, :as => :category
-    has category.is_news, :as => :category_is_news
+    has blog.id,          as: :blog
+    has category.id,      as: :category
+    has category.is_news, as: :category_is_news
     has published_at
-    has "1", :as => :is_source_kpcc, :type => :boolean
-    has "CRC32(CONCAT('blogs/entry:',blogs_entry.id))", :type => :integer, :as => :obj_key
-    has "(blogs_entry.blog_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
+    has "1", as: :is_source_kpcc, type: :boolean
+    has "CRC32(CONCAT('blogs/entry:',blogs_entry.id))",     type: :integer, as: :obj_key
+    has "(blogs_entry.blog_asset_scheme <=> 'slideshow')",  type: :boolean, as: :is_slideshow
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",       type: :boolean, as: :has_audio
     where "blogs_entry.status = #{STATUS_LIVE} and blogs_blog.is_active = 1"
     join audio
   end
@@ -100,12 +98,12 @@ class BlogEntry < ContentBase
       "http://multiamerican.scpr.org/#{self.published_at.year}/#{"%02d" % self.published_at.month}/#{self.slug}"
     else
       Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
-        :blog => self.blog.slug,
-        :year => self.published_at.year, 
-        :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-        :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
-        :id => self.id,
-        :slug => self.slug,
+        :blog           => self.blog.slug,
+        :year           => self.published_at.year, 
+        :month          => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+        :day            => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+        :id             => self.id,
+        :slug           => self.slug,
         :trailing_slash => true
       }))
     end

@@ -34,7 +34,6 @@ class NewsStory < ContentBase
   scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
   
   CONTENT_TYPE = 'news/story'
-  CONTENT_TYPE_ID = 15
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
   

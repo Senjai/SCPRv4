@@ -1,0 +1,14 @@
+<%= f.error_notification %>
+<fieldset>
+	<legend>Details</legend>
+	<%= f.input :title, input_html: { class: "long" } %>
+	<%= f.input :slug %>
+	<%= f.association :categories, collection: Category.all.map { |c| [c.category, c.id] } %>
+</fieldset>
+
+<fieldset>
+	<legend>Modules</legend>
+	<%= f.association :blogs %>
+	<%= f.association :promotions %>
+	<%= f.association :missed_it_bucket %>
+</fieldset>

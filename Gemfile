@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', "~> 3.2.3"
+gem 'rails', "~> 3.2.8"
 gem 'mysql2'
 gem 'therubyracer'
 gem 'jquery-rails'
@@ -47,12 +47,12 @@ group :development do
 end
 
 group :test, :development do
-	gem "rspec-rails"
-	gem 'guard-rspec'
-	gem 'guard-cucumber'
-	gem 'launchy'
-	gem 'jasminerice'
-	gem 'guard-jasmine'
+  gem "rspec-rails"
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
+  gem 'launchy'
+#  gem 'jasminerice'
+#  gem 'guard-jasmine'
 end
 
 group :test do

@@ -1,6 +1,2 @@
-class Admin::NewsStoriesController < Admin::ResourceController  
-  # Temporary for Cucumber...
-  def create
-    super
-  end
+class Admin::NewsStoriesController < Admin::ResourceController
 end

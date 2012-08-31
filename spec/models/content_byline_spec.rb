@@ -9,8 +9,8 @@ describe ContentByline do
   describe "scopes" do
     describe "primary" do
       it "only returns records where role is primary" do
-        primary = create :byline, role: ContentByline::ROLE_PRIMARY
-        secondary = create :byline, role: ContentByline::ROLE_SECONDARY
+        primary      = create :byline, role: ContentByline::ROLE_PRIMARY
+        secondary    = create :byline, role: ContentByline::ROLE_SECONDARY
         contributing = create :byline, role: ContentByline::ROLE_CONTRIBUTING
         ContentByline.primary.should eq [primary]
       end
