@@ -14,13 +14,17 @@
 				<div class="row-fluid">
 					<% @section.blogs.each do |blog| %>
 						<div class="span12">
-							<%= render "/shared/widgets/blog_module", blog: blog, tagline: "KPCC's #{@section.title} Blog" %>
+							<div class="widget">
+								<%= render "/shared/widgets/blog_module", blog: blog, tagline: "KPCC's #{@section.title} Blog" %>
+							</div>
 						</div>
 					<% end %>
 					
 					<% @section.promotions.each do |promotion| %>
 						<div class="span12">
-							<%= render "/shared/widgets/promotion", promotion: promotion %>
+							<div class="widget">
+								<%= render "/shared/widgets/promotion", promotion: promotion %>
+							</div>
 						</div>
 					<% end %>
 				</div> <!-- row-fluid -->

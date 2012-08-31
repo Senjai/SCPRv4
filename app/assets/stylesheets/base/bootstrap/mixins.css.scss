@@ -376,7 +376,7 @@
 }
 
 
-@mixin gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth) {
+@mixin gridFluid {
 	.row-fluid { @include makeFluidRow; }
 }
 
