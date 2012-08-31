@@ -13,16 +13,26 @@ describe SectionsController do
     context "valid section" do
       let(:section) { create :section, slug: "politics" }
       
-      before :each do
-        get :show, slug: section.slug
+      context "html request" do
+        before :each do
+          get :show, slug: section.slug
+        end
+      
+        it "sets @section to the correct section" do
+          assigns(:section).should eq section
+        end
+    
+        it "sets content do the section's content" do
+          assigns(:content).should eq section.content
+        end
       end
       
-      it "sets @section to the correct section" do
-        assigns(:section).should eq section
-      end
-    
-      it "sets content do the section's content" do
-        assigns(:content).should eq section.content
+      context "xml request" do
+        it "returns an XML response" do
+          get :show, slug: section.slug, format: :xml
+          response.should render_template "sections/show"
+          response.header['Content-Type'].should match /xml/
+        end
       end
     end
   end

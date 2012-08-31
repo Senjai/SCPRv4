@@ -29,3 +29,10 @@ Scenario: Edit a section
 	And I submit the "edit section" form
 	Then I should see a success message
 	And the section's attributes should be updated 
+
+Scenario: View a section as XML
+	Given 1 section
+	When I go to that section's XML feed
+	Then I should see the latest content
+
+	
