@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829204450) do
+ActiveRecord::Schema.define(:version => 20120830081232) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -246,6 +246,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string   "content_type",           :limit => 20
   end
 
+  add_index "contentbase_contentalarm", ["content_id"], :name => "index_contentbase_contentalarm_on_content_id"
+  add_index "contentbase_contentalarm", ["content_type", "content_id"], :name => "index_contentbase_contentalarm_on_content_type_and_content_id"
   add_index "contentbase_contentalarm", ["django_content_type_id"], :name => "contentbase_contentalarm_e4470c6e"
 
   create_table "contentbase_contentbyline", :force => true do |t|
@@ -271,6 +273,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
   end
 
   add_index "contentbase_contentcategory", ["category_id"], :name => "contentbase_contentcategory_42dc49bc"
+  add_index "contentbase_contentcategory", ["content_id"], :name => "index_contentbase_contentcategory_on_content_id"
+  add_index "contentbase_contentcategory", ["content_type", "content_id"], :name => "index_contentbase_contentcategory_on_content_type_and_content_id"
   add_index "contentbase_contentcategory", ["django_content_type_id", "content_id"], :name => "content_key", :unique => true
   add_index "contentbase_contentcategory", ["django_content_type_id"], :name => "contentbase_contentcategory_e4470c6e"
 
@@ -297,6 +301,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
   end
 
   add_index "contentbase_featuredcomment", ["bucket_id"], :name => "contentbase_featuredcomment_25ef9024"
+  add_index "contentbase_featuredcomment", ["content_id"], :name => "index_contentbase_featuredcomment_on_content_id"
+  add_index "contentbase_featuredcomment", ["content_type", "content_id"], :name => "index_contentbase_featuredcomment_on_content_type_and_content_id"
   add_index "contentbase_featuredcomment", ["django_content_type_id"], :name => "contentbase_featuredcomment_e4470c6e"
 
   create_table "contentbase_featuredcommentbucket", :force => true do |t|
@@ -316,6 +322,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
   end
 
   add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
+  add_index "contentbase_misseditcontent", ["content_id"], :name => "index_contentbase_misseditcontent_on_content_id"
+  add_index "contentbase_misseditcontent", ["content_type", "content_id"], :name => "index_contentbase_misseditcontent_on_content_type_and_content_id"
   add_index "contentbase_misseditcontent", ["django_content_type_id"], :name => "contentbase_misseditcontent_e4470c6e"
 
   create_table "contentbase_videoshell", :force => true do |t|
@@ -456,6 +464,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "content_type",           :limit => 20
   end
 
+  add_index "layout_homepagecontent", ["content_id"], :name => "index_layout_homepagecontent_on_content_id"
+  add_index "layout_homepagecontent", ["content_type", "content_id"], :name => "index_layout_homepagecontent_on_content_type_and_content_id"
   add_index "layout_homepagecontent", ["django_content_type_id"], :name => "layout_homepagecontent_e4470c6e"
   add_index "layout_homepagecontent", ["homepage_id"], :name => "layout_homepagecontent_35da0e60"
 
@@ -493,6 +503,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "content_type",           :limit => 20
   end
 
+  add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
+  add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["django_content_type_id", "content_id"], :name => "media_audio_content_type_id_569dcfe00f4d911"
   add_index "media_audio", ["django_content_type_id"], :name => "media_audio_e4470c6e"
 
@@ -528,6 +540,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "content_type",           :limit => 20
   end
 
+  add_index "media_link", ["content_id"], :name => "index_media_link_on_content_id"
+  add_index "media_link", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
   add_index "media_link", ["django_content_type_id", "content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
   add_index "media_link", ["django_content_type_id"], :name => "media_link_content_type_id"
 
@@ -541,8 +555,12 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "related_type",               :limit => 20
   end
 
+  add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
+  add_index "media_related", ["content_type", "content_id"], :name => "index_media_related_on_content_type_and_content_id"
   add_index "media_related", ["django_content_type_id"], :name => "media_related_e4470c6e"
   add_index "media_related", ["rel_django_content_type_id"], :name => "media_related_76fb6e42"
+  add_index "media_related", ["related_id"], :name => "index_media_related_on_related_id"
+  add_index "media_related", ["related_type", "related_id"], :name => "index_media_related_on_related_type_and_related_id"
 
   create_table "news_story", :force => true do |t|
     t.string   "headline",           :limit => 200,                        :null => false
@@ -781,7 +799,9 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "content_type",           :limit => 20, :default => "BlogEntry"
   end
 
+  add_index "taggit_taggeditem", ["content_id"], :name => "index_taggit_taggeditem_on_content_id"
   add_index "taggit_taggeditem", ["content_id"], :name => "taggit_taggeditem_829e37fd"
+  add_index "taggit_taggeditem", ["content_type", "content_id"], :name => "index_taggit_taggeditem_on_content_type_and_content_id"
   add_index "taggit_taggeditem", ["django_content_type_id"], :name => "taggit_taggeditem_e4470c6e"
   add_index "taggit_taggeditem", ["tag_id"], :name => "taggit_taggeditem_3747b463"
 

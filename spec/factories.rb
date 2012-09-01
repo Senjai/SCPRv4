@@ -197,6 +197,20 @@ end
     sequence(:position)
   end
 
+
+# ContentAlarm #########################################################
+  factory :content_alarm do
+    content   { |alarm| alarm.association :news_story, status: ContentBase::STATUS_PENDING }
+    has_fired false
+    
+    trait :pending do
+      fire_at   { Time.now - 2.hours }
+    end
+    
+    trait :future do
+      fire_at   { Time.now + 2.hours }
+    end
+  end
   
 # Event #########################################################
   factory :event do

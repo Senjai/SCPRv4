@@ -13,7 +13,7 @@ class Bio < ActiveRecord::Base
     if page.to_i > (SPHINX_MAX_MATCHES / per_page.to_i)
       bylines = self.bylines.includes(:content).all
                     
-      bylines.select  { |b| b.content.status == ContentBase::STATUS_LIVE}
+      bylines.select  { |b| b.content.published? }
              .sort_by { |b| b.content.published_at }
              .reverse
              .paginate(page: page, per_page: per_page)

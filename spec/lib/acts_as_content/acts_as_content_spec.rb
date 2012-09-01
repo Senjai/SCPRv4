@@ -6,11 +6,11 @@ require "spec_helper"
 describe ActsAsContent::InstanceMethods::HasFormat do
   let(:content) { create :news_story }
   
-  after :each do
-    NewsStory.acts_as_content
-  end
-  
   describe "has_format?" do
+    after :each do
+      NewsStory.acts_as_content
+    end
+    
     it "returns false by default" do
       content.has_format?.should be_false
     end
@@ -25,6 +25,36 @@ describe ActsAsContent::InstanceMethods::HasFormat do
       NewsStory.acts_as_content has_format: nil
       content.should_not respond_to :has_format?
     end
+  end
+end
+
+describe ActsAsContent::InstanceMethods::StatusHelpers do
+  let(:content) { create :news_story }
+  
+  context "with has_status set to false" do
+    after :each do
+      NewsStory.acts_as_content
+    end
+    
+    it "does not provide the status helpers" do
+      pending "These tests need to be better"
+      NewsStory.acts_as_content has_status: false
+      NewsStory.new.should_not respond_to :killed?
+    end
+  end
+  
+  context "with has_status set to true" do
+    after :each do
+      NewsStory.acts_as_content
+    end
+    
+    subject { content }
+    it { should respond_to :killed? }
+    it { should respond_to :draft? }
+    it { should respond_to :awaiting_rework? }
+    it { should respond_to :awaiting_edits? }
+    it { should respond_to :pending? }
+    it { should respond_to :published? }
   end
 end
 

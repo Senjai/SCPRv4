@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
   self.table_name =  'events_event'
   self.primary_key = "id"
   
-  acts_as_content auto_published_at: false
+  acts_as_content auto_published_at: false, has_status: false
   
   ForumTypes = [
     "comm",
