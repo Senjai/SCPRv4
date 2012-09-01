@@ -27,7 +27,7 @@ class ContentAlarm < ActiveRecord::Base
   end
   
   def content_status_is_pending
-    if !(self.content.status == ContentBase::STATUS_PENDING)
+    if !(self.content.pending?)
       errors.add(:content_status, "must be pending in order for a Content Alarm to fire.")
     end
   end
@@ -72,6 +72,6 @@ class ContentAlarm < ActiveRecord::Base
   #---------------------
 
   def can_fire?
-    pending? and self.content.status == ContentBase::STATUS_PENDING
+    pending? and self.content.pending?
   end
 end

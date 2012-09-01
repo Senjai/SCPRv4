@@ -7,7 +7,7 @@ namespace :scprv4 do
   
   desc "Fire pending content alarms"
   task :fire_content_alarms => [:environment] do
-    puts "Firing pending content alarms..."
+    puts "*** [#{Time.now}] Firing pending content alarms..."
     ContentAlarm.fire_pending
     puts "Finished."
   end
@@ -26,7 +26,7 @@ namespace :scprv4 do
     
     desc "Cache Most Viewed"
     task :most_viewed => [:environment] do
-      puts "[#{Time.now}] Caching most viewed..."
+      puts "*** [#{Time.now}] Caching most viewed..."
 
       analytics = API_KEYS["google"]["analytics"]
       task = CacheTasks::MostViewed.new(
@@ -43,7 +43,7 @@ namespace :scprv4 do
     
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
-      puts "[#{Time.now}] Caching most commented..."
+      puts "*** [#{Time.now}] Caching most commented..."
       task = CacheTasks::MostCommented.new("kpcc", "3d")
       task.verbose = true
       task.run
@@ -52,7 +52,7 @@ namespace :scprv4 do
     
     desc "Cache tweets"
     task :twitter => [:environment] do
-      puts "[#{Time.now}] Caching tweets...."
+      puts "*** [#{Time.now}] Caching tweets...."
       task = CacheTasks::Twitter.new("KPCCForum")
       task.verbose = true
       task.run
