@@ -17,12 +17,38 @@ namespace :scprv4 do
     
     #----------
     
+    desc "Cache Most Viewed"
+    task :most_viewed => [:environment] do
+      puts "[#{Time.now}] Caching most viewed..."
+
+      analytics = API_KEYS["google"]["analytics"]
+      task = CacheTasks::MostViewed.new(
+        analytics["client_id"],
+        analytics["client_secret"],
+        analytics["token"],
+        analytics["refresh_token"]
+      )
+
+      task.verbose = true
+      task.run
+      puts "Finished.\n"
+    end
+    
+    desc "Cache Most Commented"
+    task :most_commented => [:environment] do
+      puts "[#{Time.now}] Caching most commented..."
+      task = CacheTasks::MostCommented.new("kpcc", "3d")
+      task.verbose = true
+      task.run
+      puts "Finished.\n"
+    end
+    
     desc "Cache tweets"
-    task :tweets => :environment do
-      require 'twitter_cacher'
-      include TwitterCacher
-      puts "Caching tweets...."
-      cache_tweets("KPCCForum")
+    task :twitter => [:environment] do
+      puts "[#{Time.now}] Caching tweets...."
+      task = CacheTasks::Twitter.new("KPCCForum")
+      task.verbose = true
+      task.run
       puts "Finished.\n"
     end
     
@@ -45,7 +71,7 @@ namespace :scprv4 do
     end
     
     desc "Cache everything"
-    task :all => [:environment, :remote_blogs, :programs, :homepage, :tweets]
+    task :all => [:environment, :remote_blogs, :programs, :homepage, :most_viewed, :most_commented, :twitter]
   end
   
   #----------

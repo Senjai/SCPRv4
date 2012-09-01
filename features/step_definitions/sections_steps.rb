@@ -19,6 +19,13 @@ end
 
 
 
+#### Finders
+Then /^I should see the latest content$/ do
+  page.should have_content @section.title
+end
+
+
+
 #### Assertions
 Then /^there should be (\d+) sections?$/ do |num|
   Section.count.should eq num.to_i
@@ -37,4 +44,8 @@ end
 #### Actions
 When /^I go to edit that section$/ do
   visit edit_admin_section_path(@section)
+end
+
+When /^I go to that section's XML feed$/ do
+  visit section_path(@section.slug, format: :xml)
 end

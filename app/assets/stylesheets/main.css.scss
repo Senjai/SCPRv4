@@ -1,5 +1,5 @@
 // Global styles
-@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
+@include gridFluid;
 
 body {
 	width: auto;

@@ -84,6 +84,24 @@ class BlogEntry < ContentBase
   
   #----------
   
+  def extended_teaser(*args)
+    target    = args[0] || 800
+    more_text = args[1] || "Read More..."
+    
+    content         = Nokogiri::HTML::DocumentFragment.parse(self.body)
+    extended_teaser = Nokogiri::HTML::DocumentFragment.parse(nil)
+    
+    content.children.each do |child|
+      break if extended_teaser.content.length >= target
+      extended_teaser.add_child child
+    end
+    
+    extended_teaser.add_child "<p><a href=\"#{self.link_path}\">#{more_text}</a></p>"
+    return extended_teaser.to_html
+  end
+  
+  #----------
+  
   def remote_link_path
     if self.wp_id.present?
       self.link_path
