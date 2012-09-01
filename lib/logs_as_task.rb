@@ -1,5 +1,6 @@
 # The point of this is to provide a simple way 
-# to log to Rails.logger and STDOUT with just one method
+# to log to Rails.logger and STDOUT with just one method.
+# It will not log to STDOUT in the test environment.
 #
 # Usage:
 #
@@ -17,7 +18,7 @@ module LogsAsTask
   module ClassMethods
     def log(msg)
       Rails.logger.info msg
-      Logger.new(STDOUT).info msg
+      Logger.new(STDOUT).info(msg) unless Rails.env == "test"
     end
   end
 end

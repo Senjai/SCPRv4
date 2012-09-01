@@ -199,8 +199,8 @@ end
 
 
 # ContentAlarm #########################################################
-  factory :content_alarm do # force conten to be passed in
-    action    "publish"
+  factory :content_alarm do
+    content   { |alarm| alarm.association :news_story, status: ContentBase::STATUS_PENDING }
     has_fired false
     
     trait :pending do

@@ -5,6 +5,13 @@ namespace :scprv4 do
     Rails.cache.expire_obj("events/event:new")
   end
   
+  desc "Fire pending content alarms"
+  task :fire_content_alarms => [:environment] do
+    puts "Firing pending content alarms..."
+    ContentAlarm.fire_pending
+    puts "Finished."
+  end
+  
   #----------
   
   namespace :cache do

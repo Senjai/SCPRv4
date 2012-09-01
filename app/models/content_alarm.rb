@@ -5,33 +5,44 @@ class ContentAlarm < ActiveRecord::Base
   #----------
   # Scopes
   default_scope where("content_type is not null")
-  scope :pending, -> { where("fire_at <= ? and has_fired = ?", [Time.now, false]) }
+  scope :pending, -> { where("fire_at <= ? and has_fired = ?", Time.now, false).order("fire_at") }
+  
   
   #----------
   # Association
   map_content_type_for_django
   belongs_to :content, polymorphic: true
   
+  
   #----------
   # Validation
   validates_presence_of :fire_at, :content_id, :content_type
-  validate :is_in_future
+  validate :fire_at_is_in_future, if: -> { self.fire_at.present? }
+  validate :content_status_is_pending, if: -> { self.content.present? }
   
-  def is_in_future
+  def fire_at_is_in_future
     if !(self.fire_at >= Time.now)
       errors.add(:fire_at, "must be in the future.")
     end
   end
   
+  def content_status_is_pending
+    if !(self.content.status == ContentBase::STATUS_PENDING)
+      errors.add(:content_status, "must be pending in order for a Content Alarm to fire.")
+    end
+  end
+  
+  
   #----------
   # Callbacks
-  before_save :set_action
+  before_save :set_action_for_django
   
-  def set_action
-    self.action = "publish"
+  def set_action_for_django
+    self.action = 1
   end
   
   #---------------------
+  
   
   def self.fire_pending
     self.pending.each do |alarm|
@@ -42,16 +53,13 @@ class ContentAlarm < ActiveRecord::Base
   #---------------------
   
   def fire
-    if self.can_fire?
+    if can_fire?
       ContentAlarm.log(
         "*** [#{Time.now}] Firing ContentAlarm ##{self.id} " \
         "for #{self.content.class.name} ##{self.content.id}")
       
-      if self.content.update_attributes(status: ContentBase::STATUS_PUBLISHED)
-        self.destroy
-      else
-        self.update_attribute(:status, "FAILED")
-      end
+      self.content.update_attributes(status: ContentBase::STATUS_LIVE)
+      self.destroy
     else
       false
     end
@@ -62,10 +70,10 @@ class ContentAlarm < ActiveRecord::Base
   def pending?
     self.fire_at <= Time.now
   end
-  
+
   #---------------------
-  
+
   def can_fire?
-    self.pending? and self.content.status == ContentBase::STATUS_PENDING
+    pending? and self.content.status == ContentBase::STATUS_PENDING
   end
 end
