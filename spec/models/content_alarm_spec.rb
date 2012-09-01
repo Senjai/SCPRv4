@@ -91,7 +91,7 @@ describe ContentAlarm do
       alarm.fire
       alarm.destroyed?.should be_true
     end
-  end    
+  end
 
   #---------------------
   

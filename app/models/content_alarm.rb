@@ -54,13 +54,11 @@ class ContentAlarm < ActiveRecord::Base
   
   def fire
     if can_fire?
-      ContentAlarm.log(
-        "*** [#{Time.now}] Firing ContentAlarm ##{self.id} " \
-        "for #{self.content.class.name} ##{self.content.id}")
-      
+      ContentAlarm.log "Firing ContentAlarm ##{self.id} for #{self.content.class.name} ##{self.content.id}"
       self.content.update_attributes(status: ContentBase::STATUS_LIVE)
       self.destroy
     else
+      ContentAlarm.log "Can't fire ContentAlarm ##{self.id} for #{self.content.class.name} ##{self.content.id}"
       false
     end
   end
