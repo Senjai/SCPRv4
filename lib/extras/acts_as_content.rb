@@ -68,6 +68,7 @@ module ActsAsContent
       comments:           true,
       has_format:         false,
       auto_published_at:  true,
+      has_status:         true,
       short_headline:     true,
       teaser:             true,
       assets:             true
@@ -83,7 +84,8 @@ module ActsAsContent
         except.each { |e| list.delete e }
       end
     end
-    
+
+#    $stdout.puts "setting acts_as_content_options for #{self.name} with #{list}"
     cattr_accessor :acts_as_content_options
     self.acts_as_content_options = list
     
@@ -91,7 +93,9 @@ module ActsAsContent
       has_many :assets, class_name: "ContentAsset", as: :content, order: "asset_order", dependent: :destroy
     end
     
+    # Check for nil if you want to use the passed-in boolean as the actual value
     include InstanceMethods::HasFormat        if !list[:has_format].nil?
+    include InstanceMethods::StatusHelpers    if list[:has_status]
     include InstanceMethods::AutoPublishedAt  if !list[:auto_published_at].nil?
     include InstanceMethods::Headline         if !list[:headline].nil?  and list[:headline].to_sym  != :headline
     include InstanceMethods::Body             if !list[:body].nil?      and list[:body].to_sym      != :body
@@ -139,6 +143,32 @@ module ActsAsContent
     module HasFormat
       def has_format?
         self.class.acts_as_content_options[:has_format]
+      end
+    end
+    
+    module StatusHelpers
+      def killed?
+        self.status == ContentBase::STATUS_KILLED
+      end
+      
+      def draft?
+        self.status == ContentBase::STATUS_DRAFT
+      end
+      
+      def awaiting_rework?
+        self.status == ContentBase::STATUS_REWORK
+      end
+      
+      def awaiting_edits?
+        self.status == ContentBase::STATUS_EDIT
+      end
+      
+      def pending?
+        self.status == ContentBase::STATUS_PENDING
+      end
+      
+      def published?
+        self.status == ContentBase::STATUS_LIVE
       end
     end
 

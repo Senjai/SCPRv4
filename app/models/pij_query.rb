@@ -2,7 +2,7 @@ class PijQuery < ActiveRecord::Base
   self.table_name       = 'pij_query'
   CONTENT_TYPE          = "pij/query"
   
-  acts_as_content comments: false
+  acts_as_content comments: false, has_status: false
   
   QUERY_TYPES = [
     ["Evergreen",             "evergreen"],

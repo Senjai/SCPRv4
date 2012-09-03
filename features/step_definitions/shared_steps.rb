@@ -76,8 +76,8 @@ end
 
 
 #### Actions
-When /^I (?:fill in|update) all of the "([^"]*)" required fields with valid information$/ do |resource|
-  @updated_object = build(AdminResource::Helpers.to_param(resource))
+When /^I (?:fill in|update) all of the required fields with valid information$/ do
+  @updated_object = build(singular_resource(extract_controller(current_path)).to_sym)
   fill_required_fields_with_attributes_from @updated_object
 end
 

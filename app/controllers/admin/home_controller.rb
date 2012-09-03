@@ -1,7 +1,12 @@
 class Admin::HomeController < Admin::BaseController
   def index
-    # NewsStory, BlogEntry, Blog, ContentShell, VideoShell, Homepage, Tag, Flatpage, KpccProgram, OtherProgram, PijQuery, ShowEpisode, ShowSegment
-    @admin_models = [Section, Promotion, Blog]
+    @admin_models = [ Section, Promotion, 
+                      Blog, BlogEntry, Tag, 
+                      NewsStory, 
+                      ContentShell, VideoShell, 
+                      Homepage, Flatpage, 
+                      KpccProgram, OtherProgram, ShowEpisode, ShowSegment, 
+                      PijQuery ]
     @extra_links = [
       { title: "Multi-American Import", path: admin_multi_american_path, info: "Landing page for managing the Multi-American import" }
     ]

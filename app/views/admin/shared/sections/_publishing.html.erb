@@ -1,0 +1,4 @@
+<%= form_block "Publishing Status" do %>
+	<%= f.input :status, collection: ContentBase.status_text_collect, selected: record.status || ContentBase::STATUS_DRAFT %>
+	<%= extra %>
+<% end %>

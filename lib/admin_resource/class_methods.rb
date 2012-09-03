@@ -1,44 +1,4 @@
 module AdminResource
-  module Helpers
-    def self.to_class(resource)
-      resource.singularize.demodulize.parameterize.underscore.camelize.constantize
-    end
-
-    def self.to_title(resource)
-      resource.singularize.demodulize.titleize
-    end
-
-    def self.as_param(resource)
-      resource.demodulize.parameterize
-    end
-    
-    def self.to_param(resource)
-      resource.singularize.demodulize.parameterize.underscore.to_sym
-    end
-
-    def self.path_helper(resource)
-      Rails.application.routes.url_helpers.send("admin_#{resource.demodulize.tableize}_path")
-    end
-  end
-    
-  DEFAULTS = {
-    list_order: "id desc",
-    list_per_page: 25,
-    excluded_fields: ["id", "created_at", "updated_at"]
-  }
-
-  TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
-  
-  
-  # -----------------------
-  
-  def administrate
-    extend ClassMethods
-    include InstanceMethods
-  end
-  
-  # -----------------------
-  
   module ClassMethods
     
     def list_fields
@@ -113,16 +73,4 @@ module AdminResource
 
     attr_accessor :excluded_fields, :only_fields
   end
-  
-  # -----------------------
-  
-  module InstanceMethods
-    
-    def to_title
-      title_method = TITLE_ATTRIBS.find { |a| self.respond_to?(a) }
-      title_method ? self.send(title_method) : "#{self.class.name.titleize} ##{self.id}"
-    end
-  end
 end
-
-ActiveRecord::Base.extend AdminResource

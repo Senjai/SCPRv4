@@ -6,7 +6,7 @@ module CacheTasks
     view.extend ApplicationHelper
   end
   
-  class Task
+  class Task    
     def cache(content, partial, cache_key)
       cached = CacheTasks.view.render(partial: partial, object: content, as: :content)
       Rails.cache.write(cache_key, cached)

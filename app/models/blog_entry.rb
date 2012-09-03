@@ -16,7 +16,7 @@ class BlogEntry < ContentBase
     ['bylines'],
     ['status'],
     ['published_at']
-  ] 
+  ]
 
   # ------------------
   # Validation

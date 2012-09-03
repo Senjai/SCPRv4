@@ -324,7 +324,7 @@ describe BlogsController do
       get :category, blog: @blog.slug, category: @category.slug
       
       assigns(:entries).select { |e| 
-        e.status != ContentBase::STATUS_LIVE 
+        !e.published? 
       }.should be_blank
     end
     
