@@ -1,19 +1,25 @@
 module AdminResource
+  # These helpers expect to receive a controller parameter, 
+  # such as "admin/new_stories"
+  #
   module Helpers
-    def to_class(resource)
-      resource.singularize.demodulize.parameterize.underscore.camelize.constantize
-    end
-
-    def to_title(resource)
-      resource.singularize.demodulize.titleize
+    # "admin/news_stories" => "news_story"
+    def singular_resource(controller)
+      controller.singularize.camelize.demodulize.underscore
     end
     
-    def to_param(resource)
-      resource.singularize.demodulize.parameterize.underscore.to_sym
+    # "admin/news_stories" => NewsStory
+    def to_class(controller)
+      controller.singularize.camelize.demodulize.constantize
     end
 
-    def path_helper(resource)
-      Rails.application.routes.url_helpers.send("admin_#{resource.demodulize.tableize}_path")
+    # "admin/news_stories" => "News Story"
+    def to_title(controller)
+      controller.singularize.camelize.demodulize.titleize
+    end
+    
+    def extract_controller(path)
+      path.split("/")[2..3].join("/")
     end
   end
 end

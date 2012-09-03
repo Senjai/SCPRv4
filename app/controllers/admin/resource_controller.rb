@@ -1,4 +1,6 @@
 class Admin::ResourceController < Admin::BaseController
+  include AdminResource::Helpers
+  
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
   before_filter :get_records, only: :index
   before_filter :extend_breadcrumbs_with_resource_root
@@ -98,19 +100,19 @@ class Admin::ResourceController < Admin::BaseController
   helper_method :resource_class, :resource_title, :resource_param, :resource_path_helper
   
   def resource_class
-    @resource_class ||= params[:controller].camelize.demodulize.singularize.constantize
+    @resource_class ||= to_class(params[:controller])
   end
   
   def resource_title
-    @resource_title ||= resource_class.to_s.titleize
+    @resource_title ||= to_title(params[:controller])
   end
 
   def resource_param
-    @resource_param ||= resource_class.to_s.underscore.to_sym
+    @resource_param ||= singular_resource(params[:controller]).to_sym
   end
   
   def resource_path_helper
-    @resource_url_helper ||= Rails.application.routes.url_helpers.send("admin_#{resource_class.to_s.tableize}_path")
+    @resource_url_helper ||= url_for([:admin, resource_class])
   end
   
   
