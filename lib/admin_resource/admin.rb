@@ -13,5 +13,9 @@ module AdminResource
     def define_list
       yield list
     end
+    
+    def fields
+      []
+    end
   end
 end
