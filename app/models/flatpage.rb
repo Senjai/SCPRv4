@@ -8,10 +8,10 @@ class Flatpage < ActiveRecord::Base
   self.list_per_page = 100
   self.list_fields = [
     ['url'],
-    ['is_public', title: "Public?", display_helper: :display_boolean],
+    ['is_public', title: "Public?"],
     ['redirect_url'],
     ['title'],
-    ['updated_at', display_helper: :display_date ]
+    ['updated_at']
   ]
 
   # -------------------

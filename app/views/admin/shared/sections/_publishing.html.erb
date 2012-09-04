@@ -1,4 +1,13 @@
 <%= form_block "Publishing Status" do %>
 	<%= f.input :status, collection: ContentBase.status_text_collect, selected: record.status || ContentBase::STATUS_DRAFT %>
+	<%= f.input :published_at, wrapper_html: { class: "published_at" } %>
 	<%= extra %>
+<% end %>
+
+<% content_for :footerjs do %>
+	<script type="text/javascript">
+		$(function() {
+			contentAlarmUI = new scpr.ContentAlarmUI({form: "#<%=f.options[:html][:id]%>"});
+		});
+	</script>
 <% end %>

@@ -1,4 +1,7 @@
 $(document).ready ->
+    $("input.datepicker").datepicker()
+
+    # Multi-American stuff
     rawRole = "content-raw"
     formattedRole = "content-formatted"
 
