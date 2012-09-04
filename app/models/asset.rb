@@ -1,46 +1,6 @@
 class Asset
   require 'faraday'
   require 'faraday_middleware'
-    
-  class AssetNotFound < Faraday::Error::ClientError
-    attr_reader :response
-    
-    def initialize(response)
-      super "Asset not found."
-      @response = response
-    end
-  end
-  
-  class AssetRequestError < Faraday::Error::ClientError
-    attr_reader :response
-    
-    def initialize(response)
-      super "Asset request failed with status #{response.status}"
-      @response = response
-    end
-  end
-  
-  #----------
-  
-  class AssetErrors < Faraday::Response::Middleware
-    def initialize(app)
-      super(app)
-    end
-
-    def call(env)
-      response = @app.call(env)
-      
-      response.on_complete do |env|
-        if env[:status] == 404
-          raise AssetNotFound, response
-        elsif env[:status] == 400 || env[:status] == 500
-          raise AssetRequestError, response
-        end
-      end
-      
-      response
-    end
-  end
   
   #----------
   
@@ -53,7 +13,6 @@ class Asset
     
     # set up our connection at initialization time
     @@conn = Faraday.new("http://#{@@server}",:params => {:auth_token => @@token}) do |c|
-      #c.use Asset::AssetErrors
       c.use FaradayMiddleware::ParseJson, :content_type => /\bjson$/
       c.use FaradayMiddleware::Instrumentation
       c.adapter Faraday.default_adapter
