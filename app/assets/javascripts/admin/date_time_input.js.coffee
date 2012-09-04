@@ -55,4 +55,5 @@ class scpr.DateTimeInput
     
     setDate: (date, time) ->
         datetime = Date.parse("#{date} #{time}")
+        console.log "date set to", datetime
         @field.val(datetime)
