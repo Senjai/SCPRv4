@@ -14,7 +14,17 @@ class Event < ActiveRecord::Base
   
   # -------------------
   # Administration
-  administrate
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "created_at desc"
+      list.column "headline"
+      list.column "starts_at"
+      list.column "location_name", header: "Location"
+      list.column "etype",         header: "Type"
+      list.column "kpcc_event",    header: "KPCC Event?"
+      list.column "is_published",  header: "Published?"
+    end
+  end
 
   # -------------------
   # Validations

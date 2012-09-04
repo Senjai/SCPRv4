@@ -1,21 +1,13 @@
-require 'admin_resource/class_methods'
-require 'admin_resource/instance_methods'
+require 'admin_resource/list'
+require 'admin_resource/list_column'
+
+require "admin_resource/title"
+
+require "admin_resource/admin"
+require "admin_resource/administrate"
 require 'admin_resource/helpers'
 
-module AdminResource
-  DEFAULTS = {
-    list_order: "id desc",
-    list_per_page: 25,
-    excluded_fields: ["id", "created_at", "updated_at"]
-  }
-
-  TITLE_ATTRIBS = [:name, :short_headline, :title, :headline]
-  
-  def administrate
-    extend ClassMethods
-    include InstanceMethods
-  end
-  
+class ActiveRecord::Base
+  include AdminResource::Title
+  extend AdminResource::Administrate
 end
-
-ActiveRecord::Base.extend AdminResource

@@ -1,13 +1,14 @@
 class Section < ActiveRecord::Base
   #----------
   # Administration
-  administrate
-  self.list_fields = [
-    ["id"],
-    ["title", link: true],
-    ["slug"]
-  ]
-  
+  administrate do |admin|
+    admin.define_list do |list|
+      list.column "id"
+      list.column "title", linked: true
+      list.column "slug"
+    end
+  end
+
   #----------
   # Association
   has_many    :section_categories

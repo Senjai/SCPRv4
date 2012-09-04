@@ -10,15 +10,16 @@ class ContentShell < ContentBase
   
   # -------------------
   # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['headline'],
-    ['site'],
-    ['bylines'],
-    ['status'],
-    ['published_at']
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "site"
+      list.column "bylines"
+      list.column "status"
+      list.column "published_at"
+    end
+  end
   
   define_index do
     indexes headline

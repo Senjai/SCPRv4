@@ -17,7 +17,9 @@ module AdminResource
           # and then reverse-merge some default values.
           f.push({}) if !f[1]
           f[1].symbolize_keys!
-          f[1].reverse_merge!(title: f[0].titleize, display_helper: "display_#{f[0]}")
+
+          # Merge in default options
+          f[1].reverse_merge!(title: f[0].titleize)
         end
 
         # The first column will be linked if no link is specified
@@ -28,36 +30,8 @@ module AdminResource
       
       @list_fields = fields
     end
-        
+    
     # -----------------------
-    
-    def list_order
-      @list_order || DEFAULTS[:list_order]
-    end
-    
-    def list_order=(order)
-      @list_order = order
-    end
-
-    # -----------------------
-    
-    def list_per_page
-      # Need to check if defined, because we might want to
-      # pass `nil` to limit (specifying no limit).
-      defined?(@list_per_page) ? @list_per_page : DEFAULTS[:list_per_page]
-    end
-    
-    def list_per_page=(per_page)
-      if per_page == "all"
-        per_page = nil
-      else
-        per_page = per_page.to_i
-      end
-      
-      @list_per_page = per_page
-    end
-    
-    # -----------------------    
     
     def fields
       if only_fields.present?

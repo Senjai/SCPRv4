@@ -2,28 +2,40 @@ module AdminListHelper
   
   # -- Used by index view -- #
   
-  def render_attribute(item, record, options={})
+  def render_attribute(column, record, options={})
     options[:path] ||= url_for([:edit, :admin, record])
     
-    attrib         = record.send(item[0])
-    attrib_options = item[1]
-    display_helper = attrib_options[:display_helper]
+    attrib         = record.send(column.attribute)
+    display_helper = column.helper
     
+    # If no helper was specified, try some defaults
+    # More specific helpers are favored
     if !display_helper
+      
+      # Just return the value
       display_helper = "display_as_is"
       
-      if record.class.respond_to?(:columns_hash) and record.class.columns_hash[item[0]]
-        display_helper = "display_#{record.class.columns_hash[item[0]].type}"
+      # If it's an AR model and the attribute is a column,
+      # we can use display_#{type}
+      if record.class.respond_to?(:columns_hash) and record.class.columns_hash[column.attribute]
+        display_helper = "display_#{record.class.columns_hash[column.attribute].type}"
       end
       
-      if self.methods.include? "display_#{item[0]}".to_sym
-        display_helper = "display_#{item[0]}"
+      # If it's an AR model and the attribute is an AssociationReflection,
+      # we can use display_association
+      if record.class.reflect_on_association(column.attribute.to_sym)
+        display_helper = "display_association"
+      end
+      
+      # If this helper module defines display_#{attribute}, we should use that
+      if self.methods.include? "display_#{column.attribute}".to_sym
+        display_helper = "display_#{column.attribute}"
       end
     end
 
     rendered_item = send(display_helper, attrib)
     
-    if attrib_options[:link]
+    if column.linked?
       rendered_item = link_to(rendered_item, options[:path])
     end
     
@@ -54,22 +66,22 @@ module AdminListHelper
   #-------------
   # Attribute Helpers
   
+  def display_association(attrib)
+    attrib.to_title
+  end
+  
   def display_status(status)
     content_tag :span, ContentBase::STATUS_TEXT[status], class: status_bootstrap_map[status]
-  end
-  
-  def display_show(show)
-    show.title
-  end
-  
-  def display_blog(blog)
-    blog.name
   end
   
   def display_bylines(bylines)
     if bylines.present?
       bylines.first.user.try(:name) || bylines.first.name
     end
+  end
+  
+  def display_air_status(air_status)
+    KpccProgram::PROGRAM_STATUS[air_status]
   end
   
   def display_audio(audio)

@@ -16,9 +16,24 @@ class KpccProgram < ActiveRecord::Base
     'offramp'
   ]
   
+  PROGRAM_STATUS = {
+    "onair"      => "Currently Airing",
+    "online"     => "Online Only (Podcast)",
+    "archive"    => "No longer available",
+    "hidden"     => "Not visible on site"
+  }
+  
   # -------------------
   # Administration
-  administrate
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order    = "title"
+      list.per_page = "all"
+      
+      list.column "title"
+      list.column "air_status"
+    end
+  end
   
   # -------------------
   # Validations
@@ -26,9 +41,9 @@ class KpccProgram < ActiveRecord::Base
   
   # -------------------
   # Associations
-  has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
-  has_many :episodes, :foreign_key => "show_id", :class_name => "ShowEpisode"
-  has_many :schedules, :foreign_key => "kpcc_program_id", :class_name => "Schedule"
+  has_many :segments,   foreign_key: "show_id",         class_name: "ShowSegment"
+  has_many :episodes,   foreign_key: "show_id",         class_name: "ShowEpisode"
+  has_many :schedules,  foreign_key: "kpcc_program_id", class_name: "Schedule"
   belongs_to :missed_it_bucket
   belongs_to :blog
   

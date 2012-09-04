@@ -4,17 +4,17 @@ class NewsStory < ContentBase
   
   # -------------------
   # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['id'],
-    ['headline', link: true],
-    ['slug'],
-    ['news_agency'],
-    ['audio'],
-    ['status'],
-    ['published_at']
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "slug"
+      list.column "news_agency"
+      list.column "audio"
+      list.column "status"
+      list.column "published_at"
+    end
+  end
   
   # -------------------
   # Callbacks  

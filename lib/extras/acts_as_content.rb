@@ -16,23 +16,32 @@ module ActsAsContent
   # Everything defaults to `true` unless otherwise noted.
   #
   # * link_path:          Checks for `link_path` and includes `remote_link_path`
+  #                       boolean, default: true
   #
   # * obj_key:            Includes `obj_key`
+  #                       boolean, default: true
   #
   # * comments:           Includes `disqus_identifier`, `disqus_shortname`, and `has_comments?`
+  #                       boolean, default: true
   #
   # * has_format:         Includes `has_format?`
-  #                       true or false, pass `nil` if not wanted.
-  #                       Default: false
+  #                       boolean, default: false
   #
   # * auto_published_at:  Includes `auto_published_at`
-  #                       true or false, pass `nil` if no wanted
+  #                       boolean, default: true
   #
-  # * short_headline:     Includes `short_headline` 
+  # * published_at:       Includes attr_accessor for `published_at_date` and `published_at_time`,
+  #                       allowing you to split those fields out in a form
+  #                       Also includes the callback method to combine the two
+  #                       boolean, default: true
+  #
+  # * short_headline:     Includes `short_headline` method
   #                       Uses self[:short_headline]` if present else `headline`
+  #                       boolean, default: true
   #
-  # * teaser:             Includes `teaser` 
+  # * teaser:             Includes `teaser` method
   #                       Uses `self[:teaser]` if present else cuts down `body`
+  #                       boolean, default: true
   #
   # * headline:           Pass a method to use for `headline`
   #                       Only use if `object.headline` isn't possible.
@@ -68,6 +77,7 @@ module ActsAsContent
       comments:           true,
       has_format:         false,
       auto_published_at:  true,
+      published_at:       true, # Not currently being used
       has_status:         true,
       short_headline:     true,
       teaser:             true,
@@ -177,6 +187,19 @@ module ActsAsContent
     module AutoPublishedAt
       def auto_published_at
         self.class.acts_as_content_options[:auto_published_at]
+      end
+    end
+
+    #----------
+    
+    module PublishedAt
+      def published_at_is_valid_date
+        # Chronic#parse returns nil if it can't parse the date.
+        # Time#parse raises an error
+        Rails.logger.info self.published_at
+        unless self.Chronic.parse(self.published_at)
+          errors.add(:published_at, "has an invalid format. Format should be: '01/25/2012 05:30pm'")
+        end
       end
     end
     

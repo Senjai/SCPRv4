@@ -49,11 +49,6 @@ describe AdminResource do
       NewsStory.list_fields.select { |f| f[1][:link] == true }.map { |f| f[0] }.should eq ['headline']
     end
     
-    it "adds a display_helper if one is not specified" do
-      NewsStory.list_fields = [['id']]
-      NewsStory.list_fields.first[1][:display_helper].should eq "display_id"
-    end
-    
     it "uses the display helper passed in if any" do
       NewsStory.list_fields = [['id', display_helper: "show_me_the_id"]]
       NewsStory.list_fields.first[1][:display_helper].should eq "show_me_the_id"

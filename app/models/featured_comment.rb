@@ -1,6 +1,16 @@
 class FeaturedComment < ActiveRecord::Base
   self.table_name =  'contentbase_featuredcomment'
-  administrate
+  
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "bucket"
+      list.column "username"
+      list.column "excerpt"
+      list.column "status"
+      list.column "published_at"
+    end
+  end
 
   map_content_type_for_django  
   belongs_to :content, polymorphic: true

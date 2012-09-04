@@ -3,7 +3,13 @@ class Tag < ActiveRecord::Base
   
   # -------------------
   # Administration
-  administrate
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "name"
+      list.column "name"
+      list.column "slug"
+    end
+  end
   
   # -------------------
   # Associations  

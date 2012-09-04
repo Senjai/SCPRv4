@@ -10,6 +10,12 @@ class Admin::ResourceController < Admin::BaseController
   # -- Basic CRUD -- #
   
   def index
+    @list = resource_class.admin.list
+    
+    if @list.linked_columns.empty?
+      @list.columns.first.linked = true
+    end
+    
     respond_with :admin, @records
   end
 
@@ -57,7 +63,7 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def get_records
-    @records = resource_class.order(resource_class.list_order).paginate(page: params[:page], per_page: resource_class.list_per_page)
+    @records = resource_class.order(resource_class.admin.list.order).paginate(page: params[:page], per_page: resource_class.admin.list.per_page)
   end
   
   

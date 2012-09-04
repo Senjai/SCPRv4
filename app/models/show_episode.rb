@@ -7,15 +7,16 @@ class ShowEpisode < ContentBase
                   
   # -------------------
   # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['headline'],
-    ['show'],
-    ['air_date', display_helper: :display_date],
-    ['status'],
-    ['published_at']
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "show"
+      list.column "air_date", helper: :display_date
+      list.column "status"
+      list.column "published_at"
+    end
+  end
   
   # -------------------
   # Validations

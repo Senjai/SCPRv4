@@ -3,16 +3,18 @@ class Flatpage < ActiveRecord::Base
   
   # -------------------
   # Administration
-  administrate
-  self.list_order = "url"
-  self.list_per_page = 100
-  self.list_fields = [
-    ['url'],
-    ['is_public', title: "Public?"],
-    ['redirect_url'],
-    ['title'],
-    ['updated_at']
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order    = "url"
+      list.per_page = 100
+      
+      list.column "url"
+      list.column "is_public", header: "Public?"
+      list.column "redirect_url"
+      list.column "title"
+      list.column "updated_at"
+    end
+  end
 
   # -------------------
 

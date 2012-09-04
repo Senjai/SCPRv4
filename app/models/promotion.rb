@@ -1,12 +1,13 @@
 class Promotion < ActiveRecord::Base
   #-------------
   # Administration
-  administrate
-  self.list_fields = [
-    ["id"],
-    ["title", link: true],
-  ]
-
+  administrate do |admin|
+    admin.define_list do |list|
+      list.column "id"
+      list.column "title", linked: true
+    end
+  end
+  
   #-------------
   # Validations
   validates_presence_of :title, :url

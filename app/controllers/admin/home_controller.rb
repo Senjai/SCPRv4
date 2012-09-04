@@ -7,8 +7,11 @@ class Admin::HomeController < Admin::BaseController
                       Homepage, Flatpage, 
                       KpccProgram, OtherProgram, ShowEpisode, ShowSegment, 
                       PijQuery ]
+        
     @extra_links = [
       { title: "Multi-American Import", path: admin_multi_american_path, info: "Landing page for managing the Multi-American import" }
     ]
+    
+    @extra_links = []
   end
 end
