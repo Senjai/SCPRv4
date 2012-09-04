@@ -39,7 +39,7 @@ class Asset
       resp = @@conn.get("#{@@prefix}/assets/#{id}")
 
       if [400, 404, 500].include? resp.status
-        return Asset::Fallback.new
+        return Asset::Fallback.new(resp.status, id)
       else
         json = resp.body
         
@@ -153,11 +153,14 @@ class Asset::Fallback < Asset
     return json
   end
   
-  def initialize
+  def initialize(response, id)
+    logger = Logger.new("/tmp/assethost-error-assets.log")
+    logger.info "*** [#{Time.now}] AssetHost returned #{response} for Asset ##{id}"
+    
     json = {
       "id"         => 0, 
       "title"      => "Asset Unavailable", 
-      "caption"    => "We encountered a problem, and this asset is currently unavailable", 
+      "caption"    => "We encountered a problem, and this photo is currently unavailable.", 
       "size"       => "#{Fallback.json[:sizes]['full']['width']}x#{Fallback.json[:sizes]['full']['height']}",
       "sizes"      => Fallback.json[:sizes],
       "tags"       => Fallback.json[:tags],
