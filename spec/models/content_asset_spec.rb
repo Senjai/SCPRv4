@@ -14,6 +14,12 @@ describe ContentAsset do
       content_asset = build :asset
       content_asset.asset.should be_a Asset # JSON response
     end
+    
+    it "Adds in a fallback caption if @_asset is a Fallback" do
+      content_asset = build :asset
+      content_asset.stub(:asset) { Asset::Fallback.new(404, 99999) }
+      content_asset.asset.caption.should match "We encountered a problem"
+    end
   end
   
   describe "as_json" do

@@ -39,7 +39,8 @@ class Asset
       resp = @@conn.get("#{@@prefix}/assets/#{id}")
 
       if [400, 404, 500].include? resp.status
-        return Asset::Fallback.new(resp.status, id)
+        Asset::Fallback.log(resp.status, id)
+        return Asset::Fallback.new
       else
         json = resp.body
         
@@ -116,6 +117,14 @@ end
 #----------
 
 class Asset::Fallback < Asset
+  def self.logger
+    @logger ||= Logger.new("/tmp/assethost-error-assets.log")
+  end
+  
+  def self.log(response, id)
+    logger.info "*** [#{Time.now}] AssetHost returned #{response} for Asset ##{id}"
+  end
+  
   def self.image_path(size)
     dim = %w{thumb lsquare}.include?(size) ? "square" : "rect"
     ActionView::Base.new(ActionController::Base.view_paths, {}).image_path("fallback-img-#{dim}.png")
@@ -153,10 +162,7 @@ class Asset::Fallback < Asset
     return json
   end
   
-  def initialize(response, id)
-    logger = Logger.new("/tmp/assethost-error-assets.log")
-    logger.info "*** [#{Time.now}] AssetHost returned #{response} for Asset ##{id}"
-    
+  def initialize
     json = {
       "id"         => 0, 
       "title"      => "Asset Unavailable", 
