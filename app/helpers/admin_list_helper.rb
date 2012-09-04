@@ -86,16 +86,7 @@ module AdminListHelper
   
   def display_audio(audio)
     return audio if !audio.is_a? Array
-    
-    if audio = audio.first
-      if audio.mp3.present?
-        "Live"
-      elsif audio.enco_number.present? && audio.enco_date.present?
-        "Awaiting ENCO"
-      end
-    else
-      "None"
-    end
+    content_tag :span, Audio::STATUS_TEXT[audio.first.try(:status)], class: audio_bootstrap_map[audio.first.try(:status)]
   end
   
   #-------------
@@ -106,11 +97,9 @@ module AdminListHelper
   end
   
   def display_boolean(boolean)
-    content_tag(
-      :span, 
+    content_tag(:span, 
       content_tag(:i, "", class: boolean_bootstrap_map[!!boolean][:icon]), 
-      class: boolean_bootstrap_map[!!boolean][:badge]
-    )
+      class: boolean_bootstrap_map[!!boolean][:badge])
   end
   
   
@@ -132,6 +121,14 @@ module AdminListHelper
       ContentBase::STATUS_EDIT    => "label label-inverse",
       ContentBase::STATUS_PENDING => "label label-warning",
       ContentBase::STATUS_LIVE    => "label label-success"
+    }
+  end
+  
+  def audio_bootstrap_map
+    {
+      nil => "label label-inverse",
+      Audio::STATUS_WAIT => "label label-warning",
+      Audio::STATUS_LIVE => "label label-success"
     }
   end
   

@@ -16,7 +16,7 @@
 		</div> <!-- span12/9 -->
 		<div class="span6">
 			<div class="interact">
-				<%= link_to_audio("Listen now", segment, class: "inline") if segment.audio.present? %>
+				<%= link_to_audio("Listen now", segment, class: "inline") if segment.audio.available.present? %>
 				<%= comment_count_for segment, class: "inline" %>
 			</div>
 		</div>
