@@ -5,7 +5,7 @@ module AdminResource
     
     def initialize(class_name)
       @model = class_name
-      @list  = List.new
+      @list  = List::Base.new
     end
     
     #------------
