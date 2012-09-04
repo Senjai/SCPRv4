@@ -1,7 +1,12 @@
-require "spec_helper"
+require "admin_resource/spec_helper"
 
 describe AdminResource do
-  pending "These tests need to be completely rewritten"
+  describe "admin" do
+    it "is a person" do
+      person = Person.new
+      person.should be_a Person
+    end
+  end
 end
 
 __END__
@@ -13,7 +18,7 @@ __END__
     before :each do
       NewsStory.list_fields = nil
     end
-      
+    
     it "uses all of the model's columns if no list_fields are specified" do
       NewsStory.list_fields.map { |f| f[0] }.should eq NewsStory.column_names
     end

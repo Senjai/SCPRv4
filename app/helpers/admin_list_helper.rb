@@ -126,7 +126,7 @@ module AdminListHelper
   
   def audio_bootstrap_map
     {
-      nil => "label label-inverse",
+      nil                => "label",
       Audio::STATUS_WAIT => "label label-warning",
       Audio::STATUS_LIVE => "label label-success"
     }

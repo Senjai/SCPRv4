@@ -1,5 +1,5 @@
-require 'admin_resource/list'
-require 'admin_resource/list_column'
+require 'admin_resource/list/base'
+require 'admin_resource/list/column'
 
 require "admin_resource/title"
 
