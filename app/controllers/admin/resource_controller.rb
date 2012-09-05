@@ -20,6 +20,7 @@ class Admin::ResourceController < Admin::BaseController
   end
 
   def new
+    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::List::DEFAULTS[:excluded_fields]
     breadcrumb "New", nil
     @record = resource_class.new
     respond
