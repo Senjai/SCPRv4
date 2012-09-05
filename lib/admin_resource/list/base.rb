@@ -1,19 +1,13 @@
 module AdminResource
   module List
     class Base
-      DEFAULTS = {
-        order:            "id desc",
-        per_page:         25,
-        excluded_fields:  ["id", "created_at", "updated_at"]
-      }
-
       attr_accessor :order
       attr_reader :columns
       
       def initialize(attributes={})
         @columns      = []        
-        self.order    = attributes[:order]    || DEFAULTS[:order]
-        self.per_page = attributes[:per_page] || DEFAULTS[:per_page]
+        self.order    = attributes[:order]    || List::DEFAULTS[:order]
+        self.per_page = attributes[:per_page] || List::DEFAULTS[:per_page]
       end
 
       #---------------
@@ -51,7 +45,7 @@ module AdminResource
       def per_page
         # Need to check if defined, because we might want to
         # pass `nil` to limit (specifying no limit).
-        defined?(@per_page) ? @per_page : DEFAULTS[:per_page]
+        defined?(@per_page) ? @per_page : List::DEFAULTS[:per_page]
       end
     
       def per_page=(val)

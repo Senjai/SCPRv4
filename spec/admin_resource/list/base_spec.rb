@@ -24,7 +24,7 @@ describe AdminResource::List::Base do
     
     it "sets order to default if nothing passed in" do
       list = AdminResource::List::Base.new
-      list.order.should eq AdminResource::List::Base::DEFAULTS[:order]
+      list.order.should eq AdminResource::List::DEFAULTS[:order]
     end
     
     it "sets per_page to anything passed in" do
@@ -34,7 +34,7 @@ describe AdminResource::List::Base do
     
     it "sets per_page to default is nothing passed in" do
       list = AdminResource::List::Base.new
-      list.per_page.should eq AdminResource::List::Base::DEFAULTS[:per_page]
+      list.per_page.should eq AdminResource::List::DEFAULTS[:per_page]
     end
   end
 

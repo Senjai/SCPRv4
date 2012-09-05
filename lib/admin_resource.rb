@@ -1,3 +1,4 @@
+require 'admin_resource/list'
 require 'admin_resource/list/base'
 require 'admin_resource/list/column'
 
