@@ -71,7 +71,7 @@ module AdminListHelper
   end
   
   def display_status(status)
-    content_tag :span, ContentBase::STATUS_TEXT[status], class: status_bootstrap_map[status]
+    content_tag :div, ContentBase::STATUS_TEXT[status], class: status_bootstrap_map[status]
   end
   
   def display_bylines(bylines)
@@ -86,7 +86,7 @@ module AdminListHelper
   
   def display_audio(audio)
     return audio if !audio.is_a? Array
-    content_tag :span, Audio::STATUS_TEXT[audio.first.try(:status)], class: audio_bootstrap_map[audio.first.try(:status)]
+    content_tag :div, Audio::STATUS_TEXT[audio.first.try(:status)], class: audio_bootstrap_map[audio.first.try(:status)]
   end
   
   #-------------
@@ -115,20 +115,20 @@ module AdminListHelper
   
   def status_bootstrap_map
     {
-      ContentBase::STATUS_KILLED  => "label label-important",
-      ContentBase::STATUS_DRAFT   => "label",
-      ContentBase::STATUS_REWORK  => "label label-info",
-      ContentBase::STATUS_EDIT    => "label label-inverse",
-      ContentBase::STATUS_PENDING => "label label-warning",
-      ContentBase::STATUS_LIVE    => "label label-success"
+      ContentBase::STATUS_KILLED  => "list-status label label-important",
+      ContentBase::STATUS_DRAFT   => "list-status label",
+      ContentBase::STATUS_REWORK  => "list-status label label-info",
+      ContentBase::STATUS_EDIT    => "list-status label label-inverse",
+      ContentBase::STATUS_PENDING => "list-status label label-warning",
+      ContentBase::STATUS_LIVE    => "list-status label label-success"
     }
   end
   
   def audio_bootstrap_map
     {
-      nil                => "label",
-      Audio::STATUS_WAIT => "label label-warning",
-      Audio::STATUS_LIVE => "label label-success"
+      nil                => "list-status label",
+      Audio::STATUS_WAIT => "list-status label label-warning",
+      Audio::STATUS_LIVE => "list-status label label-success"
     }
   end
   
