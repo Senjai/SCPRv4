@@ -2,7 +2,7 @@ module CacheTasks
   class MostCommented < Task
     def run      
       content = self.fetch_most_commented
-      self.cache(content, "/shared/widgets/most_popular_commented", "widgets/popular_commented")
+      self.cache(content, "/shared/widgets/most_popular_commented", "widget/popular_commented")
     end
 
     #--------------
