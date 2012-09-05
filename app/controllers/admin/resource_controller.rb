@@ -1,5 +1,5 @@
 class Admin::ResourceController < Admin::BaseController
-  include AdminResource::Helpers
+  include AdminResource::Helpers::Controller
   
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
   before_filter :get_records, only: :index
@@ -12,15 +12,26 @@ class Admin::ResourceController < Admin::BaseController
   def index
     @list = resource_class.admin.list
     
+    # Temporary - This should be moved into AdminResource
+    if @list.columns.empty?
+      default_fields = resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields] - AdminResource::List::DEFAULTS[:excluded_columns]
+      default_fields.each do |field|
+        resource_class.admin.list.column field
+      end
+    end
+    
+    # Temporary - This should be moved into AdminResource
     if @list.linked_columns.empty?
       @list.columns.first.linked = true
     end
-    
+        
     respond_with :admin, @records
   end
 
   def new
-    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::List::DEFAULTS[:excluded_fields]
+    # Temporary - This should be moved into AdminResource
+    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields]
+
     breadcrumb "New", nil
     @record = resource_class.new
     respond
@@ -31,7 +42,9 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def edit
-    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::List::DEFAULTS[:excluded_fields]
+    # Temporary - This should be moved into AdminResource
+    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields]
+
     breadcrumb "Edit", nil
     respond
   end

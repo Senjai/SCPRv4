@@ -1,7 +1,14 @@
 class Person
   extend AdminResource::Administrate
+  include AdminResource::Helpers::Model
   
-  attr_accessor :name, :email, :location, :age
+  attr_accessor :id, :name, :email, :location, :age
+  
+  def initialize(attributes={})
+    attributes.each do |attrib, val|
+      send("#{attrib}=", val)
+    end
+  end
   
   administrate do |admin|
     admin.define_list do |list|

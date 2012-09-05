@@ -19,7 +19,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = true
   
   config.include FactoryGirl::Syntax::Methods
-  config.include AdminResource::Helpers
+  config.include AdminResource::Helpers::Controller
   
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
@@ -36,9 +36,5 @@ RSpec.configure do |config|
   
   config.after :each do
     DatabaseCleaner.clean
-  end
-  
-  config.after :suite do
-    #
   end
 end

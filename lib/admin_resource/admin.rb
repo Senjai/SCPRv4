@@ -1,5 +1,10 @@
 module AdminResource
   class Admin
+    
+    DEFAULTS = {
+      excluded_fields:  ["id", "created_at", "updated_at"]
+    }
+    
     attr_accessor :model
     attr_reader   :list
     

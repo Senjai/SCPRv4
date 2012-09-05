@@ -1,5 +1,28 @@
 require "admin_resource/spec_helper"
 
 describe AdminResource::Administrate do
-  pending
+  describe "administrate" do
+    it "yields the block with the Admin object" do
+      Person.administrate do |admin|
+        admin.should be_a AdminResource::Admin
+      end
+    end
+    
+    it "creates an Admin object for the model" do
+      Person.administrate
+      Person.admin.should be_a AdminResource::Admin
+    end    
+  end
+  
+  describe "admin" do
+    it "returns an Admin object" do
+      Person.admin.should be_a AdminResource::Admin
+    end
+    
+    it "uses @admin if it already exists" do
+      Person.admin
+      AdminResource::Admin.should_not_receive :new
+      Person.admin
+    end
+  end
 end

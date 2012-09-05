@@ -2,11 +2,11 @@ module AdminResource
   module List
     class Base
       attr_accessor :order
-      attr_reader :columns
+      attr_reader :columns, :per_page
       
       def initialize(attributes={})
-        @columns      = []        
-        self.order    = attributes[:order]    || List::DEFAULTS[:order]
+        @columns      = []
+        @order        = attributes[:order]    || List::DEFAULTS[:order]
         self.per_page = attributes[:per_page] || List::DEFAULTS[:per_page]
       end
 
@@ -33,29 +33,20 @@ module AdminResource
         self.columns.push column
         column
       end
-    
-      #---------------
-    
+      
+      # Return the columns in this list which are linked
+      # This is useful for determining if we need to inject a link into the list
       def linked_columns
         @linked_columns ||= self.columns.select { |c| c.linked? }
       end
     
       #---------------
-    
-      def per_page
-        # Need to check if defined, because we might want to
-        # pass `nil` to limit (specifying no limit).
-        defined?(@per_page) ? @per_page : List::DEFAULTS[:per_page]
-      end
-    
-      def per_page=(val)
-        if val == "all"
-          per_page = nil
-        else
-          per_page = val.to_i
-        end
       
-        @per_page = per_page
+      # per_page
+      # Return nil if per_page is set to "all"
+      # So that pagination will not paginate
+      def per_page=(val)
+        @per_page = val == "all" ? nil : val.to_i
       end
     end
   end
