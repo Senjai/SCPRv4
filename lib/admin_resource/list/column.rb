@@ -1,13 +1,14 @@
 module AdminResource
   module List
     class Column
-      attr_accessor :attribute, :linked, :helper, :position
+      attr_accessor :attribute, :linked, :helper, :position, :list
       attr_writer :header
     
-      def initialize(attribute, position, attributes={})
+      def initialize(attribute, list, attributes={})
         @attribute = attribute
-        @position  = position
-       
+        @list      = list
+        @position  = @list.columns.size
+
         @header    = attributes[:header]
         @helper    = attributes[:helper]
         @linked    = !!attributes[:linked] # force boolean

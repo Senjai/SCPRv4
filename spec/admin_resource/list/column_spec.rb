@@ -2,7 +2,8 @@ require "admin_resource/spec_helper"
 
 describe AdminResource::List::Column do
   describe "attributes" do
-    subject { AdminResource::List::Column.new("name", 0) }
+    let(:list) { AdminResource::List::Base.new }
+    subject { AdminResource::List::Column.new("name", list) }
     
     it { should respond_to :attribute }
     it { should respond_to :attribute= }
@@ -18,24 +19,34 @@ describe AdminResource::List::Column do
   #----------------
   
   describe "initialization" do
-    let(:column) { 
-      AdminResource::List::Column.new("name", 0, header: "Person", helper: :display_person, linked: true)
+    let(:list) {
+      AdminResource::List::Base.new
     }
+    
+    let(:column) {
+      AdminResource::List::Column.new("name", list, linked: true, helper: :display_full_name, header: "Full Name")
+    }
+    
+    before :each do
+      list.column "name"
+    end
     
     it "sets attribute" do
       column.attribute.should eq "name"
     end
-  
+    
     it "sets position" do
-      column.position.should eq 0
+      list.column "body"
+      list.columns[0].position.should eq 0
+      list.columns[1].position.should eq 1
     end
     
     it "sets header" do
-      column.header.should eq "Person"
+      column.header.should eq "Full Name"
     end
     
     it "sets helper" do
-      column.helper.should eq :display_person
+      column.helper.should eq :display_full_name
     end
     
     it "sets linked" do
@@ -47,7 +58,8 @@ describe AdminResource::List::Column do
   
   describe "linked?" do
     it "returns linked value" do
-      column = AdminResource::List::Column.new("name", 0, linked: true)
+      list   = AdminResource::List::Base.new
+      column = AdminResource::List::Column.new("name", list, linked: true)
       column.linked.should eq column.linked?
     end
   end
@@ -55,13 +67,15 @@ describe AdminResource::List::Column do
   #----------------
   
   describe "header" do
+    let(:list) { AdminResource::List::Base.new }
+    
     it "returns the header if passed in" do
-      column = AdminResource::List::Column.new("name", 0, header: "Person")
+      column = AdminResource::List::Column.new("name", list, header: "Person")
       column.header = "Person"
     end
     
     it "returns the titleized attribute if no header specified" do
-      column = AdminResource::List::Column.new("name", 0)
+      column = AdminResource::List::Column.new("name", list)
       column.header.should eq "Name"
     end
   end
