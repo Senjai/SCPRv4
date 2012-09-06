@@ -1,7 +1,7 @@
 # --------------
 # Variables
 set :branch, "master"
-set :rails_env, :scprdev
+set :rails_env, :staging
 
 
 # --------------
@@ -26,7 +26,7 @@ namespace :thinking_sphinx do
   namespace :staging do
     task :index do
       if ts_index
-        thinking_sphinx.index
+#        thinking_sphinx.index
       else
         logger.info "SKIPPING thinking_sphinx:index (ts_index false)"
       end
