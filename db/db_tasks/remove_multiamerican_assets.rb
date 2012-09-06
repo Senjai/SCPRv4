@@ -8,7 +8,7 @@ total_entries = blog_entries.size
 
 blog_entries.each_with_index do |blog_entry, bindex|
   bindex += 1
-  title = "BlogEntry ##{blog_entry.id}"
+  title  = "BlogEntry ##{blog_entry.id}"
   boutof = "[#{bindex}/#{total_entries}]"
   
   if deleted = blog_entry.assets.delete_all

@@ -2,20 +2,20 @@
 # asset into AssetHost, add it to the post's assets, remove the element 
 # from the post and save.
 
-ah = Rails.application.config.assethost
-url = URI.parse("http://#{ah.server}")
+ah         = Rails.application.config.assethost
+url        = URI.parse("http://#{ah.server}")
 connection = Net::HTTP.new(url.host, url.port)
 
-errors = []
+errors    = []
 successes = []
 
-blog_entries = BlogEntry.where('wp_id is not null').all
+blog_entries  = BlogEntry.where('wp_id is not null').all
 total_entries = blog_entries.size
 
 blog_entries.each_with_index do |blog_entry, bindex|
   bindex += 1
   boutof = "[#{bindex}/#{total_entries}]"
-  parsed_content = Nokogiri::HTML::DocumentFragment.parse(blog_entry.content)
+  parsed_content = Nokogiri::HTML::DocumentFragment.parse(blog_entry.body)
   
   # We only want to import assets from MultiAmerican::Posts
   # This loop will also include BlogEntries that were imported
@@ -41,7 +41,7 @@ blog_entries.each_with_index do |blog_entry, bindex|
     
       # Find this image from MultiAmerican::Attachment
       attachment_id = asset['data-wp-attachment-id']
-      attachment = MultiAmerican::Attachment.find.find { |a| a.id == attachment_id.to_i }
+      attachment    = MultiAmerican::Attachment.find.find { |a| a.id == attachment_id.to_i }
 
       # Setup attributes
       # Attachment URL
@@ -109,7 +109,7 @@ blog_entries.each_with_index do |blog_entry, bindex|
       if content_asset.save
         # Remove the asset block from the post
         asset.remove
-        blog_entry.content = parsed_content.to_html
+        blog_entry.body = parsed_content.to_html
         successes.push ["Saved", post.class.name, post.id]
         puts "#{boutof}#{aoutof} Saved #{asset_desc}"      
       else
@@ -139,5 +139,4 @@ blog_entries.each_with_index do |blog_entry, bindex|
 end
 
 puts "Finished with #{MultiAmerican.view.pluralize(errors.size, "error")} and #{MultiAmerican.view.pluralize(successes.size, "success")}."
-  
 puts "Errors: #{errors}"
