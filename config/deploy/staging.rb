@@ -28,7 +28,7 @@ namespace :thinking_sphinx do
       if ts_index
         thinking_sphinx.index
       else
-        logger.info "SKIPPING thinking_sphinx:index (ts_index==false)"
+        logger.info "SKIPPING thinking_sphinx:index (ts_index set to false)"
       end
     end
   end
@@ -39,7 +39,7 @@ namespace :dbsync do
     if dbsync
       run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} dbsync:pull"
     else
-      logger.info "SKIPPING dbsync (dbsync==false)"
+      logger.info "SKIPPING dbsync (dbsync set to false)"
     end
   end
 end

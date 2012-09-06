@@ -6,32 +6,43 @@ task :dbsync do
 end
 
 namespace :dbsync do
-  task :dump_file_config => :environment do
-    $stderr.puts "Environment: #{Rails.env}"
+  task :setup => :environment do
+    module Dbsync
+      LOGGER  = $stdout
+      CONFIG  = Rails.application.config.dbsync
+      
+      CONFIG['remote']  = "#{CONFIG['remote_host']}:" + File.join(CONFIG['remote_dir'], CONFIG['filename'])
+      CONFIG['local']   = File.join CONFIG['local_dir'], CONFIG['filename']
+    end
+    
+    # ---------------
+    
+    Dbsync::LOGGER.puts "Environment: #{Rails.env}"
     
     if Rails.env == 'production'
       raise "These tasks are destructive and shouldn't be used in the production environment."
     end
-    
-    DUMP  = Rails.application.config.dbsync
-    DB    = ActiveRecord::Base.configurations[Rails.env]
-    
-    DUMP['remote']  = "#{DUMP['remote_host']}:" + File.join(DUMP['remote_dir'], DUMP['filename'])
-    DUMP['local']   = File.join DUMP['local_dir'], DUMP['filename']
 
-    if DUMP['filename'].blank?
+    #-----------------
+    
+    if Dbsync::CONFIG['filename'].blank?
       raise "No dump filename specified."
-    elsif DUMP['remote'].blank?
+    elsif Dbsync::CONFIG['remote'].blank?
       raise "No remote dump file specified."
     end
+    
+    #-----------------
+    
+    VERBOSE = %w{1 true}.include? ENV['VERBOSE']
+    DB      = ActiveRecord::Base.configurations[Rails.env]
   end
   
   #-----------------------
   
   desc "Show the dbsync configuration"
-  task :config => :dump_file_config do
-    $stderr.puts "Config:"
-    $stderr.puts DUMP.to_yaml
+  task :config => :setup do
+    Dbsync::LOGGER.puts "Config:"
+    Dbsync::LOGGER.puts Dbsync::CONFIG.to_yaml
   end
     
   #-----------------------
@@ -45,32 +56,47 @@ namespace :dbsync do
   #-----------------------
   
   desc "Update the local dump file from the remote source"
-  task :fetch => :dump_file_config do
-    $stderr.puts "Fetching #{DUMP['remote']} using rsync"
-    `rsync -v #{DUMP['remote']} #{DUMP['local']}`
-    $stderr.puts "Finished."
+  task :fetch => :setup do
+    Dbsync::LOGGER.puts "Fetching #{Dbsync::CONFIG['remote']} using rsync"
+    output = %x{ rsync -v #{Dbsync::CONFIG['remote']} #{Dbsync::CONFIG['local']} }
+    
+    if VERBOSE
+      Dbsync::LOGGER.puts output
+    end
+    
+    Dbsync::LOGGER.puts "Finished."
   end
 
   #-----------------------
 
   desc "Copy the remote dump file to a local destination"
-  task :clone_dump => :dump_file_config do
-    $stderr.puts "Fetching #{DUMP['remote']} using scp"
-    `scp #{DUMP['remote']} #{DUMP['local_dir']}/`
-    $stderr.puts "Finished."
+  task :clone_dump => :setup do
+    Dbsync::LOGGER.puts "Fetching #{Dbsync::CONFIG['remote']} using scp"
+    output = %x{ scp #{Dbsync::CONFIG['remote']} #{Dbsync::CONFIG['local_dir']}/ }
+    
+    if VERBOSE
+      Dbsync::LOGGER.puts output
+    end
+    
+    Dbsync::LOGGER.puts "Finished."
   end
 
   #-----------------------
   
   desc "Merge the local dump file into the local database"
-  task :merge => :dump_file_config do
-    $stderr.puts "Dumping data from #{DUMP['local']} into #{DB['database']}"
-    `mysql \
-    #{("-u " + DB['username'])   if DB['username'].present?} \
+  task :merge => :setup do
+    Dbsync::LOGGER.puts "Dumping data from #{Dbsync::CONFIG['local']} into #{DB['database']}"
+    output = %x{ mysql \
+    #{("-u " + DB['username'])  if DB['username'].present?} \
     #{("-p " + DB['password'])  if DB['password'].present?} \
     #{("-h " + DB['host'])      if DB['host'].present?} \
-    #{DB['database']} < #{DUMP['local']}`
-    $stderr.puts "Finished."
+    #{DB['database']} < #{Dbsync::CONFIG['local']} }
+    
+    if VERBOSE
+      Dbsync::LOGGER.puts output
+    end
+    
+    Dbsync::LOGGER.puts "Finished."
   end
 
   #-----------------------
