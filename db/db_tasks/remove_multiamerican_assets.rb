@@ -12,7 +12,7 @@ blog_entries.each_with_index do |blog_entry, bindex|
   boutof = "[#{bindex}/#{total_entries}]"
   
   if deleted = blog_entry.assets.delete_all
-    msg ="Deleted #{WP.view.pluralize(deleted.size, "assets")} for #{title} (#{deleted.map(&:id).join(", ")})"
+    msg ="Deleted #{MultiAmerican.view.pluralize(deleted.size, "assets")} for #{title} (#{deleted.map(&:id).join(", ")})"
   else
     msg = "Couldn't delete assets for #{title}"
   end

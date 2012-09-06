@@ -7,8 +7,6 @@ module AdminResource
     def administrate
       self.admin = Admin.new(self)
       yield admin if block_given?
-    end
-    
-    ::ActiveRecord::Base.send :extend, self
+    end    
   end
 end

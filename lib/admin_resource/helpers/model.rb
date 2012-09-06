@@ -29,9 +29,7 @@ module AdminResource
       def to_title
         title_method = TITLE_ATTRIBUTES.find { |a| self.respond_to?(a) }
         title_method ? self.send(title_method) : "#{self.class.name.titleize} ##{self.id}"
-      end
-      
-      ::ActiveRecord::Base.send :include, self
+      end      
     end
   end
 end

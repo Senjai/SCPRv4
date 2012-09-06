@@ -10,8 +10,6 @@ class Admin::HomeController < Admin::BaseController
         
     @extra_links = [
       { title: "Multi-American Import", path: admin_multi_american_path, info: "Landing page for managing the Multi-American import" }
-    ]
-    
-    @extra_links = []
+    ]    
   end
 end

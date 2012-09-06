@@ -6,10 +6,10 @@
 		<li>
 			Totals:
 			<ul>
-				<% WP::RESOURCES.each do |resource| %>
+				<% MultiAmerican.resources.each do |resource| %>
 					<li>
 						<b><%= resource.titleize %></b>: 
-						<%= ["WP", resource.singularize.camelize].join("::").constantize.total %>
+						<%= ["MultiAmerican", resource.singularize.camelize].join("::").constantize.total %>
 					</li>
 				<% end %>
 			</ul>
@@ -22,7 +22,7 @@
 <div class="row-fluid">
 	<div class="span3">
 		<ul class="nav nav-tabs nav-stacked">
-			<% WP::RESOURCES.each do |resource| %>
+			<% MultiAmerican.resources.each do |resource| %>
 				<li>
 					<%= link_to resource.titleize, 
 						admin_index_multi_american_resource_path(resource) %>
