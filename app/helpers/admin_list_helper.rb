@@ -23,7 +23,7 @@ module AdminListHelper
       
       # If it's an AR model and the attribute is an AssociationReflection,
       # we can use display_association
-      if record.respond_to?(:reflect_on_association) and record.class.reflect_on_association(column.attribute.to_sym)
+      if record.class.respond_to?(:reflect_on_association) and record.class.reflect_on_association(column.attribute.to_sym)
         display_helper = "display_association"
       end
       
