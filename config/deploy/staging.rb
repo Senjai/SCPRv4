@@ -26,9 +26,9 @@ namespace :thinking_sphinx do
   namespace :staging do
     task :index do
       if ts_index
-#        thinking_sphinx.index
+        thinking_sphinx.index
       else
-        logger.info "SKIPPING thinking_sphinx:index (ts_index false)"
+        logger.info "SKIPPING thinking_sphinx:index (ts_index==false)"
       end
     end
   end
@@ -37,9 +37,9 @@ end
 namespace :dbsync do
   task :pull do
     if dbsync
-      "*** dbsync not yet implemented"
+      run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} dbsync:pull"
     else
-      logger.info "SKIPPING dbsync (dbsync false)"
+      logger.info "SKIPPING dbsync (dbsync==false)"
     end
   end
 end

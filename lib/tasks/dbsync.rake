@@ -7,6 +7,8 @@ end
 
 namespace :dbsync do
   task :dump_file_config => :environment do
+    $stderr.puts "Environment: #{Rails.env}"
+    
     if Rails.env == 'production'
       raise "These tasks are destructive and shouldn't be used in the production environment."
     end
@@ -28,7 +30,7 @@ namespace :dbsync do
   
   desc "Show the dbsync configuration"
   task :config => :dump_file_config do
-    $stderr.puts "Config: "
+    $stderr.puts "Config:"
     $stderr.puts DUMP.to_yaml
   end
     
@@ -64,9 +66,9 @@ namespace :dbsync do
   task :merge => :dump_file_config do
     $stderr.puts "Dumping data from #{DUMP['local']} into #{DB['database']}"
     `mysql \
-    #{"-u "+ DB['username'] if DB['username'].present?} \
-    #{"-p " + DB['password'] if DB['password'].present?} \
-    #{"-h " + DB['host'] if DB['host'].present?} \
+    #{("-u " + DB['username'])   if DB['username'].present?} \
+    #{("-p " + DB['password'])  if DB['password'].present?} \
+    #{("-h " + DB['host'])      if DB['host'].present?} \
     #{DB['database']} < #{DUMP['local']}`
     $stderr.puts "Finished."
   end
