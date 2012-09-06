@@ -86,11 +86,14 @@ namespace :dbsync do
   desc "Merge the local dump file into the local database"
   task :merge => :setup do
     Dbsync::LOGGER.puts "Dumping data from #{Dbsync::CONFIG['local']} into #{DB['database']}"
-    output = %x{ mysql \
-    #{("-u " + DB['username'])  if DB['username'].present?} \
-    #{("-p " + DB['password'])  if DB['password'].present?} \
-    #{("-h " + DB['host'])      if DB['host'].present?} \
-    #{DB['database']} < #{Dbsync::CONFIG['local']} }
+
+    command =  "mysql "
+    command += "-u #{DB['username']} " if DB['username'].present?
+    command += "-p#{DB['password']} "  if DB['password'].present?
+    command += "-h #{DB['host']} "     if DB['host'].present?
+    command += "#{DB['database']} < #{Dbsync::CONFIG['local']}"
+    
+    output = %x{#{command}}
     
     if VERBOSE
       Dbsync::LOGGER.puts output
