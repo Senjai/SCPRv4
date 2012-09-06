@@ -4,4 +4,4 @@ end # ActsAsContent
 
 require "acts_as_content/base"
 
-ActiveRecord::Base.extend ActsAsContent::Base
+ActiveRecord::Base.send :extend, ActsAsContent::Base

@@ -105,175 +105,32 @@ module ActsAsContent
       end
 
       # Check for nil if you want to use the passed-in boolean as the actual value
-      include InstanceMethods::HasFormat        if !list[:has_format].nil?
-      include InstanceMethods::StatusHelpers    if list[:has_status]
-      include InstanceMethods::AutoPublishedAt  if !list[:auto_published_at].nil?
-      include InstanceMethods::Headline         if !list[:headline].nil?  and list[:headline].to_sym  != :headline
-      include InstanceMethods::Body             if !list[:body].nil?      and list[:body].to_sym      != :body
-
-      include InstanceMethods::ObjKey           if list[:obj_key]
-      include InstanceMethods::LinkPath         if list[:link_path]
-      include InstanceMethods::Comments         if list[:comments]    
-      include InstanceMethods::ShortHeadline    if list[:short_headline]
-      include InstanceMethods::Teaser           if list[:teaser]
+      include Methods::HasFormat        if !list[:has_format].nil?
+      include Methods::StatusHelpers    if list[:has_status]
+      include Methods::AutoPublishedAt  if !list[:auto_published_at].nil?
+      include Methods::Headline         if !list[:headline].nil?  and list[:headline].to_sym  != :headline
+      include Methods::Body             if !list[:body].nil?      and list[:body].to_sym      != :body
+              
+      include Methods::ObjKey           if list[:obj_key]
+      include Methods::LinkPath         if list[:link_path]
+      include Methods::Comments         if list[:comments]    
+      include Methods::ShortHeadline    if list[:short_headline]
+      include Methods::Teaser           if list[:teaser]
     end
 
     #----------
-
-
-
-    #------------------
-
-    module InstanceMethods
-
-      module HasFormat
-        def has_format?
-          self.class.acts_as_content_options[:has_format]
-        end
-      end
-
-      module StatusHelpers
-        def killed?
-          self.status == ContentBase::STATUS_KILLED
-        end
-
-        def draft?
-          self.status == ContentBase::STATUS_DRAFT
-        end
-
-        def awaiting_rework?
-          self.status == ContentBase::STATUS_REWORK
-        end
-
-        def awaiting_edits?
-          self.status == ContentBase::STATUS_EDIT
-        end
-
-        def pending?
-          self.status == ContentBase::STATUS_PENDING
-        end
-
-        def published?
-          self.status == ContentBase::STATUS_LIVE
-        end
-      end
-
-      #----------
-
-      module AutoPublishedAt
-        def auto_published_at
-          self.class.acts_as_content_options[:auto_published_at]
-        end
-      end
-
-      #----------
-
-      module PublishedAt
-        def published_at_is_valid_date
-          # Chronic#parse returns nil if it can't parse the date.
-          # Time#parse raises an error
-          Rails.logger.info self.published_at
-          unless self.Chronic.parse(self.published_at)
-            errors.add(:published_at, "has an invalid format. Format should be: '01/25/2012 05:30pm'")
-          end
-        end
-      end
-
-      #----------
-
-      module Headline
-        def headline
-          self.send(self.class.acts_as_content_options[:headline])
-        end
-      end
-
-      #----------
-
-      module Body
-        def body
-          self.send(self.class.acts_as_content_options[:body])
-        end
-      end
-
-      #----------
-
-      module ObjKey
-        def obj_key
-          if !self.class.const_defined?(:CONTENT_TYPE)
-            raise "obj_key needs CONTENT_TYPE. Missing from #{self.class.name}."
-          else
-            [self.class::CONTENT_TYPE,self.id].join(":")
-          end
-        end
-      end
-
-      #----------
-
-      module LinkPath
-        def self.included(base)
-          if !base.instance_methods.include? :link_path
-            # FIXMEL this gets run before the class is fully loaded so it fails.
-            # raise "link_path not defined for #{base.name}."
-          end
-        end
-
-        def remote_link_path
-          "http://www.scpr.org#{self.link_path}"
-        end
-      end
-
-      #----------
-
-      module Comments
-        def disqus_identifier
-          if !self.respond_to? :obj_key
-            raise "disqus_identifer needs obj_key. Missing from #{self.class.name}."
-          end
-
-          self.obj_key
-        end
-
-        def disqus_shortname
-          API_KEYS["disqus"]["shortname"]
-        end
-      end
-
-      #----------
-
-      module ShortHeadline
-        def short_headline
-          if !self.respond_to? :headline
-            raise "short_headline needs headline. Missing from #{self.class.name}."
-          end
-
-          if self[:short_headline].present?
-            self[:short_headline]
-          else
-            self.headline
-          end
-        end
-      end
-
-      #----------
-
-      module Teaser
-
-        def teaser
-          if !self.respond_to? :body
-            raise "teaser needs body. Missing from #{self.class.name}."
-          end
-
-          # If teaser column is present, use it
-          # Otherwise try to generate the teaser from the body
-          if self[:teaser].present?
-            self[:teaser]
-          else
-            ActsAsContent::Generators::Teaser.generate_teaser(self.body)
-          end
-        end # teaser
-      end # Teaser
-    end # InstanceMethods
   end
 end
 
 require "acts_as_content/generators"
+require 'acts_as_content/methods/has_format'
+require 'acts_as_content/methods/comments'
+require 'acts_as_content/methods/status_helpers'
+require 'acts_as_content/methods/auto_published_at'
+require 'acts_as_content/methods/published_at'
+require 'acts_as_content/methods/body'
+require 'acts_as_content/methods/headline'
+require 'acts_as_content/methods/teaser'
+require 'acts_as_content/methods/short_headline'
+require 'acts_as_content/methods/link_path'
+require 'acts_as_content/methods/obj_key'
