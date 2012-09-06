@@ -82,6 +82,15 @@ describe Audio do
   end
 
   #----------------
+
+  describe "path_elements" do
+    it "splits the stored path into an array by a delimiter" do
+      audio = build :audio, :live, mp3: "audio/something/cool_story_bro.mp3"
+      audio.path_elements.should eq ["audio", "something", "cool_story_bro.mp3"]
+    end
+  end
+  
+  #----------------
   
   describe "url" do
     it "returns the full URL to the mp3 if it's available" do
@@ -100,7 +109,12 @@ describe Audio do
   describe "podcast_url" do
     it "returns the full podcast URL to the mp3 if it's available" do
       audio = build :audio, :live
-      audio.podcast_url.should eq "#{Audio::PODCAST_ROOT}/#{audio.mp3}"
+      audio.podcast_url.should eq "#{Audio::PODCAST_ROOT}/#{audio.mp3.gsub(/audio\//, "")}"
+    end
+    
+    it "does not match the audio/ path" do
+      audio = build :audio, :live, mp3: "audio/slug/cool-story-bro.mp3"
+      audio.podcast_url.should_not match "audio/"
     end
     
     it "returns nil if mp3 is blank" do
