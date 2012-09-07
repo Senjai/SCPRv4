@@ -172,7 +172,8 @@ class Asset::Fallback < Asset
       "tags"       => Fallback.json[:tags],
       "urls"       => Fallback.json[:urls],
       "url"        => Fallback.json[:urls]['full'], 
-      "created_at" => Time.now
+      "created_at" => Time.now,
+      "native"     => { "video_id" => "0" }
     }
     
     super(json)
