@@ -50,7 +50,7 @@
 
 // Temporary implementation of Multi-American logo while it's a Remote Blog
 .thumbnail {
-	.multi-american a {
+	.multiamerican a {
 		background:url(image_path("blogs/multiamerican_sm.png")) no-repeat 0 0;
 		@include ie-inline-block();
 		width:160px;
@@ -91,7 +91,7 @@
 				@include hide-text();
 				vertical-align:bottom;
 			}
-			&.multi-american, &.multi-american a {
+			&.multiamerican, &.multiamerican a {
 				background:url(image_path("blogs/multiamerican_sm.png")) no-repeat 0 0;
 				@include ie-inline-block();
 				width:112px;
@@ -153,7 +153,7 @@
 					@include hide-text();
 				}
 			}
-			&.multi-american {
+			&.multiamerican {
 				a {
 					background:url(image_path("blogs/multiamerican_lg.png")) no-repeat 0 0;
 					@include ie-inline-block();

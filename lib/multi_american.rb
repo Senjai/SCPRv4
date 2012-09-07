@@ -8,7 +8,7 @@ require "open-uri"
 # These are from Mercer
 module MultiAmerican
   BLOG_ID   = 22
-  BLOG_SLUG = 'multi-american'
+  BLOG_SLUG = 'multiamerican'
   AUTHOR_ID = 71 # Leslie's Bio ID, use by default
   
   def self.cache_namespace
