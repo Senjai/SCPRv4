@@ -62,48 +62,6 @@
 				text-decoration: none;
 			}
 		}
-		.blog-header {
-			&.politics {
-				background:url(image_path("blogs/represent_sm.png")) no-repeat 0 0;
-				@include ie-inline-block();
-				width:112px;
-				height:30px;
-				@include hide-text();
-				vertical-align:bottom;
-			}
-			&.education {
-				background:url(image_path("blogs/passfail_sm.png")) no-repeat 0 0;
-				@include ie-inline-block();
-				width:112px;
-				height:30px;
-				@include hide-text();
-				vertical-align:bottom;
-			}
-			&.multiamerican, &.multiamerican a {
-				background:url(image_path("blogs/multiamerican_sm.png")) no-repeat 0 0;
-				@include ie-inline-block();
-				width:160px;
-				height:20px;
-				@include hide-text();
-				vertical-align:bottom;
-			}
-			&.newmedia {
-				background:url(image_path("blogs/withoutanet_sm.png")) no-repeat 0 0;
-				@include ie-inline-block();
-				width:140px;
-				height:21px;
-				@include hide-text();
-				vertical-align:bottom;
-			}
-			&.news {
-				background:url(image_path("blogs/latest_sm.png")) no-repeat 0 0;
-				@include ie-inline-block();
-				width:120px;
-				height:30px;
-				@include hide-text();
-				vertical-align:bottom;
-			}
-		}		
 	}
 	
 	.content {
@@ -111,6 +69,84 @@
 		padding: 10px;
 		h3.story-headline { line-height: inherit; }
 		.offlead { border-bottom: none; }
+	}
+}
+
+.blog-logo {
+	@include ie-inline-block();
+	
+	a {
+		display: block;
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		vertical-align:bottom;
+	}
+	
+	&.small {
+		&.politics a {
+			@include hide-text();
+			background-image:url(image_path("blogs/represent_sm.png"));
+			width:112px;
+			height:30px;
+		}
+		&.education a {
+			@include hide-text();
+			background-image:url(image_path("blogs/passfail_sm.png"));
+			width:112px;
+			height:30px;
+		}
+		&.multiamerican a {
+			@include hide-text();
+			background-image:url(image_path("blogs/multiamerican_sm.png"));
+			width:160px;
+			height:20px;
+		}
+		&.newmedia a {
+			@include hide-text();
+			background-image:url(image_path("blogs/withoutanet_sm.png"));
+			width:140px;
+			height:21px;
+		}
+		&.news a {
+			@include hide-text();
+			background-image:url(image_path("blogs/latest_sm.png"));
+			width:120px;
+			height:30px;
+		}
+	}
+	
+	&.large {
+		&.politics a {
+			@include hide-text();
+			background-image:url(image_path("blogs/represent_lg.png"));
+			background-position: -4px 0;
+			width:160px;
+			height:42px;
+		}
+		&.education a {
+			@include hide-text();
+			background-image:url(image_path("blogs/passfail_lg.png"));
+			width:160px;
+			height:46px;
+		}
+		&.multiamerican a {
+			@include hide-text();
+			background-image:url(image_path("blogs/multiamerican_lg.png"));
+			width:210px;
+			height:30px;
+		}
+		&.newmedia a {
+			@include hide-text();
+			background-image:url(image_path("blogs/withoutanet_lg.png"));
+			width:187px;
+			height:32px;
+		}
+		&.news a {
+			@include hide-text();
+			background-image:url(image_path("blogs/latest_lg.png"));
+			width:160px;
+			height:46px;
+		}
 	}
 }
 
@@ -123,50 +159,8 @@
 		@include font-shorthand(200, 28px, 30px);
 		@include ie-inline-block();
 		&.blog-header {
-			&.politics {
-				a {
-					background:url(image_path("blogs/represent_lg.png")) no-repeat -4px 0;
-					@include ie-inline-block();
-					width:160px;
-					height:42px;
-					@include hide-text();
-				}
-			}
-			&.education {
-				a {
-					background:url(image_path("blogs/passfail_lg.png")) no-repeat 0 0;
-					@include ie-inline-block();
-					width:160px;
-					height:46px;
-					@include hide-text();
-				}
-			}
-			&.multiamerican {
-				a {
-					background:url(image_path("blogs/multiamerican_lg.png")) no-repeat 0 0;
-					@include ie-inline-block();
-					width:210px;
-					height:30px;
-					@include hide-text();
-				}
-			}
-			&.newmedia {
-				a {
-					background:url(image_path("blogs/withoutanet_lg.png")) no-repeat 0 0;
-					@include ie-inline-block();
-					width:187px;
-					height:32px;
-					@include hide-text();
-				}
-			}
-			&.news {
-				a {
-					background:url(image_path("blogs/latest_lg.png")) no-repeat 0 0;
-					@include ie-inline-block();
-					width:160px;
-					height:46px;
-					@include hide-text();
-				}
+			.extra {
+				@include ie-inline-block();
 			}
 		}
 	}
