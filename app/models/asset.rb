@@ -45,7 +45,7 @@ class Asset
         json = resp.body
         
         # write this asset into cache
-        # Rails.cache.write(key,json)
+        Rails.cache.write(key,json)
         
         # now create an asset and return it
         return self.new(json)
