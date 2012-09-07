@@ -58,21 +58,21 @@ class BlogEntry < ContentBase
     []
   end
   
-#  def disqus_identifier
-#    if dsq_thread_id.present? && wp_id.present?
-#      "#{wp_id} http://multiamerican.scpr.org/?p=#{wp_id}"
-#    else
-#      super
-#    end
-#  end
-#  
-#  def disqus_shortname
-#    if dsq_thread_id.present? && wp_id.present?
-#      'scprmultiamerican'
-#    else
-#      super
-#    end
-#  end
+  def disqus_identifier
+    if dsq_thread_id.present? && wp_id.present?
+      "#{wp_id} http://multiamerican.scpr.org/?p=#{wp_id}"
+    else
+      super
+    end
+  end
+  
+  def disqus_shortname
+    if dsq_thread_id.present? && wp_id.present?
+      'scprmultiamerican'
+    else
+      super
+    end
+  end
     
   def previous
     self.class.published.first(conditions: ["published_at < ? and blog_id = ?", self.published_at, self.blog_id], limit: 1, order: "published_at desc")
