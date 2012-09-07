@@ -101,29 +101,16 @@ class BlogEntry < ContentBase
   end
   
   #----------
-  
-  def remote_link_path
-    if self.wp_id.present?
-      self.link_path
-    else
-      super
-    end
-  end
-  
+
   def link_path(options={})
-    # Temporary workaround for MA until we flip the switch
-    if self.wp_id.present?
-      "http://multiamerican.scpr.org/#{self.published_at.year}/#{"%02d" % self.published_at.month}/#{self.slug}"
-    else
-      Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
-        blog:           self.blog.slug,
-        year:           self.published_at.year, 
-        month:          "%02d" % self.published_at.month,
-        day:            "%02d" % self.published_at.day,
-        id:             self.id,
-        slug:           self.slug,
-        trailing_slash: true
-      }))
-    end
+    Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
+      blog:           self.blog.slug,
+      year:           self.published_at.year, 
+      month:          "%02d" % self.published_at.month,
+      day:            "%02d" % self.published_at.day,
+      id:             self.id,
+      slug:           self.slug,
+      trailing_slash: true
+    }))
   end
 end

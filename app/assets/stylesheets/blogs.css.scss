@@ -48,18 +48,6 @@
 	}
 }
 
-// Temporary implementation of Multi-American logo while it's a Remote Blog
-.thumbnail {
-	.multiamerican a {
-		background:url(image_path("blogs/multiamerican_sm.png")) no-repeat 0 0;
-		@include ie-inline-block();
-		width:160px;
-		height:30px;
-		@include hide-text();
-		vertical-align:bottom;
-	}
-} 
-
 .blog-widget {
 	h3.header {
 		background: $grayLighter;
@@ -94,8 +82,8 @@
 			&.multiamerican, &.multiamerican a {
 				background:url(image_path("blogs/multiamerican_sm.png")) no-repeat 0 0;
 				@include ie-inline-block();
-				width:112px;
-				height:30px;
+				width:160px;
+				height:20px;
 				@include hide-text();
 				vertical-align:bottom;
 			}
@@ -157,8 +145,8 @@
 				a {
 					background:url(image_path("blogs/multiamerican_lg.png")) no-repeat 0 0;
 					@include ie-inline-block();
-					width:160px;
-					height:42px;
+					width:210px;
+					height:30px;
 					@include hide-text();
 				}
 			}
