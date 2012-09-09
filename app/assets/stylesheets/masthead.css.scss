@@ -482,33 +482,19 @@ $navHeight: 36px;
 		}
 	}
 	
-	#programs-mega .section {
-		&.programs {
+	#programs-mega {
+		.section {			
+			min-height:($baseline * 9);
+		}
+		.program {
 			a { 
-				display: block;
 				background-repeat: no-repeat;
-				background-position: 0 12px;
-				padding: 10px 0 0 78px;
-				min-height: 80px;
-				&:first-child { 
-					border-bottom: 1px solid $grayLighter;
-				}
-				h4 {
-					color:$orangeDark;
-					@include font-sans-serif($weight: 600, $size: 15px);
-				}
-				p {
-					@include font-sans-serif(normal, 11px, 16px);
-					color: $black;
-					margin-bottom:0;
-				}
-				&:hover {
-					background-color: $nearWhite;
-					text-decoration: none;
-				}
+				background-position: 0 10px;
+				display: block;
+				margin:0 -30px 0 0;
+				padding-top:69px;
 				&.brand-martinez {
 					background-image:url(image_path('broadcast-bar/brand-martinez-sm.png'));
-					padding-left:128px;
 				}
 				&.airtalk {
 					background-image:url(image_path('broadcast-bar/larry-airtalk-sm.png'));
@@ -518,6 +504,22 @@ $navHeight: 36px;
 				}
 				&.offramp {
 					background-image:url(image_path('broadcast-bar/john-offramp-sm.png'));
+				}
+				h4 {
+					border-top:1px solid $grayLighter;
+					color:$orangeDark;
+					@include font-sans-serif($weight: 600, $size: 18px);
+					margin-bottom:6px;
+					padding-top:6px;
+				}
+				p {
+					@include font-heading(normal, 13px, 18px);
+					color: $gray;
+					margin-bottom:0;
+				}
+				&:hover {
+					background-color: $nearWhite;
+					text-decoration: none;
 				}
 			}
 		}

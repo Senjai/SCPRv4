@@ -76,6 +76,17 @@
 		}
 	// end Pledge Banner to Button
 	
+	// Adjust Featured Programs in Megamenu 
+	.megamenu {
+		#programs-mega {
+			.program {
+				a {
+					margin-right:-20px;
+				}
+			}
+		}
+	}
+	
 	// Modals
 	  .modal.wide {
 	    position: absolute;

@@ -11,7 +11,6 @@ Scenario: See the featured programs on the index page
 		| slug				| title						|
 		| brand-martinez	| Brand & Martinez			|
 		| airtalk			| Airtalk					|
-		| patt-morrison		| Patt Morrison				|
 		| offramp			| Off-Ramp					|
 		
 	When I go to the programs page
