@@ -381,7 +381,7 @@ describe BlogsController do
   describe "GET /legacy_path" do
     it "redirects if blog entry is found" do
       entry = create :blog_entry
-      date = entry.published_at
+      date  = entry.published_at
       get :legacy_path, blog: entry.blog.slug, 
                         year: date.year.to_s, 
                         month: "%02d" % date.month, 
@@ -397,13 +397,24 @@ describe BlogsController do
     
     it "only responds to published entries" do
       entry = create :blog_entry, status: ContentBase::STATUS_PENDING
-      date = entry.published_at
+      date  = entry.published_at
       -> {
         get :legacy_path, blog: entry.blog.slug, 
                           year: date.year.to_s, 
                           month: "%02d" % date.month, 
                           slug: entry.slug
       }.should raise_error ActionController::RoutingError
+    end
+    
+    it "truncates the slug if it's more than 50 characters" do
+      slug  = "this-is-a-really-long-slug-that-we-will-have-to-truncate-otherwise-its-just-riduculous"
+      entry = create :blog_entry, slug: slug[0,50]
+      date  = entry.published_at
+      get :legacy_path, blog: entry.blog.slug,
+                        year: date.year.to_s, 
+                        month: "%02d" % date.month, 
+                        slug: slug
+      controller.should redirect_to entry.link_path
     end
   end
 end
