@@ -1,15 +1,15 @@
 <% content_for :opengraph do %>
 	<% @META_DESCRIPT = h content.teaser %>
 	<% @META_AUTHOR = h(render_byline(content,false)) %>
-	<meta property="og:description" content="<%= j content.teaser %>">
-    <meta property="og:title" content="<%= j content.headline %>">
-    <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
+	<meta property="og:description" content="<%= content.teaser.gsub(/\"/, "'") %>">
+	<meta property="og:title" content="<%= content.headline.gsub(/\"/, "'") %>">
+	<meta property="og:type" content="<%= @OG_TYPE || "article" %>">
 	<meta property="og:url" content="<%= content.remote_link_path %>"/>
 	<meta name="twitter:card" value="summary">
 	<meta name="twitter:site" value="@kpcc">
 	<meta name="twitter:url" value="<%= content.remote_link_path %>">
-	<meta name="twitter:title" value="<%= j content.headline %>">
-	<meta name="twitter:description" value="<%= j content.teaser %>">
+	<meta name="twitter:title" value="<%= content.headline.gsub(/\"/, "'") %>">
+	<meta name="twitter:description" value="<%= content.teaser.gsub(/\"/, "'") %>">
 	
 	<% if content.is_a?(VideoShell) %>
 	  	<meta property="og:video:width" content="300" />
@@ -22,7 +22,7 @@
 		<meta name="twitter:player:height" value="200">
 	<% end %>
 	
-	<% if content.assets.any? %>
+	<% if content.assets.present? %>
 		<meta property="og:image" content="<%= content.assets.first.asset.lead.url %>" />
 		<link rel="image_src" href="<%= content.assets.first.asset.lead.url %>" />
 		<meta name="twitter:image" value="<%= content.assets.first.asset.lead.url %>">
