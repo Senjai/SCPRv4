@@ -38,7 +38,7 @@ class Asset
       # missed... request it from the server
       resp = @@conn.get("#{@@prefix}/assets/#{id}")
 
-      if [400, 404, 500].include? resp.status
+      if [400, 404, 500, 502].include? resp.status
         Asset::Fallback.log(resp.status, id)
         return Asset::Fallback.new
       else
