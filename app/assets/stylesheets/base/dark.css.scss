@@ -112,7 +112,9 @@
 			input::-webkit-input-placeholder {color: darken($gray, 10%);}
 		}
 	}
-	
+	.megamenu .section {
+		border-color: $grayDark;
+	}
 	.megamenu .mega-bucket .section-mega {
 		background-color:darken($nearBlack, 3%);
 		$mega-shadow:0 5px 6px $black;
@@ -125,12 +127,13 @@
 		.section, 
 		ul.content-types li, 
 		#about-mega #about-hero,
-		&#programs-mega .section.programs a:first-child { border-color: $grayDark; }
-		
-		&#programs-mega .section.programs a {
-			&:hover { background-color: $nearBlack; }
+		&#programs-mega .program a {
+			h4 {
+				border-color:$grayDark;
+			}
 			p { color: $gray; }
 		}
+		
 		
 		&#support-mega .section .pledge a { color: $white; }
 	}

@@ -12,7 +12,6 @@ class KpccProgram < ActiveRecord::Base
     'madeleine-brand',
     'brand-martinez',
     'airtalk',
-    'patt-morrison',
     'offramp'
   ]
   
