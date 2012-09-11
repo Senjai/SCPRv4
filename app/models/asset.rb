@@ -38,14 +38,14 @@ class Asset
       # missed... request it from the server
       resp = @@conn.get("#{@@prefix}/assets/#{id}")
 
-      if [400, 404, 500].include? resp.status
+      if [400, 404, 500, 502].include? resp.status
         Asset::Fallback.log(resp.status, id)
         return Asset::Fallback.new
       else
         json = resp.body
         
         # write this asset into cache
-        # Rails.cache.write(key,json)
+        Rails.cache.write(key,json)
         
         # now create an asset and return it
         return self.new(json)
@@ -172,7 +172,8 @@ class Asset::Fallback < Asset
       "tags"       => Fallback.json[:tags],
       "urls"       => Fallback.json[:urls],
       "url"        => Fallback.json[:urls]['full'], 
-      "created_at" => Time.now
+      "created_at" => Time.now,
+      "native"     => { "video_id" => "0" }
     }
     
     super(json)

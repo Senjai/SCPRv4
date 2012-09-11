@@ -58,12 +58,44 @@ describe AdminResource::List::Base do
   #--------------
 
   describe "column" do
-    pending
+    let(:list)    { AdminResource::List::Base.new }
+
+    before :each do
+      column = AdminResource::List::Column.new("name", list, {})
+      AdminResource::List::Column.should_receive(:new).with("name", list, {}).and_return(column)
+    end
+    
+    it "creates a new column object" do
+      list.column("name")
+    end
+    
+    it "adds that column to the list" do
+      column = list.column("name")
+      list.columns.should eq [column]
+    end
+    
+    it "returns the column" do
+      column = list.column("name")
+      column.should be_a AdminResource::List::Column
+    end
   end
   
   #--------------
   
-  describe "per_page" do
-    pending
+  describe "per_page=" do
+    it "sets @per_page to nil if val is 'all'" do
+      list = AdminResource::List::Base.new(per_page: "all")
+      list.per_page.should be_nil
+    end
+    
+    it "sets @per_page to default if none specified" do
+      list = AdminResource::List::Base.new
+      list.per_page.should eq AdminResource::List::DEFAULTS[:per_page]
+    end
+    
+    it "sets @per_page to passed-in value as an integer if specified" do
+      list = AdminResource::List::Base.new(per_page: "99")
+      list.per_page.should eq 99
+    end
   end
 end

@@ -1,4 +1,4 @@
-module WP
+module MultiAmerican
   class ResqueJob
     @queue = Rails.application.config.scpr.resque_queue
   
@@ -26,18 +26,18 @@ module WP
       #------------------------
       
       def finished_cache_key
-        [WP.cache_namespace, "finished_queue"].join(":")
+        [MultiAmerican.cache_namespace, "finished_queue"].join(":")
       end
       
       def after_perform(resource_class, document_path, action, id, username)
         log "Performed #{action} for #{@queue}, sending to #{username}"
-        WP.rcache.set finished_cache_key, "1"
+        MultiAmerican.rcache.set finished_cache_key, "1"
         NodePusher.publish("finished_queue", username, { job: action, wp_id: id, resource_class: resource_class, errors: @errors.to_i, successes: @successes.to_i } )
       end
 
       def perform(resource_class, document_path, action, id, username)
         if (@objects = resource_class.constantize.cached).empty?
-          doc = WP::Document.new(document_path)
+          doc = MultiAmerican::Document.new(document_path)
           @objects = resource_class.constantize.find(doc)
         end
       

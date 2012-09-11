@@ -3,7 +3,7 @@ require "spec_helper"
 # Until this is using its own testing data and models,
 # NewsStory is being used to unit test ActsAsContent
 
-describe ActsAsContent::InstanceMethods::HasFormat do
+describe ActsAsContent::Methods::HasFormat do
   let(:content) { create :news_story }
   
   describe "has_format?" do
@@ -28,7 +28,7 @@ describe ActsAsContent::InstanceMethods::HasFormat do
   end
 end
 
-describe ActsAsContent::InstanceMethods::StatusHelpers do
+describe ActsAsContent::Methods::StatusHelpers do
   let(:content) { create :news_story }
   
   context "with has_status set to false" do
@@ -60,7 +60,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::AutoPublishedAt do
+describe ActsAsContent::Methods::AutoPublishedAt do
   let(:content) { create :news_story }
   
   after :each do
@@ -87,7 +87,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::Headline do
+describe ActsAsContent::Methods::Headline do
   let(:content) { create :news_story }
   
   after :each do
@@ -109,7 +109,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::Body do
+describe ActsAsContent::Methods::Body do
   let(:content) { create :news_story }
   
   after :each do
@@ -131,7 +131,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::ObjKey do  
+describe ActsAsContent::Methods::ObjKey do  
   describe "obj_key" do
     let(:content) { create :news_story }
     it "returns the CONTENT_TYPE and id joined" do
@@ -148,7 +148,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::LinkPath do
+describe ActsAsContent::Methods::LinkPath do
   describe "remote_link_path" do
     let(:content) { create :news_story }
     it "returns a link to scpr.org" do
@@ -163,7 +163,7 @@ end
     
 #--------------
 
-describe ActsAsContent::InstanceMethods::Comments do
+describe ActsAsContent::Methods::Comments do
   let(:content) { create :news_story }
   
   describe "disqus_identifier" do
@@ -187,7 +187,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::ShortHeadline do
+describe ActsAsContent::Methods::ShortHeadline do
   let(:content) { create :news_story }
   
   describe "short_headline" do
@@ -204,7 +204,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::Teaser do  
+describe ActsAsContent::Methods::Teaser do  
   describe "teaser" do
     it "returns teaser if defined" do
       content = build :news_story, teaser: "This is a short teaser"

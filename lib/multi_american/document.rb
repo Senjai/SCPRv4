@@ -1,9 +1,9 @@
-module WP
+module MultiAmerican
   class Document
     
     class << self
       def cache_key
-        [WP.cache_namespace, self.cache_namespace].join(":")
+        [MultiAmerican.cache_namespace, self.cache_namespace].join(":")
       end
       
       def cache_namespace
@@ -13,7 +13,7 @@ module WP
       attr_writer :cached
       def cached
         Rails.logger.info("*** Getting document...")
-        @cached ||= YAML.load(WP.rcache.get(self.cache_key).to_s)
+        @cached ||= YAML.load(MultiAmerican.rcache.get(self.cache_key).to_s)
       end
     end
     
@@ -26,18 +26,18 @@ module WP
       @pubDate = doc.at_xpath("/rss/channel/pubDate").content
       
       # Eager-load all classes
-      WP::RESOURCES.each do |resource|
-        instance_variable_set("@#{resource}", ["WP", resource.to_s.singularize.camelize].join("::").constantize.find(doc))
+      MultiAmerican.resources.each do |resource|
+        instance_variable_set("@#{resource}", ["MultiAmerican", resource.to_s.singularize.camelize].join("::").constantize.find(doc))
       end
       
       # Write to cache
-      WP.rcache.set self.class.cache_key, self.to_yaml
+      MultiAmerican.rcache.set self.class.cache_key, self.to_yaml
     end
 
     def method_missing(method, *args, &block)
-      if WP::RESOURCES.include? method.to_s
+      if MultiAmerican.resources.include? method.to_s
         Rails.logger.info("*** Getting #{method}")
-        instance_variable_get("@#{method}") || ["WP", method.to_s.singularize.camelize].join("::").constantize.find
+        instance_variable_get("@#{method}") || ["MultiAmerican", method.to_s.singularize.camelize].join("::").constantize.find
       else
         super
       end

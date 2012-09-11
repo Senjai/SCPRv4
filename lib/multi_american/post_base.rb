@@ -1,33 +1,23 @@
-module WP
+module MultiAmerican
   class PostBase < Node    
     SCPR_CLASS = "BlogEntry"
     CONTENT_TYPE_ID = 44 # BlogEntry (in mercer)
     
     DEFAULTS = {
-      blog_id: MultiAmerican::BLOG_ID,
-      blog_slug: MultiAmerican::BLOG_SLUG,
-      blog_asset_scheme: "",
+      blog_id:            MultiAmerican::BLOG_ID,
+      blog_slug:          MultiAmerican::BLOG_SLUG,
+      blog_asset_scheme:  "",
     }
     
     XML_AR_MAP = {
       id:                 :wp_id,
       post_name:          :slug,
-      title:              :title,
-      content:            :content,
+      title:              :headline,
+      content:            :body,
       pubDate:            :published_at,
       status:             :status,
       excerpt:            :teaser
     }
-    
-    administrate  
-    self.list_fields = [
-      ['id', title: "WP-ID"],
-      ['post_type'],
-      ['title', link: true, display_helper: :display_or_fallback],
-      ['post_name', title: "Slug"],
-      ['pubDate'],
-      ['status']
-    ]
 
     # -------------------
     # Class
@@ -85,20 +75,20 @@ module WP
       
       # Create a byline
       byline = ContentByline.new(
-        content: object, 
-        user_id: author_id,
-        name: ""
+        content:  object, 
+        user_id:  author_id,
+        name:     ""
       )
     
-      object_builder[:bylines] = [byline]      
+      object_builder[:bylines] = [byline]
       
 
       # -------------------
       # Merge in Tags and Categories
       associations = [
-        { name: :tags, class_name: "WP::Tag", 
+        { name: :tags, class_name: "MultiAmerican::Tag", 
           records: self.categories.select { |c| c[:domain] == "post_tag" } },
-        { name: :blog_categories, class_name: "WP::Category", 
+        { name: :blog_categories, class_name: "MultiAmerican::Category", 
           records: self.categories.select { |c| c[:domain] == "category" } }
       ]
 
@@ -110,7 +100,7 @@ module WP
           # Tags and categories should all be in the cache
           # at this point.
           # xml_object should return a real object from cache.
-          # eg., WP::Tag or WP::Category
+          # eg., MultiAmerican::Tag or MultiAmerican::Category
           xml_object = assoc[:class_name].constantize.find.find do |real_obj| 
             real_obj.send(assoc[:class_name].constantize.raw_real_map.first[1]) == 
               stored_object[assoc[:class_name].constantize.raw_real_map.first[0]]
@@ -135,7 +125,7 @@ module WP
         object.dsq_thread_id = dsq_meta[:meta_value]
       end
       
-      object_builder[:content] = self.style_rules!
+      object_builder[:body] = self.style_rules!
             
       return [object, object_builder]
     end
@@ -178,7 +168,7 @@ module WP
         end
         
         self.content.gsub!(regex,
-          WP.view.render("/admin/multi_american/attachment", 
+          MultiAmerican.view.render("/admin/multi_american/attachment", 
             properties: style_properties, content: content).to_s
           )
       end
@@ -230,12 +220,12 @@ module WP
           end
           
           # Render the entire asset block into the div
-          div.inner_html = WP.view.render("/admin/multi_american/asset",
+          div.inner_html = MultiAmerican.view.render("/admin/multi_american/asset",
             style: style, image: image.to_html, id: div['id'].split("_")[1],
             credit: credit.try(:to_html), caption: caption.try(:to_html),
             cssClass: cssClass).to_s
             
-          # Finally, get rid of the main div from WP by replacing it with its own children
+          # Finally, get rid of the main div from MultiAmerican by replacing it with its own children
           div.swap(div.children)
         end
       end
@@ -255,7 +245,7 @@ module WP
       
       # Get the ar_record for this post and parse its content,
       # then return an array of the entry's fake assets
-      pc = parsed_content || Nokogiri::HTML::DocumentFragment.parse(self.ar_record.content)
+      pc = parsed_content || Nokogiri::HTML::DocumentFragment.parse(self.ar_record.body)
       @fake_assets = pc.xpath("./div[@data-wp-attachment-id]")
     end
     

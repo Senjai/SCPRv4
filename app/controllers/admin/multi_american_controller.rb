@@ -37,10 +37,10 @@ class Admin::MultiAmericanController < Admin::BaseController
   def set_doc
     # Clear the cache
     @@rcache.keys("wp:*").each { |k| @@rcache.del k }
-    WP::Document.cached = nil
+    MultiAmerican::Document.cached = nil
     
     # Set a new document
-    self.document = WP::Document.new(params[:document_path].strip)
+    self.document = MultiAmerican::Document.new(params[:document_path].strip)
 
     # Set the known url to avoid a warning
     self.known_url = self.document.url
@@ -54,7 +54,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     breadcrumb resource_name.titleize, send("admin_index_multi_american_resource_path", resource_name)
     
     # Queue the job
-    Resque.enqueue(WP::ResqueJob, resource_class.name, document.url, "import", params[:id], admin_user.username)
+    Resque.enqueue(MultiAmerican::ResqueJob, resource_class.name, document.url, "import", params[:id], admin_user.username)
     render 'working'
   end
   
@@ -64,7 +64,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     breadcrumb resource_name.titleize, send("admin_index_multi_american_resource_path", resource_name)
     
     # Queue the job
-    Resque.enqueue(WP::ResqueJob, resource_class.name, document.url, "remove", params[:id], admin_user.username)
+    Resque.enqueue(MultiAmerican::ResqueJob, resource_class.name, document.url, "remove", params[:id], admin_user.username)
     render 'working'
   end
 
@@ -98,19 +98,19 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     # Set flash messages with results parsed from query string
     def set_result_flash_messages
-      if @@rcache.get WP::ResqueJob.finished_cache_key
+      if @@rcache.get MultiAmerican::ResqueJob.finished_cache_key
         if params[:errors].to_i > 0
           flash.now[:alert] = "<b>Alert!</b> There #{params[:errors] == "1" ? "was" : "were"} \
-          <b>#{WP.view.pluralize(params[:errors], 'error')}</b> during the #{params[:job]} process."
+          <b>#{MultiAmerican.view.pluralize(params[:errors], 'error')}</b> during the #{params[:job]} process."
         end
       
         if params[:successes].to_i > 0
           flash.now[:notice] = "<b>Success!</b> #{params[:job].capitalize} job succeeded for \
-          #{WP.view.pluralize(params[:successes], resource_name.singularize)}"
+          #{MultiAmerican.view.pluralize(params[:successes], resource_name.singularize)}"
         end
         
         # Set the stat to 0 so we don't get messages again
-        @@rcache.del WP::ResqueJob.finished_cache_key
+        @@rcache.del MultiAmerican::ResqueJob.finished_cache_key
       end
     end
     
@@ -122,18 +122,18 @@ class Admin::MultiAmericanController < Admin::BaseController
         items = items.select { |i| i.imported? == (params[:filter] == "imported" ? true : false) }
       end
       
-      items.sort_by { |p| p.sorter }.reverse.paginate(page: params[:page], per_page: resource_class.list_per_page)
+      items.sort_by { |p| p.sorter }.reverse.paginate(page: params[:page], per_page: resource_class.admin.list.per_page)
     end
     
     
     # ---------------
-    # Make sure the class is one of the WP module, or raise error
+    # Make sure the class is one of the MultiAmerican module, or raise error
     def verify_resource
-      if WP::RESOURCES.include? params[:resource_name]
-        self.resource_name = params[:resource_name]
-        self.resource_class = ["WP", resource_name.camelize.demodulize.singularize].join("::").constantize
+      if MultiAmerican.resources.include? params[:resource_name]
+        self.resource_name  = params[:resource_name]
+        self.resource_class = ["MultiAmerican", resource_name.camelize.demodulize.singularize].join("::").constantize
       else
-        raise "Invalid Resource" and return false
+        raise "Invalid Resource: #{MultiAmerican.resources}" and return false
       end
     end
     
@@ -145,11 +145,11 @@ class Admin::MultiAmericanController < Admin::BaseController
     # ---------------
     # Accessor for known_url
     def known_url
-      @@rcache.get([WP::Document.cache_key, "known_url"].join(":"))
+      @@rcache.get([MultiAmerican::Document.cache_key, "known_url"].join(":"))
     end
     
     def known_url=(url)
-      @@rcache.set([WP::Document.cache_key, "known_url"].join(":"), url)
+      @@rcache.set([MultiAmerican::Document.cache_key, "known_url"].join(":"), url)
     end
 
 
@@ -158,8 +158,8 @@ class Admin::MultiAmericanController < Admin::BaseController
     def load_doc
       # If the document cache is blank,
       # Initialize a new document
-      if !(self.document = WP::Document.cached)
-        self.document = WP::Document.new(DUMP_FILE)
+      if !(self.document = MultiAmerican::Document.cached)
+        self.document = MultiAmerican::Document.new(DUMP_FILE)
       end      
     end
 
@@ -174,7 +174,7 @@ class Admin::MultiAmericanController < Admin::BaseController
     def load_object
       cached = YAML.load(@@rcache.get([resource_class.cache_key, params[:id]].join(":")).to_s)
       if !cached
-        raise ActionController::RoutingError.new("Not Found")
+        raise ActionController::RoutingError .new("Not Found")
       end
       return cached
     end

@@ -1,4 +1,4 @@
-module WP
+module MultiAmerican
   module Builder
     class << self
       def included(base)

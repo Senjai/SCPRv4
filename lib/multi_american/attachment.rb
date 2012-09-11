@@ -1,9 +1,18 @@
-module WP
+module MultiAmerican
   class Attachment < Node
     XPATH = "//item/wp:post_type[text()='attachment']/.."
-    administrate
-    self.list_fields = PostBase.list_fields
 
+    administrate do |admin|
+      admin.define_list do |list|
+        list.column "id",         header: "WP-ID"
+        list.column "post_type"
+        list.column "title",      linked: true,   helper: :display_or_fallback
+        list.column "post_name",  header: "Slug"
+        list.column "pubDate"
+        list.column "status"
+      end
+    end
+    
     class << self
       def invalid_child(node)
         (Builder.is_postmeta(node) and 

@@ -33,10 +33,11 @@ class BlogsController < ApplicationController
   # Map old paths from "other blogs"
   def legacy_path
     date = Date.new(params[:year].to_i, params[:month].to_i)
+    slug = params[:slug][0,50]
     blog_entry = BlogEntry.published
       .where(
         "published_at > ? and published_at < ? and slug = ?", 
-        date, date + 1.month, params[:slug]
+        date, date + 1.month, slug
       ).first
 
     if blog_entry.present?

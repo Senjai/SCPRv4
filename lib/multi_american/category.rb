@@ -1,4 +1,4 @@
-module WP
+module MultiAmerican
   class Category < Node
     XPATH = "/rss/channel/wp:category"
     SCPR_CLASS = "BlogCategory"
@@ -28,12 +28,13 @@ module WP
       end
     end
     
-    administrate
-    self.list_fields = [
-      ['id', title: "Term ID"],
-      ['cat_name', link: true, title: "Name"],
-      ['category_nicename', title: "Slug"]
-    ]
+    administrate do |admin|
+      admin.define_list do |list|
+        list.column "id",                 header: "Term ID"
+        list.column "cat_name",           header: "Name",   linked: true
+        list.column "category_nicename",  header: "Slug"
+      end
+    end
     
     # -------------------
     # Instance

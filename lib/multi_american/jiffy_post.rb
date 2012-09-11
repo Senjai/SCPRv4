@@ -1,7 +1,17 @@
-module WP
+module MultiAmerican
   class JiffyPost < PostBase
     XPATH = "//item/wp:post_type[text()='jiffypost']/.."      
-    self.list_fields = PostBase.list_fields
+
+    administrate do |admin|
+      admin.define_list do |list|
+        list.column "id",         header: "WP-ID"
+        list.column "post_type"
+        list.column "title",      linked: true,   helper: :display_or_fallback
+        list.column "post_name",  header: "Slug"
+        list.column "pubDate"
+        list.column "status"
+      end
+    end
     
     def style_rules!
       # Format jiffy posts a little better
@@ -37,7 +47,7 @@ module WP
       parsed_content.css('p').each do |p|
         # Now simple_format the content
         dup = p.inner_html.dup
-        p.inner_html = WP.view.simple_format(dup)
+        p.inner_html = MultiAmerican.view.simple_format(dup)
         
         # Now remove/replace the characters that shouldn't be there...
 #        dup = p.inner_html.dup

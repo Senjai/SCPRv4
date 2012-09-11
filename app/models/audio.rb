@@ -3,7 +3,7 @@ class Audio < ActiveRecord::Base
   self.primary_key = "id"
   
   AUDIO_ROOT   = "http://media.scpr.org"
-  PODCAST_ROOT = "http://media.scpr.org/podcasts/"
+  PODCAST_ROOT = "http://media.scpr.org/podcasts"
   
   STATUS_NONE = nil
   STATUS_WAIT = 1
@@ -28,6 +28,12 @@ class Audio < ActiveRecord::Base
 
   #------------
   
+  def path_elements
+    self.mp3.split "/"
+  end
+
+  #------------
+  
   def url
     if mp3.present?
       "#{AUDIO_ROOT}/#{self.mp3}"
@@ -40,7 +46,8 @@ class Audio < ActiveRecord::Base
   
   def podcast_url
     if mp3.present?
-      "#{PODCAST_ROOT}/#{self.mp3}"
+      # This assumes that the audio will start with `audio/`
+      "#{PODCAST_ROOT}/#{self.path_elements.drop(1).join("/")}"
     else
       nil
     end

@@ -1,7 +1,7 @@
-module WP
+module MultiAmerican
   class Node
-    extend AdminResource
-    include WP::Builder
+    extend AdminResource::Administrate
+    include MultiAmerican::Builder
     
     DEFAULTS = {}
     
@@ -13,7 +13,7 @@ module WP
       # -------------------
       # Class cache key
       def cache_key
-        [WP.cache_namespace, WP::Document.cache_namespace, self.cache_namespace].join(":")
+        [MultiAmerican.cache_namespace, MultiAmerican::Document.cache_namespace, self.cache_namespace].join(":")
       end
       
       def cache_namespace
@@ -22,8 +22,8 @@ module WP
       
       attr_writer :cached
       def cached
-        @cached ||= WP.rcache.smembers(self.cache_key).map do |c|
-          YAML.load(WP.rcache.get c) 
+        @cached ||= MultiAmerican.rcache.smembers(self.cache_key).map do |c|
+          YAML.load(MultiAmerican.rcache.get c) 
         end
       end
       
@@ -84,11 +84,11 @@ module WP
       end
       
       def total
-        WP.rcache.get([self.cache_key, "total"].join(":"))
+        MultiAmerican.rcache.get([self.cache_key, "total"].join(":"))
       end
       
       def total=(val)
-        WP.rcache.set([self.cache_key, "total"].join(":"), val)
+        MultiAmerican.rcache.set([self.cache_key, "total"].join(":"), val)
       end
         
     end
@@ -111,8 +111,8 @@ module WP
       self.send(:remove_instance_variable, :@builder)
       
       # Write to cache & Add to set
-      WP.rcache.sadd self.class.cache_key, self.cache_key
-      WP.rcache.set self.cache_key, self.to_yaml
+      MultiAmerican.rcache.sadd self.class.cache_key, self.cache_key
+      MultiAmerican.rcache.set self.cache_key, self.to_yaml
     end
     
     
@@ -152,6 +152,9 @@ module WP
       
       # Setup any extra stuff that needs to be setup
       object, object_builder = build_extra_attributes(object, object_builder)
+      
+      Rails.logger.info object_builder.to_yaml
+      Rails.logger.info object
       
       object.attributes = object_builder
             

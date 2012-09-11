@@ -1,4 +1,4 @@
-module WP
+module MultiAmerican
   class Tag < Node
     XPATH = "/rss/channel/wp:tag"
     
@@ -14,13 +14,15 @@ module WP
       title:    :tag_name
     }
         
-    administrate 
-    self.list_fields = [
-      ['id', title: "Term ID"],
-      ['tag_slug', link: true, title: "Name"],
-      ['tag_name']
-    ]
-    self.list_per_page = 50
+    administrate do |admin|
+      admin.define_list do |list|
+        list.per_page = 50
+        
+        list.column "id",       header: "Term ID"
+        list.column "tag_slug", header: "Name",   linked: true
+        list.column "tag_name"
+      end
+    end
 
     class << self
       def raw_real_map
