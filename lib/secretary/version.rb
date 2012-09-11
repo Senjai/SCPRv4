@@ -18,7 +18,7 @@ module Secretary
     
     #---------------
 
-    before_save :increment_version_number, on: :update
+    before_create :increment_version_number
     
     #---------------
     
@@ -35,13 +35,10 @@ module Secretary
     #---------------
     
     def self.generate(object)
-      latest_version = object.versions.last
-      description    = generate_description(object)
-            
       self.create(
         versioned:    object,
         user_id:      object.logged_user_id,
-        description:  description,
+        description:  generate_description(object),
         object_yaml:  object.dirty.to_yaml)
     end
     
