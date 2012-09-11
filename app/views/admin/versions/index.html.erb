@@ -1,0 +1,25 @@
+<% page_title "History" %>
+<table class="table table-striped">
+	<%= any_to_list? @versions, title: "Versions" do %>
+		<thead>
+			<tr>
+				<% @list.columns.each do |column| %>
+					<th><%= column.header %></th>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody class="list">
+			<% @versions.each do |version| %>
+				<tr class="versions">
+					<% @list.columns.each do |column| %>
+						<td>
+							<%= render_attribute column, version, path: admin_version_path(version.versioned.class.name.tableize, version.versioned.id, version.version_number) %>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+	<% end %>
+</table>
+
+<%= will_paginate @versions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

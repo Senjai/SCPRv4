@@ -9,7 +9,6 @@ class KpccProgram < ActiveRecord::Base
   }
   
   Featured = [
-    'madeleine-brand',
     'brand-martinez',
     'airtalk',
     'patt-morrison',

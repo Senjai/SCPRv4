@@ -31,7 +31,7 @@ class Asset
   def self.find(id)
     key = "asset/asset-#{id}"
     
-    if a = Rails.cache.read(key)      
+    if a = Rails.cache.read(key)
       # cache hit -- instantiate from the cached json
       return self.new(a)
     else

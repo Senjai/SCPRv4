@@ -18,14 +18,12 @@ RSpec.configure do |config|
   config.use_transactional_fixtures                 = false
   config.infer_base_class_for_anonymous_controllers = true
   
-  config.include FactoryGirl::Syntax::Methods
-  config.include AdminResource::Helpers
+  config.include AdminResource::Helpers::Controller
   
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
     load "#{Rails.root}/db/seeds.rb"
     DatabaseCleaner.strategy = :transaction
-    FactoryGirl.reload
   end
   
   config.before :each do

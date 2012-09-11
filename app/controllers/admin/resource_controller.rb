@@ -7,6 +7,8 @@ class Admin::ResourceController < Admin::BaseController
   
   respond_to :html
   
+  helper_method :resource_class, :resource_title, :resource_param, :resource_url
+  
   # -- Basic CRUD -- #
   
   def index
@@ -43,6 +45,7 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def update
+    params[resource_param].merge!(logged_user_id: admin_user.id)
     flash[:notice] = "Saved #{resource_title}" if @record.update_attributes(params[resource_param])
     respond
   end
@@ -57,17 +60,12 @@ class Admin::ResourceController < Admin::BaseController
   # -- Fetch Records -- #
   
   def get_record
-    begin
-      @record = resource_class.find(params[:id])
-    rescue
-      raise ActionController::RoutingError.new("Not Found")
-    end
+    @record = resource_class.find_by_id!(params[:id])
   end
   
   def get_records
     @records = resource_class.order(resource_class.admin.list.order).paginate(page: params[:page], per_page: resource_class.admin.list.per_page)
   end
-  
   
   
   # -- Response -- #
@@ -100,34 +98,11 @@ class Admin::ResourceController < Admin::BaseController
       url_helpers.send("admin_#{class_str.pluralize}_path")
     end
   end
-  
-  
-  
-  # -- Resource Class helpers -- #
-  
-  helper_method :resource_class, :resource_title, :resource_param, :resource_path_helper
-  
-  def resource_class
-    @resource_class ||= to_class(params[:controller])
-  end
-  
-  def resource_title
-    @resource_title ||= to_title(params[:controller])
-  end
 
-  def resource_param
-    @resource_param ||= singular_resource(params[:controller]).to_sym
-  end
-  
-  def resource_path_helper
-    @resource_url_helper ||= url_for([:admin, resource_class])
-  end
-  
-  
-  
+
   # -- Breadcrumbs -- #
   
   def extend_breadcrumbs_with_resource_root
-    breadcrumb resource_title.pluralize, resource_path_helper
+    breadcrumb resource_title.pluralize, resource_url
   end
 end
