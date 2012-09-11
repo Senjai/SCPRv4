@@ -44,12 +44,6 @@ module Secretary
         description:  description,
         object_yaml:  object.dirty.to_yaml)
     end
-
-    #---------------
-
-    def self.compare(version_a, version_b)
-      Diffy::Diff.new(version_a, version_b)
-    end
     
     #---------------
     
