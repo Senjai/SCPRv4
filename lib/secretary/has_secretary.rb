@@ -1,20 +1,14 @@
 module Secretary
   module HasSecretary
-    def self.included(base)
-      base.send :extend, ClassMethods
-    end
+    def has_secretary(options={})
+      has_many :versions, class_name: "Secretary::Version", as: :versioned, dependent: :destroy
+      attr_accessor :logged_user_id
+      attr_reader :dirty
     
-    module ClassMethods
-      def has_secretary(options={})
-        has_many :versions, class_name: "Secretary::Version", as: :versioned, dependent: :destroy
-        attr_accessor :logged_user_id
-        attr_reader :dirty
-      
-        before_update :store_object
-        after_update  :generate_version
-            
-        send :include, InstanceMethods
-      end
+      before_update :store_object
+      after_update  :generate_version
+          
+      send :include, InstanceMethods
     end
     
     module InstanceMethods
