@@ -60,7 +60,7 @@ module Secretary
     #---------------
     
     def title
-      "Version #{version_num}"
+      "Version #{version_number}"
     end
     
     #---------------
