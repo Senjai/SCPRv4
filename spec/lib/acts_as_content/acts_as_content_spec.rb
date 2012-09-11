@@ -235,7 +235,7 @@ describe ActsAsContent::Generators::Teaser do
     end
     
     it "creates teaser from long paragraph if not defined" do
-      long_body = load_response_fixture_file("long_text.txt")
+      long_body = load_fixture("long_text.txt")
       long_body.should match /\n/
       teaser = ActsAsContent::Generators::Teaser.generate_teaser(long_body)
       teaser.should match /^Lorem ipsum (.+)\.{3,}$/

@@ -26,7 +26,6 @@ Scenario Outline: View a Featured Program's page
 		| slug				| title						|
 		| brand-martinez	| Brand & Martinez			|
 		| airtalk			| Airtalk					|
-		| patt-morrison		| Patt Morrison				|
 		| offramp			| Off-Ramp					|
 		
 Scenario: View a KPCC Program's page
