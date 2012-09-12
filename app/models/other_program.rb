@@ -1,5 +1,6 @@
 class OtherProgram < ActiveRecord::Base
   self.table_name =  'programs_otherprogram'  
+  has_secretary
 
   # -------------------
   # Administration

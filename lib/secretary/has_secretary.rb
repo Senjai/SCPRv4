@@ -1,24 +1,39 @@
 module Secretary
   module HasSecretary
+    # has_secretary
+    # Apply to any class that should be versioned
+    #
     def has_secretary(options={})
       has_many :versions, class_name: "Secretary::Version", as: :versioned, dependent: :destroy
-      attr_accessor :logged_user_id
-      attr_reader :dirty
-    
-      before_update :store_object
-      after_update  :generate_version
-          
+      attr_accessor :logged_user_id, :action
+
+      before_create :set_create
+      before_update :set_update
+      after_save    :generate_version, :clean_action
+      
       send :include, InstanceMethods
     end
     
     module InstanceMethods
-      def store_object
-        @dirty = self.class.find(self.id)
-      end
-      
       def generate_version
         Version.generate(self)
-      end      
+      end
+      
+      #-----------
+      
+      def set_create
+        self.action = :create
+      end
+      
+      def set_update
+        self.action = :update
+      end
+      
+      #-----------
+      
+      def clean_action
+        @action = nil
+      end
     end
   end  
 end

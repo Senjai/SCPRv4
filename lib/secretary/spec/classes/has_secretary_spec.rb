@@ -1,40 +1,43 @@
-require "spec_helper"
+require File.expand_path("../../spec_helper", __FILE__)
 
 describe Secretary::HasSecretary do
   describe "has_secretary" do
+    before :each do
+      user = User.create(name: "Bryan")
+      Secretary::Test::Story.any_instance.stub(:logged_user_id).and_return(user.id)
+    end
+    
     let(:new_story)   { Secretary::Test::Story.new(headline: "Cool Story, Bro", body: "Some cool text.") }
-    let(:other_story) { Secretary::Test::Story.create(headline: "Cool Story, Bro", body: "Some cool text.") }
+    let(:other_story) { Secretary::Test::Story.create(headline: "Cooler Story, Bro", body: "Some cooler text.") }
     
     it "adds the has_many association for versions" do
       new_story.should have_many(:versions).dependent(:destroy).class_name("Secretary::Version")
     end
     
-    it "has logged_user" do
+    it "has logged_user_id" do
       new_story.should respond_to :logged_user_id
     end
     
-    it "does not generate a version on create" do
+    it "generates a version on create" do
       new_story.save!
-      Secretary::Version.count.should eq 0
+      Secretary::Version.count.should eq 1
+      new_story.versions.count.should eq 1
     end
     
     it "generates a version when a record is saved on update" do
       other_story.update_attributes(headline: "Some Cool Headline?!")
-      Secretary::Version.count.should eq 1
-      other_story.versions.size.should eq 1
+      Secretary::Version.count.should eq 2
+      other_story.versions.size.should eq 2
     end
     
-    it "stores the pre-change version of the object in @dirty" do
-      pre_change = Secretary::Test::Story.find(other_story.id)
+    it "saves the version that just got saved" do
       other_story.headline = "Other cool headline"
       other_story.save!
-      dirty = other_story.instance_variable_get(:@dirty)
-      pre_change.headline.should_not eq other_story.headline
-      dirty.headline.should eq pre_change.headline
+      other_story.versions.last.frozen_object.should eq other_story
     end
     
     it "sends to Version.generate on update" do
-      Secretary::Version.should_receive(:generate).with(other_story)
+      Secretary::Version.should_receive(:generate).twice.with(other_story)
       other_story.update_attributes(headline: "Some Cool Headline?!")
     end    
   end

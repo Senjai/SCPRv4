@@ -1,14 +1,5 @@
 module Secretary
-  class Version < ActiveRecord::Base
-    administrate do |admin|
-      admin.define_list do |list|
-        list.column "user"
-        list.column "description"
-        list.column "versioned", header: "Object", linked: true
-        list.column "version_number"
-      end
-    end
-    
+  class Version < ActiveRecord::Base    
     belongs_to  :versioned, polymorphic: true
     belongs_to  :user, class_name: Secretary::Config.user_class
     
@@ -24,46 +15,56 @@ module Secretary
     
     def increment_version_number
       latest_version = versioned.versions.last
-      
-      if latest_version.present?
-        self.version_number = latest_version.version_number + 1
-      else
-        self.version_number = 1
-      end
+      self.version_number = latest_version.try(:version_number).to_i + 1
     end
     
     #---------------
-    
+    # Builds a new version for the passed-in object
+    # Passed-in object is a dirty object (not yet saved)
+    # Version will be saved when the object is saved
     def self.generate(object)
-      self.create(
-        versioned:    object,
+      object.versions.create(
         user_id:      object.logged_user_id,
         description:  generate_description(object),
-        object_yaml:  object.dirty.to_yaml)
+        object_yaml:  object.to_yaml
+      )
     end
     
     #---------------
     
     def self.generate_description(object)
-      "Changed #{object.changed_attributes.keys.join(", ")}"
+      case object.action
+        when :create
+          "Created #{object.simple_title}"
+        when :update
+          "Changed #{object.changed_attributes.keys.join(", ")}"
+        end
+      #
     end
     
     #---------------
-    
+
     def title
-      "v#{version_number}"
+      "#{frozen_object.simple_title} v#{version_number}"
+    end
+
+    #---------------
+    # Find other versions for this object
+    # Do not include this version
+    def siblings
+      @siblings ||= versioned.versions.order("version_number desc").where("version_number != ?", self.version_number)
     end
     
     #---------------
 
-    def object
-      @object ||= YAML.load(self.object_yaml)
+    def frozen_object
+      @frozen_object ||= YAML.load(self.object_yaml)
     end
-
-    #---------------
     
-    def revert
-      
+    #---------------
+    # Look for the closest version below the current one
+    def previous_version      
+      @previous_version ||= self.siblings.where("version_number < ?", self.version_number).first
     end
   end
 end

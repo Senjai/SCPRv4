@@ -1,4 +1,6 @@
 <% page_title "History" %>
+<%= render 'header', page_title: @PAGE_TITLE, object: @object %>
+
 <table class="table table-striped">
 	<%= any_to_list? @versions, title: "Versions" do %>
 		<thead>

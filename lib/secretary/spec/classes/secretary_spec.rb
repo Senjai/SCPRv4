@@ -1,4 +1,4 @@
-require Rails.root.join("lib/secretary/spec/spec_helper")
+require File.expand_path("../../spec_helper", __FILE__)
 
 describe Secretary do
   it "is alive" do

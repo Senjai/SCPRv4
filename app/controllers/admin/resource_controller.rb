@@ -4,6 +4,7 @@ class Admin::ResourceController < Admin::BaseController
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
   before_filter :get_records, only: :index
   before_filter :extend_breadcrumbs_with_resource_root
+  before_filter :add_user_id_to_params, only: [:create, :update, :destroy]
   
   respond_to :html
   
@@ -69,8 +70,8 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   
-  
-  # -- Fetch Records -- #
+  #-----------------
+  # Fetch Records
   
   def get_record
     @record = resource_class.find_by_id!(params[:id])
@@ -81,7 +82,8 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   
-  # -- Response -- #
+  #-----------------
+  # Response
   
   def respond
     respond_with_resource(@record, params[:commit_action])
@@ -113,9 +115,14 @@ class Admin::ResourceController < Admin::BaseController
   end
 
 
-  # -- Breadcrumbs -- #
+  #-----------------
+  # Breadcrumbs
   
   def extend_breadcrumbs_with_resource_root
     breadcrumb resource_title.pluralize, resource_url
+  end
+  
+  def add_user_id_to_params
+    params[resource_param].merge!(logged_user_id: admin_user.id)
   end
 end

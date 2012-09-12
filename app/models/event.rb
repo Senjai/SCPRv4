@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
   self.primary_key = "id"
   
   acts_as_content auto_published_at: false, has_status: false, published_at: false
+  has_secretary
   
   ForumTypes = [
     "comm",

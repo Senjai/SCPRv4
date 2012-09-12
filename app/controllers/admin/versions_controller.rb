@@ -3,8 +3,7 @@ class Admin::VersionsController < Admin::BaseController
 
   before_filter :get_admin_list, only: [:activity, :index]
   before_filter :get_object, only: [:index, :show, :compare]
-  before_filter :extend_breadcrumbs_for_history
-  before_filter :extend_breadcrumbs_for_object, only: [:index, :show, :compare]
+  before_filter :extend_breadcrumbs_for_object, only: [:index, :show]
   
   #--------------
   # See all activity
@@ -17,34 +16,29 @@ class Admin::VersionsController < Admin::BaseController
   #--------------
   # See activity for a single object
   def index
+    breadcrumb "History"
     @versions = @object.versions.order(@list.order).paginate(page: params[:page], per_page: @list.per_page)
   end
-  
+    
+  #--------------
+  # Compare a version to its previous version
   def show
-    @version = @object.versions.where(version_number: params[:version_number]).first
-    breadcrumb @version.to_title
-  end
+    @version_b = @object.versions.find_by_version_number!(params[:version_number])
+    @version_a = @version_b.previous_version
     
-  #--------------
-  # Diff a version with any other version from the same object
-  def compare
-    breadcrumb "Compare"
-    
-    @version_a       = @object.versions.where(version_number: params[:a_num]).first
-    @version_b       = @object.versions.where(version_number: params[:b_num]).first
-    @cache_key       = "compare:#{@object.class.name.tableize.singularize}/#{@object.id}:#{@version_a.version_number}/#{@version_b.version_number}"
-    @attribute_diffs = Secretary::Diff.new(@version_a.object, @version_b.object)
-  end
-  
-  #--------------
-  
-  protected
-    def extend_breadcrumbs_for_history
-      breadcrumb "History", admin_activity_path
+    breadcrumb "History", admin_history_path(@object.class.parameterize, @object.id), @version_b.to_title
+        
+    if !Rails.cache.read(@version_b.cache_key)
+      @attribute_diffs = Secretary::Diff.new(@version_a, @version_b)
     end
+  end
     
+  #--------------
+  
+  protected    
     def extend_breadcrumbs_for_object
-      breadcrumb @object.to_title, url_for([:admin, @object])
+      breadcrumb @object.class.name.titleize.pluralize, url_for([:admin, @object.class])
+      breadcrumb @object.simple_title, url_for([:admin, @object])
     end
 
     #--------------

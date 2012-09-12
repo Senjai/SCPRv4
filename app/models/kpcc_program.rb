@@ -1,5 +1,7 @@
 class KpccProgram < ActiveRecord::Base
   self.table_name =  'programs_kpccprogram'
+
+  has_secretary
     
   ConnectDefaults = {
     facebook: "http://www.facebook.com/kpccfm",

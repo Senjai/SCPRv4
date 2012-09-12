@@ -81,8 +81,8 @@ Scprv4::Application.routes.draw do
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
       
-      get '/search(/:resource)' => "search#index",      as: :search
-
+      get '/search(/:resource)' => "search#index", as: :search
+      
       ## -- AdminResource -- ##
       resources :missed_it_buckets
       resources :promotions
@@ -103,10 +103,9 @@ Scprv4::Application.routes.draw do
       resources :content_shells
       ## -- END AdminResource --  ##
       
-      get "/activity"                                         => "versions#activity", as: :activity
-      get "/:resources/:resource_id/history"                  => "versions#index",    as: :versions
-      get "/:resources/:resource_id/versions/:version_number" => "versions#show",     as: :version
-      get "/:resources/:resource_id/versions/:a_num..:b_num"  => "versions#compare",  as: :version_compare
+      get "/activity"                                        => "versions#activity",  as: :activity
+      get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
+      get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
       
       scope "multi_american" do
         get "/"         => "multi_american#index",    as: :multi_american

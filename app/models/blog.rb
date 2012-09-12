@@ -1,6 +1,8 @@
 class Blog < ActiveRecord::Base
   self.table_name =  'blogs_blog'
   
+  has_secretary
+  
   # -------------------
   # Administration
   administrate do |admin|

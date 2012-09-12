@@ -1,4 +1,6 @@
 class Promotion < ActiveRecord::Base
+  has_secretary
+  
   #-------------
   # Administration
   administrate do |admin|

@@ -1,6 +1,7 @@
 class NewsStory < ContentBase
   self.table_name =  'news_story'
   acts_as_content
+  has_secretary
   
   # -------------------
   # Administration

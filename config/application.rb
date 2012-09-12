@@ -48,11 +48,11 @@ module Scprv4
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    
-    config.scpr       = ActiveSupport::OrderedOptions.new
-    config.assethost  = ActiveSupport::OrderedOptions.new
-    config.node       = ActiveSupport::OrderedOptions.new
-    config.dbsync     = ActiveSupport::OrderedOptions.new
+
+    config.scpr      = ActiveSupport::OrderedOptions.new
+    config.assethost = ActiveSupport::OrderedOptions.new
+    config.node      = ActiveSupport::OrderedOptions.new
+    config.dbsync    = ActiveSupport::OrderedOptions.new
     
     Disqussion.configure do |disq|
       disq.api_key    = "n5QMkXRJa76bdBYruPhtYDvKe6wx7Vo0MqKlCypJdnh7lj6FNnFt1Lr9XAtpU2oe"

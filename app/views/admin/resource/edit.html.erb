@@ -6,6 +6,11 @@
 <% end %>
 
 <% content_for :sidebar do %>
+	<div class="form-actions">
+		<%= link_to "History", admin_history_path(@record.class.parameterize, @record.id), class: "btn btn-primary" %>
+		<%= link_to "Edit in Django", @record.django_edit_url, class: "btn" %>
+	</div>
+	
 	<h3>Currently Editing on This Page</h3>
 	<ul id="viewers" class="viewers">
 	</ul>

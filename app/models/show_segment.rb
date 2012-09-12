@@ -5,6 +5,7 @@ class ShowSegment < ContentBase
   PRIMARY_ASSET_SCHEME = :segment_asset_scheme
 
   acts_as_content
+  has_secretary
   
   # -------------------
   # Administration
