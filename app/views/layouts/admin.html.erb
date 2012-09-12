@@ -68,11 +68,15 @@
 <% end %>
 
 <div id="main" class="container-fluid">
-	<% if @PAGE_TITLE %>
-		<div class="page-header">
-			<h1><%= @PAGE_TITLE %></h1>
-		</div>
-	<% end %>
+	<div class="page-header">
+		<% if content_for? :page_header %>
+			<%= yield :page_header %>
+		<% else %>
+			<% if @PAGE_TITLE %>
+				<h1><%= @PAGE_TITLE %></h1>
+			<% end %>
+		<% end %>
+	</div>
 	
 	<div class="row-fluid">
 		<div class="span<%= content_for?(:sidebar) ? "9" : "12" %>">

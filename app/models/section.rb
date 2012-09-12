@@ -1,4 +1,6 @@
 class Section < ActiveRecord::Base
+  has_secretary
+  
   #----------
   # Administration
   administrate do |admin|

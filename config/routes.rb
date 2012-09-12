@@ -103,6 +103,10 @@ Scprv4::Application.routes.draw do
       resources :content_shells
       ## -- END AdminResource --  ##
       
+      get "/activity"                                        => "versions#activity",  as: :activity
+      get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
+      get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
+      
       scope "multi_american" do
         get "/"         => "multi_american#index",    as: :multi_american
         post "/set_doc" => "multi_american#set_doc",  as: :multi_american_set_doc

@@ -1,5 +1,7 @@
 class MissedItBucket < ActiveRecord::Base
   self.table_name = "contentbase_misseditbucket"
+
+  has_secretary
   
   #-----------
   # Administration

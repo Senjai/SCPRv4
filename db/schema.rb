@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120830081232) do
+ActiveRecord::Schema.define(:version => 20120910173557) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -817,5 +817,15 @@ ActiveRecord::Schema.define(:version => 20120830081232) do
 
   add_index "users_userprofile", ["nickname"], :name => "nickname", :unique => true
   add_index "users_userprofile", ["userid"], :name => "userid", :unique => true
+
+  create_table "versions", :force => true do |t|
+    t.integer  "version_number"
+    t.string   "versioned_type"
+    t.integer  "versioned_id"
+    t.string   "user_id"
+    t.text     "description"
+    t.text     "object_yaml"
+    t.datetime "created_at"
+  end
 
 end

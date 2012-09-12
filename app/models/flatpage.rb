@@ -1,6 +1,8 @@
 class Flatpage < ActiveRecord::Base
   self.table_name = "flatpages_flatpage" 
   
+  has_secretary
+  
   # -------------------
   # Administration
   administrate do |admin|

@@ -9,18 +9,18 @@ gem 'jquery-rails'
 gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
 gem "resque", "~> 1.20"
 
-gem 'thinking-sphinx', '~> 2.0.10', require: "thinking_sphinx"
+gem 'thinking-sphinx',    '~> 2.0.10', require: "thinking_sphinx"
 gem 'will_paginate'
-gem "bcrypt-ruby", "~> 3.0.0"
-gem "faraday", "~> 0.7.6"
+gem "bcrypt-ruby",        "~> 3.0.0"
+gem "faraday",            "~> 0.7.6"
 gem "faraday_middleware", "~> 0.8"
-
+gem "diffy",              "~> 2.0.8"
 gem 'newrelic_rpm'
 
 gem "ruby-mp3info"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
 gem "oauth2"
-gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
+gem 'disqussion', git: "git://github.com/SCPR/disqussion.git"
 #gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
 gem "twitter"
 gem 'twitter-text'
@@ -56,6 +56,7 @@ group :test, :development do
 end
 
 group :test do
+  gem "sqlite3"
   gem "cucumber-rails", require: false
   gem 'factory_girl_rails'
   gem 'database_cleaner'

@@ -3,6 +3,8 @@ class Category < ActiveRecord::Base
 
   #has_many :content, :class_name => "ContentCategory", :foreign_key => "category_id", :order => "pub_date desc"
   #has_many :content, :through => :content_categories, :source => :content, :order => "published_at desc"
+
+  has_secretary
   
   belongs_to :comment_bucket, :class_name => "FeaturedCommentBucket"
 

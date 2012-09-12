@@ -28,6 +28,22 @@ module AdminResource
       def extract_controller(path)
         path.split("/")[2..3].join("/")
       end
+            
+      def resource_class
+        @resource_class ||= to_class(params[:controller])
+      end
+
+      def resource_title
+        @resource_title ||= to_title(params[:controller])
+      end
+
+      def resource_param
+        @resource_param ||= singular_resource(params[:controller]).to_sym
+      end
+
+      def resource_url(*args)
+        @resource_url ||= send("admin_#{resource_class.to_s.tableize}_path", *args)
+      end
     end
   end
 end
