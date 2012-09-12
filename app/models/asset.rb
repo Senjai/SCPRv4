@@ -134,7 +134,7 @@ end
 
 class Asset::Fallback < Asset
   def self.logger
-    @logger ||= Logger.new("/tmp/assethost-error-assets.log")
+    @logger ||= Logger.new(Rails.root.join("log/asset-fallback.log"))
   end
   
   def self.log(response, id)
