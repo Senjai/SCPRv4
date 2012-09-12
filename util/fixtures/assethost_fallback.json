@@ -1,0 +1,81 @@
+{
+    "id"             : 0,
+    "title"          : "Asset Unavailable",
+    "caption"        : "We encountered a problem, and this photo is currently unavailable.",
+    "size"           : "800x533",
+    
+    "sizes"          : {
+        "thumb"      : {
+            "width"  : 88,
+            "height" : 88
+        },
+        "lsquare"    : {
+            "width"  : 188,
+            "height" : 188
+        },
+        "lead"       : {
+            "width"  : 324,
+            "height" : 216
+        },
+        "wide"       : {
+            "width"  : 620,
+            "height" : 413
+        },
+        "full"       : {
+            "width"  : 800,
+            "height" : 533
+        },
+        "six"        : {
+            "width"  : 540,
+            "height" : 360
+        },
+        "eight"      : {
+            "width"  : 729,
+            "height" : 486
+        },
+        "four"       : {
+            "width"  : 525,
+            "height" : 350
+        },
+        "three"      : {
+            "width"  : 255,
+            "height" : 170
+        },
+        "five"       : {
+            "width"  : 501,
+            "height" : 334
+        }
+    },
+    
+    "tags"           : {
+        "thumb"      : "<img src=\"/assets/fallback-img-square.png\" width=\"88\" height=\"88\" alt=\"\" />",
+        "lsquare"    : "<img src=\"/assets/fallback-img-square.png\" width=\"188\" height=\"188\" alt=\"\" />",
+        "lead"       : "<img src=\"/assets/fallback-img-rect.png\" width=\"324\" height=\"216\" alt=\"\" />",
+        "wide"       : "<img src=\"/assets/fallback-img-rect.png\" width=\"620\" height=\"413\" alt=\"\" />",
+        "full"       : "<img src=\"/assets/fallback-img-rect.png\" width=\"800\" height=\"533\" alt=\"\" />",
+        "six"        : "<img src=\"/assets/fallback-img-rect.png\" width=\"540\" height=\"360\" alt=\"\" />",
+        "eight"      : "<img src=\"/assets/fallback-img-rect.png\" width=\"729\" height=\"486\" alt=\"\" />",
+        "four"       : "<img src=\"/assets/fallback-img-rect.png\" width=\"525\" height=\"350\" alt=\"\" />",
+        "three"      : "<img src=\"/assets/fallback-img-rect.png\" width=\"255\" height=\"170\" alt=\"\" />",
+        "five"       : "<img src=\"/assets/fallback-img-rect.png\" width=\"501\" height=\"334\" alt=\"\" />"
+    },
+    
+    "urls"           : {
+        "thumb"      : "/assets/fallback-img-square.png",
+        "lsquare"    : "/assets/fallback-img-square.png",
+        "lead"       : "/assets/fallback-img-rect.png",
+        "wide"       : "/assets/fallback-img-rect.png",
+        "full"       : "/assets/fallback-img-rect.png",
+        "six"        : "/assets/fallback-img-rect.png",
+        "eight"      : "/assets/fallback-img-rect.png",
+        "four"       : "/assets/fallback-img-rect.png",
+        "three"      : "/assets/fallback-img-rect.png",
+        "five"       : "/assets/fallback-img-rect.png"
+    },
+
+    "url"            : "/assets/fallback-img-rect.png",
+    "created_at"     : "2012-09-12T10:15:04-07:00",
+    "native"         : {
+        "video_id"   : "0"
+    }
+}

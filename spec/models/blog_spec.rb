@@ -38,19 +38,19 @@ describe Blog do
   describe "cache_remote_entries" do
 
     it "does not cache local blogs" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       blog = create :blog
       Blog.cache_remote_entries.should be_blank
     end
     
     it "returns the blogs it cached" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       blogs = create_list :blog, 2, :remote
       Blog.cache_remote_entries.count.should eq 2
     end
     
     it "creates a cache for each remote blog" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       blogs = create_list :blog, 2, :remote
       Blog.cache_remote_entries
       blogs.each { |blog| Rails.cache.fetch("remote_blog:#{blog.slug}").should_not be_blank }
@@ -64,7 +64,7 @@ describe Blog do
     
     it "responds with all the successful caches" do
       pending "Need to solve the stubbing here"
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       create :blog, :remote
       create :blog, :remote, feed_url: "Invalid"
       Blog.cache_remote_entries.count.should eq 1
