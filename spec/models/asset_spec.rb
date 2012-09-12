@@ -10,7 +10,7 @@ describe Asset do
   #---------------------
   
   Asset.outputs.each do |output|
-    subject { Asset.new(load_fixture("assethost_asset.json")) }
+    subject { Asset.new(JSON.load(load_fixture("assethost_asset.json"))) }
     it { should respond_to output['code'].to_sym }
   end
 
@@ -39,12 +39,12 @@ describe Asset do
     
     it "returns fallback outputs if the API can't be reached" do
       Faraday::Response.any_instance.stub(:status) { 500 }
-      JSON.should_receive(:load).with(load_fixture("assethost_outputs.json")).and_return("Fallback Outputs")
-      Asset.outputs.should eq "Fallback Outputs"
+      JSON.should_receive(:load).with(load_fixture("assethost_outputs.json")).and_return({ some: "outputs" })
+      Asset.outputs.should eq({ some: "outputs" })
     end
     
     it "writes to cache on successful API response" do
-      Rails.cache.should_receive(:write).with("assets/outputs", load_fixture("assethost_outputs.json"))
+      Rails.cache.should_receive(:write).with("assets/outputs", JSON.load(load_fixture("assethost_outputs.json")))
       Asset.outputs
     end
   end
@@ -81,16 +81,55 @@ describe Asset do
     
     context "good response" do
       it "writes to cache" do
-        Rails.cache.should_receive(:write).with("asset/asset-1", load_fixture("assethost_asset.json"))
+        Rails.cache.should_receive(:write).with("asset/asset-1", JSON.load(load_fixture("assethost_asset.json")))
         Asset.find(1)
       end
       
       it "creates a new asset from the json" do
-        Asset.should_receive(:new).with(load_fixture("assethost_asset.json"))
+        Asset.should_receive(:new).with(JSON.load(load_fixture("assethost_asset.json")))
         Asset.find(1)
       end
     end
   end
   
-  #---------------------
+  #-------------------
+  
+  it "generates Asset Sizes for each output" do
+    asset = Asset.find(1) # stubbed response
+    asset.thumb.should be_a AssetSize
+    asset.lsquare.should be_a AssetSize
+  end
 end
+
+#---------------------------
+
+describe AssetSize do
+  it "provides access to the asset attributes" do
+    output = Asset.outputs.first
+    asset  = Asset.find(1)
+    size   = AssetSize.new(asset, output)
+
+    size.width.should be_present
+    size.height.should be_present
+    size.tag.should be_present
+    size.url.should be_present
+  end
+end
+
+#---------------------------
+
+describe Asset::Fallback do
+  it "loads the fallback json" do
+    JSON.should_receive(:load).with(Rails.root.join("util/fixtures/assethost_fallback.json")).and_return({ some: "json" })
+    Asset::Fallback.new.json.should eq({ some: "json" })
+  end
+  
+  it "loads fallback json as a hash" do
+    Asset::Fallback.new.json.should be_a Hash
+  end
+  
+  it "is an asset" do
+    Asset::Fallback.new.should be_a Asset
+  end
+end
+
