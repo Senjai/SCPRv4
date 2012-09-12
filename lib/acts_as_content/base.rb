@@ -96,7 +96,6 @@ module ActsAsContent
         end
       end
 
-  #    $stdout.puts "setting acts_as_content_options for #{self.name} with #{list}"
       cattr_accessor :acts_as_content_options
       self.acts_as_content_options = list
 

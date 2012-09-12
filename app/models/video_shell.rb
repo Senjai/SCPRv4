@@ -5,6 +5,7 @@ class VideoShell < ContentBase
   ADMIN_PREFIX = "contentbase/videoshell"
   
   acts_as_content
+  has_secretary
   
   # -------------------
   # Administration

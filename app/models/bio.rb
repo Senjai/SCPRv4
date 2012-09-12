@@ -1,6 +1,8 @@
 class Bio < ActiveRecord::Base  
   self.table_name =  'bios_bio'
   
+  has_secretary
+  
   belongs_to  :user,    class_name: "AdminUser"
   has_many    :bylines, class_name: "ContentByline",  foreign_key: :user_id
   

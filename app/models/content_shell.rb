@@ -1,5 +1,7 @@
 class ContentShell < ContentBase
   self.table_name =  "contentbase_contentshell"
+
+  has_secretary
   
   CONTENT_TYPE = "content/shell"
   ADMIN_PREFIX = "contentbase/contentshell"

@@ -1,6 +1,8 @@
 class Homepage < ActiveRecord::Base
   self.table_name =  "layout_homepage"
 
+  has_secretary
+
   # -------------------
   # Administration
   administrate do |admin|

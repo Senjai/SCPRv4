@@ -1,6 +1,7 @@
 class BlogEntry < ContentBase
   self.table_name =  "blogs_entry"
   acts_as_content has_format: true
+  has_secretary
   
   CONTENT_TYPE = "blogs/entry"
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme

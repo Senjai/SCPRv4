@@ -13,7 +13,7 @@ describe Admin::ResourceController do
     it "raises a RoutingError if ID does not exist" do
       controller.stub!(:params) { { id: "000" } }
       controller.stub!(:resource_class) { NewsStory }
-      -> { controller.get_record }.should raise_error ActionController::RoutingError
+      -> { controller.get_record }.should raise_error ActiveRecord::RecordNotFound
     end
   end
   
@@ -68,7 +68,7 @@ describe Admin::ResourceController do
     pending
   end
   
-  describe "resource_path_helper" do
+  describe "resource_url" do
     pending
   end
   

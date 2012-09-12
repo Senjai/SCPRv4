@@ -1,5 +1,7 @@
 class FeaturedComment < ActiveRecord::Base
   self.table_name =  'contentbase_featuredcomment'
+
+  has_secretary
   
   administrate do |admin|
     admin.define_list do |list|

@@ -33,7 +33,11 @@ module AdminListHelper
       end
     end
 
-    rendered_item = send(display_helper, attrib)
+    if !display_helper.is_a? Proc
+      rendered_item = send(display_helper, attrib)
+    else
+      rendered_item = display_helper.call(attrib)
+    end
     
     if column.linked?
       rendered_item = link_to(rendered_item, options[:path])

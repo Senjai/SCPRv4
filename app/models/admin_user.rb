@@ -1,6 +1,8 @@
 class AdminUser < ActiveRecord::Base
   require 'digest/sha1'
   self.table_name = "auth_user"
+
+  has_secretary
   
   # ----------------
   
@@ -18,6 +20,10 @@ class AdminUser < ActiveRecord::Base
   
   scope :active, where(:is_active => true)
 
+  # ----------------
+  
+  has_many :activities, class_name: "Secretary::Version"
+  
   # ----------------
 
   attr_accessor :unencrypted_password, :unencrypted_password_confirmation
