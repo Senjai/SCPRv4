@@ -1,4 +1,4 @@
-require "admin_resource/spec_helper"
+require File.expand_path("../../../spec_helper", __FILE__)
 
 describe AdminResource::List::Column do
   describe "attributes" do
