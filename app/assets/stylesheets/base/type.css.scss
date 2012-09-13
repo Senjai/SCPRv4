@@ -225,7 +225,6 @@ blockquote {
   padding-left: 15px;
   p {
     @include font-shorthand(300,14px,$baseline);
-    margin-bottom: 0;
   }
   small {
     display: block;
