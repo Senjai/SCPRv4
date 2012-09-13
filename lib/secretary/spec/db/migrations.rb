@@ -1,5 +1,6 @@
 class SecretaryMigration < ActiveRecord::Migration
   def up
+    $stdout.puts "*** Loading Schema"
     create_table "stories", force: true do |t|
       t.string  "headline"
       t.text    "body"

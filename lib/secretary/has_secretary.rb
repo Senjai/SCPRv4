@@ -3,7 +3,7 @@ module Secretary
     # has_secretary
     # Apply to any class that should be versioned
     #
-    def has_secretary(options={})
+    def has_secretary(options={})      
       has_many :versions, class_name: "Secretary::Version", as: :versioned, dependent: :destroy
       attr_accessor :logged_user_id, :action
 

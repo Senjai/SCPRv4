@@ -2,7 +2,7 @@ module MultiAmerican
   class Attachment < Node
     XPATH = "//item/wp:post_type[text()='attachment']/.."
 
-    administrate do |admin|
+    administrate do |admin|      
       admin.define_list do |list|
         list.column "id",         header: "WP-ID"
         list.column "post_type"

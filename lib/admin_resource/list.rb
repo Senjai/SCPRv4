@@ -1,3 +1,6 @@
+##
+# AdminResource::List
+
 module AdminResource
   module List
     DEFAULTS = {

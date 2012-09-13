@@ -1,7 +1,7 @@
 module Secretary
   class Version < ActiveRecord::Base    
     belongs_to  :versioned, polymorphic: true
-    belongs_to  :user, class_name: Secretary::Config.user_class
+    belongs_to  :user, class_name: Secretary.config.user_class
     
     #---------------
     
@@ -37,7 +37,11 @@ module Secretary
         when :create
           "Created #{object.simple_title}"
         when :update
-          "Changed #{object.changed_attributes.keys.join(", ")}"
+          attributes = object.changed_attributes.keys
+          attributes.delete_if { |key| Diff.should_ignore key }
+          "Changed #{attributes.to_sentence}"
+        else
+          "Generated Version"
         end
       #
     end

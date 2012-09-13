@@ -14,7 +14,7 @@ module MultiAmerican
       title:    :tag_name
     }
         
-    administrate do |admin|
+    administrate do |admin|      
       admin.define_list do |list|
         list.per_page = 50
         

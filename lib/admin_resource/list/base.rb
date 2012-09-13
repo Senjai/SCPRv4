@@ -1,3 +1,6 @@
+##
+# AdminResource::List::Base
+
 module AdminResource
   module List
     class Base

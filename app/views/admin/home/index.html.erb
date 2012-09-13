@@ -7,10 +7,13 @@
 		</tr>
 	</thead>
 	<tbody class="list">
-		<% @admin_models.each do |resource| %>
+		<% @models.each do |model| %>
 			<tr>
-				<td><%= link_to resource.name.titleize.pluralize, url_for([:admin, resource.name.underscore.pluralize]) %></td>
+				<td><%= link_to model.name.titleize.pluralize, url_for([:admin, model]) %></td>
 				<td>
+					<%= link_to "New", url_for([:new, :admin, model.singular_route_key]), class: "btn btn-success" %>
+					<%= link_to("List in Django", model.django_admin_url, class: "btn") if model.exists_in_django? %>
+					
 				</td>
 			</tr>
 		<% end %>

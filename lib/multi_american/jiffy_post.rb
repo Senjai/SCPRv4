@@ -2,7 +2,7 @@ module MultiAmerican
   class JiffyPost < PostBase
     XPATH = "//item/wp:post_type[text()='jiffypost']/.."      
 
-    administrate do |admin|
+    administrate do |admin|      
       admin.define_list do |list|
         list.column "id",         header: "WP-ID"
         list.column "post_type"

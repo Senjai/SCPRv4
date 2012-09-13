@@ -1,3 +1,6 @@
+## 
+# AdminResource::Admin
+
 module AdminResource
   class Admin
     

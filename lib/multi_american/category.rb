@@ -28,7 +28,7 @@ module MultiAmerican
       end
     end
     
-    administrate do |admin|
+    administrate do |admin|      
       admin.define_list do |list|
         list.column "id",                 header: "Term ID"
         list.column "cat_name",           header: "Name",   linked: true

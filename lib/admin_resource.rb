@@ -1,12 +1,24 @@
-module AdminResource
-  # If anyone asks...
-  # this is where AdminResource was defined
-end
+##
+# Admin Resource
+# Build admin pages with Ruby
 
-require 'admin_resource/list'
-require "admin_resource/admin"
-require "admin_resource/administrate"
-require 'admin_resource/helpers'
+require 'admin_resource/config'
+
+module AdminResource
+  extend ActiveSupport::Autoload
+  
+  class << self
+    attr_writer :config
+    def config
+      @config || AdminResource::Config.configure
+    end    
+  end
+  
+  autoload :List
+  autoload :Admin
+  autoload :Administrate
+  autoload :Helpers
+end
 
 if defined?(ActiveRecord::Base)
   ActiveRecord::Base.send :extend, AdminResource::Administrate

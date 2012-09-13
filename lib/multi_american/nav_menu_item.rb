@@ -2,7 +2,7 @@ module MultiAmerican
   class NavMenuItem < PostBase
     XPATH = "//item/wp:post_type[text()='nav_menu_item']/.."    
 
-    administrate do |admin|
+    administrate do |admin|      
       admin.define_list do |list|
         list.column "id",         header: "WP-ID"
         list.column "post_type"

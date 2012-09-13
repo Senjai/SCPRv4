@@ -2,7 +2,7 @@
 <%= render 'header', page_title: @PAGE_TITLE, object: @object %>
 
 <table class="table table-striped">
-	<%= any_to_list? @versions, title: "Versions" do %>
+	<%= any_to_list? @versions, message: "This object has no logged history in the Rails CMS." do %>
 		<thead>
 			<tr>
 				<% @list.columns.each do |column| %>

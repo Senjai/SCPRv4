@@ -1,3 +1,6 @@
+## 
+# AdminResource::Helpers::Model
+
 module AdminResource
   module Helpers
     module Model
@@ -6,9 +9,30 @@ module AdminResource
       end
       
       module ClassMethods
-        # BlogEntry.parameterize => blog_entries
-        def parameterize
-          self.name.underscore.pluralize
+        # Wrappers for ActiveModel::Naming
+        def route_key
+          @route_key ||= ActiveModel::Naming.route_key(self)
+        end
+        
+        #--------------
+        
+        def singular_route_key
+          @singular_route_key ||= ActiveModel::Naming.singular_route_key(self)
+        end
+
+        #--------------
+        
+        # This should go away eventually
+        def django_admin_url
+          "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
+        end
+
+        #--------------
+        
+        # We're going to assume that if the table name does not use 
+        # Rails conventions, then this feature was never built in Django
+        def exists_in_django?
+          @exists_in_django ||= self.table_name != self.name.tableize
         end
       end
 
@@ -43,13 +67,29 @@ module AdminResource
         title_method ? self.send(title_method) : self.simple_title
       end
       
+      #-------------
+      
       def simple_title
-        "#{self.class.name.demodulize.titleize} ##{self.id}"
+        class_title = self.class.name.demodulize.titleize
+        
+        if self.new_record?
+          "New #{class_title}"
+        else
+          "#{class_title} ##{self.id}"
+        end
       end
+
+      #-------------
       
       # This should go away eventually
       def django_edit_url
-        "http://scpr.org/admin/#{self.class.table_name.gsub("_", "/")}/#{self.id}/"
+        [self.class.django_admin_url, self.id].join "/"
+      end
+      
+      #-------------
+
+      def exists_in_django?
+        self.class.exists_in_django?
       end
     end
   end

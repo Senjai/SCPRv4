@@ -2,7 +2,7 @@ module MultiAmerican
   class Roundup < PostBase
     XPATH = "//item/wp:post_type[text()='roundup']/.."    
 
-    administrate do |admin|
+    administrate do |admin|      
       admin.define_list do |list|
         list.column "id",         header: "WP-ID"
         list.column "post_type"

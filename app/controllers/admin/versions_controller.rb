@@ -26,7 +26,7 @@ class Admin::VersionsController < Admin::BaseController
     @version_b = @object.versions.find_by_version_number!(params[:version_number])
     @version_a = @version_b.previous_version
     
-    breadcrumb "History", admin_history_path(@object.class.parameterize, @object.id), @version_b.to_title
+    breadcrumb "History", admin_history_path(@object.class.route_key, @object.id), @version_b.to_title
         
     if !Rails.cache.read(@version_b.cache_key)
       @attribute_diffs = Secretary::Diff.new(@version_a, @version_b)

@@ -1,3 +1,6 @@
+## 
+# AdminResource::Helpers::Controller
+
 module AdminResource
   module Helpers
     module Controller
@@ -42,7 +45,7 @@ module AdminResource
       end
 
       def resource_url(*args)
-        @resource_url ||= send("admin_#{resource_class.to_s.tableize}_path", *args)
+        @resource_url ||= send("admin_#{resource_class.route_key}_path", *args)
       end
     end
   end

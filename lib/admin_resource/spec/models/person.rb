@@ -1,7 +1,7 @@
 class Person < ActiveRecord::Base  
   attr_accessible :name, :email, :location, :age
   
-  administrate do |admin|
+  administrate do |admin|    
     admin.define_list do |list|
       list.column "name"
       list.column "email"

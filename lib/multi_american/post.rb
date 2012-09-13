@@ -2,7 +2,7 @@ module MultiAmerican
   class Post < PostBase
     XPATH = "//item/wp:post_type[text()='post']/.."
 
-    administrate do |admin|
+    administrate do |admin|      
       admin.define_list do |list|
         list.column "id",         header: "WP-ID"
         list.column "post_type"

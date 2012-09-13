@@ -101,6 +101,7 @@ Scprv4::Application.routes.draw do
       resources :events
       resources :homepages
       resources :content_shells
+      resources :featured_comments
       ## -- END AdminResource --  ##
       
       get "/activity"                                        => "versions#activity",  as: :activity

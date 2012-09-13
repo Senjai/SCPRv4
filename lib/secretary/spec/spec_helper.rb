@@ -13,7 +13,9 @@ Dir[Rails.root.join("lib/secretary/spec/models/*.rb")].each { |f| require f }
 Dir[Rails.root.join("lib/secretary/spec/db/*.rb")].each     { |f| require f }
 
 # Have to overwrite user_class for tests until this is extracted
-Secretary::Config.user_class = "::User"
+# Because when the application is initialized it sets the user_class
+# to ::AdminUser
+Secretary.config.user_class = "::User"
 load "lib/secretary/version.rb"
 
 RSpec.configure do |config|
@@ -24,9 +26,9 @@ RSpec.configure do |config|
     
   config.before :suite do
     ActiveRecord::Base.establish_connection("isolated")
+    DatabaseCleaner.clean_with :truncation
     migration = -> { SecretaryMigration.new.up }
     silence_stream STDOUT, &migration
-    DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.strategy = :truncation
   end
   
