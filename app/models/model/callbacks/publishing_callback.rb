@@ -11,6 +11,10 @@ module Model
       included do
         before_save :set_published_at_to_now, if: :publishing?
         
+        def publishing?
+           self.status_changed? and self.published?
+        end
+        
         def set_published_at_to_now
           self.published_at = Time.now
         end

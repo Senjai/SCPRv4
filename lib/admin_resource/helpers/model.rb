@@ -59,12 +59,12 @@ module AdminResource
       #
       #
       if !defined?(TITLE_ATTRIBUTES)
-        TITLE_ATTRIBUTES = [:name, :short_headline, :title, :headline]
+        TITLE_ATTRIBUTES = [:name, :short_headline, :title, :headline, :simple_title]
       end
       
       def to_title
         title_method = TITLE_ATTRIBUTES.find { |a| self.respond_to?(a) }
-        title_method ? self.send(title_method) : self.simple_title
+        self.send(title_method)
       end
       
       #-------------

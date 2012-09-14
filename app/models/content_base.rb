@@ -90,10 +90,6 @@ class ContentBase < ActiveRecord::Base
     where(status: STATUS_LIVE).order("published_at desc")
   end
   
-  #------------
-  
-
-  
   #-------------
   
   #after_save :create_content_alarm, if: -> { self.pending? }  

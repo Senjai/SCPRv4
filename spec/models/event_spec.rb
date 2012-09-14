@@ -4,6 +4,24 @@ describe Event do
   describe "associations" do
     it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
   end
+
+  #-------------------
+  
+  describe "validations" do
+    it_behaves_like "slug validation"
+    it_behaves_like "slug unique for date validation" do
+      let(:scope) { :starts_at }
+    end
+    
+    context "event is published" do
+      before :each do
+        Event.any_instance.stub(:published?) { true }
+      end
+      
+      it { should validate_presence_of(:etype) }
+      it { should validate_presence_of(:starts_at) }
+    end
+  end
   
   #-------------------
   

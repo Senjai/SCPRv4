@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   include Model::Validations::SlugValidation
+  include Model::Validations::ContentValidation
   
   self.table_name =  'events_event'
   self.primary_key = "id"
@@ -31,9 +32,9 @@ class Event < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates :slug, uniqueness: { scope: :starts_at, message: "has already been used for that start date." }
-  validates_presence_of :headline, :etype, :starts_at
-  
+  validates_presence_of :etype, :starts_at, if: -> { self.published? }
+  validates :slug, unique_by_date: { scope: :starts_at, filter: :day, message: "has already been used for that start date." },
+    if: :published?
   
   # -------------------
   # Scopes
@@ -70,6 +71,21 @@ class Event < ActiveRecord::Base
   end
   
   # -------------------
+  
+  # Fake these until we can make Events actually publishable
+  def published?
+    is_published
+  end
+  
+  def pending?
+    !published?
+  end
+  
+  def status
+    published? ? ContentBase::STATUS_LIVE : ContentBase::STATUS_DRAFT
+  end
+  
+  #-------------
   
   def self.closest
     upcoming.first

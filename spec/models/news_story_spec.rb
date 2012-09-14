@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe NewsStory do
   describe "validations" do
-    it { should validate_presence_of(:headline) }
-    it { should validate_presence_of(:body) }
-    it { should validate_presence_of(:slug) }
-    it { should validate_format_of(:slug).with(/^[a-zA-Z0-9\-_]+$/) }
+    it_behaves_like "slug validation"
+    it_behaves_like "content validation"
+    it_behaves_like "slug unique for date validation" do
+      let(:scope) { :published_at }
+    end
   end
   
   #-----------------

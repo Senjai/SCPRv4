@@ -1,6 +1,16 @@
 require "spec_helper"
 
 describe ShowSegment do
+  describe "validations" do
+    it_behaves_like "slug validation"
+    it_behaves_like "content validation"
+    it_behaves_like "slug unique for date validation" do
+      let(:scope) { :published_at }
+    end
+  end
+
+  #------------------
+  
   describe "associations" do
     it { should belong_to :show }
     it { should have_many :rundowns }
@@ -9,7 +19,7 @@ describe ShowSegment do
   
   #------------------
   
-  describe "link_path" do
+  describe "#link_path" do
     it "does not override the hard-coded options" do
       segment = create :show_segment
       segment.link_path(slug: "wrong").should_not match "wrong"
@@ -18,7 +28,7 @@ describe ShowSegment do
   
   #------------------
   
-  describe "episode" do
+  describe "#episode" do
     it "uses the first episode the segment is associated with" do
       segment = create :show_segment
       episodes = create_list :show_episode, 3
@@ -29,7 +39,7 @@ describe ShowSegment do
   
   #------------------
   
-  describe "sister_segments" do
+  describe "#sister_segments" do
     before :each do
       stub_publishing_callbacks(ShowSegment)
     end
@@ -53,7 +63,7 @@ describe ShowSegment do
 
   #------------------
 
-  describe "byline_elements" do
+  describe "#byline_elements" do
     it "is an array with the show's title" do
       segment = build :show_segment
       segment.byline_elements.should eq [segment.show.title]
@@ -62,7 +72,7 @@ describe ShowSegment do
 
   #------------------
  	 	
-  describe "canFeature?" do
+  describe "#canFeature?" do
     it "returns true if there are assets" do
       segment = create :show_segment, asset_count: 1
       segment.canFeature?.should be_true
@@ -76,7 +86,7 @@ describe ShowSegment do
 
  	#------------------
 
-  describe "public_datetime" do
+  describe "#public_datetime" do
     it "is the published_at date" do
       segment = create :show_segment
       segment.public_datetime.should eq segment.published_at
@@ -85,7 +95,7 @@ describe ShowSegment do
   
   # ----------------
 
-  describe "has_format?" do
+  describe "#has_format?" do
     it "is true" do
       create(:show_segment).has_format?.should be_false
     end
@@ -93,7 +103,7 @@ describe ShowSegment do
 
   # ----------------
   
-  describe "auto_published_at" do
+  describe "#auto_published_at" do
     it "is true" do
       create(:show_segment).auto_published_at.should be_true
     end

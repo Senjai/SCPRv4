@@ -26,9 +26,9 @@ class ShowSegment < ContentBase
   
   # -------------------
   # Associations  
-  belongs_to :show, :class_name => "KpccProgram"
+  belongs_to :show,   :class_name => "KpccProgram"
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id"
-  has_many :episodes, :through => :rundowns, :source => :episode, :order => "air_date asc" 
+  has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc" 
 
   define_index do
     indexes headline
@@ -41,7 +41,7 @@ class ShowSegment < ContentBase
     has "CRC32(CONCAT('shows/segment:',shows_segment.id))", :type => :integer, :as => :obj_key
     has "(shows_segment.segment_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
-    where "status = #{STATUS_LIVE}"
+    where "status = #{ContentBase::STATUS_LIVE}"
     join audio
   end
   
@@ -72,19 +72,19 @@ class ShowSegment < ContentBase
   #----------
   
   def public_datetime
-    return self.published_at
+    self.published_at
   end
   
   #----------
   
   def link_path(options={})
     Rails.application.routes.url_helpers.segment_path(options.merge!({
-      :show => self.show.slug,
-      :year => self.published_at.year, 
-      :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
-      :id => self.id,
-      :slug => self.slug,
+      :show           => self.show.slug,
+      :year           => self.published_at.year, 
+      :month          => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :day            => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+      :id             => self.id,
+      :slug           => self.slug,
       :trailing_slash => true
     }))
   end

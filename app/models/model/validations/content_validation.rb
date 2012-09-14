@@ -10,12 +10,12 @@ module Model
       extend ActiveSupport::Concern
 
       included do
-        validates_presence_of :headline, if: -> { self.published? }
-        validates_presence_of :body,     if: -> { self.published? }
+        validates_presence_of :headline, if: :should_validate?
+        validates_presence_of :body,     if: :should_validate?
         validates_presence_of :status
         
-        def publishing?
-           self.status_changed? and self.published?
+        def should_validate?
+          pending? or published?
         end
       end
     end

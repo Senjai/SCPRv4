@@ -1,6 +1,6 @@
 class VideoShell < ContentBase
   include Model::Validations::ContentValidation
-  include Model::Validations::SlugUniqueForPublishedAtValidation
+  include Model::Validations::SlugValidation
 
   self.table_name = "contentbase_videoshell"
   
@@ -9,6 +9,8 @@ class VideoShell < ContentBase
   
   acts_as_content
   has_secretary
+  
+  validates :slug, uniqueness: true
   
   # -------------------
   # Administration
@@ -40,8 +42,8 @@ class VideoShell < ContentBase
   
   def link_path(options={})
     Rails.application.routes.url_helpers.video_path(options.merge!({
-      id: self.id,
-      slug: self.slug,
+      id:             self.id,
+      slug:           self.slug,
       trailing_slash: true
     }))
   end

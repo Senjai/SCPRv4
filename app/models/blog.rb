@@ -1,4 +1,6 @@
 class Blog < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  
   self.table_name =  'blogs_blog'
   
   has_secretary
@@ -19,7 +21,8 @@ class Blog < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates_presence_of :name, :slug
+  validates :name, presence: true
+  validates :slug, uniqueness: true
   
   # -------------------
   # Associations

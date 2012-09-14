@@ -1,6 +1,12 @@
 require 'spec_helper'
 
-describe VideoShell do
+describe VideoShell do  
+  describe "validations" do
+    it_behaves_like "slug validation"
+    it_behaves_like "content validation"
+    it_behaves_like "slug unique validation"
+  end
+  
   #--------------------
   
   describe "scopes" do
@@ -17,7 +23,7 @@ describe VideoShell do
 
   # ----------------
 
-  describe "has_format?" do
+  describe "#has_format?" do
     it "is true" do
       create(:video_shell).has_format?.should be_false
     end
@@ -25,7 +31,7 @@ describe VideoShell do
 
   # ----------------
   
-  describe "auto_published_at" do
+  describe "#auto_published_at" do
     it "is true" do
       create(:video_shell).auto_published_at.should be_true
     end
@@ -33,7 +39,7 @@ describe VideoShell do
     
   #--------------------
 
-  describe "teaser" do
+  describe "#teaser" do
     it "is the body" do
       video = build :video_shell
       video.body.should eq video.teaser
@@ -42,7 +48,7 @@ describe VideoShell do
   
   #--------------------
   
-  describe "link_path" do
+  describe "#link_path" do
     it "does not override the hard-coded options" do
       video_shell = create :video_shell
       video_shell.link_path(trailing_slash: false).should match /\/$/

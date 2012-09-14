@@ -75,8 +75,10 @@
   },
 
   "url"        : "http://a.scpr.org/api/assets/32459/",
-  "notes"      : null,
+  "notes"      : "",
   "created_at" : "2012-01-13T00:14:53Z",
   "taken_at"   : "2012-01-13T00:14:53Z",
-  "native"     : null
+  "native"     : {
+    "video_id" : 1
+  }
 }

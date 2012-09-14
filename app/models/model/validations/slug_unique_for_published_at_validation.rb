@@ -12,11 +12,12 @@ module Model
 
       include SlugValidation
       included do
-        validates_uniqueness_of :slug, 
-          scope: :published_at, 
-          message: "has already been used for that publish date.",
-          if: -> { self.publishing? }
+        # TODO: The editor should be aware of validation failures before publish
+        # Auto-publishing should never fail validation.
+        validates :slug, unique_by_date: { scope: :published_at, filter: :day, message: "has already been used for that publish date." },
+          if: :published?
         #
+
       end
     end
   end

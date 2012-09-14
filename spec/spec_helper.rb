@@ -9,11 +9,9 @@ require 'database_cleaner'
 require 'chronic'
 require 'fakeweb'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
-
-FakeWeb.allow_net_connect = false
-AH_JSON                   = File.read("#{Rails.root}/spec/fixtures/assethost_asset.json")
-AH_OUTPUTS_JSON           = File.read("#{Rails.root}/spec/fixtures/assethost_outputs.json")
+Dir[Rails.root.join("spec/support/**/*.rb")].each               { |f| require f }
+Dir[Rails.root.join("spec/fixtures/models/*.rb")].each          { |f| require f }
+Dir[Rails.root.join("spec/fixtures/db/*.rb")].each              { |f| require f }
 
 RSpec.configure do |config|  
   config.use_transactional_fixtures                 = false
@@ -33,13 +31,14 @@ RSpec.configure do |config|
     load "#{Rails.root}/db/seeds.rb"
     DatabaseCleaner.strategy = :transaction
     FactoryGirl.reload
+    migration = -> { FixtureMigration.new.up }
+    silence_stream STDOUT, &migration
+    Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| load f }
     ThinkingSphinx::Test.start_with_autostop
   end
   
   config.before :each do
-    FakeWeb.clean_registry
-    FakeWeb.register_uri(:any, %r|a\.scpr\.org\/api\/outputs|,  body: AH_OUTPUTS_JSON,  content_type: "application/json")
-    FakeWeb.register_uri(:any, %r|a\.scpr\.org\/api\/assets|,   body: AH_JSON,          content_type: "application/json")
+    FakeWeb.load_callback
     DatabaseCleaner.start
     ActionMailer::Base.deliveries = []
   end

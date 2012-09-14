@@ -1,8 +1,12 @@
 require "spec_helper"
 
 describe Bio do
+#  it_behaves_like "a slugged model"
+  
   it { should belong_to(:user).class_name("AdminUser") }
   it { should have_many(:bylines).class_name("ContentByline") }
+  
+  #--------------------
   
   describe "twitter_url" do
     it "returns a twitter URL if twitter handle is present" do
@@ -20,6 +24,8 @@ describe Bio do
       bio.twitter_url.should be_nil
     end
   end
+
+  #--------------------
   
   describe "indexed_bylines" do
     describe "max_results checking" do
@@ -57,6 +63,8 @@ describe Bio do
         bio.indexed_bylines(1, 9999).should be_a Array
       end
     end
+
+    #--------------------
     
     describe "mysql method" do
       let(:bio) { create :bio }
@@ -78,6 +86,8 @@ describe Bio do
       end
     end
   end
+
+  #--------------------
   
   describe "headshot" do
     before :each do

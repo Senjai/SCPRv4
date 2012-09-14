@@ -2,9 +2,12 @@ require "spec_helper"
 
 describe Blog do
   describe "validations" do
+    it_behaves_like "slug validation"
+    it_behaves_like "slug unique validation"
     it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:slug) }
   end
+  
+  #----------------
   
   describe "associations" do
     it { should have_many :entries }
@@ -19,6 +22,8 @@ describe Blog do
       blog.authors.to_sql.should match /order by position/i
     end
   end
+
+  #----------------
   
   describe "entries" do
     it "returns the local entries if the blog is local" do
@@ -34,9 +39,10 @@ describe Blog do
       blog.entries.count.should eq 3
     end
   end
+
+  #----------------
   
   describe "cache_remote_entries" do
-
     it "does not cache local blogs" do
       Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       blog = create :blog
@@ -70,6 +76,8 @@ describe Blog do
       Blog.cache_remote_entries.count.should eq 1
     end
   end
+  
+  #----------------
   
   describe "scopes" do
     describe "#active" do

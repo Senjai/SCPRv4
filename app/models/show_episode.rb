@@ -24,7 +24,8 @@ class ShowEpisode < ContentBase
   
   # -------------------
   # Validations
-  validates_presence_of :show_id
+  validates :show_id,  presence: true
+  validates :air_date, presence: true, if: :published?
   
   # -------------------
   # Associations
@@ -54,7 +55,7 @@ class ShowEpisode < ContentBase
     has "CRC32(CONCAT('shows/episode:',shows_episode.id))", :type => :integer, :as => :obj_key
     has "0", :type => :boolean, :as => :is_slideshow
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
-    where "status = #{STATUS_LIVE}"
+    where "status = #{ContentBase::STATUS_LIVE}"
     join audio
   end
 
