@@ -22,7 +22,7 @@ class AdminUser < ActiveRecord::Base
 
   # ----------------
   
-  has_many :activities, class_name: "Secretary::Version"
+  has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
   
   # ----------------
 

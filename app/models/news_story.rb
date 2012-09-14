@@ -1,5 +1,9 @@
 class NewsStory < ContentBase
-  self.table_name =  'news_story'
+  include Model::Validations::ContentValidation
+  include Model::Validations::SlugUniqueForPublishedAtValidation
+  include Model::Callbacks::PublishingCallback
+  
+  self.table_name = 'news_story'
   acts_as_content
   has_secretary
   
@@ -16,23 +20,10 @@ class NewsStory < ContentBase
       list.column "published_at"
     end
   end
-  
-  # -------------------
-  # Callbacks  
-  before_save :fill_fields, on: :create
-  def fill_fields
-    self.published_at = Time.now unless published_at
-  end
-  
-  # -------------------
-  # Validations
-  validates :headline,  presence: true
-  validates :body,      presence: true
-  validates :slug,      presence: true, format: { with: /^[a-zA-Z0-9\-_]+$/, message: "not correctly formatted. 0-9, a-z, A-Z, -, _" }
 
   # -------------------
   # Scopes
-  scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
+  scope :this_week, -> { where("published_at > ?", Date.today - 7) }
   
   CONTENT_TYPE = 'news/story'
   
@@ -73,11 +64,11 @@ class NewsStory < ContentBase
       
   def link_path(options={})
     Rails.application.routes.url_helpers.news_story_path(options.merge!({
-      :year => self.published_at.year.to_s, 
-      :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :id => self.id,
-      :slug => self.slug,
+      :year           => self.published_at.year.to_s, 
+      :month          => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :day            => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :id             => self.id,
+      :slug           => self.slug,
       :trailing_slash => true
     }))
   end

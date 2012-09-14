@@ -152,7 +152,7 @@ ContentBase.content_classes.each do |c|
     
     describe "associations" do
       it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
-      it { should have_many(:alarms).class_name("ContentAlarm").dependent(:destroy) }
+      it { should have_one(:alarm).class_name("ContentAlarm").dependent(:destroy) }
       it { should have_many(:bylines).class_name("ContentByline").dependent(:destroy) }
       it { should have_many :brels }
       it { should have_many :frels }
@@ -161,6 +161,87 @@ ContentBase.content_classes.each do |c|
       it { should have_many :audio }
       it { should have_one :content_category }
       it { should have_one(:category).through(:content_category) }
+    end
+
+    #-----------------
+
+    describe "validations" do
+      unless ["ContentShell", "ShowEpisode"].include? c.model_name # ew
+        it { should validate_presence_of(:slug) }
+        it { should validate_format_of(:slug).with(%r{[\w-]+}) }
+        
+        it "validates slug uniqueness for date" do
+          stub_publishing_callbacks(c)
+          object = create symbolize(c), slug: "something"
+          object2 = build symbolize(c), slug: "something" # different published_at
+          object3 = build symbolize(c), slug: "something", published_at: object.published_at
+          
+          object2.should be_valid
+          object3.should_not be_valid
+          
+          object3.errors.keys.should include :slug
+        end
+      end
+    end
+    
+    #-----------------
+    
+    describe "publishing?" do
+      it "returns true if status was changed and is now published" do
+        object = build symbolize(c)
+        object.stub(:status_changed?) { true }
+        object.stub(:published?) { true }
+        object.publishing?.should be_true
+      end
+      
+      it "returns false if status was not changed" do
+        object = build symbolize(c)
+        object.stub(:status_changed?) { false }
+        object.stub(:published?) { true }
+        object.publishing?.should be_false
+      end
+      
+      it "returns false if status is not published" do
+        object = build symbolize(c)
+        object.stub(:status_changed?) { true }
+        object.stub(:published?) { false }
+        object.publishing?.should be_false
+      end
+      
+      it "returns false if status was not changed and status not published" do
+        object = build symbolize(c)
+        object.stub(:status_changed?) { false }
+        object.stub(:published?) { false }
+        object.publishing?.should be_false
+      end
+    end
+
+    #-----------------
+
+    describe "set_published_at_to_now" do
+      it "sets published at to now" do
+        object = build symbolize(c)
+        time   = object.set_published_at_to_now
+        object.published_at.should eq time
+      end
+    end
+
+    #-----------------
+        
+    describe "callbacks" do
+      it "runs set_published_at_to_now if publishing? is true" do
+        object = build symbolize(c)
+        object.stub(:publishing?) { true }
+        object.should_receive :set_published_at_to_now
+        object.save!
+      end
+      
+      it "does not run set_published_at_to_now if publishing? is false" do
+        object = build symbolize(c)
+        object.stub(:publishing?) { false }
+        object.should_not_receive :set_published_at_to_now
+        object.save!
+      end
     end
     
     #-----------------
@@ -172,8 +253,8 @@ ContentBase.content_classes.each do |c|
       end
       
       it "only selects published content" do
-        published   = create_list symbolize(c), 3, status: 5
-        unpublished = create_list symbolize(c), 2, status: 3
+        published   = create_list symbolize(c), 3, :published
+        unpublished = create_list symbolize(c), 2, :draft
         c.published.all.sort.should eq published.sort
       end
     end

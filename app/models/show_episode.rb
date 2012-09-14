@@ -1,4 +1,7 @@
 class ShowEpisode < ContentBase
+  include Model::Validations::ContentValidation
+  include Model::Callbacks::PublishingCallback
+  
   self.table_name =  "shows_episode"
   has_secretary
   
@@ -21,7 +24,7 @@ class ShowEpisode < ContentBase
   
   # -------------------
   # Validations
-  validates_presence_of :show_id, :air_date, :headline
+  validates_presence_of :show_id
   
   # -------------------
   # Associations

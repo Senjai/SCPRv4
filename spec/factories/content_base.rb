@@ -28,7 +28,20 @@ FactoryGirl.define do
     sequence(:published_at) { |n| Time.now - 60*60*n }
     required_cb_fields
   end
-    
+  
+  trait :pending do
+    status 3
+    sequence(:published_at) { |n| Time.now + n.hours }
+  end
+  
+  trait :published do
+    status 5
+    sequence(:published_at) { |n| Time.now - n.hours }
+  end
+  
+  trait :draft do
+    status 0
+  end
 
 # VideoShell ##########################################################
   factory :video_shell do

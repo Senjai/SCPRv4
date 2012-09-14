@@ -1,4 +1,7 @@
 class VideoShell < ContentBase
+  include Model::Validations::ContentValidation
+  include Model::Validations::SlugUniqueForPublishedAtValidation
+
   self.table_name = "contentbase_videoshell"
   
   CONTENT_TYPE = "content/video"
@@ -19,10 +22,6 @@ class VideoShell < ContentBase
       list.column "published_at"
     end
   end
-  
-  # -------------------
-  # Validation
-  validates_presence_of :headline
     
   define_index do
     indexes headline

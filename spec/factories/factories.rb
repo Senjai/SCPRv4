@@ -199,8 +199,7 @@ FactoryGirl.define do
 
 # ContentAlarm #########################################################
   factory :content_alarm do
-    content   { |alarm| alarm.association :news_story, status: ContentBase::STATUS_PENDING }
-    has_fired false
+    content   { |alarm| alarm.association :news_story, published_at: Time.now + 1.hour, status: ContentBase::STATUS_PENDING }
     
     trait :pending do
       fire_at   { Time.now - 2.hours }

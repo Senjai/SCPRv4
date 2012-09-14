@@ -26,6 +26,7 @@ RSpec.configure do |config|
   config.include LyrisXMLResponse
   config.include DatePathHelper
   config.include StubTime
+  config.include StubPublishingCallbacks
   
   config.before :suite do
     DatabaseCleaner.clean_with :truncation

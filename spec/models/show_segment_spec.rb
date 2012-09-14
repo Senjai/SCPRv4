@@ -30,6 +30,10 @@ describe ShowSegment do
   #------------------
   
   describe "sister_segments" do
+    before :each do
+      stub_publishing_callbacks(ShowSegment)
+    end
+    
     it "uses the other segments from the episode if episodes exist" do
       episode = create :show_episode, segment_count: 3
       episode.segments.last.sister_segments.should eq episode.segments.first(2)

@@ -5,9 +5,9 @@ describe VideoShell do
   
   describe "scopes" do
     it "#published only selects published content" do
-      published = create_list :video_shell, 3, status: 5
-      unpublished = create_list :video_shell, 2, status: 3
-      VideoShell.published.count.should eq 3
+      published   = create_list :video_shell, 3, :published
+      unpublished = create_list :video_shell, 2, :draft
+      VideoShell.published.sort.should eq published.sort
     end
   
     it "#published orders by published_at descending" do

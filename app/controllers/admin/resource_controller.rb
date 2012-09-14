@@ -74,7 +74,7 @@ class Admin::ResourceController < Admin::BaseController
   # Fetch Records
   
   def get_record
-    @record = resource_class.find_by_id!(params[:id])
+    @record = resource_class.find(params[:id])
   end
   
   def get_records

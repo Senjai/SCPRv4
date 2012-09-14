@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  
   self.table_name =  'events_event'
   self.primary_key = "id"
   
@@ -29,7 +31,9 @@ class Event < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates_presence_of :id, :headline, :slug, :etype, :starts_at
+  validates :slug, uniqueness: { scope: :starts_at, message: "has already been used for that start date." }
+  validates_presence_of :headline, :etype, :starts_at
+  
   
   # -------------------
   # Scopes

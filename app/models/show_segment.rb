@@ -1,4 +1,8 @@
 class ShowSegment < ContentBase
+  include Model::Validations::ContentValidation
+  include Model::Validations::SlugUniqueForPublishedAtValidation
+  include Model::Callbacks::PublishingCallback
+  
   self.table_name =  'shows_segment'
   
   CONTENT_TYPE = "shows/segment"

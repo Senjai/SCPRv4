@@ -1,3 +1,4 @@
+
 require "spec_helper"
 
 describe BlogsController do
@@ -66,14 +67,14 @@ describe BlogsController do
         blog = create :blog
         -> { 
           get :show, blog: "nonsense"
-        }.should raise_error ActionController::RoutingError
+        }.should raise_error ActiveRecord::RecordNotFound
       end
   
       it "responds with RoutingError for a remote blog" do
         blog = create :blog, is_remote: true
         -> { 
           get :show, blog: blog.slug 
-        }.should raise_error ActionController::RoutingError
+        }.should raise_error ActiveRecord::RecordNotFound
       end
     end
       
@@ -107,8 +108,8 @@ describe BlogsController do
     
       it "only gets published entries" do
         blog = create :blog
-        entry_pending = create :blog_entry, blog: blog, status: ContentBase::STATUS_PENDING
-        entry_published = create :blog_entry, blog: blog, status: ContentBase::STATUS_LIVE
+        entry_pending = create :blog_entry, :pending, blog: blog
+        entry_published = create :blog_entry, :published, blog: blog
         get :show, blog: blog.slug
         assigns(:entries).should eq [entry_published]
       end
@@ -210,10 +211,10 @@ describe BlogsController do
         assigns(:authors).should_not be_nil
       end
       
-      it "raises RoutingEror if blog isn't found" do
+      it "raises RecordNotFound if blog isn't found" do
         -> { 
           get action, @entry_attr.merge(blog: "nonsense") 
-        }.should raise_error ActionController::RoutingError
+        }.should raise_error ActiveRecord::RecordNotFound
       end
     end
     
@@ -235,12 +236,12 @@ describe BlogsController do
   describe "GET /entry" do
     describe "for invalid entry" do
       it "raises a routing error for unpublished" do
-        entry = create :blog_entry, status: ContentBase::STATUS_PENDING
+        entry = create :blog_entry, :pending
         -> {
           get :entry, { blog: entry.blog.slug, 
                         id: entry.id, 
                         slug: entry.slug }.merge!(date_path(entry.published_at))
-        }.should raise_error ActionController::RoutingError
+        }.should raise_error ActiveRecord::RecordNotFound
       end
       
       it "raises a routing error for invalid ID" do
@@ -249,7 +250,7 @@ describe BlogsController do
           get :entry, { blog: entry.blog.slug, 
                         id: "999999", 
                         slug: entry.slug }.merge!(date_path(entry.published_at))
-        }.should raise_error ActionController::RoutingError
+        }.should raise_error ActiveRecord::RecordNotFound
       end
     end
     
@@ -283,7 +284,7 @@ describe BlogsController do
     it "raises 404 if category isn't found" do
       -> {
         get :category, blog: @blog.slug, category: "nonsense"
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActiveRecord::RecordNotFound
     end
   
     it "assigns category if it's found with the correct blog id" do
@@ -295,7 +296,7 @@ describe BlogsController do
       other_blog = create :blog
       -> {
         get :category, blog: other_blog.slug, category: @category.slug
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActiveRecord::RecordNotFound
     end
   
     it "assigns entries if category is found" do
@@ -316,9 +317,7 @@ describe BlogsController do
     
     it "only select published content" do
       pub_entries = create_list :blog_entry, 2, blog: @blog
-      unpub_entries = create_list :blog_entry, 2,
-                        blog: @blog,
-                        status: ContentBase::STATUS_DRAFT
+      unpub_entries = create_list :blog_entry, 2, :draft, blog: @blog
                         
       @category.blog_entries.push (pub_entries + unpub_entries)
       get :category, blog: @blog.slug, category: @category.slug
@@ -352,11 +351,17 @@ describe BlogsController do
       response.should redirect_to blog_archive_path(blog.slug, "2012", "04")
     end
   end
+
+  # ------------------------
   
   describe "GET /archive" do
     let(:blog) { create :blog }
+
+    before :each do
+      stub_publishing_callbacks(BlogEntry)
+    end
     
-    it "only select entries in the correct date range" do
+    it "only select entries in the correct date range" do      
       entry_jan = create :blog_entry, blog: blog, published_at: Chronic.parse("January 10, 2012")
       entry_feb = create :blog_entry, blog: blog, published_at: Chronic.parse("February 10, 2012")
       get :archive, blog: blog.slug, year: "2012", month: "01"
@@ -365,11 +370,10 @@ describe BlogsController do
     
     it "only selects published entries" do
       date = Time.new("2012", "07")
-      entry_pub = create :blog_entry, blog: blog, 
-                          status: ContentBase::STATUS_LIVE,
+      
+      entry_pub = create :blog_entry, :published, blog: blog, 
                           published_at: date
-      entry_unpub = create :blog_entry, blog: blog, 
-                            status: ContentBase::STATUS_DRAFT,
+      entry_unpub = create :blog_entry, :draft, blog: blog, 
                             published_at: date
       get :archive, { blog: blog.slug }.merge!(date_path(date))
       assigns(:entries).should eq [entry_pub]
@@ -389,21 +393,22 @@ describe BlogsController do
       controller.should redirect_to entry.link_path
     end
     
-    it "raises RoutingError if post not found" do
+    it "raises RecordNotFound if post not found" do
+      entry = create :blog_entry
       -> {
-        get :legacy_path, year: "2000", month: "01", slug: "nonsense"
-      }.should raise_error ActionController::RoutingError
+        get :legacy_path, blog: entry.blog.slug, year: "2000", month: "01", slug: "nonsense"
+      }.should raise_error ActiveRecord::RecordNotFound
     end
     
     it "only responds to published entries" do
-      entry = create :blog_entry, status: ContentBase::STATUS_PENDING
+      entry = create :blog_entry, :pending
       date  = entry.published_at
       -> {
         get :legacy_path, blog: entry.blog.slug, 
                           year: date.year.to_s, 
                           month: "%02d" % date.month, 
                           slug: entry.slug
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActiveRecord::RecordNotFound
     end
     
     it "truncates the slug if it's more than 50 characters" do

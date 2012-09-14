@@ -1,4 +1,8 @@
 class BlogEntry < ContentBase
+  include Model::Validations::ContentValidation
+  include Model::Validations::SlugUniqueForPublishedAtValidation
+  include Model::Callbacks::PublishingCallback
+  
   self.table_name =  "blogs_entry"
   acts_as_content has_format: true
   has_secretary
@@ -18,10 +22,6 @@ class BlogEntry < ContentBase
       list.column "published_at"
     end
   end
-
-  # ------------------
-  # Validation
-  validates_presence_of :headline, :slug
   
   # ------------------
   # Association
