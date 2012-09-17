@@ -92,7 +92,6 @@ shared_examples_for "set published at callback" do
       
       it "sets published at to now" do
         time = freeze_time_at(Time.now)
-        sleep(2) # Just to make sure
         object.save!
         object.published_at.should eq time
       end
@@ -106,7 +105,6 @@ shared_examples_for "set published at callback" do
       
       it "does not set published at to now" do
         time = freeze_time_at(Time.now)
-        sleep(2) # Just to make sure
         object.save!
         object.published_at.should be_nil
       end
