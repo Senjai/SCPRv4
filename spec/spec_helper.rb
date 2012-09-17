@@ -9,9 +9,9 @@ require 'database_cleaner'
 require 'chronic'
 require 'fakeweb'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each               { |f| require f }
-Dir[Rails.root.join("spec/fixtures/models/*.rb")].each          { |f| require f }
-Dir[Rails.root.join("spec/fixtures/db/*.rb")].each              { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|  
   config.use_transactional_fixtures                 = false

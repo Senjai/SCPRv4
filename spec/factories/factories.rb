@@ -29,27 +29,26 @@ FactoryGirl.define do
   end
   
 
-# User #########################################################
+# Bio #########################################################
   factory :bio, class: "Bio", aliases: [:author] do
-    bio "This is a bio"
-    short_bio "Short!"
-    name "Bryan Ricker"
-    last_name "Ricker"
-    email { "#{name.parameterize}@kpcc.org" }
-    is_public true
-    slugged_name { name.parameterize }
-    title "Rails Developer"
-    twitter { "@#{slugged_name}" }
-    sequence(:user_id)
+    user { |bio| bio.association :admin_user }
+
+    is_public    true
+    twitter      { "@#{slug}" }
+    slug         { user.name.parameterize }
+    
+    bio          "This is a bio"
+    short_bio    "Short!"
+    title        "Rails Developer"
     phone_number "123-456-7890"
   end
   
 # AdminUser #########################################################
   factory :admin_user do
     # To be removed:
-    first_name "Bryan"
-    last_name "Ricker"
-    password "sha1$vxA3aP5quIgd$aa7c53395bf8d6126c02ec8ef4e8a9b784c9a2f7" # `secret`, salted & digested
+    sequence(:first_name) { |n| "Bryan #{n}" }
+    last_name   "Ricker"
+    password    "sha1$vxA3aP5quIgd$aa7c53395bf8d6126c02ec8ef4e8a9b784c9a2f7" # `secret`, salted & digested
     date_joined { Time.now }
     #
     
@@ -199,7 +198,7 @@ FactoryGirl.define do
 
 # ContentAlarm #########################################################
   factory :content_alarm do
-    content   { |alarm| alarm.association :news_story, published_at: Time.now + 1.hour, status: ContentBase::STATUS_PENDING }
+    content   { |alarm| alarm.association :news_story, :pending }
     
     trait :pending do
       fire_at   { Time.now - 2.hours }

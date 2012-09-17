@@ -32,9 +32,13 @@ class Event < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates_presence_of :etype, :starts_at, if: -> { self.published? }
+  validates_presence_of :etype, :starts_at, if: :should_validate?
   validates :slug, unique_by_date: { scope: :starts_at, filter: :day, message: "has already been used for that start date." },
-    if: :published?
+    if: :should_validate?
+  
+  def should_validate?
+    !!is_published
+  end
   
   # -------------------
   # Scopes
@@ -46,6 +50,12 @@ class Event < ActiveRecord::Base
   scope :upcoming_and_current,  -> { published.where("ends_at > ?", Time.now).order("starts_at") }
   scope :past,                  -> { published.where("ends_at < ?", Time.now).order("starts_at desc") }
 
+  # -------------------
+    
+  def status
+    is_published ? ContentBase::STATUS_LIVE : ContentBase::STATUS_DRAFT
+  end
+  
   # -------------------
   
   def self.sorted(events)
@@ -71,21 +81,6 @@ class Event < ActiveRecord::Base
   end
   
   # -------------------
-  
-  # Fake these until we can make Events actually publishable
-  def published?
-    is_published
-  end
-  
-  def pending?
-    !published?
-  end
-  
-  def status
-    published? ? ContentBase::STATUS_LIVE : ContentBase::STATUS_DRAFT
-  end
-  
-  #-------------
   
   def self.closest
     upcoming.first
@@ -157,10 +152,10 @@ class Event < ActiveRecord::Base
   
   def link_path(options={})
     Rails.application.routes.url_helpers.event_path(options.merge!({
-      :year => self.starts_at.year, 
-      :month => self.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.starts_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
-      :slug => self.slug,
+      :year           => self.starts_at.year, 
+      :month          => self.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :day            => self.starts_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+      :slug           => self.slug,
       :trailing_slash => true
     }))
   end

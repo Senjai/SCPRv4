@@ -1,6 +1,22 @@
 require "spec_helper"
 
 describe ShowEpisode do
+  describe "callbacks" do
+    it_behaves_like "set published at callback"
+  end
+  
+  # ----------------
+  
+  describe "associations" do
+    it_behaves_like "content alarm association"
+    
+    it { should have_many :rundowns }
+    it { should have_many(:segments).through(:rundowns) }
+    it { should belong_to :show }
+  end
+  
+  #------------------
+  
   describe "validations" do
     it_behaves_like "content validation"
 
@@ -11,19 +27,25 @@ describe ShowEpisode do
       should validate_presence_of :air_date
     end
   end
+
+  #------------------
+  
+  describe "scopes" do
+    it_behaves_like "since scope"
+    
+    describe "#published" do
+      it "orders published content by air_date descending" do
+        episodes = create_list :show_episode, 3, status: 5
+        ShowEpisode.published.first.should eq episodes.last
+        ShowEpisode.published.last.should eq episodes.first
+      end
+    end
+  end
   
   #------------------
   
   describe "content base methods" do
     it { should_not respond_to :disqus_identifier }
-  end
-  
-  #------------------
-  
-  describe "associations" do
-    it { should have_many :rundowns }
-    it { should have_many(:segments).through(:rundowns) }
-    it { should belong_to :show }
   end
   
   #------------------
@@ -61,12 +83,4 @@ describe ShowEpisode do
   end
   
   #------------------
-  
-  describe "#published" do
-    it "orders published content by air_date descending" do
-      episodes = create_list :show_episode, 3, status: 5
-      ShowEpisode.published.first.should eq episodes.last
-      ShowEpisode.published.last.should eq episodes.first
-    end
-  end
 end

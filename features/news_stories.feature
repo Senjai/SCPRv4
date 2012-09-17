@@ -2,7 +2,7 @@ Feature: News Stories
 
 Background:
 	Given I am logged in
-	
+
 Scenario: Attempt to Create an invalid news story
 	When I go to "new admin news story"
 	And I leave the fields empty
@@ -28,3 +28,4 @@ Scenario: Edit a news story
 	Then I should be on "admin news stories"
 	And I should see a success message
 	And the news story's attributes should be updated
+

@@ -13,13 +13,22 @@ describe Event do
       let(:scope) { :starts_at }
     end
     
-    context "event is published" do
+    context "should validate" do
       before :each do
-        Event.any_instance.stub(:published?) { true }
+        Event.any_instance.stub(:should_validate?) { true }
       end
       
       it { should validate_presence_of(:etype) }
       it { should validate_presence_of(:starts_at) }
+    end
+    
+    context "should not validate" do
+      before :each do
+        Event.any_instance.stub(:should_validate?) { false }
+      end
+      
+      it { should_not validate_presence_of(:etype) }
+      it { should_not validate_presence_of(:starts_at) }
     end
   end
   

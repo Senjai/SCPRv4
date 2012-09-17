@@ -1,7 +1,10 @@
 class ShowSegment < ContentBase
   include Model::Validations::ContentValidation
   include Model::Validations::SlugUniqueForPublishedAtValidation
-  include Model::Callbacks::PublishingCallback
+  include Model::Callbacks::SetPublishedAtCallback
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
   
   self.table_name =  'shows_segment'
   
@@ -23,12 +26,20 @@ class ShowSegment < ContentBase
       list.column "status"
     end
   end
+
   
   # -------------------
   # Associations  
   belongs_to :show,   :class_name => "KpccProgram"
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id"
   has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc" 
+
+
+  # -------------------
+  # Scopes
+
+
+  # -------------------
 
   define_index do
     indexes headline

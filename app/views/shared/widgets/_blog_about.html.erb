@@ -50,7 +50,7 @@
 					</div>
 				<% end %>
 		    	<figcaption>
-					<h6 class="host-name"><%= link_to author.name, bio_path(author.slugged_name) %></h6>
+					<h6 class="host-name"><%= link_to author.name, bio_path(author.slug) %></h6>
 					<p class="brief-bio">
 						<%= author.short_bio %>
 						<div><%= link_to("Follow #{author.twitter} on Twitter", author.twitter_url) if author.twitter.present? %></div>

@@ -1,6 +1,10 @@
 class VideoShell < ContentBase
   include Model::Validations::ContentValidation
   include Model::Validations::SlugValidation
+  include Model::Validations::PublishedAtValidation
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+
 
   self.table_name = "contentbase_videoshell"
   
@@ -10,7 +14,15 @@ class VideoShell < ContentBase
   acts_as_content
   has_secretary
   
+  
+  # -------------------
+  # Validations
   validates :slug, uniqueness: true
+  
+  
+  # -------------------
+  # Scopes
+  
   
   # -------------------
   # Administration
@@ -24,6 +36,9 @@ class VideoShell < ContentBase
       list.column "published_at"
     end
   end
+
+
+  # -------------------
     
   define_index do
     indexes headline

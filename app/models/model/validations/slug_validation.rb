@@ -3,6 +3,7 @@
 # Basic validation for slug field
 #
 # Required fields: [:slug]
+# Also requires object to respond to :should_validate?
 #
 module Model
   module Validations
@@ -11,9 +12,9 @@ module Model
 
       included do
         validates :slug,
-          presence:   true,
-          format:     { with: Validations::DEFAULTS[:slug_format] }
-        #
+          presence: true, # Mostly just for tests
+          format: { with: Validations::DEFAULTS[:slug_format] },
+          if: :should_validate?
       end
     end
   end

@@ -119,22 +119,11 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "auth_user_user_permissions", ["permission_id"], :name => "permission_id_refs_id_6d7fb3c2067e79cb"
   add_index "auth_user_user_permissions", ["user_id", "permission_id"], :name => "user_id", :unique => true
 
-  create_table "bios_award", :force => true do |t|
-    t.integer "reporter_id",                :null => false
-    t.integer "year",                       :null => false
-    t.string  "award_name",  :limit => 250, :null => false
-  end
-
-  add_index "bios_award", ["reporter_id"], :name => "bios_award_reporter_id"
-
   create_table "bios_bio", :force => true do |t|
     t.integer "user_id",                                            :null => false
-    t.string  "name",         :limit => 200,                        :null => false
-    t.string  "last_name",    :limit => 100,        :default => "", :null => false
-    t.string  "slugged_name", :limit => 50,         :default => "", :null => false
+    t.string  "slug",         :limit => 50,                         :null => false
     t.text    "bio",          :limit => 2147483647,                 :null => false
     t.string  "title",        :limit => 200,        :default => "", :null => false
-    t.string  "email",        :limit => 200,                        :null => false
     t.boolean "is_public",                                          :null => false
     t.string  "feed_url",     :limit => 200,        :default => "", :null => false
     t.string  "twitter",      :limit => 30,                         :null => false

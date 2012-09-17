@@ -1,14 +1,18 @@
 class BlogEntry < ContentBase
   include Model::Validations::ContentValidation
   include Model::Validations::SlugUniqueForPublishedAtValidation
-  include Model::Callbacks::PublishingCallback
+  include Model::Callbacks::SetPublishedAtCallback
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
   
   self.table_name =  "blogs_entry"
   acts_as_content has_format: true
   has_secretary
   
-  CONTENT_TYPE = "blogs/entry"
+  CONTENT_TYPE         = "blogs/entry"
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
+
     
   # ------------------
   # Administration
@@ -22,6 +26,14 @@ class BlogEntry < ContentBase
       list.column "published_at"
     end
   end
+
+
+  # ------------------
+  # Validation
+  def should_validate?
+    pending? or published?
+  end
+  
   
   # ------------------
   # Association
@@ -33,10 +45,12 @@ class BlogEntry < ContentBase
   has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
   has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
   
+  
   # ------------------
-  # Scopification
+  # Scopes
   default_scope includes(:bylines)
-  scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
+
+  # ------------------
   
   define_index do
     indexes headline

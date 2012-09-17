@@ -72,9 +72,7 @@ class ContentBase < ActiveRecord::Base
     
   # All ContentBase objects have assets and one alarm
   has_many :bylines,          as: :content, class_name: "ContentByline",  dependent: :destroy
-  
-  has_one :alarm,             as: :content, class_name: "ContentAlarm",   dependent: :destroy
-  
+    
   has_many :brels,            as: :content, class_name: "Related"
   has_many :frels,            as: :related, class_name: "Related"
   
@@ -89,13 +87,9 @@ class ContentBase < ActiveRecord::Base
   def self.published
     where(status: STATUS_LIVE).order("published_at desc")
   end
-  
+    
   #-------------
-  
-  #after_save :create_content_alarm, if: -> { self.pending? }  
-  #def create_content_alarm
-  #  ContentAlarm.generate(self)
-  #end
+
   
   #----------
   

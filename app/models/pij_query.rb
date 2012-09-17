@@ -1,4 +1,6 @@
 class PijQuery < ActiveRecord::Base
+  include Model::Scopes::SinceScope
+  
   self.table_name       = 'pij_query'
   CONTENT_TYPE          = "pij/query"
   
@@ -24,8 +26,9 @@ class PijQuery < ActiveRecord::Base
     end
   end
   
+  
   #------------
-  # Scopes
+  # Scopes  
   scope :news,          where(query_type: "news")
   scope :evergreen,     where(query_type: "evergreen")
   scope :featured,      where(is_featured: true)
@@ -37,12 +40,14 @@ class PijQuery < ActiveRecord::Base
     is_active: true, time: Time.now
   ).order("published_at desc") }
   
+  
   #------------
   # Validation
   validates :slug,        presence: true, uniqueness: true
   validates :query_type,  presence: true
   validates :query_url,   presence: true
   validates :headline,    presence: true
+
 
   #------------  
 

@@ -168,7 +168,7 @@ module ApplicationHelper
       
       authors[i].collect! do |b|
         if links && b.user && b.user.is_public
-          link_to(b.user.name, bio_path(b.user.slugged_name))
+          link_to(b.user.name, bio_path(b.user.slug))
         elsif b.user
           b.user.name
         else
@@ -215,7 +215,7 @@ module ApplicationHelper
       # go through each list and add links where needed
       authors[2].collect! do |b|
         if links && b.user
-          link_to(b.user.name, bio_path(b.user.slugged_name))
+          link_to(b.user.name, bio_path(b.user.slug))
         elsif b.user
           b.user.name
         else

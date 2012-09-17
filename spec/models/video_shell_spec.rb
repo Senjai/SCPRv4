@@ -3,13 +3,17 @@ require 'spec_helper'
 describe VideoShell do  
   describe "validations" do
     it_behaves_like "slug validation"
-    it_behaves_like "content validation"
     it_behaves_like "slug unique validation"
+    it_behaves_like "content validation"
+    it_behaves_like "published at validation"
   end
   
   #--------------------
   
   describe "scopes" do
+    it_behaves_like "since scope"
+    
+    
     it "#published only selects published content" do
       published   = create_list :video_shell, 3, :published
       unpublished = create_list :video_shell, 2, :draft
@@ -21,6 +25,18 @@ describe VideoShell do
     end
   end
 
+  # ----------------
+
+  describe "associations" do
+    it_behaves_like "content alarm association"
+  end
+  
+  # ----------------
+  
+  describe "callbacks" do
+    #
+  end
+  
   # ----------------
 
   describe "#has_format?" do

@@ -24,6 +24,10 @@ class Blog < ActiveRecord::Base
   validates :name, presence: true
   validates :slug, uniqueness: true
   
+  def should_validate?
+    true
+  end
+  
   # -------------------
   # Associations
   has_many :entries, order: 'published_at desc', class_name: "BlogEntry"
@@ -40,7 +44,9 @@ class Blog < ActiveRecord::Base
   scope :is_not_news, where(is_news: false)
   scope :local,       where(is_remote: false)
   scope :remote,      where(is_remote: true)
-  
+
+  # -------------------
+    
   def remote_link_path
     Rails.application.routes.url_helpers.blog_url(self.slug)
   end

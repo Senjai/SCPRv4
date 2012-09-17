@@ -1,32 +1,16 @@
 class NewsStory < ContentBase
   include Model::Validations::ContentValidation
   include Model::Validations::SlugUniqueForPublishedAtValidation
-  include Model::Callbacks::PublishingCallback
+  include Model::Callbacks::SetPublishedAtCallback
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
   
   self.table_name = 'news_story'
   acts_as_content
   has_secretary
   
-  # -------------------
-  # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
-      list.column "headline"
-      list.column "slug"
-      list.column "news_agency"
-      list.column "audio"
-      list.column "status"
-      list.column "published_at"
-    end
-  end
-
-  # -------------------
-  # Scopes
-  scope :this_week, -> { where("published_at > ?", Date.today - 7) }
-  
-  CONTENT_TYPE = 'news/story'
-  
+  CONTENT_TYPE         = 'news/story'
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
   
   LOCALES = [ 
@@ -45,6 +29,35 @@ class NewsStory < ContentBase
     ['New America Media',   'new_america'],
     ['NPR & KPCC',          'npr_kpcc']
   ]
+  
+  
+  # -------------------
+  # Administration
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "slug"
+      list.column "news_agency"
+      list.column "audio"
+      list.column "status"
+      list.column "published_at"
+    end
+  end
+
+
+  # ------------------
+  # Validation
+  def should_validate?
+    pending? or published?
+  end
+  
+  
+  # -------------------
+  # Scopes
+
+  
+  # -------------------
   
   define_index do
     indexes headline

@@ -1,6 +1,12 @@
 require "spec_helper"
 
 describe ShowSegment do
+  describe "callbacks" do
+    it_behaves_like "set published at callback"
+  end
+  
+  # ----------------
+  
   describe "validations" do
     it_behaves_like "slug validation"
     it_behaves_like "content validation"
@@ -12,9 +18,23 @@ describe ShowSegment do
   #------------------
   
   describe "associations" do
+    it_behaves_like "content alarm association"
+    
     it { should belong_to :show }
     it { should have_many :rundowns }
     it { should have_many(:episodes).through(:rundowns) }
+  end
+
+  #------------------
+  
+  describe "scopes" do
+    it_behaves_like "since scope"
+    
+    describe "#published" do
+      it "orders published content by published_at descending" do
+        ShowSegment.published.to_sql.should match /order by published_at desc/i
+      end
+    end
   end
   
   #------------------
@@ -110,10 +130,4 @@ describe ShowSegment do
   end
   
   #------------------
-  
-  describe "#published" do
-    it "orders published content by published_at descending" do
-      ShowSegment.published.to_sql.should match /order by published_at desc/i
-    end
-  end
 end

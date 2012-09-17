@@ -1,6 +1,9 @@
 class ShowEpisode < ContentBase
   include Model::Validations::ContentValidation
-  include Model::Callbacks::PublishingCallback
+  include Model::Callbacks::SetPublishedAtCallback
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
   
   self.table_name =  "shows_episode"
   has_secretary
@@ -41,9 +44,10 @@ class ShowEpisode < ContentBase
     
   # -------------------
   # Scopes
-  scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
+  scope :published, where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
   scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
   
+  # -------------------
   
   define_index do
     indexes headline

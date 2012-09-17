@@ -1,33 +1,4 @@
 __END__
-describe "publishing?" do
-  it "returns true if status was changed and is now published" do
-    object = build symbolize(c)
-    object.stub(:status_changed?) { true }
-    object.stub(:published?) { true }
-    object.publishing?.should be_true
-  end
-  
-  it "returns false if status was not changed" do
-    object = build symbolize(c)
-    object.stub(:status_changed?) { false }
-    object.stub(:published?) { true }
-    object.publishing?.should be_false
-  end
-  
-  it "returns false if status is not published" do
-    object = build symbolize(c)
-    object.stub(:status_changed?) { true }
-    object.stub(:published?) { false }
-    object.publishing?.should be_false
-  end
-  
-  it "returns false if status was not changed and status not published" do
-    object = build symbolize(c)
-    object.stub(:status_changed?) { false }
-    object.stub(:published?) { false }
-    object.publishing?.should be_false
-  end
-end
 
 #-----------------
 

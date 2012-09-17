@@ -4,6 +4,7 @@
 # scoped to published_at
 #
 # Required fields: [:slug, :published_at, :status]
+# Also requires object to respond to :should_validate?
 #
 module Model
   module Validations
@@ -12,12 +13,9 @@ module Model
 
       include SlugValidation
       included do
-        # TODO: The editor should be aware of validation failures before publish
-        # Auto-publishing should never fail validation.
         validates :slug, unique_by_date: { scope: :published_at, filter: :day, message: "has already been used for that publish date." },
-          if: :published?
+          if: :should_validate?
         #
-
       end
     end
   end

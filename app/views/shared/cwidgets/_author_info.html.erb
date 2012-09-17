@@ -4,11 +4,11 @@
     <figure class="clearfix">
 		<%= byline.user.headshot.thumb.tag %>
     	<figcaption>
-			<h6><%= link_to byline.user.name, bio_path(byline.user.slugged_name) %>, <em><%= byline.user.title %></em></h6>
+			<h6><%= link_to byline.user.name, bio_path(byline.user.slug) %>, <em><%= byline.user.title %></em></h6>
 			<p class="brief-bio"><%= byline.user.short_bio %></p>
 			<ul class="tease clearfix">
 				<% if byline.user.twitter? %><li class="follow"><%= link_to "Follow on Twitter", byline.user.twitter_url, target: "_blank" %></li><% end %>
-				<li><%= link_to "More from this author", bio_path(byline.user.slugged_name) %></li>
+				<li><%= link_to "More from this author", bio_path(byline.user.slug) %></li>
 			</ul>
 		</figcaption>
 	</figure>
