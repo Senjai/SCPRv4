@@ -3,13 +3,13 @@ require File.expand_path("../../../spec_helper", __FILE__)
 describe AdminResource::Helpers::Model do
   describe "#to_title" do
     it "uses one of the specified title attributes if available" do
-      stub_const("AdminResource::Helpers::Model::TITLE_ATTRIBUTES", [:name])
+      AdminResource.config.title_attributes = [:name]
       person = Person.new(name: "Bryan Ricker")
       person.to_title.should eq "Bryan Ricker"
     end
     
     it "falls back to a simple_title if none of the attributes match" do
-      stub_const("AdminResource::Helpers::Model::TITLE_ATTRIBUTES", [:title])
+      AdminResource.config.title_attributes = [:title]
       person = Person.new(id: 1, name: "Bryan Ricker")
       person.should_receive(:simple_title).and_return("Simple Title")
       person.to_title.should eq "Simple Title"

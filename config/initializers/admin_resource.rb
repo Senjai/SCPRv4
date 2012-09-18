@@ -24,4 +24,6 @@ AdminResource::Config.configure do |config|
     "ShowSegment", 
     "PijQuery"
   ]
+  
+  config.title_attributes = [:name, :short_headline, :title, :headline]
 end

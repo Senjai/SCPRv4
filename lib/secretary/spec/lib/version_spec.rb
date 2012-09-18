@@ -54,17 +54,17 @@ describe Secretary::Version do
 
   describe "::generate" do
     it "generates a new version for passed-in object" do
-      story = Secretary::Test::Story.create(headline: "Cool story, bro", body: "Cool text, bro.")
+      story   = Secretary::Test::Story.create(headline: "Cool story, bro", body: "Cool text, bro.")
       version = Secretary::Version.generate(story)
       story.versions.should include version
       
       yaml = story.to_yaml
       
       Secretary::Version.count.should eq 2
-      story.save!
+      story.update_attributes!(headline: "Something else")
       Secretary::Version.count.should eq 3
       
-      story.update_attributes(headline: "Cooler story, bro", body: "Coolio text")
+      story.update_attributes!(headline: "Cooler story, bro", body: "Coolio text")
       story.reload
       story.versions.size.should eq 4
       story.versions.last.frozen_object.headline.should eq story.headline

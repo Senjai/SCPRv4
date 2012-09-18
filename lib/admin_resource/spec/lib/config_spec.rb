@@ -25,4 +25,18 @@ describe AdminResource::Config do
       AdminResource.config.registered_models.should eq []
     end
   end
+  
+  describe "#title_attributes" do
+    it "returns the defaults plus :simple_title if nothing is set" do
+      stub_const("AdminResource::Config::DEFAULTS", { title_attributes: [:title] })
+      AdminResource.config.title_attributes = nil
+      AdminResource.config.title_attributes.should eq [:title, :simple_title]
+    end
+    
+    it "always includes simple_title" do
+      stub_const("AdminResource::Config::DEFAULTS", { title_attributes: [] })
+      AdminResource.config.title_attributes = nil
+      AdminResource.config.title_attributes.should eq [:simple_title]
+    end
+  end
 end

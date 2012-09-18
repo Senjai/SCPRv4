@@ -37,15 +37,18 @@ module AdminResource
       end
 
       # Convert any AR object into a human-readable title
-      # Tries the attributes in TITLE_ATTRIBUTES
+      # Tries the attributes in config.title_attributes
       # And falls back to "BlogEntry #99"
       #
       # This allows us to get a human-readable title regardless
       # of what an object's "title" attribute happens to be.
       #
-      # To define your own set of attributes, do so in an initializer:
+      # To define your own set of attributes, do so with the config
       #
-      #   AdminResource::Helpers::Model::TITLE_ATTRIBUTES = [:title, :full_name]
+      #   AdminResource.config.title_attributes = [:title, :full_name]
+      #
+      # The :simple_title method will automatically be added to the array
+      # and acts as the fallback.
       #
       # Usage:
       #
@@ -58,12 +61,10 @@ module AdminResource
       #   photo.to_title  #=> "Photo #10"
       #
       #
-      if !defined?(TITLE_ATTRIBUTES)
-        TITLE_ATTRIBUTES = [:name, :short_headline, :title, :headline, :simple_title]
-      end
       
       def to_title
-        title_method = TITLE_ATTRIBUTES.find { |a| self.respond_to?(a) }
+        attributes   = AdminResource.config.title_attributes
+        title_method = attributes.find { |a| self.respond_to?(a) }
         self.send(title_method)
       end
       
