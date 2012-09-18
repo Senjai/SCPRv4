@@ -53,21 +53,20 @@ class scpr.DateTimeInput
 
         # Fill in hidden text field when visible field is changed
         @timestampEls.on
-            change: (event) => (@field.trigger "updated")
+            change: (event) => (@field.trigger "update")
 
         @field.on
-            updated: => (@setDate @dateEl.val(), @timeEl.val())
+            update: => (@setDate @dateEl.val(), @timeEl.val())
                 
         # Fill in visible fields with right now time,
-        # and trigger the "change" event on only one of the
-        # timestampEls (otherwise it gets triggered multiple)
-        # times)
+        # and trigger the "update" event on field hidden field
         @populateIcons.on
             click: (event) =>
                 @populateDate(@dateEl, @options.dateFormat)
                 @populateDate(@timeEl, @options.timeFormat)
-                @field.trigger "updated"
+                @field.trigger "update"
        
+
     # Populate a visible field with a date human-readable date string
     populateDate: (el, format) ->
         date = moment().format(format)

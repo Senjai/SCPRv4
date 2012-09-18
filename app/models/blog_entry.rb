@@ -30,6 +30,8 @@ class BlogEntry < ContentBase
 
   # ------------------
   # Validation
+  validates_presence_of :blog
+  
   def should_validate?
     pending? or published?
   end
@@ -118,6 +120,10 @@ class BlogEntry < ContentBase
   #----------
 
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
       blog:           self.blog.slug,
       year:           self.published_at.year, 

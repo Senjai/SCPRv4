@@ -61,7 +61,7 @@ module Model
         # is considered "not published". Maybe that won't always 
         # be true, for now it's fine.
         def unpublishing?
-          self.status_was == ContentBase::STATUS_LIVE
+          self.status_changed? and self.status_was == ContentBase::STATUS_LIVE
         end        
         
         #--------------

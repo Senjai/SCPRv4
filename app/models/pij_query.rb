@@ -48,7 +48,6 @@ class PijQuery < ActiveRecord::Base
   validates :query_url,   presence: true
   validates :headline,    presence: true
 
-
   #------------  
 
   def link_path(options = {})

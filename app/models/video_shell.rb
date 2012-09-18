@@ -56,6 +56,10 @@ class VideoShell < ContentBase
   #--------------------
   
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.video_path(options.merge!({
       id:             self.id,
       slug:           self.slug,

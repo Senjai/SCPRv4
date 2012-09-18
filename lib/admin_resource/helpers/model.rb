@@ -82,8 +82,8 @@ module AdminResource
       #-------------
       
       # This should go away eventually
-      def django_edit_url
-        [self.class.django_admin_url, self.id].join "/"
+      def django_edit_url          
+        [self.class.django_admin_url, self.id || "add"].join "/"
       end
       
       #-------------

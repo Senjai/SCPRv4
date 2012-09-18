@@ -66,11 +66,15 @@ class ShowEpisode < ContentBase
   #----------
   
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.episode_path(options.merge!({
-      :show => self.show.slug,
-      :year => self.air_date.year, 
-      :month => self.air_date.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.air_date.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+      :show           => self.show.slug,
+      :year           => self.air_date.year, 
+      :month          => "%02d" % self.air_date.month,
+      :day            => "%02d" % self.air_date.day,
       :trailing_slash => true
     }))
   end

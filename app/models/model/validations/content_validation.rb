@@ -12,7 +12,7 @@ module Model
 
       included do
         validates_presence_of :headline  # always
-        validates_presence_of :body,     if: :should_validate?
+        validates_presence_of :body,     message: "can't be blank <br />when publishing", if: :should_validate?
         validates_presence_of :status    # always
       end
     end

@@ -76,6 +76,10 @@ class NewsStory < ContentBase
   #----------
       
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.news_story_path(options.merge!({
       :year           => self.published_at.year.to_s, 
       :month          => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 

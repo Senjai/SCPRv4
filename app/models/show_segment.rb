@@ -89,11 +89,15 @@ class ShowSegment < ContentBase
   #----------
   
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.segment_path(options.merge!({
       :show           => self.show.slug,
       :year           => self.published_at.year, 
-      :month          => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day            => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+      :month          => "%02d" % self.published_at.month,
+      :day            => "%02d" % self.published_at.day,
       :id             => self.id,
       :slug           => self.slug,
       :trailing_slash => true

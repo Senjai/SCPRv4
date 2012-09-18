@@ -227,9 +227,9 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
-    t.integer  "django_content_type_id",                                                  :null => false
-    t.integer  "content_id",                                                              :null => false
-    t.datetime "fire_at",                              :default => '2011-09-20 15:15:06', :null => false
+    t.integer  "django_content_type_id",               :null => false
+    t.integer  "content_id",                           :null => false
+    t.datetime "fire_at"
     t.string   "content_type",           :limit => 20
   end
 

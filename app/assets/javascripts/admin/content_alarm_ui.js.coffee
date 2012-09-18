@@ -3,7 +3,7 @@
 class scpr.ContentAlarmUI
     DefaultOptions:
         form:             "form.simple_form"
-        timestampEl:      ".published_at"
+        timestampEl:      ".fire_at"
         statusSelect:     "select[id*=status]"
         statusPending:    "3"
         

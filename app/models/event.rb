@@ -37,6 +37,10 @@ class Event < ActiveRecord::Base
     if: :should_validate?
   
   def should_validate?
+    published?
+  end
+  
+  def published?
     !!is_published
   end
   
@@ -151,6 +155,10 @@ class Event < ActiveRecord::Base
   #----------
   
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.event_path(options.merge!({
       :year           => self.starts_at.year, 
       :month          => self.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 

@@ -9,7 +9,8 @@ module Secretary
 
       before_create :set_create
       before_update :set_update
-      after_save    :generate_version, :clean_action
+      after_save    :generate_version, if -> { self.changed_attributes.present? }
+      after_save    :clean_action
       
       send :include, InstanceMethods
     end
