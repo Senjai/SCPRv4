@@ -3,37 +3,44 @@
 $ ->
     for wrapper in $("form.simple_form div.datetime")
         new scpr.DateTimeInput(wrapper: wrapper)
-        
+            
 class scpr.DateTimeInput
     DefaultOptions:
-        dateTemplate: JST["admin/templates/timestamp_fields"]
-        timestampEls: ".timestamp-el"
-        dateFormat:   "MM/DD/YYYY"
-        timeFormat:   "hh:mma"
-        
+        dateTemplate:  JST["admin/templates/timestamp_fields"]
+        timestampEls:  ".timestamp-el"
+        dateIcon:      "span.populate.date"
+        timeIcon:      "span.populate.time"
+        controls:      "div.controls"
+        field:         "input.datetime"
+        dateFormat:    "MM/DD/YYYY"
+        timeFormat:    "hh:mma"
+
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
         
         # Elements
-        @wrapper      = $ @options.wrapper
-        @controls     = @wrapper.find("div.controls")
-        @field        = @wrapper.find("input.datetime")
-
-        # Hide the field since we don't want anybody editing it directly
-        @field.hide()
-
+        @wrapper       = $ @options.wrapper
+        @controls      = @wrapper.find @options.controls
+        @field         = @wrapper.find @options.field
+        
         # Attributes
         @id     = @field.attr("id")
         @dateId = "#{@id}_date"
         @timeId = "#{@id}_time"
 
+        # Hide the field since we don't want anybody editing it directly
+        @field.hide()
+
         # Render the template
         @controls.prepend(@options.dateTemplate(date_id: @dateId, time_id: @timeId))
-        
+    
         # Register the newly-created elements
-        @timestampEls   = $ @options.timestampEls
+        @timestampEls   = @wrapper.find @options.timestampEls
         @dateEl         = $ "##{@dateId}"
         @timeEl         = $ "##{@timeId}"
+        @populateIcons  = @wrapper.find "span.populate"
+        @dateIcon       = @wrapper.find @options.dateIcon
+        @timeIcon       = @wrapper.find @options.timeIcon
 
         # Fill in the new fields with the correct date/time
         # Only if the field has a value (i.e. we're editing the object)
@@ -42,17 +49,36 @@ class scpr.DateTimeInput
             @timeEl.val @getDate(@options.timeFormat)
 
         # Make the dateEl a datepicker
-        @dateEl.datepicker()
+        @dateEl.datepicker(autoclose: true)
 
-        # Setup event listeners to fill in hidden text field on change
+        # Fill in hidden text field when visible field is changed
         @timestampEls.on
-            change: (event) =>
-                @setDate @dateEl.val(), @timeEl.val()
+            change: (event) => (@field.trigger "updated")
 
+        @field.on
+            updated: => (@setDate @dateEl.val(), @timeEl.val())
+                
+        # Fill in visible fields with right now time,
+        # and trigger the "change" event on only one of the
+        # timestampEls (otherwise it gets triggered multiple)
+        # times)
+        @populateIcons.on
+            click: (event) =>
+                @populateDate(@dateEl, @options.dateFormat)
+                @populateDate(@timeEl, @options.timeFormat)
+                @field.trigger "updated"
+       
+    # Populate a visible field with a date human-readable date string
+    populateDate: (el, format) ->
+        date = moment().format(format)
+        el.val(date)
+
+    # Get timestamp from hidden field
     getDate: (format) ->
         date = moment(@field.val())
         date.format format
     
+    # Set value of hidden field to a real date
     setDate: (date, time) ->
         datetime = Date.parse("#{date} #{time}")
         console.log "date set to", datetime
