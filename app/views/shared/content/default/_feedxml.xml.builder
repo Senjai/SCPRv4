@@ -12,8 +12,8 @@ xml.item do
   
   if enclosure_type == :image
     if content.assets.first.present?
-      thumb = content.assets.first.asset.thumb
-      xml.enclosure url: thumb.url, type: "image/jpeg", length: thumb.image_file_size
+      asset = content.assets.first.asset
+      xml.enclosure url: asset.thumb.url, type: "image/jpeg", length: asset.image_file_size.to_i / 100
     end
   else
     if content.audio.present?
