@@ -14,6 +14,7 @@
 	</div>
 
 	<h3>Currently Editing on This Page</h3>
+	<hr />
 	<ul id="newsroom-edit_user-list" class="viewers">
 	</ul>
 <% end %>
@@ -40,13 +41,20 @@
 		});
 	
 		socket.on('load-list', function(users) {
+			console.log(users);
 			_.each(users, function(user) {
-		    	$('#newsroom-edit_user-list').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
+		    	$('#newsroom-edit_user-list').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"border-right: 10px solid " + user.color + "\"><h3 style='display:inline-block; vertical-align: top;'>" + user.name + "</h3></li>");
+				if(typeof user.headshot !== "undefined") {
+					$("li#user-" + user.id).prepend(user.headshot)
+				}
 			});
 		});
 	
 		socket.on('new-user', function(user) {
-	    	$('#newsroom-edit_user-list').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
+	    	$('#newsroom-edit_user-list').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"border-right: 10px solid " + user.color + "\"><h3 style='display:inline-block; vertical-align: top;'>" + user.name + "</h3></li>");
+			if(typeof user.headshot !== "undefined") {
+				$("li#user-" + user.id).prepend(user.headshot)
+			}
 	  	});
 
 		socket.on('remove_viewer', function(user) {
