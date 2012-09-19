@@ -1,4 +1,5 @@
 class ShowEpisode < ContentBase
+  include Model::Methods::PublishingMethods
   include Model::Validations::ContentValidation
   include Model::Callbacks::SetPublishedAtCallback
   include Model::Associations::ContentAlarmAssociation

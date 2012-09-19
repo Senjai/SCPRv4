@@ -2,7 +2,7 @@
 # SetPublishedAtCallback
 #
 # Sets published_at depending on various things
-# Required attributes: [:status, :published_at, :alarm]
+# Required attributes: [:published_at, :alarm, :publishing?, :unpublishing?]
 # Requires a has_one association with ContentAlarm
 #
 # Note that these callbacks have to run before validation
@@ -48,20 +48,6 @@ module Model
         # If unpublishing
         def should_set_published_at_to_nil?
           self.unpublishing?
-        end
-
-        #--------------
-        
-        # Status was changed and status is published
-        def publishing?
-           self.status_changed? and self.published?
-        end
-        
-        # This assumes that any other status except STATUS_LIVE
-        # is considered "not published". Maybe that won't always 
-        # be true, for now it's fine.
-        def unpublishing?
-          self.status_changed? and self.status_was == ContentBase::STATUS_LIVE
         end        
         
         #--------------

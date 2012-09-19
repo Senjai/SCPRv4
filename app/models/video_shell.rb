@@ -1,4 +1,5 @@
 class VideoShell < ContentBase
+  include Model::Methods::PublishingMethods
   include Model::Validations::ContentValidation
   include Model::Validations::SlugValidation
   include Model::Validations::PublishedAtValidation

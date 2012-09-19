@@ -11,7 +11,7 @@ end
 # 
 # module ActiveRecord
 #   class Base
-#     if File.exists?("#{Rails.root}/app/models/scopes/#{self.model_name.underscore}_scope.rb")
+#     if File.exists?("#{Rails.root}/app/models/model/scopes/#{self.model_name.underscore}_scope.rb")
 #       include "Model::Scopes::#{self.model_name}Scope".constantize
 #     end
 #   end

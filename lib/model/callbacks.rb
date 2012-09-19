@@ -8,7 +8,7 @@ end
 # 
 # module ActiveRecord
 #   class Base
-#     if File.exists?("#{Rails.root}/app/models/callbacks/#{self.model_name.underscore}_callback.rb")
+#     if File.exists?("#{Rails.root}/app/models/model/callbacks/#{self.model_name.underscore}_callback.rb")
 #       include "Model::Callbacks::#{self.model_name}Callback".constantize
 #     end
 #   end

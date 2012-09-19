@@ -1,4 +1,5 @@
 class ContentShell < ContentBase
+  include Model::Methods::PublishingMethods
   include Model::Validations::ContentValidation
   include Model::Validations::PublishedAtValidation
   include Model::Associations::ContentAlarmAssociation

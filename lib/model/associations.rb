@@ -11,7 +11,7 @@ end
 # 
 # module ActiveRecord
 #   class Base
-#     if File.exists?("#{Rails.root}/app/models/associations/#{self.model_name.underscore}_association.rb")
+#     if File.exists?("#{Rails.root}/app/models/model/associations/#{self.model_name.underscore}_association.rb")
 #       include "Model::Associations::#{self.model_name}Association".constantize
 #     end
 #   end
