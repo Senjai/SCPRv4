@@ -14,14 +14,14 @@ class scpr.DateTimeInput
         dateFormat:    "MM/DD/YYYY"
         timeFormat:    "hh:mma"
 
-    constructor: (options) ->
+    constructor: (options) ->    
         @options = _.defaults options||{}, @DefaultOptions
         
         # Elements
         @wrapper       = $ @options.wrapper
         @controls      = $ @options.controls, @wrapper
         @field         = $ @options.field, @wrapper
-        
+
         # Attributes
         @id     = @field.attr("id")
         @dateId = "#{@id}_date"
@@ -29,7 +29,7 @@ class scpr.DateTimeInput
 
         # Hide the field since we don't want anybody editing it directly
         @field.hide()
-
+        
         # Render the template
         @controls.prepend(@options.dateTemplate(date_id: @dateId, time_id: @timeId))
     
@@ -63,7 +63,6 @@ class scpr.DateTimeInput
                 @populateDate(@timeEl, @options.timeFormat)
                 @field.trigger "update"
        
-
     # Populate a visible field with a date human-readable date string
     populateDate: (el, format) ->
         date = moment().format(format)
@@ -71,7 +70,7 @@ class scpr.DateTimeInput
 
     # Get timestamp from hidden field
     getDate: (format) ->
-        date = moment(@field.val())
+        date = moment(Date.parse(@field.val()))
         date.format format
     
     # Set value of hidden field to a real date

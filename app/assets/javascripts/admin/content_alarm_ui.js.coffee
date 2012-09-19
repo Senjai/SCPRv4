@@ -16,19 +16,20 @@ class scpr.ContentAlarmUI
         
         # Setup all of the attributes
         @form            = @options.form
-        @statusSelect    = $ @options.statusSelect,  @form
-        @timestampEl     = $ @options.timestampEl,   @form
-        @datetimeField   = $ @options.datetimeField, @form
-        @destroyEl       = $ @options.destroyEl,     @form
-        @destroyField    = $ @options.destroyField,  @form
-        @notificationEl  = $ @options.notificationEl
-        @statusPending   = @options.statusPending
+        @statusSelect    = $ @options.statusSelect,   @form
+        @timestampEl     = $ @options.timestampEl,    @form # Wrapper
+        @datetimeField   = $ @options.datetimeField,  @form # Input
+        @destroyEl       = $ @options.destroyEl,      @form # Wrapper
+        @destroyField    = $ @options.destroyField,   @form # Checkbox
+        @notificationEl  = $ @options.notificationEl, @form
+
+        @statusPending   = @options.statusPending # 3
         
         @pending   = false
         @scheduled = false
         
-        @pubNotification  = new scpr.Notification(@notificationEl, "success", "This content will be scheduled for publishing once saved.")
-        @warnNotification = new scpr.Notification(@notificationEl, "warning", "This content will <strong>not</strong> be scheduled for publishing once saved.")
+        @pubNotification  = new scpr.Notification(@notificationEl, "success", "This content is scheduled to be published.")
+        @warnNotification = new scpr.Notification(@notificationEl, "warning", "This content is not scheduled to be published.")
         
         # Check if the alarm fire_at is filled in
         # Check which status is selected
@@ -57,6 +58,8 @@ class scpr.ContentAlarmUI
                 
     #----------
     
+	# Do some boolean checking to figure out 
+	# which message to display
     notify: (pending, scheduled) ->
         if pending and scheduled
             @pubNotification.show()

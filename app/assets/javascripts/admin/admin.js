@@ -8,7 +8,7 @@
 //= require moment
 // require moment-strftime
 //= require date
-//= require datepicker
+//= require bootstrap-datepicker
 
 //= require_directory ./templates/
 

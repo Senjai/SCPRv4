@@ -139,11 +139,11 @@ shared_examples_for "set published at callback" do
   
   describe "#set_published_at_to_alarm" do
     context "should_set_published_at_to_alarm? is true" do
-      let(:content_alarm) { build :content_alarm, fire_at: Chronic.parse("4pm"), content: nil }
-      let(:object) { build symbolize(described_class), published_at: Chronic.parse("8pm"), alarm: content_alarm }
+      let(:object) { build symbolize(described_class), published_at: Chronic.parse("8pm") }
       
       before :each do
         described_class.any_instance.stub(:should_set_published_at_to_alarm?) { true }
+        object.build_alarm fire_at: Chronic.parse("4pm")
         object.save!
       end
       
@@ -154,11 +154,11 @@ shared_examples_for "set published at callback" do
     end
 
     context "should_set_published_at_to_alarm? is false" do
-      let(:content_alarm) { build :content_alarm, fire_at: Chronic.parse("4pm") }
-      let(:object) { build symbolize(described_class), published_at: Chronic.parse("8pm"), alarm: content_alarm }
+      let(:object) { build symbolize(described_class), published_at: Chronic.parse("8pm") }
 
       before :each do
         described_class.any_instance.stub(:should_set_published_at_to_alarm?) { false }
+        object.build_alarm fire_at: Chronic.parse("4pm")
         object.save!
       end
       

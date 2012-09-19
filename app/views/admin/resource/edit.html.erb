@@ -41,7 +41,6 @@
 		});
 
 		socket.on('unhighlight_field', function(field_id) {
-			console.log(field_id);
 			$("#"+field_id).closest(".control-group").css({"background-color": 'white'});
 		});
 	
