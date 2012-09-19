@@ -128,8 +128,10 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.string  "feed_url",     :limit => 200,        :default => "", :null => false
     t.string  "twitter",      :limit => 30,                         :null => false
     t.integer "asset_id"
-    t.string  "short_bio",    :limit => 200,                        :null => false
+    t.string  "short_bio",    :limit => 200
     t.string  "phone_number", :limit => 30,                         :null => false
+    t.string  "name",         :limit => 120,                        :null => false
+    t.string  "email",        :limit => 120
   end
 
   add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true

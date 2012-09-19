@@ -19,6 +19,8 @@ class Bio < ActiveRecord::Base
   # Validation
   validates :slug, uniqueness: true
   validates :user, presence: true
+  validates :name, presence: true
+  validates :title, presence: true
   
   #--------------
   # Administration
@@ -61,15 +63,6 @@ class Bio < ActiveRecord::Base
     end
   end
 
-  #----------
-  # Delegations
-  def name
-    "#{user.first_name} #{user.last_name}"
-  end
-  
-  def email
-    user.email
-  end
   
   #----------
   

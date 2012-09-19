@@ -32,6 +32,7 @@ FactoryGirl.define do
 # Bio #########################################################
   factory :bio, class: "Bio", aliases: [:author] do
     user { |bio| bio.association :admin_user }
+    name "Bryan Ricker"
 
     is_public    true
     twitter      { "@#{slug}" }
