@@ -1,4 +1,5 @@
 class BreakingNewsAlert < ActiveRecord::Base
+  administrate
   self.table_name = 'layout_breakingnewsalert'
 
   has_secretary

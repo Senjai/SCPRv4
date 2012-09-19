@@ -14,20 +14,15 @@
 	</div>
 
 	<h3>Currently Editing on This Page</h3>
-	<ul id="viewers" class="viewers">
+	<ul id="newsroom-edit_user-list" class="viewers">
 	</ul>
 <% end %>
 
 <script type="text/javascript">
-	if(typeof io === "undefined") {
-		$(document).ready(function() {
-			$("ul#viewers").append("Newsroom Alerts are currently offline.");
-		});
-	} else {
-
+	if(typeof io !== "undefined") {
 		var socket = io.connect('<%= j Rails.application.config.node.server %>');
 		socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @record.to_json.html_safe %>");
-
+		
 		$("input, textarea").on("focus", function(event) {
 			socket.emit('focus', $(event.target).attr('id'));
 		});
@@ -44,18 +39,18 @@
 			$("#"+field_id).closest(".control-group").css({"background-color": 'white'});
 		});
 	
-		socket.on('load_viewers', function(users) {
+		socket.on('load-list', function(users) {
 			_.each(users, function(user) {
-		    	$('#viewers').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
+		    	$('#newsroom-edit_user-list').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
 			});
 		});
 	
-		socket.on('add_viewer', function(user) {
-	    	$('#viewers').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
+		socket.on('new-user', function(user) {
+	    	$('#newsroom-edit_user-list').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
 	  	});
 
 		socket.on('remove_viewer', function(user) {
-			$("#viewers li#user-" + user.id).remove();
+			$("li#user-" + user.id, $('#newsroom-edit_user-list')).remove();
 		});
 	}
 </script>

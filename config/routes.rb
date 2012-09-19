@@ -84,6 +84,13 @@ Scprv4::Application.routes.draw do
       get '/search(/:resource)' => "search#index", as: :search
       
       ## -- AdminResource -- ##
+      resources :bios
+      resources :admin_users
+      resources :podcasts
+      resources :schedules
+      resources :breaking_news_alerts
+      resources :featured_comment_buckets
+      resources :categories
       resources :missed_it_buckets
       resources :promotions
       resources :sections

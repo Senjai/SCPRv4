@@ -1,4 +1,5 @@
 class FeaturedCommentBucket < ActiveRecord::Base
+  administrate
   self.table_name =  'contentbase_featuredcommentbucket'
 
   has_secretary

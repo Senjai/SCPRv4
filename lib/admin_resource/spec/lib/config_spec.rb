@@ -22,7 +22,7 @@ describe AdminResource::Config do
   describe "#registered_models" do
     it "returns an array if nothing is set" do
       AdminResource.config.registered_models = nil
-      AdminResource.config.registered_models.should eq []
+      AdminResource.config.registered_models.should eq {}
     end
   end
   

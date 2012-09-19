@@ -20,7 +20,7 @@ module AdminResource
     
     attr_writer :registered_models
     def registered_models
-      @registered_models || []
+      @registered_models || {}
     end
     
     attr_writer :title_attributes

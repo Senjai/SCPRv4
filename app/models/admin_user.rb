@@ -1,4 +1,5 @@
 class AdminUser < ActiveRecord::Base
+  administrate
   require 'digest/sha1'
   self.table_name = "auth_user"
 
@@ -32,6 +33,7 @@ class AdminUser < ActiveRecord::Base
   # ----------------
   # Association
   has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
+  has_one :bio, foreign_key: "user_id"
   
   # ----------------
 
@@ -57,11 +59,12 @@ class AdminUser < ActiveRecord::Base
   
   def as_json(*args)
     {
-      id: self.id,
-      username: self.username,
-      name: self.name,
-      email: self.email,
-      is_superuser: self.is_superuser
+      id:           self.id,
+      username:     self.username,
+      name:         self.name,
+      email:        self.email,
+      is_superuser: self.is_superuser,
+      headshot:     self.bio.try(:headshot)
     }
   end
     

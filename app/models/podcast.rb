@@ -1,4 +1,5 @@
 class Podcast < ActiveRecord::Base
+  administrate
   self.table_name = "podcasts_podcast"
   has_secretary
   

@@ -1,4 +1,5 @@
 class Bio < ActiveRecord::Base
+  administrate
   include Model::Validations::SlugValidation
   
   self.table_name =  'bios_bio'

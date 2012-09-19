@@ -1,4 +1,5 @@
 class Category < ActiveRecord::Base
+  administrate
   include Model::Validations::SlugValidation
   
   self.table_name =  'contentbase_category'

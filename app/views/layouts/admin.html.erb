@@ -97,6 +97,13 @@
 	</div> <!-- row fluid -->
 </div> <!-- container fluid main -->
 
+<script type="text/javascript">
+if(typeof io === "undefined") {
+	$(document).ready(function() {
+		$("*[id*='newsroom']").html("Newsroom Alerts are currently offline.");
+	});
+}
+</script>
 <%= yield :footerjs %>
 
 </body>

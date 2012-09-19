@@ -10,7 +10,7 @@ class AdminResourceGenerator < Rails::Generators::Base
   end
 
   def create_view_directory
-    empty_directory "app/views/admin/#{recorce.underscore.pluralize}/"
+    empty_directory "app/views/admin/#{resource.underscore.pluralize}/"
   end
   
   def add_resource_to_routes

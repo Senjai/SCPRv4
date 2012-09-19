@@ -1,4 +1,5 @@
 class Schedule < ActiveRecord::Base
+  administrate
   self.table_name =  'schedule_program'
   has_secretary
 

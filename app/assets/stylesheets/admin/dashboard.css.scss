@@ -1,0 +1,6 @@
+.dashboard-actions {
+	li a {
+		@extend .btn;
+		width: 75%;		
+	}
+}
