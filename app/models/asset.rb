@@ -79,7 +79,7 @@ class Asset
   
   #----------
 
-  attr_accessor :json, :caption, :title, :id, :size, :taken_at, :owner, :url, :api_url, :native
+  attr_accessor :json, :caption, :title, :id, :size, :taken_at, :owner, :url, :api_url, :native, :image_file_size
   
   # Define functions for each of our output sizes.  _size will return 
   # AssetSize objects
@@ -94,7 +94,7 @@ class Asset
     @_sizes = {}
     
     # define some attributes
-    [:caption,:title,:id,:size,:taken_at,:owner,:url,:api_url,:native].each { |key| self.send("#{key}=",@json[key.to_s]) }
+    [:caption,:title,:id,:size,:taken_at,:owner,:url,:api_url,:native, :image_file_size].each { |key| self.send("#{key}=",@json[key.to_s]) }
   end
   
   #----------

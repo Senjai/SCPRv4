@@ -1,3 +1,5 @@
+enclosure_type ||= :audio
+
 xml.item do
   xml.title content.headline
   xml.guid  content.remote_link_path
@@ -8,10 +10,17 @@ xml.item do
     xml.dc :creator, b
   end
   
-  if content.audio.present?
-    audio = content.audio.first
-    xml.enclosure url: audio.url, type: "audio/mpeg", 
-                  length: audio.size.present? ? audio.size : "0"
+  if enclosure_type == :image
+    if content.assets.first.present?
+      thumb = content.assets.first.asset.thumb
+      xml.enclosure url: thumb.url, type: "image/jpeg", length: thumb.image_file_size
+    end
+  else
+    if content.audio.present?
+      audio = content.audio.first
+      xml.enclosure url: audio.url, type: "audio/mpeg", 
+                    length: audio.size.present? ? audio.size : "0"
+    end
   end
   
   descript = ""
