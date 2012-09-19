@@ -46,14 +46,6 @@ describe Admin::ResourceController do
     it "returns index path by default" do
       controller.requested_location("nonsense", double(class: NewsStory)).should eq admin_news_stories_path
     end
-    
-    it "raises an error if record is blank" do
-      lambda { controller.requested_location("nonsense", nil) }.should raise_error ArgumentError 
-    end
-    
-    it "returns nil if action is blank" do
-      controller.requested_location(nil, double(class: NewsStory)).should be_nil
-    end
   end
   
   describe "resource_class" do

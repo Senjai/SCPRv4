@@ -28,7 +28,7 @@ module Secretary
       def diff
         # If two real objects were passed in, they need to be the same class
         # Otherwise diffing them is pointless
-        if @object_a and @object_a.class != @object_b.class
+        if @object_a.present? and @object_a.class != @object_b.class
           raise Secretary::Error::ClassMismatch, "Object classes must match to perform a diff"
         end
       

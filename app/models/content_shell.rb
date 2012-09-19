@@ -1,4 +1,11 @@
 class ContentShell < ContentBase
+  include Model::Methods::PublishingMethods
+  include Model::Validations::ContentValidation
+  include Model::Validations::PublishedAtValidation
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
+  
   self.table_name =  "contentbase_contentshell"
 
   has_secretary
@@ -10,6 +17,13 @@ class ContentShell < ContentBase
                   link_path:          false, # Defining them here
                   auto_published_at:  false
   
+  # ------------------
+  # Validation  
+  def should_validate?
+    pending? or published?
+  end
+              
+                  
   # -------------------
   # Administration
   administrate do |admin|
@@ -22,6 +36,13 @@ class ContentShell < ContentBase
       list.column "published_at"
     end
   end
+
+
+  # -------------------
+  # Scopes
+
+
+  # -------------------
   
   define_index do
     indexes headline

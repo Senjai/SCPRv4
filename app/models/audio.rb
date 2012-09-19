@@ -21,6 +21,9 @@ class Audio < ActiveRecord::Base
   belongs_to :content, polymorphic: true
 
   #------------
+  # Validation
+
+  #------------
   # Scopes
   scope :available,     where("mp3 is not null and mp3 != ''")
   scope :with_enco,     where("enco_number is not null and enco_number != 0 and enco_date is not null")

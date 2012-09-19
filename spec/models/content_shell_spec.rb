@@ -1,7 +1,38 @@
 require 'spec_helper'
 
 describe ContentShell do
-  describe "remote_link_path" do
+  describe "scopes" do
+    it_behaves_like "since scope"
+    
+    describe "#published" do      
+      it "orders published content by published_at descending" do      
+        ContentShell.published.to_sql.should match /order by published_at desc/i
+      end
+    end
+  end
+
+  #-----------------
+  
+  describe "associations" do
+    it_behaves_like "content alarm association"
+  end
+
+  #-----------------
+  
+  describe "callbacks" do
+    #
+  end
+  
+  #-----------------
+
+  describe "validations" do
+    it_behaves_like "content validation"
+    it_behaves_like "published at validation"
+  end
+
+  #-----------------
+  
+  describe "#remote_link_path" do
     it "uses the url attribute" do
       shell = build :content_shell
       shell.remote_link_path.should eq shell.url
@@ -18,7 +49,7 @@ describe ContentShell do
   
   #--------------------
 
-  describe "body" do
+  describe "#body" do
     it "is the teaser" do
       content_shell = build :content_shell
       content_shell.body.should eq content_shell.teaser
@@ -27,7 +58,7 @@ describe ContentShell do
 
   #-----------------
   
-  describe "auto_published_at" do
+  describe "#auto_published_at" do
     it "is false" do
       build(:content_shell).auto_published_at.should be_false
     end
@@ -35,7 +66,7 @@ describe ContentShell do
 
   #-----------------
   
-  describe "has_format?" do
+  describe "#has_format?" do
     it "is true" do
       build(:content_shell).has_format?.should be_false
     end
@@ -43,7 +74,7 @@ describe ContentShell do
   
   #-----------------
   
-  describe "link_path" do
+  describe "#link_path" do
     it "uses the url attribute" do
       shell = build :content_shell
       shell.link_path.should eq shell.url
@@ -51,10 +82,4 @@ describe ContentShell do
   end
   
   #-----------------
-  
-  describe "#published" do      
-    it "orders published content by published_at descending" do      
-      ContentShell.published.to_sql.should match /order by published_at desc/i
-    end
-  end
 end

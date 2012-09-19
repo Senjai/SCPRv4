@@ -24,10 +24,18 @@ describe Secretary::HasSecretary do
       new_story.versions.count.should eq 1
     end
     
+    
     it "generates a version when a record is saved on update" do
       other_story.update_attributes(headline: "Some Cool Headline?!")
       Secretary::Version.count.should eq 2
       other_story.versions.size.should eq 2
+    end
+    
+    it "doesn't generate a version if no attributes were changed" do
+      other_story.save!
+      other_story.versions.size.should eq 1
+      other_story.save!
+      other_story.versions.size.should eq 1
     end
     
     it "saves the version that just got saved" do

@@ -1,7 +1,30 @@
-<div class="form-actions">
-	Action: <%= select_tag :commit_action, options_for_select(Admin::BaseController::SAVE_OPTIONS) %>
-	<%= submit_tag "Save", class: "btn btn-primary" %>
-	<% unless record.new_record? %>
-		<%= link_to "Delete", [:admin, record], class: "btn btn-danger pull-right", method: :delete, data: { confirm: "Click OK to delete this #{resource_title}.\nClick CANCEL to return to editing." }  %>
+<!-- This block is part of a form -->
+<div class="form-actions submit-row">
+	<div class="btn-group dropup pull-left">
+		<%= button_tag "Save", name: "commit_action", value: "edit", class: "btn btn-primary btn-large" %>
+		<button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown">
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li><%= button_tag "Save &amp; Add Another".html_safe, name: "commit_action", value: "new" %></li>
+			<li><%= button_tag "Save &amp; Return to List".html_safe, name: "commit_action", value: "index" %></li>
+		</ul>
+	</div>
+	
+	<% if !@record.new_record? %>
+		<div class="pull-right" style="width: 120px;">
+			<%= link_to("Delete", 
+						[:admin, record], 
+						class: "btn btn-danger pull-right", 
+						method: :delete, 
+						data: { confirm: "Click OK to delete this #{resource_title}.\nClick CANCEL to return to editing." }
+						) unless record.new_record? %>
+		</div>
+	
+		<div class="pull-right" style="width: 400px;">
+			<%= link_to("Edit in Django", @record.django_edit_url, class: "btn") if @record.exists_in_django? %>
+			<%= link_to("View on Site", @record.link_path, class: "btn btn-success") if has_page?(@record) %>
+		</div>
 	<% end %>
+	
 </div>

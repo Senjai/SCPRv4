@@ -1,9 +1,16 @@
 Given /^there was some content generated on a past date$/ do
   @date = Chronic.parse("Yesterday at 12pm")
-  @news_stories   = create_list :news_story, 3, published_at: @date
-  @video_shells   = create_list :video_shell, 3, published_at: @date
-  @content_shells = create_list :content_shell, 3, published_at: @date
-  @show_segments  = create_list :show_segment, 3, published_at: @date
+  @news_stories   = create_list :news_story,    3
+  @video_shells   = create_list :video_shell,   3
+  @content_shells = create_list :content_shell, 3
+  @show_segments  = create_list :show_segment,  3
+  
+  # Do this to reset the published_at date to get around the callback
+  NewsStory.update_all     published_at: @date
+  VideoShell.update_all    published_at: @date
+  ContentShell.update_all  published_at: @date
+  ShowSegment.update_all   published_at: @date
+  
 end
 
 When /^I go to the archive page for that date$/ do

@@ -7,10 +7,12 @@
 
 <% content_for :sidebar do %>
 	<div class="form-actions">
-		<%= link_to "History", admin_history_path(@record.class.route_key, @record.id), class: "btn btn-primary" %>
-		<%= link_to("Edit in Django", @record.django_edit_url, class: "btn") if @record.exists_in_django? %>
+		<ul>
+			<li><strong>Last Updated:</strong> <%= format_date @record.updated_at, time: true %></li> 
+			<li><%= link_to("History", admin_history_path(@record.class.route_key, @record.id), class: "btn btn-primary") %></li>
+		</ul>
 	</div>
-	
+
 	<h3>Currently Editing on This Page</h3>
 	<ul id="viewers" class="viewers">
 	</ul>
@@ -39,7 +41,6 @@
 		});
 
 		socket.on('unhighlight_field', function(field_id) {
-			console.log(field_id);
 			$("#"+field_id).closest(".control-group").css({"background-color": 'white'});
 		});
 	

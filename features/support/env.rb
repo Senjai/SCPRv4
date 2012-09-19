@@ -5,6 +5,7 @@ require 'cucumber/thinking_sphinx/external_world'
 require 'chronic'
 require 'database_cleaner'
 require 'database_cleaner/cucumber'
+require 'fakeweb'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 World(FactoryGirl::Syntax::Methods, FormFillers, DatePathHelper, AdminResource::Helpers::Controller)
@@ -23,6 +24,7 @@ FactoryGirl.reload
 
 Before do
   ActionMailer::Base.deliveries = []
+  FakeWeb.load_callback
   DatabaseCleaner.start
 end
 

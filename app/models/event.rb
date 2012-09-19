@@ -1,4 +1,7 @@
 class Event < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  include Model::Validations::ContentValidation
+  
   self.table_name =  'events_event'
   self.primary_key = "id"
   
@@ -29,7 +32,17 @@ class Event < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates_presence_of :id, :headline, :slug, :etype, :starts_at
+  validates_presence_of :etype, :starts_at, if: :should_validate?
+  validates :slug, unique_by_date: { scope: :starts_at, filter: :day, message: "has already been used for that start date." },
+    if: :should_validate?
+  
+  def should_validate?
+    published?
+  end
+  
+  def published?
+    !!is_published
+  end
   
   # -------------------
   # Scopes
@@ -41,6 +54,12 @@ class Event < ActiveRecord::Base
   scope :upcoming_and_current,  -> { published.where("ends_at > ?", Time.now).order("starts_at") }
   scope :past,                  -> { published.where("ends_at < ?", Time.now).order("starts_at desc") }
 
+  # -------------------
+    
+  def status
+    is_published ? ContentBase::STATUS_LIVE : ContentBase::STATUS_DRAFT
+  end
+  
   # -------------------
   
   def self.sorted(events)
@@ -136,11 +155,15 @@ class Event < ActiveRecord::Base
   #----------
   
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.event_path(options.merge!({
-      :year => self.starts_at.year, 
-      :month => self.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.starts_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
-      :slug => self.slug,
+      :year           => self.starts_at.year, 
+      :month          => self.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :day            => self.starts_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+      :slug           => self.slug,
       :trailing_slash => true
     }))
   end

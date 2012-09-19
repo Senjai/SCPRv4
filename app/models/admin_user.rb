@@ -3,26 +3,35 @@ class AdminUser < ActiveRecord::Base
   self.table_name = "auth_user"
 
   has_secretary
+  administrate do |admin|
+    admin.define_list do |list|
+      list.per_page = "all"
+      list.order    = "last_name"
+
+      list.column :username
+    end
+  end
   
   # ----------------
-  
+  # Callbacks
   before_validation :downcase_email
   before_validation :generate_password, if: -> { unencrypted_password.blank? }, on: :create
-  
+  before_create :generate_username, if: -> { username.blank? }
+  before_create :digest_password, if: -> { unencrypted_password.present? }
+    
+  # ------------------
+  # Validation
   validates :email, uniqueness: true, allow_blank: true
   validates :unencrypted_password, confirmation: true
   validates_presence_of :unencrypted_password, on: :create
-  
-  before_create :generate_username, if: -> { username.blank? }
-  before_create :digest_password, if: -> { unencrypted_password.present? }
-  
+    
   # ----------------
-  
+  # Scopes
   scope :active, where(:is_active => true)
 
   # ----------------
-  
-  has_many :activities, class_name: "Secretary::Version"
+  # Association
+  has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
   
   # ----------------
 

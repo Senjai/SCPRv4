@@ -1,11 +1,41 @@
-class Bio < ActiveRecord::Base  
+class Bio < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  
   self.table_name =  'bios_bio'
-  
   has_secretary
-  
+
+  #--------------
+  # Associations
   belongs_to  :user,    class_name: "AdminUser"
   has_many    :bylines, class_name: "ContentByline",  foreign_key: :user_id
   
+  #--------------
+  # Scopes    
+  default_scope includes(:user)
+  scope :visible, where(is_public: true)
+  
+  #--------------
+  # Validation
+  validates :slug, uniqueness: true
+  validates :user, presence: true
+  
+  #--------------
+  # Administration
+  administrate do |admin|
+    admin.list.order    = "#{AdminUser.table_name}.last_name"
+    admin.list.per_page = "all"
+    
+    admin.define_list do |list|
+      list.column :name
+      list.column :email
+      list.column :is_public, header: "Show on Site?"
+    end
+  end
+  
+  #--------------
+  # Callbacks
+  
+    
   #----------
   
   def indexed_bylines(page=1, per_page=15)
@@ -31,9 +61,19 @@ class Bio < ActiveRecord::Base
   end
 
   #----------
+  # Delegations
+  def name
+    "#{user.first_name} #{user.last_name}"
+  end
+  
+  def email
+    user.email
+  end
+  
+  #----------
   
   def remote_link_path
-    Rails.application.routes.url_helpers.bio_url(self.slugged_name, trailing_slash: true)
+    Rails.application.routes.url_helpers.bio_url(self.slug, trailing_slash: true)
   end
   
   def twitter_url

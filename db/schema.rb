@@ -119,22 +119,11 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "auth_user_user_permissions", ["permission_id"], :name => "permission_id_refs_id_6d7fb3c2067e79cb"
   add_index "auth_user_user_permissions", ["user_id", "permission_id"], :name => "user_id", :unique => true
 
-  create_table "bios_award", :force => true do |t|
-    t.integer "reporter_id",                :null => false
-    t.integer "year",                       :null => false
-    t.string  "award_name",  :limit => 250, :null => false
-  end
-
-  add_index "bios_award", ["reporter_id"], :name => "bios_award_reporter_id"
-
   create_table "bios_bio", :force => true do |t|
     t.integer "user_id",                                            :null => false
-    t.string  "name",         :limit => 200,                        :null => false
-    t.string  "last_name",    :limit => 100,        :default => "", :null => false
-    t.string  "slugged_name", :limit => 50,         :default => "", :null => false
+    t.string  "slug",         :limit => 50,                         :null => false
     t.text    "bio",          :limit => 2147483647,                 :null => false
     t.string  "title",        :limit => 200,        :default => "", :null => false
-    t.string  "email",        :limit => 200,                        :null => false
     t.boolean "is_public",                                          :null => false
     t.string  "feed_url",     :limit => 200,        :default => "", :null => false
     t.string  "twitter",      :limit => 30,                         :null => false
@@ -194,7 +183,7 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.text     "body",              :limit => 2147483647,                 :null => false
     t.integer  "blog_id",                                                 :null => false
     t.string   "blog_slug",         :limit => 50,         :default => "", :null => false
-    t.datetime "published_at",                                            :null => false
+    t.datetime "published_at"
     t.integer  "status",                                                  :null => false
     t.string   "blog_asset_scheme", :limit => 10
     t.string   "short_headline",    :limit => 100
@@ -238,11 +227,9 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
-    t.integer  "django_content_type_id",                                                  :null => false
-    t.integer  "content_id",                                                              :null => false
-    t.integer  "action",                                                                  :null => false
-    t.datetime "fire_at",                              :default => '2011-09-20 15:15:06', :null => false
-    t.boolean  "has_fired",                            :default => false,                 :null => false
+    t.integer  "django_content_type_id",               :null => false
+    t.integer  "content_id",                           :null => false
+    t.datetime "fire_at"
     t.string   "content_type",           :limit => 20
   end
 
@@ -290,13 +277,13 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   end
 
   create_table "contentbase_featuredcomment", :force => true do |t|
-    t.integer  "bucket_id",                                                                       :null => false
-    t.integer  "django_content_type_id",                                                          :null => false
-    t.integer  "content_id",                                                                      :null => false
-    t.integer  "status",                                       :default => 0,                     :null => false
-    t.datetime "published_at",                                 :default => '2012-01-11 12:35:43', :null => false
-    t.string   "username",               :limit => 50,                                            :null => false
-    t.text     "excerpt",                :limit => 2147483647,                                    :null => false
+    t.integer  "bucket_id",                                                   :null => false
+    t.integer  "django_content_type_id",                                      :null => false
+    t.integer  "content_id",                                                  :null => false
+    t.integer  "status",                                       :default => 0, :null => false
+    t.datetime "published_at"
+    t.string   "username",               :limit => 50,                        :null => false
+    t.text     "excerpt",                :limit => 2147483647,                :null => false
     t.string   "content_type",           :limit => 20
   end
 
@@ -569,7 +556,7 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.text     "teaser",             :limit => 2147483647,                 :null => false
     t.text     "body",               :limit => 2147483647,                 :null => false
     t.string   "locale",             :limit => 5,          :default => "", :null => false
-    t.datetime "published_at",                                             :null => false
+    t.datetime "published_at"
     t.string   "source",             :limit => 20
     t.string   "story_asset_scheme", :limit => 10
     t.string   "extra_asset_scheme", :limit => 10
@@ -743,7 +730,7 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.date     "air_date",                           :null => false
     t.string   "headline",     :limit => 140,        :null => false
     t.text     "body",         :limit => 2147483647, :null => false
-    t.datetime "published_at",                       :null => false
+    t.datetime "published_at"
     t.integer  "status",                             :null => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
@@ -771,7 +758,7 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.integer  "status",                                                     :null => false
     t.string   "segment_asset_scheme", :limit => 10
     t.string   "short_headline",       :limit => 100
-    t.datetime "published_at",                                               :null => false
+    t.datetime "published_at"
     t.datetime "updated_at",                                                 :null => false
   end
 

@@ -1,4 +1,6 @@
 class Blog < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  
   self.table_name =  'blogs_blog'
   
   has_secretary
@@ -19,7 +21,8 @@ class Blog < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates_presence_of :name, :slug
+  validates :name, presence: true
+  validates :slug, uniqueness: true
   
   # -------------------
   # Associations
@@ -37,10 +40,14 @@ class Blog < ActiveRecord::Base
   scope :is_not_news, where(is_news: false)
   scope :local,       where(is_remote: false)
   scope :remote,      where(is_remote: true)
-  
+
+  # -------------------
+    
   def remote_link_path
     Rails.application.routes.url_helpers.blog_url(self.slug)
   end
+
+  # -------------------
   
   def self.cache_remote_entries
     view = ActionView::Base.new(ActionController::Base.view_paths, {})

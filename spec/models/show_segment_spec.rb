@@ -1,15 +1,45 @@
 require "spec_helper"
 
 describe ShowSegment do
+  describe "callbacks" do
+    it_behaves_like "set published at callback"
+  end
+  
+  # ----------------
+  
+  describe "validations" do
+    it_behaves_like "slug validation"
+    it_behaves_like "content validation"
+    it_behaves_like "slug unique for date validation" do
+      let(:scope) { :published_at }
+    end
+  end
+
+  #------------------
+  
   describe "associations" do
+    it_behaves_like "content alarm association"
+    
     it { should belong_to :show }
     it { should have_many :rundowns }
     it { should have_many(:episodes).through(:rundowns) }
   end
+
+  #------------------
+  
+  describe "scopes" do
+    it_behaves_like "since scope"
+    
+    describe "#published" do
+      it "orders published content by published_at descending" do
+        ShowSegment.published.to_sql.should match /order by published_at desc/i
+      end
+    end
+  end
   
   #------------------
   
-  describe "link_path" do
+  describe "#link_path" do
     it "does not override the hard-coded options" do
       segment = create :show_segment
       segment.link_path(slug: "wrong").should_not match "wrong"
@@ -18,7 +48,7 @@ describe ShowSegment do
   
   #------------------
   
-  describe "episode" do
+  describe "#episode" do
     it "uses the first episode the segment is associated with" do
       segment = create :show_segment
       episodes = create_list :show_episode, 3
@@ -29,7 +59,11 @@ describe ShowSegment do
   
   #------------------
   
-  describe "sister_segments" do
+  describe "#sister_segments" do
+    before :each do
+      stub_publishing_callbacks(ShowSegment)
+    end
+    
     it "uses the other segments from the episode if episodes exist" do
       episode = create :show_episode, segment_count: 3
       episode.segments.last.sister_segments.should eq episode.segments.first(2)
@@ -49,7 +83,7 @@ describe ShowSegment do
 
   #------------------
 
-  describe "byline_elements" do
+  describe "#byline_elements" do
     it "is an array with the show's title" do
       segment = build :show_segment
       segment.byline_elements.should eq [segment.show.title]
@@ -58,7 +92,7 @@ describe ShowSegment do
 
   #------------------
  	 	
-  describe "canFeature?" do
+  describe "#canFeature?" do
     it "returns true if there are assets" do
       segment = create :show_segment, asset_count: 1
       segment.canFeature?.should be_true
@@ -72,7 +106,7 @@ describe ShowSegment do
 
  	#------------------
 
-  describe "public_datetime" do
+  describe "#public_datetime" do
     it "is the published_at date" do
       segment = create :show_segment
       segment.public_datetime.should eq segment.published_at
@@ -81,7 +115,7 @@ describe ShowSegment do
   
   # ----------------
 
-  describe "has_format?" do
+  describe "#has_format?" do
     it "is true" do
       create(:show_segment).has_format?.should be_false
     end
@@ -89,17 +123,11 @@ describe ShowSegment do
 
   # ----------------
   
-  describe "auto_published_at" do
+  describe "#auto_published_at" do
     it "is true" do
       create(:show_segment).auto_published_at.should be_true
     end
   end
   
   #------------------
-  
-  describe "#published" do
-    it "orders published content by published_at descending" do
-      ShowSegment.published.to_sql.should match /order by published_at desc/i
-    end
-  end
 end

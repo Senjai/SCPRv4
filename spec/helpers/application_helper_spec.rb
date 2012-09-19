@@ -72,6 +72,7 @@ describe ApplicationHelper do
     end
     
     before :each do
+      stub_publishing_callbacks
       make_content(7)
       index_sphinx
       @arts = get_latest_arts

@@ -6,8 +6,8 @@ module AdminResource
     attr_accessor :admin
 
     # Use this to define a block of admin configuration for a model
-    # The block variable is an Admin object    
-    def administrate      
+    # The block variable is an Admin object
+    def administrate
       self.admin = Admin.new(self)
       yield admin if block_given?
     end

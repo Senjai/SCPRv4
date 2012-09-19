@@ -39,10 +39,15 @@ describe ArchiveController do
     
     %w{ news_story show_segment blog_entry video_shell content_shell }.each do |content|
       it "only gets #{content.pluralize} published on requested date" do
+        # Stub `publishing?` so the published_at date doesn't get updated
+        stub_publishing_callbacks(content.classify.constantize)
+        
         yesterday = create content.to_sym, published_at: Time.now.yesterday
         today     = create content.to_sym, published_at: Time.now
         tomorrow  = create content.to_sym, published_at: Time.now.tomorrow
+        
         get :show, date_path(Time.now.yesterday)
+        assigns(:date).should be_present
         assigns(content.pluralize.to_sym).should eq [yesterday]
       end
     end

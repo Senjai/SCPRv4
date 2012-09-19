@@ -5,34 +5,6 @@ describe ContentAlarm do
   
   describe "validations" do
     it { should validate_presence_of :fire_at }
-    it { should validate_presence_of :content_type }
-    it { should validate_presence_of :content_id }
-  
-    describe "fire_at_is_in_future" do
-      it "validates that fire_at is in the future" do
-        alarm = build :content_alarm, :pending # fired_at is in past
-        alarm.save.should be_false
-        alarm.errors.messages.keys.should include :fire_at
-      end
-    end
-    
-    describe "content_status_is_pending" do
-      it "validates that content's status is set to pending" do
-        content = create :news_story, status: ContentBase::STATUS_DRAFT
-        alarm   = build :content_alarm, :future, content: content
-        alarm.save.should be_false
-        alarm.errors.messages.keys.should include :content_status
-      end
-    end
-  end
-  
-  describe "set_action_for_django" do
-    it "sets action before save to 'publish'" do
-      alarm = build :content_alarm, :future
-      alarm.action.should be_nil
-      alarm.save!
-      alarm.action.should eq 1
-    end
   end
   
   #---------------------
@@ -56,21 +28,36 @@ describe ContentAlarm do
   
   #---------------------
   
-  describe "ContentAlarm.fire_pending" do    
-    it "fires all pending alarms" do
+  describe "::fire_pending" do
+    before :each do
+      # Stub this so we can create content alarms with date in the past
       ContentAlarm.any_instance.stub(:fire_at_is_in_future) { true }
-      pending     = create_list :content_alarm, 2, :pending
-      not_pending = create_list :content_alarm, 2, :future
+    end
+    
+    it "fires any pending alarms" do
+      pending       = create :content_alarm, :pending
+      other_pending = create :content_alarm, :pending
+            
+      pending_alarms = ContentAlarm.pending
+      pending_alarms.sort.should eq [pending, other_pending].sort
+      
+      ContentAlarm.stub(:pending) { pending_alarms }
+      pending_alarms.first.should_receive(:fire)
+      pending_alarms.last.should_receive(:fire)
       
       ContentAlarm.fire_pending
-      ContentAlarm.pending.reload.should be_blank
-      ContentAlarm.all.should eq not_pending
+    end
+    
+    it "does not fire future alarms" do
+      not_pending = create :content_alarm, :future
+      not_pending.should_not_receive(:fire)
+      ContentAlarm.fire_pending
     end
   end
   
   #---------------------
   
-  describe "fire" do
+  describe "#fire" do
     before :each do
       ContentAlarm.any_instance.stub(:fire_at_is_in_future) { true }
     end
@@ -95,10 +82,10 @@ describe ContentAlarm do
 
   #---------------------
   
-  describe "pending?" do
+  describe "#pending?" do
     let(:content) { create :news_story }
     
-    it "is true if fire_at is now or past and has_fired is false" do
+    it "is true if fire_at is now or past" do
       alarm = build :content_alarm, :pending
       alarm.pending?.should be_true
     end
@@ -107,16 +94,11 @@ describe ContentAlarm do
       alarm = build :content_alarm, :future
       alarm.pending?.should be_false
     end
-    
-    it "is false if already fired and fired_at is future" do
-      alarm = build :content_alarm, :future, has_fired: true
-      alarm.pending?.should be_false
-    end
   end
   
   #---------------------
   
-  describe "can_fire?" do
+  describe "#can_fire?" do
     let(:content) { create :news_story}
     it "is true if pending? and content status is pending" do
       content.status = ContentBase::STATUS_PENDING

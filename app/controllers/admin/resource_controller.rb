@@ -54,14 +54,22 @@ class Admin::ResourceController < Admin::BaseController
   
   def create
     @record = resource_class.new(params[resource_param])
-    flash[:notice] = "Saved #{resource_title}" if @record.save
-    respond
+    if @record.save
+      flash[:notice] = "Saved #{resource_title}"
+      respond
+    else
+      render :new
+    end
   end
   
   def update
     params[resource_param].merge!(logged_user_id: admin_user.id)
-    flash[:notice] = "Saved #{resource_title}" if @record.update_attributes(params[resource_param])
-    respond
+    if @record.update_attributes(params[resource_param])
+      flash[:notice] = "Saved #{resource_title}"
+      respond
+    else
+      render :edit
+    end
   end
   
   def destroy
@@ -74,7 +82,7 @@ class Admin::ResourceController < Admin::BaseController
   # Fetch Records
   
   def get_record
-    @record = resource_class.find_by_id!(params[:id])
+    @record = resource_class.find(params[:id])
   end
   
   def get_records
@@ -93,15 +101,7 @@ class Admin::ResourceController < Admin::BaseController
     respond_with :admin, resource, location: requested_location(action, resource)
   end
   
-  def requested_location(action, record)
-    if record.blank?
-      raise ArgumentError, "Can't build url helpers without record"
-    end
-    
-    if action.blank?
-      return nil
-    end
-    
+  def requested_location(action, record)    
     class_str = record.class.to_s.underscore
     url_helpers = Rails.application.routes.url_helpers
     case action

@@ -1,15 +1,37 @@
 require 'spec_helper'
 
 describe BlogEntry do
-  
   describe "validations" do
-    it { should validate_presence_of :headline }
-    it { should validate_presence_of :slug }  
+    it_behaves_like "slug validation"
+    it_behaves_like "content validation"
+    it_behaves_like "slug unique for date validation" do
+      let(:scope) { :published_at }
+    end
+  end
+
+  # ----------------
+  
+  describe "callbacks" do
+    it_behaves_like "set published at callback"
+  end
+  
+  # ----------------
+  
+  describe "scopes" do
+    it_behaves_like "since scope"
+    
+    describe "#published" do    
+      it "orders published content by published_at descending" do
+        BlogEntry.published.to_sql.should match /order by published_at desc/i
+      end
+    end
   end
   
   # ----------------
   
   describe "associations" do
+    it_behaves_like "content alarm association"
+    
     it { should belong_to :blog }
     it { should have_many :tagged }
     it { should have_many(:tags).through(:tagged).dependent(:destroy) }
@@ -50,16 +72,6 @@ describe BlogEntry do
   it "responds to category" do
     entry = create_list :blog_entry, 3, with_category: true
     entry.any? { |e| e.category == nil }.should be_false
-  end
-
-  # ----------------
-  
-  describe "scopes" do
-    describe "#published" do    
-      it "orders published content by published_at descending" do
-        BlogEntry.published.to_sql.should match /order by published_at desc/i
-      end
-    end
   end
 
   # ----------------
