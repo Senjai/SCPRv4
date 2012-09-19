@@ -24,10 +24,6 @@ class Blog < ActiveRecord::Base
   validates :name, presence: true
   validates :slug, uniqueness: true
   
-  def should_validate?
-    true
-  end
-  
   # -------------------
   # Associations
   has_many :entries, order: 'published_at desc', class_name: "BlogEntry"
@@ -50,6 +46,8 @@ class Blog < ActiveRecord::Base
   def remote_link_path
     Rails.application.routes.url_helpers.blog_url(self.slug)
   end
+
+  # -------------------
   
   def self.cache_remote_entries
     view = ActionView::Base.new(ActionController::Base.view_paths, {})

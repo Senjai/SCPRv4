@@ -4,7 +4,7 @@ class Promotion < ActiveRecord::Base
   #-------------
   # Administration
   administrate do |admin|
-    admin.define_list do |list|
+    admin.define_list do |list|      
       list.column "id"
       list.column "title", linked: true
     end
@@ -13,7 +13,7 @@ class Promotion < ActiveRecord::Base
   #-------------
   # Validations
   validates_presence_of :title, :url
-
+  
   #-------------
   
   def asset

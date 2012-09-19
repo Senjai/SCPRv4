@@ -10,12 +10,26 @@ describe Section do
     it { should belong_to(:missed_it_bucket) }
   end
   
+  #----------------------
+  
   describe "validations" do
     it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:slug) }
+    it_behaves_like "slug validation"
+    it_behaves_like "slug unique validation"
+  end
+
+  #----------------------
+
+  describe "#link_path" do
+    it "has the slug" do
+      section = create :section, slug: "something"
+      section.link_path.should match "something"
+    end
   end
   
-  describe "content" do
+  #----------------------
+  
+  describe "#content" do
     it "only returns results within the section's category" do
       pending "SPHIINNXXXXXX"
       

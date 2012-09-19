@@ -5,8 +5,7 @@ describe ContentAlarm do
   
   describe "validations" do
     it { should validate_presence_of :fire_at }
-    it { should validate_presence_of :content_type }
-    it { should validate_presence_of :content_id }
+    it { should validate_presence_of :content }
   end
   
   #---------------------
@@ -25,18 +24,6 @@ describe ContentAlarm do
       it "orders by fire_at" do
         ContentAlarm.pending.to_sql.should match /order by fire_at/i
       end
-    end
-  end
-  
-  #---------------------
-  
-  describe "::generate" do    
-    it "destroys an existing content_alarm for this object" do
-      pending
-      story = create :news_story, :pending
-      story.alarm.should_receive(:destroy).once
-      story.alarm.should be_a ContentAlarm
-      ContentAlarm.generate(story)
     end
   end
   

@@ -8,8 +8,7 @@ class scpr.DateTimeInput
     DefaultOptions:
         dateTemplate:  JST["admin/templates/timestamp_fields"]
         timestampEls:  ".timestamp-el"
-        dateIcon:      "span.populate.date"
-        timeIcon:      "span.populate.time"
+        populateIcons: "span.populate"
         controls:      "div.controls"
         field:         "input.datetime"
         dateFormat:    "MM/DD/YYYY"
@@ -20,8 +19,8 @@ class scpr.DateTimeInput
         
         # Elements
         @wrapper       = $ @options.wrapper
-        @controls      = @wrapper.find @options.controls
-        @field         = @wrapper.find @options.field
+        @controls      = $ @options.controls, @wrapper
+        @field         = $ @options.field, @wrapper
         
         # Attributes
         @id     = @field.attr("id")
@@ -35,12 +34,10 @@ class scpr.DateTimeInput
         @controls.prepend(@options.dateTemplate(date_id: @dateId, time_id: @timeId))
     
         # Register the newly-created elements
-        @timestampEls   = @wrapper.find @options.timestampEls
+        @timestampEls   = $ @options.timestampEls, @wrapper
         @dateEl         = $ "##{@dateId}"
         @timeEl         = $ "##{@timeId}"
-        @populateIcons  = @wrapper.find "span.populate"
-        @dateIcon       = @wrapper.find @options.dateIcon
-        @timeIcon       = @wrapper.find @options.timeIcon
+        @populateIcons  = $ @options.populateIcons, @wrapper
 
         # Fill in the new fields with the correct date/time
         # Only if the field has a value (i.e. we're editing the object)

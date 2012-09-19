@@ -14,17 +14,12 @@ class ContentAlarm < ActiveRecord::Base
 
   #----------
   # Validation
-  validates_presence_of :fire_at, :content_id, :content_type
+  validates_presence_of :fire_at, :content
   
   #----------
   # Callbacks
   
 
-  #---------------------
-
-  def self.generate(object)
-    object.create_alarm(fire_at: object.published_at)
-  end
   
   #---------------------
   

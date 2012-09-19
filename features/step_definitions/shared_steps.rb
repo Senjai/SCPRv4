@@ -96,7 +96,7 @@ end
 
 # This assumes that the ID of the form uses underscores, which is how FormBuilder does it by default.
 When /^I submit the "([^"]*)" form$/ do |text|
-  page.find("form[id*=#{text.gsub(/\s/, "_")}] input[type=submit]").click
+  page.find("form[id*=#{text.gsub(/\s/, "_")}] *[type=submit]").click
 end
 
 When /^I am a robot that is fooled by hidden text fields$/ do

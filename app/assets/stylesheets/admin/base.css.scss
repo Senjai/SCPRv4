@@ -20,10 +20,17 @@ form.simple_form {
 		@extend .span8;
 	}
 	
-	.inline {
+	.inline { // Extend bootstrap .inline
 		display: inline-block;
 		margin-right: 5px;
-		input { @extend .span2; }
+		input[type=text] { @extend .span2; }
+		input[type=checkbox] { width: 20px; }
+		
+		.controls {
+			margin-left: 10px;
+		}
+		
+
 	}
 	
 	textarea.short {
@@ -81,4 +88,9 @@ ul.dropdown-menu li button {
 // Override a bug in bootstrap
 .dropup .btn-large .caret {
 	border-bottom-color: $white;
+}
+
+.transparent { 
+	@include opacity(0.2);
+	@include transition(.1s linear all);
 }

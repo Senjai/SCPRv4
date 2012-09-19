@@ -17,4 +17,9 @@ module AdminHelper
   def section(partial, f, record, option={}, &block)
     render "/admin/shared/sections/#{partial}", f: f, record: record, extra: block_given? ? capture(&block) : ""
   end
+  
+  # See if this record has a link path available
+  def has_page?(record)
+    record.respond_to?(:link_path) and !!record.link_path
+  end
 end

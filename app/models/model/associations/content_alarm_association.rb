@@ -11,28 +11,26 @@ module Model
       
       included do
         has_one :alarm, as: :content, class_name: "ContentAlarm", dependent: :destroy
-        accepts_nested_attributes_for :alarm, reject_if: ->(attributes) { attributes['fire_at'].blank? }
+        accepts_nested_attributes_for :alarm, reject_if: :should_reject_alarm?, allow_destroy: true
         
-        before_save :destroy_content_alarm, if: :should_destroy_content_alarm?
-        after_save  :create_content_alarm,  if: :should_create_content_alarm?
-        
-        #------------------
-        
-        def should_create_content_alarm?
-          self.pending? and self.alarm.fire_at.present?
-        end
-        
-        def should_destroy_content_alarm?
-        end
+        before_save :mark_alarm_for_destruction, if: :should_destroy_alarm?
         
         #------------------
         
-        def create_content_alarm
-          ContentAlarm.generate(self)
+        # If we're changing status from Pending to something else,
+        # and there was an alarm, get rid of it.
+        def should_destroy_alarm?
+          self.alarm.present? and self.status_changed? and self.status_was == ContentBase::STATUS_PENDING
         end
         
-        def destroy_content_alarm
-          self.alarm.destroy
+        def should_reject_alarm?(attributes)
+          attributes['fire_at'].blank?
+        end
+
+        #------------------
+
+        def destroy_alarm
+          self.alarm.mark_for_destruction
         end
       end
     end

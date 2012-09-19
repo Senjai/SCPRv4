@@ -6,6 +6,13 @@
 <% end %>
 
 <% content_for :sidebar do %>
+	<div class="form-actions">
+		<ul>
+			<li><strong>Last Updated:</strong> <%= format_date @record.updated_at, time: true %></li> 
+			<li><%= link_to("History", admin_history_path(@record.class.route_key, @record.id), class: "btn btn-primary") %></li>
+		</ul>
+	</div>
+
 	<h3>Currently Editing on This Page</h3>
 	<ul id="viewers" class="viewers">
 	</ul>

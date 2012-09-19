@@ -82,8 +82,8 @@ class NewsStory < ContentBase
     
     Rails.application.routes.url_helpers.news_story_path(options.merge!({
       :year           => self.published_at.year.to_s, 
-      :month          => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day            => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :month          => "%02d" % self.published_at.month, 
+      :day            => "%02d" % self.published_at.day, 
       :id             => self.id,
       :slug           => self.slug,
       :trailing_slash => true

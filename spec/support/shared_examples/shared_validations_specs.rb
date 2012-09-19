@@ -62,9 +62,9 @@ shared_examples_for "content validation" do
       described_class.any_instance.stub(:should_validate?) { true }
     end
     
-    it { should validate_presence_of :status }
-    it { should validate_presence_of :headline }
-    it { should validate_presence_of :body }
+    it { should validate_presence_of(:status) }
+    it { should validate_presence_of(:headline) }
+    it { should validate_presence_of(:body).with_message(Model::Validations::ContentValidation::BODY_MESSAGE) }
   end
   
   context "should not validate" do

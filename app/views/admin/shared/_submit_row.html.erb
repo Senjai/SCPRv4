@@ -10,20 +10,21 @@
 			<li><%= button_tag "Save &amp; Return to List".html_safe, name: "commit_action", value: "index" %></li>
 		</ul>
 	</div>
-		
-	<div class="pull-right" style="width: 120px;">
-		<%= link_to("Delete", 
-					[:admin, record], 
-					class: "btn btn-mini btn-danger pull-right", 
-					method: :delete, 
-					data: { confirm: "Click OK to delete this #{resource_title}.\nClick CANCEL to return to editing." }
-					) unless record.new_record? %>
-	</div>
 	
-	<div class="pull-right" style="width: 400px;">
-		<%= link_to("History", admin_history_path(@record.class.route_key, @record.id), class: "btn btn-primary") unless record.new_record? %>
-		<%= link_to("Edit in Django", @record.django_edit_url, class: "btn") if @record.exists_in_django? %>
-		<%= link_to("View Live", @record.link_path, class: "btn btn-success") if @record.published? %>
-	</div>
+	<% if !@record.new_record? %>
+		<div class="pull-right" style="width: 120px;">
+			<%= link_to("Delete", 
+						[:admin, record], 
+						class: "btn btn-danger pull-right", 
+						method: :delete, 
+						data: { confirm: "Click OK to delete this #{resource_title}.\nClick CANCEL to return to editing." }
+						) unless record.new_record? %>
+		</div>
+	
+		<div class="pull-right" style="width: 400px;">
+			<%= link_to("Edit in Django", @record.django_edit_url, class: "btn") if @record.exists_in_django? %>
+			<%= link_to("View on Site", @record.link_path, class: "btn btn-success") if has_page?(@record) %>
+		</div>
+	<% end %>
 	
 </div>
