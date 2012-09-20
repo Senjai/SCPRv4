@@ -10,7 +10,7 @@ describe Admin::ResourceController do
       controller.get_record.should eq record
     end
     
-    it "raises a RoutingError if ID does not exist" do
+    it "raises a RecordNotFound if ID does not exist" do
       controller.stub!(:params) { { id: "000" } }
       controller.stub!(:resource_class) { NewsStory }
       -> { controller.get_record }.should raise_error ActiveRecord::RecordNotFound

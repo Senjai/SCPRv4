@@ -117,14 +117,14 @@ describe ProgramsController do
         segment = create :show_segment
         -> { 
           get :segment, { show: segment.show.slug, id: "9999999", slug: segment.slug }.merge!(date_path(segment.published_at))
-        }.should raise_error ActionController::RoutingError
+        }.should raise_error ActiveRecord::RecordNotFound
       end
       
       it "raises error for unpublished" do
         segment = create :show_segment, status: ContentBase::STATUS_DRAFT
         -> { 
           get :segment, { show: segment.show.slug, id: segment.id, slug: segment.slug }.merge!(date_path(segment.published_at))
-        }.should raise_error ActionController::RoutingError
+        }.should raise_error ActiveRecord::RecordNotFound
       end
     end
     

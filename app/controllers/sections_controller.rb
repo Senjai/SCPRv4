@@ -1,6 +1,4 @@
-class SectionsController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :raise_404
-  
+class SectionsController < ApplicationController  
   respond_to :html, :xml, :rss
   
   def show

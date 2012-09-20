@@ -63,14 +63,14 @@ describe BlogsController do
   
   describe "GET /show" do
     describe "for invalid blogs" do
-      it "responds with RoutingError on invalid slug" do
+      it "responds with RecordNotFound on invalid slug" do
         blog = create :blog
         -> { 
           get :show, blog: "nonsense"
         }.should raise_error ActiveRecord::RecordNotFound
       end
   
-      it "responds with RoutingError for a remote blog" do
+      it "responds with RecordNotFound for a remote blog" do
         blog = create :blog, is_remote: true
         -> { 
           get :show, blog: blog.slug 
