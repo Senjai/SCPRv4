@@ -132,7 +132,7 @@
 	if(typeof io !== "undefined") {
 		var socket = io.connect('<%= j Rails.application.config.node.server %>');
 		
-		socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j Hash.new(obj_key: 'dashboard').to_json.html_safe %>");
+		socket.emit('entered', "<%= j({ id: 'dashboard', type: 'Inactive'}.to_json.html_safe) %>", "<%= j admin_user.to_json.html_safe %>");
 		
 		socket.on('load-list', function(users) {
 			_.each(users, function(user) {
@@ -150,7 +150,7 @@
 			}
 	  	});
 
-		socket.on('remove_viewer', function(user) {
+		socket.on('remove-user', function(user) {
 			$("li#user-" + user.id, $('#newsroom-dashboard_currently-active')).remove();
 		});
 	}

@@ -22,7 +22,7 @@
 <script type="text/javascript">
 	if(typeof io !== "undefined") {
 		var socket = io.connect('<%= j Rails.application.config.node.server %>');
-		socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @record.to_json.html_safe %>");
+		socket.emit('entered', "<%= j({ id: @record.obj_key, type: 'Active'}.to_json.html_safe) %>", "<%= j admin_user.to_json.html_safe %>", "<%= j @record.to_json.html_safe %>");
 		
 		$("input, textarea").on("focus", function(event) {
 			socket.emit('focus', $(event.target).attr('id'));
