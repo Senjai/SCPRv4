@@ -1,6 +1,9 @@
 class BlogsController < ApplicationController
   before_filter :load_blog, :except => :index
 
+  caches_action :blog_tagged, if: proc { params[:blog] == "multiamerican" }
+  caches_action :entry, if: proc { params[:blog] == "multiamerican" }
+  
   respond_to :html, :xml, :rss
 
   #----------
