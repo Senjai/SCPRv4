@@ -12,8 +12,9 @@
 
 //= require_directory ./templates/
 
-//= require admin/utilities
 //= require admin/notification
+//= require admin/newsroom
+//= require admin/utilities
 //= require admin/date_time_input
 //= require admin/content_alarm_ui
 //= require admin/auto_slug_field

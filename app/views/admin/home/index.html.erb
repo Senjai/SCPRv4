@@ -119,9 +119,9 @@
 			</div> <!-- span9 -->
 
 			<div class="span4">
-				<h3>Currently Active</h3>
+				<h3>Current Activity</h3>
 				<hr />
-				<ul class="viewers" id="newsroom-dashboard_currently-active"></div>
+				<ul class="viewers" id="newsroom-dashboard_currently-active"></ul>
 			</div> <!-- span3 -->
 		</div> <!-- row fluid -->
 	</div> <!-- span9 -->
@@ -129,30 +129,12 @@
 
 <% content_for :footerjs do %>
 <script type="text/javascript">
-	if(typeof io !== "undefined") {
-		var socket = io.connect('<%= j Rails.application.config.node.server %>');
-		
-		socket.emit('entered', "<%= j({ id: 'dashboard', type: 'Inactive'}.to_json.html_safe) %>", "<%= j admin_user.to_json.html_safe %>");
-		
-		socket.on('load-list', function(users) {
-			_.each(users, function(user) {
-				$('#newsroom-dashboard_currently-active').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"border-right: 10px solid " + user.color + "\"><h3 style='display:inline-block; vertical-align: top;'>" + user.name + "</h3></li>");
-				if(typeof user.headshot !== "undefined") {
-					$("li#user-" + user.id).prepend(user.headshot)
-				}				
-			});
-		});
-	
-		socket.on('new-user', function(user) {
-			$('#newsroom-dashboard_currently-active').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"border-right: 10px solid " + user.color + "\"><h3 style='display:inline-block; vertical-align: top;'>" + user.name + "</h3></li>");
-			if(typeof user.headshot !== "undefined") {
-				$("li#user-" + user.id).prepend(user.headshot)
-			}
-	  	});
-
-		socket.on('remove-user', function(user) {
-			$("li#user-" + user.id, $('#newsroom-dashboard_currently-active')).remove();
-		});
-	}
+	newsroom = new scpr.Newsroom(
+		'<%= j Rails.application.config.node.server %>', // server info
+		"<%= j({ id: 'dashboard', type: 'Inactive'}.to_json.html_safe) %>", // room info
+		"<%= j admin_user.to_json.html_safe %>", // user info
+		null, // No object for the dashboard
+		{ el: "#newsroom-dashboard_currently-active" }
+	);
 </script>
 <% end %>

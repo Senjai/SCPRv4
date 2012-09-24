@@ -64,7 +64,7 @@ class AdminUser < ActiveRecord::Base
       name:         self.name,
       email:        self.email,
       is_superuser: self.is_superuser,
-      headshot:     self.bio.try(:headshot) ? self.bio.headshot.thumb.tag : nil
+      headshot:     self.bio.try(:headshot) ? self.bio.headshot.thumb.url : nil
     }
   end
     
