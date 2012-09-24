@@ -7,26 +7,26 @@
 					<div class="row-fluid">
 						<div class="span12">
 							<ul>
-							    <li><a href="/local/">Local</a></li>
-							    <li><a href="/california/">State</a></li>
-							    <li><a href="/world/">U.S./World</a></li>
-							    <li><a href="/politics/">Politics</a></li>
-							    <li><a href="/environment/">Eco/Sci</a></li>
+							    <li><a href="/local/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Local</a></li>
+							    <li><a href="/california/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">State</a></li>
+							    <li><a href="/world/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">U.S./World</a></li>
+							    <li><a href="/politics/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Politics</a></li>
+							    <li><a href="/environment/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Eco/Sci</a></li>
 							</ul>
 						</div>
 						<div class="span12">
 							<ul>
-							    <li><a href="/money/">Money</a></li>
-							    <li><a href="/crime/">Crime &amp; Safety</a></li>
-							    <li><a href="/education/">Education</a></li>
-							    <li><a href="/health/">Health</a></li>
+							    <li><a href="/money/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Money</a></li>
+							    <li><a href="/crime/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Crime &amp; Safety</a></li>
+							    <li><a href="/education/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Education</a></li>
+							    <li><a href="/health/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Health</a></li>
 							</ul>
 						</div>
 					</div> <!-- row-fluid -->
 					<ul class="content-types pull-down">
-					    <li><a href="/video/" class="video-icon">Videos</a></li>
-					    <li><a href="/blogs/">Blogs</a></li>
-						<li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=news">Archive</a></li>
+					    <li><a href="/video/" class="video-icon track-event" data-ga-category="MegaMenu" data-ga-action="Videos" data-ga-label="News">Videos</a></li>
+					    <li><a href="/blogs/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Blogs" data-ga-label="News">Blogs</a></li>
+						<li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=news" class="track-event" data-ga-category="MegaMenu" data-ga-action="Archive" data-ga-label="News">Archive</a></li>
 					</ul>
 				</nav>
 			</div> <!-- section -->
