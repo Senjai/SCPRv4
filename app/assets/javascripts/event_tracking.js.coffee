@@ -13,5 +13,8 @@ class scpr.EventTracking
 
         $(@options.chooser).on
             click: (event) =>
-                _gaq.push ["_trackEvent", @options.category, @options.action, @options.label, @options.nonInteraction]
+                eventCategory = $(event.target).attr(@options.category)
+                eventAction = $(event.target).attr(@options.action)
+                eventLabel = $(event.target).attr(@options.label)
+                _gaq.push ["_trackEvent", eventCategory, eventAction, eventLabel, @options.nonInteraction]
         
