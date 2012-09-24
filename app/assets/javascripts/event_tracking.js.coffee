@@ -1,20 +1,29 @@
 #= require scprbase
 
 class scpr.EventTracking
-    DefaultOptions:
+    chooser: "[data-ga-category]"
+    constructor: ->
+        new scpr.EventTrackingLink($ link) for link in $(@chooser)
+
+class scpr.EventTrackingLink
+    attributes:
         category: "data-ga-category"
-        action: "data-ga-action"
-        label: "data-ga-label"
-        chooser: ".track-event"
-        nonInteraction: true
+        action:   "data-ga-action"
+        label:    "data-ga-label"
+        nonInteraction: "data-non-interaction"
 
-    constructor: (options) ->
-        @options = _(_({}).extend(@DefaultOptions)).extend( options || {} )
+    defaults:
+        nonInteraction: "true"
 
-        $(@options.chooser).on
-            click: (event) =>
-                eventCategory = $(event.target).attr(@options.category)
-                eventAction = $(event.target).attr(@options.action)
-                eventLabel = $(event.target).attr(@options.label)
-                _gaq.push ["_trackEvent", eventCategory, eventAction, eventLabel, @options.nonInteraction]
+    constructor: (@el) ->
+        @category = @el.attr(@attributes.category)
+        @action   = @el.attr(@attributes.action)
+        @label    = @el.attr(@attributes.label)
+
+        @nonInteraction = @el.attr(@attributes.nonInteraction) || @defaults.nonInteraction
         
+        # Setup click event
+        @el.on click: => @_gapush()
+    
+    _gapush: ->
+        _gaq.push ["_trackEvent", @category, @action, @label, @nonInteraction]

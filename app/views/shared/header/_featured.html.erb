@@ -7,7 +7,7 @@
 			</div>
 			
 			<div class="span18">
-				<h4><%= link_to c.headline, c.link_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'News Story', 'ga-label' => 'Content'} %></h4>
+				<h4><%= link_to c.headline, c.link_path, :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'News Story', 'ga-label' => 'Content'} %></h4>
 				<% if c.category.present? %>
 					<span class="blog-title"><%= link_to c.category.category, c.category.link_path %></span>
 				<% end %>
