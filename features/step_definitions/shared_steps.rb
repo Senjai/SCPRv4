@@ -76,8 +76,8 @@ end
 
 
 #### Actions
-When /^I (?:fill in|update) all of the "([^"]*)" required fields with valid information$/ do |resource|
-  @updated_object = build(AdminResource::Helpers.to_param(resource))
+When /^I (?:fill in|update) all of the required fields with valid information$/ do
+  @updated_object = build(singular_resource(extract_controller(current_path)).to_sym)
   fill_required_fields_with_attributes_from @updated_object
 end
 
@@ -96,7 +96,7 @@ end
 
 # This assumes that the ID of the form uses underscores, which is how FormBuilder does it by default.
 When /^I submit the "([^"]*)" form$/ do |text|
-  page.find("form[id*=#{text.gsub(/\s/, "_")}] input[type=submit]").click
+  page.find("form[id*=#{text.gsub(/\s/, "_")}] *[type=submit]").click
 end
 
 When /^I am a robot that is fooled by hidden text fields$/ do

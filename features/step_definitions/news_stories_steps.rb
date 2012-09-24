@@ -28,6 +28,9 @@ Then /^the news story's attributes should be updated$/ do
   end
 end
 
+When /^I mark the status as "(.*?)"$/ do |status|
+  select status, from: "news_story_status"
+end
 
 
 #### Routing

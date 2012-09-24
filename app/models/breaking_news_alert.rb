@@ -1,5 +1,8 @@
 class BreakingNewsAlert < ActiveRecord::Base
+  administrate
   self.table_name = 'layout_breakingnewsalert'
+
+  has_secretary
     
   ALERT_TYPES = {
     "break"   => "Breaking News",

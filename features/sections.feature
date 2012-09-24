@@ -15,9 +15,9 @@ Scenario: Attempt to create an invalid section
 Scenario: Create a valid section
 	Given I am logged in
 	When I go to "new admin section"
-	And I fill in all of the "section" required fields with valid information
+	And I fill in all of the required fields with valid information
 	And I submit the "new section" form
-	Then I should be on "admin sections"
+	Then I should be on the edit page for that record
 	And I should see a success message
 	And there should be 1 section
 	
@@ -25,8 +25,9 @@ Scenario: Edit a section
 	Given 1 section
 	And I am logged in
 	When I go to edit that section
-	And I update all of the "section" required fields with valid information
+	And I update all of the required fields with valid information
 	And I submit the "edit section" form
+	Then I should be on the edit page for that record
 	Then I should see a success message
 	And the section's attributes should be updated 
 

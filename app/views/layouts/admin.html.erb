@@ -9,14 +9,27 @@
 </head>
 <body>
 	
-<div class="navbar">
+<div class="navbar navbar-fixed-top navbar-inverse">
 	<div class="navbar-inner">
 		<div class="container-fluid">
 			<%= link_to "KPCC Admin", admin_root_path, class: "brand" %>
 			
 			<% if admin_user %>
 				<ul class="nav">
-					<!-- what should we put here? -->
+					<li><%= link_to "<i class='icon-home icon-white'></i> Dashboard".html_safe, admin_root_path %></li>
+					<li class="dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-plus-sign icon-white"></i> Add New <b class="caret"></b></a>
+	                    <ul class="dropdown-menu">
+	                      <li><%= link_to "Blog Post", url_for([:new, :admin, :blog_entry]) %></li>
+	                      <li><%= link_to "Show Segment", url_for([:new, :admin, :show_segment]) %></li>
+	                      <li><%= link_to "News Story", url_for([:new, :admin, :news_story]) %></li>
+	                      <li class="divider"></li>
+	                      <li><%= link_to "Content Shell", url_for([:new, :admin, :content_shell]) %></li>
+	                      <li><%= link_to "Video Shell", url_for([:new, :admin, :video_shell]) %></li>
+						  <li><a href="#">Event</a></li>
+	                    </ul>
+                    </li>
+					<li><a href="http://a.scpr.org/a/assets" target="_new"><i class="icon-camera icon-white"></i> Launch AssetHost</a></li>
 				</ul>
 
 				<ul class="nav pull-right">
@@ -55,11 +68,15 @@
 <% end %>
 
 <div id="main" class="container-fluid">
-	<% if @PAGE_TITLE %>
-		<div class="page-header">
-			<h1><%= @PAGE_TITLE %></h1>
-		</div>
-	<% end %>
+	<div class="page-header">
+		<% if content_for? :page_header %>
+			<%= yield :page_header %>
+		<% else %>
+			<% if @PAGE_TITLE %>
+				<h1><%= @PAGE_TITLE %></h1>
+			<% end %>
+		<% end %>
+	</div>
 	
 	<div class="row-fluid">
 		<div class="span<%= content_for?(:sidebar) ? "9" : "12" %>">
@@ -79,6 +96,15 @@
 		<% end %>
 	</div> <!-- row fluid -->
 </div> <!-- container fluid main -->
+
+<script type="text/javascript">
+if(typeof io === "undefined") {
+	$(document).ready(function() {
+		$("*[id*='newsroom']").html("Newsroom Alerts are currently offline.");
+	});
+}
+</script>
+<%= yield :footerjs %>
 
 </body>
 </html>

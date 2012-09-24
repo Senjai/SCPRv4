@@ -84,6 +84,13 @@ Scprv4::Application.routes.draw do
       get '/search(/:resource)' => "search#index", as: :search
       
       ## -- AdminResource -- ##
+      resources :bios
+      resources :admin_users
+      resources :podcasts
+      resources :schedules
+      resources :breaking_news_alerts
+      resources :featured_comment_buckets
+      resources :categories
       resources :missed_it_buckets
       resources :promotions
       resources :sections
@@ -101,7 +108,12 @@ Scprv4::Application.routes.draw do
       resources :events
       resources :homepages
       resources :content_shells
+      resources :featured_comments
       ## -- END AdminResource --  ##
+      
+      get "/activity"                                        => "versions#activity",  as: :activity
+      get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
+      get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
       
       scope "multi_american" do
         get "/"         => "multi_american#index",    as: :multi_american
@@ -127,7 +139,7 @@ Scprv4::Application.routes.draw do
   
   # -- Bios -- #
   match '/about/people/staff/'      => 'people#index',  as: :staff_index
-  match '/about/people/staff/:name' => 'people#bio',    as: :bio
+  match '/about/people/staff/:slug' => 'people#bio',    as: :bio
 
 
 

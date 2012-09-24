@@ -1,41 +1,59 @@
 class BlogEntry < ContentBase
+  include Model::Methods::PublishingMethods
+  include Model::Validations::ContentValidation
+  include Model::Validations::SlugUniqueForPublishedAtValidation
+  include Model::Callbacks::SetPublishedAtCallback
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
+  
   self.table_name =  "blogs_entry"
   acts_as_content has_format: true
+  has_secretary
   
-  CONTENT_TYPE = "blogs/entry"
+  CONTENT_TYPE         = "blogs/entry"
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
+
     
   # ------------------
   # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['id'],
-    ['headline', link: true],
-    ['blog'],
-    ['bylines'],
-    ['status'],
-    ['published_at']
-  ] 
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "blog"
+      list.column "bylines"
+      list.column "status"
+      list.column "published_at"
+    end
+  end
+
 
   # ------------------
   # Validation
-  validates_presence_of :headline, :slug
+  validates_presence_of :blog
+  
+  def should_validate?
+    pending? or published?
+  end
+  
   
   # ------------------
   # Association
   belongs_to :blog
 
-  has_many :tagged, :class_name => "TaggedContent", :as => :content
-  has_many :tags, :through => :tagged, dependent: :destroy
+  has_many :tagged, class_name: "TaggedContent", as: :content
+  has_many :tags, through: :tagged, dependent: :destroy
   
   has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
   has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
   
+  
   # ------------------
-  # Scopification
+  # Scopes
   default_scope includes(:bylines)
-  scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
+
+  # ------------------
   
   define_index do
     indexes headline
@@ -75,37 +93,46 @@ class BlogEntry < ContentBase
   end
     
   def previous
-    self.class.published.first(:conditions => ["published_at < ? and blog_id = ?", self.published_at, self.blog_id], :limit => 1, :order => "published_at desc")
+    self.class.published.first(conditions: ["published_at < ? and blog_id = ?", self.published_at, self.blog_id], limit: 1, order: "published_at desc")
   end
 
   def next
-    self.class.published.first(:conditions => ["published_at > ? and blog_id = ?", self.published_at, self.blog_id], :limit => 1, :order => "published_at asc")
+    self.class.published.first(conditions: ["published_at > ? and blog_id = ?", self.published_at, self.blog_id], limit: 1, order: "published_at asc")
   end
   
   #----------
   
-  def remote_link_path
-    if self.wp_id.present?
-      self.link_path
-    else
-      super
+  def extended_teaser(*args)
+    target    = args[0] || 800
+    more_text = args[1] || "Read More..."
+    
+    content         = Nokogiri::HTML::DocumentFragment.parse(self.body)
+    extended_teaser = Nokogiri::HTML::DocumentFragment.parse(nil)
+    
+    content.children.each do |child|
+      break if extended_teaser.content.length >= target
+      extended_teaser.add_child child
     end
+    
+    extended_teaser.add_child "<p><a href=\"#{self.link_path}\">#{more_text}</a></p>"
+    return extended_teaser.to_html
   end
   
+  #----------
+
   def link_path(options={})
-    # Temporary workaround for MA until we flip the switch
-    if self.wp_id.present?
-      "http://multiamerican.scpr.org/#{self.published_at.year}/#{"%02d" % self.published_at.month}/#{self.slug}"
-    else
-      Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
-        :blog           => self.blog.slug,
-        :year           => self.published_at.year, 
-        :month          => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-        :day            => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
-        :id             => self.id,
-        :slug           => self.slug,
-        :trailing_slash => true
-      }))
-    end
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
+    Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
+      blog:           self.blog.slug,
+      year:           self.published_at.year, 
+      month:          "%02d" % self.published_at.month,
+      day:            "%02d" % self.published_at.day,
+      id:             self.id,
+      slug:           self.slug,
+      trailing_slash: true
+    }))
   end
 end

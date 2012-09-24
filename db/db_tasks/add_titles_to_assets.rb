@@ -1,17 +1,17 @@
-# The initial assethost import didn't bring in titles
+# The initial assethost import from MA didn't bring in titles
 # So this script does that
 
-ah = Rails.application.config.assethost
-url = URI.parse("http://#{ah.server}")
+ah         = Rails.application.config.assethost
+url        = URI.parse("http://#{ah.server}")
 connection = Net::HTTP.new(url.host, url.port)
 
 puts "Pushing to #{url}"
 
-blog_entries = BlogEntry.where('wp_id is not null').all
+blog_entries  = BlogEntry.where('wp_id is not null').all
 total_entries = blog_entries.size
 
 success_ct = 0
-error_ct = 0
+error_ct   = 0
 
 blog_entries.each_with_index do |blog_entry, bindex|
   bindex += 1
@@ -28,7 +28,7 @@ blog_entries.each_with_index do |blog_entry, bindex|
     attachment_url = asset.asset.json["notes"].match(/Fetched from URL: (.+?)\n/)[1]
     
     # Get that attachment from cache
-    attachment = WP::Attachment.find.find { |a| a.attachment_url == attachment_url }
+    attachment = MultiAmerican::Attachment.find.find { |a| a.attachment_url == attachment_url }
     
     # Short circuit if the attachment isn't found for some reason.
     if !attachment
@@ -39,7 +39,14 @@ blog_entries.each_with_index do |blog_entry, bindex|
     
     # Short circuit if the title is empty anyways
     if attachment.title.empty?
-      puts "#{boutof} No title for WP::Attachment #{attachment.id}"
+      puts "#{boutof} No title for MultiAmerican::Attachment #{attachment.id}"
+      success_ct += 1
+      next
+    end
+    
+    # Short circuit if the asset already has a title
+    if asset.title.present?
+      puts "#{boutof} Title already exists for Asset ##{asset.id}"
       success_ct += 1
       next
     end
@@ -70,7 +77,7 @@ blog_entries.each_with_index do |blog_entry, bindex|
     # Parse the JSON
     updated_asset = JSON.parse(response.body)
     if updated_asset["title"] == attachment.title
-      puts "#{boutof} Updated title from WP::Attachment ##{attachment.id} to Asset ##{updated_asset["id"]}"
+      puts "#{boutof} Updated title from MultiAmerican::Attachment ##{attachment.id} to Asset ##{updated_asset["id"]}"
       success_ct += 1
       next
     else

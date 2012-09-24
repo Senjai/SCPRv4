@@ -1,5 +1,14 @@
 class ContentShell < ContentBase
+  include Model::Methods::PublishingMethods
+  include Model::Validations::ContentValidation
+  include Model::Validations::PublishedAtValidation
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
+  
   self.table_name =  "contentbase_contentshell"
+
+  has_secretary
   
   CONTENT_TYPE = "content/shell"
   ADMIN_PREFIX = "contentbase/contentshell"
@@ -8,17 +17,32 @@ class ContentShell < ContentBase
                   link_path:          false, # Defining them here
                   auto_published_at:  false
   
+  # ------------------
+  # Validation  
+  def should_validate?
+    pending? or published?
+  end
+              
+                  
   # -------------------
   # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['headline'],
-    ['site'],
-    ['bylines'],
-    ['status'],
-    ['published_at']
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "site"
+      list.column "bylines"
+      list.column "status"
+      list.column "published_at"
+    end
+  end
+
+
+  # -------------------
+  # Scopes
+
+
+  # -------------------
   
   define_index do
     indexes headline

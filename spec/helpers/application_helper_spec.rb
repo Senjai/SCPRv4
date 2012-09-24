@@ -72,6 +72,7 @@ describe ApplicationHelper do
     end
     
     before :each do
+      stub_publishing_callbacks
       make_content(7)
       index_sphinx
       @arts = get_latest_arts
@@ -121,31 +122,21 @@ describe ApplicationHelper do
       helper.render_content_body(content).should match /<p>/
     end
     
+    it "renders with simple_format when the content doesn't respond to has_format?" do
+      not_content = build :blog
+      not_content.stub(:body) { "hello" }
+      helper.render_content_body(not_content).should match /<p>/ 
+    end
+    
+    it "accepts and uses any text method" do
+      content = build :news_story, teaser: "This is a TEASER"
+      helper.render_content_body(content, :teaser).should match "This is a TEASER"
+    end
+    
     it "renders raw when the content has format (i.e. uses wysiwyg)" do
       content = build :blog_entry, body: "This \n is \n an \n\n entry"
       helper.render_content_body(content).should_not match /br/
       helper.render_content_body(content).should_not match /<p>/
-    end
-    
-    it "renders an empty string if nil is passed in" do
-      helper.render_content_body(nil).should eq ""
-    end
-    
-    it "renders an emptry string if content does not have a body attribute" do
-      not_content = build :blog
-      not_content.stub("has_format?") { true }
-      helper.render_content_body(not_content).should eq ""
-    end
-    
-    it "renders an emptry string if content does not respond to has_format?" do
-      not_content = build :blog
-      not_content.stub(:body) { "hello" }
-      helper.render_content_body(not_content).should eq ""
-    end
-    
-    it "renders an emptry string if content body is nil" do
-      content = build :news_story, body: nil
-      helper.render_content_body(content).should eq ""
     end
   end
   

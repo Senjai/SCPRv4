@@ -1,13 +1,19 @@
 class Section < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  has_secretary
+  
   #----------
   # Administration
-  administrate
-  self.list_fields = [
-    ["id"],
-    ["title", link: true],
-    ["slug"]
-  ]
-  
+  administrate do |admin|
+    admin.define_list do |list|
+      list.per_page = "all"
+      
+      list.column "id"
+      list.column "title", linked: true
+      list.column "slug"
+    end
+  end
+
   #----------
   # Association
   has_many    :section_categories
@@ -21,7 +27,8 @@ class Section < ActiveRecord::Base
   
   #----------
   # Validation
-  validates_presence_of :title, :slug
+  validates :title, presence: true
+  validates :slug, uniqueness: true
   
   #----------
   
@@ -44,5 +51,22 @@ class Section < ActiveRecord::Base
       with:       { category: self.categories.map { |c| c.id } },
       retry_stale: true
     )
+  end
+
+  #----------
+  
+  def published?
+    !self.new_record?
+  end
+  
+  #----------
+  
+  def link_path(options={})
+    return nil if !published?
+    
+    Rails.application.routes.url_helpers.section_path(options.merge!({
+      slug:           self.slug,
+      trailing_slash: true
+    }))
   end
 end

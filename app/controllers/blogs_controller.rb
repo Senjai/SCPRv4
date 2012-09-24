@@ -1,6 +1,5 @@
 class BlogsController < ApplicationController
   before_filter :load_blog, :except => :index
-
   respond_to :html, :xml, :rss
 
   #----------
@@ -26,27 +25,20 @@ class BlogsController < ApplicationController
   
   def entry
     @entry = @blog.entries.published.find(params[:id])
-    rescue
-      raise ActionController::RoutingError.new("Not Found")
   end
   
   # Map old paths from "other blogs"
   def legacy_path
     date = Date.new(params[:year].to_i, params[:month].to_i)
+    slug = params[:slug][0,50]
+    
     blog_entry = BlogEntry.published
       .where(
         "published_at > ? and published_at < ? and slug = ?", 
-        date, date + 1.month, params[:slug]
-      ).first
+        date, date + 1.month, slug
+      ).first!
 
-    if blog_entry.present?
-      redirect_to blog_entry.link_path, permanent: true
-    else
-      raise ActionController::RoutingError.new("Not Found")
-    end
-
-  rescue
-    raise ActionController::RoutingError.new("Not Found")
+    redirect_to blog_entry.link_path, permanent: true
   end
   
   #----------
@@ -60,6 +52,8 @@ class BlogsController < ApplicationController
   def blog_tagged
     @tag = Tag.where(:slug => params[:tag]).first
     
+    # In this case we want to redirect, in case people just
+    # start guessing random tags
     if !@tag
       redirect_to blog_tags_path(@blog.slug) and return
     end
@@ -67,7 +61,7 @@ class BlogsController < ApplicationController
     # now we have to limit tagged content to only this blog
     @entries = @tag.tagged.where(content_type: "BlogEntry")
                    .joins("left join blogs_entry on blogs_entry.id = taggit_taggeditem.content_id")
-                   .where("blogs_entry.blog_id = ? and blogs_entry.status = ?",@blog.id, BlogEntry::STATUS_LIVE)
+                   .where("blogs_entry.blog_id = ? and blogs_entry.status = ?",@blog.id, ContentBase::STATUS_LIVE)
                    .order("blogs_entry.published_at desc")
                    .paginate(:page => params[:page] || 1, :per_page => 5)
   end
@@ -75,22 +69,19 @@ class BlogsController < ApplicationController
   #----------
   
   def category
-    if @category = BlogCategory.where(slug: params[:category],
-                                      blog_id: @blog.id).first
-                                      
-      @entries = @category.blog_entries
-                          .published
-                          .order("blogs_entry.published_at desc")
-                          .paginate(page: params[:page] || 1, per_page: 5)
-      
-      @BLOGTITLE_EXTRA = ": #{@category.title}"
-      @MESSAGE = "There are no blog posts for <b>#{@blog.name}</b> " \
-                 "listed under <b>#{@category.title}</b>.".html_safe
-                 
-      render 'show'
-    else
-      raise ActionController::RoutingError.new("Not Found")
-    end
+    @category = BlogCategory.where(slug: params[:category],
+                                      blog_id: @blog.id).first!
+                                    
+    @entries = @category.blog_entries
+                        .published
+                        .order("blogs_entry.published_at desc")
+                        .paginate(page: params[:page] || 1, per_page: 5)
+    
+    @BLOGTITLE_EXTRA = ": #{@category.title}"
+    @MESSAGE = "There are no blog posts for <b>#{@blog.name}</b> " \
+               "listed under <b>#{@category.title}</b>.".html_safe
+               
+    render 'show'
   end
   
   #----------
@@ -121,10 +112,7 @@ class BlogsController < ApplicationController
   
   protected
     def load_blog
-      if @blog = Blog.local.find_by_slug(params[:blog])
-        @authors = @blog.authors
-      else
-        raise ActionController::RoutingError.new("Not Found")
-      end
+      @blog = Blog.local.find_by_slug!(params[:blog])
+      @authors = @blog.authors
     end    
 end

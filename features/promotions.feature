@@ -15,9 +15,9 @@ Scenario: Attempt to create an invalid promotion
 Scenario: Create a valid promotion
 	Given I am logged in
 	When I go to "new admin promotion"
-	And I fill in all of the "promotion" required fields with valid information
+	And I fill in all of the required fields with valid information
 	And I submit the "new promotion" form
-	Then I should be on "admin promotions"
+	Then I should be on the edit page for that record
 	And I should see a success message
 	And there should be 1 promotion
 
@@ -25,7 +25,8 @@ Scenario: Edit a promotion
 	Given 1 promotion
 	And I am logged in
 	When I go to edit that promotion
-	And I update all of the "promotion" required fields with valid information
+	And I update all of the required fields with valid information
 	And I submit the "edit promotion" form
+	Then I should be on the edit page for that record
 	Then I should see a success message
 	And the promotion's attributes should be updated 

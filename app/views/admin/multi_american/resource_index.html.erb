@@ -25,8 +25,8 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<% resource_class.list_fields.each do |item| %>
-				<th><%= item[1][:title] %></th>
+			<% resource_class.admin.list.columns.each do |column| %>
+				<th><%= column.header %></th>
 			<% end %>
 			<% if resource_class.importable %>
 				<th>Imported?</th>
@@ -36,9 +36,9 @@
 	<tbody class="list">		
 		<% @resources.each do |record| %>
 			<tr class="<%= resource_name.dasherize %>">
-				<% resource_class.list_fields.each do |item| %>
+				<% resource_class.admin.list.columns.each do |column| %>
 					<td>
-						<%= render_attribute item, record, 
+						<%= render_attribute column, record, 
 								path: admin_show_multi_american_resource_path(resource_name, record.id) %>
 					</td>
 				<% end %>

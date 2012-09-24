@@ -1,5 +1,13 @@
 class ShowEpisode < ContentBase
+  include Model::Methods::PublishingMethods
+  include Model::Validations::ContentValidation
+  include Model::Callbacks::SetPublishedAtCallback
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
+  
   self.table_name =  "shows_episode"
+  has_secretary
   
   CONTENT_TYPE = 'shows/episode'
   
@@ -7,19 +15,21 @@ class ShowEpisode < ContentBase
                   
   # -------------------
   # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['headline'],
-    ['show'],
-    ['air_date', display_helper: :display_date],
-    ['status'],
-    ['published_at']
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "show"
+      list.column "air_date", helper: :display_date
+      list.column "status"
+      list.column "published_at"
+    end
+  end
   
   # -------------------
   # Validations
-  validates_presence_of :show_id, :air_date, :headline
+  validates :show_id,  presence: true
+  validates :air_date, presence: true, if: :published?
   
   # -------------------
   # Associations
@@ -35,9 +45,10 @@ class ShowEpisode < ContentBase
     
   # -------------------
   # Scopes
-  scope :published, where(:status => ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
+  scope :published, where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
   scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
   
+  # -------------------
   
   define_index do
     indexes headline
@@ -49,18 +60,22 @@ class ShowEpisode < ContentBase
     has "CRC32(CONCAT('shows/episode:',shows_episode.id))", :type => :integer, :as => :obj_key
     has "0", :type => :boolean, :as => :is_slideshow
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
-    where "status = #{STATUS_LIVE}"
+    where "status = #{ContentBase::STATUS_LIVE}"
     join audio
   end
 
   #----------
   
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.episode_path(options.merge!({
-      :show => self.show.slug,
-      :year => self.air_date.year, 
-      :month => self.air_date.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.air_date.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+      :show           => self.show.slug,
+      :year           => self.air_date.year, 
+      :month          => "%02d" % self.air_date.month,
+      :day            => "%02d" % self.air_date.day,
       :trailing_slash => true
     }))
   end

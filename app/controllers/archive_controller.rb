@@ -22,12 +22,11 @@ class ArchiveController < ApplicationController
     
     if @date
       condition = ["published_at between :today and :tomorrow", today: @date, tomorrow: @date.tomorrow]
+      
       @news_stories   = NewsStory.published.where(condition)
       @show_segments  = ShowSegment.published.where(condition)
       @show_episodes  = ShowEpisode.published.where("air_date=?", @date)
-      @blog_entries   = BlogEntry.published.where(condition)
-                                  .includes(:blog)
-                                  .where("blogs_blog.is_remote = ?", false) # Keep out Multi-American, temporarily
+      @blog_entries   = BlogEntry.published.where(condition).includes(:blog)
       @video_shells   = VideoShell.published.where(condition)
       @content_shells = ContentShell.published.where(condition)
     end

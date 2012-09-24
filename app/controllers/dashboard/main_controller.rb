@@ -2,7 +2,7 @@ class Dashboard::MainController < ApplicationController
   
   def index
     # get a baseline published stories count
-    @baseline = NewsStory.published.this_week
+    @baseline = NewsStory.published.since(7.days.ago)
     
     # fetch news stories from the last seven days with no category
     @stories = @baseline.joins(
@@ -15,7 +15,7 @@ class Dashboard::MainController < ApplicationController
       "left join `assethost_contentasset` on `assethost_contentasset`.content_id = news_story.id and `assethost_contentasset`.content_type = 'NewsStory'"
     ).where("assethost_contentasset.id is null").order("published_at desc")
     
-    @blog_no_assets = BlogEntry.published.this_week.joins(
+    @blog_no_assets = BlogEntry.published.since(7.day.ago).joins(
       "left join contentbase_contentcategory on `contentbase_contentcategory`.`content_id` = `blogs_entry`.`id` AND `contentbase_contentcategory`.`content_type` = 'BlogEntry'"
     ).joins(
       "left join `assethost_contentasset` on `assethost_contentasset`.content_id = blogs_entry.id and `assethost_contentasset`.content_type = 'BlogEntry'"

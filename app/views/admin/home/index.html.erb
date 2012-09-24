@@ -1,34 +1,158 @@
-<h3>Resources</h3>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Resource</th>
-			<th>Actions</th>
-		</tr>
-	</thead>
-	<tbody class="list">
-		<% @admin_models.each do |resource| %>
-			<tr>
-				<td><%= link_to resource.name.titleize.pluralize, url_for([:admin, resource.name.underscore.pluralize]) %></td>
-				<td>
-				</td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
+<% page_title "KPCC Admin Dashboard" %>
 
-<h3>Extra Links</h3>
-<table class="table table-striped">
-	<thead>
-		<th>Extra Link</th>
-		<th>Info</th>
-	</thead>
-	<tbody class="list">
-		<% @extra_links.each do |link| %>
-			<tr>
-				<td><%= link_to link[:title], link[:path] %></td>
-				<td><%= link[:info] %></td>
-			</tr>
+<div class="row-fluid">
+	<div class="span3">
+		<ul class="nav nav-list well">
+		
+		<% @model_groups.each do |title, attributes| %>
+			<li class="nav-header"><i class="<%=attributes[:icon]%>"></i><%= title %></li>
+			<% attributes[:models].each do |model| %>
+				<li><%= link_to model.constantize.name.titleize.pluralize, url_for([:admin, model.constantize]) %></li>
+			<% end %>
 		<% end %>
-	</tbody>
-</table>
+		
+		</ul>
+	</div> <!-- span3 -->
+	
+	<div class="span9">
+		<div class="row-fluid">
+			<div class="span6">
+				<h3>Stats</h3>
+				<div class="row-fluid">
+					<div class="span4">
+						<div class="well">
+							<h6 class="muted">Stories posted in the past hour</h6>
+							<span class="lead"><%= @recent_stories.count %></span>
+						</div>
+					</div> <!-- span -->
+					<div class="span4">
+						<div class="well">
+							<h6 class="muted">Last homepage published</h6>
+							<span class="lead"><%= time_ago_in_words(@latest_homepage.published_at) if @latest_homepage.present? %> ago</span>
+						</div>
+					</div> <!-- span -->
+					<div class="span4">
+						<div class="well">
+							<h6 class="muted">Last story published</h6>
+							<span class="lead"><%= time_ago_in_words(@latest_story.published_at) if @latest_story.present? %> ago</span>
+						</div>
+					</div> <!-- span -->
+				</div> <!-- row fluid -->
+			</div> <!-- span6 -->
+			
+			<div class="span6">
+				<h3>Actions</h3>
+				<div class="row-fluid">
+					<div class="span6">
+						<ul class="unstyled dashboard-actions">
+							<li><%= link_to "Add a News Story", new_admin_news_story_path %></li>
+							<li><%= link_to "Add a Blog Entry", new_admin_blog_entry_path %></li>
+							<li><%= link_to "Add a Show Segment", new_admin_show_segment_path %></li>
+							<li><%= link_to "Upload Assets", "http://#{Rails.application.config.assethost.server}/a" %></li>
+						</ul>
+					</div> <!-- span -->
+					<div class="span6">
+						<ul class="unstyled dashboard-actions">
+							<li><%= link_to("Update the Current Homepage", edit_admin_homepage_path(@latest_homepage)) if @latest_homepage.present? %></li>
+							<li><%= link_to "Create a Cew Homepage", new_admin_homepage_path %></li>
+							<li><%= link_to "Add a Breaking News Alert", new_admin_breaking_news_alert_path %></li>
+						</ul>
+					</div> <!-- span -->
+				</div> <!-- row-fluid -->
+			</div> <!-- span6 -->
+		</div> <!-- row fluid -->
+		
+		<div class="row-fluid">
+			<div class="span8">
+				<h3>Recently Saved by Me</h3>
+				<hr />
+				
+				<%= any_to_list? @current_user_activities, message: "There is no activity to show." do %>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Timestamp</th>
+								<th>Description</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<% @current_user_activities.each do |version| %>
+							<tbody class="list">
+								<tr>
+									<td><%= link_to version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
+									<td><%= display_datetime(version.created_at) %></td>
+									<td><%= version.description %></td>
+									<td><%= display_status(version.frozen_object.status) if version.frozen_object.respond_to? :status %></td>
+								</tr>
+							</tbody>
+						<% end %>
+					</table>
+				<% end %>
+				
+				<h3>Recently Saved by Others</h3>
+				<hr />
+				
+				<%= any_to_list? @latest_activities, message: "There is no activity to show." do %>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Timestamp</th>
+								<th>Description</th>
+								<th>User</th>
+							</tr>
+						</thead>
+						<% @latest_activities.each do |version| %>
+							<tbody class="list">
+								<tr>
+									<td><%= link_to version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
+									<td><%= display_datetime(version.created_at) %></td>
+									<td><%= version.description %></td>
+									<td><%= version.user.to_title %></td>
+								</tr>
+							</tbody>
+						<% end %>
+					</table>
+				<% end %>
+				
+			</div> <!-- span9 -->
+
+			<div class="span4">
+				<h3>Currently Active</h3>
+				<hr />
+				<ul class="viewers" id="newsroom-dashboard_currently-active"></div>
+			</div> <!-- span3 -->
+		</div> <!-- row fluid -->
+	</div> <!-- span9 -->
+</div> <!-- row fluid -->
+
+<% content_for :footerjs do %>
+<script type="text/javascript">
+	if(typeof io !== "undefined") {
+		var socket = io.connect('<%= j Rails.application.config.node.server %>');
+		
+		socket.emit('entered', "<%= j({ id: 'dashboard', type: 'Inactive'}.to_json.html_safe) %>", "<%= j admin_user.to_json.html_safe %>");
+		
+		socket.on('load-list', function(users) {
+			_.each(users, function(user) {
+				$('#newsroom-dashboard_currently-active').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"border-right: 10px solid " + user.color + "\"><h3 style='display:inline-block; vertical-align: top;'>" + user.name + "</h3></li>");
+				if(typeof user.headshot !== "undefined") {
+					$("li#user-" + user.id).prepend(user.headshot)
+				}				
+			});
+		});
+	
+		socket.on('new-user', function(user) {
+			$('#newsroom-dashboard_currently-active').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"border-right: 10px solid " + user.color + "\"><h3 style='display:inline-block; vertical-align: top;'>" + user.name + "</h3></li>");
+			if(typeof user.headshot !== "undefined") {
+				$("li#user-" + user.id).prepend(user.headshot)
+			}
+	  	});
+
+		socket.on('remove-user', function(user) {
+			$("li#user-" + user.id, $('#newsroom-dashboard_currently-active')).remove();
+		});
+	}
+</script>
+<% end %>

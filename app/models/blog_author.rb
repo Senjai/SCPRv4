@@ -1,3 +1,7 @@
+##
+# BlogAuthor
+# Join class between Blog and Bio
+#
 class BlogAuthor < ActiveRecord::Base
   self.table_name = "blogs_blogauthor"
   

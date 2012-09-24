@@ -1,0 +1,6 @@
+<%= form_block "Short Details" do %>
+	<%= f.input :slug, hint: "http://scpr.org/news/2012/08/19/your-slug-here/", label: "URL Slug", input_html: { class: "long" } %>
+	<%= f.input :short_headline, input_html: { class: "long" } %>
+	<%= f.input :teaser, as: :text, input_html: { rows: "5" } %>
+	<%= extra %>
+<% end %>

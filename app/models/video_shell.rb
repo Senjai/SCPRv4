@@ -1,26 +1,45 @@
 class VideoShell < ContentBase
+  include Model::Methods::PublishingMethods
+  include Model::Validations::ContentValidation
+  include Model::Validations::SlugValidation
+  include Model::Validations::PublishedAtValidation
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+
+
   self.table_name = "contentbase_videoshell"
   
   CONTENT_TYPE = "content/video"
   ADMIN_PREFIX = "contentbase/videoshell"
   
   acts_as_content
+  has_secretary
+  
+  
+  # -------------------
+  # Validations
+  validates :slug, uniqueness: true
+  
+  
+  # -------------------
+  # Scopes
+  
   
   # -------------------
   # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['headline'],
-    ['slug'],
-    ['bylines'],
-    ['status'],
-    ['published_at']
-  ]
-  
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "slug"
+      list.column "bylines"
+      list.column "status"
+      list.column "published_at"
+    end
+  end
+
+
   # -------------------
-  # Validation
-  validates_presence_of :headline
     
   define_index do
     indexes headline
@@ -38,9 +57,13 @@ class VideoShell < ContentBase
   #--------------------
   
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.video_path(options.merge!({
-      id: self.id,
-      slug: self.slug,
+      id:             self.id,
+      slug:           self.slug,
       trailing_slash: true
     }))
   end

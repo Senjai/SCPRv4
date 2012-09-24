@@ -8,11 +8,11 @@ describe NewsController do
       assigns(:story).should eq story
     end
     
-    it "raises 404 if story not found" do
+    it "raises RecordNotFound if story not found" do
       story = create :news_story
       -> {
         get :story, { id: "999999", slug: story.slug }.merge!(date_path(story.published_at))
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActiveRecord::RecordNotFound
     end
   end
   
@@ -24,10 +24,10 @@ describe NewsController do
     end
     
     it "only looks at published stories" do
-      story = create :news_story, status: ContentBase::STATUS_PENDING
+      story = create :news_story, :pending
       -> {
         get :old_story, { slug: story.slug }.merge!(date_path(story.published_at))
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActiveRecord::RecordNotFound
     end
   end
 end

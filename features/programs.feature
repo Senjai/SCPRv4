@@ -9,9 +9,8 @@ Scenario: No Programs
 Scenario: See the featured programs on the index page
 	Given kpcc programs with the following attributes:
 		| slug				| title						|
-		| brand-martinez	| Brand & Martinez			|
+		| cohen-martinez	| Alex Cohen & A Martinez	|
 		| airtalk			| Airtalk					|
-		| patt-morrison		| Patt Morrison				|
 		| offramp			| Off-Ramp					|
 		
 	When I go to the programs page
@@ -25,9 +24,8 @@ Scenario Outline: View a Featured Program's page
 	
 	Examples:
 		| slug				| title						|
-		| brand-martinez	| Brand & Martinez			|
+		| cohen-martinez	| Alex Cohen & A Martinez	|
 		| airtalk			| Airtalk					|
-		| patt-morrison		| Patt Morrison				|
 		| offramp			| Off-Ramp					|
 		
 Scenario: View a KPCC Program's page

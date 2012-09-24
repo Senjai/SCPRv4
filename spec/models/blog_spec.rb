@@ -2,9 +2,12 @@ require "spec_helper"
 
 describe Blog do
   describe "validations" do
+    it_behaves_like "slug validation"
+    it_behaves_like "slug unique validation"
     it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:slug) }
   end
+  
+  #----------------
   
   describe "associations" do
     it { should have_many :entries }
@@ -19,6 +22,8 @@ describe Blog do
       blog.authors.to_sql.should match /order by position/i
     end
   end
+
+  #----------------
   
   describe "entries" do
     it "returns the local entries if the blog is local" do
@@ -34,23 +39,24 @@ describe Blog do
       blog.entries.count.should eq 3
     end
   end
+
+  #----------------
   
   describe "cache_remote_entries" do
-
     it "does not cache local blogs" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       blog = create :blog
       Blog.cache_remote_entries.should be_blank
     end
     
     it "returns the blogs it cached" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       blogs = create_list :blog, 2, :remote
       Blog.cache_remote_entries.count.should eq 2
     end
     
     it "creates a cache for each remote blog" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       blogs = create_list :blog, 2, :remote
       Blog.cache_remote_entries
       blogs.each { |blog| Rails.cache.fetch("remote_blog:#{blog.slug}").should_not be_blank }
@@ -64,12 +70,14 @@ describe Blog do
     
     it "responds with all the successful caches" do
       pending "Need to solve the stubbing here"
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_response_fixture_file("rss.xml")) }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       create :blog, :remote
       create :blog, :remote, feed_url: "Invalid"
       Blog.cache_remote_entries.count.should eq 1
     end
   end
+  
+  #----------------
   
   describe "scopes" do
     describe "#active" do

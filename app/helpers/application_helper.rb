@@ -56,15 +56,11 @@ module ApplicationHelper
     return html.html_safe
   end
   
-  def render_content_body(content)
-    if !content || !content.respond_to?("body") || !content.respond_to?("has_format?") || !content.body.present?
-      return ""
-    end
-    
-    if content.has_format?
-      return content.body.html_safe
+  def render_content_body(content, text_method = :body)    
+    if content.respond_to?(:has_format?) && content.has_format?
+      return content.send(text_method).html_safe
     else
-      return simple_format(content.body, {}, sanitize: false)
+      return simple_format(content.send(text_method), {}, sanitize: false)
     end
   end
   
@@ -106,7 +102,7 @@ module ApplicationHelper
   #----------
   
   def random_headshot
-    images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "cohen.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png"]
+    images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png"]
     image_tag "personalities/#{images[rand(images.size)]}"
   end
 
@@ -172,7 +168,7 @@ module ApplicationHelper
       
       authors[i].collect! do |b|
         if links && b.user && b.user.is_public
-          link_to(b.user.name, bio_path(b.user.slugged_name))
+          link_to(b.user.name, bio_path(b.user.slug))
         elsif b.user
           b.user.name
         else
@@ -219,7 +215,7 @@ module ApplicationHelper
       # go through each list and add links where needed
       authors[2].collect! do |b|
         if links && b.user
-          link_to(b.user.name, bio_path(b.user.slugged_name))
+          link_to(b.user.name, bio_path(b.user.slug))
         elsif b.user
           b.user.name
         else
@@ -323,8 +319,8 @@ module ApplicationHelper
   def link_to_audio(title, object, options={}) # This needs to be more useful
     options[:class] = "audio-toggler #{options[:class]}"
     options[:title] ||= object.short_headline
-    options["data-duration"] = object.audio.first.duration
-    content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
+    options["data-duration"] = object.audio.available.first.duration
+    content_tag :div, link_to(title, object.audio.available.first.url, options), class: "story-audio inline"
   end
   
   # easy date formatting

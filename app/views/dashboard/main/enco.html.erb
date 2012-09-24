@@ -16,7 +16,7 @@
 			<p><%= link_to "View in Admin", audio.content.admin_path %></p>
 		</div>
 		<div class="span12">
-			<% if audio.content.status == ContentBase::STATUS_LIVE %>
+			<% if audio.content.published? %>
 				<%= render_content audio.content, "offlead_asset" %>
 			<% else %>
 				<b>Unpublished: <%= audio.content.headline %></b>

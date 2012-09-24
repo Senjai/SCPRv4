@@ -1,3 +1,3 @@
-require 'django_helpers'
-require 'multi_american/lib/multi_american'
-require 'acts_as_content'
+require_dependency 'django_helpers'
+require_dependency 'acts_as_content'
+require_dependency 'logs_as_task'

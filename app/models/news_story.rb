@@ -1,40 +1,17 @@
 class NewsStory < ContentBase
-  self.table_name =  'news_story'
+  include Model::Methods::PublishingMethods
+  include Model::Validations::ContentValidation
+  include Model::Validations::SlugUniqueForPublishedAtValidation
+  include Model::Callbacks::SetPublishedAtCallback
+  include Model::Associations::ContentAlarmAssociation
+  include Model::Scopes::SinceScope
+  
+  
+  self.table_name = 'news_story'
   acts_as_content
+  has_secretary
   
-  # -------------------
-  # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['id'],
-    ['headline', link: true],
-    ['slug'],
-    ['news_agency'],
-    ['audio'],
-    ['status'],
-    ['published_at']
-  ]
-  
-  # -------------------
-  # Callbacks  
-  before_save :fill_fields, on: :create
-  def fill_fields
-    self.published_at = Time.now unless published_at
-  end
-  
-  # -------------------
-  # Validations
-  validates :headline,  presence: true
-  validates :body,      presence: true
-  validates :slug,      presence: true, format: { with: /^[a-zA-Z0-9\-_]+$/, message: "not correctly formatted. 0-9, a-z, A-Z, -, _" }
-
-  # -------------------
-  # Scopes
-  scope :this_week, lambda { where("published_at > ?", Date.today - 7) }
-  
-  CONTENT_TYPE = 'news/story'
-  
+  CONTENT_TYPE         = 'news/story'
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
   
   LOCALES = [ 
@@ -54,6 +31,35 @@ class NewsStory < ContentBase
     ['NPR & KPCC',          'npr_kpcc']
   ]
   
+  
+  # -------------------
+  # Administration
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "headline"
+      list.column "slug"
+      list.column "news_agency"
+      list.column "audio"
+      list.column "status"
+      list.column "published_at"
+    end
+  end
+
+
+  # ------------------
+  # Validation
+  def should_validate?
+    pending? or published?
+  end
+  
+  
+  # -------------------
+  # Scopes
+
+  
+  # -------------------
+  
   define_index do
     indexes headline
     indexes body
@@ -71,12 +77,16 @@ class NewsStory < ContentBase
   #----------
       
   def link_path(options={})
+    # We can't figure out the link path until
+    # all of the pieces are in-place.
+    return nil if !published?
+    
     Rails.application.routes.url_helpers.news_story_path(options.merge!({
-      :year => self.published_at.year.to_s, 
-      :month => self.published_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day => self.published_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :id => self.id,
-      :slug => self.slug,
+      :year           => self.published_at.year.to_s, 
+      :month          => "%02d" % self.published_at.month, 
+      :day            => "%02d" % self.published_at.day, 
+      :id             => self.id,
+      :slug           => self.slug,
       :trailing_slash => true
     }))
   end

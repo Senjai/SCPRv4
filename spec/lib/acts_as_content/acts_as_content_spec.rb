@@ -3,14 +3,14 @@ require "spec_helper"
 # Until this is using its own testing data and models,
 # NewsStory is being used to unit test ActsAsContent
 
-describe ActsAsContent::InstanceMethods::HasFormat do
+describe ActsAsContent::Methods::HasFormat do
   let(:content) { create :news_story }
   
-  after :each do
-    NewsStory.acts_as_content
-  end
-  
   describe "has_format?" do
+    after :each do
+      NewsStory.acts_as_content
+    end
+    
     it "returns false by default" do
       content.has_format?.should be_false
     end
@@ -28,9 +28,39 @@ describe ActsAsContent::InstanceMethods::HasFormat do
   end
 end
 
+describe ActsAsContent::Methods::StatusHelpers do
+  let(:content) { create :news_story }
+  
+  context "with has_status set to false" do
+    after :each do
+      NewsStory.acts_as_content
+    end
+    
+    it "does not provide the status helpers" do
+      pending "These tests need to be better"
+      NewsStory.acts_as_content has_status: false
+      NewsStory.new.should_not respond_to :killed?
+    end
+  end
+  
+  context "with has_status set to true" do
+    after :each do
+      NewsStory.acts_as_content
+    end
+    
+    subject { content }
+    it { should respond_to :killed? }
+    it { should respond_to :draft? }
+    it { should respond_to :awaiting_rework? }
+    it { should respond_to :awaiting_edits? }
+    it { should respond_to :pending? }
+    it { should respond_to :published? }
+  end
+end
+
 #--------------
 
-describe ActsAsContent::InstanceMethods::AutoPublishedAt do
+describe ActsAsContent::Methods::AutoPublishedAt do
   let(:content) { create :news_story }
   
   after :each do
@@ -57,7 +87,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::Headline do
+describe ActsAsContent::Methods::Headline do
   let(:content) { create :news_story }
   
   after :each do
@@ -79,7 +109,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::Body do
+describe ActsAsContent::Methods::Body do
   let(:content) { create :news_story }
   
   after :each do
@@ -101,7 +131,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::ObjKey do  
+describe ActsAsContent::Methods::ObjKey do  
   describe "obj_key" do
     let(:content) { create :news_story }
     it "returns the CONTENT_TYPE and id joined" do
@@ -118,7 +148,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::LinkPath do
+describe ActsAsContent::Methods::LinkPath do
   describe "remote_link_path" do
     let(:content) { create :news_story }
     it "returns a link to scpr.org" do
@@ -133,7 +163,7 @@ end
     
 #--------------
 
-describe ActsAsContent::InstanceMethods::Comments do
+describe ActsAsContent::Methods::Comments do
   let(:content) { create :news_story }
   
   describe "disqus_identifier" do
@@ -157,7 +187,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::ShortHeadline do
+describe ActsAsContent::Methods::ShortHeadline do
   let(:content) { create :news_story }
   
   describe "short_headline" do
@@ -174,7 +204,7 @@ end
 
 #--------------
 
-describe ActsAsContent::InstanceMethods::Teaser do  
+describe ActsAsContent::Methods::Teaser do  
   describe "teaser" do
     it "returns teaser if defined" do
       content = build :news_story, teaser: "This is a short teaser"
@@ -205,7 +235,7 @@ describe ActsAsContent::Generators::Teaser do
     end
     
     it "creates teaser from long paragraph if not defined" do
-      long_body = load_response_fixture_file("long_text.txt")
+      long_body = load_fixture("long_text.txt")
       long_body.should match /\n/
       teaser = ActsAsContent::Generators::Teaser.generate_teaser(long_body)
       teaser.should match /^Lorem ipsum (.+)\.{3,}$/

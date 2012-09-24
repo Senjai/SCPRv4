@@ -1,5 +1,7 @@
 class Schedule < ActiveRecord::Base
+  administrate
   self.table_name =  'schedule_program'
+  has_secretary
 
   belongs_to :kpcc_program, :class_name => "KpccProgram"
   belongs_to :other_program, :class_name => "OtherProgram"

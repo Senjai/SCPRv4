@@ -1,3 +1,9 @@
+body {
+	// Allow space for the submit-row
+	padding-bottom: 120px;
+	padding-top: 50px;
+}
+
 .container-fluid {
 	min-width: 700px;
 }
@@ -9,9 +15,22 @@
 	}
 }
 
-form {
+form.simple_form {
 	input.long, textarea {
 		@extend .span8;
+	}
+	
+	.inline { // Extend bootstrap .inline
+		display: inline-block;
+		margin-right: 5px;
+		input[type=text] { @extend .span2; }
+		input[type=checkbox] { width: 20px; }
+		
+		.controls {
+			margin-left: 10px;
+		}
+		
+
 	}
 	
 	textarea.short {
@@ -20,8 +39,12 @@ form {
 }
 
 .user-badge {
+	vertical-align: top;
 	padding: 5px;
 	@include border-radius(5px);
+	img {
+		padding: 5px;
+	}
 }
 
 ul.viewers {
@@ -31,4 +54,47 @@ ul.viewers {
 		margin-bottom: 5px;
 		font-weight: bold;
 	}
+}
+
+.hidden {
+	display: none;
+}
+
+.list-status {
+	text-align: center;
+}
+
+.add-on.populate {
+	cursor: pointer;
+}
+
+.submit-row:last-of-type {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin: 0px;
+	background: $grayDark;
+}
+
+// Style the dropdown buttons so they look like links
+ul.dropdown-menu li button {
+	border: none;
+	background: none;
+	cursor: pointer;
+	width: 100%;
+	text-align: left;
+	&:hover {
+		background: $grayLighter;
+	}
+}
+
+// Override a bug in bootstrap
+.dropup .btn-large .caret {
+	border-bottom-color: $white;
+}
+
+.transparent { 
+	@include opacity(0.2);
+	@include transition(.1s linear all);
 }

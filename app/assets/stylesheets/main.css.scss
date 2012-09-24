@@ -1,5 +1,5 @@
 // Global styles
-@include gridFluid($fluidGridColumnWidth, $fluidGridGutterWidth);
+@include gridFluid;
 
 body {
 	width: auto;
@@ -152,7 +152,7 @@ body {
 		margin-top: 15px; // So the host isn't wearing the nav as a tophat
 		.program.current .program-info { 
 			margin-left: 100px; 
-			&.brand-martinez {
+			&.cohen-martinez {
 				margin-left:150px;
 			}
 		} // Push the show title link over since we have to absolutely-position the headshot
@@ -171,7 +171,7 @@ body {
 		width: 90px;
 		height: 70px;
 		&:hover { text-decoration: none; }
-		&.brand-martinez {
+		&.cohen-martinez {
 			width:147px;
 		}
 	}

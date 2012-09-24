@@ -1,0 +1,7 @@
+##
+# Shared Callbacks
+# Model::Callbacks
+#
+
+#------------------
+#

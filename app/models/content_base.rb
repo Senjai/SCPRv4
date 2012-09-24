@@ -70,11 +70,9 @@ class ContentBase < ActiveRecord::Base
     ["Slideshow", "slideshow"]
   ]
     
-  # All ContentBase objects have assets and alarms
+  # All ContentBase objects have assets and one alarm
   has_many :bylines,          as: :content, class_name: "ContentByline",  dependent: :destroy
-  
-  has_many :alarms,           as: :content, class_name: "ContentAlarm",   dependent: :destroy
-  
+    
   has_many :brels,            as: :content, class_name: "Related"
   has_many :frels,            as: :related, class_name: "Related"
   
@@ -89,6 +87,9 @@ class ContentBase < ActiveRecord::Base
   def self.published
     where(status: STATUS_LIVE).order("published_at desc")
   end
+    
+  #-------------
+
   
   #----------
   

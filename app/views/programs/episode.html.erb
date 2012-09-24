@@ -6,12 +6,12 @@
 	    	<h4><%= @episode.headline %></h4>
 	    </div>
 	    <div class="span10">
-	    	<% if @episode.audio.present? %>
+	    	<% if @episode.audio.available.present? %>
 				<div class="right">
 					<aside class="story-audio inline">
-							<a href="<%= @episode.audio.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= @episode.audio.first.duration %>"></a>
-							<%= link_to "Listen to this episode", @episode.audio.first.url, :class => "audio-toggler play-text",  "data-duration" => @episode.audio.first.duration %>
-							<a href="<%= @episode.audio.first.url %>" class="download">Download</a>
+							<a href="<%= @episode.audio.available.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= @episode.audio.available.first.duration %>"></a>
+							<%= link_to "Listen to this episode", @episode.audio.available.first.url, :class => "audio-toggler play-text",  "data-duration" => @episode.audio.available.first.duration %>
+							<a href="<%= @episode.audio.available.first.url %>" class="download">Download</a>
 					</aside>
 				</div>
 			<% end %>

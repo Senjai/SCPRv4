@@ -1,9 +1,19 @@
 class OtherProgram < ActiveRecord::Base
   self.table_name =  'programs_otherprogram'  
+  has_secretary
 
   # -------------------
   # Administration
-  administrate
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "title"
+      list.per_page   = "all"
+      
+      list.column "title"
+      list.column "produced_by"
+      list.column "air_status"
+    end
+  end
 
   # -------------------
   # Associations

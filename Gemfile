@@ -9,18 +9,18 @@ gem 'jquery-rails'
 gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
 gem "resque", "~> 1.20"
 
-gem 'thinking-sphinx', '~> 2.0.10', require: "thinking_sphinx"
+gem 'thinking-sphinx',    '~> 2.0.10', require: "thinking_sphinx"
 gem 'will_paginate'
-gem "bcrypt-ruby", "~> 3.0.0"
-gem "faraday", "~> 0.7.6"
+gem "bcrypt-ruby",        "~> 3.0.0"
+gem "faraday",            "~> 0.7.6"
 gem "faraday_middleware", "~> 0.8"
-
+gem "diffy",              "~> 2.0.8"
 gem 'newrelic_rpm'
 
 gem "ruby-mp3info"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
 gem "oauth2"
-gem 'disqussion', :git => "git://github.com/SCPR/disqussion.git"
+gem 'disqussion', git: "git://github.com/SCPR/disqussion.git"
 #gem 'disqussion', :path => "/Users/eric/projects/forks/disqussion"
 gem "twitter"
 gem 'twitter-text'
@@ -35,7 +35,7 @@ group :assets do
   gem "eco"
   gem "sass", branch: 'master', git: 'git://github.com/nex3/sass.git'
   gem 'sass-rails'
-  gem 'bootstrap-sass'
+  gem 'bootstrap-sass'#, path: "/Users/bryan/projects/gitclones/bootstrap-sass"
   gem "compass-rails"
   gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
@@ -43,7 +43,7 @@ group :assets do
 end
 
 group :development do
-  gem "rack-mini-profiler"
+#  gem "rack-mini-profiler"
 end
 
 group :test, :development do
@@ -56,14 +56,11 @@ group :test, :development do
 end
 
 group :test do
+  gem "sqlite3"
   gem "cucumber-rails", require: false
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'shoulda-matchers'
   gem 'fakeweb'
-end
-
-group :worker do
-  gem 'rubypython'
 end

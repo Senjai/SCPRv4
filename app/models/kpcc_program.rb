@@ -1,5 +1,7 @@
 class KpccProgram < ActiveRecord::Base
   self.table_name =  'programs_kpccprogram'
+
+  has_secretary
     
   ConnectDefaults = {
     facebook: "http://www.facebook.com/kpccfm",
@@ -9,16 +11,29 @@ class KpccProgram < ActiveRecord::Base
   }
   
   Featured = [
-    'madeleine-brand',
-    'brand-martinez',
+    'cohen-martinez',
     'airtalk',
-    'patt-morrison',
     'offramp'
   ]
   
+  PROGRAM_STATUS = {
+    "onair"      => "Currently Airing",
+    "online"     => "Online Only (Podcast)",
+    "archive"    => "No longer available",
+    "hidden"     => "Not visible on site"
+  }
+  
   # -------------------
   # Administration
-  administrate
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order    = "title"
+      list.per_page = "all"
+      
+      list.column "title"
+      list.column "air_status"
+    end
+  end
   
   # -------------------
   # Validations
@@ -26,9 +41,9 @@ class KpccProgram < ActiveRecord::Base
   
   # -------------------
   # Associations
-  has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
-  has_many :episodes, :foreign_key => "show_id", :class_name => "ShowEpisode"
-  has_many :schedules, :foreign_key => "kpcc_program_id", :class_name => "Schedule"
+  has_many :segments,   foreign_key: "show_id",         class_name: "ShowSegment"
+  has_many :episodes,   foreign_key: "show_id",         class_name: "ShowEpisode"
+  has_many :schedules,  foreign_key: "kpcc_program_id", class_name: "Schedule"
   belongs_to :missed_it_bucket
   belongs_to :blog
   

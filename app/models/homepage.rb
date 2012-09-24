@@ -1,15 +1,18 @@
 class Homepage < ActiveRecord::Base
   self.table_name =  "layout_homepage"
 
+  has_secretary
+
   # -------------------
   # Administration
-  administrate
-  self.list_order = "published_at desc"
-  self.list_fields = [
-    ['published_at'],
-    ['status'],
-    ['base', title: "Base Template"]
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.order = "published_at desc"
+      list.column "published_at"
+      list.column "status"
+      list.column "base", header: "Base Template"
+    end
+  end
   
   # -------------------
   # Associations

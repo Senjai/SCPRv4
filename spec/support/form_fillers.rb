@@ -4,7 +4,12 @@ module FormFillers
     record.attributes.keys.each do |attrib|
       field_id = "#{class_str}_#{attrib}"
       if record.class.validators_on(attrib).map(&:class).include? ActiveModel::Validations::PresenceValidator
-        fill_in field_id, with: record.send(attrib)
+        # Some fields will be drop-downs
+        if attrib == "status"
+          select ContentBase::STATUS_TEXT[record.send(attrib)], from: field_id
+        else
+          fill_in field_id, with: record.send(attrib)
+        end
       end
     end
   end

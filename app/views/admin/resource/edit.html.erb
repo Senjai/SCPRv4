@@ -1,25 +1,29 @@
 <% page_title "Editing: #{@record.to_title}" %>
+
 <%= simple_form_for [:admin, @record], html: { class: "form-horizontal" } do |f| %>
 	<%= render 'form_fields', record: @record, f: f %>
 	<%= submit_row @record %>
 <% end %>
 
 <% content_for :sidebar do %>
+	<div class="form-actions">
+		<ul>
+			<li><strong>Last Updated:</strong> <%= format_date @record.updated_at, time: true %></li> 
+			<li><%= link_to("History", admin_history_path(@record.class.route_key, @record.id), class: "btn btn-primary") %></li>
+		</ul>
+	</div>
+
 	<h3>Currently Editing on This Page</h3>
-	<ul id="viewers" class="viewers">
+	<hr />
+	<ul id="newsroom-edit_user-list" class="viewers">
 	</ul>
 <% end %>
 
 <script type="text/javascript">
-	if(typeof io === "undefined") {
-		$(document).ready(function() {
-			$("ul#viewers").append("Newsroom Alerts are currently offline.");
-		});
-	} else {
-
+	if(typeof io !== "undefined") {
 		var socket = io.connect('<%= j Rails.application.config.node.server %>');
-		socket.emit('entered', "<%= j admin_user.to_json.html_safe %>", "<%= j @record.to_json.html_safe %>");
-
+		socket.emit('entered', "<%= j({ id: @record.obj_key, type: 'Active'}.to_json.html_safe) %>", "<%= j admin_user.to_json.html_safe %>", "<%= j @record.to_json.html_safe %>");
+		
 		$("input, textarea").on("focus", function(event) {
 			socket.emit('focus', $(event.target).attr('id'));
 		});
@@ -33,22 +37,28 @@
 		});
 
 		socket.on('unhighlight_field', function(field_id) {
-			console.log(field_id);
 			$("#"+field_id).closest(".control-group").css({"background-color": 'white'});
 		});
 	
-		socket.on('load_viewers', function(users) {
+		socket.on('load-list', function(users) {
+			console.log(users);
 			_.each(users, function(user) {
-		    	$('#viewers').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
+		    	$('#newsroom-edit_user-list').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"border-right: 10px solid " + user.color + "\"><h3 style='display:inline-block; vertical-align: top;'>" + user.name + "</h3></li>");
+				if(typeof user.headshot !== "undefined") {
+					$("li#user-" + user.id).prepend(user.headshot)
+				}
 			});
 		});
 	
-		socket.on('add_viewer', function(user) {
-	    	$('#viewers').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"background-color: " + user.color + "\">" + user.name + "</li>");
+		socket.on('new-user', function(user) {
+	    	$('#newsroom-edit_user-list').append("<li class=\"user-badge\" id=\"user-" + user.id + "\" style=\"border-right: 10px solid " + user.color + "\"><h3 style='display:inline-block; vertical-align: top;'>" + user.name + "</h3></li>");
+			if(typeof user.headshot !== "undefined") {
+				$("li#user-" + user.id).prepend(user.headshot)
+			}
 	  	});
 
 		socket.on('remove_viewer', function(user) {
-			$("#viewers li#user-" + user.id).remove();
+			$("li#user-" + user.id, $('#newsroom-edit_user-list')).remove();
 		});
 	}
 </script>

@@ -1,0 +1,7 @@
+<%= f.error_notification %>
+<%= form_block "Details" do %>
+	<%= f.input :base %>
+	<%= f.association :missed_it_bucket %>
+<% end %>
+
+<%= section "publishing", f, record %>

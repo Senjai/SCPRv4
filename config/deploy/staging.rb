@@ -1,7 +1,7 @@
 # --------------
 # Variables
 set :branch, "master"
-set :rails_env, :scprdev
+set :rails_env, :staging
 
 
 # --------------
@@ -25,10 +25,10 @@ after "deploy:update_code", "thinking_sphinx:staging:index"
 namespace :thinking_sphinx do
   namespace :staging do
     task :index do
-      if ts_index
+      if %w{true 1}.include? ts_index or ts_index == true
         thinking_sphinx.index
       else
-        logger.info "SKIPPING thinking_sphinx:index (ts_index false)"
+        logger.info "SKIPPING thinking_sphinx:index (ts_index set to false)"
       end
     end
   end
@@ -36,10 +36,10 @@ end
 
 namespace :dbsync do
   task :pull do
-    if dbsync
-      "*** dbsync not yet implemented"
+    if %w{true 1}.include? dbsync
+      run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} dbsync:pull"
     else
-      logger.info "SKIPPING dbsync (dbsync false)"
+      logger.info "SKIPPING dbsync (dbsync set to false)"
     end
   end
 end

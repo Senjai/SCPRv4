@@ -1,0 +1,84 @@
+{
+  "id"         : 32459,
+  "title"      : "Cast member Dolly Parton arrives at the",
+  "caption"    : "Cast member Dolly Parton arrives at the world premiere of \"Joyful Noise\" at the Grauman's Chinese Theatre in Hollywood, California, January 9, 2012.  AFP PHOTO / Robyn Beck (Photo credit should read ROBYN BECK/AFP/Getty Images)",
+  "owner"      : "ROBYN BECK/AFP/Getty Images",
+  "size"       : "2460x3888",
+
+  "sizes"      : {
+    "thumb"    : {
+      "width"  : 88,
+      "height" : 88
+    },
+    "lsquare"  : {
+      "width"  : 188,
+      "height" : 188
+    },
+    "lead"     : {
+      "width"  : 205,
+      "height" : 324
+    },
+    "wide"     : {
+      "width"  : 262,
+      "height" : 414
+    },
+    "full"     : {
+      "width"  : 648,
+      "height" : 1024
+    },
+    "six"      : {
+      "width"  : 257,
+      "height" : 406
+    },
+    "eight"    : {
+      "width"  : 308,
+      "height" : 486
+    },
+    "four"     : {
+      "width"  : 221,
+      "height" : 350
+    },
+    "three"    : {
+      "width"  : 161,
+      "height" : 255
+    },
+    "five"     : {
+      "width"  : 211,
+      "height" : 334
+    }
+  },
+
+  "tags"       : {
+    "thumb"    : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-thumb.jpg\" width=\"88\" height=\"88\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "lsquare"  : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-lsquare.jpg\" width=\"188\" height=\"188\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "lead"     : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-lead.jpg\" width=\"205\" height=\"324\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "wide"     : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-wide.jpg\" width=\"262\" height=\"414\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "full"     : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-full.jpg\" width=\"648\" height=\"1024\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "six"      : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-six.jpg\" width=\"257\" height=\"406\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "eight"    : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-eight.jpg\" width=\"308\" height=\"486\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "four"     : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-four.jpg\" width=\"221\" height=\"350\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "three"    : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-three.jpg\" width=\"161\" height=\"255\" alt=\"Cast member Dolly Parton arrives at the\" />",
+    "five"     : "<img src=\"http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-five.jpg\" width=\"211\" height=\"334\" alt=\"Cast member Dolly Parton arrives at the\" />"
+  },
+
+  "urls"       : {
+    "thumb"    : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-thumb.jpg",
+    "lsquare"  : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-lsquare.jpg",
+    "lead"     : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-lead.jpg",
+    "wide"     : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-wide.jpg",
+    "full"     : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-full.jpg",
+    "six"      : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-six.jpg",
+    "eight"    : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-eight.jpg",
+    "four"     : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-four.jpg",
+    "three"    : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-three.jpg",
+    "five"     : "http://a.scpr.org/i/38ebb91d3c01da42d2cfa716f284550a/32459-five.jpg"
+  },
+
+  "url"        : "http://a.scpr.org/api/assets/32459/",
+  "notes"      : "",
+  "created_at" : "2012-01-13T00:14:53Z",
+  "taken_at"   : "2012-01-13T00:14:53Z",
+  "native"     : {
+    "video_id" : 1
+  }
+}

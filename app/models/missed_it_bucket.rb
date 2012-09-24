@@ -1,13 +1,16 @@
 class MissedItBucket < ActiveRecord::Base
   self.table_name = "contentbase_misseditbucket"
+
+  has_secretary
   
   #-----------
   # Administration
-  administrate
-  self.list_fields = [
-    ["id"],
-    ["title", link: true]
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.column "id"
+      list.column "title", linked: true
+    end
+  end
   
   #-----------
   # Association

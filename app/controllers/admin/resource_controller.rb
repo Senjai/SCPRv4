@@ -1,17 +1,40 @@
 class Admin::ResourceController < Admin::BaseController
+  include AdminResource::Helpers::Controller
+  
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
   before_filter :get_records, only: :index
   before_filter :extend_breadcrumbs_with_resource_root
+  before_filter :add_user_id_to_params, only: [:create, :update, :destroy]
   
   respond_to :html
+  
+  helper_method :resource_class, :resource_title, :resource_param, :resource_url
   
   # -- Basic CRUD -- #
   
   def index
+    @list = resource_class.admin.list
+    
+    # Temporary - This should be moved into AdminResource
+    if @list.columns.empty?
+      default_fields = resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields] - AdminResource::List::DEFAULTS[:excluded_columns]
+      default_fields.each do |field|
+        resource_class.admin.list.column field
+      end
+    end
+    
+    # Temporary - This should be moved into AdminResource
+    if @list.linked_columns.empty?
+      @list.columns.first.linked = true
+    end
+        
     respond_with :admin, @records
   end
 
   def new
+    # Temporary - This should be moved into AdminResource
+    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields]
+
     breadcrumb "New", nil
     @record = resource_class.new
     respond
@@ -22,19 +45,31 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def edit
+    # Temporary - This should be moved into AdminResource
+    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields]
+
     breadcrumb "Edit", nil
     respond
   end
   
   def create
     @record = resource_class.new(params[resource_param])
-    flash[:notice] = "Saved #{resource_title}" if @record.save
-    respond
+    if @record.save
+      flash[:notice] = "Saved #{resource_title}"
+      respond
+    else
+      render :new
+    end
   end
   
   def update
-    flash[:notice] = "Saved #{resource_title}" if @record.update_attributes(params[resource_param])
-    respond
+    params[resource_param].merge!(logged_user_id: admin_user.id)
+    if @record.update_attributes(params[resource_param])
+      flash[:notice] = "Saved #{resource_title}"
+      respond
+    else
+      render :edit
+    end
   end
   
   def destroy
@@ -43,24 +78,20 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   
-  
-  # -- Fetch Records -- #
+  #-----------------
+  # Fetch Records
   
   def get_record
-    begin
-      @record = resource_class.find(params[:id])
-    rescue
-      raise ActionController::RoutingError.new("Not Found")
-    end
+    @record = resource_class.find(params[:id])
   end
   
   def get_records
-    @records = resource_class.order(resource_class.list_order).paginate(page: params[:page], per_page: resource_class.list_per_page)
+    @records = resource_class.order(resource_class.admin.list.order).paginate(page: params[:page], per_page: resource_class.admin.list.per_page)
   end
   
   
-  
-  # -- Response -- #
+  #-----------------
+  # Response
   
   def respond
     respond_with_resource(@record, params[:commit_action])
@@ -70,15 +101,7 @@ class Admin::ResourceController < Admin::BaseController
     respond_with :admin, resource, location: requested_location(action, resource)
   end
   
-  def requested_location(action, record)
-    if record.blank?
-      raise ArgumentError, "Can't build url helpers without record"
-    end
-    
-    if action.blank?
-      return nil
-    end
-    
+  def requested_location(action, record)    
     class_str = record.class.to_s.underscore
     url_helpers = Rails.application.routes.url_helpers
     case action
@@ -90,34 +113,16 @@ class Admin::ResourceController < Admin::BaseController
       url_helpers.send("admin_#{class_str.pluralize}_path")
     end
   end
-  
-  
-  
-  # -- Resource Class helpers -- #
-  
-  helper_method :resource_class, :resource_title, :resource_param, :resource_path_helper
-  
-  def resource_class
-    @resource_class ||= params[:controller].camelize.demodulize.singularize.constantize
-  end
-  
-  def resource_title
-    @resource_title ||= resource_class.to_s.titleize
-  end
 
-  def resource_param
-    @resource_param ||= resource_class.to_s.underscore.to_sym
-  end
-  
-  def resource_path_helper
-    @resource_url_helper ||= Rails.application.routes.url_helpers.send("admin_#{resource_class.to_s.tableize}_path")
-  end
-  
-  
-  
-  # -- Breadcrumbs -- #
+
+  #-----------------
+  # Breadcrumbs
   
   def extend_breadcrumbs_with_resource_root
-    breadcrumb resource_title.pluralize, resource_path_helper
+    breadcrumb resource_title.pluralize, resource_url
+  end
+  
+  def add_user_id_to_params
+    params[resource_param].merge!(logged_user_id: admin_user.id)
   end
 end

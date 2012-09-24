@@ -1,5 +1,12 @@
-// Below Small Desktop (Exclusive)
+// Below small Desktop (Exclusive)
 @media screen and (max-width: $mediaDesktopSmall - 1) {
+	// Simplify Filters nav to allow for graceful wrapping
+		.filters {
+			li.heading { display: none !important; }
+			.active-arrow { display: none !important; }
+		}
+	// end Filters
+
 	.homepage-lead {
 		&.default {
 			.lead5 {
@@ -17,4 +24,82 @@
 			}
 		}
 	}
+		
+	// Pledge Banner to Button & hide form
+		#masthead {
+			.nav-primary.search-takeover {
+				.sections {
+					width:20%;
+					overflow:hidden;
+					li {
+						opacity:0;
+						&.listen-live {
+							opacity:1;
+						}
+					}
+				}	
+				.search-form {
+					display:block;
+					width:79%;
+					form {
+						.search, .submit {
+							@include ie-inline-block();
+						}
+						.search {
+							width:85%;
+						}
+						.toggle-search {
+							background-image:url(image_path('icons/search-close.png'));
+						}
+					}
+				}
+			}
+			
+			.search-form {
+				width:3%;
+				form {
+					.search, .submit { 
+						display: none; 
+					}
+					.toggle-search {
+						cursor:pointer;
+						@include ie-inline-block();
+					}
+				}
+			}
+			.nav-primary .sections { width: 96%; }
+
+			#masthead-left-header-wrapper { @include gridFluidSpan(12); }			
+			#masthead-right-header-wrapper { @include gridFluidSpan(12); }
+			
+			#masthead-mid-header-wrapper { display: none; }
+		}
+	// end Pledge Banner to Button
+	
+	// Adjust Featured Programs in Megamenu 
+	.megamenu {
+		#programs-mega {
+			.program {
+				a {
+					margin-right:-20px;
+				}
+			}
+		}
+	}
+	
+	// Modals
+	  .modal.wide {
+	    position: absolute;
+	    top:   10px;
+	    left:  10px;
+	    right: 10px;
+	    width: 300px;
+	    margin: 0;
+	    &.fade.in { top: auto; }
+		iframe {
+			width:260px !important;
+			height:235px !important;
+		}
+	  }
+	
 }

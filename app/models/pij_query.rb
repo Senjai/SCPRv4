@@ -1,8 +1,11 @@
 class PijQuery < ActiveRecord::Base
+  include Model::Scopes::SinceScope
+  
   self.table_name       = 'pij_query'
   CONTENT_TYPE          = "pij/query"
   
-  acts_as_content comments: false
+  acts_as_content comments: false, has_status: false, published_at: false
+  has_secretary
   
   QUERY_TYPES = [
     ["Evergreen",             "evergreen"],
@@ -12,19 +15,20 @@ class PijQuery < ActiveRecord::Base
   
   #------------
   # Administration
-  administrate
-  self.list_fields = [
-    ['id'],
-    ['headline', link: true],
-    ['slug'],
-    ['query_type'],
-    ['is_active', title: "Active?"],
-    ['is_featured', title: "Featured?"],
-    ['published_at']
-  ]
+  administrate do |admin|
+    admin.define_list do |list|
+      list.column "headline"
+      list.column "slug"
+      list.column "query_type"
+      list.column "is_active",    header: "Active?"
+      list.column "is_featured",  header: "Featured?"
+      list.column "published_at"
+    end
+  end
+  
   
   #------------
-  # Scopes
+  # Scopes  
   scope :news,          where(query_type: "news")
   scope :evergreen,     where(query_type: "evergreen")
   scope :featured,      where(is_featured: true)
@@ -35,6 +39,7 @@ class PijQuery < ActiveRecord::Base
     '(expires_at is null or expires_at > :time)', 
     is_active: true, time: Time.now
   ).order("published_at desc") }
+  
   
   #------------
   # Validation

@@ -78,19 +78,14 @@ class ProgramsController < ApplicationController
     if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
       redirect_to @segment.link_path and return
     end
-    
-    rescue
-      raise ActionController::RoutingError.new("Not Found")
   end
   
   
   #----------
   
   def episode
-    @episode = @program.episodes.published.where(air_date: Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)).first
+    @episode = @program.episodes.published.where(air_date: Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)).first!
     @segments = @episode.segments.published
-    rescue
-      raise ActionController::RoutingError.new("Not Found")
   end
 
   def schedule

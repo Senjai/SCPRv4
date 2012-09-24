@@ -16,8 +16,8 @@ describe PeopleController do
       assigns(:bios).reject { |b| b.is_public == true }.should be_blank
     end
     
-    it "orders by last name" do
-      assigns(:bios).to_sql.should match /order by last_name/i
+    it "orders by user's last name" do
+      assigns(:bios).to_sql.should match /order by #{AdminUser.table_name}\.last_name/i
     end
   end
   
@@ -36,7 +36,7 @@ describe PeopleController do
     
     it "returns a Bio object" do
       pending "Sphinx"
-      #get :bio, name: bio.slugged_name
+      #get :bio, name: bio.slug
       #assigns(:bio).should be_a Bio
     end
     

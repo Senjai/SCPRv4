@@ -1,23 +1,40 @@
 class AdminUser < ActiveRecord::Base
+  administrate
   require 'digest/sha1'
   self.table_name = "auth_user"
+
+  has_secretary
+  administrate do |admin|
+    admin.define_list do |list|
+      list.per_page = "all"
+      list.order    = "last_name"
+
+      list.column :username
+    end
+  end
   
   # ----------------
-  
+  # Callbacks
   before_validation :downcase_email
   before_validation :generate_password, if: -> { unencrypted_password.blank? }, on: :create
-  
+  before_create :generate_username, if: -> { username.blank? }
+  before_create :digest_password, if: -> { unencrypted_password.present? }
+    
+  # ------------------
+  # Validation
   validates :email, uniqueness: true, allow_blank: true
   validates :unencrypted_password, confirmation: true
   validates_presence_of :unencrypted_password, on: :create
-  
-  before_create :generate_username, if: -> { username.blank? }
-  before_create :digest_password, if: -> { unencrypted_password.present? }
-  
+    
   # ----------------
-  
+  # Scopes
   scope :active, where(:is_active => true)
 
+  # ----------------
+  # Association
+  has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
+  has_one :bio, foreign_key: "user_id"
+  
   # ----------------
 
   attr_accessor :unencrypted_password, :unencrypted_password_confirmation
@@ -42,11 +59,12 @@ class AdminUser < ActiveRecord::Base
   
   def as_json(*args)
     {
-      id: self.id,
-      username: self.username,
-      name: self.name,
-      email: self.email,
-      is_superuser: self.is_superuser
+      id:           self.id,
+      username:     self.username,
+      name:         self.name,
+      email:        self.email,
+      is_superuser: self.is_superuser,
+      headshot:     self.bio.try(:headshot) ? self.bio.headshot.thumb.tag : nil
     }
   end
     

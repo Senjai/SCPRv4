@@ -16,14 +16,14 @@ module Scprv4
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/extras)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/validators #{config.root}/app/models/observers)
     
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
-    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+    config.active_record.observers = :cache_expiration_observer
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -41,19 +41,19 @@ module Scprv4
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:unencrypted_password, :unencrypted_password_confirmation]
+    config.filter_parameters += [:password, :unencrypted_password, :unencrypted_password_confirmation]
     
     # Enable the asset pipeline
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.scpr      = ActiveSupport::OrderedOptions.new
+    config.assethost = ActiveSupport::OrderedOptions.new
+    config.node      = ActiveSupport::OrderedOptions.new
+    config.dbsync    = ActiveSupport::OrderedOptions.new
     
-    config.scpr       = ActiveSupport::OrderedOptions.new
-    config.assethost  = ActiveSupport::OrderedOptions.new
-    config.node       = ActiveSupport::OrderedOptions.new
-    config.dbsync     = ActiveSupport::OrderedOptions.new
-        
     Disqussion.configure do |disq|
       disq.api_key    = "n5QMkXRJa76bdBYruPhtYDvKe6wx7Vo0MqKlCypJdnh7lj6FNnFt1Lr9XAtpU2oe"
       disq.api_secret = "YsiHTacdYNGWn2tzaMKSptmJcA5jM3t0ScazSws2yDMHJJZJamkDC3a3249gfmQR"

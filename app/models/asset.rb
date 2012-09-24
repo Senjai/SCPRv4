@@ -2,117 +2,105 @@ class Asset
   require 'faraday'
   require 'faraday_middleware'
   
-  class AssetNotFound < Faraday::Error::ClientError
-    attr_reader :response
-    
-    def initialize(response)
-      super "Asset not found."
-      @response = response
-    end
+  BAD_STATUS = [400, 404, 500, 502]
+  
+  #-------------------
+  
+  def self.config
+    @config ||= Rails.application.config.assethost
   end
   
-  class AssetRequestError < Faraday::Error::ClientError
-    attr_reader :response
-    
-    def initialize(response)
-      super "Asset request failed with status #{response.status}"
-      @response = response
-    end
-  end
+  #-------------------
   
-  #----------
-  
-  class AssetErrors < Faraday::Response::Middleware
-    def initialize(app)
-      super(app)
-    end
+  def self.outputs
+    @outputs ||= begin
+      key = "assets/outputs"
 
-    def call(env)
-      response = @app.call(env)
-      
-      response.on_complete do |env|
-        if env[:status] == 404
-          raise AssetNotFound, response
-        elsif env[:status] == 400 || env[:status] == 500
-          raise AssetRequestError, response
-        end
+      # If the outputs are stored in cache, use those
+      if cached = Rails.cache.read(key)
+        return cached
       end
       
-      response
+      # Otherwise make a request
+      resp = self.connection.get("#{config.prefix}/outputs")
+      
+      if BAD_STATUS.include? resp.status
+        # A last-resort fallback - assethost not responding and outputs not in cache
+        # Should we just use this every time?
+        outputs = JSON.load(File.read(Rails.root.join("util/fixtures/assethost_outputs.json")))
+      else
+        outputs = resp.body
+        Rails.cache.write(key, outputs)
+      end
+      
+      outputs
     end
   end
   
-  #----------
+  #-------------------
   
-  # on class load, define our connection and middleware
-  
-  class << self
-    @@token   = Rails.application.config.assethost.token
-    @@server  = Rails.application.config.assethost.server
-    @@prefix  = Rails.application.config.assethost.prefix
-    
-    # set up our connection at initialization time
-    @@conn = Faraday.new("http://#{@@server}",:params => {:auth_token => @@token}) do |c|
-      c.use Asset::AssetErrors
-      c.use FaradayMiddleware::ParseJson, :content_type => /\bjson$/
-      c.use FaradayMiddleware::Instrumentation
-      c.adapter Faraday.default_adapter
-    end
-    
-    # -- run a request for outputs to populate convenience functions -- #
-    
-    resp = @@conn.get("#{@@prefix}/outputs")
-    @@outputs = resp.body    
-  end
-    
   # asset = Asset.find(id)
-  #
   # Given an asset ID, returns an asset object
+  #
   def self.find(id)
     key = "asset/asset-#{id}"
     
     if a = Rails.cache.read(key)
       # cache hit -- instantiate from the cached json
       return self.new(a)
-    else
-      # missed... request it from the server
-      resp = @@conn.get("#{@@prefix}/assets/#{id}")
+    end
+    
+    # missed... request it from the server
+    resp = connection.get("#{config.prefix}/assets/#{id}")
 
+    if BAD_STATUS.include? resp.status
+      Asset::Fallback.log(resp.status, id)
+      return Asset::Fallback.new
+    else
+      json = resp.body
+      
       # write this asset into cache
-      Rails.cache.write(key,resp.body)
+      Rails.cache.write(key,json)
       
       # now create an asset and return it
-      return self.new(resp.body)
+      return self.new(json)
+    end
+  end
+  
+  def self.connection
+    @connection ||= begin
+      Faraday.new("http://#{config.server}", params: { auth_token: config.token }) do |c|
+        c.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
+        c.use FaradayMiddleware::Instrumentation
+        c.adapter Faraday.default_adapter
+      end
     end
   end
   
   #----------
+
+  attr_accessor :json, :caption, :title, :id, :size, :taken_at, :owner, :url, :api_url, :native, :image_file_size
   
-  attr_accessor :json, :caption, :title, :id, :size, :taken_at, :owner, :url, :api_url, :native
+  # Define functions for each of our output sizes.  _size will return 
+  # AssetSize objects
+  self.outputs.each do |o|
+    define_method o['code'] do
+      self._size(o)
+    end
+  end
   
   def initialize(json)
     @json = json
     @_sizes = {}
     
-    # Define functions for each of our output sizes.  _size will return 
-    # AssetSize objects
-    class << self
-      @@outputs.each do |o|
-        define_method o['code'] do
-          self._size(o)
-        end
-      end
-    end
-    
     # define some attributes
-    [:caption,:title,:id,:size,:taken_at,:owner,:url,:api_url,:native].each { |key| self.send("#{key}=",@json[key.to_s]) }
-    
+    [:caption,:title,:id,:size,:taken_at,:owner,:url,:api_url,:native, :image_file_size].each { |key| self.send("#{key}=",@json[key.to_s]) }
   end
   
   #----------
   
   def _size(output)
-    @_sizes[ output['code'] ] ||= AssetSize.new(self,output)      
+    @_sizes[ output['code'] ] ||= AssetSize.new(self,output)
   end
   
   #----------
@@ -125,22 +113,16 @@ end
 #----------
 
 class AssetSize
-  attr_accessor  :width
-  attr_accessor  :height
-  attr_accessor  :tag
-  attr_accessor  :url
-  attr_accessor  :asset
-  attr_accessor  :output
+  attr_accessor  :width, :height, :tag, :url, :asset, :output
     
   def initialize(asset,output)
     @asset  = asset
     @output = output
     
-    self.width    = @asset.json['sizes'][ output['code'] ]['width']
-    self.height   = @asset.json['sizes'][ output['code'] ]['height']
-    self.tag      = @asset.json['tags'][ output['code'] ]
-    self.url      = @asset.json['urls'][ output['code'] ]
-
+    self.width  = @asset.json['sizes'][ output['code'] ]['width']
+    self.height = @asset.json['sizes'][ output['code'] ]['height']
+    self.tag    = @asset.json['tags'][ output['code'] ]
+    self.url    = @asset.json['urls'][ output['code'] ]
   end
   
   def tag
@@ -150,3 +132,17 @@ end
 
 #----------
 
+class Asset::Fallback < Asset
+  def self.logger
+    @logger ||= Logger.new(Rails.root.join("log/asset-fallback.log"))
+  end
+  
+  def self.log(response, id)
+    logger.info "*** [#{Time.now}] AssetHost returned #{response} for Asset ##{id}"
+  end
+  
+  def initialize
+    json = JSON.load(Rails.root.join("util/fixtures/assethost_fallback.json"))
+    super(json)
+  end
+end

@@ -6,7 +6,7 @@ describe SectionsController do
       it "raises 404" do
         -> {
           get :show, slug: "nothing"
-        }.should raise_error ActionController::RoutingError
+        }.should raise_error ActiveRecord::RecordNotFound
       end
     end
     

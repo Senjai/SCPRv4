@@ -48,17 +48,17 @@ describe PijQueriesController do
       assigns(:query).should eq query
     end
     
-    it "raises 404 if the slug isn't found" do
+    it "raises RecordNotFound if the slug isn't found" do
       -> { 
         get :show, slug: "nonsense"
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActiveRecord::RecordNotFound
     end
     
-    it "raises 404 if pij query is not visible" do
+    it "raises RecordNotFound if pij query is not visible" do
       query = create :pij_query, :expired
       -> { 
         get :show, slug: query.slug
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActiveRecord::RecordNotFound
     end
   end
 end

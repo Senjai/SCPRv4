@@ -1,25 +1,44 @@
 require "spec_helper"
 
 describe Bio do
-  it { should belong_to(:user).class_name("AdminUser") }
-  it { should have_many(:bylines).class_name("ContentByline") }
+  describe "validations" do
+    it_behaves_like "slug validation"
+    it_behaves_like "slug unique validation"
+    it { should validate_presence_of :user }
+  end
+
+  #--------------------
+  
+  describe "associations" do
+    it { should belong_to(:user).class_name("AdminUser") }
+    it { should have_many(:bylines).class_name("ContentByline") }
+  end
+
+  #--------------------
+  
+  describe "callbacks" do
+  end
+  
+  #--------------------
   
   describe "twitter_url" do
     it "returns a twitter URL if twitter handle is present" do
-      bio = build :bio, twitter: "@larrymantle"
+      bio = create :bio, twitter: "@larrymantle"
       bio.twitter_url.should match /twitter\.com/
     end
     
     it "subs out the @" do
-      bio = build :bio, twitter: "@larrymantle"
+      bio = create :bio, twitter: "@larrymantle"
       bio.twitter_url.should_not match /@/
     end
     
     it "returns nil if twitter handle is not present" do
-      bio = build :bio, twitter: ""
+      bio = create :bio, twitter: ""
       bio.twitter_url.should be_nil
     end
   end
+
+  #--------------------
   
   describe "indexed_bylines" do
     describe "max_results checking" do
@@ -57,36 +76,36 @@ describe Bio do
         bio.indexed_bylines(1, 9999).should be_a Array
       end
     end
+
+    #--------------------
     
     describe "mysql method" do
       let(:bio) { create :bio }
   
       it "only returns published content" do
-        unpub = create :news_story, status: 4
-        pub = create :news_story, status: 5
-        byline_pub = create :content_byline, user: bio, content: pub
+        unpub        = create :news_story, status: 4
+        pub          = create :news_story, status: 5
+        byline_pub   = create :content_byline, user: bio, content: pub
         byline_unpub = create :content_byline, user: bio, content: unpub
         bio.indexed_bylines(1, 9999).should eq [byline_pub]
       end
       
       it "sorts by published_at desc" do
-        news_older = create :news_story, published_at: Chronic.parse("3 days ago") 
-        news_newer = create :news_story, published_at: Chronic.parse("2 days ago")
+        news_older   = create :news_story, published_at: Chronic.parse("3 days ago") 
+        news_newer   = create :news_story, published_at: Chronic.parse("2 days ago")
         byline_older = create :content_byline, user: bio, content: news_older
         byline_newer = create :content_byline, user: bio, content: news_newer
         bio.indexed_bylines(1, 9999).first.should eq byline_newer
       end
     end
   end
+
+  #--------------------
   
   describe "headshot" do
-    before :each do
-      Asset.stub(:find) { "asset image" }
-    end
-    
     it "returns the asset if asset_id is set" do
-      bio = create :bio, asset_id: 9999
-      bio.headshot.should eq "asset image"
+      bio = create :bio, asset_id: 999
+      bio.headshot.should be_a Asset
     end
     
     it "returns false if asset_id isn't set" do
@@ -95,7 +114,7 @@ describe Bio do
     end
     
     it "uses the instance's cached asset if it's already been looked up" do
-      bio = create :bio, asset_id: 999999
+      bio = create :bio, asset_id: 999
       bio.instance_variable_set(:@_asset, "cached asset image")
       bio.headshot.should eq "cached asset image"
     end

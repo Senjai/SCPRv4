@@ -10,10 +10,10 @@ describe Admin::ResourceController do
       controller.get_record.should eq record
     end
     
-    it "raises a RoutingError if ID does not exist" do
+    it "raises a RecordNotFound if ID does not exist" do
       controller.stub!(:params) { { id: "000" } }
       controller.stub!(:resource_class) { NewsStory }
-      -> { controller.get_record }.should raise_error ActionController::RoutingError
+      -> { controller.get_record }.should raise_error ActiveRecord::RecordNotFound
     end
   end
   
@@ -46,14 +46,6 @@ describe Admin::ResourceController do
     it "returns index path by default" do
       controller.requested_location("nonsense", double(class: NewsStory)).should eq admin_news_stories_path
     end
-    
-    it "raises an error if record is blank" do
-      lambda { controller.requested_location("nonsense", nil) }.should raise_error ArgumentError 
-    end
-    
-    it "returns nil if action is blank" do
-      controller.requested_location(nil, double(class: NewsStory)).should be_nil
-    end
   end
   
   describe "resource_class" do
@@ -68,7 +60,7 @@ describe Admin::ResourceController do
     pending
   end
   
-  describe "resource_path_helper" do
+  describe "resource_url" do
     pending
   end
   

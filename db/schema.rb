@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829204450) do
+ActiveRecord::Schema.define(:version => 20120910173557) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -119,28 +119,19 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
   add_index "auth_user_user_permissions", ["permission_id"], :name => "permission_id_refs_id_6d7fb3c2067e79cb"
   add_index "auth_user_user_permissions", ["user_id", "permission_id"], :name => "user_id", :unique => true
 
-  create_table "bios_award", :force => true do |t|
-    t.integer "reporter_id",                :null => false
-    t.integer "year",                       :null => false
-    t.string  "award_name",  :limit => 250, :null => false
-  end
-
-  add_index "bios_award", ["reporter_id"], :name => "bios_award_reporter_id"
-
   create_table "bios_bio", :force => true do |t|
     t.integer "user_id",                                            :null => false
-    t.string  "name",         :limit => 200,                        :null => false
-    t.string  "last_name",    :limit => 100,        :default => "", :null => false
-    t.string  "slugged_name", :limit => 50,         :default => "", :null => false
+    t.string  "slug",         :limit => 50,                         :null => false
     t.text    "bio",          :limit => 2147483647,                 :null => false
     t.string  "title",        :limit => 200,        :default => "", :null => false
-    t.string  "email",        :limit => 200,                        :null => false
     t.boolean "is_public",                                          :null => false
     t.string  "feed_url",     :limit => 200,        :default => "", :null => false
     t.string  "twitter",      :limit => 30,                         :null => false
     t.integer "asset_id"
-    t.string  "short_bio",    :limit => 200,                        :null => false
+    t.string  "short_bio",    :limit => 200
     t.string  "phone_number", :limit => 30,                         :null => false
+    t.string  "name",         :limit => 120,                        :null => false
+    t.string  "email",        :limit => 120
   end
 
   add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true
@@ -194,7 +185,7 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.text     "body",              :limit => 2147483647,                 :null => false
     t.integer  "blog_id",                                                 :null => false
     t.string   "blog_slug",         :limit => 50,         :default => "", :null => false
-    t.datetime "published_at",                                            :null => false
+    t.datetime "published_at"
     t.integer  "status",                                                  :null => false
     t.string   "blog_asset_scheme", :limit => 10
     t.string   "short_headline",    :limit => 100
@@ -238,14 +229,14 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
-    t.integer  "django_content_type_id",                                                  :null => false
-    t.integer  "content_id",                                                              :null => false
-    t.integer  "action",                                                                  :null => false
-    t.datetime "fire_at",                              :default => '2011-09-20 15:15:06', :null => false
-    t.boolean  "has_fired",                            :default => false,                 :null => false
+    t.integer  "django_content_type_id",               :null => false
+    t.integer  "content_id",                           :null => false
+    t.datetime "fire_at"
     t.string   "content_type",           :limit => 20
   end
 
+  add_index "contentbase_contentalarm", ["content_id"], :name => "index_contentbase_contentalarm_on_content_id"
+  add_index "contentbase_contentalarm", ["content_type", "content_id"], :name => "index_contentbase_contentalarm_on_content_type_and_content_id"
   add_index "contentbase_contentalarm", ["django_content_type_id"], :name => "contentbase_contentalarm_e4470c6e"
 
   create_table "contentbase_contentbyline", :force => true do |t|
@@ -271,6 +262,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
   end
 
   add_index "contentbase_contentcategory", ["category_id"], :name => "contentbase_contentcategory_42dc49bc"
+  add_index "contentbase_contentcategory", ["content_id"], :name => "index_contentbase_contentcategory_on_content_id"
+  add_index "contentbase_contentcategory", ["content_type", "content_id"], :name => "index_contentbase_contentcategory_on_content_type_and_content_id"
   add_index "contentbase_contentcategory", ["django_content_type_id", "content_id"], :name => "content_key", :unique => true
   add_index "contentbase_contentcategory", ["django_content_type_id"], :name => "contentbase_contentcategory_e4470c6e"
 
@@ -286,17 +279,19 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
   end
 
   create_table "contentbase_featuredcomment", :force => true do |t|
-    t.integer  "bucket_id",                                                                       :null => false
-    t.integer  "django_content_type_id",                                                          :null => false
-    t.integer  "content_id",                                                                      :null => false
-    t.integer  "status",                                       :default => 0,                     :null => false
-    t.datetime "published_at",                                 :default => '2012-01-11 12:35:43', :null => false
-    t.string   "username",               :limit => 50,                                            :null => false
-    t.text     "excerpt",                :limit => 2147483647,                                    :null => false
+    t.integer  "bucket_id",                                                   :null => false
+    t.integer  "django_content_type_id",                                      :null => false
+    t.integer  "content_id",                                                  :null => false
+    t.integer  "status",                                       :default => 0, :null => false
+    t.datetime "published_at"
+    t.string   "username",               :limit => 50,                        :null => false
+    t.text     "excerpt",                :limit => 2147483647,                :null => false
     t.string   "content_type",           :limit => 20
   end
 
   add_index "contentbase_featuredcomment", ["bucket_id"], :name => "contentbase_featuredcomment_25ef9024"
+  add_index "contentbase_featuredcomment", ["content_id"], :name => "index_contentbase_featuredcomment_on_content_id"
+  add_index "contentbase_featuredcomment", ["content_type", "content_id"], :name => "index_contentbase_featuredcomment_on_content_type_and_content_id"
   add_index "contentbase_featuredcomment", ["django_content_type_id"], :name => "contentbase_featuredcomment_e4470c6e"
 
   create_table "contentbase_featuredcommentbucket", :force => true do |t|
@@ -316,6 +311,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
   end
 
   add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
+  add_index "contentbase_misseditcontent", ["content_id"], :name => "index_contentbase_misseditcontent_on_content_id"
+  add_index "contentbase_misseditcontent", ["content_type", "content_id"], :name => "index_contentbase_misseditcontent_on_content_type_and_content_id"
   add_index "contentbase_misseditcontent", ["django_content_type_id"], :name => "contentbase_misseditcontent_e4470c6e"
 
   create_table "contentbase_videoshell", :force => true do |t|
@@ -456,6 +453,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "content_type",           :limit => 20
   end
 
+  add_index "layout_homepagecontent", ["content_id"], :name => "index_layout_homepagecontent_on_content_id"
+  add_index "layout_homepagecontent", ["content_type", "content_id"], :name => "index_layout_homepagecontent_on_content_type_and_content_id"
   add_index "layout_homepagecontent", ["django_content_type_id"], :name => "layout_homepagecontent_e4470c6e"
   add_index "layout_homepagecontent", ["homepage_id"], :name => "layout_homepagecontent_35da0e60"
 
@@ -493,6 +492,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "content_type",           :limit => 20
   end
 
+  add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
+  add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["django_content_type_id", "content_id"], :name => "media_audio_content_type_id_569dcfe00f4d911"
   add_index "media_audio", ["django_content_type_id"], :name => "media_audio_e4470c6e"
 
@@ -528,6 +529,8 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "content_type",           :limit => 20
   end
 
+  add_index "media_link", ["content_id"], :name => "index_media_link_on_content_id"
+  add_index "media_link", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
   add_index "media_link", ["django_content_type_id", "content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
   add_index "media_link", ["django_content_type_id"], :name => "media_link_content_type_id"
 
@@ -541,8 +544,12 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "related_type",               :limit => 20
   end
 
+  add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
+  add_index "media_related", ["content_type", "content_id"], :name => "index_media_related_on_content_type_and_content_id"
   add_index "media_related", ["django_content_type_id"], :name => "media_related_e4470c6e"
   add_index "media_related", ["rel_django_content_type_id"], :name => "media_related_76fb6e42"
+  add_index "media_related", ["related_id"], :name => "index_media_related_on_related_id"
+  add_index "media_related", ["related_type", "related_id"], :name => "index_media_related_on_related_type_and_related_id"
 
   create_table "news_story", :force => true do |t|
     t.string   "headline",           :limit => 200,                        :null => false
@@ -551,7 +558,7 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.text     "teaser",             :limit => 2147483647,                 :null => false
     t.text     "body",               :limit => 2147483647,                 :null => false
     t.string   "locale",             :limit => 5,          :default => "", :null => false
-    t.datetime "published_at",                                             :null => false
+    t.datetime "published_at"
     t.string   "source",             :limit => 20
     t.string   "story_asset_scheme", :limit => 10
     t.string   "extra_asset_scheme", :limit => 10
@@ -725,7 +732,7 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.date     "air_date",                           :null => false
     t.string   "headline",     :limit => 140,        :null => false
     t.text     "body",         :limit => 2147483647, :null => false
-    t.datetime "published_at",                       :null => false
+    t.datetime "published_at"
     t.integer  "status",                             :null => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
@@ -753,7 +760,7 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.integer  "status",                                                     :null => false
     t.string   "segment_asset_scheme", :limit => 10
     t.string   "short_headline",       :limit => 100
-    t.datetime "published_at",                                               :null => false
+    t.datetime "published_at"
     t.datetime "updated_at",                                                 :null => false
   end
 
@@ -781,7 +788,9 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
     t.string  "content_type",           :limit => 20, :default => "BlogEntry"
   end
 
+  add_index "taggit_taggeditem", ["content_id"], :name => "index_taggit_taggeditem_on_content_id"
   add_index "taggit_taggeditem", ["content_id"], :name => "taggit_taggeditem_829e37fd"
+  add_index "taggit_taggeditem", ["content_type", "content_id"], :name => "index_taggit_taggeditem_on_content_type_and_content_id"
   add_index "taggit_taggeditem", ["django_content_type_id"], :name => "taggit_taggeditem_e4470c6e"
   add_index "taggit_taggeditem", ["tag_id"], :name => "taggit_taggeditem_3747b463"
 
@@ -797,5 +806,15 @@ ActiveRecord::Schema.define(:version => 20120829204450) do
 
   add_index "users_userprofile", ["nickname"], :name => "nickname", :unique => true
   add_index "users_userprofile", ["userid"], :name => "userid", :unique => true
+
+  create_table "versions", :force => true do |t|
+    t.integer  "version_number"
+    t.string   "versioned_type"
+    t.integer  "versioned_id"
+    t.string   "user_id"
+    t.text     "description"
+    t.text     "object_yaml"
+    t.datetime "created_at"
+  end
 
 end

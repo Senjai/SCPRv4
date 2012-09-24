@@ -5,9 +5,10 @@ require 'cucumber/thinking_sphinx/external_world'
 require 'chronic'
 require 'database_cleaner'
 require 'database_cleaner/cucumber'
+require 'fakeweb'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-World(FactoryGirl::Syntax::Methods, FormFillers, DatePathHelper)
+World(FactoryGirl::Syntax::Methods, FormFillers, DatePathHelper, AdminResource::Helpers::Controller)
 
 Capybara.default_selector           = :css
 ActionController::Base.allow_rescue = false
@@ -23,6 +24,7 @@ FactoryGirl.reload
 
 Before do
   ActionMailer::Base.deliveries = []
+  FakeWeb.load_callback
   DatabaseCleaner.start
 end
 
