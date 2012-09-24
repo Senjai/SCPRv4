@@ -1,7 +1,7 @@
 #= require scprbase
 
 class scpr.EventTracking
-    chooser: "[data-ga-category]"
+    chooser: ".track-event"
     constructor: ->
         new scpr.EventTrackingLink($ link) for link in $(@chooser)
 

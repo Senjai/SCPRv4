@@ -13,7 +13,7 @@
 						</div>
 				
 						<div class="span16">
-							<p><%= link_to video.short_headline, video.link_path, :data => {'ga-category' => 'Sidebar', 'ga-action' => 'Watch Video', 'ga-label' => 'Recent Videos'} %></p>
+							<p><%= link_to video.short_headline, video.link_path, :class => 'track-event', :data => {'ga-category' => 'Sidebar', 'ga-action' => 'Watch Video', 'ga-label' => 'Recent Videos'} %></p>
 							<span><%= format_date video.published_at %></span>
 						</div>
 					</div>
