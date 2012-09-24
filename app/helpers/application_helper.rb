@@ -102,7 +102,7 @@ module ApplicationHelper
   #----------
   
   def random_headshot
-    images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "cohen.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png"]
+    images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png"]
     image_tag "personalities/#{images[rand(images.size)]}"
   end
 
