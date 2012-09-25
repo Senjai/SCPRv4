@@ -11,7 +11,7 @@
 	
 <div class="navbar navbar-fixed-top navbar-inverse">
 	<div class="navbar-inner">
-		<div class="container-fluid">
+		<div class="container">
 			<%= link_to "KPCC Admin", admin_root_path, class: "brand" %>
 			
 			<% if admin_user %>
@@ -46,7 +46,7 @@
 </div>
 
 <% if admin_user %>
-	<div class="container-fluid">
+	<div class="container">
 		<% if breadcrumbs %>
 			<ul class="breadcrumb">
 				<% breadcrumbs.each do |crumb| %>
@@ -67,7 +67,7 @@
 	</div>
 <% end %>
 
-<div id="main" class="container-fluid">
+<div id="main" class="container">
 	<div class="page-header">
 		<% if content_for? :page_header %>
 			<%= yield :page_header %>
@@ -78,7 +78,7 @@
 		<% end %>
 	</div>
 	
-	<div class="row-fluid">
+	<div class="row">
 		<div class="span<%= content_for?(:sidebar) ? "9" : "12" %>">
 			<% flash.select { |k, v| v.is_a? String }.each do |name, msg| %>
 				<div class="alert alert-<%= flash_alert_type(name) %>">
@@ -94,8 +94,8 @@
 				<%= yield :sidebar %>
 			</div>
 		<% end %>
-	</div> <!-- row fluid -->
-</div> <!-- container fluid main -->
+	</div> <!-- row -->
+</div> <!-- container main -->
 
 <%= yield :footerjs %>
 

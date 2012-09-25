@@ -4,10 +4,6 @@ body {
 	padding-top: 50px;
 }
 
-.container-fluid {
-	min-width: 700px;
-}
-
 // We want content input to always be pretty big
 .simple_form {
 	input:not([type=submit]) {
@@ -17,7 +13,7 @@ body {
 
 form.simple_form {
 	input.long, textarea {
-		@extend .span8;
+		@extend .span7;
 	}
 	
 	.inline { // Extend bootstrap .inline
@@ -75,6 +71,7 @@ ul.viewers {
 	right: 0px;
 	margin: 0px;
 	background: $grayDark;
+	padding: 10px 0;
 }
 
 // Style the dropdown buttons so they look like links
