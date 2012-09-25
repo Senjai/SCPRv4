@@ -56,6 +56,7 @@ group :test, :development do
 end
 
 group :test do
+  gem 'simplecov', require: false
   gem "sqlite3"
   gem "cucumber-rails", require: false
   gem 'factory_girl_rails'
