@@ -7,4 +7,4 @@ config/environments/development.rb
 log/
 tmp/
 .sass-cache/
-coverage
+coverage/

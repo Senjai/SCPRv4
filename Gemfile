@@ -35,7 +35,7 @@ group :assets do
   gem "eco"
   gem "sass", branch: 'master', git: 'git://github.com/nex3/sass.git'
   gem 'sass-rails'
-  gem 'bootstrap-sass'#, path: "/Users/bryan/projects/gitclones/bootstrap-sass"
+  gem 'bootstrap-sass'
   gem "compass-rails"
   gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
@@ -48,11 +48,12 @@ end
 
 group :test, :development do
   gem "rspec-rails"
+  gem 'launchy'
+  gem 'jasminerice'
   gem 'guard-rspec'
   gem 'guard-cucumber'
-  gem 'launchy'
-#  gem 'jasminerice'
-#  gem 'guard-jasmine'
+  gem 'guard-jasmine'
+  gem 'guard-coffeescript'
 end
 
 group :test do
