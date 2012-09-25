@@ -49,11 +49,6 @@ module AdminListHelper
   
   
   # -- Custom Render methods -- #
-    
-  # for MultiAmerican
-  def display_pubDate(pubDate)
-    format_date(Time.parse(pubDate), time: true)
-  end
   
   def display_date(date)
     format_date(date, format: :full_date)

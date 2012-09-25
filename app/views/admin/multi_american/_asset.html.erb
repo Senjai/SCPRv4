@@ -1,8 +1,0 @@
-<div class="asset-block <%= cssClass %>" style="width:<%= style[:width] || "auto" %>" data-wp-attachment-id="<%=id%>">
-	<div class="contentasset">
-		<%= image.html_safe %>
-	</div>
-	
-	<%= credit.try(:html_safe) %>
-	<%= caption.try(:html_safe) %>
-</div>
