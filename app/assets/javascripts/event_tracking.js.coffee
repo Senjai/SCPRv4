@@ -26,5 +26,4 @@ class scpr.EventTrackingLink
         @el.on click: => @_gapush()
     
     _gapush: ->
-        event.preventDefault()
         _gaq.push ["_trackEvent", @category, @action, @label, @nonInteraction]
