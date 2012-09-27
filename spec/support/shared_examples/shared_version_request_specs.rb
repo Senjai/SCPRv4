@@ -17,7 +17,7 @@ shared_examples_for "versioned model" do
         new_record = described_class.first
         new_record.versions.size.should eq 1
         click_link "History"
-        page.should have_content "Created #{described_class.name.titleize}"
+        page.should have_content "Created #{described_class.name.demodulize.titleize} ##{new_record.id}"
       end
     end
     
