@@ -19,12 +19,16 @@ describe AdminResource::Config do
     end
   end
   
+  #----------------------
+  
   describe "#registered_models" do
-    it "returns an array if nothing is set" do
+    it "returns an empty hash if nothing is set" do
       AdminResource.config.registered_models = nil
-      AdminResource.config.registered_models.should eq {}
+      AdminResource.config.registered_models.should eq Hash.new
     end
   end
+
+  #----------------------
   
   describe "#title_attributes" do
     it "returns the defaults plus :simple_title if nothing is set" do

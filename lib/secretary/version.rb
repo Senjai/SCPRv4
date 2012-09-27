@@ -35,7 +35,7 @@ module Secretary
     def self.generate_description(object)
       case object.action
         when :create
-          "Created #{object.simple_title}"
+          "Created #{object.class.name.demodulize} ##{object.id}"
         when :update
           attributes = object.changed_attributes.keys
           attributes.delete_if { |key| Diff.should_ignore key }
@@ -49,7 +49,7 @@ module Secretary
     #---------------
 
     def title
-      "#{frozen_object.simple_title} v#{version_number}"
+      "#{object.class.name.demodulize} ##{object.id} v#{version_number}"
     end
 
     #---------------
