@@ -5,7 +5,7 @@ describe Related do
   it { should belong_to(:content) }
   
   describe "scopes" do
-    before :all do
+    before :each do
       content = create :news_story
       related = create :blog_entry
       @tiein = create :frel, content: content, related: related, flag: Related::FLAG_TIEIN
@@ -15,20 +15,17 @@ describe Related do
     
     it "tiein only returns related with tiein flag" do
       tieins = Related.tiein
-      tieins.count.should eq 1
-      tieins.first.should eq @tiein    
+      tieins.should eq [@tiein]
     end
   
     it "updates only returns related with update flag" do
       updates = Related.updates
-      updates.count.should eq 1
-      updates.first.should eq @update
+      updates.should eq [@update]
     end
   
     it "normal only returns related with normal flag" do
       normals = Related.normal
-      normals.count.should eq 1
-      normals.first.should eq @normal
+      normals.should eq [@normal]
     end
   
     it "notieindoes not return related with tiein flag" do

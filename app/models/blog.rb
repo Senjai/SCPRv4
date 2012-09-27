@@ -1,9 +1,9 @@
 class Blog < ActiveRecord::Base
   include Model::Validations::SlugValidation
-  
-  self.table_name =  'blogs_blog'
-  
+
+  self.table_name = 'blogs_blog'
   has_secretary
+  ROUTE_KEY = "blog"
   
   # -------------------
   # Administration
@@ -42,12 +42,6 @@ class Blog < ActiveRecord::Base
   scope :remote,      where(is_remote: true)
 
   # -------------------
-    
-  def remote_link_path
-    Rails.application.routes.url_helpers.blog_url(self.slug)
-  end
-
-  # -------------------
   
   def self.cache_remote_entries
     view = ActionView::Base.new(ActionController::Base.view_paths, {})
@@ -67,5 +61,12 @@ class Blog < ActiveRecord::Base
       end
     end # remote.each
     return success
+  end
+  
+  # -------------------
+  
+  def route_hash
+    return {} if !self.persisted? or !self.is_active?
+    { slug: self.persisted_record.slug }
   end
 end

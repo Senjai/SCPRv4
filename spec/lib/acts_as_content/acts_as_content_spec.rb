@@ -128,38 +128,6 @@ describe ActsAsContent::Methods::Body do
     end
   end
 end
-
-#--------------
-
-describe ActsAsContent::Methods::ObjKey do  
-  describe "obj_key" do
-    let(:content) { create :news_story }
-    it "returns the CONTENT_TYPE and id joined" do
-      content.obj_key.should eq "news/story:#{content.id}"
-    end
-
-    it "raises an error if CONTENT_TYPE isn't defined" do
-      content_type = NewsStory::CONTENT_TYPE
-      NewsStory.should_receive(:const_defined?).with(:CONTENT_TYPE).and_return(false)
-      -> { content.obj_key }.should raise_error
-    end
-  end
-end
-
-#--------------
-
-describe ActsAsContent::Methods::LinkPath do
-  describe "remote_link_path" do
-    let(:content) { create :news_story }
-    it "returns a link to scpr.org" do
-      content.remote_link_path.should match /scpr\.org/
-    end
-    
-    it "has the link_path in the url" do
-      content.remote_link_path.should match content.link_path
-    end
-  end
-end
     
 #--------------
 

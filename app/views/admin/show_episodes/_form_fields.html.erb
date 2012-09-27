@@ -1,0 +1,7 @@
+<%= form_block "Source" do %>
+	<%= f.association :show, collection: KpccProgram.active.all %>
+	<%= f.input :air_date, input_html: { class: "thin" } %>
+<% end %>
+
+<%= section "full_details", f, record %>
+<%= section "publishing", f, record %>

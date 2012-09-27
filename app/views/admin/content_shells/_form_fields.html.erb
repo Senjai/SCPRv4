@@ -1,11 +1,10 @@
-<%= f.error_notification %>
-
 <%= form_block "Details" do %>
 	<%= f.input :site %>
-	<%= f.input :url, input_html: { class: "long" } %>
-	<%= f.input :headline, input_html: { class: "long" } %>
-	<%= f.input :teaser, as: :text, input_html: { rows: "5" } %>
+	<%= f.input :url, input_html: { class: "wide" } %>
+	<%= section "remote_published_at", f, record %>
+	<%= f.input :headline, input_html: { class: "wide" } %>
+	<%= f.input :body, label: "Teaser" %>
 <% end %>
 
-<%= section "publishing", f, record %>
+<%= section "publishing", f, record%>
 <%= section "assets", f, record %>

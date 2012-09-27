@@ -70,5 +70,5 @@ When /^I visit a segment page with an incorrect id$/ do
 end
 
 Then /^I should be on that segment's program page$/ do
-  current_path.should eq program_path @segment.show
+  current_path.should eq program_path @segment.show.slug
 end

@@ -7,18 +7,22 @@ class ContentShell < ContentBase
   
   
   self.table_name =  "contentbase_contentshell"
-
   has_secretary
   
-  CONTENT_TYPE = "content/shell"
   ADMIN_PREFIX = "contentbase/contentshell"
   
   acts_as_content comments:           false, 
                   link_path:          false, # Defining them here
                   auto_published_at:  false
   
+  def self.content_key
+    "content/shell"
+  end
+  
   # ------------------
-  # Validation  
+  # Validation
+  validates :url, presence: true, if: :should_validate?
+
   def should_validate?
     pending? or published?
   end
@@ -58,13 +62,12 @@ class ContentShell < ContentBase
   end
   
   #----------
-  
+  # Override AdminResource's `link_path` for these
   def link_path(options={})
     self.url
   end
   
-  # Override acts_as_content's default behavior
-  def remote_link_path
+  def remote_link_path(options={})
     self.url
   end
   

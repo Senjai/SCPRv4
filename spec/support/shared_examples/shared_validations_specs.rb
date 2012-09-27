@@ -1,7 +1,7 @@
-## Shared Validations
+## 
+# Shared Validations
 # Model::Validations
 #
-
 def symbolize(klass)
   klass.to_s.underscore.to_sym
 end

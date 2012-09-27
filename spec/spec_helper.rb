@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start 'rails'
+
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'rubygems'
@@ -8,6 +11,7 @@ require 'thinking_sphinx/test'
 require 'database_cleaner'
 require 'chronic'
 require 'fakeweb'
+require 'capybara/rspec'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
@@ -25,6 +29,8 @@ RSpec.configure do |config|
   config.include DatePathHelper
   config.include StubTime
   config.include StubPublishingCallbacks
+  config.include FormFillers
+  config.include AuthenticationHelper
   
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
@@ -47,7 +53,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
     Rails.cache.clear
   end
-  
+
   config.after :suite do
     #
   end

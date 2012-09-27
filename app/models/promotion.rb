@@ -1,5 +1,6 @@
 class Promotion < ActiveRecord::Base
   has_secretary
+  ROUTE_KEY = "promotion"
   
   #-------------
   # Administration
@@ -13,6 +14,13 @@ class Promotion < ActiveRecord::Base
   #-------------
   # Validations
   validates_presence_of :title, :url
+  
+  #-------------
+
+  def route_hash
+    return {} if !self.persisted?
+    { slug: self.slug }
+  end
   
   #-------------
   

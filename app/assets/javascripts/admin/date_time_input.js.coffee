@@ -3,7 +3,10 @@
 $ ->
     for wrapper in $("form.simple_form div.datetime")
         new scpr.DateTimeInput(wrapper: wrapper)
-            
+    
+    for wrapper in $("form.simple_form div.date input")
+        $(wrapper).datepicker(autoclose: true)
+
 class scpr.DateTimeInput
     DefaultOptions:
         dateTemplate:  JST["admin/templates/timestamp_fields"]

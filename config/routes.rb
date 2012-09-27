@@ -121,7 +121,7 @@ Scprv4::Application.routes.draw do
   
   
   # Flatpage paths will override anything below this route.
-  match '*flatpage_path'     => "flatpages#show", constraints: FlatpageConstraint.new
+  match '*flatpage_path' => "flatpages#show", constraints: FlatpageConstraint.new
   
   
   # -- Bios -- #

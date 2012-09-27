@@ -9,12 +9,7 @@ describe KpccProgram do
     it { should belong_to :blog }
   end
   
-  describe "#to_param" do
-    it "uses the slug" do
-      program = build :kpcc_program
-      program.to_param.should eq program.slug
-    end
-  end
+  #--------------------
   
   describe "twitter_url" do
     it "returns the twitter_url if specified" do
@@ -28,6 +23,8 @@ describe KpccProgram do
       program.twitter_url.should eq KpccProgram::ConnectDefaults[:twitter]
     end
   end
+
+  #--------------------
   
   describe "facebook_url" do
     it "returns the facebook_url if specified" do
@@ -41,6 +38,8 @@ describe KpccProgram do
       program.facebook_url.should eq KpccProgram::ConnectDefaults[:facebook]
     end
   end
+
+  #--------------------
   
   describe "#twitter_absolute_url" do
     it "returns twitter_url if it's already a url to Twitter" do

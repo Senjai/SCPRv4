@@ -16,12 +16,6 @@ module ActsAsContent
     # whitelist or blacklist, respectively.
     # Everything defaults to `true` unless otherwise noted.
     #
-    # * link_path:          Checks for `link_path` and includes `remote_link_path`
-    #                       boolean, default: true
-    #
-    # * obj_key:            Includes `obj_key`
-    #                       boolean, default: true
-    #
     # * comments:           Includes `disqus_identifier`, `disqus_shortname`, and `has_comments?`
     #                       boolean, default: true
     #
@@ -73,8 +67,6 @@ module ActsAsContent
       except  = options.delete :except
 
       full_list = {
-        link_path:          true,
-        obj_key:            true,
         comments:           true,
         has_format:         false,
         auto_published_at:  true,
@@ -110,8 +102,6 @@ module ActsAsContent
       include Methods::Headline         if !list[:headline].nil?  and list[:headline].to_sym  != :headline
       include Methods::Body             if !list[:body].nil?      and list[:body].to_sym      != :body
               
-      include Methods::ObjKey           if list[:obj_key]
-      include Methods::LinkPath         if list[:link_path]
       include Methods::Comments         if list[:comments]    
       include Methods::ShortHeadline    if list[:short_headline]
       include Methods::Teaser           if list[:teaser]
@@ -131,5 +121,3 @@ require 'acts_as_content/methods/body'
 require 'acts_as_content/methods/headline'
 require 'acts_as_content/methods/teaser'
 require 'acts_as_content/methods/short_headline'
-require 'acts_as_content/methods/link_path'
-require 'acts_as_content/methods/obj_key'

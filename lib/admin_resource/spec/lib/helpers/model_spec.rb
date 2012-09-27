@@ -1,6 +1,12 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
 describe AdminResource::Helpers::Model do
+  describe "#title_attribute" do
+    pending
+  end
+  
+  #----------------
+  
   describe "#to_title" do
     it "uses one of the specified title attributes if available" do
       AdminResource.config.title_attributes = [:name]
@@ -18,6 +24,42 @@ describe AdminResource::Helpers::Model do
   
   #----------------
   
+  describe "#as_json" do
+    pending
+  end
+  
+  #----------------
+  
+  describe "#link_path" do
+    pending
+  end
+  
+  #----------------
+  
+  describe "#remote_link_path" do
+    pending
+  end
+
+  #----------------
+  
+  describe "#obj_key" do
+    pending
+  end
+
+  #----------------
+  
+  describe "#route_hash" do
+    pending
+  end
+  
+  #----------------
+  
+  describe "#persisted_record" do
+    pending
+  end
+  
+  #----------------
+  
   describe "#simple_title" do
     it "returns a simple name for a new object" do
       person = Person.new(id: 1, name: "Bryan Ricker")
@@ -31,6 +73,12 @@ describe AdminResource::Helpers::Model do
       person.new_record?.should be_false
       person.simple_title.should eq "Person ##{person.id}"
     end
+  end
+  
+  #----------------
+  
+  describe "::content_key" do
+    pending
   end
   
   #----------------

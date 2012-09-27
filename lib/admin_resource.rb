@@ -14,6 +14,7 @@ module AdminResource
     end    
   end
   
+  autoload :Error
   autoload :List
   autoload :Admin
   autoload :Administrate
@@ -22,5 +23,4 @@ end
 
 if defined?(ActiveRecord::Base)
   ActiveRecord::Base.send :extend, AdminResource::Administrate
-  ActiveRecord::Base.send :include, AdminResource::Helpers::Model
 end

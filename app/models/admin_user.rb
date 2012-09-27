@@ -1,8 +1,7 @@
 class AdminUser < ActiveRecord::Base
-  administrate
   require 'digest/sha1'
   self.table_name = "auth_user"
-
+  
   has_secretary
   administrate do |admin|
     admin.define_list do |list|
@@ -16,7 +15,7 @@ class AdminUser < ActiveRecord::Base
   # ----------------
   # Callbacks
   before_validation :downcase_email
-  before_validation :generate_password, if: -> { unencrypted_password.blank? }, on: :create
+  before_validation :generate_password, on: :create, if: -> { unencrypted_password.blank? }
   before_create :generate_username, if: -> { username.blank? }
   before_create :digest_password, if: -> { unencrypted_password.present? }
     
@@ -43,7 +42,7 @@ class AdminUser < ActiveRecord::Base
   
   def self.authenticate(username, unencrypted_password)
     if user = find_by_username(username)
-      algorithm, salt, hash = user.password.split('$')
+      algorithm, salt, hash = user.password.split('$')      
       if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
         return user
       else
@@ -59,12 +58,12 @@ class AdminUser < ActiveRecord::Base
   
   def as_json(*args)
     {
-      id:           self.id,
-      username:     self.username,
-      name:         self.name,
-      email:        self.email,
-      is_superuser: self.is_superuser,
-      headshot:     self.bio.try(:headshot) ? self.bio.headshot.thumb.url : nil
+      :id           => self.id,
+      :username     => self.username,
+      :name         => self.name,
+      :email        => self.email,
+      :is_superuser => self.is_superuser,
+      :headshot     => self.bio.try(:headshot) ? self.bio.headshot.thumb.url : nil
     }
   end
     
@@ -119,17 +118,17 @@ class AdminUser < ActiveRecord::Base
     # Adolfo Guzman-Lopez     #=> aguzmanlopez
     def generate_username
       names = self.name.split(" ")
-      username = ""
-      names[0..-2].each { |n| username += n.chars.first }
-      username += names.last
-      username = username.gsub(/\W/, "").downcase
+      uname = ""
+      names[0..-2].each { |n| uname += n.chars.first }
+      uname += names.last
+      uname = uname.gsub(/\W/, "").downcase
 
-      if !AdminUser.find_by_username(username)
-        self.username = username
+      if !AdminUser.find_by_username(uname)
+        self.username = uname
       else
         i = 1
         begin
-          self.username = username + i.to_s
+          self.username = uname + i.to_s
           i += 1
         end while AdminUser.exists?(username: self.username)
       end

@@ -28,8 +28,9 @@ class scpr.ContentAlarmUI
         @pending   = false
         @scheduled = false
         
-        @pubNotification  = new scpr.Notification(@notificationEl, "success", "This content is scheduled to be published.")
-        @warnNotification = new scpr.Notification(@notificationEl, "warning", "This content is not scheduled to be published.")
+        @alerts =
+            publish: new scpr.Notification(@notificationEl, "success", "This content is scheduled to be published.")
+            notPublish: new scpr.Notification(@notificationEl, "warning", "This content is not scheduled to be published.")
         
         # Check if the alarm fire_at is filled in
         # Check which status is selected
@@ -58,18 +59,18 @@ class scpr.ContentAlarmUI
                 
     #----------
     
-	# Do some boolean checking to figure out 
-	# which message to display
+    # Do some boolean checking to figure out 
+    # which message to display
     notify: (pending, scheduled) ->
         if pending and scheduled
-            @pubNotification.show()
-            @warnNotification.hide()
+            @alerts['publish'].render()
+            @alerts['notPublish'].detach()
         if !pending and scheduled
-            @pubNotification.hide()
-            @warnNotification.show()
+            @alerts['publish'].detach()
+            @alerts['notPublish'].render()
         if pending and !scheduled
-            @pubNotification.hide()
-            @warnNotification.show()
+            @alerts['publish'].detach()
+            @alerts['notPublish'].render()
         
     #----------
 

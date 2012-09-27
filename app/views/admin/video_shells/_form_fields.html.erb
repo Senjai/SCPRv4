@@ -1,5 +1,7 @@
-<%= f.error_notification %>
+<%= section "full_details", f, record do %>
+	<%= section "slug", f, record %>
+	<%= section "remote_published_at", f, record %>
+<% end %>
 
-<%= section "full_details", f, record %>
 <%= section "publishing", f, record %>
 <%= section "assets", f, record %>

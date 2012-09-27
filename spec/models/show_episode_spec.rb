@@ -10,9 +10,9 @@ describe ShowEpisode do
   describe "associations" do
     it_behaves_like "content alarm association"
     
-    it { should have_many :rundowns }
+    it { should have_many(:rundowns) }
     it { should have_many(:segments).through(:rundowns) }
-    it { should belong_to :show }
+    it { should belong_to(:show) }
   end
   
   #------------------
@@ -20,11 +20,11 @@ describe ShowEpisode do
   describe "validations" do
     it_behaves_like "content validation"
 
-    it { should validate_presence_of :show_id }
+    it { should validate_presence_of(:show) }
     
     it "validates air date on publish" do
       ShowEpisode.any_instance.stub(:published?) { true }
-      should validate_presence_of :air_date
+      should validate_presence_of(:air_date)
     end
   end
 

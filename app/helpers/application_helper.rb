@@ -40,7 +40,7 @@ module ApplicationHelper
       end
       
       # break up our content type
-      types = c.class::CONTENT_TYPE.split("/")
+      types = c.class.content_key.split("/")
 
       # set up our template precendence
       tmplt_opts = [

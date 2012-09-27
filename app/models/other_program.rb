@@ -30,21 +30,21 @@ class OtherProgram < ActiveRecord::Base
   def display_episodes
     false
   end
-  
+
   #----------
   
-  def to_param
-    slug
+  def published?
+    self.air_status != "hidden"
   end
   
   #----------
   
-  def remote_link_path
-    "http://www.scpr.org#{link_path}"
-  end
-  
-  def link_path
-    Rails.application.routes.url_helpers.program_path(self,:trailing_slash => true)
+  def route_hash
+    return {} if !self.persisted? || !self.published?
+    {
+      :slug           => self.persisted_record.slug,
+      :trailing_slash => true
+    }
   end
   
   #----------

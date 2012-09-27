@@ -14,5 +14,5 @@
 			<p class="about"><%= program.teaser.html_safe %></p>
 		</div>
 	</div>
-	<%= link_to "View Archived Episodes", program_path(program, :anchor => "archive"), class: "archive with-icon" %>
+	<%= link_to "View Archived Episodes", program_path(program.slug, :anchor => "archive"), class: "archive with-icon" %>
 </section>

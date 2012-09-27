@@ -6,20 +6,19 @@ class BlogEntry < ContentBase
   include Model::Associations::ContentAlarmAssociation
   include Model::Scopes::SinceScope
   
-  
-  self.table_name =  "blogs_entry"
+  self.table_name = "blogs_entry"
   acts_as_content has_format: true
   has_secretary
   
-  CONTENT_TYPE         = "blogs/entry"
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
-
+  ROUTE_KEY = "blog_entry"
     
   # ------------------
   # Administration
   administrate do |admin|
     admin.define_list do |list|
       list.order = "published_at desc"
+      
       list.column "headline"
       list.column "blog"
       list.column "bylines"
@@ -120,19 +119,16 @@ class BlogEntry < ContentBase
   
   #----------
 
-  def link_path(options={})
-    # We can't figure out the link path until
-    # all of the pieces are in-place.
-    return nil if !published?
-    
-    Rails.application.routes.url_helpers.blog_entry_path(options.merge!({
-      blog:           self.blog.slug,
-      year:           self.published_at.year, 
-      month:          "%02d" % self.published_at.month,
-      day:            "%02d" % self.published_at.day,
-      id:             self.id,
-      slug:           self.slug,
-      trailing_slash: true
-    }))
+  def route_hash
+    return {} if !self.persisted? or !self.published?
+    {
+      :blog           => self.persisted_record.blog.slug,
+      :year           => self.persisted_record.published_at_was.year, 
+      :month          => "%02d" % self.persisted_record.published_at_was.month,
+      :day            => "%02d" % self.persisted_record.published_at_was.day,
+      :id             => self.persisted_record.id,
+      :slug           => self.persisted_record.slug_was,
+      :trailing_slash => true
+    }
   end
 end

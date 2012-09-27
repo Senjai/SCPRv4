@@ -21,7 +21,6 @@ class ContentEmailController < ApplicationController
 
   protected
     def get_content
-      @content = ContentBase.obj_by_key(params[:obj_key])
-      raise_404 if !@content
+      @content = ContentBase.obj_by_key(params[:obj_key]) || raise_404
     end
 end

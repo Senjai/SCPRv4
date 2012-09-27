@@ -12,9 +12,19 @@ body {
 }
 
 form.simple_form {
-	input.long, textarea {
+	input.wide, textarea {
 		@extend .span7;
 	}
+	
+	input.thin, textarea.thin {
+		@extend .span2;
+	}
+	
+	textarea {
+		&.short { height: 200px; }
+		&.tall { height: 600px; }
+	}
+	
 	
 	.inline { // Extend bootstrap .inline
 		display: inline-block;
@@ -25,12 +35,6 @@ form.simple_form {
 		.controls {
 			margin-left: 10px;
 		}
-		
-
-	}
-	
-	textarea.short {
-		height: 200px;
 	}
 }
 

@@ -86,12 +86,12 @@ Then /^I should be on the programs page$/ do
 end
 
 When /^I go to (?:the|a|that) program's page$/ do
-  visit program_path @program
-  current_path.should eq program_path @program
+  visit program_path @program.slug
+  current_path.should eq program_path @program.slug
 end
 
 When /^I go to a program page with slug "([^"]*)"$/ do |slug|
-  visit program_path(show: slug)
+  visit program_path(slug)
 end
 
 When /^I visit the shallow path for that program$/ do
@@ -100,9 +100,9 @@ When /^I visit the shallow path for that program$/ do
 end
 
 Then /^I should be on (?:the|that) program's page$/ do
-  current_path.should eq program_path @program
+  current_path.should eq program_path @program.slug
 end
 
 Then /^I should not be on (?:the|that) program's page$/ do
-  current_path.should_not eq program_path @program
+  current_path.should_not eq program_path @program.slug
 end

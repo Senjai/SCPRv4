@@ -5,12 +5,10 @@ class ShowEpisode < ContentBase
   include Model::Associations::ContentAlarmAssociation
   include Model::Scopes::SinceScope
   
-  
-  self.table_name =  "shows_episode"
+  self.table_name = "shows_episode"
+  ROUTE_KEY       = "episode"
   has_secretary
-  
-  CONTENT_TYPE = 'shows/episode'
-  
+    
   acts_as_content comments: false
                   
   # -------------------
@@ -26,10 +24,12 @@ class ShowEpisode < ContentBase
     end
   end
   
+  
   # -------------------
   # Validations
-  validates :show_id,  presence: true
+  validates :show, presence: true
   validates :air_date, presence: true, if: :published?
+  
   
   # -------------------
   # Associations
@@ -66,17 +66,14 @@ class ShowEpisode < ContentBase
 
   #----------
   
-  def link_path(options={})
-    # We can't figure out the link path until
-    # all of the pieces are in-place.
-    return nil if !published?
-    
-    Rails.application.routes.url_helpers.episode_path(options.merge!({
-      :show           => self.show.slug,
-      :year           => self.air_date.year, 
-      :month          => "%02d" % self.air_date.month,
-      :day            => "%02d" % self.air_date.day,
+  def route_hash
+    return {} if !self.published? || !self.persisted?
+    {
+      :show           => self.persisted_record.show.slug,
+      :year           => self.persisted_record.air_date.year, 
+      :month          => "%02d" % self.persisted_record.air_date.month,
+      :day            => "%02d" % self.persisted_record.air_date.day,
       :trailing_slash => true
-    }))
+    }
   end
 end

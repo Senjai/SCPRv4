@@ -4,7 +4,9 @@ class Admin::ResourceController < Admin::BaseController
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
   before_filter :get_records, only: :index
   before_filter :extend_breadcrumbs_with_resource_root
-  before_filter :add_user_id_to_params, only: [:create, :update, :destroy]
+  before_filter :add_user_id_to_params, only: [:create, :update]
+  
+  before_filter :set_fields # Temporary
   
   respond_to :html
   
@@ -32,9 +34,6 @@ class Admin::ResourceController < Admin::BaseController
   end
 
   def new
-    # Temporary - This should be moved into AdminResource
-    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields]
-
     breadcrumb "New", nil
     @record = resource_class.new
     respond
@@ -45,9 +44,6 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def edit
-    # Temporary - This should be moved into AdminResource
-    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields]
-
     breadcrumb "Edit", nil
     respond
   end
@@ -83,6 +79,8 @@ class Admin::ResourceController < Admin::BaseController
   
   def get_record
     @record = resource_class.find(params[:id])
+    @persisted_record = @record.dup
+    @record
   end
   
   def get_records
@@ -124,5 +122,10 @@ class Admin::ResourceController < Admin::BaseController
   
   def add_user_id_to_params
     params[resource_param].merge!(logged_user_id: admin_user.id)
+  end
+  
+  def set_fields
+    # Temporary - This should be moved into AdminResource
+    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields]
   end
 end

@@ -32,11 +32,11 @@ FactoryGirl.define do
 # Bio #########################################################
   factory :bio, class: "Bio", aliases: [:author] do
     user { |bio| bio.association :admin_user }
-    name "Bryan Ricker"
+    sequence(:name) { |n| "Bryan Ricker #{n}" }
 
     is_public    true
+    slug         { name.parameterize }
     twitter      { "@#{slug}" }
-    slug         { user.name.parameterize }
     
     bio          "This is a bio"
     short_bio    "Short!"
@@ -57,9 +57,22 @@ FactoryGirl.define do
     unencrypted_password_confirmation { unencrypted_password }
     last_login { Time.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
+    
     is_staff 1
     is_active 1
     is_superuser 1
+    
+    trait :staff_user do
+      is_staff     1
+      is_active    1
+      is_superuser 0
+    end
+    
+    trait :superuser do
+      is_staff     1
+      is_active    1
+      is_superuser 1
+    end
   end
   
 
@@ -387,7 +400,7 @@ FactoryGirl.define do
     registration_required 0
     description           "This is the description"
     is_public             1
-    template              ""
+    template              "inherit"
   end
 
 

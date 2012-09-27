@@ -2,7 +2,7 @@
 
 <ul id="featured-programs" class="list-blocks">
 	<% @featured_programs.each do |program| %>
-		<a href="<%= program_path(program) %>">
+		<a href="<%= program_path(program.slug) %>">
 		    <li class="headshot <%=program.slug%>">
 				<h4><%= program.title %></h4>
 				<p><%= program.teaser.html_safe %></p>

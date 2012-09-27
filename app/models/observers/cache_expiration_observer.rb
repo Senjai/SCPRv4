@@ -11,7 +11,7 @@ class CacheExpirationObserver < ActiveRecord::Observer
     # If we are going from not published -> published.
     # Expire :new keys for the object's class
     if content.publishing?
-      Rails.cache.expire_obj([content.class::CONTENT_TYPE, "new"].join "/")
+      Rails.cache.expire_obj([content.class.content_key, "new"].join "/")
       Rails.cache.expire_obj("contentbase:new")
     end
     

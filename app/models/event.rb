@@ -2,8 +2,9 @@ class Event < ActiveRecord::Base
   include Model::Validations::SlugValidation
   include Model::Validations::ContentValidation
   
-  self.table_name =  'events_event'
+  self.table_name  = 'events_event'
   self.primary_key = "id"
+  ROUTE_KEY        = "event"
   
   acts_as_content auto_published_at: false, has_status: false, published_at: false
   has_secretary
@@ -13,14 +14,13 @@ class Event < ActiveRecord::Base
     "cult",
     "hall"
   ]
-  
-  CONTENT_TYPE = "events/event"
-  
+    
   # -------------------
   # Administration
   administrate do |admin|
     admin.define_list do |list|
       list.order = "created_at desc"
+      
       list.column "headline"
       list.column "starts_at"
       list.column "location_name", header: "Location"
@@ -154,17 +154,14 @@ class Event < ActiveRecord::Base
   end
   #----------
   
-  def link_path(options={})
-    # We can't figure out the link path until
-    # all of the pieces are in-place.
-    return nil if !published?
-    
-    Rails.application.routes.url_helpers.event_path(options.merge!({
-      :year           => self.starts_at.year, 
-      :month          => self.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
-      :day            => self.starts_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
-      :slug           => self.slug,
+  def route_hash
+    return {} if !self.published? || !self.persisted?
+    {
+      :year           => self.persisted_record.starts_at.year, 
+      :month          => self.persisted_record.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
+      :day            => self.persisted_record.starts_at.day.to_s.sub(/^[^0]$/) { |n| "0#{n}" },
+      :slug           => self.persisted_record.slug,
       :trailing_slash => true
-    }))
+    }
   end
 end

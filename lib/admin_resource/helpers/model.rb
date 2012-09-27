@@ -22,6 +22,16 @@ module AdminResource
 
         #--------------
         
+        def content_key
+          if self.respond_to? :table_name
+            self.table_name.gsub(/_/, "/")
+          else
+            self.name.tableize
+          end
+        end
+
+        #--------------
+        
         # This should go away eventually
         def django_admin_url
           "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
@@ -61,11 +71,18 @@ module AdminResource
       #   photo.to_title  #=> "Photo #10"
       #
       #
+            
+      def title_method
+        @title_method ||= begin
+          attributes = AdminResource.config.title_attributes
+          attributes.find { |a| self.respond_to?(a) }
+        end
+      end
+      
+      #-------------
       
       def to_title
-        attributes   = AdminResource.config.title_attributes
-        title_method = attributes.find { |a| self.respond_to?(a) }
-        self.send(title_method)
+        @to_title ||= self.send(self.title_method)
       end
       
       #-------------
@@ -80,6 +97,59 @@ module AdminResource
         end
       end
 
+      #-------------
+      # Define some defaults for as_json
+      def as_json(*args)
+        super.merge!(
+          :obj_key   => self.obj_key,
+          :to_title  => self.to_title,
+          :edit_path => self.admin_edit_path
+        )
+      end
+
+      #-------------
+      # Blank by default
+      def link_path(options={})
+        @link_path ||= begin
+          if self.route_hash.present?
+            Rails.application.routes.url_helpers.send("#{self.class::ROUTE_KEY}_path", options.merge!(route_hash))
+          end
+        end
+      end
+      
+      # If it gets here, it will be worthless anyways, so just raise an error.
+      def route_hash
+        raise AdminResource::Error::MethodNotDefinedError, "#route_hash not defined for #{self.class.name}. It needs to be defined manually."
+      end
+            
+      def remote_link_path(options={})
+        "http://#{Rails.application.default_url_options[:host]}#{self.link_path(options)}"
+      end
+
+      #-------------
+
+      def persisted_record
+        @persisted_record ||= begin
+          # If this record isn't persisted, return nil
+          return nil if !self.persisted?
+        
+          # If attributes have been changed, then fetch
+          # the persisted record from the database
+          # Otherwise just use self
+          if self.changed_attributes.present?
+            self.class.find(self.id)
+          else
+            self
+          end
+        end
+      end
+          
+      #-------------
+      # Default obj_key pattern
+      def obj_key
+        @obj_key ||= [self.class.content_key,self.id || "new"].join(":")
+      end
+      
       #-------------
       
       # This should go away eventually

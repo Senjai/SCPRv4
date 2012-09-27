@@ -3,7 +3,7 @@
 	<ul class="list-basic programs-list">
 		<% programs.each do |program| %>
 			<li>
-				<a href="<%= program_path(program) %>"><%= program.title %></a>
+				<a href="<%= program_path(program.slug) %>"><%= program.title %></a>
 			</li>
 		<% end %>
 	</ul>

@@ -64,7 +64,7 @@ describe ProgramsController do
     describe "with XML" do
       it "renders xml template when requested" do
         program = create :kpcc_program
-        get :show, show: program, format: :xml
+        get :show, show: program.slug, format: :xml
         response.should render_template 'programs/show'
         response.header['Content-Type'].should match /xml/
       end
@@ -73,31 +73,31 @@ describe ProgramsController do
     describe "get_program" do
       it "assigns a KPCC program if slug matches" do
         program = create :kpcc_program
-        get :show, show: program
+        get :show, show: program.slug
         assigns(:program).should eq program
       end
       
       it "redirects using the quick slug if present" do
         program = create :kpcc_program, quick_slug: "pm"
         get :show, quick_slug: program.quick_slug
-        response.should redirect_to program_path(program)
+        response.should redirect_to program_path(program.slug)
       end
       
       it "finds an other program if requested" do
         program = create :other_program
-        get :show, show: program
+        get :show, show: program.slug
         assigns(:program).should eq program
       end
       
       it "redirects to podcast_url if other program is present and request format is xml" do
         program = create :other_program
-        get :show, show: program, format: :xml
+        get :show, show: program.slug, format: :xml
         response.should redirect_to program.podcast_url
       end
       
       it "redirects to rss_url if no podcast_url present" do
         program = create :other_program, podcast_url: ""
-        get :show, show: program, format: :xml
+        get :show, show: program.slug, format: :xml
         response.should redirect_to program.rss_url
       end
       

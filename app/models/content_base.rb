@@ -177,7 +177,7 @@ class ContentBase < ActiveRecord::Base
       :admin_path     => self.admin_path,
       :status         => self.status,
       :to_title       => self.to_title,
-      :edit_path      => "/r/admin/#{self.class.route_key}/#{self.id}/edit"
+      :edit_path      => self.admin_edit_path
     }
   end
   

@@ -33,10 +33,10 @@ module AdminListHelper
       end
     end
 
-    if !display_helper.is_a? Proc
-      rendered_item = send(display_helper, attrib)
+    if display_helper.is_a? Proc
+      rendered_item = display_helper.call(attrib)      
     else
-      rendered_item = display_helper.call(attrib)
+      rendered_item = send(display_helper, attrib)
     end
     
     if column.linked?

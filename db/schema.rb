@@ -120,18 +120,20 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "auth_user_user_permissions", ["user_id", "permission_id"], :name => "user_id", :unique => true
 
   create_table "bios_bio", :force => true do |t|
-    t.integer "user_id",                                            :null => false
-    t.string  "slug",         :limit => 50,                         :null => false
-    t.text    "bio",          :limit => 2147483647,                 :null => false
-    t.string  "title",        :limit => 200,        :default => "", :null => false
-    t.boolean "is_public",                                          :null => false
-    t.string  "feed_url",     :limit => 200,        :default => "", :null => false
-    t.string  "twitter",      :limit => 30,                         :null => false
-    t.integer "asset_id"
-    t.string  "short_bio",    :limit => 200
-    t.string  "phone_number", :limit => 30,                         :null => false
-    t.string  "name",         :limit => 120,                        :null => false
-    t.string  "email",        :limit => 120
+    t.integer  "user_id",                                               :null => false
+    t.string   "slug",         :limit => 50,                            :null => false
+    t.text     "bio",          :limit => 2147483647,                    :null => false
+    t.string   "title",        :limit => 200,        :default => "",    :null => false
+    t.boolean  "is_public",                          :default => false, :null => false
+    t.string   "feed_url",     :limit => 200,        :default => "",    :null => false
+    t.string   "twitter",      :limit => 30,                            :null => false
+    t.integer  "asset_id"
+    t.string   "short_bio",    :limit => 200,                           :null => false
+    t.string   "phone_number", :limit => 30,                            :null => false
+    t.string   "name",         :limit => 120,                           :null => false
+    t.string   "email",        :limit => 120
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
   end
 
   add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true
@@ -268,14 +270,14 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "contentbase_contentcategory", ["django_content_type_id"], :name => "contentbase_contentcategory_e4470c6e"
 
   create_table "contentbase_contentshell", :force => true do |t|
-    t.string   "headline",     :limit => 200,                                           :null => false
-    t.string   "site",         :limit => 50,         :default => "KPCC",                :null => false
-    t.text     "body",         :limit => 2147483647,                                    :null => false
-    t.string   "url",          :limit => 150,                                           :null => false
-    t.integer  "status",                             :default => 0,                     :null => false
-    t.datetime "published_at",                       :default => '2011-11-21 11:07:11', :null => false
-    t.datetime "created_at",                                                            :null => false
-    t.datetime "updated_at",                                                            :null => false
+    t.string   "headline",     :limit => 200,                            :null => false
+    t.string   "site",         :limit => 50,         :default => "KPCC", :null => false
+    t.text     "body",         :limit => 2147483647,                     :null => false
+    t.string   "url",          :limit => 150,                            :null => false
+    t.integer  "status",                             :default => 0,      :null => false
+    t.datetime "published_at"
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
   end
 
   create_table "contentbase_featuredcomment", :force => true do |t|
@@ -387,19 +389,19 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "events_event", ["slug"], :name => "events_event_slug"
 
   create_table "flatpages_flatpage", :force => true do |t|
-    t.string   "url",                   :limit => 100,        :null => false
-    t.string   "title",                 :limit => 200,        :null => false
-    t.text     "content",               :limit => 2147483647, :null => false
-    t.text     "extra_head",            :limit => 2147483647, :null => false
-    t.text     "extra_tail",            :limit => 2147483647, :null => false
-    t.boolean  "enable_comments",                             :null => false
-    t.boolean  "registration_required",                       :null => false
+    t.string   "url",                   :limit => 100,                           :null => false
+    t.string   "title",                 :limit => 200,                           :null => false
+    t.text     "content",               :limit => 2147483647,                    :null => false
+    t.text     "extra_head",            :limit => 2147483647,                    :null => false
+    t.text     "extra_tail",            :limit => 2147483647,                    :null => false
+    t.boolean  "enable_comments",                             :default => false, :null => false
+    t.boolean  "registration_required",                       :default => false, :null => false
     t.datetime "updated_at"
-    t.text     "description",           :limit => 2147483647, :null => false
+    t.text     "description",           :limit => 2147483647,                    :null => false
     t.string   "redirect_url",          :limit => 250
-    t.boolean  "is_public",                                   :null => false
-    t.datetime "created_at",                                  :null => false
-    t.string   "template",              :limit => 10,         :null => false
+    t.boolean  "is_public",                                   :default => false, :null => false
+    t.datetime "created_at",                                                     :null => false
+    t.string   "template",              :limit => 10,                            :null => false
   end
 
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"

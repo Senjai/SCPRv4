@@ -1,6 +1,7 @@
 class KpccProgram < ActiveRecord::Base
-  self.table_name =  'programs_kpccprogram'
-
+  self.table_name = 'programs_kpccprogram'
+  ROUTE_KEY       = "program"
+  
   has_secretary
     
   ConnectDefaults = {
@@ -50,10 +51,6 @@ class KpccProgram < ActiveRecord::Base
   # -------------------
   # Scopes
   scope :active, where(:air_status => ['onair','online'])
-  
-  def to_param
-    slug
-  end
 
   # TODO Rename these fallback helpers
   def facebook_url # So we don't have to worry about a fallback in the views.
@@ -68,6 +65,9 @@ class KpccProgram < ActiveRecord::Base
     self[:rss_url].blank? ? ConnectDefaults[:rss] : self[:rss_url]
   end
   
+  def published?
+    self.air_status != "hidden"
+  end
   
   def twitter_absolute_url
     if twitter_url =~ /twitter\.com/
@@ -79,14 +79,11 @@ class KpccProgram < ActiveRecord::Base
   
   #----------
   
-  def link_path
-    Rails.application.routes.url_helpers.program_path(self,:trailing_slash => true)
+  def route_hash
+    return {} if !self.persisted? || !self.published?
+    {
+      :slug           => self.persisted_record.slug,
+      :trailing_slash => true
+    }
   end
-  
-  def remote_link_path
-    "http://www.scpr.org#{self.link_path}"
-  end
-  
-  #----------
-
 end

@@ -12,7 +12,7 @@
 						<% if @segment.episode.present? %>
 							<%= link_to @segment.episode.headline, @segment.episode.link_path %>
 						<% else %>
-							<%= link_to @program.title, program_path(@program) %>
+							<%= link_to @program.title, program_path(@program.slug) %>
 						<% end %>
 					</h5>
 					<h1 class="story-headline"><%= @segment.headline %></h1>
