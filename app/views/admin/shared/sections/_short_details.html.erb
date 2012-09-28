@@ -1,6 +1,6 @@
 <%= form_block "Short Details" do %>
 	<%= f.input :short_headline, input_html: { class: "wide" } %>
-	<%= f.input :teaser, as: :text, input_html: { rows: "5" } %>
+	<%= f.input :teaser, as: :text, input_html: { class: "tiny" } %>
 	<%= section "slug", f, record %>
 	<%= extra %>
 <% end %>

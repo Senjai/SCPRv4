@@ -3,6 +3,7 @@ class ContentShell < ContentBase
   include Model::Validations::ContentValidation
   include Model::Validations::PublishedAtValidation
   include Model::Associations::ContentAlarmAssociation
+  include Model::Associations::AssetAssociation  
   include Model::Scopes::SinceScope
   
   
@@ -21,7 +22,7 @@ class ContentShell < ContentBase
   
   # ------------------
   # Validation
-  validates :url, presence: true, if: :should_validate?
+  validates :url, presence: true
 
   def should_validate?
     pending? or published?

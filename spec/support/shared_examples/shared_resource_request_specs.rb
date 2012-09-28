@@ -4,7 +4,6 @@
 shared_examples_for "managed resource" do
   before :each do
     login
-    
     # Touch them so their associations get created
     valid_record
     invalid_record
@@ -16,7 +15,6 @@ shared_examples_for "managed resource" do
   describe "Create" do    
     context "invalid" do
       it "shows validation errors" do
-        invalid_record # force associations to be created for drop-downs
         visit described_class.admin_new_path
         fill_required_fields(invalid_record)
         click_button "edit"
@@ -29,7 +27,6 @@ shared_examples_for "managed resource" do
     
     context "valid" do
       it "is created" do
-        valid_record # force associations to be created for drop-downs
         visit described_class.admin_new_path
         fill_required_fields(valid_record)
         click_button "edit"
@@ -49,11 +46,6 @@ shared_examples_for "managed resource" do
     before :each do
       valid_record.save!
       @to_title = valid_record.to_title
-      
-      # force associations to be created for drop-downs
-      invalid_record
-      updated_record
-      
       visit valid_record.admin_edit_path
     end
     
@@ -132,4 +124,32 @@ shared_examples_for "managed resource" do
       end
     end
   end
+  
+  #------------------------
+  
+  describe "Admin Paths" do
+    before :each do
+      valid_record.save!
+    end
+  
+    it "returns success when following admin_edit_path" do
+      visit valid_record.admin_edit_path
+      current_path.should eq valid_record.admin_edit_path
+    end
+
+    it "returns success when following admin_show_path" do
+      visit valid_record.admin_show_path
+      current_path.should eq valid_record.admin_show_path
+    end
+
+    it "returns success when following admin_new_path" do
+      visit valid_record.class.admin_new_path
+      current_path.should eq valid_record.class.admin_new_path
+    end
+
+    it "returns success when following admin_index_path" do
+      visit valid_record.class.admin_index_path
+      current_path.should eq valid_record.class.admin_index_path
+    end
+  end  
 end

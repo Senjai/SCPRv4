@@ -16,7 +16,8 @@ describe PijQuery do
   #---------------
 
   describe "associations" do
-    it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
+    it_behaves_like "asset association"
+    it_behaves_like "audio association"
   end
   
   #---------------
@@ -38,14 +39,6 @@ describe PijQuery do
   describe "has_format?" do
     it "is true" do
       create(:pij_query).has_format?.should be_false
-    end
-  end
-
-  # ----------------
-  
-  describe "auto_published_at" do
-    it "is true" do
-      create(:pij_query).auto_published_at.should be_true
     end
   end
 
@@ -113,17 +106,5 @@ describe PijQuery do
         PijQuery.visible.should eq [active_query]
       end
     end
-  end
-  
-  #---------------
-  
-  describe "link_path" do
-    it "has the slug" do
-      pij_query = create :pij_query
-      pij_query.link_path.should match pij_query.slug
-    end
-  end
-  
-  #---------------
-  
+  end  
 end

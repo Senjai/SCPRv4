@@ -1,0 +1,36 @@
+<%= form_block "Audio" do %>
+	<% record.audio.build %>
+	<%= f.simple_fields_for :audio do |af| %>
+	<div class="audio-fields well" id="audio-fields-<%=af.object.id || "new"%>">
+		<div class="row">
+			<div class="span4">
+				<div class="details" id="audio-<%=af.object.id || "new"%>-details">
+					<%= af.input :description, input_html: { class: "tiny thin" } %>
+					<%= af.input :byline, input_html: { class: "thin" } %>
+					<%= af.input :position, input_html: { class: "thin" } %>
+				</div>
+			</div> <!-- span -->
+			<div class="span4">
+				<div class="audio-info">
+					<ul class="nav nav-tabs">
+						<li class="<%="active" unless af.object.mp3.present?%>"><a href="#audio-<%=af.object.id || "new"%>-enco" data-toggle="tab">Enco</a></li>
+						<li class="<%="active" if af.object.mp3.present?%>"><a href="#audio-<%=af.object.id || "new"%>-upload" data-toggle="tab">Upload</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane<%=" active" unless af.object.mp3.present?%>" id="audio-<%=af.object.id || "new"%>-enco">
+							<%= af.input :enco_number, input_html: { class: "thin" } %>
+							<%= af.input :enco_date, input_html: { class: "thin" } %>
+						</div>
+						<div class="tab-pane<%=" active" if af.object.mp3.present?%>" id="audio-<%=af.object.id || "new"%>-upload">
+							<%= af.input :mp3, as: :file, label: false %>
+						</div>
+					</div> <!-- tab-content -->
+				</div> <!-- audio-info -->
+				<div class="audio-delete">
+					<%= af.input :_destroy, as: :boolean, label: false, inline_label: "Delete?", wrapper_html: { class: "inline destroy-bool" } %>
+				</div> <!-- audio-delete -->
+			</div> <!-- span -->
+		</div> <!-- row -->
+	</div> <!-- audio-fields -->
+	<% end %>
+<% end %>

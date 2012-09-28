@@ -10,6 +10,8 @@
 //= require date
 //= require bootstrap-datepicker
 
+//= require ckeditor-jquery
+
 //= require_directory ./templates/
 
 //= require admin/notification

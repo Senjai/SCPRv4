@@ -379,7 +379,7 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.boolean  "kpcc_event",                                :default => false, :null => false
     t.string   "for_program",         :limit => 20,         :default => "",    :null => false
     t.text     "archive_description", :limit => 2147483647,                    :null => false
-    t.string   "audio",               :limit => 100,        :default => "",    :null => false
+    t.string   "old_audio",           :limit => 100,                           :null => false
     t.boolean  "is_published",                                                 :null => false
     t.boolean  "show_comments",                                                :null => false
     t.text     "teaser",              :limit => 2147483647,                    :null => false
@@ -481,17 +481,19 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
   create_table "media_audio", :force => true do |t|
-    t.string  "mp3",                    :limit => 100
-    t.integer "size"
-    t.integer "duration"
-    t.integer "enco_number"
-    t.date    "enco_date"
-    t.integer "django_content_type_id",                                           :null => false
-    t.integer "content_id",                                                       :null => false
-    t.text    "description",            :limit => 2147483647
-    t.string  "byline",                 :limit => 150,        :default => "KPCC", :null => false
-    t.integer "position",                                     :default => 0,      :null => false
-    t.string  "content_type",           :limit => 20
+    t.string   "mp3",                    :limit => 100
+    t.integer  "size"
+    t.integer  "duration"
+    t.integer  "enco_number"
+    t.date     "enco_date"
+    t.integer  "django_content_type_id",                                           :null => false
+    t.integer  "content_id",                                                       :null => false
+    t.text     "description",            :limit => 2147483647
+    t.string   "byline",                 :limit => 150,        :default => "KPCC", :null => false
+    t.integer  "position",                                     :default => 0,      :null => false
+    t.string   "content_type",           :limit => 20
+    t.datetime "created_at",                                                       :null => false
+    t.datetime "updated_at",                                                       :null => false
   end
 
   add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
@@ -591,9 +593,11 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.integer  "form_height",                        :null => false
     t.string   "query_url",    :limit => 200,        :null => false
     t.boolean  "is_active",                          :null => false
-    t.datetime "published_at",                       :null => false
+    t.datetime "published_at"
     t.datetime "expires_at"
     t.boolean  "is_featured",                        :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "pij_query", ["slug"], :name => "slug", :unique => true

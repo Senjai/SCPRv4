@@ -1,6 +1,7 @@
 class Bio < ActiveRecord::Base
   include Model::Validations::SlugValidation
   
+  ROUTE_KEY       = "bio"
   self.table_name = 'bios_bio'
   has_secretary
 

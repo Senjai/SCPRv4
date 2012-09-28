@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe Event do  
   describe "associations" do
-    it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
+    it_behaves_like "asset association"
+    it_behaves_like "audio association"
   end
 
   #-------------------
@@ -413,14 +414,6 @@ describe Event do
         spon_events = Event.sponsored
         spon_events.should eq [spon_event]
       end
-    end
-  end
-
-  #-------------------
-  
-  describe "audio" do
-    it "responds to audio" do
-      build(:event).should respond_to :audio
     end
   end
 

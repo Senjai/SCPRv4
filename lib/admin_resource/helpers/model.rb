@@ -108,25 +108,6 @@ module AdminResource
       end
 
       #-------------
-      # Blank by default
-      def link_path(options={})
-        @link_path ||= begin
-          if self.route_hash.present?
-            Rails.application.routes.url_helpers.send("#{self.class::ROUTE_KEY}_path", options.merge!(route_hash))
-          end
-        end
-      end
-      
-      # If it gets here, it will be worthless anyways, so just raise an error.
-      def route_hash
-        raise AdminResource::Error::MethodNotDefinedError, "#route_hash not defined for #{self.class.name}. It needs to be defined manually."
-      end
-            
-      def remote_link_path(options={})
-        "http://#{Rails.application.default_url_options[:host]}#{self.link_path(options)}"
-      end
-
-      #-------------
 
       def persisted_record
         @persisted_record ||= begin

@@ -21,10 +21,14 @@ form.simple_form {
 	}
 	
 	textarea {
+		&.tiny { height: 100px; }
 		&.short { height: 200px; }
 		&.tall { height: 600px; }
 	}
 	
+	fieldset legend {
+		cursor: pointer;
+	}
 	
 	.inline { // Extend bootstrap .inline
 		display: inline-block;
@@ -36,6 +40,20 @@ form.simple_form {
 			margin-left: 10px;
 		}
 	}
+}
+
+.audio-fields {
+	margin-bottom: 10px;
+	padding: 5px;
+	
+	.audio-info {
+		height: 150px;
+		border-bottom: 1px solid #ddd;
+		margin-bottom: 10px;
+	}
+	.control-group.file {
+		.controls { margin: 0; }
+	}	
 }
 
 .user-badge {

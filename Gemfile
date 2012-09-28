@@ -16,6 +16,8 @@ gem "faraday",            "~> 0.7.6"
 gem "faraday_middleware", "~> 0.8"
 gem "diffy",              "~> 2.0.8"
 gem 'newrelic_rpm'
+gem "carrierwave",        "~> 0.6.2"
+gem 'ckeditor_rails', require: 'ckeditor-rails'
 
 gem "ruby-mp3info"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"

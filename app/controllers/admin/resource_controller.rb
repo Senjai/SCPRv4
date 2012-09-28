@@ -79,8 +79,6 @@ class Admin::ResourceController < Admin::BaseController
   
   def get_record
     @record = resource_class.find(params[:id])
-    @persisted_record = @record.dup
-    @record
   end
   
   def get_records

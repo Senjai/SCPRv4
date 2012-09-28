@@ -29,6 +29,7 @@ describe VideoShell do
 
   describe "associations" do
     it_behaves_like "content alarm association"
+    it_behaves_like "asset association"
   end
   
   # ----------------
@@ -45,29 +46,12 @@ describe VideoShell do
     end
   end
 
-  # ----------------
-  
-  describe "#auto_published_at" do
-    it "is true" do
-      create(:video_shell).auto_published_at.should be_true
-    end
-  end
-    
   #--------------------
 
   describe "#teaser" do
     it "is the body" do
       video = build :video_shell
       video.body.should eq video.teaser
-    end
-  end
-  
-  #--------------------
-  
-  describe "#link_path" do
-    it "does not override the hard-coded options" do
-      video_shell = create :video_shell
-      video_shell.link_path(trailing_slash: false).should match /\/$/
     end
   end
 end

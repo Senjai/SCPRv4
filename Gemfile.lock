@@ -81,10 +81,16 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
+    carrierwave (0.6.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
     childprocess (0.3.5)
       ffi (~> 1.0, >= 1.0.6)
     chronic (0.7.0)
     chunky_png (1.2.6)
+    ckeditor_rails (3.6.4.1)
+      railties (~> 3.0)
+      thor (~> 0.14)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -340,7 +346,9 @@ DEPENDENCIES
   bootstrap-sass
   capistrano
   capybara
+  carrierwave (~> 0.6.2)
   chronic
+  ckeditor_rails
   coffee-rails
   compass-rails
   cucumber-rails

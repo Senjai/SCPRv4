@@ -4,6 +4,8 @@ class BlogEntry < ContentBase
   include Model::Validations::SlugUniqueForPublishedAtValidation
   include Model::Callbacks::SetPublishedAtCallback
   include Model::Associations::ContentAlarmAssociation
+  include Model::Associations::AudioAssociation
+  include Model::Associations::AssetAssociation
   include Model::Scopes::SinceScope
   
   self.table_name = "blogs_entry"

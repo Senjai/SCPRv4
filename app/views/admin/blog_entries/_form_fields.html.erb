@@ -9,3 +9,5 @@
 <%= section "assets", f, record do %>
 	<%= f.input :blog_asset_scheme, collection: ContentBase::BLOG_SCHEMES, selected: record.blog_asset_scheme || ContentBase::BLOG_SCHEMES[0] %>
 <% end %>
+
+<%= section "audio", f, record %>

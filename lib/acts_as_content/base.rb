@@ -73,8 +73,7 @@ module ActsAsContent
         published_at:       true, # Not currently being used
         has_status:         true,
         short_headline:     true,
-        teaser:             true,
-        assets:             true
+        teaser:             true
       }.merge! options
 
       if only.present?
@@ -90,10 +89,6 @@ module ActsAsContent
 
       cattr_accessor :acts_as_content_options
       self.acts_as_content_options = list
-
-      if list[:assets]
-        has_many :assets, class_name: "ContentAsset", as: :content, order: "asset_order", dependent: :destroy
-      end
 
       # Check for nil if you want to use the passed-in boolean as the actual value
       include Methods::HasFormat        if !list[:has_format].nil?

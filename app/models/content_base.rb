@@ -79,8 +79,6 @@ class ContentBase < ActiveRecord::Base
   has_many :related_links,    as: :content, class_name: "Link",           conditions: "link_type != 'query'"
   has_many :queries,          as: :content, class_name: "Link",           conditions: { link_type: "query" }
   
-  has_many :audio,            as: :content, order: "position asc"
-
   has_one :content_category,  as: :content  
   has_one :category,          through: :content_category
   

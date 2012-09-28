@@ -19,6 +19,8 @@ describe ShowSegment do
   
   describe "associations" do
     it_behaves_like "content alarm association"
+    it_behaves_like "asset association"
+    it_behaves_like "audio association"
     
     it { should belong_to :show }
     it { should have_many :rundowns }
@@ -34,15 +36,6 @@ describe ShowSegment do
       it "orders published content by published_at descending" do
         ShowSegment.published.to_sql.should match /order by published_at desc/i
       end
-    end
-  end
-  
-  #------------------
-  
-  describe "#link_path" do
-    it "does not override the hard-coded options" do
-      segment = create :show_segment
-      segment.link_path(slug: "wrong").should_not match "wrong"
     end
   end
   
@@ -119,15 +112,5 @@ describe ShowSegment do
     it "is true" do
       create(:show_segment).has_format?.should be_false
     end
-  end
-
-  # ----------------
-  
-  describe "#auto_published_at" do
-    it "is true" do
-      create(:show_segment).auto_published_at.should be_true
-    end
-  end
-  
-  #------------------
+  end  
 end

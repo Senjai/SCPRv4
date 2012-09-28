@@ -11,7 +11,7 @@
 	<meta name="twitter:title" value="<%= content.headline.gsub(/\"/, "'") %>">
 	<meta name="twitter:description" value="<%= content.teaser.gsub(/\"/, "'") %>">
 	
-	<% if content.is_a?(VideoShell) %>
+	<% if content.is_a?(VideoShell) and content.assets.present? %>
 	  	<meta property="og:video:width" content="300" />
 	  	<meta property="og:video:height" content="200" />
 		<meta property="og:video" content="http://c.brightcove.com/services/viewer/federated_f9/bcpid1247178207001?isVid=1&amp;isUI=1&amp;playerKey=AQ~~,AAAAmtVKbGE~,pW41hkPiaos27C7knwyeOWQgVlG4w7v5&amp;videoId=<%=content.assets.first.asset.native["videoid"] %>">

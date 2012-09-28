@@ -151,14 +151,12 @@ ContentBase.content_classes.each do |c|
     #-----------------
     
     describe "associations" do
-      it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
       it { should have_one(:alarm).class_name("ContentAlarm").dependent(:destroy) }
       it { should have_many(:bylines).class_name("ContentByline").dependent(:destroy) }
       it { should have_many :brels }
       it { should have_many :frels }
       it { should have_many :related_links }
       it { should have_many :queries }
-      it { should have_many :audio }
       it { should have_one :content_category }
       it { should have_one(:category).through(:content_category) }
     end

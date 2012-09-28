@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
   include Model::Validations::SlugValidation
   include Model::Validations::ContentValidation
+  include Model::Associations::AudioAssociation
+  include Model::Associations::AssetAssociation
   
   self.table_name  = 'events_event'
   self.primary_key = "id"
@@ -147,11 +149,6 @@ class Event < ActiveRecord::Base
     end
   end
 
-  #----------
-  
-  def audio_url
-    "http://media.scpr.org/#{self.audio}"
-  end
   #----------
   
   def route_hash

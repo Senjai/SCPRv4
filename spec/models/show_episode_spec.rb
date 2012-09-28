@@ -9,6 +9,8 @@ describe ShowEpisode do
   
   describe "associations" do
     it_behaves_like "content alarm association"
+    it_behaves_like "asset association"
+    it_behaves_like "audio association"
     
     it { should have_many(:rundowns) }
     it { should have_many(:segments).through(:rundowns) }
@@ -48,28 +50,11 @@ describe ShowEpisode do
     it { should_not respond_to :disqus_identifier }
   end
   
-  #------------------
-  
-  describe "#link_path" do
-    it "does not override the hard-coded options" do
-      episode = create :show_episode
-      episode.link_path(show: "wrong").should_not match "wrong"
-    end
-  end
-  
   # ----------------
 
   describe "#has_format?" do
     it "is true" do
       create(:show_episode).has_format?.should be_false
-    end
-  end
-
-  # ----------------
-  
-  describe "#auto_published_at" do
-    it "is true" do
-      create(:show_episode).auto_published_at.should be_true
     end
   end
   
@@ -80,7 +65,5 @@ describe ShowEpisode do
       show_episode = build :show_episode
       show_episode.body.should eq show_episode.teaser
     end
-  end
-  
-  #------------------
+  end  
 end

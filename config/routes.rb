@@ -76,7 +76,7 @@ Scprv4::Application.routes.draw do
   end
   
   scope "r" do
-    namespace :admin do
+    namespace :admin do      
       get 'login'  => "sessions#new", as: :login
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]

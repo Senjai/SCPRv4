@@ -82,7 +82,7 @@ class KpccProgram < ActiveRecord::Base
   def route_hash
     return {} if !self.persisted? || !self.published?
     {
-      :slug           => self.persisted_record.slug,
+      :show           => self.persisted_record.slug,
       :trailing_slash => true
     }
   end

@@ -4,6 +4,7 @@ class VideoShell < ContentBase
   include Model::Validations::SlugValidation
   include Model::Validations::PublishedAtValidation
   include Model::Associations::ContentAlarmAssociation
+  include Model::Associations::AssetAssociation
   include Model::Scopes::SinceScope
 
 
