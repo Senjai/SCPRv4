@@ -24,7 +24,7 @@ $headShotWidth: 90px;
 		background-position: left 6px;
 		min-height:60px;
 		padding-left:150px;
-		&.brand-martinez, &.take-two {
+		&.brand-martinez, &.cohen-martinez {
 			padding-left:150px;
 		}
 		&:hover {
@@ -58,7 +58,7 @@ $headShotWidth: 90px;
 			padding-right:150px;
 		}
 	}
-	&.take-two {
+	&.cohen-martinez {
 	    background-image: url(image_path('broadcast-bar/headshots/take-two.png'));
 		&.program-info {
 			padding-right:150px;
