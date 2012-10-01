@@ -9,7 +9,7 @@ Scenario: No Programs
 Scenario: See the featured programs on the index page
 	Given kpcc programs with the following attributes:
 		| slug				| title						|
-		| brand-martinez	| Brand & Martinez			|
+		| take-two			| Take Two					|
 		| airtalk			| Airtalk					|
 		| offramp			| Off-Ramp					|
 		
@@ -24,7 +24,7 @@ Scenario Outline: View a Featured Program's page
 	
 	Examples:
 		| slug				| title						|
-		| brand-martinez	| Brand & Martinez			|
+		| take-two			| Take Two					|
 		| airtalk			| Airtalk					|
 		| offramp			| Off-Ramp					|
 		

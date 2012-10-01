@@ -20,8 +20,10 @@
 	    </li>
 		<li class="field">
 	      <%= f.label 		:from_name, 	"From:" %>
-	      <%= f.text_field 	:from_name, 	:class => "xlarge stacked", :placeholder => "Your name" %>
-	      <%= f.text_field 	:from_email, 	:class => "xlarge", :placeholder => "Your e-mail" %>
+		  <%= f.label 		:from_name, 	"Your Name" %>
+	      <%= f.text_field 	:from_name, 	:class => "xlarge stacked" %>
+		  <%= f.label 		:from_name, 	"Your E-mail" %>
+	      <%= f.text_field 	:from_email, 	:class => "xlarge" %>
 	
 	    </li>
 		<li class="field">

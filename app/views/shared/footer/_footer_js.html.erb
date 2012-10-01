@@ -9,6 +9,7 @@
 		audio = new scpr.Audio();
 		modal = new scpr.Modal();
 		adSizer = new scpr.adSizer();
+		eventTracking = new scpr.EventTracking();
 	  
 	})
 	
@@ -23,14 +24,6 @@
   _gaq.push(['_setDomainName', 'none']); 
   _gaq.push(['_setAllowHash', 'false']);
   _gaq.push(['_setAllowLinker', true]);
-  // Set Custom Variable to track Beta traffic 
-  _gaq.push(['_setCustomVar',
-      3,                   	// Set var slot to #3
-      'Site Version',       
-      'Beta',  				
-      3                    	// page-level scope
-   ]);
-   // End Custom Variable
 
   //Additional page or section-specific GA tracking goes here
   <%= yield :footerga %>

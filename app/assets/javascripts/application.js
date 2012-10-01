@@ -22,4 +22,5 @@
 //= require listen_live
 //= require megamenu
 //= require smart_time
+//= require event_tracking
 //= require utilities
