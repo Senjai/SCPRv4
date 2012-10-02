@@ -379,7 +379,7 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.boolean  "kpcc_event",                                :default => false, :null => false
     t.string   "for_program",         :limit => 20,         :default => "",    :null => false
     t.text     "archive_description", :limit => 2147483647,                    :null => false
-    t.string   "old_audio",           :limit => 100,                           :null => false
+    t.string   "old_audio",           :limit => 100
     t.boolean  "is_published",                                                 :null => false
     t.boolean  "show_comments",                                                :null => false
     t.text     "teaser",              :limit => 2147483647,                    :null => false
@@ -494,6 +494,10 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.string   "content_type",           :limit => 20
     t.datetime "created_at",                                                       :null => false
     t.datetime "updated_at",                                                       :null => false
+    t.string   "filename",               :limit => 50
+    t.string   "store_dir",              :limit => 80
+    t.string   "mp3_path",               :limit => 120
+    t.string   "type",                   :limit => 20
   end
 
   add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"

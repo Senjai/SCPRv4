@@ -49,7 +49,8 @@ Scprv4::Application.configure do
   config.dbsync.remote_dir  = "~scprdb"
   
   config.scpr.host         = "scprv4.dev"
-  config.scpr.media_root   = "#{Rails.root}/public"
+  config.scpr.media_root   = "/Users/bryan/projects/media"
+  config.scpr.media_url    = "file:///Users/bryan/projects/media"
   config.scpr.resque_queue = :scprv4
 
   config.node.server = "http://localhost:8888"

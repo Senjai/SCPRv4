@@ -28,6 +28,9 @@ form.simple_form {
 	
 	fieldset legend {
 		cursor: pointer;
+		&:hover {
+			background: #ffffcc;
+		}
 	}
 	
 	.inline { // Extend bootstrap .inline
@@ -47,10 +50,13 @@ form.simple_form {
 	padding: 5px;
 	
 	.audio-info {
-		height: 150px;
-		border-bottom: 1px solid #ddd;
-		margin-bottom: 10px;
+	    .new-audio, .existing-audio {
+    		height: 150px;
+    		border-bottom: 1px solid #ddd;
+    		margin-bottom: 10px;
+		}
 	}
+	
 	.control-group.file {
 		.controls { margin: 0; }
 	}	

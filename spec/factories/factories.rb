@@ -1,20 +1,26 @@
 FactoryGirl.define do
 
 # Audio #########################################################
-  factory :audio do
-    content     { |a| a.association :news_story }
-    description "Sweet audio, bro."
-    byline      "KPCC"
-    
-    trait :live do
-      mp3 "audio/upload/2012/09/03/Hantavirus_Labor_Day.wav"
-      size 10166316
-      duration 209
+  factory :audio do    
+    trait :uploaded do
+      content { |a| a.association :news_story }
+      mp3 File.open(Rails.root.join("spec/fixtures/audio/point1sec.mp3"))
     end
     
-    trait :with_enco do
+    trait :enco do
+      content { |a| a.association :news_story }
       enco_number 1488
       enco_date { Date.today }
+    end
+    
+    trait :direct do
+      content { |a| a.association :news_story }
+      mp3_path Rails.root.join("spec/fixtures/audio/point1sec.mp3").to_s
+    end
+    
+    trait :episode do
+      mp3 File.open(Rails.root.join("spec/fixtures/audio/point1sec.mp3"))
+      content { |a| a.association :show_episode }
     end
   end
   
@@ -93,6 +99,7 @@ FactoryGirl.define do
     facebook_url "http://www.facebook.com/KPCC.AirTalk"
     display_segments 1
     display_episodes 1
+    audio_dir { quick_slug }
     
     ignore { segment Hash.new } # Ensures that `merge` has something to do in the after :create block
     ignore { episode Hash.new } # Ensures that `merge` has something to do in the after :create block
@@ -246,7 +253,6 @@ FactoryGirl.define do
     state               "CA"
     zip_code            "91105"
     for_program         "airtalk"
-    audio               "audio/events/2011/05/23/Father_Boyle.mp3"
     archive_description "This is the description that shows after the event has happened"
     is_published        1
     show_comments       1

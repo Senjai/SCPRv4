@@ -4,6 +4,7 @@ class scpr.ContentAlarmUI
     DefaultOptions:
         form:             "form.simple_form"
         timestampEl:      ".fire_at"
+        containerEl:      ".content-alarm-ui"
         datetimeField:    "input.datetime[name*='[fire_at]']"
         notificationEl:   ".notification#alarm_status"
         destroyEl:        ".destroy-bool"
@@ -16,12 +17,13 @@ class scpr.ContentAlarmUI
         
         # Setup all of the attributes
         @form            = @options.form
+        @container       = $ @options.containerEl,    @form
         @statusSelect    = $ @options.statusSelect,   @form
-        @timestampEl     = $ @options.timestampEl,    @form # Wrapper
-        @datetimeField   = $ @options.datetimeField,  @form # Input
-        @destroyEl       = $ @options.destroyEl,      @form # Wrapper
-        @destroyField    = $ @options.destroyField,   @form # Checkbox
-        @notificationEl  = $ @options.notificationEl, @form
+        @timestampEl     = $ @options.timestampEl,    @container # Wrapper
+        @datetimeField   = $ @options.datetimeField,  @container # Input
+        @destroyEl       = $ @options.destroyEl,      @container # Wrapper
+        @destroyField    = $ @options.destroyField,   @container  # Checkbox
+        @notificationEl  = $ @options.notificationEl, @container
 
         @statusPending   = @options.statusPending # 3
         
@@ -79,7 +81,7 @@ class scpr.ContentAlarmUI
             @timestampEl.addClass "transparent"
         else
             @timestampEl.removeClass "transparent"
-            
+        
     #----------
     
     checkScheduled: ->

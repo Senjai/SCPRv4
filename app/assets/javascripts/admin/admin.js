@@ -20,3 +20,4 @@
 //= require admin/date_time_input
 //= require admin/content_alarm_ui
 //= require admin/auto_slug_field
+//= require admin/audio-ui

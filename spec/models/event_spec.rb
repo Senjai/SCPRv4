@@ -281,7 +281,7 @@ describe Event do
 
   #-------------------
 
-  describe "description" do
+  describe "#description" do
     it "returns the body if the event is upcoming" do
       event = build :event, body: "Future", archive_description: "Past"
       event.stub(:upcoming?) { true }
@@ -298,20 +298,6 @@ describe Event do
       event = build :event, body: "Future", archive_description: nil
       event.stub(:upcoming?) { false }
       event.description.should match "Future"
-    end
-  end
-
-  #-------------------
-  
-  describe "audio_url" do
-    it "has the SCPR media url" do
-      event = build :event
-      event.audio_url.should match "media.scpr.org"
-    end
-    
-    it "has the audio file in it" do
-      event = build :event, audio: "/some/path/audio.mp3"
-      event.audio_url.should match event.audio
     end
   end
 

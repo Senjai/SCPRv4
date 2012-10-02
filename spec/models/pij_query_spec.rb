@@ -17,7 +17,6 @@ describe PijQuery do
 
   describe "associations" do
     it_behaves_like "asset association"
-    it_behaves_like "audio association"
   end
   
   #---------------
