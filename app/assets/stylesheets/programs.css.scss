@@ -24,7 +24,7 @@ $headShotWidth: 90px;
 		background-position: left 6px;
 		min-height:60px;
 		padding-left:150px;
-		&.brand-martinez, &.cohen-martinez {
+		&.brand-martinez, &.take-two {
 			padding-left:150px;
 		}
 		&:hover {
@@ -58,7 +58,7 @@ $headShotWidth: 90px;
 			padding-right:150px;
 		}
 	}
-	&.cohen-martinez {
+	&.take-two {
 	    background-image: url(image_path('broadcast-bar/headshots/taketwo.png'));
 		&.program-info {
 			padding-right:150px;
@@ -66,9 +66,6 @@ $headShotWidth: 90px;
 	}
 	&.airtalk {
 		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
-	}
-	&.patt-morrison {
-		background-image: url(image_path('broadcast-bar/headshots/patt-morrison.png'));
 	}
 	&.offramp {
 		background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
