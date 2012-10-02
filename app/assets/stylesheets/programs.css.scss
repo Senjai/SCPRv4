@@ -59,16 +59,13 @@ $headShotWidth: 90px;
 		}
 	}
 	&.take-two {
-	    background-image: url(image_path('broadcast-bar/headshots/take-two.png'));
+	    background-image: url(image_path('broadcast-bar/headshots/taketwo.png'));
 		&.program-info {
 			padding-right:150px;
 		}
 	}
 	&.airtalk {
 		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
-	}
-	&.patt-morrison {
-		background-image: url(image_path('broadcast-bar/headshots/patt-morrison.png'));
 	}
 	&.offramp {
 		background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
