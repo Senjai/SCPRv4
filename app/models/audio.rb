@@ -320,7 +320,7 @@ class Audio < ActiveRecord::Base
       # Setup a hash to search so we only have to
       # perform one query to check for existance
       existing = {}
-      Audio.all.map { |a| existing[a.filename] = true )
+      Audio.all.map { |a| existing[a.filename] = true }
       
       # Each KpccProgram with episodes and which can sync audio
       KpccProgram.can_sync_audio.where(display_episodes: true).includes(:episodes).each do |program|
