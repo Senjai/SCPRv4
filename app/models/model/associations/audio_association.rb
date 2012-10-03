@@ -15,7 +15,7 @@ module Model
         #------------------
         
         def should_reject_audio?(attributes)
-          attributes['mp3'].blank? && attributes['enco_number'].blank?
+          attributes['mp3'].blank? && attributes['enco_number'].blank? && attributes['mp3_path'].blank?
         end
       end
     end

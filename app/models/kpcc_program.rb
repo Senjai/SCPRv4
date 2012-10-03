@@ -48,10 +48,12 @@ class KpccProgram < ActiveRecord::Base
   belongs_to :missed_it_bucket
   belongs_to :blog
   
+  
   # -------------------
   # Scopes
-  scope :active, where(:air_status => ['onair','online'])
-
+  scope :active,         -> { where(:air_status => ['onair','online']) }
+  scope :can_sync_audio, -> { where(air_status: "onair").where("audio_dir is not null") }
+  
   # TODO Rename these fallback helpers
   def facebook_url # So we don't have to worry about a fallback in the views.
     self[:facebook_url].blank? ? ConnectDefaults[:facebook] : self[:facebook_url]

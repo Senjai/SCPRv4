@@ -204,7 +204,7 @@ describe Audio do
   describe "#url" do
     it "returns the full URL to the mp3 if it's live" do
       audio = create :audio, :uploaded
-      audio.url.should eq "#{Audio::AUDIO_ROOT}/#{audio.path}"      
+      audio.url.should eq "#{Audio::AUDIO_URL_ROOT}/#{audio.path}"      
     end
     
     it "returns nil if not live" do
@@ -218,7 +218,7 @@ describe Audio do
   describe "#podcast_url" do
     it "returns the full podcast URL to the mp3 if it's live" do
       audio = create :audio, :uploaded
-      audio.podcast_url.should eq "#{Audio::PODCAST_ROOT}/#{audio.path}"
+      audio.podcast_url.should eq "#{Audio::PODCAST_URL_ROOT}/#{audio.path}"
     end
     
     it "returns nil if mp3 not live" do
