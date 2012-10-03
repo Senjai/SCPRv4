@@ -38,7 +38,7 @@ describe NewsStory do
   #-----------------
   
   describe "#has_format?" do
-    it "is true" do
+    it "is false" do
       build(:news_story).has_format?.should be_false
     end
   end

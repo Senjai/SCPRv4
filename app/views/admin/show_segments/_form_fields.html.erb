@@ -9,3 +9,5 @@
 <%= section "assets", f, record do %>
 	<%= f.input :segment_asset_scheme, collection: ShowSegment::ASSET_SCHEMES, selected: record.segment_asset_scheme || ShowSegment::ASSET_SCHEMES[0] %>
 <% end %>
+
+<%= section "audio", f, record %>

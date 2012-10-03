@@ -16,6 +16,14 @@ class Event < ActiveRecord::Base
     "cult",
     "hall"
   ]
+  
+  EVENT_TYPES = [
+      ['Forum: Community Engagement', 'comm'],
+      ['Forum: Cultural',             'cult'],
+      ['Forum: Town Hall',            'hall'],
+      ['Sponsored',                   'spon'],
+      ['Staff Picks',                 'pick']
+  ]
     
   # -------------------
   # Administration

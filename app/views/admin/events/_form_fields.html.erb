@@ -1,0 +1,46 @@
+<%= form_block "Details" do %>
+  <%= f.input :headline, label: "Title", input_html: { class: 'wide' } %>
+  <%= f.input :etype, label: "Type", collection: Event::EVENT_TYPES, selected: record.etype || Event::EVENT_TYPES[0] %>
+  <%= f.input :body, input_html: { class: 'ckeditor' } %>
+<% end %>
+
+<%= form_block "Short Details" do %>
+  <%= section "slug", f, record %>
+	<%= f.input :teaser, as: :text, input_html: { class: "tiny" } %>
+<% end %>
+
+<%= form_block "Location" do %>
+  <%= f.input :location_name, hint: "e.g, The Crawford Family Forum" %>
+  <%= f.input :location_link, hint: "If present, makes the location text a link to this URL." %>
+  <%= f.input :address_1, label: "Address (line 1)" %>
+  <%= f.input :address_2, label: "Address (line 2)" %>
+  <%= f.input :city %>
+  <%= f.input :state, input_html: { class: "tiny", value: record.state || "CA" } %>
+  <%= f.input :zip_code, as: :string, input_html: { class: "thin" } %>
+  <%= f.input :show_map %>
+<% end %>
+
+<%= form_block "Sponsor/Contact" do %>
+  <%= f.input :rsvp_link, hint: "If this event requires an RSVP, put the URL for the RSVP page here. <br/>" \
+                                "For web sites: Use the full URL, including http://<br/>" \
+                                "For email addresses: Enter the address beginning with mailto: (example: mailto:contact@kpcc.org)" %>
+  <%= f.input :sponsor, hint: "Contact person, sponsoring organization, etc" %>
+  <%= f.input :sponsor_link, hint: "If present, makes the contact text a link to this URL." %>
+  <%= f.input :for_program, collection: KpccProgram.all, hint: "If this event belongs to a KPCC-produced show, select it here." %>
+  <%= f.input :kpcc_event, label: "KPCC Event?", hint: "Event is sponsored by or on behalf of KPCC." %>
+<% end %>
+
+<%= form_block "Extra" do %>
+  <%= f.input :show_comments, label: "Show Comments?" %>
+  <%= f.input :archive_description, input_html: { class: "short" }, hint: "Description to display after the event has happened" %>
+<% end %>
+
+<%= section "assets", f, record do %>
+  <%= f.input :event_asset_scheme, 
+              :collection => ContentBase::STORY_SCHEMES, 
+              :selected   => record.event_asset_scheme || ContentBase::STORY_SCHEMES[0], 
+              :hint       => "Sets up the top-of-story formatting for assets attached through AssetHost. " \
+                             "NOTE: For videos, choose 'Wide'" %>
+<% end %>
+
+<%= section "audio", f, record %>

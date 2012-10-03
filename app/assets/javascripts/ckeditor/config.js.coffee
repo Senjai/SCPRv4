@@ -5,5 +5,6 @@ CKEDITOR.editorConfig = (config) ->
         ['Blockquote', 'BulletedList']
         ['Source']
     ]
-    config.height = "500px"
+    config.height = "400px"
+    config.width  = "635px"
     true
