@@ -78,7 +78,7 @@ class scpr.SmartTime
             if @relative and now.subtract(@relative...) < @time
                 # Display "Just Now" in case it thinks 
                 # it was published in the future
-                if now.diff(@time, "seconds") < 0
+                if now.diff(@time, "seconds") > 0
                     @$el.text 'Just Now'
                 else
                     # relative formatting
