@@ -30,33 +30,6 @@ end
 
 #--------------
 
-describe ActsAsContent::Methods::AutoPublishedAt do
-  let(:content) { create :news_story }
-  
-  after :each do
-    NewsStory.acts_as_content
-  end
-  
-  describe "auto_published_at" do
-    it "returns true by default" do
-      content.auto_published_at.should be_true
-    end
-    
-    it "returns false if passed into the options" do
-      NewsStory.acts_as_content auto_published_at: false
-      content.auto_published_at.should be_false
-    end
-    
-    it "isn't defined if nil is passed" do
-      pending "File needs to be reloaded somehow"
-      NewsStory.acts_as_content auto_published_at: nil
-      content.should_not respond_to :auto_published_at
-    end
-  end
-end
-
-#--------------
-
 describe ActsAsContent::Methods::Headline do
   let(:content) { create :news_story }
   

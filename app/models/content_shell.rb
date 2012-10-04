@@ -13,9 +13,7 @@ class ContentShell < ContentBase
   
   ADMIN_PREFIX = "contentbase/contentshell"
   
-  acts_as_content comments:           false, 
-                  link_path:          false, # Defining them here
-                  auto_published_at:  false
+  acts_as_content comments: false
   
   def self.content_key
     "content/shell"

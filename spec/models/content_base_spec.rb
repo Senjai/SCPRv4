@@ -139,7 +139,6 @@ ContentBase.content_classes.each do |c|
     it { should respond_to :link_path }
     it { should respond_to :remote_link_path }
     it { should respond_to :obj_key }
-    it { should respond_to :auto_published_at }
     it { should respond_to :has_format? }
     it { should respond_to :byline_elements }
     

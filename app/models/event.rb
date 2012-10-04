@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
   self.primary_key = "id"
   ROUTE_KEY        = "event"
   
-  acts_as_content auto_published_at: false, has_status: false, published_at: false
+  acts_as_content published_at: false
   has_secretary
   
   ForumTypes = [

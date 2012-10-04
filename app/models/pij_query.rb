@@ -5,7 +5,7 @@ class PijQuery < ActiveRecord::Base
   self.table_name = 'pij_query'
   ROUTE_KEY       = "pij_query"
   
-  acts_as_content comments: false, has_status: false, published_at: false
+  acts_as_content comments: false, published_at: false
   has_secretary
   
   QUERY_TYPES = [

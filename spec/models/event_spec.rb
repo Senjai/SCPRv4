@@ -43,7 +43,6 @@ describe Event do
     it { should respond_to :link_path }
     it { should respond_to :remote_link_path }
     it { should respond_to :obj_key }
-    it { should respond_to :auto_published_at }
     it { should respond_to :has_format? }
     it { should respond_to :disqus_identifier }
     it { should respond_to :disqus_shortname }
@@ -54,14 +53,6 @@ describe Event do
   describe "has_format?" do
     it "is true" do
       create(:event).has_format?.should be_false
-    end
-  end
-
-  # ----------------
-  
-  describe "auto_published_at" do
-    it "is true" do
-      create(:event).auto_published_at.should be_false
     end
   end
   
