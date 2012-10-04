@@ -1,18 +1,20 @@
+<% present program, ProgramPresenter do |p| %>
 <section class="program-about widget">
-	<h6>About <%= program.title %></h6>
-	<div class="row-fluid">
-		<div class="span10">
-			<nav class="connect">
-				<span class="title">Stay Connected</span>
-				<%= link_to "Facebook", program.facebook_url, target: "_blank", class: "facebook with-icon" %>
-				<%= link_to "Twitter", program.twitter_absolute_url, target: "_blank", class: "twitter with-icon"%>
-				<%= link_to "Podcasts", program.podcast_url, target: "_blank", class: "podcast with-icon" if program.podcast_url.present? %>
-				<%= link_to "RSS", program.rss_url, target: "_blank", class: "rss with-icon" if program.rss_url.present? %>
-			</nav>
-		</div>
-		<div class="span14">
-			<p class="about"><%= program.teaser.html_safe %></p>
-		</div>
-	</div>
-	<%= link_to "View Archived Episodes", program_path(program.slug, :anchor => "archive"), class: "archive with-icon" %>
+  <h6>About <%= p.title %></h6>
+  <div class="row-fluid">
+    <div class="span10">
+      <nav class="connect">
+        <span class="title">Stay Connected</span>
+        <%= link_to "Facebook", p.facebook_url, target: "_blank", class: "facebook with-icon" %>
+        <%= link_to "Twitter", p.twitter_url, target: "_blank", class: "twitter with-icon" %>
+        <%= link_to "Podcasts", p.podcast_url, target: "_blank", class: "podcast with-icon" %>
+        <%= link_to "RSS", p.rss_url, target: "_blank", class: "rss with-icon"  %>
+      </nav>
+    </div>
+    <div class="span14">
+      <p class="about"><%= p.teaser %></p>
+    </div>
+  </div>
+  <%= link_to "View Archived Episodes", program_path(p.slug, :anchor => "archive"), class: "archive with-icon" %>
 </section>
+<% end %>

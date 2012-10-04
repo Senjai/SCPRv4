@@ -20,10 +20,11 @@ Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 RSpec.configure do |config|  
   config.use_transactional_fixtures                 = false
   config.infer_base_class_for_anonymous_controllers = true
-  
+
+  config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }  
   config.include FactoryGirl::Syntax::Methods
   config.include AdminResource::Helpers
-  config.include ContentBaseHelpers
+  config.include ThinkingSphinxHelpers
   config.include RemoteStubs
   config.include LyrisXMLResponse
   config.include DatePathHelper

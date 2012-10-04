@@ -3,13 +3,6 @@ class KpccProgram < ActiveRecord::Base
   ROUTE_KEY       = "program"
   
   has_secretary
-    
-  ConnectDefaults = {
-    facebook: "http://www.facebook.com/kpccfm",
-    twitter: "kpcc",
-    rss: "http://wwww.scpr.org/feeds/all_news",
-    podcast: ""
-  }
   
   Featured = [
     'take-two',
@@ -39,6 +32,7 @@ class KpccProgram < ActiveRecord::Base
   # -------------------
   # Validations
   validates :slug, uniqueness: true
+  validates :title, :slug, :air_status, presence: true
   
   # -------------------
   # Associations
@@ -52,31 +46,10 @@ class KpccProgram < ActiveRecord::Base
   # -------------------
   # Scopes
   scope :active,         -> { where(:air_status => ['onair','online']) }
-  scope :can_sync_audio, -> { where(air_status: "onair").where("audio_dir is not null") }
-  
-  # TODO Rename these fallback helpers
-  def facebook_url # So we don't have to worry about a fallback in the views.
-    self[:facebook_url].blank? ? ConnectDefaults[:facebook] : self[:facebook_url]
-  end
-  
-  def twitter_url # So we don't have to worry about a fallback in the views.
-    self[:twitter_url].blank? ? ConnectDefaults[:twitter] : self[:twitter_url]
-  end
-  
-  def rss_url
-    self[:rss_url].blank? ? ConnectDefaults[:rss] : self[:rss_url]
-  end
+  scope :can_sync_audio, -> { where(air_status: "onair").where("audio_dir is not null").where("audio_dir != ?", "") }
   
   def published?
     self.air_status != "hidden"
-  end
-  
-  def twitter_absolute_url
-    if twitter_url =~ /twitter\.com/
-      twitter_url
-    else
-      "http://twitter.com/#{twitter_url}"
-    end
   end
   
   #----------

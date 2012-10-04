@@ -3,8 +3,8 @@
 #
 # Add to spec_helper:
 #
-#     require './spec/support/content_base_helpers.rb'
-#     config.include ContentBaseHelpers
+#     require './spec/support/thinking_sphinx_helpers.rb'
+#     config.include ThinkingSphinxHelpers
 #
 #
 # Example usage with ThinkingSphinx::Test
@@ -37,7 +37,7 @@
 #
 # `make_content` assigns @generated_content for you, available for using in your specs. 
 
-module ContentBaseHelpers
+module ThinkingSphinxHelpers
   def self.included(base)
     base.extend(ClassMethods)
   end
