@@ -69,4 +69,8 @@ class Section < ActiveRecord::Base
       trailing_slash: true
     }))
   end
+  
+  def obj_key
+    "sections:#{self.id}"
+  end
 end
