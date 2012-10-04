@@ -54,9 +54,12 @@ class Audio < ActiveRecord::Base
   # Callbacks
   before_create :set_type, if: -> { self.type.blank? }
   before_create :set_file_info
-  
+  before_save   :set_django_mp3, if: -> { self.mp3.present? }
   after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
 
+  def set_django_mp3
+    self.django_mp3 = File.join("audio", self.path)
+  end
   
   #------------
   # Validation

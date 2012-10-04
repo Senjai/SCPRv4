@@ -499,7 +499,7 @@ ActiveRecord::Schema.define(:version => 20121002194924) do
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
   create_table "media_audio", :force => true do |t|
-    t.string   "mp3",                    :limit => 100
+    t.string   "django_mp3",             :limit => 100
     t.integer  "size"
     t.integer  "duration"
     t.integer  "enco_number"
@@ -516,6 +516,7 @@ ActiveRecord::Schema.define(:version => 20121002194924) do
     t.string   "store_dir",              :limit => 80
     t.string   "mp3_path",               :limit => 120
     t.string   "type",                   :limit => 20
+    t.string   "mp3",                    :limit => 120
   end
 
   add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
