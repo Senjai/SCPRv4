@@ -71,6 +71,9 @@ describe BlogEntry do
   
   # ----------------
   
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
+  
   it "responds to category" do
     entry = create_list :blog_entry, 3, with_category: true
     entry.any? { |e| e.category == nil }.should be_false

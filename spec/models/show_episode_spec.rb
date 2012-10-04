@@ -46,6 +46,9 @@ describe ShowEpisode do
   
   #------------------
   
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
+  
   describe "content base methods" do
     it { should_not respond_to :disqus_identifier }
   end

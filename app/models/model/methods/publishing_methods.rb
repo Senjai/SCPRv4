@@ -13,14 +13,14 @@ module Model
       included do
         # Status was changed and status is published
         def publishing?
-           @publishing ||= self.status_changed? and self.published?
+          self.status_changed? && self.published?
         end
         
         # This assumes that any other status except STATUS_LIVE
         # is considered "not published". Maybe that won't always 
         # be true, for now it's fine.
         def unpublishing?
-          @unpublishing ||= self.status_changed? and self.status_was == ContentBase::STATUS_LIVE
+          self.status_changed? && (self.status_was == ContentBase::STATUS_LIVE)
         end
       end
     end

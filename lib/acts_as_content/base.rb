@@ -25,11 +25,6 @@ module ActsAsContent
     # * auto_published_at:  Includes `auto_published_at`
     #                       boolean, default: true
     #
-    # * published_at:       Includes attr_accessor for `published_at_date` and `published_at_time`,
-    #                       allowing you to split those fields out in a form
-    #                       Also includes the callback method to combine the two
-    #                       boolean, default: true
-    #
     # * short_headline:     Includes `short_headline` method
     #                       Uses self[:short_headline]` if present else `headline`
     #                       boolean, default: true
@@ -70,8 +65,6 @@ module ActsAsContent
         comments:           true,
         has_format:         false,
         auto_published_at:  true,
-        published_at:       true, # Not currently being used
-        has_status:         true,
         short_headline:     true,
         teaser:             true
       }.merge! options
@@ -92,7 +85,6 @@ module ActsAsContent
 
       # Check for nil if you want to use the passed-in boolean as the actual value
       include Methods::HasFormat        if !list[:has_format].nil?
-      include Methods::StatusHelpers    if list[:has_status]
       include Methods::AutoPublishedAt  if !list[:auto_published_at].nil?
       include Methods::Headline         if !list[:headline].nil?  and list[:headline].to_sym  != :headline
       include Methods::Body             if !list[:body].nil?      and list[:body].to_sym      != :body
@@ -109,7 +101,6 @@ end
 require "acts_as_content/generators"
 require 'acts_as_content/methods/has_format'
 require 'acts_as_content/methods/comments'
-require 'acts_as_content/methods/status_helpers'
 require 'acts_as_content/methods/auto_published_at'
 require 'acts_as_content/methods/published_at'
 require 'acts_as_content/methods/body'

@@ -41,6 +41,9 @@ describe ShowSegment do
   
   #------------------
   
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
+  
   describe "#episode" do
     it "uses the first episode the segment is associated with" do
       segment = create :show_segment

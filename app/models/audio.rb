@@ -4,7 +4,7 @@
 # :filename and :store_dir should be present for
 # every record, even if it's not live.
 #
-# :mp3 should be present for live audio
+# :mp3 should be present for live audio, but can be null otherwise
 # :enco_number, :enco_date, and :mp3_path are STI
 # columns that can be null depending on audio source
 #
@@ -52,9 +52,11 @@ class Audio < ActiveRecord::Base
 
   #------------
   # Callbacks
+  before_create :set_type, if: -> { self.type.blank? }
   before_create :set_file_info
-  after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
   
+  after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
+
   
   #------------
   # Validation
@@ -78,25 +80,11 @@ class Audio < ActiveRecord::Base
   #------------
   #------------
   
-  class << self
-    #------------
-    # Sync ENCO audio with database
-    def sync_enco_audio
-      EncoAudio.sync
-      end
-    end
-    
-    #------------
-    # Sync full Episode audio with database
-    # for KpccPrograms with display_episodes == true
-    def sync_episode_audio
-      EpisodeAudio.awaiting_audio.each do |audio|
-        
-    end
-    
-    #------------
-    # Sync series audio
-    def sync_series_audio
+  #------------
+  # Enqueue the sync task for any subclasses that need it
+  def self.sync!
+    [Audio::ProgramAudio, Audio::DirectAudio, Audio::EncoAudio].each do |klass|
+      Resque.enqueue(Audio::SyncAudioJob, klass)
     end
   end
 
@@ -167,33 +155,20 @@ class Audio < ActiveRecord::Base
     end
   end
   
-  
+
   #------------
-  # Set audio type based on conditions
-  # And set some file info that Carrierwave doesn't store
-  # Don't need ProgramAudio because that only ever gets
-  # created deliberately. This method is for ambiguous
-  # Audio type.
+  #------------
+  # Set file info, using each subclass's methods
+  # for generating store_dir and filename
   def set_file_info
-    if self.live?
-      self.type       = "Audio::UploadedAudio"
-      self.filename   = UploadedAudio.filename(self)
-      self.store_dir  = UploadedAudio.store_dir
-      
-    elsif self.enco_number.present? && self.enco_date.present?
-      self.type       = "Audio::EncoAudio"
-      self.filename   = EncoAudio.filename(self)
-      self.store_dir  = EncoAudio.store_dir
-      
-    elsif self.mp3_path.present?
-      self.type      = "Audio::DirectAudio"
-      self.filename  = DirectAudio.filename(audio)
-      self.store_dir = DirectAudio.store_dir(audio)
-    
+    if self.type.present?
+      self.filename  = self.type.constantize.filename(self)
+      self.store_dir = self.type.constantize.store_dir(self)
     end
   end
   
   
+  #------------  
   #------------
   # Compute duration via Mp3Info
   # Set to 0 if something goes wrong
@@ -257,7 +232,7 @@ class Audio < ActiveRecord::Base
     @queue = "#{Rails.application.config.scpr.requeue_queue}:syncaudio"
     
     def self.perform(klass)
-      klass.sync
+      klass.sync!
     end
   end
   
@@ -274,20 +249,22 @@ class Audio < ActiveRecord::Base
     #------------
     # Sync ENCO audio on the server 
     # with the database    
-    def self.store_dir
+    def self.store_dir(audio)
       STORE_DIRS[:enco]
     end
     
     def self.filename(audio)
-      date = Chronic.parse(audio.enco_date).strftime("%Y%m%d")
+      date = audio.enco_date.strftime("%Y%m%d")
       "#{date}_features#{audio.enco_number}.mp3"
     end
     
-    def self.sync
+    #------------
+
+    def self.sync!
       self.awaiting_audio.each do |audio|
         if File.exists? audio.full_path
           audio.mp3 = File.open(audio.full_path)
-          audio.save
+          audio.save!          
         end
       end
     end
@@ -300,30 +277,33 @@ class Audio < ActiveRecord::Base
   # It belongs to a ShowEpisode or ShowSegment
   # for a KpccProgram
   class ProgramAudio < Audio
-    before_create :set_description_to_episode_headline
-      
+    before_create :set_description_to_episode_headline, if: -> { self.description.blank? }
+    
     def set_description_to_episode_headline
       self.description = self.content.headline
-    end
-    
-    #------------
-    # Override Audio#set_file_info since we know
-    # exactly what needs to be done
-    def set_file_info
-      self.store_dir = self.content.show.audio_dir
-      self.filename  = self.mp3.file.filename
     end
 
     #------------
     
-    def self.sync
+    def self.store_dir(audio)
+      audio.content.show.audio_dir
+    end
+    
+    def self.filename(audio)
+      audio.mp3.file.filename
+    end
+
+
+    #------------
+    
+    def self.sync!
       # Setup a hash to search so we only have to
       # perform one query to check for existance
       existing = {}
       Audio.all.map { |a| existing[a.filename] = true }
       
       # Each KpccProgram with episodes and which can sync audio
-      KpccProgram.can_sync_audio.where(display_episodes: true).includes(:episodes).each do |program|
+      KpccProgram.can_sync_audio.each do |program|
         absolute_directory_path = File.join(AUDIO_PATH_ROOT, program.audio_dir)
         
         # Each file in this program's audio directory
@@ -331,7 +311,7 @@ class Audio < ActiveRecord::Base
           absolute_mp3_path = File.join(absolute_directory_path, file)
           
           # Move on if:
-          # 1. File already exists (episode audio only needs to exists once in the DB)
+          # 1. File already exists (program audio only needs to exist once in the DB)
           next if existing[file]
           
           # 2. The filename doesn't match our regex (won't be able to get date)
@@ -347,45 +327,54 @@ class Audio < ActiveRecord::Base
           file_date = File.mtime(absolute_mp3_path)
           next if file_date < 14.days.ago
 
-          # Get the date for this episode based on the filename,
-          # find that episode, and create the audio / association
-          # if the episode for that air date exists.
-          date    = Time.new(match[:year], match[:month], match[:day])
-          episode = program.episodes.where(air_date: date).first
+          # Get the date for this episode/segment based on the filename,
+          # find that episode/segment, and create the audio / association
+          # if the content for that date exists.
+          date = Time.new(match[:year], match[:month], match[:day])
           
-          if episode
-            audio = self.new(content: episode, mp3: File.open(absolute_mp3_path))
+          if program.display_episodes?
+            content = program.episodes.where(air_date: date).first
+          else
+            content = program.segments.where(published_at: date..date.end_of_day).first
+          end
+          
+          if content
+            audio = self.new(content: content, mp3: File.open(absolute_mp3_path))
             audio.save
-            episode.save # to expire cache
+            content.save # to expire cache
           end
         end
       end
     end
   end
   
+  
   #------------
   # DirectAudio is given an arbitrary path to an mp3
   class DirectAudio < Audio
     def self.store_dir(audio)
-      path = audio.mp3_path.split("/")
-      path.pop
-      path.join("/")
+      path = Pathname.new(audio.mp3_path)
+      path.split.first.to_s
     end
     
     def self.filename(audio)
-      path = self.mp3_path.split("/")
-      path.pop
+      path = Pathname.new(audio.mp3_path)
+      path.split.last.to_s
     end
     
-    def self.sync
+    #------------
+    
+    def self.sync!
+      raise NotImplementedError, "(#{self})"
     end
   end
   
   
   #------------
   # UploadedAudio is uploaded via the CMS
+  # Doesn't need to be synced, so no ::sync! method
   class UploadedAudio < Audio
-    def self.store_dir
+    def self.store_dir(audio)
       "#{STORE_DIRS[:upload]}/#{Time.now.strftime("%Y/%m/%d")}"
     end
     
@@ -393,4 +382,31 @@ class Audio < ActiveRecord::Base
       audio.mp3.file.filename
     end
   end
+
+  
+  #------------  
+  #------------  
+  
+  private
+
+    #------------
+    # Set audio type based on conditions
+    # This only gets run if self.type is blank,
+    # which won't be true for ProgramAudio, since
+    # it gets created through the subclass,
+    # so if we're here and the mp3 is present,
+    # we can safely assume it's uploaded audio
+    def set_type
+      if self.live?
+        self.type = "Audio::UploadedAudio"
+      
+      elsif self.enco_number.present? && self.enco_date.present?
+        self.type = "Audio::EncoAudio"
+      
+      elsif self.mp3_path.present?
+        self.type = "Audio::DirectAudio"
+      
+      end
+    end
+  #
 end

@@ -458,7 +458,7 @@ ActiveRecord::Schema.define(:version => 20121002194924) do
 
   create_table "layout_homepage", :force => true do |t|
     t.string   "base",                :limit => 10, :null => false
-    t.datetime "published_at",                      :null => false
+    t.datetime "published_at"
     t.integer  "status",                            :null => false
     t.integer  "missed_it_bucket_id"
   end

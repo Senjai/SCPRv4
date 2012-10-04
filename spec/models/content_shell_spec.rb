@@ -33,6 +33,9 @@ describe ContentShell do
 
   #-----------------
   
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
+  
   describe "#remote_link_path" do
     it "uses the url attribute" do
       shell = build :content_shell

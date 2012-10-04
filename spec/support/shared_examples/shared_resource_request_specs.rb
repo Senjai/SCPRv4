@@ -63,11 +63,11 @@ shared_examples_for "managed resource" do
     
     context "valid" do
       it "updates attributes" do
+        updated_record.save!
         fill_all_fields(updated_record)
         click_button "edit"
         page.should have_css ".alert-success"
-        described_class.count.should eq 1
-        updated = described_class.first
+        updated = described_class.find(valid_record.id)
         current_path.should eq updated.admin_edit_path
         updated.to_title.should eq updated_record.to_title
       end

@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :audio do    
     trait :uploaded do
       content { |a| a.association :news_story }
-      mp3 File.open(Rails.root.join("spec/fixtures/audio/point1sec.mp3"))
+      mp3 File.open(Rails.application.config.scpr.media_root.join("audio/point1sec.mp3"))
     end
     
     trait :enco do
@@ -15,12 +15,39 @@ FactoryGirl.define do
     
     trait :direct do
       content { |a| a.association :news_story }
-      mp3_path Rails.root.join("spec/fixtures/audio/point1sec.mp3").to_s
+      mp3_path Rails.application.config.scpr.media_root.join("audio/events/2012/10/02/SomeCoolEvent.mp3").to_s
+    end
+
+    trait :program do
+      type "Audio::ProgramAudio" # Typecast this object since Audio#set_type doesn't do it for ProgramAudio
+      mp3 File.open(Rails.application.config.scpr.media_root.join("audio/mbrand/20121002_mbrand.mp3"))
     end
     
-    trait :episode do
-      mp3 File.open(Rails.root.join("spec/fixtures/audio/point1sec.mp3"))
+    trait :for_episode do
       content { |a| a.association :show_episode }
+    end
+    
+    trait :for_segment do
+      content { |a| a.association :show_segment }
+    end
+    
+    #---------
+    
+    factory :program_audio, class: "Audio::ProgramAudio" do
+      program
+      for_episode
+    end
+    
+    factory :enco_audio, class: "Audio::EncoAudio" do
+      enco
+    end
+    
+    factory :direct_audio, class: "Audio::DirectAudio" do
+      direct
+    end
+    
+    factory :uploaded_audio, class: "Audio::UploadedAudio" do
+      uploaded
     end
   end
   
@@ -388,12 +415,25 @@ FactoryGirl.define do
   
 # FeaturedComment #########################################################
   factory :featured_comment do
-    featured_comment_bucket
-    sequenced_published_at
-    status    5
+    bucket  { |f| f.association :featured_comment_bucket }
+    content { |mic| mic.association(:content_shell) }
+    
     username  "bryanricker"
-    excert    "This is an excerpt of the featured comment"
-    content   { |mic| mic.association(:content_shell) }
+    excerpt   "This is an excerpt of the featured comment"
+    
+    trait :pending do
+      status 3
+      sequence(:published_at) { |n| Time.now + n.hours }
+    end
+
+    trait :published do
+      status 5
+      sequence(:published_at) { |n| Time.now - n.hours }
+    end
+
+    trait :draft do
+      status 0
+    end
   end
   
   

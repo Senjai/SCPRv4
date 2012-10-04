@@ -13,7 +13,6 @@ describe VideoShell do
   describe "scopes" do
     it_behaves_like "since scope"
     
-    
     it "#published only selects published content" do
       published   = create_list :video_shell, 3, :published
       unpublished = create_list :video_shell, 2, :draft
@@ -40,8 +39,11 @@ describe VideoShell do
   
   # ----------------
 
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
+  
   describe "#has_format?" do
-    it "is true" do
+    it "is false" do
       create(:video_shell).has_format?.should be_false
     end
   end
