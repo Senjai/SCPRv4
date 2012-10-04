@@ -63,7 +63,6 @@ shared_examples_for "managed resource" do
     
     context "valid" do
       it "updates attributes" do
-        updated_record.save!
         fill_all_fields(updated_record)
         click_button "edit"
         page.should have_css ".alert-success"

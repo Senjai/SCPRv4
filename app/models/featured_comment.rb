@@ -30,6 +30,6 @@ class FeaturedComment < ActiveRecord::Base
   
   # Override AdminResource's `to_title`
   def to_title
-    "Featured Comment ##{self.id} (for #{content.simple_title})"
+    "Featured Comment (for #{content.obj_key})"
   end
 end
