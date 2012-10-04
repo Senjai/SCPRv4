@@ -14,11 +14,14 @@ module AdminResource
       #--------------
       
       module ClassMethods
-        # /admin/blog_entries
+        #--------------
+        # /admin/blog_entries/new
         def admin_new_path
           @admin_new_path ||= Rails.application.routes.url_helpers.send("new_admin_#{self.singular_route_key}_path")
         end
         
+        #--------------
+        # /admin/blog_entries
         def admin_index_path
           @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")
         end
@@ -37,10 +40,10 @@ module AdminResource
       end
       
       #-------------
-      # Uses self.class::ROUTE_KEY to generated
+      # Uses self.class::ROUTE_KEY to generate
       # the front-end path to this object
       # If an object doesn't have a front-end path,
-      # do not defined a ROUTE_KEY
+      # do not define a ROUTE_KEY on the class.
       def link_path(options={})
         @link_path ||= begin
           if self.route_hash.present? and defined?(self.class::ROUTE_KEY)
@@ -48,11 +51,15 @@ module AdminResource
           end
         end
       end
-      
+
+      #-------------
+      # Override this method manually for each model.
       def route_hash
         {}
       end
-            
+      
+      #-------------
+      # http://scpr.org/blogs/2012/...
       def remote_link_path(options={})
         "http://#{Rails.application.default_url_options[:host]}#{self.link_path(options)}"
       end
