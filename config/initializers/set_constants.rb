@@ -3,8 +3,9 @@ SPHINX_MAX_MATCHES = 1000
 STATIC_TABLES      = %w{ rails_content_map }
 
 CONNECT_DEFAULTS = {
-  :facebook => "http://www.facebook.com/kpccfm",
-  :twitter  => "kpcc",
-  :rss      => "http://wwww.scpr.org/feeds/all_news",
-  :podcast  => "http://www.scpr.org/podcasts/news"
+  :facebook      => "http://www.facebook.com/kpccfm",
+  :twitter       => "kpcc",
+  :rss           => "http://wwww.scpr.org/feeds/all_news",
+  :podcast       => "http://www.scpr.org/podcasts/news",
+  :web           => "http://scpr.org"
 }

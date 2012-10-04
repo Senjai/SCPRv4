@@ -112,22 +112,17 @@ FactoryGirl.define do
 # KpccProgram #########################################################
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
-    slug { title.parameterize }
-    quick_slug { title.parameterize.chars.first(5) }
-    teaser "AirTalk, short teaser, etc."
-    description "This is the description for AirTalk!"
-    host "Larry Mantle"
-    airtime "Weekdays 10 a.m.-12 p.m."
+    slug { title.parameterize }    
     air_status "onair"
-    podcast_url "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=73329334&uo=6"
-    rss_url "http://feeds.scpr.org/kpccAirTalk"
-    sidebar "Sidebar Content"    
-    twitter_url "airtalk"
-    facebook_url "http://www.facebook.com/KPCC.AirTalk"
-    display_segments 1
-    display_episodes 1
-    audio_dir { quick_slug }
     
+    trait :episodic do
+      display_episodes 1
+    end
+    
+    trait :segmented do
+      display_segments 1
+    end
+        
     ignore { segment Hash.new } # Ensures that `merge` has something to do in the after :create block
     ignore { episode Hash.new } # Ensures that `merge` has something to do in the after :create block
     ignore { missed_it_bucket Hash.new }
@@ -156,16 +151,9 @@ FactoryGirl.define do
   factory :other_program do
     sequence(:title) { |n| "Other Program #{n}" }
     slug        { title.parameterize }
-    teaser      "Outside Program"
-    description "This is the description for the outside program!"
-    host        "Larry Mantle"
-    airtime     "Weekdays 10 a.m.-12 p.m."
     air_status  "onair"
-    podcast_url "http://www.npr.org/rss/podcast.php?id=510294"
-    rss_url     "http://oncentral.org/rss/latest" # This column cannot be null?
-    sidebar     "Sidebar Content"
-    web_url     "http://www.bbc.co.uk/worldservice/"
-    produced_by "BBC"
+    podcast_url "http://www.npr.org/rss/podcast.php?id=510005"
+    rss_url     "http://www.kqed.org/rss/private/californiareport.xml"
   end
   
 

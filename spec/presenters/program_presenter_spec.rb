@@ -1,6 +1,80 @@
 require "spec_helper"
 
 describe ProgramPresenter do
+  describe "#teaser" do
+    it "returns html_safe teaser if it's present" do
+      program = build :kpcc_program, teaser: "This is <b>cool</b> teaser, bro."
+      p = ProgramPresenter.new(program, view)
+      p.teaser.should eq "This is <b>cool</b> teaser, bro."
+      p.teaser.html_safe?.should be_true
+    end
+    
+    it "returns nil if teaser not present" do
+      program = build :kpcc_program, teaser: nil
+      p = ProgramPresenter.new(program, view)
+      p.teaser.should eq nil
+    end
+  end
+  
+  #--------------------
+  
+  describe "#description" do
+    it "returns html_safe description if it's present" do
+      program = build :kpcc_program, description: "This is <b>cool</b> description, bro."
+      p = ProgramPresenter.new(program, view)
+      p.description.should eq "This is <b>cool</b> description, bro."
+      p.description.html_safe?.should be_true
+    end
+    
+    it "returns nil if description not present" do
+      program = build :kpcc_program, description: nil
+      p = ProgramPresenter.new(program, view)
+      p.description.should eq nil
+    end
+  end
+  
+  #--------------------
+  
+  describe "feed" do
+    it "returns podcast cache if it's present" do
+      program = build :other_program, slug: "coolshow"
+      Rails.cache.write("ext_program:coolshow:podcast", "Cool Show Podcast!")
+      p = ProgramPresenter.new(program, view)
+      p.feed.should match "Cool Show Podcast!"
+    end
+    
+    it "returns rss cache if it's present" do
+      program = build :other_program, slug: "coolshow"
+      Rails.cache.write("ext_program:coolshow:rss", "Cool Show RSS!")
+      p = ProgramPresenter.new(program, view)
+      p.feed.should match "Cool Show RSS!"
+    end
+    
+    it "returns a message if no cache is availabe" do
+      program = build :other_program
+      p = ProgramPresenter.new(program, view)
+      p.feed.should match "none-to-list"
+    end
+  end
+  
+  #--------------------
+  
+  describe "#web_url" do
+    it "returns program.web_url if specified" do
+      program = build :other_program, web_url: "show.com/coolshow"
+      p = ProgramPresenter.new(program, view)
+      p.web_url.should eq "show.com/coolshow"
+    end
+    
+    it "returns the KPCC fallback if not specified" do
+      program = build :other_program, web_url: ""
+      p = ProgramPresenter.new(program, view)
+      p.web_url.should eq CONNECT_DEFAULTS[:web]
+    end
+  end
+  
+  #--------------------
+  
   describe "#twitter_url" do    
     it "returns program.twitter_url as-is if specified and is already a full URL to twitter" do
       program = build :kpcc_program, twitter_url: "http://twitter.com/airtalk"
@@ -70,19 +144,4 @@ describe ProgramPresenter do
   end
 
   #--------------------
-
-  describe "#teaser" do
-    it "returns html_safe teaser if it's present" do
-      program = build :kpcc_program, teaser: "This is <b>cool</b> teaser, bro."
-      p = ProgramPresenter.new(program, view)
-      p.teaser.should eq "This is <b>cool</b> teaser, bro."
-      p.teaser.html_safe?.should be_true
-    end
-    
-    it "returns nil if teaser not present" do
-      program = build :kpcc_program, teaser: nil
-      p = ProgramPresenter.new(program, view)
-      p.teaser.should eq nil
-    end
-  end
 end

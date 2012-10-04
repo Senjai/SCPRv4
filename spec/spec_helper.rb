@@ -30,8 +30,8 @@ RSpec.configure do |config|
   config.include DatePathHelper
   config.include StubTime
   config.include StubPublishingCallbacks
-  config.include FormFillers
-  config.include AuthenticationHelper
+  config.include FormFillers,           example_group: { file_path: %r{spec/requests} }  
+  config.include AuthenticationHelper,  example_group: { file_path: %r{spec/requests} }  
   
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
