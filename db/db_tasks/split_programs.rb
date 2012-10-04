@@ -19,8 +19,8 @@ tt_program = KpccProgram.find(23)
 # madeleine-brand = beginning of time      - 12am on Monday 8/20
 # brand-martinez  = 12am on Monday 8/20    - 12am on Saturday, 9/22
 # take-two        = 12am on Saturday, 9/22 - end of time
-mb_end = Time.new(2012, 08, 20) # 12am on Monday, 8/20
-bm_end = Time.new(2012, 09, 22) # 12am on Saturday, 9/22
+mb_end = Time.new(2012, 8, 20) # 12am on Monday, 8/20
+bm_end = Time.new(2012, 9, 22) # 12am on Saturday, 9/22
 
 # Setup conditions so we can use them on both episodes and segments
 mb_conditions = ['published_at < ?', mb_end]        # Before mb_end
@@ -49,4 +49,9 @@ tt_episodes.update_all(show_id: tt_program.id)
 bm_segments.update_all(show_id: bm_program.id)
 tt_segments.update_all(show_id: tt_program.id)
 
-# That it
+# Now just update the week of "Alex Cohen & A Martinez" episode titles to "Take Two"
+tt_episodes.where("headline LIKE ?", "%Cohen%").each do |episode|
+  episode.update_attribute(:headline, "Take Two for #{episode.air_date.strftime("%B %-d, %Y")}")
+end
+
+# Thats it
