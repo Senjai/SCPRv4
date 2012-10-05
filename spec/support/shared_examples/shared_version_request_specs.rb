@@ -11,7 +11,7 @@ shared_examples_for "versioned model" do
     context "new record" do
       it "saves an initial version" do
         visit described_class.admin_new_path
-        fill_required_fields(valid_record)
+        fill_all_fields(valid_record)
         click_button "edit"
         described_class.count.should eq 1
         new_record = described_class.first

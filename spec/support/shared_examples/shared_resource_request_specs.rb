@@ -28,7 +28,7 @@ shared_examples_for "managed resource" do
     context "valid" do
       it "is created" do
         visit described_class.admin_new_path
-        fill_required_fields(valid_record)
+        fill_all_fields(valid_record)
         click_button "edit"
         described_class.count.should eq 1
         valid = described_class.first

@@ -52,20 +52,30 @@ class Audio < ActiveRecord::Base
 
   #------------
   # Callbacks
+  before_save   :set_django_mp3, if: -> { self.mp3_changed? }
   before_create :set_type, if: -> { self.type.blank? }
   before_create :set_file_info
-  before_save   :set_django_mp3, if: -> { self.mp3.present? }
   after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
 
+  # This could get run before the file info is set,
+  # So we need to use the actual mp3 info rather than #path
   def set_django_mp3
-    self.django_mp3 = File.join("audio", self.path)
+    if self.mp3.present?
+      self.django_mp3 = File.join("audio", self.mp3.path, self.mp3.file.filename)
+    end
   end
+  
   
   #------------
   # Validation
-  validates :enco_date,   presence: true, if: -> { self.enco_number.present? }
-  validates :enco_number, presence: true, if: -> { self.enco_date.present? }
+  validate  :enco_info_is_present_together
   validate  :audio_source_is_provided
+  
+  def enco_info_is_present_together
+    if self.enco_number.blank? ^ self.enco_date.blank?
+      errors.add(:base, "Enco number and Enco date must both be present for ENCO audio")
+    end
+  end
   
   def audio_source_is_provided
     if self.mp3_path.blank? && self.mp3.blank? && self.enco_number.blank? && self.enco_date.blank?
@@ -87,7 +97,7 @@ class Audio < ActiveRecord::Base
   # Enqueue the sync task for any subclasses that need it
   def self.sync!
     [Audio::ProgramAudio, Audio::DirectAudio, Audio::EncoAudio].each do |klass|
-      Resque.enqueue(Audio::SyncAudioJob, klass)
+      klass.enqueue_sync
     end
   end
 
@@ -166,12 +176,12 @@ class Audio < ActiveRecord::Base
   def set_file_info
     if self.type.present?
       self.filename  = self.type.constantize.filename(self)
-      self.store_dir = self.type.constantize.store_dir(self)
+      self.store_dir = self.type.constantize.store_dir(self)      
     end
   end
   
   
-  #------------  
+  #------------ 
   #------------
   # Compute duration via Mp3Info
   # Set to 0 if something goes wrong
@@ -401,6 +411,7 @@ class Audio < ActiveRecord::Base
     # we can safely assume it's uploaded audio
     def set_type
       if self.live?
+        
         self.type = "Audio::UploadedAudio"
       
       elsif self.enco_number.present? && self.enco_date.present?

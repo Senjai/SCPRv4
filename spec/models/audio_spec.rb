@@ -10,16 +10,28 @@ describe Audio do
   #----------------
   
   describe "validations" do
-    it "validates enco_date if enco_number is present" do
-      audio = build :audio, enco_date: nil, enco_number: 999
-      audio.should_not be_valid
-      audio.errors.keys.should eq [:enco_date]
-    end
+    context "enco" do
+      it "fails if enco_number present but not enco_date" do
+        audio = build :audio, enco_date: nil, enco_number: 999
+        audio.should_not be_valid
+        audio.errors.keys.should eq [:base]
+      end
     
-    it "validates enco_number if enco_date is present" do
-      audio = build :audio, enco_date: Date.today, enco_number: nil
-      audio.should_not be_valid
-      audio.errors.keys.should eq [:enco_number]
+      it "fails if enco_date present but not enco_number" do
+        audio = build :audio, enco_date: Date.today, enco_number: nil
+        audio.should_not be_valid
+        audio.errors.keys.should eq [:base]
+      end
+    
+      it "passes if enco_date and enco_number are present" do
+        audio = build :audio, enco_date: Date.today, enco_number: 999
+        audio.should be_valid
+      end
+    
+      it "passes if neither enco_date nor enco_number were provided" do
+        audio = build :audio, :direct, enco_date: nil, enco_number: nil
+        audio.should be_valid
+      end
     end
     
     it "validates audio source is provided" do
@@ -36,8 +48,8 @@ describe Audio do
   describe "scopes" do
     describe "::available" do
       it "selects only audio objects with mp3 present" do
-        available   = create(:audio, :uploaded)
-        unavailable = create(:audio, :enco) # mp3 is blank
+        available   = create :audio, :uploaded
+        unavailable = create :audio, :enco # mp3 is blank
         Audio.available.should eq [available.becomes(Audio::UploadedAudio)]
       end
       
@@ -477,10 +489,10 @@ describe Audio do
   describe Audio::ProgramAudio do
     describe "callbacks" do
       describe "set_description_to_episode_headline" do
-        let(:content) { create :show_episode, headline: "Cool Episode, Bro" }
+        let(:content) { create :show_episode, headline: "Cool Episode, Bro", show: create(:kpcc_program, audio_dir: "coolshow") }
       
         it "sets description to content's headline before create if description is blank" do
-          audio = create :program_audio, :enco, description: nil, content: content
+          audio = create :program_audio, description: nil, content: content
           audio.description.should eq "Cool Episode, Bro"
         
           # Make sure it doesn't happen on subsequent saves
@@ -490,7 +502,7 @@ describe Audio do
         end
       
         it "doesn't run if the description was given" do
-          audio = create :program_audio, :enco, description: "Cool Audio, Bro", content: content
+          audio = create :program_audio, description: "Cool Audio, Bro", content: content
           audio.description.should eq "Cool Audio, Bro"
         end
       end

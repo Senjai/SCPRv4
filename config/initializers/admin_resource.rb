@@ -55,7 +55,8 @@ AdminResource::Config.configure do |config|
         "MissedItBucket",
         "FeaturedComment",
         "FeaturedCommentBucket",
-        "Category"
+        "Category",
+        "Section"
       ]
     },
     
@@ -63,6 +64,7 @@ AdminResource::Config.configure do |config|
       icon: "icon-bookmark",
       models: [
         "Flatpage",
+        "Promotion"
 #        "PressRelease"
       ]
     },

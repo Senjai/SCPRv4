@@ -4,11 +4,22 @@ namespace :scprv4 do
   task :clear_events => [ :environment ] do 
     Rails.cache.expire_obj("events/event:new")
   end
+
+  #----------
   
   desc "Fire pending content alarms"
   task :fire_content_alarms => [:environment] do
     puts "*** [#{Time.now}] Firing pending content alarms..."
     ContentAlarm.fire_pending
+    puts "Finished."
+  end
+
+  #----------
+  
+  desc "Sync all Audio types"
+  task :syncaudio => [:environment] do
+    puts "*** [#{Time.now}] Enqueueing audio sync tasks into Resque..."
+    Audio.sync!
     puts "Finished."
   end
   

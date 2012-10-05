@@ -3,7 +3,7 @@ FactoryGirl.define do
 ##########################################################
 ### ContentBase Classes
 ##### *NOTE:* The name of the factory should eq `ClassName.to_s.underscore.to_sym`, i.e. NewsStory = :news_story
-##### This is to please `#make_content` / `#sphinx_spec` in /spec/support/content_base_helpers.rb
+##### This is to please `#make_content` / `#sphinx_spec` in /spec/support/thinking_sphinx_helpers.rb
 ##########################################################
 
 # ContentBase - Common attributes ##########################################################

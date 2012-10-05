@@ -1,7 +1,7 @@
 <% page_title "Add #{resource_title}" %>
 
 <%= simple_form_for [:admin, @record], html: { multipart: @record.respond_to?(:audio), class: "form-horizontal" } do |f| %>
-	<%= f.error_notification %>
-	<%= render 'form_fields', record: @record, f: f %>
-	<%= submit_row @record, @persisted_record %>
+  <%= render 'errors', f: f %>
+  <%= render 'form_fields', record: @record, f: f %>
+  <%= submit_row @record, @persisted_record %>
 <% end %>

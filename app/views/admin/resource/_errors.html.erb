@@ -1,0 +1,7 @@
+<%= f.error_notification %>
+
+<% if f.error(:base) %>
+  <div class="alert alert-error">
+    <%= f.error :base %>
+  </div>
+<% end %>

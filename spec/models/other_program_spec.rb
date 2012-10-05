@@ -31,7 +31,7 @@ describe OtherProgram do
       it "rejects if both blank" do
         program = build :other_program, podcast_url: "", rss_url: nil
         program.should_not be_valid
-        program.errors.keys.should eq [:base]
+        program.errors.keys.sort.should eq [:base, :podcast_url, :rss_url].sort
       end
     end
   end

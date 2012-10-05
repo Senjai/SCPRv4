@@ -659,27 +659,27 @@ ActiveRecord::Schema.define(:version => 20121002194924) do
   add_index "press_releases_release", ["slug"], :name => "press_releases_release_slug"
 
   create_table "programs_kpccprogram", :force => true do |t|
-    t.string   "slug",                :limit => 40,                            :null => false
-    t.string   "title",               :limit => 60,                            :null => false
-    t.text     "teaser",              :limit => 2147483647,                    :null => false
-    t.text     "description",         :limit => 2147483647,                    :null => false
-    t.string   "host",                :limit => 150,        :default => "",    :null => false
-    t.string   "airtime",             :limit => 300,                           :null => false
-    t.string   "air_status",          :limit => 10,                            :null => false
-    t.string   "podcast_url",         :limit => 300,        :default => "",    :null => false
-    t.string   "rss_url",             :limit => 300,        :default => "",    :null => false
-    t.string   "twitter_url",         :limit => 300,        :default => "",    :null => false
-    t.string   "facebook_url",        :limit => 300,        :default => "",    :null => false
-    t.text     "sidebar",             :limit => 2147483647,                    :null => false
-    t.boolean  "display_episodes",                          :default => false, :null => false
-    t.boolean  "display_segments",                                             :null => false
+    t.string   "slug",                :limit => 40,                           :null => false
+    t.string   "title",               :limit => 60,                           :null => false
+    t.text     "teaser",              :limit => 2147483647
+    t.text     "description",         :limit => 2147483647
+    t.string   "host",                :limit => 150
+    t.string   "airtime",             :limit => 300
+    t.string   "air_status",          :limit => 10,                           :null => false
+    t.string   "podcast_url",         :limit => 200
+    t.string   "rss_url",             :limit => 200
+    t.string   "twitter_url",         :limit => 300
+    t.string   "facebook_url",        :limit => 200
+    t.text     "sidebar",             :limit => 2147483647
+    t.boolean  "display_episodes",                          :default => true, :null => false
+    t.boolean  "display_segments",                          :default => true, :null => false
     t.integer  "blog_id"
     t.string   "video_player",        :limit => 20
     t.string   "audio_dir",           :limit => 50
     t.integer  "missed_it_bucket_id"
     t.string   "quick_slug",          :limit => 40
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
   end
 
   add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
@@ -688,20 +688,20 @@ ActiveRecord::Schema.define(:version => 20121002194924) do
   add_index "programs_kpccprogram", ["title"], :name => "title", :unique => true
 
   create_table "programs_otherprogram", :force => true do |t|
-    t.string   "slug",        :limit => 40,                         :null => false
-    t.string   "title",       :limit => 60,                         :null => false
-    t.text     "teaser",      :limit => 2147483647,                 :null => false
-    t.text     "description", :limit => 2147483647,                 :null => false
-    t.string   "host",        :limit => 150,        :default => "", :null => false
-    t.string   "produced_by", :limit => 50,                         :null => false
-    t.string   "airtime",     :limit => 300,                        :null => false
-    t.string   "air_status",  :limit => 10,                         :null => false
-    t.string   "web_url",     :limit => 300,        :default => "", :null => false
-    t.string   "podcast_url", :limit => 300,        :default => "", :null => false
-    t.string   "rss_url",     :limit => 300,        :default => "", :null => false
-    t.text     "sidebar",     :limit => 2147483647,                 :null => false
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.string   "slug",        :limit => 40,         :null => false
+    t.string   "title",       :limit => 60,         :null => false
+    t.text     "teaser",      :limit => 2147483647
+    t.text     "description", :limit => 2147483647
+    t.string   "host",        :limit => 150
+    t.string   "produced_by", :limit => 50
+    t.string   "airtime",     :limit => 300
+    t.string   "air_status",  :limit => 10,         :null => false
+    t.string   "web_url",     :limit => 200
+    t.string   "podcast_url", :limit => 200
+    t.string   "rss_url",     :limit => 200
+    t.text     "sidebar",     :limit => 2147483647
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true

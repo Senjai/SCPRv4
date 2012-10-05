@@ -1,17 +1,19 @@
 <h1>KPCC Programs</h1>
 
 <ul id="featured-programs" class="list-blocks">
-	<% @featured_programs.each do |program| %>
-		<a href="<%= program_path(program.slug) %>">
-		    <li class="headshot <%=program.slug%>">
-				<h4><%= program.title %></h4>
-				<p><%= program.teaser.html_safe %></p>
-		    </li>
-		</a>
-	<% end %>
+  <% @featured_programs.each do |program| %>
+    <% present program, ProgramPresenter do |p| %>
+      <a href="<%= program_path(p.slug) %>">
+        <li class="headshot <%=p.slug%>">
+          <h4><%= p.title %></h4>
+          <p><%= p.teaser %></p>
+        </li>
+      </a>
+    <% end %>
+  <% end %>
 </ul>
 
 <div class="row-fluid">
-	<%= render("programs_list", programs: @kpcc_programs, title: "KPCC Programs") if any_to_list? @kpcc_programs %>
-	<%= render("programs_list", programs: @other_programs, title: "Other Programs") if any_to_list? @other_programs %>
+  <%= render("programs_list", programs: @kpcc_programs, title: "KPCC Programs") if any_to_list? @kpcc_programs %>
+  <%= render("programs_list", programs: @other_programs, title: "Other Programs") if any_to_list? @other_programs %>
 </div>

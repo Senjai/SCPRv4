@@ -45,11 +45,23 @@ class ShowEpisode < ContentBase
                           foreign_key:  "segment_id", 
                           through:      :rundowns, 
                           order:        "segment_order asc"
+
     
   # -------------------
   # Scopes
   scope :published, where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
   scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
+
+
+  # -------------------
+  # Callbacks
+  before_validation :generate_headline, if: -> { self.headline.blank? }
+  
+  def generate_headline
+    if self.air_date.present?
+      self.headline = "#{self.show.title} for #{self.air_date.strftime("%B %-d, %Y")}"
+    end
+  end
   
   # -------------------
   

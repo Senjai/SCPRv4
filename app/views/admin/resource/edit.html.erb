@@ -1,32 +1,32 @@
 <% page_title "Editing: #{@record.to_title}" %>
 
 <%= simple_form_for [:admin, @record], html: { multipart: @record.respond_to?(:audio), class: "form-horizontal" } do |f| %>
-	<%= f.error_notification %>
-	<%= render 'form_fields', record: @record, f: f %>
-	<%= submit_row @record, @persisted_record %>
+  <%= render 'errors', f: f %>
+  <%= render 'form_fields', record: @record, f: f %>
+  <%= submit_row @record, @persisted_record %>
 <% end %>
 
 <% content_for :sidebar do %>
-	<div class="form-actions">
-		<ul class="unstyled">
-			<li><strong>Last Updated:</strong> <%= format_date @record.updated_at, time: true %></li> 
-			<li><%= link_to("History", admin_history_path(@record.class.route_key, @record.id), class: "btn btn-primary") %></li>
-		</ul>
-	</div>
+  <div class="form-actions">
+    <ul class="unstyled">
+      <li><strong>Last Updated:</strong> <%= format_date @record.updated_at, time: true %></li> 
+      <li><%= link_to("History", admin_history_path(@record.class.route_key, @record.id), class: "btn btn-primary") %></li>
+    </ul>
+  </div>
 
-	<h3>Currently Editing on This Page</h3>
-	<hr />
-	<ul id="newsroom-edit_user-list" class="viewers"></ul>
+  <h3>Currently Editing on This Page</h3>
+  <hr />
+  <ul id="newsroom-edit_user-list" class="viewers"></ul>
 <% end %>
 
 <% content_for :footerjs do %>
 <script type="text/javascript">
-	newsroom = new scpr.Newsroom(
-		'<%= j Rails.application.config.node.server %>', // server info
-		"<%= j({ id: @record.obj_key, type: 'Active'}.to_json.html_safe) %>", // room info
-		"<%= j admin_user.to_json.html_safe %>", // user info
-		"<%= j @record.to_json.html_safe %>", // record info
-		{ el: "#newsroom-edit_user-list" }
-	);
+  newsroom = new scpr.Newsroom(
+    '<%= j Rails.application.config.node.server %>', // server info
+    "<%= j({ id: @record.obj_key, type: 'Active'}.to_json.html_safe) %>", // room info
+    "<%= j admin_user.to_json.html_safe %>", // user info
+    "<%= j @record.to_json.html_safe %>", // record info
+    { el: "#newsroom-edit_user-list" }
+  );
 </script>
 <% end %>
