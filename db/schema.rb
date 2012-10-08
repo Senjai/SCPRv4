@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002194924) do
+ActiveRecord::Schema.define(:version => 20121008203814) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -374,36 +374,37 @@ ActiveRecord::Schema.define(:version => 20121002194924) do
   end
 
   create_table "events_event", :force => true do |t|
-    t.string   "headline",            :limit => 140,                           :null => false
-    t.string   "slug",                :limit => 50,                            :null => false
-    t.text     "body",                :limit => 2147483647,                    :null => false
-    t.string   "etype",               :limit => 4,                             :null => false
-    t.string   "sponsor",             :limit => 140,                           :null => false
-    t.string   "sponsor_link",        :limit => 200,                           :null => false
-    t.datetime "starts_at",                                                    :null => false
+    t.string   "headline"
+    t.string   "slug",                :limit => 50
+    t.text     "body",                :limit => 2147483647
+    t.string   "etype"
+    t.string   "sponsor"
+    t.string   "sponsor_link",        :limit => 200
+    t.datetime "starts_at"
     t.datetime "ends_at"
-    t.boolean  "is_all_day",                                                   :null => false
-    t.string   "location_name",       :limit => 140,                           :null => false
-    t.string   "location_link",       :limit => 200,                           :null => false
-    t.string   "rsvp_link",           :limit => 200,                           :null => false
-    t.boolean  "show_map",                                                     :null => false
-    t.string   "address_1",           :limit => 140,                           :null => false
-    t.string   "address_2",           :limit => 140,                           :null => false
-    t.string   "city",                :limit => 140,                           :null => false
-    t.string   "state",               :limit => 2
-    t.integer  "zip_code"
+    t.boolean  "is_all_day",                                :default => false, :null => false
+    t.string   "location_name"
+    t.string   "location_link",       :limit => 200
+    t.string   "rsvp_link",           :limit => 200
+    t.boolean  "show_map",                                  :default => true,  :null => false
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
     t.boolean  "kpcc_event",                                :default => false, :null => false
-    t.string   "for_program",         :limit => 20,         :default => "",    :null => false
-    t.text     "archive_description", :limit => 2147483647,                    :null => false
+    t.text     "archive_description", :limit => 2147483647
     t.string   "old_audio",           :limit => 100
-    t.boolean  "is_published",                                                 :null => false
-    t.boolean  "show_comments",                                                :null => false
-    t.text     "teaser",              :limit => 2147483647,                    :null => false
-    t.string   "event_asset_scheme",  :limit => 10
+    t.boolean  "is_published",                              :default => false, :null => false
+    t.boolean  "show_comments",                             :default => false, :null => false
+    t.text     "teaser",              :limit => 2147483647
+    t.string   "event_asset_scheme"
+    t.integer  "kpcc_program_id"
   end
 
+  add_index "events_event", ["kpcc_program_id"], :name => "events_event_7666a8c6"
   add_index "events_event", ["slug"], :name => "events_event_slug"
 
   create_table "flatpages_flatpage", :force => true do |t|
@@ -499,24 +500,24 @@ ActiveRecord::Schema.define(:version => 20121002194924) do
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
   create_table "media_audio", :force => true do |t|
-    t.string   "django_mp3",             :limit => 100
+    t.string   "django_mp3"
     t.integer  "size"
     t.integer  "duration"
-    t.integer  "enco_number"
+    t.string   "enco_number"
     t.date     "enco_date"
-    t.integer  "django_content_type_id",                                           :null => false
-    t.integer  "content_id",                                                       :null => false
+    t.integer  "django_content_type_id",                                      :null => false
+    t.integer  "content_id",                                                  :null => false
     t.text     "description",            :limit => 2147483647
-    t.string   "byline",                 :limit => 150,        :default => "KPCC", :null => false
-    t.integer  "position",                                     :default => 0,      :null => false
-    t.string   "content_type",           :limit => 20
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
-    t.string   "filename",               :limit => 50
-    t.string   "store_dir",              :limit => 80
-    t.string   "mp3_path",               :limit => 120
-    t.string   "type",                   :limit => 20
-    t.string   "mp3",                    :limit => 120
+    t.string   "byline"
+    t.integer  "position",                                     :default => 0, :null => false
+    t.string   "content_type"
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
+    t.string   "filename"
+    t.string   "store_dir"
+    t.string   "mp3_path"
+    t.string   "type"
+    t.string   "mp3"
   end
 
   add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
