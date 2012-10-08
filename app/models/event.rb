@@ -1,6 +1,5 @@
 class Event < ActiveRecord::Base
   include Model::Validations::SlugValidation
-  include Model::Validations::ContentValidation
   include Model::Associations::AudioAssociation
   include Model::Associations::AssetAssociation
   
@@ -24,7 +23,8 @@ class Event < ActiveRecord::Base
       ['Sponsored',                   'spon'],
       ['Staff Picks',                 'pick']
   ]
-    
+  
+  
   # -------------------
   # Administration
   administrate do |admin|
@@ -40,9 +40,16 @@ class Event < ActiveRecord::Base
     end
   end
 
+
+  # -------------------
+  # Associations
+  belongs_to :kpcc_program
+  
+  
   # -------------------
   # Validations
-  validates_presence_of :etype, :starts_at, if: :should_validate?
+  validates :headline, presence: true
+  validates :etype, :starts_at, :body, presence: true, if: :should_validate?
   validates :slug, unique_by_date: { scope: :starts_at, filter: :day, message: "has already been used for that start date." },
     if: :should_validate?
   
@@ -54,18 +61,20 @@ class Event < ActiveRecord::Base
     !!is_published
   end
   
+  
   # -------------------
   # Scopes
-  scope :published,             where(is_published: true)
-  scope :forum,                 published.where("etype IN (?)", ForumTypes)
-  scope :sponsored,             published.where("etype = ?", "spon")
+  scope :published,             -> { where(is_published: true) }
+  scope :forum,                 -> { published.where("etype IN (?)", ForumTypes) }
+  scope :sponsored,             -> { published.where("etype = ?", "spon") }
   
   scope :upcoming,              -> { published.where("starts_at > ?", Time.now).order("starts_at") }
-  scope :upcoming_and_current,  -> { published.where("ends_at > ?", Time.now).order("starts_at") }
+  scope :upcoming_and_current,  -> { published.where("ends_at > :now or starts_at > :now", now: Time.now).order("starts_at") }
   scope :past,                  -> { published.where("ends_at < ?", Time.now).order("starts_at desc") }
 
+
   # -------------------
-    
+  
   def status
     is_published ? ContentBase::STATUS_LIVE : ContentBase::STATUS_DRAFT
   end
@@ -91,7 +100,13 @@ class Event < ActiveRecord::Base
   end
   
   def minutes
-    ((ends_at - starts_at) / 60).floor
+    if self.ends_at.present?
+      endt = self.ends_at
+    else
+      endt = self.starts_at.end_of_day
+    end
+    
+    ((endt - starts_at) / 60).floor
   end
   
   # -------------------
@@ -113,50 +128,13 @@ class Event < ActiveRecord::Base
       Time.now.between? starts_at, starts_at.end_of_day
     end
   end
-  
-  # -------------------
-  
-  def consoli_dated # should probably be a helper.
-    # If one needs minutes, use that format for the other as well, for consistency
-    timef = (starts_at.min == 0 and [0, nil].include?(ends_at.try(:min))) ? "%l" : "%l:%M"
-    
-    if self.is_all_day
-      starts_at.strftime("%A, %B %e") # Wednesday, October 11
-    elsif ends_at.blank?
-      starts_at.strftime("%A, %B %e, #{timef}%P") # Wednesday, October 11, 11am
-    elsif starts_at.day == ends_at.day # If the event starts and ends on the same day
-      if starts_at.strftime("%P") != ends_at.strftime("%P") # If it starts in the AM and ends in the PM
-        starts_at.strftime("%A, %B %e, #{timef}%P -") + ends_at.strftime("#{timef}%P")
-      else
-        starts_at.strftime("%A, %B %e, #{timef} -") + ends_at.strftime("#{timef}%P")
-      end
-    else # If the event starts and ends on different days
-      starts_at.strftime("%A, %B %e, #{timef}%P -") + ends_at.strftime("%A, %B %e, #{timef}%P")
-    end
-  end
-  
+
   #----------
   
   def is_forum_event?
     ForumTypes.include? self.etype
   end
   
-  #----------
-  
-  def inline_address(separator=", ")
-    [address_1, address_2, city, state, zip_code].reject { |element| element.blank? }.join(separator)
-  end
-
-  #----------
-  
-  def description
-    if self.upcoming? or archive_description.blank?
-      self.body
-    else
-      archive_description
-    end
-  end
-
   #----------
   
   def route_hash

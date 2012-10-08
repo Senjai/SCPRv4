@@ -1,7 +1,14 @@
 <%= form_block "Details" do %>
   <%= f.input :headline, label: "Title", input_html: { class: 'wide' } %>
   <%= f.input :etype, label: "Type", collection: Event::EVENT_TYPES, selected: record.etype || Event::EVENT_TYPES[0] %>
+  <%= f.input :is_published, label: "Published?", hint: "Should this event show up on the website?" %>
   <%= f.input :body, input_html: { class: 'ckeditor' } %>
+<% end %>
+
+<%= form_block "Date/Time" do %>
+  <%= f.input :starts_at %>
+  <%= f.input :ends_at %>
+  <%= f.input :is_all_day, label: "All-Day Event?" %>
 <% end %>
 
 <%= form_block "Short Details" do %>
@@ -26,7 +33,7 @@
                                 "For email addresses: Enter the address beginning with mailto: (example: mailto:contact@kpcc.org)" %>
   <%= f.input :sponsor, hint: "Contact person, sponsoring organization, etc" %>
   <%= f.input :sponsor_link, hint: "If present, makes the contact text a link to this URL." %>
-  <%= f.input :for_program, collection: KpccProgram.all, hint: "If this event belongs to a KPCC-produced show, select it here." %>
+  <%= f.association :kpcc_program, hint: "If this event belongs to a KPCC-produced show, select it here." %>
   <%= f.input :kpcc_event, label: "KPCC Event?", hint: "Event is sponsored by or on behalf of KPCC." %>
 <% end %>
 

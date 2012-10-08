@@ -54,6 +54,16 @@ class KpccProgram < ActiveRecord::Base
   
   #----------
   
+  def absolute_audio_path
+    @absolute_audio_path ||= begin
+      if self.audio_dir.present?
+        File.join(Audio::AUDIO_PATH_ROOT, self.audio_dir)
+      end
+    end
+  end
+
+  #----------
+  
   def route_hash
     return {} if !self.persisted? || !self.published?
     {

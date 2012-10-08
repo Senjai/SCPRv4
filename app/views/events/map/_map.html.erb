@@ -1,0 +1,8 @@
+<li class="modal-container">                  
+  <span class="fake-link bold map-link modal-toggler" data-address="<%=j p.inline_address%>">Map &amp; Directions</span>
+  <%= modal("google-maps") do %> 
+    <h5 class="address"><%= p.inline_address %></h5>
+    <div class="google-map map-canvas" id="map-canvas"></div>
+    <div id="map-errors">&nbsp;</div>
+  <% end %> 
+</li>

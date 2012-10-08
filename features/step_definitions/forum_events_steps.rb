@@ -1,6 +1,6 @@
 #### Setup
 Given /^there (?:is|are) (\d+) upcoming forum events?$/ do |num|
-  @events = create_list :event, num.to_i
+  @events = create_list :event, num.to_i, :future, :published
   @event = @events[rand(@events.size)]
   Event.all.count.should eq num.to_i
 end
@@ -53,18 +53,6 @@ end
 
 Then /^that event should not be in the upcoming events$/ do
   find(".more-events").should_not have_content @event.headline
-end
-
-
-#### Assertions
-Then /^the events should be ordered by "([^"]*)"$/ do |order|
-  pending "Need to figure this one out"
-  # events = Event.order(order)
-  # page.first(".event").should match events.first
-  # page.last(".event").should match events.last
-  # Event.forum.past.order(order).each_with_index do |event, i|
-  #   page.find(".event")[i].should have_content event.headline
-  # end
 end
 
 

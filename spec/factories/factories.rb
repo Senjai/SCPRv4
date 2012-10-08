@@ -15,7 +15,7 @@ FactoryGirl.define do
     
     trait :direct do
       content { |a| a.association :news_story }
-      mp3_path Rails.application.config.scpr.media_root.join("audio/events/2012/10/02/SomeCoolEvent.mp3").to_s
+      mp3_path "events/2012/10/02/SomeCoolEvent.mp3"
     end
 
     trait :program do
@@ -34,8 +34,8 @@ FactoryGirl.define do
     #---------
     
     factory :program_audio, class: "Audio::ProgramAudio" do
-      program
       for_episode
+      program
     end
     
     factory :enco_audio, class: "Audio::EncoAudio" do
@@ -250,29 +250,23 @@ FactoryGirl.define do
     sequence(:id, 1) # Not auto-incrementing in database?
     sequence(:headline)   { |n| "A Very Special Event #{n}" }
     sequence(:starts_at)  { |n| Time.now + 60*60*24*n }
-    ends_at               { starts_at + 60*60*1 }
     
     slug                { headline.parameterize }
     body                "This is a very special event."
     etype               "comm"
-    sponsor             "Patt Morrison"
-    sponsor_link        "http://oncentral.org"
-    is_all_day          0
-    location_name       "The Crawford Family Forum"
-    location_link       "http://www.scpr.org/crawfordfamilyforum"
-    rsvp_link           "http://kpcc.ticketleap.com/connie-rice/"
-    show_map            1
-    address_1           "474 South Raymond Avenue"
-    address_2           "Second Level" # required column?
-    city                "Pasadena"
-    state               "CA"
-    zip_code            "91105"
-    for_program         "airtalk"
-    archive_description "This is the description that shows after the event has happened"
-    is_published        1
-    show_comments       1
-    teaser              "This is a short teaser"
-
+    
+    trait :published do
+      is_published true
+    end
+    
+    trait :with_address do
+      address_1 "123 Fake St."
+      address_2 "Apt. A"
+      city      "Pasadena"
+      state     "CA"
+      zip_code  "12345"
+    end
+    
     trait :multiple_days_past do
       starts_at { 3.days.ago }
       ends_at   { 1.day.ago }

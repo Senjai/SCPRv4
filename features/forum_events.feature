@@ -31,7 +31,7 @@ Scenario: See the closest 4 events
 Scenario: Only show forum events on the Forum page
 	Given events with the following attributes:
 	 | etype |
-	 | comm  |
+	 | comm  | 
 	 | spon  |
 	
 	When I go to the forum page
