@@ -1,7 +1,11 @@
-<%= f.error_notification %>
-
-<% if f.error(:base) %>
+<% if f.object.errors[:base].present? %>
   <div class="alert alert-error">
-    <%= f.error :base %>
+    <ul class="unstyled" style="margin-bottom: 0">
+      <% f.object.errors[:base].each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
   </div>
+<% else %>
+  <%= f.error_notification %>
 <% end %>

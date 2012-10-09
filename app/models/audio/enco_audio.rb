@@ -20,7 +20,7 @@ class Audio
     #------------
 
     def self.sync!
-      Audio::Sync.sync_awaiting_audio_if_file_exists!
+      Audio::Sync.new(self).sync_awaiting_audio_if_file_exists!
     end
   end # EncoAudio
 end # Audio

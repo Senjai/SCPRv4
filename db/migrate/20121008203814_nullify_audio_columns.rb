@@ -8,9 +8,10 @@ class NullifyAudioColumns < ActiveRecord::Migration
         end
       end
       
-      # Also catch the enco's with only date here
-      if audio.enco_date.present? && audio.enco_number.blank?
-        audio.enco_date = nil
+      # If a piece of enco information is missing, nullify them
+      if audio.enco_date.blank? || audio.enco_number.blank?
+        audio.enco_date   = nil
+        audio.enco_number = nil
       end
       
       if audio.changed_attributes.present?

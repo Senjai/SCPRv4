@@ -47,6 +47,14 @@ form.simple_form {
             margin-left: 10px;
         }
     }
+    
+    .control-group.vertical {
+        label { 
+            float: none;
+            text-align: left;
+        }
+        .controls { margin-left: 2px; }
+    }
 }
 
 p.help-block {
@@ -61,7 +69,7 @@ p.help-block {
     
     .audio-info {
         .new-audio, .existing-audio {
-            height: 150px;
+            height: 200px;
             border-bottom: 1px solid #ddd;
             margin-bottom: 10px;
         }

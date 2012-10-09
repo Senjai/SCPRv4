@@ -21,8 +21,8 @@ describe Audio::EncoAudio do
   #----------------
   
   describe "::sync!" do
-    it "sends to Audio::Sync.sync_awaiting_audio_if_file_exists!" do
-      Audio::Sync.should_receive(:sync_awaiting_audio_if_file_exists!)
+    it "sends to Audio::Sync#sync_awaiting_audio_if_file_exists!" do
+      Audio::Sync.should_receive(:sync_awaiting_audio_if_file_exists!).with(Audio::EncoAudio)
       Audio::EncoAudio.sync!
     end
   end

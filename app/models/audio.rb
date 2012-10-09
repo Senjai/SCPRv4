@@ -52,6 +52,45 @@ class Audio < ActiveRecord::Base
   
 
   #------------
+  # Validation
+  validate :enco_info_is_present_together
+  validate :audio_source_is_provided
+  validate :mp3_exists, unless: -> { self.new_record? || Rails.env == "development" } # So that we can still save objects even though the file won't exist on dev machines. 
+  
+  def enco_info_is_present_together
+    if self.enco_number.blank? ^ self.enco_date.blank?
+      errors.add(:base, "Enco number and Enco date must both be present for ENCO audio")
+      # Just so the form is aware that enco_number and enco_date are involved
+      errors.add(:enco_number, "")
+      errors.add(:enco_date, "")
+    end
+  end
+  
+  #------------  
+  # Check if an audio source was given.
+  # For the mp3 column, Carrierwave checks that
+  # the file actually exists on the filesystem
+  # (in `CarrierWave::Uploader::Proxy#blank?`), so
+  # we will just check that the column is filled here.
+  # If it's filled in but the audio doesn't exist,
+  # #mp3_exists will catch that with a more helpful
+  # error message.
+  def audio_source_is_provided
+    if self.mp3_path.blank? && self.mp3.file.nil? && self.enco_number.blank? && self.enco_date.blank?
+      self.errors.add(:base, "Audio must have a source (upload, enco, or path)")
+    end
+  end
+  
+  # If the column is filled in, but the file doesn't exist, invalid
+  def mp3_exists
+    # Can't use `present?` on mp3.file, because CarrierWave defines an `empty?` method on SanitizedFile    
+    if !self.mp3.file.nil? && self.mp3.blank?
+      self.errors.add(:mp3, "doesn't exist on the filesystem (#{self.full_path}). Perhaps it was deleted?")
+    end
+  end
+  
+  
+  #------------
   # Callbacks
   before_save   :set_django_mp3, if: -> { self.mp3_changed? }
   before_create :set_type, if: -> { self.type.blank? }
@@ -63,42 +102,6 @@ class Audio < ActiveRecord::Base
   def set_django_mp3
     if self.mp3.present?
       self.django_mp3 = File.join("audio", self.mp3.path, self.mp3.file.filename)
-    end
-  end
-  
-  
-  #------------
-  # Validation
-  validate :enco_info_is_present_together
-  validate :audio_source_is_provided
-  validate :mp3_exists, unless: -> { self.new_record? || Rails.env == "development" } # So that we can still save objects even though the file won't exist on dev machines. 
-  
-  def enco_info_is_present_together
-    if self.enco_number.blank? ^ self.enco_date.blank?
-      errors.add(:base, "Enco number and Enco date must both be present for ENCO audio")
-    end
-  end
-  
-  #------------  
-  # Check if an audio source was given
-  # For the mp3 column, Carrierwave checks that
-  # the file actually exists on the filesystem
-  # (in `CarrierWave::Uploader::Proxy#blank?`), so
-  # we will just check that the column is filled here.
-  # If it's filled in but the audio doesn't exist,
-  # #mp3_exists will catch that with a more helpful
-  # error message.
-  def audio_source_is_provided
-    if self.mp3_path.blank? && self.mp3.file.blank? && self.enco_number.blank? && self.enco_date.blank?
-      self.errors.add(:base, "Audio must have a source (upload, enco, or path)")
-    end
-  end
-  
-  # If the column is filled in, but the file doesn't exist, invalid
-  def mp3_exists
-    # Can't use `present?` on mp3.file, because CarrierWave defines an `empty?` method on SanitizedFile    
-    if self.mp3.file != nil && self.mp3.blank?
-      self.errors.add(:mp3, "doesn't exist on the filesystem (#{self.full_path}). Perhaps it was deleted?")
     end
   end
 
