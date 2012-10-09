@@ -51,7 +51,7 @@ header#masthead {
 // KPCC logo image
 .logo {
 	white-space:nowrap;
-	a, .fb-like {
+	a {
 		@include ie-inline-block;
 		margin-top: 16px;
 		vertical-align: top;
@@ -64,15 +64,6 @@ header#masthead {
 		text-decoration: none;
 		height: 42px;
 		width: 181px;
-	}
-	
-	.fb-like {
-		padding: 5px 0 0 10px;
-		min-width: 100px;
-		max-width: none;
-	}
-	.fb_edge_widget_with_comment span.fb_edge_comment_widget iframe.fb_ltr {
-		display: none !important;
 	}
 }
 
