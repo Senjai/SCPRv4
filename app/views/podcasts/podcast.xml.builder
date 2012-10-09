@@ -30,13 +30,13 @@ content_cache("podcast:#{@podcast.slug}") do
         # Limited to 15 items
         @audio_content.each do |c|
           xml.item do |item|
-            item.title              h(c.headline)
-            item.itunes :author,    h(@podcast.author)
-            item.itunes :summary,   h(c.teaser)
-            item.description        h(c.teaser)
+            item.title              raw(c.headline)
+            item.itunes :author,    raw(@podcast.author)
+            item.itunes :summary,   raw(c.teaser)
+            item.description        raw(c.teaser)
             item.guid               c.remote_link_path, :isPermaLink => true
             item.pubDate            c.published_at
-            item.itunes :keywords,  h(@podcast.keywords)
+            item.itunes :keywords,  raw(@podcast.keywords)
             item.link               c.remote_link_path
 
             if c.audio.present?

@@ -49,6 +49,13 @@ class ShowEpisode < ContentBase
   scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
   
   # -------------------
+  # Since episode bodies are short, 
+  # just use them for the teaser.
+  def teaser
+    body
+  end
+  
+  # -------------------
   
   define_index do
     indexes headline
