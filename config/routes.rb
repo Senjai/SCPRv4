@@ -85,6 +85,7 @@ Scprv4::Application.routes.draw do
       
       ## -- AdminResource -- ##
       resources :bios
+      resources :audio
       resources :admin_users
       resources :podcasts
       resources :schedules

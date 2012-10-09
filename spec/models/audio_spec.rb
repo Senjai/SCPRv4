@@ -10,34 +10,110 @@ describe Audio do
   #----------------
   
   describe "validations" do
-    context "enco" do
+    context "#enco_info_is_present_together" do
+      it "runs on save" do
+        audio = build :audio, :enco
+        audio.should_receive(:enco_info_is_present_together).once
+        audio.save!
+      end
+      
       it "fails if enco_number present but not enco_date" do
         audio = build :audio, enco_date: nil, enco_number: 999
-        audio.should_not be_valid
+        audio.enco_info_is_present_together
         audio.errors.keys.should eq [:base]
       end
     
       it "fails if enco_date present but not enco_number" do
         audio = build :audio, enco_date: Date.today, enco_number: nil
-        audio.should_not be_valid
+        audio.enco_info_is_present_together
         audio.errors.keys.should eq [:base]
       end
     
       it "passes if enco_date and enco_number are present" do
         audio = build :audio, enco_date: Date.today, enco_number: 999
-        audio.should be_valid
+        audio.enco_info_is_present_together
+        audio.errors.should be_blank
       end
     
       it "passes if neither enco_date nor enco_number were provided" do
         audio = build :audio, :direct, enco_date: nil, enco_number: nil
-        audio.should be_valid
+        audio.enco_info_is_present_together
+        audio.errors.should be_blank
       end
     end
     
-    it "validates audio source is provided" do
-      audio = build :audio, enco_date: nil, enco_number: nil, mp3_path: nil, mp3: ""
-      audio.should_not be_valid
-      audio.errors.keys.should eq [:base]
+    #----------------
+    
+    context "#audio_source_is_provided" do
+      it "runs on save" do
+        audio = build :audio, :enco
+        audio.should_receive(:audio_source_is_provided).once
+        audio.save!
+      end
+      
+      it "is valid if only enco_number and enco_date present" do
+        audio = build :audio, :enco, mp3_path: nil, mp3: nil
+        audio.audio_source_is_provided
+        audio.errors.should be_blank
+      end
+      
+      it "is valid if only mp3_path present" do
+        audio = build :audio, :direct, enco_number: nil, enco_date: nil, mp3: nil
+        audio.audio_source_is_provided
+        audio.errors.should be_blank
+      end
+      
+      it "is valid if only mp3 present" do
+        audio = build :audio, :uploaded, mp3_path: nil, enco_number: nil, enco_date: nil
+        audio.save
+        audio.errors.should be_blank
+      end
+      
+      it "is invalid if everything is blank" do
+        audio = build :audio, mp3: nil, mp3_path: nil, enco_number: nil, enco_date: nil
+        audio.audio_source_is_provided
+        audio.errors.keys.should eq [:base]
+      end
+    end
+    
+    #----------------
+    
+    context "#mp3_exists" do
+      it "runs on save for existing records" do
+        audio = create :audio, :enco
+        audio.should_receive(:mp3_exists).once
+        audio.save!
+      end
+
+      it "does not run on create" do
+        audio = build :audio, :enco
+        audio.should_not_receive(:mp3_exists)
+        audio.save!
+      end
+      
+      it "is valid if the audio actually exists on the filesystem" do
+        audio = build :audio, :uploaded
+        File.open audio.mp3.file.path # make sure it exists
+        audio.mp3_exists
+        audio.errors.should be_blank
+      end
+      
+      it "is invalid if the audio doesn't exist on the filesystem" do
+        audio = create :audio, :uploaded
+        -> { File.open audio.mp3.file.path }.should_not raise_error Errno::ENOENT
+        `rm -rf #{Rails.application.config.scpr.media_root}/audio/upload/#{Time.now.strftime("%Y/%m/%d")}`
+        -> { File.open audio.mp3.file.path }.should raise_error Errno::ENOENT # make sure it *doesn't* exist
+        audio.reload
+        audio.mp3_exists
+        audio.errors.keys.should eq [:mp3]        
+      end
+      
+      it "ignores this validation if the environment is development" do
+        audio = build :audio, :uploaded
+        audio.should_not_receive(:mp3_exists)
+        Rails.stub(:env) { "development" }
+        audio.save!
+      end
     end
   end
   
@@ -52,17 +128,6 @@ describe Audio do
         unavailable = create :audio, :enco # mp3 is blank
         Audio.available.should eq [available.becomes(Audio::UploadedAudio)]
       end
-      
-      it "treats null and blank mp3 the same" do
-        available = create :audio, :uploaded
-        blank     = create :audio, :enco, mp3: nil
-        empty     = create :audio, :enco, mp3: ""
-        
-        blank.mp3.should be_blank
-        empty.mp3.should be_blank
-        
-        Audio.available.should eq [available.becomes(Audio::UploadedAudio)]
-      end
     end
 
     #----------------
@@ -75,15 +140,6 @@ describe Audio do
         null_mp3.mp3.should be_blank
         
         Audio.awaiting_audio.should eq [null_mp3.becomes(Audio::EncoAudio)]
-      end
-      
-      it "selects audio with blank mp3" do
-        blank_mp3 = create :audio, :enco, mp3: ""
-        live      = create :audio, :uploaded
-        
-        blank_mp3.mp3.should be_blank
-        
-        Audio.awaiting_audio.should eq [blank_mp3.becomes(Audio::EncoAudio)]
       end
     end
   end
@@ -131,19 +187,6 @@ describe Audio do
     it "doesn't receive async_compute_file_fields if mp3 is not present" do
       Audio.any_instance.should_not_receive(:async_compute_file_info)
       create :audio, :enco
-    end
-  end
-  
-
-  #----------------
-  #----------------
-
-  describe "::sync!" do
-    it "enqueues SyncAudioJob for each class that should be automagically synced" do
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio::EncoAudio).once
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio::ProgramAudio).once
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio::DirectAudio).once
-      Audio.sync!
     end
   end
   
@@ -413,176 +456,6 @@ describe Audio do
     it "does it for subclasses" do
       Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio::EncoAudio)
       Audio::EncoAudio.enqueue_sync
-    end
-  end
-  
-  #----------------
-
-  describe Audio::ComputeFileInfoJob do
-    describe "::perform" do
-      it "computes duration and size, and saves" do
-        audio = build :audio, :uploaded
-        audio.should_receive(:compute_duration)
-        audio.should_receive(:compute_size)
-        audio.should_receive(:save)
-        Audio::ComputeFileInfoJob.perform(audio)
-      end
-    end
-  end
-
-  #----------------
-  
-  describe Audio::SyncAudioJob do
-    describe "::perform" do
-      it "sends to klass.sync!" do
-        Audio.should_receive(:sync!)
-        Audio::SyncAudioJob.perform(Audio)
-      end
-    end
-  end
-
-
-  #----------------
-  #----------------
-  
-  describe Audio::EncoAudio do
-    describe "::filename" do
-      it "is makes the filename based on enco number and date" do
-        audio = build :enco_audio, enco_number: "1234", enco_date: freeze_time_at("October 21, 1988")
-        Audio::EncoAudio.filename(audio).should eq "19881021_features1234.mp3"
-      end
-    end
-    
-    #----------------
-    
-    describe "::store_dir" do
-      it "is the predetermined enco folder" do
-        stub_const("Audio::STORE_DIRS", { enco: "features" })
-        audio = build :enco_audio
-        Audio::EncoAudio.store_dir(audio).should eq "features"
-      end
-    end
-    
-    #----------------
-    
-    describe "::sync!" do
-      it "sets the audio's mp3 to the file if the file exists" do
-        audio = create :enco_audio, enco_number: "1234", enco_date: freeze_time_at("October 02, 2012")
-        audio.filename.should eq "20121002_features1234.mp3"
-        Audio::EncoAudio.sync!
-        audio.reload.mp3.file.filename.should eq audio.filename
-      end
-      
-      it "doesn't doesn't do anything if the file doesn't exist" do
-        audio = create :enco_audio, enco_number: "9999", enco_date: freeze_time_at("October 10, 2012")
-        audio.filename.should eq "20121010_features9999.mp3"
-        Audio::EncoAudio.sync!
-        audio.reload.mp3.file.should be_blank
-      end
-    end
-  end
-
-
-  #----------------
-  #----------------
-  
-  describe Audio::ProgramAudio do
-    describe "callbacks" do
-      describe "set_description_to_episode_headline" do
-        let(:content) { create :show_episode, headline: "Cool Episode, Bro", show: create(:kpcc_program, audio_dir: "coolshow") }
-      
-        it "sets description to content's headline before create if description is blank" do
-          audio = create :program_audio, description: nil, content: content
-          audio.description.should eq "Cool Episode, Bro"
-        
-          # Make sure it doesn't happen on subsequent saves
-          content.update_attribute(:headline, "Cooler Story")
-          audio.save
-          audio.reload.description.should eq "Cool Episode, Bro"
-        end
-      
-        it "doesn't run if the description was given" do
-          audio = create :program_audio, description: "Cool Audio, Bro", content: content
-          audio.description.should eq "Cool Audio, Bro"
-        end
-      end
-    end
-
-    #----------------
-    
-    describe "::filename" do
-      it "is the mp3's actual filename" do
-        audio = build :audio, :program, :for_episode
-        Audio::ProgramAudio.filename(audio).should eq "20121002_mbrand.mp3"
-      end
-    end
-    
-    #----------------
-    
-    describe "::store_dir" do
-      it "is the show's audio_dir" do
-        audio = build :audio, :program, :for_segment
-        audio.content.show.update_attribute(:audio_dir, "coolshowbro")
-        Audio::ProgramAudio.store_dir(audio).should eq "coolshowbro"
-      end
-    end
-    
-    #----------------
-    
-    describe "::sync!" do
-      pending
-    end
-  end
-
-
-  #----------------
-  #----------------
-
-  describe Audio::DirectAudio do
-    describe "::filename" do
-      it "is the supplied mp3's filename" do
-        audio = build :audio, :direct, mp3_path: "/some/cool/audio_bro.mp3"
-        Audio::DirectAudio.filename(audio).should eq "audio_bro.mp3"
-      end
-    end
-    
-    #----------------
-    
-    describe "::store_dir" do
-      it "is the supplied mp3's base path" do
-        audio = build :audio, :direct, mp3_path: "/some/cool/audio_bro.mp3"
-        Audio::DirectAudio.store_dir(audio).should eq "/some/cool"
-      end
-    end
-    
-    #----------------
-    
-    describe "::sync!" do
-      pending
-    end
-  end
-  
-  
-  #----------------
-  #----------------
-  
-  describe Audio::UploadedAudio do
-    describe "::filename" do
-      it "is the mp3's actual filename" do
-        audio = build :audio, :uploaded
-        Audio::ProgramAudio.filename(audio).should eq "point1sec.mp3"
-      end
-    end
-    
-    #----------------
-    
-    describe "::store_dir" do
-      it "is the root upload dir with date paths" do
-        stub_const("Audio::STORE_DIRS", { upload: "upload"} )
-        time  = freeze_time_at("October 21, 1988")
-        audio = build :audio, :uploaded
-        Audio::UploadedAudio.store_dir(audio).should eq "upload/1988/10/21"
-      end
     end
   end
 end

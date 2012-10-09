@@ -11,6 +11,7 @@
 class Audio < ActiveRecord::Base
   self.table_name  = 'media_audio'
   self.primary_key = "id"
+  logs_as_task
   
   # Server path root - /home/media/kpcc/audio
   AUDIO_PATH_ROOT = File.join(Rails.application.config.scpr.media_root, "audio")
@@ -46,7 +47,7 @@ class Audio < ActiveRecord::Base
   #------------
   # Association
   map_content_type_for_django
-  belongs_to :content, polymorphic: true
+  belongs_to :content, polymorphic: true, touch: true
   mount_uploader :mp3, AudioUploader
   
 
@@ -68,8 +69,9 @@ class Audio < ActiveRecord::Base
   
   #------------
   # Validation
-  validate  :enco_info_is_present_together
-  validate  :audio_source_is_provided
+  validate :enco_info_is_present_together
+  validate :audio_source_is_provided
+  validate :mp3_exists, unless: -> { self.new_record? || Rails.env == "development" } # So that we can still save objects even though the file won't exist on dev machines. 
   
   def enco_info_is_present_together
     if self.enco_number.blank? ^ self.enco_date.blank?
@@ -77,29 +79,34 @@ class Audio < ActiveRecord::Base
     end
   end
   
+  #------------  
+  # Check if an audio source was given
+  # For the mp3 column, Carrierwave checks that
+  # the file actually exists on the filesystem
+  # (in `CarrierWave::Uploader::Proxy#blank?`), so
+  # we will just check that the column is filled here.
+  # If it's filled in but the audio doesn't exist,
+  # #mp3_exists will catch that with a more helpful
+  # error message.
   def audio_source_is_provided
-    if self.mp3_path.blank? && self.mp3.blank? && self.enco_number.blank? && self.enco_date.blank?
+    if self.mp3_path.blank? && self.mp3.file.blank? && self.enco_number.blank? && self.enco_date.blank?
       self.errors.add(:base, "Audio must have a source (upload, enco, or path)")
+    end
+  end
+  
+  # If the column is filled in, but the file doesn't exist, invalid
+  def mp3_exists
+    # Can't use `present?` on mp3.file, because CarrierWave defines an `empty?` method on SanitizedFile    
+    if self.mp3.file != nil && self.mp3.blank?
+      self.errors.add(:mp3, "doesn't exist on the filesystem (#{self.full_path}). Perhaps it was deleted?")
     end
   end
 
 
   #------------
   # Scopes
-  scope :available,      -> { where("mp3 is not null and mp3 != ''") }
-  scope :awaiting_audio, -> { where("mp3 is null or mp3 = ''") }
-
-
-  #------------
-  #------------
-  
-  #------------
-  # Enqueue the sync task for any subclasses that need it
-  def self.sync!
-    [Audio::ProgramAudio, Audio::DirectAudio, Audio::EncoAudio].each do |klass|
-      klass.enqueue_sync
-    end
-  end
+  scope :available,      -> { where("mp3 is not null") }
+  scope :awaiting_audio, -> { where("mp3 is null") }
 
   
   #------------
@@ -219,186 +226,6 @@ class Audio < ActiveRecord::Base
   def self.enqueue_sync
     Resque.enqueue(SyncAudioJob, self)
   end
-  
-  
-  #------------  
-  #------------
-  # Resque Job classes
-  # TODO Move these into a separate file
-  class ComputeFileInfoJob
-    @queue = Rails.application.config.scpr.resque_queue
-    
-    def self.perform(audio)
-      audio.compute_duration
-      audio.compute_size
-      
-      # If anything has thrown an error,
-      # then save won't get called here, 
-      # which is good.
-      audio.save
-    end
-  end
-  
-  #------------
-  
-  class SyncAudioJob
-    @queue = "#{Rails.application.config.scpr.requeue_queue}:syncaudio"
-    
-    def self.perform(klass)
-      klass.sync!
-    end
-  end
-  
-  
-  #------------  
-  #------------
-  # Audio Types
-  # These classes can be used to have different behavior
-  # for different types of audio.
-  # TODO Move these into their own files
-  #
-  # EncoAudio is given enco_number and enco_date
-  class EncoAudio < Audio
-    #------------
-    # Sync ENCO audio on the server 
-    # with the database    
-    def self.store_dir(audio)
-      STORE_DIRS[:enco]
-    end
-    
-    def self.filename(audio)
-      date = audio.enco_date.strftime("%Y%m%d")
-      "#{date}_features#{audio.enco_number}.mp3"
-    end
-    
-    #------------
-
-    def self.sync!
-      self.awaiting_audio.each do |audio|
-        if File.exists? audio.full_path
-          audio.mp3 = File.open(audio.full_path)
-          audio.save!          
-        end
-      end
-    end
-  end
-
-
-  #------------  
-  # ProgramAudio is created automatically
-  # when the file appears on the filesystem
-  # It belongs to a ShowEpisode or ShowSegment
-  # for a KpccProgram
-  class ProgramAudio < Audio
-    before_create :set_description_to_episode_headline, if: -> { self.description.blank? }
-    
-    def set_description_to_episode_headline
-      self.description = self.content.headline
-    end
-
-    #------------
-    
-    def self.store_dir(audio)
-      audio.content.show.audio_dir
-    end
-    
-    def self.filename(audio)
-      audio.mp3.file.filename
-    end
-
-
-    #------------
-    
-    def self.sync!
-      # Setup a hash to search so we only have to
-      # perform one query to check for existance
-      existing = {}
-      Audio.all.map { |a| existing[a.filename] = true }
-      
-      # Each KpccProgram with episodes and which can sync audio
-      KpccProgram.can_sync_audio.each do |program|
-        absolute_directory_path = File.join(AUDIO_PATH_ROOT, program.audio_dir)
-        
-        # Each file in this program's audio directory
-        Dir[absolute_directory_path].each do |file|
-          absolute_mp3_path = File.join(absolute_directory_path, file)
-          
-          # Move on if:
-          # 1. File already exists (program audio only needs to exist once in the DB)
-          next if existing[file]
-          
-          # 2. The filename doesn't match our regex (won't be able to get date)
-          match = file.match(FILENAMES[:program])
-          next if !match
-          
-          # 3. The file is too old -
-          #    If the file was uploaded more than 14 days ago
-          #    and still hasn't been matched, then something's wrong.
-          #    Maybe the date is incorrect? Either way, at this point
-          #    it's too old to keep trying. They can upload the audio
-          #    manually if they need to.
-          file_date = File.mtime(absolute_mp3_path)
-          next if file_date < 14.days.ago
-
-          # Get the date for this episode/segment based on the filename,
-          # find that episode/segment, and create the audio / association
-          # if the content for that date exists.
-          date = Time.new(match[:year], match[:month], match[:day])
-          
-          if program.display_episodes?
-            content = program.episodes.where(air_date: date).first
-          else
-            content = program.segments.where(published_at: date..date.end_of_day).first
-          end
-          
-          if content
-            audio = self.new(content: content, mp3: File.open(absolute_mp3_path))
-            audio.save
-            content.save # to expire cache
-          end
-        end
-      end
-    end
-  end
-  
-  
-  #------------
-  # DirectAudio is given an arbitrary path to an mp3
-  class DirectAudio < Audio
-    def self.store_dir(audio)
-      path = Pathname.new(audio.mp3_path)
-      path.split.first.to_s
-    end
-    
-    def self.filename(audio)
-      path = Pathname.new(audio.mp3_path)
-      path.split.last.to_s
-    end
-    
-    #------------
-    
-    def self.sync!
-      raise NotImplementedError, "(#{self})"
-    end
-  end
-  
-  
-  #------------
-  # UploadedAudio is uploaded via the CMS
-  # Doesn't need to be synced, so no ::sync! method
-  class UploadedAudio < Audio
-    def self.store_dir(audio)
-      "#{STORE_DIRS[:upload]}/#{Time.now.strftime("%Y/%m/%d")}"
-    end
-    
-    def self.filename(audio)
-      audio.mp3.file.filename
-    end
-  end
-
-  
-  #------------  
-  #------------  
   
   private
 

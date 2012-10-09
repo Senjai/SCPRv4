@@ -18,7 +18,11 @@ class AudioUploader < CarrierWave::Uploader::Base
   def store_dir
     File.join(Rails.application.config.scpr.media_root, "audio", model.store_dir)
   end
-
+  
+  def raw_value
+    model.read_attribute mounted_as
+  end
+  
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:
