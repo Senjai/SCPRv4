@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   end
   
   def archive
-    @events = Event.forum.past.paginate(page: params[:page], per_page: 10)
+    @events = Event.forum.past.paginate(page: params[:page] || 1, per_page: 10)
   end
   
   def show

@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe PeopleController do
+  render_views
+  
   describe "GET /index" do    
     before :each do
       create_list :bio, 2, is_public: false

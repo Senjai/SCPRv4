@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe ContentEmailController do
+  render_views
+  
   describe "GET /new" do
     let(:content) { create :news_story }
     

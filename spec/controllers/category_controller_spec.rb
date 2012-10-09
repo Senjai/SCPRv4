@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe CategoryController do
+  render_views
+  
   describe "GET /index" do
     sphinx_spec
     

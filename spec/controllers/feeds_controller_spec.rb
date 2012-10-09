@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe FeedsController do
+describe FeedsController do  
   describe "GET /all_news" do
     sphinx_spec(num: 1)
     

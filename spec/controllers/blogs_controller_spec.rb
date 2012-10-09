@@ -2,6 +2,7 @@
 require "spec_helper"
 
 describe BlogsController do
+  render_views
   
   # ------------------------
   

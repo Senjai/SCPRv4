@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe ArchiveController do
+  render_views
+  
   describe "POST /process" do
     it "redirects to archive_path with the processed date" do
       post :process_form, 

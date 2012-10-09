@@ -55,10 +55,10 @@ FactoryGirl.define do
   factory :schedule do # Requires us to pass in kpcc_proram_id or other_program_id and program. There must be a better way to do this.
     sequence(:day) { |n| (Time.now + 60*60*24*n).day }
     start_time "00:00:00" # arbitrary
-    end_time "02:00:00" # aribtrary
+    end_time   "02:00:00" # aribtrary
     sequence(:program) { |n| "Cool Program #{n}" } 
     url { "/programs/#{program.parameterize}" }
-    kpcc_program_id 1
+    kpcc_program
   end
   
 

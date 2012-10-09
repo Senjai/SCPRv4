@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe PodcastsController do
+  render_views
+  
   describe "GET /index" do
     it "orders by title asc" do
       get :index

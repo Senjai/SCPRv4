@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe ProgramsController do
+  render_views
   
   # ----------------------
   
