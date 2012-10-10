@@ -1,65 +1,67 @@
-<% page_title [@segment.headline, @program.title] %>
-<%= render_content @segment, "opengraph" %>
+<%= cache ["show", "v1", @segment] do %>
+  <% page_title [@segment.headline, @program.title] %>
+  <%= render_content @segment, "opengraph" %>
 
-<div class="segment content-block">
-	<div class="row-fluid">
-		<%= content_widget "article_meta", @segment %>
-	
-		<div class="span18 mq-solo-span">
-			<article>
-				<header>
-					<h5 class="episode-title">
-						<% if @segment.episode.present? %>
-							<%= link_to @segment.episode.headline, @segment.episode.link_path %>
-						<% else %>
-							<%= link_to @program.title, program_path(@program.slug) %>
-						<% end %>
-					</h5>
-					<h1 class="story-headline"><%= @segment.headline %></h1>
-					<p class="byline"><%= render_byline @segment %></p>
-				</header>
-			
-				<div class="story-body">
-					<div class="visible-reader"><%= content_widget "primary_audio", @segment %></div>
-					<%= render_asset @segment, "segment" %>
-					<%= render_content_body @segment %>
-					<br style="clear: both"/>
-				</div>
-				
-				<div class="visible-reader"><%= content_widget "extra_audio", @segment %></div>
-			</article><!-- article.segment -->
-			
-			<%= content_widget "social_tools", @segment, cssClass: "bottom horizontal" %>
-		</div> <!-- span -->
-	</div> <!-- row fluid -->
-</div> <!-- segment -->
+  <div class="segment content-block">
+    <div class="row-fluid">
+      <%= content_widget "article_meta", @segment %>
+  
+      <div class="span18 mq-solo-span">
+        <article>
+          <header>
+            <h5 class="episode-title">
+              <% if @segment.episode.present? %>
+                <%= link_to @segment.episode.headline, @segment.episode.link_path %>
+              <% else %>
+                <%= link_to @program.title, program_path(@program.slug) %>
+              <% end %>
+            </h5>
+            <h1 class="story-headline"><%= @segment.headline %></h1>
+            <p class="byline"><%= render_byline @segment %></p>
+          </header>
+      
+          <div class="story-body">
+            <div class="visible-reader"><%= content_widget "primary_audio", @segment %></div>
+            <%= render_asset @segment, "segment" %>
+            <%= render_content_body @segment %>
+            <br style="clear: both"/>
+          </div>
+        
+          <div class="visible-reader"><%= content_widget "extra_audio", @segment %></div>
+        </article><!-- article.segment -->
+      
+        <%= content_widget "social_tools", @segment, cssClass: "bottom horizontal" %>
+      </div> <!-- span -->
+    </div> <!-- row fluid -->
+  </div> <!-- segment -->
+<% end %>
 
 <div class="fold" id="fold">
-	<%= content_widget "related_content_and_links", @segment %>
-	<%= content_widget "pij_query", @segment %>
-	
-	<aside class="other-segments" id="other-segments">
-		<div class="row-fluid">
-			<div class="span6 row-title">
-				<h6>More from this <%= @segment.episodes.present? ? "Episode" : "Program" %></h6>
-			</div>
-			<div class="span18">
-				<ul>
-					<% @segment.sister_segments.each do |segment| %>
-						<li><%= link_to segment.headline, segment.link_path %></li>
-					<% end %>
-				</ul>
-			</div>
-		</div> <!-- row fluid -->
-	</aside>
-	<div class="comment-wrap">
-		<div class="row-fluid">
-			<div class="span6 row-title" id="fold-comments-count-widget">
-				<%= comment_widget_for @segment, cssClass: "left-side", name: "comments" %>
-			</div>
-			<div class="span18 mq-solo-span">
-				<%= comments_for @segment, header: false %>
-			</div>
-		</div> <!-- row-fluid -->
-	</div>
+  <%= content_widget "related_content_and_links", @segment %>
+  <%= content_widget "pij_query", @segment %>
+  
+  <aside class="other-segments" id="other-segments">
+    <div class="row-fluid">
+      <div class="span6 row-title">
+        <h6>More from this <%= @segment.episodes.present? ? "Episode" : "Program" %></h6>
+      </div>
+      <div class="span18">
+        <ul>
+          <% @segment.sister_segments.each do |segment| %>
+            <li><%= link_to segment.headline, segment.link_path %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div> <!-- row fluid -->
+  </aside>
+  <div class="comment-wrap">
+    <div class="row-fluid">
+      <div class="span6 row-title" id="fold-comments-count-widget">
+        <%= comment_widget_for @segment, cssClass: "left-side", name: "comments" %>
+      </div>
+      <div class="span18 mq-solo-span">
+        <%= comments_for @segment, header: false %>
+      </div>
+    </div> <!-- row-fluid -->
+  </div>
 </div>
