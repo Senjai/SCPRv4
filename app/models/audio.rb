@@ -55,7 +55,10 @@ class Audio < ActiveRecord::Base
   # Validation
   validate :enco_info_is_present_together
   validate :audio_source_is_provided
-  validate :mp3_exists, unless: -> { self.new_record? || Rails.env == "development" } # So that we can still save objects even though the file won't exist on dev machines. 
+  
+  # Don't run this for development, 
+  # so that we can still save objects even though the file won't exist on dev machines. 
+  validate :mp3_exists, unless: -> { self.new_record? || Rails.env == "development" }
   
   def enco_info_is_present_together
     if self.enco_number.blank? ^ self.enco_date.blank?

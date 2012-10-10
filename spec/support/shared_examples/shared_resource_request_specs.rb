@@ -67,7 +67,7 @@ shared_examples_for "managed resource" do
         click_button "edit"
         page.should have_css ".alert-success"
         updated = described_class.find(valid_record.id)
-        current_path.should eq updated.admin_edit_path
+        current_path.should eq valid_record.admin_edit_path
         updated.to_title.should eq updated_record.to_title
       end
     end

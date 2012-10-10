@@ -3,9 +3,9 @@ require "spec_helper"
 describe Audio::Sync do
   describe "::sync_each!" do
     it "enqueues SyncAudioJob for each class that should be automagically synced" do
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio::EncoAudio).once
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio::ProgramAudio).once
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio::DirectAudio).once
+      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, "Audio::EncoAudio").once
+      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, "Audio::ProgramAudio").once
+      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, "Audio::DirectAudio").once
       Audio::Sync.new.sync_each!
     end
   end

@@ -11,6 +11,7 @@ shared_examples_for "front-end routes request" do
   describe "Route Methods" do
     before :each do
       valid_record.save!
+      Scprv4::Application.reload_routes!
     end
     
     it "returns success when following link_path" do
