@@ -20,11 +20,20 @@ describe AdminResource::Config do
   end
   
   #----------------------
-  
+
   describe "#registered_models" do
-    it "returns an empty hash if nothing is set" do
+    it "returns an empty array if nothing is set" do
       AdminResource.config.registered_models = nil
-      AdminResource.config.registered_models.should eq Hash.new
+      AdminResource.config.registered_models.should eq []
+    end
+  end
+
+  #----------------------
+    
+  describe "#nav_groups" do
+    it "returns an empty hash if nothing is set" do
+      AdminResource.config.nav_groups = nil
+      AdminResource.config.nav_groups.should eq Hash.new
     end
   end
 

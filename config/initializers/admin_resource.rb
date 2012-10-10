@@ -7,7 +7,36 @@
 require_dependency 'admin_resource'
 
 AdminResource::Config.configure do |config|
-  config.registered_models = {
+  config.registered_models = [
+    "NewsStory", 
+    "ContentShell", 
+    "VideoShell", 
+    "PijQuery", 
+    "BlogEntry", 
+    "Blog", 
+    "Tag",
+    "ShowSegment", 
+    "ShowEpisode", 
+    "KpccProgram", 
+    "OtherProgram", 
+    "Schedule", 
+    "Podcast",
+    "Event",
+    "Homepage", 
+    "BreakingNewsAlert", 
+    "MissedItBucket", 
+    "FeaturedComment", 
+    "FeaturedCommentBucket", 
+    "Category", 
+    "Section",
+    "Flatpage", 
+    "Promotion", 
+    "AdminUser", 
+    "Bio"
+  ]
+    
+    
+  config.nav_groups = {
     "News" => {
       icon: "icon-file",
       models: [

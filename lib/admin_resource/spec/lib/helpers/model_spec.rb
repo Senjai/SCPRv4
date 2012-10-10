@@ -1,12 +1,6 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
-describe AdminResource::Helpers::Model do
-  describe "#title_attribute" do
-    pending
-  end
-  
-  #----------------
-  
+describe AdminResource::Helpers::Model do  
   describe "#to_title" do
     it "uses one of the specified title attributes if available" do
       AdminResource.config.title_attributes = [:name]
@@ -27,29 +21,24 @@ describe AdminResource::Helpers::Model do
   describe "#as_json" do
     pending
   end
-  
-  #----------------
-  
-  describe "#link_path" do
-    pending
-  end
-  
-  #----------------
-  
-  describe "#remote_link_path" do
-    pending
-  end
 
   #----------------
   
   describe "#obj_key" do
-    pending
-  end
-
-  #----------------
-  
-  describe "#route_hash" do
-    pending
+    context "for persisted record" do
+      it "uses the class's content_key, the record's ID, and joins by :" do
+        person = Person.create(name: "Bryan")
+        person.id.should_not be_blank
+        person.obj_key.should eq "people:#{person.id}"
+      end
+    end
+    
+    context "for new record" do
+      it "uses new in the key" do
+        person = Person.new(name: "Bryan")
+        person.obj_key.should eq "people:new"
+      end
+    end
   end
   
   #----------------
@@ -78,7 +67,14 @@ describe AdminResource::Helpers::Model do
   #----------------
   
   describe "::content_key" do
-    pending
+    it "uses the table name if it responds to it" do
+      Person.stub(:table_name) { "people_and_stuff" }
+      Person.content_key.should eq "people/and/stuff"
+    end
+    
+    it "tableizes the classname if no table" do
+      Person.content_key.should eq "people"
+    end
   end
   
   #----------------

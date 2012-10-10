@@ -17,12 +17,21 @@ module AdminResource
     end
     
     #------------------
-    
+    # An array of models that should show up
     attr_writer :registered_models
     def registered_models
-      @registered_models || {}
+      @registered_models || []
     end
     
+    #--------------
+    # A hash of groups of models, for navigation
+    attr_writer :nav_groups
+    def nav_groups
+      @nav_groups || {}
+    end
+    
+    #--------------
+    # Which attributes to look at for `to_title`
     attr_writer :title_attributes
     def title_attributes
       (@title_attributes ||= DEFAULTS[:title_attributes]) | [:simple_title]

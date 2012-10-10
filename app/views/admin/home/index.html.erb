@@ -4,7 +4,7 @@
 	<div class="span3">
 		<ul class="nav nav-list well">
 		
-		<% @model_groups.each do |title, attributes| %>
+		<% @nav_groups.each do |title, attributes| %>
 			<li class="nav-header"><i class="<%=attributes[:icon]%>"></i><%= title %></li>
 			<% attributes[:models].each do |model| %>
 				<li><%= link_to model.constantize.name.titleize.pluralize, url_for([:admin, model.constantize]) %></li>
