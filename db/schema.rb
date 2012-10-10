@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008203814) do
+ActiveRecord::Schema.define(:version => 20121010172135) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -223,8 +223,8 @@ ActiveRecord::Schema.define(:version => 20121008203814) do
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
 
   create_table "contentbase_category", :force => true do |t|
-    t.string   "category",          :limit => 50,                   :null => false
-    t.string   "slug",              :limit => 50,                   :null => false
+    t.string   "title"
+    t.string   "slug",              :limit => 50
     t.boolean  "is_news",                         :default => true, :null => false
     t.integer  "comment_bucket_id"
     t.datetime "created_at",                                        :null => false
@@ -606,6 +606,14 @@ ActiveRecord::Schema.define(:version => 20121008203814) do
     t.string   "link",         :limit => 200,        :null => false
     t.string   "npr_id",       :limit => 20,         :null => false
     t.boolean  "new",                                :null => false
+  end
+
+  create_table "permissions", :force => true do |t|
+    t.string   "model"
+    t.string   "action"
+    t.integer  "admin_user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "pij_query", :force => true do |t|

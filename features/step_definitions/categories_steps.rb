@@ -9,11 +9,11 @@ end
 
 #### Finders
 Then /^I should see the category's title$/ do
-  page.should have_content @category.category
+  page.should have_content @category.title
 end
 
 Then /^I should not see the category's title$/ do
-  page.should_not have_content @category.category
+  page.should_not have_content @category.title
 end
 
 

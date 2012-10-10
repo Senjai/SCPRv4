@@ -1,7 +1,7 @@
 <%= form_block "Details" do %>
 	<%= f.input :title, input_html: { class: "wide" } %>
 	<%= f.input :slug %>
-	<%= f.association :categories, collection: Category.all.map { |c| [c.category, c.id] } %>
+	<%= f.association :categories %>
 <% end %>
 
 <%= form_block "Modules" do %>

@@ -332,16 +332,16 @@ FactoryGirl.define do
 # Category #########################################################
   factory :category do
     trait :is_news do 
-      sequence(:category) { |n| "Local #{n}" }
+      sequence(:title) { |n| "Local #{n}" }
       is_news true
     end
 
     trait :is_not_news do
-      sequence(:category) { |n| "Culture #{n}" }
+      sequence(:title) { |n| "Culture #{n}" }
       is_news false
     end
 
-    slug { category.parameterize }
+    slug { title.parameterize }
     comment_bucket
 
     factory :category_news, traits: [:is_news]
@@ -391,7 +391,7 @@ FactoryGirl.define do
 
 # FeaturedCommentBucket #########################################################
   factory :featured_comment_bucket, aliases: [:comment_bucket] do
-    title "Comment Bucket"
+    sequence(:title) { |n| "Comment Bucket #{n}" }
   end
   
   
@@ -516,8 +516,9 @@ end
 
 # MissedItBucket #########################################################
 factory :missed_it_bucket do
-  title "Airtalk"
+  sequence(:title) { |n| "Airtalk #{n}" }
   ignore { contents_count 0 }
+  
   after :create do |object, evaluator|
     FactoryGirl.create_list(:missed_it_content, evaluator.contents_count.to_i, missed_it_bucket: object)
   end

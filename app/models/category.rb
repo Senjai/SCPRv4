@@ -4,10 +4,20 @@ class Category < ActiveRecord::Base
   self.table_name = 'contentbase_category'
   ROUTE_KEY       = "category"
   has_secretary
-  administrate
+  administrate do |admin|
+    admin.define_list do |list|
+      list.per_page = "all"
+      
+      list.column :title, linked: true
+      list.column :slug
+      list.column :is_news
+      list.column :comment_bucket
+    end
+  end
   
   belongs_to :comment_bucket, :class_name => "FeaturedCommentBucket"
-
+  validates :title, presence: true
+  
   #----------
 
   def content(page=1,per_page=10,without_obj=nil)
