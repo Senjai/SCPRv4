@@ -1,4 +1,4 @@
-<% cache ["show", "v1", @event], expires_at: @event.ends_at do %>
+<%= cache ["show", "v1", @event], expires_at: @event.ends_at do %>
   <% present @event do |p| %>
     <% page_title [p.headline, "Events"] %>
     <% watch_gmaps %>
