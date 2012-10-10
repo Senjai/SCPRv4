@@ -5,22 +5,25 @@
 #
 class Audio
   class EncoAudio < Audio
-    #------------
-    # Sync ENCO audio on the server 
-    # with the database    
-    def self.store_dir(audio)
-      STORE_DIRS[:enco]
-    end
+    class << self
+      def store_dir(audio)
+        STORE_DIRS[:enco]
+      end
   
-    def self.filename(audio)
-      date = audio.enco_date.strftime("%Y%m%d")
-      "#{date}_features#{audio.enco_number}.mp3"
-    end
+      # Generate the filename for an object
+      def filename(audio)
+        date = audio.enco_date.strftime("%Y%m%d")
+        "#{date}_features#{audio.enco_number}.mp3"
+      end
   
-    #------------
+      #------------
 
-    def self.sync!
-      Audio::Sync.new(self).sync_awaiting_audio_if_file_exists!
-    end
+      #------------
+      # Sync ENCO audio on the server 
+      # with the database
+      def sync!
+        Audio::Sync.new(self).sync_awaiting_audio_if_file_exists!
+      end
+    end # singleton
   end # EncoAudio
 end # Audio

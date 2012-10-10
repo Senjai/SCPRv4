@@ -20,13 +20,13 @@ describe Audio do
       it "fails if enco_number present but not enco_date" do
         audio = build :audio, enco_date: nil, enco_number: 999
         audio.enco_info_is_present_together
-        audio.errors.keys.should eq [:base]
+        audio.errors.keys.should eq [:base, :enco_number, :enco_date]
       end
     
       it "fails if enco_date present but not enco_number" do
         audio = build :audio, enco_date: Date.today, enco_number: nil
         audio.enco_info_is_present_together
-        audio.errors.keys.should eq [:base]
+        audio.errors.keys.should eq [:base, :enco_number, :enco_date]
       end
     
       it "passes if enco_date and enco_number are present" do

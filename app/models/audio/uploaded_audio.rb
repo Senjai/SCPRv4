@@ -6,13 +6,14 @@
 #
 class Audio
   class UploadedAudio < Audio
-    def self.store_dir(audio)
-      "#{STORE_DIRS[:upload]}/#{Time.now.strftime("%Y/%m/%d")}"
-    end
+    class << self
+      def store_dir(audio)
+        "#{STORE_DIRS[:upload]}/#{Time.now.strftime("%Y/%m/%d")}"
+      end
 
-    def self.filename(audio)
-      audio.mp3.file.filename
-    end
-    
+      def filename(audio)
+        audio.mp3.file.filename
+      end
+    end # singleton
   end # UploadedAudio
 end # Audio

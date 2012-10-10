@@ -11,6 +11,7 @@ class Audio
         path.split.first.to_s
       end
   
+      # Generate the filename for an object
       def filename(audio)
         path = Pathname.new(audio.mp3_path)
         path.split.last.to_s

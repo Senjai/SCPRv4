@@ -147,7 +147,7 @@ class Audio < ActiveRecord::Base
   
   
   #------------
-  # The URL path, 
+  # The URL path, i.e. the path without "audio/"
   # eg. /upload/2012/10/01/your_sweet_audio.mp3
   def path
     @path ||= File.join self.store_dir, self.filename
@@ -241,7 +241,6 @@ class Audio < ActiveRecord::Base
     # we can safely assume it's uploaded audio
     def set_type
       if self.live?
-        
         self.type = "Audio::UploadedAudio"
       
       elsif self.enco_number.present? && self.enco_date.present?
