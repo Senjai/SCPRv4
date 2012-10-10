@@ -7,6 +7,6 @@ class Audio::SyncAudioJob
   @queue = "#{Rails.application.config.scpr.resque_queue}:syncaudio"
   
   def self.perform(klass)
-    klass.sync!
+    klass.constantize.sync!
   end
 end

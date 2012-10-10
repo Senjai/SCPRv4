@@ -6,7 +6,9 @@
 class Audio::ComputeFileInfoJob
   @queue = Rails.application.config.scpr.resque_queue
   
-  def self.perform(audio)
+  def self.perform(id)
+    audio = Audio.find(id)
+    
     audio.compute_duration
     audio.compute_size
     

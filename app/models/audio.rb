@@ -92,16 +92,16 @@ class Audio < ActiveRecord::Base
   
   #------------
   # Callbacks
+  before_save   :set_type, if: -> { self.type.blank? }
+  before_save   :set_file_info, if: -> { self.filename.blank? || self.store_dir.blank? }
   before_save   :set_django_mp3, if: -> { self.mp3_changed? }
-  before_create :set_type, if: -> { self.type.blank? }
-  before_create :set_file_info
   after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
 
   # This could get run before the file info is set,
   # So we need to use the actual mp3 info rather than #path
   def set_django_mp3
     if self.mp3.present?
-      self.django_mp3 = File.join("audio", self.mp3.path, self.mp3.file.filename)
+      self.django_mp3 = File.join("audio", self.store_dir, self.filename)
     end
   end
 
@@ -220,14 +220,18 @@ class Audio < ActiveRecord::Base
   #------------
   # Queue the computation jobs
   def async_compute_file_info
-    Resque.enqueue(ComputeFileInfoJob, self)
+    Resque.enqueue(Audio::ComputeFileInfoJob, self.id)
   end
 
   #------------
   # Enqueue the audio sync
-  # Call from cronjob: `rails r "Audio::EncoAudio.enqueue_sync"`
   def self.enqueue_sync
-    Resque.enqueue(SyncAudioJob, self)
+    Resque.enqueue(Audio::SyncAudioJob, self.name)
+  end
+  
+  # Proxy to AudioSync#sync_each!
+  def self.sync!
+    Audio::Sync.new.sync_each!
   end
   
   private

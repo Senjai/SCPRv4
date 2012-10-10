@@ -439,8 +439,8 @@ describe Audio do
   
   describe "#async_compute_file_info" do
     it "sends off to Resque" do
-      audio = build :audio, :uploaded
-      Resque.should_receive(:enqueue).with(Audio::ComputeFileInfoJob, audio)
+      audio = create :audio, :uploaded
+      Resque.should_receive(:enqueue).with(Audio::ComputeFileInfoJob, audio.id)
       audio.async_compute_file_info
     end
   end
@@ -449,12 +449,12 @@ describe Audio do
   
   describe "::enqueue_sync" do
     it "sends off to Resque" do
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio)
+      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, "Audio")
       Audio.enqueue_sync
     end
     
     it "does it for subclasses" do
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, Audio::EncoAudio)
+      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, "Audio::EncoAudio")
       Audio::EncoAudio.enqueue_sync
     end
   end
