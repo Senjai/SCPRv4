@@ -1,8 +1,8 @@
 class AdminUser < ActiveRecord::Base
   require 'digest/sha1'
   self.table_name = "auth_user"
-  
   has_secretary
+  
   administrate do |admin|
     admin.define_list do |list|
       list.per_page = "all"
@@ -12,27 +12,32 @@ class AdminUser < ActiveRecord::Base
     end
   end
   
+  
   # ----------------
   # Callbacks
   before_validation :downcase_email
   before_validation :generate_password, on: :create, if: -> { unencrypted_password.blank? }
   before_create :generate_username, if: -> { username.blank? }
   before_create :digest_password, if: -> { unencrypted_password.present? }
-    
+  
+  
   # ------------------
   # Validation
   validates :email, uniqueness: true, allow_blank: true
   validates :unencrypted_password, confirmation: true
   validates_presence_of :unencrypted_password, on: :create
-    
+  
+  
   # ----------------
   # Scopes
   scope :active, where(:is_active => true)
 
+
   # ----------------
   # Association
   has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
-  has_one :bio, foreign_key: "user_id"
+  has_one  :bio, foreign_key: "user_id"
+  has_many :permissions
   
   # ----------------
 
