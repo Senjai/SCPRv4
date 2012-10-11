@@ -1,110 +1,109 @@
 // IE7 rules
 html.ie7-fix {
-	.nav-primary {
-		.search-form form {
-			// IE7 doesn't show text if its line-height is 0
-			line-height: $baseLineHeight;
-		}
-		
-		nav.sections, .search-form {
-			// Prevent wrapping in navbar
-			clear: both;
-		}
+    .nav-primary {
+        .search-form form {
+            // IE7 doesn't show text if its line-height is 0
+            line-height: $baseLineHeight;
+        }
+        
+        nav.sections, .search-form {
+            // Prevent wrapping in navbar
+            clear: both;
+        }
 
-		nav.sections ul {
-			// Keep the navbar in ie7 from wrapping all over the place
-			white-space: nowrap;
-			li { clear: right; }
-		}
-	}
+        nav.sections ul {
+            // Keep the navbar in ie7 from wrapping all over the place
+            white-space: nowrap;
+            li { clear: right; }
+        }
+    }
 
-	// All layouts should have this class
-	.main-content {
-	  	// IE7 - need to set this so modals can be in front
-		position: relative;
-		z-index: 1;
-	}
-	
-	.broadcast-bar {
-		position: relative;
-		z-index: 99;
-	}
+    // All layouts should have this class
+    .main-content {
+        // IE7 - need to set this so modals can be in front
+        position: relative;
+        z-index: 1;
+    }
+    
+    .broadcast-bar {
+        position: relative;
+        z-index: 99;
+    }
 
-	header#masthead {
-		// IE7 - These need to be set because IE7 doesn't do z-index properly. 
-		position: relative;
-		z-index: 100;
-	}
-	
-	.megamenu .mega-bucket .section-mega .cbase li h4 a {
-		// Some of the fonts in the mega menus is a little hard to read in IE7
-		font-size: 16px;
-	}
-	
-	// Just a hacky clean-up
-	.content-carousel .pager-nav {
-		position: relative;
-		top: -35px;
-	}
-	
-	// IE7 doesn't honor display: inline on this h6 tag
-	.slideview .slideshow-header h6 {
-		float: left;
-	}
+    header#masthead {
+        // IE7 - These need to be set because IE7 doesn't do z-index properly. 
+        position: relative;
+        z-index: 100;
+    }
+    
+    .megamenu .mega-bucket .section-mega .cbase li h4 a {
+        // Some of the fonts in the mega menus is a little hard to read in IE7
+        font-size: 16px;
+    }
+    
+    // Just a hacky clean-up
+    .content-carousel .pager-nav {
+        position: relative;
+        top: -35px;
+    }
+    
+    // IE7 doesn't honor display: inline on this h6 tag
+    .slideview .slideshow-header h6 {
+        float: left;
+    }
 }
 
 
 // IE8 rules
 html.ie8-fix {
-	.contentasset img {
-		width: auto; // otherwise 'height: auto' is ignored
-	}
-	
-	nav.sections, .search-form {
-		white-space: nowrap;
-		display: inline-block;
-		float: none;
-	}
-	
-	.nav-primary {
-		white-space: nowrap;
-		nav.sections {
-			// Hack this because ie8 handles inline-block weird
-			position: relative;
-			top: -5px;
-			
-			// Keep the navbar in ie7 from wrapping all over the place
-			ul li { 
-				float: none;
-				display: inline-block;
-			}
-		}
-	}
+    .contentasset img {
+        width: auto; // otherwise 'height: auto' is ignored
+    }
+    
+    nav.sections, .search-form {
+        white-space: nowrap;
+        display: inline-block;
+        float: none;
+    }
+    
+    .nav-primary {
+        white-space: nowrap;
+        nav.sections {
+            // Hack this because ie8 handles inline-block weird
+            position: relative;
+            top: -5px;
+            
+            // Keep the navbar in ie7 from wrapping all over the place
+            ul li { 
+                float: none;
+                display: inline-block;
+            }
+        }
+    }
 }
 
 
 
 html.ie7-fix, html.ie8-fix {
-	object {
-		// Videos don't show in IE if max-width is set to 100%
-		max-width: none !important;
-	}
-	
-	.section-mega {
-		// IE7/8 - Since IE7/8 don't support CSS3 box-shadows, stick a border around it
-		border-left: 1px solid #000;
-		border-right: 1px solid #000;
-		border-bottom: 1px solid #000;
-	}
-	
-	.audio-bar {
-		// IE7/8 won't load the audio if the audio bar is hidden
-		display: block;
-		&.active {
-			// IE7/8, no box-shadow so fallback to border
-			border-top: 1px solid #000;
-			border-left: 1px solid #000;
-			border-right: 1px solid #000;
-		}
-	}
+    object {
+        // Videos don't show in IE if max-width is set to 100%
+        max-width: none !important;
+    }
+    
+    .section-mega {
+        // IE7/8 - Since IE7/8 don't support CSS3 box-shadows, stick a border around it
+        border-left: 1px solid #000;
+        border-right: 1px solid #000;
+        border-bottom: 1px solid #000;
+    }
+    
+    #audio-bar {
+        visibility: visible;
+        &.active {
+            // IE7/8, no box-shadow so fallback to border
+            border-top: 1px solid #000;
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
+        }
+    }
 }

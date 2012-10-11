@@ -5,7 +5,7 @@
 //= require jquery
 //= require jquery_ujs
 
-//= require jquery.jplayer
+//= require jquery.jplayer.min
 //= require spin.js
 //= require moment
 //= require moment-strftime
