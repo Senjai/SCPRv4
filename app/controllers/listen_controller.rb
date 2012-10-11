@@ -1,5 +1,4 @@
 class ListenController < ApplicationController
-  
   def index
     # grab eight hours worth of schedule, starting now
     @schedule = Schedule.at :time => Time.now(), :hours => 8
@@ -9,5 +8,4 @@ class ListenController < ApplicationController
     
     render :layout => false
   end
-  
 end

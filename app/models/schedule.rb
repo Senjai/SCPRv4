@@ -56,13 +56,13 @@ class Schedule < ActiveRecord::Base
     
     # now get what's on at our end time
     pend = self.on_at( time + 60*60*hours )
-    
+        
     # now get anything in between
-    begin 
+    begin
       s = programs[-1].up_next
       programs << s
     end until ( s == pend )
-        
+    
     return programs
   end
   

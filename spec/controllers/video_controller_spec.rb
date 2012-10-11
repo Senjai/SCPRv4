@@ -3,7 +3,7 @@ require "spec_helper"
 describe VideoController do
   render_views
   
-  describe "index" do
+  describe "GET /index" do
     it "finds the most recently published video" do
       published_recent = create :video_shell, :published, published_at: 1.hour.ago
       published_old    = create :video_shell, :published, published_at: 2.hours.ago
@@ -20,7 +20,7 @@ describe VideoController do
   
   #------------------
 
-  describe "show" do
+  describe "GET /show" do
     it "assigns video to param id" do
       video = create :video_shell, :published
       get :show, slug: video.slug, id: video.id
@@ -36,7 +36,7 @@ describe VideoController do
 
   #------------------
   
-  describe "list" do
+  describe "GET /list" do
     it "assigns videos to published videos" do
       pub_videos   = create_list :video_shell, 3, :published
       unpub_videos = create_list :video_shell, 3, :pending

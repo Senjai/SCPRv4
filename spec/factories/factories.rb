@@ -495,6 +495,11 @@ factory :homepage do
   sequenced_published_at
   status 5
   
+  trait :published do
+    status 5
+    published_at { 2.hours.ago }
+  end
+  
   ignore { missed_it_bucket Hash.new }
   ignore { contents_count 0 }
   
