@@ -64,6 +64,13 @@ class ShowEpisode < ContentBase
   end
   
   # -------------------
+  # Since episode bodies are short, 
+  # just use them for the teaser.
+  def teaser
+    body
+  end
+  
+  # -------------------
   
   define_index do
     indexes headline

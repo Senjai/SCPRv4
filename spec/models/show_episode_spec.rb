@@ -79,10 +79,10 @@ describe ShowEpisode do
   
   #------------------
   
-  describe "#body" do
-    it "is the teaser" do
-      show_episode = build :show_episode
-      show_episode.body.should eq show_episode.teaser
+  describe "#teaser" do
+    it "is the body" do
+      show_episode = build :show_episode, body: load_fixture("long_text.txt")
+      show_episode.teaser.should eq show_episode.body
     end
   end  
 end

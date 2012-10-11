@@ -63,6 +63,11 @@ $headShotWidth: 90px;
 		&.program-info {
 			padding-right:150px;
 		}
+		.page-title {
+			&:after {
+				content:" \2122";
+			}
+		}
 	}
 	&.airtalk {
 		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));

@@ -6,16 +6,16 @@ class scpr.Audio
         titleEl:        "#jplayer1_title"
         widgetClass:    ".story-audio"
         playBtn:        ".audio-toggler"
-        audioBar:       ".audio-bar"
-        solution:       "flash, html"
+        audioBar:       "#audio-bar"
     
     constructor: (options) ->
         @options = _(_({}).extend(@DefaultOptions)).extend( options || {} )
 
         # instantiate jPlayer on playEl
         @player = $(@options.playEl).jPlayer
-            swfPath: "/assets-flash"
+            swfPath:  "/assets-flash"
             supplied: "mp3"
+            wmode:    "window"
             
         @audiobar = $(@options.audioBar)
         
@@ -30,8 +30,8 @@ class scpr.Audio
             
             if btn
                 # get the audio file path from the href
-                mp3 = $(btn).attr("href")
-                title = $(btn).attr("title")
+                mp3      = $(btn).attr("href")
+                title    = $(btn).attr("title")
                 duration = Number($(btn).attr("data-duration"))
                                 
                 # take the URL out of the href
@@ -70,7 +70,7 @@ class scpr.Audio
         return false
 
     play: (widget) ->
-        if @playing && @active == widget                        
+        if @playing && @active == widget
             if @playing == 1
                 @player.jPlayer "pause"
                 @playing = 2
@@ -90,7 +90,7 @@ class scpr.Audio
         # set our new mp3
         @player.jPlayer "setMedia", mp3:widget.options.mp3
         $(@options.titleEl).text widget.options.title
-
+        
         # should we enable hours?
         $.jPlayer.timeFormat.showHour = 
             if widget.options.duration && widget.options.duration > 60*60
@@ -105,7 +105,8 @@ class scpr.Audio
         @audiobar.animate { bottom: 0 }, 1000
         
         # and hit play
-        @player.jPlayer "play"
+        @player.jPlayer "play", 0
+        @player.jPlayer "play" # Need the second one for IE 9...
         
         @playing = 1
         
