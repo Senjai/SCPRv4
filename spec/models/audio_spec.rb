@@ -188,6 +188,18 @@ describe Audio do
       Audio.any_instance.should_not_receive(:async_compute_file_info)
       create :audio, :enco
     end
+
+    #----------------
+    
+    describe "nilify_blanks" do
+      it "nilifies blanks" do
+        audio = create :audio, :uploaded, description: "", byline: "", enco_number: "", mp3_path: ""
+        audio.description.should eq ""
+        audio.byline.should eq nil
+        audio.enco_number.should eq nil
+        audio.mp3_path.should eq nil
+      end
+    end
   end
   
   

@@ -98,6 +98,7 @@ class Audio < ActiveRecord::Base
   before_save   :set_type, if: -> { self.type.blank? }
   before_save   :set_file_info, if: -> { self.filename.blank? || self.store_dir.blank? }
   before_save   :set_django_mp3, if: -> { self.mp3_changed? }
+  before_save   :nilify_blanks
   after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
 
   # This could get run before the file info is set,
@@ -105,6 +106,16 @@ class Audio < ActiveRecord::Base
   def set_django_mp3
     if self.mp3.present?
       self.django_mp3 = File.join("audio", self.store_dir, self.filename)
+    end
+  end
+  
+  #------------
+  # Nilify these attributes just to keep everything consistent in the DB
+  def nilify_blanks
+    [:enco_number, :mp3_path, :byline].each do |attribute|
+      if self[attribute] == ""
+        self[attribute] = nil
+      end
     end
   end
 
