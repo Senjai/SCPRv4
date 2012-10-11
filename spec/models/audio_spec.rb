@@ -195,7 +195,7 @@ describe Audio do
       it "nilifies blanks" do
         audio = create :audio, :uploaded, description: "", byline: "", enco_number: "", mp3_path: ""
         audio.description.should eq ""
-        audio.byline.should eq nil
+        audio.byline.should eq ""
         audio.enco_number.should eq nil
         audio.mp3_path.should eq nil
       end
