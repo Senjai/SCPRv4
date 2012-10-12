@@ -37,6 +37,10 @@ form.simple_form {
         }
     }
     
+    .counter-notify {
+        @extend .span7;
+    }
+    
     .inline { // Extend bootstrap .inline
         display: inline-block;
         margin-right: 5px;
