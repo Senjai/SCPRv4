@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008165121) do
+ActiveRecord::Schema.define(:version => 20121010172136) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   end
 
   add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
+
+  create_table "admin_user_permissions", :force => true do |t|
+    t.integer  "admin_user_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id",                :null => false
@@ -609,11 +616,10 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   end
 
   create_table "permissions", :force => true do |t|
-    t.string   "model"
+    t.string   "resource"
     t.string   "action"
-    t.integer  "admin_user_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "pij_query", :force => true do |t|

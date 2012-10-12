@@ -1,6 +1,7 @@
 class Admin::ResourceController < Admin::BaseController
   include AdminResource::Helpers::Controller
-  
+
+  before_filter :authorize!
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
   before_filter :get_records, only: :index
   before_filter :extend_breadcrumbs_with_resource_root
@@ -110,6 +111,15 @@ class Admin::ResourceController < Admin::BaseController
     end
   end
 
+
+  #-----------------
+  # Authorization
+  # TODO Abstract this
+  def authorize!
+    unless admin_user.allowed_to?(action_name, resource_class)
+      redirect_to admin_root_path, alert: "You don't have permission to #{Permission.normalize_rest(action_name).titleize} #{resource_title.pluralize}" and return false
+    end
+  end
 
   #-----------------
   # Breadcrumbs

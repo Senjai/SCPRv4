@@ -32,7 +32,8 @@ AdminResource::Config.configure do |config|
     "Flatpage", 
     "Promotion", 
     "AdminUser", 
-    "Bio"
+    "Bio",
+    "Permission"
   ]
     
     

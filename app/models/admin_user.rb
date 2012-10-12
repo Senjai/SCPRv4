@@ -30,6 +30,7 @@ class AdminUser < ActiveRecord::Base
   
   # ----------------
   # Scopes
+  default_scope { includes(:permissions) }
   scope :active, where(:is_active => true)
 
 
@@ -37,11 +38,18 @@ class AdminUser < ActiveRecord::Base
   # Association
   has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
   has_one  :bio, foreign_key: "user_id"
-  has_many :permissions
+  has_many :admin_user_permissions
+  has_many :permissions, through: :admin_user_permissions
   
   # ----------------
 
   attr_accessor :unencrypted_password, :unencrypted_password_confirmation
+  
+  # ----------------
+
+  def allowed_to?(action, resource)
+    !self.is_superuser? || self.permissions.where(resource: resource.to_s, action: Permission.normalize_rest(action)).first
+  end
   
   # ----------------
   

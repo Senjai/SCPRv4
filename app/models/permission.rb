@@ -2,12 +2,26 @@
 # Permission
 #
 class Permission < ActiveRecord::Base
-  belongs_to :admin_user
+  administrate
+  has_many :admin_user_permissions
+  has_many :admin_users, through: :admin_user_permissions
   
-  # If not using AdminResource, just provide an array of
-  # models that should be included in the list
-  ACTIONS = [:show, :create, :update, :destroy]
+  # RESTful actions.
+  DEFAULT_ACTIONS = [:show, :update, :create, :destroy]
   
-  def self.collection
+  # Map actions to other similar ones.
+  #
+  #   :edit  => :update
+  #   :new   => :create
+  #   :index => :show
+  #
+  def self.normalize_rest(action)
+    action = action.to_s
+    case action
+    when "edit"   then "update"
+    when "new"    then "create"
+    when "index"  then "show"
+    else action
+    end
   end
 end
