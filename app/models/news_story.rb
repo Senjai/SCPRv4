@@ -15,7 +15,7 @@ class NewsStory < ContentBase
   has_secretary
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
-  ROUTE_KEY = "news_story"
+  ROUTE_KEY            = "news_story"
   
   LOCALES = [ 
     ["CA/Local",  "local"],

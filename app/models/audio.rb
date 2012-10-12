@@ -111,8 +111,9 @@ class Audio < ActiveRecord::Base
   
   #------------
   # Nilify these attributes just to keep everything consistent in the DB
+  # This is only applicable to text values that are coming from the form
   def nilify_blanks
-    [:enco_number, :mp3_path, :byline].each do |attribute|
+    [:enco_number, :mp3_path].each do |attribute|
       if self[attribute] == ""
         self[attribute] = nil
       end
