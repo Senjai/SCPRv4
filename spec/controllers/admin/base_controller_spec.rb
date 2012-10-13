@@ -16,30 +16,40 @@ describe Admin::BaseController do
     
     it "returns false if session is blank" do
       controller.session['_auth_user_id'] = nil
-      controller.admin_user.should eq false
+      controller.admin_user.should eq nil
     end
     
     it "unsets the session and returns false if the user isn't found" do
       controller.session['_auth_user_id'] = 999
-      controller.admin_user.should be_false
-      controller.session['_auth_user_id'].should be_nil
+      controller.admin_user.should eq nil
+      controller.session['_auth_user_id'].should eq nil
+      controller.instance_variable_get(:@admin_user).should eq nil
     end
   end
   
   describe "require_admin" do
     controller { def index; render nothing: true; end }
     
-    describe "admin_user true" do
-      it "returns true" do
+    context "admin_user true" do
+      it "returns nil" do
         user = create :admin_user
         controller.stub(:admin_user) { user }
-        controller.require_admin.should eq true
+        controller.require_admin.should eq nil
       end
     end
     
-    describe "admin_user false" do
+    context "admin_user not staff" do
+      it "redirects" do
+        user = create :admin_user, is_staff: false
+        controller.stub(:admin_user) { user }
+        get :index
+        controller.response.should redirect_to admin_login_path
+      end
+    end
+    
+    context "admin_user false" do
       before :each do
-        controller.stub(:admin_user) { false }
+        controller.stub(:admin_user) { nil }
         controller.request.stub(:fullpath) { "/home" }
         get :index
       end

@@ -113,7 +113,7 @@ class Schedule < ActiveRecord::Base
   
   #----------
   
-  def as_json(*args)
+  def json
     stime = self.start_time
     etime = self.end_time
     

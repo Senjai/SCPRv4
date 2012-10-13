@@ -83,8 +83,8 @@ class Bio < ActiveRecord::Base
   
   #---------------------
   
-  def as_json(*args)
-    super.merge!(asset: self.headshot)
+  def json
+    { asset: self.headshot }
   end
   
   #---------------------

@@ -98,13 +98,25 @@ module AdminResource
       end
 
       #-------------
+      # This method should be overridden
+      # Don't override as_json unless you don't
+      # want its baked-in goodies
+      def json
+        {}
+      end
+      
+      #-------------
       # Define some defaults for as_json
+      # Override `self.json` to add attributes
+      # or override any of these.
       def as_json(*args)
-        super.merge!(
-          :obj_key   => self.obj_key,
-          :to_title  => self.to_title,
-          :edit_path => self.admin_edit_path
-        )
+        {
+          :id         => self.id,
+          :obj_key    => self.obj_key,          
+          :link_path  => self.link_path,
+          :to_title   => self.to_title,
+          :edit_path  => self.admin_edit_path
+        }.merge! self.json
       end
 
       #-------------

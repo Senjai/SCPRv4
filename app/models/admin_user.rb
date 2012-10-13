@@ -9,6 +9,11 @@ class AdminUser < ActiveRecord::Base
       list.order    = "last_name"
 
       list.column :username
+      list.column :email
+      list.column :first_name
+      list.column :last_name
+      list.column :is_superuser
+      list.column :is_staff
     end
   end
   
@@ -48,7 +53,7 @@ class AdminUser < ActiveRecord::Base
   # ----------------
 
   def allowed_to?(action, resource)
-    !self.is_superuser? || self.permissions.where(resource: resource.to_s, action: Permission.normalize_rest(action)).first
+    self.is_superuser? || self.permissions.where(resource: resource.to_s, action: Permission.normalize_rest(action)).first
   end
   
   # ----------------
@@ -69,9 +74,8 @@ class AdminUser < ActiveRecord::Base
   
   # ----------------
   
-  def as_json(*args)
+  def json
     {
-      :id           => self.id,
       :username     => self.username,
       :name         => self.name,
       :email        => self.email,
@@ -79,7 +83,7 @@ class AdminUser < ActiveRecord::Base
       :headshot     => self.bio.try(:headshot) ? self.bio.headshot.thumb.url : nil
     }
   end
-    
+  
   # ----------------
   # Getter and Setter for name
   # Should eventually be stored in database

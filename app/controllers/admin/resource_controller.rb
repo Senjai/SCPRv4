@@ -121,9 +121,9 @@ class Admin::ResourceController < Admin::BaseController
     end
   end
 
+
   #-----------------
   # Breadcrumbs
-  
   def extend_breadcrumbs_with_resource_root
     breadcrumb resource_title.pluralize, resource_url
   end
