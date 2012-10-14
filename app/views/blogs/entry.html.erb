@@ -1,10 +1,8 @@
-<%= cache ["show", "v1", @blog_entry] do %>
-  <% page_title [@blog.name, @entry.headline], " : "
-  @OG_TYPE = "blog" %>
+<% page_title [@blog.name, @entry.headline], " : "
+@OG_TYPE = "blog" %>
 
-  <%= render_content @entry, "opengraph" %>
-  <%= render "blogs/entry", entry: @entry %>
-<% end %>
+<%= render_content @entry, "opengraph" %>
+<%= render "blogs/entry", entry: @entry %>
 
 <div class="fold" id="fold">
   <%= content_widget "related_content_and_links", @entry %>
