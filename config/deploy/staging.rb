@@ -22,18 +22,6 @@ after "deploy:update_code", "thinking_sphinx:staging:index"
 # --------------
 # Tasks
 
-namespace :thinking_sphinx do
-  namespace :staging do
-    task :index do
-      if %w{true 1}.include? ts_index or ts_index == true
-        thinking_sphinx.index
-      else
-        logger.info "SKIPPING thinking_sphinx:index (ts_index set to false)"
-      end
-    end
-  end
-end
-
 namespace :dbsync do
   task :pull do
     if %w{true 1}.include? dbsync
@@ -44,3 +32,14 @@ namespace :dbsync do
   end
 end
 
+namespace :thinking_sphinx do
+  namespace :staging do
+    task :index do
+      if %w{true 1}.include? ts_index
+        thinking_sphinx.index
+      else
+        logger.info "SKIPPING thinking_sphinx:index (ts_index set to false)"
+      end
+    end
+  end
+end
