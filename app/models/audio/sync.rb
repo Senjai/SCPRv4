@@ -37,7 +37,7 @@ class Audio
       def sync_if_file_exists!(audio)
         begin
           if File.exists? audio.full_path
-            audio.mp3 = File.open(audio.full_path)
+            audio.send :write_attribute, :mp3, audio.filename
             audio.save!
             self.log "Saved Audio ##{audio.id}: #{audio.full_path}"
             audio
