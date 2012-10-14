@@ -17,9 +17,16 @@ class Audio
       def bulk_sync_awaiting_audio!(klass, limit=nil)
         limit ||= 2.weeks.ago
         awaiting = klass.awaiting_audio.where("created_at > ?", limit)
-            
-        awaiting.each do |audio|
-          audio.sync!
+        
+        if awaiting.empty?
+          self.log "No Audio to sync."
+        else
+        
+          awaiting.each do |audio|
+            audio.sync!
+          end
+          
+          self.log "Finished. Files synced: #{synced.size}"
         end
       end
     
@@ -38,9 +45,7 @@ class Audio
           end
         rescue Exception => e
           self.log "Could not save Audio ##{audio.id}: #{e}"
-        end
-        
-        self.log "Finished. Synced #{synced.size} files."
+        end        
       end
     end # singleton
   end # Sync
