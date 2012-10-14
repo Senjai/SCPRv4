@@ -78,6 +78,7 @@ describe Audio::ProgramAudio do
     context "syncs" do
       before :each do
         Audio::ProgramAudio.instance_variable_set(:@synced, nil)
+        Audio::ProgramAudio.instance_variable_set(:@existing, nil)
       end
       
       it "if all the criteria pass for episodes" do
@@ -101,8 +102,8 @@ describe Audio::ProgramAudio do
       end
       
       it "only grabs `existing` once" do
-        program1 = create :kpcc_program, audio_dir: "airtalk", segment_count: 1, display_episodes: false
-        program2 = create :kpcc_program, audio_dir: "mbrand", segment_count: 1, display_episodes: false
+        create :kpcc_program, audio_dir: "airtalk", segment_count: 1, display_episodes: false
+        create :kpcc_program, audio_dir: "mbrand", segment_count: 1, display_episodes: false
         Audio::ProgramAudio.should_receive(:all).once
         Audio::ProgramAudio.bulk_sync!
       end

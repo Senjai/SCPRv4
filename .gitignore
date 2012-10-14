@@ -8,3 +8,4 @@ log/
 tmp/
 .sass-cache/
 coverage/
+spec/fixtures/media/audio/upload/
