@@ -13,7 +13,7 @@ class AudioUploader < CarrierWave::Uploader::Base
   end
   
   def move_to_store
-    Rails.env == 'test' ? false : false
+    Rails.env == 'test' ? false : true
   end
 
   #--------------  
