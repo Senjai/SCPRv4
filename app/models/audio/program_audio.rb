@@ -90,18 +90,16 @@ class Audio
     
       #------------
   
-      private
-        # Setup a hash to search so we only have to
-        # perform one query to check for existance
-        def existing
-          @existing ||= Audio.all.map { |a| existing[a.path] = true }
-        end
-      
-        # An array of what got synced
-        def synced
-          @synced ||= []
-        end
-      #
+      # Setup a hash to search so we only have to
+      # perform one query to check for existance
+      def existing
+        @existing ||= Audio.all.map { |a| existing[a.path] = true }
+      end
+
+      # An array of what got synced
+      def synced
+        @synced ||= []
+      end
     end # singleton
   end # ProgramAudio
 end # Audio
