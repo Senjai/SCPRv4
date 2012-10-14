@@ -24,10 +24,10 @@ after "deploy:update_code", "thinking_sphinx:staging:index"
 
 namespace :dbsync do
   task :pull do
-    if %w{true 1}.include? dbsync
+    if ["true", 1].include? syncdb
       run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} dbsync:pull"
     else
-      logger.info "SKIPPING dbsync (dbsync set to false)"
+      logger.info "SKIPPING dbsync (syncdb set to #{syncdb})"
     end
   end
 end
@@ -35,10 +35,10 @@ end
 namespace :thinking_sphinx do
   namespace :staging do
     task :index do
-      if %w{true 1}.include? ts_index
+      if ["true", 1].include? ts_index
         thinking_sphinx.index
       else
-        logger.info "SKIPPING thinking_sphinx:index (ts_index set to false)"
+        logger.info "SKIPPING thinking_sphinx:index (ts_index set to #{ts_index})"
       end
     end
   end

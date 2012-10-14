@@ -31,7 +31,7 @@ set :maintenance_template_path, "public/maintenance.erb"
 set :force_assets,  "false" # If assets wouldn't normally be precompiled, force them to
 set :skip_assets,   "false" # If assets are going to be precompuled, force them NOT to
 set :ts_index,      "true" # Staging only - Whether or not to run the sphinx index on drop
-set :dbsync,        "false" # Staging only - Whether or not to run a dbsync to mercer_staging
+set :syncdb,        "false" # Staging only - Whether or not to run a dbsync to mercer_staging
 
 
 # --------------
