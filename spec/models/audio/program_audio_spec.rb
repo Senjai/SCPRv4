@@ -103,7 +103,7 @@ describe Audio::ProgramAudio do
       it "only grabs `existing` once" do
         program1 = create :kpcc_program, audio_dir: "airtalk", segment_count: 1, display_episodes: false
         program2 = create :kpcc_program, audio_dir: "mbrand", segment_count: 1, display_episodes: false
-        Audio.should_receive(:all).once
+        Audio::ProgramAudio.should_receive(:all).once
         Audio::ProgramAudio.bulk_sync!
       end
     end

@@ -93,7 +93,7 @@ class Audio
       # Setup a hash to search so we only have to
       # perform one query to check for existance
       def existing
-        @existing ||= Audio.all.map { |a| existing[a.path] = true }
+        @existing ||= Audio::ProgramAudio.all.map { |a| existing[a.path] = true }
       end
 
       # An array of what got synced
