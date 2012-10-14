@@ -235,10 +235,10 @@ describe Event do
       it "selects event that are future or currently happening" do
         past_event    = create :event, :published, :past
         current_event = create :event, :published, :current
-        future_event  = create :event, :published, :future
+        future_event  = create :event, :published, :future, ends_at: nil
         Event.upcoming_and_current.should eq [current_event, future_event]
       end
-      
+            
       it "orders by starts_at" do
         Event.upcoming_and_current.to_sql.should match /order by starts_at/i
       end

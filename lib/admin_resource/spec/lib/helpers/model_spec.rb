@@ -1,6 +1,6 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
-describe AdminResource::Helpers::Model do  
+describe AdminResource::Helpers::Model do
   describe "#to_title" do
     it "uses one of the specified title attributes if available" do
       AdminResource.config.title_attributes = [:name]

@@ -70,7 +70,7 @@ class Event < ActiveRecord::Base
   
   scope :upcoming,              -> { published.where("starts_at > ?", Time.now).order("starts_at") }
   scope :upcoming_and_current,  -> { published.where("ends_at > :now or starts_at > :now", now: Time.now).order("starts_at") }
-  scope :past,                  -> { published.where("ends_at < ?", Time.now).order("starts_at desc") }
+  scope :past,                  -> { published.where("ends_at < :now", now: Time.now).order("starts_at desc") }
 
 
   # -------------------

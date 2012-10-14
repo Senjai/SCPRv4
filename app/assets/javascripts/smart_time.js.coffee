@@ -92,6 +92,5 @@ class scpr.SmartTime
                 else
                     # use date, time format
                     @$el.text "" + @options.prefix + @time.strftime @options.datetime_format                
-                        
+                
             @$el.addClass @options.class if @options.class
-      

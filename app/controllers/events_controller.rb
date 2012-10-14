@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   def index
-    # FIXME This won't show events without an ends_at
     @scoped_events = Event.upcoming_and_current
     
     if params[:list] == "forum"
@@ -8,7 +7,7 @@ class EventsController < ApplicationController
     elsif params[:list] == "sponsored"
       @scoped_events = @scoped_events.sponsored
     end
-        
+    
     @events = Event.sorted(@scoped_events).paginate(page: params[:page], per_page: 10)
   end
   

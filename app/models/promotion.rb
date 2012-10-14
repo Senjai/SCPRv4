@@ -13,7 +13,7 @@ class Promotion < ActiveRecord::Base
   #-------------
   # Validations
   validates_presence_of :title, :url
-    
+  
   #-------------
   
   def asset
