@@ -1,7 +1,7 @@
-<%= cache ["show", "v1", @segment] do %>
-  <% page_title [@segment.headline, @program.title] %>
-  <%= render_content @segment, "opengraph" %>
+<% page_title [@segment.headline, @program.title] %>
+<%= render_content @segment, "opengraph" %>
 
+<%= cache ["show", "v1", @segment] do %>
   <div class="segment content-block">
     <div class="row-fluid">
       <%= content_widget "article_meta", @segment %>

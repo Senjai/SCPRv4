@@ -1,8 +1,8 @@
-<%= cache ["show", "v1", @entry] do %>
-  <% page_title [@blog.name, @entry.headline], " : "
-  @OG_TYPE = "blog" %>
+<%= render_content @entry, "opengraph" %>
+<% page_title [@blog.name, @entry.headline], " : " %>
+<% @OG_TYPE = "blog" %>
 
-  <%= render_content @entry, "opengraph" %>
+<%= cache ["show", "v1", @entry] do %>
   <%= render "blogs/entry", entry: @entry %>
 <% end %>
 

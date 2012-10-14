@@ -1,7 +1,7 @@
-<%= cache ["show", "v1", @story] do %>
-  <% page_title @story.headline %>
-  <%= render_content @story, "opengraph" %>
+<% page_title @story.headline %>
+<%= render_content @story, "opengraph" %>
 
+<%= cache ["show", "v1", @story] do %>
   <div class="story content-block">
     <article>
       <header>
@@ -31,15 +31,14 @@
     <%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
     <%= content_widget "social_tools", @story, cssClass: "bottom horizontal" %>
   </div> <!-- story -->
+
+  <div class="fold inline" id="fold">
+    <%= content_widget "related_content_and_links", @story %>
+    <%= content_widget "pij_query", @story %>
+    <%= content_widget 'content_carousel', @story %>
+    <%= comments_for @story %>
+  </div>
 <% end %>
-
-<div class="fold inline" id="fold">
-  <%= content_widget "related_content_and_links", @story %>
-  <%= content_widget "pij_query", @story %>
-
-  <%= content_widget 'content_carousel', @story %>
-  <%= comments_for @story %>
-</div>
 
 <% content_for :footerga do %>
   _gaq.push(['_setCustomVar',1,'Source','<%=@story.source%>',3]);
