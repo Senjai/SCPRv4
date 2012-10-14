@@ -1,4 +1,4 @@
-enclosure_type ||= :audio
+enclosure_type ||= content.respond_to?(:audio) ? :audio : :image
 
 xml.item do
   xml.title content.headline
@@ -16,7 +16,7 @@ xml.item do
       xml.enclosure url: asset.thumb.url, type: "image/jpeg", length: asset.image_file_size.to_i / 100
     end
   else
-    if content.audio.present?
+    if content.try(:audio).present?
       audio = content.audio.first
       xml.enclosure url: audio.url, type: "audio/mpeg", 
                     length: audio.size.present? ? audio.size : "0"
