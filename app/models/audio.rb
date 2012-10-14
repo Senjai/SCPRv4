@@ -243,10 +243,10 @@ class Audio < ActiveRecord::Base
   def self.enqueue_sync
     Resque.enqueue(Audio::SyncAudioJob, self.name)
   end
-  
-  # Proxy to AudioSync#sync_each!
-  def self.sync!
-    Audio::Sync.new.sync_each!
+    
+  # Proxy to AudioSync::enqueue_all
+  def self.enqueue_all
+    Audio::Sync.enqueue_all
   end
   
   private

@@ -6,6 +6,10 @@
 # It belongs to a ShowEpisode or ShowSegment
 # for a KpccProgram
 #
+# Doesn't need an instance `#sync!` method,
+# because an instance is only created if
+# the audio exists.
+#
 class Audio
   class ProgramAudio < Audio
     before_create :set_description_to_episode_headline, if: -> { self.description.blank? }
@@ -27,7 +31,7 @@ class Audio
   
       #------------
       # TODO This could be broken up into smaller units
-      def sync!
+      def bulk_sync!
         # Each KpccProgram with episodes and which can sync audio
         KpccProgram.can_sync_audio.each do |program|
           # Each file in this program's audio directory

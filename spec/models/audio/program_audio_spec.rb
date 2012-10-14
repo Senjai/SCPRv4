@@ -43,7 +43,7 @@ describe Audio::ProgramAudio do
   
   #----------------
   
-  describe "::sync!" do
+  describe "::bulk_sync!" do
     let(:program) { create :kpcc_program, display_episodes: true, audio_dir: "coolshowbro", air_status: "onair" }
 
     before :each do
@@ -57,21 +57,21 @@ describe Audio::ProgramAudio do
       it "if file has already been synced in database" do
         Audio::ProgramAudio.stub(:existing) { { "mbrand/20121002_mbrand.mp3" => true } }
         File.should_not_receive(:mtime)
-        Audio::ProgramAudio.sync!.should eq []
+        Audio::ProgramAudio.bulk_sync!.should eq []
       end
     
       it "if filename doesn't match the regex" do
         Audio::ProgramAudio.stub(:existing) { { } }
         Dir.should_receive(:[]).with(program.absolute_audio_path).and_return(["nomatch.mp3"])
         File.should_not_receive(:mtime)
-        Audio::ProgramAudio.sync!.should eq []
+        Audio::ProgramAudio.bulk_sync!.should eq []
       end
     
       it "if file mtime is too old" do
         Audio::ProgramAudio.stub(:existing) { { } }
         Dir.should_receive(:[]).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
         File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(1.month.ago)
-        Audio::ProgramAudio.sync!.should eq []
+        Audio::ProgramAudio.bulk_sync!.should eq []
       end
     end
     
@@ -87,7 +87,7 @@ describe Audio::ProgramAudio do
 
         audio = build :program_audio, content: program.episodes.first
         Audio::ProgramAudio.should_receive(:new).and_return(audio)
-        Audio::ProgramAudio.sync!.should eq [audio]
+        Audio::ProgramAudio.bulk_sync!.should eq [audio]
       end
     
       it "if all the criteria pass for segments" do
@@ -97,7 +97,7 @@ describe Audio::ProgramAudio do
 
         audio = build :program_audio, content: program.segments.first
         Audio::ProgramAudio.should_receive(:new).and_return(audio)
-        Audio::ProgramAudio.sync!.should eq [audio]
+        Audio::ProgramAudio.bulk_sync!.should eq [audio]
       end
     end
   end

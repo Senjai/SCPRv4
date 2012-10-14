@@ -470,4 +470,13 @@ describe Audio do
       Audio::EncoAudio.enqueue_sync
     end
   end
+  
+  #----------------
+  
+  describe "::enqueue_all" do
+    it "sends to Audio::Sync::enqueue_all" do
+      Audio::Sync.should_receive(:enqueue_all)
+      Audio.enqueue_all
+    end
+  end
 end
