@@ -2,16 +2,18 @@
 
 class AudioUploader < CarrierWave::Uploader::Base
   storage :file
-
+  
   #--------------
   # Override default CarrierWave config
   # to move files instead of copy them.
+  # Don't do it in test environment so 
+  # the fixtures stay in place.
   def move_to_cache
-    true
+    Rails.env == 'test' ? false : true
   end
   
   def move_to_store
-    true
+    Rails.env == 'test' ? false : false
   end
 
   #--------------  

@@ -20,6 +20,26 @@ describe Audio::Sync do
       Audio::DirectAudio.any_instance.should_receive(:sync!)
       Audio::Sync.bulk_sync_awaiting_audio!(Audio)
     end
+    
+    it "only syncs audio from the past 2 weeks by default" do
+      enco   = create :enco_audio
+      direct = create :direct_audio
+      direct.send :write_attribute, :created_at, 4.weeks.ago
+      direct.save!
+      Audio::EncoAudio.any_instance.should_receive(:sync!)
+      Audio::DirectAudio.any_instance.should_not_receive(:sync!)
+      Audio::Sync.bulk_sync_awaiting_audio!(Audio)
+    end
+    
+    it "accepts an alternate limit" do
+      enco   = create :enco_audio
+      direct = create :direct_audio
+      direct.send :write_attribute, :created_at, 4.weeks.ago
+      direct.save!
+      Audio::EncoAudio.any_instance.should_receive(:sync!)
+      Audio::DirectAudio.any_instance.should_receive(:sync!)
+      Audio::Sync.bulk_sync_awaiting_audio!(Audio, 5.weeks.ago)
+    end
   end
   
   #----------------

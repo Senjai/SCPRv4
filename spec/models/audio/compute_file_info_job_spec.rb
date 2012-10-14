@@ -6,7 +6,7 @@ describe Audio::ComputeFileInfoJob do
       audio = create :audio, :uploaded
       Audio.any_instance.should_receive(:compute_duration)
       Audio.any_instance.should_receive(:compute_size)
-      Audio.any_instance.should_receive(:save)
+      Audio.any_instance.should_receive(:save!)
       Audio::ComputeFileInfoJob.perform(audio)
     end
   end
