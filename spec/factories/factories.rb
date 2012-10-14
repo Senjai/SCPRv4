@@ -1,20 +1,53 @@
 FactoryGirl.define do
 
 # Audio #########################################################
-  factory :audio do
-    content     { |a| a.association :news_story }
-    description "Sweet audio, bro."
-    byline      "KPCC"
-    
-    trait :live do
-      mp3 "audio/upload/2012/09/03/Hantavirus_Labor_Day.wav"
-      size 10166316
-      duration 209
+  factory :audio do    
+    trait :uploaded do
+      content { |a| a.association :news_story }
+      mp3 File.open(Rails.application.config.scpr.media_root.join("audio/point1sec.mp3"))
     end
     
-    trait :with_enco do
+    trait :enco do
+      content { |a| a.association :news_story }
       enco_number 1488
       enco_date { Date.today }
+    end
+    
+    trait :direct do
+      content { |a| a.association :news_story }
+      mp3_path "events/2012/10/02/SomeCoolEvent.mp3"
+    end
+
+    trait :program do
+      type "Audio::ProgramAudio" # Typecast this object since Audio#set_type doesn't do it for ProgramAudio
+      mp3 File.open(Rails.application.config.scpr.media_root.join("audio/mbrand/20121002_mbrand.mp3"))
+    end
+    
+    trait :for_episode do
+      content { |a| a.association :show_episode }
+    end
+    
+    trait :for_segment do
+      content { |a| a.association :show_segment }
+    end
+    
+    #---------
+    
+    factory :program_audio, class: "Audio::ProgramAudio" do
+      for_episode
+      program
+    end
+    
+    factory :enco_audio, class: "Audio::EncoAudio" do
+      enco
+    end
+    
+    factory :direct_audio, class: "Audio::DirectAudio" do
+      direct
+    end
+    
+    factory :uploaded_audio, class: "Audio::UploadedAudio" do
+      uploaded
     end
   end
   
@@ -22,21 +55,21 @@ FactoryGirl.define do
   factory :schedule do # Requires us to pass in kpcc_proram_id or other_program_id and program. There must be a better way to do this.
     sequence(:day) { |n| (Time.now + 60*60*24*n).day }
     start_time "00:00:00" # arbitrary
-    end_time "02:00:00" # aribtrary
+    end_time   "02:00:00" # aribtrary
     sequence(:program) { |n| "Cool Program #{n}" } 
     url { "/programs/#{program.parameterize}" }
-    kpcc_program_id 1
+    kpcc_program
   end
   
 
 # Bio #########################################################
   factory :bio, class: "Bio", aliases: [:author] do
     user { |bio| bio.association :admin_user }
-    name "Bryan Ricker"
+    sequence(:name) { |n| "Bryan Ricker #{n}" }
 
     is_public    true
+    slug         { name.parameterize }
     twitter      { "@#{slug}" }
-    slug         { user.name.parameterize }
     
     bio          "This is a bio"
     short_bio    "Short!"
@@ -57,30 +90,39 @@ FactoryGirl.define do
     unencrypted_password_confirmation { unencrypted_password }
     last_login { Time.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
+    
     is_staff 1
     is_active 1
     is_superuser 1
+    
+    trait :staff_user do
+      is_staff     1
+      is_active    1
+      is_superuser 0
+    end
+    
+    trait :superuser do
+      is_staff     1
+      is_active    1
+      is_superuser 1
+    end
   end
   
 
 # KpccProgram #########################################################
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
-    slug { title.parameterize }
-    quick_slug { title.parameterize.chars.first(5) }
-    teaser "AirTalk, short teaser, etc."
-    description "This is the description for AirTalk!"
-    host "Larry Mantle"
-    airtime "Weekdays 10 a.m.-12 p.m."
+    slug { title.parameterize }    
     air_status "onair"
-    podcast_url "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=73329334&uo=6"
-    rss_url "http://feeds.scpr.org/kpccAirTalk"
-    sidebar "Sidebar Content"    
-    twitter_url "airtalk"
-    facebook_url "http://www.facebook.com/KPCC.AirTalk"
-    display_segments 1
-    display_episodes 1
     
+    trait :episodic do
+      display_episodes 1
+    end
+    
+    trait :segmented do
+      display_segments 1
+    end
+        
     ignore { segment Hash.new } # Ensures that `merge` has something to do in the after :create block
     ignore { episode Hash.new } # Ensures that `merge` has something to do in the after :create block
     ignore { missed_it_bucket Hash.new }
@@ -109,16 +151,9 @@ FactoryGirl.define do
   factory :other_program do
     sequence(:title) { |n| "Other Program #{n}" }
     slug        { title.parameterize }
-    teaser      "Outside Program"
-    description "This is the description for the outside program!"
-    host        "Larry Mantle"
-    airtime     "Weekdays 10 a.m.-12 p.m."
     air_status  "onair"
-    podcast_url "http://www.npr.org/rss/podcast.php?id=510294"
-    rss_url     "http://oncentral.org/rss/latest" # This column cannot be null?
-    sidebar     "Sidebar Content"
-    web_url     "http://www.bbc.co.uk/worldservice/"
-    produced_by "BBC"
+    podcast_url "http://www.npr.org/rss/podcast.php?id=510005"
+    rss_url     "http://www.kqed.org/rss/private/californiareport.xml"
   end
   
 
@@ -215,30 +250,23 @@ FactoryGirl.define do
     sequence(:id, 1) # Not auto-incrementing in database?
     sequence(:headline)   { |n| "A Very Special Event #{n}" }
     sequence(:starts_at)  { |n| Time.now + 60*60*24*n }
-    ends_at               { starts_at + 60*60*1 }
     
     slug                { headline.parameterize }
     body                "This is a very special event."
     etype               "comm"
-    sponsor             "Patt Morrison"
-    sponsor_link        "http://oncentral.org"
-    is_all_day          0
-    location_name       "The Crawford Family Forum"
-    location_link       "http://www.scpr.org/crawfordfamilyforum"
-    rsvp_link           "http://kpcc.ticketleap.com/connie-rice/"
-    show_map            1
-    address_1           "474 South Raymond Avenue"
-    address_2           "Second Level" # required column?
-    city                "Pasadena"
-    state               "CA"
-    zip_code            "91105"
-    for_program         "airtalk"
-    audio               "audio/events/2011/05/23/Father_Boyle.mp3"
-    archive_description "This is the description that shows after the event has happened"
-    is_published        1
-    show_comments       1
-    teaser              "This is a short teaser"
-
+    
+    trait :published do
+      is_published true
+    end
+    
+    trait :with_address do
+      address_1 "123 Fake St."
+      address_2 "Apt. A"
+      city      "Pasadena"
+      state     "CA"
+      zip_code  "12345"
+    end
+    
     trait :multiple_days_past do
       starts_at { 3.days.ago }
       ends_at   { 1.day.ago }
@@ -304,16 +332,16 @@ FactoryGirl.define do
 # Category #########################################################
   factory :category do
     trait :is_news do 
-      sequence(:category) { |n| "Local #{n}" }
+      sequence(:title) { |n| "Local #{n}" }
       is_news true
     end
 
     trait :is_not_news do
-      sequence(:category) { |n| "Culture #{n}" }
+      sequence(:title) { |n| "Culture #{n}" }
       is_news false
     end
 
-    slug { category.parameterize }
+    slug { title.parameterize }
     comment_bucket
 
     factory :category_news, traits: [:is_news]
@@ -363,18 +391,31 @@ FactoryGirl.define do
 
 # FeaturedCommentBucket #########################################################
   factory :featured_comment_bucket, aliases: [:comment_bucket] do
-    title "Comment Bucket"
+    sequence(:title) { |n| "Comment Bucket #{n}" }
   end
   
   
 # FeaturedComment #########################################################
   factory :featured_comment do
-    featured_comment_bucket
-    sequenced_published_at
-    status    5
+    bucket  { |f| f.association :featured_comment_bucket }
+    content { |mic| mic.association(:content_shell) }
+    
     username  "bryanricker"
-    excert    "This is an excerpt of the featured comment"
-    content   { |mic| mic.association(:content_shell) }
+    excerpt   "This is an excerpt of the featured comment"
+    
+    trait :pending do
+      status 3
+      sequence(:published_at) { |n| Time.now + n.hours }
+    end
+
+    trait :published do
+      status 5
+      sequence(:published_at) { |n| Time.now - n.hours }
+    end
+
+    trait :draft do
+      status 0
+    end
   end
   
   
@@ -387,7 +428,7 @@ FactoryGirl.define do
     registration_required 0
     description           "This is the description"
     is_public             1
-    template              ""
+    template              "inherit"
   end
 
 
@@ -454,6 +495,11 @@ factory :homepage do
   sequenced_published_at
   status 5
   
+  trait :published do
+    status 5
+    published_at { 2.hours.ago }
+  end
+  
   ignore { missed_it_bucket Hash.new }
   ignore { contents_count 0 }
   
@@ -475,8 +521,9 @@ end
 
 # MissedItBucket #########################################################
 factory :missed_it_bucket do
-  title "Airtalk"
+  sequence(:title) { |n| "Airtalk #{n}" }
   ignore { contents_count 0 }
+  
   after :create do |object, evaluator|
     FactoryGirl.create_list(:missed_it_content, evaluator.contents_count.to_i, missed_it_bucket: object)
   end

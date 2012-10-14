@@ -1,166 +1,163 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-	<title>Listen Live | 89.3 KPCC</title>
-	<meta name="viewport" content="width=556">
-	
-	<%= render "shared/header/header_js" %>
-	<%= render "shared/header/opengraph" %>
-	<%= csrf_meta_tags %>
-	
-	<style type="text/css">
+  <title>Listen Live | 89.3 KPCC</title>
+  <meta name="viewport" content="width=556">
+  
+  <%= render "shared/header/header_js" %>
+  <%= render "shared/header/opengraph" %>
+  <%= csrf_meta_tags %>
+  
+  <style type="text/css">
 
-	</style>
+  </style>
     <script>
-    	<!-- OAS SETUP BEGIN --> 
-    	 <!--//configuration 
-    	 OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/'; 
-    	 OAS_sitepage = 'scpr.org'; 
-    	 //OAS_sitepage = window.location.hostname + window.location.pathname; 
-    	 OAS_listpos = 'x61,x62,x63'; 
-    	 OAS_query = ''; 
-    	 OAS_target = '_top'; 
-    	 //end of configuration 
-    	 OAS_version = 10; 
-    	 OAS_rn = '001234567890'; OAS_rns = '1234567890'; 
-    	 OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11); 
-    	 function OAS_NORMAL(pos) { 
-    	   document.write('<a href="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" target=' + OAS_target + '>');
-    	   document.write('<img src="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" border="0" /></a>');
-    	 } 
-    	 //--> 
+      <!-- OAS SETUP BEGIN --> 
+       <!--//configuration 
+       OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/'; 
+       OAS_sitepage = 'scpr.org'; 
+       //OAS_sitepage = window.location.hostname + window.location.pathname; 
+       OAS_listpos = 'x61,x62,x63'; 
+       OAS_query = ''; 
+       OAS_target = '_top'; 
+       //end of configuration 
+       OAS_version = 10; 
+       OAS_rn = '001234567890'; OAS_rns = '1234567890'; 
+       OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11); 
+       function OAS_NORMAL(pos) { 
+         document.write('<a href="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" target=' + OAS_target + '>');
+         document.write('<img src="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" border="0" /></a>');
+       } 
+       //--> 
     </script>
 
     <script>
-    	 <!-- 
-    	 OAS_version = 11; 
-    	 if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)) 
-    	   OAS_version = 10; 
-    	 if (OAS_version >= 11) 
-    	   document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');//-->
+       <!-- 
+       OAS_version = 11; 
+       if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)) 
+         OAS_version = 10; 
+       if (OAS_version >= 11) 
+         document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');//-->
     </script>
 
     <script>
-    	 <!-- 
-    	 document.write(''); 
-    	 function OAS_AD(pos) { 
-    	   if (OAS_version >= 11) 
-    	     OAS_RICH(pos); 
-    	   else 
-    	     OAS_NORMAL(pos); 
-    	 } 
-    	 //--> 
+       <!-- 
+       document.write(''); 
+       function OAS_AD(pos) { 
+         if (OAS_version >= 11) 
+           OAS_RICH(pos); 
+         else 
+           OAS_NORMAL(pos); 
+       } 
+       //--> 
     </script>
 
-<!--	
-	<script type='text/javascript'>
-	var googletag = googletag || {};
-	googletag.cmd = googletag.cmd || [];
-	(function() {
-	var gads = document.createElement('script');
-	gads.async = true;
-	gads.type = 'text/javascript';
-	var useSSL = 'https:' == document.location.protocol;
-	gads.src = (useSSL ? 'https:' : 'http:') + 
-	'//www.googletagservices.com/tag/js/gpt.js';
-	var node = document.getElementsByTagName('script')[0];
-	node.parentNode.insertBefore(gads, node);
-	})();
-	</script>
+<!--  
+  <script type='text/javascript'>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+  (function() {
+  var gads = document.createElement('script');
+  gads.async = true;
+  gads.type = 'text/javascript';
+  var useSSL = 'https:' == document.location.protocol;
+  gads.src = (useSSL ? 'https:' : 'http:') + 
+  '//www.googletagservices.com/tag/js/gpt.js';
+  var node = document.getElementsByTagName('script')[0];
+  node.parentNode.insertBefore(gads, node);
+  })();
+  </script>
 
-	<script type='text/javascript'>
-	googletag.cmd.push(function() {
-	googletag.defineSlot('/127204706/listen_live', [234, 60], 'div-gpt-ad-1336163771924-0').addService(googletag.pubads());
-	googletag.pubads().enableSingleRequest();
-	googletag.enableServices();
-	});
-	</script>
-	
+  <script type='text/javascript'>
+  googletag.cmd.push(function() {
+  googletag.defineSlot('/127204706/listen_live', [234, 60], 'div-gpt-ad-1336163771924-0').addService(googletag.pubads());
+  googletag.pubads().enableSingleRequest();
+  googletag.enableServices();
+  });
+  </script>
+  
 -->
-	
+  
 </head>
 <body class="minimal listen">
     
   <header class="topbar">
-    
     <div class="wrapper">
-    	<a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>
-		<span class="pledge"><a href="https://scprcontribute.publicradio.org/contribute.php?" target="_blank">Pledge now</a></span>
+      <a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>
+    <span class="pledge"><a href="https://scprcontribute.publicradio.org/contribute.php?" target="_blank">Pledge now</a></span>
     </div>
   </header>
 
   <div id="content">
-		<div class="player">
-			<div class="wrapper clearfix">
-			  <div>
-          		<h2>Listen Live</h2>
-              	<span class="small">
-					More ways to listen:&nbsp;&nbsp;
-					<a href="http://www.scpr.org/iphone/" target="_blank">KPCC iPhone app</a>
-					<span class="pipe">|</span>
-					<a href="http://live.scpr.org/listen.pls">MP3/iTunes</a>
-					<span class="pipe">|</span>
-					<a href="mms://kpcclive1.publicradio.org">Windows Media</a>
-				</span>
-              </div>
-			</div>
+    <div class="player">
+      <div class="wrapper clearfix">
+        <div>
+          <h2>Listen Live</h2>
+          <span class="small">
+            More ways to listen:&nbsp;&nbsp;
+            <a href="http://www.scpr.org/iphone/" target="_blank">KPCC iPhone app</a>
+            <span class="pipe">|</span>
+            <a href="http://live.scpr.org/listen.pls">MP3/iTunes</a>
+            <span class="pipe">|</span>
+            <a href="mms://kpcclive1.publicradio.org">Windows Media</a>
+          </span>
+        </div>
+      </div> <!-- wrapper -->
           
-			<div id="jquery_jplayer_1" class="jp-jplayer"></div>
-			<div id="jp_container_1" class="jp-audio">
-				<div class="jp-type-single clearfix">
-						<div class="jp-no-solution alert-message error">
-				        	<strong>Update Required</strong>
-				        	To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-				      	</div>
-					<!-- put bar-close first so it floats right properly when the widget switches to modal 
-						 On the normal layout, everything here is floated so it still gets pushed to the right properly -->
+      <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+      <div id="jp_container_1" class="jp-audio">
+        <div class="jp-type-single clearfix">
+          <div class="jp-no-solution alert-message error">
+            <strong>Update Required</strong>
+            To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+          </div>
+          <!-- put bar-close first so it floats right properly when the widget switches to modal 
+             On the normal layout, everything here is floated so it still gets pushed to the right properly -->
 
-					<div class="section-left">
-						<div class="jp-gui jp-interface clearfix">
-							<ul class="jp-controls clearfix">
-								<li><a href="javascript:;" class="jp-play">play</a></li>
-								<li><a href="javascript:;" class="jp-pause">pause</a></li>
-							</ul>
-							<div class="jp-progress">
-			  					<div class="jp-current-time"></div>
-							</div> <!-- jp-progress -->
-							<div class="clearfix"></div>
-							<ul class="volume-controls">
-								<li><a href="javascript:;" class="jp-mute">mute</a></li>
-								<li><a href="javascript:;" class="jp-unmute">unmute</a></li>
-								<li>
-									<div class="jp-volume-bar">
-										<div class="jp-volume-bar-value"></div>
-									</div>
-								</li>
-								<li><a href="javascript:;" class="jp-volume-max">max vol</a></li>
-							</ul>
-			  			</div> <!-- jp-gui -->
-					</div> <!-- section-left -->
+          <div class="section-left">
+            <div class="jp-gui jp-interface clearfix">
+              <ul class="jp-controls clearfix">
+                <li><a href="javascript:;" class="jp-play">play</a></li>
+                <li><a href="javascript:;" class="jp-pause">pause</a></li>
+              </ul>
+              <div class="jp-progress">
+                  <div class="jp-current-time"></div>
+              </div> <!-- jp-progress -->
+              <div class="clearfix"></div>
+              <ul class="volume-controls">
+                <li><a href="javascript:;" class="jp-mute">mute</a></li>
+                <li><a href="javascript:;" class="jp-unmute">unmute</a></li>
+                <li>
+                  <div class="jp-volume-bar">
+                    <div class="jp-volume-bar-value"></div>
+                  </div>
+                </li>
+                <li><a href="javascript:;" class="jp-volume-max">max vol</a></li>
+              </ul>
+            </div> <!-- jp-gui -->
+          </div> <!-- section-left -->
 
-					<div class="section-mid" id="llschedule">
+          <div class="section-mid" id="llschedule">
+          </div> <!-- section-mid -->
+        </div> <!-- jp-type-single -->
+      </div> <!-- jp-audio -->
+    </div> <!-- player -->
+  </div> <!-- content -->
 
-					</div> <!-- section-mid -->
-				</div> <!-- jp-type-single -->
-			</div> <!-- jp-audio -->
-      </div>
+  <% if @homepage.present? %>
+    <div class="wrapper headlines" id="llcontent">
+      <h6>Top Story</h6>
+      <%= render_content @homepage.content[0], "offlead_asset" %>
 
-
-	
-  </div>
-<div class="wrapper headlines" id="llcontent">
-	<h6>Top Story</h6>
-
-	<%= render_content @homepage.content[0], "offlead_asset" %>
-
-	<h6>More Headlines</h6>
-	
-	<ul class="cbase">
-	<%= render_content @homepage.content[1..-1], "headline" %>
-	</ul>
-</div>
-<hr />
-<div class="ad" style="text-align:center; height:80px"> 
+      <h6>More Headlines</h6>
+      <ul class="cbase">
+        <%= render_content @homepage.content[1..-1], "headline" %>
+      </ul>
+    </div> <!-- headlines -->
+  <% end %>
+  
+  <hr />
+  <div class="ad" style="text-align:center; height:80px"> 
     <p><small>Sponsors</small></p>
 
     <!-- OAS AD 'Center1' begin --> 
@@ -187,35 +184,35 @@
     </script> 
     <!-- OAS AD 'Center1' end -->
     <p><small><a href="/support/underwriting/online_sponsorship/">Advertise with us</a></small></p>
-</div>
+  </div> <!-- ad -->
 
   <footer>
-    <div class="">
-        <ul class="menu unstyled clearfix">
-        	<li><a href="/terms/" target="_blank">Terms &amp; Conditions</a></li>
-        	<li><a href="/privacy/" target="_blank">Privacy</a></li>
-			<li style="border:none"><a href="/web_site_feedback" target="_blank">Website Feedback</a></li>
-			<li>Copyright 2012 &copy; Southern California Public Radio</li>
-		</ul>
+    <div>
+      <ul class="menu unstyled clearfix">
+        <li><a href="/terms/" target="_blank">Terms &amp; Conditions</a></li>
+        <li><a href="/privacy/" target="_blank">Privacy</a></li>
+        <li style="border:none"><a href="/web_site_feedback" target="_blank">Website Feedback</a></li>
+        <li>Copyright 2012 &copy; Southern California Public Radio</li>
+      </ul>
     </div>
   </footer>
 
 <% content_for :footerjss do %>
-	llPlayer = new scpr.ListenLive.CurrentGen({
-		schedule: 	<%= raw @schedule.to_json %>
-	})
-	
-	$("#llcontent a").attr("target","_blank")
+  llPlayer = new scpr.ListenLive.CurrentGen({
+    schedule:   <%= raw @schedule.to_json %>
+  })
+  
+  $("#llcontent a").attr("target","_blank")
 <% end %>
 
 <% content_for :footerga do %>
-	_gaq.push(['_setCustomVar',
-	      12,                   // This custom var is set to slot #2.  Required parameter.
-	      'Listen Live Visitor', // The name of the custom variable.  Required parameter.
-	      'Yes',               // The value of the custom variable.  Required parameter.
-	                           //  (you might set this value by default to No)
-	      1                    // Sets the scope to session-level.  Optional parameter.
-	   ]);
+  _gaq.push(['_setCustomVar',
+        12,                   // This custom var is set to slot #2.  Required parameter.
+        'Listen Live Visitor', // The name of the custom variable.  Required parameter.
+        'Yes',               // The value of the custom variable.  Required parameter.
+                             //  (you might set this value by default to No)
+        1                    // Sets the scope to session-level.  Optional parameter.
+     ]);
 <% end %>
 
 <%= render :partial => "shared/footer/footer_js" %>

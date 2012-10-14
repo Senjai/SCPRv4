@@ -3,14 +3,14 @@ Given /^(?:an )?events? with the following attributes?:$/ do |table|
   events = []
   table.hashes.each do |attributes|
     attributes["starts_at"] = Chronic.parse(attributes["starts_at"]) if attributes["starts_at"].present?
-    events << create(:event, attributes)
+    events << create(:event, :published, attributes)
   end
   events.count.should eq table.hashes.count
   @event = events[rand(events.count)]
 end
 
 Given /^there (?:is|are) (\d+) events?$/ do |num|
-  @events = create_list :event, num.to_i
+  @events = create_list :event, num.to_i, :published, ends_at: 1.year.from_now
 end
 
 
@@ -73,13 +73,6 @@ Then /^I should see each event's primary asset$/ do
   page.should have_css ".upcoming-events .event .contentasset img", count: Event.all.count
 end
 
-Then /^I should see an RSVP link$/ do
-  page.should have_css "#events-rsvp-btn"
-end
-
-Then /^I should not see an RSVP link$/ do
-  page.should_not have_css "#events-rsvp-btn"
-end
 
 Then /^I should see that even has already occurred$/ do
   page.should have_css ".past-date"

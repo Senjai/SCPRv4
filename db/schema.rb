@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910173557) do
+ActiveRecord::Schema.define(:version => 20121010172136) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   end
 
   add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
+
+  create_table "admin_user_permissions", :force => true do |t|
+    t.integer  "admin_user_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id",                :null => false
@@ -99,6 +106,8 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.boolean  "is_superuser",                :null => false
     t.datetime "last_login",                  :null => false
     t.datetime "date_joined",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "auth_user", ["username"], :name => "username", :unique => true
@@ -120,18 +129,20 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "auth_user_user_permissions", ["user_id", "permission_id"], :name => "user_id", :unique => true
 
   create_table "bios_bio", :force => true do |t|
-    t.integer "user_id",                                            :null => false
-    t.string  "slug",         :limit => 50,                         :null => false
-    t.text    "bio",          :limit => 2147483647,                 :null => false
-    t.string  "title",        :limit => 200,        :default => "", :null => false
-    t.boolean "is_public",                                          :null => false
-    t.string  "feed_url",     :limit => 200,        :default => "", :null => false
-    t.string  "twitter",      :limit => 30,                         :null => false
-    t.integer "asset_id"
-    t.string  "short_bio",    :limit => 200,                        :null => false
-    t.string  "phone_number", :limit => 30,                         :null => false
-    t.string  "name",         :limit => 120,                        :null => false
-    t.string  "email",        :limit => 120
+    t.integer  "user_id",                                               :null => false
+    t.string   "slug",         :limit => 50,                            :null => false
+    t.text     "bio",          :limit => 2147483647,                    :null => false
+    t.string   "title",        :limit => 200,        :default => "",    :null => false
+    t.boolean  "is_public",                          :default => false, :null => false
+    t.string   "feed_url",     :limit => 200,        :default => "",    :null => false
+    t.string   "twitter",      :limit => 30,                            :null => false
+    t.integer  "asset_id"
+    t.string   "short_bio",    :limit => 200,                           :null => false
+    t.string   "phone_number", :limit => 30,                            :null => false
+    t.string   "name",         :limit => 120,                           :null => false
+    t.string   "email",        :limit => 120
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
   end
 
   add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true
@@ -219,10 +230,12 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
 
   create_table "contentbase_category", :force => true do |t|
-    t.string  "category",          :limit => 50,                   :null => false
-    t.string  "slug",              :limit => 50,                   :null => false
-    t.boolean "is_news",                         :default => true, :null => false
-    t.integer "comment_bucket_id"
+    t.string   "title"
+    t.string   "slug",              :limit => 50
+    t.boolean  "is_news",                         :default => true, :null => false
+    t.integer  "comment_bucket_id"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   add_index "contentbase_category", ["comment_bucket_id"], :name => "contentbase_category_36c0cbca"
@@ -233,6 +246,8 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.integer  "content_id",                           :null => false
     t.datetime "fire_at"
     t.string   "content_type",           :limit => 20
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   add_index "contentbase_contentalarm", ["content_id"], :name => "index_contentbase_contentalarm_on_content_id"
@@ -240,12 +255,14 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "contentbase_contentalarm", ["django_content_type_id"], :name => "contentbase_contentalarm_e4470c6e"
 
   create_table "contentbase_contentbyline", :force => true do |t|
-    t.integer "django_content_type_id",                              :null => false
-    t.integer "content_id",                                          :null => false
-    t.integer "user_id"
-    t.string  "name",                   :limit => 50,                :null => false
-    t.integer "role",                                 :default => 0, :null => false
-    t.string  "content_type",           :limit => 20
+    t.integer  "django_content_type_id",                              :null => false
+    t.integer  "content_id",                                          :null => false
+    t.integer  "user_id"
+    t.string   "name",                   :limit => 50,                :null => false
+    t.integer  "role",                                 :default => 0, :null => false
+    t.string   "content_type",           :limit => 20
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
   end
 
   add_index "contentbase_contentbyline", ["content_id"], :name => "index_contentbase_contentbyline_on_content_id"
@@ -255,10 +272,12 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "contentbase_contentbyline", ["user_id"], :name => "contentbase_contentbyline_fbfc09f1"
 
   create_table "contentbase_contentcategory", :force => true do |t|
-    t.integer "category_id",                          :null => false
-    t.integer "django_content_type_id",               :null => false
-    t.integer "content_id",                           :null => false
-    t.string  "content_type",           :limit => 20
+    t.integer  "category_id",                          :null => false
+    t.integer  "django_content_type_id",               :null => false
+    t.integer  "content_id",                           :null => false
+    t.string   "content_type",           :limit => 20
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   add_index "contentbase_contentcategory", ["category_id"], :name => "contentbase_contentcategory_42dc49bc"
@@ -268,14 +287,14 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "contentbase_contentcategory", ["django_content_type_id"], :name => "contentbase_contentcategory_e4470c6e"
 
   create_table "contentbase_contentshell", :force => true do |t|
-    t.string   "headline",     :limit => 200,                                           :null => false
-    t.string   "site",         :limit => 50,         :default => "KPCC",                :null => false
-    t.text     "body",         :limit => 2147483647,                                    :null => false
-    t.string   "url",          :limit => 150,                                           :null => false
-    t.integer  "status",                             :default => 0,                     :null => false
-    t.datetime "published_at",                       :default => '2011-11-21 11:07:11', :null => false
-    t.datetime "created_at",                                                            :null => false
-    t.datetime "updated_at",                                                            :null => false
+    t.string   "headline",     :limit => 200,                            :null => false
+    t.string   "site",         :limit => 50,         :default => "KPCC", :null => false
+    t.text     "body",         :limit => 2147483647,                     :null => false
+    t.string   "url",          :limit => 150,                            :null => false
+    t.integer  "status",                             :default => 0,      :null => false
+    t.datetime "published_at"
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
   end
 
   create_table "contentbase_featuredcomment", :force => true do |t|
@@ -287,6 +306,8 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.string   "username",               :limit => 50,                        :null => false
     t.text     "excerpt",                :limit => 2147483647,                :null => false
     t.string   "content_type",           :limit => 20
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
   end
 
   add_index "contentbase_featuredcomment", ["bucket_id"], :name => "contentbase_featuredcomment_25ef9024"
@@ -295,19 +316,25 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "contentbase_featuredcomment", ["django_content_type_id"], :name => "contentbase_featuredcomment_e4470c6e"
 
   create_table "contentbase_featuredcommentbucket", :force => true do |t|
-    t.string "title", :limit => 50, :null => false
+    t.string   "title",      :limit => 50, :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "contentbase_misseditbucket", :force => true do |t|
-    t.string "title", :limit => 50, :null => false
+    t.string   "title",      :limit => 50, :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "contentbase_misseditcontent", :force => true do |t|
-    t.integer "bucket_id",                                            :null => false
-    t.integer "django_content_type_id",                               :null => false
-    t.integer "content_id",                                           :null => false
-    t.integer "position",                             :default => 99, :null => false
-    t.string  "content_type",           :limit => 20
+    t.integer  "bucket_id",                                            :null => false
+    t.integer  "django_content_type_id",                               :null => false
+    t.integer  "content_id",                                           :null => false
+    t.integer  "position",                             :default => 99, :null => false
+    t.string   "content_type",           :limit => 20
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
   end
 
   add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
@@ -354,52 +381,53 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   end
 
   create_table "events_event", :force => true do |t|
-    t.string   "headline",            :limit => 140,                           :null => false
-    t.string   "slug",                :limit => 50,                            :null => false
-    t.text     "body",                :limit => 2147483647,                    :null => false
-    t.string   "etype",               :limit => 4,                             :null => false
-    t.string   "sponsor",             :limit => 140,                           :null => false
-    t.string   "sponsor_link",        :limit => 200,                           :null => false
-    t.datetime "starts_at",                                                    :null => false
+    t.string   "headline"
+    t.string   "slug",                :limit => 50
+    t.text     "body",                :limit => 2147483647
+    t.string   "etype"
+    t.string   "sponsor"
+    t.string   "sponsor_link",        :limit => 200
+    t.datetime "starts_at"
     t.datetime "ends_at"
-    t.boolean  "is_all_day",                                                   :null => false
-    t.string   "location_name",       :limit => 140,                           :null => false
-    t.string   "location_link",       :limit => 200,                           :null => false
-    t.string   "rsvp_link",           :limit => 200,                           :null => false
-    t.boolean  "show_map",                                                     :null => false
-    t.string   "address_1",           :limit => 140,                           :null => false
-    t.string   "address_2",           :limit => 140,                           :null => false
-    t.string   "city",                :limit => 140,                           :null => false
-    t.string   "state",               :limit => 2
-    t.integer  "zip_code"
+    t.boolean  "is_all_day",                                :default => false, :null => false
+    t.string   "location_name"
+    t.string   "location_link",       :limit => 200
+    t.string   "rsvp_link",           :limit => 200
+    t.boolean  "show_map",                                  :default => true,  :null => false
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
     t.boolean  "kpcc_event",                                :default => false, :null => false
-    t.string   "for_program",         :limit => 20,         :default => "",    :null => false
-    t.text     "archive_description", :limit => 2147483647,                    :null => false
-    t.string   "audio",               :limit => 100,        :default => "",    :null => false
-    t.boolean  "is_published",                                                 :null => false
-    t.boolean  "show_comments",                                                :null => false
-    t.text     "teaser",              :limit => 2147483647,                    :null => false
-    t.string   "event_asset_scheme",  :limit => 10
+    t.text     "archive_description", :limit => 2147483647
+    t.string   "old_audio",           :limit => 100
+    t.boolean  "is_published",                              :default => false, :null => false
+    t.boolean  "show_comments",                             :default => false, :null => false
+    t.text     "teaser",              :limit => 2147483647
+    t.string   "event_asset_scheme"
+    t.integer  "kpcc_program_id"
   end
 
+  add_index "events_event", ["kpcc_program_id"], :name => "events_event_7666a8c6"
   add_index "events_event", ["slug"], :name => "events_event_slug"
 
   create_table "flatpages_flatpage", :force => true do |t|
-    t.string   "url",                   :limit => 100,        :null => false
-    t.string   "title",                 :limit => 200,        :null => false
-    t.text     "content",               :limit => 2147483647, :null => false
-    t.text     "extra_head",            :limit => 2147483647, :null => false
-    t.text     "extra_tail",            :limit => 2147483647, :null => false
-    t.boolean  "enable_comments",                             :null => false
-    t.boolean  "registration_required",                       :null => false
+    t.string   "url",                   :limit => 100,                           :null => false
+    t.string   "title",                 :limit => 200,                           :null => false
+    t.text     "content",               :limit => 2147483647,                    :null => false
+    t.text     "extra_head",            :limit => 2147483647,                    :null => false
+    t.text     "extra_tail",            :limit => 2147483647,                    :null => false
+    t.boolean  "enable_comments",                             :default => false, :null => false
+    t.boolean  "registration_required",                       :default => false, :null => false
     t.datetime "updated_at"
-    t.text     "description",           :limit => 2147483647, :null => false
+    t.text     "description",           :limit => 2147483647,                    :null => false
     t.string   "redirect_url",          :limit => 250
-    t.boolean  "is_public",                                   :null => false
-    t.datetime "created_at",                                  :null => false
-    t.string   "template",              :limit => 10,         :null => false
+    t.boolean  "is_public",                                   :default => false, :null => false
+    t.datetime "created_at",                                                     :null => false
+    t.string   "template",              :limit => 10,                            :null => false
   end
 
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
@@ -438,7 +466,7 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
 
   create_table "layout_homepage", :force => true do |t|
     t.string   "base",                :limit => 10, :null => false
-    t.datetime "published_at",                      :null => false
+    t.datetime "published_at"
     t.integer  "status",                            :null => false
     t.integer  "missed_it_bucket_id"
   end
@@ -479,17 +507,24 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
   create_table "media_audio", :force => true do |t|
-    t.string  "mp3",                    :limit => 100
-    t.integer "size"
-    t.integer "duration"
-    t.integer "enco_number"
-    t.date    "enco_date"
-    t.integer "django_content_type_id",                                           :null => false
-    t.integer "content_id",                                                       :null => false
-    t.text    "description",            :limit => 2147483647
-    t.string  "byline",                 :limit => 150,        :default => "KPCC", :null => false
-    t.integer "position",                                     :default => 0,      :null => false
-    t.string  "content_type",           :limit => 20
+    t.string   "django_mp3"
+    t.integer  "size"
+    t.integer  "duration"
+    t.string   "enco_number"
+    t.date     "enco_date"
+    t.integer  "django_content_type_id",                                      :null => false
+    t.integer  "content_id",                                                  :null => false
+    t.text     "description",            :limit => 2147483647
+    t.string   "byline"
+    t.integer  "position",                                     :default => 0, :null => false
+    t.string   "content_type"
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
+    t.string   "filename"
+    t.string   "store_dir"
+    t.string   "mp3_path"
+    t.string   "type"
+    t.string   "mp3"
   end
 
   add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
@@ -580,6 +615,13 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.boolean  "new",                                :null => false
   end
 
+  create_table "permissions", :force => true do |t|
+    t.string   "resource"
+    t.string   "action"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "pij_query", :force => true do |t|
     t.string   "slug",         :limit => 50,         :null => false
     t.string   "headline",     :limit => 200,        :null => false
@@ -589,28 +631,32 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
     t.integer  "form_height",                        :null => false
     t.string   "query_url",    :limit => 200,        :null => false
     t.boolean  "is_active",                          :null => false
-    t.datetime "published_at",                       :null => false
+    t.datetime "published_at"
     t.datetime "expires_at"
     t.boolean  "is_featured",                        :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "pij_query", ["slug"], :name => "slug", :unique => true
 
   create_table "podcasts_podcast", :force => true do |t|
-    t.string  "slug",        :limit => 40,                            :null => false
-    t.string  "title",       :limit => 140,                           :null => false
-    t.string  "link",        :limit => 250,                           :null => false
-    t.string  "podcast_url", :limit => 250,        :default => "",    :null => false
-    t.string  "itunes_url",  :limit => 250,        :default => "",    :null => false
-    t.text    "description", :limit => 2147483647,                    :null => false
-    t.string  "image_url",   :limit => 250,                           :null => false
-    t.string  "author",      :limit => 140,                           :null => false
-    t.string  "keywords",    :limit => 200,                           :null => false
-    t.string  "duration",    :limit => 10,                            :null => false
-    t.boolean "is_listed",                         :default => false, :null => false
-    t.integer "program_id"
-    t.integer "category_id"
-    t.string  "item_type",   :limit => 10
+    t.string   "slug",        :limit => 40,                            :null => false
+    t.string   "title",       :limit => 140,                           :null => false
+    t.string   "link",        :limit => 250,                           :null => false
+    t.string   "podcast_url", :limit => 250,        :default => "",    :null => false
+    t.string   "itunes_url",  :limit => 250,        :default => "",    :null => false
+    t.text     "description", :limit => 2147483647,                    :null => false
+    t.string   "image_url",   :limit => 250,                           :null => false
+    t.string   "author",      :limit => 140,                           :null => false
+    t.string   "keywords",    :limit => 200,                           :null => false
+    t.string   "duration",    :limit => 10,                            :null => false
+    t.boolean  "is_listed",                         :default => false, :null => false
+    t.integer  "program_id"
+    t.integer  "category_id"
+    t.string   "item_type",   :limit => 10
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
   end
 
   add_index "podcasts_podcast", ["category_id"], :name => "podcasts_podcast_42dc49bc"
@@ -628,25 +674,27 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "press_releases_release", ["slug"], :name => "press_releases_release_slug"
 
   create_table "programs_kpccprogram", :force => true do |t|
-    t.string  "slug",                :limit => 40,                            :null => false
-    t.string  "title",               :limit => 60,                            :null => false
-    t.text    "teaser",              :limit => 2147483647,                    :null => false
-    t.text    "description",         :limit => 2147483647,                    :null => false
-    t.string  "host",                :limit => 150,        :default => "",    :null => false
-    t.string  "airtime",             :limit => 300,                           :null => false
-    t.string  "air_status",          :limit => 10,                            :null => false
-    t.string  "podcast_url",         :limit => 300,        :default => "",    :null => false
-    t.string  "rss_url",             :limit => 300,        :default => "",    :null => false
-    t.string  "twitter_url",         :limit => 300,        :default => "",    :null => false
-    t.string  "facebook_url",        :limit => 300,        :default => "",    :null => false
-    t.text    "sidebar",             :limit => 2147483647,                    :null => false
-    t.boolean "display_episodes",                          :default => false, :null => false
-    t.boolean "display_segments",                                             :null => false
-    t.integer "blog_id"
-    t.string  "video_player",        :limit => 20
-    t.string  "audio_dir",           :limit => 50
-    t.integer "missed_it_bucket_id"
-    t.string  "quick_slug",          :limit => 40
+    t.string   "slug",                :limit => 40,                           :null => false
+    t.string   "title",               :limit => 60,                           :null => false
+    t.text     "teaser",              :limit => 2147483647
+    t.text     "description",         :limit => 2147483647
+    t.string   "host",                :limit => 150
+    t.string   "airtime",             :limit => 300
+    t.string   "air_status",          :limit => 10,                           :null => false
+    t.string   "podcast_url",         :limit => 200
+    t.string   "rss_url",             :limit => 200
+    t.string   "twitter_url",         :limit => 300
+    t.string   "facebook_url",        :limit => 200
+    t.text     "sidebar",             :limit => 2147483647
+    t.boolean  "display_episodes",                          :default => true, :null => false
+    t.boolean  "display_segments",                          :default => true, :null => false
+    t.integer  "blog_id"
+    t.string   "video_player",        :limit => 20
+    t.string   "audio_dir",           :limit => 50
+    t.integer  "missed_it_bucket_id"
+    t.string   "quick_slug",          :limit => 40
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
   end
 
   add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
@@ -655,18 +703,20 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   add_index "programs_kpccprogram", ["title"], :name => "title", :unique => true
 
   create_table "programs_otherprogram", :force => true do |t|
-    t.string "slug",        :limit => 40,                         :null => false
-    t.string "title",       :limit => 60,                         :null => false
-    t.text   "teaser",      :limit => 2147483647,                 :null => false
-    t.text   "description", :limit => 2147483647,                 :null => false
-    t.string "host",        :limit => 150,        :default => "", :null => false
-    t.string "produced_by", :limit => 50,                         :null => false
-    t.string "airtime",     :limit => 300,                        :null => false
-    t.string "air_status",  :limit => 10,                         :null => false
-    t.string "web_url",     :limit => 300,        :default => "", :null => false
-    t.string "podcast_url", :limit => 300,        :default => "", :null => false
-    t.string "rss_url",     :limit => 300,        :default => "", :null => false
-    t.text   "sidebar",     :limit => 2147483647,                 :null => false
+    t.string   "slug",        :limit => 40,         :null => false
+    t.string   "title",       :limit => 60,         :null => false
+    t.text     "teaser",      :limit => 2147483647
+    t.text     "description", :limit => 2147483647
+    t.string   "host",        :limit => 150
+    t.string   "produced_by", :limit => 50
+    t.string   "airtime",     :limit => 300
+    t.string   "air_status",  :limit => 10,         :null => false
+    t.string   "web_url",     :limit => 200
+    t.string   "podcast_url", :limit => 200
+    t.string   "rss_url",     :limit => 200
+    t.text     "sidebar",     :limit => 2147483647
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
@@ -686,13 +736,15 @@ ActiveRecord::Schema.define(:version => 20120910173557) do
   end
 
   create_table "schedule_program", :force => true do |t|
-    t.integer "day",                             :null => false
-    t.integer "kpcc_program_id"
-    t.integer "other_program_id"
-    t.string  "program",          :limit => 150, :null => false
-    t.string  "url",              :limit => 200, :null => false
-    t.time    "start_time",                      :null => false
-    t.time    "end_time",                        :null => false
+    t.integer  "day",                             :null => false
+    t.integer  "kpcc_program_id"
+    t.integer  "other_program_id"
+    t.string   "program",          :limit => 150, :null => false
+    t.string   "url",              :limit => 200, :null => false
+    t.time     "start_time",                      :null => false
+    t.time     "end_time",                        :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"

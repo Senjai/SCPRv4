@@ -23,8 +23,4 @@ class Promotion < ActiveRecord::Base
       false
     end
   end
-  
-  def obj_key
-    "promotions:#{self.id}"
-  end
 end

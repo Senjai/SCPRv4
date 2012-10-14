@@ -1,16 +1,17 @@
 class ShowEpisode < ContentBase
+  include Model::Methods::StatusMethods
   include Model::Methods::PublishingMethods
   include Model::Validations::ContentValidation
   include Model::Callbacks::SetPublishedAtCallback
   include Model::Associations::ContentAlarmAssociation
+  include Model::Associations::AudioAssociation
+  include Model::Associations::AssetAssociation
   include Model::Scopes::SinceScope
   
-  
-  self.table_name =  "shows_episode"
+  self.table_name = "shows_episode"
+  ROUTE_KEY       = "episode"
   has_secretary
-  
-  CONTENT_TYPE = 'shows/episode'
-  
+    
   acts_as_content comments: false
                   
   # -------------------
@@ -26,10 +27,12 @@ class ShowEpisode < ContentBase
     end
   end
   
+  
   # -------------------
   # Validations
-  validates :show_id,  presence: true
+  validates :show, presence: true
   validates :air_date, presence: true, if: :published?
+  
   
   # -------------------
   # Associations
@@ -42,11 +45,23 @@ class ShowEpisode < ContentBase
                           foreign_key:  "segment_id", 
                           through:      :rundowns, 
                           order:        "segment_order asc"
+
     
   # -------------------
   # Scopes
   scope :published, where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
   scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
+
+
+  # -------------------
+  # Callbacks
+  before_validation :generate_headline, if: -> { self.headline.blank? }
+  
+  def generate_headline
+    if self.air_date.present?
+      self.headline = "#{self.show.title} for #{self.air_date.strftime("%B %-d, %Y")}"
+    end
+  end
   
   # -------------------
   # Since episode bodies are short, 
@@ -73,17 +88,14 @@ class ShowEpisode < ContentBase
 
   #----------
   
-  def link_path(options={})
-    # We can't figure out the link path until
-    # all of the pieces are in-place.
-    return nil if !published?
-    
-    Rails.application.routes.url_helpers.episode_path(options.merge!({
-      :show           => self.show.slug,
-      :year           => self.air_date.year, 
-      :month          => "%02d" % self.air_date.month,
-      :day            => "%02d" % self.air_date.day,
+  def route_hash
+    return {} if !self.published? || !self.persisted?
+    {
+      :show           => self.persisted_record.show.slug,
+      :year           => self.persisted_record.air_date.year, 
+      :month          => "%02d" % self.persisted_record.air_date.month,
+      :day            => "%02d" % self.persisted_record.air_date.day,
       :trailing_slash => true
-    }))
+    }
   end
 end

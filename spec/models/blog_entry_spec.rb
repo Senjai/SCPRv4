@@ -31,6 +31,8 @@ describe BlogEntry do
   
   describe "associations" do
     it_behaves_like "content alarm association"
+    it_behaves_like "asset association"
+    it_behaves_like "audio association"
     
     it { should belong_to :blog }
     it { should have_many :tagged }
@@ -68,6 +70,9 @@ describe BlogEntry do
   end
   
   # ----------------
+  
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
   
   it "responds to category" do
     entry = create_list :blog_entry, 3, with_category: true
@@ -110,23 +115,6 @@ describe BlogEntry do
       extended_teaser = entry.extended_teaser(20)
       extended_teaser.should match /Blah Blah Blah/
       extended_teaser.should match /Bold Bold Bold/
-    end
-  end
-
-  # ----------------
-  
-  describe "auto_published_at" do
-    it "is true" do
-      create(:blog_entry).auto_published_at.should be_true
-    end
-  end
-  
-  # ----------------
-  
-  describe "link_path" do
-    it "does not override hard-coded options" do
-      entry = create :blog_entry
-      entry.link_path(slug: "wrong").should_not match "wrong"
     end
   end
 end

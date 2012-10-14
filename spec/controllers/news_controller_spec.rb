@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe NewsController do
+  render_views
+  
   describe "GET /story" do
     it "assigns @story" do
       story = create :news_story

@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start 'rails'
+
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'rubygems'
@@ -8,6 +11,7 @@ require 'thinking_sphinx/test'
 require 'database_cleaner'
 require 'chronic'
 require 'fakeweb'
+require 'capybara/rspec'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
@@ -16,15 +20,19 @@ Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 RSpec.configure do |config|  
   config.use_transactional_fixtures                 = false
   config.infer_base_class_for_anonymous_controllers = true
-  
+
+  config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }  
   config.include FactoryGirl::Syntax::Methods
   config.include AdminResource::Helpers
-  config.include ContentBaseHelpers
+  config.include ThinkingSphinxHelpers
   config.include RemoteStubs
+  config.include PresenterHelper
   config.include LyrisXMLResponse
   config.include DatePathHelper
   config.include StubTime
   config.include StubPublishingCallbacks
+  config.include FormFillers,           example_group: { file_path: %r{spec/requests} }  
+  config.include AuthenticationHelper,  example_group: { file_path: %r{spec/requests} }  
   
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
@@ -47,8 +55,9 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
     Rails.cache.clear
   end
-  
+
   config.after :suite do
-    #
+    # Just incase
+    FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
   end
 end

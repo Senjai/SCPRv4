@@ -1,17 +1,25 @@
 class ShowSegment < ContentBase
+  include Model::Methods::StatusMethods
   include Model::Methods::PublishingMethods
   include Model::Validations::ContentValidation
   include Model::Validations::SlugUniqueForPublishedAtValidation
   include Model::Callbacks::SetPublishedAtCallback
   include Model::Associations::ContentAlarmAssociation
+  include Model::Associations::AudioAssociation
+  include Model::Associations::AssetAssociation
   include Model::Scopes::SinceScope
   
   
-  self.table_name =  'shows_segment'
-  
-  CONTENT_TYPE = "shows/segment"
+  self.table_name      = 'shows_segment'
   PRIMARY_ASSET_SCHEME = :segment_asset_scheme
-
+  ROUTE_KEY            = "segment"
+  
+  ASSET_SCHEMES = [
+    ["Full Width (default)", ""],
+    ["Float Right", "float"],
+    ["Slideshow", "slideshow"]
+  ]
+  
   acts_as_content
   has_secretary
   
@@ -28,6 +36,7 @@ class ShowSegment < ContentBase
     end
   end
 
+
   
   # -------------------
   # Associations  
@@ -36,6 +45,10 @@ class ShowSegment < ContentBase
   has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc" 
 
 
+  # -------------------
+  # Validations
+  validates :show, presence: true
+  
   # -------------------
   # Scopes
 
@@ -89,19 +102,16 @@ class ShowSegment < ContentBase
   
   #----------
   
-  def link_path(options={})
-    # We can't figure out the link path until
-    # all of the pieces are in-place.
-    return nil if !published?
-    
-    Rails.application.routes.url_helpers.segment_path(options.merge!({
-      :show           => self.show.slug,
-      :year           => self.published_at.year, 
-      :month          => "%02d" % self.published_at.month,
-      :day            => "%02d" % self.published_at.day,
-      :id             => self.id,
-      :slug           => self.slug,
+  def route_hash
+    return {} if !self.published? || !self.persisted?
+    {
+      :show           => self.persisted_record.show.slug,
+      :year           => self.persisted_record.published_at.year, 
+      :month          => "%02d" % self.persisted_record.published_at.month,
+      :day            => "%02d" % self.persisted_record.published_at.day,
+      :id             => self.persisted_record.id,
+      :slug           => self.persisted_record.slug,
       :trailing_slash => true
-    }))
+    }
   end
 end

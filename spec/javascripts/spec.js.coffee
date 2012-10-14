@@ -1,4 +1,4 @@
 #= require jquery
-#= require presentation
-#= require content_carousel
+#= require scprbase
+#= require ../../app/assets/javascripts/admin/admin.js
 #= require_tree .

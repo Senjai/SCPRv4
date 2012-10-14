@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe SitemapsController do
+  render_views
+  
   SitemapsController.sitemaps.each do |sitemap|
     describe sitemap do
       it "sets @content" do

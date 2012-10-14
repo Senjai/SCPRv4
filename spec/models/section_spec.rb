@@ -35,8 +35,8 @@ describe Section do
       
       setup_sphinx
       
-      politics_category = create :category, category: "Politics"
-      music_category    = create :category, category: "Music"
+      politics_category = create :category, title: "Politics"
+      music_category    = create :category, title: "Music"
       politics_content  = make_content(2, category: politics_category)
       music_content     = make_content(2, category: music_category)
       section           = create :section, categories: [politics_category]

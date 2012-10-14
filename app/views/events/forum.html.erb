@@ -2,157 +2,157 @@
 
 <% content_for :masthead do %>
 <!-- HERO -->
-	<div class="events-header-small">
-		<%= image_tag "event-headers/cff-logo.png" %>
-	</div>
-	<%= render 'nav', navClass: "horizontal" %>
-	
-	<header id="events-header">
-		<div class="slides-wrapper">
-			<div class="slide active" id="hero-1">
-				<div class="slide-text">
-					<h3>Where the conversation starts</h3>
-					<p></p>
-				</div>
-				<%= image_tag 'event-headers/hero-1.jpg', alt: "" %>
-			</div>
-		
-			<div class="slide" id="hero-2">
-				<div class="slide-text">
-					<h3>Vital voices, important issues</h3>
-					<p></p>
-				</div>
-				<%= image_tag 'event-headers/hero-2.jpg', alt: "" %>
-			</div>
-		
-			<div class="slide" id="hero-3">
-				<div class="slide-text">
-					<h3>Be part of the conversation</h3>
-					<p></p>
-				</div>
-				<%= image_tag 'event-headers/hero-3.jpg', alt: "" %>
-			</div>
-		
-			<div class="slide" id="hero-4">
-				<div class="slide-text">
-					<h3>Engage your community</h3>
-					<p></p>
-				</div>
-				<%= image_tag 'event-headers/hero-4.jpg', alt: "" %>
-			</div>
-		</div><!-- slides-wrapper -->
-		<div class="choosers">
-			<div class="chooser active" data-slide="hero-1">&nbsp;</div>
-			<div class="chooser" data-slide="hero-2">&nbsp;</div>
-			<div class="chooser" data-slide="hero-3">&nbsp;</div>
-			<div class="chooser" data-slide="hero-4">&nbsp;</div>
-		</div> <!-- choosers -->
+  <div class="events-header-small">
+    <%= image_tag "event-headers/cff-logo.png" %>
+  </div>
+  <%= render 'nav', navClass: "horizontal" %>
+  
+  <header id="events-header">
+    <div class="slides-wrapper">
+      <div class="slide active" id="hero-1">
+        <div class="slide-text">
+          <h3>Where the conversation starts</h3>
+          <p></p>
+        </div>
+        <%= image_tag 'event-headers/hero-1.jpg', alt: "" %>
+      </div>
+    
+      <div class="slide" id="hero-2">
+        <div class="slide-text">
+          <h3>Vital voices, important issues</h3>
+          <p></p>
+        </div>
+        <%= image_tag 'event-headers/hero-2.jpg', alt: "" %>
+      </div>
+    
+      <div class="slide" id="hero-3">
+        <div class="slide-text">
+          <h3>Be part of the conversation</h3>
+          <p></p>
+        </div>
+        <%= image_tag 'event-headers/hero-3.jpg', alt: "" %>
+      </div>
+    
+      <div class="slide" id="hero-4">
+        <div class="slide-text">
+          <h3>Engage your community</h3>
+          <p></p>
+        </div>
+        <%= image_tag 'event-headers/hero-4.jpg', alt: "" %>
+      </div>
+    </div><!-- slides-wrapper -->
+    <div class="choosers">
+      <div class="chooser active" data-slide="hero-1">&nbsp;</div>
+      <div class="chooser" data-slide="hero-2">&nbsp;</div>
+      <div class="chooser" data-slide="hero-3">&nbsp;</div>
+      <div class="chooser" data-slide="hero-4">&nbsp;</div>
+    </div> <!-- choosers -->
     </header>
 <% end %>
 
 <!-- CONTENT -->
 <div class="events">
-	<div class="row-fluid">
-	
-		<!-- LEFT COLUMN -->
-		<div id="forum-span-upcoming-events" class="span13">
-			<section class="upcoming-events">
-				<h6 class="upcoming">Attend an Upcoming Event</h6>
-				<% if @closest_event.present? %>
-					<div class="event closest">
-						<%= render_asset @closest_event, 'lead5' %>
-						<%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.link_path, class: "event-link" %>
-						<h1 class="story-title"><%= link_to @closest_event.headline, @closest_event.link_path %></h1>
-						<%= @closest_event.teaser %>
-					</div>
-				<% end %>
-		
-				<%= any_to_list? @future_events, title: "Future Events", message: "There are no events planned for the near future. Check back soon!" do %>
-					<% @future_events.each do |event| %>
-						<div class="event future">
-							<div class="row-fluid">
-								<% if event.assets.present? %>
-									<div class="span8">
-										<%= render_asset event, 'lsquare' %>
-									</div>
-									<div class="span16">
-								<% else %>
-									<div class="span24">
-								<% end %>
-									<div class="info">
-										<%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
-										<h2 class="story-title"><%= link_to event.headline, event.link_path %></h2>
-										<%= event.teaser %>
-									</div>
-								</div> <!-- span -->
-							</div> <!-- row fluid -->
-						</div> <!-- event future -->
-					<% end %>
-				<% end %>
-				<p><a href="<%= events_path(list: 'forum') %>" class="more">More Upcoming Events</a></p>
-			</section> <!-- upcoming-events -->
-		</div> <!-- span -->
-	
-		<!-- MIDDLE COLUMN (social media) -->
-		<div id="forum-span-social" class="span11">
-			<section class="social">
-				<h3>Follow Us on Social Media</h3>
-				<div class="banners">
-					<a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook">Like the Crawford Family Forum on Facebook</a><br />
-					<a href="http://twitter.com/KPCCForum" class="twitter">Follow the Crawford Family Forum on Twitter</a>
-				</div>
-		
-				<!-- TWITTER -->
-				<% if cached_tweets = Rails.cache.fetch("twitter:KPCCForum") %>
-					<a class="twitter-peeker" href="http://twitter.com/KPCCForum"><h3>Tweets from the Crawford Family Forum</h3></a>
-					<%= cached_tweets %>
-				<% end %>
-			</section>
-		</div> <!-- span -->
-	</div> <!-- .row-fluid -->
+  <div class="row-fluid">
+  
+    <!-- LEFT COLUMN -->
+    <div id="forum-span-upcoming-events" class="span13">
+      <section class="upcoming-events">
+        <h6 class="upcoming">Attend an Upcoming Event</h6>
+        <% if @closest_event.present? %>
+          <div class="event closest">
+            <%= render_asset @closest_event, 'lead5' %>
+            <%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.link_path, class: "event-link" %>
+            <h1 class="story-title"><%= link_to @closest_event.headline, @closest_event.link_path %></h1>
+            <%= @closest_event.teaser %>
+          </div>
+        <% end %>
+    
+        <%= any_to_list? @future_events, title: "Future Events", message: "There are no events planned for the near future. Check back soon!" do %>
+          <% @future_events.each do |event| %>
+            <div class="event future">
+              <div class="row-fluid">
+                <% if event.assets.present? %>
+                  <div class="span8">
+                    <%= render_asset event, 'lsquare' %>
+                  </div>
+                  <div class="span16">
+                <% else %>
+                  <div class="span24">
+                <% end %>
+                  <div class="info">
+                    <%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
+                    <h2 class="story-title"><%= link_to event.headline, event.link_path %></h2>
+                    <%= event.teaser %>
+                  </div>
+                </div> <!-- span -->
+              </div> <!-- row fluid -->
+            </div> <!-- event future -->
+          <% end %>
+        <% end %>
+        <p><a href="<%= events_path(list: 'forum') %>" class="more">More Upcoming Events</a></p>
+      </section> <!-- upcoming-events -->
+    </div> <!-- span -->
+  
+    <!-- MIDDLE COLUMN (social media) -->
+    <div id="forum-span-social" class="span11">
+      <section class="social">
+        <h3>Follow Us on Social Media</h3>
+        <div class="banners">
+          <a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook">Like the Crawford Family Forum on Facebook</a><br />
+          <a href="http://twitter.com/KPCCForum" class="twitter">Follow the Crawford Family Forum on Twitter</a>
+        </div>
+    
+        <!-- TWITTER -->
+        <% if cached_tweets = Rails.cache.fetch("twitter:KPCCForum") %>
+          <a class="twitter-peeker" href="http://twitter.com/KPCCForum"><h3>Tweets from the Crawford Family Forum</h3></a>
+          <%= cached_tweets %>
+        <% end %>
+      </section>
+    </div> <!-- span -->
+  </div> <!-- .row-fluid -->
 </div> <!-- events -->
 
 
 <!-- ARCHIVE STRIP -->
 <% if any_to_list? @past_events %>
-	<% content_for :bottom do %>
-		<section class="archive-strip">
-			<h6 class="more-news-title">
-				Events from the Archive
-				<span class="more-link"><%= link_to "More", forum_events_archive_path %></span>
-			</h6>
-			<div class="row-fluid">
-				<% @past_events.each do |event| %>
-					<div class="span8">
-						<div class="event past">
-							<div class="row-fluid">
-								<% if event.assets.present? %>
-									<div class="span8">
-										<%= render_asset event, 'thumb' %>
-									</div>
-									<div class="span16">
-								<% else %>
-									<div class="span24">
-								<% end %>
-									<div class="info">
-										<h4 class="story-title"><%= link_to event.headline, event.link_path %></h4>
-										<p class="byline"><%= format_date event.starts_at, format: :full_date %></p>
-										<% if event.audio.present? %>
-											<%= content_tag :div, link_to("Listen to this event", event.audio_url, class: "inline audio-toggler", title: event.headline), class: "story-audio inline" %>
-										<% elsif event.show_comments %>
-											<%= comment_count_for event %>
-										<% end %>
-									</div> <!-- info -->
-								</div> <!-- span -->
-							</div> <!-- row fluid -->
-						</div> <!-- event past -->
-					</div> <!-- span -->
-				<% end %>
-			</div> <!-- row-fluid -->
-		</section>
-	<% end %>
+  <% content_for :bottom do %>
+    <section class="archive-strip">
+      <h6 class="more-news-title">
+        Events from the Archive
+        <span class="more-link"><%= link_to "More", forum_events_archive_path %></span>
+      </h6>
+      <div class="row-fluid">
+        <% @past_events.each do |event| %>
+          <div class="span8">
+            <div class="event past">
+              <div class="row-fluid">
+                <% if event.assets.present? %>
+                  <div class="span8">
+                    <%= render_asset event, 'thumb' %>
+                  </div>
+                  <div class="span16">
+                <% else %>
+                  <div class="span24">
+                <% end %>
+                  <div class="info">
+                    <h4 class="story-title"><%= link_to event.headline, event.link_path %></h4>
+                    <p class="byline"><%= format_date event.starts_at, format: :full_date %></p>
+                    <% if event.audio.present? %>
+                      <%= content_tag :div, link_to("Listen to this event", event.audio_url, class: "inline audio-toggler", title: event.headline), class: "story-audio inline" %>
+                    <% elsif event.show_comments %>
+                      <%= comment_count_for event %>
+                    <% end %>
+                  </div> <!-- info -->
+                </div> <!-- span -->
+              </div> <!-- row fluid -->
+            </div> <!-- event past -->
+          </div> <!-- span -->
+        <% end %>
+      </div> <!-- row-fluid -->
+    </section>
+  <% end %>
 <% end %>
 
 <% content_for :footerjss do %>
-	fader = new scpr.HeroFader;
+  fader = new scpr.HeroFader;
 <% end %>

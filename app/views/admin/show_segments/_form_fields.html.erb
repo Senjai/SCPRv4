@@ -1,0 +1,13 @@
+<%= form_block "Source" do %>
+	<%= f.association :show, collection: KpccProgram.active.all %>
+<% end %>
+
+<%= section "full_details", f, record %>
+<%= section "short_details", f, record %>
+<%= section "publishing", f, record %>
+
+<%= section "assets", f, record do %>
+	<%= f.input :segment_asset_scheme, collection: ShowSegment::ASSET_SCHEMES, selected: record.segment_asset_scheme || ShowSegment::ASSET_SCHEMES[0] %>
+<% end %>
+
+<%= section "audio", f, record %>

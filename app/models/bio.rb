@@ -1,8 +1,8 @@
 class Bio < ActiveRecord::Base
-  administrate
   include Model::Validations::SlugValidation
   
-  self.table_name =  'bios_bio'
+  ROUTE_KEY       = "bio"
+  self.table_name = 'bios_bio'
   has_secretary
 
   #--------------
@@ -25,10 +25,10 @@ class Bio < ActiveRecord::Base
   #--------------
   # Administration
   administrate do |admin|
-    admin.list.order    = "#{AdminUser.table_name}.last_name"
-    admin.list.per_page = "all"
-    
     admin.define_list do |list|
+      list.order    = "#{AdminUser.table_name}.last_name"
+      list.per_page = "all"
+      
       list.column :name
       list.column :email
       list.column :is_public, header: "Show on Site?"
@@ -62,13 +62,8 @@ class Bio < ActiveRecord::Base
       )
     end
   end
-
   
-  #----------
-  
-  def remote_link_path
-    Rails.application.routes.url_helpers.bio_url(self.slug, trailing_slash: true)
-  end
+  #---------------------
   
   def twitter_url
     if twitter.present?
@@ -76,11 +71,26 @@ class Bio < ActiveRecord::Base
     end
   end
   
+  #---------------------
+  
   def headshot
     if self.asset_id?
       @_asset ||= Asset.find(self.asset_id)
     else
-      return false
+      return nil
     end
+  end
+  
+  #---------------------
+  
+  def json
+    { asset: self.headshot }
+  end
+  
+  #---------------------
+
+  def route_hash
+    return {} if !self.persisted? || !self.is_public
+    { slug: self.persisted_record.slug }
   end
 end

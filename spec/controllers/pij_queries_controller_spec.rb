@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe PijQueriesController do
+  render_views
+  
   describe "GET /index" do
     before :each do
       create :pij_query, :news, :expired

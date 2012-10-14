@@ -1,17 +1,13 @@
-<%= f.error_notification %>
-
 <%= form_block "Source" do %>
 	<%= f.association :blog, collection: Blog.active.all %>
 <% end %>
 
-<%= form_block "Full Details" do %>
-	<%= f.input :headline, input_html: { class: "long" } %>
-	<%= f.input :body %>
-<% end %>
-
+<%= section "full_details", f, record %>
 <%= section "short_details", f, record %>
 <%= section "publishing", f, record %>
 
 <%= section "assets", f, record do %>
 	<%= f.input :blog_asset_scheme, collection: ContentBase::BLOG_SCHEMES, selected: record.blog_asset_scheme || ContentBase::BLOG_SCHEMES[0] %>
 <% end %>
+
+<%= section "audio", f, record %>

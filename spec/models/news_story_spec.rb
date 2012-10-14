@@ -19,6 +19,8 @@ describe NewsStory do
   
   describe "associations" do
     it_behaves_like "content alarm association"
+    it_behaves_like "asset association"
+    it_behaves_like "audio association"
   end
   
   #-----------------
@@ -35,26 +37,12 @@ describe NewsStory do
   
   #-----------------
   
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
+  
   describe "#has_format?" do
-    it "is true" do
+    it "is false" do
       build(:news_story).has_format?.should be_false
-    end
-  end
-
-  # ----------------
-  
-  describe "#auto_published_at" do
-    it "is true" do
-      create(:news_story).auto_published_at.should be_true
-    end
-  end
-
-  #-----------------
-  
-  describe "#link_path" do
-    it "does not override the hard-coded options" do
-      news_story = create :news_story
-      news_story.link_path(slug: "wrong").should_not match "wrong"
     end
   end
 end

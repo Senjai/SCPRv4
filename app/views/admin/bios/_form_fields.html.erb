@@ -1,0 +1,20 @@
+<%= form_block "Bio Information" do %>
+	<%= f.input :name %>
+	<%= f.input :title %>
+	<%= f.input :short_bio %>
+	<%= f.input :bio, input_html: { class: "short" } %>
+<% end %>
+
+<%= form_block "Website" do %>
+	<%= f.association :user, label: "User Account"%>
+	<%= f.input :slug %>
+	<%= f.input :is_public, hint: "Check this to make the page available." %>
+<% end %>
+
+<%= form_block "Contact Information" do %>
+	<%= f.input :email %>
+	<%= f.input :twitter %>
+	<%= f.input :phone_number %>
+	<%= f.input :feed_url %>
+<% end %>
+

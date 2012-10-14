@@ -78,7 +78,7 @@ end
 #### Actions
 When /^I (?:fill in|update) all of the required fields with valid information$/ do
   @updated_object = build(singular_resource(extract_controller(current_path)).to_sym)
-  fill_required_fields_with_attributes_from @updated_object
+  fill_required_fields @updated_object
 end
 
 When /^I leave the fields empty$/ do

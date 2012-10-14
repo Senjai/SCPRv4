@@ -35,8 +35,8 @@ class Dashboard::MainController < ApplicationController
   #----------
   
   def enco
-    @awaiting = Audio.unscoped.awaiting_enco.count
-    @this_week = Audio.unscoped.awaiting_enco.where( :enco_date => Date.today-7..Date.today ).order("enco_date desc, enco_number asc")
+    @awaiting  = Audio::EncoAudio.awaiting_audio.count
+    @this_week = Audio::EncoAudio.awaiting_audio.where( :enco_date => Date.today-7..Date.today ).order("enco_date desc, enco_number asc")
   end
   
   #----------

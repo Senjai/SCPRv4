@@ -1,6 +1,11 @@
 <% page_title "Add #{resource_title}" %>
 
-<%= simple_form_for [:admin, @record], html: { class: "form-horizontal" } do |f| %>
-	<%= render 'form_fields', record: @record, f: f %>
-	<%= submit_row @record %>
+<%= simple_form_for [:admin, @record], html: { multipart: @record.respond_to?(:audio), class: "form-horizontal" } do |f| %>
+  <%= render 'errors', f: f %>
+  <%= render 'form_fields', record: @record, f: f %>
+  <%= submit_row @record, @persisted_record %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <!-- placeholder -->
 <% end %>

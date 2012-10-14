@@ -79,8 +79,6 @@ class ContentBase < ActiveRecord::Base
   has_many :related_links,    as: :content, class_name: "Link",           conditions: "link_type != 'query'"
   has_many :queries,          as: :content, class_name: "Link",           conditions: { link_type: "query" }
   
-  has_many :audio,            as: :content, order: "position asc"
-
   has_one :content_category,  as: :content  
   has_one :category,          through: :content_category
   
@@ -163,19 +161,17 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
-  def as_json(*args)
+  def json
     {
       :id             => self.obj_key,
-      :obj_key        => self.obj_key,
       :headline       => self.headline,
       :short_headline => self.short_headline,
       :teaser         => self.teaser,
       :asset          => self.assets.present? ? self.assets.first.asset.lsquare.tag : nil,
       :byline         => render_byline(self,false),
       :published_at   => self.published_at,
-      :link_path      => self.link_path,
-      :admin_path     => self.admin_path,
-      :status         => self.status
+      :status         => self.status,
+      :admin_path     => self.admin_path
     }
   end
   

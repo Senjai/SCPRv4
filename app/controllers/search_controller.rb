@@ -1,6 +1,2 @@
-class SearchController < ApplicationController
-  
-  def index
-  end
-  
+class SearchController < ApplicationController  
 end

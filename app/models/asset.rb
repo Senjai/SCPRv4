@@ -2,7 +2,8 @@ class Asset
   require 'faraday'
   require 'faraday_middleware'
   
-  BAD_STATUS = [400, 404, 500, 502]
+  BAD_STATUS  = [400, 404, 500, 502]
+  GOOD_STATUS = [200]
   
   #-------------------
   
@@ -24,7 +25,7 @@ class Asset
       # Otherwise make a request
       resp = self.connection.get("#{config.prefix}/outputs")
       
-      if BAD_STATUS.include? resp.status
+      if !GOOD_STATUS.include? resp.status
         # A last-resort fallback - assethost not responding and outputs not in cache
         # Should we just use this every time?
         outputs = JSON.load(File.read(Rails.root.join("util/fixtures/assethost_outputs.json")))
@@ -45,15 +46,15 @@ class Asset
   def self.find(id)
     key = "asset/asset-#{id}"
     
-    if a = Rails.cache.read(key)
+    if cached = Rails.cache.read(key)
       # cache hit -- instantiate from the cached json
-      return self.new(a)
+      return self.new(cached)
     end
     
     # missed... request it from the server
     resp = connection.get("#{config.prefix}/assets/#{id}")
 
-    if BAD_STATUS.include? resp.status
+    if !GOOD_STATUS.include? resp.status
       Asset::Fallback.log(resp.status, id)
       return Asset::Fallback.new
     else

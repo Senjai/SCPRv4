@@ -60,9 +60,10 @@ module WidgetsHelper
   #----------
   
   def content_widget(partial, object, options={})
-    if object.present?
-      partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
-      render(partial, { content: object, cssClass: "" }.merge!(options))
-    end
+    partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
+    render(partial, { content: object, cssClass: "" }.merge!(options))
   end
+  
+  alias_method :widget, :content_widget
+  
 end

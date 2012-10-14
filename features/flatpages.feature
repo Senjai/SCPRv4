@@ -35,7 +35,7 @@ Scenario: Redirect
 
 Scenario: Flatpage paths overwrite most others
 	Given a category with the following attributes:
-	 | category | is_news | slug |
+	 | title | is_news | slug |
 	 | Foodxx	| 0		  | food |
 
 	And a flatpage with the following attributes:

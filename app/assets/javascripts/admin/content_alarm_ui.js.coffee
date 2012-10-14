@@ -4,6 +4,7 @@ class scpr.ContentAlarmUI
     DefaultOptions:
         form:             "form.simple_form"
         timestampEl:      ".fire_at"
+        containerEl:      ".content-alarm-ui"
         datetimeField:    "input.datetime[name*='[fire_at]']"
         notificationEl:   ".notification#alarm_status"
         destroyEl:        ".destroy-bool"
@@ -16,20 +17,22 @@ class scpr.ContentAlarmUI
         
         # Setup all of the attributes
         @form            = @options.form
+        @container       = $ @options.containerEl,    @form
         @statusSelect    = $ @options.statusSelect,   @form
-        @timestampEl     = $ @options.timestampEl,    @form # Wrapper
-        @datetimeField   = $ @options.datetimeField,  @form # Input
-        @destroyEl       = $ @options.destroyEl,      @form # Wrapper
-        @destroyField    = $ @options.destroyField,   @form # Checkbox
-        @notificationEl  = $ @options.notificationEl, @form
+        @timestampEl     = $ @options.timestampEl,    @container # Wrapper
+        @datetimeField   = $ @options.datetimeField,  @container # Input
+        @destroyEl       = $ @options.destroyEl,      @container # Wrapper
+        @destroyField    = $ @options.destroyField,   @container  # Checkbox
+        @notificationEl  = $ @options.notificationEl, @container
 
         @statusPending   = @options.statusPending # 3
         
         @pending   = false
         @scheduled = false
         
-        @pubNotification  = new scpr.Notification(@notificationEl, "success", "This content is scheduled to be published.")
-        @warnNotification = new scpr.Notification(@notificationEl, "warning", "This content is not scheduled to be published.")
+        @alerts =
+            publish: new scpr.Notification(@notificationEl, "success", "This content is scheduled to be published.")
+            notPublish: new scpr.Notification(@notificationEl, "warning", "This content is not scheduled to be published.")
         
         # Check if the alarm fire_at is filled in
         # Check which status is selected
@@ -58,18 +61,18 @@ class scpr.ContentAlarmUI
                 
     #----------
     
-	# Do some boolean checking to figure out 
-	# which message to display
+    # Do some boolean checking to figure out 
+    # which message to display
     notify: (pending, scheduled) ->
         if pending and scheduled
-            @pubNotification.show()
-            @warnNotification.hide()
+            @alerts['publish'].render()
+            @alerts['notPublish'].detach()
         if !pending and scheduled
-            @pubNotification.hide()
-            @warnNotification.show()
+            @alerts['publish'].detach()
+            @alerts['notPublish'].render()
         if pending and !scheduled
-            @pubNotification.hide()
-            @warnNotification.show()
+            @alerts['publish'].detach()
+            @alerts['notPublish'].render()
         
     #----------
 
@@ -78,7 +81,7 @@ class scpr.ContentAlarmUI
             @timestampEl.addClass "transparent"
         else
             @timestampEl.removeClass "transparent"
-            
+        
     #----------
     
     checkScheduled: ->

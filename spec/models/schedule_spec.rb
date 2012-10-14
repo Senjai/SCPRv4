@@ -28,6 +28,8 @@ describe Schedule do
       schedule.show_modal?.should be_true
     end
   end
+
+  #---------------------
   
   describe "formnat_time" do
     it "returns noon if the time is noon" do

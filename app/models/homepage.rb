@@ -1,4 +1,9 @@
 class Homepage < ActiveRecord::Base
+  include Model::Methods::StatusMethods
+  include Model::Methods::PublishingMethods
+  include Model::Callbacks::SetPublishedAtCallback
+  include Model::Associations::ContentAlarmAssociation
+  
   self.table_name =  "layout_homepage"
 
   has_secretary

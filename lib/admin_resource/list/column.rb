@@ -5,7 +5,7 @@ module AdminResource
       attr_writer :header
     
       def initialize(attribute, list, attributes={})
-        @attribute = attribute
+        @attribute = attribute.to_s
         @list      = list
         @position  = @list.columns.size
 

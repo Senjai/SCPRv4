@@ -1,20 +1,24 @@
 class VideoShell < ContentBase
+  include Model::Methods::StatusMethods
   include Model::Methods::PublishingMethods
   include Model::Validations::ContentValidation
   include Model::Validations::SlugValidation
   include Model::Validations::PublishedAtValidation
   include Model::Associations::ContentAlarmAssociation
+  include Model::Associations::AssetAssociation
   include Model::Scopes::SinceScope
 
 
   self.table_name = "contentbase_videoshell"
-  
-  CONTENT_TYPE = "content/video"
-  ADMIN_PREFIX = "contentbase/videoshell"
+  ADMIN_PREFIX    = "contentbase/videoshell"
+  ROUTE_KEY       = "video"
   
   acts_as_content
   has_secretary
   
+  def self.content_key
+    "content/video"
+  end
   
   # -------------------
   # Validations
@@ -55,16 +59,13 @@ class VideoShell < ContentBase
   end
   
   #--------------------
-  
-  def link_path(options={})
-    # We can't figure out the link path until
-    # all of the pieces are in-place.
-    return nil if !published?
-    
-    Rails.application.routes.url_helpers.video_path(options.merge!({
-      id:             self.id,
-      slug:           self.slug,
-      trailing_slash: true
-    }))
+
+  def route_hash
+    return {} if !self.persisted? || !self.published?
+    {
+      :id             => self.persisted_record.id,
+      :slug           => self.persisted_record.slug,
+      :trailing_slash => true
+    }
   end
 end

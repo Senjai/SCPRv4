@@ -1,6 +1,7 @@
 class Section < ActiveRecord::Base
   include Model::Validations::SlugValidation
   has_secretary
+  ROUTE_KEY = "section"
   
   #----------
   # Administration
@@ -60,17 +61,12 @@ class Section < ActiveRecord::Base
   end
   
   #----------
-  
-  def link_path(options={})
-    return nil if !published?
-    
-    Rails.application.routes.url_helpers.section_path(options.merge!({
-      slug:           self.slug,
-      trailing_slash: true
-    }))
-  end
-  
-  def obj_key
-    "sections:#{self.id}"
+
+  def route_hash
+    return {} if !self.published? || !self.persisted?
+    {
+      :slug           => self.persisted_record.slug,
+      :trailing_slash => true
+    }
   end
 end

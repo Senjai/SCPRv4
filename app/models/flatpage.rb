@@ -30,15 +30,17 @@ class Flatpage < ActiveRecord::Base
   # Scopes
   scope :visible, where(is_public: true)
 
-  # -------------------
-  # Validations
-  validates :url, presence: true, uniqueness: true
-  
+
   # -------------------
   # Callbacks
   before_validation :slashify
   before_validation :downcase_url
-  after_save        :reload_routes, if: -> { self.url_changed? }
+  
+  
+  # -------------------
+  # Validations
+  validates :url, presence: true, uniqueness: true
+  validates_inclusion_of :template, in: TEMPLATE_OPTIONS.map { |o| o[1] }
   
   # -------------------
   
@@ -74,16 +76,12 @@ class Flatpage < ActiveRecord::Base
       end
     end
   end
-  
-  def remote_link_path
-    "http://www.scpr.org#{url}"
-  end
 
   # -------------------
+  # Override AdminResource for this
+  def link_path(options={})
+    self.url
+  end
   
-  private
-  
-    def reload_routes
-      Scprv4::Application.reload_routes!
-    end
+  # -------------------
 end

@@ -1,13 +1,26 @@
 require "spec_helper"
 
 describe AdminUser do
-  describe "active" do
-    it "only returns active users" do
-      inactive = create :admin_user, is_active: false
-      active = create :admin_user, is_active: true
-      #AdminUser.active.all.should eq [active]
+  describe "associations" do
+    it { should have_many(:activities).class_name("Secretary::Version") }
+    it { should have_one(:bio) }
+    it { should have_many(:admin_user_permissions) }
+    it { should have_many(:permissions).through(:admin_user_permissions) }
+  end
+  
+  #------------------------
+  
+  describe "scopes" do
+    describe "active" do
+      it "only returns active users" do
+        inactive = create :admin_user, is_active: false
+        active   = create :admin_user, is_active: true
+        AdminUser.active.should eq [active]
+      end
     end
   end
+  
+  #------------------------
   
   describe "validations" do
     before(:each) { @user = create :admin_user, name: "Ryan Bicker" }
@@ -22,6 +35,8 @@ describe AdminUser do
     end 
   end
   
+  #------------------------
+  
   describe "downcase_email" do
     it "downcases the e-mail before validating and saving a user" do
       user = create :admin_user, email: "SomeEmail@email.com"
@@ -29,9 +44,13 @@ describe AdminUser do
     end
   end
   
+  #------------------------
+  
   describe "generate_token" do
     pending
   end
+  
+  #------------------------
   
   describe "generate_username" do
     it "runs before create" do
@@ -74,6 +93,8 @@ describe AdminUser do
     end
   end
   
+  #------------------------
+  
   describe "authenticate" do 
     it "returns the user if the username and password are correct" do
       user = create :admin_user, unencrypted_password: "secret"
@@ -90,6 +111,8 @@ describe AdminUser do
       AdminUser.authenticate("wrong", "secret")
     end
   end
+
+  #------------------------
   
   describe "generate_password" do
     it "does not run if unencrypted_password is passed in" do
@@ -111,6 +134,8 @@ describe AdminUser do
       user.unencrypted_password_confirmation.should eq user.unencrypted_password
     end
   end
+
+  #------------------------
   
   describe "digest_password" do
     it "runs before creation" do

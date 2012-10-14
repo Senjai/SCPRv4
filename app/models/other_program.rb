@@ -2,6 +2,8 @@ class OtherProgram < ActiveRecord::Base
   self.table_name =  'programs_otherprogram'  
   has_secretary
 
+  ROUTE_KEY = "program"
+
   # -------------------
   # Administration
   administrate do |admin|
@@ -17,11 +19,27 @@ class OtherProgram < ActiveRecord::Base
 
   # -------------------
   # Associations
-  has_many :schedules, :foreign_key => "other_program_id", :class_name => "Schedule"
+  has_many :schedules
+  
+
+  # -------------------
+  # Validations
+  validates :title, :slug, :air_status, presence: true
+  validate :rss_or_podcast_present
+    
+  def rss_or_podcast_present
+    if self.podcast_url.blank? && self.rss_url.blank?
+      errors.add(:base, "Must specify either a Podcast url or an RSS url")
+      errors.add(:podcast_url, "")
+      errors.add(:rss_url, "")
+    end
+  end
+  
   
   # -------------------
   # Scopes
   scope :active, where(:air_status => ['onair','online'])
+  
   
   def display_segments
     false
@@ -30,21 +48,21 @@ class OtherProgram < ActiveRecord::Base
   def display_episodes
     false
   end
-  
+
   #----------
   
-  def to_param
-    slug
+  def published?
+    self.air_status != "hidden"
   end
   
   #----------
   
-  def remote_link_path
-    "http://www.scpr.org#{link_path}"
-  end
-  
-  def link_path
-    Rails.application.routes.url_helpers.program_path(self,:trailing_slash => true)
+  def route_hash
+    return {} if !self.persisted? || !self.published?
+    {
+      :show           => self.persisted_record.slug,
+      :trailing_slash => true
+    }
   end
   
   #----------

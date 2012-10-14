@@ -64,7 +64,7 @@ describe Asset do
       FakeWeb.last_request.path.should match "api/assets/1"
     end
     
-    context "bad response" do
+    context "bad response 500" do
       before :each do
         Faraday::Response.any_instance.stub(:status) { 500 }
       end
@@ -75,6 +75,21 @@ describe Asset do
   
       it "logs the fallback" do
         Asset::Fallback.should_receive(:log).with(500, 1)
+        Asset.find(1)
+      end
+    end
+    
+    context "bad response 502" do
+      before :each do
+        Faraday::Response.any_instance.stub(:status) { 502 }
+      end
+      
+      it "Returns a fallback asset" do
+        Asset.find(1).should be_a Asset::Fallback
+      end
+  
+      it "logs the fallback" do
+        Asset::Fallback.should_receive(:log).with(502, 1)
         Asset.find(1)
       end
     end

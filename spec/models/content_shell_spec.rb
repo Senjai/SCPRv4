@@ -15,6 +15,7 @@ describe ContentShell do
   
   describe "associations" do
     it_behaves_like "content alarm association"
+    it_behaves_like "asset association"
   end
 
   #-----------------
@@ -31,6 +32,9 @@ describe ContentShell do
   end
 
   #-----------------
+  
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
   
   describe "#remote_link_path" do
     it "uses the url attribute" do
@@ -53,14 +57,6 @@ describe ContentShell do
     it "is the teaser" do
       content_shell = build :content_shell
       content_shell.body.should eq content_shell.teaser
-    end
-  end
-
-  #-----------------
-  
-  describe "#auto_published_at" do
-    it "is false" do
-      build(:content_shell).auto_published_at.should be_false
     end
   end
 

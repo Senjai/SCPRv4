@@ -139,7 +139,6 @@ ContentBase.content_classes.each do |c|
     it { should respond_to :link_path }
     it { should respond_to :remote_link_path }
     it { should respond_to :obj_key }
-    it { should respond_to :auto_published_at }
     it { should respond_to :has_format? }
     it { should respond_to :byline_elements }
     
@@ -151,14 +150,12 @@ ContentBase.content_classes.each do |c|
     #-----------------
     
     describe "associations" do
-      it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
       it { should have_one(:alarm).class_name("ContentAlarm").dependent(:destroy) }
       it { should have_many(:bylines).class_name("ContentByline").dependent(:destroy) }
       it { should have_many :brels }
       it { should have_many :frels }
       it { should have_many :related_links }
       it { should have_many :queries }
-      it { should have_many :audio }
       it { should have_one :content_category }
       it { should have_one(:category).through(:content_category) }
     end

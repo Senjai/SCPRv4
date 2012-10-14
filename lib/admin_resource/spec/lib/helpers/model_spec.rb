@@ -18,6 +18,37 @@ describe AdminResource::Helpers::Model do
   
   #----------------
   
+  describe "#as_json" do
+    pending
+  end
+
+  #----------------
+  
+  describe "#obj_key" do
+    context "for persisted record" do
+      it "uses the class's content_key, the record's ID, and joins by :" do
+        person = Person.create(name: "Bryan")
+        person.id.should_not be_blank
+        person.obj_key.should eq "people:#{person.id}"
+      end
+    end
+    
+    context "for new record" do
+      it "uses new in the key" do
+        person = Person.new(name: "Bryan")
+        person.obj_key.should eq "people:new"
+      end
+    end
+  end
+  
+  #----------------
+  
+  describe "#persisted_record" do
+    pending
+  end
+  
+  #----------------
+  
   describe "#simple_title" do
     it "returns a simple name for a new object" do
       person = Person.new(id: 1, name: "Bryan Ricker")
@@ -30,6 +61,19 @@ describe AdminResource::Helpers::Model do
       person.id.should be_present
       person.new_record?.should be_false
       person.simple_title.should eq "Person ##{person.id}"
+    end
+  end
+  
+  #----------------
+  
+  describe "::content_key" do
+    it "uses the table name if it responds to it" do
+      Person.stub(:table_name) { "people_and_stuff" }
+      Person.content_key.should eq "people/and/stuff"
+    end
+    
+    it "tableizes the classname if no table" do
+      Person.content_key.should eq "people"
     end
   end
   

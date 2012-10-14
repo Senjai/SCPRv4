@@ -1,5 +1,7 @@
 require "spec_helper"
 
 describe Admin::VideoShellsController do
-  pending
+  it_behaves_like "resource controller" do
+    let(:resource) { :video_shell }
+  end
 end

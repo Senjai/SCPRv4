@@ -3,11 +3,7 @@ require "spec_helper"
 describe WidgetsHelper do
   let(:object) { create :blog_entry }
   
-  describe "content_widget" do
-    it "returns nil if object is not present" do
-      content_widget("anything", nil).should be_nil
-    end
-    
+  describe "content_widget" do    
     it "uses the absolute path if the partial starts with a slash" do
       content_widget("/shared/widgets/facebook", object).should match /Like KPCC on Facebook/ # Need to figure out a better way to test this
     end

@@ -15,6 +15,13 @@ module ApplicationHelper
     content.class.acting_as_content
   end
   
+  def present(object, klass=nil)
+    klass ||= "#{object.class}Presenter".constantize
+    presenter = klass.new(object, self)
+    yield presenter if block_given?
+    presenter
+  end
+  
   def render_content(content,context,options={})
     if !content
       return ''
@@ -40,7 +47,7 @@ module ApplicationHelper
       end
       
       # break up our content type
-      types = c.class::CONTENT_TYPE.split("/")
+      types = c.class.content_key.split("/")
 
       # set up our template precendence
       tmplt_opts = [

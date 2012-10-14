@@ -1,5 +1,9 @@
-<%= f.error_notification %>
+<%= form_block "Details" do %>
+  <%= f.input :headline, input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
+  <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 160, fuzziness: 20 } } %>
+  <%= section "slug", f, record %>
+  <%= section "remote_published_at", f, record %>
+<% end %>
 
-<%= section "full_details", f, record %>
 <%= section "publishing", f, record %>
 <%= section "assets", f, record %>

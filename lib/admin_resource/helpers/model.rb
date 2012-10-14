@@ -22,6 +22,16 @@ module AdminResource
 
         #--------------
         
+        def content_key
+          if self.respond_to? :table_name
+            self.table_name.gsub(/_/, "/")
+          else
+            self.name.tableize
+          end
+        end
+
+        #--------------
+        
         # This should go away eventually
         def django_admin_url
           "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
@@ -61,11 +71,18 @@ module AdminResource
       #   photo.to_title  #=> "Photo #10"
       #
       #
+            
+      def title_method
+        @title_method ||= begin
+          attributes = AdminResource.config.title_attributes
+          attributes.find { |a| self.respond_to?(a) }
+        end
+      end
+      
+      #-------------
       
       def to_title
-        attributes   = AdminResource.config.title_attributes
-        title_method = attributes.find { |a| self.respond_to?(a) }
-        self.send(title_method)
+        @to_title ||= self.send(self.title_method)
       end
       
       #-------------
@@ -80,6 +97,54 @@ module AdminResource
         end
       end
 
+      #-------------
+      # This method should be overridden
+      # Don't override as_json unless you don't
+      # want its baked-in goodies
+      def json
+        # Super is temporary for ContentBase stuff
+        # Since this module sits between CB and its subclasses
+        super rescue {}
+      end
+      
+      #-------------
+      # Define some defaults for as_json
+      # Override `self.json` to add attributes
+      # or override any of these.
+      def as_json(*args)
+        {
+          :id         => self.id,
+          :obj_key    => self.obj_key,          
+          :link_path  => self.link_path,
+          :to_title   => self.to_title,
+          :edit_path  => self.admin_edit_path
+        }.merge! self.json
+      end
+
+      #-------------
+
+      def persisted_record
+        @persisted_record ||= begin
+          # If this record isn't persisted, return nil
+          return nil if !self.persisted?
+        
+          # If attributes have been changed, then fetch
+          # the persisted record from the database
+          # Otherwise just use self
+          if self.changed_attributes.present?
+            self.class.find(self.id)
+          else
+            self
+          end
+        end
+      end
+          
+      #-------------
+      # Default obj_key pattern
+      def obj_key
+        @obj_key ||= [self.class.content_key,self.id || "new"].join(":")
+      end
+      
       #-------------
       
       # This should go away eventually

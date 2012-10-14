@@ -9,48 +9,46 @@ describe KpccProgram do
     it { should belong_to :blog }
   end
   
-  describe "#to_param" do
-    it "uses the slug" do
-      program = build :kpcc_program
-      program.to_param.should eq program.slug
+  #--------------------
+
+  describe "validations" do
+    it { should validate_presence_of(:title) }
+    it { should validate_presence_of(:slug) }
+    it { should validate_presence_of(:air_status) }
+    
+    it "validates slug uniqueness" do
+      create :kpcc_program
+      should validate_uniqueness_of(:slug)
+    end    
+  end
+  
+  #--------------------
+
+  describe "::scopes" do
+    describe "can sync audio" do
+      it "returns records with onair and audio_dir" do
+        onair_and_dir = create :kpcc_program, air_status: "onair", audio_dir: "coolprogram"
+        online        = create :kpcc_program, air_status: "online", audio_dir: "coolprogram"
+        no_dir        = create :kpcc_program, air_status: "onair", audio_dir: ""
+        offair_no_dir = create :kpcc_program, air_status: "online", audio_dir: ""
+      
+        KpccProgram.can_sync_audio.should eq [onair_and_dir]
+      end
     end
   end
   
-  describe "twitter_url" do
-    it "returns the twitter_url if specified" do
-      twitter_url = "airtalk"
-      program = build :kpcc_program, twitter_url: twitter_url
-      program.twitter_url.should eq twitter_url
-    end
-    
-    it "returns the KPCC fallback if not specified" do
-      program = build :kpcc_program, twitter_url: ""
-      program.twitter_url.should eq KpccProgram::ConnectDefaults[:twitter]
-    end
-  end
+  #--------------------
   
-  describe "facebook_url" do
-    it "returns the facebook_url if specified" do
-      facebook_url = "facebook.com/airtalk"
-      program = build :kpcc_program, facebook_url: facebook_url
-      program.facebook_url.should eq facebook_url
+  describe "#absolute_audio_path" do
+    it "is Audio::AUDIO_ROOT_PATH joined with the program's audio_dir" do
+      stub_const("Audio::AUDIO_PATH_ROOT", "/home/path/to/audio")
+      program = create :kpcc_program, audio_dir: "someshow"
+      program.absolute_audio_path.should eq "/home/path/to/audio/someshow"
     end
     
-    it "returns the KPCC fallback if not specified" do
-      program = build :kpcc_program, facebook_url: ""
-      program.facebook_url.should eq KpccProgram::ConnectDefaults[:facebook]
-    end
-  end
-  
-  describe "#twitter_absolute_url" do
-    it "returns twitter_url if it's already a url to Twitter" do
-      program = build :kpcc_program, twitter_url: "http://twitter.com/kpcc"
-      program.twitter_absolute_url.should eq program.twitter_url
-    end
-    
-    it "appends the twitter domain if twitter_url is only a handle" do
-      program = build :kpcc_program, twitter_url: "kpcc"
-      program.twitter_absolute_url.should eq "http://twitter.com/#{program.twitter_url}"
+    it "is nil if audio_dir is present" do
+      program = create :kpcc_program, audio_dir: nil
+      program.absolute_audio_path.should eq nil
     end
   end
 end

@@ -3,17 +3,28 @@
 # Raise notifications from anywhere in the JS code
 # Pass the el to place the message into
 class scpr.Notification
-    constructor: (el, type, message) ->
-        @type      = type
-        @message   = message
-        @container = el
-        @el        = $("<div />", class: "alert alert-#{type}").html("#{message}").hide()
-        el.append @el
+    constructor: (@wrapper, @type, @message) ->
+        @el = $("<div />", class: "alert alert-#{type}").html("#{message}")
+
+    render: ->
+        @wrapper.append @el
     
-    # Delegation to @el.show()
+    # Delegation for jQuery: @el.is(":visible")
+    isVisible: ->
+        @el.is(":visible")
+        
+    # Delegation for jQuery: @el.show()
     show: ->
         @el.show()
         
-    # Delegation to @el.hide()
+    # Delegation for jQuery: @el.hide()
     hide: -> 
         @el.hide()
+    
+    # Delegation for jQuery: @el.detach()
+    detach: ->
+        @el.detach()
+        
+    # Delegation for jQuery: @el.remove()
+    remove: ->
+        @el.remove()

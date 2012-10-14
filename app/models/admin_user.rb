@@ -1,49 +1,66 @@
 class AdminUser < ActiveRecord::Base
-  administrate
   require 'digest/sha1'
   self.table_name = "auth_user"
-
   has_secretary
+  
   administrate do |admin|
     admin.define_list do |list|
       list.per_page = "all"
       list.order    = "last_name"
 
       list.column :username
+      list.column :email
+      list.column :first_name
+      list.column :last_name
+      list.column :is_superuser
+      list.column :is_staff
     end
   end
+  
   
   # ----------------
   # Callbacks
   before_validation :downcase_email
-  before_validation :generate_password, if: -> { unencrypted_password.blank? }, on: :create
+  before_validation :generate_password, on: :create, if: -> { unencrypted_password.blank? }
   before_create :generate_username, if: -> { username.blank? }
   before_create :digest_password, if: -> { unencrypted_password.present? }
-    
+  
+  
   # ------------------
   # Validation
   validates :email, uniqueness: true, allow_blank: true
   validates :unencrypted_password, confirmation: true
   validates_presence_of :unencrypted_password, on: :create
-    
+  
+  
   # ----------------
   # Scopes
+  default_scope { includes(:permissions) }
   scope :active, where(:is_active => true)
+
 
   # ----------------
   # Association
   has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
-  has_one :bio, foreign_key: "user_id"
+  has_one  :bio, foreign_key: "user_id"
+  has_many :admin_user_permissions
+  has_many :permissions, through: :admin_user_permissions
   
   # ----------------
 
   attr_accessor :unencrypted_password, :unencrypted_password_confirmation
   
   # ----------------
+
+  def allowed_to?(action, resource)
+    self.is_superuser? || self.permissions.where(resource: resource.to_s, action: Permission.normalize_rest(action)).first
+  end
+  
+  # ----------------
   
   def self.authenticate(username, unencrypted_password)
     if user = find_by_username(username)
-      algorithm, salt, hash = user.password.split('$')
+      algorithm, salt, hash = user.password.split('$')      
       if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
         return user
       else
@@ -57,17 +74,16 @@ class AdminUser < ActiveRecord::Base
   
   # ----------------
   
-  def as_json(*args)
+  def json
     {
-      id:           self.id,
-      username:     self.username,
-      name:         self.name,
-      email:        self.email,
-      is_superuser: self.is_superuser,
-      headshot:     self.bio.try(:headshot) ? self.bio.headshot.thumb.tag : nil
+      :username     => self.username,
+      :name         => self.name,
+      :email        => self.email,
+      :is_superuser => self.is_superuser,
+      :headshot     => self.bio.try(:headshot) ? self.bio.headshot.thumb.url : nil
     }
   end
-    
+  
   # ----------------
   # Getter and Setter for name
   # Should eventually be stored in database
@@ -119,17 +135,17 @@ class AdminUser < ActiveRecord::Base
     # Adolfo Guzman-Lopez     #=> aguzmanlopez
     def generate_username
       names = self.name.split(" ")
-      username = ""
-      names[0..-2].each { |n| username += n.chars.first }
-      username += names.last
-      username = username.gsub(/\W/, "").downcase
+      uname = ""
+      names[0..-2].each { |n| uname += n.chars.first }
+      uname += names.last
+      uname = uname.gsub(/\W/, "").downcase
 
-      if !AdminUser.find_by_username(username)
-        self.username = username
+      if !AdminUser.find_by_username(uname)
+        self.username = uname
       else
         i = 1
         begin
-          self.username = username + i.to_s
+          self.username = uname + i.to_s
           i += 1
         end while AdminUser.exists?(username: self.username)
       end

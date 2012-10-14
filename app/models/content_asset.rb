@@ -32,5 +32,4 @@ class ContentAsset < ActiveRecord::Base
     # grab asset as_json, merge in our values, then call to_json on that
     self.asset.as_json(options).merge({"caption" => self.caption, "ORDER" => self.asset_order, "credit" => self.asset.owner })
   end
-  
 end

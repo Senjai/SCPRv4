@@ -1,0 +1,16 @@
+<%= form_block "Login" do %>
+  <%= f.input :username %>
+<% end %>
+
+<%= form_block "Personal Details" do %>
+  <%= f.input :first_name %>
+  <%= f.input :last_name %>
+  <%= f.input :email %>
+<% end %>
+
+<%= form_block "Permissions" do %>
+  <%= f.input :is_staff %>
+  <%= f.input :is_active %>
+  <%= f.input :is_staff %>
+  <%= f.input :is_superuser %>
+<% end %>

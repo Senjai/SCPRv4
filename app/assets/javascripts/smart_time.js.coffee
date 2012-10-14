@@ -76,9 +76,14 @@ class scpr.SmartTime
                 
             # are we doing relative or absolute timing?
             if @relative and now.subtract(@relative...) < @time
-                # relative formatting
-                @$el.text "" + @options.prefix + @time.fromNow()
-                
+                # Display "Just Now" in case it thinks 
+                # it was published in the future
+                if now.diff(@time, "seconds") > 0
+                    @$el.text 'Just Now'
+                else
+                    # relative formatting
+                    @$el.text "" + @options.prefix + @time.fromNow()
+                    
             else
                 # absolute formatting
                 if @timecut and now.subtract(@timecut...) > @time
@@ -89,4 +94,3 @@ class scpr.SmartTime
                     @$el.text "" + @options.prefix + @time.strftime @options.datetime_format                
                 
             @$el.addClass @options.class if @options.class
-      

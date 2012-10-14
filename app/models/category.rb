@@ -1,13 +1,23 @@
 class Category < ActiveRecord::Base
-  administrate
   include Model::Validations::SlugValidation
   
-  self.table_name =  'contentbase_category'
-
+  self.table_name = 'contentbase_category'
+  ROUTE_KEY       = "category"
   has_secretary
+  administrate do |admin|
+    admin.define_list do |list|
+      list.per_page = "all"
+      
+      list.column :title, linked: true
+      list.column :slug
+      list.column :is_news
+      list.column :comment_bucket
+    end
+  end
   
   belongs_to :comment_bucket, :class_name => "FeaturedCommentBucket"
-
+  validates :title, presence: true
+  
   #----------
 
   def content(page=1,per_page=10,without_obj=nil)
@@ -36,12 +46,11 @@ class Category < ActiveRecord::Base
   
   #----------
   
-  def link_path(options={})
-    Rails.application.routes.url_helpers.send("category_path", options.merge!({
-      category: self.slug
-    }))
+  def route_hash
+    return {} if !self.persisted?
+    { category: self.persisted_record.slug }
   end
-  
+
   #----------
   
   def feature_candidates(args={})

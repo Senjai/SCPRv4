@@ -2,7 +2,7 @@
 
 <div class="blog-landing">
 	<%= any_to_list? @entries, message: @MESSAGE do %>
-		<%= render :partial => "entry", :collection => @entries, :as => :entry %>
+		<%= render partial: "/blogs/entry", collection: @entries, as: :entry %>
 	<% end %>
 </div>
 

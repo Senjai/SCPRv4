@@ -11,7 +11,7 @@ module CacheTasks
     
     def initialize(forum, interval, options={})
       @forum    = forum
-      @interval = interval      
+      @interval = interval
     end
     
     #--------------

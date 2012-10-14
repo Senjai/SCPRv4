@@ -3,8 +3,11 @@ class ContentDefault
   include ActiveRecord::Reflection
   extend ActsAsContent
   
-  CONTENT_TYPE = "content/default"
   acts_as_content
+
+  def self.content_key
+    "content/default"
+  end
   
   def id
     1

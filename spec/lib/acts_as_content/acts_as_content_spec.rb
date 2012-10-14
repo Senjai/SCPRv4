@@ -28,63 +28,6 @@ describe ActsAsContent::Methods::HasFormat do
   end
 end
 
-describe ActsAsContent::Methods::StatusHelpers do
-  let(:content) { create :news_story }
-  
-  context "with has_status set to false" do
-    after :each do
-      NewsStory.acts_as_content
-    end
-    
-    it "does not provide the status helpers" do
-      pending "These tests need to be better"
-      NewsStory.acts_as_content has_status: false
-      NewsStory.new.should_not respond_to :killed?
-    end
-  end
-  
-  context "with has_status set to true" do
-    after :each do
-      NewsStory.acts_as_content
-    end
-    
-    subject { content }
-    it { should respond_to :killed? }
-    it { should respond_to :draft? }
-    it { should respond_to :awaiting_rework? }
-    it { should respond_to :awaiting_edits? }
-    it { should respond_to :pending? }
-    it { should respond_to :published? }
-  end
-end
-
-#--------------
-
-describe ActsAsContent::Methods::AutoPublishedAt do
-  let(:content) { create :news_story }
-  
-  after :each do
-    NewsStory.acts_as_content
-  end
-  
-  describe "auto_published_at" do
-    it "returns true by default" do
-      content.auto_published_at.should be_true
-    end
-    
-    it "returns false if passed into the options" do
-      NewsStory.acts_as_content auto_published_at: false
-      content.auto_published_at.should be_false
-    end
-    
-    it "isn't defined if nil is passed" do
-      pending "File needs to be reloaded somehow"
-      NewsStory.acts_as_content auto_published_at: nil
-      content.should_not respond_to :auto_published_at
-    end
-  end
-end
-
 #--------------
 
 describe ActsAsContent::Methods::Headline do
@@ -125,38 +68,6 @@ describe ActsAsContent::Methods::Body do
       pending "messes up later tests"
       NewsStory.acts_as_content body: :teaser
       content.body.should eq content.teaser
-    end
-  end
-end
-
-#--------------
-
-describe ActsAsContent::Methods::ObjKey do  
-  describe "obj_key" do
-    let(:content) { create :news_story }
-    it "returns the CONTENT_TYPE and id joined" do
-      content.obj_key.should eq "news/story:#{content.id}"
-    end
-
-    it "raises an error if CONTENT_TYPE isn't defined" do
-      content_type = NewsStory::CONTENT_TYPE
-      NewsStory.should_receive(:const_defined?).with(:CONTENT_TYPE).and_return(false)
-      -> { content.obj_key }.should raise_error
-    end
-  end
-end
-
-#--------------
-
-describe ActsAsContent::Methods::LinkPath do
-  describe "remote_link_path" do
-    let(:content) { create :news_story }
-    it "returns a link to scpr.org" do
-      content.remote_link_path.should match /scpr\.org/
-    end
-    
-    it "has the link_path in the url" do
-      content.remote_link_path.should match content.link_path
     end
   end
 end

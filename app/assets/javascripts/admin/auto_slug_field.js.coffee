@@ -6,7 +6,7 @@ $ ->
 
 class scpr.AutoSlugField
     DefaultOptions:
-        titleAttributes: ["title", "headline", "title", "name"]
+        titleAttributes: ["headline", "name", "title"]
     
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions

@@ -1,9 +1,12 @@
 class NewsStory < ContentBase
+  include Model::Methods::StatusMethods
   include Model::Methods::PublishingMethods
   include Model::Validations::ContentValidation
   include Model::Validations::SlugUniqueForPublishedAtValidation
   include Model::Callbacks::SetPublishedAtCallback
   include Model::Associations::ContentAlarmAssociation
+  include Model::Associations::AudioAssociation
+  include Model::Associations::AssetAssociation
   include Model::Scopes::SinceScope
   
   
@@ -11,8 +14,8 @@ class NewsStory < ContentBase
   acts_as_content
   has_secretary
   
-  CONTENT_TYPE         = 'news/story'
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
+  ROUTE_KEY            = "news_story"
   
   LOCALES = [ 
     ["CA/Local",  "local"],
@@ -75,22 +78,19 @@ class NewsStory < ContentBase
   end
     
   #----------
-      
-  def link_path(options={})
-    # We can't figure out the link path until
-    # all of the pieces are in-place.
-    return nil if !published?
-    
-    Rails.application.routes.url_helpers.news_story_path(options.merge!({
-      :year           => self.published_at.year.to_s, 
-      :month          => "%02d" % self.published_at.month, 
-      :day            => "%02d" % self.published_at.day, 
-      :id             => self.id,
-      :slug           => self.slug,
+
+  def route_hash
+    return {} if !self.persisted? || !self.published?
+    {
+      :year           => self.persisted_record.published_at.year.to_s, 
+      :month          => "%02d" % self.persisted_record.published_at.month, 
+      :day            => "%02d" % self.persisted_record.published_at.day, 
+      :id             => self.persisted_record.id,
+      :slug           => self.persisted_record.slug,
       :trailing_slash => true
-    }))
+    }
   end
-  
+      
   #----------
   
   def byline_elements

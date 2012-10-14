@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   def index
     @scoped_events = Event.upcoming_and_current
+    
     if params[:list] == "forum"
       @scoped_events = @scoped_events.forum
     elsif params[:list] == "sponsored"
@@ -11,23 +12,20 @@ class EventsController < ApplicationController
   end
   
   def archive
-    @events = Event.forum.past.paginate(page: params[:page], per_page: 10)
+    @events = Event.forum.past.paginate(page: params[:page] || 1, per_page: 10)
   end
   
   def show
-    date = Time.new(params[:year], params[:month], params[:day])
-    if @event = Event.published.where(slug: params[:slug], starts_at: date..date.end_of_day).first
-      @more_events = Event.forum.upcoming.where("id != ?", @event.id).limit(2)
-    else
-      redirect_to events_path
-    end
+    date         = Time.new(params[:year], params[:month], params[:day])
+    @event       = Event.published.where(slug: params[:slug], starts_at: date..date.end_of_day).first!
+    @more_events = Event.forum.upcoming.where("id != ?", @event.id).limit(2)
   end
   
   def forum
     @upcoming_events = Event.forum.upcoming_and_current.limit(3)
-    @closest_event = @upcoming_events.first
-    @future_events = @upcoming_events[1..-1]
-    @past_events = Event.forum.past.limit(3)
+    @closest_event   = @upcoming_events.first
+    @future_events   = @upcoming_events[1..-1]
+    @past_events     = Event.forum.past.limit(3)
     render layout: 'forum'
   end
 end

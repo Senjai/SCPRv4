@@ -84,7 +84,9 @@ Scprv4::Application.routes.draw do
       get '/search(/:resource)' => "search#index", as: :search
       
       ## -- AdminResource -- ##
+      resources :permissions
       resources :bios
+      resources :audio
       resources :admin_users
       resources :podcasts
       resources :schedules
@@ -114,19 +116,6 @@ Scprv4::Application.routes.draw do
       get "/activity"                                        => "versions#activity",  as: :activity
       get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
       get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
-      
-      scope "multi_american" do
-        get "/"         => "multi_american#index",    as: :multi_american
-        post "/set_doc" => "multi_american#set_doc",  as: :multi_american_set_doc
-        
-        get     ":resource_name"             => "multi_american#resource_index",       as: "index_multi_american_resource"
-        post    ":resource_name/import"      => "multi_american#import",               as: "multi_american_multiple_import"
-        delete  ":resource_name/remove"      => "multi_american#remove",               as: "multi_american_multiple_remove"
-
-        get     ":resource_name/:id"         => "multi_american#resource_show",        as: "show_multi_american_resource"
-        post    ":resource_name/:id/import"  => "multi_american#import",               as: "multi_american_import"
-        delete  ":resource_name/:id/remove"  => "multi_american#remove",               as: "multi_american_remove"
-      end
 
       root to: 'home#index'
     end
@@ -134,7 +123,7 @@ Scprv4::Application.routes.draw do
   
   
   # Flatpage paths will override anything below this route.
-  match '*flatpage_path'     => "flatpages#show", constraints: FlatpageConstraint.new
+  match '*flatpage_path' => "flatpages#show", constraints: FlatpageConstraint.new
   
   
   # -- Bios -- #

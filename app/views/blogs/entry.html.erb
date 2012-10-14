@@ -1,23 +1,24 @@
-<% page_title [@blog.name, @entry.headline], " : "
-@OG_TYPE = "blog" %>
+<%= cache ["show", "v1", @blog_entry] do %>
+  <% page_title [@blog.name, @entry.headline], " : "
+  @OG_TYPE = "blog" %>
 
-<%= render_content @entry, "opengraph" %>
-<%= render "blogs/entry", entry: @entry %>
+  <%= render_content @entry, "opengraph" %>
+  <%= render "blogs/entry", entry: @entry %>
+<% end %>
 
 <div class="fold" id="fold">
-	<%= content_widget "related_content_and_links", @entry %>
-	<%= render "shared/cwidgets/pij_query", :content => @entry %>
-	<%= content_widget "next_prev", @entry %>
-	
-	<div class="comment-wrap">
-		<div class="row-fluid">
-			<div class="span6" id="fold-comments-count-widget">
-				<%= comment_widget_for @entry, cssClass: "left-side", name: "comments" %>
-			</div>
-			<div class="span18 mq-solo-span">
-				<%= comments_for @entry, header: false %>
-			</div>
-		</div> <!-- row-fluid -->
-	</div>
+  <%= content_widget "related_content_and_links", @entry %>
+  <%= render "shared/cwidgets/pij_query", :content => @entry %>
+  <%= content_widget "next_prev", @entry %>
+  
+  <div class="comment-wrap">
+    <div class="row-fluid">
+      <div class="span6" id="fold-comments-count-widget">
+        <%= comment_widget_for @entry, cssClass: "left-side", name: "comments" %>
+      </div>
+      <div class="span18 mq-solo-span">
+        <%= comments_for @entry, header: false %>
+      </div>
+    </div> <!-- row-fluid -->
+  </div>
 </div> <!-- fold -->
-

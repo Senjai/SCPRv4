@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe SectionsController do
+  render_views
+  
   describe "GET /show" do
     context "slug not found" do
       it "raises 404" do

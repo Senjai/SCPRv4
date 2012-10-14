@@ -19,6 +19,8 @@ describe ShowSegment do
   
   describe "associations" do
     it_behaves_like "content alarm association"
+    it_behaves_like "asset association"
+    it_behaves_like "audio association"
     
     it { should belong_to :show }
     it { should have_many :rundowns }
@@ -39,14 +41,8 @@ describe ShowSegment do
   
   #------------------
   
-  describe "#link_path" do
-    it "does not override the hard-coded options" do
-      segment = create :show_segment
-      segment.link_path(slug: "wrong").should_not match "wrong"
-    end
-  end
-  
-  #------------------
+  it_behaves_like "status methods"
+  it_behaves_like "publishing methods"
   
   describe "#episode" do
     it "uses the first episode the segment is associated with" do
@@ -88,23 +84,23 @@ describe ShowSegment do
       segment = build :show_segment
       segment.byline_elements.should eq [segment.show.title]
     end
-  end 	 	
+  end     
 
   #------------------
- 	 	
+    
   describe "#canFeature?" do
     it "returns true if there are assets" do
       segment = create :show_segment, asset_count: 1
       segment.canFeature?.should be_true
-    end 	 	
- 	 	
+    end     
+    
     it "returns false if there are no assets" do
       segment = create :show_segment, asset_count: 0
       segment.canFeature?.should be_false
     end
   end
 
- 	#------------------
+  #------------------
 
   describe "#public_datetime" do
     it "is the published_at date" do
@@ -119,15 +115,5 @@ describe ShowSegment do
     it "is true" do
       create(:show_segment).has_format?.should be_false
     end
-  end
-
-  # ----------------
-  
-  describe "#auto_published_at" do
-    it "is true" do
-      create(:show_segment).auto_published_at.should be_true
-    end
-  end
-  
-  #------------------
+  end  
 end

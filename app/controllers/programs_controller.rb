@@ -54,7 +54,7 @@ class ProgramsController < ApplicationController
   def archive
     # If the date wasn't specified, send them to the program page's archive section
     if params[:archive].blank?
-      redirect_to program_path(@program, anchor: "archive-select") and return
+      redirect_to program_path(@program.slug, anchor: "archive-select") and return
       
     else
       @date = Time.new(params[:archive]["date(1i)"].to_i, params[:archive]["date(2i)"].to_i, params[:archive]["date(3i)"].to_i)
@@ -62,7 +62,7 @@ class ProgramsController < ApplicationController
      
       if @episode.blank?
         # TODO: Display some kind of notice that there is no episode
-        redirect_to program_path(@program, anchor: "archive-select") and return
+        redirect_to program_path(@program.slug, anchor: "archive-select") and return
       else
         redirect_to @episode.link_path
       end
@@ -125,7 +125,7 @@ class ProgramsController < ApplicationController
     def get_kpcc_program_by_quick_slug
       if params[:quick_slug]
         if program = KpccProgram.find_by_quick_slug(params[:quick_slug])
-          redirect_to program_path(program) and return program
+          redirect_to program_path(program.slug) and return program
         end
       else
         return false

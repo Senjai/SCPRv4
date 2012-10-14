@@ -6,3 +6,15 @@ RailsContentMap.create(django_content_type_id: 115, rails_class_name: "ContentSh
 RailsContentMap.create(django_content_type_id: 88,  rails_class_name: "Event")
 RailsContentMap.create(django_content_type_id: 125, rails_class_name: "VideoShell")
 RailsContentMap.create(django_content_type_id: 75,  rails_class_name: "PijQuery")
+RailsContentMap.create(django_content_type_id: 13,  rails_class_name: "Bio")
+RailsContentMap.create(django_content_type_id: 18,  rails_class_name: "KpccProgram")
+RailsContentMap.create(django_content_type_id: 12,  rails_class_name: "OtherProgram")
+RailsContentMap.create(django_content_type_id: 58,  rails_class_name: "Homepage")
+RailsContentMap.create(django_content_type_id: 121,  rails_class_name: "FeaturedComment")
+
+# Setup permissions based on Admin Resource's regsitered models.
+AdminResource.config.registered_models.each do |resource|
+  Permission::DEFAULT_ACTIONS.each do |action|
+    Permission.create(resource: resource, action: action)
+  end
+end

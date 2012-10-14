@@ -1,10 +1,11 @@
 class PijQuery < ActiveRecord::Base
   include Model::Scopes::SinceScope
+  include Model::Associations::AssetAssociation
+
+  self.table_name = 'pij_query'
+  ROUTE_KEY       = "pij_query"
   
-  self.table_name       = 'pij_query'
-  CONTENT_TYPE          = "pij/query"
-  
-  acts_as_content comments: false, has_status: false, published_at: false
+  acts_as_content comments: false, published_at: false
   has_secretary
   
   QUERY_TYPES = [
@@ -47,13 +48,21 @@ class PijQuery < ActiveRecord::Base
   validates :query_type,  presence: true
   validates :query_url,   presence: true
   validates :headline,    presence: true
+  validates :form_height, presence: true
 
   #------------  
+  
+  def published?
+    !!is_active
+  end
 
-  def link_path(options = {})
-    Rails.application.routes.url_helpers.pij_query_path(options.merge!({
-      slug:             self.slug,
-      trailing_slash:   true
-    }))
+  #------------  
+  
+  def route_hash
+    return {} if !self.published? || !self.persisted?
+    {
+      :slug           => self.persisted_record.slug,
+      :trailing_slash => true
+    }
   end
 end

@@ -1,5 +1,3 @@
-<%= f.error_notification %>
-
 <%= section "full_details", f, record %>
 <%= section "short_details", f, record %>
 <%= section "publishing", f, record %>
@@ -15,3 +13,5 @@
 	<%= f.input :extra_asset_scheme, collection: ContentBase::STORY_EXTRA_SCHEMES, selected: record.extra_asset_scheme || ContentBase::STORY_EXTRA_SCHEMES[0] %>
 	<%= f.input :lead_asset_scheme, collection: ContentBase::LEAD_SCHEMES, selected: record.lead_asset_scheme || ContentBase::LEAD_SCHEMES[0] %>
 <% end %>
+
+<%= section "audio", f, record %>
