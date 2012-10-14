@@ -14,7 +14,7 @@
   google.load('search', '1');
 
   function onLoad() {
-	
+  
     // Create a Custom Search control that uses a CSE restricted to code.google.com
     // Change the customSearchId string to the ID of your own Custom Search engine.
     var customSearchControl = new google.search.CustomSearchControl('001021908144703713078:fob566vxk8i');
@@ -25,12 +25,12 @@
     options.setAutoComplete(true);
     // Draw the control in content div
     customSearchControl.draw('results', options);
-	
-	query = document.location.search.substring(3)
-	if (query != ""){
-		customSearchControl.execute(decodeURIComponent(query.replace(/\+/g,  " ")));
-	}
-	
+  
+  query = document.location.search.substring(3)
+  if (query != ""){
+    customSearchControl.execute(decodeURIComponent(query.replace(/\+/g,  " ")));
+  }
+  
   }
 
   google.setOnLoadCallback(onLoad);

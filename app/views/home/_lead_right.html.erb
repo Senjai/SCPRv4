@@ -1,21 +1,21 @@
 <div class="homepage-lead lead-right">
-	<div class="row-fluid">
-		<%= content_cache("home_leads") do %>
-			<% register_content("layout/homepage") %>
-			<div class="span12">
-				<div class="offleads">
-					<%= render_content @homepage.content[0..2], "offlead" %>
-				</div>
-			</div>
-			<div class="span12">
-				<%= render_content @homepage.content[3], "lead" %>
-			</div>
-		<% end %>
-	</div>
+  <div class="row-fluid">
+    <%= content_cache("home_leads") do %>
+      <% register_content("layout/homepage") %>
+      <div class="span12">
+        <div class="offleads">
+          <%= render_content @homepage.content[0..2], "offlead" %>
+        </div>
+      </div>
+      <div class="span12">
+        <%= render_content @homepage.content[3], "lead" %>
+      </div>
+    <% end %>
+  </div>
 </div> <!-- lead-right -->
 
 <% content_for :conversation_slot do %>
-	<div class="join-conversation-container home">
-		<%= featured_comment :bucket => nil, :style => "home" %>
-	</div>
+  <div class="join-conversation-container home">
+    <%= featured_comment :bucket => nil, :style => "home" %>
+  </div>
 <% end %>

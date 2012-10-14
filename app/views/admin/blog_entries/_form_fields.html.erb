@@ -1,5 +1,5 @@
 <%= form_block "Source" do %>
-	<%= f.association :blog, collection: Blog.active.all %>
+  <%= f.association :blog, collection: Blog.active.all %>
 <% end %>
 
 <%= section "full_details", f, record %>
@@ -7,7 +7,7 @@
 <%= section "publishing", f, record %>
 
 <%= section "assets", f, record do %>
-	<%= f.input :blog_asset_scheme, collection: ContentBase::BLOG_SCHEMES, selected: record.blog_asset_scheme || ContentBase::BLOG_SCHEMES[0] %>
+  <%= f.input :blog_asset_scheme, collection: ContentBase::BLOG_SCHEMES, selected: record.blog_asset_scheme || ContentBase::BLOG_SCHEMES[0] %>
 <% end %>
 
 <%= section "audio", f, record %>

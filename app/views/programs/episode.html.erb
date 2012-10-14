@@ -1,27 +1,27 @@
 <% page_title [@episode.headline,@program.title] %>
 
 <header class="episode">
-	<div class="row-fluid">
-	    <div class="span14">
-	    	<h4><%= @episode.headline %></h4>
-	    </div>
-	    <div class="span10">
-	    	<% if @episode.audio.available.present? %>
-				<div class="right">
-					<aside class="story-audio inline">
-							<a href="<%= @episode.audio.available.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= @episode.audio.available.first.duration %>"></a>
-							<%= link_to "Listen to this episode", @episode.audio.available.first.url, :class => "audio-toggler play-text",  "data-duration" => @episode.audio.available.first.duration %>
-							<a href="<%= @episode.audio.available.first.url %>" class="download">Download</a>
-					</aside>
-				</div>
-			<% end %>
-	    </div>
-	</div>
+  <div class="row-fluid">
+    <div class="span14">
+      <h4><%= @episode.headline %></h4>
+    </div>
+    <div class="span10">
+      <% if @episode.audio.available.present? %>
+        <div class="right">
+          <aside class="story-audio inline">
+              <a href="<%= @episode.audio.available.first.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= @episode.audio.available.first.duration %>"></a>
+              <%= link_to "Listen to this episode", @episode.audio.available.first.url, :class => "audio-toggler play-text",  "data-duration" => @episode.audio.available.first.duration %>
+              <a href="<%= @episode.audio.available.first.url %>" class="download">Download</a>
+          </aside>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </header>
 
 <section class="show-segments episode">
-	<%= any_to_list? @segments, title: "Segments" do %>
-  		<%= render partial: 'programs/segment', collection: @segments %>
-	<% end %>
+  <%= any_to_list? @segments, title: "Segments" do %>
+      <%= render partial: 'programs/segment', collection: @segments %>
+  <% end %>
 </section>
 <%= render "/programs/archive_select" %>

@@ -1,111 +1,111 @@
 <html>
 <head>
-	
-	<title><%= @message.from %> shared an article with you from 89.3 KPCC</title>
-	
-	<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
-	<style type="text/css">
-	.list a {color: #cc0000; text-transform: uppercase; font-family: Helvetica; font-size: 11px; text-decoration: none;}
+  
+  <title><%= @message.from %> shared an article with you from 89.3 KPCC</title>
+  
+  <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+  <style type="text/css">
+  .list a {color: #cc0000; text-transform: uppercase; font-family: Helvetica; font-size: 11px; text-decoration: none;}
 
-	</style>
-	
-	
+  </style>
+  
+  
 </head>
 <body marginheight="0" topmargin="0" marginwidth="0" bgcolor="#c5c5c5" leftmargin="0">
 
 <table cellspacing="0" border="0" style="background-image: url(http://scpr.org<%=image_path('breaking-news/bg.gif')%>); background-color: #c5c5c5;" cellpadding="0" width="100%">
-	
-	<tr>
-		
-		<td valign="top">
+  
+  <tr>
+    
+    <td valign="top">
 
-			<table cellspacing="0" border="0" align="center" style="background: #fff; border-right: 1px solid #ccc; border-left: 1px solid #ccc;" cellpadding="0" width="600">
-				<tr>
-					<td valign="top">
-						<!-- header -->
-						<table cellspacing="0" border="0" height="100" cellpadding="0" width="600">
-							<tr>
-								<td class="main-title" height="13" valign="top" style="text-align:center;padding:20px; font-size: 25px; font-family: Georgia; font-style: italic;" width="600" colspan="2">
-									<img src="http://scpr.org<%=image_path('logo-masthead.png')%>" alt="89.3 KPCC" />
-								</td>
-							</tr>
-							<tr>
-								<td height="20" valign="top" width="600" colspan="2">
-									<img src="http://scpr.org<%=image_path('breaking-news/breaker.jpg')%>" height="20" alt="" style="border: 0;" width="600" />
-								</td>
-							</tr>
-							<tr>
-								<td class="header-bar" valign="top" style="color: #333; font-family: Helvetica; font-size: 10px; text-transform: uppercase; text-align:center; padding: 0 20px; height: 15px;" width="600" height="15">
-									A message from 89.3 KPCC
-								</td>
-							</tr>
-								<tr>
-									<td height="20" valign="top" width="600" colspan="2">
-										<img src="http://scpr.org/<%= image_path('breaking-news/breaker.jpg') %>" height="20" alt="" style="border: 0;" width="600" />
-									</td>
-								</tr>
-						</table>
-						<!-- / header -->
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<!-- content -->
-						<table cellspacing="0" border="0" height="400" cellpadding="0" width="600">
-							<tr>
-								<td class="article-title" height="20" valign="top" style="padding: 0 20px; font-size: 20px; font-weight: bold;" width="600" colspan="2">
-									<p style="font-family:Helvetica, sans-serif;"><%= @message.from %> shared an article with you:</p>
-									<% if @message.body.present? %>
-									<div style="background-color:#ededed;padding:3px 10px;border-left:3px solid #c3c3c3;">
-										<p style="font-family:Helvetica, sans-serif;font-size:14px;font-weight:normal;"><strong style="font-weight:bold;">A personal message from <%= @message.from %>:</strong> <%= @message.body %></p>
-									</div>
-									<% end %>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<table cellspacing="0" border="0" cellpadding="0">
-										<tr>
-											<td class="floated-copy" valign="top" style="padding: 0 20px 20px 20px; color: #000; font-size: 14px; font-family: Georgia; line-height: 20px;" width="600">				
-												<h1 style="color:#000;font-family:Helvetica, sans-serif;font-size:28px;font-weight:bold;line-height:28px;"><%= @content.headline %></h1>
-												<p style="color:#000;font-family:Georgia, serif;font-size:16px;line-height:26px;"><%= @content.teaser.html_safe %></p>
-												<p style="font-family:Helvetica, sans-serif;font-weight:bold;">Read the full story: <a href="<%= @content.remote_link_path %>" style="font-weight:bold;"><%= @content.remote_link_path %></a></p>
-											</td>
-										</tr>
-									</table>
-								</td>
+      <table cellspacing="0" border="0" align="center" style="background: #fff; border-right: 1px solid #ccc; border-left: 1px solid #ccc;" cellpadding="0" width="600">
+        <tr>
+          <td valign="top">
+            <!-- header -->
+            <table cellspacing="0" border="0" height="100" cellpadding="0" width="600">
+              <tr>
+                <td class="main-title" height="13" valign="top" style="text-align:center;padding:20px; font-size: 25px; font-family: Georgia; font-style: italic;" width="600" colspan="2">
+                  <img src="http://scpr.org<%=image_path('logo-masthead.png')%>" alt="89.3 KPCC" />
+                </td>
+              </tr>
+              <tr>
+                <td height="20" valign="top" width="600" colspan="2">
+                  <img src="http://scpr.org<%=image_path('breaking-news/breaker.jpg')%>" height="20" alt="" style="border: 0;" width="600" />
+                </td>
+              </tr>
+              <tr>
+                <td class="header-bar" valign="top" style="color: #333; font-family: Helvetica; font-size: 10px; text-transform: uppercase; text-align:center; padding: 0 20px; height: 15px;" width="600" height="15">
+                  A message from 89.3 KPCC
+                </td>
+              </tr>
+                <tr>
+                  <td height="20" valign="top" width="600" colspan="2">
+                    <img src="http://scpr.org/<%= image_path('breaking-news/breaker.jpg') %>" height="20" alt="" style="border: 0;" width="600" />
+                  </td>
+                </tr>
+            </table>
+            <!-- / header -->
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <!-- content -->
+            <table cellspacing="0" border="0" height="400" cellpadding="0" width="600">
+              <tr>
+                <td class="article-title" height="20" valign="top" style="padding: 0 20px; font-size: 20px; font-weight: bold;" width="600" colspan="2">
+                  <p style="font-family:Helvetica, sans-serif;"><%= @message.from %> shared an article with you:</p>
+                  <% if @message.body.present? %>
+                  <div style="background-color:#ededed;padding:3px 10px;border-left:3px solid #c3c3c3;">
+                    <p style="font-family:Helvetica, sans-serif;font-size:14px;font-weight:normal;"><strong style="font-weight:bold;">A personal message from <%= @message.from %>:</strong> <%= @message.body %></p>
+                  </div>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <table cellspacing="0" border="0" cellpadding="0">
+                    <tr>
+                      <td class="floated-copy" valign="top" style="padding: 0 20px 20px 20px; color: #000; font-size: 14px; font-family: Georgia; line-height: 20px;" width="600">        
+                        <h1 style="color:#000;font-family:Helvetica, sans-serif;font-size:28px;font-weight:bold;line-height:28px;"><%= @content.headline %></h1>
+                        <p style="color:#000;font-family:Georgia, serif;font-size:16px;line-height:26px;"><%= @content.teaser.html_safe %></p>
+                        <p style="font-family:Helvetica, sans-serif;font-weight:bold;">Read the full story: <a href="<%= @content.remote_link_path %>" style="font-weight:bold;"><%= @content.remote_link_path %></a></p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
 
-							</tr>
+              </tr>
 
-						</table>
-						<!--  / content -->
-					</td>
-				</tr>
-				<tr>
-					<td valign="top" width="600">
-						<table cellspacing="0" border="0" height="202" cellpadding="0" width="600">
-							<tr>
-								<td height="20" valign="top" width="600" colspan="2">
-									<img src="http://scpr.org<%=image_path('breaking-news/breaker.jpg')%>" height="20" alt="" style="border: 0;" width="600" />
-								</td>
-							</tr>
-							<tr>
-								<td class="copyright" height="100" align="center" valign="top" style="padding: 0 20px; color: #999; font-family: Helvetica; font-size: 10px; text-transform: uppercase; line-height: 20px;" width="600" colspan="2">
-									&copy; <%= Time.now.year %> Southern California Public Radio<br />
-									474 South Raymond Avenue<br />
-									Pasadena, CA 91105 <br />
-								</td>
-							</tr>
-						</table>
-						<!-- / end footer -->
-					</td>
-				</tr>
-			</table>
-			
-		</td>
-	
-	</tr>
-	
+            </table>
+            <!--  / content -->
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" width="600">
+            <table cellspacing="0" border="0" height="202" cellpadding="0" width="600">
+              <tr>
+                <td height="20" valign="top" width="600" colspan="2">
+                  <img src="http://scpr.org<%=image_path('breaking-news/breaker.jpg')%>" height="20" alt="" style="border: 0;" width="600" />
+                </td>
+              </tr>
+              <tr>
+                <td class="copyright" height="100" align="center" valign="top" style="padding: 0 20px; color: #999; font-family: Helvetica; font-size: 10px; text-transform: uppercase; line-height: 20px;" width="600" colspan="2">
+                  &copy; <%= Time.now.year %> Southern California Public Radio<br />
+                  474 South Raymond Avenue<br />
+                  Pasadena, CA 91105 <br />
+                </td>
+              </tr>
+            </table>
+            <!-- / end footer -->
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  
+  </tr>
+  
 </table>
 
 </body>

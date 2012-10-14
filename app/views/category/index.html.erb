@@ -1,17 +1,17 @@
 <% page_title @category.title %>
 <div class="category-page">
-	<h1><%= @category.title %></h1>
+  <h1><%= @category.title %></h1>
 
-	<% nav = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
+  <% nav = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
 
-	<% if @content.current_page == 1 %>
-		<%= render_content @content[0], "twocol" %>
-		<%= render_content @content[1..2], "offlead_asset" %>
-		<%= render_content @content[3..-1], "thumbnail" %>
-	<% else %>
-		<%= nav %>
-		<%= render_content @content[0..-1], "thumbnail" %>
-	<% end %>
+  <% if @content.current_page == 1 %>
+    <%= render_content @content[0], "twocol" %>
+    <%= render_content @content[1..2], "offlead_asset" %>
+    <%= render_content @content[3..-1], "thumbnail" %>
+  <% else %>
+    <%= nav %>
+    <%= render_content @content[0..-1], "thumbnail" %>
+  <% end %>
 
-	<%= nav %>
+  <%= nav %>
 </div>

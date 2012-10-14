@@ -1,16 +1,16 @@
 <% if content.queries.present? %>
-	<aside class="pij-query cbase">
-		<div class="row-fluid">
-			<div class="span6 row-title">
-				<h6>Become a KPCC Source <small><a href="/network/about/">(What's this?)</a></small></h6>
-			</div>
-			<div class="span18">
-				<ul>
-					<% content.queries.each do |query| %>
-						<li><%= link_to query.title, query.link %></li>
-					<% end %>
-				</ul>
-			</div> <!-- span -->
-		</div> <!-- row-fluid -->
-	</aside>
+  <aside class="pij-query cbase">
+    <div class="row-fluid">
+      <div class="span6 row-title">
+        <h6>Become a KPCC Source <small><a href="/network/about/">(What's this?)</a></small></h6>
+      </div>
+      <div class="span18">
+        <ul>
+          <% content.queries.each do |query| %>
+            <li><%= link_to query.title, query.link %></li>
+          <% end %>
+        </ul>
+      </div> <!-- span -->
+    </div> <!-- row-fluid -->
+  </aside>
 <% end %>

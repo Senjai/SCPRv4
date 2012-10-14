@@ -1,60 +1,60 @@
 <% if !@date %>
-	<h1><%= page_title "Archive" %></h1>
-	<strong>Select a date:</strong>
+  <h1><%= page_title "Archive" %></h1>
+  <strong>Select a date:</strong>
 <% else %>
 
 <h1><%= page_title "Archive for #{format_date @date, format: :full_date}" %></h1>
 
 <nav class="filters">
-	<ul class="clearfix" id="archive_nav">
-		<li class="heading">View:</li>
-		<li class="active"><a href="#news" data-toggle="tab">News</a></li>
-		<li><a href="#blogs" data-toggle="tab">Blogs</a></li>
-		<li><a href="#video" data-toggle="tab">Video</a></li>
-		<li><a href="#programs" data-toggle="tab">Programs</a></li>		
-	</ul>
+  <ul class="clearfix" id="archive_nav">
+    <li class="heading">View:</li>
+    <li class="active"><a href="#news" data-toggle="tab">News</a></li>
+    <li><a href="#blogs" data-toggle="tab">Blogs</a></li>
+    <li><a href="#video" data-toggle="tab">Video</a></li>
+    <li><a href="#programs" data-toggle="tab">Programs</a></li>   
+  </ul>
 </nav>
 
 <div class="tab-content" id="archive_tabs">
-	
+  
 <!-- News Stories -->
 <div id="news" class="tab-pane active">
 <%= content_cache "archive:#{@date.to_i}:news_stories" do %>
-	<% register_content("news/story:new") if @date.to_i == Time.now.beginning_of_day %>
-	<h2>News</h2>
-	
-	<%= any_to_list? @news_stories + @content_shells, message: "There was no News published on this date." do %>
-		<% (@news_stories + @content_shells).each do |content| %>
-			<% register_content content %>
-	
-			<div class="teaser cbase">
-				<div class="row-fluid">
-					<% if content.assets.present? %>
-						<div class="span4">
-							<%= render_asset content, 'thumb' %>
-						</div>
-						<div class="span20">
-					<% else %>
-						<div class="span24">
-					<% end %>
-						<div class="info">
-							<h3><%= link_to content.short_headline, content.link_path %></h3>
-							<p class="byline">
-								<% if content.category.present? %>
-									<span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
-									<span class="pipe">|</span> 
-								<% end %>
-								<time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
-								<span class="pipe">|</span> 
-								<%= render_byline content %>
-							</p>
-							<%= content.teaser %>
-						</div>
-					</div> <!-- span18/24 -->
-				</div>
-			</div>
-		<% end %>
-	<% end %>
+  <% register_content("news/story:new") if @date.to_i == Time.now.beginning_of_day %>
+  <h2>News</h2>
+  
+  <%= any_to_list? @news_stories + @content_shells, message: "There was no News published on this date." do %>
+    <% (@news_stories + @content_shells).each do |content| %>
+      <% register_content content %>
+  
+      <div class="teaser cbase">
+        <div class="row-fluid">
+          <% if content.assets.present? %>
+            <div class="span4">
+              <%= render_asset content, 'thumb' %>
+            </div>
+            <div class="span20">
+          <% else %>
+            <div class="span24">
+          <% end %>
+            <div class="info">
+              <h3><%= link_to content.short_headline, content.link_path %></h3>
+              <p class="byline">
+                <% if content.category.present? %>
+                  <span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
+                  <span class="pipe">|</span> 
+                <% end %>
+                <time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
+                <span class="pipe">|</span> 
+                <%= render_byline content %>
+              </p>
+              <%= content.teaser %>
+            </div>
+          </div> <!-- span18/24 -->
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
 </div>
 <!-- /news-stories -->
@@ -63,39 +63,39 @@
 <!-- Blog Entries -->
 <div id="blogs" class="tab-pane">
 <%= content_cache "archive:#{@date.to_i}:blog_entries" do %>
-	<% register_content("blogs/entry:new") if @date.to_i == Time.now.beginning_of_day %>
-	<h2>Blogs</h2>
-	
-	<%= any_to_list? @blog_entries, message: "There were no blog entries published on this date." do %>
-		<% @blog_entries.each do |content| %>
-			<% register_content content %>
-		
-			<div class="teaser cbase">
-				<div class="row-fluid">
-					<% if content.assets.present? %>
-						<div class="span4">
-							<%= render_asset content, 'thumb' %>
-						</div>
-						<div class="span20">
-					<% else %>
-						<div class="span24">
-					<% end %>
-						<div class="info">
-							<h3><%= link_to content.short_headline, content.link_path %></h3>
-							<p class="byline">
-								<span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span> 
-								<span class="pipe">|</span> 
-								<time pubdate=""><%= smart_date content %></time> 
-								<span class="pipe">|</span> 
-								<%= render_byline content %>
-							</p>
-							<%= content.teaser %>
-						</div>
-					</div> <!-- span18/24 -->
-				</div>
-			</div>
-		<% end %>
-	<% end %>
+  <% register_content("blogs/entry:new") if @date.to_i == Time.now.beginning_of_day %>
+  <h2>Blogs</h2>
+  
+  <%= any_to_list? @blog_entries, message: "There were no blog entries published on this date." do %>
+    <% @blog_entries.each do |content| %>
+      <% register_content content %>
+    
+      <div class="teaser cbase">
+        <div class="row-fluid">
+          <% if content.assets.present? %>
+            <div class="span4">
+              <%= render_asset content, 'thumb' %>
+            </div>
+            <div class="span20">
+          <% else %>
+            <div class="span24">
+          <% end %>
+            <div class="info">
+              <h3><%= link_to content.short_headline, content.link_path %></h3>
+              <p class="byline">
+                <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span> 
+                <span class="pipe">|</span> 
+                <time pubdate=""><%= smart_date content %></time> 
+                <span class="pipe">|</span> 
+                <%= render_byline content %>
+              </p>
+              <%= content.teaser %>
+            </div>
+          </div> <!-- span18/24 -->
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
 </div>
 <!-- /blog-entries -->
@@ -104,41 +104,41 @@
 <!-- Video Shells -->
 <div id="video" class="tab-pane">
 <%= content_cache "archive:#{@date.to_i}:video_shells" do %>
-	<% register_content("content/video:new") if @date.to_i == Time.now.beginning_of_day %>
-	<h2>Video</h2>
+  <% register_content("content/video:new") if @date.to_i == Time.now.beginning_of_day %>
+  <h2>Video</h2>
 
-	<%= any_to_list? @video_shells, message: "There were no videos published on this date." do %>
-		<% @video_shells.each do |content| %>
-			<% register_content content %>
+  <%= any_to_list? @video_shells, message: "There were no videos published on this date." do %>
+    <% @video_shells.each do |content| %>
+      <% register_content content %>
 
-			<div class="teaser cbase">
-				<div class="row-fluid">
-					<% if content.assets.present? %>
-						<div class="span4">
-							<%= render_asset content, 'thumb' %>
-						</div>
-						<div class="span20">
-					<% else %>
-						<div class="span24">
-					<% end %>
-						<div class="info">
-							<h3><%= link_to content.short_headline, content.link_path %></h3>
-							<p class="byline">
-								<% if content.category.present? %>
-									<span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
-									<span class="pipe">|</span>
-								<% end %>
-								<time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
-								<span class="pipe">|</span> 
-								<%= render_byline content %>
-							</p>
-							<%= content.teaser %>
-						</div>
-					</div> <!-- span18/24 -->
-				</div>
-			</div>
-		<% end %>
-	<% end %>
+      <div class="teaser cbase">
+        <div class="row-fluid">
+          <% if content.assets.present? %>
+            <div class="span4">
+              <%= render_asset content, 'thumb' %>
+            </div>
+            <div class="span20">
+          <% else %>
+            <div class="span24">
+          <% end %>
+            <div class="info">
+              <h3><%= link_to content.short_headline, content.link_path %></h3>
+              <p class="byline">
+                <% if content.category.present? %>
+                  <span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
+                  <span class="pipe">|</span>
+                <% end %>
+                <time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
+                <span class="pipe">|</span> 
+                <%= render_byline content %>
+              </p>
+              <%= content.teaser %>
+            </div>
+          </div> <!-- span18/24 -->
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
 </div>
 <!-- /video shells -->
@@ -147,66 +147,66 @@
 <!-- Programs -->
 <div id="programs" class="tab-pane programs">
 <%= content_cache "archive:#{@date.to_i}:programs" do %>
-	<% register_content("shows/segment:new") if @date.to_i == Time.now.beginning_of_day %>
-	<% register_content("shows/episode:new") if @date.to_i == Time.now.beginning_of_day %>
-	<% grouped = (@show_episodes + @show_segments).group_by { |c| c.show.title } %>
-	
-	<h2>Programs</h2>
-	<div class="jump-nav">
-		<ul>
-			<li><strong>Jump to:</strong></li>
-			<% grouped.each do |g| %>
-				<li><%= link_to g[0], "##{g[0].parameterize}" %></li>
-			<% end %>
-			</ul>
-	</div> <!-- jump-nav -->
-	
-	<% grouped.each do |show, contents| %>
-		<% type_group = contents.group_by { |c| c.class.name } %>
+  <% register_content("shows/segment:new") if @date.to_i == Time.now.beginning_of_day %>
+  <% register_content("shows/episode:new") if @date.to_i == Time.now.beginning_of_day %>
+  <% grouped = (@show_episodes + @show_segments).group_by { |c| c.show.title } %>
+  
+  <h2>Programs</h2>
+  <div class="jump-nav">
+    <ul>
+      <li><strong>Jump to:</strong></li>
+      <% grouped.each do |g| %>
+        <li><%= link_to g[0], "##{g[0].parameterize}" %></li>
+      <% end %>
+      </ul>
+  </div> <!-- jump-nav -->
+  
+  <% grouped.each do |show, contents| %>
+    <% type_group = contents.group_by { |c| c.class.name } %>
 
-		<div class="program-group">
-			<h3 id="<%=show.parameterize%>" class="show-title"><%= show %></h3>
-		
-			<% if type_group["ShowEpisode"].present? %>
-				<% type_group["ShowEpisode"].each do |content| %>
-					<% register_content content %>
-					<h5>Episode: <%= link_to content.short_headline, content.link_path %></h5>
-				<% end %>
-			<% end %>
-		
-			<% if type_group["ShowSegment"].present? %>
-				<% type_group["ShowSegment"].each do |content| %>
-					<% register_content content %>
-					<div class="teaser cbase">
-						<div class="row-fluid">
-							<% if content.assets.present? %>
-								<div class="span4">
-									<%= render_asset content, 'thumb' %>
-								</div>
-								<div class="span20">
-							<% else %>
-								<div class="span24">
-							<% end %>
-								<div class="info">
-									<h3><%= link_to content.short_headline, content.link_path %></h3>
-									<p class="byline">
-										<% if content.category.present? %>
-											<span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
-											<span class="pipe">|</span>
-										<% end %>
-										<time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
-										<span class="pipe">|</span> 
-										<%= render_byline content %>
-									</p>
-									<%= content.teaser %>
-								</div>
-							</div> <!-- span18/24 -->
-						</div> <!-- row fluid -->
-					</div> <!-- teaser -->
-				<% end %> <%# each ShowSegment %>
-			<% end %> <%# ShowSegment.present?%>
-		</div> <!-- program-group -->
-	<% end %> <%# each grouped %>
+    <div class="program-group">
+      <h3 id="<%=show.parameterize%>" class="show-title"><%= show %></h3>
+    
+      <% if type_group["ShowEpisode"].present? %>
+        <% type_group["ShowEpisode"].each do |content| %>
+          <% register_content content %>
+          <h5>Episode: <%= link_to content.short_headline, content.link_path %></h5>
+        <% end %>
+      <% end %>
+    
+      <% if type_group["ShowSegment"].present? %>
+        <% type_group["ShowSegment"].each do |content| %>
+          <% register_content content %>
+          <div class="teaser cbase">
+            <div class="row-fluid">
+              <% if content.assets.present? %>
+                <div class="span4">
+                  <%= render_asset content, 'thumb' %>
+                </div>
+                <div class="span20">
+              <% else %>
+                <div class="span24">
+              <% end %>
+                <div class="info">
+                  <h3><%= link_to content.short_headline, content.link_path %></h3>
+                  <p class="byline">
+                    <% if content.category.present? %>
+                      <span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
+                      <span class="pipe">|</span>
+                    <% end %>
+                    <time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
+                    <span class="pipe">|</span> 
+                    <%= render_byline content %>
+                  </p>
+                  <%= content.teaser %>
+                </div>
+              </div> <!-- span18/24 -->
+            </div> <!-- row fluid -->
+          </div> <!-- teaser -->
+        <% end %> <%# each ShowSegment %>
+      <% end %> <%# ShowSegment.present?%>
+    </div> <!-- program-group -->
+  <% end %> <%# each grouped %>
 <% end %> <%# content cache %>
 </div>
 <!-- /video shells -->
@@ -214,24 +214,24 @@
 </div> <!-- tab-content -->
 
 <script type="text/javascript">
-	// deep linking
-	var query, keyval;
-	var params = {};
-	query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
-	
-	tab = $("#archive_nav a[href='#"+params['section']+"']")
-	if(tab) tab.tab('show');
-	
-	$("#archive_nav a").on({
-		click: function(event) {
-			target = $(event.target).attr("href").substr(1);
-			if (window.history.replaceState) {
-				window.history.replaceState({ section: target }, document.title + ": " + target, window.location.pathname + "?section=" + target);
-			} else {
-				window.location.hash = target;
-			}
-		}
-	})
+  // deep linking
+  var query, keyval;
+  var params = {};
+  query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
+  
+  tab = $("#archive_nav a[href='#"+params['section']+"']")
+  if(tab) tab.tab('show');
+  
+  $("#archive_nav a").on({
+    click: function(event) {
+      target = $(event.target).attr("href").substr(1);
+      if (window.history.replaceState) {
+        window.history.replaceState({ section: target }, document.title + ": " + target, window.location.pathname + "?section=" + target);
+      } else {
+        window.location.hash = target;
+      }
+    }
+  })
 </script>
 
 <% end %> <%# @date? %>

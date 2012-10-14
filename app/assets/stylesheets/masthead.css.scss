@@ -1,48 +1,48 @@
 // Masthead container
 header#masthead {
-	margin:0 0 $baseline 0;
-	.head-lead { 
-		height: 74px; 
-		overflow: hidden;
-	}
-	
-	.head-lead-minimal {
-		display: none;
-		text-align: center;
-		padding: 13px 0;
-		margin: 0;
-		@include clearfix;
-		
-		a.antenna, span.condensed-nav-link {
-			background: url(image_path("icons/antenna-dark.png")) no-repeat 8px 3px;
-			color: #b8b8b8;
-			cursor: pointer;
-			@include font-heading(600, 14px);
-			margin: 7px 0 0 0; // Push it down a bit... this shouldn't wrap so it's okay
-			opacity:0.8;
-			padding: 8px 8px 8px 30px;
-			display: block;
-			text-shadow:0 1px 0 $black;
-			text-transform:uppercase;
-			&:hover, :active {
-				@include border-radius(4px); 
-				background-color:$black;
-				opacity:1;
-				text-decoration: none;
-			}
-		}
-		
-		a.dark-logo { margin: 0 auto; }
-		a.antenna {
-			margin-right:-8px;
-		}
-		span.condensed-nav-link {
-			float: left;
-			background: url(image_path("icons/menu-icon.png")) no-repeat 8px 10px;
-			margin-left:-8px;
-			text-align: text-top;
-		}
-	}	
+    margin:0 0 $baseline 0;
+    .head-lead { 
+        height: 74px; 
+        overflow: hidden;
+    }
+    
+    .head-lead-minimal {
+        display: none;
+        text-align: center;
+        padding: 13px 0;
+        margin: 0;
+        @include clearfix;
+        
+        a.antenna, span.condensed-nav-link {
+            background: url(image_path("icons/antenna-dark.png")) no-repeat 8px 3px;
+            color: #b8b8b8;
+            cursor: pointer;
+            @include font-heading(600, 14px);
+            margin: 7px 0 0 0; // Push it down a bit... this shouldn't wrap so it's okay
+            opacity:0.8;
+            padding: 8px 8px 8px 30px;
+            display: block;
+            text-shadow:0 1px 0 $black;
+            text-transform:uppercase;
+            &:hover, :active {
+                @include border-radius(4px); 
+                background-color:$black;
+                opacity:1;
+                text-decoration: none;
+            }
+        }
+        
+        a.dark-logo { margin: 0 auto; }
+        a.antenna {
+            margin-right:-8px;
+        }
+        span.condensed-nav-link {
+            float: left;
+            background: url(image_path("icons/menu-icon.png")) no-repeat 8px 10px;
+            margin-left:-8px;
+            text-align: text-top;
+        }
+    }   
 }
 
 // Set a min-height on the Hero pencil so that top and bottom margins are respected even when we don't have a hero to display
@@ -50,520 +50,520 @@ header#masthead {
 
 // KPCC logo image
 .logo {
-	white-space:nowrap;
-	a {
-		@include ie-inline-block;
-		margin-top: 16px;
-		vertical-align: top;
-	}
-	
-	a.logo-img {
-		background-image: url(image_path('logo-masthead.png'));
-		background-repeat: no-repeat;
-		background-position: 0 0;
-		text-decoration: none;
-		height: 42px;
-		width: 181px;
-	}
+    white-space:nowrap;
+    a {
+        @include ie-inline-block;
+        margin-top: 16px;
+        vertical-align: top;
+    }
+    
+    a.logo-img {
+        background-image: url(image_path('logo-masthead.png'));
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        text-decoration: none;
+        height: 42px;
+        width: 181px;
+    }
 }
 
 .mid-header-wrapper {
-	white-space: nowrap;
+    white-space: nowrap;
 }
 
 // Pledge
 .kpcc-personalities {
-	@include ie-inline-block;
-	background: transparent url(image_path("pledge-container-bg.jpg")) no-repeat bottom;
-	height:73px;
-	max-height: 73px;
-	overflow: hidden;
-	width:286px !important;
-	// Pledge Now button
-	.pledge {
-		float: right;
-		left:132px;
-		margin-left:30px;
-		position:absolute;
-		top:15px;
-	}
-	img {
-		margin:5px 0 0 35px;
-	}
+    @include ie-inline-block;
+    background: transparent url(image_path("pledge-container-bg.jpg")) no-repeat bottom;
+    height:73px;
+    max-height: 73px;
+    overflow: hidden;
+    width:286px !important;
+    // Pledge Now button
+    .pledge {
+        float: right;
+        left:132px;
+        margin-left:30px;
+        position:absolute;
+        top:15px;
+    }
+    img {
+        margin:5px 0 0 35px;
+    }
 }
 
 .pledge {
-	margin:10px 0;
+    margin:10px 0;
 }
 
 .pledge-button-container { // For the responsive button
-	float: right;
-	margin: 9px 7px 0 0;
-	text-align: right;
-	@include ie-inline-block();
-	.pledge { float:right; }
+    float: right;
+    margin: 9px 7px 0 0;
+    text-align: right;
+    @include ie-inline-block();
+    .pledge { float:right; }
 }
 
 nav.utils {
-	@include text-utility();
-	text-align: right;
-	margin-top: 10px;
-	float:right;
-	ul {
-		margin: 0;
-		padding: 0;
-		li {
-			border-left:1px solid #e9e9e9;
-			
-			// Won't be seen in IE7, that's okay.
-			&:last-child { border-right: none; }
-			
-			@include ie-inline-block;
-			padding: 0 8px 0 6px;
-			&.social {
-				img {
-					margin-left:5px;
-					vertical-align:text-top;
-				}
-			}
-		}
-	}
+    @include text-utility();
+    text-align: right;
+    margin-top: 10px;
+    float:right;
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            border-left:1px solid #e9e9e9;
+            
+            // Won't be seen in IE7, that's okay.
+            &:last-child { border-right: none; }
+            
+            @include ie-inline-block;
+            padding: 0 8px 0 6px;
+            &.social {
+                img {
+                    margin-left:5px;
+                    vertical-align:text-top;
+                }
+            }
+        }
+    }
 }
 
 // Pledge Now button
 .pledge {
-	@include gradient-vertical-three-colors(#00b9f3, #00b9f3, 45%, #0098c7);
-	@include border-radius(4px);
-	@include font-heading(600, 13px);
-	@include ie-inline-block();
-	a {
-		background:transparent url(image_path('icons/pledge-heart.png')) no-repeat 7px 2px;
-		color:$white;
-		@include ie-inline-block();
-		padding:1px 8px 1px 34px;
-		text-shadow: 0px -1px 0px #016d8e;
-		&:hover {text-decoration:none;}
-	}
+    @include gradient-vertical-three-colors(#00b9f3, #00b9f3, 45%, #0098c7);
+    @include border-radius(4px);
+    @include font-heading(600, 13px);
+    @include ie-inline-block();
+    a {
+        background:transparent url(image_path('icons/pledge-heart.png')) no-repeat 7px 2px;
+        color:$white;
+        @include ie-inline-block();
+        padding:1px 8px 1px 34px;
+        text-shadow: 0px -1px 0px #016d8e;
+        &:hover {text-decoration:none;}
+    }
 }
 
 
 // Main Navigation, including search
 $navHeight: 36px;
 .nav-primary {
-	@include gradient-vertical-four-stops(darken($nearWhite, 10%), 1%, $nearWhite, 2%, $grayLighter, 98%, darken($grayLighter, 10%), 99%);
-	height:$navHeight;
-	border-left:1px solid #cb5f1d;
-	border-right:1px solid darken($nearWhite, 10%);
-	position: relative;
-	z-index: 80;
-	
-	nav.sections, .search-form {
-		@include ie-inline-block;
-	}
-	
-	.sections {
-		width:80%;
-		height:$navHeight;
-		float:left;
-		ul {
-			margin: 0;
-			white-space: nowrap;
-			li {
-				display: block;
-				float: left;
-				font-size: 13px;
-				opacity:1;
-				@include transition(opacity 1.2s linear);
-				&.listen-live {
-					@include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
-					background-color:#cb5f1d;
-					max-width: none; // Undo the max-width set above
-					&:hover {
-						@include gradient-vertical(#cb5f1d, #9b4816);
-					}
-					a {
-						background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
-						color:$white;
-						padding-left:33px;
-						padding-right:22px;
-						&:hover {
-							background-color:transparent;
-							color:$white;
-							$no-shadow: none;
-							@include box-shadow($no-shadow);
-						}
-					}
-				}
-		
-				a {
-					display: block;
-					@include font-navigation(600, 16px);
-					color:$grayDark;
-					padding: 8px 24px;
-					text-transform:uppercase;
-					&:hover, &.hover {
-						color:$orangeDark;
-						text-decoration:none;
-					}
-				}
-				&.mega {
-					a {
-						&:hover, &.hover {
-							background-color:$white;
-							$nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
-							@include box-shadow($nav-shadow);
-							@include transition(background-color 0.2s);
-						}
-					}
-				}
-			}
-		}
-	}
-		
-	.search-form {
-		float: right;
-		height: 36px;
-		width: 200px;
-		padding-right: 7px;
-		form {
-			width: 100%;
-			margin: 8px 0 0 0; // push the form down a bit to vertically center
-			text-align: right;
-			label { display:none; }
-			input.search {
-				@include border-radius(20px);
-				padding:0px 8px;
-				vertical-align: top;
-				width: 65%;
-				&:focus {
-					outline: none;
-				    border-color:#999;
-					$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
-				    @include box-shadow($shadow);
-				}
-			}
-			input.submit, .toggle-search {
-				background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
-				min-width:20px;
-				height:20px;
-				text-indent:-9999px;
-				border:0;
-			}
-			.toggle-search {
-				display:none;
-				margin-right:1px;
-			}
-		}
-	}
+    @include gradient-vertical-four-stops(darken($nearWhite, 10%), 1%, $nearWhite, 2%, $grayLighter, 98%, darken($grayLighter, 10%), 99%);
+    height:$navHeight;
+    border-left:1px solid #cb5f1d;
+    border-right:1px solid darken($nearWhite, 10%);
+    position: relative;
+    z-index: 80;
+    
+    nav.sections, .search-form {
+        @include ie-inline-block;
+    }
+    
+    .sections {
+        width:80%;
+        height:$navHeight;
+        float:left;
+        ul {
+            margin: 0;
+            white-space: nowrap;
+            li {
+                display: block;
+                float: left;
+                font-size: 13px;
+                opacity:1;
+                @include transition(opacity 1.2s linear);
+                &.listen-live {
+                    @include background-image(linear-gradient(#cb5f1d 1%, lighten(#cb5f1d, 8%) 2%, lighten(#9b4816, 3%) 98%, #9b4816 100%));
+                    background-color:#cb5f1d;
+                    max-width: none; // Undo the max-width set above
+                    &:hover {
+                        @include gradient-vertical(#cb5f1d, #9b4816);
+                    }
+                    a {
+                        background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+                        color:$white;
+                        padding-left:33px;
+                        padding-right:22px;
+                        &:hover {
+                            background-color:transparent;
+                            color:$white;
+                            $no-shadow: none;
+                            @include box-shadow($no-shadow);
+                        }
+                    }
+                }
+        
+                a {
+                    display: block;
+                    @include font-navigation(600, 16px);
+                    color:$grayDark;
+                    padding: 8px 24px;
+                    text-transform:uppercase;
+                    &:hover, &.hover {
+                        color:$orangeDark;
+                        text-decoration:none;
+                    }
+                }
+                &.mega {
+                    a {
+                        &:hover, &.hover {
+                            background-color:$white;
+                            $nav-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 4px lighten($gray, 10%);
+                            @include box-shadow($nav-shadow);
+                            @include transition(background-color 0.2s);
+                        }
+                    }
+                }
+            }
+        }
+    }
+        
+    .search-form {
+        float: right;
+        height: 36px;
+        width: 200px;
+        padding-right: 7px;
+        form {
+            width: 100%;
+            margin: 8px 0 0 0; // push the form down a bit to vertically center
+            text-align: right;
+            label { display:none; }
+            input.search {
+                @include border-radius(20px);
+                padding:0px 8px;
+                vertical-align: top;
+                width: 65%;
+                &:focus {
+                    outline: none;
+                    border-color:#999;
+                    $shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px lighten($gray, 20%);
+                    @include box-shadow($shadow);
+                }
+            }
+            input.submit, .toggle-search {
+                background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+                min-width:20px;
+                height:20px;
+                text-indent:-9999px;
+                border:0;
+            }
+            .toggle-search {
+                display:none;
+                margin-right:1px;
+            }
+        }
+    }
 }
 
 .blog-title a {
-	color: lighten($gray, 20%);
-	@include font-sans-serif(normal, 11px);
-	text-transform:uppercase;
-	@include ie-inline-block;
+    color: lighten($gray, 20%);
+    @include font-sans-serif(normal, 11px);
+    text-transform:uppercase;
+    @include ie-inline-block;
 }
 
 // Mega Menu Pop-ups
 .megamenu {
-	.mega-bucket {
-		position:relative;
-		
-		.section-mega {
-			display: none;
-			background-color:$white;
-			width:100%;
-			min-height:$baseline * 10;
-			position:absolute;
-			z-index: 84;
-			$mega-shadow:0 2px 3px lighten($gray, 10%);
-			@include box-shadow($mega-shadow);
-			
-			nav {
-				width: 100%;
-				li {
-					margin-bottom: $baseLineHeight / 4;
-					line-height: 12px;
-					a {
-						color:$nearBlack;
-						@include font-navigation($size: 14px, $weight: 600);
-						line-height:18px;
-						text-transform: uppercase;
-						&:hover {
-							time {
-								text-decoration:none;
-							}
-						}
-					}
-				}
-			}
-			
-			.cbase {
-				li {
-					h4 {
-						a { 
-							color: $nearBlack; 
-							@include font-navigation(600, 14px, $baseLineHeight); 
-							text-transform: none; // for elements with the cbase class
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	h6 {
-		color:$orangeDark;
-		font-size:13px;
-		font-weight:700;
-		line-height: 14px;
-		margin-bottom: 5px;
-	}
-	
-	ul {
-		list-style: none;
-		margin-left: 5px;
-		
-		&.cbase li { 
-			border-bottom: 1px solid $grayLighter; 
-			margin: 5px 0;
-			padding-bottom: 5px;
-			
-			// Won't be seen in IE7
-			&:last-child { border-bottom: none; }
-		}
-	}
-	
-	.featured {
-		.contentasset { max-width: 65px; } // Override default thumbnail size to make it a little smaller
-		
-		h4 {
-			@include font-headline;
-			@include font-shorthand(600, 15px, $baseLineHeight);
-			a { color: $nearBlack; }
-			text-transform: none; // for elements with the cbase class
-		}
-	}
+    .mega-bucket {
+        position:relative;
+        
+        .section-mega {
+            display: none;
+            background-color:$white;
+            width:100%;
+            min-height:$baseline * 10;
+            position:absolute;
+            z-index: 84;
+            $mega-shadow:0 2px 3px lighten($gray, 10%);
+            @include box-shadow($mega-shadow);
+            
+            nav {
+                width: 100%;
+                li {
+                    margin-bottom: $baseLineHeight / 4;
+                    line-height: 12px;
+                    a {
+                        color:$nearBlack;
+                        @include font-navigation($size: 14px, $weight: 600);
+                        line-height:18px;
+                        text-transform: uppercase;
+                        &:hover {
+                            time {
+                                text-decoration:none;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .cbase {
+                li {
+                    h4 {
+                        a { 
+                            color: $nearBlack; 
+                            @include font-navigation(600, 14px, $baseLineHeight); 
+                            text-transform: none; // for elements with the cbase class
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    h6 {
+        color:$orangeDark;
+        font-size:13px;
+        font-weight:700;
+        line-height: 14px;
+        margin-bottom: 5px;
+    }
+    
+    ul {
+        list-style: none;
+        margin-left: 5px;
+        
+        &.cbase li { 
+            border-bottom: 1px solid $grayLighter; 
+            margin: 5px 0;
+            padding-bottom: 5px;
+            
+            // Won't be seen in IE7
+            &:last-child { border-bottom: none; }
+        }
+    }
+    
+    .featured {
+        .contentasset { max-width: 65px; } // Override default thumbnail size to make it a little smaller
+        
+        h4 {
+            @include font-headline;
+            @include font-shorthand(600, 15px, $baseLineHeight);
+            a { color: $nearBlack; }
+            text-transform: none; // for elements with the cbase class
+        }
+    }
 
-	.section {
-		border-left: 1px solid $grayLighter;
-		padding-left: $fluidGridGutterWidth * 2;
-		&.first {
-			border-left: none;
-			padding-left: 0;
-		}
-	}
-	
-	ul.content-types {
-		li {
-			@include ie-inline-block;
-			padding: 0 8px;
-			
-			// Use border-left because of IE7
-			border-left: 1px solid $grayLighter;
-			
-			&:first-child { border-left: none; }
-		}
-	}
-	
-	#events-mega .section { 
-		min-height: 230px;
-		.event-link { 
-			color: $linkColor; 
-			@include font-serif(normal, 12px);
-			text-transform:none;
-		}
-		
-		// A lazy way to make the events-forum widget look better in the masthead
-		.events-forum .event > .row-fluid {
-			> .span8 { @include gridFluidSpan(6); }
-			> .span16 { @include gridFluidSpan(18); }
-		}
-	}
-	
-	#news-mega .section {
-		min-height: 200px;
-	}
-	
-	#arts-mega .section {
-		min-height: 200px;
-	}
-	
-	#support-mega .section {
-		min-height: 200px;
-		.pledge a {
-			background-position:8px 8px;
-			font-weight:bold;
-			padding:6px 9px 7px 34px;
-		}
-	}
-	
-	#about-mega {
-		#about-hero {
-			background:url(image_path('about/menu-hero-bg.png')) no-repeat right bottom;
-			border-right:1px solid $grayLighter;
-			height:210px;
-			margin-right:-4%;
-			hgroup {
-				padding:10px 20px 20px;
-			}
-			h3, a {
-				@include font-slab-headings();
-				font-size:20px;
-				line-height:36px;
-			}
-			a {
-				color:$orangeDark;
-				font-size:16px;
-				&.learn-more {
-					background:url(image_path('icons/bullet-donut.png')) no-repeat 0 2px;
-					padding-left:18px;
-				}
-			}
-		}
-		h6 {
-			&.heading-about {
-				padding:8px 0 7px 36px;
-				position:relative;
-				z-index:1;
-				&:before {
-					background:url(image_path('icons/menu-about-kpcc.png')) no-repeat 0 0;
-					content:"";
-				    position:absolute;
-				    z-index:-1;
-				    top:0;
-				    bottom:0;
-				    left:0;
-				    right:0;
-				}
-			}
-			&.heading-connect {
-				padding:8px 0 7px 36px;
-				position:relative;
-				z-index:1;
-				&:before {
-					background:url(image_path('icons/menu-about-connect.png')) no-repeat 0 0;
-					content:"";
-				    position:absolute;
-				    z-index:-1;
-				    top:0;
-				    bottom:0;
-				    left:0;
-				    right:0;
-				}
-			}
-			&.heading-people {
-				padding:8px 0 7px 36px;
-				position:relative;
-				z-index:1;
-				&:before {
-					background:url(image_path('icons/menu-about-people.png')) no-repeat 0 0;
-					content:"";
-				    position:absolute;
-				    z-index:-1;
-				    top:0;
-				    bottom:0;
-				    left:0;
-				    right:0;
-				}
-			}
-		}
-		nav {
-			padding-left:32px;
-		}
-	}
-	
-	#programs-mega {
-		.section {			
-			min-height:($baseline * 9);
-		}
-		.program {
-			a { 
-				background-repeat: no-repeat;
-				background-position: 0 10px;
-				display: block;
-				margin:0 -30px 0 0;
-				padding-top:69px;
-				&.take-two {
-					background-image:url(image_path('broadcast-bar/taketwo-sm.png'));
-				}
-				&.airtalk {
-					background-image:url(image_path('broadcast-bar/larry-airtalk-sm.png'));
-				}
-				&.offramp {
-					background-image:url(image_path('broadcast-bar/john-offramp-sm.png'));
-				}
-				h4 {
-					border-top:1px solid $grayLighter;
-					color:$orangeDark;
-					@include font-sans-serif($weight: 600, $size: 18px);
-					margin-bottom:6px;
-					padding-top:6px;
-				}
-				p {
-					@include font-heading(normal, 13px, 18px);
-					color: $gray;
-					margin-bottom:0;
-				}
-				&:hover {
-					background-color: $nearWhite;
-					text-decoration: none;
-				}
-			}
-		}
-	}
+    .section {
+        border-left: 1px solid $grayLighter;
+        padding-left: $fluidGridGutterWidth * 2;
+        &.first {
+            border-left: none;
+            padding-left: 0;
+        }
+    }
+    
+    ul.content-types {
+        li {
+            @include ie-inline-block;
+            padding: 0 8px;
+            
+            // Use border-left because of IE7
+            border-left: 1px solid $grayLighter;
+            
+            &:first-child { border-left: none; }
+        }
+    }
+    
+    #events-mega .section { 
+        min-height: 230px;
+        .event-link { 
+            color: $linkColor; 
+            @include font-serif(normal, 12px);
+            text-transform:none;
+        }
+        
+        // A lazy way to make the events-forum widget look better in the masthead
+        .events-forum .event > .row-fluid {
+            > .span8 { @include gridFluidSpan(6); }
+            > .span16 { @include gridFluidSpan(18); }
+        }
+    }
+    
+    #news-mega .section {
+        min-height: 200px;
+    }
+    
+    #arts-mega .section {
+        min-height: 200px;
+    }
+    
+    #support-mega .section {
+        min-height: 200px;
+        .pledge a {
+            background-position:8px 8px;
+            font-weight:bold;
+            padding:6px 9px 7px 34px;
+        }
+    }
+    
+    #about-mega {
+        #about-hero {
+            background:url(image_path('about/menu-hero-bg.png')) no-repeat right bottom;
+            border-right:1px solid $grayLighter;
+            height:210px;
+            margin-right:-4%;
+            hgroup {
+                padding:10px 20px 20px;
+            }
+            h3, a {
+                @include font-slab-headings();
+                font-size:20px;
+                line-height:36px;
+            }
+            a {
+                color:$orangeDark;
+                font-size:16px;
+                &.learn-more {
+                    background:url(image_path('icons/bullet-donut.png')) no-repeat 0 2px;
+                    padding-left:18px;
+                }
+            }
+        }
+        h6 {
+            &.heading-about {
+                padding:8px 0 7px 36px;
+                position:relative;
+                z-index:1;
+                &:before {
+                    background:url(image_path('icons/menu-about-kpcc.png')) no-repeat 0 0;
+                    content:"";
+                    position:absolute;
+                    z-index:-1;
+                    top:0;
+                    bottom:0;
+                    left:0;
+                    right:0;
+                }
+            }
+            &.heading-connect {
+                padding:8px 0 7px 36px;
+                position:relative;
+                z-index:1;
+                &:before {
+                    background:url(image_path('icons/menu-about-connect.png')) no-repeat 0 0;
+                    content:"";
+                    position:absolute;
+                    z-index:-1;
+                    top:0;
+                    bottom:0;
+                    left:0;
+                    right:0;
+                }
+            }
+            &.heading-people {
+                padding:8px 0 7px 36px;
+                position:relative;
+                z-index:1;
+                &:before {
+                    background:url(image_path('icons/menu-about-people.png')) no-repeat 0 0;
+                    content:"";
+                    position:absolute;
+                    z-index:-1;
+                    top:0;
+                    bottom:0;
+                    left:0;
+                    right:0;
+                }
+            }
+        }
+        nav {
+            padding-left:32px;
+        }
+    }
+    
+    #programs-mega {
+        .section {          
+            min-height:($baseline * 9);
+        }
+        .program {
+            a { 
+                background-repeat: no-repeat;
+                background-position: 0 10px;
+                display: block;
+                margin:0 -30px 0 0;
+                padding-top:69px;
+                &.take-two {
+                    background-image:url(image_path('broadcast-bar/taketwo-sm.png'));
+                }
+                &.airtalk {
+                    background-image:url(image_path('broadcast-bar/larry-airtalk-sm.png'));
+                }
+                &.offramp {
+                    background-image:url(image_path('broadcast-bar/john-offramp-sm.png'));
+                }
+                h4 {
+                    border-top:1px solid $grayLighter;
+                    color:$orangeDark;
+                    @include font-sans-serif($weight: 600, $size: 18px);
+                    margin-bottom:6px;
+                    padding-top:6px;
+                }
+                p {
+                    @include font-heading(normal, 13px, 18px);
+                    color: $gray;
+                    margin-bottom:0;
+                }
+                &:hover {
+                    background-color: $nearWhite;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
 }
 
 .live-update {
-	background-color:$nearWhite;
-	border-bottom:1px solid $grayLighter;
-	border-top:1px solid $grayLighter;
-	color:$black;
-	@include font-headline();
-	font-size:18px;
-	margin-bottom:$baseline;
-	vertical-align:text-bottom;
-	.inner-container {
-		border-bottom:1px solid $white;
-		border-top:1px solid $white;
-		padding:4px 6px;
-		a {
-			color:$black;
-		}
-		strong {
-			background-color:$gray;
-			@include border-radius(4px);
-			@include ie-inline-block();
-			@include font-heading(600, 13px);
-			color:$white;
-			margin:2px 6px 2px 0;
-			padding:3px 6px;
-			text-shadow:0 1px 0 rgba(0,0,0,0.35);
-			text-transform:uppercase;
-		}
-	}
-	&.break {
-		background-color:#fbe0e0;
-		border-bottom:1px solid #faa1a1;
-		border-top:1px solid #faa1a1;
-		strong {
-			background-color:#bf0a0a;
-		}
-	}
-	&.now {
-		background-color:#fff7dd;
-		border-bottom:1px solid #ead58f;
-		border-top:1px solid #ead58f;
-		strong {
-			background-color:#f37a00;
-		}
-	}
-	&.audio {
-		background-color:#ecfafe;
-		border-bottom:1px solid #bae9f6;
-		border-top:1px solid #bae9f6;
-		strong {
-			background-color:#00b9f3;
-		}
-	}
+    background-color:$nearWhite;
+    border-bottom:1px solid $grayLighter;
+    border-top:1px solid $grayLighter;
+    color:$black;
+    @include font-headline();
+    font-size:18px;
+    margin-bottom:$baseline;
+    vertical-align:text-bottom;
+    .inner-container {
+        border-bottom:1px solid $white;
+        border-top:1px solid $white;
+        padding:4px 6px;
+        a {
+            color:$black;
+        }
+        strong {
+            background-color:$gray;
+            @include border-radius(4px);
+            @include ie-inline-block();
+            @include font-heading(600, 13px);
+            color:$white;
+            margin:2px 6px 2px 0;
+            padding:3px 6px;
+            text-shadow:0 1px 0 rgba(0,0,0,0.35);
+            text-transform:uppercase;
+        }
+    }
+    &.break {
+        background-color:#fbe0e0;
+        border-bottom:1px solid #faa1a1;
+        border-top:1px solid #faa1a1;
+        strong {
+            background-color:#bf0a0a;
+        }
+    }
+    &.now {
+        background-color:#fff7dd;
+        border-bottom:1px solid #ead58f;
+        border-top:1px solid #ead58f;
+        strong {
+            background-color:#f37a00;
+        }
+    }
+    &.audio {
+        background-color:#ecfafe;
+        border-bottom:1px solid #bae9f6;
+        border-top:1px solid #bae9f6;
+        strong {
+            background-color:#00b9f3;
+        }
+    }
 }

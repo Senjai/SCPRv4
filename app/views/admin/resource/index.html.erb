@@ -1,26 +1,26 @@
 <% page_title resource_title.pluralize %>
 <%= index_header resource_class %>
 <table class="table table-striped">
-	<%= any_to_list? @records, title: resource_title.pluralize do %>
-		<thead>
-			<tr>
-				<% @list.columns.each do |column| %>
-					<th><%= column.header %></th>
-				<% end %>
-			</tr>
-		</thead>
-		<tbody class="list">
-			<% @records.each do |record| %>
-				<tr class="<%= resource_class.to_s.underscore.dasherize %>">
-					<% @list.columns.each do |column| %>
-						<td>
-							<%= render_attribute column, record %>
-						</td>
-					<% end %>
-				</tr>
-			<% end %>
-		</tbody>
-	<% end %>
+  <%= any_to_list? @records, title: resource_title.pluralize do %>
+    <thead>
+      <tr>
+        <% @list.columns.each do |column| %>
+          <th><%= column.header %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="list">
+      <% @records.each do |record| %>
+        <tr class="<%= resource_class.to_s.underscore.dasherize %>">
+          <% @list.columns.each do |column| %>
+            <td>
+              <%= render_attribute column, record %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
 </table>
 
 <%= will_paginate @records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

@@ -1,7 +1,7 @@
 <div class="index-header">
-	<%= form_tag admin_search_path(resource: resource_param.to_s.pluralize), method: :get, class: "form-search pull-left" do %>
-		<%= text_field_tag "query", nil, class: "search-query" %>
-		<%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
-	<% end %>
-	<%= link_to "Add #{resource_class.to_s.titleize}", url_for([:new, :admin, resource_class.to_s.underscore]), class: "btn btn-success pull-right" %>
+  <%= form_tag admin_search_path(resource: resource_param.to_s.pluralize), method: :get, class: "form-search pull-left" do %>
+    <%= text_field_tag "query", nil, class: "search-query" %>
+    <%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
+  <% end %>
+  <%= link_to "Add #{resource_class.to_s.titleize}", url_for([:new, :admin, resource_class.to_s.underscore]), class: "btn btn-success pull-right" %>
 </div>

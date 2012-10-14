@@ -1,41 +1,40 @@
 <%= flash[:alert] %>
 
-<%= form_for @message, :url => content_email_path(:obj_key => @content.obj_key) do |f| %>
-	<h6>Email this to a friend:</h6>
-	<hr />
-	<div class="cbase">
-		<h2 class="story-headline"><%= @content.headline %></h2>
-		<p><%= @content.teaser %></p>
-	</div>
-	<hr />
+<%= form_for @message, url: content_email_path(obj_key: @content.obj_key) do |f| %>
+  <h6>Email this to a friend:</h6>
+  <hr />
+  <div class="cbase">
+    <h2 class="story-headline"><%= @content.headline %></h2>
+    <p><%= @content.teaser %></p>
+  </div>
+  <hr />
 
   <fieldset class="fields">
-	<% unless flash[:alert].blank? %>
-		<div class="error"><%=h flash[:alert] %></div>
-	<% end %>
+    <% unless flash[:alert].blank? %>
+      <div class="error"><%=h flash[:alert] %></div>
+    <% end %>
     <ul class="inputs-list">
-    	<li class="field">
-	      <%= f.label 		:to_email, "Send This To:" %>
-	      <%= f.text_field 	:to_email, :class => "xlarge", :placeholder => "Email address" %>
-	    </li>
-		<li class="field">
-	      <%= f.label 		:from_name, 	"From:" %>
-		  <%= f.label 		:from_name, 	"Your Name" %>
-	      <%= f.text_field 	:from_name, 	:class => "xlarge stacked" %>
-		  <%= f.label 		:from_name, 	"Your E-mail" %>
-	      <%= f.text_field 	:from_email, 	:class => "xlarge" %>
-	
-	    </li>
-		<li class="field">
-	      <%= f.label 		:body, 	"Add a personal message:" %>
-	      <%= f.text_area 	:body, 	:class => "xlarge" %>
-	    </li>
+      <li class="field">
+        <%= f.label :to_email, "Send This To:" %>
+        <%= f.text_field :to_email, class: "xlarge", placeholder: "Email address" %>
+      </li>
+      <li class="field">
+        <%= f.label :from_name, "From:" %>
+        <%= f.label :from_name, "Your Name" %>
+        <%= f.text_field :from_name, class: "xlarge stacked" %>
+        <%= f.label :from_name, "Your E-mail" %>
+        <%= f.text_field :from_email, class: "xlarge" %>
+      </li>
+      <li class="field">
+        <%= f.label :body, "Add a personal message:" %>
+        <%= f.text_area :body, class: "xlarge" %>
+      </li>
     </ul>
   </fieldset>
 
-	<%= f.text_field :lname, :class => "hidden" %>
+  <%= f.text_field :lname, class: "hidden" %>
 
   <fieldset>
-    <%= f.submit "Share", 	:class => "btn primary" %>
+    <%= f.submit "Share", class: "btn primary" %>
   </fieldset>
 <% end %>

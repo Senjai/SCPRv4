@@ -1,47 +1,47 @@
 <%=
-	begin
-		render :partial => @homepage.base, :homepage => @homepage
-	rescue
-		render :partial => "default", :homepage => @homepage
-	end
+  begin
+    render :partial => @homepage.base, :homepage => @homepage
+  rescue
+    render :partial => "default", :homepage => @homepage
+  end
 %>
 
 <%= yield :conversation_slot %>
 <div class="more-content">
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="headlines">
-				<h6>More Headlines</h6>
-				<ul class="cbase">
-					<%= raw Rails.cache.read("home/headlines") %>
-				</ul>
-			</div>
-		</div>
-		<div class="span12">
-			<%= render "shared/widgets/events_at_the_forum" %>
-		</div>	
-	</div>
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="headlines">
+        <h6>More Headlines</h6>
+        <ul class="cbase">
+          <%= raw Rails.cache.read("home/headlines") %>
+        </ul>
+      </div>
+    </div>
+    <div class="span12">
+      <%= render "shared/widgets/events_at_the_forum" %>
+    </div>  
+  </div>
 </div>
 
 <% content_for :missed_it do %>
-	<% if @homepage and @homepage.missed_it_bucket.present? and @homepage.missed_it_bucket.contents.present? %>
-		<div class="more-news missed-it-bucket content-carousel">
-			<h6 class="more-news-title">
-				In Case You Missed It
-				<div class="pager-nav">
-					<a class="prev track-event" data-ga-category="Homepage" data-ga-action="In Cast You Missed It" data-ga-label="Nav Previous"></a>
-					<a class="next track-event" data-ga-category="Homepage" data-ga-action="In Cast You Missed It" data-ga-label="Nav Next"></a>
-				</div>
-			</h6>			
-			<div class="carousel" data-current-page="1"></div>
-		</div> <!-- missed-it-bucket -->
-		
-		<% content_for :footerjss do %>
-			var carousel = new scpr.ContentCarousel({dataUrl: "<%= homepage_missed_it_content_path(@homepage.id) %>"});
-		<% end %>
-	<% end %>
+  <% if @homepage and @homepage.missed_it_bucket.present? and @homepage.missed_it_bucket.contents.present? %>
+    <div class="more-news missed-it-bucket content-carousel">
+      <h6 class="more-news-title">
+        In Case You Missed It
+        <div class="pager-nav">
+          <a class="prev track-event" data-ga-category="Homepage" data-ga-action="In Cast You Missed It" data-ga-label="Nav Previous"></a>
+          <a class="next track-event" data-ga-category="Homepage" data-ga-action="In Cast You Missed It" data-ga-label="Nav Next"></a>
+        </div>
+      </h6>     
+      <div class="carousel" data-current-page="1"></div>
+    </div> <!-- missed-it-bucket -->
+    
+    <% content_for :footerjss do %>
+      var carousel = new scpr.ContentCarousel({dataUrl: "<%= homepage_missed_it_content_path(@homepage.id) %>"});
+    <% end %>
+  <% end %>
 <% end %>
 
 <% content_for :lower do %>
-	<%= raw Rails.cache.read("home/sections") %>
+  <%= raw Rails.cache.read("home/sections") %>
 <% end %>

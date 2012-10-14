@@ -4,39 +4,39 @@
 <h2><%= title %></h2>
 <%= any_to_list? events, title: title do %>
 <section class="events-list <%= cssClass %>">
-	<% Event.sorted(events).each do |event| %>
-  		<div class="cbase event teaser">
-			<div class="row-fluid">
-				<% if event.assets.present? %>
-					<div class="span6">
-						<a href="<%= event.link_path %>">
-							<%= render_asset event, 'three' %>
-						</a>
-					</div>
-					<div class="span18">
-				<% else %>
-					<div class="span24">
-				<% end %>
-					
-					<div class="event-details">
-						<div class="row-fluid">
-							<div class="span8">
-								<% text = event.ongoing? ? "Through " : "" %>
-								<%= link_to text + format_date(event.sorter, format: :event), event.link_path, class: "event-link" %>
-							</div>
-							<div class="span16">
-								<% if event.location_name.present? %>
-									<span class="event-location<%= " forum" if event.is_forum_event? %>"><%= event.location_name %></span>
-								<% end %>
-							</div>
-						</div> <!-- row fluid -->
-						<h1 class="story-title"><%= link_to event.headline, event.link_path %></h1>
-						<p><%= event.teaser.html_safe %> <%= link_to "More", event.link_path %></p>
-					</div> <!-- event-details -->
-				</div> <!-- span -->
-			</div> <!-- row fluid -->
-		</div>
-	<% end %>
+  <% Event.sorted(events).each do |event| %>
+      <div class="cbase event teaser">
+      <div class="row-fluid">
+        <% if event.assets.present? %>
+          <div class="span6">
+            <a href="<%= event.link_path %>">
+              <%= render_asset event, 'three' %>
+            </a>
+          </div>
+          <div class="span18">
+        <% else %>
+          <div class="span24">
+        <% end %>
+          
+          <div class="event-details">
+            <div class="row-fluid">
+              <div class="span8">
+                <% text = event.ongoing? ? "Through " : "" %>
+                <%= link_to text + format_date(event.sorter, format: :event), event.link_path, class: "event-link" %>
+              </div>
+              <div class="span16">
+                <% if event.location_name.present? %>
+                  <span class="event-location<%= " forum" if event.is_forum_event? %>"><%= event.location_name %></span>
+                <% end %>
+              </div>
+            </div> <!-- row fluid -->
+            <h1 class="story-title"><%= link_to event.headline, event.link_path %></h1>
+            <p><%= event.teaser.html_safe %> <%= link_to "More", event.link_path %></p>
+          </div> <!-- event-details -->
+        </div> <!-- span -->
+      </div> <!-- row fluid -->
+    </div>
+  <% end %>
 </section>
 <% end %>
 <%= will_paginate events %>

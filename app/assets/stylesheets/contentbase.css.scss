@@ -1,113 +1,113 @@
 .cbase {
-	h1, h2, h3, h4, h5, h6 {
-		line-height: $baseLineHeight;
-	}
-	p {
-		font-size:13px;
-		line-height:18px;
-		padding:5px 0 2px;
-		margin: 0;
-	}
-	h4 {
-		color:$gray;
-		@include font-sans-serif(normal, 11px);
-	    line-height: $baseLineHeight;
+    h1, h2, h3, h4, h5, h6 {
+        line-height: $baseLineHeight;
+    }
+    p {
+        font-size:13px;
+        line-height:18px;
+        padding:5px 0 2px;
+        margin: 0;
+    }
+    h4 {
+        color:$gray;
+        @include font-sans-serif(normal, 11px);
+        line-height: $baseLineHeight;
         margin-top: 6px;
         text-transform: uppercase;
-	
-		a {
-	        color: $gray;
-	        font-weight: 600;
-		}
-		
-		time.sttime {
-			border-left:1px solid $grayLight;
-			margin-left:2px;
-			padding-left:4px;
-		}
-	}
-	
-	a.comment_link {
-	    @include font-sans-serif(normal, 11px);
-	    margin-bottom: 10px;
-	    background: url(image_path('icons/comment-count-sm.png')) no-repeat left 1px;
-	    padding-left: 14px;
-	}
-	
-	time, .shell-link {
-	    /* @include ie-inline-block; */
+    
+        a {
+            color: $gray;
+            font-weight: 600;
+        }
+        
+        time.sttime {
+            border-left:1px solid $grayLight;
+            margin-left:2px;
+            padding-left:4px;
+        }
+    }
+    
+    a.comment_link {
+        @include font-sans-serif(normal, 11px);
+        margin-bottom: 10px;
+        background: url(image_path('icons/comment-count-sm.png')) no-repeat left 1px;
+        padding-left: 14px;
+    }
+    
+    time, .shell-link {
+        /* @include ie-inline-block; */
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;
-		white-space:nowrap;
-		
-		&:hover {
-			text-decoration:none;
-		}
-		
+        white-space:nowrap;
+        
+        &:hover {
+            text-decoration:none;
+        }
+        
     }
 
-	.shell-link {
-		background:transparent url(image_path('icons/link-offsite.png')) no-repeat right 0;
-		padding:1px 15px 0 0;
-	}
-	
-	&.lead, &.lead5 {
-		h4 { text-transform: none; }
-	    h1 {
-		  font-size:26px;
-	      margin-bottom: 0;
-		  line-height: $baseLineHeight * 1.5;
-	    }
-	}
-	
-	&.lead {
-		border-bottom: 1px solid $grayLighter;
-		padding-bottom: 10px;
-		margin-bottom: 10px;
-	}
-	
-	&.offlead {
-		border-bottom: 1px solid $grayLighter;
-		padding-bottom: 10px;
-		margin-bottom: 10px;
-	    h3 {
-			@include font-headline();
-	    	margin-bottom:0;
-	    	a {
-	    		color:$nearBlack;
-	    	}
-	    }
-	    h4 {
-	        font-weight:normal;
-			margin-bottom: 0;
-			color: #999;
-	    }
-	}
+    .shell-link {
+        background:transparent url(image_path('icons/link-offsite.png')) no-repeat right 0;
+        padding:1px 15px 0 0;
+    }
+    
+    &.lead, &.lead5 {
+        h4 { text-transform: none; }
+        h1 {
+          font-size:26px;
+          margin-bottom: 0;
+          line-height: $baseLineHeight * 1.5;
+        }
+    }
+    
+    &.lead {
+        border-bottom: 1px solid $grayLighter;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+    
+    &.offlead {
+        border-bottom: 1px solid $grayLighter;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        h3 {
+            @include font-headline();
+            margin-bottom:0;
+            a {
+                color:$nearBlack;
+            }
+        }
+        h4 {
+            font-weight:normal;
+            margin-bottom: 0;
+            color: #999;
+        }
+    }
 
-	&.thumbnail {
-		padding-bottom: 10px;
-		margin-bottom: 10px;
-	    h3 {
-	        font-weight:600;
-			margin-bottom: 0;
-	    }
-	    h4 {
-	        font-weight:normal;
-			margin-bottom: 0;
-			color: #999;
-	    }
-	}
+    &.thumbnail {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        h3 {
+            font-weight:600;
+            margin-bottom: 0;
+        }
+        h4 {
+            font-weight:normal;
+            margin-bottom: 0;
+            color: #999;
+        }
+    }
 }
 
 // Add a bottom-border to the "thumbnails" on category index pages. Should probably not be using "thumbnail" partial for this.
 .category-page, .bio-detail {
-	.cbase.thumbnail { border-bottom: 1px solid $grayLighter; }
+    .cbase.thumbnail { border-bottom: 1px solid $grayLighter; }
 }
 
 .homepage-lead.lead-right .lead { border-bottom: none; }
 time.smart {
-	/* @include ie-inline-block; */
+    /* @include ie-inline-block; */
     @include font-sans-serif(normal, 11px);
     color: $orangeDark;
     text-transform: uppercase;
@@ -115,24 +115,24 @@ time.smart {
 
 .cbase.lead {
     h1 {
-	  font-size:26px;
+      font-size:26px;
       margin-bottom: 0;
     }
 }
 
 .cbase.offlead {
     h3 {
-		@include font-headline();
-    	margin-bottom:0;
-    	a {
-    		color:$nearBlack;
-    	}
+        @include font-headline();
+        margin-bottom:0;
+        a {
+            color:$nearBlack;
+        }
     }
     
     h4 {
         font-weight:normal;
-		margin-bottom: 0;
-		color: #999;
+        margin-bottom: 0;
+        color: #999;
     }
     
     img {
@@ -146,69 +146,69 @@ time.smart {
 .cbase.thumbnail {
     h3 {
         font-weight:600;
-		margin-bottom: 0;
+        margin-bottom: 0;
     }
     h4 {
         font-weight:normal;
-		margin-bottom: 0;
-		color: #999;
+        margin-bottom: 0;
+        color: #999;
     }
     
 }
 #lead-right {
-	#lead-right .offleads .offlead:first-child h3.story-headline {
-		font-size: 26px;
-		line-height: 28px;
-		font-weight: bold;
-	}
-	.lead h1 {
-		font-size:24px;
-		font-weight:600;
-	}
+    #lead-right .offleads .offlead:first-child h3.story-headline {
+        font-size: 26px;
+        line-height: 28px;
+        font-weight: bold;
+    }
+    .lead h1 {
+        font-size:24px;
+        font-weight:600;
+    }
 }
 
 .span16.split {
-	@include clearfix();
-	margin-top:$baseline;
-	.offlead {
-		float:left;
-		width: 350px;
-		margin-left: 30px;
-		&:first-child {
-			margin-left:0;
-		}
-	}
-	hr {
-		display:none;
-	}
+    @include clearfix();
+    margin-top:$baseline;
+    .offlead {
+        float:left;
+        width: 350px;
+        margin-left: 30px;
+        &:first-child {
+            margin-left:0;
+        }
+    }
+    hr {
+        display:none;
+    }
 }
 
 .teaser {
-	border-bottom: 1px solid $grayLighter;
-	padding: 10px 0;
-	.info, header {
-		@include font-serif($size: 13px);
-		vertical-align: top;
-		h3 {
-			@include font-headline();
-			font-size:20px;
-			line-height:22px;
-			a {
-				color:$nearBlack;
-			}
-		}
-		.byline {
-			margin-bottom:10px;
-		}
-	}
-	.interact {
-		@include font-sans-serif($size: 11px);
-		.story-audio {
-			display:block;
-			margin-bottom:3px;
-			a {
-				padding-left:19px;
-			}
-		}
-	}
+    border-bottom: 1px solid $grayLighter;
+    padding: 10px 0;
+    .info, header {
+        @include font-serif($size: 13px);
+        vertical-align: top;
+        h3 {
+            @include font-headline();
+            font-size:20px;
+            line-height:22px;
+            a {
+                color:$nearBlack;
+            }
+        }
+        .byline {
+            margin-bottom:10px;
+        }
+    }
+    .interact {
+        @include font-sans-serif($size: 11px);
+        .story-audio {
+            display:block;
+            margin-bottom:3px;
+            a {
+                padding-left:19px;
+            }
+        }
+    }
 }

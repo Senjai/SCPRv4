@@ -318,23 +318,23 @@
 
 // Fixed Grid
 @mixin gridCore($gridColumnWidth, $gridGutterWidth) {
-	.row {
-		margin-left: $gridGutterWidth * -1;
-	    @include clearfix();
-	
-		> [class*="span"] {
-		  float: left;
-		  margin-left: $gridGutterWidth;
-		}
+    .row {
+        margin-left: $gridGutterWidth * -1;
+        @include clearfix();
+    
+        > [class*="span"] {
+          float: left;
+          margin-left: $gridGutterWidth;
+        }
 
-		@for $i from 1 through $gridColumns {
-		  > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
-		}
+        @for $i from 1 through $gridColumns {
+          > .span#{$i} { @include gridCoreSpan($i, $gridColumnWidth, $gridGutterWidth) }
+        }
 
-		@for $i from 1 through $gridColumns {
-		  > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
-		}
-	}
+        @for $i from 1 through $gridColumns {
+          > .offset#{$i} { @include gridCoreOffset($i, $gridColumnWidth, $gridGutterWidth) }
+        }
+    }
 
   .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
     @include gridCoreSpan($gridColumns, $gridColumnWidth, $gridGutterWidth);
@@ -353,19 +353,19 @@
 
 // Fluid Grid
 @mixin gridFluidSpan($columns) {
-	width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 2));
+    width: ($fluidGridColumnWidth * $columns) + ($fluidGridGutterWidth * ($columns - 2));
 }
 
 @mixin makeFluidRow {
-	width: 100%;
+    width: 100%;
     @include clearfix();
     > [class*="span"] {
       float: left;
       margin-left: $fluidGridGutterWidth * 2;
-	  
-	  // To make sure spans don't wrap in IE7 due to pixel/percentage discrepancies
-	  // Can stay here because it's fine to apply in other browsers as well
-	  clear: right;
+      
+      // To make sure spans don't wrap in IE7 due to pixel/percentage discrepancies
+      // Can stay here because it's fine to apply in other browsers as well
+      clear: right;
     }
     > [class*="span"]:first-child {
       margin-left: 0;
@@ -377,7 +377,7 @@
 
 
 @mixin gridFluid {
-	.row-fluid { @include makeFluidRow; }
+    .row-fluid { @include makeFluidRow; }
 }
 
 @mixin makeFluidColumn($columns) {

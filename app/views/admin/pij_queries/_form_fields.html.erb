@@ -1,24 +1,24 @@
 <%= form_block "Details" do %>
-	<%= f.input :query_url, input_html: { class: "wide" } %>
-	<%= f.input :query_type, collection: PijQuery::QUERY_TYPES %>
-	<%= f.input :slug %>
+  <%= f.input :query_url, input_html: { class: "wide" } %>
+  <%= f.input :query_type, collection: PijQuery::QUERY_TYPES %>
+  <%= f.input :slug %>
 <% end %>
 
 <%= form_block "Content" do %>
-	<%= f.input :headline, input_html: { class: "wide" } %>
-	<%= f.input :teaser, input_html: { class: "short" } %>
-	<%= f.input :body %>
+  <%= f.input :headline, input_html: { class: "wide" } %>
+  <%= f.input :teaser, input_html: { class: "short" } %>
+  <%= f.input :body %>
 <% end %>
 
 <%= form_block "Display Options" do %>
-	<%= f.input :is_featured %>
-	<%= f.input :form_height, as: :string, input_html: { class: "thin" } %>
+  <%= f.input :is_featured %>
+  <%= f.input :form_height, as: :string, input_html: { class: "thin" } %>
 <% end %>
 
 <%= form_block "Publishing" do %>
-	<%= f.input :is_active %>
-	<%= f.input :published_at %>
-	<%= f.input :expires_at %>
+  <%= f.input :is_active %>
+  <%= f.input :published_at %>
+  <%= f.input :expires_at %>
 <% end %>
 
 <%= section "assets", f, record %>

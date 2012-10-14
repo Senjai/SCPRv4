@@ -36,7 +36,7 @@ class scpr.adSizer
         $(document).ready =>
             # 5 times. If the ad hasn't loaded after that, then we're giving up.
             for i in [1..5]
-            	@sizedCheck(i)
+                @sizedCheck(i)
             
 
     resize: (element) ->

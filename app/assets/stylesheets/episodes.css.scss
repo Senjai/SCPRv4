@@ -1,95 +1,95 @@
 header.episode, .gray-strip {
-	margin-top: $baseline/2 * -1;
-	margin-left: 0px;
-	margin-right: 0px;
-	margin-bottom: 10px;
-	
-	background: #f5f5f5;
-	border-bottom: 1px solid #bfbfbf;
-	padding: 8px 3px 8px 12px;
-	@include font-heading($size: 12px, $weight: 600);
-	
-	h4 {
-		color: $orangeDark;
-		@include ie-inline-block;
-		font-size:18px;
-		font-weight:500;
-		line-height:20px;
-		margin-top:8px;
-	}
-	
-	.story-audio {
-		&.inline {
-			margin: 0;
-			@include ie-inline-block;
-		}
-		a.play-btn {
-			margin-top:3px;
-		}
-		a.play-text {
-			@include ie-inline-block();
-			padding:11px 5px 0 0;
-		}
-		.audio-toggler {
-			@include font-headline();
-			color:$nearBlack;
-			font-size:16px;
-			font-weight:600;
-		}
-		.download {
-			@include font-sans-serif(normal, 11px);
-			color:$grayDark;
-		}
-	}
+    margin-top: $baseline/2 * -1;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    
+    background: #f5f5f5;
+    border-bottom: 1px solid #bfbfbf;
+    padding: 8px 3px 8px 12px;
+    @include font-heading($size: 12px, $weight: 600);
+    
+    h4 {
+        color: $orangeDark;
+        @include ie-inline-block;
+        font-size:18px;
+        font-weight:500;
+        line-height:20px;
+        margin-top:8px;
+    }
+    
+    .story-audio {
+        &.inline {
+            margin: 0;
+            @include ie-inline-block;
+        }
+        a.play-btn {
+            margin-top:3px;
+        }
+        a.play-text {
+            @include ie-inline-block();
+            padding:11px 5px 0 0;
+        }
+        .audio-toggler {
+            @include font-headline();
+            color:$nearBlack;
+            font-size:16px;
+            font-weight:600;
+        }
+        .download {
+            @include font-sans-serif(normal, 11px);
+            color:$grayDark;
+        }
+    }
 }
 
 .gray-strip {
-	.more { 
-		display: inline-block;
-		margin-right: 10px; 
-	}
-	
+    .more { 
+        display: inline-block;
+        margin-right: 10px; 
+    }
+    
 }
 
 .archive-date-select {
-	margin-bottom: 0;
-	display: inline-block;
-	select { 
-		width: 100px;
-		&#archive_date_3i {
-			width:60px;
-		}
-	}
+    margin-bottom: 0;
+    display: inline-block;
+    select { 
+        width: 100px;
+        &#archive_date_3i {
+            width:60px;
+        }
+    }
 }
 
 .show-episode {
-	border-bottom: 1px solid $grayLighter;
+    border-bottom: 1px solid $grayLighter;
     margin-top: $baseline;
-	padding-bottom: 16px;
-	h3 {
-		@include font-headline();
-		font-size:20px;
-		a {
-			color: $nearBlack;
-		}
-	}
-	p {
-		font-size:13px;
-		line-height:18px;
-	}
+    padding-bottom: 16px;
+    h3 {
+        @include font-headline();
+        font-size:20px;
+        a {
+            color: $nearBlack;
+        }
+    }
+    p {
+        font-size:13px;
+        line-height:18px;
+    }
 }
 
 .current-episode {
-	border-bottom: 1px solid $grayLighter;
-	margin-bottom: $baseline/2;
-	
+    border-bottom: 1px solid $grayLighter;
+    margin-bottom: $baseline/2;
+    
     h2 {
-		font-size:18px;
+        font-size:18px;
         font-weight: 600;
         margin: 6px 0 12px 0;
-		a {
-			color:$nearBlack;
-		}
+        a {
+            color:$nearBlack;
+        }
     }
     
     h3 {
@@ -97,22 +97,22 @@ header.episode, .gray-strip {
     }
 }
 .current-episode-segments {
-	h3 {
-		font-size:16px;
-		font-weight:600;
-	}
-	.cbase {
-		margin-bottom:$baseline / 2;
-		a.comment_link {
-			margin-left:0;
-		}
-	}
+    h3 {
+        font-size:16px;
+        font-weight:600;
+    }
+    .cbase {
+        margin-bottom:$baseline / 2;
+        a.comment_link {
+            margin-left:0;
+        }
+    }
 }
 
 .upcoming-episode {
     margin-bottom: 12px;
     padding-bottom: 12px;
-	border-bottom: 1px solid $grayLighter;
+    border-bottom: 1px solid $grayLighter;
     
     h3 {
         font-weight: 400;

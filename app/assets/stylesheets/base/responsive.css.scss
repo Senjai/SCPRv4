@@ -10,23 +10,23 @@ $mediaSmallPortrait: 320px;
 
 // These mixins are for responsive use only. Don't use them to define default styles (because they're not IE7/8-friendly).
 @mixin fluidPopup($margin: 4%, $top: 70px) {
-	position: fixed;
-	left: $margin !important;
-	top: $top !important; // Leave room for headers to show
-	width: 100% - $margin * 2 !important;
-	max-height: 75% !important;
-	overflow: scroll;
+    position: fixed;
+    left: $margin !important;
+    top: $top !important; // Leave room for headers to show
+    width: 100% - $margin * 2 !important;
+    max-height: 75% !important;
+    overflow: scroll;
 }
 
 @mixin vertify {
-	> .row-fluid {
-		> [class*="span"] {
-	    	float: none;
-			display: block;
-			width: 100%;
-			margin: 0;
-		}
-	}
+    > .row-fluid {
+        > [class*="span"] {
+            float: none;
+            display: block;
+            width: 100%;
+            margin: 0;
+        }
+    }
 }
 
 // We can use globbing since the media queries are isolated
