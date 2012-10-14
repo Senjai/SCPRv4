@@ -102,7 +102,9 @@ module AdminResource
       # Don't override as_json unless you don't
       # want its baked-in goodies
       def json
-        {}
+        # Super is temporary for ContentBase stuff
+        # Since this module sits between CB and its subclasses
+        super rescue {}
       end
       
       #-------------
