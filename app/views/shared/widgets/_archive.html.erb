@@ -1,14 +1,15 @@
 <div class="archive widget">
-	<h6>Browse our news archive</h6>
-	<div class="archive-select" id="archive-select">
-		<p>
-			<%= form_tag archive_process_form_path, id: "archive_date_select", class: "archive-date-select" do %>
-				<%= date_select 'archive', 'date', order: [:month, :day, :year], 
-								start_year: 2002, 
-								end_year: Time.now.year,
-								default: Time.now.yesterday %>
-				<%= submit_tag "Go", class: "btn" %>
-			<% end %>
-		</p>
-	</div>
+  <h6>Browse our news archive</h6>
+  <div class="archive-select" id="archive-select">
+    <p>
+      <%= form_tag archive_process_form_path, id: "archive_date_select", class: "archive-date-select" do %>
+        <%= date_select 'archive', 'date', 
+          order: [:month, :day, :year], 
+          start_year: 2002, 
+          end_year: Time.now.year,
+          default: Time.now.yesterday %>
+        <%= submit_tag "Go", class: "btn" %>
+      <% end %>
+    </p>
+  </div>
 </div>
