@@ -47,7 +47,7 @@ module AdminResource
       def link_path(options={})
         @link_path ||= begin
           if self.route_hash.present? and defined?(self.class::ROUTE_KEY)
-            Rails.application.routes.url_helpers.send("#{self.class::ROUTE_KEY}_path", options.merge!(route_hash))
+            Rails.application.routes.url_helpers.send("#{self.class::ROUTE_KEY}_path", options.merge!(self.route_hash))
           end
         end
       end
@@ -61,7 +61,7 @@ module AdminResource
       #-------------
       # http://scpr.org/blogs/2012/...
       def remote_link_path(options={})
-        "http://#{Rails.application.default_url_options[:host]}#{self.link_path(options)}"
+        "http://#{Rails.application.config.scpr.host}#{self.link_path(options)}"
       end
     end
   end

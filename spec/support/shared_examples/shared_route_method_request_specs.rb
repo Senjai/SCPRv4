@@ -18,11 +18,6 @@ shared_examples_for "front-end routes request" do
       visit valid_record.link_path
       current_path.should eq valid_record.link_path
     end
-  
-    it "returns success when following remote_link_path" do
-      visit valid_record.remote_link_path
-      current_url.should eq valid_record.remote_link_path
-    end  
   end
 end
 

@@ -44,20 +44,52 @@ describe AdminResource::Helpers::Routes do
   #----------------
   
   describe "#link_path" do
-    pending
+    let(:person) { Person.new(name: "Bob Loblaw") }
+    
+    it "returns nil if #route_hash is blank" do
+      person.stub(:route_hash) { Hash.new }
+      person.link_path.should eq nil
+    end
+    
+    it "returns nil if if ROUTE_KEY isn't defined" do
+      class SomeClass; include AdminResource::Helpers::Routes; end
+      something = SomeClass.new
+      something.stub(:route_hash) { { id: 1, slug: "cool-dude" } }
+      something.link_path.should eq nil
+    end
+    
+    it "returns the route helper with the route hash" do
+      Rails.application.routes.url_helpers.should_receive(:people_path).with(person.route_hash).and_return("blahblahblah")
+      person.link_path.should eq "blahblahblah"      
+    end
   end
   
   #----------------
   
   describe "#remote_link_path" do
-    pending
+    let(:person) { Person.create(name: "Dude Bro") }
+    
+    before :each do
+      Rails.application.routes.url_helpers.should_receive(:people_path).with(person.route_hash).and_return("/people/#{person.id}/#{person.name.parameterize}")
+    end
+    
+    it "contains the object's link path" do
+      person.link_path.should_not be_blank
+      person.remote_link_path.should match person.link_path
+    end
+    
+    it "contains the configured remote URL" do
+      Rails.application.config.scpr.stub(:host) { "www.foodnstuff.com" }
+      person.remote_link_path.should match /http:\/\/www\.foodnstuff\.com/
+    end
   end
   
   #----------------
   
   describe "#route_hash" do
     it "is just an empty hash, meant to be overridden" do
-      Person.new.route_hash.should eq Hash.new
+      class SomeClass; include AdminResource::Helpers::Routes; end
+      SomeClass.new.route_hash.should eq Hash.new
     end
   end
 end

@@ -27,10 +27,10 @@ RSpec.configure do |config|
     silence_stream STDOUT, &migration
     DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.strategy = :truncation
+    Dir[Rails.root.join("lib/admin_resource/spec/models/*.rb")].each { |f| load f }
   end
   
   config.before :each do
-    Dir[Rails.root.join("lib/admin_resource/spec/models/*.rb")].each { |f| load f }
   end
   
   config.after :each do
