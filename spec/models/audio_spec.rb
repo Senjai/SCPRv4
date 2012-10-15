@@ -446,6 +446,31 @@ describe Audio do
       audio.size.should eq audio.mp3.file.size
     end
   end
+
+  #----------------
+  
+  describe "#compute_file_info!" do
+    context "with mp3 file" do
+      it "computes duration and size, and saves" do
+        audio = create :audio, :uploaded
+        audio.mp3.present?.should eq true
+        Audio.any_instance.should_receive(:compute_duration)
+        Audio.any_instance.should_receive(:compute_size)
+        Audio.any_instance.should_receive(:save!)
+        audio.compute_file_info!.should eq audio
+      end
+    end
+    
+    context "without mp3 file" do
+      it "doesn't do anything, and returns nil" do
+        audio = create :audio, :enco
+        Audio.any_instance.should_not_receive(:compute_duration)
+        Audio.any_instance.should_not_receive(:compute_size)
+        Audio.any_instance.should_not_receive(:save!)
+        audio.compute_file_info!.should eq nil
+      end
+    end
+  end
   
   #----------------
   

@@ -230,6 +230,16 @@ class Audio < ActiveRecord::Base
     self.size = self.mp3.file.size # Carrierwave sets this to 0 if it can't compute it
   end
   
+  #------------
+  # Compute duration and size, and save the object
+  def compute_file_info!
+    if self.mp3.present?
+      self.compute_duration
+      self.compute_size
+      self.save!
+      self
+    end
+  end
   
   #------------  
   #------------

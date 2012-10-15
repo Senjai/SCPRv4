@@ -12,14 +12,8 @@ class Audio::ComputeFileInfoJob
   def self.perform(id)
     begin
       audio = Audio.find(id)
-      if audio.mp3.present?
-        audio.compute_duration
-        audio.compute_size
-        audio.save!
-        self.log "Saved Audio ##{audio.id}. Duration: #{audio.duration}; Size: #{audio.size}"
-      else
-        self.log "No audio file present for Audio ##{audio.id}."
-      end
+      audio.compute_file_info!
+      self.log "Saved Audio ##{audio.id}. Duration: #{audio.duration}; Size: #{audio.size}"
     rescue Exception => e
       self.log "Couldn't save audio file info: #{e}"
     end
