@@ -44,6 +44,12 @@
 	#VoterGuideForm p {
 		color:#62b5dd;
 		font-family:"proxima-nova", Helvetica, sans-serif;
+		margin-bottom:6px;
+	}
+	#VoterGuideForm p.small {
+		color:#888;
+		font-size:11px;
+		margin-bottom:0;
 	}
 	#VoterGuideForm label {
 		display:none;
@@ -96,10 +102,11 @@
 </style>
 <div class="my-ballot">
 	<header data-toggle="collapse" data-target="#VoterGuideForm">
-		<h4>Election 2012: Build your own ballot <span>Get Started</span></h4>
+		<h4>Election 2012: Do you know who's on your ballot? <span>Get Started</span></h4>
 	</header>
 	<form id="VoterGuideForm" class="collapse" action="http://myballot.kpcc.org/get-started.do" method="GET">
-		<p><strong>Find the races that matter to you!</strong> Get started by entering your address and clicking "Go".</p>
+		<p><strong>Find the races in Southern California that matter to you!</strong></p>
+		<p>Get started by entering your address* and clicking "Go".</p>
 		<div class="form-inline">
 			<label>Address</label>
 			<input type="text" name="address1" maxlength="200" class="input-address" placeholder="Street Address" autofocus="autofocus" />
@@ -109,6 +116,7 @@
 			<input type="text" name="zip" maxlength="10" class="input-zip" placeholder="Zip" />
 			<input value="Go" type="submit" class="btn" />
 		</div>
+		<p class="small">*None of the data you submit is collected by KPCC.</p>
 	 </form>
 </div>
 
