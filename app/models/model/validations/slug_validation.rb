@@ -14,6 +14,7 @@ module Model
         validates :slug,
           presence: true, # Mostly just for tests
           format: { with: Validations::DEFAULTS[:slug_format] },
+          length: { maximum: 50 },
           if: :should_validate?
       end
     end
