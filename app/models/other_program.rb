@@ -6,14 +6,14 @@ class OtherProgram < ActiveRecord::Base
 
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "title"
-      list.per_page   = "all"
+  administrate do
+    define_list do
+      order    = "title"
+      per_page = :all
       
-      list.column "title"
-      list.column "produced_by"
-      list.column "air_status"
+      column "title"
+      column "produced_by"
+      column "air_status"
     end
   end
 

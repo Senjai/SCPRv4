@@ -24,14 +24,14 @@ class Bio < ActiveRecord::Base
   
   #--------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order    = "#{AdminUser.table_name}.last_name"
-      list.per_page = "all"
+  administrate do
+    define_list do
+      order    = "#{AdminUser.table_name}.last_name"
+      per_page = :all
       
-      list.column :name
-      list.column :email
-      list.column :is_public, header: "Show on Site?"
+      column :name
+      column :email
+      column :is_public, header: "Show on Site?"
     end
   end
   

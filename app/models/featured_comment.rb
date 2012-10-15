@@ -8,15 +8,15 @@ class FeaturedComment < ActiveRecord::Base
 
   has_secretary
   
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
-      list.column :bucket
-      list.column :content
-      list.column :username, linked: true
-      list.column :excerpt
-      list.column :status
-      list.column :published_at
+  administrate do
+    define_list do
+      order = "published_at desc"
+      column :bucket
+      column :content
+      column :username, linked: true
+      column :excerpt
+      column :status
+      column :published_at
     end
   end
 

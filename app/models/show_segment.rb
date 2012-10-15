@@ -25,14 +25,14 @@ class ShowSegment < ContentBase
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
-      list.column "headline"
-      list.column "show"
-      list.column "bylines"
-      list.column "published_at"
-      list.column "status"
+  administrate do
+    define_list do
+      order = "published_at desc"
+      column "headline"
+      column "show"
+      column "bylines"
+      column "published_at"
+      column "status"
     end
   end
 

@@ -7,12 +7,12 @@ module AdminResource
 
     # Use this to define a block of admin configuration for a model
     # The block variable is an Admin object
-    def administrate
+    def administrate(&block)
       include AdminResource::Helpers::Model
       include AdminResource::Helpers::Routes
       
       self.admin = Admin.new(self)
-      yield admin if block_given?
+      admin.instance_eval(&block) if block_given?
     end
   end
 end

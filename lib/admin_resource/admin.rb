@@ -18,8 +18,8 @@ module AdminResource
     
     #------------
     
-    def define_list
-      yield list
+    def define_list(&block)
+      list.instance_eval &block
     end
     
     def fields

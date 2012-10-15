@@ -1,9 +1,19 @@
 class BreakingNewsAlert < ActiveRecord::Base
-  administrate
   self.table_name = 'layout_breakingnewsalert'
 
   has_secretary
-    
+  
+  administrate do
+    define_list do
+      order = "created_at desc"
+      column :headline
+      column :alert_type, helper: ->(alert) { BreakingNewsAlert::ALERT_TYPES[alert.alert_type] }
+      column :visible
+      column :is_published
+      column :email_sent
+    end
+  end
+  
   ALERT_TYPES = {
     "break"   => "Breaking News",
     "audio"   => "Listen Live",

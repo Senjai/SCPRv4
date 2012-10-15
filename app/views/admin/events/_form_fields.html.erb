@@ -1,6 +1,6 @@
 <%= form_block "Details" do %>
   <%= f.input :headline, label: "Title", input_html: { class: 'wide' } %>
-  <%= f.input :etype, label: "Type", collection: Event::EVENT_TYPES, selected: record.etype || Event::EVENT_TYPES[0] %>
+  <%= f.input :etype, label: "Type", collection: Event::EVENT_TYPES.map { |k, v| [v, k] }, selected: record.etype || Event::EVENT_TYPES[0] %>
   <%= f.input :is_published, label: "Published?", hint: "Should this event show up on the website?" %>
   <%= f.input :body, input_html: { class: 'ckeditor' } %>
 <% end %>

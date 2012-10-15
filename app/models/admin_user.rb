@@ -3,17 +3,17 @@ class AdminUser < ActiveRecord::Base
   self.table_name = "auth_user"
   has_secretary
   
-  administrate do |admin|
-    admin.define_list do |list|
-      list.per_page = "all"
-      list.order    = "last_name"
-
-      list.column :username
-      list.column :email
-      list.column :first_name
-      list.column :last_name
-      list.column :is_superuser
-      list.column :is_staff
+  administrate do
+    define_list do
+      per_page = :all
+      order    = "last_name"
+      
+      column :username
+      column :email
+      column :first_name
+      column :last_name
+      column :is_superuser
+      column :is_staff
     end
   end
   

@@ -3,8 +3,8 @@ require File.expand_path("../../spec_helper", __FILE__)
 describe AdminResource::Administrate do
   describe "administrate" do
     it "yields the block with the Admin object" do
-      Person.administrate do |admin|
-        admin.should be_a AdminResource::Admin
+      Person.administrate do
+        self.should be_a AdminResource::Admin
       end
     end
     

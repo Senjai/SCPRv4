@@ -4,7 +4,7 @@
 module AdminResource
   module List
     class Base
-      attr_accessor :order
+      attr_accessor :order # Must be a string since it gets passed directly to ActiveRecord
       attr_reader :columns, :per_page
       
       def initialize(attributes={})
@@ -18,15 +18,15 @@ module AdminResource
       # to a list, rather than directly creating a new Column
       #
       # Usage:
-      #   admin.define_list do |list|
-      #     list.column "name", header: "Full Name", helper: "display_full_name", linked: true
+      #   define_list do
+      #     column "name", header: "Full Name", helper: "display_full_name", linked: true
       #   end
       #
       # Options:
       # * header:     (str) The title of the column, displayed in the table header.
       #               Defaults to attribute.titleize
       #
-      # * helper:     (sym) The helper method to use to display this attribute.
+      # * helper:     (sym or Proc) The helper method to use to display this attribute.
       #               See AdminListHelper for how to set that up.
       #
       # * linked:     (bool) Whether or not to link this attribute to the edit page
@@ -46,10 +46,10 @@ module AdminResource
       #---------------
       
       # per_page
-      # Return nil if per_page is set to "all"
+      # Return nil if per_page is set to :all
       # So that pagination will not paginate
       def per_page=(val)
-        @per_page = val == "all" ? nil : val.to_i
+        @per_page = val == :all ? nil : val.to_i
       end
     end
   end

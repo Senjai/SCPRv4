@@ -7,15 +7,15 @@ class Blog < ActiveRecord::Base
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order    = "is_active desc, name"
-      list.per_page = "all"
+  administrate do
+    define_list do
+      order    = "is_active desc, name"
+      per_page = :all
       
-      list.column "name"
-      list.column "slug"
-      list.column "teaser",    header: "Tagline"
-      list.column "is_active", header: "Active?"
+      column :name
+      column :slug
+      column :teaser,    header: "Tagline"
+      column :is_active, header: "Active?"
     end
   end
 

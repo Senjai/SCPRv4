@@ -5,12 +5,12 @@
 class BlogCategory < ActiveRecord::Base
   self.table_name = "blogs_blogcategory"
 
-  administrate do |admin|
-    admin.define_list do |list|
-      list.per_page = "all"
-      list.column :blog
-      list.column :title
-      list.column :slug
+  administrate do
+    define_list do
+      per_page = :all
+      column :blog
+      column :title
+      column :slug
     end
   end
       

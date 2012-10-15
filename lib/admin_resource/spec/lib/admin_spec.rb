@@ -20,7 +20,7 @@ describe AdminResource::Admin do
   describe "define_list" do
     it "yields with the list object" do
       admin = AdminResource::Admin.new(BlogEntry)
-      admin.define_list { |list| list }.should eq admin.list
+      define_list { list }.should eq admin.list
     end
   end
 end

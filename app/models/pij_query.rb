@@ -16,14 +16,14 @@ class PijQuery < ActiveRecord::Base
   
   #------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.column "headline"
-      list.column "slug"
-      list.column "query_type"
-      list.column "is_active",    header: "Active?"
-      list.column "is_featured",  header: "Featured?"
-      list.column "published_at"
+  administrate do
+    define_list do
+      column "headline"
+      column "slug"
+      column "query_type"
+      column "is_active",    header: "Active?"
+      column "is_featured",  header: "Featured?"
+      column "published_at"
     end
   end
   

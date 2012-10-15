@@ -16,27 +16,27 @@ class Event < ActiveRecord::Base
     "hall"
   ]
   
-  EVENT_TYPES = [
-      ['Forum: Community Engagement', 'comm'],
-      ['Forum: Cultural',             'cult'],
-      ['Forum: Town Hall',            'hall'],
-      ['Sponsored',                   'spon'],
-      ['Staff Picks',                 'pick']
-  ]
+  EVENT_TYPES = {
+    'comm' => 'Forum: Community Engagement',
+    'cult' => 'Forum: Cultural',
+    'hall' => 'Forum: Town Hall',
+    'spon' => 'Sponsored',
+    'pick' => 'Staff Picks'
+  }
   
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "created_at desc"
+  administrate do
+    define_list do
+      order = "created_at desc"
       
-      list.column "headline"
-      list.column "starts_at"
-      list.column "location_name", header: "Location"
-      list.column "etype",         header: "Type"
-      list.column "kpcc_event",    header: "KPCC Event?"
-      list.column "is_published",  header: "Published?"
+      column :headline
+      column :starts_at
+      column :location_name, header: "Location"
+      column :etype,         header: "Type", helper: ->(event) { Event::EVENT_TYPES[event.etype] }
+      column :kpcc_event,    header: "KPCC Event?"
+      column :is_published,  header: "Published?"
     end
   end
 

@@ -34,7 +34,7 @@ module AdminListHelper
     end
 
     if display_helper.is_a? Proc
-      rendered_item = display_helper.call(attrib)      
+      rendered_item = display_helper.call(record)      
     else
       rendered_item = send(display_helper, attrib)
     end

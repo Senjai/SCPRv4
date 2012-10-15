@@ -28,7 +28,7 @@ describe AdminResource::List::Column do
     }
     
     before :each do
-      list.column "name"
+      column "name"
     end
     
     it "sets attribute" do
@@ -36,7 +36,7 @@ describe AdminResource::List::Column do
     end
     
     it "sets position" do
-      list.column "body"
+      column "body"
       list.columns[0].position.should eq 0
       list.columns[1].position.should eq 1
     end

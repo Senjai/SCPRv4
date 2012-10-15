@@ -18,15 +18,15 @@ class BlogEntry < ContentBase
     
   # ------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
+  administrate do
+    define_list do
+      order = "published_at desc"
       
-      list.column "headline"
-      list.column "blog"
-      list.column "bylines"
-      list.column "status"
-      list.column "published_at"
+      column "headline"
+      column "blog"
+      column "bylines"
+      column "status"
+      column "published_at"
     end
   end
 

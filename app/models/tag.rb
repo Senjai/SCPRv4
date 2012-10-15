@@ -3,11 +3,11 @@ class Tag < ActiveRecord::Base
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "name"
-      list.column "name"
-      list.column "slug"
+  administrate do
+    define_list do
+      order = "name"
+      column "name"
+      column "slug"
     end
   end
   
