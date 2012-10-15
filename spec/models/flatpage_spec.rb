@@ -91,13 +91,4 @@ describe Flatpage do
       flatpage.url.should eq "/hello/whats/up/"
     end
   end
-
-  #--------------------
-  
-  describe "remote_link_path" do
-    it "returns the full url for scpr.org" do
-      page = create :flatpage
-      page.remote_link_path.should match /scpr\.org/
-    end
-  end
 end

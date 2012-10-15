@@ -30,10 +30,10 @@ RSpec.configure do |config|
     migration = -> { SecretaryMigration.new.up }
     silence_stream STDOUT, &migration
     DatabaseCleaner.strategy = :truncation
+    Dir[Rails.root.join("lib/secretary/spec/models/*.rb")].each { |f| load f }
   end
   
   config.before :each do
-    Dir[Rails.root.join("lib/secretary/spec/models/*.rb")].each { |f| load f }
   end
   
   config.after :each do
