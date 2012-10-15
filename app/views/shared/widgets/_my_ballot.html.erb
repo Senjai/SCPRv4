@@ -1,0 +1,114 @@
+<style type="text/css">
+.my-ballot {
+	margin-bottom:18px;
+}
+	.my-ballot header {
+		background:#0f366b url('http://media.scpr.org/assets/images/election/bg-election-header.jpg') no-repeat 0 0;
+		border-top:1px solid #023455;
+	}
+		.my-ballot header h4 {
+			border-bottom:1px solid #676767;
+			color:#fff;
+			cursor:pointer;
+			font-size:20px;
+			font-weight:900;
+			padding:5px 0;
+			text-align:center;
+			text-shadow:0 1px 0 rgba(0,0,0,0.68);
+		}
+			.my-ballot header h4 span {
+				background-color:#db343d;
+				border-radius:4px;
+				color:#fff;
+				display:inline-block;
+				font-family:Helvetica, sans-serif;
+				font-size:14px;
+				font-weight:800;
+				line-height:18px;
+				margin-left:8px;
+				margin-top:-5px;
+				padding:2px 5px;
+				position:relative;
+				text-align:center;
+				text-shadow:0 -1px 0 rgba(0,0,0,0.68);
+				text-transform:uppercase;
+				vertical-align:middle;
+			}
+#VoterGuideForm {
+	background:#2e2e2e;
+	color:#fff;
+	border-top:1px solid #1d1d1d;
+	padding:10px;
+	text-align:center;
+}
+	#VoterGuideForm p {
+		color:#62b5dd;
+		font-family:"proxima-nova", Helvetica, sans-serif;
+	}
+	#VoterGuideForm label {
+		display:none;
+	}
+	#VoterGuideForm input[type=text] {
+		background-color:#1d1d1d;
+		border:1px solid #484848;
+		color:#efefef;
+		margin-bottom:6px;
+		padding-bottom:6px;
+		padding-top:6px;
+	}
+	#VoterGuideForm input:focus {
+		box-shadow:0 0 10px rgba(255,255,255,0.1);
+	}
+	#VoterGuideForm input.input-address {
+		width:48%;
+	}
+	#VoterGuideForm input.input-city {
+		width:20%;
+	}
+	#VoterGuideForm input.input-zip {
+		width:10%;
+	}
+	
+@media (max-width: 768px) {
+	.my-ballot header {
+		background-image:none;
+	}
+	.my-ballot header h4 {
+		font-size:16px;
+	}
+	.my-ballot header h4 span {
+		font-size:12px;
+	}
+	#VoterGuideForm input[type=text] {
+		display:block;
+		padding-bottom:10px;
+		padding-top:10px;
+		width:95%;
+	}
+	#VoterGuideForm input[type=submit] {
+		font-size:20px;
+		padding:8px 16px;
+	}
+	#VoterGuideForm {
+		text-align:left;
+	}
+}
+</style>
+<div class="my-ballot">
+	<header data-toggle="collapse" data-target="#VoterGuideForm">
+		<h4>Election 2012: Build your own ballot <span>Get Started</span></h4>
+	</header>
+	<form id="VoterGuideForm" class="collapse" action="http://myballot.kpcc.org/get-started.do" method="GET">
+		<p><strong>Find the races that matter to you!</strong> Get started by entering your address and clicking "Go".</p>
+		<div class="form-inline">
+			<label>Address</label>
+			<input type="text" name="address1" maxlength="200" class="input-address" placeholder="Street Address" autofocus="autofocus" />
+			<label>City</label>
+			<input type="text" name="city" maxlength="50" class="input-city" placeholder="City" />
+			<label>Zip</label>
+			<input type="text" name="zip" maxlength="10" class="input-zip" placeholder="Zip" />
+			<input value="Go" type="submit" class="btn" />
+		</div>
+	 </form>
+</div>
+

@@ -2,6 +2,7 @@
 
 <div class="section-page">
   <h1><%= page_title @section.title %></h1>
+  <%= render "/shared/widgets/my_ballot" %>
   <% nav = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
   
   <% if @content.current_page == 1 %>
