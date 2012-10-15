@@ -1,39 +1,37 @@
 <% page_title "Bio: #{@bio.name}" %>
 <div class="bio-detail">
+  <h1><%= @bio.name %> <small><%= @bio.title %></small></h1>
 
-	<h1><%= @bio.name %> <small><%= @bio.title %></small></h1>
-
-	<div class="row-fluid">
-		<div class="span6">
-			<% if @bio.headshot %>
-				<div class="asset-block" style="width:<%= @bio.headshot.three.width %>px">
-					<div class="contentasset">
-						<%= @bio.headshot.three.tag %>
-					</div>
-				</div>
-			<% end %>
-			<div class="contact">
-				<strong>Contact <%= @bio.name %></strong>
-				<ul>
-					<% if @bio.twitter.present? %><li><%= link_to "Twitter", @bio.twitter_url, target: "_blank" %></li><% end %>
-					<% if @bio.email.present? %><li><%= mail_to @bio.email, "Email", :encode => "javascript" %></li><% end %>
-					<% if @bio.phone_number.present? %><li>Phone: <%= @bio.phone_number %></li><% end %>
-				</ul>
-			</div>
-		</div>
-		<div class="span18">
-			<%= @bio.bio.html_safe %>
-		</div>
-	</div>
-	<hr />
-	<% if @bylines.present? %>
-		<div class="row-fluid">
-			<div class="span24">
-				<h2>Stories by <%= @bio.name %></h2>
-				<%= render_content @bylines, "thumbnail" %>
-				<%= will_paginate(@bylines, :previous_label => "« Newer", :next_label => "Older »", :inner_window => 2) %>
-			</div>
-		</div>
-	<% end %>
-
+  <div class="row-fluid">
+    <div class="span6">
+      <% if @bio.headshot %>
+        <div class="asset-block" style="width:<%= @bio.headshot.three.width %>px">
+          <div class="contentasset">
+            <%= @bio.headshot.three.tag %>
+          </div>
+        </div>
+      <% end %>
+      <div class="contact">
+        <strong>Contact <%= @bio.name %></strong>
+        <ul>
+          <% if @bio.twitter.present? %><li><%= link_to "Twitter", @bio.twitter_url, target: "_blank" %></li><% end %>
+          <% if @bio.email.present? %><li><%= mail_to @bio.email, "Email", :encode => "javascript" %></li><% end %>
+          <% if @bio.phone_number.present? %><li>Phone: <%= @bio.phone_number %></li><% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="span18">
+      <%= @bio.bio.html_safe %>
+    </div>
+  </div>
+  <hr />
+  <% if @bylines.present? %>
+    <div class="row-fluid">
+      <div class="span24">
+        <h2>Stories by <%= @bio.name %></h2>
+        <%= render_content @bylines, "thumbnail" %>
+        <%= will_paginate(@bylines, :previous_label => "« Newer", :next_label => "Older »", :inner_window => 2) %>
+      </div>
+    </div>
+  <% end %>
 </div> <!-- bio-detail -->

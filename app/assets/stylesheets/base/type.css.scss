@@ -30,18 +30,18 @@ h1 {
 }
 
 h2 {
-	@include font-heading($size: 24px, $lineHeight: $baseline * 1.4);
+    @include font-heading($size: 24px, $lineHeight: $baseline * 1.4);
   small { font-size: 14px; }
 }
 
 
 h3 {
-	@include font-heading($size: 18px, $lineHeight: $baseline * 1.4);
+    @include font-heading($size: 18px, $lineHeight: $baseline * 1.4);
   small { font-size: 14px; }
 }
 
 h4 {
-	@include font-heading($size: 16px, $lineHeight: $baseline * 1.2);
+    @include font-heading($size: 16px, $lineHeight: $baseline * 1.2);
   small { font-size: 12px; }
 }
 
@@ -54,71 +54,71 @@ h6 {
 }
 
 h1.page-title {
-	text-transform: uppercase;
-	margin-bottom: 0;
-	@include font-headline;
-	font-size: 36px;
-	a {
-		color: $black;
-		&:hover {
-			text-decoration: none;
-		}
-	}
+    text-transform: uppercase;
+    margin-bottom: 0;
+    @include font-headline;
+    font-size: 36px;
+    a {
+        color: $black;
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 
 .heading-block {
-	padding:3px 6px;
-	&.dark {
-		background:$grayDark;
-		color:$white;
-	}
-	&.light {
-		background:$grayLighter;
-		color:$nearBlack;
-	}
+    padding:3px 6px;
+    &.dark {
+        background:$grayDark;
+        color:$white;
+    }
+    &.light {
+        background:$grayLighter;
+        color:$nearBlack;
+    }
 }
 
 @mixin footer-h4 { // so we can switch h3 and h4 easily in responsive
-	background-color:#232323;
-	border-bottom:1px solid $grayAlt;
-	border-top:1px solid $grayAlt;
-	color:#545454;
-	font-size:13px;
-	margin-bottom:2px;
-	padding:0 3px;
-	text-shadow:0 1px 0 #000;	
+    background-color:#232323;
+    border-bottom:1px solid $grayAlt;
+    border-top:1px solid $grayAlt;
+    color:#545454;
+    font-size:13px;
+    margin-bottom:2px;
+    padding:0 3px;
+    text-shadow:0 1px 0 #000;   
 }
 
 @mixin footer-h3 {
-	background-color: transparent;
-	border: none;
-	color:#8f8f8f;
-	font-size:14px;
-	font-weight:200;
-	margin-bottom:6px;
-	text-shadow:0 1px 0 #000;
+    background-color: transparent;
+    border: none;
+    color:#8f8f8f;
+    font-size:14px;
+    font-weight:200;
+    margin-bottom:6px;
+    text-shadow:0 1px 0 #000;
 }
 
 // Headline styles
 .story-headline {
-	@include font-headline;
-	margin-bottom:0;
-	a {
-		color:$nearBlack;
-	}
+    @include font-headline;
+    margin-bottom:0;
+    a {
+        color:$nearBlack;
+    }
 }
 .story-body {
-	h2 {
-		font-size:17px;
-	}
-	h3, h4, h5 {
-		font-size:14px;
-	}
+    h2 {
+        font-size:17px;
+    }
+    h3, h4, h5 {
+        font-size:14px;
+    }
 }
 
 // standard-sized utility text
 @mixin text-utility {
-	@include font-sans-serif(normal, 11px, 16px);
+    @include font-sans-serif(normal, 11px, 16px);
 }
 
 
@@ -213,8 +213,8 @@ em {
   color: $grayLighter;
 }
 .more {
-	@include font-sans-serif($size: 12px, $weight: bold);
-	text-transform:uppercase;
+    @include font-sans-serif($size: 12px, $weight: bold);
+    text-transform:uppercase;
 }
 
 // Blockquotes

@@ -1,8 +1,8 @@
 // Mid Portrait (Exclusive) to Small Desktop (Includisve)
 @media screen and (min-width: $mediaMidPortrait + 1) and (max-width: $mediaDesktopSmall) {
-	// vertify the modules on Section pages //
-		.section-page .section-widgets {
-			@include vertify;
-		}
-	// end //
+    // vertify the modules on Section pages //
+        .section-page .section-widgets {
+            @include vertify;
+        }
+    // end //
 }

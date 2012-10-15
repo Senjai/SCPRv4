@@ -12,8 +12,8 @@ body {
 
 // LOGO STYLES
 .logo-mark-sm {
-	background:transparent url(image_path('logo-mark-sm.png')) no-repeat center left;
-	padding-left:32px;
+    background:transparent url(image_path('logo-mark-sm.png')) no-repeat center left;
+    padding-left:32px;
 }
 
 // TOPBAR
@@ -30,7 +30,7 @@ body {
 //
 //  // gradient is applied to it's own element because overflow visible is not honored by ie when filter is present
 //  .fill {
-//	@include gradient-vertical(#333, #222);
+//  @include gradient-vertical(#333, #222);
 //    $shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1);
 //    @include box-shadow($shadow);
 //  }
@@ -75,10 +75,10 @@ body {
 //      padding: 3px 9px;
 //      color: #333;
 //      border: 1px solid #111;
-//	  width:160px;
+//    width:160px;
 //      @include transition(width 1s);
 //
-//	  
+//    
 //      // Placeholder text gets special styles; can't be bundled together though for some reason
 //      &:-moz-placeholder {
 //        color: $grayLight;
@@ -92,7 +92,7 @@ body {
 //        outline: none;
 //        color: $grayDark;
 //        padding: 5px 10px;
-//		width:220px;
+//      width:220px;
 //        @include box-shadow(0 0 3px rgba(0,0,0,.15));
 //      }
 //    }
@@ -103,7 +103,7 @@ body {
 //div.secondary-nav {
 //    float: right;
 //    margin:10px 0 0 10px;
-//	font-size:12px;
+//  font-size:12px;
 //}
 //  ul {
 //    display: block;
@@ -290,9 +290,9 @@ body {
 // ERROR STYLES
 // ------------
 @mixin gradientBar($primaryColor, $secondaryColor) {
-	@include gradient-vertical($primaryColor, $secondaryColor);
- 	border-color: $secondaryColor $secondaryColor darken($secondaryColor, 15%);
- 	border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
+    @include gradient-vertical($primaryColor, $secondaryColor);
+    border-color: $secondaryColor $secondaryColor darken($secondaryColor, 15%);
+    border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
 }
 
 
@@ -317,16 +317,16 @@ body {
     }
   }
   &.error {
-	@include gradientBar(#EE5F5B, #C43C35); 
-	a {
-		color:$white;
-		font-weight:bold;
-		text-decoration:underline;
-	}
+    @include gradientBar(#EE5F5B, #C43C35); 
+    a {
+        color:$white;
+        font-weight:bold;
+        text-decoration:underline;
+    }
   }
   &.warning {
     @include gradientBar(lighten(#fceec1, 10%), lighten(#eedc94, 10%)); 
-	p, li {color:$grayDark;font-size:13px;text-shadow:none;}
+    p, li {color:$grayDark;font-size:13px;text-shadow:none;}
   }
   &.success {
     @include gradientBar(#62C462, #57a957); 
@@ -335,14 +335,14 @@ body {
     @include gradientBar(#5BC0DE, #339BB9); 
   }
   &.inverse {
-	@include border-radius(0);
-	@include box-shadow(none);
-	border:0;
+    @include border-radius(0);
+    @include box-shadow(none);
+    border:0;
     @include gradientBar($nearBlack, $nearBlack); 
-	text-shadow:none;
-	a {
-		color:$linkColorHover;
-	}
+    text-shadow:none;
+    a {
+        color:$linkColorHover;
+    }
   }
   .close {
     float: right;
@@ -431,8 +431,8 @@ body {
     display: inline;
   }
   .active {
-	font-weight:bold;
-	text-transform:uppercase;
+    font-weight:bold;
+    text-transform:uppercase;
   }
   .divider {
     padding: 0 2px;
@@ -442,7 +442,7 @@ body {
     color: $orangeDark;
   }
   a:hover {
-	color:$orange;
+    color:$orange;
 }
 }
 
@@ -468,17 +468,17 @@ body {
   padding-left:3%;
   li {
     > a {
-	  color:$gray;
+      color:$gray;
       font-size:12px;
-	  margin-bottom: -1px;
+      margin-bottom: -1px;
       margin-right: 2px;
       padding: 0 13px;
       line-height: ($baseline * 1.5) - 1;
       &:hover {
         background-color: $grayLighter;
         border-bottom: 1px solid $grayLight;
-		color:$nearBlack;
-		text-decoration:none;
+        color:$nearBlack;
+        text-decoration:none;
       }
     }
   }
@@ -488,11 +488,11 @@ body {
       border: 1px solid #ccc;
       border-bottom: 0;
       color: $orangeDark;
-	  &:hover {
-		background-color: #fff;
-		border-bottom: 0;
-		color: $orangeDark;
-	  }
+      &:hover {
+        background-color: #fff;
+        border-bottom: 0;
+        color: $orangeDark;
+      }
     }
 }
 
@@ -507,14 +507,14 @@ body {
 
 // Basic pill nav
 .nav-pills {
-	@include font-sans-serif();
-	@include clearfix();
-	margin:0;
+    @include font-sans-serif();
+    @include clearfix();
+    margin:0;
   li {
-	@include nav-horiz();
-	display:block;
-	float:none;
-	padding:0;
+    @include nav-horiz();
+    display:block;
+    float:none;
+    padding:0;
     a {
       margin: 0;
       padding: 5px 15px;
@@ -700,50 +700,50 @@ color:$nearBlack;
 
 // Collapsible items
 .collapse {
-	display:none;
-	&.in {
-		display:block;
-	}
+    display:none;
+    &.in {
+        display:block;
+    }
 }
 .collapse-toggle {
-	&:hover {
-		cursor:pointer;
-		text-decoration:underline;
-	}
-	.caret {
-		margin:10px 2px 0 0;
-	}
+    &:hover {
+        cursor:pointer;
+        text-decoration:underline;
+    }
+    .caret {
+        margin:10px 2px 0 0;
+    }
 }
 
 
 // Dividers
 // --------
 .divider-vert {
-	background: url(image_path('divider-vert.png')) repeat-y 775px top;
+    background: url(image_path('divider-vert.png')) repeat-y 775px top;
 }
 
 // Lists
 // --------
 .list-basic {
-	margin-left:0;
-	border-top:1px solid $grayLighter;
-	li {
-		list-style-type:none;
-		border-bottom:1px solid $grayLighter;
-		a{
-			display:block;
-			padding:8px 4px;
-		}
-	}
+    margin-left:0;
+    border-top:1px solid $grayLighter;
+    li {
+        list-style-type:none;
+        border-bottom:1px solid $grayLighter;
+        a{
+            display:block;
+            padding:8px 4px;
+        }
+    }
 }
 .list-blocks {
-	margin-left:0;
-	border-top:1px solid $grayLighter;
-	li {
-		list-style-type:none;
-		border-bottom:1px solid $grayLighter;
-		padding:10px 14px;
-	}
+    margin-left:0;
+    border-top:1px solid $grayLighter;
+    li {
+        list-style-type:none;
+        border-bottom:1px solid $grayLighter;
+        padding:10px 14px;
+    }
 }
 
 
@@ -755,8 +755,8 @@ color:$nearBlack;
   margin: 17px 0 3px;
   a, span, em {
     float: left;
-	font-size:12px;
-	margin:4px;
+    font-size:12px;
+    margin:4px;
     padding: 0 8px;
     line-height: $baseline * 1.2;
     border: 1px solid #ddd;
@@ -780,18 +780,18 @@ color:$nearBlack;
 // HEROS
 // -----
 .section-hero {
-	background:url(image_path('about/bg-hero.png')) no-repeat 30px bottom;
-	padding-top:40px;
-	h1, h2, h3, h4, h5 {
-		color:$orangeDark;
-		@include font-slab-headings(300, 32px);
-	}
-	p {
-		@include font-slab-headings(300, 24px, 36px);
-		strong {
-			font-weight:800;
-		}
-	}
+    background:url(image_path('about/bg-hero.png')) no-repeat 30px bottom;
+    padding-top:40px;
+    h1, h2, h3, h4, h5 {
+        color:$orangeDark;
+        @include font-slab-headings(300, 32px);
+    }
+    p {
+        @include font-slab-headings(300, 24px, 36px);
+        strong {
+            font-weight:800;
+        }
+    }
 }
 
 
@@ -848,11 +848,11 @@ color:$nearBlack;
   }
   &.fade.in { top: 50%; }
   &.wide {
-	margin: -320px 0 0 -370px;
-	width:740px;
+    margin: -320px 0 0 -370px;
+    width:740px;
   }
   &.hide {
-	display:none;
+    display:none;
   }
   .modal-header {
     border-bottom: 1px solid #eee;
@@ -868,9 +868,9 @@ color:$nearBlack;
   }
   .modal-body {
     padding: 20px;
-	img {
-		max-width:100%;
-	}
+    img {
+        max-width:100%;
+    }
   }
   .modal-footer {
     background-color: #f5f5f5;

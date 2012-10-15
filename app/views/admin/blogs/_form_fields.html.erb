@@ -1,17 +1,17 @@
 <%= form_block "Basic Info" do %>
-	<%= f.input :name %>
-	<%= f.input :is_active %>
-	<%= f.input :slug %>
-	<%= f.input :teaser, label: "Tagline", input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 100, fuzziness: 15 } } %>
-	<%= f.input :description, input_html: { class: "tiny" } %>
+  <%= f.input :name %>
+  <%= f.input :is_active %>
+  <%= f.input :slug %>
+  <%= f.input :teaser, label: "Tagline", input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 100, fuzziness: 15 } } %>
+  <%= f.input :description, input_html: { class: "tiny" } %>
 <% end %>
 
 <%= form_block "Media" do %>
-	<%= f.input :feed_url %>
-	<%= f.input :is_news %>
+  <%= f.input :feed_url %>
+  <%= f.input :is_news %>
 <% end %>
 
 <%= form_block "Remote" do %>
-	<%= f.input :is_remote %>
-	<%= f.input :custom_url %>
+  <%= f.input :is_remote %>
+  <%= f.input :custom_url %>
 <% end %>

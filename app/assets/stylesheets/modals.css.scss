@@ -1,164 +1,164 @@
 // STYLES
 
 @mixin modal-light {
-	@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
-	background-color: $grayBackground;
-	border: 1px solid #bfbfbf;
-	padding: 0 0 0 5px;
-	
-	.inner-container {
-		padding: 20px 25px;
-	}
-	.arrow-up {
-		background: url(image_path('broadcast-bar/episode-modal-arrow-up.png')) no-repeat;
-		width: 28px;
-		height: 12px;
-		position: absolute;
-		left: 70px; // specify a new 'left' property on your specific class for the modal override this default horizontal position of the arrow
-		top: -12px;
-	}
-	.modal-close {
-		background: url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
-		cursor: pointer;
-		width: 18px;
-		height: 16px;
-		@include opacity(0.8);
-		position: absolute;
-		right: 25px;
-		top: 20px;
-		&:hover {
-			@include opacity(1);
-		}
-	}
-	h6 {
-		margin-bottom: $baseline/2;
-		a {
-			color: $orangeDark;
-		}
-	}
+    @include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
+    background-color: $grayBackground;
+    border: 1px solid #bfbfbf;
+    padding: 0 0 0 5px;
+    
+    .inner-container {
+        padding: 20px 25px;
+    }
+    .arrow-up {
+        background: url(image_path('broadcast-bar/episode-modal-arrow-up.png')) no-repeat;
+        width: 28px;
+        height: 12px;
+        position: absolute;
+        left: 70px; // specify a new 'left' property on your specific class for the modal override this default horizontal position of the arrow
+        top: -12px;
+    }
+    .modal-close {
+        background: url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
+        cursor: pointer;
+        width: 18px;
+        height: 16px;
+        @include opacity(0.8);
+        position: absolute;
+        right: 25px;
+        top: 20px;
+        &:hover {
+            @include opacity(1);
+        }
+    }
+    h6 {
+        margin-bottom: $baseline/2;
+        a {
+            color: $orangeDark;
+        }
+    }
 } // modal-light
 
 @mixin modal-dark {
-	@include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
-	@include gradient-vertical(#333, #1b1b1b);
-	border: 1px solid #4c4c4c;
-	margin-top: 14px;
-	
-	.arrow-up {
-		background: url(image_path('icons/dark-modal-arrow.png')) no-repeat;
-		width: 28px;
-		height: 12px;
-		position: absolute;
-		left: 70px; // specify a new 'left' property on your specific class for the modal, flagged with !important to override the horizontal position of the arrow
-		top: -12px;
-	}
-	.modal-close {
-		background: url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
-		cursor: pointer;
-		width: 18px;
-		height: 16px;
-		@include opacity(0.8);
-		position: absolute;
-		right: 25px;
-		top: 20px;
-		&:hover {
-			@include opacity(1);
-		}
-	}
+    @include box-shadow(0 3px 10px rgba(0, 0, 0, 0.45));
+    @include gradient-vertical(#333, #1b1b1b);
+    border: 1px solid #4c4c4c;
+    margin-top: 14px;
+    
+    .arrow-up {
+        background: url(image_path('icons/dark-modal-arrow.png')) no-repeat;
+        width: 28px;
+        height: 12px;
+        position: absolute;
+        left: 70px; // specify a new 'left' property on your specific class for the modal, flagged with !important to override the horizontal position of the arrow
+        top: -12px;
+    }
+    .modal-close {
+        background: url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
+        cursor: pointer;
+        width: 18px;
+        height: 16px;
+        @include opacity(0.8);
+        position: absolute;
+        right: 25px;
+        top: 20px;
+        &:hover {
+            @include opacity(1);
+        }
+    }
 } // modal-dark
 
 a.modal-toggler {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .modal-container { // Wrap this class around the modal-popup if you need to so the modal will be positioned properly
-	position: relative;
-	z-index: 81;
+    position: relative;
+    z-index: 81;
 }
 
 .modal-popup {
-	// Add this class to any block element you want to behave like a modal pop-up.
-	// Add the class `modal-toggler` to whatever you want to toggle the modal.
-	//// Optional: modal-toggler can take "data-modal-id" to specify which modal it should toggle. This requires an `id` attribute top be added to the modal-popup.
-	// Use a modal-specific class (e.g. `.broadcast-bar-modal`) to position, size, and further style the modal.
-	
-	// Required attributes for the modal-specific class:
-	//// width & height
-	//// left, top, right, or bottom (use one or more to position the modal as necessary)
-	//// An extra class for generic styling - "light", "dark", etc. (defined below)
-	// As you know - Any default attributes (such as the 'left' position of the arrow) can be overridden with an !important flag
-	
-	// Example:
-	/*
-		 .google-maps {
-				@include font-sans-serif($weight:normal, $size:13px);
-				color: $grayAlt;
-				width: 400px;
-				min-height: 350px;
-				left: -250px;
-				top: 26px;
+    // Add this class to any block element you want to behave like a modal pop-up.
+    // Add the class `modal-toggler` to whatever you want to toggle the modal.
+    //// Optional: modal-toggler can take "data-modal-id" to specify which modal it should toggle. This requires an `id` attribute top be added to the modal-popup.
+    // Use a modal-specific class (e.g. `.broadcast-bar-modal`) to position, size, and further style the modal.
+    
+    // Required attributes for the modal-specific class:
+    //// width & height
+    //// left, top, right, or bottom (use one or more to position the modal as necessary)
+    //// An extra class for generic styling - "light", "dark", etc. (defined below)
+    // As you know - Any default attributes (such as the 'left' position of the arrow) can be overridden with an !important flag
+    
+    // Example:
+    /*
+         .google-maps {
+                @include font-sans-serif($weight:normal, $size:13px);
+                color: $grayAlt;
+                width: 400px;
+                min-height: 350px;
+                left: -250px;
+                top: 26px;
 
-				.arrow-up {
-					left: 300px !important; // To overide default arrow position
-				}
-		}
-	*/
-	
-	// Check out the `modal` helper for a quick way to put a modal anywhere
-	
-	position: absolute;
-	display: none;
-	z-index: 82;
-	
-	// Use these classes for positioning, width, height, and any extra options you want on a specific modal (or a group of duplicate modals)
-	&.google-maps {
-		@include modal-light;
-		@include font-sans-serif($weight:normal, $size:13px);
-		color: $grayAlt;
-		padding: 0 0 0 5px;
-		width: 400px;
-		min-height: 350px;
-		left: -250px;
-		top: 26px;
-		text-align: center;
-		
-		h5.address { padding-right: 30px; }
-		.arrow-up {
-			left: 300px !important; // To overide default arrow position
-		}
+                .arrow-up {
+                    left: 300px !important; // To overide default arrow position
+                }
+        }
+    */
+    
+    // Check out the `modal` helper for a quick way to put a modal anywhere
+    
+    position: absolute;
+    display: none;
+    z-index: 82;
+    
+    // Use these classes for positioning, width, height, and any extra options you want on a specific modal (or a group of duplicate modals)
+    &.google-maps {
+        @include modal-light;
+        @include font-sans-serif($weight:normal, $size:13px);
+        color: $grayAlt;
+        padding: 0 0 0 5px;
+        width: 400px;
+        min-height: 350px;
+        left: -250px;
+        top: 26px;
+        text-align: center;
+        
+        h5.address { padding-right: 30px; }
+        .arrow-up {
+            left: 300px !important; // To overide default arrow position
+        }
 
-		.google-map {
-			margin: 20px auto 0 auto;
-			width: 350px;
-			height: 350px;
-		}
-	} // .google-maps
-	
-	&.new-site-video {
-		@include modal-light;
-		padding: 20px 0 0 28px;
-		width: 723px;
-		min-height: 425px;
-		margin-left:-361px;
-		left: 50%;
-		top: 100px;
-		.arrow-up { display: none; }
-	} // .new-site-video
-	
-	&.episode-guide {
-		@include modal-light;
-		width:650px;
-		min-height:300px;
-		left:18px;
-		top:14px;
-		.arrow-up { 
-			left: 100px;
-		}
-	} // .episode-guide
-	
-	&.videos-list {
-		@include modal-dark;
-		min-height: 700px;
-		@include gridFluidSpan(22);
-	} // .video-list
+        .google-map {
+            margin: 20px auto 0 auto;
+            width: 350px;
+            height: 350px;
+        }
+    } // .google-maps
+    
+    &.new-site-video {
+        @include modal-light;
+        padding: 20px 0 0 28px;
+        width: 723px;
+        min-height: 425px;
+        margin-left:-361px;
+        left: 50%;
+        top: 100px;
+        .arrow-up { display: none; }
+    } // .new-site-video
+    
+    &.episode-guide {
+        @include modal-light;
+        width:650px;
+        min-height:300px;
+        left:18px;
+        top:14px;
+        .arrow-up { 
+            left: 100px;
+        }
+    } // .episode-guide
+    
+    &.videos-list {
+        @include modal-dark;
+        min-height: 700px;
+        @include gridFluidSpan(22);
+    } // .video-list
 }

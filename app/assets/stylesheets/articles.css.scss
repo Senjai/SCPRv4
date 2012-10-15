@@ -1,82 +1,82 @@
 .storybar {
-	width: 160px;
-	float: right;
-	clear: right;
-	margin-left: 12px;
+    width: 160px;
+    float: right;
+    clear: right;
+    margin-left: 12px;
 }
 
 .byline, .cbase p.byline {
-	color:$gray;
-	@include text-utility();
-	margin-top:($baseline / 4);
-	a {
-		color:$gray;
-		font-weight:bold;
-	}
+    color:$gray;
+    @include text-utility();
+    margin-top:($baseline / 4);
+    a {
+        color:$gray;
+        font-weight:bold;
+    }
 }
 
 .news-top .lead { border-bottom: none; } // remove the bottom border on ".cbase.lead" for news and arts landing pages, since the "more news container" is right below
 
 .story.content-block {
-	article header {
-		border-bottom: 1px solid $grayLighter;
-		margin-bottom: 10px;
-		p.byline { margin-bottom: 0;}
-	}
+    article header {
+        border-bottom: 1px solid $grayLighter;
+        margin-bottom: 10px;
+        p.byline { margin-bottom: 0;}
+    }
 }
 
 .categories a {
-	color: lighten($gray, 20%);
-	@include font-sans-serif(normal, 11px);
-	text-transform:uppercase;
-	@include ie-inline-block;
+    color: lighten($gray, 20%);
+    @include font-sans-serif(normal, 11px);
+    text-transform:uppercase;
+    @include ie-inline-block;
 }
 
 .story-body { @include clearfix; }
 
 .slideview { // Temporarily overriding the fixed-size slideshow elements
-	width: 100% !important;
-	max-width: 100% !important;
-	.ah_imgholder, .ah_imgholder img { max-width: 100% !important; margin: 0 auto !important; height: auto !important; }
-	ul, li, .text { max-width: 100% !important; margin: 0 auto !important; }
-	li { height: auto !important; }
+    width: 100% !important;
+    max-width: 100% !important;
+    .ah_imgholder, .ah_imgholder img { max-width: 100% !important; margin: 0 auto !important; height: auto !important; }
+    ul, li, .text { max-width: 100% !important; margin: 0 auto !important; }
+    li { height: auto !important; }
 }
 
 .content-block { // This is for news-style content (blogs, events, stories, segments) in its entirety - It is here to add styles to the main block of content
-	border-bottom: 1px solid $grayLight;
-	margin-bottom: 10px;
+    border-bottom: 1px solid $grayLight;
+    margin-bottom: 10px;
 }
 
 .fold { // related content below the main content - comments, "more from"s, etc.
-	.row-title h6 {
-		font-size: 12px;
-		margin-top: 5px;
-		text-align: right;
-		line-height: $baseLineHeight;
-	}
-	.comment-wrap {
-		border-top:1px solid $grayLight;
-		.comment-count, .comments {
-			border:none;
-		}
-	}
-	
-	ul li {
-		@include font-headline($weight: normal);
-		a { color: $black; }
-	}
-	
-	&.inline {
-		h6 { text-align: left; }
-	}
+    .row-title h6 {
+        font-size: 12px;
+        margin-top: 5px;
+        text-align: right;
+        line-height: $baseLineHeight;
+    }
+    .comment-wrap {
+        border-top:1px solid $grayLight;
+        .comment-count, .comments {
+            border:none;
+        }
+    }
+    
+    ul li {
+        @include font-headline($weight: normal);
+        a { color: $black; }
+    }
+    
+    &.inline {
+        h6 { text-align: left; }
+    }
 }
 
 article {
-	img, object, iframe, embed, .pds-box {
-		max-width: 100%;
-	}
-	
-	.pds-box { 
-		width: 95% !important;
-	}
+    img, object, iframe, embed, .pds-box {
+        max-width: 100%;
+    }
+    
+    .pds-box { 
+        width: 95% !important;
+    }
 }

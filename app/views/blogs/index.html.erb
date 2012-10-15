@@ -2,21 +2,21 @@
 
 <h1>KPCC Blogs</h1>
 <div class="row-fluid">
-	<div class="span12">
-		<div class="directory" id="news">
-			<h6>News &amp; Commentary</h6>
-			<%= render partial: "/shared/widgets/blog_module", collection: @news_blogs, as: :blog %>
-		</div>
-	</div>
-	<div class="span12">
-		<div class="directory" id="arts-and-culture">
-			<h6>Arts &amp; Culture</h6>
-			<%= render partial: "/shared/widgets/blog_module", collection: @non_news_blogs, as: :blog %>
-		</div>
-		
-		<div class="directory" id="kpcc-sites">
-			<h6>KPCC Sites</h6>
-			<%= render partial: "remote_blog_thumb", collection: @remote_blogs, as: :blog %>
-		</div>
-	</div> <!-- .span8 -->
+  <div class="span12">
+    <div class="directory" id="news">
+      <h6>News &amp; Commentary</h6>
+      <%= render partial: "/shared/widgets/blog_module", collection: @news_blogs, as: :blog %>
+    </div>
+  </div>
+  <div class="span12">
+    <div class="directory" id="arts-and-culture">
+      <h6>Arts &amp; Culture</h6>
+      <%= render partial: "/shared/widgets/blog_module", collection: @non_news_blogs, as: :blog %>
+    </div>
+    
+    <div class="directory" id="kpcc-sites">
+      <h6>KPCC Sites</h6>
+      <%= render partial: "remote_blog_thumb", collection: @remote_blogs, as: :blog %>
+    </div>
+  </div> <!-- .span8 -->
 </div> <!-- .row -->

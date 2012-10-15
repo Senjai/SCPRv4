@@ -12,12 +12,12 @@ $grayDark:          lighten($black, 19%);
 $gray:              lighten($black, 50%);
 $grayLight:         lighten($black, 75%);
 $grayLighter:       lighten($black, 88%);
-$nearWhite:			lighten($black, 96%);
+$nearWhite:         lighten($black, 96%);
 $white:             #fff;
-$grayAlt:			#3d3d3d;
-$grayBorder:		#d9d9d9;
-$grayBackground:	#f5f5f5;
-$graydarkHR:		#bfbfbf;
+$grayAlt:           #3d3d3d;
+$grayBorder:        #d9d9d9;
+$grayBackground:    #f5f5f5;
+$graydarkHR:        #bfbfbf;
 
 // Accent Colors
 $blue:              #009fbd;
@@ -31,8 +31,8 @@ $pink:              #c3325f;
 $purple:            #7a43b6;
 
 // Misc Colors
-$facebookBlue:		#3b5895;
-$twitterBlue:		#4099FF;
+$facebookBlue:      #3b5895;
+$twitterBlue:       #4099FF;
 
 // Baseline grid
 $baseFontSize: 14px;
@@ -61,33 +61,33 @@ $fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
 
 // For aligning an asset. Apply to an asset-block.
 @mixin assetAlign($align: left) {
-	@if $align == left {
-		margin-left: 0;
-		margin-right: auto;
-	} @else if $align == center {
-		margin-left: auto;
-		margin-right: auto;
-	} @else if $align == right {
-		margin-left: auto;
-		margin-right: 0
-	}
-	
-	.contentasset { text-align: $align; }
+    @if $align == left {
+        margin-left: 0;
+        margin-right: auto;
+    } @else if $align == center {
+        margin-left: auto;
+        margin-right: auto;
+    } @else if $align == right {
+        margin-left: auto;
+        margin-right: 0
+    }
+    
+    .contentasset { text-align: $align; }
 }
 
 // Clearfix for clearing floats like a boss h5bp.com/q
 @mixin clearfix {
   zoom: 1;
-	&:before, &:after {
+    &:before, &:after {
     display: table;
     content: "";
-	}
-	&:after {
+    }
+    &:after {
     clear: both;
-	}
+    }
 }
 .clearfix {
-	@include clearfix
+    @include clearfix
 }
 
 // Color Scheme
@@ -107,33 +107,33 @@ $analog2:           spin($baseColor, -22);
 // ------
 
 @mixin hide-text() {
-	text-indent: 100%;
-	white-space: nowrap;
-	overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 // mixin for getting IE to respect inline-block
 @mixin ie-inline-block() {
-	display:inline-block;
-	zoom:1;
-	*display:inline;
+    display:inline-block;
+    zoom:1;
+    *display:inline;
 }
 
 // Turn an unordered list into a basic horizontal nav
 @mixin nav-horiz() {
-	display: block;
+    display: block;
     float: left;
     padding: 0 10px;
     position: relative;
-	list-style-type:none;
+    list-style-type:none;
 }
 
 // Padded containers for when you need it
 @mixin box-padding($vertical: 20px, $horizontal: 20px) {
-	padding-left: $horizontal;
-	padding-right: $horizontal;
-	padding-top: $vertical;
-	padding-bottom: $vertical;
+    padding-left: $horizontal;
+    padding-right: $horizontal;
+    padding-top: $vertical;
+    padding-bottom: $vertical;
 }
 
 
@@ -147,24 +147,24 @@ $analog2:           spin($baseColor, -22);
 
 
 .inner-container {
-	@include box-padding(10px, 10px);
+    @include box-padding(10px, 10px);
 }
 
 // Center-align a block level element
 .center-block {
-	display: block;
+    display: block;
   margin: 0 auto;
 }
 
 // Center-align contents of a block level element
 .center-contents {
-	text-align:center;
+    text-align:center;
 }
 
 // Sizing shortcuts
 @mixin size($height: 5px, $width: 5px) {
-	height: $height;
-	width: $width;
+    height: $height;
+    width: $width;
 }
 
 // Input placeholder text
@@ -242,25 +242,25 @@ $analog2:           spin($baseColor, -22);
 
 // Transitions
 @mixin transition($transition) {
-	-webkit-transition: $transition;
-	   -moz-transition: $transition;
-	        transition: $transition;
+    -webkit-transition: $transition;
+       -moz-transition: $transition;
+            transition: $transition;
 }
 
 // Background clipping
 @mixin background-clip($clip) {
-	-webkit-background-clip: $clip;
-	   -moz-background-clip: $clip;
-	        background-clip: $clip;
+    -webkit-background-clip: $clip;
+       -moz-background-clip: $clip;
+            background-clip: $clip;
 }
 
 // CSS3 Content Columns
 @mixin content-columns($columnCount, $columnGap: 20px) {
-	-webkit-column-count: $columnCount;
-	   -moz-column-count: $columnCount;
+    -webkit-column-count: $columnCount;
+       -moz-column-count: $columnCount;
           column-count: $columnCount;
   -webkit-column-gap: $columnGap;
-	   -moz-column-gap: $columnGap;
+       -moz-column-gap: $columnGap;
           column-gap: $columnGap;
 }
 
@@ -284,112 +284,112 @@ a {
   border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
 }
 @media screen { // The buttons don't play nice in print media because of the background color, so for print we'll just make them look like regular links
-	.btn {
-	  // .button(#1174C6);
-	  cursor: pointer;
-	  @include ie-inline-block;
-	  @include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 10%));
-	  padding: 4px 14px;
-	  text-shadow: 0 1px 1px rgba(255,255,255,.75);
-	  color: #333;
-	  font-size: 16px;
-	  font-weight:600;
-	  @include font-heading();
-	  line-height: $baseline;
-	  border: 1px solid #ccc;
-	  border-bottom-color: #bbb;
-	  @include border-radius(4px);
-	  $shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-	  @include box-shadow($shadow);
-	  &:hover {
-	    color: #333;
-	    text-decoration: none;
-		@include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 20%));
-	  }
-	  @include transition(.1s linear all);
-	  &.primary,
-	  &.danger,
-	  &.success,
-	  &.info,
-	  &.inverse {
-	    color: #fff;
-	    &:hover {
-	      color: #fff;
-	    }
-	  }
-	  &.primary {
-	    @include btnColor($blue, $blueDark);
-		background-color:$blueDark;
-		&:hover {
-			@include btnColor($blue, darken($blueDark, 10%));
-		}
-	  }
-	
-	  &.inverse {
-		color: $gray;
-	    @include btnColor($grayDark, $nearBlack);
-		background-color:$grayDark;
-		&:hover {
-			@include btnColor($grayDark, $nearBlack);
-		}
-	  }
-	
-	  &.success {
-	    @include btnColor(#62c462, #57a957);
-		background-color:#57a957;
-		&:hover {
-			@include btnColor(#62c462, darken(#57a957, 10%));
-		}
-	  }
-	  &.info {
-	    @include btnColor(#5bc0de, #339bb9);
-		background-color:#339bb9;
-		&:hover {
-			@include btnColor(#5bc0de, darken(#339bb9, 10%));
-		}
-	  }
-	  &.danger {
-	    @include btnColor(lighten($red, 15%), $red);
-	    &:hover {
-	    	@include btnColor(lighten($red, 15%), darken($red, 10%));
-	    }
-	  }
-	  &.large {
-	    font-size: 16px;
-	    line-height: 28px;
-	    @include border-radius(6px);
-	  }
-	  &.small {
-	    padding-right: 9px;
-	    padding-left: 9px;
-		line-height:16px;
-	    font-size: 11px;
-	  }
-	  &.disabled {
-	    background-image: none;
-	    @include opacity(0.65);
-	    cursor: default;
-	  }
+    .btn {
+      // .button(#1174C6);
+      cursor: pointer;
+      @include ie-inline-block;
+      @include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 10%));
+      padding: 4px 14px;
+      text-shadow: 0 1px 1px rgba(255,255,255,.75);
+      color: #333;
+      font-size: 16px;
+      font-weight:600;
+      @include font-heading();
+      line-height: $baseline;
+      border: 1px solid #ccc;
+      border-bottom-color: #bbb;
+      @include border-radius(4px);
+      $shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+      @include box-shadow($shadow);
+      &:hover {
+        color: #333;
+        text-decoration: none;
+        @include gradient-vertical-three-colors(#fff, #fff, 25%, darken(#fff, 20%));
+      }
+      @include transition(.1s linear all);
+      &.primary,
+      &.danger,
+      &.success,
+      &.info,
+      &.inverse {
+        color: #fff;
+        &:hover {
+          color: #fff;
+        }
+      }
+      &.primary {
+        @include btnColor($blue, $blueDark);
+        background-color:$blueDark;
+        &:hover {
+            @include btnColor($blue, darken($blueDark, 10%));
+        }
+      }
+    
+      &.inverse {
+        color: $gray;
+        @include btnColor($grayDark, $nearBlack);
+        background-color:$grayDark;
+        &:hover {
+            @include btnColor($grayDark, $nearBlack);
+        }
+      }
+    
+      &.success {
+        @include btnColor(#62c462, #57a957);
+        background-color:#57a957;
+        &:hover {
+            @include btnColor(#62c462, darken(#57a957, 10%));
+        }
+      }
+      &.info {
+        @include btnColor(#5bc0de, #339bb9);
+        background-color:#339bb9;
+        &:hover {
+            @include btnColor(#5bc0de, darken(#339bb9, 10%));
+        }
+      }
+      &.danger {
+        @include btnColor(lighten($red, 15%), $red);
+        &:hover {
+            @include btnColor(lighten($red, 15%), darken($red, 10%));
+        }
+      }
+      &.large {
+        font-size: 16px;
+        line-height: 28px;
+        @include border-radius(6px);
+      }
+      &.small {
+        padding-right: 9px;
+        padding-left: 9px;
+        line-height:16px;
+        font-size: 11px;
+      }
+      &.disabled {
+        background-image: none;
+        @include opacity(0.65);
+        cursor: default;
+      }
 
-	  // this can't be included with the .disabled def because IE8 and below will drop it ;_;
-	  &:disabled {
-	    background-image: none;
-	    @include opacity(0.65);
-	    cursor: default;
-	  }
-	  &:active {
-	    $shadow: inset 0 3px 7px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.05);
-	    @include box-shadow($shadow);
-	  }
-	}
+      // this can't be included with the .disabled def because IE8 and below will drop it ;_;
+      &:disabled {
+        background-image: none;
+        @include opacity(0.65);
+        cursor: default;
+      }
+      &:active {
+        $shadow: inset 0 3px 7px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.05);
+        @include box-shadow($shadow);
+      }
+    }
 }
 
 // Help Firefox not be a jerk about adding extra padding to buttons
 button.btn,
 input[type=submit].btn {
   &::-moz-focus-inner {
-  	padding: 0;
-  	border: 0;
+    padding: 0;
+    border: 0;
   }
 }
 // Super jank hack for removing border-radius from IE9 so we can keep filter gradients on alerts and buttons
@@ -426,25 +426,25 @@ input[type=submit].btn {
     background-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
 }
 @mixin border($color: $white, $alpha: 1) {
-	border-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
-	background-clip: padding-box;
+    border-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
+    background-clip: padding-box;
 }
 
 
 #translucent {
-	@include background;
-	@include border;
+    @include background;
+    @include border;
 }
 
 // Utility
 .divider {
-	background:url(image_path('mega-divider.png')) repeat-y right top;
-	margin-right:-15px;
+    background:url(image_path('mega-divider.png')) repeat-y right top;
+    margin-right:-15px;
 }
 
 .pull-down {
-	position: absolute;
-	bottom: 0;
+    position: absolute;
+    bottom: 0;
 }
 
 .pull-right { float: right; }

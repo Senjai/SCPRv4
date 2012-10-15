@@ -26,7 +26,7 @@ module ApplicationHelper
     if !content
       return ''
     end
-    
+
     html = ''
     
     (content.is_a?(Array) ? content : [content]).each do |c|

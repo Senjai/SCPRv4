@@ -121,14 +121,14 @@ form {
     span.help-inline,
     {
       color: $red;
-	  font-weight:bold;
+      font-weight:bold;
     }
     span.help-block,
     {
       color: $gray;
     }
     input[type=text],
-	input[type=email],
+    input[type=email],
     input[type=password],
     textarea {
       border-color: $error-text;
@@ -165,7 +165,7 @@ form {
     width: 300px;
   }
   input.stacked {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
   }
   .input-xxlarge, input.xxlarge, textarea.xxlarge, select.xxlarge {
     width: 530px;

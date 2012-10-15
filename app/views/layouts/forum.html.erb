@@ -2,59 +2,59 @@
 
 <body class="forum">
 <div class="viewport">
-	<!-- MASTHEAD-->
-	<%= render "shared/masthead" %>
-	<%= yield :masthead %>
+  <!-- MASTHEAD-->
+  <%= render "shared/masthead" %>
+  <%= yield :masthead %>
 
-	<div id="forum" class="container-fluid main-content">
-		<div class="row-fluid">
-			<div id="forum-span-content" class="span18">
-				<%= yield %>
-			</div>
-		
-			<!-- SIDEBAR -->
-			<div id="forum-span-sidebar" class="span6">
-				<div id="sidebar">
-					<% if !content_for(:sidebar) %>
-						<%= yield :sidebar %>
-					<% else %>
-						<%= render 'events/nav', navClass: "vertical" %>
+  <div id="forum" class="container-fluid main-content">
+    <div class="row-fluid">
+      <div id="forum-span-content" class="span18">
+        <%= yield %>
+      </div>
+    
+      <!-- SIDEBAR -->
+      <div id="forum-span-sidebar" class="span6">
+        <div id="sidebar">
+          <% if !content_for(:sidebar) %>
+            <%= yield :sidebar %>
+          <% else %>
+            <%= render 'events/nav', navClass: "vertical" %>
 
-						<div class="mq-row-fluid">
-							<div class="span8">
-								<div id="getting-there" class="widget">
-									<h3>Finding the Crawford Family Forum</h3>
-									<p><a href='/events/forum/directions'>Get directions, parking and public transit info</a></p>
-								</div>
-							</div>
+            <div class="mq-row-fluid">
+              <div class="span8">
+                <div id="getting-there" class="widget">
+                  <h3>Finding the Crawford Family Forum</h3>
+                  <p><a href='/events/forum/directions'>Get directions, parking and public transit info</a></p>
+                </div>
+              </div>
 
-							<div class="span8">
-								<div id="community-partnerships" class="widget">
-									<h3>Partner with us</h3>
-									<p>We seek events that open dialogue and deepen the relationships and understanding of Southern California’s diverse communities.</p>
-									<p><a href='/events/forum/space'>Learn more about community partnership</a></p>
-								</div>
-							</div>
-						
-							<div class="span8">
-								<div class="ad widget">
-									<a href="https://scprcontribute.publicradio.org">
-									    <%= image_tag 'support-forum.png', alt: "Pledge now to become a KPCC member" %>
-									</a>
-								</div>
-							</div>
-						</div>
-					<% end %> <!-- /SIDEBAR -->
-				</div> <!-- sidebar -->
-			</div> <!-- span6 -->
-		</div> <!-- row fluid -->
+              <div class="span8">
+                <div id="community-partnerships" class="widget">
+                  <h3>Partner with us</h3>
+                  <p>We seek events that open dialogue and deepen the relationships and understanding of Southern California’s diverse communities.</p>
+                  <p><a href='/events/forum/space'>Learn more about community partnership</a></p>
+                </div>
+              </div>
+            
+              <div class="span8">
+                <div class="ad widget">
+                  <a href="https://scprcontribute.publicradio.org">
+                      <%= image_tag 'support-forum.png', alt: "Pledge now to become a KPCC member" %>
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% end %> <!-- /SIDEBAR -->
+        </div> <!-- sidebar -->
+      </div> <!-- span6 -->
+    </div> <!-- row fluid -->
 
-		<%= yield :bottom %>
-		<%= render "shared/audio/inpage_audio_player" %>
-	</div> <!-- container-fluid forum -->
+    <%= yield :bottom %>
+    <%= render "shared/audio/inpage_audio_player" %>
+  </div> <!-- container-fluid forum -->
 
-	<%= render :partial => "shared/footer" %>
-	<%= render :partial => "shared/footer/footer_js" %>
+  <%= render :partial => "shared/footer" %>
+  <%= render :partial => "shared/footer/footer_js" %>
 </div> <!-- viewport -->
 </body>
 </html>

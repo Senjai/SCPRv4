@@ -1,43 +1,43 @@
 <div id="article-related-content">
-	<%= content_cache("related:#{content.obj_key}") do %>
-		<% register_content content %>
-		<% if (rels = content.sorted_relations(content.frels.normal,content.brels.notiein)).any? %>
-			<aside class="related-articles cbase">
-				<div class="row-fluid">
-					<div class="span6 row-title">
-						<h6>More from KPCC</h6>
-					</div>
-					<div class="span18">
-						<ul>
-							<% for c in rels %>
-						    <li>
-								<% register_content c %>
-								<%= link_to c.short_headline, c.link_path %> <span class="pipe">|</span> <time><%= smart_date c %></time>
-						    </li>
-							<% end %>
-						</ul>
-					</div> <!-- span -->
-				</div> <!-- row-fluid -->
-			</aside>	
-		<% end %>
-	
-		<% if content.related_links.any? %>
-			<aside class="related-links cbase">
-				<div class="row-fluid">
-					<div class="span6 row-title">
-						<h6>Elsewhere on the Web</h6>
-					</div>
-					<div class="span18">
-						<ul>
-							<% content.related_links.each do |link| %>
-						    <li>
-								<%= link_to link.title, link.link %> <span class="domain"> | <%= link.domain.gsub(/^www\./, "") %></span>
-						    </li>
-							<% end %>
-						</ul>
-					</div> <!-- span -->
-				</div> <!-- row-fluid -->
-			</aside>
-		<% end %>
-	<% end %>
+  <%= content_cache("related:#{content.obj_key}") do %>
+    <% register_content content %>
+    <% if (rels = content.sorted_relations(content.frels.normal,content.brels.notiein)).any? %>
+      <aside class="related-articles cbase">
+        <div class="row-fluid">
+          <div class="span6 row-title">
+            <h6>More from KPCC</h6>
+          </div>
+          <div class="span18">
+            <ul>
+              <% for c in rels %>
+                <li>
+                <% register_content c %>
+                <%= link_to c.short_headline, c.link_path %> <span class="pipe">|</span> <time><%= smart_date c %></time>
+                </li>
+              <% end %>
+            </ul>
+          </div> <!-- span -->
+        </div> <!-- row-fluid -->
+      </aside>  
+    <% end %>
+  
+    <% if content.related_links.any? %>
+      <aside class="related-links cbase">
+        <div class="row-fluid">
+          <div class="span6 row-title">
+            <h6>Elsewhere on the Web</h6>
+          </div>
+          <div class="span18">
+            <ul>
+              <% content.related_links.each do |link| %>
+                <li>
+                <%= link_to link.title, link.link %> <span class="domain"> | <%= link.domain.gsub(/^www\./, "") %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div> <!-- span -->
+        </div> <!-- row-fluid -->
+      </aside>
+    <% end %>
+  <% end %>
 </div>
