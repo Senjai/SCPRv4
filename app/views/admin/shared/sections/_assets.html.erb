@@ -1,3 +1,11 @@
 <%= form_block "Asset Management" do %>
   <%= extra %>
+  
+  <h4>Assets</h4>
+  <div id="asset_bucket" class="clearfix">
+    <ul class="thumbnails"></li>
+  </div>
+  <script>
+    new scpr.AssetManager(<%= raw record.assets.to_json %>)
+  </script>
 <% end %>

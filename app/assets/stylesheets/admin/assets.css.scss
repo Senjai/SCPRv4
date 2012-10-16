@@ -1,0 +1,17 @@
+#asset_bucket {
+    .thumbnail {
+      position: relative;
+      overflow: hidden;
+      height: 300px;
+      
+      img { padding-bottom: 5px; }
+      small { font-size: 11px; }
+      
+      .delete.btn {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 5px;
+      }
+    }
+}
