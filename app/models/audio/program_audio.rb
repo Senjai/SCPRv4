@@ -41,7 +41,7 @@ class Audio
           # Each KpccProgram with episodes and which can sync audio
           KpccProgram.can_sync_audio.each do |program|
             # Each file in this program's audio directory
-            Dir[program.absolute_audio_path].each do |file|
+            Dir.foreach(program.absolute_audio_path).each do |file|
               absolute_mp3_path = File.join(program.absolute_audio_path, file)
         
               # Move on if:
