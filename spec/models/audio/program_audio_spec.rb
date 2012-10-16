@@ -54,23 +54,24 @@ describe Audio::ProgramAudio do
     end
     
     context "doesn't sync" do
+      it "if file mtime is too old" do
+        Audio::ProgramAudio.stub(:existing) { { } }
+        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
+        File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(1.month.ago)
+        Audio::ProgramAudio.bulk_sync!.should eq []
+      end
+      
       it "if file has already been synced in database" do
+        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
         Audio::ProgramAudio.stub(:existing) { { "mbrand/20121002_mbrand.mp3" => true } }
-        File.should_not_receive(:mtime)
+        String.any_instance.should_not_receive(:match)
         Audio::ProgramAudio.bulk_sync!.should eq []
       end
     
       it "if filename doesn't match the regex" do
         Audio::ProgramAudio.stub(:existing) { { } }
-        Dir.should_receive(:[]).with(program.absolute_audio_path).and_return(["nomatch.mp3"])
-        File.should_not_receive(:mtime)
-        Audio::ProgramAudio.bulk_sync!.should eq []
-      end
-    
-      it "if file mtime is too old" do
-        Audio::ProgramAudio.stub(:existing) { { } }
-        Dir.should_receive(:[]).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
-        File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(1.month.ago)
+        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["nomatch.mp3"])
+        Time.should_not_receive(:new)
         Audio::ProgramAudio.bulk_sync!.should eq []
       end
     end
@@ -83,7 +84,7 @@ describe Audio::ProgramAudio do
       
       it "if all the criteria pass for episodes" do
         Audio::ProgramAudio.stub(:existing) { { } } # Not existing
-        Dir.should_receive(:[]).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
+        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
         File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(Time.now) # File new
 
         audio = build :program_audio, content: program.episodes.first
@@ -93,7 +94,7 @@ describe Audio::ProgramAudio do
     
       it "if all the criteria pass for segments" do
         Audio::ProgramAudio.stub(:existing) { { } } # Not existing
-        Dir.should_receive(:[]).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
+        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
         File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(Time.now) # File new
 
         audio = build :program_audio, content: program.segments.first

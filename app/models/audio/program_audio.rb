@@ -43,23 +43,20 @@ class Audio
             # Each file in this program's audio directory
             Dir.foreach(program.absolute_audio_path).each do |file|
               absolute_mp3_path = File.join(program.absolute_audio_path, file)
-        
+              
               # Move on if:
+              # 1. The file is too old -
+              #    To keep this process quick, only 
+              #    worry about files less than 14 days old
+              file_date = File.mtime(absolute_mp3_path)
+              next if file_date < 14.days.ago
+              
               # 1. File already exists (program audio only needs to exist once in the DB)
               next if existing[File.join(program.audio_dir, file)]
         
               # 2. The filename doesn't match our regex (won't be able to get date)
               match = file.match(FILENAMES[:program])
               next if !match
-            
-              # 3. The file is too old -
-              #    If the file was uploaded more than 14 days ago
-              #    and still hasn't been matched, then something's wrong.
-              #    Maybe the date is incorrect? Either way, at this point
-              #    it's too old to keep trying. They can upload the audio
-              #    manually if they need to.
-              file_date = File.mtime(absolute_mp3_path)
-              next if file_date < 14.days.ago
 
               # Get the date for this episode/segment based on the filename,
               # find that episode/segment, and create the audio / association
