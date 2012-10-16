@@ -1,22 +1,61 @@
 #= require scprbase
 
-class scpr.Asset
-    assetTemplate: JST['admin/templates/asset']
-        
+##
+# scpr.AssetThumbnail
+#
+# One Asset thumbnail in the CMS
+#
+class scpr.AssetThumbnail
+    options:
+        assetTemplate: JST['admin/templates/asset']
+        fieldsPrefix:  "#asset-fields-"
+        destroyEl:     ".destroy-bool"
+        destroyField:  "input[type=checkbox][name*='[_destroy]']"
+        infoEl:       ".asset-info"
+        thumbnailEl:  ".thumbnail"
+    
     constructor: (attributes) ->
+        # Setup attributes
         _(_.keys(attributes)).each (key) =>
             @[key] = attributes[key]
-            
-    render: (el, i) ->
-        el.append @assetTemplate(asset: @, i: i)
+        
+        # Setup elements
+        @el           = $ @options.assetTemplate(asset: @)
+        @thumbnailEl  = $ @options.thumbnailEl, @el
+        @infoEl       = $ @options.infoEl, @el
+        
+        @fieldsEl     = $ "#{@options.fieldsPrefix}#{@content_asset_id}"
+        @destroyEl    = $ @options.destroyEl, @fieldsEl
+        @destroyField = $ @options.destroyField, @fieldsEl
+
+        # Move the hidden fields into the thumbnail,
+        # Just to keep everything together.
+        @thumbnailEl.append @fieldsEl.detach()
+        
+        # Register listener for Destroy button click
+        @destroyField.on
+            click: (event) =>
+                if $(event.target).is(':checked')
+                    @dim @infoEl
+                else
+                    @brighten @infoEl
+        
+    render: (el) ->
+        el.append @el
+        
+    dim: (el) ->
+        el.addClass("transparent")
     
-    remove: ->
-        el = $("#asset-#{@id}")
-        el.fadeOut 'slow', ->
-            el.remove()
+    brighten: (el) ->
+        el.removeClass("transparent")
         
 #-----------------
 
+##
+# scpr.AssetManager
+# 
+# The block that contains the Asset Management tools
+#
 class scpr.AssetManager
     DefaultOptions:
         el:         "#asset_bucket .thumbnails"
@@ -39,32 +78,17 @@ class scpr.AssetManager
         @el     = $ @options.el
         @assets = {}
         
-        # Load the assets into the collection
-        for asset in assets
-            @assets[asset.id] = new scpr.Asset(asset)
+        @_loadAssets assets
+        @_renderAssets()
 
-        # Render the assets
-        i=0
+    #---------------
+    # Render the assets into the asset bucket
+    _renderAssets: ->
         for asset in _.pairs(@assets)
-            asset[1].render(@el, i)
-            i++
+            asset[1].render(@el)
             
-        # Listeners
-        $(@options.deleteBtn).on
-            click: (event) =>
-                btn     = $(event.target).closest("a.btn")
-                assetId = btn.closest(".asset").attr("data-asset")
-                
-                if btn.hasClass("btn-danger")
-                    @assets[assetId].remove()
-                    clearTimeout @warnTimer
-                else
-                    @warn(btn)
-    
-    warn: (btn) ->
-        btn.removeClass("btn-inverse").addClass("btn-danger").html("Remove?")
-        @warnTimer = setTimeout (=> @resetBtn(btn)), 3000
-    
-    resetBtn: (btn) ->
-        btn.removeClass("btn-danger").addClass("btn-inverse").html("<i class='icon-white icon-remove'></i>")
-    
+    #---------------
+    # Load the asset thumbnails into @assets
+    _loadAssets: (assets) ->
+        for asset in assets
+            @assets[asset.content_asset_id] = new scpr.AssetThumbnail(asset)
