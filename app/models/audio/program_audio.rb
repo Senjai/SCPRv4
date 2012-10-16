@@ -37,23 +37,23 @@ class Audio
       # Since this is run as a task, we need some informative
       # logging in case of failure, hence the begin/rescue block.
       def bulk_sync!
-        begin
-          # Each KpccProgram with episodes and which can sync audio
-          KpccProgram.can_sync_audio.each do |program|
+        # Each KpccProgram with episodes and which can sync audio
+        KpccProgram.can_sync_audio.each do |program|
+          begin
             # Each file in this program's audio directory
             Dir.foreach(program.absolute_audio_path).each do |file|
               absolute_mp3_path = File.join(program.absolute_audio_path, file)
-              
+            
               # Move on if:
               # 1. The file is too old -
               #    To keep this process quick, only 
               #    worry about files less than 14 days old
               file_date = File.mtime(absolute_mp3_path)
               next if file_date < 14.days.ago
-              
+            
               # 1. File already exists (program audio only needs to exist once in the DB)
               next if existing[File.join(program.audio_dir, file)]
-        
+      
               # 2. The filename doesn't match our regex (won't be able to get date)
               match = file.match(FILENAMES[:program])
               next if !match
@@ -62,13 +62,13 @@ class Audio
               # find that episode/segment, and create the audio / association
               # if the content for that date exists.
               date = Time.new(match[:year], match[:month], match[:day])
-        
+      
               if program.display_episodes?
                 content = program.episodes.where(air_date: date).first
               else
                 content = program.segments.where(published_at: date..date.end_of_day).first
               end
-        
+      
               if content
                 audio = self.new(content: content)
                 audio.send :write_attribute, :mp3, file
@@ -76,11 +76,12 @@ class Audio
                 self.log "Saved ProgramAudio ##{audio.id} for #{content.simple_title}"
               end
             end # Dir
-          end # KpccProgram
           
-        rescue Exception => e
-          self.log "Could not save ProgramAudio: #{e}"
-        end
+          rescue Exception => e
+            self.log "Could not save ProgramAudio: #{e}"
+            next
+          end
+        end # KpccProgram
         
         self.log "Finished syncing ProgramAudio. Total synced: #{synced.size}"
         synced

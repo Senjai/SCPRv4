@@ -26,7 +26,7 @@ shared_examples_for "slug validation" do
     
     it { should_not validate_presence_of(:slug) }
     it { should_not validate_format_of(:slug) }
-    it { should_not ensure_length_of(:slug) }
+    it { should_not ensure_length_of(:slug).is_at_most(50) }
   end
 end
 
