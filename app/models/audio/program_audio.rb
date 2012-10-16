@@ -70,7 +70,7 @@ class Audio
               end
       
               if content
-                audio = self.new(content: content)
+                audio = self.new(content: content, filename: file, store_dir: program.absolute_audio_path)
                 audio.send :write_attribute, :mp3, file
                 synced << audio if audio.save!
                 self.log "Saved ProgramAudio ##{audio.id} for #{content.simple_title}"
