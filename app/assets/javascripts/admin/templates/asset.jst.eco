@@ -1,4 +1,4 @@
-<li class="span2">
+<li class="span2 asset" data-asset="<%=@asset.id%>" id="asset-<%=@asset.id%>">
   <div class="thumbnail">
     <img src="<%= @asset.urls.lsquare %>" />
     <h5><%= @asset.title %></h5>

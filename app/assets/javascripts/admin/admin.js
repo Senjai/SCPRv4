@@ -21,5 +21,5 @@
 //= require admin/content_alarm_ui
 //= require admin/auto_slug_field
 //= require admin/field_counter
-//= require admin/audio-ui
+//= require admin/audio_ui
 //= require admin/asset_manager

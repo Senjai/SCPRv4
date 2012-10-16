@@ -9,12 +9,18 @@ class scpr.Asset
             
     render: (el, i) ->
         el.append @assetTemplate(asset: @, i: i)
+    
+    remove: ->
+        el = $("#asset-#{@id}")
+        el.fadeOut 'slow', ->
+            el.remove()
         
 #-----------------
 
 class scpr.AssetManager
     DefaultOptions:
-        el:            "#asset_bucket .thumbnails"
+        el:         "#asset_bucket .thumbnails"
+        deleteBtn:  ".delete"
         
         assetAttr:
           id:      "asset_id"
@@ -44,4 +50,21 @@ class scpr.AssetManager
             i++
             
         # Listeners
+        $(@options.deleteBtn).on
+            click: (event) =>
+                btn     = $(event.target).closest("a.btn")
+                assetId = btn.closest(".asset").attr("data-asset")
+                
+                if btn.hasClass("btn-danger")
+                    @assets[assetId].remove()
+                    clearTimeout @warnTimer
+                else
+                    @warn(btn)
+    
+    warn: (btn) ->
+        btn.removeClass("btn-inverse").addClass("btn-danger").html("Remove?")
+        @warnTimer = setTimeout (=> @resetBtn(btn)), 3000
+    
+    resetBtn: (btn) ->
+        btn.removeClass("btn-danger").addClass("btn-inverse").html("<i class='icon-white icon-remove'></i>")
     
