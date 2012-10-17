@@ -1,0 +1,6 @@
+<h5>Jump to Section</h5>
+<ul class="nav nav-tabs nav-stacked" id="form-nav">
+  <% @sections.each do |id, title| %>
+    <li><a href="#<%=id%>"><%= title %></a></li>
+  <% end %>
+</ul>

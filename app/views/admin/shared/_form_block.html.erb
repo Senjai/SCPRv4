@@ -1,4 +1,7 @@
-<fieldset class="form-block">
+<% id = "form-block-#{title.parameterize}" %>
+<% @sections[id] = title %>
+
+<fieldset class="form-block" id="<%=id%>">
   <legend><%= title %></legend>
   
   <div class="hidden notification">

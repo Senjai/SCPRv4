@@ -2,7 +2,7 @@ class Admin::BaseController < ActionController::Base
   protect_from_forgery
   abstract!
   
-  before_filter :require_admin, :root_breadcrumb  
+  before_filter :require_admin, :root_breadcrumb, :set_sections
   layout 'admin'
   
   # -- Login checks -- #
@@ -38,6 +38,11 @@ class Admin::BaseController < ActionController::Base
   helper_method :breadcrumbs
   
   protected
+    # Just setup the @sections variable so the views can add to it.
+    def set_sections
+      @sections = {}
+    end
+    
     def root_breadcrumb
       breadcrumb "KPCC Admin", admin_root_path
     end

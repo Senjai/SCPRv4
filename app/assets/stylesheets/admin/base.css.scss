@@ -4,6 +4,14 @@ body {
     padding-top: 50px;
 }
 
+body, p {
+  line-height: 14px;
+}
+
+small { 
+  font-size: 11px;
+}
+
 // We want content input to always be pretty big
 .simple_form {
     input:not([type=submit]) {
@@ -144,4 +152,9 @@ ul.dropdown-menu li button {
 .transparent { 
     @include opacity(0.2);
     @include transition(.1s linear all);
+}
+
+#fixed-sidebar.affix {
+  width: 265px;
+  top: 60px;
 }

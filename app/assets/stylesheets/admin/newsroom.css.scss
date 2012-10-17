@@ -4,23 +4,27 @@
     position: relative;
     border: 1px solid $grayLight;
     padding-right: 30px; // make room for the badge
+    line-height: 12px;
     
     &.highlighted {
         background-color: #ffff99;
     }
-    h3 {
-        vertical-align: top;
+    
+    h5 {
+      margin: 0;
     }
     
     .headshot {
-        max-width: 60px;
-        float: left;
+      max-width: 60px;
+      float: left;
     }
     
     .badge-mark {
-        right: 10px;
+      right: 10px;
     }
 }
+
+.affix .user-badge .headshot { display: none; }
 
 .circle {
     @include border-radius(20px);
