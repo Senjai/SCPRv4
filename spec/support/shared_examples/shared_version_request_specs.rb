@@ -16,7 +16,7 @@ shared_examples_for "versioned model" do
         described_class.count.should eq 1
         new_record = described_class.first
         new_record.versions.size.should eq 1
-        click_link "History"
+        click_link "history"
         page.should have_content "Created #{described_class.name.demodulize.titleize} ##{new_record.id}"
       end
     end
@@ -29,7 +29,7 @@ shared_examples_for "versioned model" do
         click_button "edit"
         updated = described_class.find(valid_record.id)
         updated.versions.size.should eq 2
-        click_link "History"
+        click_link "history"
         current_path.should eq admin_history_path(valid_record.class.route_key, valid_record.id)
         page.should have_content "Changed"
         click_link "Changed"
