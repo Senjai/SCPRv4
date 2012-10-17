@@ -8,10 +8,18 @@
       
       <div class="span18">
         <h4><%= link_to c.headline, c.link_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'News Story', 'ga-label' => 'Content'} %></h4>
-        <% if c.category.present? %>
-          <span class="blog-title"><%= link_to c.category.title, c.category.link_path %></span>
-        <% end %>
-        <%= smart_date_js c, "data-window" => "8h" %>
+        <div class="cbase">
+
+          <% if c.category.present? %>
+            <span class="blog-title"><%= link_to c.category.title, c.category.link_path %></span>
+          <% end %>
+          
+          <%= smart_date_js c, "data-window" => "8h" %>
+          
+          <% if c.is_a? ContentShell %>
+            <span class="shell-link">| <%= c.site %></span>
+          <% end %>
+        </div>
       </div> <!-- span -->
     </div> <!-- row fluid -->
   <% end %>
