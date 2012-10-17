@@ -11,7 +11,7 @@ class Dashboard::MainController < ApplicationController
     redis = Rails.cache.instance_variable_get :@data
     
     data = {
-      :user        => params["user"].gsub("\n", ""),
+      :user        => params["user"],
       :datetime    => params["datetime"],
       :application => params["application"]
     }
