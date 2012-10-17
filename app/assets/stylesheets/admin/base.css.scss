@@ -12,6 +12,15 @@ small {
   font-size: 11px;
 }
 
+.page-header {
+  padding: 0;
+  margin: 5px 0;
+}
+
+ul.breadcrumb {
+  margin: 0;
+}
+
 // We want content input to always be pretty big
 .simple_form {
     input:not([type=submit]) {
