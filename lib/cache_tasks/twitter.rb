@@ -13,7 +13,7 @@ module CacheTasks
     
     #---------------
     
-    def run      
+    def run
       if tweets = self.fetch_tweets
         self.cache(tweets, "/shared/widgets/cached/tweets", "twitter:#{@screen_name}")
       end
@@ -25,13 +25,13 @@ module CacheTasks
     
     def initialize(screen_name, options={})
       @screen_name  = screen_name
-      @options      = options.reverse_merge! DEFAULTS      
+      @options      = options.reverse_merge! DEFAULTS
     end
     
     #---------------
     
     protected
-      def fetch_tweets      
+      def fetch_tweets
         begin
           self.log "Fetching the latest #{@options[:count]} tweets for #{@screen_name}..."
           tweets = ::Twitter.user_timeline(@screen_name, @options)

@@ -35,11 +35,11 @@ class Blog < ActiveRecord::Base
   
   # -------------------
   # Scopes
-  scope :active,      where(is_active: true)
-  scope :is_news,     where(is_news: true)
-  scope :is_not_news, where(is_news: false)
-  scope :local,       where(is_remote: false)
-  scope :remote,      where(is_remote: true)
+  scope :active,      -> { where(is_active: true) }
+  scope :is_news,     -> { where(is_news: true) }
+  scope :is_not_news, -> { where(is_news: false) }
+  scope :local,       -> { where(is_remote: false) }
+  scope :remote,      -> { where(is_remote: true) }
 
   # -------------------
   
