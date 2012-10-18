@@ -1,7 +1,7 @@
 <% content.first(5).each do |thread| %>
   <div class="row-fluid">
     <div class="span5">
-      <%= render_asset thread.object, "thumb" %>
+      <%= render_asset thread.object, "thumb", true %>
     </div>
     <div class="span19">
       <a href="<%= thread.object.link_path %>" class="track-event" data-ga-category="Popular Box" data-ga-action="Most Commented" data-ga-label="<%= thread.object.obj_key %> :: <%= j thread.object.headline %>">
