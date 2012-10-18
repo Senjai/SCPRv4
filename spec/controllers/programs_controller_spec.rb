@@ -71,7 +71,7 @@ describe ProgramsController do
       end
     end
     
-    describe "get_program" do
+    describe "get_any_program" do
       it "assigns a KPCC program if slug matches" do
         program = create :kpcc_program
         get :show, show: program.slug
