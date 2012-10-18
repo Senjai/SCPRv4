@@ -347,7 +347,7 @@ DEPENDENCIES
   launchy
   mysql2
   newrelic_rpm
-  oauth2
+  oauth2 (~> 0.8)
   rails (~> 3.2)
   rb-fsevent (~> 0.9)
   redis-content-store!
@@ -363,7 +363,7 @@ DEPENDENCIES
   simplecov
   sqlite3
   thinking-sphinx (~> 2.0.10)
-  twitter
+  twitter (~> 4.1)
   twitter-text (~> 1.5)
   uglifier (>= 1.0.3)
   will_paginate (~> 3.0)
