@@ -31,14 +31,14 @@ gem "ruby-mp3info", require: 'mp3info'
 
 
 ## HTTP
-gem "faraday", "~> 0.7"
+gem "faraday", "~> 0.8"
 gem "faraday_middleware", "~> 0.8"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
 
 
 ## APIs
-gem "twitter"
-gem "oauth2"
+gem "twitter", "~> 4.1"
+gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.4"
 gem 'newrelic_rpm'
 
