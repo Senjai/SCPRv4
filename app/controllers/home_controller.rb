@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   # Just for development purposes
   # Pass ?regenerate to the URL to regenerate the homepage category blocks
   # Only works in development
-  before_filter :generate_homepage, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
+  before_filter :generate_homepage, only: :index, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
   
   def index
     @homepage = Homepage.published.first
