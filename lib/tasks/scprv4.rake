@@ -67,7 +67,7 @@ namespace :scprv4 do
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Caching most commented..."
-      task = CacheTasks::MostCommented.new("kpcc", "3d")
+      task = CacheTasks::MostCommented.new("kpcc", "3d", API_KEYS['disqus']['api_key'], 5)
       task.verbose = true
       task.run
       puts "Finished.\n"

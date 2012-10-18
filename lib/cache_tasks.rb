@@ -4,6 +4,7 @@ module CacheTasks
   def self.view
     view = ActionView::Base.new(ActionController::Base.view_paths, {})
     view.extend ApplicationHelper
+    view.extend WidgetsHelper
   end
   
   class Task    

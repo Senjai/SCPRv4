@@ -1,0 +1,12 @@
+<% content.first(5).each do |object| %>
+  <div class="row-fluid">
+    <div class="span5">
+      <%= render_asset object, "thumb" %>
+    </div>
+    <div class="span19">
+      <a href="<%= object.link_path %>" class="track-event" data-ga-category="Popular Box" data-ga-action="Most Viewed" data-ga-label="<%= object.obj_key %> :: <%= j object.headline %>">
+        <%= object.short_headline %>
+      </a>
+    </div>
+  </div> <!-- row -->
+<% end %>

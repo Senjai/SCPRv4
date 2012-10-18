@@ -14,10 +14,10 @@ module CacheTasks
       "pp"          => "1"
     }
       
-    TOKEN_URL   = "http://accounts.google.com/o/oauth2/token"
-    AUTH_URL    = "http://accounts.google.com/o/oauth2/auth"
-    API_URL     = "https://www.googleapis.com"
-    API_PATH    = "/analytics/v3/data/ga"
+    TOKEN_URL = "http://accounts.google.com/o/oauth2/token"
+    AUTH_URL  = "http://accounts.google.com/o/oauth2/auth"
+    API_URL   = "https://www.googleapis.com"
+    API_PATH  = "/analytics/v3/data/ga"
     
     #---------------
     
@@ -29,7 +29,7 @@ module CacheTasks
       
       data    = self.fetch_data(options)
       content = self.content(data['rows'])
-      self.cache(content, "/shared/widgets/most_popular_viewed", "widget/popular_viewed")
+      self.cache(content, "/shared/widgets/cached/most_popular_viewed", "widget/popular_viewed")
     end
 
     #---------------
@@ -64,15 +64,16 @@ module CacheTasks
         objects = []
 
         rows.each do |row|
-          obj = ContentBase.obj_by_url(row[0])
-          # check whether row[0] is a content URL and that it doesn't already exist in the array
-          if objects.length < 5 && obj && !objects.flatten.include?(obj)
-            self.log "ga:pagePath is #{row[0]}"
-            # yes... add it
-            objects << [ row[1], obj ]
+          if object = ContentBase.obj_by_url(row[0])
+            # Prevent duplicates
+            if !objects.flatten.include?(object)
+              self.log "(#{row[1]}) #{row[0]}"
+              objects.push object
+            end
           end
         end
-        return objects
+        
+        objects
       end
     
       #---------------
