@@ -18,108 +18,176 @@
 <% end %>
 
 <% content_for :hero_roadblock do %>
-<style type="text/css">
-  .Lacey {
-    background-image:url(<%= image_path('specials/election/head-lacey.png') %>);
-  }
-  .Trutanich {
-    background-image:url(<%= image_path('specials/election/head-trutanich.png') %>);
-  }
-  .Grace {
-    background-image:url(<%= image_path('specials/election/head-grace.png') %>);
-  }
-  .Meyers {
-    background-image:url(<%= image_path('specials/election/head-meyers.png') %>);
-  }
-  .Jackson {
-    background-image:url(<%= image_path('specials/election/head-jackson.png') %>);
-  }
-  .Berman {
-    background-image:url(<%= image_path('specials/election/head-berman.png') %>);
-  }
-  .Sherman {
-    background-image:url(<%= image_path('specials/election/head-sherman.png') %>);
-  }
+<style>
+	.broadcast-bar {display:none;}
 </style>
 
-<script id="some-template" type="text/x-handlebars-template">
 <div class="hero-election">
   <div class="container-fluid">
     <div class="row-fluid">
-      <div class="span24">
-        <h1 class="center-block"><%= image_tag('specials/election/header-results.png') %></h1>
-      </div>
+      <header class="span24 election-header">
+        <h1>2012 Election Results</h1>
+				<a href="#" class="share-link"><span>Share This</span></a>
+      </header>
     </div>
-    <div class="row-fluid">
-          {{#ballots}}
-        <div class="span6 relative">
-          <div class="{{race_type}} clearfix">
-          {{#ballot_items}}
-            <div class="split {{item_title}}">
-              <h4>{{item_title}}</h4>
-            </div>
-          {{/ballot_items}}
-          </div>
-            <div class="banner">
-            <h3>{{race}}</h3>
-            {{#if outcome}}<span class="outcome {{outcome}}">{{outcome}}</span>{{/if}}
-            <span class="pennant"></span>
-          </div>
-          <div class="results clearfix">
-          {{#ballot_items}}
-            <div class="split">
-                <div class="results">
-                <h4>{{vote_percentage}}%</h4>
-              </div>
-            </div>
-          {{/ballot_items}}
-          </div>
-          <footer>
-            <span>{{percentage_reporting}}% reporting</span>
-          </footer>
-          <div class="vert-divider"></div>
-        </div>
-          {{/ballots}}
-    </div>
+		<div class="row-fluid">
+			<section class="span24">
+				<div class="header-well">
+					<a href="#" class="live-tweet visible-mobile">Read KPCC’s Election Live-Tweets</a>
+					<div class="tweets">
+						<span class="live-tweet">@KPCC Live-Tweets:</span>
+						<ul>
+						    <li class="active"><a href="#">@StoltzeFrankly is tweeting from the on air @RepHowardBerman and @BradSherman debate on @AirTalk. If you can't listen in, follow his tweets</a></li>
+						    <li><a href="#">We've launched our #MyBallot voter app. Every race, measure and prop in SoCal, tailored to your address: http://kp.cc/U10IvU  #LA</a></li>
+						    <li><a href="#">Backers and opponents of Prop 35 agree human trafficking is a problem, but disagree on how to deal with it: http://kp.cc/QonPKG </a></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+    <div class="row-fluid results">
+				<!-- PRESIDENTIAL RESULTS -->
+        <article class="span6 results-block relative">
+          <header>
+          	<h2>U.S. President</h2>
+						<aside>54% Reporting</aside>
+          </header>
+					<section class="candidate obama">
+						<h4>Barack Obama (D)</h4>
+						<div class="result">
+							<strong>273</strong>
+							<span>Electoral Votes</span>
+						</div>
+					</section>
+					<section class="candidate romney">
+						<h4>Mitt Romney (R)</h4>
+						<div class="result">
+							<strong>178</strong>
+							<span>Electoral Votes</span>
+						</div>
+					</section>
+				</article>
+				<!-- PROPOSITION RESULTS -->
+        <article class="span6 results-block relative">
+          <header>
+          	<h2>CA Propositions</h2>
+						<aside>68% Reporting</aside>
+          </header>
+					<!-- Prop 30 -->
+					<section class="initiative">
+						<h3>Prop 30</h3>
+						<p>Governor’s Tax Initiative</p>
+						<div class="result">
+							<strong>46%</strong>
+							<span>Yes</span>
+						</div>
+						<div class="result">
+							<strong>39%</strong>
+							<span>No</span>
+						</div>
+					</section>
+					<!-- Prop 34 -->
+					<section class="initiative">
+						<h3>Prop 34</h3>
+						<p>Repeal Death Penalty</p>
+						<div class="result">
+							<strong>39%</strong>
+							<span>Yes</span>
+						</div>
+						<div class="result">
+							<strong>52%</strong>
+							<span>No</span>
+						</div>
+					</section>
+					<!-- Prop 36 -->
+					<section class="initiative">
+						<h3>Prop 36</h3>
+						<p>Repeal "Three Strikes"</p>
+						<div class="result">
+							<strong>49%</strong>
+							<span>Yes</span>
+						</div>
+						<div class="result">
+							<strong>31%</strong>
+							<span>No</span>
+						</div>
+					</section>
+					<!-- Prop 38 -->
+					<section class="initiative">
+						<h3>Prop 38</h3>
+						<p>Education Tax Initiative</p>
+						<div class="result">
+							<strong>49%</strong>
+							<span>Yes</span>
+						</div>
+						<div class="result">
+							<strong>31%</strong>
+							<span>No</span>
+						</div>
+					</section>
+				</article>
+				<!-- 30TH DISTRICT RESULTS -->
+    		<article class="span6 results-block">
+    			<header>
+          	<h2>30th District</h2>
+						<aside>68% Reporting</aside>
+          </header>
+					<section class="candidate berman">
+						<h4>Howard Berman</h4>
+						<div class="result">
+							<strong>36%</strong>
+						</div>
+					</section>
+					<section class="candidate sherman">
+						<h4>Brad Sherman</h4>
+						<div class="result">
+							<strong>42%</strong>
+						</div>
+					</section>
+    		</article>
+				<!-- LA COUNTY DA RESULTS -->
+    		<article class="span6 results-block">
+    			<header>
+          	<h2>LA County DA</h2>
+						<aside>82% Reporting</aside>
+          </header>
+					<section class="candidate lacey">
+						<h4>Jackie Lacey</h4>
+						<div class="result">
+							<strong>36%</strong>
+						</div>
+					</section>
+					<section class="candidate jackson">
+						<h4>Alan Jackson</h4>
+						<div class="result">
+							<strong>42%</strong>
+						</div>
+					</section>
+    		</article>
+				<!-- LOCAL MEASURE RESULTS -->
+        <article class="span6 results-block relative">
+          <header>
+          	<h2>Local Measures</h2>
+						<aside>82% Reporting</aside>
+          </header>
+					<!-- MEASURE J -->
+					<section class="initiative local">
+						<h3>Measure J</h3>
+						<p>Transportation Tax</p>
+						<div class="result">
+							<strong>36%</strong>
+							<span>Yes</span>
+						</div>
+						<div class="result">
+							<strong>61%</strong>
+							<span>No</span>
+						</div>
+					</section>
+				</article>
+			</div>
   </div>
 </div>
-</script>
 
-<div id="results"></div>
-
-<script>
-jQuery(document).ready(function() {
-  // Make AJAX request and get JSON data
-  $.ajax({
-    type: "GET",
-    url: "http://sharp-mist-4353.herokuapp.com/ballot.js",
-    dataType: 'json',
-    cache: false,
-    callback: 'scpr',
-    
-    success: function(res) {
-      var source   = $("#some-template").html();
-      var template = Handlebars.compile(source);
-      console.log(res);
-      
-      $("#results").html(template(res));
-    },
-    
-    error: function(res) {
-      console.log("error");
-    }
-    
-    
-  });
-    
-  //$.getJSON("http://sharp-mist-4353.herokuapp.com/ballot.js?callback=scpr", function(data){
-  //  $.each(data.items, function(i,item){
-  //    $('#results').html("<p>item1="+data.item1+" item2="+data.item2+" item3="+data.item3+"</p>");
-  //  });
-  
-
-}); 
-</script>
 
 
 <% end %>
