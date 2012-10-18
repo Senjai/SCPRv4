@@ -1,5 +1,6 @@
 .hero-election {
     @include font-heading();
+margin-bottom:22px;
 	text-shadow:0 1px 0 rgba(0,0,0,0.67);
     .election-header {
 		background:#134b94 url(image_path('specials/election/bg-header.jpg')) no-repeat 0 0;
