@@ -1,6 +1,6 @@
 .hero-election {
     @include font-heading();
-margin-bottom:22px;
+	margin-bottom:22px;
 	text-shadow:0 1px 0 rgba(0,0,0,0.67);
     .election-header {
 		background:#134b94 url(image_path('specials/election/bg-header.jpg')) no-repeat 0 0;
@@ -60,6 +60,135 @@ margin-bottom:22px;
 		background:#2e2e2e;
 		border-top:1px solid #414141;
 		color:#fff;
+		.results-block {
+			header {
+				background:url(image_path('specials/election/bg-subhead.png')) repeat-x 0 0;
+				margin-right:-5.5%;
+				margin-left:-5.3%;
+				position:relative;
+				&.first {
+					margin-left:0;
+				}
+				&.last {
+					margin-right:0;
+				}
+				h2 {
+					color:#6bc6f2;
+					font-size:16px;
+					padding:0 10px;
+					text-transform:uppercase;
+				}
+				aside {
+					color:#9c9c9c;
+					font-size:12px;
+					font-weight:400;
+					position:absolute;
+					right:10px;
+					top:4px;
+				}
+			}
+			.vert-divider {
+				background-color:#1d1d1d;
+				border-right:1px solid #484848;
+				right:-5.850225%;
+			}
+			.candidate, .initiative {
+				border-bottom:1px solid #1d1d1d;
+				border-top:1px solid #484848;
+				min-height:51px;
+				padding:12px 10px 0;
+				&.first {
+					border-top:none;
+				}
+				&.last {
+					border-bottom:none;
+				}
+			}
+			.initiative {
+				@include clearfix();
+				.title {
+					float:left;
+					h3 {
+						color:$white;
+						font-size:30px;
+						font-weight:100;
+					}
+					p {
+						color:#858585;
+						@include font-heading();
+						font-size:11px;
+						font-weight:600;
+						margin-bottom:0;
+					}
+				}
+				.result {
+					@include clearfix();
+					float:right;
+					width:130px;
+					.yes, .no {
+						float:left;
+						width:60px;
+					}
+					strong {
+						display:block;
+						font-size:32px;
+					}
+					span {
+						color:#b3b3b3;
+						font-size:16px;
+						
+					}
+				}
+			}
+			.candidate {
+				position:relative;
+				@include clearfix();
+				background:no-repeat 10px 6px;
+				&.obama {
+					background-image:url(image_path('specials/election/head-obama.png'));
+				}
+				&.romney {
+					background-image:url(image_path('specials/election/head-romney.png'));
+				}
+				&.berman {
+					background-image:url(image_path('specials/election/head-berman.png'));
+				}
+				&.sherman {
+					background-image:url(image_path('specials/election/head-sherman.png'));
+				}
+				&.lacey {
+					background-image:url(image_path('specials/election/head-lacey.png'));
+				}
+				&.jackson {
+					background-image:url(image_path('specials/election/head-jackson.png'));
+				}
+				h4 {
+					color:$white;
+					float:left;
+					font-size:18px;
+					font-weight:100;
+					padding-left:60px;
+				}
+				.result {
+					text-align:right;
+					float:right;
+					width:62px;
+					strong {
+						display:block;
+						font-size:32px;
+						font-weight:900;
+						margin-bottom:6px;
+					}
+					span {
+						color:#858585;
+						@include ie-inline-block();
+						font-size:10px;
+						line-height:11px;
+						text-transform:uppercase;
+					}
+				}
+			}
+		}
 	}
 	.visible-mobile {
 		display:none;
