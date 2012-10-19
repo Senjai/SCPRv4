@@ -1,5 +1,7 @@
 require "spec_helper"
 
 describe CacheTasks::Task do
-  pending
+  describe "#cache" do
+    pending
+  end
 end

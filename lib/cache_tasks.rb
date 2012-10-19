@@ -11,7 +11,10 @@ module CacheTasks
     def cache(content, partial, cache_key)
       cached = CacheTasks.view.render(partial: partial, object: content, as: :content)
       Rails.cache.write(cache_key, cached)
+      true
     end
+    
+    #---------------
     
     def log(message)
       message = "*** #{message}"
@@ -24,8 +27,8 @@ module CacheTasks
         puts message
       end
     end
-  end
-end
+  end # Task
+end # CacheTasks
 
 require 'cache_tasks/most_commented'
 require 'cache_tasks/most_viewed'
