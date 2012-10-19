@@ -164,7 +164,7 @@ module ApplicationHelper
       return ""
     end
     
-    key = "byline:#{content.cache_key}"
+    key = "byline:#{content.cache_key}:#{links ? "links" : "text"}"
     
     # Check if we have a cache
     if cached = Rails.cache.fetch(key)
