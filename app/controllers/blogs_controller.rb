@@ -112,7 +112,6 @@ class BlogsController < ApplicationController
   
   protected
     def load_blog
-      @blog = Blog.local.find_by_slug!(params[:blog])
-      @authors = @blog.authors
+      @blog = Blog.local.includes(:authors, :blog_categories).find_by_slug!(params[:blog])
     end    
 end
