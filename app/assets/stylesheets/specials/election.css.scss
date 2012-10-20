@@ -61,6 +61,7 @@
 		border-top:1px solid #414141;
 		color:#fff;
 		.results-block {
+			min-height:320px;
 			header {
 				background:url(image_path('specials/election/bg-subhead.png')) repeat-x 0 0;
 				margin-right:-5.5%;
@@ -103,6 +104,12 @@
 				&.last {
 					border-bottom:none;
 				}
+				.percentage {
+					color:$white !important;
+					font-size:18px;
+					margin-left:4px;
+					vertical-align:super;
+				}
 			}
 			.initiative {
 				@include clearfix();
@@ -124,19 +131,46 @@
 				.result {
 					@include clearfix();
 					float:right;
-					width:130px;
-					.yes, .no {
+					width:140px;
+					margin-top:-3px;
+					.yes {
 						float:left;
 						width:60px;
+						&.pass {
+							span {
+								background:url(image_path('specials/election/ico-checkbox-sm.png')) no-repeat right 3px;
+								color:#74bd3a;
+								padding-right:18px;
+							}
+						}
+					}
+					.no {
+						float:right;
+						width:60px;
+						&.fail {
+							span {
+								background:url(image_path('specials/election/ico-strikethrough-sm.png')) no-repeat right 3px;
+								color:#da1020;
+								padding-right:18px;
+							}
+						}
 					}
 					strong {
 						display:block;
 						font-size:32px;
+						margin-bottom:4px;
 					}
 					span {
 						color:#b3b3b3;
+						display:inline-block;
 						font-size:16px;
-						
+						margin-left:6px;
+						text-transform:uppercase;
+					}
+					.vert-divider {
+						background-color:#484848;
+						border-right:none;
+						right:50%;
 					}
 				}
 			}
@@ -146,15 +180,22 @@
 				background:no-repeat 10px 6px;
 				&.obama {
 					background-image:url(image_path('specials/election/head-obama.png'));
+					.result strong {
+						color:#0f93d2;
+					}
 				}
 				&.romney {
 					background-image:url(image_path('specials/election/head-romney.png'));
+					.result strong {
+						color:#e53f48;
+					}
 				}
 				&.berman {
 					background-image:url(image_path('specials/election/head-berman.png'));
 				}
 				&.sherman {
 					background-image:url(image_path('specials/election/head-sherman.png'));
+					background-position:15px 6px;
 				}
 				&.lacey {
 					background-image:url(image_path('specials/election/head-lacey.png'));
@@ -168,6 +209,16 @@
 					font-size:18px;
 					font-weight:100;
 					padding-left:60px;
+					em {
+						background:url(image_path('specials/election/ico-checkbox.png')) no-repeat 0 2px;
+						display:block;
+						color:#74bd3a;
+						font-size:12px;
+						font-style:normal;
+						font-weight:600;
+						margin-bottom:0;
+						padding-left:24px;
+					}
 				}
 				.result {
 					text-align:right;
