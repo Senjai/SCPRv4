@@ -1,5 +1,6 @@
 .hero-election {
     @include font-heading();
+	font-size:13px;
 	margin-bottom:22px;
 	text-shadow:0 1px 0 rgba(0,0,0,0.67);
     .election-header {
@@ -9,7 +10,7 @@
 		text-align:center;
 		h1 {
 			color:#f1f1f1;
-			font-size:24px;
+			font-size:1.846153846em;
 			line-height:24px;
 			margin:8px 0 4px;
 			text-transform:uppercase;
@@ -17,7 +18,7 @@
 		.share-link {
 			background:url(image_path('specials/election/ico-share.png')) no-repeat 0 2px;
 			color:$white;
-			font-size:12px;
+			font-size:0.923076923em;
 			font-weight:800;
 			text-transform:uppercase;
 			padding-left:25px;
@@ -30,7 +31,7 @@
 		background:#032e54;
 		border-top:1px solid #002035;
 		border-bottom:1px solid #2e2e2e;
-		font-size:13px;
+		font-size:1em;
 		font-weight:400;
 		padding:3px 10px;
 		.live-tweet {
@@ -75,13 +76,13 @@
 				}
 				h2 {
 					color:#6bc6f2;
-					font-size:16px;
+					font-size:1.230769231em;
 					padding:0 10px;
 					text-transform:uppercase;
 				}
 				aside {
 					color:#9c9c9c;
-					font-size:12px;
+					font-size:0.923076923em;
 					font-weight:400;
 					position:absolute;
 					right:10px;
@@ -106,24 +107,32 @@
 				}
 				.percentage {
 					color:$white !important;
-					font-size:18px;
+					font-size:0.5625em;
 					margin-left:4px;
 					vertical-align:super;
 				}
 			}
 			.initiative {
 				@include clearfix();
+				&.local {
+					.title {
+						width:120px;
+						h3 {
+							font-size:2em;
+						}
+					}
+				}
 				.title {
 					float:left;
 					h3 {
 						color:$white;
-						font-size:30px;
+						font-size:2.307692308em;
 						font-weight:100;
 					}
 					p {
 						color:#858585;
 						@include font-heading();
-						font-size:11px;
+						font-size:0.846153846em;
 						font-weight:600;
 						margin-bottom:0;
 					}
@@ -157,13 +166,13 @@
 					}
 					strong {
 						display:block;
-						font-size:32px;
+						font-size:2.461538462em;
 						margin-bottom:4px;
 					}
 					span {
 						color:#b3b3b3;
 						display:inline-block;
-						font-size:16px;
+						font-size:1.230769231em;
 						margin-left:6px;
 						text-transform:uppercase;
 					}
@@ -206,14 +215,14 @@
 				h4 {
 					color:$white;
 					float:left;
-					font-size:18px;
+					font-size:1.384615385em;
 					font-weight:100;
 					padding-left:60px;
 					em {
 						background:url(image_path('specials/election/ico-checkbox.png')) no-repeat 0 2px;
 						display:block;
 						color:#74bd3a;
-						font-size:12px;
+						font-size:0.666666667em;
 						font-style:normal;
 						font-weight:600;
 						margin-bottom:0;
@@ -226,14 +235,14 @@
 					width:62px;
 					strong {
 						display:block;
-						font-size:32px;
+						font-size:2.461538462em;
 						font-weight:900;
 						margin-bottom:6px;
 					}
 					span {
 						color:#858585;
 						@include ie-inline-block();
-						font-size:10px;
+						font-size:0.769230769em;
 						line-height:11px;
 						text-transform:uppercase;
 					}
@@ -243,5 +252,88 @@
 	}
 	.visible-mobile {
 		display:none;
+	}
+}
+
+// Between Small Desktop & Mid-Portrait 
+@media screen and (min-width: 768px + 1) and (max-width: $mediaDesktopSmall) {
+	.hero-election {
+		font-size:11px;
+		.results {
+			.results-block {
+				.candidate, .initiative {
+					padding-right:4px;
+					padding-left:4px;
+				}
+				.initiative {
+					&.local {
+						.title {
+							width:100px;
+						}
+					}
+					.result {
+						width:110px;
+						.yes, .no {
+							width:52px;
+						}
+						.vert-divider {
+							display:none;
+						}
+					}
+				}
+				.candidate {
+					background-image:none !important;
+					h4 {
+						font-size:1.6em;
+						padding-left:0;
+					}
+				}
+			}
+		}
+	}
+}
+// Below Mid-Portrait 
+@media screen and (max-width: 768px) {
+	.hero-election {
+		font-size:13px;
+		.election-header {
+			float:none;
+			h1 {
+				font-size:1.230769231em;
+				padding-left:10px;
+				padding-top:7px;
+				text-align:left;
+			}
+			.share-link {
+				width:20px;
+				height:20px;
+				padding-left:0;
+				span {
+					display:none;
+				}
+			}
+		}
+		.header-well {
+			.visible-mobile {
+				display:block;
+			}
+			.tweets {
+				display:none;
+			}
+		}
+		.span8 {
+			float:none;
+			margin-left:0;
+			width:100%;
+		}
+		.results {
+			.results-block {
+				min-height:0;
+				header {
+					margin-right:0;
+					margin-left:0;
+				}
+			}
+		}
 	}
 }
