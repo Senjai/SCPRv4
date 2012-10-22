@@ -4,7 +4,8 @@ describe Bio do
   describe "validations" do
     it_behaves_like "slug validation"
     it_behaves_like "slug unique validation"
-    it { should validate_presence_of :user }
+    it { should validate_presence_of :name }
+    it { should validate_presence_of :last_name }
   end
 
   #--------------------
@@ -17,6 +18,17 @@ describe Bio do
   #--------------------
   
   describe "callbacks" do
+    describe "set_last_name" do
+      it "sets last name if last name isn't present" do
+        bio = create :bio, name: "Bryan Ricker", last_name: nil
+        bio.last_name.should eq "Ricker"
+      end
+      
+      it "doesn't set last name if last_name is present" do
+        bio = create :bio, name: "Bryan Ricker", last_name: "Dudebro"
+        bio.last_name.should eq "Dudebro"
+      end
+    end
   end
   
   #--------------------

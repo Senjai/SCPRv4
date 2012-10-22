@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_staff_index
   
   def index
-    @bios = Bio.where(is_public: true).order("#{AdminUser.table_name}.last_name")
+    @bios = Bio.where(is_public: true).order("last_name")
   end
   
   def bio
