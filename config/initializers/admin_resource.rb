@@ -33,7 +33,8 @@ AdminResource::Config.configure do |config|
     "Promotion", 
     "AdminUser", 
     "Bio",
-    "Permission"
+    "Permission",
+    "DataPoint"
   ]
     
     
@@ -94,7 +95,8 @@ AdminResource::Config.configure do |config|
       icon: "icon-bookmark",
       models: [
         "Flatpage",
-        "Promotion"
+        "Promotion",
+        "DataPoint"
 #        "PressRelease"
       ]
     },

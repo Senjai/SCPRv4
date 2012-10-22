@@ -589,4 +589,9 @@ factory :pij_query do
   end
 end
 
+# DataPoint #########################################################
+factory :data_point do
+  data_key "president_percentage"
+end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121017082933) do
+ActiveRecord::Schema.define(:version => 20121022174220) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -363,6 +363,18 @@ ActiveRecord::Schema.define(:version => 20121017082933) do
 
   add_index "contentbase_videoshell", ["slug"], :name => "contentbase_videoshell_a951d5d6"
   add_index "contentbase_videoshell", ["status", "published_at"], :name => "index_contentbase_videoshell_on_status_and_published_at"
+
+  create_table "data_points", :force => true do |t|
+    t.string   "group"
+    t.string   "data_key"
+    t.string   "description"
+    t.text     "data"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "data_points", ["data_key"], :name => "index_data_points_on_data_key"
+  add_index "data_points", ["group"], :name => "index_data_points_on_group"
 
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
