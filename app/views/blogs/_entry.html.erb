@@ -14,7 +14,7 @@
           <h1 class="story-headline"><%= link_to entry.headline, entry.link_path %></h1>
           <div class="categories">
             <%= entry.blog_categories.map { |c|
-              link_to(c.title, blog_category_path(entry.blog.slug, c.slug))
+              link_to(c.title, blog_category_path(blog.slug, c.slug))
             }.join(" | ").html_safe %>
           </div>
           
@@ -35,7 +35,7 @@
           <div class="visible-reader"><%= widget "extra_audio", entry %></div>
           
           <% if entry.tags.present? %>
-            <br /><i>Tagged:</i> <%= raw entry.tags.collect {|t| link_to(t.name, blog_entries_tagged_path(@blog.slug,t.slug)) }.join(", ") %>
+            <br /><i>Tagged:</i> <%= raw entry.tags.collect {|t| link_to(t.name, blog_entries_tagged_path(blog.slug,t.slug)) }.join(", ") %>
           <% end %>
         </footer>
       </article>

@@ -53,7 +53,6 @@ class BlogEntry < ContentBase
   
   # ------------------
   # Scopes
-  default_scope includes(:bylines)
 
   # ------------------
   
@@ -65,10 +64,10 @@ class BlogEntry < ContentBase
     has category.is_news, as: :category_is_news
     has published_at
     has "1", as: :is_source_kpcc, type: :boolean
-    has "CRC32(CONCAT('blogs/entry:',blogs_entry.id))",     type: :integer, as: :obj_key
-    has "(blogs_entry.blog_asset_scheme <=> 'slideshow')",  type: :boolean, as: :is_slideshow
+    has "CRC32(CONCAT('blogs/entry:',#{BlogEntry.table_name}.id))",     type: :integer, as: :obj_key
+    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')",  type: :boolean, as: :is_slideshow
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",       type: :boolean, as: :has_audio
-    where "blogs_entry.status = #{STATUS_LIVE} and blogs_blog.is_active = 1"
+    where "#{BlogEntry.table_name}.status = #{STATUS_LIVE} and #{Blog.table_name}.is_active = 1"
     join audio
   end
     

@@ -148,6 +148,7 @@ GEM
     haml (3.1.7)
     highline (1.6.15)
     hike (1.2.1)
+    hodel_3000_compliant_logger (0.1.0)
     httparty (0.9.0)
       multi_json (~> 1.0)
       multi_xml
@@ -196,6 +197,9 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
+    oink (0.9.3)
+      activerecord
+      hodel_3000_compliant_logger
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -348,6 +352,7 @@ DEPENDENCIES
   mysql2
   newrelic_rpm
   oauth2 (~> 0.8)
+  oink
   rails (~> 3.2)
   rb-fsevent (~> 0.9)
   redis-content-store!

@@ -12,7 +12,6 @@ class Bio < ActiveRecord::Base
   
   #--------------
   # Scopes    
-  default_scope includes(:user)
   scope :visible, where(is_public: true)
   
   #--------------
