@@ -281,9 +281,9 @@ describe Audio do
   
   describe "#full_path" do
     it "returns the server path to the mp3 if mp3 is present" do
-      Rails.application.config.scpr.stub(:media_root) { Rails.root.join("spec/fixtures/media/some/path") }
+      Rails.application.config.scpr.stub(:media_root) { Rails.root.join("spec/fixtures/media") }
       audio = create :audio, :uploaded
-      audio.full_path.should eq Rails.root.join("spec/fixtures/media/some/path/audio/#{audio.path}").to_s
+      audio.full_path.should eq Rails.root.join("spec/fixtures/media/audio/#{audio.path}").to_s
     end    
   end
   
