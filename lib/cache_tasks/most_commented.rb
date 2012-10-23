@@ -20,8 +20,6 @@ module CacheTasks
 
     #--------------
     
-    attr_accessor :verbose
-
     def initialize(forum, interval, api_key, options={})
       @forum    = forum
       @interval = interval

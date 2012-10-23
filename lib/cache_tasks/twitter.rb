@@ -21,9 +21,7 @@ module CacheTasks
     end
 
     #---------------
-    
-    attr_accessor :verbose
-    
+        
     def initialize(screen_name, partial="/shared/widgets/cached/tweets", options={})
       @screen_name  = screen_name
       @cache_key    = "twitter:#{screen_name}"

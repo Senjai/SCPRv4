@@ -29,6 +29,7 @@ class DataPoint < ActiveRecord::Base
       column :data_key, linked: true
       column :data
       column :description
+      column :updated_at
     end
   end
 
