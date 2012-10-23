@@ -163,13 +163,13 @@ class scpr.SocialTools
         $(@options.fbfinder).on "click", (evt) =>
             if url = $(evt.target).attr("data-url")
                 fburl = "http://www.facebook.com/sharer.php?u=#{url}"
-                window.open fburl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'                
+                window.open fburl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'
 
         # add share functionality on google plus
         $(@options.gplusfinder).on "click", (evt) =>
             if url = $(evt.target).attr("data-url")
                 gpurl = "https://plus.google.com/share?url=#{url}"
-                window.open gpurl, 'pop_up','height=400,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'               
+                window.open gpurl, 'pop_up','height=400,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'
         
         # add share functionality for twitter
         $(@options.twitfinder).on "click", (evt) =>
