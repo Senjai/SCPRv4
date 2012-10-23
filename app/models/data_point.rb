@@ -22,11 +22,12 @@ class DataPoint < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order    = "group, data_key"
-      per_page = :all
+      list_order "'groupname, data_key'" # Need the extra quotes for MySQL group
+      list_per_page :all
       
       column :group
       column :data_key, linked: true
+      column :data
       column :description
     end
   end
@@ -48,8 +49,21 @@ class DataPoint < ActiveRecord::Base
   class << self
     def to_hash(collection)
       hash = {}
-      collection.each { |obj| hash[obj.data_key] = obj.data }
+      collection.each { |obj| hash[obj.data_key] = DataPoint::Hashed.new(obj) }
       hash
+    end
+  end
+  
+  class Hashed
+    delegate :data, :data_key, to: :@object
+    
+    attr_accessor :object
+    def initialize(object)
+      @object = object
+    end
+    
+    def to_s
+      @object.data
     end
   end
 end
