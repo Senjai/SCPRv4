@@ -15,7 +15,7 @@
 # is deployed that relies on that key.
 # Don't assume the key will be there!
 #
-class DataPoint < ActiveRecord::Base
+class DataPoint < ActiveRecord::Base  
   has_secretary
   
   #--------------

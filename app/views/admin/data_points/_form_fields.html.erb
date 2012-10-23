@@ -1,6 +1,6 @@
 <%= form_block do %>
-  <%= f.input :group, hint: "An arbitrary string. Can be used to group together a group of keys." %>
-  <%= f.input :data_key %>
+  <%= f.input :group, disabled: !record.new_record?, hint: "An arbitrary string. Can be used to group together a group of keys." %>
+  <%= f.input :data_key, disabled: !record.new_record? %>
   <%= f.input :description, hint: "For internal use only." %>
   <%= f.input :data, input_html: { class: "tiny" } %>
 <% end %>
