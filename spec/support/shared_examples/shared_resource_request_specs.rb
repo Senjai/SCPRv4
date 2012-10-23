@@ -12,14 +12,18 @@ shared_examples_for "managed resource" do
   
   #------------------------
   
-  describe "Create" do    
+  describe "Create" do
+    before :each do
+      visit described_class.admin_new_path
+    end
+        
     context "invalid" do
       it "shows validation errors" do
-        visit described_class.admin_new_path
         fill_required_fields(invalid_record)
         click_button "edit"
-        current_path.should eq described_class.admin_index_path
+        current_path.should eq described_class.admin_index_path # Technically "#create"
         described_class.count.should eq 0
+        page.should_not have_css ".alert-success"
         page.should have_css ".alert-error"
         page.should have_css ".help-inline"
       end
@@ -27,14 +31,14 @@ shared_examples_for "managed resource" do
     
     context "valid" do
       it "is created" do
-        visit described_class.admin_new_path
-        fill_all_fields(valid_record)
+        fill_required_fields(valid_record)
         click_button "edit"
         described_class.count.should eq 1
         valid = described_class.first
         current_path.should eq valid.admin_edit_path
         page.should have_css ".alert-success"
         page.should_not have_css ".alert-error"
+        page.should_not have_css ".help-inline"
         page.should have_css "#edit_#{described_class.singular_route_key}_#{valid.id}"
       end
     end
@@ -45,7 +49,6 @@ shared_examples_for "managed resource" do
   describe "Update" do    
     before :each do
       valid_record.save!
-      @to_title = valid_record.to_title
       visit valid_record.admin_edit_path
     end
     
@@ -54,21 +57,16 @@ shared_examples_for "managed resource" do
         fill_required_fields(invalid_record)
         click_button "edit"
         page.should have_css ".alert-error"
-        updated = described_class.find(valid_record.id)
-        current_path.should eq updated.admin_show_path
-        updated.to_title.should_not eq ""
-        updated.to_title.should eq @to_title
+        current_path.should eq valid_record.admin_show_path # Technically "#update" but this'll do        
       end
     end
     
     context "valid" do
       it "updates attributes" do
-        fill_all_fields(updated_record)
+        fill_required_fields(updated_record)
         click_button "edit"
         page.should have_css ".alert-success"
-        updated = described_class.find(valid_record.id)
         current_path.should eq valid_record.admin_edit_path
-        updated.to_title.should eq updated_record.to_title
       end
     end
   end
