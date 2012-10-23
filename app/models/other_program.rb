@@ -10,12 +10,12 @@ class OtherProgram < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order    = "title"
-      per_page = :all
+      list_order "title"
+      list_per_page :all
       
-      column "title"
-      column "produced_by"
-      column "air_status"
+      column :title
+      column :produced_by
+      column :air_status
     end
   end
 

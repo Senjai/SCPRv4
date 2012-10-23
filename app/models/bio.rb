@@ -26,8 +26,8 @@ class Bio < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order    = "last_name"
-      per_page = :all
+      list_order "last_name"
+      list_per_page :all
       
       column :name
       column :email

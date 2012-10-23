@@ -7,11 +7,11 @@ class Section < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      per_page = :all
+      list_per_page :all
       
-      column "id"
-      column "title", linked: true
-      column "slug"
+      column :id
+      column :title, linked: true
+      column :slug
     end
   end
 

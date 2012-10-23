@@ -12,10 +12,11 @@ class Homepage < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order = "published_at desc"
-      column "published_at"
-      column "status"
-      column "base", header: "Base Template"
+      list_order "published_at desc"
+      
+      column :published_at
+      column :status
+      column :base, header: "Base Template"
     end
   end
   

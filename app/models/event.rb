@@ -29,7 +29,7 @@ class Event < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order = "created_at desc"
+      list_order "created_at desc"
       
       column :headline
       column :starts_at

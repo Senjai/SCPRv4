@@ -11,7 +11,7 @@ class FeaturedComment < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order = "published_at desc"
+      list_order "published_at desc"
 
       column :bucket
       column :content

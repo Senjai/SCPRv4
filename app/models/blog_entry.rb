@@ -20,7 +20,7 @@ class BlogEntry < ContentBase
   # Administration
   administrate do
     define_list do
-      order = "published_at desc"
+      list_order "published_at desc"
       
       column "headline"
       column "blog"
