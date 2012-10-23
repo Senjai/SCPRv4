@@ -26,7 +26,7 @@ class DataPoint < ActiveRecord::Base
       per_page = :all
       
       column :group
-      column :data_key
+      column :data_key, linked: true
       column :description
     end
   end
@@ -38,9 +38,19 @@ class DataPoint < ActiveRecord::Base
   
   #--------------
   # Validation
-  validates :data_key, presence: true
+  validates :data_key, presence: true, uniqueness: true
+  
   
   #--------------
   # Association
+  
+  
+  class << self
+    def to_hash(collection, key_attribute=:data_key)
+      hash = {}
+      collection.each { |obj| hash[obj.send(key_attribute)] = obj }
+      hash
+    end
+  end
   
 end
