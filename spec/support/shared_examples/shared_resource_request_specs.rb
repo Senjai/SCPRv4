@@ -2,6 +2,12 @@
 # Shared examples for managed resources
 #
 shared_examples_for "managed resource" do
+  it_behaves_like "managed resource create"
+  it_behaves_like "managed resource update"
+  it_behaves_like "managed resource destroy"
+end
+
+shared_examples_for "managed resource create" do
   before :each do
     login
     # Touch them so their associations get created
@@ -43,6 +49,18 @@ shared_examples_for "managed resource" do
       end
     end
   end
+end
+
+#------------------------
+
+shared_examples_for "managed resource update" do
+  before :each do
+    login
+    # Touch them so their associations get created
+    valid_record
+    invalid_record
+    updated_record
+  end
   
   #------------------------
   
@@ -70,10 +88,20 @@ shared_examples_for "managed resource" do
       end
     end
   end
-  
-  #------------------------
-  
-  describe "Delete" do    
+end
+
+#------------------------
+
+shared_examples_for "managed resource destroy" do
+  before :each do
+    login
+    # Touch them so their associations get created
+    valid_record
+    invalid_record
+    updated_record
+  end
+      
+  describe "Destroy" do    
     before :each do
       valid_record.save!
       visit valid_record.admin_edit_path
@@ -86,11 +114,14 @@ shared_examples_for "managed resource" do
       described_class.count.should eq 0
     end
   end
-  
-  #------------------------
-  
-  describe "Save options" do    
+end
+
+#------------------------
+
+shared_examples_for "save options" do
+  describe "Save options" do
     before :each do
+      login
       valid_record.save!
       visit valid_record.admin_edit_path
     end
@@ -121,32 +152,4 @@ shared_examples_for "managed resource" do
       end
     end
   end
-  
-  #------------------------
-  
-  describe "Admin Paths" do
-    before :each do
-      valid_record.save!
-    end
-  
-    it "returns success when following admin_edit_path" do
-      visit valid_record.admin_edit_path
-      current_path.should eq valid_record.admin_edit_path
-    end
-
-    it "returns success when following admin_show_path" do
-      visit valid_record.admin_show_path
-      current_path.should eq valid_record.admin_show_path
-    end
-
-    it "returns success when following admin_new_path" do
-      visit valid_record.class.admin_new_path
-      current_path.should eq valid_record.class.admin_new_path
-    end
-
-    it "returns success when following admin_index_path" do
-      visit valid_record.class.admin_index_path
-      current_path.should eq valid_record.class.admin_index_path
-    end
-  end  
 end
