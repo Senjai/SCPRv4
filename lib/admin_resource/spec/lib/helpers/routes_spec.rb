@@ -19,6 +19,24 @@ describe AdminResource::Helpers::Routes do
     end
   end
 
+  #----------------
+  
+  describe "::route_key" do
+    it "uses ActiveModel's route_key method" do
+      ActiveModel::Naming.should_receive(:route_key)
+      Person.route_key
+    end
+  end
+  
+  #----------------
+  
+  describe "::singular_route_key" do
+    it "uses ActiveModel's singular_route_key method" do
+      ActiveModel::Naming.should_receive(:singular_route_key)
+      Person.singular_route_key
+    end
+  end
+  
   #---------------------
   
   describe "#admin_edit_path" do
@@ -70,17 +88,12 @@ describe AdminResource::Helpers::Routes do
     let(:person) { Person.create(name: "Dude Bro") }
     
     before :each do
-      Rails.application.routes.url_helpers.should_receive(:people_path).with(person.route_hash).and_return("/people/#{person.id}/#{person.name.parameterize}")
-    end
-    
-    it "contains the object's link path" do
-      person.link_path.should_not be_blank
-      person.remote_link_path.should match person.link_path
-    end
-    
-    it "contains the configured remote URL" do
+      person.stub(:link_path) { "/people/linkpath" }
       Rails.application.config.scpr.stub(:host) { "www.foodnstuff.com" }
-      person.remote_link_path.should match /http:\/\/www\.foodnstuff\.com/
+    end
+    
+    it "contains the object's link path and configured remote URL" do
+      person.remote_link_path.should eq "http://www.foodnstuff.com/people/linkpath"
     end
   end
   
