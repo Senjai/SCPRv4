@@ -10,7 +10,6 @@ class VideoShell < ContentBase
 
 
   self.table_name = "contentbase_videoshell"
-  ADMIN_PREFIX    = "contentbase/videoshell"
   ROUTE_KEY       = "video"
   
   acts_as_content

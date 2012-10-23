@@ -47,6 +47,6 @@ describe Secretary::HasSecretary do
     it "sends to Version.generate on update" do
       Secretary::Version.should_receive(:generate).twice.with(other_story)
       other_story.update_attributes(headline: "Some Cool Headline?!")
-    end    
+    end
   end
 end

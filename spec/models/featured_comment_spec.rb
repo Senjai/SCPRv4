@@ -15,12 +15,25 @@ describe FeaturedComment do
   
   #-------------------
   
-  describe "validations" do
+  describe "validations" do    
     it { should validate_presence_of(:username) }
-    it { should validate_presence_of(:excerpt) }
-    it { should validate_presence_of(:bucket_id) }
-    it { should validate_presence_of(:content_id) }
-    it { should validate_presence_of(:content_type) }
+    it { should validate_presence_of(:status) }
+    
+    context "should validate" do
+      subject { create :featured_comment, :published }
+      it { should validate_presence_of(:excerpt) }
+      it { should validate_presence_of(:bucket_id) }
+      it { should validate_presence_of(:content_id) }
+      it { should validate_presence_of(:content_type) }
+    end
+    
+    context "should not validate" do
+      subject { create :featured_comment, :draft }
+      it { should_not validate_presence_of(:excerpt) }
+      it { should_not validate_presence_of(:bucket_id) }
+      it { should_not validate_presence_of(:content_id) }
+      it { should_not validate_presence_of(:content_type) }
+    end
   end
 
   it_behaves_like "status methods"

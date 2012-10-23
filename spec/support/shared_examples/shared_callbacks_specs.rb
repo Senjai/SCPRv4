@@ -5,59 +5,7 @@
 
 #------------------
 # SetPublishedAtCallback
-shared_examples_for "set published at callback" do
-  describe "#publishing?" do
-    let(:object) { build symbolize(described_class) }
-    
-    it "returns true if status was changed and is now published" do
-      object.stub(:status_changed?) { true }
-      object.stub(:published?) { true }
-      object.publishing?.should be_true
-    end
-
-    it "returns false if status was not changed and status is published" do
-      object.stub(:status_changed?) { false }
-      object.stub(:published?) { true }
-      object.publishing?.should be_false
-    end
-
-    it "returns false if status is not published" do
-      object.stub(:status_changed?) { true }
-      object.stub(:published?) { false }
-      object.publishing?.should be_false
-    end
-
-    it "returns false if status was not changed and status not published" do
-      object.stub(:status_changed?) { false }
-      object.stub(:published?) { false }
-      object.publishing?.should be_false
-    end
-  end
-  
-  #-----------------
-  
-  describe "#unpublishing?" do
-    let(:object) { build symbolize(described_class) }
-    
-    it "returns true if status_was == status live" do
-      object.status = ContentBase::STATUS_LIVE
-      object.unpublishing?.should be_false
-      object.save!
-      object.status = ContentBase::STATUS_PENDING
-      object.unpublishing?.should be_true
-    end
-    
-    it "returns false if status_was != status_live" do
-      object.status = ContentBase::STATUS_DRAFT
-      object.unpublishing?.should be_false
-      object.save!
-      object.status = ContentBase::STATUS_PENDING
-      object.unpublishing?.should be_false
-    end
-  end
-  
-  #-----------------
-  
+shared_examples_for "set published at callback" do  
   describe "#should_set_published_at_to_now?" do
     let(:object) { build symbolize(described_class) }
     
@@ -194,7 +142,7 @@ shared_examples_for "set published at callback" do
   #-----------------
   
   describe "#set_published_at_to_nil" do
-    let(:object) { build symbolize(described_class), :published }
+    let(:object) { build symbolize(described_class), published_at: Time.now - 1.hour }
     
     context "should_set_published_at_to_nil? is true" do
       before :each do
@@ -220,7 +168,4 @@ shared_examples_for "set published at callback" do
       end
     end
   end
-  
-  #-----------------
-  
 end

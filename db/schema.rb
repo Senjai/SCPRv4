@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022224507) do
+ActiveRecord::Schema.define(:version => 20121023055404) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
   add_index "admin_user_permissions", ["permission_id"], :name => "index_admin_user_permissions_on_permission_id"
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
-    t.integer "django_content_type_id",                :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                            :null => false
     t.string  "locations",              :limit => 200
     t.string  "asc_types",              :limit => 200
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
   add_index "ascertainment_ascertainmentrecord", ["django_content_type_id"], :name => "ascertainment_ascertainmentrecord_e4470c6e"
 
   create_table "assethost_contentasset", :force => true do |t|
-    t.integer "django_content_type_id",                                       :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                                                   :null => false
     t.integer "asset_order",                                  :default => 99, :null => false
     t.integer "asset_id",                                                     :null => false
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
-    t.integer  "django_content_type_id",               :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                           :null => false
     t.datetime "fire_at"
     t.string   "content_type",           :limit => 20
@@ -265,7 +265,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
   add_index "contentbase_contentalarm", ["django_content_type_id"], :name => "contentbase_contentalarm_e4470c6e"
 
   create_table "contentbase_contentbyline", :force => true do |t|
-    t.integer  "django_content_type_id",                              :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                                          :null => false
     t.integer  "user_id"
     t.string   "name",                   :limit => 50,                :null => false
@@ -283,7 +283,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
 
   create_table "contentbase_contentcategory", :force => true do |t|
     t.integer  "category_id",                          :null => false
-    t.integer  "django_content_type_id",               :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                           :null => false
     t.string   "content_type",           :limit => 20
     t.datetime "created_at",                           :null => false
@@ -311,7 +311,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
 
   create_table "contentbase_featuredcomment", :force => true do |t|
     t.integer  "bucket_id",                                                   :null => false
-    t.integer  "django_content_type_id",                                      :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                                                  :null => false
     t.integer  "status",                                       :default => 0, :null => false
     t.datetime "published_at"
@@ -341,7 +341,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
 
   create_table "contentbase_misseditcontent", :force => true do |t|
     t.integer  "bucket_id",                                            :null => false
-    t.integer  "django_content_type_id",                               :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                                           :null => false
     t.integer  "position",                             :default => 99, :null => false
     t.string   "content_type",           :limit => 20
@@ -507,7 +507,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
 
   create_table "layout_homepagecontent", :force => true do |t|
     t.integer "homepage_id",                                          :null => false
-    t.integer "django_content_type_id",                               :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                                           :null => false
     t.integer "position",                             :default => 99, :null => false
     t.string  "content_type",           :limit => 20
@@ -544,7 +544,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
     t.integer  "duration"
     t.string   "enco_number"
     t.date     "enco_date"
-    t.integer  "django_content_type_id",                                      :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                                                  :null => false
     t.text     "description",            :limit => 2147483647
     t.string   "byline"
@@ -593,7 +593,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
     t.string  "link",                   :limit => 300,                 :null => false
     t.string  "link_type",              :limit => 10,                  :null => false
     t.string  "sort_order",             :limit => 2,   :default => "", :null => false
-    t.integer "django_content_type_id",                                :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                                            :null => false
     t.string  "content_type",           :limit => 20
   end
@@ -605,9 +605,9 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
   add_index "media_link", ["sort_order"], :name => "index_media_link_on_sort_order"
 
   create_table "media_related", :force => true do |t|
-    t.integer "django_content_type_id",                                  :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                                              :null => false
-    t.integer "rel_django_content_type_id",                              :null => false
+    t.integer "rel_django_content_type_id"
     t.integer "related_id",                                              :null => false
     t.integer "flag",                                     :default => 0, :null => false
     t.string  "content_type",               :limit => 20
@@ -894,7 +894,7 @@ ActiveRecord::Schema.define(:version => 20121022224507) do
   create_table "taggit_taggeditem", :force => true do |t|
     t.integer "tag_id",                                                        :null => false
     t.integer "content_id",                                                    :null => false
-    t.integer "django_content_type_id",                                        :null => false
+    t.integer "django_content_type_id"
     t.string  "content_type",           :limit => 20, :default => "BlogEntry"
   end
 

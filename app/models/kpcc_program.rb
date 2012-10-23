@@ -1,4 +1,6 @@
 class KpccProgram < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  
   self.table_name = 'programs_kpccprogram'
   ROUTE_KEY       = "program"
   
@@ -31,8 +33,8 @@ class KpccProgram < ActiveRecord::Base
   
   # -------------------
   # Validations
+  validates :title, :air_status, presence: true
   validates :slug, uniqueness: true
-  validates :title, :slug, :air_status, presence: true
   
   # -------------------
   # Associations

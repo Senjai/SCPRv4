@@ -4,9 +4,8 @@
 module AdminResource
   module List
     DEFAULTS = {
-      order:            "id desc",
-      per_page:         25,
-      excluded_columns: ["body"]
+      :order    => "id desc",
+      :per_page => 25,
     }
   end
 end
