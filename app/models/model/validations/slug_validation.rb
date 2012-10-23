@@ -13,9 +13,9 @@ module Model
       included do
         validates :slug,
           presence: true, # Mostly just for tests
-          format: { with: Validations::DEFAULTS[:slug_format] },
+          format: { with: Validations::DEFAULTS[:slug_format], message: "Only letters, numbers, underscores, and hyphens allowed" },
           length: { maximum: 50 },
-          if: :should_validate?
+          if: :should_validate?            
       end
     end
   end

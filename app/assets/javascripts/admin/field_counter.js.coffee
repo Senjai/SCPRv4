@@ -32,7 +32,7 @@ class scpr.FieldCounter
         outOfRangeClass: "alert alert-warning"
         counterClass:    "counter-notify"
         counterWrapper:  ".controls"             # The element to which the counter will be prepended
-        counterStyle:    "padding: 0 0 0 5px; margin: 0 0 2px 0;"
+        counterStyle:    "padding: 3px; margin: 0 0 2px 0;"
         
     constructor: (@el, options={}) ->
         @options = _.defaults options, @DefaultOptions

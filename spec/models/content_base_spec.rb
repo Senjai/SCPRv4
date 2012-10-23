@@ -150,7 +150,6 @@ ContentBase.content_classes.each do |c|
     #-----------------
     
     describe "associations" do
-      it { should have_one(:alarm).class_name("ContentAlarm").dependent(:destroy) }
       it { should have_many(:bylines).class_name("ContentByline").dependent(:destroy) }
       it { should have_many :brels }
       it { should have_many :frels }
@@ -172,24 +171,6 @@ ContentBase.content_classes.each do |c|
         published   = create_list symbolize(c), 3, :published
         unpublished = create_list symbolize(c), 2, :draft
         c.published.all.sort.should eq published.sort
-      end
-    end
-    
-    #-----------------
-    
-    describe "#link_path" do      
-      it "accepts an options hash" do
-        object = create symbolize(c)
-        lambda { object.link_path(anchor: "comments") }.should_not raise_error
-      end
-
-      it "merges in an options hash unless it's a ContentShell" do
-        object = create symbolize(c)
-        if c == ContentShell
-          object.link_path(anchor: "comments").should_not match "#comments"
-        else  
-          object.link_path(anchor: "comments").should match "#comments"
-        end
       end
     end
     

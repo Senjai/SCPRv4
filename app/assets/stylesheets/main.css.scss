@@ -115,7 +115,7 @@ body {
         &.lead-right {
             // Make the first headline bigger in lead-right scheme
             .offleads .span8:first-child .offlead h3.story-headline { @include font-shorthand(bold, 28px, 26px); }
-            .lead h1 { @include font-shorthand(600, 24px); }
+            .lead h1 { @include font-shorthand(600, 24px, 24px); }
         }
     }
 }

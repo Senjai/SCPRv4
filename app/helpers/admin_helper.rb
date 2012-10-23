@@ -9,7 +9,7 @@ module AdminHelper
   end
   
   # Render the block inside of the fieldset template
-  def form_block(title, &block)
+  def form_block(title=nil, &block)
     render "/admin/shared/form_block", title: title, body: capture(&block)
   end
   

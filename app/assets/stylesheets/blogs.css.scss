@@ -113,6 +113,12 @@
             width:120px;
             height:30px;
         }
+		&.patt-morrison a {
+            @include hide-text();
+            background-image:url(image_path("blogs/pattmorrison_sm.png"));
+            width:160px;
+            height:27px;
+        }
     }
     
     &.large {
@@ -146,6 +152,12 @@
             background-image:url(image_path("blogs/latest_lg.png"));
             width:160px;
             height:46px;
+        }
+		&.patt-morrison a {
+            @include hide-text();
+            background-image:url(image_path("blogs/pattmorrison_lg.png"));
+            width:210px;
+            height:35px;
         }
     }
 }

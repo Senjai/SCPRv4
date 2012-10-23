@@ -33,7 +33,8 @@ AdminResource::Config.configure do |config|
     "Promotion", 
     "AdminUser", 
     "Bio",
-    "Permission"
+    "Permission",
+    "DataPoint"
   ]
     
     
@@ -94,7 +95,8 @@ AdminResource::Config.configure do |config|
       icon: "icon-bookmark",
       models: [
         "Flatpage",
-        "Promotion"
+        "Promotion",
+        "DataPoint"
 #        "PressRelease"
       ]
     },
@@ -108,5 +110,7 @@ AdminResource::Config.configure do |config|
     }
   }
   
-  config.title_attributes = [:name, :short_headline, :title, :headline]
+  config.title_attributes      = [:name, :short_headline, :title, :headline]
+  config.excluded_form_fields  = ["django_content_type_id"]
+  config.excluded_list_columns = ["body", "django_content_type_id"]
 end

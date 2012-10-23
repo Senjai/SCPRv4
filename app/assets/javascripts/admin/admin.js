@@ -6,7 +6,6 @@
 
 //= require spin.js
 //= require moment
-// require moment-strftime
 //= require date
 //= require bootstrap-datepicker
 

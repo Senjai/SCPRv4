@@ -1,4 +1,6 @@
 class OtherProgram < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  
   self.table_name =  'programs_otherprogram'  
   has_secretary
 
@@ -17,6 +19,7 @@ class OtherProgram < ActiveRecord::Base
     end
   end
 
+
   # -------------------
   # Associations
   has_many :schedules
@@ -24,9 +27,10 @@ class OtherProgram < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates :title, :slug, :air_status, presence: true
+  validates :title, :air_status, presence: true
+  validates :slug, uniqueness: true
+  
   validate :rss_or_podcast_present
-    
   def rss_or_podcast_present
     if self.podcast_url.blank? && self.rss_url.blank?
       errors.add(:base, "Must specify either a Podcast url or an RSS url")
@@ -34,6 +38,10 @@ class OtherProgram < ActiveRecord::Base
       errors.add(:rss_url, "")
     end
   end
+
+  # Temporary
+  validates :podcast_url, presence: true, if: -> { self.rss_url.blank? }
+  validates :rss_url, presence: true, if: -> { self.podcast_url.blank? }
   
   
   # -------------------

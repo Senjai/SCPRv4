@@ -162,7 +162,14 @@ module ApplicationHelper
   def render_byline(content,links = true)
     if !content || !content.respond_to?(:sorted_bylines)
       return ""
-    end    
+    end
+    
+    key = "byline:#{content.cache_key}:#{links ? "links" : "text"}"
+    
+    # Check if we have a cache
+    if cached = Rails.cache.fetch(key)
+      return cached
+    end
     
     authors = content.sorted_bylines
         
@@ -196,17 +203,20 @@ module ApplicationHelper
     
     if byels.length > 0
       if authors[0].length == 0 and authors[1].length == 0
-        return byels.join(" | ").html_safe
+        byline = byels.join(" | ").html_safe
       else
-        return ("By " + [names.join(" with "), byels.join(" | ")].join(" | ")).html_safe
+        byline = ("By " + [names.join(" with "), byels.join(" | ")].join(" | ")).html_safe
       end
     else
       if names.any?
-        return ("By " + names.join(" with ")).html_safe
+        byline = ("By " + names.join(" with ")).html_safe
       else
-        return ""
+        byline = ""
       end
     end
+    
+    key = Rails.cache.write(key, byline)
+    byline
   end
   
   #----------

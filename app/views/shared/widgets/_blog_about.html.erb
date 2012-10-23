@@ -38,10 +38,10 @@
 </div>
 
 
-<% if @authors.present? %>
+<% if @blog.authors.present? %>
 <div class="blog-about widget">
-  <h6>Blog Host<%="s" if @authors.length > 1 %></h6>
-  <% @authors.each do |author| %>
+  <h6>Blog Host<%="s" if @blog.authors.length > 1 %></h6>
+  <% @blog.authors.each do |author| %>
     <div class="host">
       <figure class="clearfix">
         <% if author.headshot.present? %>

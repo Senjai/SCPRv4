@@ -36,7 +36,7 @@ class AdminUser < ActiveRecord::Base
   # ----------------
   # Scopes
   default_scope { includes(:permissions) }
-  scope :active, where(:is_active => true)
+  scope :active, where(is_active: true)
 
 
   # ----------------

@@ -1,22 +1,64 @@
 #= require scprbase
 
-class scpr.Asset
-    assetTemplate: JST['admin/templates/asset']
-        
-    constructor: (attributes) ->
-        _(_.keys(attributes)).each (key) =>
-            @[key] = attributes[key]
-            
-    render: (el, i) ->
-        el.append @assetTemplate(asset: @, i: i)
+##
+# scpr.AssetThumbnail
+#
+# An Asset thumbnail in the CMS
+#
+class scpr.AssetThumbnail
+    options:
+        assetTemplate: JST['admin/templates/asset']
+        fieldsPrefix:  "#asset-fields-"
+        destroyEl:     ".destroy-bool"
+        destroyField:  "input[type=checkbox][name*='[_destroy]']"
+        infoEl:       ".asset-info"
+        thumbnailEl:  ".thumbnail"
     
-    remove: ->
-        el = $("#asset-#{@id}")
-        el.fadeOut 'slow', ->
-            el.remove()
+    constructor: (@attributes) ->
+        # Setup attributes
+        _(_.keys(attributes)).each (key) =>
+            @[key] = @attributes[key]
+        
+        # Setup elements
+        @el           = $ @options.assetTemplate(asset: @)
+        @thumbnailEl  = $ @options.thumbnailEl, @el
+        @infoEl       = $ @options.infoEl, @el
+        
+        @fieldsEl     = $ "#{@options.fieldsPrefix}#{@content_asset_id}"
+        @destroyEl    = $ @options.destroyEl, @fieldsEl
+        @destroyField = $ @options.destroyField, @fieldsEl
+
+        # Move the hidden fields into the thumbnail,
+        # Just to keep everything together.
+        @thumbnailEl.append @fieldsEl.detach()
+        
+        # Register listener for Destroy button click
+        @destroyField.on
+            click: (event) =>
+                if $(event.target).is(':checked')
+                    @dim @infoEl
+                else
+                    @brighten @infoEl
+    
+    toJSON: ->
+        @attributes
+        
+    render: (el) ->
+        el.append @el
+        
+    dim: (el) ->
+        el.addClass("transparent")
+    
+    brighten: (el) ->
+        el.removeClass("transparent")
         
 #-----------------
 
+##
+# scpr.AssetManager
+# 
+# The block that contains the Asset Management tools
+#
 class scpr.AssetManager
     DefaultOptions:
         el:         "#asset_bucket .thumbnails"
@@ -28,43 +70,58 @@ class scpr.AssetManager
           order:   "asset_order"
         
         assethost:
-            token:  "droQQ2LcESKeGPzldQr7"
-            server: "http://ahhost.dev"
-            prefix: "/api"
-    
+            token:       "droQQ2LcESKeGPzldQr7"
+            server:      "http://ahhost-scpr.dev"
+            chooserPath: "/a/chooser"
+            
     constructor: (assets, options) ->
         @options   = _.defaults options||{}, @DefaultOptions
         @assethost = @options.assethost
         
-        @el     = $ @options.el
-        @assets = {}
+        @el         = $ @options.el
+        @collection = {}
         
-        # Load the assets into the collection
-        for asset in assets
-            @assets[asset.id] = new scpr.Asset(asset)
-
-        # Render the assets
-        i=0
-        for asset in _.pairs(@assets)
-            asset[1].render(@el, i)
-            i++
-            
-        # Listeners
-        $(@options.deleteBtn).on
+        @button = $("<button />", id: "asset-chooser").html("Popup Asset Chooser")
+        @el.prepend @button
+        
+        @button.on
             click: (event) =>
-                btn     = $(event.target).closest("a.btn")
-                assetId = btn.closest(".asset").attr("data-asset")
+                @_popup(event)
                 
-                if btn.hasClass("btn-danger")
-                    @assets[assetId].remove()
-                    clearTimeout @warnTimer
-                else
-                    @warn(btn)
-    
-    warn: (btn) ->
-        btn.removeClass("btn-inverse").addClass("btn-danger").html("Remove?")
-        @warnTimer = setTimeout (=> @resetBtn(btn)), 3000
-    
-    resetBtn: (btn) ->
-        btn.removeClass("btn-danger").addClass("btn-inverse").html("<i class='icon-white icon-remove'></i>")
-    
+        @_loadAssets assets
+        @_renderAssets()
+
+    #---------------
+    # Return an array of objects turned into JSON
+    toJSON: ->
+        collection = []
+        for asset in @collection
+            collection.push asset.toJSON
+        collection
+        
+    #---------------
+    # Render the assets into the asset bucket
+    _renderAssets: ->
+        for asset in _.pairs(@collection)
+            asset[1].render(@el)
+            
+    #---------------
+    # Load the asset thumbnails into @assets
+    _loadAssets: (assets) ->
+        for asset in assets
+            @collection[asset.content_asset_id] = new scpr.AssetThumbnail(asset)
+
+    _popup: (event) ->
+        event.originalEvent.stopPropagation()
+        event.originalEvent.preventDefault()
+        newwindow = window.open("#{@assethost.server}#{@assethost.chooserPath}", 'chooser', 'height=620,width=1000,scrollbars=1')
+        
+        # attach a listener to wait for the LOADED message
+        window.addEventListener "message", (event) => 
+            if event.data == "LOADED"
+                # dispatch our event with the asset data
+                newwindow.postMessage @toJSON(), @assethost.server
+        , false
+                            
+        return false
+        

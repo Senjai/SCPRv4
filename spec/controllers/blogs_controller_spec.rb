@@ -206,11 +206,6 @@ describe BlogsController do
         get action, @entry_attr
         assigns(:blog).should eq @blog
       end
-
-      it "assigns @authors for #{action}" do
-        get action, @entry_attr
-        assigns(:authors).should_not be_nil
-      end
       
       it "raises RecordNotFound if blog isn't found" do
         -> { 
@@ -223,12 +218,7 @@ describe BlogsController do
       it "does not assign @blog for #{action}" do
         get action, blog: @blog.slug
         assigns(:blog).should be_nil
-      end
-
-      it "does not assign @authors for #{action}" do
-        get action, blog: @blog.slug
-        assigns(:authors).should be_nil
-      end      
+      end     
     end
   end
   

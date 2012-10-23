@@ -93,13 +93,13 @@ class BlogEntry < ContentBase
       super
     end
   end
-    
+  
   def previous
-    self.class.published.first(conditions: ["published_at < ? and blog_id = ?", self.published_at, self.blog_id], limit: 1, order: "published_at desc")
+    self.class.published.where("published_at < ? and blog_id = ?", self.published_at, self.blog_id).first
   end
 
   def next
-    self.class.published.first(conditions: ["published_at > ? and blog_id = ?", self.published_at, self.blog_id], limit: 1, order: "published_at asc")
+    self.class.published.where("published_at > ? and blog_id = ?", self.published_at, self.blog_id).first
   end
   
   #----------

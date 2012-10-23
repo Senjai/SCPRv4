@@ -3,16 +3,11 @@
 #
 module AdminResource
   class Admin
-    
-    DEFAULTS = {
-      excluded_fields:  ["id", "created_at", "updated_at"]
-    }
-    
     attr_accessor :model
     attr_reader   :list
     
-    def initialize(class_name)
-      @model = class_name
+    def initialize(klass)
+      @model = klass
       @list  = List::Base.new
     end
     

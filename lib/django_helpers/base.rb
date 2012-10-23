@@ -2,8 +2,8 @@ module DjangoHelpers
   module Base
     def map_content_type_for_django
       include InstanceMethods
-      default_scope where("content_type is not null")
-      before_save :set_django_content_type_id, on: :create, if: -> { self.django_content_type_id.blank? }
+      default_scope { where("content_type is not null") }
+      before_save :set_django_content_type_id, if: -> { self.content_type_changed? }
     end
 
     module InstanceMethods

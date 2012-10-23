@@ -1,6 +1,11 @@
 class HomeController < ApplicationController  
   layout "homepage"
   
+  # Just for development purposes
+  # Pass ?regenerate to the URL to regenerate the homepage category blocks
+  # Only works in development
+  before_filter :generate_homepage, only: :index, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
+  
   def index
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_now
@@ -91,5 +96,10 @@ class HomeController < ApplicationController
   class << self
     include NewRelic::Agent::Instrumentation::ControllerInstrumentation
     add_transaction_tracer :_cache_homepage, :category => :task
+  end
+  
+  protected
+  def generate_homepage
+    self.class._cache_homepage
   end
 end

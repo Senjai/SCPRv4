@@ -1,7 +1,0 @@
-<ol>
-  <% for c in content[0..4] %>
-  <li>
-    <a href="<%= c[1].link_path %>" class="track-event" data-ga-category="Popular Box" data-ga-action="Most Viewed" data-ga-label="<%= c[1].obj_key %> :: <%= j c[1].headline %>"><%= c[1].headline %></a>
-  </li>
-  <% end %>
-</ol>

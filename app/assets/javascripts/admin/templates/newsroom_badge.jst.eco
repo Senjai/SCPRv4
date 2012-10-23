@@ -1,14 +1,12 @@
-<li class="user-badge" id="user-<%=@user.id%>">
-	<div class="circle badge-mark" style="background-color:<%=@user.color%>"></div>
-	<% if @user.headshot?: %>
-		<img src="<%=@user.headshot %>" class="headshot" />
-	<% end %>
-	
-	<h3><%= @user.name %></h3>
-	
-	<% if @record?: %>
-		<p class="text-muted"><small>Currently editing <a href="<%=@record.edit_path%>"><%=@record.to_title%></a> (<%=@record.obj_key%>)</small></p>
-	<% end %>
-	
-	<br class="clearfix" />
+<li class="user-badge clearfix" id="user-<%=@user.id%>">
+  <div class="circle badge-mark" style="background-color:<%=@user.color%>"></div>
+  <% if @user.headshot?: %>
+    <img src="<%=@user.headshot %>" class="headshot" />
+  <% end %>
+  
+  <h5><%= @user.name %></h5>
+  
+  <% if @record? and @room.type isnt "Active": %>
+    <small class="muted">Currently editing <a href="<%=@record.edit_path%>"><%=@record.to_title%></a> (<%=@record.obj_key%>)</small>
+  <% end %>  
 </li>

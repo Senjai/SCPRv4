@@ -16,7 +16,7 @@ class BlogCategory < ActiveRecord::Base
       
   #--------------
   # Association
-  belongs_to :blog
+  belongs_to :blog, touch: true
   has_many :blog_entry_blog_categories
   has_many :blog_entries, through: :blog_entry_blog_categories, dependent: :destroy
   

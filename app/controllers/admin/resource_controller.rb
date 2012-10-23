@@ -20,7 +20,7 @@ class Admin::ResourceController < Admin::BaseController
     
     # Temporary - This should be moved into AdminResource
     if @list.columns.empty?
-      default_fields = resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields] - AdminResource::List::DEFAULTS[:excluded_columns]
+      default_fields = resource_class.column_names - AdminResource.config.excluded_form_fields - AdminResource.config.excluded_list_columns
       default_fields.each do |field|
         resource_class.admin.list.column field
       end
@@ -134,6 +134,6 @@ class Admin::ResourceController < Admin::BaseController
   
   def set_fields
     # Temporary - This should be moved into AdminResource
-    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource::Admin::DEFAULTS[:excluded_fields]
+    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource.config.excluded_form_fields
   end
 end

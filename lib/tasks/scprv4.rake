@@ -22,12 +22,24 @@ namespace :scprv4 do
     Audio.enqueue_all
     puts "Finished."
   end
+
+  #----------
+  
+  desc "Cache everything"
+  task :cache => [:environment] do
+    Rake::Task["scprv4:cache:remote_blogs"].invoke
+    Rake::Task["scprv4:cache:programs"].invoke
+    Rake::Task["scprv4:cache:homepage"].invoke
+    Rake::Task["scprv4:cache:most_viewed"].invoke
+    Rake::Task["scprv4:cache:most_commented"].invoke
+    Rake::Task["scprv4:cache:twitter"].invoke
+  end
   
   #----------
   
   namespace :cache do
     desc "Cache Remote Blog Entries"
-    task :remote_blogs => :environment do
+    task :remote_blogs => [:environment] do
       puts "Caching remote blogs..."
       cached = Blog.cache_remote_entries
       puts "Finished.\n"
@@ -55,7 +67,7 @@ namespace :scprv4 do
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Caching most commented..."
-      task = CacheTasks::MostCommented.new("kpcc", "3d")
+      task = CacheTasks::MostCommented.new("kpcc", "3d", API_KEYS['disqus']['api_key'], 5)
       task.verbose = true
       task.run
       puts "Finished.\n"
@@ -87,9 +99,6 @@ namespace :scprv4 do
       HomeController._cache_homepage(nil)
       puts "Finished.\n"
     end
-    
-    desc "Cache everything"
-    task :all => [:environment, :remote_blogs, :programs, :homepage, :most_viewed, :most_commented, :twitter]
   end
   
   #----------

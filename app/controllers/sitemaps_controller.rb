@@ -70,7 +70,7 @@ class SitemapsController < ApplicationController
   def bios
     @changefreq = "daily"
     @priority   = "0.4"
-    @content    = Bio.where(is_public: true).order("#{AdminUser.table_name}.last_name")
+    @content    = Bio.where(is_public: true).order("last_name")
     render 'sitemap', formats: :xml
   end
 end
