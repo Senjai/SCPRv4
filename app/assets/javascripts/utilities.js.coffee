@@ -64,6 +64,46 @@ class scpr.adSizer
 
 #----------
 
+class scpr.TweetRotator
+    defaults:
+        el:          "#election-tweets"
+        fadeSpeed:   '400' # milliseconds
+        rotateSpeed: 15 # seconds
+        activeClass: 'active'
+        
+    constructor: (options={}) ->
+        @options = _.defaults options, @defaults
+        
+        @el     = $(@options.el)
+        
+        @_firstChild = $(@el.children()[0])
+        @active      = @_firstChild
+        
+        setInterval =>
+            @rotate()
+        , @options.rotateSpeed * 1000
+        
+    rotate: ->
+        next = @getNext()
+        @active.fadeOut @options.fadeSpeed, =>
+            @deactivate @active
+            @activate next
+    
+    activate: (el) ->
+        el.fadeIn @options.fadeSpeed, =>
+            el.addClass(@options.activeClass)
+            @active = el
+    
+    deactivate: (el) ->
+        el.removeClass(@options.activeClass)
+        
+    getNext: ->
+        next = @active.next()
+        if next.length then next else @_firstChild
+        
+        
+#----------
+
 class scpr.SocialTools
     DefaultOptions:
         fbfinder:   ".social_fb"
@@ -143,7 +183,7 @@ class scpr.SocialTools
             if key = $(evt.target).attr("data-key")
                 emurl = "/content/share?obj_key=#{key}"
                 window.open emurl, 'pop_up','height=650,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'
-
+                
     #----------
     
     _getDisqusCounts: ->

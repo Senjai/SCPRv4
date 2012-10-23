@@ -1,9 +1,9 @@
 .hero-election {
-    @include font-heading();
+	@include font-heading();
 	font-size:13px;
 	margin-bottom:22px;
 	text-shadow:0 1px 0 rgba(0,0,0,0.67);
-    .election-header {
+	.election-header {
 		background:#134b94 url(image_path('specials/election/bg-header.jpg')) no-repeat 0 0;
 		border-bottom:1px solid #115695;
 		position:relative;
@@ -42,17 +42,21 @@
 			padding-left:26px;
 			text-transform:uppercase;
 		}
-		ul {
+		ul {	
 			margin:0;
 			li {
 				display:none;
 				list-style:none;
+				color:#6bc6f2;
 				&.active {
 					display:block;
 				}
-				a {
-					color:#6bc6f2;
-					text-shadow:none;
+				a.twitter-icon {
+					display: inline-block;
+					width: 18px;
+					margin-left: 5px;
+					background: url(image_path('icons/share-twitter.png')) no-repeat;
+					&:hover { text-decoration: none; }
 				}
 			}
 		}
