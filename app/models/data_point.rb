@@ -52,5 +52,4 @@ class DataPoint < ActiveRecord::Base
       hash
     end
   end
-  
 end
