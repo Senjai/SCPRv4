@@ -5,12 +5,15 @@ class HomeController < ApplicationController
   # Pass ?regenerate to the URL to regenerate the homepage category blocks
   # Only works in development
   before_filter :generate_homepage, only: :index, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
+  before_filter :fetch_data_points, only: [:index, :election_results]
   
   def index
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_now
   end
 
+  def election_results
+  end
   
   #----------
   
@@ -101,5 +104,11 @@ class HomeController < ApplicationController
   protected
   def generate_homepage
     self.class._cache_homepage
+  end
+  
+  def fetch_data_points
+    # For the election
+    @data = DataPoint.where(group: 'election')
+    @data_points = DataPoint.to_hash(@data)
   end
 end

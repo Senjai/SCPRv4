@@ -23,19 +23,13 @@ describe DataPoint do
     it "takes a collection and spits out a hash" do
       points = DataPoint.all
       hash   = DataPoint.to_hash(points)
-      hash[point1.data_key].should eq point1
-    end
-    
-    it "takes an alternate key_attributes" do
-      points = DataPoint.all
-      hash = DataPoint.to_hash(points, :id)
-      hash[point1.id].should eq point1
+      hash[point1.data_key].should eq point1.data
     end
     
     it "accepts an Array" do
       points = DataPoint.all.to_a
       hash = DataPoint.to_hash(points)
-      hash[point1.data_key].should eq point1
+      hash[point1.data_key].should eq point1.data
     end
   end
 end

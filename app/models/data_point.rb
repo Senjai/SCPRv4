@@ -22,7 +22,7 @@ class DataPoint < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order    = "group"
+      order    = "group, data_key"
       per_page = :all
       
       column :group
@@ -46,9 +46,9 @@ class DataPoint < ActiveRecord::Base
   
   
   class << self
-    def to_hash(collection, key_attribute=:data_key)
+    def to_hash(collection)
       hash = {}
-      collection.each { |obj| hash[obj.send(key_attribute)] = obj }
+      collection.each { |obj| hash[obj.data_key] = obj.data }
       hash
     end
   end
