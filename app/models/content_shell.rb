@@ -10,9 +10,7 @@ class ContentShell < ContentBase
   
   self.table_name =  "contentbase_contentshell"
   has_secretary
-  
-  ADMIN_PREFIX = "contentbase/contentshell"
-  
+    
   acts_as_content comments: false
   
   def self.content_key

@@ -27,6 +27,12 @@ module Model
         def published?
           self.status == ContentBase::STATUS_LIVE
         end
+        
+        #-----------------
+        
+        def status_text
+          ContentBase::STATUS_TEXT[ self.status ]
+        end
       end
     end
   end
