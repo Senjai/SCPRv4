@@ -180,16 +180,6 @@ class ContentBase < ActiveRecord::Base
 
   #----------
   
-  def slideshow?
-    if self.class::PRIMARY_ASSET_SCHEME
-      return self[ self.class::PRIMARY_ASSET_SCHEME ] == "slideshow" ? true : false
-    else
-      return false
-    end
-  end
-
-  #----------
-  
   def sorted_bylines
     authors = [ [],[],[] ]
   
