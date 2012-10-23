@@ -4,7 +4,7 @@ describe AdminResource::Administrate do
   describe "administrate" do
     it "yields the block with the Admin object" do
       Person.administrate do
-        self.should be_a AdminResource::Admin
+        self.class.should == AdminResource::Admin
       end
     end
     
