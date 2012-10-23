@@ -168,7 +168,7 @@ class ContentBase < ActiveRecord::Base
       :byline         => render_byline(self,false),
       :published_at   => self.published_at,
       :status         => self.status,
-      :admin_path     => self.django_admin_url
+      :admin_path     => self.django_edit_url
     }
   end
   
