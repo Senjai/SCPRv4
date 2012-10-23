@@ -34,7 +34,7 @@ class DataPoint < ActiveRecord::Base
   
   #--------------
   # Scopes
-
+  
   
   #--------------
   # Validation

@@ -591,7 +591,7 @@ end
 
 # DataPoint #########################################################
 factory :data_point do
-  data_key "president_percentage"
+  sequence(:data_key) { |i| "datapoint#{i}" }
 end
 
 end
