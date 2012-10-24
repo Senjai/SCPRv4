@@ -76,7 +76,7 @@ module CacheTasks
     #---------------
     
     def update_data
-      data_points = DataPoint.where(group: "election")
+      data_points = DataPoint.where(group_name: "election")
       data        = DataPoint.to_hash(data_points)
       
       # Now update the stuff
@@ -87,7 +87,7 @@ module CacheTasks
         # Don't override the data if the result is blank.
         if data_from_json.present?
           self.log "updating #{key} to #{data_from_json}"
-          data_point.update_attribute(:data, data_from_json)
+          data_point.update_attribute(:data_value, data_from_json)
           
           # touch it because Rails doesn't update timestamp if the data didn't change
           data_point.touch

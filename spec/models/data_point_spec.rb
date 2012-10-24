@@ -11,9 +11,9 @@ describe DataPoint do
   end
   
   describe "::to_hash" do
-    let(:point1) { create :data_point, data_key: "point1", description: "Point 1" }
-    let(:point2) { create :data_point, data_key: "point2", description: "Point 2" }
-    let(:point3) { create :data_point, data_key: "point3", description: "Point 3" }
+    let(:point1) { create :data_point, data_key: "point1", notes: "Point 1" }
+    let(:point2) { create :data_point, data_key: "point2", notes: "Point 2" }
+    let(:point3) { create :data_point, data_key: "point3", notes: "Point 3" }
     
     before :each do
       # Load the points
@@ -23,13 +23,13 @@ describe DataPoint do
     it "takes a collection and spits out a hash" do
       points = DataPoint.all
       hash   = DataPoint.to_hash(points)
-      hash[point1.data_key].to_s.should eq point1.data
+      hash[point1.data_key].to_s.should eq point1.data_value
     end
     
     it "accepts an Array" do
       points = DataPoint.all.to_a
       hash = DataPoint.to_hash(points)
-      hash[point1.data_key].to_s.should eq point1.data
+      hash[point1.data_key].to_s.should eq point1.data_value
     end
     
     it "creates a new DataPoint::Hashed object" do
@@ -41,21 +41,21 @@ describe DataPoint do
 end
 
 describe DataPoint::Hashed do
-  let(:point1) { create :data_point, data_key: "point1", description: "Point 1" }
-  let(:point2) { create :data_point, data_key: "point2", description: "Point 2" }
-  let(:point3) { create :data_point, data_key: "point3", description: "Point 3" }
+  let(:point1) { create :data_point, data_key: "point1", notes: "Point 1" }
+  let(:point2) { create :data_point, data_key: "point2", notes: "Point 2" }
+  let(:point3) { create :data_point, data_key: "point3", notes: "Point 3" }
   
   it "delegates data and data_key to the DataPoint" do
     hashed = DataPoint::Hashed.new(point1)
-    hashed.data.should eq point1.data
+    hashed.data_value.should eq point1.data_value
     hashed.data_key.should eq point1.data_key
   end
   
   describe "#to_s" do
     it "is the data" do
       hashed = DataPoint::Hashed.new(point1)
-      hashed.to_s.should eq hashed.data
-      hashed.to_s.should eq hashed.object.data
+      hashed.to_s.should eq hashed.data_value
+      hashed.to_s.should eq hashed.object.data_value
     end
   end
 end

@@ -119,7 +119,7 @@ class HomeController < ApplicationController
   
   def fetch_data_points
     # For the election
-    @data = DataPoint.where(group: 'election')
+    @data = DataPoint.where(group_name: 'election')
     @data_points = DataPoint.to_hash(@data)
   end
 end

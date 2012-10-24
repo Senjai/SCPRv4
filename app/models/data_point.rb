@@ -4,12 +4,12 @@
 # A terribly-named model for storing arbitrary data 
 # as key/value pairs. Like Redis but slower. :)
 # 
-# Group pairs with the "group" column. The group column
-# is just an arbitrary string and isn't tied to any other
-# models. This makes it possible to grab related data with 
-# only one query:
+# Group pairs with the "group_name" column. The group_name
+# column is just an arbitrary string and isn't tied to any 
+# other models. This makes it possible to grab related data 
+# with only one query:
 #
-#   @data_points = DataPoint.where(group: "election2012")
+#   @data_points = DataPoint.where(group_name: "election2012")
 #
 # A DataPoint should be added in production *before* anything
 # is deployed that relies on that key.
@@ -22,13 +22,13 @@ class DataPoint < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      list_order "'groupname, data_key'" # Need the extra quotes for MySQL group
+      list_order "group_name, data_key" # Need the extra quotes for MySQL group
       list_per_page :all
       
-      column :group
+      column :group_name
       column :data_key, linked: true
-      column :data
-      column :description
+      column :data_value
+      column :notes
       column :updated_at
     end
   end
@@ -46,6 +46,8 @@ class DataPoint < ActiveRecord::Base
   #--------------
   # Association
   
+
+  #--------------
   
   class << self
     def to_hash(collection)
@@ -54,9 +56,11 @@ class DataPoint < ActiveRecord::Base
       hash
     end
   end
+
+  #--------------
   
   class Hashed
-    delegate :data, :data_key, to: :@object
+    delegate :data_value, :data_key, to: :@object
     
     attr_accessor :object
     def initialize(object)
@@ -64,7 +68,7 @@ class DataPoint < ActiveRecord::Base
     end
     
     def to_s
-      @object.data
+      @object.data_value
     end
   end
 end
