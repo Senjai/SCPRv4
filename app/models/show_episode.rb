@@ -50,7 +50,7 @@ class ShowEpisode < ContentBase
     
   # -------------------
   # Scopes
-  scope :published, where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc")
+  scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc") }
   scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
 
 

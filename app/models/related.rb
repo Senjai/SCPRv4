@@ -22,10 +22,10 @@ class Related < ActiveRecord::Base
   }
 
   default_scope where("content_type is not null and related_type is not null")
-  scope :tiein,   where(flag:         FLAG_TIEIN)
-  scope :updates, where(flag:         FLAG_UPDATE)
-  scope :normal,  where(flag:         FLAG_NORMAL)
-  scope :notiein, where("flag != ?",  FLAG_TIEIN)
+  scope :tiein,   -> { where(flag:         FLAG_TIEIN) }
+  scope :updates, -> { where(flag:         FLAG_UPDATE) }
+  scope :normal,  -> { where(flag:         FLAG_NORMAL) }
+  scope :notiein, -> { where("flag != ?",  FLAG_TIEIN) }
   
   def self.sorted
     all().sort_by { |r| r.content.public_datetime }

@@ -13,7 +13,7 @@ class Bio < ActiveRecord::Base
   
   #--------------
   # Scopes    
-  scope :visible, where(is_public: true)
+  scope :visible, -> { where(is_public: true) }
 
   
   #--------------

@@ -20,8 +20,8 @@ class BreakingNewsAlert < ActiveRecord::Base
     "now"     => "Happening Now"
   }
   
-  scope :published, order("created_at desc").where(is_published: true)
-  scope :visible,   where(visible: true)
+  scope :published, -> { order("created_at desc").where(is_published: true) }
+  scope :visible,   -> { where(visible: true) }
   
   def break_type
     ALERT_TYPES[alert_type]

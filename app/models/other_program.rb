@@ -46,7 +46,7 @@ class OtherProgram < ActiveRecord::Base
   
   # -------------------
   # Scopes
-  scope :active, where(:air_status => ['onair','online'])
+  scope :active, -> { where(:air_status => ['onair','online']) }
   
   
   def display_segments

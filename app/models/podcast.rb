@@ -6,5 +6,5 @@ class Podcast < ActiveRecord::Base
   belongs_to :program, :class_name => "KpccProgram"
   belongs_to :category
   
-  scope :listed, where(:is_listed => true)
+  scope :listed, -> { where(:is_listed => true) }
 end

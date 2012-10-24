@@ -32,7 +32,7 @@ class FeaturedComment < ActiveRecord::Base
   
   #----------------
   # Scopes
-  scope :published, where(status: ContentBase::STATUS_LIVE).order("published_at desc")
+  scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("published_at desc") }
   
   
   #----------------

@@ -30,10 +30,10 @@ class PijQuery < ActiveRecord::Base
   
   #------------
   # Scopes  
-  scope :news,          where(query_type: "news")
-  scope :evergreen,     where(query_type: "evergreen")
-  scope :featured,      where(is_featured: true)
-  scope :not_featured,  where(is_featured: false)
+  scope :news,          -> { where(query_type: "news") }
+  scope :evergreen,     -> { where(query_type: "evergreen") }
+  scope :featured,      -> { where(is_featured: true) }
+  scope :not_featured,  -> { where(is_featured: false) }
 
   scope :visible, -> { where(
     'is_active = :is_active and published_at < :time and ' \
