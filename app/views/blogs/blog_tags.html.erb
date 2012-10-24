@@ -1,4 +1,4 @@
-<% @PAGE_TITLE = "Tags for #{@blog.name}" %>
+<% page_title "Tags for #{@blog.name}" %>
 
 <h1>Tags</h1>
 
@@ -7,8 +7,8 @@
     <h3>Recent Tags</h3>
     
     <ul>
-      <% for t in @recent.first(25) %>
-        <li><%= link_to t.name, blog_entries_tagged_path(@blog.slug,t.slug) %></li>
+      <% @recent.first(25).each do |tag| %>
+        <li><%= link_to tag.name, blog_entries_tagged_path(@blog.slug,tag.slug) %></li>
       <% end %>
     </ul>
   </div>

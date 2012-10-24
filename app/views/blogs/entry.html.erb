@@ -3,7 +3,7 @@
 <% @OG_TYPE = "blog" %>
 
 <%= cache ["show", "v1", @entry] do %>
-  <%= render "blogs/entry", entry: @entry, blog: @blog %>
+  <%= render "/blogs/entry", entry: @entry, blog: @blog %>
 <% end %>
 
 <div class="fold" id="fold">
