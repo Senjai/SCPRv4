@@ -5,14 +5,14 @@ class HomeController < ApplicationController
   # Pass ?regenerate to the URL to regenerate the homepage category blocks
   # Only works in development
   before_filter :generate_homepage, only: :index, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
-  before_filter :fetch_data_points, only: [:index, :election]
+  before_filter :fetch_data_points, only: [:index, :elections]
   
   def index
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_now
   end
 
-  def election
+  def elections
     @category = Category.find_by_slug('politics')
     
     @content = ThinkingSphinx.search('',

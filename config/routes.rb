@@ -227,7 +227,8 @@ Scprv4::Application.routes.draw do
   match '/'                                => "home#index",             as: :home
   match '/about'                           => "home#about_us",          as: :about
   match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
-  match '/election'                        => 'home#election', as: :election
+  
+  # match '/elections' => 'home#elections'
   
   # catch error routes
   match '/404', to: 'home#not_found'

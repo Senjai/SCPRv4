@@ -53,7 +53,7 @@ class BlogEntry < ContentBase
   
   # ------------------
   # Scopes
-  default_scope includes(:bylines)
+
 
   # ------------------
   

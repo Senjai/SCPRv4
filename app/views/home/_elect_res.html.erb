@@ -3,12 +3,12 @@
 		<%= content_cache("home_leads") do %>
 			<% register_content("layout/homepage") %>
 			<div class="span24">
-				<%= render_content @homepage.content[0], "lead8" if @homepage %>
+				<%= render_content homepage.content[0], "lead8" if homepage %>
 			</div>
 	</div>
 	<div class="row-fluid">
 			<div class="span24 offleads split">
-				<%= render_content @homepage.content[1..-1], "offlead_asset" if @homepage %>
+				<%= render_content homepage.content[1..-1], "offlead_asset" if homepage %>
 			</div>
 		<% end %>
 	</div>
