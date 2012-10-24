@@ -18,7 +18,7 @@ Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|  
-  config.use_transactional_fixtures                 = false
+  config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = true
 
   config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }  
@@ -35,7 +35,7 @@ RSpec.configure do |config|
   config.include AuthenticationHelper,  example_group: { file_path: %r{spec/requests} }  
   
   config.before :suite do
-    DatabaseCleaner.clean_with :truncation
+    DatabaseCleaner.clean_with :truncation, { except: STATIC_TABLES }
     load "#{Rails.root}/db/seeds.rb"
     DatabaseCleaner.strategy = :transaction
     FactoryGirl.reload
@@ -45,13 +45,17 @@ RSpec.configure do |config|
     ThinkingSphinx::Test.start_with_autostop
   end
   
-  config.before :each do
-    FakeWeb.load_callback
-    DatabaseCleaner.start
-    ActionMailer::Base.deliveries = []
+  config.before type: :request do
+    DatabaseCleaner.strategy = :truncation
   end
   
-  config.after :each do
+  config.before do
+    FakeWeb.load_callback
+    DatabaseCleaner.start
+    ActionMailer::Base.deliveries.clear
+  end
+    
+  config.after do
     DatabaseCleaner.clean
     Rails.cache.clear
   end

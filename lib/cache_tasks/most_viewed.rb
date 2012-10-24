@@ -35,9 +35,7 @@ module CacheTasks
     end
 
     #---------------
-    
-    attr_accessor :verbose
-    
+        
     def initialize(client_id, client_secret, token, refresh_token, options={})
       @client_id     = client_id
       @client_secret = client_secret

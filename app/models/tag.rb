@@ -5,9 +5,10 @@ class Tag < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order = "name"
-      column "name"
-      column "slug"
+      list_order "name"
+      
+      column :name
+      column :slug
     end
   end
   

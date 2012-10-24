@@ -10,9 +10,7 @@ class ContentShell < ContentBase
   
   self.table_name =  "contentbase_contentshell"
   has_secretary
-  
-  ADMIN_PREFIX = "contentbase/contentshell"
-  
+    
   acts_as_content comments: false
   
   def self.content_key
@@ -32,7 +30,8 @@ class ContentShell < ContentBase
   # Administration
   administrate do
     define_list do
-      order = "published_at desc"
+      list_order "published_at desc"
+      
       column "headline"
       column "site"
       column "bylines"

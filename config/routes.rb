@@ -112,8 +112,9 @@ Scprv4::Application.routes.draw do
       resources :homepages
       resources :content_shells
       resources :featured_comments
+      resources :data_points
       ## -- END AdminResource --  ##
-      
+            
       get "/activity"                                        => "versions#activity",  as: :activity
       get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
       get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
@@ -226,6 +227,8 @@ Scprv4::Application.routes.draw do
   match '/'                                => "home#index",             as: :home
   match '/about'                           => "home#about_us",          as: :about
   match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
+  
+  # match '/elections' => 'home#elections'
   
   # catch error routes
   match '/404', to: 'home#not_found'

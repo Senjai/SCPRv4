@@ -7,7 +7,8 @@ class BlogCategory < ActiveRecord::Base
 
   administrate do
     define_list do
-      per_page = :all
+      list_per_page :all
+      
       column :blog
       column :title
       column :slug

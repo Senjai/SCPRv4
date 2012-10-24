@@ -7,8 +7,8 @@ class Flatpage < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order    = "url"
-      per_page = 100
+      list_order "url"
+      list_per_page 100
       
       column "url"
       column "is_public", header: "Public?"

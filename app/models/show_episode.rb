@@ -18,12 +18,13 @@ class ShowEpisode < ContentBase
   # Administration
   administrate do
     define_list do
-      order = "published_at desc"
-      column "headline"
-      column "show"
-      column "air_date", helper: :display_date
-      column "status"
-      column "published_at"
+      list_order "published_at desc"
+      
+      column :headline
+      column :show
+      column :air_date, helper: :display_date
+      column :status
+      column :published_at
     end
   end
   

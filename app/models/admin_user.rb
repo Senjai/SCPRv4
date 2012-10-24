@@ -5,8 +5,8 @@ class AdminUser < ActiveRecord::Base
   
   administrate do
     define_list do
-      per_page = :all
-      order    = "last_name"
+      list_per_page :all
+      list_order "last_name"
       
       column :username
       column :email
@@ -36,7 +36,7 @@ class AdminUser < ActiveRecord::Base
   # ----------------
   # Scopes
   default_scope { includes(:permissions) }
-  scope :active, where(:is_active => true)
+  scope :active, where(is_active: true)
 
 
   # ----------------

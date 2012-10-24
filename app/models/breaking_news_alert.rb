@@ -5,7 +5,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   
   administrate do
     define_list do
-      order = "created_at desc"
+      list_order "created_at desc"
       column :headline
       column :alert_type, helper: ->(alert) { BreakingNewsAlert::ALERT_TYPES[alert.alert_type] }
       column :visible

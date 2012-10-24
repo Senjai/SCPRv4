@@ -7,12 +7,30 @@ module AdminResource
       attr_accessor :order # Must be a string since it gets passed directly to ActiveRecord
       attr_reader :columns, :per_page
       
-      def initialize(attributes={})
-        @columns      = []
-        @order        = attributes[:order]    || List::DEFAULTS[:order]
+      def initialize(attributes = {})
+        @columns  = []
+        self.order    = attributes[:order] || List::DEFAULTS[:order]
         self.per_page = attributes[:per_page] || List::DEFAULTS[:per_page]
       end
-
+      
+      #---------------
+      
+      def list_order(val)
+        self.order = val
+      end
+      
+      #---------------
+      # Return nil if per_page is set to :all
+      # So that pagination will not paginate
+      def list_per_page(val)
+        self.per_page = val
+        
+      end
+      
+      def per_page=(val)
+        @per_page = val == :all ? nil : val.to_i
+      end
+      
       #---------------
       # This is the method that should be used to add columns
       # to a list, rather than directly creating a new Column
@@ -41,15 +59,6 @@ module AdminResource
       # This is useful for determining if we need to inject a link into the list
       def linked_columns
         @linked_columns ||= self.columns.select { |c| c.linked? }
-      end
-    
-      #---------------
-      
-      # per_page
-      # Return nil if per_page is set to :all
-      # So that pagination will not paginate
-      def per_page=(val)
-        @per_page = val == :all ? nil : val.to_i
       end
     end
   end

@@ -9,8 +9,8 @@ class Blog < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order    = "is_active desc, name"
-      per_page = :all
+      list_order "is_active desc, name"
+      list_per_page :all
       
       column :name
       column :slug

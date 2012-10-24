@@ -3,7 +3,7 @@
 ##
 # scpr.AssetThumbnail
 #
-# One Asset thumbnail in the CMS
+# An Asset thumbnail in the CMS
 #
 class scpr.AssetThumbnail
     options:
@@ -14,10 +14,10 @@ class scpr.AssetThumbnail
         infoEl:       ".asset-info"
         thumbnailEl:  ".thumbnail"
     
-    constructor: (attributes) ->
+    constructor: (@attributes) ->
         # Setup attributes
         _(_.keys(attributes)).each (key) =>
-            @[key] = attributes[key]
+            @[key] = @attributes[key]
         
         # Setup elements
         @el           = $ @options.assetTemplate(asset: @)
@@ -39,6 +39,9 @@ class scpr.AssetThumbnail
                     @dim @infoEl
                 else
                     @brighten @infoEl
+    
+    toJSON: ->
+        @attributes
         
     render: (el) ->
         el.append @el
@@ -67,28 +70,58 @@ class scpr.AssetManager
           order:   "asset_order"
         
         assethost:
-            token:  "droQQ2LcESKeGPzldQr7"
-            server: "http://ahhost.dev"
-            prefix: "/api"
-    
+            token:       "droQQ2LcESKeGPzldQr7"
+            server:      "http://ahhost-scpr.dev"
+            chooserPath: "/a/chooser"
+            
     constructor: (assets, options) ->
         @options   = _.defaults options||{}, @DefaultOptions
         @assethost = @options.assethost
         
-        @el     = $ @options.el
-        @assets = {}
+        @el         = $ @options.el
+        @collection = {}
         
+        @button = $("<button />", id: "asset-chooser").html("Popup Asset Chooser")
+        @el.prepend @button
+        
+        @button.on
+            click: (event) =>
+                @_popup(event)
+                
         @_loadAssets assets
         @_renderAssets()
 
     #---------------
+    # Return an array of objects turned into JSON
+    toJSON: ->
+        collection = []
+        for asset in @collection
+            collection.push asset.toJSON
+        collection
+        
+    #---------------
     # Render the assets into the asset bucket
     _renderAssets: ->
-        for asset in _.pairs(@assets)
+        for asset in _.pairs(@collection)
             asset[1].render(@el)
             
     #---------------
     # Load the asset thumbnails into @assets
     _loadAssets: (assets) ->
         for asset in assets
-            @assets[asset.content_asset_id] = new scpr.AssetThumbnail(asset)
+            @collection[asset.content_asset_id] = new scpr.AssetThumbnail(asset)
+
+    _popup: (event) ->
+        event.originalEvent.stopPropagation()
+        event.originalEvent.preventDefault()
+        newwindow = window.open("#{@assethost.server}#{@assethost.chooserPath}", 'chooser', 'height=620,width=1000,scrollbars=1')
+        
+        # attach a listener to wait for the LOADED message
+        window.addEventListener "message", (event) => 
+            if event.data == "LOADED"
+                # dispatch our event with the asset data
+                newwindow.postMessage @toJSON(), @assethost.server
+        , false
+                            
+        return false
+        

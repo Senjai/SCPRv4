@@ -6,7 +6,7 @@ class Category < ActiveRecord::Base
   has_secretary
   administrate do
     define_list do
-      per_page = :all
+      list_per_page :all
       
       column :title, linked: true
       column :slug

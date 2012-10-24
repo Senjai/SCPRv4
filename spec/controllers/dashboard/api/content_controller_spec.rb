@@ -136,7 +136,7 @@ describe Dashboard::Api::ContentController do
         get :recent
         cache = Rails.cache.fetch("cbaseapi:recent")
         cache.should match @generated_content.first.to_json
-        cache.should match @generated_content.first.to_json
+        cache.should match @generated_content.last.to_json
       end
     end
   end

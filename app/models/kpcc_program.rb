@@ -1,4 +1,6 @@
 class KpccProgram < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  
   self.table_name = 'programs_kpccprogram'
   ROUTE_KEY       = "program"
   
@@ -21,18 +23,18 @@ class KpccProgram < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      order    = "title"
-      per_page = :all
+      list_order "title"
+      list_per_page :all
       
-      column "title"
-      column "air_status"
+      column :title
+      column :air_status
     end
   end
   
   # -------------------
   # Validations
+  validates :title, :air_status, presence: true
   validates :slug, uniqueness: true
-  validates :title, :slug, :air_status, presence: true
   
   # -------------------
   # Associations

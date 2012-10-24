@@ -9,34 +9,42 @@ class Bio < ActiveRecord::Base
   # Associations
   belongs_to  :user,    class_name: "AdminUser"
   has_many    :bylines, class_name: "ContentByline",  foreign_key: :user_id
+
   
   #--------------
   # Scopes    
   scope :visible, where(is_public: true)
+
   
   #--------------
   # Validation
   validates :slug, uniqueness: true
-  validates :user, presence: true
   validates :name, presence: true
-  validates :title, presence: true
+  validates :last_name, presence: true
   
   #--------------
   # Administration
   administrate do
     define_list do
-      order    = "#{AdminUser.table_name}.last_name"
-      per_page = :all
+      list_order "last_name"
+      list_per_page :all
       
       column :name
       column :email
       column :is_public, header: "Show on Site?"
     end
   end
+
   
   #--------------
   # Callbacks
-  
+  before_validation :set_last_name, if: -> { self.last_name.blank? }
+  def set_last_name
+    if self.name.present?
+      self.last_name = self.name.split(" ").last
+    end
+  end
+
     
   #----------
   
