@@ -15,19 +15,21 @@
 # is deployed that relies on that key.
 # Don't assume the key will be there!
 #
-class DataPoint < ActiveRecord::Base
+class DataPoint < ActiveRecord::Base  
   has_secretary
   
   #--------------
   # Administration
   administrate do
     define_list do
-      order    = "group"
-      per_page = :all
+      list_order "'groupname, data_key'" # Need the extra quotes for MySQL group
+      list_per_page :all
       
       column :group
       column :data_key, linked: true
+      column :data
       column :description
+      column :updated_at
     end
   end
 
@@ -46,10 +48,23 @@ class DataPoint < ActiveRecord::Base
   
   
   class << self
-    def to_hash(collection, key_attribute=:data_key)
+    def to_hash(collection)
       hash = {}
-      collection.each { |obj| hash[obj.send(key_attribute)] = obj }
+      collection.each { |obj| hash[obj.data_key] = DataPoint::Hashed.new(obj) }
       hash
+    end
+  end
+  
+  class Hashed
+    delegate :data, :data_key, to: :@object
+    
+    attr_accessor :object
+    def initialize(object)
+      @object = object
+    end
+    
+    def to_s
+      @object.data
     end
   end
 end

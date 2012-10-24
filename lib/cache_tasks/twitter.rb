@@ -15,17 +15,17 @@ module CacheTasks
     
     def run
       if tweets = self.fetch
-        self.cache(tweets, "/shared/widgets/cached/tweets", "twitter:#{@screen_name}")
+        self.cache(tweets, @partial, @cache_key)
         true
       end
     end
 
     #---------------
-    
-    attr_accessor :verbose
-    
-    def initialize(screen_name, options={})
+        
+    def initialize(screen_name, partial="/shared/widgets/cached/tweets", options={})
       @screen_name  = screen_name
+      @cache_key    = "twitter:#{screen_name}"
+      @partial      = partial
       @options      = options.reverse_merge! DEFAULTS
     end
     

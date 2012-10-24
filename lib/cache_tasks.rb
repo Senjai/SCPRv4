@@ -8,6 +8,8 @@ module CacheTasks
   end
   
   class Task
+    attr_accessor :verbose
+    
     def cache(content, partial, cache_key)
       cached = CacheTasks.view.render(partial: partial, object: content, as: :content)
       Rails.cache.write(cache_key, cached)
@@ -30,6 +32,4 @@ module CacheTasks
   end # Task
 end # CacheTasks
 
-require 'cache_tasks/most_commented'
-require 'cache_tasks/most_viewed'
-require 'cache_tasks/twitter'
+Dir["cache_tasks/*"].each { |f| require f }

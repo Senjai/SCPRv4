@@ -39,13 +39,14 @@ class NewsStory < ContentBase
   # Administration
   administrate do
     define_list do
-      order = "published_at desc"
-      column "headline"
-      column "slug"
-      column "news_agency"
-      column "audio"
-      column "status"
-      column "published_at"
+      list_order "published_at desc"
+      
+      column :headline
+      column :slug
+      column :news_agency
+      column :audio
+      column :status
+      column :published_at
     end
   end
 

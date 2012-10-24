@@ -1,0 +1,33 @@
+<% page_title "2012 Election Results"%>
+
+<% content_for :opengraph do %>
+    <meta property="og:description" content="KPCC's up-to-the-minute results of the 2012 Elections">
+    <meta property="og:title" content="2012 Election Results from KPCC.org">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://www.scpr.org/elections"/>
+    <meta name="twitter:card" value="summary">
+    <meta name="twitter:site" value="@kpcc">
+    <meta name="twitter:url" value="http://www.scpr.org/elections">
+    <meta name="twitter:title" value="2012 Election Results from KPCC.org">
+    <meta name="twitter:description" value="KPCC's up-to-the-minute results of the 2012 Elections">  
+    <meta property="og:image" content="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+    <link rel="image_src" href="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+    <meta name="twitter:image" value="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
+<% end %>
+
+<div class="stacked">
+  <div class="row-fluid">
+    <div class="span24">
+      <h1>Politics</h1>
+      <%= render_content @content[0], "twocol" %>
+      <%= render_content @content[1..5], "offlead_asset" %>
+      <%= link_to "More in Politics", section_path(slug: 'politics') %>
+    </div>
+  </div>
+</div>
+
+<% content_for :lower do %>
+  <%= render_content @content[6..-1], "thumbnail" %>
+<% end %>
+
+<%= render '/home/election_results_block', data_points: @data_points %>
