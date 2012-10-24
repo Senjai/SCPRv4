@@ -91,11 +91,15 @@ namespace :scprv4 do
       puts "Finished.\n"
     end
     
-    desc "Cache Election Results"
+    desc "Fetch and parse Election Results"
     task :election_results => [:environment] do
       puts "*** [#{Time.now}] Caching Election Results...."
-      # fake = # http://project.wnyc.org/election-2012-ca-results/fakeresults.json
-      task = CacheTasks::ElectionResults.new("http://project.wnyc.org/election-2012-ca-results/fakeresults.json")
+      
+      fake  = "http://project.wnyc.org/election-2012-ca-results/fakeresults.json"
+      real  = "http://project.wnyc.org/election-2012-ca-results/all.json"
+      other = "http://project.wnyc.org/election-2012-ca-results/data/election_data.json"
+      
+      task = CacheTasks::ElectionResults.new(other)
       task.verbose = true
       task.run
       puts "Finished.\n"
