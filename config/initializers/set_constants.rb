@@ -9,3 +9,5 @@ CONNECT_DEFAULTS = {
   :podcast       => "http://www.scpr.org/podcasts/news",
   :web           => "http://scpr.org"
 }
+
+$redis = Rails.cache.instance_variable_get :@data

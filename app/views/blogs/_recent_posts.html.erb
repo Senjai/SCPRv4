@@ -3,7 +3,7 @@
   <ul>
     <%= content_cache("blogs:#{blog.slug}:recent") do %>
       <% register_content "blogs/entry:new" %>
-      <% for entry in blog.entries.published.first(5) %>
+      <% blog.entries.published.first(5).each do |entry| %>
           <li>
             <% register_content entry %>
             <p><%= link_to entry.short_headline, entry.link_path %></p>
