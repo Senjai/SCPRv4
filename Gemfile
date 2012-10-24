@@ -9,10 +9,6 @@ gem 'thinking-sphinx', '~> 2.0.10', require: "thinking_sphinx"
 gem 'capistrano'
 
 
-## Logging
-gem 'oink'
-
-
 ## Cache
 gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
 # gem 'redis-content-store', :path => "/Users/bryan/projects/redis-content-store"
