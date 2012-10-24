@@ -18,22 +18,22 @@
     <div class="row-fluid">
       <div class="span6">
         <h3>Stats</h3>
-        <div class="row-fluid">
+        <div class="row-fluid" id="dashboard-stats">
           <div class="span4">
-            <div class="well">
-              <h6 class="muted">Stories posted in the past hour</h6>
-              <span class="lead"><%= @recent_stories.count %></span>
+            <div class="well tight">
+              <h6 class="muted">Hello,</h6>
+              <span class="lead"><%= admin_user.name %></span>
             </div>
           </div> <!-- span -->
           <div class="span4">
-            <div class="well">
-              <h6 class="muted">Last homepage published</h6>
-              <span class="lead"><%= time_ago_in_words(@latest_homepage.published_at) if @latest_homepage.present? %> ago</span>
+            <div class="well tight">
+              <h6 class="muted">Homepage last updated</h6>
+              <span class="lead"><%= time_ago_in_words(@latest_homepage.updated_at) if @latest_homepage.present? %> ago</span>
             </div>
           </div> <!-- span -->
           <div class="span4">
-            <div class="well">
-              <h6 class="muted">Last story published</h6>
+            <div class="well tight">
+              <h6 class="muted">Last content published</h6>
               <span class="lead"><%= time_ago_in_words(@latest_story.published_at) if @latest_story.present? %> ago</span>
             </div>
           </div> <!-- span -->
