@@ -38,14 +38,14 @@
 						<aside><%= data_points['president:percent_reporting'] %>% Reporting</aside>
 					</header>
 					<section class="candidate obama first">
-						<h4>Barack Obama (D) <%= winner if data_points['president:winner'].to_s.downcase.match(/obama/) %></h4>
+						<h4>Barack Obama (D) <%= winner if data_points['president:winner'].to_s.match(/obama/i) %></h4>
 						<div class="result relative">
 							<strong><%= data_points['president:obama_electoral_votes'] %></strong>
 							<span>Electoral Votes</span>
 						</div>
 					</section>
 					<section class="candidate romney last">
-						<h4>Mitt Romney (R) <%= winner if data_points['president:winner'].to_s.downcase.match(/romney/) %></h4>
+						<h4>Mitt Romney (R) <%= winner if data_points['president:winner'].to_s.match(/romney/i) %></h4>
 						<div class="result relative">
 							<strong><%= data_points['president:romney_electoral_votes'] %></strong>
 							<span>Electoral Votes</span>
@@ -56,13 +56,13 @@
 						<aside><%= data_points['30th:percent_reporting'] %>% Reporting</aside>
 					</header>
 					<section class="candidate berman first">
-						<h4>Howard Berman <%= winner if data_points['30th:winner'].to_s.downcase.match(/berman/) %></h4>
+						<h4>Howard Berman <%= winner if data_points['30th:winner'].to_s.match(/berman/i) %></h4>
 						<div class="result relative">
 							<strong><%= data_points['30th:berman_percent'] %><b class="percentage">%</b></strong>
 						</div>
 					</section>
 					<section class="candidate sherman last">
-						<h4>Brad Sherman <%= winner if data_points['30th:winner'].to_s.downcase.match(/sherman/) %></h4>
+						<h4>Brad Sherman <%= winner if data_points['30th:winner'].to_s.match(/sherman/i) %></h4>
 						<div class="result relative">
 							<strong><%= data_points['30th:sherman_percent'] %><b class="percentage">%</b></strong>
 						</div>
@@ -82,11 +82,11 @@
 							<p>Governor’s Tax Initiative</p>
 						</div>
 						<div class="result relative">
-							<div class="yes <%= "pass" if data_points['props:30:passed'].to_s.downcase.match /true/ %>">
+							<div class="yes <%= "pass" if data_points['props:30:passed'].to_s.match(/true/i) %>">
 								<strong><%= data_points['props:30:percent_yes'] %><b class="percentage">%</b></strong>
 								<span>Yes</span>
 							</div>
-							<div class="no <%= "fail" if data_points['props:30:passed'].to_s.downcase.match /false/ %>">
+							<div class="no <%= "fail" if data_points['props:30:passed'].to_s.match(/false/) %>">
 								<strong><%= data_points['props:30:percent_no'] %><b class="percentage">%</b></strong>
 								<span>No</span>
 							</div>
@@ -100,11 +100,11 @@
 							<p>Repeal Death Penalty</p>
 						</div>
 						<div class="result relative">
-							<div class="yes <%= "pass" if data_points['props:34:passed'].to_s.downcase.match /true/ %>">
+							<div class="yes <%= "pass" if data_points['props:34:passed'].to_s.match(/true/i) %>">
 								<strong><%= data_points['props:34:percent_yes'] %><b class="percentage">%</b></strong>
 								<span>Yes</span>
 							</div>
-							<div class="no <%= "fail" if data_points['props:34:passed'].to_s.downcase.match /false/ %>">
+							<div class="no <%= "fail" if data_points['props:34:passed'].to_s.match(/false/i) %>">
 								<strong><%= data_points['props:34:percent_no'] %><b class="percentage">%</b></strong>
 								<span>No</span>
 							</div>
@@ -118,11 +118,11 @@
 							<p>Repeal "Three Strikes"</p>
 						</div>
 						<div class="result relative">
-							<div class="yes <%= "pass" if data_points['props:36:passed'].to_s.downcase.match /true/ %>">
+							<div class="yes <%= "pass" if data_points['props:36:passed'].to_s.match(/true/i) %>">
 								<strong><%= data_points['props:36:percent_yes'] %><b class="percentage">%</b></strong>
 								<span>Yes</span>
 							</div>
-							<div class="no <%= "fail" if data_points['props:36:passed'].to_s.downcase.match /false/ %>">
+							<div class="no <%= "fail" if data_points['props:36:passed'].to_s.match(/false/i) %>">
 								<strong><%= data_points['props:36:percent_no'] %><b class="percentage">%</b></strong>
 								<span>No</span>
 							</div>
@@ -136,11 +136,11 @@
 							<p>Education Tax Initiative</p>
 						</div>
 						<div class="result relative">
-							<div class="yes <%= "pass" if data_points['props:38:passed'].to_s.downcase.match /true/ %>">
+							<div class="yes <%= "pass" if data_points['props:38:passed'].to_s.match(/true/i) %>">
 								<strong><%= data_points['props:38:percent_yes'] %><b class="percentage">%</b></strong>
 								<span>Yes</span>
 							</div>
-							<div class="no <%= "fail" if data_points['props:38:passed'].to_s.downcase.match /false/ %>">
+							<div class="no <%= "fail" if data_points['props:38:passed'].to_s.match(/false/i) %>">
 								<strong><%= data_points['props:38:percent_no'] %><b class="percentage">%</b></strong>
 								<span>No</span>
 							</div>
@@ -156,13 +156,13 @@
 						<aside><%= data_points['da:percent_reporting'] %>% Reporting</aside>
 					</header>
 					<section class="candidate lacey first">
-						<h4>Jackie Lacey <%= winner if data_points['da:winner'].to_s.downcase.match(/lacey/) %></h4>
+						<h4>Jackie Lacey <%= winner if data_points['da:winner'].to_s.match(/lacey/i) %></h4>
 						<div class="result relative">
 							<strong><%= data_points['da:lacey_percent'] %><b class="percentage">%</b></strong>
 						</div>
 					</section>
 					<section class="candidate jackson last">
-						<h4>Alan Jackson <%= winner if data_points['da:winner'].to_s.downcase.match(/jackson/) %></h4>
+						<h4>Alan Jackson <%= winner if data_points['da:winner'].to_s.match(/jackson/i) %></h4>
 						<div class="result relative">
 							<strong><%= data_points['da:jackson_percent'] %><b class="percentage">%</b></strong>
 						</div>
@@ -178,11 +178,11 @@
 							<p>Transportation Tax</p>
 						</div>
 						<div class="result relative">
-							<div class="yes <%= "pass" if data_points['measures:J:passed'].to_s.downcase.match /true/ %>">
+							<div class="yes <%= "pass" if data_points['measures:J:passed'].to_s.match(/true/i) %>">
 								<strong><%= data_points['measures:J:percent_yes'] %><b class="percentage">%</b></strong>
 								<span>Yes</span>
 							</div>
-							<div class="no <%= "fail" if data_points['measures:J:passed'].to_s.downcase.match /false/ %>">
+							<div class="no <%= "fail" if data_points['measures:J:passed'].to_s.match(/false/i) %>">
 								<strong><%= data_points['measures:J:percent_no'] %><b class="percentage">%</b></strong>
 								<span>No</span>
 							</div>
