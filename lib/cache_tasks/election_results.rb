@@ -46,8 +46,9 @@ module CacheTasks
     #---------------
         
     def run
-      self.fetch
-      self.update_data
+      if self.fetch
+        self.update_data
+      end
     end
     
     #---------------
@@ -60,11 +61,16 @@ module CacheTasks
     #---------------
     
     def fetch
-      resp = @connection.get do |req|
-        req.url @feed.path
-      end
-      
-      @data = resp.body
+      begin
+        resp = @connection.get do |req|
+          req.url @feed.path
+        end
+        
+        @data = resp.body
+      rescue
+        self.log "Data can't be parsed"
+        false
+      end      
     end
 
     #---------------
@@ -75,7 +81,17 @@ module CacheTasks
       
       # Now update the stuff
       data_key_map.keys.each do |key|
-        data[key].object.update_attribute(:data, data_key_map[key] || "")
+        data_point     = data[key].object
+        data_from_json = data_key_map[key]
+        
+        # Don't override the data if the result is blank.
+        if data_from_json.present?
+          self.log "updating #{key} to #{data_from_json}"
+          data_point.update_attribute(:data, data_from_json)
+          
+          # touch it because Rails doesn't update timestamp if the data didn't change
+          data_point.touch
+        end
       end
     end
 
