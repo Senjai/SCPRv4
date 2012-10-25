@@ -9,10 +9,10 @@
           </div>
           <div class="span18">
             <ul>
-              <% for c in rels %>
+              <% rels.each do |content| %>
                 <li>
-                <% register_content c %>
-                <%= link_to c.short_headline, c.link_path %> <span class="pipe">|</span> <time><%= smart_date c %></time>
+                <% register_content content %>
+                <%= link_to content.short_headline, content.link_path %> <span class="pipe">|</span> <time><%= format_date content.published_at, format: :full_date, time: true %></time>
                 </li>
               <% end %>
             </ul>

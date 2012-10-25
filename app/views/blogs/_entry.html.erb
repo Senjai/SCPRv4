@@ -6,7 +6,7 @@
 
 <div class="entry content-block">
   <div class="row-fluid">
-    <%= widget "article_meta", entry %>
+    <%= widget "social_sidebar", entry %>
 
     <div class="span18 mq-solo-span">
       <article>
@@ -19,7 +19,7 @@
           </div>
           
           <p class="byline">
-            <%= render_byline entry %>
+            <%= render_byline entry %> <span class="pipe">|</span> <time pubdate><%= format_date entry.published_at, format: :full_date, time: true %></time>
           </p>
         </header>
     

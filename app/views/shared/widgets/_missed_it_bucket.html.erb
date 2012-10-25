@@ -1,22 +1,22 @@
-<% if object.respond_to?(:missed_it_bucket) and object.missed_it_bucket.present? and object.missed_it_bucket.contents.present? %>
-  <div class="missed-it-bucket widget cbase">
-    <h6>In Case You Missed It</h6>
-    <%= content_cache object.missed_it_bucket.obj_key do %>
+<% if object.missed_it_bucket.present? %>
+  <nav class="recent-posts widget">
+    <h6>In Case You Missd It</h6>
+    <%= content_cache(object.missed_it_bucket.obj_key) do %>
       <% register_content object.missed_it_bucket %>
       <% object.missed_it_bucket.contents.limit(5).each do |content| %> <%# content is a MissedItContent object %>
         <% register_content content.content %>
-        <div class="missed-it-content carousel-item">
-          <div class="row-fluid">
-            <div class="span8">
-              <%= render_asset content.content, "thumb" %>
-            </div>
-            <div class="span16">
-              <%= link_to content.content.short_headline, content.content.link_path %>
-              <h4><%= format_date content.content.published_at, format: "event" %></h4>
-            </div>
-          </div> <!-- row-fluid -->
-        </div> <!-- missed it content -->
+    
+        <div class="row-fluid">
+          <div class="span6">
+            <%= render_asset content.content, "thumb", true %>
+          </div>
+          <div class="span18">
+            <%= link_to content.content.short_headline, content.content.link_path %><br />
+            <%= smart_date_js content.content %>
+          </div>
+        </div> <!-- row-fluid -->
+      
       <% end %>
     <% end %>
-  </div> <!-- missed it bucket -->
+  </nav>
 <% end %>

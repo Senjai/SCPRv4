@@ -7,7 +7,7 @@
       <header>
         <%= content_widget "social_tools", @story, cssClass: "top horizontal" %>
         <h1 class="story-headline"><%= @story.headline %></h1>
-        <p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
+        <p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= format_date @story.published_at, format: :full_date, time: true %></time></p>
       </header>
   
       <div class="story-body <%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">

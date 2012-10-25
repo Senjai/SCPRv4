@@ -13,7 +13,7 @@
       <li>
         <%= link_to s.headline, s.link_path %>
         (<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
-        <br/>&mdash; <%= smart_date s %> 
+        <br/>&mdash; <%= format_date s.published_at, format: :full_date, time: true %> 
         <br/>&mdash; <%= render_byline s, false %>
         <br/>
       </li>
@@ -28,7 +28,7 @@
         <li>
           <%= link_to s.headline, s.link_path %>
           (<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
-          <br/>&mdash; <%= smart_date s %> 
+          <br/>&mdash; <%= format_date s.published_at, format: :full_date, time: true %>
           <br/>&mdash; <%= render_byline s, false %>
           <br/>
         </li>
@@ -44,7 +44,7 @@
         <li>
           <%= link_to s.headline, s.link_path %>
           (<%= link_to "Open in Admin", "/admin/blogs/entry/#{s.id}/", :target => :blank %>)
-          <br/>&mdash; <%= smart_date s %> 
+          <br/>&mdash; <%= format_date s.published_at, format: :full_date, time: true %>
           <br/>&mdash; <%= render_byline s, false %>
           <br/>
         </li>

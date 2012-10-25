@@ -85,7 +85,7 @@
               <p class="byline">
                 <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span> 
                 <span class="pipe">|</span> 
-                <time pubdate=""><%= smart_date content %></time> 
+                <time pubdate=""><%= format_date content.published_at, format: :full_date, time: true %></time> 
                 <span class="pipe">|</span> 
                 <%= render_byline content %>
               </p>

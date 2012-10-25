@@ -829,20 +829,13 @@ a.comment-count.inline {
 
 // Recent Posts
 .recent-posts {
-    li {
-        list-style-image:url("more-headlines-li.png");
-        margin-bottom:$baseline / 2;
-        p {
-            margin-bottom:0;
-        }
-        .date-posted {
-            @include font-sans-serif(normal, 11px);
-        }
-        a {
-            color:$grayAlt;
-            @include font-headline(400);
-            font-size:15px;
-        }
+    .date-posted {
+        @include font-sans-serif(normal, 11px);
+    }
+    a {
+        color:$grayAlt;
+        @include font-headline(400);
+        font-size:15px;
     }
 }
 

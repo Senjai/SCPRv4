@@ -35,29 +35,3 @@ Scenario: Local Blog
   When I go to that blog's page
   Then I should see the blog's information
   And I should see the blog's entries listed
-  And I should see the recent posts widget for that blog
-
-Scenario: See the blog's missed it bucket if it has one
-  Given a blog with the following attributes:
-   | missed_it_bucket[contents_count] |
-   | 3                                |
-
-  When I go to the blog's page
-  Then I should see a missed it bucket
-  And the missed it bucket should have 3 items in it
-
-Scenario: Do not show a missed it bucket if the blog doesn't have one
-  Given a blog with the following attributes:
-   | missed_it_bucket_id |
-   |                     |
-
-  When I go to that blog's page
-  Then I should not see a missed it bucket
-
-Scenario: Do not show a missed it bucket if the bucket has no contents
-  Given a blog with the following attributes:
-   | missed_it_bucket[contents_count] |
-   | 0                                |
-
-  When I go to that blog's page
-  Then I should not see a missed it bucket

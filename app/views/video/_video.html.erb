@@ -6,7 +6,7 @@
     <%= render_asset video, "eight" %>
     <header>
       <h1 class="story-headline"><%= video.headline %></h1>
-      <p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= smart_date video %></time></p>
+      <p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= format_date video.published_at, format: :full_date, time: true %></time></p>
     </header>
     
     <div class="story-body"><%= render_content_body video %></div>

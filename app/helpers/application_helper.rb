@@ -112,32 +112,6 @@ module ApplicationHelper
     images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png"]
     image_tag "personalities/#{images[rand(images.size)]}"
   end
-
-  #----------
-  
-  def smart_date(content,options={})
-    options = {
-      :today_template => "%-I:%M%P",
-      :template       => "%b %e, %Y"
-    }.merge(options)
-    
-    if !content || !content.respond_to?("public_datetime")
-      return ""
-    end
-    
-    if content.public_datetime.to_date == Date.today()
-      if content.public_datetime.is_a? Time
-        return content.public_datetime.strftime(options[:today_template])          
-      else
-        return "| Today"
-      end
-    elsif options && options[:today]
-      # we only want a date if it is today's date, so return nothing
-      return ''
-    else
-      return content.public_datetime.strftime(options[:template])
-    end
-  end
   
   #----------
   

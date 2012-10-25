@@ -5,7 +5,7 @@
   <%= cache ["show", "v1", @event], expires_at: @event.ends_at do %>
     <div class="event content-block">
       <div class="row-fluid">
-        <%= widget "article_meta", @event %>
+        <%= widget "social_sidebar", @event %>
   
         <div class="span18 mq-solo-span" id="events-event-detail">
           <article>

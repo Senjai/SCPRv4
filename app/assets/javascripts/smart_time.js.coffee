@@ -142,7 +142,7 @@ class scpr.SmartTime
                     # then only show the time, since the date can be inferred.
                     # Otherwise, if no @window was specified, or the hours is higher than 12,
                     # show the date.
-                    if @window[1] <= 12
+                    if @window and @window[1] <= 12
                         # use time format only
                         @$el.text "" + @options.prefix + @time.strftime "#{@options.time_format}"
                     else
