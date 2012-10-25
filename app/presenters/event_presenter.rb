@@ -37,7 +37,7 @@ class EventPresenter < ApplicationPresenter
     if event.upcoming? or event.current?
       h.content_tag :div, range_date, class: "upcoming-date"
     else 
-      h.content_tag :div, class: "post-date" do
+      h.content_tag :div, class: "past-date" do
         "This event took place on:<br />#{range_date}".html_safe
       end
     end    
