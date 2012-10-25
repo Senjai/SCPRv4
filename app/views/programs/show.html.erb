@@ -17,7 +17,7 @@
 
 <a name="archive"></a>
 <% if @program.display_segments %>
-  <% nav = will_paginate @segments, previous_label: "&laquo; Newer".html_safe, next_label: "Older &raquo;".html_safe, params: { anchor: "archive"} %>
+  <% nav = paginate @segments, params: { anchor: "archive"} %>
   <section class="show-segments">
     <%= any_to_list? @segments, title: "Segments" do %>
       <h2>Recently on <%= @program.title %></h2>    
@@ -28,7 +28,7 @@
   </section>
   
 <% elsif @program.display_episodes %>
-  <% nav = will_paginate @episodes, previous_label: "&laquo; Newer".html_safe, next_label: "Older &raquo;".html_safe, params: { anchor: "archive"} %>
+  <% nav = paginate @episodes, params: { anchor: "archive"} %>
   <section class="show-episodes">   
     <%= any_to_list? @episodes, title: "Episodes" do %>
       <h2>Recently on <%= @program.title %></h2>

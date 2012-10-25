@@ -3,7 +3,7 @@
   <%= any_to_list? @videos, "Videos" do %>
     <div class="list">
       <%= render partial: 'video_thumb', collection: @videos %>
-      <%= will_paginate @videos %>
+      <%= paginate @videos %>
     </div>
   <% end %>
 <% end %>

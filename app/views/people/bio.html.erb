@@ -30,7 +30,7 @@
       <div class="span24">
         <h2>Stories by <%= @bio.name %></h2>
         <%= render_content @bylines, "thumbnail" %>
-        <%= will_paginate(@bylines, :previous_label => "« Newer", :next_label => "Older »", :inner_window => 2) %>
+        <%= paginate @bylines, window: 2 %>
       </div>
     </div>
   <% end %>

@@ -24,4 +24,4 @@
   <% end %>
 </table>
 
-<%= will_paginate @versions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<%= paginate @versions, theme: 'bootstrap', window: 4%>

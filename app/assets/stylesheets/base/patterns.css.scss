@@ -751,29 +751,29 @@ color:$nearBlack;
 // ----------
 
 .pagination {
-  height: $baseline * 2;
+  min-height: $baseline * 2;
   margin: 17px 0 3px;
-  a, span, em {
-    float: left;
+  
+  span {
+    display: inline-block;
     font-size:12px;
-    margin:4px;
-    padding: 0 8px;
     line-height: $baseline * 1.2;
     border: 1px solid #ddd;
     border: 1px solid rgba(0,0,0,.15);
-    text-decoration: none;
-  }
-  a:hover,
-  &.active a {
-    background-color: lighten($blue, 45%);
-  }
-  &.disabled a,
-  &.disabled a:hover {
-    background-color: none;
-    color: $grayLight;
-  }
-  &.next a {
-    border: 0;
+
+    a, &.gap, &.current {
+      padding: 0 8px;
+      text-decoration: none;
+    }
+    
+    a {
+      display: block;
+    }
+    
+    a:hover, 
+    &.current {
+      background-color: lighten($blue, 45%);
+    }
   }
 }
 

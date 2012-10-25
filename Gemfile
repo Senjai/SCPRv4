@@ -16,7 +16,7 @@ gem "resque", "~> 1.20"
 
 
 ## Views
-gem 'will_paginate', "~> 3.0"
+gem 'kaminari', "~> 0.14"
 gem 'ckeditor_rails', "~> 3.6", require: 'ckeditor-rails'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"

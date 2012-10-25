@@ -56,7 +56,7 @@ class HomeController < ApplicationController
   
   def missed_it_content
     @homepage = Homepage.find(params[:id])
-    @carousel_contents = @homepage.missed_it_bucket.contents.paginate(page: params[:page], per_page: 6)
+    @carousel_contents = @homepage.missed_it_bucket.contents.page(params[:page]).per(6)
     render 'missed_it_content.js.erb'
   end
   

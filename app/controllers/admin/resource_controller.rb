@@ -10,9 +10,7 @@ class Admin::ResourceController < Admin::BaseController
   before_filter :set_fields # Temporary
   
   respond_to :html
-  
-  helper_method :resource_class, :resource_title, :resource_param, :resource_url
-  
+    
   # -- Basic CRUD -- #
   
   def index
@@ -50,9 +48,9 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def create
-    @record = resource_class.new(params[resource_param])
+    @record = resource_class.new(params[resource_class.singular_route_key])
     if @record.save
-      flash[:notice] = "Saved #{resource_title}"
+      flash[:notice] = "Saved #{@record.simple_title}"
       respond
     else
       render :new
@@ -60,9 +58,8 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def update
-    params[resource_param].merge!(logged_user_id: admin_user.id)
-    if @record.update_attributes(params[resource_param])
-      flash[:notice] = "Saved #{resource_title}"
+    if @record.update_attributes(params[resource_class.singular_route_key])
+      flash[:notice] = "Saved #{@record.simple_title}"
       respond
     else
       render :edit
@@ -70,7 +67,7 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def destroy
-    flash[:notice] = "Deleted #{resource_title}" if @record.delete
+    flash[:notice] = "Deleted #{@record.simple_title}" if @record.delete
     respond
   end
   
@@ -83,7 +80,7 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def get_records
-    @records = resource_class.order(resource_class.admin.list.order).paginate(page: params[:page], per_page: resource_class.admin.list.per_page)
+    @records = resource_class.order(resource_class.admin.list.order).page(params[:page]).per(resource_class.admin.list.per_page)
   end
   
   
@@ -117,7 +114,7 @@ class Admin::ResourceController < Admin::BaseController
   # TODO Abstract this
   def authorize!
     unless admin_user.allowed_to?(action_name, resource_class)
-      redirect_to admin_root_path, alert: "You don't have permission to #{Permission.normalize_rest(action_name).titleize} #{resource_title.pluralize}" and return false
+      redirect_to admin_root_path, alert: "You don't have permission to #{Permission.normalize_rest(action_name).titleize} #{resource_class.to_title.pluralize}" and return false
     end
   end
 
@@ -125,11 +122,11 @@ class Admin::ResourceController < Admin::BaseController
   #-----------------
   # Breadcrumbs
   def extend_breadcrumbs_with_resource_root
-    breadcrumb resource_title.pluralize, resource_url
+    breadcrumb resource_class.to_title.pluralize, resource_class.admin_index_path
   end
   
   def add_user_id_to_params
-    params[resource_param].merge!(logged_user_id: admin_user.id)
+    params[resource_class.singular_route_key].merge!(logged_user_id: admin_user.id)
   end
   
   def set_fields

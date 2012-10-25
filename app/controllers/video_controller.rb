@@ -13,7 +13,7 @@ class VideoController < ApplicationController
   end
   
   def list
-    @videos = VideoShell.published.paginate(page: params[:page], per_page: 9)
+    @videos = VideoShell.published.page(params[:page]).per(9)
     respond_with @videos
   end
   

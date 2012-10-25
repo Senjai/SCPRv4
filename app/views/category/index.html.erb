@@ -2,7 +2,7 @@
 <div class="category-page">
   <h1><%= @category.title %></h1>
 
-  <% nav = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
+  <% nav = paginate @content %>
 
   <% if @content.current_page == 1 %>
     <%= render_content @content[0], "twocol" %>

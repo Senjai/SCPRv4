@@ -96,10 +96,10 @@
     
     // Fake the "pager"... hide all page number links, just show Previous and Next links.
         .pagination { 
-            a, span, em {
+            span {
                 display: none;
-                &.previous_page { display: inline; } 
-                &.next_page { 
+                &.prev { display: inline; float: left; } 
+                &.next { 
                     display: inline;
                     float: right;
                 }

@@ -5,9 +5,11 @@
     }
     
     .pagination {
-        a:hover, &.active a {
-            background-color: $nearBlack;
+      span {
+        a:hover, &.current {
+          background-color: $nearBlack;
         }
+      }
     }
     
     // DEFINE FOCUS TRANSITIONS

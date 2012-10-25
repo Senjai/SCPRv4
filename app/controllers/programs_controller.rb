@@ -41,8 +41,8 @@ class ProgramsController < ApplicationController
       
       # Don't want to paginate for XML response
       @segments_scoped = @segments
-      @segments = @segments.paginate(page: params[:page], per_page: 10)
-      @episodes = @episodes.paginate(page: params[:page], per_page: 6)
+      @segments = @segments.page(params[:page]).per(10)
+      @episodes = @episodes.page(params[:page]).per(6)
       
       respond_with @segments_scoped
     else
