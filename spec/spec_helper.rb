@@ -21,7 +21,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = true
 
-  config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }  
+  config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }
   config.include FactoryGirl::Syntax::Methods
   config.include AdminResource::Helpers
   config.include ThinkingSphinxHelpers
@@ -31,8 +31,8 @@ RSpec.configure do |config|
   config.include DatePathHelper
   config.include StubTime
   config.include StubPublishingCallbacks
-  config.include FormFillers,           example_group: { file_path: %r{spec/requests} }  
-  config.include AuthenticationHelper,  example_group: { file_path: %r{spec/requests} }  
+  config.include FormFillers,           example_group: { file_path: %r{spec/requests} }
+  config.include AuthenticationHelper,  example_group: { file_path: %r{spec/requests} }
   
   config.before :suite do
     DatabaseCleaner.clean_with :truncation, { except: STATIC_TABLES }

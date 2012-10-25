@@ -82,7 +82,7 @@ class scpr.AssetManager
         @collection = {}
         
         @button = $("<button />", id: "asset-chooser").html("Popup Asset Chooser")
-        @el.prepend @button
+        #@el.prepend @button
         
         @button.on
             click: (event) =>

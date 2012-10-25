@@ -38,13 +38,12 @@ class Admin::BaseController < ActionController::Base
   helper_method :breadcrumbs
   
   protected
-    # Just setup the @sections variable so the views can add to it.
-    def set_sections
-      @sections = {}
-    end
-    
-    def root_breadcrumb
-      breadcrumb "KPCC Admin", admin_root_path
-    end
-  #
+  # Just setup the @sections variable so the views can add to it.
+  def set_sections
+    @sections = {}
+  end
+  
+  def root_breadcrumb
+    breadcrumb "KPCC Admin", admin_root_path
+  end
 end
