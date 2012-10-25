@@ -8,9 +8,7 @@ class Admin::SearchController < Admin::BaseController
       :per_page => 50
     )
     
-    @list = @klass.admin.list
-    
-    render '/admin/resource/index'
+    @list = @klass.admin.list    
   end
   
   def resource_class
