@@ -1,6 +1,6 @@
 <% if object.missed_it_bucket.present? %>
   <nav class="recent-posts widget">
-    <h6>In Case You Missd It</h6>
+    <h6>In Case You Missed It</h6>
     <%= content_cache(object.missed_it_bucket.obj_key) do %>
       <% register_content object.missed_it_bucket %>
       <% object.missed_it_bucket.contents.limit(5).each do |content| %> <%# content is a MissedItContent object %>
