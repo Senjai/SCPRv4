@@ -1,10 +1,11 @@
 <% title ||= "" %>
 <% cssClass ||= "" %>
+<% direction ||= :asc %>
 
 <h2><%= title %></h2>
 <%= any_to_list? events, title: title do %>
 <section class="events-list <%= cssClass %>">
-  <% Event.sorted(events).each do |event| %>
+  <% Event.sorted(events, direction).each do |event| %>
       <div class="cbase event teaser">
       <div class="row-fluid">
         <% if event.assets.present? %>

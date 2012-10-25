@@ -81,8 +81,13 @@ class Event < ActiveRecord::Base
   
   # -------------------
   
-  def self.sorted(events)
-    events.sort { |a,b| a.sorter <=> b.sorter }
+  def self.sorted(events, direction=:asc)
+    case direction
+    when :asc
+      events.sort { |a,b| a.sorter <=> b.sorter }
+    when :desc
+      events.sort { |a,b| b.sorter <=> a.sorter }
+    end
   end
   
   def sorter
@@ -92,7 +97,7 @@ class Event < ActiveRecord::Base
   # -------------------
 
   def ongoing?
-    multiple_days? and current?
+    multiple_days? && current?
   end
   
   def multiple_days?
