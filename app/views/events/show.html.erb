@@ -2,7 +2,7 @@
   <% page_title [p.headline, "Events"] %>
   <% watch_gmaps %>
 
-  <%= cache ["show", "v1", @event], expires_at: @event.ends_at do %>
+  <%= cache ["show", "v2", @event], expires_at: @event.ends_at do %>
     <div class="event content-block">
       <div class="row-fluid">
         <%= widget "social_sidebar", @event %>

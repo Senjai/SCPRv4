@@ -41,43 +41,9 @@ after "deploy:update", "deploy:cleanup"
 
 # --------------
 # Universal Tasks
-namespace :deploy do
-  task :start, roles: [:app, :workers] do
-    logger.info "Use 'cap deploy:restart'"
-  end
 
-  task :stop, roles: [:app, :workers] do
-    logger.info "Use 'cap deploy:restart'"
-  end
-    
-  desc "Restart Application"
-  task :restart, roles: [:app, :workers] do
-    restart_file = "#{current_release}/tmp/restart.txt"
-    delay        = restart_delay.to_i
-
-    if delay <= 0
-      logger.info "Restarting application processes immediately on all servers..."
-      run "touch #{restart_file}"
-    else      
-      logger.info "Restarting application processes on each app server in #{restart_delay} second intervals..."
-      parallel(roles: [:app, :workers], pty: true, shell: false) do |session|
-        # Worker processes can be restarted immediately
-        session.when "in?(:workers)", "touch #{restart_file}"
-        
-        # App processes should be staggered
-        find_servers(roles: [:app]).each_with_index do |server, i|
-          sleep_time = i * delay
-
-          touch_cmd   = "sleep #{sleep_time} && touch #{restart_file} && echo [`date`] Restarted application processes for #{server}"
-          restart_cmd = "nohup sh -c '(#{touch_cmd}) &' 2>&1 >> #{current_release}/log/restart.log"
-
-          session.when "server.host == '#{server.host}'", restart_cmd
-        end
-      end
-    end
-  end
   
-  
+namespace :deploy do  
   # --------------
   # Override disable/enable
   # https://github.com/capistrano/capistrano/blob/master/lib/capistrano/recipes/deploy.rb

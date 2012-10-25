@@ -21,6 +21,12 @@ after "deploy:update_code", "thinking_sphinx:staging:index"
 
 # --------------
 # Tasks
+namespace :deploy do
+  task :restart, roles: [:app] do
+    run "touch #{current_release}/tmp/restart.txt"
+  end
+end
+
 
 namespace :dbsync do
   task :pull do
