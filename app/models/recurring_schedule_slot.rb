@@ -23,7 +23,7 @@ class RecurringScheduleSlot < ActiveRecord::Base
   #--------------
   # Scopes
   scope :on_at, ->(time) { where("start_time <= :time and :time < end_time", time: time.second_of_week).order("start_time desc") }
-
+  scope :between
 
   #--------------
   

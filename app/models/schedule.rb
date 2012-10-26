@@ -1,8 +1,9 @@
 ##
 # Schedule
 #
-# This module acts as an API for grabbing
-# schedule slots across both schedule models.
+# This module is a collaborator which acts 
+# as an API for grabbing schedule slots 
+# across both schedule models.
 #
 # Example usage:
 #
@@ -27,7 +28,10 @@ module Schedule
   #   Schedule.between(time, time + 8.hours)
   #
   def between(start_time, end_time)
+    recurring = RecurringScheduleSlot.between(start_time, end_time)
   end
+  
+  
   def at(args={})
     time = args[:time] || Time.now()
     hours = args[:hours] || 4
