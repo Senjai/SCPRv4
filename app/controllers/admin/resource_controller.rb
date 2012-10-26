@@ -6,23 +6,13 @@ class Admin::ResourceController < Admin::BaseController
   before_filter :get_records, only: :index
   before_filter :extend_breadcrumbs_with_resource_root
   before_filter :add_user_id_to_params, only: [:create, :update]
-  
-  before_filter :set_fields # Temporary
-  
+    
   respond_to :html
     
   # -- Basic CRUD -- #
   
   def index
     @list = resource_class.admin.list
-    
-    # Temporary - This should be moved into AdminResource
-    if @list.columns.empty?
-      default_fields = resource_class.column_names - AdminResource.config.excluded_form_fields - AdminResource.config.excluded_list_columns
-      default_fields.each do |field|
-        resource_class.admin.list.column field
-      end
-    end
     
     # Temporary - This should be moved into AdminResource
     if @list.linked_columns.empty?
@@ -127,10 +117,5 @@ class Admin::ResourceController < Admin::BaseController
   
   def add_user_id_to_params
     params[resource_class.singular_route_key].merge!(logged_user_id: admin_user.id)
-  end
-  
-  def set_fields
-    # Temporary - This should be moved into AdminResource
-    @fields = resource_class.admin.fields.present? ? resource_class.admin.fields : resource_class.column_names - AdminResource.config.excluded_form_fields
   end
 end

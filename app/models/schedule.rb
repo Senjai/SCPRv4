@@ -1,7 +1,8 @@
 # TODO Clean this up
 class Schedule < ActiveRecord::Base
+  self.table_name = 'schedule_program'
+
   administrate
-  self.table_name =  'schedule_program'
   has_secretary
 
   belongs_to :kpcc_program, :class_name => "KpccProgram"

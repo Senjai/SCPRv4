@@ -2,6 +2,9 @@
 # Admin Resource
 # Build admin pages with Ruby
 
+require 'active_record'
+require 'action_controller'
+
 require 'admin_resource/config'
 
 module AdminResource
