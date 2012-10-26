@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024205134) do
+ActiveRecord::Schema.define(:version => 20121026130437) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -379,6 +379,18 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "data_points", ["data_key"], :name => "index_data_points_on_data_key"
   add_index "data_points", ["group_name"], :name => "index_data_points_on_group"
 
+  create_table "distinct_schedule_slots", :force => true do |t|
+    t.string   "title"
+    t.string   "info_url"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "distinct_schedule_slots", ["ends_at"], :name => "index_distinct_schedule_slots_on_ends_at"
+  add_index "distinct_schedule_slots", ["starts_at"], :name => "index_distinct_schedule_slots_on_starts_at"
+
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
     t.integer  "user_id",                               :null => false
@@ -496,10 +508,12 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "layout_breakingnewsalert", ["visible"], :name => "index_layout_breakingnewsalert_on_visible"
 
   create_table "layout_homepage", :force => true do |t|
-    t.string   "base",                :limit => 10, :null => false
+    t.string   "base"
     t.datetime "published_at"
-    t.integer  "status",                            :null => false
+    t.integer  "status",              :null => false
     t.integer  "missed_it_bucket_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "layout_homepage", ["missed_it_bucket_id"], :name => "layout_homepage_d12628ce"
@@ -777,6 +791,18 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
     t.integer "django_content_type_id", :null => false
     t.string  "rails_class_name",       :null => false
   end
+
+  create_table "recurring_schedule_slots", :force => true do |t|
+    t.integer  "program_id"
+    t.integer  "program_type"
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "recurring_schedule_slots", ["program_id", "program_type"], :name => "index_recurring_schedule_slots_on_program_id_and_program_type"
+  add_index "recurring_schedule_slots", ["start_time", "end_time"], :name => "index_recurring_schedule_slots_on_start_time_and_end_time"
 
   create_table "schedule_program", :force => true do |t|
     t.integer  "day",                             :null => false

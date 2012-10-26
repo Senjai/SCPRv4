@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe OtherProgram do
   describe "associations" do
-    it { should have_many(:schedules) }
+    it { should have_many(:recurring_schedule_slots) }
   end
   
   #-----------------
