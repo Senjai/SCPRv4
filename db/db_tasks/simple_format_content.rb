@@ -2,7 +2,7 @@
 
 klass = ARGV[0]
 
-unless %w{NewsStory ShowSegment}.include? klass
+unless %w{NewsStory ShowSegment Event PijQuery}.include? klass
   $stdout.puts "#{klass} not allowed."
   exit
 end
