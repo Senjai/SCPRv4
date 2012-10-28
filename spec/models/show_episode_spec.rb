@@ -69,14 +69,6 @@ describe ShowEpisode do
     it { should_not respond_to :disqus_identifier }
   end
   
-  # ----------------
-
-  describe "#has_format?" do
-    it "is true" do
-      create(:show_episode).has_format?.should be_false
-    end
-  end
-  
   #------------------
   
   describe "#teaser" do

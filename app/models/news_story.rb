@@ -11,7 +11,7 @@ class NewsStory < ContentBase
   
   
   self.table_name = 'news_story'
-  acts_as_content has_format: true
+  acts_as_content
   has_secretary
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme

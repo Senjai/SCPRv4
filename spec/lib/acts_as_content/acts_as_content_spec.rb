@@ -3,33 +3,6 @@ require "spec_helper"
 # Until this is using its own testing data and models,
 # NewsStory is being used to unit test ActsAsContent
 
-describe ActsAsContent::Methods::HasFormat do
-  let(:content) { create :news_story }
-  
-  describe "has_format?" do
-    after :each do
-      NewsStory.acts_as_content
-    end
-    
-    it "returns false by default" do
-      content.has_format?.should be_false
-    end
-    
-    it "returns true if passed into the options" do
-      NewsStory.acts_as_content has_format: true
-      content.has_format?.should be_true
-    end
-    
-    it "isn't defined if nil is passed" do
-      pending "File needs to be reloaded somehow"
-      NewsStory.acts_as_content has_format: nil
-      content.should_not respond_to :has_format?
-    end
-  end
-end
-
-#--------------
-
 describe ActsAsContent::Methods::Headline do
   let(:content) { create :news_story }
   
