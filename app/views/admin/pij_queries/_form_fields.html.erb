@@ -1,13 +1,13 @@
 <%= form_block "Details" do %>
   <%= f.input :query_url, input_html: { class: "wide" } %>
   <%= f.input :query_type, collection: PijQuery::QUERY_TYPES %>
-  <%= f.input :slug %>
 <% end %>
 
-<%= form_block "Content" do %>
-  <%= f.input :headline, input_html: { class: "wide" } %>
-  <%= f.input :teaser, input_html: { class: "short" } %>
-  <%= f.input :body %>
+<%= section "full_details", f, record %>
+
+<%= form_block "Short Details" do %>
+  <%= f.input :teaser, as: :text, input_html: { class: "tiny" } %>
+  <%= section "slug", f, record %>
 <% end %>
 
 <%= form_block "Display Options" do %>
