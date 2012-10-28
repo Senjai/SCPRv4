@@ -157,15 +157,15 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "bios_bio", ["user_id"], :name => "user_id_refs_id_1277bd7cd84326f2"
 
   create_table "blogs_blog", :force => true do |t|
-    t.string   "name",                :limit => 140,                           :null => false
-    t.string   "slug",                :limit => 50,                            :null => false
-    t.text     "description",         :limit => 2147483647,                    :null => false
+    t.string   "name"
+    t.string   "slug",                :limit => 50
+    t.text     "description",         :limit => 2147483647
     t.boolean  "is_active",                                 :default => false, :null => false
-    t.string   "feed_url",            :limit => 200,        :default => "",    :null => false
+    t.string   "feed_url",            :limit => 200
     t.boolean  "is_remote",                                                    :null => false
-    t.string   "custom_url",          :limit => 140,                           :null => false
+    t.string   "custom_url",          :limit => 200
     t.boolean  "is_news",                                                      :null => false
-    t.string   "teaser",              :limit => 115,                           :null => false
+    t.string   "teaser"
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   create_table "blogs_blogauthor", :force => true do |t|
     t.integer  "blog_id",    :null => false
     t.integer  "author_id",  :null => false
-    t.integer  "position",   :null => false
+    t.integer  "position"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -188,11 +188,11 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
 
   create_table "blogs_blogcategory", :force => true do |t|
-    t.integer  "blog_id",                                                      :null => false
-    t.string   "title",      :limit => 140,                                    :null => false
-    t.string   "slug",       :limit => 50,                                     :null => false
-    t.datetime "created_at",                :default => '2012-06-08 02:03:41', :null => false
-    t.datetime "updated_at",                :default => '2012-06-08 02:03:41', :null => false
+    t.integer  "blog_id",                                                     :null => false
+    t.string   "title"
+    t.string   "slug",       :limit => 50
+    t.datetime "created_at",               :default => '2012-06-08 02:03:41', :null => false
+    t.datetime "updated_at",               :default => '2012-06-08 02:03:41', :null => false
     t.integer  "wp_id"
   end
 
@@ -200,20 +200,20 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "blogs_blogcategory", ["slug"], :name => "blogs_blogcategory_a951d5d6"
 
   create_table "blogs_entry", :force => true do |t|
-    t.string   "headline",          :limit => 140,                        :null => false
-    t.string   "slug",              :limit => 50,                         :null => false
-    t.text     "body",              :limit => 2147483647,                 :null => false
-    t.integer  "blog_id",                                                 :null => false
-    t.string   "blog_slug",         :limit => 50,         :default => "", :null => false
+    t.string   "headline"
+    t.string   "slug",              :limit => 50
+    t.text     "body",              :limit => 2147483647
+    t.integer  "blog_id",                                 :null => false
+    t.string   "blog_slug",         :limit => 50
     t.datetime "published_at"
-    t.integer  "status",                                                  :null => false
-    t.string   "blog_asset_scheme", :limit => 10
-    t.string   "short_headline",    :limit => 100
+    t.integer  "status"
+    t.string   "blog_asset_scheme"
+    t.string   "short_headline"
     t.text     "teaser",            :limit => 2147483647
     t.integer  "wp_id"
     t.integer  "dsq_thread_id"
-    t.datetime "created_at",                                              :null => false
-    t.datetime "updated_at",                                              :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
@@ -379,6 +379,18 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "data_points", ["data_key"], :name => "index_data_points_on_data_key"
   add_index "data_points", ["group_name"], :name => "index_data_points_on_group"
 
+  create_table "distinct_schedule_slots", :force => true do |t|
+    t.string   "title"
+    t.string   "info_url"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "distinct_schedule_slots", ["ends_at"], :name => "index_distinct_schedule_slots_on_ends_at"
+  add_index "distinct_schedule_slots", ["starts_at"], :name => "index_distinct_schedule_slots_on_starts_at"
+
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
     t.integer  "user_id",                               :null => false
@@ -496,10 +508,12 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "layout_breakingnewsalert", ["visible"], :name => "index_layout_breakingnewsalert_on_visible"
 
   create_table "layout_homepage", :force => true do |t|
-    t.string   "base",                :limit => 10, :null => false
+    t.string   "base"
     t.datetime "published_at"
-    t.integer  "status",                            :null => false
+    t.integer  "status",              :null => false
     t.integer  "missed_it_bucket_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "layout_homepage", ["missed_it_bucket_id"], :name => "layout_homepage_d12628ce"
@@ -622,21 +636,21 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "media_related", ["related_type", "related_id"], :name => "index_media_related_on_related_type_and_related_id"
 
   create_table "news_story", :force => true do |t|
-    t.string   "headline",           :limit => 200,                        :null => false
-    t.string   "slug",               :limit => 50,         :default => "", :null => false
-    t.string   "news_agency",        :limit => 50
-    t.text     "teaser",             :limit => 2147483647,                 :null => false
-    t.text     "body",               :limit => 2147483647,                 :null => false
-    t.string   "locale",             :limit => 5,          :default => "", :null => false
+    t.string   "headline"
+    t.string   "slug",               :limit => 50
+    t.string   "news_agency"
+    t.text     "teaser",             :limit => 2147483647
+    t.text     "body",               :limit => 2147483647
+    t.string   "locale"
     t.datetime "published_at"
-    t.string   "source",             :limit => 20
-    t.string   "story_asset_scheme", :limit => 10
-    t.string   "extra_asset_scheme", :limit => 10
+    t.string   "source"
+    t.string   "story_asset_scheme"
+    t.string   "extra_asset_scheme"
     t.string   "lead_asset_scheme",  :limit => 10
-    t.integer  "status",                                                   :null => false
-    t.string   "short_headline",     :limit => 100
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
+    t.integer  "status"
+    t.string   "short_headline"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
@@ -778,6 +792,18 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
     t.string  "rails_class_name",       :null => false
   end
 
+  create_table "recurring_schedule_slots", :force => true do |t|
+    t.integer  "program_id"
+    t.integer  "program_type"
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "recurring_schedule_slots", ["program_id", "program_type"], :name => "index_recurring_schedule_slots_on_program_id_and_program_type"
+  add_index "recurring_schedule_slots", ["start_time", "end_time"], :name => "index_recurring_schedule_slots_on_start_time_and_end_time"
+
   create_table "schedule_program", :force => true do |t|
     t.integer  "day",                             :null => false
     t.integer  "kpcc_program_id"
@@ -836,11 +862,11 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
-    t.date     "air_date",                           :null => false
-    t.string   "headline",     :limit => 140,        :null => false
-    t.text     "body",         :limit => 2147483647, :null => false
+    t.date     "air_date"
+    t.string   "headline"
+    t.text     "body",         :limit => 2147483647
     t.datetime "published_at"
-    t.integer  "status",                             :null => false
+    t.integer  "status"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
   end
@@ -859,18 +885,18 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "shows_rundown", ["segment_order"], :name => "index_shows_rundown_on_segment_order"
 
   create_table "shows_segment", :force => true do |t|
-    t.integer  "show_id",                                                    :null => false
-    t.string   "headline",             :limit => 200,                        :null => false
-    t.string   "slug",                 :limit => 50,                         :null => false
-    t.text     "teaser",               :limit => 2147483647,                 :null => false
-    t.text     "body",                 :limit => 2147483647,                 :null => false
-    t.string   "locale",               :limit => 5,          :default => "", :null => false
-    t.datetime "created_at",                                                 :null => false
-    t.integer  "status",                                                     :null => false
-    t.string   "segment_asset_scheme", :limit => 10
-    t.string   "short_headline",       :limit => 100
+    t.integer  "show_id",                                    :null => false
+    t.string   "headline"
+    t.string   "slug",                 :limit => 50
+    t.text     "teaser",               :limit => 2147483647
+    t.text     "body",                 :limit => 2147483647
+    t.string   "locale"
+    t.datetime "created_at",                                 :null => false
+    t.integer  "status"
+    t.string   "segment_asset_scheme"
+    t.string   "short_headline"
     t.datetime "published_at"
-    t.datetime "updated_at",                                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
