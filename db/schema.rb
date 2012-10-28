@@ -675,19 +675,19 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   add_index "permissions", ["resource", "action"], :name => "index_permissions_on_resource_and_action"
 
   create_table "pij_query", :force => true do |t|
-    t.string   "slug",         :limit => 50,         :null => false
-    t.string   "headline",     :limit => 200,        :null => false
-    t.text     "teaser",       :limit => 2147483647, :null => false
-    t.text     "body",         :limit => 2147483647, :null => false
-    t.string   "query_type",   :limit => 20,         :null => false
-    t.integer  "form_height",                        :null => false
-    t.string   "query_url",    :limit => 200,        :null => false
-    t.boolean  "is_active",                          :null => false
+    t.string   "slug",         :limit => 50
+    t.string   "headline"
+    t.text     "teaser",       :limit => 2147483647
+    t.text     "body",         :limit => 2147483647
+    t.string   "query_type"
+    t.integer  "form_height"
+    t.string   "query_url",    :limit => 200
+    t.boolean  "is_active",                          :default => false, :null => false
     t.datetime "published_at"
     t.datetime "expires_at"
-    t.boolean  "is_featured",                        :null => false
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.boolean  "is_featured",                        :default => false, :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
   end
 
   add_index "pij_query", ["is_active", "published_at"], :name => "index_pij_query_on_is_active_and_published_at"
