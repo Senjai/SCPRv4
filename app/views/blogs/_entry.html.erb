@@ -27,7 +27,7 @@
           <div class="visible-reader"><%= widget "primary_audio", entry %></div>
           
           <%= render_asset entry, "blog" %>
-          <%= render_content_body(entry, full ? :body : :extended_teaser) %>
+          <%= entry.send(full ? :body : :extended_teaser).html_safe %>
         </div>
     
         <footer>

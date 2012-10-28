@@ -11,7 +11,7 @@
   
     <div class="story-body storyleft">
       <%= render_asset @query, "query" %>
-      <%= render_content_body @query %>
+      <%= @query.body.html_safe %>
     </div>
   
     <footer>

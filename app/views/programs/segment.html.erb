@@ -25,7 +25,7 @@
           <div class="story-body">
             <div class="visible-reader"><%= content_widget "primary_audio", @segment %></div>
             <%= render_asset @segment, "segment" %>
-            <%= render_content_body @segment %>
+            <%= @segment.body.html_safe %>
             <br style="clear: both"/>
           </div>
         
