@@ -115,33 +115,6 @@ describe ApplicationHelper do
   
   #------------------------
   
-  describe "render_content_body" do
-    it "renders with simple_format when the content does not have format (i.e. no wysiwyg)" do
-      content = build :news_story, body: "This \n is \n a \n\n story"
-      helper.render_content_body(content).should match /br/
-      helper.render_content_body(content).should match /<p>/
-    end
-    
-    it "renders with simple_format when the content doesn't respond to has_format?" do
-      not_content = build :blog
-      not_content.stub(:body) { "hello" }
-      helper.render_content_body(not_content).should match /<p>/ 
-    end
-    
-    it "accepts and uses any text method" do
-      content = build :news_story, teaser: "This is a TEASER"
-      helper.render_content_body(content, :teaser).should match "This is a TEASER"
-    end
-    
-    it "renders raw when the content has format (i.e. uses wysiwyg)" do
-      content = build :blog_entry, body: "This \n is \n an \n\n entry"
-      helper.render_content_body(content).should_not match /br/
-      helper.render_content_body(content).should_not match /<p>/
-    end
-  end
-  
-  #------------------------
-  
   describe "render_asset" do
     it "should render a fallback image if there are no assets and fallback is true" do
       content = build :content_shell

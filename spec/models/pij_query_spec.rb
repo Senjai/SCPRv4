@@ -8,7 +8,6 @@ describe PijQuery do
   it { should respond_to :link_path }
   it { should respond_to :remote_link_path }
   it { should respond_to :obj_key }
-  it { should respond_to :has_format? }
   
   it { should_not respond_to :disqus_identifier }
   
@@ -30,14 +29,6 @@ describe PijQuery do
     it { should validate_presence_of :query_type }
     it { should validate_presence_of :query_url }
     it { should validate_presence_of :query_type }
-  end
-  
-  # ----------------
-
-  describe "has_format?" do
-    it "is true" do
-      create(:pij_query).has_format?.should be_false
-    end
   end
 
   #---------------

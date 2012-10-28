@@ -41,12 +41,6 @@ describe VideoShell do
 
   it_behaves_like "status methods"
   it_behaves_like "publishing methods"
-  
-  describe "#has_format?" do
-    it "is false" do
-      create(:video_shell).has_format?.should be_false
-    end
-  end
 
   #--------------------
 

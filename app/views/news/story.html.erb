@@ -20,7 +20,7 @@
           <%= render_asset(@story, "extra") if @story.extra_asset_scheme == "sidebar" %>
         </div>
 
-        <%= render_content_body @story %>
+        <%= @story.body.html_safe %>
       </div>
   
       <footer>

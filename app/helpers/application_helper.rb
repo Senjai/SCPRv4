@@ -63,14 +63,6 @@ module ApplicationHelper
     return html.html_safe
   end
   
-  def render_content_body(content, text_method = :body)    
-    if content.respond_to?(:has_format?) && content.has_format?
-      return content.send(text_method).html_safe
-    else
-      return simple_format(content.send(text_method), {}, sanitize: false)
-    end
-  end
-  
   #----------
   
   # render_asset takes a ContentBase object and a context, and renders using 

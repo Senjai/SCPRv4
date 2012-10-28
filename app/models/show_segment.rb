@@ -50,6 +50,10 @@ class ShowSegment < ContentBase
   # Validations
   validates :show, presence: true
   
+  def should_validate?
+    pending? or published?
+  end
+  
   # -------------------
   # Scopes
 

@@ -11,7 +11,7 @@ class EventPresenter < ApplicationPresenter
       s = event.archive_description
     end
     
-    h.simple_format s, {}, sanitize: false
+    s.html_safe
   end
 
   #-------------

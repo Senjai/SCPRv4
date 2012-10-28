@@ -49,7 +49,6 @@ describe Event do
     it { should respond_to :link_path }
     it { should respond_to :remote_link_path }
     it { should respond_to :obj_key }
-    it { should respond_to :has_format? }
     it { should respond_to :disqus_identifier }
     it { should respond_to :disqus_shortname }
   end

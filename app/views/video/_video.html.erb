@@ -9,7 +9,7 @@
       <p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= format_date video.published_at, format: :full_date, time: true %></time></p>
     </header>
     
-    <div class="story-body"><%= render_content_body video %></div>
+    <div class="story-body"><%= video.body.html_safe %></div>
   </article>
   <%= content_widget "social_tools", video, cssClass: "multimedia horizontal bottom" %>
 <% end %>

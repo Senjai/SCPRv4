@@ -19,9 +19,6 @@ module ActsAsContent
     # * comments:           Includes `disqus_identifier`, `disqus_shortname`, and `has_comments?`
     #                       boolean, default: true
     #
-    # * has_format:         Includes `has_format?`
-    #                       boolean, default: false
-    #
     # * short_headline:     Includes `short_headline` method
     #                       Uses self[:short_headline]` if present else `headline`
     #                       boolean, default: true
@@ -60,7 +57,6 @@ module ActsAsContent
 
       full_list = {
         comments:           true,
-        has_format:         false,
         short_headline:     true,
         teaser:             true
       }.merge! options
@@ -80,7 +76,6 @@ module ActsAsContent
       self.acts_as_content_options = list
 
       # Check for nil if you want to use the passed-in boolean as the actual value
-      include Methods::HasFormat        if !list[:has_format].nil?
       include Methods::Headline         if !list[:headline].nil?  and list[:headline].to_sym  != :headline
       include Methods::Body             if !list[:body].nil?      and list[:body].to_sym      != :body
               
@@ -94,9 +89,7 @@ module ActsAsContent
 end
 
 require "acts_as_content/generators"
-require 'acts_as_content/methods/has_format'
 require 'acts_as_content/methods/comments'
-require 'acts_as_content/methods/published_at'
 require 'acts_as_content/methods/body'
 require 'acts_as_content/methods/headline'
 require 'acts_as_content/methods/teaser'
