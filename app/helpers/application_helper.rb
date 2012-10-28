@@ -66,7 +66,7 @@ module ApplicationHelper
   def render_content_body(content, text_method = :body)    
     if content.respond_to?(:has_format?) && content.has_format?
       body = content.send(text_method)
-      if body.match /^\<p\>/
+      if body =~ %r|^\<p|
         return body.html_safe
       else
         return simple_format(body, {}, sanitize: false)
