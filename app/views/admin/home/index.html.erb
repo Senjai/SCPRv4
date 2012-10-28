@@ -1,140 +1,140 @@
 <% page_title "KPCC Admin Dashboard" %>
 
 <div class="row-fluid">
-	<div class="span3">
-		<ul class="nav nav-list well">
-		
-		<% @nav_groups.each do |title, attributes| %>
-			<li class="nav-header"><i class="<%=attributes[:icon]%>"></i><%= title %></li>
-			<% attributes[:models].each do |model| %>
-				<li><%= link_to model.constantize.name.titleize.pluralize, url_for([:admin, model.constantize]) %></li>
-			<% end %>
-		<% end %>
-		
-		</ul>
-	</div> <!-- span3 -->
-	
-	<div class="span9">
-		<div class="row-fluid">
-			<div class="span6">
-				<h3>Stats</h3>
-				<div class="row-fluid">
-					<div class="span4">
-						<div class="well">
-							<h6 class="muted">Stories posted in the past hour</h6>
-							<span class="lead"><%= @recent_stories.count %></span>
-						</div>
-					</div> <!-- span -->
-					<div class="span4">
-						<div class="well">
-							<h6 class="muted">Last homepage published</h6>
-							<span class="lead"><%= time_ago_in_words(@latest_homepage.published_at) if @latest_homepage.present? %> ago</span>
-						</div>
-					</div> <!-- span -->
-					<div class="span4">
-						<div class="well">
-							<h6 class="muted">Last story published</h6>
-							<span class="lead"><%= time_ago_in_words(@latest_story.published_at) if @latest_story.present? %> ago</span>
-						</div>
-					</div> <!-- span -->
-				</div> <!-- row fluid -->
-			</div> <!-- span6 -->
-			
-			<div class="span6">
-				<h3>Actions</h3>
-				<div class="row-fluid">
-					<div class="span6">
-						<ul class="unstyled dashboard-actions">
-							<li><%= link_to "Add a News Story", new_admin_news_story_path %></li>
-							<li><%= link_to "Add a Blog Entry", new_admin_blog_entry_path %></li>
-							<li><%= link_to "Add a Show Segment", new_admin_show_segment_path %></li>
-							<li><%= link_to "Upload Assets", "http://#{Rails.application.config.assethost.server}/a" %></li>
-						</ul>
-					</div> <!-- span -->
-					<div class="span6">
-						<ul class="unstyled dashboard-actions">
-							<li><%= link_to("Update the Current Homepage", edit_admin_homepage_path(@latest_homepage)) if @latest_homepage.present? %></li>
-							<li><%= link_to "Create a Cew Homepage", new_admin_homepage_path %></li>
-							<li><%= link_to "Add a Breaking News Alert", new_admin_breaking_news_alert_path %></li>
-						</ul>
-					</div> <!-- span -->
-				</div> <!-- row-fluid -->
-			</div> <!-- span6 -->
-		</div> <!-- row fluid -->
-		
-		<div class="row-fluid">
-			<div class="span8">
-				<h3>Recently Saved by Me</h3>
-				<hr />
-				
-				<%= any_to_list? @current_user_activities, message: "There is no activity to show." do %>
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>Title</th>
-								<th>Timestamp</th>
-								<th>Description</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<% @current_user_activities.each do |version| %>
-							<tbody class="list">
-								<tr>
-									<td><%= link_to version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
-									<td><%= display_datetime(version.created_at) %></td>
-									<td><%= version.description %></td>
-									<td><%= display_status(version.frozen_object.status) if version.frozen_object.respond_to? :status %></td>
-								</tr>
-							</tbody>
-						<% end %>
-					</table>
-				<% end %>
-				
-				<h3>Recently Saved by Others</h3>
-				<hr />
-				
-				<%= any_to_list? @latest_activities, message: "There is no activity to show." do %>
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>Title</th>
-								<th>Timestamp</th>
-								<th>Description</th>
-								<th>User</th>
-							</tr>
-						</thead>
-						<% @latest_activities.each do |version| %>
-							<tbody class="list">
-								<tr>
-									<td><%= link_to version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
-									<td><%= display_datetime(version.created_at) %></td>
-									<td><%= version.description %></td>
-									<td><%= version.user.to_title %></td>
-								</tr>
-							</tbody>
-						<% end %>
-					</table>
-				<% end %>
-				
-			</div> <!-- span9 -->
+  <div class="span3">
+    <ul class="nav nav-list well">
+    
+    <% @nav_groups.each do |title, attributes| %>
+      <li class="nav-header"><i class="<%=attributes[:icon]%>"></i><%= title %></li>
+      <% attributes[:models].each do |model| %>
+        <li><%= link_to model.constantize.name.titleize.pluralize, url_for([:admin, model.constantize]) %></li>
+      <% end %>
+    <% end %>
+    
+    </ul>
+  </div> <!-- span3 -->
+  
+  <div class="span9">
+    <div class="row-fluid">
+      <div class="span6">
+        <h3>Stats</h3>
+        <div class="row-fluid" id="dashboard-stats">
+          <div class="span4">
+            <div class="well tight">
+              <h6 class="muted">Hello,</h6>
+              <span class="lead"><%= admin_user.name %></span>
+            </div>
+          </div> <!-- span -->
+          <div class="span4">
+            <div class="well tight">
+              <h6 class="muted">Homepage last updated</h6>
+              <span class="lead"><%= time_ago_in_words(@latest_homepage.updated_at) if @latest_homepage.present? %> ago</span>
+            </div>
+          </div> <!-- span -->
+          <div class="span4">
+            <div class="well tight">
+              <h6 class="muted">Last content published</h6>
+              <span class="lead"><%= time_ago_in_words(@latest_story.published_at) if @latest_story.present? %> ago</span>
+            </div>
+          </div> <!-- span -->
+        </div> <!-- row fluid -->
+      </div> <!-- span6 -->
+      
+      <div class="span6">
+        <h3>Actions</h3>
+        <div class="row-fluid">
+          <div class="span6">
+            <ul class="unstyled dashboard-actions">
+              <li><%= link_to "Add a News Story", new_admin_news_story_path %></li>
+              <li><%= link_to "Add a Blog Entry", new_admin_blog_entry_path %></li>
+              <li><%= link_to "Add a Show Segment", new_admin_show_segment_path %></li>
+              <li><%= link_to "Upload Assets", "http://#{Rails.application.config.assethost.server}/a" %></li>
+            </ul>
+          </div> <!-- span -->
+          <div class="span6">
+            <ul class="unstyled dashboard-actions">
+              <li><%= link_to("Update the Current Homepage", edit_admin_homepage_path(@latest_homepage)) if @latest_homepage.present? %></li>
+              <li><%= link_to "Create a New Homepage", new_admin_homepage_path %></li>
+              <li><%= link_to "Add a Breaking News Alert", new_admin_breaking_news_alert_path %></li>
+            </ul>
+          </div> <!-- span -->
+        </div> <!-- row-fluid -->
+      </div> <!-- span6 -->
+    </div> <!-- row fluid -->
+    
+    <div class="row-fluid">
+      <div class="span8">
+        <h3>Recently Saved by Me</h3>
+        <hr />
+        
+        <%= any_to_list? @current_user_activities, message: "There is no activity to show." do %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Timestamp</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <% @current_user_activities.each do |version| %>
+              <tbody class="list">
+                <tr>
+                  <td><%= link_to version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
+                  <td><%= display_datetime(version.created_at) %></td>
+                  <td><%= version.description %></td>
+                  <td><%= display_status(version.frozen_object.status) if version.frozen_object.respond_to? :status %></td>
+                </tr>
+              </tbody>
+            <% end %>
+          </table>
+        <% end %>
+        
+        <h3>Recently Saved by Others</h3>
+        <hr />
+        
+        <%= any_to_list? @latest_activities, message: "There is no activity to show." do %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Timestamp</th>
+                <th>Description</th>
+                <th>User</th>
+              </tr>
+            </thead>
+            <% @latest_activities.each do |version| %>
+              <tbody class="list">
+                <tr>
+                  <td><%= link_to version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
+                  <td><%= display_datetime(version.created_at) %></td>
+                  <td><%= version.description %></td>
+                  <td><%= version.user.to_title %></td>
+                </tr>
+              </tbody>
+            <% end %>
+          </table>
+        <% end %>
+        
+      </div> <!-- span9 -->
 
-			<div class="span4">
-				<h3>Current Activity</h3>
-				<hr />
-				<ul class="viewers" id="newsroom-dashboard_currently-active"></ul>
-			</div> <!-- span3 -->
-		</div> <!-- row fluid -->
-	</div> <!-- span9 -->
+      <div class="span4">
+        <h3>Current Activity</h3>
+        <hr />
+        <ul class="viewers" id="newsroom-dashboard_currently-active"></ul>
+      </div> <!-- span3 -->
+    </div> <!-- row fluid -->
+  </div> <!-- span9 -->
 </div> <!-- row fluid -->
 
 <% content_for :footerjs do %>
 <script type="text/javascript">
-	newsroom = new scpr.Newsroom(
-		'<%= j Rails.application.config.node.server %>', // server info
-		"<%= j({ id: 'dashboard', type: 'Inactive'}.to_json.html_safe) %>", // room info
-		"<%= j admin_user.to_json.html_safe %>", // user info
-		null, // No object for the dashboard
-		{ el: "#newsroom-dashboard_currently-active" }
-	);
+  newsroom = new scpr.Newsroom(
+    '<%= j Rails.application.config.node.server %>', // server info
+    "<%= j({ id: 'dashboard', type: 'Inactive'}.to_json.html_safe) %>", // room info
+    "<%= j admin_user.to_json.html_safe %>", // user info
+    null, // No object for the dashboard
+    { el: "#newsroom-dashboard_currently-active" }
+  );
 </script>
 <% end %>

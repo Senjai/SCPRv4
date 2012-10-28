@@ -9,7 +9,7 @@ class Admin::VersionsController < Admin::BaseController
   # See all activity
   def activity
     breadcrumb "Activity"
-    @versions = Secretary::Version.order(@list.order).paginate(page: params[:page], per_page: @list.per_page)
+    @versions = Secretary::Version.order(@list.order).page(params[:page]).per(@list.per_page)
     render :index
   end
   
@@ -17,7 +17,7 @@ class Admin::VersionsController < Admin::BaseController
   # See activity for a single object
   def index
     breadcrumb "History"
-    @versions = @object.versions.order(@list.order).paginate(page: params[:page], per_page: @list.per_page)
+    @versions = @object.versions.order(@list.order).page(params[:page]).per(@list.per_page)
   end
     
   #--------------

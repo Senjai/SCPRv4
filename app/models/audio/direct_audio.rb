@@ -16,12 +16,16 @@ class Audio
         path = Pathname.new(audio.mp3_path)
         path.split.last.to_s
       end
-  
+    
       #------------
-  
-      def sync!
-        Audio::Sync.new(self).sync_awaiting_audio_if_file_exists!
+      # Proxy to Audio::Sync::bulk_sync_awaiting_audio!
+      def bulk_sync!
+        Audio::Sync.bulk_sync_awaiting_audio!(self)
       end
+    end # singleton
+    
+    def sync!
+      Audio::Sync.sync_if_file_exists!(self)
     end
-  end
-end
+  end # DirectAudio
+end # Audio

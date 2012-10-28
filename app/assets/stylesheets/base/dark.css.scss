@@ -1,180 +1,182 @@
 /* DARK THEME FOR VIDEO SECTIONS & OTHER PLACES WHERE THE FOCUS IS ON VISUAL CONTENT */
 .dark-theme {
-	h1, h2, h3, h4, h5, h6, h7 {
-		color: $gray;
-	}
-	
-	.pagination {
-		a:hover, &.active a {
-	    	background-color: $nearBlack;
-		}
-	}
-	
-	// DEFINE FOCUS TRANSITIONS
-	.muted {
-		@include transition(opacity linear 0.2s);
-		@include opacity(0.4);
-		&:hover { @include opacity(1); }
-	}
+    h1, h2, h3, h4, h5, h6, h7 {
+        color: $gray;
+    }
+    
+    .pagination {
+      span {
+        a:hover, &.current {
+          background-color: $nearBlack;
+        }
+      }
+    }
+    
+    // DEFINE FOCUS TRANSITIONS
+    .muted {
+        @include transition(opacity linear 0.2s);
+        @include opacity(0.4);
+        &:hover { @include opacity(1); }
+    }
 
-	@include gradient-vertical(lighten($black, 13%), $black);
-	background-color: $black; // override since the disqus comments load after the gradient has already been calculated	
-	background-repeat: no-repeat;
-	color:$gray;
-	
-	.alert-message.warning {
-		@include gradient-vertical(lighten($nearBlack, 13%), $nearBlack);
-		border:none;
-		border-radius:0;
-		border-bottom:1px solid $black;
-		p { color:$grayLighter; }
-	}
-	
-	#masthead {
-		#masthead-left-header-wrapper {
-			.logo a.logo-img {
-				background-image: url(image_path('logo-masthead-dark.png'));
-			}
-		}
+    @include gradient-vertical(lighten($black, 13%), $black);
+    background-color: $black; // override since the disqus comments load after the gradient has already been calculated 
+    background-repeat: no-repeat;
+    color:$gray;
+    
+    .alert-message.warning {
+        @include gradient-vertical(lighten($nearBlack, 13%), $nearBlack);
+        border:none;
+        border-radius:0;
+        border-bottom:1px solid $black;
+        p { color:$grayLighter; }
+    }
+    
+    #masthead {
+        #masthead-left-header-wrapper {
+            .logo a.logo-img {
+                background-image: url(image_path('logo-masthead-dark.png'));
+            }
+        }
 
-		#masthead-mid-header-wrapper {
-			//Pledge Promo 
-			.kpcc-personalities {
-				background:transparent;
-				img {
-					display:none;
-				}
-			}
-		}
-	}
-	// Site Utilities
-	nav.utils {
-		a { color: $gray;}
-		ul li { border-color: $grayDark; }
-	}
+        #masthead-mid-header-wrapper {
+            //Pledge Promo 
+            .kpcc-personalities {
+                background:transparent;
+                img {
+                    display:none;
+                }
+            }
+        }
+    }
+    // Site Utilities
+    nav.utils {
+        a { color: $gray;}
+        ul li { border-color: $grayDark; }
+    }
 
-	// Site Nav
-	.nav-primary {
-		$this_borderColor: lighten($black, 15%);
-		@include gradient-vertical-four-stops($this_borderColor, 1%, darken($nearBlack, 5%), 2%, $black, 98%, $this_borderColor, 99%);
-		border-color: $this_borderColor;
+    // Site Nav
+    .nav-primary {
+        $this_borderColor: lighten($black, 15%);
+        @include gradient-vertical-four-stops($this_borderColor, 1%, darken($nearBlack, 5%), 2%, $black, 98%, $this_borderColor, 99%);
+        border-color: $this_borderColor;
 
-		.sections ul li.listen-live {
-			@include gradient-vertical-four-stops($this_borderColor, 1%, $nearBlack, 2%, lighten($black, 5%), 98%, $this_borderColor, 99%);
-			&:hover {
-				@include gradient-vertical(darken(#cb5f1d, 5%), darken(#9b4816, 5%));
-			}
-			a {
-				background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
-				@include opacity (0.7);
-				padding-left:33px;
-				padding-right:22px;
-				&:hover {
-					background-color:transparent;
-					color:$white;
-					@include opacity (1);
-				}
-			}
-		}
-	
-		.sections ul li {
-			a {	
-				color:$gray;		
-				&:hover, &.hover {
-					color:$white;
-				}
-			}
-			&.mega {
-				a {
-					&:hover, &.hover {
-						background-color:darken($nearBlack, 3%);
-						$nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
-						@include box-shadow($nav-shadow);
-					}
-				}
-			}
-		}
-	
-		.search-form form {
-			input.search {
-				background-color:$nearBlack;
-				border:1px solid $black;
-				color:$nearWhite;
-				&:focus {
-				    border-color:$grayDark;
-					$shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
-				    @include box-shadow($shadow);
-				}
-			}
-			input:-moz-placeholder {color: darken($gray, 10%);}
-			input::-webkit-input-placeholder {color: darken($gray, 10%);}
-		}
-	}
-	.megamenu .section {
-		border-color: $grayDark;
-	}
-	.megamenu .mega-bucket .section-mega {
-		background-color:darken($nearBlack, 3%);
-		$mega-shadow:0 5px 6px $black;
-		@include box-shadow($mega-shadow);
-		h6 { color: $white; }
-		a, .featured h4 a, ul.cbase li h4 a { color: $gray; }
-		.blog-title a { color: $grayLight; }
-		
-		ul.cbase li, 
-		.section, 
-		ul.content-types li, 
-		#about-mega #about-hero,
-		&#programs-mega .program a {
-			h4 {
-				border-color:$grayDark;
-			}
-			p { color: $gray; }
-		}
-		
-		
-		&#support-mega .section .pledge a { color: $white; }
-	}
-	.megamenu #about-mega {
-		#about-hero {border-color: $grayDark; }
-		h6 {
-			&.heading-about, &.heading-connect, &.heading-people {
-				&:before {
-				    opacity:0.4;
-				}
-			}
-		}
-	}
-	
-	
-	// MAIN BODY
-	// Headlines & Body Copy
-	.story-headline { color:$grayLight; } 
+        .sections ul li.listen-live {
+            @include gradient-vertical-four-stops($this_borderColor, 1%, $nearBlack, 2%, lighten($black, 5%), 98%, $this_borderColor, 99%);
+            &:hover {
+                @include gradient-vertical(darken(#cb5f1d, 5%), darken(#9b4816, 5%));
+            }
+            a {
+                background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+                @include opacity (0.7);
+                padding-left:33px;
+                padding-right:22px;
+                &:hover {
+                    background-color:transparent;
+                    color:$white;
+                    @include opacity (1);
+                }
+            }
+        }
+    
+        .sections ul li {
+            a { 
+                color:$gray;        
+                &:hover, &.hover {
+                    color:$white;
+                }
+            }
+            &.mega {
+                a {
+                    &:hover, &.hover {
+                        background-color:darken($nearBlack, 3%);
+                        $nav-shadow: 0 1px 3px rgba(0,0,0,1), 0 0 4px $black;
+                        @include box-shadow($nav-shadow);
+                    }
+                }
+            }
+        }
+    
+        .search-form form {
+            input.search {
+                background-color:$nearBlack;
+                border:1px solid $black;
+                color:$nearWhite;
+                &:focus {
+                    border-color:$grayDark;
+                    $shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 0 8px darken($gray, 20%);
+                    @include box-shadow($shadow);
+                }
+            }
+            input:-moz-placeholder {color: darken($gray, 10%);}
+            input::-webkit-input-placeholder {color: darken($gray, 10%);}
+        }
+    }
+    .megamenu .section {
+        border-color: $grayDark;
+    }
+    .megamenu .mega-bucket .section-mega {
+        background-color:darken($nearBlack, 3%);
+        $mega-shadow:0 5px 6px $black;
+        @include box-shadow($mega-shadow);
+        h6 { color: $white; }
+        a, .featured h4 a, ul.cbase li h4 a { color: $gray; }
+        .blog-title a { color: $grayLight; }
+        
+        ul.cbase li, 
+        .section, 
+        ul.content-types li, 
+        #about-mega #about-hero,
+        &#programs-mega .program a {
+            h4 {
+                border-color:$grayDark;
+            }
+            p { color: $gray; }
+        }
+        
+        
+        &#support-mega .section .pledge a { color: $white; }
+    }
+    .megamenu #about-mega {
+        #about-hero {border-color: $grayDark; }
+        h6 {
+            &.heading-about, &.heading-connect, &.heading-people {
+                &:before {
+                    opacity:0.4;
+                }
+            }
+        }
+    }
+    
+    
+    // MAIN BODY
+    // Headlines & Body Copy
+    .story-headline { color:$grayLight; } 
 
-	
-	// Comments
-	.comments {
-		border-top:1px solid $nearBlack;
-		
-		.dsq-comment-header, .dsq-comment-text {
-			color: $grayLight;
-		}
-		.dsq-mobile { 
-			background-color: $nearBlack !important; 
-			#dsq-topbar, #dsq-comments { background-color: $nearBlack !important; }
-			#dsq-comments {
-				.dsq-comment, .dsq-comment-body, .dsq-comment-message, .dsq-comment-text { color: $white; }
-			}
-		}
-		.dsq-options, #dsq-footer, #dsq-account-dropdown {
-			@include font-sans-serif(normal, 12px);
-		}
-		#dsq-content h3 {
-			border-bottom:1px solid $grayDark;
-		}
-		.dsq-brlink {display:none;}
-	}
-	
-	//FOOTER
-	#page-footer footer #footer-container { background-image: url(image_path('footer-arrow-dark.png')); }
+    
+    // Comments
+    .comments {
+        border-top:1px solid $nearBlack;
+        
+        .dsq-comment-header, .dsq-comment-text {
+            color: $grayLight;
+        }
+        .dsq-mobile { 
+            background-color: $nearBlack !important; 
+            #dsq-topbar, #dsq-comments { background-color: $nearBlack !important; }
+            #dsq-comments {
+                .dsq-comment, .dsq-comment-body, .dsq-comment-message, .dsq-comment-text { color: $white; }
+            }
+        }
+        .dsq-options, #dsq-footer, #dsq-account-dropdown {
+            @include font-sans-serif(normal, 12px);
+        }
+        #dsq-content h3 {
+            border-bottom:1px solid $grayDark;
+        }
+        .dsq-brlink {display:none;}
+    }
+    
+    //FOOTER
+    #page-footer footer #footer-container { background-image: url(image_path('footer-arrow-dark.png')); }
 }

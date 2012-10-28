@@ -85,9 +85,6 @@ class ContentBase < ActiveRecord::Base
   def self.published
     where(status: STATUS_LIVE).order("published_at desc")
   end
-    
-  #-------------
-
   
   #----------
   
@@ -161,21 +158,17 @@ class ContentBase < ActiveRecord::Base
   
   #----------
   
-  def as_json(*args)
+  def json
     {
       :id             => self.obj_key,
-      :obj_key        => self.obj_key,
       :headline       => self.headline,
       :short_headline => self.short_headline,
       :teaser         => self.teaser,
       :asset          => self.assets.present? ? self.assets.first.asset.lsquare.tag : nil,
       :byline         => render_byline(self,false),
       :published_at   => self.published_at,
-      :link_path      => self.link_path,
-      :admin_path     => self.admin_path,
       :status         => self.status,
-      :to_title       => self.to_title,
-      :edit_path      => self.admin_edit_path
+      :admin_path     => self.django_edit_url
     }
   end
   
@@ -183,30 +176,6 @@ class ContentBase < ActiveRecord::Base
   
   def self.status_text_collect
     ContentBase::STATUS_TEXT.map { |p| [p[1], p[0]] }
-  end
-  
-  def slideshow?
-    if self.class::PRIMARY_ASSET_SCHEME
-      return self[ self.class::PRIMARY_ASSET_SCHEME ] == "slideshow" ? true : false
-    else
-      return false
-    end
-  end
-  
-  #----------
-  
-  def admin_path
-    if self.class.const_defined? :ADMIN_PREFIX
-      return "/admin/#{self.class::ADMIN_PREFIX}/#{self.id}/"
-    else
-      self.obj_key() =~ /(\w+)\/(\w+):(\d+)/
-      
-      if $~
-        return "/admin/#{$~[1]}/#{$~[2]}/#{self.id}/"
-      else
-        return ''
-      end
-    end
   end
 
   #----------
@@ -262,11 +231,5 @@ class ContentBase < ActiveRecord::Base
     
   def public_datetime
     self.published_at
-  end
-  
-  #----------
-  
-  def status_text
-    ContentBase::STATUS_TEXT[ self.status ]
   end
 end

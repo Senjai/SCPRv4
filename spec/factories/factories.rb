@@ -589,4 +589,9 @@ factory :pij_query do
   end
 end
 
+# DataPoint #########################################################
+factory :data_point do
+  sequence(:data_key) { |i| "datapoint#{i}" }
+end
+
 end

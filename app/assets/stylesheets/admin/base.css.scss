@@ -4,6 +4,33 @@ body {
     padding-top: 50px;
 }
 
+body, p {
+  line-height: 14px;
+}
+
+small { 
+  font-size: 11px;
+}
+
+.page-header {
+  padding: 0;
+  margin: 5px 0;
+}
+
+ul.breadcrumb {
+  margin: 0;
+}
+
+.well.tight {
+  padding: 5px;
+  h6 { margin: 0 0 5px 0; padding: 0;}
+}
+
+#dashboard-stats {
+  .well { min-height: 100px; }
+  .lead { line-height: inherit; }
+}
+
 // We want content input to always be pretty big
 .simple_form {
     input:not([type=submit]) {
@@ -35,6 +62,10 @@ form.simple_form {
         &:hover {
             background: #ffffcc;
         }
+    }
+    
+    .counter-notify {
+        @extend .span7;
     }
     
     .inline { // Extend bootstrap .inline
@@ -140,4 +171,13 @@ ul.dropdown-menu li button {
 .transparent { 
     @include opacity(0.2);
     @include transition(.1s linear all);
+}
+
+#fixed-sidebar.affix {
+  width: 265px;
+  top: 60px;
+}
+
+.alert .close {
+  line-height: 12px;
 }

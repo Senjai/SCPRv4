@@ -1,6 +1,8 @@
-class ProgramsController < ApplicationController  
-  before_filter :get_program, except: [:index, :schedule]
-  before_filter :get_featured_programs, only: :index
+class ProgramsController < ApplicationController
+  before_filter :redirect_for_quick_slug, only: [:show], if: -> { params[:quick_slug].present? }
+  before_filter :get_any_program, only: [:show]
+  before_filter :get_kpcc_program!, only: [:archive, :episode]
+  before_filter :get_featured_programs, only: [:index]
 
   respond_to :html, :xml, :rss
   
@@ -39,8 +41,8 @@ class ProgramsController < ApplicationController
       
       # Don't want to paginate for XML response
       @segments_scoped = @segments
-      @segments = @segments.paginate(page: params[:page], per_page: 10)
-      @episodes = @episodes.paginate(page: params[:page], per_page: 6)
+      @segments = @segments.page(params[:page]).per(10)
+      @episodes = @episodes.page(params[:page]).per(6)
       
       respond_with @segments_scoped
     else
@@ -51,7 +53,9 @@ class ProgramsController < ApplicationController
     end
   end
   
-  def archive
+  #----------
+  
+  def archive    
     # If the date wasn't specified, send them to the program page's archive section
     if params[:archive].blank?
       redirect_to program_path(@program.slug, anchor: "archive-select") and return
@@ -72,7 +76,8 @@ class ProgramsController < ApplicationController
   #----------
   
   def segment
-    @segment = ShowSegment.published.find(params[:id])
+    @segment = ShowSegment.published.includes(:show).find(params[:id])
+    @program = @segment.show
     
     # check whether this is the correct URL for the segment
     if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
@@ -88,21 +93,32 @@ class ProgramsController < ApplicationController
     @segments = @episode.segments.published
   end
 
+  #----------
+
   def schedule
     @schedule_slots = Schedule.all
     render layout: "application"
   end
   
+  #----------
+  #----------
+  
   protected
     
     # Try various ways to fetch the program the person requested
     # If nothing is found, 404
-    def get_program
-      @program = get_kpcc_program_by_quick_slug || get_kpcc_program_by_slug || get_other_program
+    def get_any_program
+      @program = KpccProgram.find_by_slug(params[:show]) || OtherProgram.find_by_slug(params[:show])
       
       if !@program
         raise ActionController::RoutingError.new("Not Found")
       end
+    end
+
+    # ---------------
+    
+    def get_kpcc_program!
+      @program = KpccProgram.find_by_slug!(params[:show])
     end
     
     # ---------------
@@ -113,26 +129,12 @@ class ProgramsController < ApplicationController
     end
     
     # ---------------
+
+  private
     
-    def get_kpcc_program_by_slug
-      if params[:show]
-        KpccProgram.find_by_slug(params[:show])
-      else
-        return false
-      end
+    def redirect_for_quick_slug
+      program = KpccProgram.find_by_quick_slug!(params[:quick_slug])
+      redirect_to program_path(program.slug) and return
     end
-    
-    def get_kpcc_program_by_quick_slug
-      if params[:quick_slug]
-        if program = KpccProgram.find_by_quick_slug(params[:quick_slug])
-          redirect_to program_path(program.slug) and return program
-        end
-      else
-        return false
-      end
-    end
-    
-    def get_other_program
-      OtherProgram.find_by_slug(params[:show])
-    end
+  #
 end

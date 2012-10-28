@@ -1,28 +1,28 @@
 <div class="featured presentation" id="featured_queries">
-	<h2 class="heading-block dark">Featured</h2>
-	<div class="cards">
-			<% @featured.each do |query| %>
-				<div class="card" id="featured_query_<%=query.id%>">
-					<div class="row-fluid">
-					
-						<% if query.assets.present? %>
-							<div class="span4">
-								<%= render_asset query, "thumb" %>
-							</div>
-							<div class="span20">
-						<% else %>
-							<div class="span24">
-						<% end %>
-					
-							<h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
-							<p><%= query.teaser %></p>
-						</div> <!-- span -->
-					</div> <!-- row-fluid -->
-				</div> <!-- card -->
-			<% end %>
-	</div>
+  <h2 class="heading-block dark">Featured</h2>
+  <div class="cards">
+      <% @featured.each do |query| %>
+        <div class="card" id="featured_query_<%=query.id%>">
+          <div class="row-fluid">
+          
+            <% if query.assets.present? %>
+              <div class="span4">
+                <%= render_asset query, "thumb" %>
+              </div>
+              <div class="span20">
+            <% else %>
+              <div class="span24">
+            <% end %>
+          
+              <h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
+              <p><%= query.teaser %></p>
+            </div> <!-- span -->
+          </div> <!-- row-fluid -->
+        </div> <!-- card -->
+      <% end %>
+  </div>
 </div>
 
 <% content_for :footerjss do %>
-	var featuredQueries = new scpr.Presentation({el: "#featured_queries"});
+  var featuredQueries = new scpr.Presentation({el: "#featured_queries"});
 <% end %>

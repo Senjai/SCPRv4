@@ -13,14 +13,14 @@ module Model
         has_one :alarm, as: :content, class_name: "ContentAlarm", dependent: :destroy
         accepts_nested_attributes_for :alarm, reject_if: :should_reject_alarm?, allow_destroy: true
         
-        before_save :mark_alarm_for_destruction, if: :should_destroy_alarm?
+        before_save :destroy_alarm, if: :should_destroy_alarm?
         
         #------------------
         
         # If we're changing status from Pending to something else,
         # and there was an alarm, get rid of it.
         def should_destroy_alarm?
-          self.alarm.present? and self.status_changed? and self.status_was == ContentBase::STATUS_PENDING
+          self.alarm.present? && self.status_changed? && self.status_was == ContentBase::STATUS_PENDING
         end
         
         def should_reject_alarm?(attributes)

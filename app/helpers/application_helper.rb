@@ -26,7 +26,7 @@ module ApplicationHelper
     if !content
       return ''
     end
-    
+
     html = ''
     
     (content.is_a?(Array) ? content : [content]).each do |c|
@@ -117,32 +117,6 @@ module ApplicationHelper
     images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png"]
     image_tag "personalities/#{images[rand(images.size)]}"
   end
-
-  #----------
-  
-  def smart_date(content,options={})
-    options = {
-      :today_template => "%-I:%M%P",
-      :template       => "%b %e, %Y"
-    }.merge(options)
-    
-    if !content || !content.respond_to?("public_datetime")
-      return ""
-    end
-    
-    if content.public_datetime.to_date == Date.today()
-      if content.public_datetime.is_a? Time
-        return content.public_datetime.strftime(options[:today_template])          
-      else
-        return "| Today"
-      end
-    elsif options && options[:today]
-      # we only want a date if it is today's date, so return nothing
-      return ''
-    else
-      return content.public_datetime.strftime(options[:template])
-    end
-  end
   
   #----------
   
@@ -167,7 +141,14 @@ module ApplicationHelper
   def render_byline(content,links = true)
     if !content || !content.respond_to?(:sorted_bylines)
       return ""
-    end    
+    end
+    
+    key = "byline:#{content.cache_key}:#{links ? "links" : "text"}"
+    
+    # Check if we have a cache
+    if cached = Rails.cache.fetch(key)
+      return cached
+    end
     
     authors = content.sorted_bylines
         
@@ -201,17 +182,20 @@ module ApplicationHelper
     
     if byels.length > 0
       if authors[0].length == 0 and authors[1].length == 0
-        return byels.join(" | ").html_safe
+        byline = byels.join(" | ").html_safe
       else
-        return ("By " + [names.join(" with "), byels.join(" | ")].join(" | ")).html_safe
+        byline = ("By " + [names.join(" with "), byels.join(" | ")].join(" | ")).html_safe
       end
     else
       if names.any?
-        return ("By " + names.join(" with ")).html_safe
+        byline = ("By " + names.join(" with ")).html_safe
       else
-        return ""
+        byline = ""
       end
     end
+    
+    key = Rails.cache.write(key, byline)
+    byline
   end
   
   #----------

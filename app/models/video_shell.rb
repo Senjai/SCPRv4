@@ -10,7 +10,6 @@ class VideoShell < ContentBase
 
 
   self.table_name = "contentbase_videoshell"
-  ADMIN_PREFIX    = "contentbase/videoshell"
   ROUTE_KEY       = "video"
   
   acts_as_content
@@ -31,14 +30,15 @@ class VideoShell < ContentBase
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
-      list.column "headline"
-      list.column "slug"
-      list.column "bylines"
-      list.column "status"
-      list.column "published_at"
+  administrate do
+    define_list do
+      list_order "published_at desc"
+      
+      column :headline
+      column :slug
+      column :bylines
+      column :status
+      column :published_at
     end
   end
 

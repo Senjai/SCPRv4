@@ -4,14 +4,14 @@ class Category < ActiveRecord::Base
   self.table_name = 'contentbase_category'
   ROUTE_KEY       = "category"
   has_secretary
-  administrate do |admin|
-    admin.define_list do |list|
-      list.per_page = "all"
+  administrate do
+    define_list do
+      list_per_page :all
       
-      list.column :title, linked: true
-      list.column :slug
-      list.column :is_news
-      list.column :comment_bucket
+      column :title, linked: true
+      column :slug
+      column :is_news
+      column :comment_bucket
     end
   end
   

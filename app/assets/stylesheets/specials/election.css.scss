@@ -1,207 +1,343 @@
 .hero-election {
-	box-shadow: inset 0 -24px 24px -24px rgba(0,0,0,0.22), inset 0  24px 24px -24px rgba(0,0,0,0.22);
 	@include font-heading();
-	margin:-25px 0 $baseline 0;
-	h2, h3 {
-		@include font-slab-headings();
-	}
-	h1 {
-		margin-bottom:($baseline /2);
-		margin-top:($baseline /2);
-		width:367px;
-		height:24px;
-		img {
-			max-width:100%;
-		}
-	}
-	.outcome {
-		@include ie-inline-block();
-		@include hide-text();
-		width:67px;
-		height:18px;
-		margin-left:6px;
-		&.passed {
-			background:url(image_path('specials/election/ballot-passed.png')) no-repeat 0 0;
-		}
-		&.failed {
-			background:url(image_path('specials/election/ballot-failed.png')) no-repeat 0 0;
-		}
-	}
-	.vert-divider {
-		right:-7.702%;
-	}
-	.split {
-		display:block;
-		float:left;
-		width:49%;
-		margin-left:2%;
-		&:first-child {
-			margin-left:0;
-		}
-	}
-	.candidate, .proposition {
-		height:55px;
-	}
-	.candidate {
-		.split {
-			background-position:0 1px;
-			background-repeat:no-repeat;
-			height:55px;
-			h4 {
-				color:#585858;
-				font-size:.928571429em;
-				padding:1.071428571em 0 0 53px;
-				text-transform:uppercase;
-			}
-		}
-	}
-	.proposition {
-		h4 {
-			@include font-slab-headings();
-			color:#585858;
-			font-size:2.571428571em;
-			font-weight:500;
-			padding-top:15px;
-		}
-	}
-	.banner {
-		background-color:$black;
+	font-size:13px;
+	margin-bottom:22px;
+	text-shadow:0 1px 0 rgba(0,0,0,0.67);
+	.election-header {
+		background:#134b94 url(image_path('specials/election/bg-header.jpg')) no-repeat 0 0;
+		border-bottom:1px solid #115695;
 		position:relative;
-		h3 {
-			@include ie-inline-block();
+		text-align:center;
+		h1 {
+			color:#f1f1f1;
+			font-size:1.846153846em;
+			line-height:24px;
+			margin:8px 0 4px;
+			text-transform:uppercase;
+		}
+		.share-link {
+			background:url(image_path('specials/election/ico-share.png')) no-repeat 0 2px;
 			color:$white;
-			font-size:1.071428571em;
-			font-weight:300;
-			padding:4px 8px;
-		}
-		a {
-			@include font-sans-serif(normal, .857142857em);
-			padding-left:8px;
-			padding-right:8px;
-			white-space:nowrap;
-		}
-		.pennant {
-			width:0px; 
-			height:0px; 
-			border-bottom:13px solid transparent;
-			border-top:13px solid transparent;
-			border-right:13px solid $white; 
-			font-size:0px;
-			line-height:0px;
+			font-size:0.923076923em;
+			font-weight:800;
+			text-transform:uppercase;
+			padding-left:25px;
 			position:absolute;
-			right:0;
-			top:1px;
+			top:9px;
+			right:10px;
+			span,a { cursor: pointer; }
+		}
+	}
+	.header-well {
+		background:#032e54;
+		border-top:1px solid #002035;
+		border-bottom:1px solid #2e2e2e;
+		font-size:1em;
+		font-weight:400;
+		padding:3px 10px;
+		.live-tweet {
+			background:url(image_path('specials/election/ico-twitter.png')) no-repeat 0 2px;
+			color:$white;
+			float:left;
+			margin-right:10px;
+			padding-left:26px;
+			text-transform:uppercase;
+		}
+		ul {	
+			margin:0;
+			li {
+				display:none;
+				list-style:none;
+				color:#6bc6f2;
+				&.active {
+					display:block;
+				}
+				a.twitter-icon {
+					display: inline-block;
+					width: 18px;
+					margin-left: 5px;
+					background: url(image_path('icons/share-twitter.png')) no-repeat;
+					&:hover { text-decoration: none; }
+				}
+			}
 		}
 	}
 	.results {
-		padding:8px 0;
-		h4 {
-			color:#b82227;
-			font-size:2.142857143em;
-			text-shadow:0 1px 0 $white;
-			small {
-				font-size:.8em;
-				font-weight:800;
-				&.place {
-					font-size:.6em;
+		background:#2e2e2e;
+		border-top:1px solid #414141;
+		color:#fff;
+		.results-block {
+			min-height:320px;
+			header {
+				background:url(image_path('specials/election/bg-subhead.png')) repeat-x 0 0;
+				margin-right:-5.5%;
+				margin-left:-5.3%;
+				position:relative;
+				&.first {
+					margin-left:0;
+				}
+				&.last {
+					margin-right:0;
+				}
+				h2 {
+					color:#6bc6f2;
+					font-size:1.230769231em;
+					padding:0 10px;
+					text-transform:uppercase;
+				}
+				aside {
+					color:#9c9c9c;
+					font-size:0.923076923em;
+					font-weight:400;
+					position:absolute;
+					right:10px;
+					top:4px;
 				}
 			}
-		}
-	}
-	footer {
-		text-align:center;
-		span {
-			font-size:.785714286em;
-			font-weight:normal;
-		}
-	}
-	.list {
-		ul, ul#voter-tools {
-			text-align:left;
-			margin:0;
-			&.dropdown-menu {
-				margin-left:17px;
+			.vert-divider {
+				background-color:#1d1d1d;
+				border-right:1px solid #484848;
+				right:-5.850225%;
 			}
-			li {
-				background:url(image_path('specials/election/bullet-star.png')) no-repeat 0 12px;
-				@include font-heading();
-				list-style-type:none;
-				padding-left:20px;
-				border-bottom:1px solid $grayLighter;
-				li {
-					background:none;
-					padding-left:8px;
+			.candidate, .initiative {
+				border-bottom:1px solid #1d1d1d;
+				border-top:1px solid #484848;
+				min-height:51px;
+				padding:12px 10px 0;
+				&.first {
+					border-top:none;
 				}
-				&.open a {
-					background-color:transparent;
-					color:$linkColorHover;
-					.caret {
-						border-bottom-color:$linkColorHover;
-						border-top-color:$linkColorHover;
-					}
+				&.last {
+					border-bottom:none;
 				}
-				a {
-					display:block;
-					line-height:20px;
-					padding:9px 0;
-					&:hover {
-						background-color:transparent;
-						color:$linkColorHover;
-					}
-					.caret {
-						margin-top:8px;
-					}
+				.percentage {
+					color:$white !important;
+					font-size:0.5625em;
+					margin-left:4px;
+					vertical-align:super;
 				}
 			}
-		}
-	}
-}
-
-// Below Max Width
-@media screen and (max-width: $mediaMax - 1) and (min-width: 769px) {
-	.hero-election {
-		h2 {
-			font-size:1.714285714em;
-		}
-		.pennant {
-			display:none;
-		}
-		.candidate {
-			.split {
-				background-image:none;
+			.initiative {
+				@include clearfix();
+				&.local {
+					.title {
+						width:120px;
+						h3 {
+							font-size:2em;
+						}
+					}
+				}
+				.title {
+					float:left;
+					h3 {
+						color:$white;
+						font-size:2.307692308em;
+						font-weight:100;
+					}
+					p {
+						color:#858585;
+						@include font-heading();
+						font-size:0.846153846em;
+						font-weight:600;
+						margin-bottom:0;
+					}
+				}
+				.result {
+					@include clearfix();
+					float:right;
+					width:140px;
+					margin-top:-3px;
+					.yes {
+						float:left;
+						width:60px;
+						&.pass {
+							span {
+								background:url(image_path('specials/election/ico-checkbox-sm.png')) no-repeat right 3px;
+								color:#74bd3a;
+								padding-right:18px;
+							}
+						}
+					}
+					.no {
+						float:right;
+						width:60px;
+						&.fail {
+							span {
+								background:url(image_path('specials/election/ico-strikethrough-sm.png')) no-repeat right 3px;
+								color:#da1020;
+								padding-right:18px;
+							}
+						}
+					}
+					strong {
+						display:block;
+						font-size:2.461538462em;
+						margin-bottom:4px;
+					}
+					span {
+						color:#b3b3b3;
+						display:inline-block;
+						font-size:1.230769231em;
+						margin-left:6px;
+						text-transform:uppercase;
+					}
+					.vert-divider {
+						background-color:#484848;
+						border-right:none;
+						right:50%;
+					}
+				}
+			}
+			.candidate {
+				position:relative;
+				@include clearfix();
+				background:no-repeat 10px 6px;
+				&.obama {
+					background-image:url(image_path('specials/election/head-obama.png'));
+					.result strong {
+						color:#0f93d2;
+					}
+				}
+				&.romney {
+					background-image:url(image_path('specials/election/head-romney.png'));
+					.result strong {
+						color:#e53f48;
+					}
+				}
+				&.berman {
+					background-image:url(image_path('specials/election/head-berman.png'));
+				}
+				&.sherman {
+					background-image:url(image_path('specials/election/head-sherman.png'));
+					background-position:15px 6px;
+				}
+				&.lacey {
+					background-image:url(image_path('specials/election/head-lacey.png'));
+				}
+				&.jackson {
+					background-image:url(image_path('specials/election/head-jackson.png'));
+				}
 				h4 {
-					padding-left:0;
+					color:$white;
+					float:left;
+					font-size:1.384615385em;
+					font-weight:100;
+					padding-left:60px;
+					em {
+						background:url(image_path('specials/election/ico-checkbox.png')) no-repeat 0 2px;
+						display:block;
+						color:#74bd3a;
+						font-size:0.666666667em;
+						font-style:normal;
+						font-weight:600;
+						margin-bottom:0;
+						padding-left:24px;
+					}
+				}
+				.result {
+					text-align:right;
+					float:right;
+					width:62px;
+					strong {
+						display:block;
+						font-size:2.461538462em;
+						font-weight:900;
+						margin-bottom:6px;
+					}
+					span {
+						color:#858585;
+						@include ie-inline-block();
+						font-size:0.769230769em;
+						line-height:11px;
+						text-transform:uppercase;
+					}
+				}
+			}
+		}
+	}
+	.visible-mobile {
+		display:none;
+	}
+}
+
+// Between Small Desktop & Mid-Portrait 
+@media screen and (min-width: 768px + 1) and (max-width: $mediaDesktopSmall) {
+	.hero-election {
+		font-size:11px;
+		.results {
+			.results-block {
+				.candidate, .initiative {
+					padding-right:4px;
+					padding-left:4px;
+				}
+				.initiative {
+					&.local {
+						.title {
+							width:100px;
+						}
+					}
+					.result {
+						width:110px;
+						.yes, .no {
+							width:52px;
+						}
+						.vert-divider {
+							display:none;
+						}
+					}
+				}
+				.candidate {
+					background-image:none !important;
+					h4 {
+						font-size:1.6em;
+						padding-left:0;
+					}
 				}
 			}
 		}
 	}
 }
-
-// At Tablet breakpoint we drop down to one column
+// Below Mid-Portrait 
 @media screen and (max-width: 768px) {
 	.hero-election {
-		// Make all columns even
-		.row-fluid > [class*="span"] {
-			float: none;
-			display: block;
-			width: auto;
-			margin: 0;
-			border-bottom:1px solid $grayLight;
-			&:last-child {
-				border-bottom:none;
+		font-size:13px;
+		.election-header {
+			float:none;
+			h1 {
+				font-size:1.230769231em;
+				padding-left:10px;
+				padding-top:7px;
+				text-align:left;
+			}
+			.share-link {
+				width:20px;
+				height:20px;
+				padding-left:0;
+				span {
+					display:none;
+				}
 			}
 		}
-		footer {
-			text-align:left;
+		.header-well {
+			.visible-mobile {
+				display:block;
+			}
+			.tweets {
+				display:none;
+			}
 		}
-	}
-}
-@media screen and (max-width: 480px) {
-	.hero-election {
-		h1 {
-			width:300px;
-			img {
-				width:300px;
+		.span8 {
+			float:none;
+			margin-left:0;
+			width:100%;
+		}
+		.results {
+			.results-block {
+				min-height:0;
+				header {
+					margin-right:0;
+					margin-left:0;
+				}
 			}
 		}
 	}

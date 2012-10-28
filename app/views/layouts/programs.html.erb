@@ -1,42 +1,42 @@
 <% content_for :title_bar do %>
 <div class="page-header program-masthead">
-	<div class="row-fluid">
-		<div class="span16" id="program-masthead-title">
-			<div class="program-info<%= " headshot #{@program.slug}" if KpccProgram::Featured.include? @program.slug  %>">
-				<h1 class="page-title"><%= link_to @program.title, program_path(@program.slug) %></h1>
-				<div class="show-meta">
-					<%= @program.airtime %>
-					<% if @program.host.present? %>
-						<br />with <%= @program.host %>
-					<% end %>
-				</div> <!-- show meta -->
-			</div> <!-- program info -->
-		</div>
-		
-		<div class="span8" id="program-masthead-support">
-			<div class="support">
-				<a class="<%= "small" if @program.title.length > 20 %>" href="http://scprcontribute.publicradio.org/">
-					Support all the great programming on KPCC, including <%= @program.title %>.
-				</a> 
-			</div><!-- .support -->
-		</div> <!-- span -->
-	</div><!-- row -->
+  <div class="row-fluid">
+    <div class="span16" id="program-masthead-title">
+      <div class="program-info<%= " headshot #{@program.slug}" if KpccProgram::Featured.include? @program.slug  %>">
+        <h1 class="page-title"><%= link_to @program.title, program_path(@program.slug) %></h1>
+        <div class="show-meta">
+          <%= @program.airtime %>
+          <% if @program.host.present? %>
+            <br />with <%= @program.host %>
+          <% end %>
+        </div> <!-- show meta -->
+      </div> <!-- program info -->
+    </div>
+    
+    <div class="span8" id="program-masthead-support">
+      <div class="support">
+        <a class="<%= "small" if @program.title.length > 20 %>" href="http://scprcontribute.publicradio.org/">
+          Support all the great programming on KPCC, including <%= @program.title %>.
+        </a> 
+      </div><!-- .support -->
+    </div> <!-- span -->
+  </div><!-- row -->
 </div>
 <% end %>
 
 <% content_for :content do %>
-	<%= content_for?(:program_content) ? yield(:program_content) : yield %>
+  <%= content_for?(:program_content) ? yield(:program_content) : yield %>
 <% end %>
 
 <% content_for :sidebar_middle do %>
-	<% if @program.is_a? KpccProgram %>
-		<%= render "shared/widgets/program_about", program: @program %>
-		<%= render "shared/widgets/missed_it_bucket", object: @program %>
-		
-		<% if @program.blog.present? %>
-			<%= render 'blogs/recent_posts', blog: @program.blog, title: "From the Blog: #{@program.blog.name}" %>
-		<% end %>
-	<% end %>
+  <% if @program.is_a? KpccProgram %>
+    <%= render "shared/widgets/program_about", program: @program %>
+    <%= render "shared/widgets/missed_it_bucket", object: @program %>
+    
+    <% if @program.blog.present? %>
+      <%= render 'blogs/recent_posts', blog: @program.blog, title: "From the Blog: #{@program.blog.name}" %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= render :template => "layouts/application" %>

@@ -5,13 +5,13 @@ class Section < ActiveRecord::Base
   
   #----------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.per_page = "all"
+  administrate do
+    define_list do
+      list_per_page :all
       
-      list.column "id"
-      list.column "title", linked: true
-      list.column "slug"
+      column :id
+      column :title, linked: true
+      column :slug
     end
   end
 

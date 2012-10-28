@@ -17,7 +17,7 @@ class BlogsController < ApplicationController
   def show
     # Only want to paginate for HTML response
     @scoped_entries = @blog.entries.published
-    @entries = @scoped_entries.paginate(page: params[:page], per_page: 5)
+    @entries = @scoped_entries.page(params[:page]).per(5)
     respond_with @scoped_entries
   end
   
@@ -63,7 +63,7 @@ class BlogsController < ApplicationController
                    .joins("left join blogs_entry on blogs_entry.id = taggit_taggeditem.content_id")
                    .where("blogs_entry.blog_id = ? and blogs_entry.status = ?",@blog.id, ContentBase::STATUS_LIVE)
                    .order("blogs_entry.published_at desc")
-                   .paginate(:page => params[:page] || 1, :per_page => 5)
+                   .page(params[:page]).per(5)
   end
   
   #----------
@@ -72,10 +72,9 @@ class BlogsController < ApplicationController
     @category = BlogCategory.where(slug: params[:category],
                                       blog_id: @blog.id).first!
                                     
-    @entries = @category.blog_entries
-                        .published
+    @entries = @category.blog_entries.published
                         .order("blogs_entry.published_at desc")
-                        .paginate(page: params[:page] || 1, per_page: 5)
+                        .page(params[:page]).per(5)
     
     @BLOGTITLE_EXTRA = ": #{@category.title}"
     @MESSAGE = "There are no blog posts for <b>#{@blog.name}</b> " \
@@ -98,7 +97,7 @@ class BlogsController < ApplicationController
     date = Date.new(params[:year].to_i, params[:month].to_i)
     @entries = @blog.entries.published.where(
                 "published_at >= ? AND published_at < ?", date.beginning_of_month, date.end_of_month
-              ).paginate(page: params[:page] || 1, per_page: 5)
+              ).page(params[:page]).per(5)
    
     datestr = "#{date.strftime("%B")}, #{date.year}"
     @BLOGTITLE_EXTRA = ": #{datestr}"
@@ -111,8 +110,7 @@ class BlogsController < ApplicationController
   #----------
   
   protected
-    def load_blog
-      @blog = Blog.local.find_by_slug!(params[:blog])
-      @authors = @blog.authors
-    end    
+  def load_blog
+    @blog = Blog.local.includes(:authors, :blog_categories).find_by_slug!(params[:blog])
+  end
 end

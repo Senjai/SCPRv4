@@ -9,15 +9,8 @@ module AdminResource
       end
       
       module ClassMethods
-        # Wrappers for ActiveModel::Naming
-        def route_key
-          @route_key ||= ActiveModel::Naming.route_key(self)
-        end
-        
-        #--------------
-        
-        def singular_route_key
-          @singular_route_key ||= ActiveModel::Naming.singular_route_key(self)
+        def to_title
+          self.name.demodulize.titleize
         end
 
         #--------------
@@ -28,13 +21,6 @@ module AdminResource
           else
             self.name.tableize
           end
-        end
-
-        #--------------
-        
-        # This should go away eventually
-        def django_admin_url
-          "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
         end
 
         #--------------
@@ -70,8 +56,6 @@ module AdminResource
       #   blog.to_title   #=> "Some Blog"
       #   photo.to_title  #=> "Photo #10"
       #
-      #
-            
       def title_method
         @title_method ||= begin
           attributes = AdminResource.config.title_attributes
@@ -88,23 +72,37 @@ module AdminResource
       #-------------
       
       def simple_title
-        class_title = self.class.name.demodulize.titleize
-        
-        if self.new_record?
-          "New #{class_title}"
-        else
-          "#{class_title} ##{self.id}"
+        @simple_title ||= begin
+          if self.new_record?
+            "New #{self.class.to_title}"
+          else
+            "#{self.class.to_title} ##{self.id}"
+          end
         end
       end
 
       #-------------
+      # This method should be overridden
+      # Don't override as_json unless you don't
+      # want its baked-in goodies
+      def json
+        # Super is temporary for ContentBase stuff
+        # Since this module sits between CB and its subclasses
+        super rescue {}
+      end
+      
+      #-------------
       # Define some defaults for as_json
+      # Override `self.json` to add attributes
+      # or override any of these.
       def as_json(*args)
-        super.merge!(
-          :obj_key   => self.obj_key,
-          :to_title  => self.to_title,
-          :edit_path => self.admin_edit_path
-        )
+        {
+          :id         => self.id,
+          :obj_key    => self.obj_key,          
+          :link_path  => self.link_path,
+          :to_title   => self.to_title,
+          :edit_path  => self.admin_edit_path
+        }.merge! self.json
       end
 
       #-------------
@@ -129,13 +127,6 @@ module AdminResource
       # Default obj_key pattern
       def obj_key
         @obj_key ||= [self.class.content_key,self.id || "new"].join(":")
-      end
-      
-      #-------------
-      
-      # This should go away eventually
-      def django_edit_url          
-        [self.class.django_admin_url, self.id || "add"].join "/"
       end
       
       #-------------

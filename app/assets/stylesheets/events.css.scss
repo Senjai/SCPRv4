@@ -1,9 +1,9 @@
 a.event-link {
-	@include font-shorthand($size: 12px);
-	@include ie-inline-block;
-	padding-left: 25px;
-	min-height: 19px;
-	background: url(image_path("icons/calendar-icon.png")) no-repeat left top;
+    @include font-shorthand($size: 12px);
+    @include ie-inline-block;
+    padding-left: 25px;
+    min-height: 19px;
+    background: url(image_path("icons/calendar-icon.png")) no-repeat left top;
 }
 
 span.fake-link {
@@ -12,471 +12,475 @@ span.fake-link {
   line-height: inherit;
   font-weight: inherit;
   &:hover {
-	cursor: pointer;
-	color: $linkColorHover;
-	text-decoration: underline;
+    cursor: pointer;
+    color: $linkColorHover;
+    text-decoration: underline;
   }
 
-	&.bold {
-		font-weight: 500;
-	}
+    &.bold {
+        font-weight: 500;
+    }
 }
 
 @mixin event-headers {
-	h1, h2, h4.story-title {
-		a {
-			color: #000;
-		}
-	}
-		
-	h1.story-title {
-		@include font-headline($weight: 600);
-		font-size:22px;
-		margin: 4px 0;
-	}
-	
-	h2.story-title {
-		@include font-headline($weight: 600);
-		font-size:18px;
-		margin: 10px 0;
-	}
-	
-	h3 {
-		@include font-slab-headings($size: 15px, $lineHeight: 18px);
-		text-transform: uppercase;
-	}
-	
-	h4.story-title {
-		@include font-headline($weight: 600);
-		font-size:15px;
-	}
-	
-	h6.upcoming {
-		@include font-slab-headings($size: 18px, $lineHeight: 18px);
-		text-transform: uppercase;
-		margin-bottom: 10px;
-	}
+    h1, h2, h4.story-title {
+        a {
+            color: #000;
+        }
+    }
+        
+    h1.story-title {
+        @include font-headline($weight: 600);
+        font-size:22px;
+        margin: 4px 0;
+    }
+    
+    h2.story-title {
+        @include font-headline($weight: 600);
+        font-size:18px;
+        margin: 10px 0;
+    }
+    
+    h3 {
+        @include font-slab-headings($size: 15px, $lineHeight: 18px);
+        text-transform: uppercase;
+    }
+    
+    h4.story-title {
+        @include font-headline($weight: 600);
+        font-size:15px;
+    }
+    
+    h6.upcoming {
+        @include font-slab-headings($size: 18px, $lineHeight: 18px);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
 }
 
 #forum { @include event-headers; }
 
 .event {
-	@include event-headers;
-	
-	&.future {
-		margin: 10px 0;
-		@include font-serif($size: 13px);
-		h4 {
-			margin-top:0;
-			a { color:$nearBlack; }
-		}
-	}
-	
-	&.past {
-		padding: 15px 0;
-		.byline {
-			@include font-serif($size: 12px);
-		}
-	}
-	
-	
-	.story-headline.event-headline {
-		margin-bottom: 10px;
-	}
-	.sponsor {
-		color:$gray;
-		@include font-heading($size: 11px, $weight: 400);
-		margin-bottom:0;
-		a {
-			color:$nearBlack;
-		}
-	}
-	&.content-block {
-		.event-details {
-			padding: 5px 0;
-			margin-bottom: 10px;
-			border-top: 1px solid $grayLighter;
-			border-bottom: 1px solid $grayLighter;
-			a {
-				margin: 5px 0;
-			}
-			.upcoming-date {
-				background: url(image_path('icons/calendar-icon-orange.png')) no-repeat left 5px;
-				color:$orangeDark;
-				@include font-heading($size: 13px, $weight: 600, $lineHeight: 16px);
-				min-height:25px;
-				padding:3px 0 0 26px;
-			}
-			.past-date {
-				background: url(image_path('icons/calendar-icon-black.png')) no-repeat left 5px;
-				@include font-heading($size: 12px);
-				padding-left: 26px;
-			}
-			.location-text {
-				@include font-heading($size: 12px, $lineHeight: 14px);
-				@include ie-inline-block;
-				vertical-align: top;
-				margin-right: 10px;
-				color: $gray;
-			}
-			ul.address {
-				padding: 0;
-				margin: 0;
-				@include ie-inline-block;
-				li {
-					@include font-heading($size: 13px, $weight: 400, $lineHeight: 16px);
-					list-style: none;
-				}
+    @include event-headers;
+    
+    &.future {
+        margin: 10px 0;
+        @include font-serif($size: 13px);
+        h4 {
+            margin-top:0;
+            a { color:$nearBlack; }
+        }
+    }
+    
+    &.past {
+        padding: 15px 0;
+        .byline {
+            @include font-serif($size: 12px);
+        }
+    }
+    
+    
+    .story-headline.event-headline {
+        margin-bottom: 10px;
+    }
+    .sponsor {
+        color:$gray;
+        @include font-heading($size: 11px, $weight: 400);
+        margin-bottom:0;
+        a {
+            color:$nearBlack;
+        }
+    }
+    &.content-block {
+        .event-details {
+            padding: 5px 0;
+            margin-bottom: 10px;
+            border-top: 1px solid $grayLighter;
+            border-bottom: 1px solid $grayLighter;
+            a {
+                margin: 5px 0;
+            }
+            .upcoming-date {
+                background: url(image_path('icons/calendar-icon-orange.png')) no-repeat left 5px;
+                color:$orangeDark;
+                @include font-heading($size: 13px, $weight: 600, $lineHeight: 16px);
+                min-height:25px;
+                padding:3px 0 0 26px;
+            }
+            .past-date {
+                background: url(image_path('icons/calendar-icon-black.png')) no-repeat left 5px;
+                @include font-heading($size: 12px);
+                padding-left: 26px;
+            }
+            .location-text {
+                @include font-heading($size: 12px, $lineHeight: 14px);
+                @include ie-inline-block;
+                vertical-align: top;
+                margin-right: 10px;
+                color: $gray;
+            }
+            ul.address {
+                padding: 0;
+                margin: 0;
+                @include ie-inline-block;
+                li {
+                    @include font-heading($size: 13px, $weight: 400, $lineHeight: 16px);
+                    list-style: none;
+                }
 
-				.blue {
-					color: $blue;
-				}
-			}
-			.map-link {
-				background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 6px;
-				padding-right:15px;
-				&:hover {
-					background-position:right -38px;
-				}
-			}
-		}
-	}
+                .blue {
+                    color: $blue;
+                }
+            }
+            .map-link {
+                background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 6px;
+                padding-right:15px;
+                &:hover {
+                    background-position:right -38px;
+                }
+            }
+        }
+    }
 }
 
 .more-events {
-	border-bottom:1px solid $grayLight;
-	margin-bottom: 10px;
-	
-	.event { 
-		margin-bottom: 10px;
-	}
-	
-	h5 a {
-		color: $nearBlack;
-		@include font-headline($weight: 600);
-		font-size:15px;
-		line-height:18px;
-	}
+    border-bottom:1px solid $grayLight;
+    margin-bottom: 10px;
+    
+    .event { 
+        margin-bottom: 10px;
+    }
+    
+    h5 a {
+        color: $nearBlack;
+        @include font-headline($weight: 600);
+        font-size:15px;
+        line-height:18px;
+    }
 }
 
 .events-fold {
-	.comments, .comment-count { 
-		border-top: none;
-		padding-top: none;
-	}
+    .comments, .comment-count { 
+        border-top: none;
+        padding-top: none;
+    }
 }
 
 .events {
-	.upcoming-events {
-		.event {
-			border-bottom: 1px solid $grayLighter;
-			margin-bottom: 5px;
-			&.closest {
-				padding-bottom:10px;
-			}
-		}
-	}
+    .upcoming-events {
+        .event {
+            border-bottom: 1px solid $grayLighter;
+            margin-bottom: 5px;
+            &.closest {
+                padding-bottom:10px;
+            }
+        }
+    }
 
-	.social {
-		.banners {
-			margin-bottom: 10px;
-			border-bottom: 1px solid $grayLighter;
-			line-height: 0; // so the line break between the links doesn't have any space
-			a {
-				display: block;
-				@include font-sans-serif(bold, 12px, 14px);
-				padding: 10px 0 5px 30px;
-				min-height: 30px;
-				background-repeat: no-repeat;
-				background-position: left 50%;
-				&.facebook { 
-					background-image: url(image_path("facebook/facebook-icon.png")); 
-					color: $facebookBlue;
-				}
-				&.twitter {
-					background-image: url(image_path("facebook/twitter-icon.png")); 
-					color: $twitterBlue;
-				}
-			}
-		}
-		
-		.twitter-peeker {
-			color:$nearBlack;
-			display: block;
-			vertical-align: middle;
-			font-size:15px;
-			min-height: 41px;
-			margin: 15px 0 10px 0;
-			padding: 10px 80px 10px 5px;
-			background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
-			
-			color: inherit;
-			&:hover {
-				text-decoration: none;
-			}
-		}
-		
-		.tweet {
-			margin: 12px 0 8px 0;
-			border-bottom: 1px solid $grayLighter;
-			padding-bottom: 10px;
-			@include font-serif($size: 12px, $lineHeight: 15px);
-			@include clearfix;
-			
-			img.tweet-image {
-				float: left;
-				vertical-align: top;
-				margin-right: 6px;
-			}
+    .social {
+        .banners {
+            margin-bottom: 10px;
+            border-bottom: 1px solid $grayLighter;
+            line-height: 0; // so the line break between the links doesn't have any space
+            a {
+                display: block;
+                @include font-sans-serif(bold, 12px, 14px);
+                padding: 10px 0 5px 30px;
+                min-height: 30px;
+                background-repeat: no-repeat;
+                background-position: left 50%;
+                &.facebook { 
+                    background-image: url(image_path("facebook/facebook-icon.png")); 
+                    color: $facebookBlue;
+                }
+                &.twitter {
+                    background-image: url(image_path("facebook/twitter-icon.png")); 
+                    color: $twitterBlue;
+                }
+            }
+        }
+        
+        .twitter-peeker {
+            color:$nearBlack;
+            display: block;
+            vertical-align: middle;
+            font-size:15px;
+            min-height: 41px;
+            margin: 15px 0 10px 0;
+            padding: 10px 80px 10px 5px;
+            background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
+            
+            color: inherit;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        
+        .tweet {
+            margin: 12px 0 8px 0;
+            border-bottom: 1px solid $grayLighter;
+            padding-bottom: 10px;
+            @include font-serif($size: 12px, $lineHeight: 15px);
+            @include clearfix;
+            
+            img.tweet-image {
+                float: left;
+                vertical-align: top;
+                margin-right: 6px;
+            }
 
-			h5 {
-				@include ie-inline-block;
-				@include font-shorthand($size: 13px, $weight: bold);
-				margin-top:-5px;
-				a { color:$nearBlack; }
-			}
-			
-			.byline { font-size: 10px; }
+            h5 {
+                @include ie-inline-block;
+                @include font-shorthand($size: 13px, $weight: bold);
+                margin-top:-5px;
+                a { color:$nearBlack; }
+            }
+            
+            .byline { font-size: 10px; }
+        }
+    }
+	.recent-videos {
+		.video-player {
+			margin:18px 0;
 		}
 	}
 }
 
 .archive-strip {
-	border-bottom: 1px solid $grayLighter;
-	margin-bottom: 20px;
+    border-bottom: 1px solid $grayLighter;
+    margin-bottom: 20px;
 }
 
 .events-list {
-	.teaser {
-		padding:18px 0;
-		
-		.event-details {
-			span.event-location {
-				@include font-sans-serif(normal, 11px);
-				color: $gray;
-				text-transform: uppercase;
-				&.forum {
-					color:$orangeDark;
-				}
-			}
-		}
-		.info {
-			margin: 0 5px;
-		}
-	}
+    .teaser {
+        padding:18px 0;
+        
+        .event-details {
+            span.event-location {
+                @include font-sans-serif(normal, 11px);
+                color: $gray;
+                text-transform: uppercase;
+                &.forum {
+                    color:$orangeDark;
+                }
+            }
+        }
+        .info {
+            margin: 0 5px;
+        }
+    }
 }
 
 $smallHeaderShadow: 0 6px 10px rgba(0,0,0,.5);
 nav.section-nav {
-	@include font-navigation($size: 13px, $weight: 600);
-	&.vertical {
-		margin-bottom: 25px;
-		a {
-			display: block;
-			text-transform: uppercase;
-			border-bottom: 1px solid $grayLighter;
-			color: darken($gray, 20%);
-			padding: 8px;
-			&:hover {
-				color:$orangeDark;
-				text-decoration: underline;
-			}
-		}
-	}
-	
-	&.horizontal {
-		display: none;
-		@include clearfix;
-		background: lighten(#2e2e2e, 10%);
-		margin-top: -20px; // pull it up. alternative is to responsively remove bottom margin and shadow from events-header-small.
-		margin-bottom: 20px;
-		@include box-shadow($smallHeaderShadow); // mimic the events-header-small shadow
-		a { // Faking a two-column fluid grid here, so it's a little hacky
-			text-align: center;
-			$this_borderColor: #222;
-			float: left;
-			color: $nearWhite;
-			width: 50%; // We don't want the gutter width so we won't use the grid here
-			padding: 5px 0;
-			border-bottom: 1px solid $this_borderColor;
-						
-			// Will not work in IE7/8
-			&:nth-child(even) { @include box-shadow(1px 0 $this_borderColor inset); } // Fake border between columns
-			&:nth-last-child(-n+2) { border-bottom: none; } // no border on the last two
-		}
-	}
+    @include font-navigation($size: 13px, $weight: 600);
+    &.vertical {
+        margin-bottom: 25px;
+        a {
+            display: block;
+            text-transform: uppercase;
+            border-bottom: 1px solid $grayLighter;
+            color: darken($gray, 20%);
+            padding: 8px;
+            &:hover {
+                color:$orangeDark;
+                text-decoration: underline;
+            }
+        }
+    }
+    
+    &.horizontal {
+        display: none;
+        @include clearfix;
+        background: lighten(#2e2e2e, 10%);
+        margin-top: -20px; // pull it up. alternative is to responsively remove bottom margin and shadow from events-header-small.
+        margin-bottom: 20px;
+        @include box-shadow($smallHeaderShadow); // mimic the events-header-small shadow
+        a { // Faking a two-column fluid grid here, so it's a little hacky
+            text-align: center;
+            $this_borderColor: #222;
+            float: left;
+            color: $nearWhite;
+            width: 50%; // We don't want the gutter width so we won't use the grid here
+            padding: 5px 0;
+            border-bottom: 1px solid $this_borderColor;
+                        
+            // Will not work in IE7/8
+            &:nth-child(even) { @include box-shadow(1px 0 $this_borderColor inset); } // Fake border between columns
+            &:nth-last-child(-n+2) { border-bottom: none; } // no border on the last two
+        }
+    }
 }
 
 .forum nav.section-nav.vertical {
-	margin-bottom:10px;
+    margin-bottom:10px;
 }
 
 #main nav.section-nav.vertical { 
-	margin-top: -21px;
+    margin-top: -21px;
 }
 
 /* FADER */
 
 .forum .nav-primary {
-	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
+    @include box-shadow(0 6px 10px rgba(0,0,0,.5));
 }
 
 .events-header-small {
-	text-align: center;
-	display: none;
-	@include gradient-vertical(lighten(#2e2e2e, 10%), #2e2e2e);
-	@include box-shadow($smallHeaderShadow);
-	margin-bottom: 20px;
-	margin-top: -22px;
-	img { 
-		max-width: 95%;
-		margin: 10px 10px 5px 10px;
-	}
+    text-align: center;
+    display: none;
+    @include gradient-vertical(lighten(#2e2e2e, 10%), #2e2e2e);
+    @include box-shadow($smallHeaderShadow);
+    margin-bottom: 20px;
+    margin-top: -22px;
+    img { 
+        max-width: 95%;
+        margin: 10px 10px 5px 10px;
+    }
 }
 
 #events-header {
-	position: relative;
-	top: -38px;
-	height: 468px;
-	min-width: $mediaDesktopSmall;
-	@include gradient-vertical(#2e2e2e, lighten(#2e2e2e, 10%));
-	@include box-shadow(0 6px 10px rgba(0,0,0,.5));
-	width:100%;
-	overflow: hidden;
-	z-index: 20;
-	
-	.choosers {
-		position: absolute;
-		width: 100%;
-		text-align: center;
-		bottom: 0;
-		z-index: 21;
-		.chooser {
-			border:4px solid $white;
-			@include border-radius(10px);
-			@include ie-inline-block;
-			vertical-align: bottom;
-			margin:0 5px 5px 5px;
-			width: 10px;
-			height: 10px;
-			@include opacity(0.3);
+    position: relative;
+    top: -38px;
+    height: 468px;
+    min-width: $mediaDesktopSmall;
+    @include gradient-vertical(#2e2e2e, lighten(#2e2e2e, 10%));
+    @include box-shadow(0 6px 10px rgba(0,0,0,.5));
+    width:100%;
+    overflow: hidden;
+    z-index: 20;
+    
+    .choosers {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        z-index: 21;
+        .chooser {
+            border:4px solid $white;
+            @include border-radius(10px);
+            @include ie-inline-block;
+            vertical-align: bottom;
+            margin:0 5px 5px 5px;
+            width: 10px;
+            height: 10px;
+            @include opacity(0.3);
 
-			&:hover {
-				cursor: pointer;
-				background-color:$nearBlack;
-				@include opacity(0.5);
-			}
-			&.active {
-				border-color: #b24401;
-				@include opacity(0.8);
-			}
-		}
-	}
-	
-	.slides-wrapper {
-		position: relative;
-		max-width: 1500px;
-		margin: 0 auto;
-		.slide {
-			z-index: 8;
-			visibility: hidden;
-			position: relative; // to make opacity happy in IE
-			img {
-				width: 100%;
-				position: absolute;
-				z-index: 19;
-			}
-			.slide-text {
-				position: absolute;
-				z-index: 20;
-				top: 45px;
-				left: 5%;
-				width: 523px;
-				text-align: left;
-				padding: 35px 0 0 37px;
-				background: url(image_path("event-headers/cff-logo.png")) no-repeat left top;
-				h3 {
-					color:#00b9f3;
-					font:34px/48px "Museo Slab", sans-serif;
-					font-weight: 500;
-					margin:0;
-					text-shadow:0 1px 0 rgba(0,0,0,0.75);
-				}
-				p {
-					color:#fff;
-					font:18px/21px "Museo Slab", sans-serif;
-					font-weight: normal;
-					margin:0;
-					text-shadow:0 1px 0 rgba(0,0,0,0.75);
-				}
-			}
-		
-			&.active {
-				visibility: visible;
-				z-index: 10;
-			}
-			&.last-active {
-				visibility: visible;
-				z-index: 9;
-			}
-		}
-	}
+            &:hover {
+                cursor: pointer;
+                background-color:$nearBlack;
+                @include opacity(0.5);
+            }
+            &.active {
+                border-color: #b24401;
+                @include opacity(0.8);
+            }
+        }
+    }
+    
+    .slides-wrapper {
+        position: relative;
+        max-width: 1500px;
+        margin: 0 auto;
+        .slide {
+            z-index: 8;
+            visibility: hidden;
+            position: relative; // to make opacity happy in IE
+            img {
+                width: 100%;
+                position: absolute;
+                z-index: 19;
+            }
+            .slide-text {
+                position: absolute;
+                z-index: 20;
+                top: 45px;
+                left: 5%;
+                width: 523px;
+                text-align: left;
+                padding: 35px 0 0 37px;
+                background: url(image_path("event-headers/cff-logo.png")) no-repeat left top;
+                h3 {
+                    color:#00b9f3;
+                    font:34px/48px "Museo Slab", sans-serif;
+                    font-weight: 500;
+                    margin:0;
+                    text-shadow:0 1px 0 rgba(0,0,0,0.75);
+                }
+                p {
+                    color:#fff;
+                    font:18px/21px "Museo Slab", sans-serif;
+                    font-weight: normal;
+                    margin:0;
+                    text-shadow:0 1px 0 rgba(0,0,0,0.75);
+                }
+            }
+        
+            &.active {
+                visibility: visible;
+                z-index: 10;
+            }
+            &.last-active {
+                visibility: visible;
+                z-index: 9;
+            }
+        }
+    }
 }
 
 .filters.events {
-	border-top:none;
-	margin-top:-20px;
-	a.active { 
-		position:relative;
-		span {
-			background:url(image_path('icons/filter-arrow.png')) no-repeat left top;
-			position:absolute;
-			display:block;
-			width:19px;
-			height:11px;
-			top:21px;
-			left:50%;
-			margin-left:-10px;
-		}
-	}
+    border-top:none;
+    margin-top:-20px;
+    a.active { 
+        position:relative;
+        span {
+            background:url(image_path('icons/filter-arrow.png')) no-repeat left top;
+            position:absolute;
+            display:block;
+            width:19px;
+            height:11px;
+            top:21px;
+            left:50%;
+            margin-left:-10px;
+        }
+    }
 }
 
 
 h3.section-nav-header {
-	color:$gray;
-	font-size:16px;
-	margin-top:10px;
+    color:$gray;
+    font-size:16px;
+    margin-top:10px;
 }
 
 .forum #sidebar {
-	.widget {
-		display: block;
-		p { 
-			margin:20px 0 24px;
-			@include font-navigation($size: 14px, $lineHeight: 16px);
-		}
-	}
-	
-	#getting-there {
-		background: url(image_path("cff-building.png")) no-repeat right 98%;
-		h3 {
-			background: url(image_path("icons/forum-directions.png")) no-repeat left top;
-			padding-left:46px;
-		}
-		p { 
-			padding-right: 115px;
-		}
-	}
-	
-	#community-partnerships {
-		h3 {
-			background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
-			height:26px;
-			padding-left:46px;
-		}
-		p { 
-			margin:14px 0;
-		}
-	}
+    .widget {
+        display: block;
+        p { 
+            margin:20px 0 24px;
+            @include font-navigation($size: 14px, $lineHeight: 16px);
+        }
+    }
+    
+    #getting-there {
+        background: url(image_path("cff-building.png")) no-repeat right 98%;
+        h3 {
+            background: url(image_path("icons/forum-directions.png")) no-repeat left top;
+            padding-left:46px;
+        }
+        p { 
+            padding-right: 115px;
+        }
+    }
+    
+    #community-partnerships {
+        h3 {
+            background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
+            height:26px;
+            padding-left:46px;
+        }
+        p { 
+            margin:14px 0;
+        }
+    }
 }
-

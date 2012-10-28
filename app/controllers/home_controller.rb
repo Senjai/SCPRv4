@@ -1,11 +1,30 @@
 class HomeController < ApplicationController  
   layout "homepage"
   
+  # Just for development purposes
+  # Pass ?regenerate to the URL to regenerate the homepage category blocks
+  # Only works in development
+  before_filter :generate_homepage, only: :index, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
+  before_filter :fetch_data_points, only: [:index, :elections]
+  
   def index
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_now
   end
 
+  def elections
+    @category = Category.find_by_slug('politics')
+    
+    @content = ThinkingSphinx.search('',
+      :classes    => ContentBase.content_classes,
+      :page       => 1,
+      :per_page   => 15,
+      :order      => :published_at,
+      :sort_mode  => :desc,
+      :with => { :category => [@category.id] },
+      retry_stale: true
+    )    
+  end
   
   #----------
   
@@ -37,7 +56,7 @@ class HomeController < ApplicationController
   
   def missed_it_content
     @homepage = Homepage.find(params[:id])
-    @carousel_contents = @homepage.missed_it_bucket.contents.paginate(page: params[:page], per_page: 6)
+    @carousel_contents = @homepage.missed_it_bucket.contents.page(params[:page]).per(6)
     render 'missed_it_content.js.erb'
   end
   
@@ -91,5 +110,16 @@ class HomeController < ApplicationController
   class << self
     include NewRelic::Agent::Instrumentation::ControllerInstrumentation
     add_transaction_tracer :_cache_homepage, :category => :task
+  end
+  
+  protected
+  def generate_homepage
+    self.class._cache_homepage
+  end
+  
+  def fetch_data_points
+    # For the election
+    @data = DataPoint.where(group_name: 'election')
+    @data_points = DataPoint.to_hash(@data)
   end
 end

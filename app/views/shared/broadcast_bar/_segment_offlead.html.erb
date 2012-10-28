@@ -1,6 +1,5 @@
 <li>
-	<h5 class="headline"><%= link_to segment.short_headline, segment.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Offlead Segment'} %></h5>
-	<% register_content segment %>
-	<%= comment_count_for segment %>
+  <h5 class="headline"><%= link_to segment.short_headline, segment.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Offlead Segment'} %></h5>
+  <% register_content segment %>
+  <%= comment_count_for segment %>
 </li>
-

@@ -26,10 +26,6 @@ Then /^I should see a list of blog entries$/ do
   page.should have_css ".entry", count: @blog_entries.count # FIXME Account for pagination
 end
 
-Then /^I should see article meta for each entry$/ do
-  page.should have_css ".article-meta", count: @blog_entries.count # FIXME Account for pagination
-end
-
 Then /^I should see the latest entry for that blog$/ do
   page.find(".blog-widget").should have_content @blog.entries.first.short_headline
 end

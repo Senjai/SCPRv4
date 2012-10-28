@@ -52,4 +52,36 @@ describe AdminResource::Config do
       AdminResource.config.title_attributes.should eq [:simple_title]
     end
   end
+  
+  #----------------------
+  
+  describe "#excluded_form_fields" do
+    it "returns the defaults if nothing is set" do
+      stub_const("AdminResource::Config::DEFAULTS", { excluded_form_fields: [:title] })
+      AdminResource.config.excluded_form_fields = nil
+      AdminResource.config.excluded_form_fields.should eq [:title]
+    end
+    
+    it "always included the defaults" do
+      stub_const("AdminResource::Config::DEFAULTS", { excluded_form_fields: [:title] })
+      AdminResource.config.excluded_form_fields = [:body, :title]
+      AdminResource.config.excluded_form_fields.should eq [:body, :title]
+    end
+  end
+  
+  #----------------------
+  
+  describe "#excluded_list_columns" do
+    it "returns the defaults if nothing is set" do
+      stub_const("AdminResource::Config::DEFAULTS", { excluded_list_columns: ["title"] })
+      AdminResource.config.excluded_list_columns = nil
+      AdminResource.config.excluded_list_columns.should eq ["title"]
+    end
+    
+    it "always included the defaults" do
+      stub_const("AdminResource::Config::DEFAULTS", { excluded_list_columns: ["title"] })
+      AdminResource.config.excluded_list_columns = ["body", "title"]
+      AdminResource.config.excluded_list_columns.should eq ["body", "title"]
+    end
+  end
 end

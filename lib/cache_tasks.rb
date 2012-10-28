@@ -4,13 +4,19 @@ module CacheTasks
   def self.view
     view = ActionView::Base.new(ActionController::Base.view_paths, {})
     view.extend ApplicationHelper
+    view.extend WidgetsHelper
   end
   
-  class Task    
+  class Task
+    attr_accessor :verbose
+    
     def cache(content, partial, cache_key)
       cached = CacheTasks.view.render(partial: partial, object: content, as: :content)
       Rails.cache.write(cache_key, cached)
+      true
     end
+    
+    #---------------
     
     def log(message)
       message = "*** #{message}"
@@ -23,9 +29,7 @@ module CacheTasks
         puts message
       end
     end
-  end
-end
+  end # Task
+end # CacheTasks
 
-require 'cache_tasks/most_commented'
-require 'cache_tasks/most_viewed'
-require 'cache_tasks/twitter'
+Dir["cache_tasks/*"].each { |f| require f }

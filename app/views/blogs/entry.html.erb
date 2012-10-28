@@ -1,14 +1,14 @@
-<%= cache ["show", "v1", @blog_entry] do %>
-  <% page_title [@blog.name, @entry.headline], " : "
-  @OG_TYPE = "blog" %>
+<%= render_content @entry, "opengraph" %>
+<% page_title [@blog.name, @entry.headline], " : " %>
+<% @OG_TYPE = "blog" %>
 
-  <%= render_content @entry, "opengraph" %>
-  <%= render "blogs/entry", entry: @entry %>
+<%= cache ["show", "v2", @entry] do %>
+  <%= render "/blogs/entry", entry: @entry, blog: @blog %>
 <% end %>
 
 <div class="fold" id="fold">
   <%= content_widget "related_content_and_links", @entry %>
-  <%= render "shared/cwidgets/pij_query", :content => @entry %>
+  <%= render "shared/cwidgets/pij_query", content: @entry %>
   <%= content_widget "next_prev", @entry %>
   
   <div class="comment-wrap">

@@ -2,8 +2,8 @@
 
 <h1>Latest News</h1>
 <div class="news-top">
-	<%= render_content @top, "twocol" %>
+  <%= render_content @top, "twocol" %>
 </div>
 <section class="more-news-container">
-	<%= render :partial => "home/cached/sections_sec", :collection => @sections, :as => :section %>
+  <%= render :partial => "home/cached/sections_sec", :collection => @sections, :as => :section %>
 </section>

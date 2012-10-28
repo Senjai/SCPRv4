@@ -1,3 +1,25 @@
 <%= form_block "Asset Management" do %>
-	<%= extra %>
+  <%= extra %>
+  
+  <h4>Assets</h4>
+  <div id="asset_bucket" class="clearfix">
+    <ul class="thumbnails">
+      <% record.assets.each do |asset| %>          
+          <!-- hidden fields -->
+          <div id="asset-fields-<%=asset.id%>">
+            <%= f.simple_fields_for :assets, asset do |af| %>
+              <%= af.input :caption, as: :hidden  %>
+              <%= af.input :asset_order, as: :hidden %>
+              <%= af.input :_destroy, as: :boolean, label: false, inline_label: "Remove?", wrapper_html: { class: "inline destroy-bool", id: "asset-delete-#{af.object.id}" } %>
+            <% end %>
+          </div>
+      <% end %>
+    </ul>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      new scpr.AssetManager(<%= raw record.assets.to_json %>)
+    })
+  </script>
 <% end %>

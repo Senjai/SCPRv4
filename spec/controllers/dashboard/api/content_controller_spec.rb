@@ -104,10 +104,10 @@ describe Dashboard::Api::ContentController do
   describe "GET /recent" do
     context "cache hit" do
       let(:content) { create :blog_entry }
-      let(:cache)   { content.to_json.to_s }
+      let(:cache)   { "content.to_json" }
       
       before :each do
-        Rails.cache.should_receive(:fetch).with("cbaseapi:recent").and_return(cache)
+        Rails.cache.write("cbaseapi:recent", cache)
       end
       
       it "returns the cache as json" do
@@ -121,7 +121,7 @@ describe Dashboard::Api::ContentController do
       sphinx_spec(num: 2)
       
       before :each do
-        Rails.cache.should_receive(:fetch).with("cbaseapi:recent").and_return(nil)
+        Rails.cache.write("cbaseapi:recent", nil)
       end
       
       it "returns the sphinx results as json" do
@@ -132,8 +132,11 @@ describe Dashboard::Api::ContentController do
       end
       
       it "writes the json to the cache" do
-        Rails.cache.should_receive(:write_entry)
+        Rails.cache.fetch("cbaseapi:recent").should eq nil
         get :recent
+        cache = Rails.cache.fetch("cbaseapi:recent")
+        cache.should match @generated_content.first.to_json
+        cache.should match @generated_content.last.to_json
       end
     end
   end

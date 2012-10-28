@@ -1,76 +1,76 @@
 <header id="masthead">
-	<div class="container-fluid">
-		<div class="head-lead-minimal">
-			<span id="condensed-nav-link" class="condensed-nav-link">Menu</span>
-			<a href="/" class="dark-logo"><%= image_tag "logo-masthead-dark.png", alt: "KPCC.org", id: "masthead-logo-dark" %></a>
-			<a href="/listen" class="antenna pull-right">Listen</a>
-		</div>
-		<div class="head-lead">
-			<div class="row-fluid">
-	    		<div class="span8" id="masthead-left-header-wrapper">
-					<div class="logo" id="masthead-kpcc-logo">
-						<a href="/" class="logo-img" id="masthead-logo" title="KPCC.org"></a>
-					</div>
-				</div>
+  <div class="container-fluid">
+    <div class="head-lead-minimal">
+      <span id="condensed-nav-link" class="condensed-nav-link">Menu</span>
+      <a href="/" class="dark-logo"><%= image_tag "logo-masthead-dark.png", alt: "KPCC.org", id: "masthead-logo-dark" %></a>
+      <a href="/listen" class="antenna pull-right">Listen</a>
+    </div>
+    <div class="head-lead">
+      <div class="row-fluid">
+          <div class="span8" id="masthead-left-header-wrapper">
+          <div class="logo" id="masthead-kpcc-logo">
+            <a href="/" class="logo-img" id="masthead-logo" title="KPCC.org"></a>
+          </div>
+        </div>
 
-				<div class="span7" id="masthead-mid-header-wrapper">
-					<div class="mid-header-wrapper">
-						<div class="kpcc-personalities">
-							<%= random_headshot %>
-						</div> <!-- kpcc-personalities -->
-					</div> <!-- mid header wrapper -->
-				</div> <!-- span -->
-			
-			    <div class="span9" id="masthead-right-header-wrapper">
-					<nav class="utils">
-						<ul>
-							<li class="social">
-								Follow us
-								<a href="http://facebook.com/kpccfm"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
-			    		        <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
-								<a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
-							</li>
-							<% if current_user %>
-								<li class="username">Hi, <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
-								<li><a href="/accounts/logout/">Log Out</a></li>
-							<% else %>
-				    		    <li><a href="/accounts/login/">Login</a></li>
-				    		    <li><a href="/accounts/register/">Register</a></li>					
-							<% end %>
-			    		</ul>
-			    	</nav>
-					<div class="pledge-button-container">
-						<a href="https://scprcontribute.publicradio.org/contribute.php"><%= image_tag('pledge-btn.png')%></a>					
-					</div> <!-- pledge button container -->
-				</div>
-			</div> <!-- row fluid -->
-		</div>
+        <div class="span7" id="masthead-mid-header-wrapper">
+          <div class="mid-header-wrapper">
+            <div class="kpcc-personalities">
+              <%= random_headshot %>
+            </div> <!-- kpcc-personalities -->
+          </div> <!-- mid header wrapper -->
+        </div> <!-- span -->
+      
+          <div class="span9" id="masthead-right-header-wrapper">
+          <nav class="utils">
+            <ul>
+              <li class="social">
+                Follow us
+                <a href="http://facebook.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
+                      <a href="http://twitter.com/kpcc"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
+                <a href="https://plus.google.com/108872361044769229886/"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
+              </li>
+              <% if current_user %>
+                <li class="username">Hi, <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
+                <li><a href="/accounts/logout/">Log Out</a></li>
+              <% else %>
+                    <li><a href="/accounts/login/">Login</a></li>
+                    <li><a href="/accounts/register/">Register</a></li>         
+              <% end %>
+              </ul>
+            </nav>
+          <div class="pledge-button-container">
+            <a href="https://scprcontribute.publicradio.org/contribute.php"><%= image_tag('pledge-btn.png')%></a>         
+          </div> <!-- pledge button container -->
+        </div>
+      </div> <!-- row fluid -->
+    </div>
 
-		<div id="megamenu" class="megamenu">
-			<div class="nav-primary clearfix">
-				<nav class="sections">
-					<ul>
-					    <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('/listen_live/');" id="listen-live">Listen Live</a></li>
-						<li class="mega"><a href="/news/" data-section="news-mega"><span>News</span></a></li>
-						<li class="mega"><a href="/arts-life/" data-section="arts-mega"><span>Arts &amp; Life</span></a></li>
-						<li class="mega"><a href="/programs/" data-section="programs-mega"><span>Programs</span></a></li>
-						<li class="mega"><a href="/events/" data-section="events-mega"><span>Events</span></a></li>
-						<li class="mega"><a href="/support/" data-section="support-mega"><span>Support Us</span></a></li>
-						<li class="mega"><a href="/about/" data-section="about-mega"><span>About Us</span></a></li>
-					</ul>
-				</nav>
-				<div class="search-form">
-					<form action="/search/" method="get">
-						    <label>Search:</label>
-						    <input type="text" name="q" placeholder="Search" class="search" />
-						    <input type="submit" value="" id="submit" class="submit" />
-							<input type="button" class="toggle-search" />
-					</form>
-				</div>
-			</div> <!-- nav-primary -->
-			<div id="mega-bucket" class="mega-bucket"></div>
-		</div> <!-- megamenu -->
-	</div> <!-- container fluid -->
+    <div id="megamenu" class="megamenu">
+      <div class="nav-primary clearfix">
+        <nav class="sections">
+          <ul>
+              <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('/listen_live/');" id="listen-live">Listen Live</a></li>
+            <li class="mega"><a href="/news/" data-section="news-mega"><span>News</span></a></li>
+            <li class="mega"><a href="/arts-life/" data-section="arts-mega"><span>Arts &amp; Life</span></a></li>
+            <li class="mega"><a href="/programs/" data-section="programs-mega"><span>Programs</span></a></li>
+            <li class="mega"><a href="/events/" data-section="events-mega"><span>Events</span></a></li>
+            <li class="mega"><a href="/support/" data-section="support-mega"><span>Support Us</span></a></li>
+            <li class="mega"><a href="/about/" data-section="about-mega"><span>About Us</span></a></li>
+          </ul>
+        </nav>
+        <div class="search-form">
+          <form action="/search/" method="get">
+                <label>Search:</label>
+                <input type="text" name="q" placeholder="Search" class="search" />
+                <input type="submit" value="" id="submit" class="submit" />
+              <input type="button" class="toggle-search" />
+          </form>
+        </div>
+      </div> <!-- nav-primary -->
+      <div id="mega-bucket" class="mega-bucket"></div>
+    </div> <!-- megamenu -->
+  </div> <!-- container fluid -->
 </header>
 
 <!-- breaking news -->
@@ -82,11 +82,11 @@
 
 <div class="hero"></div>
 <div class="container-fluid">
-	<% flash.each do |name, msg| %>
-		<div class="<%= flash_bootstrap(name) %>">
-			<button class="close" data-dismiss="alert"></button>
-			<%= msg %>
-		</div>
-	<% end %>
+  <% flash.each do |name, msg| %>
+    <div class="<%= flash_bootstrap(name) %>">
+      <button class="close" data-dismiss="alert"></button>
+      <%= msg %>
+    </div>
+  <% end %>
 </div>
 <!-- end MASTHEAD-->

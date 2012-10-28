@@ -2,183 +2,183 @@ $headShotHeight: 70px;
 $headShotWidth: 90px;
 
 .show-segments, .show-episodes {
-	h2 {
-		color:$orangeDark;
-		font-size:18px;
-		font-weight:600;
-	}
+    h2 {
+        color:$orangeDark;
+        font-size:18px;
+        font-weight:600;
+    }
 }
 
 #featured-programs {
-	h4 {
-		color:$orangeDark;
-		font-weight:600;
-	}
-	&>a {
-		display: block;
-		&:hover {
-			text-decoration: none;
-		}
-	}
-	li {
-		background-position: left 6px;
-		min-height:60px;
-		padding-left:150px;
-		&.brand-martinez, &.take-two {
-			padding-left:150px;
-		}
-		&:hover {
-			background-color:$nearWhite;
-			cursor: pointer;
-		}
-		p {
-			margin-bottom:0;
-		}
-	}
+    h4 {
+        color:$orangeDark;
+        font-weight:600;
+    }
+    &>a {
+        display: block;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    li {
+        background-position: left 6px;
+        min-height:60px;
+        padding-left:150px;
+        &.brand-martinez, &.take-two {
+            padding-left:150px;
+        }
+        &:hover {
+            background-color:$nearWhite;
+            cursor: pointer;
+        }
+        p {
+            margin-bottom:0;
+        }
+    }
 }
 
 .programs-list {
-	@include font-serif;
-	li {
-		&:hover { background-color: $nearWhite; }
-		a { 
-			display: block;
-			padding: 5px;
-		}
-	}
+    @include font-serif;
+    li {
+        &:hover { background-color: $nearWhite; }
+        a { 
+            display: block;
+            padding: 5px;
+        }
+    }
 }
 
 /* the following must match the slug of the program */
 .headshot {
-	background-repeat: no-repeat;
-	background-position: 0 0;
-	&.brand-martinez {
-	    background-image: url(image_path('broadcast-bar/headshots/brand-martinez.png'));
-		&.program-info {
-			padding-right:150px;
-		}
-	}
-	&.take-two {
-	    background-image: url(image_path('broadcast-bar/headshots/taketwo.png'));
-		&.program-info {
-			padding-right:150px;
-		}
-		.page-title {
-			&:after {
-				content:" \2122";
-			}
-		}
-	}
-	&.airtalk {
-		background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
-	}
-	&.offramp {
-		background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
-	}
-	
-	&.program-info { 
-		height: $headShotHeight;
-		min-height: $headShotHeight;
-		padding-right: $headShotWidth;
-		background-position: right top;
-	}
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    &.brand-martinez {
+        background-image: url(image_path('broadcast-bar/headshots/brand-martinez.png'));
+        &.program-info {
+            padding-right:150px;
+        }
+    }
+    &.take-two {
+        background-image: url(image_path('broadcast-bar/headshots/taketwo.png'));
+        &.program-info {
+            padding-right:150px;
+        }
+        .page-title {
+            &:after {
+                content:" \2122";
+            }
+        }
+    }
+    &.airtalk {
+        background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
+    }
+    &.offramp {
+        background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
+    }
+    
+    &.program-info { 
+        height: $headShotHeight;
+        min-height: $headShotHeight;
+        padding-right: $headShotWidth;
+        background-position: right top;
+    }
 }
 
 .program-masthead {
-	border-bottom: 1px solid $grayLighter;
-	margin-bottom: $baseline / 2;
-	padding-bottom: 10px;
-	
-	.program-info {
-		display: table-cell;
-		width: 700px; // table-cell needs pixels, but with max-width set it's fluid
-		max-width: 100%;
-		vertical-align: bottom;
-	
-		h1 { 
-			float: left;
-			margin: 0;
-		}
-		.show-meta {
-			@include font-sans-serif($size: 11px, $lineHeight: 14px);
-			text-align: right;
-			float: right;
-		}
-		
-	}
-	
-	.support {
-		display: table;
-		height: 55px;
-		background: url(image_path('support-banner.png')) no-repeat left top;
-		padding: 0 5px 0 63px;
-		width: 246px;
-		overflow: hidden;
-		@include font-slab-headings(300, 13px, 15px);		
-		a {
-			display: table-cell;
-			vertical-align: middle;
-			color: #fff;
-			text-shadow: 0 1px $orangeDark;
-			&.small {
-				font-size:11px;
-			}
-		}
-	}
+    border-bottom: 1px solid $grayLighter;
+    margin-bottom: $baseline / 2;
+    padding-bottom: 10px;
+    
+    .program-info {
+        display: table-cell;
+        width: 700px; // table-cell needs pixels, but with max-width set it's fluid
+        max-width: 100%;
+        vertical-align: bottom;
+    
+        h1 { 
+            float: left;
+            margin: 0;
+        }
+        .show-meta {
+            @include font-sans-serif($size: 11px, $lineHeight: 14px);
+            text-align: right;
+            float: right;
+        }
+        
+    }
+    
+    .support {
+        display: table;
+        height: 55px;
+        background: url(image_path('support-banner.png')) no-repeat left top;
+        padding: 0 5px 0 63px;
+        width: 246px;
+        overflow: hidden;
+        @include font-slab-headings(300, 13px, 15px);       
+        a {
+            display: table-cell;
+            vertical-align: middle;
+            color: #fff;
+            text-shadow: 0 1px $orangeDark;
+            &.small {
+                font-size:11px;
+            }
+        }
+    }
 }
 
 .regular-features {
-	.feature {
-		border-bottom: 1px solid $grayLight;
-		padding-bottom: 5px;
-		margin-bottom: 5px;
-		
-		// Not supported by IE7/8, but that's okay
-		&:last-child {
-			border: none;
-			padding: 0;
-			margin: 0;
-		}
-	}
+    .feature {
+        border-bottom: 1px solid $grayLight;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        
+        // Not supported by IE7/8, but that's okay
+        &:last-child {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+    }
 }
 header.episode {
-	background: #f5f5f5;
-	border-bottom: 1px solid #bfbfbf;
-	margin-left: 0px;
-	margin-right: 0px;
-	margin-bottom: 10px;
-	padding: 8px 3px 8px 12px;
-	@include font-heading($size: 12px, $weight: 600);
+    background: #f5f5f5;
+    border-bottom: 1px solid #bfbfbf;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    padding: 8px 3px 8px 12px;
+    @include font-heading($size: 12px, $weight: 600);
 }
 
 .missed-it {
-	display: none; /* temporary */
-	li {
-		list-style: none;
-	}
+    display: none; /* temporary */
+    li {
+        list-style: none;
+    }
 }
 
 .show-video {
-	.video-player {
-		margin: 10px 0;
-		text-align: center;
-	}
+    .video-player {
+        margin: 10px 0;
+        text-align: center;
+    }
 }
 
 .program-external-header {
-	p { 
-		border-right: 1px solid $grayLighter;
-		padding-right: 5px;
-		margin: 0;
-	}
-	.connect { 
-		border-right: none;
-		min-height: 0px; 
-	}
+    p { 
+        border-right: 1px solid $grayLighter;
+        padding-right: 5px;
+        margin: 0;
+    }
+    .connect { 
+        border-right: none;
+        min-height: 0px; 
+    }
 }
 
 .teaser.program-external {
-	// scoping span18/span24 here for different style if there is audio (span18) or not (span24) 
-	.span18 .info { min-height: 100px; }
-	.span24 .info { border-right: none; }
+    // scoping span18/span24 here for different style if there is audio (span18) or not (span24) 
+    .span18 .info { min-height: 100px; }
+    .span24 .info { border-right: none; }
 }

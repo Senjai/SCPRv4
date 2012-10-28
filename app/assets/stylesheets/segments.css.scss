@@ -1,42 +1,42 @@
 .show-segments {
-	margin-bottom:$baseline;
-	h2 {
-		border-bottom: 1px solid $grayLighter;
-		color:$orangeDark;
-		font-size:18px;
-		font-weight:600;
-	}
-		
-	.teaser {
-		.info {
-			border-right: 1px solid $grayLighter;
-			padding-right: 10px;
-		}
-	}
+    margin-bottom:$baseline;
+    h2 {
+        border-bottom: 1px solid $grayLighter;
+        color:$orangeDark;
+        font-size:18px;
+        font-weight:600;
+    }
+        
+    .teaser {
+        .info {
+            border-right: 1px solid $grayLighter;
+            padding-right: 10px;
+        }
+    }
 }
 
 .segment {
-	border-bottom: 1px solid $grayLight;
-	article {
-		h1.story-title {
-			@include font-headline();
-		}
-	}
+    border-bottom: 1px solid $grayLight;
+    article {
+        h1.story-title {
+            @include font-headline();
+        }
+    }
 }
 
 h5.episode-title {
-	border-bottom: 1px solid $grayLighter;
-	margin-bottom: 10px;
-	padding: 0 0 5px 0;
-	a {
-		color:$grayDark;
-		font-size:13px;
-		font-weight:500;
-	}
+    border-bottom: 1px solid $grayLighter;
+    margin-bottom: 10px;
+    padding: 0 0 5px 0;
+    a {
+        color:$grayDark;
+        font-size:13px;
+        font-weight:500;
+    }
 }
 
 .other-segments ul {
-	@include font-headline($weight: normal);
-	font-size: 14px;
-	a { color: $black; }
+    @include font-headline($weight: normal);
+    font-size: 14px;
+    a { color: $black; }
 }

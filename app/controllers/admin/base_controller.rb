@@ -2,15 +2,8 @@ class Admin::BaseController < ActionController::Base
   protect_from_forgery
   abstract!
   
-  before_filter :require_admin, :root_breadcrumb  
+  before_filter :require_admin, :root_breadcrumb, :set_sections
   layout 'admin'
-  
-  SAVE_OPTIONS = [
-    ["Save & Return to List", "index"],
-    ["Save & Continue Editing", "edit"],
-    ["Save & Add Another", "new"]
-  ]
-  
   
   # -- Login checks -- #
   
@@ -19,19 +12,17 @@ class Admin::BaseController < ActionController::Base
     begin
       if session['_auth_user_id']
         @admin_user ||= AdminUser.find(session['_auth_user_id'])
-      else
-        return false
       end
     rescue
       session['_auth_user_id'] = nil
-      return false
+      @admin_user              = nil
     end
   end
   
   def require_admin
-    if admin_user and admin_user.is_superuser
-      return true
-    else
+    # Only allow in if admin_user is set, and 
+    # admin is_staff is true
+    if !admin_user.try(:is_staff?)
       session[:return_to] = request.fullpath
       redirect_to admin_login_path and return false
     end
@@ -47,7 +38,12 @@ class Admin::BaseController < ActionController::Base
   helper_method :breadcrumbs
   
   protected
-    def root_breadcrumb
-      breadcrumb "KPCC Admin", admin_root_path
-    end
+  # Just setup the @sections variable so the views can add to it.
+  def set_sections
+    @sections = {}
+  end
+  
+  def root_breadcrumb
+    breadcrumb "KPCC Admin", admin_root_path
+  end
 end

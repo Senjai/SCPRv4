@@ -14,6 +14,19 @@ module AdminResource
       #--------------
       
       module ClassMethods
+        #--------------        
+        # Wrappers for ActiveModel::Naming
+        # NewsStory => news_stories
+        def route_key
+          @route_key ||= ActiveModel::Naming.route_key(self)
+        end
+        
+        #--------------
+        # NewsStory => news_story        
+        def singular_route_key
+          @singular_route_key ||= ActiveModel::Naming.singular_route_key(self)
+        end
+        
         #--------------
         # /admin/blog_entries/new
         def admin_new_path
@@ -24,6 +37,12 @@ module AdminResource
         # /admin/blog_entries
         def admin_index_path
           @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")
+        end
+        
+        #--------------
+        # This should go away eventually
+        def django_admin_url
+          "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
         end
       end
       
@@ -45,10 +64,8 @@ module AdminResource
       # If an object doesn't have a front-end path,
       # do not define a ROUTE_KEY on the class.
       def link_path(options={})
-        @link_path ||= begin
-          if self.route_hash.present? and defined?(self.class::ROUTE_KEY)
-            Rails.application.routes.url_helpers.send("#{self.class::ROUTE_KEY}_path", options.merge!(route_hash))
-          end
+        if self.route_hash.present? and defined?(self.class::ROUTE_KEY)
+          Rails.application.routes.url_helpers.send("#{self.class::ROUTE_KEY}_path", options.merge!(self.route_hash))
         end
       end
 
@@ -61,7 +78,13 @@ module AdminResource
       #-------------
       # http://scpr.org/blogs/2012/...
       def remote_link_path(options={})
-        "http://#{Rails.application.default_url_options[:host]}#{self.link_path(options)}"
+        "http://#{Rails.application.config.scpr.host}#{self.link_path(options)}"
+      end
+      
+      #-------------
+      # This should go away eventually
+      def django_edit_url          
+        [self.class.django_admin_url, self.id || "add"].join "/"
       end
     end
   end

@@ -5,31 +5,49 @@ class FeaturedComment < ActiveRecord::Base
   include Model::Associations::ContentAlarmAssociation
   
   self.table_name = 'contentbase_featuredcomment'
-
   has_secretary
   
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
-      list.column :bucket
-      list.column :content
-      list.column :username, linked: true
-      list.column :excerpt
-      list.column :status
-      list.column :published_at
+  #----------------
+  # Administration
+  administrate do
+    define_list do
+      list_order "published_at desc"
+
+      column :bucket
+      column :content
+      column :username, linked: true
+      column :excerpt
+      column :status
+      column :published_at
     end
   end
-
-  map_content_type_for_django  
+  
+  
+  #----------------
+  # Associations
+  map_content_type_for_django
   belongs_to :content, polymorphic: true
   belongs_to :bucket, class_name: "FeaturedCommentBucket"
   
-  scope :published, where(status: ContentBase::STATUS_LIVE).order("published_at desc")
   
-  validates :username, :excerpt, :bucket_id, :content_id, :content_type, presence: true
+  #----------------
+  # Scopes
+  scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("published_at desc") }
   
-  # Override AdminResource's `to_title`
-  def to_title
+  
+  #----------------
+  # Validation
+  validates :username, :status, presence: true
+  validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: -> { self.should_validate? }
+  
+  
+  def title
     "Featured Comment (for #{content.obj_key})"
+  end
+
+  #----------------
+  
+  def should_validate?
+    pending? or published?
   end
 end

@@ -1,28 +1,28 @@
 <!-- This block is part of a form -->
 <div class="form-actions submit-row">
-	<div class="container">
-		<div class="btn-group dropup pull-left">
-			<%= button_tag "Save", name: "commit_action", value: "edit", class: "btn btn-primary btn-large span2" %>
-			<button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown">
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				<li><%= button_tag "Save &amp; Add Another".html_safe, name: "commit_action", value: "new" %></li>
-				<li><%= button_tag "Save &amp; Return to List".html_safe, name: "commit_action", value: "index" %></li>
-			</ul>
-		</div>
-	
-		<% if !record.new_record? %>
-			<div class="pull-right">
-				<%= link_to("View on Site", record.link_path, class: "btn btn-success", target: "_blank") if record.link_path.present? %>
-				<%= link_to("Edit in Django", record.django_edit_url, class: "btn") if record.exists_in_django? %>
-				<%= link_to("Delete", 
-							[:admin, record], 
-							class: "btn btn-danger", 
-							method: :delete, 
-							data: { confirm: "Click OK to delete this #{resource_title}.\nClick CANCEL to return to editing." }
-							) unless record.new_record? %>
-			</div>
-		<% end %>
-	</div> <!-- container -->
+  <div class="container">
+    <div class="btn-group dropup pull-left">
+      <%= button_tag "Save", name: "commit_action", value: "edit", class: "btn btn-primary btn-large span2" %>
+      <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><%= button_tag "Save &amp; Add Another".html_safe, name: "commit_action", value: "new" %></li>
+        <li><%= button_tag "Save &amp; Return to List".html_safe, name: "commit_action", value: "index" %></li>
+      </ul>
+    </div>
+  
+    <% if !record.new_record? %>
+      <div class="pull-right">
+        <%= link_to("View on Site", record.link_path, class: "btn btn-success", target: "_blank") if record.link_path.present? %>
+        <%= link_to("Edit in Django", record.django_edit_url, class: "btn") if record.exists_in_django? %>
+        <%= link_to("Delete", 
+              [:admin, record], 
+              class: "btn btn-danger", 
+              method: :delete, 
+              data: { confirm: "Click OK to delete this #{resource_class.to_title}.\nClick CANCEL to return to editing." }
+              ) unless record.new_record? %>
+      </div>
+    <% end %>
+  </div> <!-- container -->
 </div> <!-- form-actions -->

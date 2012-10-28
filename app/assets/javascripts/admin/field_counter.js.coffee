@@ -1,36 +1,56 @@
 #= require scprbase
 
 $ ->
+    # Initialize a FieldCounter for any field that asks for it.
     for field in $("form.simple_form .field-counter")
         el        = $(field)
         target    = el.attr("data-target")
         fuzziness = el.attr("data-fuzziness")
-        new scpr.FieldCounter(el, target: target fuzziness: fuzziness)
-        
+        new scpr.FieldCounter(el, target: target, fuzziness: fuzziness)
+
+##   
+# FieldCounter
+# To turn a field into a field counter, add three attributes:
+#
+#   class="field-counter"
+#   data-target="50"        # Perfect length
+#   data-fuzziness="10"     # Lee-way in either direction (inclusive)
+#
+# Anything spanning the range of 
+#
+#   `(target - fuzziness) through (target + fuzziness)`
+#
+# (inclusive) will be considered "in-range". Everything else is
+# "out of range". By default, this class will use the Twitter Bootstrap
+# notification classes, but that can be overridden.
+#
 class scpr.FieldCounter
     DefaultOptions:
-        target:          145 # This should pretty much always be overwritten
-        fuzziness:       20
+        target:          145                      # Perfect length
+        fuzziness:       20                       # Lee-way (in either direction, inclusive)
         inRangeClass:    "alert alert-success"
         outOfRangeClass: "alert alert-warning"
+        counterClass:    "counter-notify"
+        counterWrapper:  ".controls"             # The element to which the counter will be prepended
+        counterStyle:    "padding: 3px; margin: 0 0 2px 0;"
         
     constructor: (@el, options={}) ->
         @options = _.defaults options, @DefaultOptions
 
         # Setup elements
         @field   = $("input, textarea", @el)
-        @counterEl = $("<div />", class: "counter-notify", style: "padding: 0;")
-        $(".controls", @el).prepend @counterEl
+        @counterEl = $("<div />", class: @options.counterClass, style: @options.counterStyle)
+        $(@options.counterWrapper, @el).prepend @counterEl
         
         # Setup attributes
         @count     = 0
-        @target    = @options.target
-        @fuzziness = @options.fuzziness
+        @target    = parseInt(@options.target)
+        @fuzziness = parseInt(@options.fuzziness)
         @rangeLow  = @target - @fuzziness
         @rangeHigh = @target + @fuzziness
-
-        # Set the count on initialize
-        @updateCount(@field.val().length)
+        
+        @inRangeClass    = @options.inRangeClass
+        @outOfRangeClass = @options.outOfRangeClass
         
         # Register listeners
         @field.on
@@ -38,9 +58,12 @@ class scpr.FieldCounter
                 @updateCount($(event.target).val().length)
         
         @el.on
-            updateCount: (count) =>
+            updateCounter: (event, count) =>
                 @updateText(count)
                 @updateColor(count)
+
+        # Set the count on initialize
+        @updateCount(@field.val().length)
                 
     #--------------
 
@@ -51,12 +74,12 @@ class scpr.FieldCounter
     
     updateCount: (length) ->
         @count = length
-        @el.trigger "updateCount", @count
+        @el.trigger "updateCounter", @count
     
     #--------------
     
     updateText: (count) ->
-        @counterEl.html("Optimal Length: #{count} of #{@target} (+/- #{@fuzziness})")
+        @counterEl.html("<strong>Optimal Length:</strong> #{count} of #{@target} (+/- #{@fuzziness})")
 
     #--------------
     

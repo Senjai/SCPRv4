@@ -5,7 +5,7 @@ module Model
   module Validations
     # Define some defaults
     DEFAULTS = {
-      slug_format: %r{[\w-]+}
+      slug_format: %r{^[\w-]+$}
     }
     
     module InstanceMethods

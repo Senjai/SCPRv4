@@ -28,11 +28,11 @@ set :maintenance_template_path, "public/maintenance.erb"
 
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true
-set :force_assets,  "false" # If assets wouldn't normally be precompiled, force them to
-set :skip_assets,   "false" # If assets are going to be precompuled, force them NOT to
-set :ts_index,      "true" # Staging only - Whether or not to run the sphinx index on drop
-set :dbsync,        "false" # Staging only - Whether or not to run a dbsync to mercer_staging
-
+set :force_assets,  "false" # If assets wouldn't normally be precompiled, force them to be
+set :skip_assets,   "false" # If assets are going to be precompiled, force them NOT to be
+set :ts_index,      "false" # Staging only - Whether or not to run the sphinx index on drop
+set :syncdb,        "false" # Staging only - Whether or not to run a dbsync to mercer_staging
+set :restart_delay, 40 # Yes, this is seriously how long it takes our application to boot up...
 
 # --------------
 # Universal Callbacks
@@ -42,23 +42,8 @@ after "deploy:update", "deploy:cleanup"
 # --------------
 # Universal Tasks
 
-namespace :deploy do
-  # --------------
-  # Restart app
-  task :start, roles: [:app, :workers] do
-    run "touch #{current_release}/tmp/restart.txt"
-  end
-
-  task :stop, roles: [:app, :workers] do
-    # Do nothing.
-  end
-
-  desc "Restart Application"
-  task :restart, roles: [:app, :workers] do
-    run "touch #{current_release}/tmp/restart.txt"
-  end
   
-  
+namespace :deploy do  
   # --------------
   # Override disable/enable
   # https://github.com/capistrano/capistrano/blob/master/lib/capistrano/recipes/deploy.rb

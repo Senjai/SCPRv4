@@ -1,23 +1,28 @@
-<div class="next-prev" id="article-next-prev">
-	<div class="row-fluid">
-		<div class="span6 row-title">
-			<h6>More from <%= @blog.name %></h6>
-		</div>
-		<div class="span18">
-			<div class="row-fluid">
-				<div class="span12 left">
-					<% if @entry.previous.present? %>
-						<div class="arrow">&larr;</div>
-						<%= link_to @entry.previous.headline, @entry.previous.link_path %>
-					<% end %>
-				</div>
-				<div class="span12 right">
-					<% if @entry.next.present? %>
-						<div class="arrow">&rarr;</div>
-						<%= link_to @entry.next.headline, @entry.next.link_path %>
-					<% end %>
-				</div>
-			</div> <!-- row fluid -->
-		</div> <!-- span -->
-	</div> <!-- row fluid -->
-</div>
+<%= content_cache "next_prev/v1/#{content.obj_key}" do %>
+  <% register_content content %>
+  <div class="next-prev" id="article-next-prev">
+    <div class="row-fluid">
+      <div class="span6 row-title">
+        <h6>More from <%= content.blog.name %></h6>
+      </div>
+      <div class="span18">
+        <div class="row-fluid">
+          <div class="span12 left">
+            <% if content.previous.present? %>
+              <% register_content content.previous %>
+              <div class="arrow">&larr;</div>
+              <%= link_to content.previous.short_headline, content.previous.link_path %>
+            <% end %>
+          </div>
+          <div class="span12 right">
+            <% if content.next.present? %>
+              <% register_content content.next %>
+              <div class="arrow">&rarr;</div>
+              <%= link_to content.next.short_headline, content.next.link_path %>
+            <% end %>
+          </div>
+        </div> <!-- row fluid -->
+      </div> <!-- span -->
+    </div> <!-- row fluid -->
+  </div>
+<% end %>

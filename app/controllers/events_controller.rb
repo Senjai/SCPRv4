@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   def index
-    # FIXME This won't show events without an ends_at
     @scoped_events = Event.upcoming_and_current
     
     if params[:list] == "forum"
@@ -8,12 +7,12 @@ class EventsController < ApplicationController
     elsif params[:list] == "sponsored"
       @scoped_events = @scoped_events.sponsored
     end
-        
-    @events = Event.sorted(@scoped_events).paginate(page: params[:page], per_page: 10)
+    
+    @events = Kaminari.paginate_array(Event.sorted(@scoped_events)).page(params[:page]).per(10)
   end
   
   def archive
-    @events = Event.forum.past.paginate(page: params[:page] || 1, per_page: 10)
+    @events = Event.forum.past.page(params[:page]).per(10)
   end
   
   def show

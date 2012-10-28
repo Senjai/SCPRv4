@@ -7,78 +7,78 @@
 .slideview {    
     position: relative;
     
-	.slideshow-header {
-		margin-bottom: 5px;
-		height: 21px;
+    .slideshow-header {
+        margin-bottom: 5px;
+        height: 21px;
 
-	    h6 {
-			display: inline;
-			line-height: 21px;
-	        font-family:'Helvetica Neue', Helvetica, Arial, sans-serif
-	    }
+        h6 {
+            display: inline;
+            line-height: 21px;
+            font-family:'Helvetica Neue', Helvetica, Arial, sans-serif
+        }
     
-	    .pager-nav {
-	        padding: 0 5px;
-		
-			a { 
-				float: left;
-				margin-top: 0;
-			}
-		
-	        .page-count {
-				float: left;
-	            @include font-sans-serif($size: 12px);
-	            color: #ccc;
-	            height: 20px;
-				width: 60px;
-				text-align: center;
-	        }
-	    }
-    
-	    .thumbtray-toggler {
-	        float: right;
-	        cursor: pointer;
-	        margin: 0 10px;
-	        width: 88px;
-	        height: 22px;
-	        background: transparent url(image_path('thumbnails-btn.png')) no-repeat 0 0;
-	        vertical-align: middle;
+        .pager-nav {
+            padding: 0 5px;
         
-	        &:hover, &.active {
-	            background-position: 100% 0;
-	        }
-	    }
-	}
+            a { 
+                float: left;
+                margin-top: 0;
+            }
+        
+            .page-count {
+                float: left;
+                @include font-sans-serif($size: 12px);
+                color: #ccc;
+                height: 20px;
+                width: 60px;
+                text-align: center;
+            }
+        }
+    
+        .thumbtray-toggler {
+            float: right;
+            cursor: pointer;
+            margin: 0 10px;
+            width: 88px;
+            height: 22px;
+            background: transparent url(image_path('thumbnails-btn.png')) no-repeat 0 0;
+            vertical-align: middle;
+        
+            &:hover, &.active {
+                background-position: 100% 0;
+            }
+        }
+    }
     
     .thumbtray {
-		position: relative;
-		margin: 10px 0;
-		text-align: center;
-		display: none;
-		@extend .well;
-		padding: 5px 0 0 0 ;
-		@include border-radius(0px);
-		
+        position: relative;
+        margin: 10px 0;
+        text-align: center;
+        display: none;
+        @extend .well;
+        padding: 5px 0 0 0 ;
+        @include border-radius(0px);
+        
         .nav {
-			position: absolute;
-			top: 0;
-			width: 7%;
-			max-width: 48px;
-			min-width: 31px;
-			height: 100%;
-			background-color: transparent;
-			background-repeat: no-repeat;
-			background-position: 50% 48%;
-			
+            position: absolute;
+            top: 0;
+            width: 7%;
+            max-width: 48px;
+            min-width: 31px;
+            height: 100%;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-position: 50% 48%;
+            
             &.prev {
-				left: 0;
-				background-image: url(image_path('overlay-prev-dark-sm.png'));
-				border-right: 1px solid $grayLight;
+                left: 0;
+                background-image: url(image_path('overlay-prev-dark-sm.png'));
+                border-right: 1px solid $grayLight;
             }
             &.next {
-				right: 0;
-				background-image: url(image_path('overlay-next-dark-sm.png'));
-				border-left: 1px solid $grayLight;
+                right: 0;
+                background-image: url(image_path('overlay-next-dark-sm.png'));
+                border-left: 1px solid $grayLight;
             }
 
             &.disabled {
@@ -94,25 +94,25 @@
              }
         }
         
-		.thumbnails {
-			@include opacity(1);
-			width: 86%;
-			margin: 0 auto;
-	        .thumbnail {
-	            cursor: pointer;
-	            margin: 0 5px;
-				display: none;
-				width: 13%;
-				
-				&.current-set {
-					@include ie-inline-block();
-				}
-				
-				&.active, &:hover {
-					border-color: $orange;
-				}
-	        }
-		}
+        .thumbnails {
+            @include opacity(1);
+            width: 86%;
+            margin: 0 auto;
+            .thumbnail {
+                cursor: pointer;
+                margin: 0 5px;
+                display: none;
+                width: 13%;
+                
+                &.current-set {
+                    @include ie-inline-block();
+                }
+                
+                &.active, &:hover {
+                    border-color: $orange;
+                }
+            }
+        }
     }
 
     .slides {

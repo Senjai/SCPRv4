@@ -5,8 +5,8 @@ require 'rubygems'
 require File.expand_path("../../../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
-require 'database_cleaner'
 require 'chronic'
+require 'database_cleaner'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each           { |f| require f }
 Dir[Rails.root.join("lib/secretary/spec/models/*.rb")].each { |f| require f }
@@ -20,27 +20,23 @@ load "lib/secretary/version.rb"
 
 RSpec.configure do |config|
   config.include RemoteStubs
-  
-  config.use_transactional_fixtures                 = false
+  config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = true
     
   config.before :suite do
-    ActiveRecord::Base.establish_connection("isolated")
+    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
+    ActiveRecord::Base.establish_connection("isolated")
     migration = -> { SecretaryMigration.new.up }
     silence_stream STDOUT, &migration
-    DatabaseCleaner.strategy = :truncation
-  end
-  
-  config.before :each do
     Dir[Rails.root.join("lib/secretary/spec/models/*.rb")].each { |f| load f }
   end
   
-  config.after :each do
-    DatabaseCleaner.clean
+  config.before do
+    DatabaseCleaner.start
   end
   
-  config.after :suite do
-    #
+  config.after do
+    DatabaseCleaner.clean
   end
 end

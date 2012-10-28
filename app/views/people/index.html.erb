@@ -5,12 +5,12 @@
 <p>The hosts, producers and others who make what you hear -- both on air and off.</p>
 <hr/>
 <table cellspacing="0" class="table table-striped">
-    <tbody>
-    	<% @bios.each do |bio| %>
-			<tr>
-				<td><%= link_to bio.name, bio_path(bio.slug) %></td>
-				<td><%= bio.title %></td>
-			</tr>
-		<% end %>
-    </tbody>
+  <tbody>
+    <% @bios.each do |bio| %>
+      <tr>
+        <td><%= link_to bio.name, bio_path(bio.slug) %></td>
+        <td><%= bio.title %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

@@ -1,9 +1,13 @@
 <%= form_block "Source" do %>
-	<%= f.association :show, collection: KpccProgram.active.all %>
-	<%= f.input :air_date, input_html: { class: "thin" } %>
+  <%= f.association :show, collection: KpccProgram.active.all %>
+  <%= f.input :air_date, input_html: { class: "thin" } %>
 <% end %>
 
-<%= section "full_details", f, record %>
+<%= form_block "Details" do %>
+  <%= f.input :headline, input_html: { class: "wide" } %>
+  <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
+<% end %>
+
 <%= section "publishing", f, record %>
 
 <%= section "assets", f, record %>

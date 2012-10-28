@@ -84,7 +84,7 @@ describe AdminResource::List::Base do
   
   describe "per_page=" do
     it "sets @per_page to nil if val is 'all'" do
-      list = AdminResource::List::Base.new(per_page: "all")
+      list = AdminResource::List::Base.new(per_page: :all)
       list.per_page.should be_nil
     end
     

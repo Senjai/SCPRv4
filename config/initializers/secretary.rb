@@ -8,13 +8,13 @@ end
 # Administration for Versions
 module Secretary
   class Version
-    administrate do |admin|
-      admin.define_list do |list|
-        list.column "user", helper: ->(user) { user.try(:to_title) || "System" }
-        list.column "description", linked: true
-        list.column "versioned", header: "Object", helper: ->(versioned) { versioned.simple_title }
-        list.column "version_number", header: "Version"
-        list.column "created_at", header: "Timestamp"
+    administrate do
+      define_list do
+        column "user", helper: ->(version) { version.user.try(:to_title) || "System" }
+        column "description", linked: true
+        column "versioned", header: "Object", helper: ->(version) { version.versioned.simple_title }
+        column "version_number", header: "Version"
+        column "created_at", header: "Timestamp"
       end
     end
   end

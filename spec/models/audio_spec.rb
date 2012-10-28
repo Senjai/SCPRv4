@@ -281,9 +281,9 @@ describe Audio do
   
   describe "#full_path" do
     it "returns the server path to the mp3 if mp3 is present" do
-      Rails.application.config.scpr.stub(:media_root) { "/some/path" }
+      Rails.application.config.scpr.stub(:media_root) { Rails.root.join("spec/fixtures/media") }
       audio = create :audio, :uploaded
-      audio.full_path.should eq "/some/path/audio/#{audio.path}"
+      audio.full_path.should eq Rails.root.join("spec/fixtures/media/audio/#{audio.path}").to_s
     end    
   end
   
@@ -446,6 +446,31 @@ describe Audio do
       audio.size.should eq audio.mp3.file.size
     end
   end
+
+  #----------------
+  
+  describe "#compute_file_info!" do
+    context "with mp3 file" do
+      it "computes duration and size, and saves" do
+        audio = create :audio, :uploaded
+        audio.mp3.present?.should eq true
+        Audio.any_instance.should_receive(:compute_duration)
+        Audio.any_instance.should_receive(:compute_size)
+        Audio.any_instance.should_receive(:save!)
+        audio.compute_file_info!.should eq audio
+      end
+    end
+    
+    context "without mp3 file" do
+      it "doesn't do anything, and returns nil" do
+        audio = create :audio, :enco
+        Audio.any_instance.should_not_receive(:compute_duration)
+        Audio.any_instance.should_not_receive(:compute_size)
+        Audio.any_instance.should_not_receive(:save!)
+        audio.compute_file_info!.should eq nil
+      end
+    end
+  end
   
   #----------------
   
@@ -468,6 +493,15 @@ describe Audio do
     it "does it for subclasses" do
       Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, "Audio::EncoAudio")
       Audio::EncoAudio.enqueue_sync
+    end
+  end
+  
+  #----------------
+  
+  describe "::enqueue_all" do
+    it "sends to Audio::Sync::enqueue_all" do
+      Audio::Sync.should_receive(:enqueue_all)
+      Audio.enqueue_all
     end
   end
 end

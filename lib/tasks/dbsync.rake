@@ -104,7 +104,11 @@ namespace :dbsync do
 
   #-----------------------
   
-  task :reset do
+  task :reset => :setup do
+    if VERBOSE
+      Dbsync::LOGGER.puts "Resetting database..."
+    end
+    
     Rake::Task["db:drop"].invoke
     Rake::Task["db:create"].invoke
   end

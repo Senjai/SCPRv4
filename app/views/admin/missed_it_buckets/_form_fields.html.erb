@@ -1,12 +1,10 @@
-<fieldset>
-	<legend>Details</legend>
-	<%= f.input :title %>
-</fieldset>
+<%= form_block "Details" do %>
+  <%= f.input :title %>
+<% end %>
 
-<fieldset>
-	<legend>Content</legend>
-	<%= f.association :contents %>
-</fieldset>
+<%= form_block "Content" do %>
+  <%= f.association :contents %>
+<% end %>
 
 <script type="text/javascript">
     (function($) {

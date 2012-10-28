@@ -52,18 +52,6 @@ describe Admin::ResourceController do
     pending
   end
   
-  describe "resource_title" do
-    pending
-  end
-  
-  describe "resource_param" do
-    pending
-  end
-  
-  describe "resource_url" do
-    pending
-  end
-  
   describe "extend_breadcrumbs_with_resource_route" do
     pending
   end

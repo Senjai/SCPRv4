@@ -1,12 +1,12 @@
 <% vert = ( assets[0].asset.six.height.to_i > assets[0].asset.six.width.to_i ) ? true : false %>
 <div class="asset-block <%= vert ? "right" : "wide" %>" style="width:<%= assets[0].asset.six.width %>px">
-	<div class="contentasset">
-		<%= assets[0].asset.six.tag %>
-	</div>
+  <div class="contentasset">
+    <%= assets[0].asset.six.tag %>
+  </div>
 
-	<h4><%= assets[0].asset.owner %></h4>
+  <h4><%= assets[0].asset.owner %></h4>
 
-	<% if assets[0].caption %>
-		<p><%= assets[0].caption %></p>
-	<% end %>
+  <% if assets[0].caption %>
+    <p><%= assets[0].caption %></p>
+  <% end %>
 </div>

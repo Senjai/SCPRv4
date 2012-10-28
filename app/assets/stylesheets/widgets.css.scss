@@ -814,64 +814,28 @@ a.comment-count.inline {
 .nav-tabs {
     @include font-sans-serif();
 }
-.popular li {
-    @include clearfix();
-    display:block;
-    list-style-image:url("more-headlines-li.png");
-    margin-bottom:0;
-    position:relative;
+.popular {
     a {
-        display:block;
-        padding:0 $baseline / 2 10px;
-        position:relative;
-        z-index:4;
         @include font-headline($weight:400);
         color:$grayAlt;
         font-size:15px;
-        line-height: 18px;
     }
     .count {
-        @include gradient-vertical(#fff, $nearWhite);
-        @include border-radius(4px);
-        @include font-headline();
-        border:1px solid $grayLighter;
-        color:$grayDark;
-        display:block;
-        float:right;
-        font-size:14px;
-        font-weight:bold;
-        position:relative;
-        white-space:nowrap;
-        width:42px;
-        height:42px;
-        z-index:3;
-        span {
-            position:absolute;
-            left:0;
-            top:4px;
-            display:block;
-            width:43px;
-            text-align:center;
-        }
+      color: $gray;
+      margin-left: 5px;
+      font-size: 13px;
     }
 }
 
 // Recent Posts
 .recent-posts {
-    li {
-        list-style-image:url("more-headlines-li.png");
-        margin-bottom:$baseline / 2;
-        p {
-            margin-bottom:0;
-        }
-        .date-posted {
-            @include font-sans-serif(normal, 11px);
-        }
-        a {
-            color:$grayAlt;
-            @include font-headline(400);
-            font-size:15px;
-        }
+    .date-posted {
+        @include font-sans-serif(normal, 11px);
+    }
+    a {
+        color:$grayAlt;
+        @include font-headline(400);
+        font-size:15px;
     }
 }
 

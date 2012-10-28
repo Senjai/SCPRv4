@@ -5,18 +5,19 @@
 class BlogCategory < ActiveRecord::Base
   self.table_name = "blogs_blogcategory"
 
-  administrate do |admin|
-    admin.define_list do |list|
-      list.per_page = "all"
-      list.column :blog
-      list.column :title
-      list.column :slug
+  administrate do
+    define_list do
+      list_per_page :all
+      
+      column :blog
+      column :title
+      column :slug
     end
   end
       
   #--------------
   # Association
-  belongs_to :blog
+  belongs_to :blog, touch: true
   has_many :blog_entry_blog_categories
   has_many :blog_entries, through: :blog_entry_blog_categories, dependent: :destroy
   

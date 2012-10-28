@@ -3,32 +3,30 @@
 <h1>Podcasts</h1>
 
 <div class="row-fluid">
-	<div class="span6">
-		<p style="font-style: italic">A podcast is a way for you to "subscribe" to a program and listen to it when and where you want. It's kind of like TiVo for radio, with the added benefit of portability.</p>
-
-		<p style="font-style: italic">Once you've subscribed to a program's podcast, your podcasting application checks on a regular basis for new episodes of the program and makes them available for download to your computer.</p>
-
-	</div>
-	
-	<div class="span18">
-		<% for p in @podcasts %>
-			<h3><%= p.title %></h3>
-			<div class="row-fluid">
-				<div class="span4">
-					<img src="<%= p.image_url %>" style="width: 100%; max-width: 88px;"/>
-				</div>
-				<div class="span20">
-					<p><%= p.description %></p>
-					<p><a href="<%= p.itunes_url %>">
-						<img src="http://media.scpr.org/assets/images/png-tool-icons/podcasts.png">
-						Subscribe via iTunes™
-					</a>
-					<br/><a href="<%= p.podcast_url %>">
-						<img src="http://media.scpr.org/assets/images/png-tool-icons/rss.png">
-						<%= p.podcast_url %>	
-					</a></p>
-				</div>
-			</div>
-		<% end %>
-	</div>
+  <div class="span6">
+    <p style="font-style: italic">A podcast is a way for you to "subscribe" to a program and listen to it when and where you want. It's kind of like TiVo for radio, with the added benefit of portability.</p>
+    <p style="font-style: italic">Once you've subscribed to a program's podcast, your podcasting application checks on a regular basis for new episodes of the program and makes them available for download to your computer.</p>
+  </div>
+  
+  <div class="span18">
+    <% for p in @podcasts %>
+      <h3><%= p.title %></h3>
+      <div class="row-fluid">
+        <div class="span4">
+          <img src="<%= p.image_url %>" style="width: 100%; max-width: 88px;"/>
+        </div>
+        <div class="span20">
+          <p><%= p.description %></p>
+          <p><a href="<%= p.itunes_url %>">
+            <img src="http://media.scpr.org/assets/images/png-tool-icons/podcasts.png">
+            Subscribe via iTunes™
+          </a>
+          <br/><a href="<%= p.podcast_url %>">
+            <img src="http://media.scpr.org/assets/images/png-tool-icons/rss.png">
+            <%= p.podcast_url %>  
+          </a></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

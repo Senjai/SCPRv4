@@ -4,7 +4,8 @@ describe AdminUser do
   describe "associations" do
     it { should have_many(:activities).class_name("Secretary::Version") }
     it { should have_one(:bio) }
-    it { should have_many(:permissions) }
+    it { should have_many(:admin_user_permissions) }
+    it { should have_many(:permissions).through(:admin_user_permissions) }
   end
   
   #------------------------

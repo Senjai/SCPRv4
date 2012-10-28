@@ -18,15 +18,15 @@ class BlogEntry < ContentBase
     
   # ------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
+  administrate do
+    define_list do
+      list_order "published_at desc"
       
-      list.column "headline"
-      list.column "blog"
-      list.column "bylines"
-      list.column "status"
-      list.column "published_at"
+      column "headline"
+      column "blog"
+      column "bylines"
+      column "status"
+      column "published_at"
     end
   end
 
@@ -53,7 +53,7 @@ class BlogEntry < ContentBase
   
   # ------------------
   # Scopes
-  default_scope includes(:bylines)
+  
 
   # ------------------
   
@@ -65,10 +65,10 @@ class BlogEntry < ContentBase
     has category.is_news, as: :category_is_news
     has published_at
     has "1", as: :is_source_kpcc, type: :boolean
-    has "CRC32(CONCAT('blogs/entry:',blogs_entry.id))",     type: :integer, as: :obj_key
-    has "(blogs_entry.blog_asset_scheme <=> 'slideshow')",  type: :boolean, as: :is_slideshow
+    has "CRC32(CONCAT('blogs/entry:',#{BlogEntry.table_name}.id))",     type: :integer, as: :obj_key
+    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')",  type: :boolean, as: :is_slideshow
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",       type: :boolean, as: :has_audio
-    where "blogs_entry.status = #{STATUS_LIVE} and blogs_blog.is_active = 1"
+    where "#{BlogEntry.table_name}.status = #{STATUS_LIVE} and #{Blog.table_name}.is_active = 1"
     join audio
   end
     
@@ -93,13 +93,13 @@ class BlogEntry < ContentBase
       super
     end
   end
-    
+  
   def previous
-    self.class.published.first(conditions: ["published_at < ? and blog_id = ?", self.published_at, self.blog_id], limit: 1, order: "published_at desc")
+    self.class.published.where("published_at < ? and blog_id = ?", self.published_at, self.blog_id).first
   end
 
   def next
-    self.class.published.first(conditions: ["published_at > ? and blog_id = ?", self.published_at, self.blog_id], limit: 1, order: "published_at asc")
+    self.class.published.where("published_at > ? and blog_id = ?", self.published_at, self.blog_id).first
   end
   
   #----------

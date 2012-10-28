@@ -15,7 +15,7 @@ class NewsStory < ContentBase
   has_secretary
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme
-  ROUTE_KEY = "news_story"
+  ROUTE_KEY            = "news_story"
   
   LOCALES = [ 
     ["CA/Local",  "local"],
@@ -37,15 +37,16 @@ class NewsStory < ContentBase
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
-      list.column "headline"
-      list.column "slug"
-      list.column "news_agency"
-      list.column "audio"
-      list.column "status"
-      list.column "published_at"
+  administrate do
+    define_list do
+      list_order "published_at desc"
+      
+      column :headline
+      column :slug
+      column :news_agency
+      column :audio
+      column :status
+      column :published_at
     end
   end
 

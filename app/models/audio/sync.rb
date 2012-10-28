@@ -2,36 +2,54 @@ class Audio
   class Sync
     extend LogsAsTask
     logs_as_task
-  
-    def initialize(klass=nil)
-      @klass = klass || Audio
-    end
     
-    #------------
-    # Enqueue the sync task for any subclasses that need it
-    def sync_each!
-      [Audio::ProgramAudio, Audio::DirectAudio, Audio::EncoAudio].each do |klass|
-        klass.enqueue_sync
-      end
-    end
-
-    #------------
-    # Enco and Direct audio sync this way
-    # Don't use this method directly, use Klass.sync!
-    def sync_awaiting_audio_if_file_exists!
-      @klass.awaiting_audio.each do |audio|
-        begin
-          if File.exists? audio.full_path
-            audio.mp3 = File.open(audio.full_path)
-            audio.save!
-            self.class.log "Saved Audio ##{audio.id}: #{audio.full_path}"
-          else
-            self.class.log "Still awaiting audio file for Audio ##{audio.id}: #{audio.full_path}"
-          end
-        rescue Exception => e
-          self.class.log "Could not save Audio ##{audio.id}: #{e}"
+    class << self
+      #------------
+      # Enqueue the sync task for any subclasses that need it
+      def enqueue_all
+        [Audio::ProgramAudio, Audio::DirectAudio, Audio::EncoAudio].each do |klass|
+          klass.enqueue_sync
         end
       end
-    end
+    
+      #------------
+      # Run `#sync!` on all awaiting audio
+      def bulk_sync_awaiting_audio!(klass, limit=nil)
+        limit ||= 2.weeks.ago
+        awaiting = klass.awaiting_audio.where("created_at > ?", limit)
+        synced = 0
+        
+        if awaiting.empty?
+          self.log "No Audio to sync."
+        else
+        
+          awaiting.each do |audio|
+            synced += 1 if audio.sync!
+          end
+          
+          self.log "Finished. Total synced: #{synced}"
+        end
+      end
+    
+      #------------
+      # Enco and Direct audio sync this way
+      # Don't use this method directly, use object.sync!
+      def sync_if_file_exists!(audio)
+        begin
+          if File.exists? audio.full_path
+            audio.send :write_attribute, :mp3, audio.filename
+            audio.save!
+            self.log "Saved Audio ##{audio.id}: #{audio.full_path}"
+            audio
+          else
+            self.log "Still awaiting audio file for Audio ##{audio.id}: #{audio.full_path}"
+            false
+          end
+        rescue Exception => e
+          self.log "Could not save Audio ##{audio.id}: #{e}"
+          false
+        end
+      end
+    end # singleton
   end # Sync
 end # Audio

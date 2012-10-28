@@ -10,20 +10,20 @@
 
 <div class="cbase">
 <% for audio in @this_week %>
-	<div class="row">
-		<div class="span4">
-			<p><b><%= [audio.enco_date,audio.enco_number].join("/") %></b></p>		
-			<p><%= link_to "View in Admin", audio.content.admin_path %></p>
-		</div>
-		<div class="span12">
-			<% if audio.content.published? %>
-				<%= render_content audio.content, "offlead_asset" %>
-			<% else %>
-				<b>Unpublished: <%= audio.content.headline %></b>
-				<h3 style="margin-bottom: 12px">Status: <%= audio.content.status_text %></h3>
-				<hr/>
-			<% end %>			
-		</div>
-	</div>
+  <div class="row">
+    <div class="span4">
+      <p><b><%= [audio.enco_date,audio.enco_number].join("/") %></b></p>    
+      <p><%= link_to "View in Admin", audio.content.django_edit_url %></p>
+    </div>
+    <div class="span12">
+      <% if audio.content.published? %>
+        <%= render_content audio.content, "offlead_asset" %>
+      <% else %>
+        <b>Unpublished: <%= audio.content.headline %></b>
+        <h3 style="margin-bottom: 12px">Status: <%= audio.content.status_text %></h3>
+        <hr/>
+      <% end %>
+    </div>
+  </div>
 <% end %>
 </div>

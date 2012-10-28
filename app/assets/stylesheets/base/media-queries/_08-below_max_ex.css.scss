@@ -1,45 +1,45 @@
 // Below Max Width (Exclusive)
 @media screen and (max-width: $mediaMax - 1) {
-	// This happens below maxWidth because the banner is an image.
-	// TODO Change the support banner to a more fluid div so it can scale nicely.
-	// Remove background from Support Banner to allow fluidity //
-		.program-masthead #program-masthead-support .support {
-			display: block;
-			background: none;
-			height: auto;
-			width: auto;
-			a {
-				display: block;
-				color: $black;
-				text-shadow: none;
-			}
-		}
-	// end Support Banner
-	
-	
-	// Basically, if this media query is being read by the browser, 
-	// then we can set a lower min-width than the default to allow 
-	// the responsive design to do its thing. Otherwise (IE7/8), the 
-	// default min-width (set to the $siteWidth) will keep the site 
-	// at that width.
-	#masthead-right-header-wrapper {
-		.pledge, nav.utils {
-			float:none;
-			li:first-child {
-				border-left:none;
-			}
-		}
-		.pledge-button-container { display: block; margin: 5px 0 0 0; }
-	}
-	.nav-primary .sections ul li a {padding: 8px 14px;}
-	.nav-primary .search-form { width:150px;}
-	.container-fluid { min-width: 300px; }
-	#events-header { min-width: 0; }
-	.newsletter .or { display:none;	}
-	#page-footer {
-		footer {
-			#footer-container {background-position: 75% 0; }
-			.footer-nav {background:none;}
-		}
-	}
+    // This happens below maxWidth because the banner is an image.
+    // TODO Change the support banner to a more fluid div so it can scale nicely.
+    // Remove background from Support Banner to allow fluidity //
+        .program-masthead #program-masthead-support .support {
+            display: block;
+            background: none;
+            height: auto;
+            width: auto;
+            a {
+                display: block;
+                color: $black;
+                text-shadow: none;
+            }
+        }
+    // end Support Banner
+    
+    
+    // Basically, if this media query is being read by the browser, 
+    // then we can set a lower min-width than the default to allow 
+    // the responsive design to do its thing. Otherwise (IE7/8), the 
+    // default min-width (set to the $siteWidth) will keep the site 
+    // at that width.
+    #masthead-right-header-wrapper {
+        .pledge, nav.utils {
+            float:none;
+            li:first-child {
+                border-left:none;
+            }
+        }
+        .pledge-button-container { display: block; margin: 5px 0 0 0; }
+    }
+    .nav-primary .sections ul li a {padding: 8px 14px;}
+    .nav-primary .search-form { width:150px;}
+    .container-fluid { min-width: 300px; }
+    #events-header { min-width: 0; }
+    .newsletter .or { display:none; }
+    #page-footer {
+        footer {
+            #footer-container {background-position: 75% 0; }
+            .footer-nav {background:none;}
+        }
+    }
 }

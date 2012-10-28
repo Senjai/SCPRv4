@@ -1,17 +1,27 @@
 class BreakingNewsAlert < ActiveRecord::Base
-  administrate
   self.table_name = 'layout_breakingnewsalert'
 
   has_secretary
-    
+  
+  administrate do
+    define_list do
+      list_order "created_at desc"
+      column :headline
+      column :alert_type, helper: ->(alert) { BreakingNewsAlert::ALERT_TYPES[alert.alert_type] }
+      column :visible
+      column :is_published
+      column :email_sent
+    end
+  end
+  
   ALERT_TYPES = {
     "break"   => "Breaking News",
     "audio"   => "Listen Live",
     "now"     => "Happening Now"
   }
   
-  scope :published, order("created_at desc").where(is_published: true)
-  scope :visible,   where(visible: true)
+  scope :published, -> { order("created_at desc").where(is_published: true) }
+  scope :visible,   -> { where(visible: true) }
   
   def break_type
     ALERT_TYPES[alert_type]

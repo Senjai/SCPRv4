@@ -1,11 +1,11 @@
 <% page_title @blog.name + @BLOGTITLE_EXTRA.to_s %>
 
 <div class="blog-landing">
-	<%= any_to_list? @entries, message: @MESSAGE do %>
-		<%= render partial: "/blogs/entry", collection: @entries, as: :entry %>
-	<% end %>
+  <%= any_to_list? @entries, message: @MESSAGE do %>
+    <%= render partial: "/blogs/entry", collection: @entries, as: :entry, locals: { blog: @blog } %>
+  <% end %>
 </div>
 
 <div class="span18 blog-pag">
-	<%= will_paginate @entries, :page_links => false %>
+  <%= paginate @entries %>
 </div>

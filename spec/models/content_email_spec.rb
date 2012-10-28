@@ -24,8 +24,10 @@ describe ContentEmail do
     it { should validate_presence_of :from_email }
     it { should validate_presence_of :to_email }
     it { should validate_presence_of :content }
-    it { should validate_format_of(:to_email).with(/.+@.+\..+/) }
-    it { should validate_format_of(:from_email).with(/.+@.+\..+/) }
+    it { should allow_value("other-guy@gmail.com").for(:from_email).with_message(/Invalid/) }
+    it { should allow_value("other-guy@gmail.com").for(:to_email).with_message(/Invalid/) }
+    it { should_not allow_value("noway jose @ whatever").for(:to_email).with_message(/Invalid/) }
+    it { should_not allow_value("nowayjose@whatever").for(:from_email).with_message(/Invalid/) }
     it { should ensure_length_of(:lname).is_at_most(0) }
   end
 

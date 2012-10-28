@@ -1,23 +1,23 @@
 <div id="most-popular" class="widget">   
-	<h6>Most Popular</h6>
-	<ul class="nav nav-tabs">
-	    <li class="active"><a href="#pop_tab1" data-toggle="tab">Viewed</a></li>
-	    <li><a href="#pop_tab2" data-toggle="tab">Discussed</a></li>
-	</ul>
-	<div class="tab-content">
-		<div class="tab-pane active popular" id="pop_tab1">
-			<% if popular = ActionController::Base.cache_store.read("widget/popular_viewed") %>
-		        <%= raw popular %>
-		    <% else %>
-		        <p>The most viewed content widget has an error and will refresh momentarily.</p>
-		    <% end %>
-		</div>
-		<div class="tab-pane popular" id="pop_tab2">
-			<% if discussed = ActionController::Base.cache_store.read("widget/popular_commented") %>
-		        <%= raw discussed %>
-		    <% else %>
-		        <p>The most discussed content widget has an error and will refresh momentarily.</p>
-		    <% end %>    
-		</div>
-	</div>
+  <h6>Most Popular</h6>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#pop_tab1" data-toggle="tab">Viewed</a></li>
+    <li><a href="#pop_tab2" data-toggle="tab">Discussed</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active popular" id="pop_tab1">
+      <% if popular = ActionController::Base.cache_store.read("widget/popular_viewed") %>
+        <%= raw popular %>
+      <% else %>
+        <p>The most viewed content widget has an error and will refresh momentarily.</p>
+      <% end %>
+    </div>
+    <div class="tab-pane popular" id="pop_tab2">
+      <% if discussed = ActionController::Base.cache_store.read("widget/popular_commented") %>
+        <%= raw discussed %>
+      <% else %>
+        <p>The most discussed content widget has an error and will refresh momentarily.</p>
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -1,63 +1,63 @@
 <div class="blog-about widget">
-	<h6>About the blog: <%= @blog.name %></h6>
-	<div class="row-fluid">
-		<div class="span10">
-			<nav class="connect">
-				<%= link_to "RSS", @blog.feed_url, class: "rss with-icon" %>
-			</nav>
-		</div>
-		<div class="span14">
-			<p class="about"><%= @blog.description.html_safe %></p>
-		</div>
-	</div>
+  <h6>About the blog: <%= @blog.name %></h6>
+  <div class="row-fluid">
+    <div class="span10">
+      <nav class="connect">
+        <%= link_to "RSS", @blog.feed_url, class: "rss with-icon" %>
+      </nav>
+    </div>
+    <div class="span14">
+      <p class="about"><%= @blog.description.html_safe %></p>
+    </div>
+  </div>
 </div>
 
 <div class="blog-categories widget blog">
-	<h6>Browse posts by Category</h6>
-	<ul>
-		<% @blog.blog_categories.each do |category| %>
-			<li><%= link_to category.title, blog_category_path(@blog.slug, category.slug) %></li>
-		<% end %>
-		
-		<li><%= link_to "Browse All", blog_path(@blog.slug) %></li>
-	</ul>
+  <h6>Browse posts by Category</h6>
+  <ul>
+    <% @blog.blog_categories.each do |category| %>
+      <li><%= link_to category.title, blog_category_path(@blog.slug, category.slug) %></li>
+    <% end %>
+    
+    <li><%= link_to "Browse All", blog_path(@blog.slug) %></li>
+  </ul>
 </div>
 
 <div class="blog-archive widget blog">
-	<h6>Browse the Archive</h6>
-	<div class="archive-select" id="archive-select">
-		<p>
-			<%= form_tag blog_process_archive_select_path(@blog.slug), id: "archive_date_select", class: "archive-date-select" do %>
-				<%= date_select 'archive', 'date', order: [:month, :year], 
-								start_year: @blog.created_at.year, 
-								end_year: Time.now.year %>
-				<%= submit_tag "Go", class: "btn" %>
-			<% end %>
-		</p>
-	</div>
+  <h6>Browse the Archive</h6>
+  <div class="archive-select" id="archive-select">
+    <p>
+      <%= form_tag blog_process_archive_select_path(@blog.slug), id: "archive_date_select", class: "archive-date-select" do %>
+        <%= date_select 'archive', 'date', order: [:month, :year], 
+                start_year: @blog.created_at.year, 
+                end_year: Time.now.year %>
+        <%= submit_tag "Go", class: "btn" %>
+      <% end %>
+    </p>
+  </div>
 </div>
 
 
-<% if @authors.present? %>
+<% if @blog.authors.present? %>
 <div class="blog-about widget">
-	<h6>Blog Host<%="s" if @authors.length > 1 %></h6>
-	<% @authors.each do |author| %>
-		<div class="host">
-			<figure class="clearfix">
-				<% if author.headshot.present? %>
-					<div class="contentasset">
-						<%= author.headshot.thumb.tag %>
-					</div>
-				<% end %>
-		    	<figcaption>
-					<h6 class="host-name"><%= link_to author.name, bio_path(author.slug) %></h6>
-					<p class="brief-bio">
-						<%= author.short_bio %>
-						<div><%= link_to("Follow #{author.twitter} on Twitter", author.twitter_url) if author.twitter.present? %></div>
-					</p>
-				</figcaption>
-			</figure>
-		</div>
-	<% end %>
+  <h6>Blog Host<%="s" if @blog.authors.length > 1 %></h6>
+  <% @blog.authors.each do |author| %>
+    <div class="host">
+      <figure class="clearfix">
+        <% if author.headshot.present? %>
+          <div class="contentasset">
+            <%= author.headshot.thumb.tag %>
+          </div>
+        <% end %>
+          <figcaption>
+          <h6 class="host-name"><%= link_to author.name, bio_path(author.slug) %></h6>
+          <p class="brief-bio">
+            <%= author.short_bio %>
+            <div><%= link_to("Follow #{author.twitter} on Twitter", author.twitter_url) if author.twitter.present? %></div>
+          </p>
+        </figcaption>
+      </figure>
+    </div>
+  <% end %>
 </div>
 <% end %>

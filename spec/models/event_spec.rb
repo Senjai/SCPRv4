@@ -54,38 +54,47 @@ describe Event do
     it { should respond_to :disqus_shortname }
   end
   
-  # ----------------
-
-  describe "has_format?" do
-    it "is true" do
-      create(:event).has_format?.should be_false
-    end
-  end
-  
   #-------------------
   
-  describe "Event.sorted" do
+  describe "::sorted" do
+    let(:past_one     ) { build :event, starts_at: 2.hours.ago,      ends_at: 1.hour.ago }
+    let(:past_many    ) { build :event, starts_at: 3.days.ago,       ends_at: 1.day.ago }
+    let(:current_one  ) { build :event, starts_at: 1.hour.ago,       ends_at: 1.hour.from_now }
+    let(:current_many ) { build :event, starts_at: 1.day.ago,        ends_at: 1.day.from_now }
+    let(:future_one   ) { build :event, starts_at: 1.hour.from_now,  ends_at: 2.hours.from_now }
+    let(:future_many  ) { build :event, starts_at: 2.days.from_now,  ends_at: 4.days.from_now }
+    
+    let(:events) { [past_one, past_many, current_one, current_many, future_one, future_many].shuffle }
+    
     before :each do
-      freeze_time_at "noon"
+      freeze_time_at "noon"    
     end
     
-    # Is there a more reliable way to test this?
-    it "sorts based on instance sorter" do
-      past_one      = build :event, starts_at: 2.hours.ago,      ends_at: 1.hour.ago
-      past_many     = build :event, starts_at: 3.days.ago,       ends_at: 1.day.ago
-      current_one   = build :event, starts_at: 1.hour.ago,       ends_at: 1.hour.from_now
-      current_many  = build :event, starts_at: 1.day.ago,        ends_at: 1.day.from_now
-      future_one    = build :event, starts_at: 1.hour.from_now,  ends_at: 2.hours.from_now
-      future_many   = build :event, starts_at: 2.days.from_now,  ends_at: 4.days.from_now
-      
-      events = [past_one, past_many, current_one, current_many, future_one, future_many].shuffle
-      Event.sorted(events).should eq [past_many, past_one, current_one, future_one, current_many, future_many]
+    context "ascending" do
+      # Is there a more reliable way to test this?
+      it "sorts based on instance sorter" do
+        Event.sorted(events, :asc).should eq [past_many, past_one, current_one, future_one, current_many, future_many]
+      end
     end
+    
+    context "descending" do
+      it "sorts based on instance order" do
+        past_one      = build :event, starts_at: 2.hours.ago,      ends_at: 1.hour.ago
+        past_many     = build :event, starts_at: 3.days.ago,       ends_at: 1.day.ago
+        current_one   = build :event, starts_at: 1.hour.ago,       ends_at: 1.hour.from_now
+        current_many  = build :event, starts_at: 1.day.ago,        ends_at: 1.day.from_now
+        future_one    = build :event, starts_at: 1.hour.from_now,  ends_at: 2.hours.from_now
+        future_many   = build :event, starts_at: 2.days.from_now,  ends_at: 4.days.from_now
+    
+        events = [past_one, past_many, current_one, current_many, future_one, future_many].shuffle
+        Event.sorted(events).should eq [past_many, past_one, current_one, future_one, current_many, future_many]
+      end
+    end    
   end
   
   #-------------------
   
-  describe "sorter" do
+  describe "#sorter" do
     before :each do
       freeze_time_at "noon"
     end
@@ -113,7 +122,7 @@ describe Event do
   
   #-------------------
 
-  describe "multiple_days?" do
+  describe "#multiple_days?" do
     it "is true if > 24 hours" do
       event = Event.new
       event.stub(:minutes) { 60*48 }
@@ -135,7 +144,7 @@ describe Event do
   
   #-------------------
 
-  describe "minutes" do
+  describe "#minutes" do
     it "calculates the minutes of the event" do
       event = build :event, starts_at: 2.minutes.ago, ends_at: 3.minutes.from_now
       event.minutes.should be_a Fixnum
@@ -145,7 +154,7 @@ describe Event do
   
   #-------------------
 
-  describe "ongoing?" do
+  describe "#ongoing?" do
     it "is true if multiple day and current" do
       event = Event.new
       event.stub(:multiple_days?) { true }
@@ -156,7 +165,7 @@ describe Event do
   
   #-------------------
   
-  describe "upcoming?" do
+  describe "#upcoming?" do
     it "is true if the start time is greater than right now" do
       event = build :event, ends_at: nil, starts_at: Chronic.parse("1 hour from now")
       event.upcoming?.should be_true
@@ -170,7 +179,7 @@ describe Event do
   
   #-------------------
   
-  describe "current?" do
+  describe "#current?" do
     before :each do
       freeze_time_at "noon"
     end
@@ -203,7 +212,7 @@ describe Event do
 
   #-------------------
   
-  describe "closest" do # TODO All the scopes are ugly and inefficient
+  describe "#closest" do # TODO All the scopes are ugly and inefficient
     it "returns the closest published future event" do
       events  = create_list :event, 5, :published
       closest = Event.closest
@@ -235,10 +244,10 @@ describe Event do
       it "selects event that are future or currently happening" do
         past_event    = create :event, :published, :past
         current_event = create :event, :published, :current
-        future_event  = create :event, :published, :future
+        future_event  = create :event, :published, :future, ends_at: nil
         Event.upcoming_and_current.should eq [current_event, future_event]
       end
-      
+            
       it "orders by starts_at" do
         Event.upcoming_and_current.to_sql.should match /order by starts_at/i
       end
@@ -281,7 +290,7 @@ describe Event do
 
   #-------------------
   
-  describe "is_forum_event" do
+  describe "#is_forum_event" do
     it "is true if event type in the ForumTypes variable" do
       Event::ForumTypes.each do |etype|
         event = build :event, etype: etype

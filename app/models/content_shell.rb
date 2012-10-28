@@ -10,9 +10,7 @@ class ContentShell < ContentBase
   
   self.table_name =  "contentbase_contentshell"
   has_secretary
-  
-  ADMIN_PREFIX = "contentbase/contentshell"
-  
+    
   acts_as_content comments: false
   
   def self.content_key
@@ -30,14 +28,15 @@ class ContentShell < ContentBase
                   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "published_at desc"
-      list.column "headline"
-      list.column "site"
-      list.column "bylines"
-      list.column "status"
-      list.column "published_at"
+  administrate do
+    define_list do
+      list_order "published_at desc"
+      
+      column "headline"
+      column "site"
+      column "bylines"
+      column "status"
+      column "published_at"
     end
   end
 

@@ -5,16 +5,16 @@ class Flatpage < ActiveRecord::Base
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order    = "url"
-      list.per_page = 100
+  administrate do
+    define_list do
+      list_order "url"
+      list_per_page 100
       
-      list.column "url"
-      list.column "is_public", header: "Public?"
-      list.column "redirect_url"
-      list.column "title"
-      list.column "updated_at"
+      column "url"
+      column "is_public", header: "Public?"
+      column "redirect_url"
+      column "title"
+      column "updated_at"
     end
   end
 
@@ -28,7 +28,7 @@ class Flatpage < ActiveRecord::Base
   
   # -------------------
   # Scopes
-  scope :visible, where(is_public: true)
+  scope :visible, -> { where(is_public: true) }
 
 
   # -------------------

@@ -74,7 +74,7 @@ describe EventPresenter do
       event.stub(:current?) { false }
       p = presenter(event)
       p.should_receive(:range_date).twice
-      p.date.should match /post-date/
+      p.date.should match /past-date/
       p.date.should match /This event took place on/
     end
   end

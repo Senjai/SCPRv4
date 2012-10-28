@@ -1,19 +1,18 @@
 <% if params[:page] == "1" %>
-	$(".content-carousel .pager-nav .prev").addClass("disabled");
+  $(".content-carousel .pager-nav .prev").addClass("disabled");
 <% else %>
-	$(".content-carousel .pager-nav .prev").removeClass("disabled");
+  $(".content-carousel .pager-nav .prev").removeClass("disabled");
 <% end %>
 
 <% if ["250", @carousel_contents.total_pages.to_s].include? params[:page] %> <%# 250 = max thinking sphinx results divided by per_page... 1000/4 %>
-	$(".content-carousel .pager-nav .next").addClass("disabled");
+  $(".content-carousel .pager-nav .next").addClass("disabled");
 <% else %>
-	$(".content-carousel .pager-nav .next").removeClass("disabled");
+  $(".content-carousel .pager-nav .next").removeClass("disabled");
 <% end %>
 
 $(".carousel").animate({opacity: 0}, 300);
 
 setTimeout(function() {
-	$(".carousel").html("<%= escape_javascript(render 'shared/cwidgets/content_carousel_page', contents: @carousel_contents) %>").animate({opacity: 1}, 300);
-	$(".carousel").attr("data-current-page", <%= params[:page] %>);
+  $(".carousel").html("<%= escape_javascript(render 'shared/cwidgets/content_carousel_page', contents: @carousel_contents) %>").animate({opacity: 1}, 300);
+  $(".carousel").attr("data-current-page", <%= params[:page] %>);
 }, 300);
-

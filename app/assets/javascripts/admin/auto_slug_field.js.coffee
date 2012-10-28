@@ -7,13 +7,16 @@ $ ->
 class scpr.AutoSlugField
     DefaultOptions:
         titleAttributes: ["headline", "name", "title"]
+        maxLength:       50
     
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
         
+        # Setup Attributes
         @slugField  = $ @options.field
         @titleAttrs = @options.titleAttributes
-
+        @maxLength  = @options.maxLength
+        
         # Loop through title attributes and find the first one that matches
         for attr in @titleAttrs
             @titleField = $ @slugField.closest("form").find("input[name*='[#{attr}]']")[0]
@@ -27,7 +30,10 @@ class scpr.AutoSlugField
                 keyup: (event) => @updateSlug($(event.target).val())
     
     updateSlug: (value) ->
-        @slugField.val @slugify(value)
+        # Slugs should not be longer than @maxLength characters
+        slug = @slugify(value)
+        if slug.length < @maxLength
+            @slugField.val slug
     
     slugify: (str) ->
         str.toLowerCase()

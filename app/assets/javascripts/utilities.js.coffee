@@ -30,13 +30,13 @@ class scpr.CompactNav
         )
 
 #----------
-
-class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
+# Hack to get DFP ads in iframes to be responsive
+class scpr.adSizer
     constructor: ->
         $(document).ready =>
             # 5 times. If the ad hasn't loaded after that, then we're giving up.
             for i in [1..5]
-            	@sizedCheck(i)
+                @sizedCheck(i)
             
 
     resize: (element) ->
@@ -62,6 +62,46 @@ class scpr.adSizer # Hack to get DFP ads in iframes to be responsive
     removeFixedDimensions: (element) ->
         $(element).removeAttr("width").removeAttr("height")
 
+#----------
+
+class scpr.TweetRotator
+    defaults:
+        el:          "#election-tweets"
+        fadeSpeed:   '400' # milliseconds
+        rotateSpeed: 15 # seconds
+        activeClass: 'active'
+        
+    constructor: (options={}) ->
+        @options = _.defaults options, @defaults
+        
+        @el     = $(@options.el)
+        
+        @_firstChild = $(@el.children()[0])
+        @active      = @_firstChild
+        
+        setInterval =>
+            @rotate()
+        , @options.rotateSpeed * 1000
+        
+    rotate: ->
+        next = @getNext()
+        @active.fadeOut @options.fadeSpeed, =>
+            @deactivate @active
+            @activate next
+    
+    activate: (el) ->
+        el.fadeIn @options.fadeSpeed, =>
+            el.addClass(@options.activeClass)
+            @active = el
+    
+    deactivate: (el) ->
+        el.removeClass(@options.activeClass)
+        
+    getNext: ->
+        next = @active.next()
+        if next.length then next else @_firstChild
+        
+        
 #----------
 
 class scpr.SocialTools
@@ -123,13 +163,13 @@ class scpr.SocialTools
         $(@options.fbfinder).on "click", (evt) =>
             if url = $(evt.target).attr("data-url")
                 fburl = "http://www.facebook.com/sharer.php?u=#{url}"
-                window.open fburl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'                
+                window.open fburl, 'pop_up','height=350,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no'
 
         # add share functionality on google plus
         $(@options.gplusfinder).on "click", (evt) =>
             if url = $(evt.target).attr("data-url")
                 gpurl = "https://plus.google.com/share?url=#{url}"
-                window.open gpurl, 'pop_up','height=400,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'               
+                window.open gpurl, 'pop_up','height=400,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'
         
         # add share functionality for twitter
         $(@options.twitfinder).on "click", (evt) =>
@@ -143,7 +183,7 @@ class scpr.SocialTools
             if key = $(evt.target).attr("data-key")
                 emurl = "/content/share?obj_key=#{key}"
                 window.open emurl, 'pop_up','height=650,width=500,resizable,left=10,top=10,scrollbars=no,toolbar=no'
-
+                
     #----------
     
     _getDisqusCounts: ->
@@ -272,82 +312,3 @@ class scpr.SocialTools
     _signalTwitLoadFailure: ->
         console.log "failed to load twitter counts in 5 seconds."
         @gaq?.push ['_trackEvent','SocialTools','Twitter Failure',String(new Date),0,true]
-
-#----------    
-
-class scpr.BetaToggle
-    DefaultOptions:
-        cookie: "scprbeta"
-        el: "#beta-button"
-        homeEl: "#beta-home"
-        onText: "Opt me in to the beta!"
-        offText: "Get me out of the beta!"
-    
-    constructor: (options) ->
-        @options = _(_({}).extend(this.DefaultOptions)).extend( options || {} )
-        
-        @current = if scpr.Cookie.get(@options.cookie) == "true" then true else false
-
-        $ => 
-            # attach click handler for cookie toggling
-            $(@options.el).click (e) =>
-                if @current
-                    # opt out
-                    console.log "opt out!"
-                    scpr.Cookie.unset(@options.cookie)
-                    @current = false
-                else
-                    # opt in
-                    console.log "opt in!"
-                    scpr.Cookie.set(@options.cookie,true,86400*30)
-                    @current = true
-                
-                @setText()
-                
-                # show the home page link
-                $(@options.homeEl).show()
-            
-                return false
-                
-            @setText()
-
-    setText: ->
-        if @current
-            $(@options.el).text @options.offText
-        else
-            $(@options.el).text @options.onText
-
-        
-    
-#----------        
-
-###
- cookie code originally from prototype-tidbits
- http://livepipe.net/projects/prototype_tidbits/
-###
-
-class scpr.Cookie
-    @set: (name,value,seconds) ->
-        if seconds
-            d = new Date()
-            d.setTime d.getTime() + (seconds * 1000)
-            expiry = '; expires=' + d.toGMTString()
-        else
-            expiry = ''
-
-        document.cookie = name + "=" + value + expiry + "; path=/"
-
-    @get: (name) ->
-        nameEQ = name + "=";
-        ca = document.cookie.split(';');
-        for c in ca
-            while c.charAt(0) == ' '
-                c = c.substring(1,c.length)
-
-            if c.indexOf(nameEQ) == 0
-                return c.substring(nameEQ.length,c.length)
-
-        return null
-
-    @unset: (name) ->
-        scpr.Cookie.set name, '', -1

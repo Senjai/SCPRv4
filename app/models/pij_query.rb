@@ -16,24 +16,24 @@ class PijQuery < ActiveRecord::Base
   
   #------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.column "headline"
-      list.column "slug"
-      list.column "query_type"
-      list.column "is_active",    header: "Active?"
-      list.column "is_featured",  header: "Featured?"
-      list.column "published_at"
+  administrate do
+    define_list do
+      column "headline"
+      column "slug"
+      column "query_type"
+      column "is_active",    header: "Active?"
+      column "is_featured",  header: "Featured?"
+      column "published_at"
     end
   end
   
   
   #------------
   # Scopes  
-  scope :news,          where(query_type: "news")
-  scope :evergreen,     where(query_type: "evergreen")
-  scope :featured,      where(is_featured: true)
-  scope :not_featured,  where(is_featured: false)
+  scope :news,          -> { where(query_type: "news") }
+  scope :evergreen,     -> { where(query_type: "evergreen") }
+  scope :featured,      -> { where(is_featured: true) }
+  scope :not_featured,  -> { where(is_featured: false) }
 
   scope :visible, -> { where(
     'is_active = :is_active and published_at < :time and ' \

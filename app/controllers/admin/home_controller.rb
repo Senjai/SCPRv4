@@ -4,7 +4,12 @@ class Admin::HomeController < Admin::BaseController
     @nav_groups = AdminResource.config.nav_groups
     
     # Gather some data for stats
-    @latest_story    = NewsStory.published.first
+    @latest_story = ThinkingSphinx.search('',
+      :classes    => ContentBase.content_classes,
+      :order      => :published_at,
+      :sort_mode  => :desc
+    ).first
+    
     @recent_stories  = NewsStory.published.where("published_at >= ?", 1.hour.ago)
     @latest_homepage = Homepage.published.first
     

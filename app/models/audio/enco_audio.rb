@@ -19,11 +19,16 @@ class Audio
       #------------
 
       #------------
-      # Sync ENCO audio on the server 
-      # with the database
-      def sync!
-        Audio::Sync.new(self).sync_awaiting_audio_if_file_exists!
+      # Proxy to Audio::Sync::bulk_sync_awaiting_audio!
+      def bulk_sync!
+        Audio::Sync.bulk_sync_awaiting_audio!(self)
       end
     end # singleton
+
+    #------------
+    
+    def sync!
+      Audio::Sync.sync_if_file_exists!(self)
+    end
   end # EncoAudio
 end # Audio

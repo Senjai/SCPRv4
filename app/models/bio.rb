@@ -9,35 +9,42 @@ class Bio < ActiveRecord::Base
   # Associations
   belongs_to  :user,    class_name: "AdminUser"
   has_many    :bylines, class_name: "ContentByline",  foreign_key: :user_id
+
   
   #--------------
   # Scopes    
-  default_scope includes(:user)
-  scope :visible, where(is_public: true)
+  scope :visible, -> { where(is_public: true) }
+
   
   #--------------
   # Validation
   validates :slug, uniqueness: true
-  validates :user, presence: true
   validates :name, presence: true
-  validates :title, presence: true
+  validates :last_name, presence: true
   
   #--------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order    = "#{AdminUser.table_name}.last_name"
-      list.per_page = "all"
+  administrate do
+    define_list do
+      list_order "last_name"
+      list_per_page :all
       
-      list.column :name
-      list.column :email
-      list.column :is_public, header: "Show on Site?"
+      column :name
+      column :email
+      column :is_public, header: "Show on Site?"
     end
   end
+
   
   #--------------
   # Callbacks
-  
+  before_validation :set_last_name, if: -> { self.last_name.blank? }
+  def set_last_name
+    if self.name.present?
+      self.last_name = self.name.split(" ").last
+    end
+  end
+
     
   #----------
   
@@ -48,10 +55,10 @@ class Bio < ActiveRecord::Base
     if page.to_i > (SPHINX_MAX_MATCHES / per_page.to_i)
       bylines = self.bylines.includes(:content).all
                     
-      bylines.select  { |b| b.content.published? }
+      Kaminari.paginate_array(bylines.select { |b| b.content.published? }
              .sort_by { |b| b.content.published_at }
-             .reverse
-             .paginate(page: page, per_page: per_page)
+             .reverse)
+             .page(page).per(per_page)
     else
       ContentByline.search('', 
         order:      :published_at,
@@ -83,8 +90,8 @@ class Bio < ActiveRecord::Base
   
   #---------------------
   
-  def as_json(*args)
-    super.merge!(asset: self.headshot)
+  def json
+    { asset: self.headshot }
   end
   
   #---------------------

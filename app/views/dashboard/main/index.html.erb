@@ -1,54 +1,54 @@
 <%
-	@PAGE_TITLE = "Dashboard"
+  @PAGE_TITLE = "Dashboard"
 %>
 
 <h1>Debugging Dashboard</h1>
 
 <div class="row">
-	<div class="span8">
-		<h2>News Story: Missing Category</h2>
-		<p><%= @stories.count() %> of <%= @baseline.count() %> stories published in the period</p>
-		<ul>
-		<% for s in @stories %>
-			<li>
-				<%= link_to s.headline, s.link_path %>
-				(<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
-				<br/>&mdash; <%= smart_date s %> 
-				<br/>&mdash; <%= render_byline s, false %>
-				<br/>
-			</li>
-		<% end %>
-		</ul>
-	</div>
-	<div class="span8">
-		<h2>News Story: No Assets</h2>
-		<p><%= @no_assets.count() %> of <%= @baseline.count() %> stories published in the period</p>
-		<ul>
-			<% for s in @no_assets %>
-				<li>
-					<%= link_to s.headline, s.link_path %>
-					(<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
-					<br/>&mdash; <%= smart_date s %> 
-					<br/>&mdash; <%= render_byline s, false %>
-					<br/>
-				</li>
-			<% end %>			
-		</ul>
-	</div>
-	
-	<div class="span8">
-		<h2>Blog Entry (w/ News Category): No Assets</h2>
-		<p><%= @blog_no_assets.count() %> entries published in the period</p>
-		<ul>
-			<% for s in @blog_no_assets %>
-				<li>
-					<%= link_to s.headline, s.link_path %>
-					(<%= link_to "Open in Admin", "/admin/blogs/entry/#{s.id}/", :target => :blank %>)
-					<br/>&mdash; <%= smart_date s %> 
-					<br/>&mdash; <%= render_byline s, false %>
-					<br/>
-				</li>
-			<% end %>			
-		</ul>
-	</div>
+  <div class="span8">
+    <h2>News Story: Missing Category</h2>
+    <p><%= @stories.count() %> of <%= @baseline.count() %> stories published in the period</p>
+    <ul>
+    <% for s in @stories %>
+      <li>
+        <%= link_to s.headline, s.link_path %>
+        (<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
+        <br/>&mdash; <%= format_date s.published_at, format: :full_date, time: true %> 
+        <br/>&mdash; <%= render_byline s, false %>
+        <br/>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+  <div class="span8">
+    <h2>News Story: No Assets</h2>
+    <p><%= @no_assets.count() %> of <%= @baseline.count() %> stories published in the period</p>
+    <ul>
+      <% for s in @no_assets %>
+        <li>
+          <%= link_to s.headline, s.link_path %>
+          (<%= link_to "Open in Admin", "/admin/news/story/#{s.id}/", :target => :blank %>)
+          <br/>&mdash; <%= format_date s.published_at, format: :full_date, time: true %>
+          <br/>&mdash; <%= render_byline s, false %>
+          <br/>
+        </li>
+      <% end %>     
+    </ul>
+  </div>
+  
+  <div class="span8">
+    <h2>Blog Entry (w/ News Category): No Assets</h2>
+    <p><%= @blog_no_assets.count() %> entries published in the period</p>
+    <ul>
+      <% for s in @blog_no_assets %>
+        <li>
+          <%= link_to s.headline, s.link_path %>
+          (<%= link_to "Open in Admin", "/admin/blogs/entry/#{s.id}/", :target => :blank %>)
+          <br/>&mdash; <%= format_date s.published_at, format: :full_date, time: true %>
+          <br/>&mdash; <%= render_byline s, false %>
+          <br/>
+        </li>
+      <% end %>     
+    </ul>
+  </div>
 </div>

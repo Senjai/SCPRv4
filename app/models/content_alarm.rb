@@ -9,7 +9,7 @@ class ContentAlarm < ActiveRecord::Base
   
   #----------
   # Scopes
-  default_scope where("content_type is not null").includes(:content)
+  default_scope where("content_type is not null")
   scope :pending, -> { where("fire_at <= ?", Time.now).order("fire_at") }
 
   #----------

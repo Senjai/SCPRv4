@@ -111,8 +111,9 @@ class Audio < ActiveRecord::Base
   
   #------------
   # Nilify these attributes just to keep everything consistent in the DB
+  # This is only applicable to text values that are coming from the form
   def nilify_blanks
-    [:enco_number, :mp3_path, :byline].each do |attribute|
+    [:enco_number, :mp3_path].each do |attribute|
       if self[attribute] == ""
         self[attribute] = nil
       end
@@ -229,6 +230,16 @@ class Audio < ActiveRecord::Base
     self.size = self.mp3.file.size # Carrierwave sets this to 0 if it can't compute it
   end
   
+  #------------
+  # Compute duration and size, and save the object
+  def compute_file_info!
+    if self.mp3.present?
+      self.compute_duration
+      self.compute_size
+      self.save!
+      self
+    end
+  end
   
   #------------  
   #------------
@@ -242,10 +253,10 @@ class Audio < ActiveRecord::Base
   def self.enqueue_sync
     Resque.enqueue(Audio::SyncAudioJob, self.name)
   end
-  
-  # Proxy to AudioSync#sync_each!
-  def self.sync!
-    Audio::Sync.new.sync_each!
+    
+  # Proxy to AudioSync::enqueue_all
+  def self.enqueue_all
+    Audio::Sync.enqueue_all
   end
   
   private

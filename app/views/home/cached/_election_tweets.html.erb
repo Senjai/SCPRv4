@@ -1,0 +1,5 @@
+<ul id="election-tweets">
+  <% content.each_with_index do |tweet, i| %>
+    <li class="<%="active" if i==0 %>"><%= auto_link(tweet.text).html_safe %><a href="http://twitter.com/<%=tweet.user.screen_name%>/status/<%=tweet.id%>" class="twitter-icon">&nbsp;</a></li>
+  <% end %>
+</ul>

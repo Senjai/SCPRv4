@@ -1,4 +1,6 @@
 class OtherProgram < ActiveRecord::Base
+  include Model::Validations::SlugValidation
+  
   self.table_name =  'programs_otherprogram'  
   has_secretary
 
@@ -6,16 +8,17 @@ class OtherProgram < ActiveRecord::Base
 
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "title"
-      list.per_page   = "all"
+  administrate do
+    define_list do
+      list_order "title"
+      list_per_page :all
       
-      list.column "title"
-      list.column "produced_by"
-      list.column "air_status"
+      column :title
+      column :produced_by
+      column :air_status
     end
   end
+
 
   # -------------------
   # Associations
@@ -24,9 +27,10 @@ class OtherProgram < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates :title, :slug, :air_status, presence: true
+  validates :title, :air_status, presence: true
+  validates :slug, uniqueness: true
+  
   validate :rss_or_podcast_present
-    
   def rss_or_podcast_present
     if self.podcast_url.blank? && self.rss_url.blank?
       errors.add(:base, "Must specify either a Podcast url or an RSS url")
@@ -34,11 +38,15 @@ class OtherProgram < ActiveRecord::Base
       errors.add(:rss_url, "")
     end
   end
+
+  # Temporary
+  validates :podcast_url, presence: true, if: -> { self.rss_url.blank? }
+  validates :rss_url, presence: true, if: -> { self.podcast_url.blank? }
   
   
   # -------------------
   # Scopes
-  scope :active, where(:air_status => ['onair','online'])
+  scope :active, -> { where(:air_status => ['onair','online']) }
   
   
   def display_segments

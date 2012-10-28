@@ -2,12 +2,11 @@ require "spec_helper"
 
 describe Audio::ComputeFileInfoJob do
   describe "::perform" do
-    it "computes duration and size, and saves" do
+    it "finds the audio and sends to Audio#compute_file_info!" do
       audio = create :audio, :uploaded
-      Audio.any_instance.should_receive(:compute_duration)
-      Audio.any_instance.should_receive(:compute_size)
-      Audio.any_instance.should_receive(:save)
-      Audio::ComputeFileInfoJob.perform(audio)
+      Audio.should_receive(:find).with(audio.id).and_return(audio)
+      audio.should_receive(:compute_file_info!)
+      Audio::ComputeFileInfoJob.perform(audio.id)
     end
   end
 end

@@ -2,14 +2,14 @@
 <% @OG_TYPE = "movie" %>
 <%= render_content video, "opengraph" %>
 <% if defined?(video) and video.assets.present? %> <%# This is a temporary fix that needs to be validated in the future %>
-	<article class="video">
-		<%= render_asset video, "eight" %>
-		<header>
-			<h1 class="story-headline"><%= video.headline %></h1>
-			<p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= smart_date video %></time></p>
-		</header>
-		
-		<div class="story-body"><%= render_content_body video %></div>
-	</article>
-	<%= content_widget "social_tools", video, cssClass: "multimedia horizontal bottom" %>
+  <article class="video">
+    <%= render_asset video, "eight" %>
+    <header>
+      <h1 class="story-headline"><%= video.headline %></h1>
+      <p class="byline"><%= render_byline video %> <span class="pipe">|</span> <time pubdate=""><%= format_date video.published_at, format: :full_date, time: true %></time></p>
+    </header>
+    
+    <div class="story-body"><%= render_content_body video %></div>
+  </article>
+  <%= content_widget "social_tools", video, cssClass: "multimedia horizontal bottom" %>
 <% end %>

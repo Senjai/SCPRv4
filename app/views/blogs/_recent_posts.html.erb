@@ -1,16 +1,23 @@
 <nav class="recent-posts widget">
-	<h6><%= title ||= "Recent Posts" %></h6>
-	<ul>
-		<%= content_cache("blogs:#{blog.slug}:recent") do %>
-			<% register_content "blogs/entry:new" %>
-			<% for entry in blog.entries.published.first(5) %>
-			    <li>
-					<% register_content entry %>
-			        <p><%= link_to entry.short_headline, entry.link_path %></p>
-					<span class="date-posted"><%= smart_date entry %></span>
-			    </li>
-			<% end %>
-		<% end %>
-		<p class="more"><%= link_to "More Blog Entries", blog_path(blog.slug) %></p>
-	</ul>
+  <h6><%= title ||= "Recent Posts" %></h6>
+  <%= content_cache("blogs:#{blog.slug}:recent") do %>
+    <% register_content "blogs/entry:new" %>
+    <% blog.entries.published.first(5).each do |entry| %>
+      <% register_content entry %>
+    
+      <div class="row-fluid">
+        <div class="span7">
+          <%= render_asset entry, "thumb" %>
+        </div>
+        <div class="span17">
+          <p>
+          <%= link_to entry.short_headline, entry.link_path %><br />
+          <%= smart_date_js entry %>
+          </p>
+        </div>
+      </div> <!-- row-fluid -->
+      
+    <% end %>
+    <p class="more"><%= link_to "More from #{blog.name}", blog_path(blog.slug) %></p>
+  <% end %>
 </nav>

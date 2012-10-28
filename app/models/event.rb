@@ -16,27 +16,27 @@ class Event < ActiveRecord::Base
     "hall"
   ]
   
-  EVENT_TYPES = [
-      ['Forum: Community Engagement', 'comm'],
-      ['Forum: Cultural',             'cult'],
-      ['Forum: Town Hall',            'hall'],
-      ['Sponsored',                   'spon'],
-      ['Staff Picks',                 'pick']
-  ]
+  EVENT_TYPES = {
+    'comm' => 'Forum: Community Engagement',
+    'cult' => 'Forum: Cultural',
+    'hall' => 'Forum: Town Hall',
+    'spon' => 'Sponsored',
+    'pick' => 'Staff Picks'
+  }
   
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order = "created_at desc"
+  administrate do
+    define_list do
+      list_order "created_at desc"
       
-      list.column "headline"
-      list.column "starts_at"
-      list.column "location_name", header: "Location"
-      list.column "etype",         header: "Type"
-      list.column "kpcc_event",    header: "KPCC Event?"
-      list.column "is_published",  header: "Published?"
+      column :headline
+      column :starts_at
+      column :location_name, header: "Location"
+      column :etype,         header: "Type", helper: ->(event) { Event::EVENT_TYPES[event.etype] }
+      column :kpcc_event,    header: "KPCC Event?"
+      column :is_published,  header: "Published?"
     end
   end
 
@@ -70,7 +70,7 @@ class Event < ActiveRecord::Base
   
   scope :upcoming,              -> { published.where("starts_at > ?", Time.now).order("starts_at") }
   scope :upcoming_and_current,  -> { published.where("ends_at > :now or starts_at > :now", now: Time.now).order("starts_at") }
-  scope :past,                  -> { published.where("ends_at < ?", Time.now).order("starts_at desc") }
+  scope :past,                  -> { published.where("ends_at < :now", now: Time.now).order("starts_at desc") }
 
 
   # -------------------
@@ -81,8 +81,13 @@ class Event < ActiveRecord::Base
   
   # -------------------
   
-  def self.sorted(events)
-    events.sort { |a,b| a.sorter <=> b.sorter }
+  def self.sorted(events, direction=:asc)
+    case direction
+    when :asc
+      events.sort { |a,b| a.sorter <=> b.sorter }
+    when :desc
+      events.sort { |a,b| b.sorter <=> a.sorter }
+    end
   end
   
   def sorter
@@ -92,7 +97,7 @@ class Event < ActiveRecord::Base
   # -------------------
 
   def ongoing?
-    multiple_days? and current?
+    multiple_days? && current?
   end
   
   def multiple_days?

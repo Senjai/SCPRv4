@@ -1,47 +1,48 @@
 <% top, bottom = split_collection(@content, 3) %>
 
 <div class="section-page">
-	<h1><%= page_title @section.title %></h1>
-	<% nav = will_paginate(@content, :previous_label => "« Newer Stories", :next_label => "Older Stories »") %>
-	
-	<% if @content.current_page == 1 %>
-		
-		<%= render_content top[0], "twocol" %>
-		<%= render_content top[1..2], "offlead_asset" %>
-		
-		<% if @section.blogs or @section.promotions %>
-			<div class="section-widgets">
-				<div class="row-fluid">
-					<% @section.blogs.each do |blog| %>
-						<div class="span12">
-							<div class="widget">
-								<%= render "/shared/widgets/blog_module", blog: blog, tagline: "KPCC's #{@section.title} Blog" %>
-							</div>
-						</div>
-					<% end %>
-					
-					<% @section.promotions.each do |promotion| %>
-						<div class="span12">
-							<div class="widget">
-								<%= render "/shared/widgets/promotion", promotion: promotion %>
-							</div>
-						</div>
-					<% end %>
-				</div> <!-- row-fluid -->
-			</div> <!-- section-widgets -->
-		<% end %>
-		
-		<% content_for :sidebar_middle do %>
-			<%= render "/shared/widgets/missed_it_bucket", object: @section %>
-		<% end %>
-		
-		<h6>More Headlines from <%= @section.title %></h6>
-		<%= render_content bottom, "thumbnail" %>
-		
-	<% else %>
-		<%= nav %>
-		<%= render_content @content[0..-1], "thumbnail" %>
-	<% end %>
+  <h1><%= page_title @section.title %></h1>
+  <%= render "/shared/widgets/my_ballot" %>
+  <% nav = paginate @content %>
+  
+  <% if @content.current_page == 1 %>
+    
+    <%= render_content top[0], "twocol" %>
+    <%= render_content top[1..2], "offlead_asset" %>
+    
+    <% if @section.blogs or @section.promotions %>
+      <div class="section-widgets">
+        <div class="row-fluid">
+          <% @section.blogs.each do |blog| %>
+            <div class="span12">
+              <div class="widget">
+                <%= render "/shared/widgets/blog_module", blog: blog, tagline: "KPCC's #{@section.title} Blog" %>
+              </div>
+            </div>
+          <% end %>
+          
+          <% @section.promotions.each do |promotion| %>
+            <div class="span12">
+              <div class="widget">
+                <%= render "/shared/widgets/promotion", promotion: promotion %>
+              </div>
+            </div>
+          <% end %>
+        </div> <!-- row-fluid -->
+      </div> <!-- section-widgets -->
+    <% end %>
+    
+    <% content_for :sidebar_middle do %>
+      <%= render "/shared/widgets/missed_it_bucket", object: @section %>
+    <% end %>
+    
+    <h6>More Headlines from <%= @section.title %></h6>
+    <%= render_content bottom, "thumbnail" %>
+    
+  <% else %>
+    <%= nav %>
+    <%= render_content @content[0..-1], "thumbnail" %>
+  <% end %>
 
-	<%= nav %>
+  <%= nav %>
 </div>

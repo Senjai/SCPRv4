@@ -1,171 +1,171 @@
 // Phone Landscape and below (Inclusive)
-@media screen and (max-width: $mediaSmallLandscape) {	
-	//reduce container padding when we get small
-	.container-fluid {
-		padding:0 10px;
-	}
-	
-	// Make all columns even
-	.row-fluid > [class*="span"] {
-		float: none;
-		display: block;
-		width: auto;
-		margin: 0;
-	}
-	
-	.hidden-phone { display: none; }
-	
-	// Make Masthead elements smaller 
-	header#masthead {
-		.head-lead-minimal {
-			.dark-logo img {
-				margin-top:6px;
-				max-width:130px;
-			}
-			a.antenna, span.condensed-nav-link {
-				font-size:13px;
-				padding:5px 5px 5px 23px;
-			}
-			a.antenna {
-				background-position:5px 3px;
-				background-size:15px 22px;
-				margin-right:-5px;
-			}
-			span.condensed-nav-link {
-				background-position:5px 9px;
-				background-size:15px 13px;
-				margin-left:-5px;
-			}
-		}
-	}
+@media screen and (max-width: $mediaSmallLandscape) {   
+    //reduce container padding when we get small
+    .container-fluid {
+        padding:0 10px;
+    }
+    
+    // Make all columns even
+    .row-fluid > [class*="span"] {
+        float: none;
+        display: block;
+        width: auto;
+        margin: 0;
+    }
+    
+    .hidden-phone { display: none; }
+    
+    // Make Masthead elements smaller 
+    header#masthead {
+        .head-lead-minimal {
+            .dark-logo img {
+                margin-top:6px;
+                max-width:130px;
+            }
+            a.antenna, span.condensed-nav-link {
+                font-size:13px;
+                padding:5px 5px 5px 23px;
+            }
+            a.antenna {
+                background-position:5px 3px;
+                background-size:15px 22px;
+                margin-right:-5px;
+            }
+            span.condensed-nav-link {
+                background-position:5px 9px;
+                background-size:15px 13px;
+                margin-left:-5px;
+            }
+        }
+    }
 
-	// Block level the page header small tag for readability
-	.page-header h1 small {
-		display: block;
-		line-height: $baseLineHeight;
-	}
-	
-	.show-segments .teaser .info {
-		border-right: none !important;
-		padding-right: 0;
-	}
-	
-	
-	.more-news-content {
-		border-right: none !important;
-	}
-	
-	.cbase {
-		&.offlead .row-fluid { @include makeFluidRow; } // Assets are thumbnails so these can stay in multiple column format
-	}
-	
-	.next-prev .span9 .row-fluid { 
-		@include makeFluidRow; // It's just a few words, no need to make it vertical
-	}
-	
-	.related-content {
-		border-top: 1px solid $grayLighter;
-		padding-top: 10px;
-	}
-	
-	// Hide CFF vertical nav, show horizontal nav
-		nav.section-nav.vertical { display: none; }
-		nav.section-nav.horizontal { display: block; }
-	// end CFF navs
-	
-	.more-news-content {
-		border-right: none;
-		padding-right: none;
-		margin-bottom: 5px;
-	}
-	
-	.homepage-top {
-		.events-forum {
-			border: none !important;
-			padding-left: 0 !important;
-			.event > .row-fluid { 
-				@include makeFluidRow;
-				> .span8 { @include gridFluidSpan(6) }
-				> .span16 { @include gridFluidSpan(18) }
-				
-			}
-		}
-		
-		.missed-it-bucket { display: none; }
-	}
-	
-	// Fake the "pager"... hide all page number links, just show Previous and Next links.
-		.pagination { 
-			a, span, em {
-				display: none;
-				&.previous_page { display: inline; } 
-				&.next_page { 
-					display: inline;
-					float: right;
-				}
-			}
-		}
-	// End Pager
-	
-	// Make content carousel assets 2-columns instead of 1 column, since they're just thumbs
-		.content-carousel {
-			.row-fluid {
-				@include makeFluidRow;
-				> .span6 {					
-					@include gridFluidSpan(12);
-					&:nth-child(even) { margin-right: 0px; }
-					&:nth-child(odd) { margin-left: 0px; }
-				}
-			}
-		}
-	// end Content Carousel
-	
-	.event.content-block .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
-	
-	// latest videos: 2 cols
-		#multimedia .latest-videos {
-			.row-fluid { 
-				@include makeFluidRow; 
-				
-				> .span6 {
-					@include gridFluidSpan(12);
-					&:nth-of-type(2) { 
-						margin-right: 0; 
-						&:after { 
-							content: "."; 
-							visibility: none;
-						} 
-					}
-					&:nth-of-type(3) { margin-left: 0; }
-				}
-			}
-		}
-	// end latest videos
-	
-	#program-external-header { @include makeFluidRow; }
-	.sharing-tools.horizontal h5 {
-		float: none;
-		display: block;
-		width: 100%;
-		margin: 0;
-	}
-	
-	.archive-strip {
-		> .row-fluid .span8:last-child .event { border-bottom: none; }
-		.event { 
-			border-bottom: 1px solid $grayLighter; 
-			.row-fluid { @include makeFluidRow; }
-		}
-	}
-	
-	// Make the slideshow target arrows a little smaller here
-	.slideview .slides .overlay-nav div.bar {
-		&.prev {
-			background-image: url(image_path('overlay-prev-dark-sm.png'));
-		}
-		
-		&.next {
-			background-image: url(image_path('overlay-next-dark-sm.png'));			
-		}
-	}
+    // Block level the page header small tag for readability
+    .page-header h1 small {
+        display: block;
+        line-height: $baseLineHeight;
+    }
+    
+    .show-segments .teaser .info {
+        border-right: none !important;
+        padding-right: 0;
+    }
+    
+    
+    .more-news-content {
+        border-right: none !important;
+    }
+    
+    .cbase {
+        &.offlead .row-fluid { @include makeFluidRow; } // Assets are thumbnails so these can stay in multiple column format
+    }
+    
+    .next-prev .span9 .row-fluid { 
+        @include makeFluidRow; // It's just a few words, no need to make it vertical
+    }
+    
+    .related-content {
+        border-top: 1px solid $grayLighter;
+        padding-top: 10px;
+    }
+    
+    // Hide CFF vertical nav, show horizontal nav
+        nav.section-nav.vertical { display: none; }
+        nav.section-nav.horizontal { display: block; }
+    // end CFF navs
+    
+    .more-news-content {
+        border-right: none;
+        padding-right: none;
+        margin-bottom: 5px;
+    }
+    
+    .homepage-top {
+        .events-forum {
+            border: none !important;
+            padding-left: 0 !important;
+            .event > .row-fluid { 
+                @include makeFluidRow;
+                > .span8 { @include gridFluidSpan(6) }
+                > .span16 { @include gridFluidSpan(18) }
+                
+            }
+        }
+        
+        .missed-it-bucket { display: none; }
+    }
+    
+    // Fake the "pager"... hide all page number links, just show Previous and Next links.
+        .pagination { 
+            span {
+                display: none;
+                &.prev { display: inline; float: left; } 
+                &.next { 
+                    display: inline;
+                    float: right;
+                }
+            }
+        }
+    // End Pager
+    
+    // Make content carousel assets 2-columns instead of 1 column, since they're just thumbs
+        .content-carousel {
+            .row-fluid {
+                @include makeFluidRow;
+                > .span6 {                  
+                    @include gridFluidSpan(12);
+                    &:nth-child(even) { margin-right: 0px; }
+                    &:nth-child(odd) { margin-left: 0px; }
+                }
+            }
+        }
+    // end Content Carousel
+    
+    .event.content-block .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
+    
+    // latest videos: 2 cols
+        #multimedia .latest-videos {
+            .row-fluid { 
+                @include makeFluidRow; 
+                
+                > .span6 {
+                    @include gridFluidSpan(12);
+                    &:nth-of-type(2) { 
+                        margin-right: 0; 
+                        &:after { 
+                            content: "."; 
+                            visibility: none;
+                        } 
+                    }
+                    &:nth-of-type(3) { margin-left: 0; }
+                }
+            }
+        }
+    // end latest videos
+    
+    #program-external-header { @include makeFluidRow; }
+    .sharing-tools.horizontal h5 {
+        float: none;
+        display: block;
+        width: 100%;
+        margin: 0;
+    }
+    
+    .archive-strip {
+        > .row-fluid .span8:last-child .event { border-bottom: none; }
+        .event { 
+            border-bottom: 1px solid $grayLighter; 
+            .row-fluid { @include makeFluidRow; }
+        }
+    }
+    
+    // Make the slideshow target arrows a little smaller here
+    .slideview .slides .overlay-nav div.bar {
+        &.prev {
+            background-image: url(image_path('overlay-prev-dark-sm.png'));
+        }
+        
+        &.next {
+            background-image: url(image_path('overlay-next-dark-sm.png'));          
+        }
+    }
 }

@@ -46,8 +46,8 @@
 @import "promotions.css.scss";
 
 //Special Sections
-// @import "specials/election.css.scss";
-@import "specials/pledge_thermometer.css.scss";
+@import "specials/election.css.scss";
+// @import "specials/pledge_thermometer.css.scss";
 
 // Put these at the bottom for overriding
 @import "base/ie-overrides.css.scss";
@@ -55,18 +55,18 @@
 
 // Global z-index Index:
 
-// 20	: #events-header
-// 45	: #uvTab
-// 50	: #opaque-cover
-// 70	: #audio-bar
-// 80	: .nav-primary
-// 81	: .modal-container
-// 82	: .modal-popup
-// 84	: .section-mega
-// 85	: .footer-nav.active (in media query)
+// 20   : #events-header
+// 45   : #uvTab
+// 50   : #opaque-cover
+// 70   : #audio-bar
+// 80   : .nav-primary
+// 81   : .modal-container
+// 82   : .modal-popup
+// 84   : .section-mega
+// 85   : .footer-nav.active (in media query)
 
-// 99	: .broadcast-bar (ie7 only)
-// 100	: #masthead (ie7 only)
+// 99   : .broadcast-bar (ie7 only)
+// 100  : #masthead (ie7 only)
 
 
 

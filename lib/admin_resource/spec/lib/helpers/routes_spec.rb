@@ -19,6 +19,24 @@ describe AdminResource::Helpers::Routes do
     end
   end
 
+  #----------------
+  
+  describe "::route_key" do
+    it "uses ActiveModel's route_key method" do
+      ActiveModel::Naming.should_receive(:route_key)
+      Person.route_key
+    end
+  end
+  
+  #----------------
+  
+  describe "::singular_route_key" do
+    it "uses ActiveModel's singular_route_key method" do
+      ActiveModel::Naming.should_receive(:singular_route_key)
+      Person.singular_route_key
+    end
+  end
+  
   #---------------------
   
   describe "#admin_edit_path" do
@@ -44,20 +62,47 @@ describe AdminResource::Helpers::Routes do
   #----------------
   
   describe "#link_path" do
-    pending
+    let(:person) { Person.new(name: "Bob Loblaw") }
+    
+    it "returns nil if #route_hash is blank" do
+      person.stub(:route_hash) { Hash.new }
+      person.link_path.should eq nil
+    end
+    
+    it "returns nil if if ROUTE_KEY isn't defined" do
+      class SomeClass; include AdminResource::Helpers::Routes; end
+      something = SomeClass.new
+      something.stub(:route_hash) { { id: 1, slug: "cool-dude" } }
+      something.link_path.should eq nil
+    end
+    
+    it "returns the route helper with the route hash" do
+      Rails.application.routes.url_helpers.should_receive(:people_path).with(person.route_hash).and_return("blahblahblah")
+      person.link_path.should eq "blahblahblah"      
+    end
   end
   
   #----------------
   
   describe "#remote_link_path" do
-    pending
+    let(:person) { Person.create(name: "Dude Bro") }
+    
+    before :each do
+      person.stub(:link_path) { "/people/linkpath" }
+      Rails.application.config.scpr.stub(:host) { "www.foodnstuff.com" }
+    end
+    
+    it "contains the object's link path and configured remote URL" do
+      person.remote_link_path.should eq "http://www.foodnstuff.com/people/linkpath"
+    end
   end
   
   #----------------
   
   describe "#route_hash" do
     it "is just an empty hash, meant to be overridden" do
-      Person.new.route_hash.should eq Hash.new
+      class SomeClass; include AdminResource::Helpers::Routes; end
+      SomeClass.new.route_hash.should eq Hash.new
     end
   end
 end

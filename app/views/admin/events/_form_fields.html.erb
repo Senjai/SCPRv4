@@ -1,6 +1,6 @@
 <%= form_block "Details" do %>
   <%= f.input :headline, label: "Title", input_html: { class: 'wide' } %>
-  <%= f.input :etype, label: "Type", collection: Event::EVENT_TYPES, selected: record.etype || Event::EVENT_TYPES[0] %>
+  <%= f.input :etype, label: "Type", collection: Event::EVENT_TYPES.map { |k, v| [v, k] }, selected: record.etype || Event::EVENT_TYPES[0] %>
   <%= f.input :is_published, label: "Published?", hint: "Should this event show up on the website?" %>
   <%= f.input :body, input_html: { class: 'ckeditor' } %>
 <% end %>
@@ -13,7 +13,7 @@
 
 <%= form_block "Short Details" do %>
   <%= section "slug", f, record %>
-	<%= f.input :teaser, as: :text, input_html: { class: "tiny" } %>
+  <%= f.input :teaser, as: :text, input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
 <% end %>
 
 <%= form_block "Location" do %>
@@ -39,7 +39,7 @@
 
 <%= form_block "Extra" do %>
   <%= f.input :show_comments, label: "Show Comments?" %>
-  <%= f.input :archive_description, input_html: { class: "short" }, hint: "Description to display after the event has happened" %>
+  <%= f.input :archive_description, input_html: { class: "ckeditor" }, hint: "Description to display after the event has happened" %>
 <% end %>
 
 <%= section "assets", f, record do %>

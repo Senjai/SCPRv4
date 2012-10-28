@@ -1,13 +1,13 @@
-<%= cache ["show", "v1", @story] do %>
-  <% page_title @story.headline %>
-  <%= render_content @story, "opengraph" %>
+<% page_title @story.headline %>
+<%= render_content @story, "opengraph" %>
 
+<%= cache ["show", "v3", @story] do %>
   <div class="story content-block">
     <article>
       <header>
         <%= content_widget "social_tools", @story, cssClass: "top horizontal" %>
         <h1 class="story-headline"><%= @story.headline %></h1>
-        <p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= smart_date @story %></time></p>
+        <p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= format_date @story.published_at, format: :full_date, time: true %></time></p>
       </header>
   
       <div class="story-body <%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
@@ -36,7 +36,6 @@
 <div class="fold inline" id="fold">
   <%= content_widget "related_content_and_links", @story %>
   <%= content_widget "pij_query", @story %>
-
   <%= content_widget 'content_carousel', @story %>
   <%= comments_for @story %>
 </div>

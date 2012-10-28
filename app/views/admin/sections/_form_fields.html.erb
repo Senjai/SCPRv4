@@ -1,11 +1,11 @@
 <%= form_block "Details" do %>
-	<%= f.input :title, input_html: { class: "wide" } %>
-	<%= f.input :slug %>
-	<%= f.association :categories %>
+  <%= f.input :title, input_html: { class: "wide" } %>
+  <%= f.input :slug %>
+  <%= f.association :categories %>
 <% end %>
 
 <%= form_block "Modules" do %>
-	<%= f.association :blogs %>
-	<%= f.association :promotions %>
-	<%= f.association :missed_it_bucket %>
+  <%= f.association :blogs %>
+  <%= f.association :promotions %>
+  <%= f.association :missed_it_bucket %>
 <% end %>

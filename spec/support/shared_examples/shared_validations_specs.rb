@@ -15,7 +15,9 @@ shared_examples_for "slug validation" do
     end
 
     it { should validate_presence_of(:slug) }
-    it { should validate_format_of(:slug).with(Model::Validations::DEFAULTS[:slug_format]) }
+    it { should allow_value("cool-slug").for(:slug).with_message(/Only letters/) }
+    it { should validate_format_of(:slug).not_with("invalid@characters.?").with_message(/Only letters/) }
+    it { should ensure_length_of(:slug).is_at_most(50) }
   end
   
   context "should not validate" do      
@@ -24,7 +26,8 @@ shared_examples_for "slug validation" do
     end
     
     it { should_not validate_presence_of(:slug) }
-    it { should_not validate_format_of(:slug) }
+    it { should allow_value("invalid@characters.?").for(:slug).with_message(/Only letters/) }
+    it { should_not ensure_length_of(:slug).is_at_most(50) }
   end
 end
 

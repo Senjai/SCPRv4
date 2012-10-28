@@ -1,7 +1,8 @@
 # TODO Clean this up
 class Schedule < ActiveRecord::Base
+  self.table_name = 'schedule_program'
+
   administrate
-  self.table_name =  'schedule_program'
   has_secretary
 
   belongs_to :kpcc_program, :class_name => "KpccProgram"
@@ -56,7 +57,7 @@ class Schedule < ActiveRecord::Base
     
     # now get what's on at our end time
     pend = self.on_at( time + 60*60*hours )
-        
+    
     # now get anything in between
     begin
       s = programs[-1].up_next
@@ -98,7 +99,7 @@ class Schedule < ActiveRecord::Base
         nextp._date = self._date
       end
       
-      return nextp  
+      return nextp
     else
       # ends at midnight, so we want the first show tomorrow
       nextp = self.class.where("day = ?", ( self.day <= 5 ? self.day + 1 : 0 ) ).order("start_time asc").first
@@ -113,7 +114,7 @@ class Schedule < ActiveRecord::Base
   
   #----------
   
-  def as_json(*args)
+  def json
     stime = self.start_time
     etime = self.end_time
     

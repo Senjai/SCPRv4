@@ -5,7 +5,7 @@ class ContentEmail
 
   attr_accessor :from_name, :from_email, :to_email, :subject, :body, :lname, :content
 
-  validates :from_email, :to_email, presence: true, format: { with: %r{.+@.+\..+} }
+  validates :from_email, :to_email, presence: true, format: { with: %r{^\S+@\S+\.\S+$}, message: "Invalid E-mail format" }
   validates :content,               presence: true
   validates :lname,                 length: { maximum: 0 }
  

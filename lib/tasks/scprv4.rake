@@ -19,15 +19,27 @@ namespace :scprv4 do
   desc "Sync all Audio types"
   task :syncaudio => [:environment] do
     puts "*** [#{Time.now}] Enqueueing audio sync tasks into Resque..."
-    Audio::Sync.new.sync_each!
+    Audio.enqueue_all
     puts "Finished."
+  end
+
+  #----------
+  
+  desc "Cache everything"
+  task :cache => [:environment] do
+    Rake::Task["scprv4:cache:remote_blogs"].invoke
+    Rake::Task["scprv4:cache:programs"].invoke
+    Rake::Task["scprv4:cache:homepage"].invoke
+    Rake::Task["scprv4:cache:most_viewed"].invoke
+    Rake::Task["scprv4:cache:most_commented"].invoke
+    Rake::Task["scprv4:cache:twitter"].invoke
   end
   
   #----------
   
   namespace :cache do
     desc "Cache Remote Blog Entries"
-    task :remote_blogs => :environment do
+    task :remote_blogs => [:environment] do
       puts "Caching remote blogs..."
       cached = Blog.cache_remote_entries
       puts "Finished.\n"
@@ -55,16 +67,39 @@ namespace :scprv4 do
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Caching most commented..."
-      task = CacheTasks::MostCommented.new("kpcc", "3d")
+      task = CacheTasks::MostCommented.new("kpcc", "3d", API_KEYS['disqus']['api_key'], 5)
       task.verbose = true
       task.run
       puts "Finished.\n"
     end
     
-    desc "Cache tweets"
+    desc "Cache KPCCForum tweets"
     task :twitter => [:environment] do
-      puts "*** [#{Time.now}] Caching tweets...."
+      puts "*** [#{Time.now}] Caching KPCCForum tweets...."
       task = CacheTasks::Twitter.new("KPCCForum")
+      task.verbose = true
+      task.run
+      puts "Finished.\n"
+    end
+    
+    desc "Cache KPCC tweets for election night"
+    task :election_tweets => [:environment] do
+      puts "*** [#{Time.now}] Caching KPCC tweets...."
+      task = CacheTasks::Twitter.new("KPCC", "/home/cached/election_tweets")
+      task.verbose = true
+      task.run
+      puts "Finished.\n"
+    end
+    
+    desc "Fetch and parse Election Results"
+    task :election_results => [:environment] do
+      puts "*** [#{Time.now}] Caching Election Results...."
+      
+      fake  = "http://project.wnyc.org/election-2012-ca-results/fakeresults.json"
+      real  = "http://project.wnyc.org/election-2012-ca-results/all.json"
+      other = "http://project.wnyc.org/election-2012-ca-results/data/election_data.json"
+      
+      task = CacheTasks::ElectionResults.new(other)
       task.verbose = true
       task.run
       puts "Finished.\n"
@@ -87,9 +122,6 @@ namespace :scprv4 do
       HomeController._cache_homepage(nil)
       puts "Finished.\n"
     end
-    
-    desc "Cache everything"
-    task :all => [:environment, :remote_blogs, :programs, :homepage, :most_viewed, :most_commented, :twitter]
   end
   
   #----------

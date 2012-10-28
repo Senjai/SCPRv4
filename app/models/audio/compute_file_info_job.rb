@@ -4,17 +4,18 @@
 # Get the duration and size of the file, and save
 #
 class Audio::ComputeFileInfoJob
+  extend LogsAsTask
+  logs_as_task
+  
   @queue = Rails.application.config.scpr.resque_queue
   
   def self.perform(id)
-    audio = Audio.find(id)
-    
-    audio.compute_duration
-    audio.compute_size
-    
-    # If anything has thrown an error,
-    # then save won't get called here, 
-    # which is good.
-    audio.save
+    begin
+      audio = Audio.find(id)
+      audio.compute_file_info!
+      self.log "Saved Audio ##{audio.id}. Duration: #{audio.duration}; Size: #{audio.size}"
+    rescue Exception => e
+      self.log "Couldn't save audio file info: #{e}"
+    end
   end
 end

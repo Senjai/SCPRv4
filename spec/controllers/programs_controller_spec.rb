@@ -71,17 +71,11 @@ describe ProgramsController do
       end
     end
     
-    describe "get_program" do
+    describe "get_any_program" do
       it "assigns a KPCC program if slug matches" do
         program = create :kpcc_program
         get :show, show: program.slug
         assigns(:program).should eq program
-      end
-      
-      it "redirects using the quick slug if present" do
-        program = create :kpcc_program, quick_slug: "pm"
-        get :show, quick_slug: program.quick_slug
-        response.should redirect_to program_path(program.slug)
       end
       
       it "finds an other program if requested" do
@@ -108,6 +102,20 @@ describe ProgramsController do
         }.should raise_error ActionController::RoutingError
       end
     end
+    
+    describe "redirect_for_quick_slug" do
+      it "redirects using the quick slug if present" do
+        program = create :kpcc_program, quick_slug: "pm"
+        get :show, quick_slug: program.quick_slug
+        response.should redirect_to program_path(program.slug)
+      end
+      
+      it "doesn't do anything if quick_slug isn't present" do
+        program = create :kpcc_program
+        controller.should_not_receive(:redirect_for_quick_slug)
+        get :show, program.route_hash
+      end
+    end
   end
   
   # ----------------------
@@ -128,6 +136,8 @@ describe ProgramsController do
         }.should raise_error ActiveRecord::RecordNotFound
       end
     end
+
+    # ----------------------
     
     describe "for valid segment" do
       it "assigns @segment" do
@@ -137,6 +147,26 @@ describe ProgramsController do
       end
     end
   end
+  
+  # ----------------------
+  
+  describe "GET /episode" do
+    describe "get_kpcc_program!" do
+      let(:program) { create :kpcc_program, episode_count: 1 }
+      
+      it "returns the program if slug exists" do
+        get :episode, program.episodes.last.route_hash
+        assigns(:program).should eq program
+      end
+      
+      it "raises an error if slug doesn't exist" do
+        -> {
+          get :episode, program.episodes.last.route_hash.merge!(show: "nonsense")
+        }.should raise_error ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
   # ----------------------
   
   

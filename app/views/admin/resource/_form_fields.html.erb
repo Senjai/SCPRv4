@@ -1,3 +1,8 @@
-<% @fields.each do |field| %>
-	<%= f.input field %>
+<% resource_class.admin.fields.each do |field| %>
+  <% association = field.gsub(/_id/, "").to_sym %>
+  <% if f.object.class.reflect_on_association(association) %>
+    <%= f.association association %>
+  <% else %>
+    <%= f.input field %>
+  <% end %>
 <% end %>

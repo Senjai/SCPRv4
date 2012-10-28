@@ -1,18 +1,18 @@
 <%= form_block "Details" do %>
-	<%= f.input :title %>
-	<%= f.input :url %>
-	<%= f.input :redirect_url %>
-	<%= f.input :description, input_html: { class: "tiny" } %>
+  <%= f.input :title %>
+  <%= f.input :url %>
+  <%= f.input :redirect_url %>
+  <%= f.input :description, input_html: { class: "tiny" } %>
 <% end %>
 
 <%= form_block "Display Options" do %>
-	<%= f.input :enable_comments %>
-	<%= f.input :is_public %>
-	<%= f.input :template, collection: Flatpage::TEMPLATE_OPTIONS, selected: record.template || Flatpage::TEMPLATE_OPTIONS[0] %>
+  <%= f.input :enable_comments %>
+  <%= f.input :is_public %>
+  <%= f.input :template, collection: Flatpage::TEMPLATE_OPTIONS, selected: record.template || Flatpage::TEMPLATE_OPTIONS[0] %>
 <% end %>
 
 <%= form_block "Content" do %>
-	<%= f.input :content %>
-	<%= f.input :extra_head %>
-	<%= f.input :extra_tail %>
+  <%= f.input :content %>
+  <%= f.input :extra_head %>
+  <%= f.input :extra_tail %>
 <% end %>

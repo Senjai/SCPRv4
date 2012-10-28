@@ -2,16 +2,16 @@
 <% @blogtitle_extra = ": Tagged '#{@tag.name}'" %>
 
 <div class="row-fluid">
-	<div class="span6">&nbsp;</div>
-	<div class="span18">
-		<h3><i><%= pluralize @entries.total_entries, "entry" %> tagged '<%= @tag.name %>'</i></h3>
-	</div>
+  <div class="span6">&nbsp;</div>
+  <div class="span18">
+    <h3><i><%= pluralize @entries.total_count, "entry" %> tagged '<%= @tag.name %>'</i></h3>
+  </div>
 </div>
 
 <div class="blog-landing">
-	<%= render :partial => "entry", :collection => @entries.collect {|e| e.content }, :as => :entry %>
+  <%= render :partial => "/blogs/entry", :collection => @entries.collect {|e| e.content }, :as => :entry, locals: { blog: @blog } %>
 </div>
 
 <div class="offset2 blog-pag">
-	<%= will_paginate @entries, :page_links => false %>
+  <%= paginate @entries %>
 </div>

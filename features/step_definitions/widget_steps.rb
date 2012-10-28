@@ -44,15 +44,6 @@ end
 
 
 
-# Article Meta
-Then /^the article meta header should say "([^"]*)"$/ do |text|
-  page.find(".article-meta").should have_content "#{text}"
-end
-
-Then /^I should see article meta$/ do
-  page.should have_css ".article-meta"
-end
-
 # Audio
 Then /^I should see an audio link$/ do
   page.should have_css ".audio-toggler"

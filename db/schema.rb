@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008165121) do
+ActiveRecord::Schema.define(:version => 20121024205134) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -33,8 +33,18 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
 
   add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
 
+  create_table "admin_user_permissions", :force => true do |t|
+    t.integer  "admin_user_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "admin_user_permissions", ["admin_user_id"], :name => "index_admin_user_permissions_on_admin_user_id"
+  add_index "admin_user_permissions", ["permission_id"], :name => "index_admin_user_permissions_on_permission_id"
+
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
-    t.integer "django_content_type_id",                :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                            :null => false
     t.string  "locations",              :limit => 200
     t.string  "asc_types",              :limit => 200
@@ -45,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   add_index "ascertainment_ascertainmentrecord", ["django_content_type_id"], :name => "ascertainment_ascertainmentrecord_e4470c6e"
 
   create_table "assethost_contentasset", :force => true do |t|
-    t.integer "django_content_type_id",                                       :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                                                   :null => false
     t.integer "asset_order",                                  :default => 99, :null => false
     t.integer "asset_id",                                                     :null => false
@@ -53,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.string  "content_type",           :limit => 20
   end
 
+  add_index "assethost_contentasset", ["asset_order"], :name => "index_assethost_contentasset_on_asset_order"
   add_index "assethost_contentasset", ["content_id"], :name => "index_assethost_contentasset_on_content_id"
   add_index "assethost_contentasset", ["content_type", "content_id"], :name => "index_assethost_contentasset_on_content_type_and_content_id"
   add_index "assethost_contentasset", ["django_content_type_id", "content_id"], :name => "content_type_id"
@@ -122,23 +133,28 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   add_index "auth_user_user_permissions", ["user_id", "permission_id"], :name => "user_id", :unique => true
 
   create_table "bios_bio", :force => true do |t|
-    t.integer  "user_id",                                               :null => false
-    t.string   "slug",         :limit => 50,                            :null => false
-    t.text     "bio",          :limit => 2147483647,                    :null => false
-    t.string   "title",        :limit => 200,        :default => "",    :null => false
+    t.integer  "user_id"
+    t.string   "slug",         :limit => 50
+    t.text     "bio",          :limit => 2147483647
+    t.string   "title"
     t.boolean  "is_public",                          :default => false, :null => false
-    t.string   "feed_url",     :limit => 200,        :default => "",    :null => false
-    t.string   "twitter",      :limit => 30,                            :null => false
+    t.string   "feed_url",     :limit => 200
+    t.string   "twitter"
     t.integer  "asset_id"
-    t.string   "short_bio",    :limit => 200,                           :null => false
-    t.string   "phone_number", :limit => 30,                            :null => false
-    t.string   "name",         :limit => 120,                           :null => false
-    t.string   "email",        :limit => 120
+    t.string   "short_bio"
+    t.string   "phone_number"
+    t.string   "name"
+    t.string   "email"
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
+    t.string   "last_name"
   end
 
-  add_index "bios_bio", ["user_id"], :name => "user_id", :unique => true
+  add_index "bios_bio", ["is_public", "last_name"], :name => "index_bios_bio_on_is_public_and_last_name"
+  add_index "bios_bio", ["is_public"], :name => "index_bios_bio_on_is_public"
+  add_index "bios_bio", ["last_name"], :name => "index_bios_bio_on_last_name"
+  add_index "bios_bio", ["slug"], :name => "index_bios_bio_on_slug"
+  add_index "bios_bio", ["user_id"], :name => "user_id_refs_id_1277bd7cd84326f2"
 
   create_table "blogs_blog", :force => true do |t|
     t.string   "name",                :limit => 140,                           :null => false
@@ -201,6 +217,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   end
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
+  add_index "blogs_entry", ["status", "published_at"], :name => "index_blogs_entry_on_status_and_published_at"
 
   create_table "blogs_entryblogcategory", :force => true do |t|
     t.integer  "entry_id",                                            :null => false
@@ -235,7 +252,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
-    t.integer  "django_content_type_id",               :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                           :null => false
     t.datetime "fire_at"
     t.string   "content_type",           :limit => 20
@@ -248,7 +265,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   add_index "contentbase_contentalarm", ["django_content_type_id"], :name => "contentbase_contentalarm_e4470c6e"
 
   create_table "contentbase_contentbyline", :force => true do |t|
-    t.integer  "django_content_type_id",                              :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                                          :null => false
     t.integer  "user_id"
     t.string   "name",                   :limit => 50,                :null => false
@@ -266,7 +283,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
 
   create_table "contentbase_contentcategory", :force => true do |t|
     t.integer  "category_id",                          :null => false
-    t.integer  "django_content_type_id",               :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                           :null => false
     t.string   "content_type",           :limit => 20
     t.datetime "created_at",                           :null => false
@@ -290,9 +307,11 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.datetime "updated_at",                                             :null => false
   end
 
+  add_index "contentbase_contentshell", ["status", "published_at"], :name => "index_contentbase_contentshell_on_status_and_published_at"
+
   create_table "contentbase_featuredcomment", :force => true do |t|
     t.integer  "bucket_id",                                                   :null => false
-    t.integer  "django_content_type_id",                                      :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                                                  :null => false
     t.integer  "status",                                       :default => 0, :null => false
     t.datetime "published_at"
@@ -322,7 +341,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
 
   create_table "contentbase_misseditcontent", :force => true do |t|
     t.integer  "bucket_id",                                            :null => false
-    t.integer  "django_content_type_id",                               :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                                           :null => false
     t.integer  "position",                             :default => 99, :null => false
     t.string   "content_type",           :limit => 20
@@ -346,6 +365,19 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   end
 
   add_index "contentbase_videoshell", ["slug"], :name => "contentbase_videoshell_a951d5d6"
+  add_index "contentbase_videoshell", ["status", "published_at"], :name => "index_contentbase_videoshell_on_status_and_published_at"
+
+  create_table "data_points", :force => true do |t|
+    t.string   "group_name"
+    t.string   "data_key"
+    t.string   "notes"
+    t.text     "data_value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "data_points", ["data_key"], :name => "index_data_points_on_data_key"
+  add_index "data_points", ["group_name"], :name => "index_data_points_on_group"
 
   create_table "django_admin_log", :force => true do |t|
     t.datetime "action_time",                           :null => false
@@ -404,8 +436,10 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.integer  "kpcc_program_id"
   end
 
+  add_index "events_event", ["etype"], :name => "index_events_event_on_etype"
   add_index "events_event", ["kpcc_program_id"], :name => "events_event_7666a8c6"
   add_index "events_event", ["slug"], :name => "events_event_slug"
+  add_index "events_event", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
 
   create_table "flatpages_flatpage", :force => true do |t|
     t.string   "url",                   :limit => 100,                           :null => false
@@ -423,6 +457,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.string   "template",              :limit => 10,                            :null => false
   end
 
+  add_index "flatpages_flatpage", ["is_public"], :name => "index_flatpages_flatpage_on_is_public"
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
 
   create_table "jobs_department", :force => true do |t|
@@ -457,6 +492,9 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.boolean  "visible",                                               :null => false
   end
 
+  add_index "layout_breakingnewsalert", ["is_published"], :name => "index_layout_breakingnewsalert_on_is_published"
+  add_index "layout_breakingnewsalert", ["visible"], :name => "index_layout_breakingnewsalert_on_visible"
+
   create_table "layout_homepage", :force => true do |t|
     t.string   "base",                :limit => 10, :null => false
     t.datetime "published_at"
@@ -465,10 +503,11 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   end
 
   add_index "layout_homepage", ["missed_it_bucket_id"], :name => "layout_homepage_d12628ce"
+  add_index "layout_homepage", ["status", "published_at"], :name => "index_layout_homepage_on_status_and_published_at"
 
   create_table "layout_homepagecontent", :force => true do |t|
     t.integer "homepage_id",                                          :null => false
-    t.integer "django_content_type_id",                               :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                                           :null => false
     t.integer "position",                             :default => 99, :null => false
     t.string  "content_type",           :limit => 20
@@ -505,7 +544,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.integer  "duration"
     t.string   "enco_number"
     t.date     "enco_date"
-    t.integer  "django_content_type_id",                                      :null => false
+    t.integer  "django_content_type_id"
     t.integer  "content_id",                                                  :null => false
     t.text     "description",            :limit => 2147483647
     t.string   "byline"
@@ -524,6 +563,8 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["django_content_type_id", "content_id"], :name => "media_audio_content_type_id_569dcfe00f4d911"
   add_index "media_audio", ["django_content_type_id"], :name => "media_audio_e4470c6e"
+  add_index "media_audio", ["mp3"], :name => "index_media_audio_on_mp3"
+  add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
@@ -552,7 +593,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.string  "link",                   :limit => 300,                 :null => false
     t.string  "link_type",              :limit => 10,                  :null => false
     t.string  "sort_order",             :limit => 2,   :default => "", :null => false
-    t.integer "django_content_type_id",                                :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                                            :null => false
     t.string  "content_type",           :limit => 20
   end
@@ -561,11 +602,12 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   add_index "media_link", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
   add_index "media_link", ["django_content_type_id", "content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
   add_index "media_link", ["django_content_type_id"], :name => "media_link_content_type_id"
+  add_index "media_link", ["sort_order"], :name => "index_media_link_on_sort_order"
 
   create_table "media_related", :force => true do |t|
-    t.integer "django_content_type_id",                                  :null => false
+    t.integer "django_content_type_id"
     t.integer "content_id",                                              :null => false
-    t.integer "rel_django_content_type_id",                              :null => false
+    t.integer "rel_django_content_type_id"
     t.integer "related_id",                                              :null => false
     t.integer "flag",                                     :default => 0, :null => false
     t.string  "content_type",               :limit => 20
@@ -598,6 +640,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   end
 
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
+  add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
 
   create_table "npr_npr_story", :force => true do |t|
     t.string   "headline",     :limit => 140,        :null => false
@@ -609,12 +652,13 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   end
 
   create_table "permissions", :force => true do |t|
-    t.string   "model"
+    t.string   "resource"
     t.string   "action"
-    t.integer  "admin_user_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
+
+  add_index "permissions", ["resource", "action"], :name => "index_permissions_on_resource_and_action"
 
   create_table "pij_query", :force => true do |t|
     t.string   "slug",         :limit => 50,         :null => false
@@ -632,6 +676,9 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.datetime "updated_at",                         :null => false
   end
 
+  add_index "pij_query", ["is_active", "published_at"], :name => "index_pij_query_on_is_active_and_published_at"
+  add_index "pij_query", ["is_featured"], :name => "index_pij_query_on_is_featured"
+  add_index "pij_query", ["query_type"], :name => "index_pij_query_on_query_type"
   add_index "pij_query", ["slug"], :name => "slug", :unique => true
 
   create_table "podcasts_podcast", :force => true do |t|
@@ -691,6 +738,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.datetime "updated_at",                                                  :null => false
   end
 
+  add_index "programs_kpccprogram", ["air_status"], :name => "index_programs_kpccprogram_on_air_status"
   add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
   add_index "programs_kpccprogram", ["missed_it_bucket_id"], :name => "programs_kpccprogram_d12628ce"
   add_index "programs_kpccprogram", ["slug"], :name => "slug", :unique => true
@@ -713,6 +761,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.datetime "updated_at",                        :null => false
   end
 
+  add_index "programs_otherprogram", ["air_status"], :name => "index_programs_otherprogram_on_air_status"
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
 
@@ -741,6 +790,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.datetime "updated_at",                      :null => false
   end
 
+  add_index "schedule_program", ["day", "start_time", "end_time"], :name => "index_schedule_program_on_day_and_start_time_and_end_time"
   add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"
   add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
 
@@ -751,12 +801,18 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "section_blogs", ["blog_id"], :name => "index_section_blogs_on_blog_id"
+  add_index "section_blogs", ["section_id"], :name => "index_section_blogs_on_section_id"
+
   create_table "section_categories", :force => true do |t|
     t.integer  "section_id"
     t.integer  "category_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "section_categories", ["category_id"], :name => "index_section_categories_on_category_id"
+  add_index "section_categories", ["section_id"], :name => "index_section_categories_on_section_id"
 
   create_table "section_promotions", :force => true do |t|
     t.integer  "section_id"
@@ -765,6 +821,9 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.datetime "updated_at",   :null => false
   end
 
+  add_index "section_promotions", ["promotion_id"], :name => "index_section_promotions_on_promotion_id"
+  add_index "section_promotions", ["section_id"], :name => "index_section_promotions_on_section_id"
+
   create_table "sections", :force => true do |t|
     t.string   "title"
     t.string   "slug"
@@ -772,6 +831,8 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.datetime "updated_at",          :null => false
     t.integer  "missed_it_bucket_id"
   end
+
+  add_index "sections", ["missed_it_bucket_id"], :name => "index_sections_on_missed_it_bucket_id"
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
@@ -785,6 +846,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   end
 
   add_index "shows_episode", ["show_id"], :name => "shows_episode_show_id"
+  add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
 
   create_table "shows_rundown", :force => true do |t|
     t.integer "episode_id",    :null => false
@@ -794,6 +856,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
 
   add_index "shows_rundown", ["episode_id"], :name => "shows_rundown_episode_id"
   add_index "shows_rundown", ["segment_id"], :name => "shows_rundown_segment_id"
+  add_index "shows_rundown", ["segment_order"], :name => "index_shows_rundown_on_segment_order"
 
   create_table "shows_segment", :force => true do |t|
     t.integer  "show_id",                                                    :null => false
@@ -812,6 +875,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
 
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
   add_index "shows_segment", ["slug"], :name => "shows_segment_slug"
+  add_index "shows_segment", ["status", "published_at"], :name => "index_shows_segment_on_status_and_published_at"
 
   create_table "south_migrationhistory", :force => true do |t|
     t.string   "app_name",  :null => false
@@ -830,7 +894,7 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
   create_table "taggit_taggeditem", :force => true do |t|
     t.integer "tag_id",                                                        :null => false
     t.integer "content_id",                                                    :null => false
-    t.integer "django_content_type_id",                                        :null => false
+    t.integer "django_content_type_id"
     t.string  "content_type",           :limit => 20, :default => "BlogEntry"
   end
 
@@ -862,5 +926,9 @@ ActiveRecord::Schema.define(:version => 20121008165121) do
     t.text     "object_yaml"
     t.datetime "created_at"
   end
+
+  add_index "versions", ["user_id"], :name => "index_versions_on_user_id"
+  add_index "versions", ["version_number"], :name => "index_versions_on_version_number"
+  add_index "versions", ["versioned_type", "versioned_id"], :name => "index_versions_on_versioned_type_and_versioned_id"
 
 end

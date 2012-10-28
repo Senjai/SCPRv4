@@ -1,24 +1,24 @@
-<% cssClass  	||= nil %>
-<% feature	 	||= 5 %>
-<% top, bottom 	= split_collection(queries, feature) %>
+<% cssClass   ||= nil %>
+<% feature    ||= 5 %>
+<% top, bottom  = split_collection(queries, feature) %>
 
 <ul class="list-blocks">
-	<% top.each do |query| %>
-		<li>
-			<h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
-			<p><%= query.teaser %></p>
-		</li>
-	<% end %>
+  <% top.each do |query| %>
+    <li>
+      <h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
+      <p><%= query.teaser %></p>
+    </li>
+  <% end %>
 </ul>
 
 <% if cssClass =="collapse" %>
-	<h4 class="collapse-toggle heading-block light" data-toggle="collapse" data-target="#recent-queries"><span class="caret"></span> View more recent questions</h4>
+  <h4 class="collapse-toggle heading-block light" data-toggle="collapse" data-target="#recent-queries"><span class="caret"></span> View more recent questions</h4>
 <% else %>
-	<h4 class="heading-block light">More questions in this section</h4>
+  <h4 class="heading-block light">More questions in this section</h4>
 <% end %>
 
 <ul id="recent-queries" class="<%= cssClass %> list-basic">
-	<% bottom.each do |query| %>
-		<li><%= link_to query.headline, pij_query_path(query.slug) %></li>
-	<% end %>
+  <% bottom.each do |query| %>
+    <li><%= link_to query.headline, pij_query_path(query.slug) %></li>
+  <% end %>
 </ul>

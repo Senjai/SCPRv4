@@ -11,7 +11,7 @@ class ContentByline < ActiveRecord::Base
       ROLE_CONTRIBUTING => "Contributing"
   }
   
-  scope :primary, where(role: ROLE_PRIMARY)
+  scope :primary, -> { where(role: ROLE_PRIMARY) }
   
   map_content_type_for_django
   belongs_to :content, polymorphic: true

@@ -1,0 +1,32 @@
+#asset_bucket {
+  .thumbnail {
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+    padding-bottom: 25px;
+    
+    .asset-info {
+      line-height: 11px; 
+      h6 { 
+        line-height: 12px;
+      }
+    }
+    
+    // Override bootstrap styles
+    .destroy-bool {
+      .controls { 
+        float: right; 
+        padding-right: 5px;
+      }
+      label { font-size: 11px; }
+      
+      position: absolute;
+      width: 100%;
+      margin: 0;
+      right: 0;
+      bottom: 0;
+      padding: 2px 2px 0 0;
+      background: $grayLighter;
+    }
+  }
+}

@@ -7,15 +7,15 @@ class Blog < ActiveRecord::Base
   
   # -------------------
   # Administration
-  administrate do |admin|
-    admin.define_list do |list|
-      list.order    = "is_active desc, name"
-      list.per_page = "all"
+  administrate do
+    define_list do
+      list_order "is_active desc, name"
+      list_per_page :all
       
-      list.column "name"
-      list.column "slug"
-      list.column "teaser",    header: "Tagline"
-      list.column "is_active", header: "Active?"
+      column :name
+      column :slug
+      column :teaser,    header: "Tagline"
+      column :is_active, header: "Active?"
     end
   end
 
@@ -35,11 +35,11 @@ class Blog < ActiveRecord::Base
   
   # -------------------
   # Scopes
-  scope :active,      where(is_active: true)
-  scope :is_news,     where(is_news: true)
-  scope :is_not_news, where(is_news: false)
-  scope :local,       where(is_remote: false)
-  scope :remote,      where(is_remote: true)
+  scope :active,      -> { where(is_active: true) }
+  scope :is_news,     -> { where(is_news: true) }
+  scope :is_not_news, -> { where(is_news: false) }
+  scope :local,       -> { where(is_remote: false) }
+  scope :remote,      -> { where(is_remote: true) }
 
   # -------------------
   

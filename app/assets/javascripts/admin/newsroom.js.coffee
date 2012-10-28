@@ -29,6 +29,8 @@ class scpr.Newsroom
     constructor: (@server, @roomInfo, @user, @object, options) ->
         @options = _.defaults options||{}, @DefaultOptions
         @el      = $ options.el
+        @room    = JSON.parse(@roomInfo) # So we can use it here
+        
         @alerts  = 
             offline: new Newsroom.Alert.Offline()
             empty:   new Newsroom.Alert.Empty(@el)
@@ -95,7 +97,7 @@ class scpr.Newsroom
     #-----------------
     # Add a user to the bucket by rendering the template
     _addUser: (user) ->
-        badge = $ @options.badgeTemplate(user: user, record: user.record)
+        badge = $ @options.badgeTemplate(user: user, record: user.record, room: @room)
         badge.hide()
         @el.append badge
         badge.fadeIn('fast')
