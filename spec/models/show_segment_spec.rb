@@ -108,12 +108,4 @@ describe ShowSegment do
       segment.public_datetime.should eq segment.published_at
     end
   end
-  
-  # ----------------
-
-  describe "#has_format?" do
-    it "is true" do
-      create(:show_segment).has_format?.should be_false
-    end
-  end  
 end

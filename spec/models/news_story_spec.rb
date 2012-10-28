@@ -39,10 +39,4 @@ describe NewsStory do
   
   it_behaves_like "status methods"
   it_behaves_like "publishing methods"
-  
-  describe "#has_format?" do
-    it "is false" do
-      build(:news_story).has_format?.should be_false
-    end
-  end
 end

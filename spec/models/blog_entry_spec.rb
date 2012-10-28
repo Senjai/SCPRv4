@@ -80,14 +80,6 @@ describe BlogEntry do
   end
 
   # ----------------
-
-  describe "has_format?" do
-    it "is true" do
-      create(:blog_entry).has_format?.should be_true
-    end
-  end
-
-  # ----------------
   
   describe "extended_teaser" do
     let(:entry) { create :blog_entry }

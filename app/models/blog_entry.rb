@@ -10,7 +10,7 @@ class BlogEntry < ContentBase
   include Model::Scopes::SinceScope
   
   self.table_name = "blogs_entry"
-  acts_as_content has_format: true
+  acts_as_content
   has_secretary
   
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
