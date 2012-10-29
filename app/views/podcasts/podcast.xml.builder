@@ -4,10 +4,10 @@ content_cache("podcast:#{@podcast.slug}") do
   xml.rss('version' => "2.0", 'xmlns:itunes' => "http://www.itunes.com/dtds/podcast-1.0.dtd") do
     xml.channel do
       xml.title             @podcast.title
-      xml.link              @podcast.link || "http://www.scpr.org"
+      xml.link              @podcast.url || "http://www.scpr.org"
       xml.description       h(@podcast.description)
-      xml.itunes :author,    @podcast.author
-      xml.itunes :summary,   h(@podcast.description)
+      xml.itunes :author,   @podcast.author
+      xml.itunes :summary,  h(@podcast.description)
     
       xml.itunes :owner do
         xml.itunes :name,  "KPCC 89.3 | Southern California Public Radio"
@@ -40,7 +40,7 @@ content_cache("podcast:#{@podcast.slug}") do
             item.link               c.remote_link_path
 
             if c.audio.present?
-              item.enclosure          :url => c.audio[0].podcast_url, :length => c.audio[0].size, :type => "audio/mpeg"
+              item.enclosure          :url => c.audio.first.podcast_url, :length => c.audio.first.size, :type => "audio/mpeg"
               item.itunes :duration,  c.audio.first.duration
             end
           end

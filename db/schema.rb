@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024205134) do
+ActiveRecord::Schema.define(:version => 20121029230709) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -698,7 +698,7 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
   create_table "podcasts_podcast", :force => true do |t|
     t.string   "slug",        :limit => 40,                            :null => false
     t.string   "title",       :limit => 140,                           :null => false
-    t.string   "link",        :limit => 250,                           :null => false
+    t.string   "url",         :limit => 250,                           :null => false
     t.string   "podcast_url", :limit => 250,        :default => "",    :null => false
     t.string   "itunes_url",  :limit => 250,        :default => "",    :null => false
     t.text     "description", :limit => 2147483647,                    :null => false
@@ -707,16 +707,17 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
     t.string   "keywords",    :limit => 200,                           :null => false
     t.string   "duration",    :limit => 10,                            :null => false
     t.boolean  "is_listed",                         :default => false, :null => false
-    t.integer  "program_id"
+    t.integer  "source_id"
     t.integer  "category_id"
     t.string   "item_type",   :limit => 10
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
+    t.string   "source_type"
   end
 
   add_index "podcasts_podcast", ["category_id"], :name => "podcasts_podcast_42dc49bc"
-  add_index "podcasts_podcast", ["program_id"], :name => "podcasts_podcast_7eef53e3"
   add_index "podcasts_podcast", ["slug"], :name => "slug", :unique => true
+  add_index "podcasts_podcast", ["source_id"], :name => "podcasts_podcast_7eef53e3"
 
   create_table "press_releases_release", :force => true do |t|
     t.string   "short_title",  :limit => 240,        :default => "", :null => false
@@ -794,7 +795,7 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
 
   create_table "recurring_schedule_slots", :force => true do |t|
     t.integer  "program_id"
-    t.integer  "program_type"
+    t.string   "program_type"
     t.integer  "start_time"
     t.integer  "end_time"
     t.datetime "created_at",   :null => false
