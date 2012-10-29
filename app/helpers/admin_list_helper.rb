@@ -6,7 +6,7 @@ module AdminListHelper
     options[:path] ||= url_for([:edit, :admin, record])
     
     attrib         = record.send(column.attribute)
-    display_helper = column.helper
+    display_helper = column.display
     
     # If no helper was specified, try some defaults
     # More specific helpers are favored
@@ -34,7 +34,7 @@ module AdminListHelper
     end
 
     if display_helper.is_a? Proc
-      rendered_item = display_helper.call(record)      
+      rendered_item = record.instance_eval(&display_helper)
     else
       rendered_item = send(display_helper, attrib)
     end

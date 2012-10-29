@@ -10,7 +10,17 @@
 class RecurringScheduleSlot < ActiveRecord::Base
   DATE_ANCHOR = Time.new(2000, 01, 02, 0, 0, 0) # Sunday, January 1, 2000, 00:00:00
 
-  administrate  
+  administrate do
+    define_list do
+      list_per_page :all
+      list_order :start_time
+      
+      column :program, display: proc { self.program.title }
+      column :starts_at, display: proc { self.format_time(:starts_at) }
+      column :ends_at, display: proc { self.format_time(:ends_at) }
+    end
+  end
+  
   has_secretary
   
   #--------------
