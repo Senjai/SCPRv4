@@ -37,23 +37,6 @@ describe AdminResource::List::Base do
       list.per_page.should eq AdminResource::List::DEFAULTS[:per_page]
     end
   end
-
-  #--------------
-  
-  describe "linked_columns" do
-    it "returns @linked_columns if set" do
-      list   = AdminResource::List::Base.new
-      list.instance_variable_set(:@linked_columns, "hello")
-      list.linked_columns.should eq "hello"
-    end
-    
-    it "select columns in that list which are linked" do
-      list    = AdminResource::List::Base.new
-      linked  = list.column("name", linked: true)
-      unlined = list.column("body", linked: false)
-      list.linked_columns.should eq [linked]
-    end
-  end
   
   #--------------
 

@@ -26,7 +26,7 @@ class DataPoint < ActiveRecord::Base
       list_per_page :all
       
       column :group_name
-      column :data_key, linked: true
+      column :data_key
       column :data_value
       column :notes
       column :updated_at

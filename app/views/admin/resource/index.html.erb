@@ -4,6 +4,7 @@
   <%= any_to_list? @records, title: resource_class.to_title.pluralize do %>
     <thead>
       <tr>
+        <th>Manage</th>
         <% @list.columns.each do |column| %>
           <th><%= column.header %></th>
         <% end %>
@@ -12,6 +13,9 @@
     <tbody class="list">
       <% @records.each do |record| %>
         <tr class="<%= resource_class.singular_route_key.dasherize %>">
+          <td>
+            <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
+          </td>
           <% @list.columns.each do |column| %>
             <td>
               <%= render_attribute column, record %>
