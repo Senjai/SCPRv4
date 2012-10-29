@@ -95,6 +95,11 @@ describe BlogEntry do
       extended_teaser.should_not match /Something Else<\/p>$/
     end
     
+    it "breaks if the class is story-break" do
+      entry.body = "<p>Blah blah blah</p><br class='story-break' /><p>More Blah</p>"
+      entry.extended_teaser.should_not match /More Blah/
+    end
+    
     it "appends a link to read more at the end, using the passed-in text" do
       entry.body = "<p>Something</p><p>Something Else</p>"
       extended_teaser = entry.extended_teaser(2, "Continue...")

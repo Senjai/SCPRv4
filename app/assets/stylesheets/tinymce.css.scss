@@ -1,0 +1,11 @@
+body.mceContentBody {
+  padding: 10px;
+  
+  br.story-break {
+    display: block;
+    height: 5px;
+    content: "&nbsp;";
+    background: #ff0000;
+  }
+  
+}
