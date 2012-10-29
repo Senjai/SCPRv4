@@ -138,7 +138,7 @@ class RecurringScheduleSlot < ActiveRecord::Base
   end
   
   def format_time(time=:starts_at)
-    attribute = seld.send(attribute)
+    attribute = self.send(time)
     str_time = attribute.strftime("%H:%M")
     
     if str_time == "00:00"
