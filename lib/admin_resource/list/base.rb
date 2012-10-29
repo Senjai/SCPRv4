@@ -37,14 +37,14 @@ module AdminResource
       #
       # Usage:
       #   define_list do
-      #     column "name", header: "Full Name", helper: "display_full_name", linked: true
+      #     column "name", header: "Full Name", display: :display_full_name, linked: true
       #   end
       #
       # Options:
       # * header:     (str) The title of the column, displayed in the table header.
       #               Defaults to attribute.titleize
       #
-      # * helper:     (sym or Proc) The helper method to use to display this attribute.
+      # * display:    (sym or Proc) The helper method to use to display this attribute.
       #               See AdminListHelper for how to set that up.
       #
       # * linked:     (bool) Whether or not to link this attribute to the edit page

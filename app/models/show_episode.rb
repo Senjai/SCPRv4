@@ -22,7 +22,7 @@ class ShowEpisode < ContentBase
       
       column :headline
       column :show
-      column :air_date, helper: :display_date
+      column :air_date
       column :status
       column :published_at
     end

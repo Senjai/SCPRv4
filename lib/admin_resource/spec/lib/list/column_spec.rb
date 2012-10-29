@@ -24,7 +24,7 @@ describe AdminResource::List::Column do
     }
     
     let(:column) {
-      AdminResource::List::Column.new("name", list, linked: true, helper: :display_full_name, header: "Full Name")
+      AdminResource::List::Column.new("name", list, linked: true, display: :display_full_name, header: "Full Name")
     }
     
     before :each do
