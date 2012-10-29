@@ -53,8 +53,8 @@ FactoryGirl.define do
 
 # RecurringScheduleSlot #########################################################
 factory :recurring_schedule_slot do
-  start_time { Chronic.parse("October 25 2012 at 8am").second_of_week }
-  end_time { Chronic.parse("October 25 2012 at 8am").second_of_week }
+  sequence(:start_time) { |n| Time.new(2012, 10, 25, 1*n).second_of_week }
+  end_time { start_time + 2.hours }  
   program { |f| f.association :kpcc_program }
 end
 

@@ -16,35 +16,116 @@ describe RecurringScheduleSlot do
   #------------
   
   describe "::on_at" do
-    before :each do
-      freeze_time_at(Chronic.parse("Monday"))
-      t = Chronic.parse("Thursday 8am").second_of_week
-      @slot = create :recurring_schedule_slot, start_time: t, end_time: t + 2.hours.to_i
+    context "normal time slot" do
+      before :each do
+        freeze_time_at("Monday, October 22, 2012")
+        t = Chronic.parse("Thursday 8am")
+        @slot = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: (t + 2.hours).second_of_week
+      end
+    
+      it "gets the program on at the time passed in" do
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 8am")).should eq [@slot]
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9am")).should eq [@slot]
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9:59am")).should eq [@slot]
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9:59:59am")).should eq [@slot]
+      end
+    
+      it "is empty if nothing is found" do
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 10am")).should eq []
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 7:59:59am")).should eq []
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 9pm")).should eq []
+      end
     end
     
-    it "gets the program on at the time passed in" do
-      RecurringScheduleSlot.on_at(Chronic.parse("Thursday 8am")).should eq [@slot]
-      RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9am")).should eq [@slot]
-      RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9:59am")).should eq [@slot]
-      RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9:59:59am")).should eq [@slot]
+    context "time slot bridges beginning of week threshold" do
+      before :each do
+        freeze_time_at("Monday, October 22, 2012")
+        t = Chronic.parse("Saturday 11pm")
+        @slot = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: (t + 3.hours).second_of_week
+      end
+      
+      it "gets the program on at the time passed in" do
+        RecurringScheduleSlot.on_at(Chronic.parse("Saturday 11pm")).should eq [@slot]
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 12am")).should eq [@slot]
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 1am")).should eq [@slot]
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 1:59:59am")).should eq [@slot]
+      end
+      
+      it "is empty if nothing is found" do
+      end
     end
     
-    it "is empty if nothing is found" do
-      RecurringScheduleSlot.on_at(Chronic.parse("Thursday 10am")).should eq []
-      RecurringScheduleSlot.on_at(Chronic.parse("Thursday 7:59:59am")).should eq []
-      RecurringScheduleSlot.on_at(Chronic.parse("Sunday 9pm")).should eq []
+    context "daylight savings time" do
+      before :each do
+        # DST "Fall back" 2am -> 1am on November 4, 2012
+        t = Time.new(2012, 11, 3, 23)
+        @slot = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: Time.new(2012, 11, 4, 3).second_of_week
+      end
+      
+      it "selects stuff properly" do
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 3, 23)).should eq [@slot]
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 0)).should eq [@slot]
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 1)).should eq [@slot]
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 2, 59, 59)).should eq [@slot]
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 3)).should eq []
+      end
+    end
+  end
+
+  #------------
+
+  describe "::block" do
+    context "same week" do
+      it "returns the records within the block" do
+        t = Time.new(2012, 10, 21, 8)
+        slot0 = create :recurring_schedule_slot, start_time: (t-2.hours).second_of_week, end_time: t.second_of_week
+        slot1 = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: (t + 2.hours).second_of_week
+        slot2 = create :recurring_schedule_slot, start_time: (t + 2.hours).second_of_week, end_time: (t + 4.hours).second_of_week
+        slot3 = create :recurring_schedule_slot, start_time: (t + 4.hours).second_of_week, end_time: (t + 6.hours).second_of_week
+        slot4 = create :recurring_schedule_slot, start_time: (t+6.hours).second_of_week, end_time: (t + 8.hours).second_of_week
+        slot5 = create :recurring_schedule_slot, start_time: (t+8.hours).second_of_week, end_time: (t + 10.hours).second_of_week
+        RecurringScheduleSlot.block(t, 8.hours).should eq [slot1, slot2, slot3, slot4]
+      end
+      
+      it "returns partial slots" do
+        t = Time.new(2012, 10, 21, 8)
+        slot1 = create :recurring_schedule_slot, start_time: (t-1.hour).second_of_week, end_time: (t+1.hour).second_of_week
+        slot2 = create :recurring_schedule_slot, start_time: (t+7.hours).second_of_week, end_time: (t+9.hours).second_of_week
+        RecurringScheduleSlot.block(t, 8.hours).should eq [slot1, slot2]
+      end
+    end
+    
+    context "different week" do
+      it "returns the records within the block" do
+        t = Time.new(2012, 10, 20, 20)
+        slot0 = create :recurring_schedule_slot, start_time: (t-2.hours).second_of_week, end_time: t.second_of_week
+        slot1 = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: (t + 2.hours).second_of_week
+        slot2 = create :recurring_schedule_slot, start_time: (t + 2.hours).second_of_week, end_time: (t + 4.hours).second_of_week
+        slot3 = create :recurring_schedule_slot, start_time: (t + 4.hours).second_of_week, end_time: (t + 6.hours).second_of_week
+        slot4 = create :recurring_schedule_slot, start_time: (t+6.hours).second_of_week, end_time: (t + 8.hours).second_of_week
+        slot5 = create :recurring_schedule_slot, start_time: (t+8.hours).second_of_week, end_time: (t + 10.hours).second_of_week
+        RecurringScheduleSlot.block(t, 8.hours).should eq [slot1, slot2, slot3, slot4]
+      end
+      
+      it "returns partial slots" do
+        t = Time.new(2012, 10, 20, 20)
+        slot1 = create :recurring_schedule_slot, start_time: (t-1.hour).second_of_week, end_time: (t+1.hour).second_of_week
+        slot2 = create :recurring_schedule_slot, start_time: (t+7.hours).second_of_week, end_time: (t+9.hours).second_of_week
+        RecurringScheduleSlot.block(t, 8.hours).should eq [slot1, slot2]
+      end
     end
   end
   
   #------------
   
   describe "::as_time" do
-    it "Adds the relative seconds to January 1, 2012 to get a Rails-y fake Time" do
-      t = Chronic.parse("Thursday 8am").second_of_week
-      slot = create :recurring_schedule_slot, start_time: t, end_time: t + 2.hours.to_i
+    it "Adds the relative seconds to January 2, 2012 to get a Rails-y fake Time" do
+      t      = Chronic.parse("Thursday 8am").second_of_week
+      slot   = create :recurring_schedule_slot, start_time: t, end_time: t + 2.hours
       anchor = RecurringScheduleSlot::DATE_ANCHOR.to_i
+      
       slot.class.as_time(slot.start_time).should eq Time.at(anchor + t)
-      slot.class.as_time(slot.end_time).should eq Time.at(anchor + t+2.hours.to_i)
+      slot.class.as_time(slot.end_time).should eq Time.at(anchor + t + 2.hours)
     end
   end
   
@@ -65,6 +146,17 @@ describe RecurringScheduleSlot do
       slot = create :recurring_schedule_slot
       RecurringScheduleSlot.should_receive(:as_time).with(slot.end_time)
       slot.ends_at
+    end
+  end
+  
+  #------------
+
+  describe "#next" do
+    it "selects the slot immediately following this one" do
+      t = Time.new(2012, 10, 21, 12)
+      slot1 = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: (t + 2.hours).second_of_week
+      slot2 = create :recurring_schedule_slot, start_time: (t + 2.hours).second_of_week, end_time: (t + 4.hours).second_of_week
+      slot1.next.should eq slot2
     end
   end
   

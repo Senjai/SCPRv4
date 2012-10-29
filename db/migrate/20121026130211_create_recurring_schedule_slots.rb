@@ -2,7 +2,7 @@ class CreateRecurringScheduleSlots < ActiveRecord::Migration
   def change
     create_table :recurring_schedule_slots do |t|
       t.integer :program_id
-      t.integer :program_type
+      t.string :program_type
       t.integer :start_time
       t.integer :end_time
       t.timestamps

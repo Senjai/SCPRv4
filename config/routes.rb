@@ -85,6 +85,7 @@ Scprv4::Application.routes.draw do
       get '/search(/:resource)' => "search#index", as: :search
       
       ## -- AdminResource -- ##
+      resources :recurring_schedule_slots
       resources :permissions
       resources :bios
       resources :audio
