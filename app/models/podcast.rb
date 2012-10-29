@@ -37,25 +37,32 @@ class Podcast < ActiveRecord::Base
 
   #-------------
 
-  def content
+  def content(limit=25)
     @content ||= begin
-      case self.item_type
-      when "episodes"
-        self.program.episodes.published
-      when "segments"
-        self.program.segments.published
-      when "content"
-        ThinkingSphinx.search('', 
-          :with       => { :has_audio => true }, 
-          :without    => { :category => '' },
-          :classes    => ContentBase.content_classes, 
-          :order      => :published_at, 
-          :page       => 1, 
-          :per_page   => 15, 
-          :sort_mode  => :desc,
-          retry_stale: true
-        ).to_a
+      content = []
+      
+      case self.source_type
+      when "KpccProgram" || "OtherProgram"
+        content = self.source.episodes.published.limit(limit) if self.item_type == "episodes"
+        content = self.source.segments.published.limit(limit) if self.item_type == "segments"
+      when "Blog"
+        content = self.source.entries.published.limit(limit)
+      else
+        if item_type == "content"
+          content = ThinkingSphinx.search('', 
+            :with       => { :has_audio => true }, 
+            :without    => { :category => '' },
+            :classes    => ContentBase.content_classes, 
+            :order      => :published_at, 
+            :page       => 1, 
+            :per_page   => limit, 
+            :sort_mode  => :desc,
+            retry_stale: true
+          ).to_a
+        end
       end
+      
+      content
     end
   end
   
