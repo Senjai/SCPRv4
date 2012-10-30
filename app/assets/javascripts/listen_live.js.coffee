@@ -73,7 +73,7 @@ class scpr.ListenLive
                 
                 # attach our extra buttons
                 @_attachExtraUI()
-                                
+                
             # each time we get a timecheck from the server, update our play view
             @io.on "timecheck", (data) => @_updateDisplay data
                 
@@ -84,8 +84,8 @@ class scpr.ListenLive
             # -- stash our times -- #
         
             @serverBuffer = Number(data.buffered)
-            @serverTime = new Date(data.time)
-            @playTime = new Date( Number(@serverTime) - @offset*1000 )
+            @serverTime   = new Date(data.time)
+            @playTime     = new Date( Number(@serverTime) - @offset*1000 )
         
         # -- do we have a current show? -- #
         if @currentShow && @currentShow.isWhatsPlayingAt @playTime
