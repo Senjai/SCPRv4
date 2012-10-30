@@ -1,5 +1,5 @@
 content_cache("podcast:#{@podcast.slug}") do
-  register_content @obj_type
+  register_content @content.push @podcast.obj_type
   
   xml.rss('version' => "2.0", 'xmlns:itunes' => "http://www.itunes.com/dtds/podcast-1.0.dtd") do
     xml.channel do
@@ -18,34 +18,24 @@ content_cache("podcast:#{@podcast.slug}") do
     
       xml.itunes :image, :href => @podcast.image_url
       xml.itunes :explicit, "no"
-    
-      if @content
-        # Audio or not, we register the content for cache expiration
-        # Limited to 25 items
-        @content.each do |c|
-          register_content c
-        end
-        
-        # Only content with audio
-        # Limited to 15 items
-        @audio_content.each do |c|
-          xml.item do |item|
-            item.title              raw(c.headline)
-            item.itunes :author,    raw(@podcast.author)
-            item.itunes :summary,   raw(c.teaser)
-            item.description        raw(c.teaser)
-            item.guid               c.remote_link_path, :isPermaLink => true
-            item.pubDate            c.published_at
-            item.itunes :keywords,  raw(@podcast.keywords)
-            item.link               c.remote_link_path
 
-            if c.audio.present?
-              item.enclosure          :url => c.audio.first.podcast_url, :length => c.audio.first.size, :type => "audio/mpeg"
-              item.itunes :duration,  c.audio.first.duration
-            end
-          end
-        end
-      end
-    end
-  end.html_safe
-end
+      # Only content with audio
+      # Limited to 15 items
+      @audio_content.each do |c|
+        xml.item do |item|
+          item.title              raw(c.headline)
+          item.itunes :author,    raw(@podcast.author)
+          item.itunes :summary,   raw(c.teaser)
+          item.description        raw(c.teaser)
+          item.guid               c.remote_link_path, :isPermaLink => true
+          item.pubDate            c.published_at
+          item.itunes :keywords,  raw(@podcast.keywords)
+          item.link               c.remote_link_path
+
+          item.enclosure          :url => c.audio.first.podcast_url, :length => c.audio.first.size, :type => "audio/mpeg"
+          item.itunes :duration,  c.audio.first.duration
+        end # xml
+      end # @audio_content
+    end # xml.channel
+  end.html_safe #xml.rss
+end # content_cache

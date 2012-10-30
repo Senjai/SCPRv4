@@ -167,14 +167,13 @@ FactoryGirl.define do
   factory :podcast do
     sequence(:title) { |n| "Podcast #{n}" }
     slug      { title.parameterize }
-    is_listed 1
     author    "KPCC 89.3 | Southern California Public Radio"
-    program   { |p| p.association :kpcc_program }
+    source   { |p| p.association :kpcc_program }
     item_type 'episodes'
     image_url { "http://media.scpr.org/assets/images/podcasts/#{slug}.png" }
     keywords  "KPCC, Los Angeles, Southern California, LA"
     link      { "http://www.scpr.org/programs/#{slug}" }
-    duration  0 # Needs to be removed from database
+    duration  0
   end
 
 

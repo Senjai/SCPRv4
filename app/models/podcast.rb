@@ -66,6 +66,30 @@ class Podcast < ActiveRecord::Base
     end
   end
   
+  #-------------
+  
+  def obj_type
+    @obj_type ||= begin
+      obj_type = nil
+      
+      case self.source_type
+      when "KpccProgram" || "OtherProgram"
+        obj_type = "shows/episode:new" if self.item_type == "episodes"
+        obj_type = "shows/segment:new" if self.item_type == "segments"
+      when "Blog"
+        obj_type = "blogs/entry:new"
+      else
+        if item_type == "content"
+          obj_type = "contentbase:new"
+        end
+      end
+      
+      obj_type
+    end
+  end
+  
+  #-------------
+  
   def route_hash
     {
       :slug => self.slug
