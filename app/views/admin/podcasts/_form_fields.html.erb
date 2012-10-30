@@ -1,0 +1,26 @@
+<%= form_block "Details" do %>
+  <%= f.input :title %>
+  <%= section "slug", f, record %>
+  <%= f.input :is_active, hint: "If unchecked, this podcast will still be generated, but will not appear on the podcast page." %>
+  <%= f.input :description, input_html: { class: "tiny"} %>
+<% end %>
+
+<%= form_block "Meta Info" do %>
+ <%= f.input :author %>
+ <%= f.input :keywords, hint: "Comma-seperated keywords" %>
+ <%= f.input :image_url %>
+ <%= f.input :duration, hint: "Average episode duration, as either <em>H:MM:SS</em> or <em>MM:SS</em>".html_safe %>
+<% end %>
+
+<%= form_block "URLs" do %>
+  <%= f.input :url, hint: "The URL to the supplemental material for this Podcast." %>
+  <%= f.input :podcast_url, hint: "The URL to this podcast feed on the web." %>
+  <%= f.input :itunes_url, hint: "The URL to this podcast feed on iTunes." %>
+<% end %>
+
+<%= form_block "Content" do %>
+  <%= f.input :source_type %>
+  <%= f.input :source_id %>
+  <%= f.input :category_id %>
+  <%= f.input :item_type, hint: "What type of items should be used in the podcast?", collection: Podcast::ITEM_TYPES %>
+<% end %>

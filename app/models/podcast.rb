@@ -2,6 +2,12 @@ class Podcast < ActiveRecord::Base
   self.table_name = "podcasts_podcast"
   ROUTE_KEY = "podcast"
 
+  ITEM_TYPES = [
+    ["Episodes", 'episodes'],
+    ["Segments", 'segments'],
+    ["Content", 'content']
+  ]
+
   #-------------
   # Administration
   administrate do
@@ -14,7 +20,7 @@ class Podcast < ActiveRecord::Base
       column :is_listed
     end
   end
-  
+
   has_secretary
 
 
