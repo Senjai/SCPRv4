@@ -105,14 +105,15 @@ class BlogEntry < ContentBase
   #----------
   
   def extended_teaser(*args)
-    target    = args[0] || 800
-    more_text = args[1] || "Read More..."
+    target      = args[0] || 800
+    more_text   = args[1] || "Read More..."
+    break_class = "story-break"
     
     content         = Nokogiri::HTML::DocumentFragment.parse(self.body)
     extended_teaser = Nokogiri::HTML::DocumentFragment.parse(nil)
     
     content.children.each do |child|
-      break if extended_teaser.content.length >= target
+      break if (child.attributes["class"].to_s == break_class) || (extended_teaser.content.length >= target)
       extended_teaser.add_child child
     end
     
