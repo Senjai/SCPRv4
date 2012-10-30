@@ -1,0 +1,40 @@
+.pledge-pushdown {
+    background:#3c3c3c url(image_path('specials/pledge/bg-pledge-pushdown.png')) repeat 0 0;
+    @include box-shadow(inset 0 -18px 14px -14px $black);
+    color:$white;
+    @include font-heading();
+    margin-top:-105px;
+    padding:10px 0 7px;
+    text-shadow:0 -1px 0 $black;
+	.ad {
+		margin:0 auto;
+	}
+    .call-to-action {
+        position:absolute;
+		right:0;
+		top:4px;
+        .pushdown-close {
+            background:url(image_path('specials/pledge/btn-close.png')) no-repeat right 3px;
+            @include ie-inline-block();
+            color:#acacac;
+            cursor:pointer;
+            font-size:12px;
+            padding-right:20px;
+            float:right;
+            &:hover {
+                text-decoration:underline;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .pledge-pushdown {
+		.call-to-action {
+			right:50%;
+			top:auto;
+			bottom:0px;
+			margin-right:-40px;
+		}
+    }
+}
