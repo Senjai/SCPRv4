@@ -367,6 +367,7 @@ class scpr.ListenLive
             """
         
         initialize: ->
+            console.log @model
             @render()
             @model.bind "change", => @render()
             
