@@ -8,7 +8,6 @@
 # the week.
 #
 class RecurringScheduleSlot < ActiveRecord::Base
-  DATE_ANCHOR = Time.new(2000, 01, 02, 0, 0, 0) # Sunday, January 1, 2000, 00:00:00
 
   administrate do
     define_list do
@@ -41,14 +40,41 @@ class RecurringScheduleSlot < ActiveRecord::Base
   
   class << self
     #--------------
-    # Convert the stored relative minute
-    # count into a real Time object.
+    # Convert the seconds into a real Time 
+    # object. To be used with seconds relative
+    # to the beginning of the week, such as
+    # the ones stored in the database.
+    #
+    # Usage:
+    #
+    #   time = RecurringTimeSlot.last
+    #   time.start_time 
+    #   # => 169200
+    #
+    #   RecurringTimeSlot.as_time(time.start_time)
+    #   # => 2012-10-29 23:00:00 -0700
+    #
     def as_time(seconds)
-      Time.at(DATE_ANCHOR.to_i + seconds)
+      Time.at(Time.now.beginning_of_week(:sunday) + seconds)
     end
     
     #--------------
-    # Get the program(s) on at the requested time
+    # Get the slots on at the requested time
+    #
+    # As this method returns an ARRAY, be sure to
+    # call #first on it to return just one slot!
+    # The idea is that there might be more than one
+    # thing going on, which may or may not ever 
+    # happen.
+    #
+    # Usage:
+    #
+    #   RecurringScheduleSlot.on_at(Time.now)
+    #
+    # Super-nifty with ActiveSupport's relative time functions:
+    #
+    #   RecurringScheduleSlot.on_at(8.hours.from_now)
+    #
     def on_at(time)
       second = time.second_of_week
       
@@ -108,19 +134,15 @@ class RecurringScheduleSlot < ActiveRecord::Base
   end
   
   #--------------
-  # Fake attributes to return real Time objects
+  # Proxy to RecurringTimeSlot::as_time
   def starts_at
-    @starts_at ||= RecurringScheduleSlot.as_time(self.start_time)
-  end
-  
-  def ends_at
-    @ends_at ||= RecurringScheduleSlot.as_time(self.end_time)
+    RecurringScheduleSlot.as_time relative_time(:start_time)
   end
 
   #--------------
-
-  def next
-    RecurringScheduleSlot.on_at(self.ends_at).first
+  # Proxy to RecurringTimeSlot::as_time  
+  def ends_at
+    RecurringScheduleSlot.as_time relative_time(:end_time)
   end
 
   #--------------
@@ -129,12 +151,48 @@ class RecurringScheduleSlot < ActiveRecord::Base
     self.starts_at.wday
   end
   
+  
+  #--------------
+  # Has the slot ended already this week?
+  def past?
+    Time.now.second_of_week > self.end_time
+  end
+  
+  #--------------
+  # If the slot splits the weeks, see if now is
+  # above the start time, or now is below the end time.
+  # Otherwise, do the normal thing and just check
+  # if now is in-between start and end times.
+  def current?
+    now = Time.now.second_of_week
+    
+    if !split_weeks?
+      self.start_time <= now && self.end_time > now
+    else
+      now > self.start_time || now < self.end_time
+    end
+  end
+  
+  #--------------
+  # Has the slot not yet started this week?
+  def upcoming?
+    Time.now.second_of_week < self.start_time
+  end
+
+  
+  #--------------
+
+  def next
+    RecurringScheduleSlot.on_at(self.ends_at).first
+  end
+
+  
   #--------------
   
   def json
     {
-      :start => self.starts_at,
-      :end   => self.ends_at,
+      :start => self.starts_at.to_i,
+      :end   => self.ends_at.to_i,
       :title => self.program.title,
       :link  => self.program.link_path
     }
@@ -160,5 +218,26 @@ class RecurringScheduleSlot < ActiveRecord::Base
     else
       attribute.strftime("%l:%M%P")
     end
+  end
+
+  #--------------
+  
+  private
+
+  #--------------  
+  # This will only be true for one slot...
+  # But we need to check.
+  def split_weeks?
+    @split_weeks ||= self.end_time < self.start_time
+  end
+
+  #--------------
+  # If the slot is now or upcoming, use
+  # this week's day. If it's past, use
+  # next week's date.
+  def relative_time(attribute)
+    time = self.send(attribute)
+    time += 1.week if self.past?
+    time
   end
 end

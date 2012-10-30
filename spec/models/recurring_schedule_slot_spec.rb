@@ -132,10 +132,25 @@ describe RecurringScheduleSlot do
   #------------
 
   describe "#starts_at" do
-    it "passes it off to ::as_time" do
-      slot = create :recurring_schedule_slot
-      RecurringScheduleSlot.should_receive(:as_time).with(slot.start_time)
-      slot.starts_at
+    context "slot is past" do
+      it "returns the time with next week's date", focus: true do
+        t = freeze_time_at Time.new(2012, 10, 30, 12, 0)
+        slot = create :recurring_schedule_slot, start_time: (t-4.hours).second_of_week, end_time: (t-2.hours).second_of_week
+        slot.starts_at.should eq Time.at(t.to_i+1.week-4.hours)
+      end
+    end
+    
+    context "slot is current" do
+      it "returns the time with this week's date", focus: true do
+        t = freeze_time_at Time.new(2012, 10, 30, 12, 0)
+        slot = create :recurring_schedule_slot, start_time: (t-4.hours).second_of_week, end_time: (t-2.hours).second_of_week
+        slot.starts_at.should eq Time.at(t.to_i-4.hours)
+      end
+    end
+    
+    context "slot is upcoming" do
+      it "returns the time with this week's date", focus: true do
+      end      
     end
   end
 
@@ -147,6 +162,31 @@ describe RecurringScheduleSlot do
       RecurringScheduleSlot.should_receive(:as_time).with(slot.end_time)
       slot.ends_at
     end
+  end
+  
+  #------------
+
+  describe "#day" do
+  end
+
+  #------------
+
+  describe "#past?" do
+  end
+  
+  #------------
+
+  describe "#current?" do
+  end
+  
+  #------------
+
+  describe "#upcoming?" do
+  end
+  
+  #------------
+
+  describe "#day" do
   end
   
   #------------
