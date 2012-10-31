@@ -367,7 +367,12 @@ $navHeight: 36px;
     }
     
     #events-mega .section { 
-        min-height: 230px;
+        min-height: 210px;
+		&.sponsored-events {
+			ul.cbase, .more {
+				margin-bottom:0;
+			}
+		}
         .event-link { 
             color: $linkColor; 
             @include font-serif(normal, 12px);
