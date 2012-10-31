@@ -119,13 +119,27 @@ describe RecurringScheduleSlot do
   #------------
   
   describe "::as_time" do
-    it "Adds the relative seconds to January 2, 2012 to get a Rails-y fake Time" do
-      t      = Chronic.parse("Thursday 8am").second_of_week
-      slot   = create :recurring_schedule_slot, start_time: t, end_time: t + 2.hours
-      anchor = RecurringScheduleSlot::DATE_ANCHOR.to_i
-      
-      slot.class.as_time(slot.start_time).should eq Time.at(anchor + t)
-      slot.class.as_time(slot.end_time).should eq Time.at(anchor + t + 2.hours)
+    context "same timezone" do
+      it "returns the time from the beginning of the week" do
+        t       = freeze_time_at Time.new(2012, 10, 20, 12, 0, 0) # Saturday
+        seconds = t.second_of_week-1.hour
+        time    = RecurringScheduleSlot.as_time(seconds)
+        time.hour.should eq 11
+        time.wday.should eq 6
+      end
+    end
+    
+    context "DST -> not-DST" do
+      it "returns the actual time, not the adjusted time" do
+        t       = freeze_time_at Time.new(2012, 11, 4, 1, 0, 0) # DST ends at 2am, goes back to 1am on this date
+        seconds = t.second_of_week+3.hours
+        time    = RecurringScheduleSlot.as_time(seconds)
+        time.hour.should eq 4
+        time.wday.should eq 0
+      end
+    end
+    
+    context "not-DST -> DST" do
     end
   end
   
@@ -133,60 +147,133 @@ describe RecurringScheduleSlot do
 
   describe "#starts_at" do
     context "slot is past" do
-      it "returns the time with next week's date", focus: true do
+      it "returns the time with next week's date" do
         t = freeze_time_at Time.new(2012, 10, 30, 12, 0)
-        slot = create :recurring_schedule_slot, start_time: (t-4.hours).second_of_week, end_time: (t-2.hours).second_of_week
-        slot.starts_at.should eq Time.at(t.to_i+1.week-4.hours)
+        
+        slot = create :recurring_schedule_slot, start_time: t.second_of_week-4.hours, end_time: t.second_of_week-2.hours
+        slot.starts_at.should eq t+1.week-4.hours
       end
     end
     
     context "slot is current" do
-      it "returns the time with this week's date", focus: true do
+      it "returns the time with this week's date" do
         t = freeze_time_at Time.new(2012, 10, 30, 12, 0)
-        slot = create :recurring_schedule_slot, start_time: (t-4.hours).second_of_week, end_time: (t-2.hours).second_of_week
-        slot.starts_at.should eq Time.at(t.to_i-4.hours)
+        slot = create :recurring_schedule_slot, start_time: (t-2.hours).second_of_week, end_time: (t+2.hours).second_of_week
+        slot.starts_at.should eq Time.at(t-2.hours)
       end
     end
     
     context "slot is upcoming" do
-      it "returns the time with this week's date", focus: true do
-      end      
+      it "returns the time with this week's date" do
+        t = freeze_time_at Time.new(2012, 10, 30, 12, 0)
+        slot = create :recurring_schedule_slot, start_time: (t+2.hours).second_of_week, end_time: (t+4.hours).second_of_week
+        slot.starts_at.should eq Time.at(t+2.hours)
+      end
     end
   end
 
   #------------
   
   describe "#ends_at" do
-    it "passes it off to ::as_time" do
-      slot = create :recurring_schedule_slot
-      RecurringScheduleSlot.should_receive(:as_time).with(slot.end_time)
-      slot.ends_at
+    context "slot is past" do
+      it "returns the time with next week's date" do
+        t = freeze_time_at Time.new(2012, 10, 30, 12, 0)
+        slot = create :recurring_schedule_slot, start_time: (t-4.hours).second_of_week, end_time: (t-2.hours).second_of_week
+        slot.starts_at.should eq Time.at(t+1.week-4.hours)
+      end
+    end
+    
+    context "slot is current" do
+      it "returns the time with this week's date" do
+        t = freeze_time_at Time.new(2012, 10, 30, 12, 0)
+        slot = create :recurring_schedule_slot, start_time: (t-2.hours).second_of_week, end_time: (t+2.hours).second_of_week
+        slot.starts_at.should eq Time.at(t-2.hours)
+      end
+    end
+    
+    context "slot is upcoming" do
+      it "returns the time with this week's date" do
+        t = freeze_time_at Time.new(2012, 10, 30, 12, 0)
+        slot = create :recurring_schedule_slot, start_time: (t+2.hours).second_of_week, end_time: (t+4.hours).second_of_week
+        slot.starts_at.should eq Time.at(t+2.hours)
+      end
     end
   end
   
   #------------
 
   describe "#day" do
+    it "returns the wday" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: t.second_of_week+2.hours
+      slot.day.should eq 2
+    end
   end
 
   #------------
 
   describe "#past?" do
+    it "is true if slot is past" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week-4.hours, end_time: t.second_of_week-2.hours
+      slot.past?.should eq true
+    end
+    
+    it "is false if slot is current" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week-2.hours, end_time: t.second_of_week+2.hours
+      slot.past?.should eq false
+    end
+    
+    it "is false if slot is upcoming" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week+2.hours, end_time: t.second_of_week+4.hours
+      slot.past?.should eq false
+    end
   end
   
   #------------
 
   describe "#current?" do
+    it "is false if slot is past" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week-4.hours, end_time: t.second_of_week-2.hours
+      slot.current?.should eq false
+    end
+    
+    it "is true if slot is current" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week-2.hours, end_time: t.second_of_week+2.hours
+      slot.current?.should eq true
+    end
+    
+    it "is false if slot is upcoming" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week+2.hours, end_time: t.second_of_week+4.hours
+      slot.current?.should eq false
+    end
   end
   
   #------------
 
   describe "#upcoming?" do
-  end
-  
-  #------------
-
-  describe "#day" do
+    it "is false if slot is past" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week-4.hours, end_time: t.second_of_week-2.hours
+      slot.upcoming?.should eq false
+    end
+    
+    it "is true if slot is current" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week-2.hours, end_time: t.second_of_week+2.hours
+      slot.upcoming?.should eq false
+    end
+    
+    it "is false if slot is upcoming" do
+      t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
+      slot = create :recurring_schedule_slot, start_time: t.second_of_week+2.hours, end_time: t.second_of_week+4.hours
+      slot.upcoming?.should eq true
+    end
   end
   
   #------------

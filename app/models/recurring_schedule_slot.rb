@@ -8,7 +8,7 @@
 # the week.
 #
 class RecurringScheduleSlot < ActiveRecord::Base
-
+  
   administrate do
     define_list do
       list_per_page :all
@@ -55,7 +55,8 @@ class RecurringScheduleSlot < ActiveRecord::Base
     #   # => 2012-10-29 23:00:00 -0700
     #
     def as_time(seconds)
-      Time.at(Time.now.beginning_of_week(:sunday) + seconds)
+      week = Time.now.beginning_of_week(:sunday)
+      time = week + seconds.seconds
     end
     
     #--------------
@@ -120,32 +121,29 @@ class RecurringScheduleSlot < ActiveRecord::Base
       # the requested start, OR which starts
       # before the requested end. This is okay
       # because it will go right up to the minimum
-      # (0) and maximum (604800) limits.      
+      # (0) and maximum (604800) limits.
       if !different_weeks
         slots = self.where("end_time > :start_time and start_time < :end_time", args).order(order).to_a
       else
-        starts_before_break = self.where("end_time < start_time or end_time > :start_time", args).order(order).to_a
-        starts_after_break  = self.where("start_time < :end_time", args).order(order).to_a
-        slots = starts_before_break + starts_after_break
+        before = self.where("end_time < start_time or end_time > :start_time", args).order(order).to_a
+        after  = self.where("start_time < :end_time", args).order(order).to_a
+        slots  = before + after
       end
       
       slots
     end
   end
   
+  
   #--------------
-  # Proxy to RecurringTimeSlot::as_time
+  # Methods to return real Time objects.
   def starts_at
-    RecurringScheduleSlot.as_time relative_time(:start_time)
+    at_time(:start_time)
   end
 
-  #--------------
-  # Proxy to RecurringTimeSlot::as_time  
   def ends_at
-    RecurringScheduleSlot.as_time relative_time(:end_time)
+    at_time(:end_time)
   end
-
-  #--------------
 
   def day
     self.starts_at.wday
@@ -221,22 +219,22 @@ class RecurringScheduleSlot < ActiveRecord::Base
   end
 
   #--------------
-  
+
   private
 
-  #--------------  
+  #--------------
   # This will only be true for one slot...
   # But we need to check.
   def split_weeks?
     @split_weeks ||= self.end_time < self.start_time
   end
-
+  
   #--------------
   # If the slot is now or upcoming, use
-  # this week's day. If it's past, use
+  # this week's date. If it's past, use
   # next week's date.
-  def relative_time(attribute)
-    time = self.send(attribute)
+  def at_time(attribute)
+    time = RecurringScheduleSlot.as_time(self.send(attribute))
     time += 1.week if self.past?
     time
   end

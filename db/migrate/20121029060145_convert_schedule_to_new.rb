@@ -26,7 +26,6 @@ class ConvertScheduleToNew < ActiveRecord::Migration
       ns.end_time   = end_time.second_of_week
       
       ns.save!
-      $stdout.puts "saved schedule: #{ns.attributes}"
     end
   end
 
