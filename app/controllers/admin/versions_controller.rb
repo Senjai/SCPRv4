@@ -50,7 +50,7 @@ class Admin::VersionsController < Admin::BaseController
     #--------------
     
     def get_object
-      logger.info "Warning: unsafe object fectching in #{__FILE__}"
+      Rails.logger.warn "Warning: unsafe object fectching in #{__FILE__}"
       @object = to_class(params[:resources]).find(params[:resource_id])
     end
   #

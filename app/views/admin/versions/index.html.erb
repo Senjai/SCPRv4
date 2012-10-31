@@ -5,6 +5,7 @@
   <%= any_to_list? @versions, message: "This object has no logged history in the Rails CMS." do %>
     <thead>
       <tr>
+        <th>Manage</th>
         <% @list.columns.each do |column| %>
           <th><%= column.header %></th>
         <% end %>
@@ -13,6 +14,9 @@
     <tbody class="list">
       <% @versions.each do |version| %>
         <tr class="versions">
+          <td>
+            <%= link_to "View", admin_version_path(resources: @object.class.route_key, resource_id: @object.id, version_number: version.version_number), class: "btn" %>
+          </td>
           <% @list.columns.each do |column| %>
             <td>
               <%= render_attribute column, version, path: admin_version_path(version.versioned.class.name.tableize, version.versioned.id, version.version_number) %>
