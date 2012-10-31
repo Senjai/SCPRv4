@@ -18,7 +18,7 @@ set :repository,  "git@github.com:SCPR/SCPRv4.git"
 set :scm_verbose, true
 set :deploy_via, :remote_cache
 set :deploy_to, "/web/scprv4"
-set :keep_releases, 25
+set :keep_releases, 5
 
 set :user, "scprv4"
 set :use_sudo, false
