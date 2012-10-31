@@ -59,7 +59,7 @@ describe RecurringScheduleSlot do
       before :each do
         # DST "Fall back" 2am -> 1am on November 4, 2012
         t = Time.new(2012, 11, 3, 23)
-        @slot = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: Time.new(2012, 11, 4, 3).second_of_week
+        @slot = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: (t+4.hours).second_of_week
       end
       
       it "selects stuff properly" do
@@ -130,16 +130,23 @@ describe RecurringScheduleSlot do
     end
     
     context "DST -> not-DST" do
-      it "returns the actual time, not the adjusted time" do
-        t       = freeze_time_at Time.new(2012, 11, 4, 1, 0, 0) # DST ends at 2am, goes back to 1am on this date
-        seconds = t.second_of_week+3.hours
+      it "returns the time that is specified in DB, not the server-adjusted time" do
+        t       = freeze_time_at Time.new(2012, 11, 4, 0, 0, 0) # DST ends at 2am, goes back to 1am on this date
+        seconds = (t+3.hours).second_of_week # 3am
         time    = RecurringScheduleSlot.as_time(seconds)
-        time.hour.should eq 4
+        time.hour.should eq 3
         time.wday.should eq 0
       end
     end
     
     context "not-DST -> DST" do
+      it "returns the time specified in the DB" do
+        t       = freeze_time_at Time.new(2012, 3, 11, 0, 0, 0) # DST starts at 2am, goes forward to 3am on this date
+        seconds = t.second_of_week+3.hours
+        time    = RecurringScheduleSlot.as_time(seconds)
+        time.hour.should eq 3
+        time.wday.should eq 0
+      end
     end
   end
   
@@ -251,6 +258,9 @@ describe RecurringScheduleSlot do
       t = freeze_time_at Time.new(2012, 10, 30, 12, 0) # Tuesday
       slot = create :recurring_schedule_slot, start_time: t.second_of_week+2.hours, end_time: t.second_of_week+4.hours
       slot.current?.should eq false
+    end
+    
+    context "split weeks" do
     end
   end
   

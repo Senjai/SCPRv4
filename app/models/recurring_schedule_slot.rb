@@ -54,9 +54,25 @@ class RecurringScheduleSlot < ActiveRecord::Base
     #   RecurringTimeSlot.as_time(time.start_time)
     #   # => 2012-10-29 23:00:00 -0700
     #
+    # This method should be used only for 
+    # displaying times, because it does some 
+    # freaky DST adjusting stuff.
+    #
     def as_time(seconds)
       week = Time.now.beginning_of_week(:sunday)
       time = week + seconds.seconds
+      
+      # Adjust for DST to display time properly.
+      # If DST is ADDING an hour, then we should
+      # ADD an hour here so it displays times, 
+      # properly, and vice-versa.
+      if to_standard?(week, time)
+        time += 1.hour
+      elsif to_dst?(week, time)
+        time -= 1.hour
+      end
+      
+      time
     end
     
     #--------------
@@ -77,7 +93,18 @@ class RecurringScheduleSlot < ActiveRecord::Base
     #   RecurringScheduleSlot.on_at(8.hours.from_now)
     #
     def on_at(time)
+      week   = time.beginning_of_week(:sunday)
       second = time.second_of_week
+      
+      # Adjust for DST so we can query properly
+      # If DST is ADDING an hour (DST -> not DST),
+      # Then we need to REMOVE that hour here,
+      # and vice-versa.
+      if to_standard?(week, time)
+        second -= 1.hour
+      elsif to_dst?(week, time)
+        second += 1.hour
+      end
       
       # First try the most common pattern,
       # where the requested time is between
@@ -131,6 +158,16 @@ class RecurringScheduleSlot < ActiveRecord::Base
       end
       
       slots
+    end
+
+    #--------------
+    private
+    def to_standard?(time1, time2)
+      time1.dst? && !time2.dst?
+    end
+    
+    def to_dst?(time1, time2)
+      !time1.dst? && time2.dst?
     end
   end
   

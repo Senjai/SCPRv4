@@ -11,6 +11,9 @@ class Time
   # Find the relative number of seconds since
   # the beginning of the week for this Time
   def second_of_week
-    (self - self.beginning_of_week(:sunday)).to_i
+    @second_of_week ||= begin
+      week = self.beginning_of_week(:sunday)
+      (self - week).to_i
+    end
   end
 end
