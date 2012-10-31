@@ -15,6 +15,40 @@ describe RecurringScheduleSlot do
 
   #------------
   
+  describe "::as_time" do
+    context "same timezone" do
+      it "returns the time from the beginning of the week" do
+        t       = freeze_time_at Time.new(2012, 10, 20, 12, 0, 0) # Saturday
+        seconds = t.second_of_week-1.hour
+        time    = RecurringScheduleSlot.as_time(seconds)
+        time.hour.should eq 11
+        time.wday.should eq 6
+      end
+    end
+    
+    context "DST -> not-DST" do
+      it "returns the time that is specified in DB, not the server-adjusted time" do
+        t       = freeze_time_at Time.new(2012, 11, 4, 0, 0, 0) # DST ends at 2am, goes back to 1am on this date
+        seconds = (t+3.hours).second_of_week # 3am
+        time    = RecurringScheduleSlot.as_time(seconds)
+        time.hour.should eq 3
+        time.wday.should eq 0
+      end
+    end
+    
+    context "not-DST -> DST" do
+      it "returns the time specified in the DB" do
+        t       = freeze_time_at Time.new(2012, 3, 11, 0, 0, 0) # DST starts at 2am, goes forward to 3am on this date
+        seconds = t.second_of_week+3.hours
+        time    = RecurringScheduleSlot.as_time(seconds)
+        time.hour.should eq 3
+        time.wday.should eq 0
+      end
+    end
+  end
+  
+  #------------
+  
   describe "::on_at" do
     context "normal time slot" do
       before :each do
@@ -52,6 +86,8 @@ describe RecurringScheduleSlot do
       end
       
       it "is empty if nothing is found" do
+        RecurringScheduleSlot.on_at(Chronic.parse("Saturday 10:59:59pm")).should eq []
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 3am")).should eq []
       end
     end
     
@@ -112,40 +148,6 @@ describe RecurringScheduleSlot do
         slot1 = create :recurring_schedule_slot, start_time: (t-1.hour).second_of_week, end_time: (t+1.hour).second_of_week
         slot2 = create :recurring_schedule_slot, start_time: (t+7.hours).second_of_week, end_time: (t+9.hours).second_of_week
         RecurringScheduleSlot.block(t, 8.hours).should eq [slot1, slot2]
-      end
-    end
-  end
-  
-  #------------
-  
-  describe "::as_time" do
-    context "same timezone" do
-      it "returns the time from the beginning of the week" do
-        t       = freeze_time_at Time.new(2012, 10, 20, 12, 0, 0) # Saturday
-        seconds = t.second_of_week-1.hour
-        time    = RecurringScheduleSlot.as_time(seconds)
-        time.hour.should eq 11
-        time.wday.should eq 6
-      end
-    end
-    
-    context "DST -> not-DST" do
-      it "returns the time that is specified in DB, not the server-adjusted time" do
-        t       = freeze_time_at Time.new(2012, 11, 4, 0, 0, 0) # DST ends at 2am, goes back to 1am on this date
-        seconds = (t+3.hours).second_of_week # 3am
-        time    = RecurringScheduleSlot.as_time(seconds)
-        time.hour.should eq 3
-        time.wday.should eq 0
-      end
-    end
-    
-    context "not-DST -> DST" do
-      it "returns the time specified in the DB" do
-        t       = freeze_time_at Time.new(2012, 3, 11, 0, 0, 0) # DST starts at 2am, goes forward to 3am on this date
-        seconds = t.second_of_week+3.hours
-        time    = RecurringScheduleSlot.as_time(seconds)
-        time.hour.should eq 3
-        time.wday.should eq 0
       end
     end
   end
@@ -261,6 +263,7 @@ describe RecurringScheduleSlot do
     end
     
     context "split weeks" do
+      pending
     end
   end
   
