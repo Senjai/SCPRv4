@@ -17,7 +17,7 @@ gem "resque", "~> 1.20"
 
 ## Views
 gem 'kaminari', "~> 0.14"
-gem 'ckeditor_rails', "~> 3.6", require: 'ckeditor-rails'
+gem 'tinymce-rails', "~> 3.5"
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
 gem 'simple_form', "~> 2.0"

@@ -1,0 +1,16 @@
+extended_valid_elements: 
+  - "*[*]"
+  - "script[charset|type|src|language]"
+theme: advanced
+content_css: http://www.scpr.org/assets/application.css
+theme_advanced_toolbar_location: top
+theme_advanced_toolbar_align: center
+theme_advanced_buttons1: bold, italic, numlist, bullist, blockquote, link, unlink, image, code
+mode: textareas
+height: 400
+width: 635
+relative_urls: false
+plugins: 
+  - media
+  - paste
+paste_auto_cleanup_on_paste: true
