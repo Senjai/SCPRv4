@@ -64,7 +64,7 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def get_records
-    @records = resource_class.order(resource_class.admin.list.order).page(params[:page]).per(resource_class.admin.list.per_page)
+    @records = resource_class.order(resource_class.admin.list.order).page(params[:page]).per(resource_class.admin.list.per_page || 99999) # Temporary until Kaminari fixes this?
   end
   
   
