@@ -10,7 +10,7 @@ class Section < ActiveRecord::Base
       list_per_page :all
       
       column :id
-      column :title, linked: true
+      column :title
       column :slug
     end
   end

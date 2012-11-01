@@ -13,12 +13,6 @@ class Admin::ResourceController < Admin::BaseController
   
   def index
     @list = resource_class.admin.list
-    
-    # Temporary - This should be moved into AdminResource
-    if @list.linked_columns.empty?
-      @list.columns.first.linked = true
-    end
-        
     respond_with :admin, @records
   end
 

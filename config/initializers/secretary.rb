@@ -10,11 +10,11 @@ module Secretary
   class Version
     administrate do
       define_list do
-        column "user", helper: ->(version) { version.user.try(:to_title) || "System" }
-        column "description", linked: true
-        column "versioned", header: "Object", helper: ->(version) { version.versioned.simple_title }
-        column "version_number", header: "Version"
-        column "created_at", header: "Timestamp"
+        column :user, display: proc { self.user.try(:to_title) || "System" }
+        column :description
+        column :versioned, header: "Object", display: proc { self.versioned.simple_title }
+        column :version_number, header: "Version"
+        column :created_at, header: "Timestamp"
       end
     end
   end

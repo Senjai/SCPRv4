@@ -19,7 +19,7 @@ AdminResource::Config.configure do |config|
     "ShowEpisode", 
     "KpccProgram", 
     "OtherProgram", 
-    "Schedule", 
+    "RecurringScheduleSlot", 
     "Podcast",
     "Event",
     "Homepage", 
@@ -66,7 +66,7 @@ AdminResource::Config.configure do |config|
         "ShowEpisode",
         "KpccProgram",
         "OtherProgram",
-        "Schedule",
+        "RecurringScheduleSlot",
         "Podcast"
       ]
     },

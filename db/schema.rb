@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024205134) do
+ActiveRecord::Schema.define(:version => 20121029060145) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -794,7 +794,7 @@ ActiveRecord::Schema.define(:version => 20121024205134) do
 
   create_table "recurring_schedule_slots", :force => true do |t|
     t.integer  "program_id"
-    t.integer  "program_type"
+    t.string   "program_type"
     t.integer  "start_time"
     t.integer  "end_time"
     t.datetime "created_at",   :null => false

@@ -34,7 +34,7 @@ class Event < ActiveRecord::Base
       column :headline
       column :starts_at
       column :location_name, header: "Location"
-      column :etype,         header: "Type", helper: ->(event) { Event::EVENT_TYPES[event.etype] }
+      column :etype,         header: "Type", display: proc { Event::EVENT_TYPES[self.etype] }
       column :kpcc_event,    header: "KPCC Event?"
       column :is_published,  header: "Published?"
     end

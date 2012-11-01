@@ -73,7 +73,7 @@ class scpr.ListenLive
                 
                 # attach our extra buttons
                 @_attachExtraUI()
-                                
+                
             # each time we get a timecheck from the server, update our play view
             @io.on "timecheck", (data) => @_updateDisplay data
                 
@@ -84,8 +84,8 @@ class scpr.ListenLive
             # -- stash our times -- #
         
             @serverBuffer = Number(data.buffered)
-            @serverTime = new Date(data.time)
-            @playTime = new Date( Number(@serverTime) - @offset*1000 )
+            @serverTime   = new Date(data.time)
+            @playTime     = new Date( Number(@serverTime) - @offset*1000 )
         
         # -- do we have a current show? -- #
         if @currentShow && @currentShow.isWhatsPlayingAt @playTime
@@ -99,7 +99,6 @@ class scpr.ListenLive
             @currentShow = @schedule.on_at @playTime
             @currentShow.isPlaying(true)
 
-            console.log "rendering playerUI with ", show:@currentShow.toJSON()
             @playerUI = $ "<div/>", 
                 id: "llPlayerUI"
                 html: JST["t_listen/player"]( show:@currentShow.toJSON() )
@@ -115,7 +114,6 @@ class scpr.ListenLive
                 
                 dest    = moment(s).add("ms", d * (evt.offsetX / llBP.width()) )
                 offset  = ( @serverTime - dest.toDate() ) / 1000
-                console.log "request is for ", offset, dest, (evt.offsetX / $(evt.target).width())
                 
                 if offset < 0
                     offset = 0
@@ -143,9 +141,7 @@ class scpr.ListenLive
             c = moment(@playTime).diff(s) / 1000
 
             perc = Math.round( c / d * 100 ) 
-            
-            #console.log "updateTimes has ", s, e, d, c, perc
-            
+                        
             $("#llBuffBar").width("#{perc}%")
         else
             # set buffer bar globally
@@ -172,7 +168,7 @@ class scpr.ListenLive
             "9",
             "/swf/expressInstall.swf",
             { stream:"#{@options.rewind}?socket=#{@io.socket.sessionid}" },
-            { wmode: "transparent" }, {}, (e) => console.log "setting up audio with ", e; @audio = e.ref
+            { wmode: "transparent" }, {}, (e) => @audio = e.ref
     
     #----------
      
@@ -183,11 +179,9 @@ class scpr.ListenLive
         @playBtn.on "click", (evt) =>
             if @playing
                 @audio.stop()
-                console.log "stopping..."
                 @playing = false
             else              
                 @audio.play()
-                console.log "playing..."
                 @playing = true
                 
         $("#llnow").on "click", (evt) =>
@@ -197,7 +191,6 @@ class scpr.ListenLive
             now = new Date
             topoff = (now.getMinutes() * 60) + now.getSeconds()
         
-            console.log "top of hour was at offset ", topoff
             @offsetTo topoff
                     
         $("#llbottom").on "click", (evt) =>
@@ -212,7 +205,6 @@ class scpr.ListenLive
                 # bottom of the last hour
                 offsecs = ( now.getMinutes() + 30 ) * 60 + now.getSeconds()
             
-            console.log "bottom of the hour offset: ", offsecs
             @offsetTo offsecs
    
     #----------
@@ -229,7 +221,6 @@ class scpr.ListenLive
             return true
                         
         @io.emit "offset", i, (i) =>
-            console.log "got offset back from server of ", i
             if @offset != i
                 @offset = Math.round(i)
                         
@@ -271,19 +262,15 @@ class scpr.ListenLive
                 swfPath: @options.swf_path
                 supplied: "mp3"
                 ready: => 
-                    console.log "llPlayer setting media and playing"
                     @player.jPlayer("setMedia",mp3:@options.url).jPlayer("play")
                     
             # -- register play / pause handlers -- #
             @player.on $.jPlayer.event.play, (evt) =>
-                console.log "play event"
                 if @_pause_timeout
                     clearTimeout @_pause_timeout
                     @_pause_timeout = null
-                    console.log "cleared pause timeout"
                 
             @player.on $.jPlayer.event.pause, (evt) => 
-                console.log "pause event"
                 
                 # set a timer to convert this pause to a stop in one minute
                 @_pause_timeout = setTimeout => 
@@ -309,10 +296,7 @@ class scpr.ListenLive
         _buildSchedule: ->
             on_now = @schedule.on_now()
             on_next = @schedule.on_at( on_now.end.toDate() )
-                
-            console.log "on_now: ", on_now.toJSON()
-            console.log "on_next: ", on_next?.get("title")
-                
+                            
             $(@options.schedule_finder).html @options.schedule_template? on_now:on_now.toJSON(), on_next:on_next.toJSON()
                 
             @_on_now = on_now
@@ -326,7 +310,7 @@ class scpr.ListenLive
             # parse start and end times
             @start  = moment 1000 * Number(@attributes['start'])
             @end    = moment 1000 * Number(@attributes['end'])
-            
+
             # Check if the show starts or ends between hours and choose format
             if @start.format("mm") is "00" and @end.format("mm") is "00"
                 time_format = "ha"
@@ -350,7 +334,8 @@ class scpr.ListenLive
         
         on_at: (time) ->
             # iterate through models until we get a true result from isWhatsPlayingAt
-            @find (m) -> m.isWhatsPlayingAt time
+            @find (m) -> 
+                m.isWhatsPlayingAt time
             
         #----------
         
@@ -367,7 +352,6 @@ class scpr.ListenLive
             """
         
         initialize: ->
-            console.log @model
             @render()
             @model.bind "change", => @render()
             
@@ -394,11 +378,11 @@ class scpr.ListenLive
                 @setClass()
             
             reltime = 
-                if @model.start <= moment() <= @model.end                    
+                if @model.start <= moment() <= @model.end
                     "On Now"
-                else if @model.start < moment()                    
+                else if @model.start < moment()
                     "Finished #{@model.end.fromNow()}"
-                else                    
+                else
                     "Starts #{@model.start.fromNow()}"
             
             @$el.html _.template @template, _(@model.toJSON()).extend relative:reltime

@@ -48,10 +48,6 @@ end
 
 Scprv4::Application.routes.draw do
   match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
-  
-  #namespace :api do
-  #  match '/' => 'main#index', :as => :home
-  #end
     
   namespace :dashboard do
     match '/sections' => 'main#sections', :as => :sections
@@ -85,6 +81,7 @@ Scprv4::Application.routes.draw do
       get '/search(/:resource)' => "search#index", as: :search
       
       ## -- AdminResource -- ##
+      resources :recurring_schedule_slots
       resources :permissions
       resources :bios
       resources :audio

@@ -96,45 +96,44 @@ class ProgramsController < ApplicationController
   #----------
 
   def schedule
-    @schedule_slots = Schedule.all
+    @schedule_slots = RecurringScheduleSlot.all
     render layout: "application"
   end
   
   #----------
   #----------
   
-  protected
-    
-    # Try various ways to fetch the program the person requested
-    # If nothing is found, 404
-    def get_any_program
-      @program = KpccProgram.find_by_slug(params[:show]) || OtherProgram.find_by_slug(params[:show])
-      
-      if !@program
-        raise ActionController::RoutingError.new("Not Found")
-      end
-    end
+  protected    
 
-    # ---------------
+  # Try various ways to fetch the program the person requested
+  # If nothing is found, 404
+  def get_any_program
+    @program = KpccProgram.find_by_slug(params[:show]) || OtherProgram.find_by_slug(params[:show])
     
-    def get_kpcc_program!
-      @program = KpccProgram.find_by_slug!(params[:show])
+    if !@program
+      raise ActionController::RoutingError.new("Not Found")
     end
-    
-    # ---------------
-    
-    def get_featured_programs
-      @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
-      @featured_programs.sort_by! { |program| KpccProgram::Featured.index(program.slug) } # Orders the returned records by the order of the KpccProgram::Featured array
-    end
-    
-    # ---------------
+  end
 
-  private
-    
-    def redirect_for_quick_slug
-      program = KpccProgram.find_by_quick_slug!(params[:quick_slug])
-      redirect_to program_path(program.slug) and return
-    end
-  #
+  # ---------------
+  
+  def get_kpcc_program!
+    @program = KpccProgram.find_by_slug!(params[:show])
+  end
+  
+  # ---------------
+  
+  def get_featured_programs
+    @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
+    @featured_programs.sort_by! { |program| KpccProgram::Featured.index(program.slug) } # Orders the returned records by the order of the KpccProgram::Featured array
+  end
+  
+  # ---------------
+
+  private    
+
+  def redirect_for_quick_slug
+    program = KpccProgram.find_by_quick_slug!(params[:quick_slug])
+    redirect_to program_path(program.slug) and return
+  end
 end

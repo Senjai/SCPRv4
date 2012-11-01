@@ -67,12 +67,6 @@ Given /^the feeds are cached$/ do
   Rails.cache.fetch("ext_program:#{@program.slug}:rss").should_not be_blank if @program.rss_url.present?
 end
 
-Given /^the program is currently on$/ do
-  schedule = create :schedule, kpcc_program_id: @program.id, program: @program.title
-  Schedule.stub(:on_now) { schedule }
-  Schedule.on_now.programme.should eq @program
-end
-
 
 
 #### Routing

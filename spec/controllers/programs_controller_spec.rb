@@ -30,10 +30,10 @@ describe ProgramsController do
   # ----------------------
 
   describe "GET /schedule" do
-    it "assigns @schedule_slots to all Schedule objects" do
-      create_list :schedule, 3
+    it "assigns @schedule_slots to all RecurringScheduleSlot objects" do
+      create_list :recurring_schedule_slot, 3
       get :schedule
-      assigns(:schedule_slots).should eq Schedule.all
+      assigns(:schedule_slots).should eq RecurringScheduleSlot.all
     end
   end
 

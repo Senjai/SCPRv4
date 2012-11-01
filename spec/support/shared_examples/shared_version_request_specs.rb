@@ -31,8 +31,8 @@ shared_examples_for "versioned model" do
         updated.versions.size.should eq 2
         click_link "history"
         current_path.should eq admin_history_path(valid_record.class.route_key, valid_record.id)
-        page.should have_content "Changed"
-        click_link "Changed"
+        page.should have_content "View"
+        click_link "View"
       end
     end
   end

@@ -6,8 +6,8 @@ class MissedItBucket < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      column "id"
-      column "title", linked: true
+      column :id
+      column :title
     end
   end
   

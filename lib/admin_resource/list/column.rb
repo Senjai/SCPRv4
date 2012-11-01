@@ -1,7 +1,7 @@
 module AdminResource
   module List
     class Column
-      attr_accessor :attribute, :linked, :helper, :position, :list
+      attr_accessor :attribute, :display, :position, :list
       attr_writer :header
     
       def initialize(attribute, list, attributes={})
@@ -9,17 +9,12 @@ module AdminResource
         @list      = list
         @position  = @list.columns.size
 
-        @header    = attributes[:header]
-        @helper    = attributes[:helper]
-        @linked    = !!attributes[:linked] # force boolean
+        @header  = attributes[:header]
+        @display = attributes[:display]
       end
     
       def header
         @header ||= @attribute.titleize 
-      end
-    
-      def linked?
-        linked
       end
     end
   end

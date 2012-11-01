@@ -1,5 +1,5 @@
 body.mceContentBody {
-  padding: 10px;
+  padding: 10px !important;
   
   br.story-break {
     display: block;
@@ -7,5 +7,4 @@ body.mceContentBody {
     content: "&nbsp;";
     background: #ff0000;
   }
-  
 }

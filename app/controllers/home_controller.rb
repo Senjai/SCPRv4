@@ -9,7 +9,7 @@ class HomeController < ApplicationController
   
   def index
     @homepage = Homepage.published.first
-    @schedule_current = Schedule.on_now
+    @schedule_current = Schedule.on_at(Time.now).first
   end
 
   def elections

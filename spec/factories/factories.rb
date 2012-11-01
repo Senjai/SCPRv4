@@ -50,17 +50,18 @@ FactoryGirl.define do
       uploaded
     end
   end
-  
-# Schedule #########################################################
-  factory :schedule do # Requires us to pass in kpcc_proram_id or other_program_id and program. There must be a better way to do this.
-    sequence(:day) { |n| (Time.now + 60*60*24*n).day }
-    start_time "00:00:00" # arbitrary
-    end_time   "02:00:00" # aribtrary
-    sequence(:program) { |n| "Cool Program #{n}" } 
-    url { "/programs/#{program.parameterize}" }
-    kpcc_program
-  end
-  
+
+# RecurringScheduleSlot #########################################################
+factory :recurring_schedule_slot do
+  sequence(:start_time) { |n| Time.new(2012, 10, 25, 1*n).second_of_week }
+  end_time { start_time + 2.hours }  
+  program { |f| f.association :kpcc_program }
+end
+
+# DistinctScheduleSlot #########################################################
+factory :distinct_schedule_slot do
+end
+
 
 # Bio #########################################################
   factory :bio, class: "Bio", aliases: [:author] do
