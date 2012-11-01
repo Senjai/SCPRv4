@@ -26,12 +26,12 @@ describe CacheTasks::Twitter do
     let(:tweets) { ["tweet1", "tweet2"] }
 
     it "sends to Twitter#user_timeline" do
-      ::Twitter.should_receive(:user_timeline).with('kpcc', CacheTasks::Twitter::DEFAULTS).and_return(tweets)
+      ::Twitter::Client.any_instance.should_receive(:user_timeline).with('kpcc', CacheTasks::Twitter::DEFAULTS).and_return(tweets)
       task.fetch.should eq tweets
     end
     
     it "returns false on error" do
-      ::Twitter.should_receive(:user_timeline).with('kpcc', CacheTasks::Twitter::DEFAULTS).and_raise(StandardError)
+      ::Twitter::Client.any_instance.should_receive(:user_timeline).with('kpcc', CacheTasks::Twitter::DEFAULTS).and_raise(StandardError)
       task.fetch.should eq false
     end
   end
