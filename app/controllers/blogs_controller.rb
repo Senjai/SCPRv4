@@ -2,8 +2,6 @@ class BlogsController < ApplicationController
   before_filter :load_blog, :except => :index
   respond_to :html, :xml, :rss
 
-  caches_action :entry, :if => Proc.new { params[:id] == "10835" }
-
   #----------
   
   def index
