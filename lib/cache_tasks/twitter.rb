@@ -11,11 +11,6 @@ module CacheTasks
       :include_entities => 0
     }
     
-    TWITTER_CONSUMER_KEY       = API_KEYS["twitter"]["kpccweb"]["consumer_key"]
-    TWITTER_CONSUMER_SECRET    = API_KEYS["twitter"]["kpccweb"]["consumer_secret"]
-    TWITTER_OAUTH_TOKEN        = API_KEYS["twitter"]["kpccweb"]["access_token"]
-    TWITTER_OAUTH_TOKEN_SECRET = API_KEYS["twitter"]["kpccweb"]["access_token_secret"]
-    
     #---------------
     
     def run
