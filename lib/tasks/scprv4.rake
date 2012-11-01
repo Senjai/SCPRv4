@@ -93,13 +93,10 @@ namespace :scprv4 do
     
     desc "Fetch and parse Election Results"
     task :election_results => [:environment] do
+      json = ENV['json']
+
       puts "*** [#{Time.now}] Caching Election Results...."
-      
-      fake  = "http://project.wnyc.org/election-2012-ca-results/fakeresults.json"
-      real  = "http://project.wnyc.org/election-2012-ca-results/all.json"
-      other = "http://project.wnyc.org/election-2012-ca-results/data/election_data.json"
-      
-      task = CacheTasks::ElectionResults.new(other)
+      task = CacheTasks::ElectionResults.new(json)
       task.verbose = true
       task.run
       puts "Finished.\n"
@@ -107,8 +104,10 @@ namespace :scprv4 do
     
     desc "Auto-tweet election results!"
     task :tweet_results => [:environment] do
-      puts "*** [#{Time.now}] Caching Election Results...."
-      task = CacheTasks::ElectionTweeter.new("kpccweb")
+      screenname = ENV['screenname']
+      
+      puts "*** [#{Time.now}] Checking Election Results..."
+      task = CacheTasks::ElectionTweeter.new(screenname)
       task.verbose = true
       task.run
       puts "Finished.\n"

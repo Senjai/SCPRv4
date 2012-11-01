@@ -1,7 +1,8 @@
 ##
 # Tweeter
 # A light wrapper around the Twitter API
-# to authenticate and tweet as a user.
+# to authenticate as a twitter user and
+# perform actions as that user.
 #
 # The passed-in screen name must have a
 # corresponding YAML config in
@@ -11,14 +12,12 @@ class Tweeter
   def initialize(screen_name)
     @screen_name = screen_name
   end
-  
-  #---------------
-  
-  def tweet(message)
-    client.update message
-  end
 
   #---------------
+  
+  def method_missing(method, *args, &block)
+    client.send(method, *args)
+  end
   
   private
   

@@ -19,7 +19,7 @@ module CacheTasks
       @screen_name = screen_name
       @tweeter     = Tweeter.new(screen_name)
       @points      = DataPoint.to_hash(DataPoint.where(group_name: "election"))
-      @tweet_extra = @points["tweet_extra"].data_value
+      @tweet_extra = @points["tweet_extra"].try(:data_value)
     end
 
     #---------------
@@ -89,7 +89,7 @@ module CacheTasks
         
     def tweet(message)
       self.log "Tweeting: #{message}"
-      @tweeter.tweet "#{message} #{@tweet_extra}"
+      @tweeter.update "#{message} #{@tweet_extra}"
     end
     
     def should_tweet?(group)
