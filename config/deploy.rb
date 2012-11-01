@@ -18,7 +18,7 @@ set :repository,  "git@github.com:SCPR/SCPRv4.git"
 set :scm_verbose, true
 set :deploy_via, :remote_cache
 set :deploy_to, "/web/scprv4"
-set :keep_releases, 25
+set :keep_releases, 5
 
 set :user, "scprv4"
 set :use_sudo, false
@@ -74,7 +74,7 @@ namespace :deploy do
       
       # Previous revision is blank or git log doesn't 
       # have any new lines mentioning assets
-      if %w{true 1}.include?(force_assets) || from.nil? || 
+      if [true, 1].include?(force_assets) || from.nil? || 
           capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
           if !%w{true 1}.include? skip_assets
             run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"

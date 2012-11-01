@@ -26,7 +26,7 @@ module CacheTasks
       
       # STDOUT only gets it if requested
       if @verbose
-        puts message
+        $stdout.puts message
       end
     end
   end # Task
