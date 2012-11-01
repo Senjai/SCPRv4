@@ -378,11 +378,11 @@ class scpr.ListenLive
                 @setClass()
             
             reltime = 
-                if @model.start <= moment() <= @model.end                    
+                if @model.start <= moment() <= @model.end
                     "On Now"
-                else if @model.start < moment()                    
+                else if @model.start < moment()
                     "Finished #{@model.end.fromNow()}"
-                else                    
+                else
                     "Starts #{@model.start.fromNow()}"
             
             @$el.html _.template @template, _(@model.toJSON()).extend relative:reltime
