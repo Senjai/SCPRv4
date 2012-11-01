@@ -1,3 +1,4 @@
+<% if @homepage %>
 <%=
   begin
     render :partial => @homepage.base, locals: { :homepage => @homepage }
@@ -9,6 +10,7 @@
     end
   end
 %>
+<% end %>
 
 <%= yield :conversation_slot %>
 <div class="more-content">
