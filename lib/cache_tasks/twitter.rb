@@ -11,6 +11,11 @@ module CacheTasks
       :include_entities => 0
     }
     
+    TWITTER_CONSUMER_KEY       = API_KEYS["twitter"]["kpccweb"]["consumer_key"]
+    TWITTER_CONSUMER_SECRET    = API_KEYS["twitter"]["kpccweb"]["consumer_secret"]
+    TWITTER_OAUTH_TOKEN        = API_KEYS["twitter"]["kpccweb"]["access_token"]
+    TWITTER_OAUTH_TOKEN_SECRET = API_KEYS["twitter"]["kpccweb"]["access_token_secret"]
+    
     #---------------
     
     def run
@@ -34,11 +39,27 @@ module CacheTasks
     def fetch
       begin
         self.log "Fetching the latest #{@options[:count]} tweets for #{@screen_name}..."
-        tweets = ::Twitter.user_timeline(@screen_name, @options)
+        tweets = client.user_timeline(@screen_name, @options)
         tweets
       rescue Exception => e
         self.log "Error: \n #{e}"
         false
+      end
+    end
+    
+    private
+
+    #---------------
+    
+    def client
+      @client ||= begin
+        auth = API_KEYS['twitter']['kpccweb']
+        ::Twitter::Client.new(
+          :consumer_key       => auth["consumer_key"],
+          :consumer_secret    => auth["consumer_secret"],
+          :oauth_token        => auth["access_token"],
+          :oauth_token_secret => auth["access_token_secret"]
+        )
       end
     end
   end # Twitter
