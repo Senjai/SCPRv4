@@ -9,8 +9,8 @@ describe AdminResource::List::Column do
     it { should respond_to :attribute= }
     it { should respond_to :header }
     it { should respond_to :header= }
-    it { should respond_to :helper }
-    it { should respond_to :helper= }
+    it { should respond_to :display }
+    it { should respond_to :display= }
   end
 
   #----------------
@@ -42,8 +42,8 @@ describe AdminResource::List::Column do
       column.header.should eq "Full Name"
     end
     
-    it "sets helper" do
-      column.helper.should eq :display_full_name
+    it "sets display" do
+      column.display.should eq :display_full_name
     end
   end
 
