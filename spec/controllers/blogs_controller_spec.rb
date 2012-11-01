@@ -1,4 +1,3 @@
-
 require "spec_helper"
 
 describe BlogsController do
@@ -179,8 +178,7 @@ describe BlogsController do
     it "assigns @entries" do
       blog_entry = create :blog_entry, tag_count: 1, blog: blog
       get :blog_tagged, blog: blog.slug, tag: blog_entry.tags.first.slug
-      assigns(:entries).should eq blog_entry.tagged.all
-      assigns(:entries).collect { |e| e.content }.should eq [blog_entry]
+      assigns(:entries).should eq [blog_entry]
     end
   end
   

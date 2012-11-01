@@ -50,7 +50,7 @@ class BlogsController < ApplicationController
   #----------
   
   def blog_tagged
-    @tag = Tag.where(:slug => params[:tag]).first
+    @tag = Tag.where(slug: params[:tag]).first
     
     # In this case we want to redirect, in case people just
     # start guessing random tags
@@ -58,12 +58,7 @@ class BlogsController < ApplicationController
       redirect_to blog_tags_path(@blog.slug) and return
     end
     
-    # now we have to limit tagged content to only this blog
-    @entries = @tag.tagged.where(content_type: "BlogEntry")
-                   .joins("left join blogs_entry on blogs_entry.id = taggit_taggeditem.content_id")
-                   .where("blogs_entry.blog_id = ? and blogs_entry.status = ?",@blog.id, ContentBase::STATUS_LIVE)
-                   .order("blogs_entry.published_at desc")
-                   .page(params[:page]).per(5)
+    @entries = @blog.entries.published.joins(:tags).where(taggit_tag: { slug: @tag.slug }).page(params[:page]).per(5)
   end
   
   #----------
