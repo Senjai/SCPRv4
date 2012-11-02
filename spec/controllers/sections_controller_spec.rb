@@ -17,7 +17,9 @@ describe SectionsController do
       
       context "html request" do
         before :each do
-          get :show, slug: section.slug
+          ThinkingSphinx::Test.run do
+            get :show, slug: section.slug
+          end
         end
       
         it "sets @section to the correct section" do
@@ -31,9 +33,11 @@ describe SectionsController do
       
       context "xml request" do
         it "returns an XML response" do
-          get :show, slug: section.slug, format: :xml
-          response.should render_template "sections/show"
-          response.header['Content-Type'].should match /xml/
+          ThinkingSphinx::Test.run do
+            get :show, slug: section.slug, format: :xml
+            response.should render_template "sections/show"
+            response.header['Content-Type'].should match /xml/
+          end
         end
       end
     end

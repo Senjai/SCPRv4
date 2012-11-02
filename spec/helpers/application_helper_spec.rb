@@ -59,7 +59,7 @@ describe ApplicationHelper do
       index_sphinx
       ContentShell.all.first.destroy
       ContentShell.count.should eq 0
-      arts = get_latest_arts
+      arts = ThinkingSphinx::Test.run { get_latest_arts }
       arts.should_not include nil
     end
   end
@@ -75,8 +75,11 @@ describe ApplicationHelper do
       stub_publishing_callbacks
       make_content(7)
       index_sphinx
-      @arts = get_latest_arts
-      @news = get_latest_news
+      
+      ThinkingSphinx::Test.run do
+        @arts = get_latest_arts
+        @news = get_latest_news
+      end
     end
     
     after :all do

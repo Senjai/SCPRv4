@@ -111,9 +111,11 @@ describe Dashboard::Api::ContentController do
       end
       
       it "returns the cache as json" do
-        get :recent
-        response.body.should eq cache
-        response.header['Content-Type'].should match /json/
+        ThinkingSphinx::Test.run do
+          get :recent
+          response.body.should eq cache
+          response.header['Content-Type'].should match /json/
+        end
       end
     end
     
@@ -125,18 +127,23 @@ describe Dashboard::Api::ContentController do
       end
       
       it "returns the sphinx results as json" do
-        get :recent
-        response.body.should match @generated_content.first.to_json
-        response.body.should match @generated_content.last.to_json
-        response.header['Content-Type'].should match /json/
+        ThinkingSphinx::Test.run do
+          get :recent
+          response.body.should match @generated_content.first.to_json
+          response.body.should match @generated_content.last.to_json
+          response.header['Content-Type'].should match /json/
+        end
       end
       
       it "writes the json to the cache" do
         Rails.cache.fetch("cbaseapi:recent").should eq nil
-        get :recent
-        cache = Rails.cache.fetch("cbaseapi:recent")
-        cache.should match @generated_content.first.to_json
-        cache.should match @generated_content.last.to_json
+
+        ThinkingSphinx::Test.run do
+          get :recent
+          cache = Rails.cache.fetch("cbaseapi:recent")
+          cache.should match @generated_content.first.to_json
+          cache.should match @generated_content.last.to_json
+        end
       end
     end
   end
