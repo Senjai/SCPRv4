@@ -1,5 +1,7 @@
 require "spec_helper"
 
 describe Admin::PodcastsController do
-  pending
+  it_behaves_like "resource controller" do
+    let(:resource) { :podcast }
+  end
 end

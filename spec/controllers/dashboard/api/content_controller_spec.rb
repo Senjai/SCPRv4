@@ -133,6 +133,7 @@ describe Dashboard::Api::ContentController do
       
       it "writes the json to the cache" do
         Rails.cache.fetch("cbaseapi:recent").should eq nil
+
         get :recent
         cache = Rails.cache.fetch("cbaseapi:recent")
         cache.should match @generated_content.first.to_json

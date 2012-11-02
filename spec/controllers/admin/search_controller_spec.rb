@@ -9,6 +9,7 @@ describe Admin::SearchController do
     end
     
     it "figures out the class" do
+      NewsStory.stub(:search)
       get :index, resource: "news_stories"
       assigns(:klass).should eq NewsStory
     end

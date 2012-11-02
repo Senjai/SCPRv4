@@ -44,6 +44,7 @@ RSpec.configure do |config|
     migration = -> { FixtureMigration.new.up }
     silence_stream STDOUT, &migration
     Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| load f }
+    ThinkingSphinx::Test.init
     ThinkingSphinx::Test.start_with_autostop
   end
   

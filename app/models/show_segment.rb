@@ -64,6 +64,7 @@ class ShowSegment < ContentBase
     indexes headline
     indexes teaser
     indexes body
+    has show.id, as: :program
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at

@@ -44,72 +44,58 @@ describe ApplicationHelper do
   end
   
   #------------------------
-
-  describe "retry stale for sphinx" do
-    before :all do
-      setup_sphinx
-    end
-
-    after :all do
-      teardown_sphinx
-    end
-
-    it "doesn't return a nil value" do
-      make_content(1)
-      index_sphinx
-      ContentShell.all.first.destroy
-      ContentShell.count.should eq 0
-      arts = get_latest_arts
-      arts.should_not include nil
-    end
-  end
   
-  #------------------------
-  
-  describe "get latest using sphinx" do
-    before :all do
-      setup_sphinx
-    end
-    
+  describe "sphinx category searches" do
     before :each do
-      stub_publishing_callbacks
-      make_content(7)
-      index_sphinx
-      @arts = get_latest_arts
-      @news = get_latest_news
+      category_news     = create :category, :is_news
+      category_not_news = create :category, :is_not_news
+      
+      @news     = [create(:news_story), create(:blog_entry), create(:show_segment), create(:content_shell)]
+      @not_news = [create(:news_story), create(:blog_entry), create(:show_segment), create(:content_shell)]
+      
+      @news.each { |c| c.category = category_news; c.save! }
+      @not_news.each { |c| c.category = category_not_news; c.save! }
     end
     
-    after :all do
-      teardown_sphinx
-    end
+    describe "#get_latest_news" do
+      let(:sphinx_hash) do
+        {
+          :classes     => ContentBase.content_classes,
+          :page        => 1,
+          :per_page    => 12,
+          :order       => :published_at,
+          :sort_mode   => :desc,
+          :with        => { category_is_news: true },
+          :retry_stale => true
+        }
+      end
     
-    it "all returns an array" do
-      @arts.should be_a Array
-      @news.should be_a Array
+      it "sends it off to sphinx" do
+        ThinkingSphinx.should_receive(:search).with('', sphinx_hash).and_return(@news)
+        helper.get_latest_news.should eq @news
+      end
     end
   
-    it "all returns 12 items" do
-      @arts.count.should eq 12
-      @news.count.should eq 12
-    end
-
-    it "all is ordered by published_at desc" do
-      @arts[0].published_at.should be > @arts[1].published_at
-      @arts[10].published_at.should be < @arts[9].published_at
-      @news[0].published_at.should be > @news[1].published_at
-      @news[10].published_at.should be < @news[9].published_at
-    end
+    #------------------------
+  
+    describe "#get_latest_arts" do
+      let(:sphinx_hash) do
+        {
+          :classes     => ContentBase.content_classes,
+          :page        => 1,
+          :per_page    => 12,
+          :order       => :published_at,
+          :sort_mode   => :desc,
+          :with        => { category_is_news: false },
+          :without     => { category: '' },
+          :retry_stale => true
+        }
+      end
     
-    it "arts doesn't return any records where category_is_news" do
-      @arts.any? { |r| r.category.try(:is_news) == true }.should be_false # TODO Figure out why it's returning records without a category sometimes.
-    end
-
-    it "arts does not return ShowEpisodes" do
-      @arts.any? { |r| r.is_a? ShowEpisode }.should be_false
-    end
-    
-    it "news only returns records where category_is_news" do
-      @news.any? { |r| r.category.try(:is_news) == false }.should be_false # TODO Figure out why it's returning records without a category sometimes.
+      it "sends it off to sphinx" do
+        ThinkingSphinx.should_receive(:search).with('', sphinx_hash).and_return(@not_news)
+        helper.get_latest_arts.should eq @not_news
+      end
     end
   end
   
@@ -144,6 +130,8 @@ describe ApplicationHelper do
   describe "#render_byline" do
     pending "needs tests"
   end
+
+  #------------------------
   
   describe "#page_title" do
     it "accepts and array and joins them by the default separator" do

@@ -62,7 +62,7 @@ module AdminListHelper
   # Attribute Helpers
   
   def display_association(attrib)
-    attrib.to_title
+    attrib.try(:to_title)
   end
   
   def display_status(status)

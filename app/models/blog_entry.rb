@@ -22,11 +22,11 @@ class BlogEntry < ContentBase
     define_list do
       list_order "published_at desc"
       
-      column "headline"
-      column "blog"
-      column "bylines"
-      column "status"
-      column "published_at"
+      column :headline
+      column :blog
+      column :bylines
+      column :status
+      column :published_at
     end
   end
 

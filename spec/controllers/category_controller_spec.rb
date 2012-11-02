@@ -3,11 +3,10 @@ require "spec_helper"
 describe CategoryController do
   render_views
   
-  describe "GET /index" do
-    sphinx_spec
-    
+  describe "GET /index" do    
     it "assigns @category" do
       category = create :category_news
+      
       get :index, category: category.slug
       assigns(:category).should eq category
     end
@@ -15,6 +14,7 @@ describe CategoryController do
     describe "with XML" do
       it "renders xml template when requested" do
         category = create :category_news
+        
         get :index, category: category.slug, format: :xml
         response.should render_template 'category/index'
         response.header['Content-Type'].should match /xml/
