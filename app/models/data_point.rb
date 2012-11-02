@@ -22,11 +22,11 @@ class DataPoint < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      list_order "group_name, data_key" # Need the extra quotes for MySQL group
+      list_order "group_name, data_key"
       list_per_page :all
       
       column :group_name
-      column :data_key, linked: true
+      column :data_key
       column :data_value
       column :notes
       column :updated_at

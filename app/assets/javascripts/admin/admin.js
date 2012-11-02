@@ -8,8 +8,7 @@
 //= require moment
 //= require date
 //= require bootstrap-datepicker
-
-//= require ckeditor-jquery
+//= require tinymce-jquery
 
 //= require_directory ./templates/
 

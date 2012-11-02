@@ -23,10 +23,12 @@ module CacheTasks
     #---------------
         
     def initialize(screen_name, partial="/shared/widgets/cached/tweets", options={})
-      @screen_name  = screen_name
-      @cache_key    = "twitter:#{screen_name}"
-      @partial      = partial
-      @options      = options.reverse_merge! DEFAULTS
+      @tweeter     = Tweeter.new("kpccweb")
+      
+      @screen_name = screen_name
+      @cache_key   = "twitter:#{screen_name}"
+      @partial     = partial
+      @options     = options.reverse_merge! DEFAULTS
     end
     
     #---------------
@@ -34,7 +36,7 @@ module CacheTasks
     def fetch
       begin
         self.log "Fetching the latest #{@options[:count]} tweets for #{@screen_name}..."
-        tweets = ::Twitter.user_timeline(@screen_name, @options)
+        tweets = @tweeter.user_timeline(@screen_name, @options)
         tweets
       rescue Exception => e
         self.log "Error: \n #{e}"

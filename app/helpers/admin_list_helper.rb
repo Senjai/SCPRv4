@@ -39,10 +39,6 @@ module AdminListHelper
       rendered_item = send(display_helper, attrib)
     end
     
-    if column.linked?
-      rendered_item = link_to(rendered_item, options[:path])
-    end
-    
     return rendered_item  
   end
   

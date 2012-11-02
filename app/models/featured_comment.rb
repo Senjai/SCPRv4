@@ -15,7 +15,7 @@ class FeaturedComment < ActiveRecord::Base
 
       column :bucket
       column :content
-      column :username, linked: true
+      column :username
       column :excerpt
       column :status
       column :published_at

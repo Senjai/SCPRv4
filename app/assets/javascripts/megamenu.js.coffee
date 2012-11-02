@@ -37,7 +37,7 @@ class scpr.MegaMenu
                     score: 0
                     selected: false
                     positioned: false
-                    func: _.debounce (=> @_score(sec)), 100
+                    func: _.debounce (=> @_score(sec)), 25
                     
                 # stash a copy
                 @sections.push = sec
@@ -95,19 +95,21 @@ class scpr.MegaMenu
                 _(@hidden).each (el) -> el.css
                     visibility: "hidden"
             
-                sec.drop.fadeIn 100
+                sec.drop.fadeIn 5
             
         else if sec.score == 0 && sec.selected
             # hide section
             sec.selected = false
-            sec.item.delay(25).queue ->
+            sec.item.delay(5).queue ->
                 $(this).removeClass("hover")
                 $(this).dequeue()
             
             if @expanded
                 sec.drop.hide()
             else
-                sec.drop.fadeOut("25")
+                sec.drop.delay(5).queue ->
+                    $(this).hide()
+                    $(this).dequeue()
                 # show the stuff that was hidden during display
                 _(@hidden).each (el) -> el.css
                     visibility: "visible"

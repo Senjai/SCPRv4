@@ -38,9 +38,10 @@ class KpccProgram < ActiveRecord::Base
   
   # -------------------
   # Associations
-  has_many :segments,   foreign_key: "show_id",         class_name: "ShowSegment"
-  has_many :episodes,   foreign_key: "show_id",         class_name: "ShowEpisode"
-  has_many :schedules,  foreign_key: "kpcc_program_id", class_name: "Schedule"
+  has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
+  has_many :episodes, foreign_key: "show_id", class_name: "ShowEpisode"
+  has_many :recurring_schedule_slots, as: :program
+  has_many :schedules
   belongs_to :missed_it_bucket
   belongs_to :blog
   

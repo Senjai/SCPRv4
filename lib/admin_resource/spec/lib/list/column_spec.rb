@@ -7,13 +7,10 @@ describe AdminResource::List::Column do
     
     it { should respond_to :attribute }
     it { should respond_to :attribute= }
-    it { should respond_to :linked }
-    it { should respond_to :linked= }
-    it { should respond_to :linked? }
     it { should respond_to :header }
     it { should respond_to :header= }
-    it { should respond_to :helper }
-    it { should respond_to :helper= }
+    it { should respond_to :display }
+    it { should respond_to :display= }
   end
 
   #----------------
@@ -24,7 +21,7 @@ describe AdminResource::List::Column do
     }
     
     let(:column) {
-      AdminResource::List::Column.new("name", list, linked: true, display: :display_full_name, header: "Full Name")
+      AdminResource::List::Column.new("name", list, display: :display_full_name, header: "Full Name")
     }
     
     before :each do
@@ -45,25 +42,11 @@ describe AdminResource::List::Column do
       column.header.should eq "Full Name"
     end
     
-    it "sets helper" do
-      column.helper.should eq :display_full_name
-    end
-    
-    it "sets linked" do
-      column.linked.should eq true
+    it "sets display" do
+      column.display.should eq :display_full_name
     end
   end
 
-  #----------------
-  
-  describe "linked?" do
-    it "returns linked value" do
-      list   = AdminResource::List::Base.new
-      column = AdminResource::List::Column.new("name", list, linked: true)
-      column.linked.should eq column.linked?
-    end
-  end
-  
   #----------------
   
   describe "header" do

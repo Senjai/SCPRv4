@@ -22,8 +22,8 @@ class OtherProgram < ActiveRecord::Base
 
   # -------------------
   # Associations
+  has_many :recurring_schedule_slots, as: :program
   has_many :schedules
-  
 
   # -------------------
   # Validations

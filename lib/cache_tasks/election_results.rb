@@ -56,19 +56,24 @@ module CacheTasks
     def initialize(feed_url)
       @feed       = URI.parse(feed_url)
       @connection = connection
+      @points     = DataPoint.to_hash(DataPoint.where(group_name: "election"))
     end
 
     #---------------
     
     def fetch
       begin
-        resp = @connection.get do |req|
+        response = @connection.get do |req|
           req.url @feed.path
         end
         
-        @data = resp.body
-      rescue
-        self.log "Data can't be parsed"
+        if response.status != 200
+          return false
+        end
+        
+        @data = response.body
+      rescue Exception => e
+        self.log "Data can't be parsed: #{e}"
         false
       end      
     end
@@ -76,12 +81,9 @@ module CacheTasks
     #---------------
     
     def update_data
-      data_points = DataPoint.where(group_name: "election")
-      data        = DataPoint.to_hash(data_points)
-      
       # Now update the stuff
       data_key_map.keys.each do |key|
-        data_point     = data[key].object
+        data_point     = @points[key].object
         data_from_json = data_key_map[key]
         
         # Don't override the data if the result is blank.
@@ -103,7 +105,7 @@ module CacheTasks
         builder.use Faraday::Request::UrlEncoded
         builder.use FaradayMiddleware::ParseJson
         builder.adapter Faraday.default_adapter
-      end        
+      end
     end
   end # ElectionResults
 end # CacheTasks
