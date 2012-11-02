@@ -76,6 +76,7 @@ class ShowEpisode < ContentBase
   define_index do
     indexes headline
     indexes body
+    has show.id, :as => :program
     has "''", :as => :category, :type => :integer
     has "0", :as => :category_is_news, :type => :boolean
     has published_at

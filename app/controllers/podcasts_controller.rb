@@ -10,11 +10,6 @@ class PodcastsController < ApplicationController
   def podcast
     @podcast = Podcast.where(slug: params[:slug]).first!    
     @content = @podcast.content
-  
-    # Set up the actual podcast listing, only items with audio
-    # Limit it to 15 items
-    @audio_content = @content.select { |c| c.audio.available.present? }.first(15)
-
     render_to_string formats: [:xml]
   end
 
