@@ -7,6 +7,8 @@ class Podcast < ActiveRecord::Base
     ["Content", 'content']
   ]
 
+  SOURCES = ["KpccProgram", "OtherProgram", "Blog"]
+  
   #-------------
   # Administration
   administrate do

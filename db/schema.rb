@@ -695,7 +695,7 @@ ActiveRecord::Schema.define(:version => 20121102181839) do
   add_index "pij_query", ["query_type"], :name => "index_pij_query_on_query_type"
   add_index "pij_query", ["slug"], :name => "slug", :unique => true
 
-  create_table "podcasts_podcast", :force => true do |t|
+  create_table "podcasts", :force => true do |t|
     t.string   "slug"
     t.string   "title"
     t.string   "url"
@@ -715,9 +715,9 @@ ActiveRecord::Schema.define(:version => 20121102181839) do
     t.string   "source_type"
   end
 
-  add_index "podcasts_podcast", ["category_id"], :name => "podcasts_podcast_42dc49bc"
-  add_index "podcasts_podcast", ["slug"], :name => "slug", :unique => true
-  add_index "podcasts_podcast", ["source_id"], :name => "podcasts_podcast_7eef53e3"
+  add_index "podcasts", ["category_id"], :name => "podcasts_podcast_42dc49bc"
+  add_index "podcasts", ["slug"], :name => "slug", :unique => true
+  add_index "podcasts", ["source_id"], :name => "podcasts_podcast_7eef53e3"
 
   create_table "press_releases_release", :force => true do |t|
     t.string   "short_title",  :limit => 240,        :default => "", :null => false

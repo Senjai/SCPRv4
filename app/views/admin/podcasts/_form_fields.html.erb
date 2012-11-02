@@ -19,8 +19,8 @@
 <% end %>
 
 <%= form_block "Content" do %>
-  <%= f.input :source_type %>
-  <%= f.input :source_id %>
-  <%= f.input :category_id %>
+  <%= f.input :source_type, collection: Podcast::SOURCES %>
+  <%= f.input :source_id, label: "Source ID" %>
+  <%= f.association :category %>
   <%= f.input :item_type, hint: "What type of items should be used in the podcast?", collection: Podcast::ITEM_TYPES %>
 <% end %>

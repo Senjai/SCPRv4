@@ -1,8 +1,8 @@
 class CleanupPodcastTable < ActiveRecord::Migration
   def up
-    rename_table :podcasts_podcast, :podcast
+    rename_table :podcasts_podcast, :podcasts
     
-    change_table :podcast do |t|
+    change_table :podcasts do |t|
       t.change :slug, :string, null: true
       t.change :title, :string, null: true
       t.change :url, :string, null: true
