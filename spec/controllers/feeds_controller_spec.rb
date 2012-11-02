@@ -5,17 +5,13 @@ describe FeedsController do
     sphinx_spec(num: 1)
     
     it "doesn't render a layout" do
-      ThinkingSphinx::Test.run do
-        get :all_news
-        response.should render_template(layout: false)
-      end
+      get :all_news
+      response.should render_template(layout: false)
     end
     
     it "adds XML content-type to header" do
-      ThinkingSphinx::Test.run do
-        get :all_news
-        response.header["Content-Type"].should eq "text/xml"
-      end
+      get :all_news
+      response.header["Content-Type"].should eq "text/xml"
     end
     
     describe "with cache available" do
@@ -29,24 +25,18 @@ describe FeedsController do
     
     describe "without cache available" do    
       it "returns a string" do
-        ThinkingSphinx::Test.run do
-          get :all_news
-          response.body.should be_a String
-        end
+        get :all_news
+        response.body.should be_a String
       end
     
       it "writes to cache" do
-        ThinkingSphinx::Test.run do
-          Rails.cache.should_receive(:write_entry)
-          get :all_news
-        end
+        Rails.cache.should_receive(:write_entry)
+        get :all_news
       end
       
       it "uses sphinx to populate @content" do
-        ThinkingSphinx::Test.run do
-          get :all_news
-          assigns(:content).should_not be_blank
-        end
+        get :all_news
+        assigns(:content).should_not be_blank
       end
     end
   end

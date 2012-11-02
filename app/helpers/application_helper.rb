@@ -233,14 +233,14 @@ module ApplicationHelper
   def get_latest_arts
     begin
       ThinkingSphinx.search('',
-        classes:      ContentBase.content_classes,
-        page:         1,
-        per_page:     12,
-        order:        :published_at,
-        sort_mode:    :desc,
-        with:         { :category_is_news => false },
-        without:      { :category => '' },
-        retry_stale:  true
+        :classes     => ContentBase.content_classes,
+        :page        => 1,
+        :per_page    => 12,
+        :order       => :published_at,
+        :sort_mode   => :desc,
+        :with        => { category_is_news: false },
+        :without     => { category: '' },
+        :retry_stale => true
       ).to_a
     rescue Riddle::ConnectionError
       []
@@ -252,13 +252,13 @@ module ApplicationHelper
   def get_latest_news
     begin
       ThinkingSphinx.search('',
-        classes:      ContentBase.content_classes,
-        page:         1,
-        per_page:     12,
-        order:        :published_at,
-        sort_mode:    :desc,
-        with:         { :category_is_news => true },
-        retry_stale:  true
+        :classes     => ContentBase.content_classes,
+        :page        => 1,
+        :per_page    => 12,
+        :order       => :published_at,
+        :sort_mode   => :desc,
+        :with        => { category_is_news: true },
+        :retry_stale => true
       ).to_a
     rescue Riddle::ConnectionError
       []

@@ -20,13 +20,16 @@ describe PodcastsController do
   #---------------
 
   describe "GET /podcast" do    
+    it "returns RecordNotFound if no podcast is found" do
+      -> { 
+        get :podcast, slug: "nonsense"
+      }.should raise_error ActiveRecord::RecordNotFound
+    end
+    
     it "finds the correct podcast" do
       podcast = create :podcast, slug: "podcast"
-
-      ThinkingSphinx::Test.run do
-        get :podcast, slug: "podcast"
-        assigns(:podcast).should eq podcast
-      end
+      get :podcast, slug: "podcast"
+      assigns(:podcast).should eq podcast
     end
     
     context "sphinx search" do
@@ -35,10 +38,7 @@ describe PodcastsController do
       end
       
       before :each do
-        @entry = create :blog_entry
-        audio = create :audio, :uploaded
-        @entry.audio.push audio
-        @entry.save!
+
       end
       
       after :all do
@@ -46,23 +46,17 @@ describe PodcastsController do
       end
       
       it "assigns the content" do
-        podcast = create :podcast, slug: "podcast", source: @entry.blog
+        entry = create :blog_entry
+        audio = create :audio, :uploaded
+        entry.audio.push audio
+        entry.save!
         
-        ThinkingSphinx::Test.run do
-          get :podcast, slug: "podcast"
-          assigns(:content).should eq [@entry]
-        end
+        podcast = create :podcast, slug: "podcast", source: entry.blog
+        
+        podcast.should_receive(:content).and_return([entry])
+        get :podcast, slug: "podcast"
+        assigns(:content).should eq [entry]
       end
-    end
-  end
-  
-  #---------------
-  
-  describe "GET /podcasts/:slug" do
-    it "returns RecordNotFound if no podcast is found" do
-      -> { 
-        get :podcast, slug: "nonsense"
-      }.should raise_error ActiveRecord::RecordNotFound
     end
   end
 end
