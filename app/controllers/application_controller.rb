@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   
   #----------
   
-  helper_method :current_user, :admin_user, :verify_natural
+  helper_method :current_user, :admin_user
   
   def current_user
     @current_user
@@ -26,11 +26,6 @@ class ApplicationController < ActionController::Base
     else
       redirect_to '/admin/' and return
     end
-  end
-  
-  # TODO Find a better place to put this
-  def verify_natural(num)
-    num.to_i > 0 ? num : 1
   end
   
   #----------

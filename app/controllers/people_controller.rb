@@ -7,7 +7,7 @@ class PeopleController < ApplicationController
   
   def bio
     @bio     = Bio.visible.where(slug: params[:slug]).first!
-    @bylines = @bio.indexed_bylines(verify_natural(params[:page]))
+    @bylines = @bio.indexed_bylines(params[:page])
   end
   
   protected
