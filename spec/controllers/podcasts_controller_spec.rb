@@ -33,18 +33,6 @@ describe PodcastsController do
     end
     
     context "sphinx search" do
-      before :all do
-        setup_sphinx
-      end
-      
-      before :each do
-
-      end
-      
-      after :all do
-        teardown_sphinx
-      end
-      
       it "assigns the content" do
         entry = create :blog_entry
         audio = create :audio, :uploaded
@@ -53,7 +41,7 @@ describe PodcastsController do
         
         podcast = create :podcast, slug: "podcast", source: entry.blog
         
-        podcast.should_receive(:content).and_return([entry])
+        Podcast.any_instance.should_receive(:content).and_return([entry])
         get :podcast, slug: "podcast"
         assigns(:content).should eq [entry]
       end

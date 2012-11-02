@@ -36,14 +36,6 @@ describe Podcast do
   # TODO: This entire spec needs to be rewritten, 
   # the stubbing is fickle with such specific arguments
   describe "#content" do
-    before :all do
-      setup_sphinx
-    end
-    
-    after :all do
-      teardown_sphinx
-    end
-
     let(:sphinx_hash) do
       { 
         :with        => { has_audio: true }, 
