@@ -83,7 +83,7 @@ class Dashboard::Api::ContentController < ApplicationController
       order:        :published_at,
       sort_mode:    :desc,
       retry_stale:  true
-    ).to_ary
+    ).to_a
     
     json = contents.to_json
     Rails.cache.write_entry("cbaseapi:recent", json, :objects => [contents,"contentbase:new"].flatten)

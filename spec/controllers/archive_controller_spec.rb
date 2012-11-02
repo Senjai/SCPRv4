@@ -13,7 +13,7 @@ describe ArchiveController do
   
   #---------------
   
-  describe "archive" do
+  describe "GET /show" do
     it "doesn't assign date if none requested" do
       get :show
       assigns(:date).should be_nil
