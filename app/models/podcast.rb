@@ -1,5 +1,4 @@
 class Podcast < ActiveRecord::Base
-  self.table_name = "podcasts_podcast"
   ROUTE_KEY = "podcast"
 
   ITEM_TYPES = [
@@ -38,7 +37,7 @@ class Podcast < ActiveRecord::Base
   
   #-------------
   # Scopes
-  scope :listed, -> { where(:is_listed => true) }
+  scope :listed, -> { where(is_listed: true) }
 
 
   #-------------

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029230709) do
+ActiveRecord::Schema.define(:version => 20121102181839) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -696,22 +696,22 @@ ActiveRecord::Schema.define(:version => 20121029230709) do
   add_index "pij_query", ["slug"], :name => "slug", :unique => true
 
   create_table "podcasts_podcast", :force => true do |t|
-    t.string   "slug",        :limit => 40,                            :null => false
-    t.string   "title",       :limit => 140,                           :null => false
-    t.string   "url",         :limit => 250,                           :null => false
-    t.string   "podcast_url", :limit => 250,        :default => "",    :null => false
-    t.string   "itunes_url",  :limit => 250,        :default => "",    :null => false
-    t.text     "description", :limit => 2147483647,                    :null => false
-    t.string   "image_url",   :limit => 250,                           :null => false
-    t.string   "author",      :limit => 140,                           :null => false
-    t.string   "keywords",    :limit => 200,                           :null => false
-    t.string   "duration",    :limit => 10,                            :null => false
-    t.boolean  "is_listed",                         :default => false, :null => false
+    t.string   "slug"
+    t.string   "title"
+    t.string   "url"
+    t.string   "podcast_url"
+    t.string   "itunes_url"
+    t.text     "description"
+    t.string   "image_url"
+    t.string   "author"
+    t.string   "keywords"
+    t.string   "duration"
+    t.boolean  "is_listed",   :default => false, :null => false
     t.integer  "source_id"
     t.integer  "category_id"
-    t.string   "item_type",   :limit => 10
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.string   "item_type"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "source_type"
   end
 

@@ -1,7 +1,7 @@
 <%= form_block "Details" do %>
   <%= f.input :title %>
   <%= section "slug", f, record %>
-  <%= f.input :is_active, hint: "If unchecked, this podcast will still be generated, but will not appear on the podcast page." %>
+  <%= f.input :is_listed, hint: "If unchecked, this podcast will still be generated, but will not appear on the podcast page." %>
   <%= f.input :description, input_html: { class: "tiny"} %>
 <% end %>
 
