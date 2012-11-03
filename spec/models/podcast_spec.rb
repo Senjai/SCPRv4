@@ -44,8 +44,7 @@ describe Podcast do
         :page        => 1, 
         :per_page    => 25, 
         :sort_mode   => :desc,
-        :retry_stale => true,
-        :populate    => true
+        :retry_stale => true
       }
     end
         

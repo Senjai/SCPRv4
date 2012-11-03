@@ -87,8 +87,7 @@ class Podcast < ActiveRecord::Base
       :page        => 1, 
       :per_page    => limit, 
       :sort_mode   => :desc,
-      :retry_stale => true,
-      :populate    => true
+      :retry_stale => true
     )
   end
 end
