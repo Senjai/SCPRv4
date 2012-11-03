@@ -243,7 +243,7 @@ module ApplicationHelper
         :retry_stale => true,
         :populate    => true
       )
-    rescue Riddle::ConnectionError
+    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
       []
     end
   end
@@ -262,7 +262,7 @@ module ApplicationHelper
         :retry_stale => true,
         :populate    => true
       )
-    rescue Riddle::ConnectionError
+    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
       []
     end
   end

@@ -54,7 +54,7 @@ class Section < ActiveRecord::Base
         :retry_stale => true,
         :populate    => true
       )
-    rescue Riddle::ConnectionError
+    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
       Kaminari.paginate_array([]).page(options[:page])
     end
   end

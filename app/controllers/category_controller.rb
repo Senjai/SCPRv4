@@ -76,7 +76,7 @@ class CategoryController < ApplicationController
         :retry_stale => true,
         :populate    => true
       )
-    rescue Riddle::ConnectionError
+    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
       Kaminari.paginate_array([]).page(params[:page])
     end
   end
@@ -104,7 +104,7 @@ class CategoryController < ApplicationController
           :retry_stale => true,
           :populate    => true
         )
-      rescue Riddle::ConnectionError
+      rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
         return []
       end
               

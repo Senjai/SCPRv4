@@ -21,9 +21,9 @@ class Admin::HomeController < Admin::BaseController
         :classes    => ContentBase.content_classes,
         :order      => :published_at,
         :sort_mode  => :desc,
-        :limit      => 1,
+        :limit      => 1
       ).first
-    rescue Riddle::ConnectionError
+    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
       nil
     end
   end
