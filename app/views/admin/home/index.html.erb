@@ -28,13 +28,13 @@
           <div class="span4">
             <div class="well tight">
               <h6 class="muted">Homepage last updated</h6>
-              <span class="lead"><%= time_ago_in_words(@latest_homepage.updated_at) if @latest_homepage.present? %> ago</span>
+              <span class="lead"><%= (time_ago_in_words(@latest_homepage.updated_at) + " ago") if @latest_homepage.present? %></span>
             </div>
           </div> <!-- span -->
           <div class="span4">
             <div class="well tight">
               <h6 class="muted">Last content published</h6>
-              <span class="lead"><%= time_ago_in_words(@latest_story.published_at) if @latest_story.present? %> ago</span>
+              <span class="lead"><%= (time_ago_in_words(@latest_story.published_at) + " ago") if @latest_story.present? %></span>
             </div>
           </div> <!-- span -->
         </div> <!-- row fluid -->
