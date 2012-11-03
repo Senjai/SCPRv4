@@ -51,7 +51,7 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def destroy
-    flash[:notice] = "Deleted #{@record.simple_title}" if @record.delete
+    flash[:notice] = "Deleted #{@record.simple_title}" if @record.destroy
     respond
   end
   

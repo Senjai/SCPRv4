@@ -48,5 +48,13 @@ describe Secretary::HasSecretary do
       Secretary::Version.should_receive(:generate).twice.with(other_story)
       other_story.update_attributes(headline: "Some Cool Headline?!")
     end
+    
+    it "destroys all versions when the object is destroyed" do
+      other_story.update_attributes!(headline: "Changed the headline")
+      other_story.versions.size.should eq 2
+      Secretary::Version.count.should eq 2
+      other_story.destroy
+      Secretary::Version.count.should eq 0
+    end
   end
 end

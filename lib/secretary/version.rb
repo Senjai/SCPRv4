@@ -1,5 +1,5 @@
 module Secretary
-  class Version < ActiveRecord::Base    
+  class Version < ActiveRecord::Base
     belongs_to  :versioned, polymorphic: true
     belongs_to  :user, class_name: Secretary.config.user_class
     
