@@ -2,8 +2,16 @@
   <% page_title [p.headline, "Events"] %>
   <% watch_gmaps %>
 
+  <%# move this... %>
+  <%
+    expires = nil
+    if @event.ends_at.to_i > Time.now.to_i
+      expires = @event.ends_at - Time.now 
+    end
+  %>
+  
   <%# Automagically expire this cache when it ends %>
-  <%= cache ["show", "v3", @event], expires_in: ((@event.ends_at - Time.now) if @event.ends_at.present?) do %>
+  <%= cache ["show", "v3", @event], expires_in: expires do %>
     <div class="event content-block">
       <div class="row-fluid">
         <%= widget "social_sidebar", @event %>
