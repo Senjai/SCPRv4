@@ -43,16 +43,20 @@ class Section < ActiveRecord::Base
       options[:page] = 1 
     end
     
-    ThinkingSphinx.search('',
-      :classes     => ContentBase.content_classes,
-      :page        => options[:page],
-      :per_page    => options[:per_page],
-      :order       => :published_at,
-      :sort_mode   => :desc,
-      :with        => { category: self.categories.map { |c| c.id } },
-      :retry_stale => true,
-      :populate    => true
-    )
+    begin
+      ThinkingSphinx.search('',
+        :classes     => ContentBase.content_classes,
+        :page        => options[:page],
+        :per_page    => options[:per_page],
+        :order       => :published_at,
+        :sort_mode   => :desc,
+        :with        => { category: self.categories.map { |c| c.id } },
+        :retry_stale => true,
+        :populate    => true
+      )
+    rescue Riddle::ConnectionError
+      Kaminari.paginate_array([]).page(options[:page])
+    end
   end
 
   #----------

@@ -77,7 +77,7 @@ class CategoryController < ApplicationController
         :populate    => true
       )
     rescue Riddle::ConnectionError
-      Kaminari.paginate_array []
+      Kaminari.paginate_array([]).page(params[:page])
     end
   end
 
