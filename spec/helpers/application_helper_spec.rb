@@ -66,7 +66,8 @@ describe ApplicationHelper do
           :order       => :published_at,
           :sort_mode   => :desc,
           :with        => { category_is_news: true },
-          :retry_stale => true
+          :retry_stale => true,
+          :populate    => true
         }
       end
     
@@ -88,7 +89,8 @@ describe ApplicationHelper do
           :sort_mode   => :desc,
           :with        => { category_is_news: false },
           :without     => { category: '' },
-          :retry_stale => true
+          :retry_stale => true,
+          :populate    => true
         }
       end
     

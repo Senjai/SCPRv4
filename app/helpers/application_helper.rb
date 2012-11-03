@@ -240,8 +240,9 @@ module ApplicationHelper
         :sort_mode   => :desc,
         :with        => { category_is_news: false },
         :without     => { category: '' },
-        :retry_stale => true
-      ).to_a
+        :retry_stale => true,
+        :populate    => true
+      )
     rescue Riddle::ConnectionError
       []
     end
@@ -258,8 +259,9 @@ module ApplicationHelper
         :order       => :published_at,
         :sort_mode   => :desc,
         :with        => { category_is_news: true },
-        :retry_stale => true
-      ).to_a
+        :retry_stale => true,
+        :populate    => true
+      )
     rescue Riddle::ConnectionError
       []
     end

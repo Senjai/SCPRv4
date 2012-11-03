@@ -7,7 +7,8 @@ class Admin::HomeController < Admin::BaseController
     @latest_story = ThinkingSphinx.search('',
       :classes    => ContentBase.content_classes,
       :order      => :published_at,
-      :sort_mode  => :desc
+      :sort_mode  => :desc,
+      :limit      => 1,
     ).first
     
     @recent_stories  = NewsStory.published.where("published_at >= ?", 1.hour.ago)

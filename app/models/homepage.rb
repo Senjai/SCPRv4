@@ -39,16 +39,16 @@ class Homepage < ActiveRecord::Base
     # -- More Headlines -- #
     
     # Anything with a news category is eligible
-    headlines = ThinkingSphinx.search(
-      '',
-      :classes    => ContentBase.content_classes,
-      :page       => 1,
-      :per_page   => 12,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :without    => { :category => '' },
-      :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } },
-      retry_stale: true
+    headlines = ThinkingSphinx.search('',
+      :classes     => ContentBase.content_classes,
+      :page        => 1,
+      :per_page    => 12,
+      :order       => :published_at,
+      :sort_mode   => :desc,
+      :without     => { category: '' },
+      :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } },
+      :retry_stale => true,
+      :populate    => true
     )
         
     # -- Section Blocks -- #
@@ -59,18 +59,18 @@ class Homepage < ActiveRecord::Base
     Category.all.each do |cat|
       # exclude content that is used in our object
       content = ThinkingSphinx.search('',
-        :classes    => ContentBase.content_classes,
-        :page       => 1,
-        :per_page   => 5,
-        :order      => :published_at,
-        :sort_mode  => :desc,
-        :with       => { :category => cat.id },
-        :without_any => { :obj_key => citems.collect {|c| c.obj_key.to_crc32 } },
-        retry_stale: true
-      )
+        :classes     => ContentBase.content_classes,
+        :page        => 1,
+        :per_page    => 5,
+        :order       => :published_at,
+        :sort_mode   => :desc,
+        :with        => { category: cat.id },
+        :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } },
+        :retry_stale => true
+      ).to_a
       
-      top = nil
-      more = []
+      more     = []
+      top      = nil
       sorttime = nil
       
       content.each do |c|

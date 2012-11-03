@@ -16,14 +16,15 @@ class HomeController < ApplicationController
     @category = Category.find_by_slug('politics')
     
     @content = ThinkingSphinx.search('',
-      :classes    => ContentBase.content_classes,
-      :page       => 1,
-      :per_page   => 15,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with => { :category => [@category.id] },
-      retry_stale: true
-    )    
+      :classes     => ContentBase.content_classes,
+      :page        => 1,
+      :per_page    => 15,
+      :order       => :published_at,
+      :sort_mode   => :desc,
+      :with        => { category: [@category.id] },
+      :retry_stale => true,
+      :populate    => true
+    )
   end
   
   #----------

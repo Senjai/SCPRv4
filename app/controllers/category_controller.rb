@@ -65,34 +65,48 @@ class CategoryController < ApplicationController
       params[:page] = 1 
     end
     
-    ThinkingSphinx.search('',
-      :classes    => ContentBase.content_classes,
-      :page       => params[:page],
-      :per_page   => options[:limit],
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with => { :category => categories.map { |c| c.id } },
-      retry_stale: true
-    )
+    begin
+      ThinkingSphinx.search('',
+        :classes     => ContentBase.content_classes,
+        :page        => params[:page],
+        :per_page    => options[:limit],
+        :order       => :published_at,
+        :sort_mode   => :desc,
+        :with        => { category: categories.map { |c| c.id } },
+        :retry_stale => true,
+        :populate    => true
+      )
+    rescue Riddle::ConnectionError
+      Kaminari.paginate_array []
+    end
   end
 
   #------------------
 
   def generate_sections_for(categories,without)
     sections = []
-  
+    
+    # If without is nil, assume we had some problem with sphinx above
+    # TODO Make this better
+    return [] if without.nil?
+    
     categories.each do |sec|
       # get stories in this section
-      content = ThinkingSphinx.search('',
-          :classes    => ContentBase.content_classes,
-          :page       => 1,
-          :per_page   => 5,
-          :order      => :published_at,
-          :sort_mode  => :desc,
-          :with       => { :category => sec.id },
+      content = begin
+        ThinkingSphinx.search('',
+          :classes     => ContentBase.content_classes,
+          :page        => 1,
+          :per_page    => 5,
+          :order       => :published_at,
+          :sort_mode   => :desc,
+          :with        => { :category => sec.id },
           :without_any => { :obj_key => without.obj_key.to_crc32 },
-          retry_stale: true
-        ).to_a
+          :retry_stale => true,
+          :populate    => true
+        )
+      rescue Riddle::ConnectionError
+        return []
+      end
               
       top = nil
       more = []

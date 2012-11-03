@@ -125,7 +125,8 @@ describe Dashboard::Api::ContentController do
           :per_page    => 20,
           :order       => :published_at,
           :sort_mode   => :desc,
-          :retry_stale => true
+          :retry_stale => true,
+          :populate    => true
         }
       end
 

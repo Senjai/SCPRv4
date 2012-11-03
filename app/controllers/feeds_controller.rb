@@ -15,17 +15,17 @@ class FeedsController < ApplicationController
     }
     
     # Anything with a news category is eligible
-    @content = ThinkingSphinx.search(
-      '',
-      :classes    => ContentBase.content_classes,
-      :page       => 1,
-      :per_page   => 15,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with       => { :is_source_kpcc => true },
-      :without    => { :category => '' },
-      retry_stale: true
-    ).to_a
+    @content = ThinkingSphinx.search('',
+      :classes     => ContentBase.content_classes,
+      :page        => 1,
+      :per_page    => 15,
+      :order       => :published_at,
+      :sort_mode   => :desc,
+      :with        => { is_source_kpcc: true },
+      :without     => { category: '' },
+      :retry_stale => true,
+      :populate    => true
+    )
         
     xml = render_to_string(action: "feed", formats: :xml)
     Rails.cache.write_entry("feeds:all_news", xml, objects: (@content.push "contentbase:new"))

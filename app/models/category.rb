@@ -28,17 +28,18 @@ class Category < ActiveRecord::Base
     end
     
     args = {
-      :classes    => ContentBase.content_classes,
-      :page       => page,
-      :per_page   => per_page,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with       => { :category => self.id },
-      retry_stale: true
+      :classes     => ContentBase.content_classes,
+      :page        => page,
+      :per_page    => per_page,
+      :order       => :published_at,
+      :sort_mode   => :desc,
+      :with        => { category: self.id },
+      :retry_stale => true,
+      :populate    => true
     }
     
     if without_obj && without_obj.respond_to?("obj_key")
-      args[:without] = { :obj_key => without_obj.obj_key.to_crc32 }
+      args[:without] = { obj_key: without_obj.obj_key.to_crc32 }
     end
     
     ThinkingSphinx.search('', args)
@@ -81,11 +82,11 @@ class Category < ActiveRecord::Base
       :per_page     => 1,
       :order        => :published_at,
       :sort_mode    => :desc,
-      :with         => { :category => self.id },
-      :without_any  => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
-      retry_stale: true
-    )
-      
+      :with         => { category: self.id },
+      :without_any  => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      :retry_stale  => true
+    ).to_a
+    
     if video.present?
       # Initial score: 15
       # Decay rate: 0.05
@@ -101,15 +102,15 @@ class Category < ActiveRecord::Base
     # -- now try slideshows -- #
 
     slideshow = ThinkingSphinx.search('',
-      :classes    => ContentBase.content_classes,
-      :page       => 1,
-      :per_page   => 1,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with       => { :category => self.id, :is_slideshow => true },
-      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
-      retry_stale: true
-    )
+      :classes     => ContentBase.content_classes,
+      :page        => 1,
+      :per_page    => 1,
+      :order       => :published_at,
+      :sort_mode   => :desc,
+      :with        => { category: self.id, is_slideshow: true },
+      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      :retry_stale => true
+    ).to_a
 
     if slideshow.any?
       # Initial score:  5 + number of slides
@@ -126,15 +127,15 @@ class Category < ActiveRecord::Base
     # -- segment in the last two days? -- #
 
     segments = ThinkingSphinx.search('',
-      :classes    => [ShowSegment],
-      :page       => 1,
-      :per_page   => 1,
-      :order      => :published_at,
-      :sort_mode  => :desc,
-      :with       => { :category => self.id },
-      :without_any => { :obj_key => args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
-      retry_stale: true
-    )
+      :classes     => [ShowSegment],
+      :page        => 1,
+      :per_page    => 1,
+      :order       => :published_at,
+      :sort_mode   => :desc,
+      :with        => { :category => self.id },
+      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
+      :retry_stale => true
+    ).to_a
 
     if segments.any?
       # Initial score:  10
