@@ -1,4 +1,4 @@
-# Easy database syncing for development
+# Easy database syncing for development/staging
 
 desc "Alias for dbsync:pull"
 task :dbsync do
@@ -51,7 +51,7 @@ namespace :dbsync do
   task :pull => [:fetch, :merge]
   
   desc "Copy the remote dump file, reset the local database, and load in the dump file"
-  task :clone => [:clone_dump, :reset, :merge]
+  task :clone => [:clone_dump, :reset]
   
   #-----------------------
   
@@ -104,6 +104,7 @@ namespace :dbsync do
 
   #-----------------------
   
+  desc "Drop & Create the database, then load the dump file."
   task :reset => :setup do
     if VERBOSE
       Dbsync::LOGGER.puts "Resetting database..."
@@ -111,5 +112,6 @@ namespace :dbsync do
     
     Rake::Task["db:drop"].invoke
     Rake::Task["db:create"].invoke
+    Rake::Task["dbsync:merge"].invoke
   end
 end

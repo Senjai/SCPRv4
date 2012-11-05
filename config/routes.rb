@@ -81,6 +81,7 @@ Scprv4::Application.routes.draw do
       get '/search(/:resource)' => "search#index", as: :search
       
       ## -- AdminResource -- ##
+      resources :press_releases
       resources :recurring_schedule_slots
       resources :permissions
       resources :bios
@@ -206,6 +207,11 @@ Scprv4::Application.routes.draw do
   # PIJ Queries
   match '/network/questions/:slug/' => "pij_queries#show",  as: :pij_query
   match '/network/'                 => "pij_queries#index", as: :pij_queries
+
+  #----------
+  # Press Releases
+  match '/about/press/:slug' => "press_releases#show", as: :press_release
+  match '/about/press/'      => "press_releases#index", as: :press_releases
   
   # -- RSS feeds -- #
   match '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
