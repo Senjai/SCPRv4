@@ -4,16 +4,17 @@ class ChangePressReleaseColumns < ActiveRecord::Migration
     
     change_table :press_releases do |t|
       t.timestamps
-      t.change :short_title, :string
-      t.change :slug, :string
-      t.change :long_title, :string
-      t.change :body, :text
+      t.change :short_title, :string, null: true, default: nil
+      t.change :slug, :string, null: true, default: nil
+      t.change :long_title, :string, null: true, default: nil
+      t.rename :long_title, :title
+      t.change :body, :text, default: ""
     end
     
     PressRelease.all.each do |release|
-      release.update_column(:created_at, release.published_at)
+      release.update_attributes(:created_at => release.published_at, :updated_at => release.published_at)
     end
     
-    drop_column :press_releases, :published_at
+    remove_column :press_releases, :published_at
   end
 end

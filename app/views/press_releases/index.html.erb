@@ -2,7 +2,7 @@
   <tbody>
     <% @press_releases.each do |press_release| %>
         <tr>
-          <td><%= link_to press_release.short_title, press_release.link_path %> (<%= format_time(press_release.created_at) %>)</td>
+          <td><%= link_to press_release.short_title, press_release.link_path %> (<%= format_date(press_release.created_at) %>)</td>
         </tr>
     <% end %>
   </tbody>

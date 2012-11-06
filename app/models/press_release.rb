@@ -7,7 +7,7 @@ class PressRelease < ActiveRecord::Base
   administrate do
     define_list do
       column :short_title
-      column :published_at
+      column :created_at
     end
   end
   
@@ -18,4 +18,12 @@ class PressRelease < ActiveRecord::Base
   # Validation
   validates :short_title, presence: true
   
+  
+  #--------------
+  
+  def route_hash
+    {
+      :slug => self.slug
+    }
+  end
 end

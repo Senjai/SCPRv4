@@ -331,22 +331,22 @@ describe RecurringScheduleSlot do
   
   describe "#format_time" do    
     it "returns noon if the time is noon" do
-      schedule = build :recurring_schedule_slot, start_time: Chronic.parse("12pm").second_of_week
+      schedule = build :recurring_schedule_slot, start_time: Time.new(2000, 01, 01, 12, 0, 0).second_of_week
       schedule.format_time.should eq "noon"
     end
     
     it "returns midnight if the time is midnight" do
-      schedule = build :recurring_schedule_slot, start_time: Chronic.parse("12am").second_of_week
+      schedule = build :recurring_schedule_slot, start_time: Time.new(2000, 01, 01, 0, 0, 0).second_of_week
       schedule.format_time.should eq "midnight"
     end
     
     it "returns minutes if it doesn't start on the top of the hour" do
-      schedule = build :recurring_schedule_slot, start_time: Chronic.parse("12:30pm").second_of_week
+      schedule = build :recurring_schedule_slot, start_time: Time.new(2000, 01, 01, 12, 30, 0).second_of_week
       schedule.format_time.should match /\:30/
     end
     
     it "returns only the hour and am/pm if starts on the hour" do
-      schedule = build :recurring_schedule_slot, start_time: Chronic.parse("1pm").second_of_week
+      schedule = build :recurring_schedule_slot, start_time: Time.new(2000, 01, 01, 13, 0, 0).second_of_week
       schedule.format_time.should_not match /\:00/
     end
   end
