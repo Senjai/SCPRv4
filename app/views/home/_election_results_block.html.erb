@@ -2,11 +2,56 @@
 <% end %>
 
 <% content_for :hero_roadblock do %>
-<style>
-	.broadcast-bar {display:none;}
-</style>
 
 <% winner = '<em class="winner">Winner</em>'.html_safe %>
+
+<style>
+	.broadcast-bar {display:none;}
+	.ad.pencil {overflow:visible;}
+  .ad.pencil a {display:inline-block;position:relative;height:30px;overflow:visible;text-align:center;}
+  .ad.pencil a img.desktop {display:block;z-index:1000;text-align:center;}
+  .ad.pencil a img.mobile {display:none;}
+  .ad.pencil a img.active {position:absolute;left:50%;margin-left:-470px;}
+  @media screen and (max-width: 767px) {
+    .ad.pencil a {height:auto;}
+    .ad.pencil a img.mobile {display:block;}
+    .ad.pencil a img.desktop {display:none;}
+  }
+</style>
+<div class="ad pencil container-fluid" style="margin-bottom:18px;">
+  <div class="row-fluid">
+    <div class="span24">
+      <a href="http://www.antiochla.edu/different?reff=elect" class="center-contents contentasset track-event" data-ga-category="Advertisement" data-ga-action="Clickthrough" data-ga-label="Antioch 2012 Election Dashboard">
+          <img class="ad-creative desktop" src="http://media.scpr.org/assets/images/election/antioch-pencil-collapsed.jpg" data-expanded-img="http://media.scpr.org/assets/images/election/antioch-pencil-expanded.jpg" data-mobile-img="http://media.scpr.org/assets/images/election/antioch-mobile.gif" alt="Antioch University: Committed to Social Justice, Proggressive Education and Lifelong Learning." />
+          <img class="ad-creative mobile"src="http://media.scpr.org/assets/images/election/antioch-mobile.gif" alt="Antioch University: Committed to Social Justice, Proggressive Education and Lifelong Learning." />
+      </a>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    var adCollapsed = $(".ad-creative.desktop").attr("src");
+    var adExpanded = $(".ad-creative.desktop").data("expanded-img");
+  	$(".ad-creative.desktop").hover(
+  	  function () {
+	      var image = $(".ad-creative.desktop");
+	      var imageWidth = $(image).width();
+        image.fadeOut('10', function () {
+          image.attr('src', adExpanded);
+          image.addClass("active").css({"width":imageWidth, "margin-left":(imageWidth / -2)});
+          image.show();
+        });
+      },
+      function () {
+        var image = $(".ad-creative.desktop");
+          image.fadeOut('100', function () {
+            image.attr('src', adCollapsed);
+            image.removeClass("active").css({"width":"auto", "margin-left":"auto"});
+            image.fadeIn('100');
+          });
+        });
+  });
+</script>
 
 <!--
   Pre-results Hero
