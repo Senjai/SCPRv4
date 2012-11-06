@@ -21,7 +21,7 @@ describe AdminResource::List::Column do
     }
     
     let(:column) {
-      AdminResource::List::Column.new("name", list, display: :display_full_name, header: "Full Name")
+      AdminResource::List::Column.new("name", list, quick_edit: true, display: :display_full_name, header: "Full Name")
     }
     
     before :each do
@@ -45,11 +45,15 @@ describe AdminResource::List::Column do
     it "sets display" do
       column.display.should eq :display_full_name
     end
+    
+    it "sets quick_edit" do
+      column.quick_edit.should eq true
+    end
   end
 
   #----------------
   
-  describe "header" do
+  describe "#header" do
     let(:list) { AdminResource::List::Base.new }
     
     it "returns the header if passed in" do
@@ -60,6 +64,18 @@ describe AdminResource::List::Column do
     it "returns the titleized attribute if no header specified" do
       column = AdminResource::List::Column.new("name", list)
       column.header.should eq "Name"
+    end
+  end
+  
+  #----------------
+  
+  describe "#quick_edit?" do
+    let(:list) { AdminResource::List::Base.new }
+    
+    it "is the same as #quick_edit" do
+      column = AdminResource::List::Column.new("name", list, quick_edit: true)
+      column.quick_edit.should eq true
+      column.quick_edit?.should eq true
     end
   end
 end
