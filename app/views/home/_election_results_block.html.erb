@@ -297,8 +297,49 @@
   						<h2>Local Measures</h2>
   						<aside><%= data_points['measures:percent_reporting'] %>% Reporting</aside>
   					</header>
+  					
+  					<% if show_extra_measures %>
+  					  <!-- A -->
+    					<section class="initiative local first condensed">
+    						<div class="title">
+    							<h3>Measure A</h3>
+    							<p>Appointed County Assessor</p>
+    						</div>
+    						<div class="result relative">
+    							<div class="yes <%= "pass" if data_points['measures:A:passed'].to_s.match(/true/i) %>">
+    								<strong><%= data_points['measures:A:percent_yes'] %><b class="percentage">%</b></strong>
+    								<span>Yes</span>
+    							</div>
+    							<div class="no <%= "fail" if data_points['measures:A:passed'].to_s.match(/false/i) %>">
+    								<strong><%= data_points['measures:A:percent_no'] %><b class="percentage">%</b></strong>
+    								<span>No</span>
+    							</div>
+    							<div class="vert-divider"></div>
+    						</div>
+    					</section>
+    					
+    					<!-- B -->
+    					<section class="initiative local condensed">
+    						<div class="title">
+    							<h3>Measure B</h3>
+    							<p>Condom Mandate</p>
+    						</div>
+    						<div class="result relative">
+    							<div class="yes <%= "pass" if data_points['measures:B:passed'].to_s.match(/true/i) %>">
+    								<strong><%= data_points['measures:B:percent_yes'] %><b class="percentage">%</b></strong>
+    								<span>Yes</span>
+    							</div>
+    							<div class="no <%= "fail" if data_points['measures:B:passed'].to_s.match(/false/i) %>">
+    								<strong><%= data_points['measures:B:percent_no'] %><b class="percentage">%</b></strong>
+    								<span>No</span>
+    							</div>
+    							<div class="vert-divider"></div>
+    						</div>
+    					</section>
+    				<% end %>
+    				
   					<!-- MEASURE J -->
-  					<section class="initiative local first">
+  					<section class="initiative local <%= show_extra_measures ? "last condensed" : "first" %>">
   						<div class="title">
   							<h3>Measure J</h3>
   							<p>Transportation Tax</p>
@@ -315,7 +356,10 @@
   							<div class="vert-divider"></div>
   						</div>
   					</section>
-  					<section class="initiative last"></section>
+  					
+    				<% if !show_extra_measures %>
+  					  <section class="initiative last"></section>
+  					<% end %>
   				</article>
   			</div>
   	</div> <!-- container-fluid -->
