@@ -1,18 +1,20 @@
 <% page_title "2012 Election Results" %>
 
 <% content_for :opengraph do %>
-    <meta property="og:description" content="KPCC's up-to-the-minute results of the 2012 Elections">
-    <meta property="og:title" content="2012 Election Results from KPCC.org">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="http://kpcc.org/elections"/>
-    <meta name="twitter:card" value="summary">
-    <meta name="twitter:site" value="@kpcc">
-    <meta name="twitter:url" value="http://kpcc.org/elections">
-    <meta name="twitter:title" value="2012 Election Results from KPCC.org">
-    <meta name="twitter:description" value="KPCC's up-to-the-minute results of the 2012 Elections">  
-    <meta property="og:image" content="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
-    <link rel="image_src" href="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
-    <meta name="twitter:image" value="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
+  <% share_link = "http://kpcc.org/elections/2012/results/" %>
+  
+  <meta property="og:description" content="KPCC's up-to-the-minute results of the 2012 Elections">
+  <meta property="og:title" content="2012 Election Results from KPCC.org">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="<%=share_link%>"/>
+  <meta name="twitter:card" value="summary">
+  <meta name="twitter:site" value="@kpcc">
+  <meta name="twitter:url" value="<%=share_link%>">
+  <meta name="twitter:title" value="2012 Election Results from KPCC.org">
+  <meta name="twitter:description" value="KPCC's up-to-the-minute results of the 2012 Elections">  
+  <meta property="og:image" content="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+  <link rel="image_src" href="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+  <meta name="twitter:image" value="http://www.scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
 <% end %>
 
 <iframe src = "http://project.wnyc.org/election-2012-ca-results/" width="100%" height="705px" frameborder="0" scrolling="no"></iframe>
