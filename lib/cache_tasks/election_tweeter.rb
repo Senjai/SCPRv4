@@ -25,11 +25,6 @@ module CacheTasks
     #---------------
     
     def handle_tweeting
-      pres = {
-        :prev      => Rails.cache.fetch("data_point:election:president:percent_reporting"),
-        :current   => @points["president:percent_reporting"].data_value
-      }
-      
       cd = { 
         :prev    => Rails.cache.fetch("data_point:election:30th:percent_reporting"),
         :current => @points["30th:percent_reporting"].data_value
@@ -49,12 +44,6 @@ module CacheTasks
         :prev    => Rails.cache.fetch("data_point:election:measures:percent_reporting"),
         :current => @points["measures:percent_reporting"].data_value
       }
-      
-      if should_tweet?(pres)
-        tweet("US President: #{@points["president:obama_electoral_votes"]} Obama, " \
-          "#{@points["president:romney_electoral_votes"]} Romney (#{pres[:current]}% reporting)")
-        Rails.cache.write("data_point:election:president:percent_reporting", pres[:current])
-      end
       
       if should_tweet?(da)
         tweet("LA County DA: #{@points["da:jackson_percent"]}% Jackson, " \
