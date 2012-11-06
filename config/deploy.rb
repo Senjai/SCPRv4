@@ -28,11 +28,11 @@ set :maintenance_template_path, "public/maintenance.erb"
 
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true
-set :force_assets,  "false" # If assets wouldn't normally be precompiled, force them to be
-set :skip_assets,   "false" # If assets are going to be precompiled, force them NOT to be
-set :ts_index,      "false" # Staging only - Whether or not to run the sphinx index on drop
-set :syncdb,        "false" # Staging only - Whether or not to run a dbsync to mercer_staging
-set :restart_delay, 40 # Yes, this is seriously how long it takes our application to boot up...
+set :force_assets,  false # If assets wouldn't normally be precompiled, force them to be
+set :skip_assets,   false # If assets are going to be precompiled, force them NOT to be
+set :ts_index,      false # Staging only - Whether or not to run the sphinx index on drop
+set :syncdb,        false # Staging only - Whether or not to run a dbsync to mercer_staging
+set :restart_delay, 40
 
 # --------------
 # Universal Callbacks
@@ -76,7 +76,7 @@ namespace :deploy do
       # have any new lines mentioning assets
       if [true, 1].include?(force_assets) || from.nil? || 
           capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-          if !%w{true 1}.include? skip_assets
+          if ![true, 1].include? skip_assets
             run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
           else
             logger.info "SKIPPING asset pre-compilation (skip_assets true)"

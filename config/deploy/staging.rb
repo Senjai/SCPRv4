@@ -30,7 +30,7 @@ end
 
 namespace :dbsync do
   task :pull do
-    if ["true", 1].include? syncdb
+    if [true, 1].include? syncdb
       run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} dbsync:pull"
     else
       logger.info "SKIPPING dbsync (syncdb set to #{syncdb})"
@@ -41,7 +41,7 @@ end
 namespace :thinking_sphinx do
   namespace :staging do
     task :index do
-      if ["true", 1].include? ts_index
+      if [true, 1].include? ts_index
         thinking_sphinx.index
       else
         logger.info "SKIPPING thinking_sphinx:index (ts_index set to #{ts_index})"

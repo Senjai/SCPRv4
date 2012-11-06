@@ -28,6 +28,7 @@ describe PodcastsController do
     
     it "finds the correct podcast" do
       podcast = create :podcast, slug: "podcast"
+      Podcast.any_instance.stub(:content) { [] }
       get :podcast, slug: "podcast"
       assigns(:podcast).should eq podcast
     end

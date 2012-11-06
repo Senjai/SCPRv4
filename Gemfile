@@ -60,9 +60,10 @@ end
 group :test, :development do
   gem "rspec-rails", "~> 2.11"
   gem 'rb-fsevent', '~> 0.9'
+  gem 'rb-readline'
   gem 'launchy'
   gem 'jasminerice'
-  gem 'guard', '~> 1.4.0'
+  gem 'guard', '~> 1.5'
   gem 'guard-rspec'
   gem 'guard-cucumber'
   gem 'guard-jasmine'
