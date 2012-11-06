@@ -61,7 +61,7 @@ class scpr.QuickEditCell
 
     #-------------
     
-    updateData: (event) ->        
+    updateData: (event) ->
         input = $(event.target)
         value = input.val()
         
