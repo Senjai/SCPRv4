@@ -8,7 +8,7 @@
 
 <% winner = '<em class="winner">Winner</em>'.html_safe %>
 
-<% if data_points['display_data'].to_s == "pre_coverage"%>
+<% if data_points['display_data'] == "pre_coverage"%>
   <!--
     Pre-results Hero
   -->
@@ -33,7 +33,7 @@
     End Pre-results Hero
   -->
 
-<% elsif data_points['display_data'].to_s == "president_only"%>
+<% elsif data_points['display_data'] == "president_only"%>
   <!--
     Presidential Results Only -  Hero
   -->

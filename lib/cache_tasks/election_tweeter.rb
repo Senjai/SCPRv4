@@ -77,8 +77,12 @@ module CacheTasks
     private
         
     def tweet(message)
-      self.log "Tweeting: #{message}"
-      @tweeter.update "#{message} #{@tweet_extra}"
+      if @points['auto_tweet'] == "true"
+        self.log "Tweeting: #{message}"
+        @tweeter.update "#{message} #{@tweet_extra}"
+      else
+        self.log "auto_tweet turned off. Skipping tweet."
+      end   
     end
     
     def should_tweet?(group)

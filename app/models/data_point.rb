@@ -67,8 +67,16 @@ class DataPoint < ActiveRecord::Base
       @object = object
     end
     
+    #----------
+    
     def to_s
       @object.data_value
+    end
+    
+    #----------
+    
+    def ==(val)
+      self.to_s == val
     end
   end
 end
