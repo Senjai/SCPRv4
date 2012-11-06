@@ -14,6 +14,10 @@
 			line-height:24px;
 			margin:8px 0 4px;
 			text-transform:uppercase;
+			em {
+			    color:#6bc6f2;
+			    font-style:normal;
+			}
 		}
 		.share-link {
 			background:url(image_path('specials/election/ico-share.png')) no-repeat 0 2px;
@@ -61,11 +65,61 @@
 				}
 			}
 		}
+	    /* Styles for pre-results voter guide callout */
+	    h2.callout {
+	        color:$white;
+	        font-size:22px;
+	        margin:8px 0;
+	        text-align:center;
+	        strong {
+	            color:#6bc6f2;
+	        }
+	        a {
+	            background-color:#db343d;
+	            color:$white;
+	            font-size:.818181818em;
+	            @include ie-inline-block();
+	            @include border-radius(4px);
+	            margin-left:10px;
+	            padding:4px 8px;
+	            text-shadow:0 -2px 0 rgba(0,0,0,0.670588);
+	            text-transform:uppercase;
+	            &:hover {
+	                background-color:#bc242c;
+	                text-decoration:none;
+	            }
+	        }
+	    }
 	}
 	.results {
 		background:#2e2e2e;
 		border-top:1px solid #414141;
 		color:#fff;
+		&.president-only {
+		    .results-block {
+		        min-height:64px;
+		        header {
+		            background-repeat:repeat;
+		            min-height:64px;
+		            margin:0;
+		            h2 {
+		                font-size:1.846153846em;
+		                padding-top:10px;
+		                text-align:right;
+		            }
+		            aside {
+    					position:relative;
+    					right:auto;
+    					top:auto;
+    					margin-right:10px;
+    					text-align:right;
+    				}
+		        }
+		        .candidate {
+		            border:none;
+		        }
+		    }
+		}
 		.results-block {
 			min-height:320px;
 			header {
@@ -332,6 +386,19 @@
 			width:100%;
 		}
 		.results {
+		    &.president-only {
+    		    .results-block {
+    		        header {
+    		            h2 {
+    		                text-align:left;
+    		            }
+    		            aside {
+    		                margin-left:10px;
+        					text-align:left;
+        				}
+    		        }
+    		    }
+    		}
 			.results-block {
 				min-height:0;
 				header {
