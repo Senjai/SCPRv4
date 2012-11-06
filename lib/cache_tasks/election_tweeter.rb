@@ -70,6 +70,7 @@ module CacheTasks
         MEASURES.each do |measure|
           tweet("Measure #{measure}: #{@points["measures:#{measure}:percent_yes"]}% Yes, " \
             "#{@points["measures:#{measure}:percent_no"]}% No (#{measures[:current]}% reporting)")
+        end
         Rails.cache.write("data_point:election:measures:percent_reporting", measures[:current])
       end
     end
