@@ -93,7 +93,7 @@ namespace :scprv4 do
     
     desc "Fetch and parse Election Results"
     task :election_results => [:environment] do
-      json = ENV['json']
+      json = ENV['json'] || "http://project.wnyc.org/election-2012-ca-results/data/election_data.json"
 
       puts "*** [#{Time.now}] Caching Election Results...."
       task = CacheTasks::ElectionResults.new(json)

@@ -53,12 +53,16 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :development do
+  gem "dbsync"
+end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.11"
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
   gem 'jasminerice'
+  gem 'guard', '~> 1.4.0'
   gem 'guard-rspec'
   gem 'guard-cucumber'
   gem 'guard-jasmine'

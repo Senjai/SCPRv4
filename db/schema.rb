@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029230709) do
+ActiveRecord::Schema.define(:version => 20121105192629) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -719,15 +719,16 @@ ActiveRecord::Schema.define(:version => 20121029230709) do
   add_index "podcasts", ["slug"], :name => "slug", :unique => true
   add_index "podcasts", ["source_id"], :name => "podcasts_podcast_7eef53e3"
 
-  create_table "press_releases_release", :force => true do |t|
-    t.string   "short_title",  :limit => 240,        :default => "", :null => false
-    t.string   "slug",         :limit => 50,         :default => "", :null => false
-    t.string   "long_title",   :limit => 240,        :default => "", :null => false
-    t.text     "body",         :limit => 2147483647,                 :null => false
-    t.datetime "published_at",                                       :null => false
+  create_table "press_releases", :force => true do |t|
+    t.string   "short_title"
+    t.string   "slug"
+    t.string   "title"
+    t.text     "body",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "press_releases_release", ["slug"], :name => "press_releases_release_slug"
+  add_index "press_releases", ["slug"], :name => "press_releases_release_slug"
 
   create_table "programs_kpccprogram", :force => true do |t|
     t.string   "slug",                :limit => 40,                           :null => false

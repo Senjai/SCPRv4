@@ -37,7 +37,7 @@ describe DataPoint do
       DataPoint::Hashed.should_receive(:new).exactly(3).times
       hash = DataPoint.to_hash(points)
     end
-  end
+  end  
 end
 
 describe DataPoint::Hashed do
@@ -56,6 +56,15 @@ describe DataPoint::Hashed do
       hashed = DataPoint::Hashed.new(point1)
       hashed.to_s.should eq hashed.data_value
       hashed.to_s.should eq hashed.object.data_value
+    end
+  end
+  
+  #--------------
+  
+  describe "==" do
+    it "compares self as string to value" do
+      hashed = DataPoint::Hashed.new(point1)
+      (hashed == hashed.to_s).should eq true
     end
   end
 end

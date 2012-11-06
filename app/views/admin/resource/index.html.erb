@@ -17,7 +17,7 @@
             <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
           </td>
           <% @list.columns.each do |column| %>
-            <td>
+            <td data-id="<%=record.id%>" data-attribute="<%=column.attribute%>"<% if column.quick_edit? %> data-updatable="true"<% end %>>
               <%= render_attribute column, record %>
             </td>
           <% end %>

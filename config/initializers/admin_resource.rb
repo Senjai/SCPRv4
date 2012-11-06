@@ -34,7 +34,8 @@ AdminResource::Config.configure do |config|
     "AdminUser", 
     "Bio",
     "Permission",
-    "DataPoint"
+    "DataPoint",
+    "PressRelease"
   ]
     
     
@@ -96,8 +97,8 @@ AdminResource::Config.configure do |config|
       models: [
         "Flatpage",
         "Promotion",
-        "DataPoint"
-#        "PressRelease"
+        "DataPoint",
+        "PressRelease"
       ]
     },
     

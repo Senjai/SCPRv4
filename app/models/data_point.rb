@@ -27,7 +27,7 @@ class DataPoint < ActiveRecord::Base
       
       column :group_name
       column :data_key
-      column :data_value
+      column :data_value, quick_edit: true
       column :notes
       column :updated_at
     end
@@ -59,6 +59,16 @@ class DataPoint < ActiveRecord::Base
 
   #--------------
   
+  def json
+    {
+      :group_name => self.group_name,
+      :data_key => self.data_key,
+      :data_value => self.data_value
+    }
+  end
+  
+  #--------------
+  
   class Hashed
     delegate :data_value, :data_key, to: :@object
     
@@ -67,8 +77,16 @@ class DataPoint < ActiveRecord::Base
       @object = object
     end
     
+    #----------
+    
     def to_s
       @object.data_value
+    end
+    
+    #----------
+    
+    def ==(val)
+      self.to_s == val
     end
   end
 end
