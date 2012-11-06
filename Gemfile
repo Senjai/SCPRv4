@@ -62,6 +62,7 @@ group :test, :development do
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
   gem 'jasminerice'
+  gem 'guard', '~> 1.4.0'
   gem 'guard-rspec'
   gem 'guard-cucumber'
   gem 'guard-jasmine'
