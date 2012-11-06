@@ -1,7 +1,7 @@
 module AdminResource
   module List
     class Column
-      attr_accessor :attribute, :display, :position, :list
+      attr_accessor :attribute, :display, :position, :list, :quick_edit
       attr_writer :header
     
       def initialize(attribute, list, attributes={})
@@ -9,12 +9,19 @@ module AdminResource
         @list      = list
         @position  = @list.columns.size
 
-        @header  = attributes[:header]
-        @display = attributes[:display]
+        @header     = attributes[:header]
+        @display    = attributes[:display]
+        @quick_edit = attributes[:quick_edit]
       end
     
       def header
         @header ||= @attribute.titleize 
+      end
+      
+      #-----------------
+      
+      def quick_edit?
+        !!self.quick_edit
       end
     end
   end

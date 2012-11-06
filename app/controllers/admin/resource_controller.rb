@@ -7,7 +7,7 @@ class Admin::ResourceController < Admin::BaseController
   before_filter :extend_breadcrumbs_with_resource_root
   before_filter :add_user_id_to_params, only: [:create, :update]
     
-  respond_to :html
+  respond_to :html, :json, :js
     
   # -- Basic CRUD -- #
   
@@ -34,7 +34,7 @@ class Admin::ResourceController < Admin::BaseController
   def create
     @record = resource_class.new(params[resource_class.singular_route_key])
     if @record.save
-      flash[:notice] = "Saved #{@record.simple_title}"
+      flash[:notice] = "Saved #{@record.simple_title}" if request.format.html?
       respond
     else
       render :new
@@ -43,7 +43,7 @@ class Admin::ResourceController < Admin::BaseController
   
   def update
     if @record.update_attributes(params[resource_class.singular_route_key])
-      flash[:notice] = "Saved #{@record.simple_title}"
+      flash[:notice] = "Saved #{@record.simple_title}" if request.format.html?
       respond
     else
       render :edit
@@ -51,7 +51,8 @@ class Admin::ResourceController < Admin::BaseController
   end
   
   def destroy
-    flash[:notice] = "Deleted #{@record.simple_title}" if @record.destroy
+    @record.destroy
+    flash[:notice] = "Deleted #{@record.simple_title}" if request.format.html?
     respond
   end
   

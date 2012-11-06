@@ -1,0 +1,7 @@
+<% content_for :footerjs do %>
+  <script type="text/javascript">
+    indexManager = new scpr.IndexManager("<%= admin_data_points_path %>")
+  </script>
+<% end %>
+
+<%= render template: "/admin/resource/index" %>
