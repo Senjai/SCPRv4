@@ -3,6 +3,9 @@ class Admin::SearchController < Admin::BaseController
   before_filter :set_class
   
   def index
+    flash[:info] = "Search functionality isn't implemented yet. Sorry!"
+    return
+    
     @records = @klass.search(params[:query],
       :page     => params[:page] || 1,
       :per_page => 50
