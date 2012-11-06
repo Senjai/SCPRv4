@@ -2,7 +2,6 @@
 
 <div class="section-page">
   <h1><%= page_title @section.title %></h1>
-  <%= render "/shared/widgets/my_ballot" %>
   <% nav = paginate @content %>
   
   <% if @content.current_page == 1 %>
