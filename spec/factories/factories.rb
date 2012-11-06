@@ -586,6 +586,12 @@ factory :pij_query do
   end
 end
 
+# PressRelease #########################################################
+factory :press_release do
+  sequence(:short_title) { |n| "Press Release #{n}" }
+  slug { short_title.parameterize }
+end
+
 # DataPoint #########################################################
 factory :data_point do
   sequence(:data_key) { |i| "datapoint#{i}" }

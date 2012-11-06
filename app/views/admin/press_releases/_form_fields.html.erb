@@ -1,0 +1,6 @@
+<%= form_block "Details" do %>
+  <%= f.input :short_title, hint: "Displayed on homepage and elsewhere on site" %>
+  <%= section "slug", f, record %>
+  <%= f.input :title, input_html: { class: "wide" } %>
+  <%= f.input :body, input_html: { class: "tinymce" } %>
+<% end %>
