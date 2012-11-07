@@ -89,7 +89,7 @@ googletag.enableServices();
    OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/'; 
    
    // Temporary! Remove after elections
-   if((window.location.pathname == "/elections/2012/results") || (window.location.pathname == "/blogs/politics")) {
+   if(window.location.pathname.match(/^\/elections\/2012\/results\/?$/) || window.location.pathname.match(/^\/blogs\/politics\/?$/)) {
      OAS_sitepage = 'scpr.org' + window.location.pathname;
    } else {
      OAS_sitepage = 'scpr.org';
