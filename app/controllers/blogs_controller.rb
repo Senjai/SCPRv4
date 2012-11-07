@@ -1,7 +1,7 @@
 class BlogsController < ApplicationController
   before_filter :load_blog, :except => :index
   respond_to :html, :xml, :rss
-
+  
   #----------
   
   def index
