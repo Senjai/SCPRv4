@@ -19,7 +19,7 @@ class Admin::VersionsController < Admin::BaseController
     breadcrumb "History"
     @versions = @object.versions.order(@list.order).page(params[:page]).per(@list.per_page)
   end
-    
+  
   #--------------
   # Compare a version to its previous version
   def show
@@ -35,23 +35,23 @@ class Admin::VersionsController < Admin::BaseController
     
   #--------------
   
-  protected    
-    def extend_breadcrumbs_for_object
-      breadcrumb @object.class.name.titleize.pluralize, url_for([:admin, @object.class])
-      breadcrumb @object.simple_title, url_for([:admin, @object])
-    end
+  protected
 
-    #--------------
-    
-    def get_admin_list
-      @list = Secretary::Version.admin.list
-    end
+  def extend_breadcrumbs_for_object
+    breadcrumb @object.class.name.titleize.pluralize, url_for([:admin, @object.class])
+    breadcrumb @object.simple_title, url_for([:admin, @object])
+  end
 
-    #--------------
-    
-    def get_object
-      Rails.logger.warn "Warning: unsafe object fectching in #{__FILE__}"
-      @object = to_class(params[:resources]).find(params[:resource_id])
-    end
-  #
+  #--------------
+  
+  def get_admin_list
+    @list = Secretary::Version.admin.list
+  end
+
+  #--------------
+  
+  def get_object
+    Rails.logger.warn "Warning: unsafe object fectching in #{__FILE__}"
+    @object = to_class(params[:resources]).find(params[:resource_id])
+  end
 end
