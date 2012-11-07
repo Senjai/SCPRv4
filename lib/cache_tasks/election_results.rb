@@ -88,8 +88,9 @@ module CacheTasks
         
         # Don't override the data if the result is blank.
         if data_from_json.present?
-          self.log "updating #{key} to #{data_from_json}"
-          data_point.update_attribute(:data_value, data_from_json)
+          rounded = data_from_json.to_f.round
+          self.log "updating #{key} to #{rounded}"
+          data_point.update_attribute(:data_value, rounded)
           
           # touch it because Rails doesn't update timestamp if the data didn't change
           data_point.touch
