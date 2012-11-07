@@ -1,5 +1,8 @@
 <% page_title "History" %>
-<%= render 'header', page_title: @PAGE_TITLE, object: @object %>
+
+<% if @object %>
+  <%= render 'header', page_title: @PAGE_TITLE, object: @object %>
+<% end %>
 
 <table class="table table-striped">
   <%= any_to_list? @versions, message: "This object has no logged history in the Rails CMS." do %>
@@ -15,7 +18,7 @@
       <% @versions.each do |version| %>
         <tr class="versions">
           <td>
-            <%= link_to "View", admin_version_path(resources: @object.class.route_key, resource_id: @object.id, version_number: version.version_number), class: "btn" %>
+            <%= link_to "View", admin_version_path(resources: version.versioned.class.route_key, resource_id: version.versioned.id, version_number: version.version_number), class: "btn" %>
           </td>
           <% @list.columns.each do |column| %>
             <td>
