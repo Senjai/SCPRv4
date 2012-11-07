@@ -5,8 +5,9 @@
 #
 module CacheTasks
   class ElectionTweeter < Task
-    PROPS = ["30", "34", "36", "38"]
-
+    PROPS    = ["30", "34", "36", "38"]
+    MEASURES = ["A", "B", "J"]
+    
     #---------------
         
     def run
@@ -66,8 +67,10 @@ module CacheTasks
       end
       
       if should_tweet?(measures)
-        tweet("Measure J: #{@points["measures:J:percent_yes"]}% Yes, " \
-          "#{@points["measures:J:percent_no"]}% No (#{measures[:current]}% reporting)")
+        MEASURES.each do |measure|
+          tweet("Measure #{measure}: #{@points["measures:#{measure}:percent_yes"]}% Yes, " \
+            "#{@points["measures:#{measure}:percent_no"]}% No (#{measures[:current]}% reporting)")
+        end
         Rails.cache.write("data_point:election:measures:percent_reporting", measures[:current])
       end
     end

@@ -173,9 +173,26 @@
 			}
 			.initiative {
 				@include clearfix();
+				&.condensed {
+				  padding: 5px;
+				  min-height:30px;
+				  &.local {
+				    .title h3 { font-size: 1.2em !important;line-height: 1.2em; }
+				    .result {
+				        width:110px;
+				        .yes, .no {
+				            width:40px;
+				        }
+				      strong { font-size: 2em !important;margin-bottom: 0; }
+				      .percentage { font-size: .4em !important; }
+				      span { font-size: 1em !important; }
+			      }
+			    }
+		    }
+		    
 				&.local {
 					.title {
-						width:120px;
+						width:122px;
 						h3 {
 							font-size:2em;
 						}
