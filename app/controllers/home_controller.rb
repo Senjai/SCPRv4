@@ -12,6 +12,7 @@ class HomeController < ApplicationController
     @schedule_current = Schedule.on_at(Time.now).first
   end
 
+  # Elections - Remove this!
   def elections
     @category = Category.find_by_slug('politics')
     

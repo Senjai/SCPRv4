@@ -82,37 +82,6 @@ namespace :scprv4 do
       puts "Finished.\n"
     end
     
-    desc "Cache KPCC tweets for election night"
-    task :election_tweets => [:environment] do
-      puts "*** [#{Time.now}] Caching KPCC tweets...."
-      task = CacheTasks::Twitter.new("KPCC", "/home/cached/election_tweets")
-      task.verbose = true
-      task.run
-      puts "Finished.\n"
-    end
-    
-    desc "Fetch and parse Election Results"
-    task :election_results => [:environment] do
-      json = ENV['json'] || "http://project.wnyc.org/election-2012-ca-results/data/election_data.json"
-
-      puts "*** [#{Time.now}] Caching Election Results...."
-      task = CacheTasks::ElectionResults.new(json)
-      task.verbose = true
-      task.run
-      puts "Finished.\n"
-    end
-    
-    desc "Auto-tweet election results!"
-    task :tweet_results => [:environment] do
-      screenname = ENV['screenname']
-      
-      puts "*** [#{Time.now}] Checking Election Results..."
-      task = CacheTasks::ElectionTweeter.new(screenname)
-      task.verbose = true
-      task.run
-      puts "Finished.\n"
-    end
-    
     #----------
     
     desc "Cache external programs"
