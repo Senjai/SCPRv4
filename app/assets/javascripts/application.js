@@ -11,6 +11,7 @@
 //= require moment-strftime
 //= require bootstrap-tab
 //= require bootstrap-collapse
+//= require bootstrap-modal
 //= require content_carousel
 
 //= require audio
