@@ -107,7 +107,6 @@ Scprv4::Application.routes.draw do
   
   
   # Events
-  match '/events/forum/about/'              => 'events#about',      as: :forum_about,           trailing_slash: true  
   match '/events/forum/archive/'            => 'events#archive',    as: :forum_events_archive
   match '/events/forum/'                    => 'events#forum',      as: :forum_events
   match '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }

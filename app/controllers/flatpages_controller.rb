@@ -8,13 +8,13 @@ class FlatpagesController < ApplicationController
       redirect_to @flatpage.redirect_url and return
     end
         
-    case @flatpage.template
-    when "full"
-      layout_template = 'app_nosidebar'
-    when "none"
-      layout_template = false
-    else
-      layout_template = 'application'
+    layout_template = begin
+      case @flatpage.template
+      when "full"  then 'app_nosidebar'
+      when "forum" then "forum"
+      when "none"  then false
+      else 'application'
+      end
     end
       
     render layout: layout_template
