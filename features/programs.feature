@@ -96,22 +96,6 @@ Scenario: See a video player if the program has a dedicated Brightcove player
   When I go to that program's page
   Then I should see a video
 
-Scenario: Quick Slug for a show
-  Given a kpcc program with the following attributes:
-   | quick_slug | slug          |
-   | pm         | patt-morrison |
-  
-  When I visit the shallow path for that program
-  Then I should be on that program's page
-
-Scenario: Quick Slug is same as another page
-  Given a kpcc program with the following attributes:
-   | quick_slug |
-   | events     |
-  
-  When I visit the shallow path for that program
-  Then I should not be on that program's page
-
 Scenario: Archive
   Given a kpcc program with the following attributes:
   | episode_count | episode[air_date] | display_episodes |

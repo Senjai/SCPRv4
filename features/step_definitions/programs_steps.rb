@@ -88,11 +88,6 @@ When /^I go to a program page with slug "([^"]*)"$/ do |slug|
   visit program_path(slug)
 end
 
-When /^I visit the shallow path for that program$/ do
-  Scprv4::Application.reload_routes!
-  visit "/#{@program.quick_slug}"
-end
-
 Then /^I should be on (?:the|that) program's page$/ do
   current_path.should eq program_path @program.slug
 end

@@ -1,5 +1,4 @@
 class ProgramsController < ApplicationController
-  before_filter :redirect_for_quick_slug, only: [:show], if: -> { params[:quick_slug].present? }
   before_filter :get_any_program, only: [:show]
   before_filter :get_kpcc_program!, only: [:archive, :episode]
   before_filter :get_featured_programs, only: [:index]
@@ -126,14 +125,5 @@ class ProgramsController < ApplicationController
   def get_featured_programs
     @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
     @featured_programs.sort_by! { |program| KpccProgram::Featured.index(program.slug) } # Orders the returned records by the order of the KpccProgram::Featured array
-  end
-  
-  # ---------------
-
-  private    
-
-  def redirect_for_quick_slug
-    program = KpccProgram.find_by_quick_slug!(params[:quick_slug])
-    redirect_to program_path(program.slug) and return
   end
 end

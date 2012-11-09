@@ -34,23 +34,10 @@ end
 
 #---------
 
-class QuickSlugConstraint
-  def initialize
-    @quick_slugs = KpccProgram.where("quick_slug != ''").all.map { |f| f.quick_slug }.compact rescue []
-  end
-  
-  def matches?(request)
-    @quick_slugs.include?(request.params[:quick_slug])
-  end
-end
-
-#---------
-
 Scprv4::Application.routes.draw do
   # Homepage
   root to: "home#index"
   match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
-  match '/fb_channel_file' => 'home#fb_channel_file'
   
   
   # Listen Live
@@ -157,7 +144,7 @@ Scprv4::Application.routes.draw do
   
   # Extra (internal stuff)
   match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
-  match '/breaking_email' => 'breaking_news#show'
+  match '/breaking_email'   => 'breaking_news#show'
   
   
   # Sitemaps
@@ -240,9 +227,4 @@ Scprv4::Application.routes.draw do
       get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
     end
   end
-  
-  #------------------
-  
-  # -- Dynamic root-level routes -- #
-  match '/:quick_slug'       => "programs#show",  constraints: QuickSlugConstraint.new
 end

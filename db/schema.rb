@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105192629) do
+ActiveRecord::Schema.define(:version => 20121109234848) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -749,7 +749,6 @@ ActiveRecord::Schema.define(:version => 20121105192629) do
     t.string   "video_player",        :limit => 20
     t.string   "audio_dir",           :limit => 50
     t.integer  "missed_it_bucket_id"
-    t.string   "quick_slug",          :limit => 40
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
   end
@@ -933,13 +932,14 @@ ActiveRecord::Schema.define(:version => 20121105192629) do
   add_index "taggit_taggeditem", ["tag_id"], :name => "taggit_taggeditem_3747b463"
 
   create_table "users_userprofile", :force => true do |t|
-    t.integer "userid",                    :null => false
-    t.string  "nickname",   :limit => 50,  :null => false
-    t.string  "firstname",  :limit => 50
-    t.string  "lastname",   :limit => 50
-    t.string  "location",   :limit => 120
-    t.string  "image_file", :limit => 100
-    t.string  "email",      :limit => 75
+    t.integer  "userid",                    :null => false
+    t.string   "nickname",   :limit => 50,  :null => false
+    t.string   "firstname",  :limit => 50
+    t.string   "lastname",   :limit => 50
+    t.string   "location",   :limit => 120
+    t.string   "image_file", :limit => 100
+    t.string   "email",      :limit => 75
+    t.datetime "last_login"
   end
 
   add_index "users_userprofile", ["nickname"], :name => "nickname", :unique => true

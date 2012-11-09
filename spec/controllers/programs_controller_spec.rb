@@ -102,20 +102,6 @@ describe ProgramsController do
         }.should raise_error ActionController::RoutingError
       end
     end
-    
-    describe "redirect_for_quick_slug" do
-      it "redirects using the quick slug if present" do
-        program = create :kpcc_program, quick_slug: "pm"
-        get :show, quick_slug: program.quick_slug
-        response.should redirect_to program_path(program.slug)
-      end
-      
-      it "doesn't do anything if quick_slug isn't present" do
-        program = create :kpcc_program
-        controller.should_not_receive(:redirect_for_quick_slug)
-        get :show, program.route_hash
-      end
-    end
   end
   
   # ----------------------
