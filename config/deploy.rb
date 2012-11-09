@@ -36,14 +36,12 @@ set :restart_delay, 40
 
 # --------------
 # Universal Callbacks
-after "deploy:update", "deploy:cleanup"
+after "deploy:restart", "deploy:cleanup"
 
 
 # --------------
 # Universal Tasks
-
-  
-namespace :deploy do  
+namespace :deploy do
   # --------------
   # Override disable/enable
   # https://github.com/capistrano/capistrano/blob/master/lib/capistrano/recipes/deploy.rb
