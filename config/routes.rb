@@ -113,14 +113,6 @@ Scprv4::Application.routes.draw do
   match '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }
   match '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event
   match '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }
-  # Flatpages (move these to actual flatpages)
-  match '/events/forum/space/request/'      => 'events#request',    as: :forum_request
-  match '/events/forum/request/caterers/'   => 'events#caterers',   as: :forum_caterers
-  match '/events/forum/space/'              => 'events#space',      as: :forum_space
-  match '/events/forum/riots/'              => 'events#riots',      as: :forum_riots
-  match '/events/forum/directions/'         => 'events#directions', as: :forum_directions
-  match '/events/forum/volunteer/'          => 'events#volunteer',  as: :forum_volunteer
-  match '/events/forum/about/'              => 'events#about',      as: :forum_about
   
   
   # Search
