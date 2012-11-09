@@ -23,6 +23,7 @@ class Flatpage < ActiveRecord::Base
   TEMPLATE_OPTIONS = [
     ["Normal (with sidebar)",   "inherit"],
     ["Full Width (no sidebar)", "full"],
+    ["Crawford Family Forum",   "forum"]
     ["No Template",             "none"]
   ]
   
