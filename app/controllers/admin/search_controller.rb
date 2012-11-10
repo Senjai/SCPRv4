@@ -11,7 +11,7 @@ class Admin::SearchController < Admin::BaseController
       :per_page => 50
     )
     
-    @list = @klass.admin.list    
+    @list = @klass.admin.list
   end
   
   def resource_class
@@ -20,6 +20,6 @@ class Admin::SearchController < Admin::BaseController
   
   private
   def set_class
-    @klass = to_class(params[:resource])
+    @klass = AdminResource::Helpers::Naming.to_class(params[:resource])
   end
 end

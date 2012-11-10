@@ -9,8 +9,8 @@
 <% end %>
 
 <%= form_block "Permissions" do %>
-  <%= f.input :is_staff %>
+  <%= f.input :is_staff, hint: "May this user login to the admin?" %>
   <%= f.input :is_active %>
-  <%= f.input :is_staff %>
   <%= f.input :is_superuser %>
+  <%= f.association :permissions, collection: Permission.order("resource, action") %>
 <% end %>

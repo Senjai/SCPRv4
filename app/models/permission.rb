@@ -9,19 +9,27 @@ class Permission < ActiveRecord::Base
   # RESTful actions.
   DEFAULT_ACTIONS = [:show, :update, :create, :destroy]
   
-  # Map actions to other similar ones.
-  #
-  #   :edit  => :update
-  #   :new   => :create
-  #   :index => :show
-  #
-  def self.normalize_rest(action)
-    action = action.to_s
-    case action
-    when "edit"   then "update"
-    when "new"    then "create"
-    when "index"  then "show"
-    else action
+  class << self
+    # Map actions to other similar ones.
+    #
+    #   :edit  => :update
+    #   :new   => :create
+    #   :index => :show
+    #
+    def normalize_rest(action)
+      action = action.to_s
+      case action
+      when "edit"   then "update"
+      when "new"    then "create"
+      when "index"  then "show"
+      else action
+      end
     end
+  end
+  
+  #-------------------
+  
+  def title
+    "#{resource.titleize}: #{action.titlelize}"
   end
 end

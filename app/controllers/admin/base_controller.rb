@@ -1,11 +1,11 @@
 class Admin::BaseController < ActionController::Base  
-  protect_from_forgery
   abstract!
+  protect_from_forgery
   
-  before_filter :require_admin, :root_breadcrumb, :set_sections
   layout 'admin'
+  before_filter :require_admin, :root_breadcrumb, :set_sections
   
-  # -- Login checks -- #
+  #------------------------
   
   helper_method :admin_user
   def admin_user
@@ -18,6 +18,8 @@ class Admin::BaseController < ActionController::Base
       @admin_user              = nil
     end
   end
+
+  #------------------------
   
   def require_admin
     # Only allow in if admin_user is set, and 
@@ -27,6 +29,8 @@ class Admin::BaseController < ActionController::Base
       redirect_to admin_login_path and return false
     end
   end
+
+  #------------------------
   
   def breadcrumb(*args)
     @breadcrumbs ||= []
@@ -34,8 +38,21 @@ class Admin::BaseController < ActionController::Base
     pairs.each { |pair| @breadcrumbs.push(pair) }
   end
   
-  attr_reader :breadcrumbs  
+  attr_reader :breadcrumbs
   helper_method :breadcrumbs
+
+  #------------------------
+  
+  def authorize!(action=nil, resource=nil)
+    action   ||= action_name
+    resource ||= AdminResource::Helpers::Controller.to_class(params[:controller])
+    if !admin_user.allowed_to?(action, resource)
+      redirect_to admin_root_path, alert: "You don't have permission to #{Permission.normalize_rest(action).titleize} #{resource.to_title.pluralize}"
+      return false
+    end
+  end
+
+  #------------------------
   
   protected
   # Just setup the @sections variable so the views can add to it.
@@ -43,6 +60,8 @@ class Admin::BaseController < ActionController::Base
     @sections = {}
   end
   
+  #------------------------
+  # Always want to add this link to the Breadcrumbs
   def root_breadcrumb
     breadcrumb "KPCC Admin", admin_root_path
   end

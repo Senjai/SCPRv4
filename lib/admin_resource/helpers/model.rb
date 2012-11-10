@@ -95,10 +95,11 @@ module AdminResource
       # Define some defaults for as_json
       # Override `self.json` to add attributes
       # or override any of these.
+      # TODO: Make this use ActiveModel's `as_json`
       def as_json(*args)
         {
           :id         => self.id,
-          :obj_key    => self.obj_key,          
+          :obj_key    => self.obj_key,
           :link_path  => self.link_path,
           :to_title   => self.to_title,
           :edit_path  => self.admin_edit_path

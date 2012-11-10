@@ -45,32 +45,35 @@ class AdminUser < ActiveRecord::Base
   has_many :admin_user_permissions
   has_many :permissions, through: :admin_user_permissions
   
-  # ----------------
 
+  # ----------------
+  
+  class << self
+    def authenticate(username, unencrypted_password)
+      if user = find_by_username(username)
+        algorithm, salt, hash = user.password.split('$')      
+        if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
+          return user
+        else
+          return false
+        end
+      else
+        return false
+      end
+    end
+  end
+
+
+  # ----------------
+  
   attr_accessor :unencrypted_password, :unencrypted_password_confirmation
   
   # ----------------
 
   def allowed_to?(action, resource)
-    self.is_superuser? || self.permissions.where(resource: resource.to_s, action: Permission.normalize_rest(action)).first
+    self.is_superuser? || !!self.permissions.where(resource: resource.to_s, action: Permission.normalize_rest(action)).first
   end
-  
-  # ----------------
-  
-  def self.authenticate(username, unencrypted_password)
-    if user = find_by_username(username)
-      algorithm, salt, hash = user.password.split('$')      
-      if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
-        return user
-      else
-        return false
-      end
-    else
-      return false
-    end
-  end
-  
-  
+
   # ----------------
   
   def json
