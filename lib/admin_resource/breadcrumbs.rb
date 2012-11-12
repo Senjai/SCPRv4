@@ -3,11 +3,11 @@
 #
 # Super-simple breadcrumbs for you and me.
 # Include it into a controller!
+# 
 # Arguments:
 # Pairs of strings. Title of breadcrumb, Path
 #
 # Usage:
-#
 # In the controller:
 #
 #   class PostsController < ApplicationController

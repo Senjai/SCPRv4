@@ -80,7 +80,9 @@ module AdminResource
       end
       
       #--------------
-              
+      
+      private
+      
       def notice(message)
         flash[:notice] = message if request.format.html?
       end

@@ -15,7 +15,7 @@ class Admin::BaseController < ActionController::Base
       if session['_auth_user_id']
         @admin_user ||= AdminUser.find(session['_auth_user_id'])
       end
-    rescue
+    rescue ActiveRecord::RecordNotFound
       session['_auth_user_id'] = nil
       @admin_user              = nil
     end
@@ -37,6 +37,7 @@ class Admin::BaseController < ActionController::Base
   def authorize!(action=nil, resource=nil)
     action   ||= action_name
     resource ||= AdminResource::Helpers::Controller.to_class(params[:controller])
+    
     if !admin_user.allowed_to?(action, resource)
       redirect_to admin_root_path, alert: "You don't have permission to #{Permission.normalize_rest(action).titleize} #{resource.to_title.pluralize}"
       return false
@@ -46,6 +47,7 @@ class Admin::BaseController < ActionController::Base
   #------------------------
   
   protected
+  
   # Just setup the @sections variable so the views can add to it.
   def set_sections
     @sections = {}
