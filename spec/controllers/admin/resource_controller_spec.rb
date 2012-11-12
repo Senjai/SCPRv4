@@ -21,10 +21,6 @@ describe Admin::ResourceController do
     pending
   end
   
-  describe "resource_class" do
-    pending
-  end
-  
   describe "extend_breadcrumbs_with_resource_route" do
     pending
   end

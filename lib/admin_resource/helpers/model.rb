@@ -1,12 +1,10 @@
 ## 
 # AdminResource::Helpers::Model
-
+#
 module AdminResource
   module Helpers
     module Model
-      def self.included(base)
-        base.extend ClassMethods
-      end
+      extend ActiveSupport::Concern
       
       module ClassMethods
         def to_title

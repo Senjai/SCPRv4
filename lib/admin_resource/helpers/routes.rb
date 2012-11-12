@@ -7,12 +7,8 @@
 module AdminResource
   module Helpers
     module Routes
-      def self.included(base)
-        base.extend ClassMethods
-      end
-      
-      #--------------
-      
+      extend ActiveSupport::Concern
+            
       module ClassMethods
         #--------------        
         # Wrappers for ActiveModel::Naming
@@ -45,7 +41,8 @@ module AdminResource
           "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
         end
       end
-      
+
+      #--------------      
       #--------------
       # /admin/blog_entries/20/edit
       def admin_edit_path
