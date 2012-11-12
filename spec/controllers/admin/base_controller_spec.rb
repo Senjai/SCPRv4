@@ -27,6 +27,8 @@ describe Admin::BaseController do
     end
   end
   
+  #-----------------
+  
   describe "require_admin" do
     controller { def index; render nothing: true; end }
     
@@ -61,26 +63,6 @@ describe Admin::BaseController do
       it "redirects to login path if admin_user is false" do
         controller.response.should redirect_to admin_login_path
       end
-    end
-  end
-  
-  describe "breadcrumb" do
-    it "pushes the arguments, grouped in pairs as a hash, into @breadcrumbs" do
-      controller.breadcrumb("Home", "/home", "New")
-      controller.breadcrumbs.should eq [{title: "Home", link: "/home"}, {title: "New", link: nil}]
-    end
-    
-    it "appends to @breadcrumbs if the variable already exists" do
-      controller.instance_variable_set(:@breadcrumbs, [{title: "Home", link: "/home"}])
-      controller.breadcrumb("New", nil, "Blogs", "/blogs")
-      controller.breadcrumbs.should eq [{title: "Home", link: "/home"}, {title: "New", link: nil}, {title: "Blogs", link: "/blogs"}]
-    end
-  end
-  
-  describe "breadcrumbs" do
-    it "returns @breadcrumbs" do
-      controller.instance_variable_set(:@breadcrumbs, true)
-      controller.breadcrumbs.should eq true
     end
   end
 end
