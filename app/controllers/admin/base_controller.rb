@@ -1,4 +1,6 @@
-class Admin::BaseController < ActionController::Base  
+class Admin::BaseController < ActionController::Base
+  include AdminResource::Breadcrumbs
+  
   abstract!
   protect_from_forgery
   
@@ -29,17 +31,6 @@ class Admin::BaseController < ActionController::Base
       redirect_to admin_login_path and return false
     end
   end
-
-  #------------------------
-  
-  def breadcrumb(*args)
-    @breadcrumbs ||= []
-    pairs = args.each_slice(2).map { |pair| { title: pair[0], link: pair[1] } }
-    pairs.each { |pair| @breadcrumbs.push(pair) }
-  end
-  
-  attr_reader :breadcrumbs
-  helper_method :breadcrumbs
 
   #------------------------
   
