@@ -1,7 +1,7 @@
 module AdminResource
   module Test
     class PeopleController < ActionController::Base
-      include AdminResource::Helpers::Controller
+      include AdminResource::Controller::Actions
   
       def params
         {

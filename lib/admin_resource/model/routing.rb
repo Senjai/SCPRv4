@@ -1,12 +1,12 @@
 ##
-# Routes helpers
+# AdminResource::Model::Routing
 #
 # Provides easy access to any object's admin paths,
 # and any class's admin paths
 #
 module AdminResource
-  module Helpers
-    module Routes
+  module Model
+    module Routing
       extend ActiveSupport::Concern
             
       module ClassMethods
@@ -83,6 +83,6 @@ module AdminResource
       def django_edit_url          
         [self.class.django_admin_url, self.id || "add"].join "/"
       end
-    end
-  end
-end
+    end # Routing
+  end # Model
+end # AdminResource

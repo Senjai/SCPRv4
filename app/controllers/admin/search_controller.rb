@@ -1,5 +1,4 @@
 class Admin::SearchController < Admin::BaseController
-  include AdminResource::Helpers::Controller
   before_filter :set_class
   
   def index

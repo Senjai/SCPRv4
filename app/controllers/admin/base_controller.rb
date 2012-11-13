@@ -33,7 +33,7 @@ class Admin::BaseController < ActionController::Base
   #------------------------
   
   def authorize!(resource=nil)
-    resource ||= AdminResource::Helpers::Controller.to_class(params[:controller])
+    resource ||= AdminResource::Helpers::Naming.to_class(params[:controller])
     
     if !admin_user.can_manage?(resource)
       handle_unauthorized(resource)

@@ -1,24 +1,18 @@
-## 
-# AdminResource::Helpers::Controller
+##
+# AdminResource::Controller::Actions
+#
+# This provides basic CRUD actions for you to include into any
+# controller that you want to behave like an resource management
+# area.
 #
 module AdminResource
-  module Helpers
-    module Controller
+  module Controller
+    module Actions
       extend ActiveSupport::Concern
-      
-      included do
-        if self < ActionController::Base
-          helper_method :resource_class
-        end
-      end
 
-      #------------------
-      
-      def resource_class
-        @resource_class ||= AdminResource::Helpers::Naming.to_class(params[:controller])
+      included do
+        include AdminResource::Controller::Helpers
       end
-      
-      #------------------
       
       def index
         @list = resource_class.admin.list
@@ -96,6 +90,6 @@ module AdminResource
         else @record.class.admin_index_path
         end
       end
-    end # Controller
-  end # Helpers
+    end # Actions
+  end # Controller
 end # AdminResource

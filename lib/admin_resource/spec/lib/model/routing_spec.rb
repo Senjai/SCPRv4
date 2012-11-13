@@ -1,6 +1,6 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
-describe AdminResource::Helpers::Routes do
+describe AdminResource::Model::Routing do
   describe "::admin_new_path" do
     it "figures out the new path using singular_route_key" do
       Person.stub(:singular_route_key) { "coolguy" }
@@ -70,7 +70,7 @@ describe AdminResource::Helpers::Routes do
     end
     
     it "returns nil if if ROUTE_KEY isn't defined" do
-      class SomeClass; include AdminResource::Helpers::Routes; end
+      class SomeClass; include AdminResource::Model::Routing; end
       something = SomeClass.new
       something.stub(:route_hash) { { id: 1, slug: "cool-dude" } }
       something.link_path.should eq nil
@@ -101,7 +101,7 @@ describe AdminResource::Helpers::Routes do
   
   describe "#route_hash" do
     it "is just an empty hash, meant to be overridden" do
-      class SomeClass; include AdminResource::Helpers::Routes; end
+      class SomeClass; include AdminResource::Model::Routing; end
       SomeClass.new.route_hash.should eq Hash.new
     end
   end

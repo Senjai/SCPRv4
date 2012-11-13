@@ -1,9 +1,11 @@
-## 
-# AdminResource::Helpers::Model
+##
+# AdminResource::Model::Methods
+#
+# A bunch of methods that help AdminResource be awesome.
 #
 module AdminResource
-  module Helpers
-    module Model
+  module Model
+    module Methods
       extend ActiveSupport::Concern
       
       module ClassMethods
@@ -133,6 +135,6 @@ module AdminResource
       def exists_in_django?
         self.class.exists_in_django?
       end
-    end
-  end
-end
+    end # Methods
+  end # Model
+end # AdminResource

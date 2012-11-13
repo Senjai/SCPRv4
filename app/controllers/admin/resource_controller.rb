@@ -1,5 +1,5 @@
 class Admin::ResourceController < Admin::BaseController
-  include AdminResource::Helpers::Controller
+  include AdminResource::Controller::Actions
   
   before_filter :authorize_resource
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
