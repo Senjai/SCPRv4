@@ -4,10 +4,10 @@ class Person < ActiveRecord::Base
   
   administrate do    
     define_list do
-      column "name"
-      column "email"
-      column "location"
-      column "age"
+      column :name
+      column :email
+      column :location
+      column :age
     end
   end
   

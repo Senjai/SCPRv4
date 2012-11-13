@@ -1,3 +1,9 @@
+##
+# AdminResourceGenerator
+#
+# Bootstrap an already existing class, for use
+# with AdminResource, and generate some test files
+#
 class AdminResourceGenerator < Rails::Generators::Base
   argument :resource, type: :string
   
@@ -34,5 +40,12 @@ class AdminResourceGenerator < Rails::Generators::Base
                 "describe #{resource.camelize.singularize} do\n" \
                 "  it_behaves_like \"managed resource\"\n" \
                 "end\n"
+  end
+  
+  def warn_permission
+    invoke ActiveRecord::Generators::MigrationGenerator, "add_#{resource.underscore}_to_permissions"
+    
+    say "Don't forget to add #{resource.singularize.camelize.constantize} to the Permissions table!\n" \
+        "Example: Permission.create(resource: #{resource.singularize.camelize.constantize})", :yellow
   end
 end

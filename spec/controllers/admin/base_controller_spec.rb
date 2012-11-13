@@ -65,4 +65,10 @@ describe Admin::BaseController do
       end
     end
   end
+  
+  #-----------------
+  
+  describe "#authorize!" do
+    pending
+  end
 end

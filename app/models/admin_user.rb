@@ -28,7 +28,6 @@ class AdminUser < ActiveRecord::Base
   
   # ------------------
   # Validation
-  validates :email, uniqueness: true, allow_blank: true
   validates :unencrypted_password, confirmation: true
   validates_presence_of :unencrypted_password, on: :create
   
@@ -70,10 +69,11 @@ class AdminUser < ActiveRecord::Base
   
   # ----------------
 
-  def allowed_to?(action, resource)
-    self.is_superuser? || !!self.permissions.where(resource: resource.to_s, action: Permission.normalize_rest(action)).first
+  def can_manage?(*resources)
+    self.is_superuser? || (allowed_resources & resources).present?
   end
 
+  
   # ----------------
   
   def json
@@ -170,5 +170,13 @@ class AdminUser < ActiveRecord::Base
     begin
       self[column] = SecureRandom.urlsafe_base64
     end while AdminUser.exists?(column => self[column])
+  end
+
+  #----------------
+  
+  private
+    
+  def allowed_resources
+    @allowed_resources ||= self.permissions.map { |p| p.resource.constantize }
   end
 end

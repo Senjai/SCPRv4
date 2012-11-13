@@ -36,6 +36,12 @@ describe AdminUser do
   end
   
   #------------------------
+
+  describe "#can_manage?" do
+    pending
+  end
+  
+  #------------------------
   
   describe "downcase_email" do
     it "downcases the e-mail before validating and saving a user" do

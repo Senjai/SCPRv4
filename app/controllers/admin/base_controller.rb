@@ -12,9 +12,7 @@ class Admin::BaseController < ActionController::Base
   helper_method :admin_user
   def admin_user
     begin
-      if session['_auth_user_id']
-        @admin_user ||= AdminUser.find(session['_auth_user_id'])
-      end
+      @admin_user ||= AdminUser.find(session['_auth_user_id'])
     rescue ActiveRecord::RecordNotFound
       session['_auth_user_id'] = nil
       @admin_user              = nil
@@ -34,13 +32,11 @@ class Admin::BaseController < ActionController::Base
 
   #------------------------
   
-  def authorize!(action=nil, resource=nil)
-    action   ||= action_name
+  def authorize!(resource=nil)
     resource ||= AdminResource::Helpers::Controller.to_class(params[:controller])
     
-    if !admin_user.allowed_to?(action, resource)
-      redirect_to admin_root_path, alert: "You don't have permission to #{Permission.normalize_rest(action).titleize} #{resource.to_title.pluralize}"
-      return false
+    if !admin_user.can_manage?(resource)
+      handle_unauthorized(resource)
     end
   end
 
@@ -57,5 +53,14 @@ class Admin::BaseController < ActionController::Base
   # Always want to add this link to the Breadcrumbs
   def root_breadcrumb
     breadcrumb "KPCC Admin", admin_root_path
+  end
+
+  #------------------------
+  
+  private
+  
+  def handle_unauthorized(resource)
+    redirect_to admin_root_path, alert: "You don't have permission to manage #{resource.to_title.pluralize}"
+    return false
   end
 end

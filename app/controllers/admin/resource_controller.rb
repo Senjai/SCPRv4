@@ -38,6 +38,6 @@ class Admin::ResourceController < Admin::BaseController
   private
   
   def authorize_resource
-    authorize!(action_name, resource_class)
+    authorize!(resource_class)
   end
 end

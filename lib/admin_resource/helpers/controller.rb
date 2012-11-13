@@ -52,7 +52,7 @@ module AdminResource
         @record = resource_class.new(params[resource_class.singular_route_key])
         if @record.save
           notice "Saved #{@record.simple_title}"
-          respond_with :admin, @record, location: location
+          respond_with :admin, @record, location: requested_location
         else
           breadcrumb "New"
           render :new
@@ -64,7 +64,7 @@ module AdminResource
       def update
         if @record.update_attributes(params[@record.class.singular_route_key])
           notice "Saved #{@record.simple_title}"
-          respond_with :admin, @record, location: location
+          respond_with :admin, @record, location: requested_location
         else
           breadcrumb "Edit"
           render :edit
@@ -89,7 +89,7 @@ module AdminResource
       
       #--------------
       
-      def location
+      def requested_location
         case params[:commit_action]
         when "edit" then @record.admin_edit_path
         when "new"  then @record.class.admin_new_path
