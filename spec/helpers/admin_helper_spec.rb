@@ -1,5 +1,13 @@
 require "spec_helper"
 
 describe AdminHelper do
-  pending
+  describe "#guard" do
+    pending
+  end
+  
+  #-----------------
+  
+  describe "#guarded_link_to" do
+    pending
+  end
 end
