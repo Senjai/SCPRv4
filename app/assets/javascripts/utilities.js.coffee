@@ -34,8 +34,8 @@ class scpr.CompactNav
 class scpr.adSizer
     constructor: ->
         $(document).ready =>
-            # 5 times. If the ad hasn't loaded after that, then we're giving up.
-            for i in [1..5]
+            # 7 times. If the ad hasn't loaded after that, then we're giving up.
+            for i in [1..7]
                 @sizedCheck(i)
             
 
