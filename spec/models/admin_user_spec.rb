@@ -22,17 +22,8 @@ describe AdminUser do
   
   #------------------------
   
-  describe "validations" do
-    before(:each) { @user = create :admin_user, name: "Ryan Bicker" }
-    
+  describe "validations" do    
     it { should validate_confirmation_of(:unencrypted_password) }
-    it { should validate_uniqueness_of(:email).case_insensitive }
-    
-    it "should not care about case in the e-mail uniqueness validation" do
-      other_user = build :admin_user, email: @user.email.upcase
-      other_user.should_not be_valid
-      other_user.errors[:email].should include "has already been taken"
-    end 
   end
   
   #------------------------
