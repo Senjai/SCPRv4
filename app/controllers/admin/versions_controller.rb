@@ -1,6 +1,4 @@
 class Admin::VersionsController < Admin::BaseController
-  include AdminResource::Helpers::Controller
-
   before_filter :get_admin_list, only: [:activity, :index]
   before_filter :get_object, only: [:index, :show, :compare]
   before_filter :extend_breadcrumbs_for_object, only: [:index, :show]
@@ -37,6 +35,15 @@ class Admin::VersionsController < Admin::BaseController
   
   protected
 
+  def get_object
+    klass = AdminResource::Helpers::Naming.to_class(params[:resources])
+    authorize!(klass)
+    redirect_to admin_root_path if !klass.has_secretary?
+    @object = klass.find(params[:resource_id])
+  end
+  
+  #--------------
+  
   def extend_breadcrumbs_for_object
     breadcrumb @object.class.name.titleize.pluralize, url_for([:admin, @object.class])
     breadcrumb @object.simple_title, url_for([:admin, @object])
@@ -46,12 +53,5 @@ class Admin::VersionsController < Admin::BaseController
   
   def get_admin_list
     @list = Secretary::Version.admin.list
-  end
-
-  #--------------
-  
-  def get_object
-    Rails.logger.warn "Warning: unsafe object fectching in #{__FILE__}"
-    @object = to_class(params[:resources]).find(params[:resource_id])
   end
 end

@@ -25,7 +25,6 @@ RSpec.configure do |config|
   
   config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }
   config.include FactoryGirl::Syntax::Methods
-  config.include AdminResource::Helpers
   config.include ThinkingSphinxHelpers
   config.include RemoteStubs
   config.include PresenterHelper

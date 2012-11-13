@@ -1,12 +1,12 @@
-## 
-# AdminResource::Helpers::Model
-
+##
+# AdminResource::Model::Methods
+#
+# A bunch of methods that help AdminResource be awesome.
+#
 module AdminResource
-  module Helpers
-    module Model
-      def self.included(base)
-        base.extend ClassMethods
-      end
+  module Model
+    module Methods
+      extend ActiveSupport::Concern
       
       module ClassMethods
         def to_title
@@ -95,10 +95,11 @@ module AdminResource
       # Define some defaults for as_json
       # Override `self.json` to add attributes
       # or override any of these.
+      # TODO: Make this use ActiveModel's `as_json`
       def as_json(*args)
         {
           :id         => self.id,
-          :obj_key    => self.obj_key,          
+          :obj_key    => self.obj_key,
           :link_path  => self.link_path,
           :to_title   => self.to_title,
           :edit_path  => self.admin_edit_path
@@ -134,6 +135,6 @@ module AdminResource
       def exists_in_django?
         self.class.exists_in_django?
       end
-    end
-  end
-end
+    end # Methods
+  end # Model
+end # AdminResource

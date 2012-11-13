@@ -1,6 +1,19 @@
 require File.expand_path("../../spec_helper", __FILE__)
 
 describe Secretary::HasSecretary do
+  describe "has_secretary?" do
+    it "returns false if no has_secretary declared" do
+      User.has_secretary?.should eq false
+    end
+    
+    it "returns true if @_has_secretary is true" do
+      User.instance_variable_set(:@_has_secretary, true)
+      User.has_secretary?.should eq true
+    end
+  end
+  
+  #---------------
+  
   describe "has_secretary" do
     before :each do
       user = User.create(name: "Bryan")
@@ -9,6 +22,11 @@ describe Secretary::HasSecretary do
     
     let(:new_story)   { Secretary::Test::Story.new(headline: "Cool Story, Bro", body: "Some cool text.") }
     let(:other_story) { Secretary::Test::Story.create(headline: "Cooler Story, Bro", body: "Some cooler text.") }
+    
+    it "sets @has_secretary to true" do
+      Secretary::Test::Story.instance_variable_get(:@_has_secretary).should eq true
+      Secretary::Test::Story.has_secretary?.should eq true
+    end
     
     it "adds the has_many association for versions" do
       new_story.should have_many(:versions).dependent(:destroy).class_name("Secretary::Version")
@@ -19,6 +37,7 @@ describe Secretary::HasSecretary do
     end
     
     it "generates a version on create" do
+      Secretary::Version.count.should eq 0
       new_story.save!
       Secretary::Version.count.should eq 1
       new_story.versions.count.should eq 1

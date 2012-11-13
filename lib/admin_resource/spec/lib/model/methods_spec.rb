@@ -1,6 +1,6 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
-describe AdminResource::Helpers::Model do
+describe AdminResource::Model::Methods do
   describe "::to_title" do
     it "returns the titleized class name" do
       Person.to_title.should eq "Person"

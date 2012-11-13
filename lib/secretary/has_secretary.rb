@@ -1,12 +1,21 @@
 module Secretary
   module HasSecretary
+    #---------------------
+    # has_secretary?
+    # See if a class is versioned
+    def has_secretary?
+      !!@_has_secretary
+    end
+    
+    #---------------------
     # has_secretary
     # Apply to any class that should be versioned
-    #
-    def has_secretary(options={})      
+    def has_secretary(options={})
+      @_has_secretary = true
+      
       has_many :versions, class_name: "Secretary::Version", as: :versioned, dependent: :destroy
       attr_accessor :logged_user_id, :action
-
+      
       before_create :set_create
       before_update :set_update
       after_save    :generate_version, if: -> { self.changed_attributes.present? }
@@ -14,6 +23,8 @@ module Secretary
       
       send :include, InstanceMethods
     end
+
+    #---------------------
     
     module InstanceMethods
       def generate_version
@@ -36,5 +47,5 @@ module Secretary
         @action = nil
       end
     end
-  end  
+  end
 end

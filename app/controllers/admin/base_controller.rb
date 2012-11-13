@@ -1,23 +1,25 @@
-class Admin::BaseController < ActionController::Base  
-  protect_from_forgery
+class Admin::BaseController < ActionController::Base
+  include AdminResource::Breadcrumbs
+  
   abstract!
+  protect_from_forgery
   
-  before_filter :require_admin, :root_breadcrumb, :set_sections
   layout 'admin'
+  before_filter :require_admin, :root_breadcrumb, :set_sections
   
-  # -- Login checks -- #
+  #------------------------
   
   helper_method :admin_user
   def admin_user
     begin
-      if session['_auth_user_id']
-        @admin_user ||= AdminUser.find(session['_auth_user_id'])
-      end
-    rescue
+      @admin_user ||= AdminUser.find(session['_auth_user_id'])
+    rescue ActiveRecord::RecordNotFound
       session['_auth_user_id'] = nil
       @admin_user              = nil
     end
   end
+
+  #------------------------
   
   def require_admin
     # Only allow in if admin_user is set, and 
@@ -27,23 +29,38 @@ class Admin::BaseController < ActionController::Base
       redirect_to admin_login_path and return false
     end
   end
+
+  #------------------------
   
-  def breadcrumb(*args)
-    @breadcrumbs ||= []
-    pairs = args.each_slice(2).map { |pair| { title: pair[0], link: pair[1] } }
-    pairs.each { |pair| @breadcrumbs.push(pair) }
+  def authorize!(resource=nil)
+    resource ||= AdminResource::Helpers::Naming.to_class(params[:controller])
+    
+    if !admin_user.can_manage?(resource)
+      handle_unauthorized(resource)
+    end
   end
-  
-  attr_reader :breadcrumbs  
-  helper_method :breadcrumbs
+
+  #------------------------
   
   protected
+  
   # Just setup the @sections variable so the views can add to it.
   def set_sections
     @sections = {}
   end
   
+  #------------------------
+  # Always want to add this link to the Breadcrumbs
   def root_breadcrumb
     breadcrumb "KPCC Admin", admin_root_path
+  end
+
+  #------------------------
+  
+  private
+  
+  def handle_unauthorized(resource)
+    redirect_to admin_root_path, alert: "You don't have permission to manage #{resource.to_title.pluralize}"
+    return false
   end
 end

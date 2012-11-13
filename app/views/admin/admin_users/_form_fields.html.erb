@@ -9,8 +9,20 @@
 <% end %>
 
 <%= form_block "Permissions" do %>
-  <%= f.input :is_staff %>
+  <%= f.input :is_staff, hint: "May this user login to the admin?" %>
   <%= f.input :is_active %>
-  <%= f.input :is_staff %>
   <%= f.input :is_superuser %>
+  
+  <% if admin_user.can_manage?(Permission) %>
+    <%= f.association :permissions, include_blank: "NO PERMISSIONS",
+        hint: "Which resources can this user manage?<br />" \
+        "Selecting a resource gives this user the ability to <br />" \
+        "Create, Read, Update, and Delete *any* of those records." %>
+  <% else %>
+    <ul>
+      <% record.permissions.each do |permission| %>
+        <li><%= permission %></li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>

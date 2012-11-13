@@ -8,7 +8,7 @@ require 'database_cleaner/cucumber'
 require 'fakeweb'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-World(FactoryGirl::Syntax::Methods, FormFillers, DatePathHelper, AdminResource::Helpers::Controller)
+World(FactoryGirl::Syntax::Methods, FormFillers, DatePathHelper)
 
 Capybara.default_selector           = :css
 ActionController::Base.allow_rescue = false

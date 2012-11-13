@@ -14,7 +14,5 @@ RailsContentMap.create(django_content_type_id: 121,  rails_class_name: "Featured
 
 # Setup permissions based on Admin Resource's regsitered models.
 AdminResource.config.registered_models.each do |resource|
-  Permission::DEFAULT_ACTIONS.each do |action|
-    Permission.create(resource: resource, action: action)
-  end
+  Permission.create(resource: resource)
 end

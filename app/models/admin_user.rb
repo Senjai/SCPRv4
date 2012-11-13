@@ -28,7 +28,6 @@ class AdminUser < ActiveRecord::Base
   
   # ------------------
   # Validation
-  validates :email, uniqueness: true, allow_blank: true
   validates :unencrypted_password, confirmation: true
   validates_presence_of :unencrypted_password, on: :create
   
@@ -45,31 +44,35 @@ class AdminUser < ActiveRecord::Base
   has_many :admin_user_permissions
   has_many :permissions, through: :admin_user_permissions
   
-  # ----------------
 
+  # ----------------
+  
+  class << self
+    def authenticate(username, unencrypted_password)
+      if user = find_by_username(username)
+        algorithm, salt, hash = user.password.split('$')      
+        if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
+          return user
+        else
+          return false
+        end
+      else
+        return false
+      end
+    end
+  end
+
+
+  # ----------------
+  
   attr_accessor :unencrypted_password, :unencrypted_password_confirmation
   
   # ----------------
 
-  def allowed_to?(action, resource)
-    self.is_superuser? || self.permissions.where(resource: resource.to_s, action: Permission.normalize_rest(action)).first
+  def can_manage?(*resources)
+    self.is_superuser? || (allowed_resources & resources).present?
   end
-  
-  # ----------------
-  
-  def self.authenticate(username, unencrypted_password)
-    if user = find_by_username(username)
-      algorithm, salt, hash = user.password.split('$')      
-      if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
-        return user
-      else
-        return false
-      end
-    else
-      return false
-    end
-  end
-  
+
   
   # ----------------
   
@@ -167,5 +170,13 @@ class AdminUser < ActiveRecord::Base
     begin
       self[column] = SecureRandom.urlsafe_base64
     end while AdminUser.exists?(column => self[column])
+  end
+
+  #----------------
+  
+  private
+    
+  def allowed_resources
+    @allowed_resources ||= self.permissions.map { |p| p.resource.constantize }
   end
 end

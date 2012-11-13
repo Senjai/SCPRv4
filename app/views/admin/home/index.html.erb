@@ -5,9 +5,12 @@
     <ul class="nav nav-list well">
     
     <% @nav_groups.each do |title, attributes| %>
+      <%# TODO this still shows headers even if the section is blank %>
       <li class="nav-header"><i class="<%=attributes[:icon]%>"></i><%= title %></li>
       <% attributes[:models].each do |model| %>
-        <li><%= link_to model.constantize.name.titleize.pluralize, url_for([:admin, model.constantize]) %></li>
+        <%= guard model do %>
+          <li><%= link_to model.constantize.name.titleize.pluralize, url_for([:admin, model.constantize]) %></li>
+        <% end %>
       <% end %>
     <% end %>
     
@@ -45,17 +48,23 @@
         <div class="row-fluid">
           <div class="span6">
             <ul class="unstyled dashboard-actions">
-              <li><%= link_to "Add a News Story", new_admin_news_story_path %></li>
-              <li><%= link_to "Add a Blog Entry", new_admin_blog_entry_path %></li>
-              <li><%= link_to "Add a Show Segment", new_admin_show_segment_path %></li>
+              <%= guard NewsStory do %><li><%= link_to "Add a News Story", new_admin_news_story_path %></li><% end %>
+              <%= guard BlogEntry do %><li><%= link_to "Add a Blog Entry", new_admin_blog_entry_path %></li><% end %>
+              <%= guard ShowSegment do %><li><%= link_to "Add a Show Segment", new_admin_show_segment_path %></li><% end %>
               <li><%= link_to "Upload Assets", "http://#{Rails.application.config.assethost.server}/a" %></li>
             </ul>
           </div> <!-- span -->
           <div class="span6">
             <ul class="unstyled dashboard-actions">
-              <li><%= link_to("Update the Current Homepage", edit_admin_homepage_path(@latest_homepage)) if @latest_homepage.present? %></li>
-              <li><%= link_to "Create a New Homepage", new_admin_homepage_path %></li>
-              <li><%= link_to "Add a Breaking News Alert", new_admin_breaking_news_alert_path %></li>
+              <%= guard Homepage do %>
+                <% if @latest_homepage.present? %>
+                  <li><%= link_to("Update the Current Homepage", edit_admin_homepage_path(@latest_homepage)) %></li>
+                <% end %>
+                
+                <li><%= link_to "Create a New Homepage", new_admin_homepage_path %></li>
+              <% end %>
+              
+              <%= guard BreakingNewsAlert do %><li><%= link_to "Add a Breaking News Alert", new_admin_breaking_news_alert_path %></li><% end %>
             </ul>
           </div> <!-- span -->
         </div> <!-- row-fluid -->
@@ -80,7 +89,7 @@
             <% @current_user_activities.each do |version| %>
               <tbody class="list">
                 <tr>
-                  <td><%= link_to version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
+                  <td><%= guarded_link_to version.versioned.class, version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
                   <td><%= display_datetime(version.created_at) %></td>
                   <td><%= version.description %></td>
                   <td><%= display_status(version.frozen_object.status) if version.frozen_object.respond_to? :status %></td>
@@ -106,7 +115,7 @@
             <% @latest_activities.each do |version| %>
               <tbody class="list">
                 <tr>
-                  <td><%= link_to version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
+                  <td><%= guarded_link_to version.versioned.class, version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
                   <td><%= display_datetime(version.created_at) %></td>
                   <td><%= version.description %></td>
                   <td><%= version.user.to_title %></td>
