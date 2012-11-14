@@ -67,10 +67,17 @@ class AdminUser < ActiveRecord::Base
   
   attr_accessor :unencrypted_password, :unencrypted_password_confirmation
   
-  # ----------------
-
+  #----------------
+  # Check if a user can manage the passed-in resource(s)
+  #
+  # If multiple resources are passed in, a user must be
+  # allowed to manage ALL of them in order for this to
+  # return true.
+  #
+  # Constants must be passed in.
+  #
   def can_manage?(*resources)
-    self.is_superuser? || (allowed_resources & resources).present?
+    self.is_superuser? || (allowed_resources & resources) == resources
   end
 
   
