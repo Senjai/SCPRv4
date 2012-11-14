@@ -35,12 +35,13 @@ ActiveRecord::Schema.define(:version => 20121112231444) do
 
   create_table "admin_user_permissions", :force => true do |t|
     t.integer  "admin_user_id"
+    t.integer  "permission_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "permission_id"
   end
 
   add_index "admin_user_permissions", ["admin_user_id"], :name => "index_admin_user_permissions_on_admin_user_id"
+  add_index "admin_user_permissions", ["permission_id"], :name => "index_admin_user_permissions_on_permission_id"
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id"
@@ -669,6 +670,8 @@ ActiveRecord::Schema.define(:version => 20121112231444) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "permissions", ["resource"], :name => "index_permissions_on_resource_and_action"
 
   create_table "pij_query", :force => true do |t|
     t.string   "slug",         :limit => 50
