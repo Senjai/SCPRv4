@@ -1,3 +1,8 @@
+##
+# ContentEmail
+#
+# An e-mail associated with any object
+#
 class ContentEmail
   include ActiveModel::Validations
   include ActiveModel::Conversion
