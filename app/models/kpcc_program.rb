@@ -1,5 +1,5 @@
 class KpccProgram < ActiveRecord::Base
-  include Model::Validations::SlugValidation
+  include Concern::Validations::SlugValidation
   
   self.table_name = 'programs_kpccprogram'
   ROUTE_KEY       = "program"

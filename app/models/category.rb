@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  include Model::Validations::SlugValidation
+  include Concern::Validations::SlugValidation
   
   self.table_name = 'contentbase_category'
   ROUTE_KEY       = "category"

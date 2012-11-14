@@ -1,19 +1,18 @@
 class ShowEpisode < ContentBase
-  include Model::Methods::StatusMethods
-  include Model::Methods::PublishingMethods
-  include Model::Validations::ContentValidation
-  include Model::Callbacks::SetPublishedAtCallback
-  include Model::Associations::ContentAlarmAssociation
-  include Model::Associations::AudioAssociation
-  include Model::Associations::AssetAssociation
-  include Model::Scopes::SinceScope
+  include Concern::Methods::StatusMethods
+  include Concern::Methods::PublishingMethods
+  include Concern::Methods::HeadlineMethods
+  include Concern::Validations::ContentValidation
+  include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::AudioAssociation
+  include Concern::Associations::AssetAssociation
+  include Concern::Scopes::SinceScope
   
   self.table_name = "shows_episode"
   ROUTE_KEY       = "episode"
   has_secretary
-    
-  acts_as_content comments: false
-                  
+                    
   # -------------------
   # Administration
   administrate do
@@ -64,11 +63,10 @@ class ShowEpisode < ContentBase
     end
   end
   
-  # -------------------
-  # Since episode bodies are short, 
-  # just use them for the teaser.
+  #--------------------
+  # Teaser just returns the body.
   def teaser
-    body
+    self.body
   end
   
   # -------------------

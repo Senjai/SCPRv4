@@ -1,5 +1,5 @@
 class PressRelease < ActiveRecord::Base
-  include Model::Validations::SlugValidation  
+  include Concern::Validations::SlugValidation  
   ROUTE_KEY = "press_release"
   
   #-------------

@@ -1,6 +1,6 @@
 ##
 # Shared Associations
-# Model::Associations
+# Concern::Associations
 #
 
 #---------------

@@ -1,6 +1,6 @@
 ## 
 # Shared Validations
-# Model::Validations
+# Concern::Validations
 #
 def symbolize(klass)
   klass.to_s.underscore.to_sym
@@ -67,7 +67,7 @@ shared_examples_for "content validation" do
     
     it { should validate_presence_of(:status) }
     it { should validate_presence_of(:headline) }
-    it { should validate_presence_of(:body).with_message(Model::Validations::ContentValidation::BODY_MESSAGE) }
+    it { should validate_presence_of(:body).with_message(Concern::Validations::ContentValidation::BODY_MESSAGE) }
   end
   
   context "should not validate" do

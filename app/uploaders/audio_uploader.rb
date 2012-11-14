@@ -1,5 +1,8 @@
 # encoding: utf-8
 
+##
+# AudioUploader
+#
 class AudioUploader < CarrierWave::Uploader::Base
   storage :file
   
