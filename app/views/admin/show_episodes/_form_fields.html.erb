@@ -8,7 +8,7 @@
   <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
 <% end %>
 
-<%= section "publishing", f, record %>
+<%= f.section "publishing" %>
 
-<%= section "assets", f, record %>
-<%= section "audio", f, record %>
+<%= f.section "assets" %>
+<%= f.section "audio" %>

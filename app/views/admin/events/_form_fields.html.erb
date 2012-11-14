@@ -12,7 +12,7 @@
 <% end %>
 
 <%= form_block "Short Details" do %>
-  <%= section "slug", f, record %>
+  <%= f.section "slug" %>
   <%= f.input :teaser, as: :text, input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
 <% end %>
 
@@ -42,7 +42,7 @@
   <%= f.input :archive_description, input_html: { class: "tinymce" }, hint: "Description to display after the event has happened" %>
 <% end %>
 
-<%= section "assets", f, record do %>
+<%= f.section "assets" do %>
   <%= f.input :event_asset_scheme, 
               :collection => ContentBase::STORY_SCHEMES, 
               :selected   => record.event_asset_scheme || ContentBase::STORY_SCHEMES[0], 
@@ -50,4 +50,4 @@
                              "NOTE: For videos, choose 'Wide'" %>
 <% end %>
 
-<%= section "audio", f, record %>
+<%= f.section "audio" %>

@@ -3,11 +3,11 @@
   <%= f.input :query_type, collection: PijQuery::QUERY_TYPES %>
 <% end %>
 
-<%= section "full_details", f, record %>
+<%= f.section "full_details" %>
 
 <%= form_block "Short Details" do %>
   <%= f.input :teaser, as: :text, input_html: { class: "tiny" } %>
-  <%= section "slug", f, record %>
+  <%= f.section "slug" %>
 <% end %>
 
 <%= form_block "Display Options" do %>
@@ -21,4 +21,4 @@
   <%= f.input :expires_at %>
 <% end %>
 
-<%= section "assets", f, record %>
+<%= f.section "assets" %>
