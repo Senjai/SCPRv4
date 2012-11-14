@@ -3,6 +3,31 @@ class AdminUser < ActiveRecord::Base
   self.table_name = "auth_user"
   has_secretary
   
+  # ----------------
+  # Scopes
+  scope :active, -> { where(is_active: true) }
+  
+  # ----------------
+  # Association
+  has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
+  has_one  :bio, foreign_key: "user_id"
+  has_many :admin_user_permissions
+  has_many :permissions, through: :admin_user_permissions
+  
+  # ------------------
+  # Validation
+  validates :unencrypted_password, confirmation: true
+  validates_presence_of :unencrypted_password, on: :create
+  
+  # ----------------
+  # Callbacks
+  before_validation :downcase_email
+  before_validation :generate_password, on: :create, if: -> { unencrypted_password.blank? }
+  before_create :generate_username, if: -> { username.blank? }
+  before_create :digest_password, if: -> { unencrypted_password.present? }
+
+  #-------------------
+  # Administration
   administrate do
     define_list do
       list_per_page :all
@@ -17,33 +42,13 @@ class AdminUser < ActiveRecord::Base
     end
   end
   
-  
   # ----------------
-  # Callbacks
-  before_validation :downcase_email
-  before_validation :generate_password, on: :create, if: -> { unencrypted_password.blank? }
-  before_create :generate_username, if: -> { username.blank? }
-  before_create :digest_password, if: -> { unencrypted_password.present? }
-  
-  
-  # ------------------
-  # Validation
-  validates :unencrypted_password, confirmation: true
-  validates_presence_of :unencrypted_password, on: :create
-  
-  
-  # ----------------
-  # Scopes
-  scope :active, -> { where(is_active: true) }
-
-
-  # ----------------
-  # Association
-  has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
-  has_one  :bio, foreign_key: "user_id"
-  has_many :admin_user_permissions
-  has_many :permissions, through: :admin_user_permissions
-  
+  # Sphinx
+  define_index do
+    indexes username
+    indexes first_name
+    indexes last_name
+  end
 
   # ----------------
   

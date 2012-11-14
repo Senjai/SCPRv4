@@ -87,37 +87,5 @@ describe Blog do
         Blog.active.should eq active_blogs
       end
     end
-    
-    describe "#is_news" do
-      it "returns only news blogs" do
-        news_blogs     = create_list :blog, 1, is_news: true
-        non_news_blogs = create_list :blog, 2, is_news: false
-        Blog.is_news.should eq news_blogs
-      end
-    end
-    
-    describe "#is_not_news" do
-      it "returns only non-news blogs" do
-        news_blogs     = create_list :blog, 1, is_news: true
-        non_news_blogs = create_list :blog, 2, is_news: false
-        Blog.is_not_news.should eq non_news_blogs
-      end
-    end
-    
-    describe "#local" do
-      it "returns only local blogs" do
-        local_blogs  = create_list :blog, 1, is_remote: false
-        remote_blogs = create_list :blog, 2, is_remote: true
-        Blog.local.should eq local_blogs
-      end
-    end
-    
-    describe "#remote" do
-      it "returns only remote blogs" do
-        local_blogs  = create_list :blog, 1, is_remote: false
-        remote_blogs = create_list :blog, 2, is_remote: true
-        Blog.remote.should eq remote_blogs
-      end
-    end
   end
 end

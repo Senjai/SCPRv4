@@ -1,8 +1,9 @@
 class PijQueriesController < ApplicationController  
   def index
-    @featured  = PijQuery.visible.featured
-    @evergreen = PijQuery.visible.not_featured.evergreen
-    @news      = PijQuery.visible.not_featured.news
+    @featured     = PijQuery.visible.where(is_featured: true)
+    @not_featured = PijQuery.visible.where(is_featured: false)
+    @evergreen    = @not_featured.evergreen
+    @news         = @not_featured.news
   end
   
   def show

@@ -2,7 +2,7 @@
 # SinceScope
 # Basic scope to get objects published after the passed-in date
 #
-# Required attributse: [:published_at]
+# Required attributes: [:published_at]
 #
 module Model
   module Scopes

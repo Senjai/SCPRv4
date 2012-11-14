@@ -23,13 +23,6 @@ describe Podcast do
   #---------------
   
   describe "scopes" do
-    describe "::listed" do
-      it "only selects listed" do
-        listed = create :podcast, is_listed: true
-        unlisted = create :podcast, is_listed: false
-        Podcast.listed.should eq [listed]
-      end
-    end
   end
   
   #---------------

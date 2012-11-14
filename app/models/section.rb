@@ -2,19 +2,10 @@ class Section < ActiveRecord::Base
   include Model::Validations::SlugValidation
   has_secretary
   ROUTE_KEY = "section"
-  
-  #----------
-  # Administration
-  administrate do
-    define_list do
-      list_per_page :all
-      
-      column :id
-      column :title
-      column :slug
-    end
-  end
 
+  #----------
+  # Scopes
+  
   #----------
   # Association
   has_many    :section_categories
@@ -30,6 +21,27 @@ class Section < ActiveRecord::Base
   # Validation
   validates :title, presence: true
   validates :slug, uniqueness: true
+  
+  #----------
+  # Callbacks
+  
+  #----------
+  # Administration
+  administrate do
+    define_list do
+      list_per_page :all
+      
+      column :id
+      column :title
+      column :slug
+    end
+  end
+  
+  #----------
+  # Sphinx
+  define_index do
+    indexes title
+  end
   
   #----------
   

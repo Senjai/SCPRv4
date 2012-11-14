@@ -15,7 +15,31 @@ class BlogEntry < ContentBase
   
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
   ROUTE_KEY = "blog_entry"
-    
+
+  # ------------------
+  # Scopes
+  
+  # ------------------
+  # Validation
+  validates_presence_of :blog
+  
+  def should_validate?
+    pending? or published?
+  end
+  
+  # ------------------
+  # Callbacks
+  
+  # ------------------
+  # Association
+  belongs_to :blog
+
+  has_many :tagged, class_name: "TaggedContent", as: :content
+  has_many :tags, through: :tagged, dependent: :destroy
+  
+  has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
+  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
+  
   # ------------------
   # Administration
   administrate do
@@ -29,34 +53,9 @@ class BlogEntry < ContentBase
       column :published_at
     end
   end
-
-
-  # ------------------
-  # Validation
-  validates_presence_of :blog
-  
-  def should_validate?
-    pending? or published?
-  end
-  
   
   # ------------------
-  # Association
-  belongs_to :blog
-
-  has_many :tagged, class_name: "TaggedContent", as: :content
-  has_many :tags, through: :tagged, dependent: :destroy
-  
-  has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
-  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
-  
-  
-  # ------------------
-  # Scopes
-  
-
-  # ------------------
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes body
@@ -71,12 +70,14 @@ class BlogEntry < ContentBase
     where "#{BlogEntry.table_name}.status = #{STATUS_LIVE} and #{Blog.table_name}.is_active = 1"
     join audio
   end
-    
-  #----------
+  
+  #---------------------
   
   def byline_elements
     []
   end
+  
+  #-------------------
   
   def disqus_identifier
     if dsq_thread_id.present? && wp_id.present?
@@ -85,6 +86,8 @@ class BlogEntry < ContentBase
       super
     end
   end
+
+  #-------------------
   
   def disqus_shortname
     if dsq_thread_id.present? && wp_id.present?
@@ -93,10 +96,14 @@ class BlogEntry < ContentBase
       super
     end
   end
+
+  #-------------------
   
   def previous
     self.class.published.where("published_at < ? and blog_id = ?", self.published_at, self.blog_id).first
   end
+
+  #-------------------
 
   def next
     self.class.published.where("published_at > ? and blog_id = ?", self.published_at, self.blog_id).first

@@ -1,4 +1,6 @@
 class Podcast < ActiveRecord::Base
+  has_secretary
+  
   ROUTE_KEY = "podcast"
 
   ITEM_TYPES = [
@@ -8,6 +10,22 @@ class Podcast < ActiveRecord::Base
   ]
 
   SOURCES = ["KpccProgram", "OtherProgram", "Blog"]
+  
+  #-------------
+  # Scopes
+  
+  #-------------
+  # Association  
+  belongs_to :source, polymorphic: true
+  belongs_to :category
+  
+  #-------------
+  # Validation
+  validates :slug, uniqueness: true, presence: true
+  validates :title, :url, :podcast_url, presence: true
+  
+  #-------------
+  # Callbacks
   
   #-------------
   # Administration
@@ -21,27 +39,15 @@ class Podcast < ActiveRecord::Base
       column :is_listed
     end
   end
-
-  has_secretary
-
-
-  #-------------
-  # Association  
-  belongs_to :source, polymorphic: true
-  belongs_to :category
-  
   
   #-------------
-  # Validation
-  validates :slug, uniqueness: true, presence: true
-  validates :title, :url, :podcast_url, presence: true
+  # Sphinx
+  define_index do
+    indexes title
+    indexes slug
+    indexes description
+  end
   
-  
-  #-------------
-  # Scopes
-  scope :listed, -> { where(is_listed: true) }
-
-
   #-------------
   
   def content(limit=25)

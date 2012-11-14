@@ -24,29 +24,21 @@ class Event < ActiveRecord::Base
     'pick' => 'Staff Picks'
   }
   
+  #-------------------
+  # Scopes
+  scope :published,             -> { where(is_published: true) }
+  scope :forum,                 -> { published.where("etype IN (?)", ForumTypes) }
+  scope :sponsored,             -> { published.where("etype = ?", "spon") }
   
-  # -------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "created_at desc"
-      
-      column :headline
-      column :starts_at
-      column :location_name, header: "Location"
-      column :etype,         header: "Type", display: proc { Event::EVENT_TYPES[self.etype] }
-      column :kpcc_event,    header: "KPCC Event?"
-      column :is_published,  header: "Published?"
-    end
-  end
-
-
-  # -------------------
+  scope :upcoming,              -> { published.where("starts_at > ?", Time.now).order("starts_at") }
+  scope :upcoming_and_current,  -> { published.where("ends_at > :now or starts_at > :now", now: Time.now).order("starts_at") }
+  scope :past,                  -> { published.where("ends_at < :now", now: Time.now).order("starts_at desc") }
+  
+  #-------------------
   # Associations
   belongs_to :kpcc_program
   
-  
-  # -------------------
+  #-------------------
   # Validations
   validates :headline, presence: true
   validates :etype, :starts_at, :body, presence: true, if: :should_validate?
@@ -61,18 +53,34 @@ class Event < ActiveRecord::Base
     !!is_published
   end
   
+  #-------------------
+  # Callbacks
   
-  # -------------------
-  # Scopes
-  scope :published,             -> { where(is_published: true) }
-  scope :forum,                 -> { published.where("etype IN (?)", ForumTypes) }
-  scope :sponsored,             -> { published.where("etype = ?", "spon") }
+  #-------------------
+  # Administration
+  administrate do
+    define_list do
+      list_order "created_at desc"
+      
+      column :headline
+      column :starts_at
+      column :location_name, header: "Location"
+      column :etype,         header: "Type", display: proc { Event::EVENT_TYPES[self.etype] }
+      column :kpcc_event,    header: "KPCC Event?"
+      column :is_published,  header: "Published?"
+    end
+  end
   
-  scope :upcoming,              -> { published.where("starts_at > ?", Time.now).order("starts_at") }
-  scope :upcoming_and_current,  -> { published.where("ends_at > :now or starts_at > :now", now: Time.now).order("starts_at") }
-  scope :past,                  -> { published.where("ends_at < :now", now: Time.now).order("starts_at desc") }
-
-
+  #-------------------
+  # Sphinx
+  define_index do
+    indexes headline
+    indexes body
+    indexes sponsor
+    indexes location_name
+    indexes city
+  end
+  
   # -------------------
   
   def status

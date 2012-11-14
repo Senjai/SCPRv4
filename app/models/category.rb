@@ -4,6 +4,23 @@ class Category < ActiveRecord::Base
   self.table_name = 'contentbase_category'
   ROUTE_KEY       = "category"
   has_secretary
+  
+  #-------------------
+  # Scopes
+  
+  #-------------------
+  # Associations
+  belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
+  
+  #-------------------
+  # Validations
+  validates :title, presence: true
+  
+  #-------------------
+  # Callbacks
+  
+  #-------------------
+  # Administration
   administrate do
     define_list do
       list_per_page :all
@@ -15,8 +32,11 @@ class Category < ActiveRecord::Base
     end
   end
   
-  belongs_to :comment_bucket, :class_name => "FeaturedCommentBucket"
-  validates :title, presence: true
+  #-------------------
+  # Sphinx
+  define_index do
+    indexes title
+  end
   
   #----------
 

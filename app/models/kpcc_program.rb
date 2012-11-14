@@ -3,7 +3,6 @@ class KpccProgram < ActiveRecord::Base
   
   self.table_name = 'programs_kpccprogram'
   ROUTE_KEY       = "program"
-  
   has_secretary
   
   Featured = [
@@ -19,7 +18,29 @@ class KpccProgram < ActiveRecord::Base
     "hidden"     => "Not visible on site"
   }
   
-  # -------------------
+  #-------------------
+  # Scopes
+  scope :active,         -> { where(:air_status => ['onair','online']) }
+  scope :can_sync_audio, -> { where(air_status: "onair").where("audio_dir is not null").where("audio_dir != ?", "") }
+  
+  #-------------------
+  # Associations
+  has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
+  has_many :episodes, foreign_key: "show_id", class_name: "ShowEpisode"
+  has_many :recurring_schedule_slots, as: :program
+  has_many :schedules
+  belongs_to :missed_it_bucket
+  belongs_to :blog
+  
+  #-------------------
+  # Validations
+  validates :title, :air_status, presence: true
+  validates :slug, uniqueness: true
+  
+  #-------------------
+  # Callbacks
+  
+  #-------------------
   # Administration
   administrate do
     define_list do
@@ -31,25 +52,15 @@ class KpccProgram < ActiveRecord::Base
     end
   end
   
-  # -------------------
-  # Validations
-  validates :title, :air_status, presence: true
-  validates :slug, uniqueness: true
+  #-------------------
+  # Sphinx
+  define_index do
+    indexes title
+    indexes description
+    indexes host
+  end
   
-  # -------------------
-  # Associations
-  has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
-  has_many :episodes, foreign_key: "show_id", class_name: "ShowEpisode"
-  has_many :recurring_schedule_slots, as: :program
-  has_many :schedules
-  belongs_to :missed_it_bucket
-  belongs_to :blog
-  
-  
-  # -------------------
-  # Scopes
-  scope :active,         -> { where(:air_status => ['onair','online']) }
-  scope :can_sync_audio, -> { where(air_status: "onair").where("audio_dir is not null").where("audio_dir != ?", "") }
+  #-------------------
   
   def published?
     self.air_status != "hidden"

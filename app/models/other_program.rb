@@ -3,10 +3,39 @@ class OtherProgram < ActiveRecord::Base
   
   self.table_name =  'programs_otherprogram'  
   has_secretary
-
   ROUTE_KEY = "program"
 
-  # -------------------
+  #-------------------
+  # Scopes
+  scope :active, -> { where(:air_status => ['onair','online']) }
+  
+  #-------------------
+  # Associations
+  has_many :recurring_schedule_slots, as: :program
+  has_many :schedules
+  
+  #-------------------
+  # Validations
+  validates :title, :air_status, presence: true
+  validates :slug, uniqueness: true
+  
+  # Temporary
+  validates :podcast_url, presence: true, if: -> { self.rss_url.blank? }
+  validates :rss_url, presence: true, if: -> { self.podcast_url.blank? }
+  
+  validate :rss_or_podcast_present
+  def rss_or_podcast_present
+    if self.podcast_url.blank? && self.rss_url.blank?
+      errors.add(:base, "Must specify either a Podcast url or an RSS url")
+      errors.add(:podcast_url, "")
+      errors.add(:rss_url, "")
+    end
+  end
+  
+  #-------------------
+  # Callbacks
+  
+  #-------------------
   # Administration
   administrate do
     define_list do
@@ -18,40 +47,23 @@ class OtherProgram < ActiveRecord::Base
       column :air_status
     end
   end
-
-
-  # -------------------
-  # Associations
-  has_many :recurring_schedule_slots, as: :program
-  has_many :schedules
-
-  # -------------------
-  # Validations
-  validates :title, :air_status, presence: true
-  validates :slug, uniqueness: true
   
-  validate :rss_or_podcast_present
-  def rss_or_podcast_present
-    if self.podcast_url.blank? && self.rss_url.blank?
-      errors.add(:base, "Must specify either a Podcast url or an RSS url")
-      errors.add(:podcast_url, "")
-      errors.add(:rss_url, "")
-    end
+  #-------------------
+  # Sphinx
+  define_index do
+    indexes title
+    indexes description
+    indexes host
+    indexes produced_by
   end
 
-  # Temporary
-  validates :podcast_url, presence: true, if: -> { self.rss_url.blank? }
-  validates :rss_url, presence: true, if: -> { self.podcast_url.blank? }
-  
-  
-  # -------------------
-  # Scopes
-  scope :active, -> { where(:air_status => ['onair','online']) }
-  
+  #-------------------
   
   def display_segments
     false
   end
+
+  #-------------------
   
   def display_episodes
     false
@@ -74,7 +86,7 @@ class OtherProgram < ActiveRecord::Base
   end
   
   #----------
-  
+  # TODO Make this better
   def cache
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  
 

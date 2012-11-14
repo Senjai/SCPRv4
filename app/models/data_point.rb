@@ -19,6 +19,19 @@ class DataPoint < ActiveRecord::Base
   has_secretary
   
   #--------------
+  # Scopes
+  
+  #--------------
+  # Association
+  
+  #--------------
+  # Validation
+  validates :data_key, presence: true, uniqueness: true
+  
+  #--------------
+  # Callbacks
+  
+  #--------------
   # Administration
   administrate do
     define_list do
@@ -32,24 +45,28 @@ class DataPoint < ActiveRecord::Base
       column :updated_at
     end
   end
-
   
   #--------------
-  # Scopes
+  # Sphinx
+  define_index do
+    indexes data_key
+    indexes data_value
+  end
   
-  
-  #--------------
-  # Validation
-  validates :data_key, presence: true, uniqueness: true
-  
-  
-  #--------------
-  # Association
-  
-
   #--------------
   
   class << self
+    # DataPoint::to_hash lets us take an array and turn it into
+    # a hash, where the data_key is the key and the data_value
+    # is the value. 
+    #
+    # ...Why?
+    #
+    # Because otherwise we would have to use Ruby's Enumerable#find 
+    # everywhere, which is a lot slower than a hash. Also, the DataPoint
+    # model is modeled after a Hash - a key, and a value - so it makes
+    # sense to turn it into a real hash.
+    #
     def to_hash(collection)
       hash = {}
       collection.each { |obj| hash[obj.data_key] = DataPoint::Hashed.new(obj) }
@@ -62,13 +79,14 @@ class DataPoint < ActiveRecord::Base
   def json
     {
       :group_name => self.group_name,
-      :data_key => self.data_key,
+      :data_key   => self.data_key,
       :data_value => self.data_value
     }
   end
   
   #--------------
-  
+  # DataPoint::Hashed
+  #
   class Hashed
     delegate :data_value, :data_key, to: :@object
     

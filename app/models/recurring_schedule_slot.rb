@@ -8,7 +8,24 @@
 # the week.
 #
 class RecurringScheduleSlot < ActiveRecord::Base
+  has_secretary
   
+  #--------------
+  # Scopes
+  
+  #--------------
+  # Associations
+  belongs_to :program, polymorphic: true
+  
+  #--------------
+  # Validations
+  validates :start_time, :end_time, :program, presence: true
+  
+  #--------------
+  # Callbacks
+  
+  #--------------
+  # Administration
   administrate do
     define_list do
       list_per_page :all
@@ -19,23 +36,13 @@ class RecurringScheduleSlot < ActiveRecord::Base
       column :ends_at, display: proc { self.format_time(:ends_at) }
     end
   end
+
+  #--------------
+  # Sphinx
+  define_index do
+    indexes program.title
+  end
   
-  has_secretary
-  
-  #--------------
-  # Associations
-  belongs_to :program, polymorphic: true
-
-
-  #--------------
-  # Validations  
-  validates :start_time, :end_time, :program, presence: true
-
-
-  #--------------
-  # Scopes
-
-
   #--------------
   
   class << self
