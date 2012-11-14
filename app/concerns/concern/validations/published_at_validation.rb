@@ -4,7 +4,9 @@
 #
 # This module should not be included in models
 # which will have their published_at attribute
-# automatically updated.
+# automatically updated. It's for models where
+# the published_at attribute needs to be manually
+# inserted, such as ContentShell and VideoShell.
 #
 # Required attributes: [:published_at]
 # Also requires object to respond to :should_validate?

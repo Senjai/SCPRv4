@@ -28,7 +28,7 @@ module Concern
       #-----------------
       
       def status_text
-        ContentBase::STATUS_TEXT[ self.status ]
+        ContentBase::STATUS_TEXT[self.status]
       end
     end
   end
