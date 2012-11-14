@@ -25,7 +25,7 @@ RSpec.configure do |config|
     ActiveRecord::Base.establish_connection("isolated")
     migration = -> { AdminResourceMigration.new.up }
     silence_stream STDOUT, &migration
-    Dir[Rails.root.join("lib/admin_resource/spec/models/*.rb")].each { |f| load f }
+    Dir[Rails.root.join("lib/admin_resource/spec/test_classes/*.rb")].each { |f| load f }
   end
   
   config.before do

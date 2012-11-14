@@ -6,10 +6,17 @@ class AdminResourceMigration < ActiveRecord::Migration
       t.string  "location"
       t.string  "age"
       t.timestamps
-    end   
+    end
+    
+    create_table "pidgeons", force: true do |t|
+      t.string "chirp"
+      t.string "squak"
+      t.string "cockadoodledoo"
+    end
   end
   
   def down
     drop_table "people"
+    drop_table "pidgeons"
   end
 end
