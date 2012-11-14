@@ -11,12 +11,14 @@ module Concern
     module SlugUniqueForPublishedAtValidation
       extend ActiveSupport::Concern
 
-      include SlugValidation
       included do
-        validates :slug, unique_by_date: { scope: :published_at, filter: :day, message: "has already been used for that publish date." },
+        include SlugValidation
+        
+        validates :slug, 
+          unique_by_date: { scope: :published_at, filter: :day, message: "has already been used for that publish date." },
           if: :should_validate?
         #
       end
-    end
-  end
-end
+    end # SlugUniqueForPublishedAtValidation
+  end # Validations
+end # Concern

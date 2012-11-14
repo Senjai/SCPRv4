@@ -1,4 +1,4 @@
-guard :rspec, cli: "-c -f progress", all_after_pass: false do
+guard :rspec, cli: "-c -f progress --fail-fast", all_after_pass: false do
   # --format nested --profile --fail-fast
   watch(%r{^spec/.+_spec\.rb$})
   watch('spec/spec_helper.rb')  { "spec" }

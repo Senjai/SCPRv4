@@ -14,25 +14,25 @@ module Concern
         accepts_nested_attributes_for :alarm, reject_if: :should_reject_alarm?, allow_destroy: true
         
         before_save :destroy_alarm, if: :should_destroy_alarm?
-        
-        #------------------
-        
-        # If we're changing status from Pending to something else,
-        # and there was an alarm, get rid of it.
-        def should_destroy_alarm?
-          self.alarm.present? && self.status_changed? && self.status_was == ContentBase::STATUS_PENDING
-        end
-        
-        def should_reject_alarm?(attributes)
-          attributes['fire_at'].blank?
-        end
-
-        #------------------
-
-        def destroy_alarm
-          self.alarm.mark_for_destruction
-        end
       end
-    end
-  end
-end
+
+      #------------------
+      
+      # If we're changing status from Pending to something else,
+      # and there was an alarm, get rid of it.
+      def should_destroy_alarm?
+        self.alarm.present? && self.status_changed? && self.status_was == ContentBase::STATUS_PENDING
+      end
+      
+      def should_reject_alarm?(attributes)
+        attributes['fire_at'].blank?
+      end
+
+      #------------------
+
+      def destroy_alarm
+        self.alarm.mark_for_destruction
+      end
+    end # ContentAlarmAssociation
+  end # Associations
+end # Concern

@@ -82,81 +82,112 @@ class ContentBase < ActiveRecord::Base
   has_one :content_category,  as: :content  
   has_one :category,          through: :content_category
   
-  def self.published
-    where(status: STATUS_LIVE).order("published_at desc")
-  end
-  
-  #----------
-  
-  def self.content_classes
-    self::CONTENT_CLASSES[:content].collect {|k,v| v.constantize }
-  end
-  
-  def self.other_classes
-    self::CONTENT_CLASSES[:other].collect {|k,v| v.constantize }
-  end
-  
-  def self.all_classes
-    self.content_classes + self.other_classes
-  end
-  
-  #----------
-  
-  def self.get_model_for_obj_key(key)
-    # convert key from "app/model:id" to AppModel
-    key =~ /([^:]+):(\d+)/
-    
-    if $~
-      if ALL_CLASSES[ $~[1] ]
-        return ALL_CLASSES[ $~[1] ].constantize
-      end
+  #--------------------
+
+  class << self
+    def published
+      where(status: STATUS_LIVE).order("published_at desc")
     end
-  end
   
-  #----------
+    #--------------------
+  
+    def content_classes
+      self::CONTENT_CLASSES[:content].collect {|k,v| v.constantize }
+    end
+  
+    def other_classes
+      self::CONTENT_CLASSES[:other].collect {|k,v| v.constantize }
+    end
+  
+    def all_classes
+      self.content_classes + self.other_classes
+    end
     
-  def self.obj_by_key(key)
-    # convert key from "app/model:id" to AppModel.find(id)
-    key =~ /([^:]+):(\d+)/
-    
-    if $~
-      if ALL_CLASSES[ $~[1] ]
-        begin
-          return ALL_CLASSES[ $~[1] ].constantize.find($~[2])
-        rescue
-          return nil
+    #--------------------
+    # Cut down body to get teaser
+    def generate_teaser(text, length=180)
+      stripped_body = ActionController::Base.helpers.strip_tags(text).gsub("&nbsp;"," ").gsub(/\r/,'')
+      match = stripped_body.match(/^(.+)/)
+
+      if !match
+        return ""
+      else
+        first = match[1]
+        if first.length < length
+          return first
+        else
+          # try shortening this paragraph
+          short = first.match /^(.{#{length}}\w*)\W/
+          return short ? "#{short[1]}..." : first
         end
       end
     end
-    
-    return nil
-  end
+
+    #--------------------
   
-  #----------
-  
-  def self.obj_by_url(url)
-    begin
-      u = URI.parse(url)
-    rescue URI::InvalidURIError
-      return nil
-    end
+    def get_model_for_obj_key(key)
+      # convert key from "app/model:id" to AppModel
+      key =~ /([^:]+):(\d+)/
     
-    key = nil
-    CONTENT_MATCHES.detect do |k,v|
-      if u.path =~ k
-        key = [v,$~[1]].join(":")
+      if $~
+        if ALL_CLASSES[ $~[1] ]
+          return ALL_CLASSES[ $~[1] ].constantize
+        end
       end
     end
+  
+    #--------------------
     
-    if key
-      # now make sure that content exists
-      return self.obj_by_key(key)
-    else
+    def obj_by_key(key)
+      # convert key from "app/model:id" to AppModel.find(id)
+      key =~ /([^:]+):(\d+)/
+    
+      if $~
+        if ALL_CLASSES[ $~[1] ]
+          begin
+            return ALL_CLASSES[ $~[1] ].constantize.find($~[2])
+          rescue
+            return nil
+          end
+        end
+      end
+    
       return nil
+    end
+  
+    #--------------------
+  
+    def obj_by_url(url)
+      begin
+        u = URI.parse(url)
+      rescue URI::InvalidURIError
+        return nil
+      end
+    
+      key = nil
+      CONTENT_MATCHES.detect do |k,v|
+        if u.path =~ k
+          key = [v,$~[1]].join(":")
+        end
+      end
+    
+      if key
+        # now make sure that content exists
+        return self.obj_by_key(key)
+      else
+        return nil
+      end
+    end
+  
+  
+    #--------------------
+  
+    def status_text_collect
+      ContentBase::STATUS_TEXT.map { |p| [p[1], p[0]] }
     end
   end
   
-  #----------
+  #--------------------
   
   def json
     {
@@ -171,12 +202,7 @@ class ContentBase < ActiveRecord::Base
       :admin_path     => self.django_edit_url
     }
   end
-  
-  #----------
-  
-  def self.status_text_collect
-    ContentBase::STATUS_TEXT.map { |p| [p[1], p[0]] }
-  end
+
 
   #----------
   

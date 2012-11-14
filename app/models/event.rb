@@ -2,12 +2,13 @@ class Event < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
+  include Concern::Methods::HeadlineMethods
+  include Concern::Methods::CommentMethods
   
   self.table_name  = 'events_event'
   self.primary_key = "id"
   ROUTE_KEY        = "event"
   
-  acts_as_content published_at: false
   has_secretary
   
   ForumTypes = [

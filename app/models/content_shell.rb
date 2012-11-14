@@ -1,6 +1,7 @@
 class ContentShell < ContentBase
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
+  include Concern::Methods::HeadlineMethods
   include Concern::Validations::ContentValidation
   include Concern::Validations::PublishedAtValidation
   include Concern::Associations::ContentAlarmAssociation
@@ -10,9 +11,7 @@ class ContentShell < ContentBase
   
   self.table_name =  "contentbase_contentshell"
   has_secretary
-    
-  acts_as_content comments: false
-  
+      
   def self.content_key
     "content/shell"
   end

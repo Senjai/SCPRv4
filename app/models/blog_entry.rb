@@ -1,6 +1,9 @@
 class BlogEntry < ContentBase
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
+  include Concern::Methods::CommentMethods
+  include Concern::Methods::HeadlineMethods
+  include Concern::Methods::TeaserMethods
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
@@ -10,7 +13,6 @@ class BlogEntry < ContentBase
   include Concern::Scopes::SinceScope
   
   self.table_name = "blogs_entry"
-  acts_as_content
   has_secretary
   
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
@@ -77,7 +79,10 @@ class BlogEntry < ContentBase
   def byline_elements
     []
   end
-  
+
+  #----------
+  # Need to work around multi-american until we can figure
+  # out how to merge those comments in with kpcc
   def disqus_identifier
     if dsq_thread_id.present? && wp_id.present?
       "#{wp_id} http://multiamerican.scpr.org/?p=#{wp_id}"
@@ -85,6 +90,8 @@ class BlogEntry < ContentBase
       super
     end
   end
+
+  #----------
   
   def disqus_shortname
     if dsq_thread_id.present? && wp_id.present?
@@ -94,9 +101,13 @@ class BlogEntry < ContentBase
     end
   end
   
+  #----------
+  
   def previous
     self.class.published.where("published_at < ? and blog_id = ?", self.published_at, self.blog_id).first
   end
+
+  #----------
 
   def next
     self.class.published.where("published_at > ? and blog_id = ?", self.published_at, self.blog_id).first

@@ -1,6 +1,9 @@
 class ShowSegment < ContentBase
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
+  include Concern::Methods::CommentMethods
+  include Concern::Methods::HeadlineMethods
+  include Concern::Methods::TeaserMethods
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
@@ -11,6 +14,7 @@ class ShowSegment < ContentBase
   
   
   self.table_name      = 'shows_segment'
+  has_secretary
   PRIMARY_ASSET_SCHEME = :segment_asset_scheme
   ROUTE_KEY            = "segment"
   
@@ -19,10 +23,7 @@ class ShowSegment < ContentBase
     ["Float Right", "float"],
     ["Slideshow", "slideshow"]
   ]
-  
-  acts_as_content
-  has_secretary
-  
+    
   # -------------------
   # Administration
   administrate do

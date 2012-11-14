@@ -1,6 +1,8 @@
 class VideoShell < ContentBase
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
+  include Concern::Methods::CommentMethods
+  include Concern::Methods::HeadlineMethods
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugValidation
   include Concern::Validations::PublishedAtValidation
@@ -10,9 +12,7 @@ class VideoShell < ContentBase
 
 
   self.table_name = "contentbase_videoshell"
-  ROUTE_KEY       = "video"
-  
-  acts_as_content
+  ROUTE_KEY       = "video"  
   has_secretary
   
   def self.content_key
@@ -59,7 +59,13 @@ class VideoShell < ContentBase
   end
   
   #--------------------
+  # Teaser just returns the body.
+  def teaser
+    self.body
+  end
 
+  #--------------------
+  
   def route_hash
     return {} if !self.persisted? || !self.published?
     {

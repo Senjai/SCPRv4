@@ -1,6 +1,9 @@
 class NewsStory < ContentBase
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
+  include Concern::Methods::CommentMethods
+  include Concern::Methods::HeadlineMethods
+  include Concern::Methods::TeaserMethods
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
@@ -11,7 +14,6 @@ class NewsStory < ContentBase
   
   
   self.table_name = 'news_story'
-  acts_as_content
   has_secretary
   
   PRIMARY_ASSET_SCHEME = :story_asset_scheme

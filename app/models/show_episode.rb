@@ -1,6 +1,7 @@
 class ShowEpisode < ContentBase
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
+  include Concern::Methods::HeadlineMethods
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
@@ -11,9 +12,7 @@ class ShowEpisode < ContentBase
   self.table_name = "shows_episode"
   ROUTE_KEY       = "episode"
   has_secretary
-    
-  acts_as_content comments: false
-                  
+                    
   # -------------------
   # Administration
   administrate do
@@ -64,11 +63,10 @@ class ShowEpisode < ContentBase
     end
   end
   
-  # -------------------
-  # Since episode bodies are short, 
-  # just use them for the teaser.
+  #--------------------
+  # Teaser just returns the body.
   def teaser
-    body
+    self.body
   end
   
   # -------------------

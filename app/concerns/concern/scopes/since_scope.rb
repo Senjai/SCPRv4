@@ -12,6 +12,6 @@ module Concern
       included do
         scope :since, ->(floor) { where("published_at > ?", floor) }
       end
-    end
-  end
-end
+    end # SinceScope
+  end # Scopes
+end # Concern

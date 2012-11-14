@@ -17,6 +17,6 @@ module Concern
       included do
         validates :published_at, presence: true, if: :should_validate?
       end
-    end
-  end
-end
+    end # PublishedAtValidation
+  end # Validations
+end # Concern

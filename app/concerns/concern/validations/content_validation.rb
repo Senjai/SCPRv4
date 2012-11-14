@@ -16,6 +16,6 @@ module Concern
         validates_presence_of :body,     message: BODY_MESSAGE, if: :should_validate?
         validates_presence_of :status    # always
       end
-    end
-  end
-end
+    end # ContentValidation
+  end # Validations
+end # Concern
