@@ -2,7 +2,7 @@
 
 <% if title %>
   <% id = "form-block-#{title.parameterize}" %>
-  <% @sections[id] = title %>
+  <% @sections[id] = title if @sections %>
   <fieldset class="form-block" id="<%=id%>">
   <legend><%= title %></legend>
   
