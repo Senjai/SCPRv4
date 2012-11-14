@@ -44,7 +44,7 @@ module CacheTasks
       
       @client        = client
       @oauth_token   = oauth_token
-      @connection    = connection      
+      @connection    = connection
     end
 
     #---------------
