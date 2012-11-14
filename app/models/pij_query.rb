@@ -2,7 +2,8 @@ class PijQuery < ActiveRecord::Base
   include Concern::Scopes::SinceScope
   include Concern::Associations::AssetAssociation
   include Concern::Methods::HeadlineMethods
-
+  include Concern::Methods::TeaserMethods
+  
   self.table_name = 'pij_query'
   ROUTE_KEY       = "pij_query"
   
