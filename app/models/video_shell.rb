@@ -1,12 +1,12 @@
 class VideoShell < ContentBase
-  include Model::Methods::StatusMethods
-  include Model::Methods::PublishingMethods
-  include Model::Validations::ContentValidation
-  include Model::Validations::SlugValidation
-  include Model::Validations::PublishedAtValidation
-  include Model::Associations::ContentAlarmAssociation
-  include Model::Associations::AssetAssociation
-  include Model::Scopes::SinceScope
+  include Concern::Methods::StatusMethods
+  include Concern::Methods::PublishingMethods
+  include Concern::Validations::ContentValidation
+  include Concern::Validations::SlugValidation
+  include Concern::Validations::PublishedAtValidation
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::AssetAssociation
+  include Concern::Scopes::SinceScope
 
 
   self.table_name = "contentbase_videoshell"

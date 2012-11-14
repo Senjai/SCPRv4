@@ -1,6 +1,6 @@
 class PijQuery < ActiveRecord::Base
-  include Model::Scopes::SinceScope
-  include Model::Associations::AssetAssociation
+  include Concern::Scopes::SinceScope
+  include Concern::Associations::AssetAssociation
 
   self.table_name = 'pij_query'
   ROUTE_KEY       = "pij_query"

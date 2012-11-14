@@ -1,5 +1,5 @@
 class Blog < ActiveRecord::Base
-  include Model::Validations::SlugValidation
+  include Concern::Validations::SlugValidation
 
   self.table_name = 'blogs_blog'
   has_secretary

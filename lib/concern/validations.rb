@@ -1,7 +1,7 @@
 ##
-# Basic setup for Model::Validations
+# Basic setup for Concern::Validations
 #
-module Model
+module Concern
   module Validations
     # Define some defaults
     DEFAULTS = {
@@ -26,8 +26,8 @@ end
 # 
 # module ActiveRecord
 #   class Base
-#     if File.exists?("#{Rails.root}/app/models/model/validations/#{self.model_name.underscore}_validation.rb")
-#       include "Model::Validations::#{self.model_name}Validation".constantize
+#     if File.exists?("#{Rails.root}/app/concern/validations/#{self.model_name.underscore}_validation.rb")
+#       include "Concern::Validations::#{self.model_name}Validation".constantize
 #     end
 #   end
 # end

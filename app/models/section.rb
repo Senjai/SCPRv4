@@ -1,5 +1,5 @@
 class Section < ActiveRecord::Base
-  include Model::Validations::SlugValidation
+  include Concern::Validations::SlugValidation
   has_secretary
   ROUTE_KEY = "section"
   

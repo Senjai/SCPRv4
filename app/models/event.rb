@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
-  include Model::Validations::SlugValidation
-  include Model::Associations::AudioAssociation
-  include Model::Associations::AssetAssociation
+  include Concern::Validations::SlugValidation
+  include Concern::Associations::AudioAssociation
+  include Concern::Associations::AssetAssociation
   
   self.table_name  = 'events_event'
   self.primary_key = "id"

@@ -1,5 +1,5 @@
 class OtherProgram < ActiveRecord::Base
-  include Model::Validations::SlugValidation
+  include Concern::Validations::SlugValidation
   
   self.table_name =  'programs_otherprogram'  
   has_secretary
