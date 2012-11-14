@@ -23,8 +23,8 @@ class ContentShell < ContentBase
   def should_validate?
     pending? or published?
   end
-              
-                  
+  
+  
   # -------------------
   # Administration
   administrate do
@@ -57,6 +57,10 @@ class ContentShell < ContentBase
     has "0", :as => :is_slideshow, :type => :boolean
     has "0", :as => :has_audio, :type => :boolean
     where "status = #{STATUS_LIVE}"
+  end
+  
+  def teaser
+    self.body
   end
   
   #----------

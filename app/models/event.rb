@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::CommentMethods
+  include Concern::Methods::TeaserMethods
   
   self.table_name  = 'events_event'
   self.primary_key = "id"
