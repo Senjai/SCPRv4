@@ -1,8 +1,11 @@
+# These just make sure there are no blatant view errors.
+# Could definitely be faster and more useful.
+
 shared_examples_for "resource controller" do
   render_views
     
   before :each do
-    @object = create resource
+    @object     = create resource
     @admin_user = create :admin_user
     controller.stub(:admin_user) { @admin_user }
   end
