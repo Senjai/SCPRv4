@@ -1,3 +1,8 @@
+##
+# CacheExpirationObserver
+#
+# Watches classes, expires cache.
+#
 class CacheExpirationObserver < ActiveRecord::Observer
   observe ContentBase
   def after_save(content)
