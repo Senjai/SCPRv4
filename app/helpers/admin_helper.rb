@@ -10,7 +10,16 @@ module AdminHelper
 
   #----------------
   # Use this to block out whole chunks of code 
-  # based on permissions
+  # based on permissions. If the user has permission
+  # to manage the resource, show the block.
+  # Otherwise, display the message (or nil by default).
+  #
+  # Usage:
+  #
+  #   <%= guard NewsStory, "You do not have permission to view this" do %>
+  #     <%= @news_story.headline %>
+  #   <% end %>
+  #
   def guard(resource, message=nil, &block)
     if admin_user.can_manage?(resource)
       capture(&block)
@@ -20,8 +29,17 @@ module AdminHelper
   end
 
   #----------------
-  # Use this if you want to conditionally link
-  # text based on permissions
+  # Conditionally link text based on permissions.
+  # If the user has permission to manage the resource,
+  # link to it. Otherwise, just show the text.
+  #
+  # The first argument is the resource to guard.
+  # All other arguments are passed as-is to +link_to+
+  #
+  # Usage:
+  #
+  #   <%= guarded_link_to NewsStory, @news_story.headline, edit_news_story_path(@news_story) %>
+  #
   def guarded_link_to(*args)
     resource = args.shift
     if admin_user.can_manage?(resource)
@@ -35,11 +53,5 @@ module AdminHelper
   # Render the block inside of the fieldset template
   def form_block(title=nil, &block)
     render "/admin/shared/form_block", title: title, body: capture(&block)
-  end
-  
-  #----------------
-  # Render the default fields, plus any extra fields
-  def section(partial, f, record, option={}, &block)
-    render "/admin/shared/sections/#{partial}", f: f, record: record, extra: block_given? ? capture(&block) : ""
   end
 end
