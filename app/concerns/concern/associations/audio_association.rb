@@ -3,7 +3,7 @@
 #
 # Association and callbacks for Audio
 #
-module Model
+module Concern
   module Associations
     module AudioAssociation
       extend ActiveSupport::Concern

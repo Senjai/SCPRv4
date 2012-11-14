@@ -4,7 +4,7 @@
 #
 # Required attributse: [:published_at]
 #
-module Model
+module Concern
   module Scopes
     module SinceScope
       extend ActiveSupport::Concern

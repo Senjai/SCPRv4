@@ -5,7 +5,7 @@
 #
 # Required attributes: [:status, :published?]
 #
-module Model
+module Concern
   module Methods
     module PublishingMethods
       extend ActiveSupport::Concern

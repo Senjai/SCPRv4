@@ -1,5 +1,5 @@
 ##
-# Basic setup for Concern::Validations
+# Concern::Validations
 #
 module Concern
   module Validations
@@ -21,14 +21,3 @@ module Concern
     ActiveRecord::Base.send :include, InstanceMethods
   end
 end
-
-# If you wanted to, you could use this...
-# 
-# module ActiveRecord
-#   class Base
-#     if File.exists?("#{Rails.root}/app/concern/validations/#{self.model_name.underscore}_validation.rb")
-#       include "Concern::Validations::#{self.model_name}Validation".constantize
-#     end
-#   end
-# end
-# 

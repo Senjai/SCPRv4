@@ -5,7 +5,7 @@
 # Required fields: [:headline, :body, :status]
 # Also requires that the object responds to :should_validate?
 #
-module Model
+module Concern
   module Validations
     module ContentValidation
       extend ActiveSupport::Concern

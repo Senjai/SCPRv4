@@ -1,6 +1,6 @@
 ##
 # Shared Callbacks
-# Model::Callbacks
+# Concern::Callbacks
 #
 
 #------------------

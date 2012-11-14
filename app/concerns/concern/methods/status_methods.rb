@@ -1,4 +1,4 @@
-module Model
+module Concern
   module Methods
     module StatusMethods
       extend ActiveSupport::Concern

@@ -1,6 +1,6 @@
 ##
 # Shared Methods Specs
-# Model::Methods
+# Concern::Methods
 #
 
 def symbolize(klass)

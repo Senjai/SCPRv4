@@ -23,7 +23,7 @@
 #   - Set `published_at` to nil
 #     So it can be set again later when re-publishing
 #
-module Model
+module Concern
   module Callbacks
     module SetPublishedAtCallback
       extend ActiveSupport::Concern

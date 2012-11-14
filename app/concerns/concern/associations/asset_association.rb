@@ -3,7 +3,7 @@
 #
 # Association for Asset
 #
-module Model
+module Concern
   module Associations
     module AssetAssociation
       extend ActiveSupport::Concern

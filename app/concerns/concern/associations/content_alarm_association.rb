@@ -4,7 +4,7 @@
 # Association definition for content_alarm
 # Also includes related callbacks
 #
-module Model
+module Concern
   module Associations
     module ContentAlarmAssociation
       extend ActiveSupport::Concern

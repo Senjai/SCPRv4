@@ -9,7 +9,7 @@
 # Required attributes: [:published_at]
 # Also requires object to respond to :should_validate?
 #
-module Model
+module Concern
   module Validations
     module PublishedAtValidation
       extend ActiveSupport::Concern

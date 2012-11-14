@@ -6,7 +6,7 @@
 # Required fields: [:slug, :published_at, :status]
 # Also requires object to respond to :should_validate?
 #
-module Model
+module Concern
   module Validations
     module SlugUniqueForPublishedAtValidation
       extend ActiveSupport::Concern

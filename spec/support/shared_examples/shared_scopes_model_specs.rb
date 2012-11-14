@@ -1,5 +1,5 @@
 ## Shared Scopes
-# Model::Scopes
+# Concern::Scopes
 #
 
 def symbolize(klass)
