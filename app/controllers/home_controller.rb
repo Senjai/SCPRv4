@@ -59,13 +59,11 @@ class HomeController < ApplicationController
     view = ActionView::Base.new(ActionController::Base.view_paths, {})  
     
     class << view  
-      include ApplicationHelper  
+      include ApplicationHelper
       include WidgetsHelper
       include Rails.application.routes.url_helpers
     end
-    
-    Rails.logger.info("in _cache_homepage for #{obj_key}")
-    
+        
     # -- Update Sphinx Index -- #
     
     # for now, just run the complete index for the object's model
@@ -81,13 +79,12 @@ class HomeController < ApplicationController
         tsc = ThinkingSphinx::Configuration.instance
         # run index
         out = tsc.controller.index idx
-        Rails.logger.info("Sphinx index updated for #{model.name}: #{out}")
       end
     end
     
     # get scored content from homepage
     @homepage = Homepage.published.first
-    scored_content = @homepage.scored_content    
+    scored_content = @homepage.scored_content
         
     # write cache...
     Rails.cache.write(
