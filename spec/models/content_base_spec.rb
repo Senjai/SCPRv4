@@ -5,7 +5,7 @@ def symbolize(klass)
 end
 
 describe ContentBase do # Using news_story here arbitrarily
-  describe "sorted_relations" do
+  describe "#sorted_relations" do
     it "takes a list of frels and brels and returns an array of related records" do
       object = create :news_story, frel_count: 2, brel_count: 2
       sorted_relations = object.sorted_relations(object.frels.normal, object.brels.normal)
@@ -35,7 +35,7 @@ describe ContentBase do # Using news_story here arbitrarily
     
     #---------------
     
-    describe "content_classes" do
+    describe "::content_classes" do
       it "returns only the content classes, constantized" do
         ContentBase.content_classes.should eq [ContentB]
       end
@@ -43,7 +43,7 @@ describe ContentBase do # Using news_story here arbitrarily
   
     #---------------
   
-    describe "other_classes" do
+    describe "::other_classes" do
       it "returns only the other classes, constantized" do
         ContentBase.other_classes.should eq [OtherB]
       end
@@ -51,7 +51,7 @@ describe ContentBase do # Using news_story here arbitrarily
   
     #---------------
   
-    describe "all_classes" do
+    describe "::all_classes" do
       it "returns all classes in the CONTENT_CLASSES constant, constantized" do
         ContentBase.all_classes.should eq [ContentB, OtherB]
       end
@@ -60,7 +60,38 @@ describe ContentBase do # Using news_story here arbitrarily
   
   #---------------
   
-  describe "get_model_for_obj_key" do
+  describe "::generate_teaser" do
+    it "returns empty string if text is blank" do
+      ContentBase.generate_teaser("").should eq ""
+    end
+    
+    it "returns the full first paragraph if it's short enough" do
+      first   = "This is just a short paragraph."
+      body    = "#{first}\n And some more!"
+      teaser  = ContentBase.generate_teaser(body)
+      teaser.should eq first
+    end
+    
+    it "creates teaser from long paragraph if not defined" do
+      long_body = load_fixture("long_text.txt")
+      long_body.should match /\n/
+      teaser = ContentBase.generate_teaser(long_body)
+      teaser.should match /^Lorem ipsum (.+)\.{3,}$/
+      teaser.should_not match /\n/
+    end
+    
+    it "uses the length passed in as a guideline for cutting off the text" do
+      teaser1 = ContentBase.generate_teaser("Testing a Teaser.", 1)
+      teaser1.should eq "Testing..."
+      
+      teaser2 = ContentBase.generate_teaser("Testing a Teaser.", 10)
+      teaser2.should eq "Testing a Teaser..."      
+    end
+  end
+  
+  #---------------
+  
+  describe "::get_model_for_obj_key" do
     it "returns nil if key doesn't match anything" do
       ContentBase.get_model_for_obj_key("doesnt/match:123").should be_nil
     end
@@ -73,7 +104,7 @@ describe ContentBase do # Using news_story here arbitrarily
   
   #---------------
   
-  describe "obj_by_key" do
+  describe "::obj_by_key" do
     context "no match" do
       it "returns nil" do
         ContentBase.obj_by_key("nomatch").should be_nil
@@ -99,7 +130,7 @@ describe ContentBase do # Using news_story here arbitrarily
   
   #---------------
   
-  describe "obj_by_url" do
+  describe "::obj_by_url" do
     context "invalid URI" do
       it "returns nil" do
         ContentBase.obj_by_url("$$$$").should be_nil
@@ -160,7 +191,7 @@ ContentBase.content_classes.each do |c|
 
     #-----------------
     
-    describe "#published" do
+    describe "::published" do
       it "returns an ActiveRecord::Relation" do
         create symbolize(c)
         c.published.class.should eq ActiveRecord::Relation

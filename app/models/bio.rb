@@ -1,5 +1,5 @@
 class Bio < ActiveRecord::Base
-  include Model::Validations::SlugValidation
+  include Concern::Validations::SlugValidation
   
   ROUTE_KEY       = "bio"
   self.table_name = 'bios_bio'

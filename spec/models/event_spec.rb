@@ -11,9 +11,7 @@ describe Event do
   
   describe "validations" do
     it_behaves_like "slug validation"
-    it_behaves_like "slug unique for date validation" do
-      let(:scope) { :starts_at }
-    end
+    it_behaves_like "slug unique for date validation"
 
     it { should validate_presence_of(:headline) }
     

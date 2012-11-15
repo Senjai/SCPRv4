@@ -1,6 +1,13 @@
 module ApplicationHelper
   include Twitter::Autolink
   
+  def present(object, klass=nil)
+    klass ||= "#{object.class}Presenter".constantize
+    presenter = klass.new(object, self)
+    yield presenter if block_given?
+    presenter
+  end
+  
   # render_content takes a ContentBase object and a context, and renders 
   # using the most specific version of that context it can find.
   # 
@@ -10,18 +17,7 @@ module ApplicationHelper
   # * shared/content/news/story/lead
   # * shared/content/news/lead
   # * shared/content/default/lead
-
-  def acts_as_content?(content)
-    content.class.acting_as_content
-  end
-  
-  def present(object, klass=nil)
-    klass ||= "#{object.class}Presenter".constantize
-    presenter = klass.new(object, self)
-    yield presenter if block_given?
-    presenter
-  end
-  
+  #
   def render_content(content,context,options={})
     if !content
       return ''
@@ -30,15 +26,8 @@ module ApplicationHelper
     html = ''
     
     (content.is_a?(Array) ? content : [content]).each do |c|
-      if c.respond_to?(:content) && acts_as_content?(c.content)
+      if c.respond_to?(:content)
         c = c.content
-      end
-      
-      # if this isn't a contentbase object, assume it is broken and move on
-      if !acts_as_content?(c)
-        next
-        
-        # FIXME: Should we also be raising a notification?
       end
 
       # if we're caching, add content to the objects list

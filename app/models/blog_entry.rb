@@ -1,25 +1,27 @@
 class BlogEntry < ContentBase
-  include Model::Methods::StatusMethods
-  include Model::Methods::PublishingMethods
-  include Model::Validations::ContentValidation
-  include Model::Validations::SlugUniqueForPublishedAtValidation
-  include Model::Callbacks::SetPublishedAtCallback
-  include Model::Associations::ContentAlarmAssociation
-  include Model::Associations::AudioAssociation
-  include Model::Associations::AssetAssociation
-  include Model::Scopes::SinceScope
+  include Concern::Methods::StatusMethods
+  include Concern::Methods::PublishingMethods
+  include Concern::Methods::CommentMethods
+  include Concern::Methods::HeadlineMethods
+  include Concern::Methods::TeaserMethods
+  include Concern::Validations::ContentValidation
+  include Concern::Validations::SlugUniqueForPublishedAtValidation
+  include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::AudioAssociation
+  include Concern::Associations::AssetAssociation
+  include Concern::Scopes::SinceScope
   
   self.table_name = "blogs_entry"
-  acts_as_content
   has_secretary
   
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
   ROUTE_KEY = "blog_entry"
 
-  # ------------------
+  #------------------
   # Scopes
   
-  # ------------------
+  #------------------
   # Validation
   validates_presence_of :blog
   
@@ -27,10 +29,10 @@ class BlogEntry < ContentBase
     pending? or published?
   end
   
-  # ------------------
+  #------------------
   # Callbacks
   
-  # ------------------
+  #------------------
   # Association
   belongs_to :blog
 
@@ -40,7 +42,7 @@ class BlogEntry < ContentBase
   has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
   has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
   
-  # ------------------
+  #------------------
   # Administration
   administrate do
     define_list do
@@ -54,8 +56,8 @@ class BlogEntry < ContentBase
     end
   end
   
-  # ------------------
-  # Sphinx  
+  #------------------
+  # Sphinx
   define_index do
     indexes headline
     indexes body
@@ -78,7 +80,8 @@ class BlogEntry < ContentBase
   end
   
   #-------------------
-  
+  # Need to work around multi-american until we can figure
+  # out how to merge those comments in with kpcc
   def disqus_identifier
     if dsq_thread_id.present? && wp_id.present?
       "#{wp_id} http://multiamerican.scpr.org/?p=#{wp_id}"
@@ -109,7 +112,7 @@ class BlogEntry < ContentBase
     self.class.published.where("published_at > ? and blog_id = ?", self.published_at, self.blog_id).first
   end
   
-  #----------
+  #-------------------
   
   def extended_teaser(*args)
     target      = args[0] || 800
@@ -128,7 +131,7 @@ class BlogEntry < ContentBase
     return extended_teaser.to_html
   end
   
-  #----------
+  #-------------------
 
   def route_hash
     return {} if !self.persisted? or !self.published?

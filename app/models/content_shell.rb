@@ -1,18 +1,17 @@
 class ContentShell < ContentBase
-  include Model::Methods::StatusMethods
-  include Model::Methods::PublishingMethods
-  include Model::Validations::ContentValidation
-  include Model::Validations::PublishedAtValidation
-  include Model::Associations::ContentAlarmAssociation
-  include Model::Associations::AssetAssociation  
-  include Model::Scopes::SinceScope
+  include Concern::Methods::StatusMethods
+  include Concern::Methods::PublishingMethods
+  include Concern::Methods::HeadlineMethods
+  include Concern::Validations::ContentValidation
+  include Concern::Validations::PublishedAtValidation
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::AssetAssociation  
+  include Concern::Scopes::SinceScope
   
   
   self.table_name =  "contentbase_contentshell"
   has_secretary
-    
-  acts_as_content comments: false
-  
+      
   def self.content_key
     "content/shell"
   end
@@ -24,8 +23,8 @@ class ContentShell < ContentBase
   def should_validate?
     pending? or published?
   end
-              
-                  
+  
+  
   # -------------------
   # Administration
   administrate do
@@ -58,6 +57,10 @@ class ContentShell < ContentBase
     has "0", :as => :is_slideshow, :type => :boolean
     has "0", :as => :has_audio, :type => :boolean
     where "status = #{STATUS_LIVE}"
+  end
+  
+  def teaser
+    self.body
   end
   
   #----------

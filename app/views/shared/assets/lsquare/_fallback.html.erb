@@ -1,5 +1,6 @@
 <div class="asset-block fallback">
   <div class="contentasset">
-    <%= link_to image_tag("fallback-img.png"), content.link_path %>
+    <!-- This partial is rendered by tasks. Don't use asset helper tags. -->
+    <a href="<%=content.link_path%>"><img src="/assets/fallback-img.png" /></a>
   </div>
 </div>
