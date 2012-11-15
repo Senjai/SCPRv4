@@ -6,7 +6,7 @@
 #
 # Required attributes: [:status, :published_at]
 #
-module Model
+module Concern
   module Scopes
     module PublishedScope
       extend ActiveSupport::Concern
@@ -14,6 +14,6 @@ module Model
       included do
         scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("published_at desc") }
       end
-    end
-  end
-end
+    end # PublishedScope
+  end # Scopes
+end # Concern
