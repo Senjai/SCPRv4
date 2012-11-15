@@ -70,7 +70,7 @@ class Category < ActiveRecord::Base
         :content  => featured.first,
         :score    => 20 * Math.exp( -0.04 * ((Time.now - featured.first.published_at) / 3600) ),
         :metric   => :comment
-      }        
+      }
     end
 
 
