@@ -86,41 +86,27 @@ class OtherProgram < ActiveRecord::Base
   end
   
   #----------
-  # TODO Make this better
+  
   def cache
-    view = ActionView::Base.new(ActionController::Base.view_paths, {})  
+    if self.podcast_url.present?
+      fetch_feed(self.podcast_url, "podcast")
+    end
+    
+    if self.rss_url.present?
+      fetch_feed(self.rss_url, "rss")
+    end
+  end
 
-    class << view  
-      include ApplicationHelper
-    end
+  #----------
+  
+  private
+  
+  def fetch_feed(url, cache_suffix)
+    cacher = CacheController.new
+    feed   = Feedzirra::Feed.fetch_and_parse url
     
-    if self.podcast_url?
-      begin
-        podcast = Feedzirra::Feed.fetch_and_parse self.podcast_url
-      rescue
-        podcast = nil
-      end
-      
-      if podcast.present? && !podcast.is_a?(Fixnum)
-        podcast_html = view.render :partial => "programs/cached/podcast_entry", :collection => podcast.entries.first(5), :as => :entry
-        Rails.cache.write("ext_program:#{self.slug}:podcast", podcast_html)
-      end
+    if !feed.is_a?(Fixnum)
+      cacher.cache(feed.entries.first(5), "/programs/cached/podcast_entry", "ext_program:#{self.slug}:#{cache_suffix}", local: :entry)
     end
-    
-    if self.rss_url?
-      begin
-        rss = Feedzirra::Feed.fetch_and_parse self.rss_url
-      rescue
-        rss = nil
-      end
-      
-      if rss.present? && !rss.is_a?(Fixnum)
-        Rails.cache.write(
-          "ext_program:#{self.slug}:rss", 
-           view.render(:partial => "programs/cached/podcast_entry", :collection => rss.entries.first(5), :as => :entry)
-        )
-      end
-    end # rss_url?
-    return podcast.present? || rss.present?
   end
 end

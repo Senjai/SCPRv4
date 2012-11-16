@@ -18,31 +18,25 @@ describe Blog do
     
     it "orders by position on authors" do
       blog = create :blog
-      create_list :blog_author, 3, blog: blog
       blog.authors.to_sql.should match /order by position/i
     end
   end
 
   #----------------
   
-  describe "entries" do
-    it "returns the local entries if the blog is local" do
-      blog = create :blog
-      create_list :blog_entry, 2, blog: blog
-      blog.entries.first.class.should eq BlogEntry
-    end
-    
-    it "returns all entries if the blog is local" do
-      blog = create :blog
-      create_list :blog_entry, 2, blog: blog, status: 0
-      create_list :blog_entry, 1, blog: blog, status: 5
-      blog.entries.count.should eq 3
+  describe "scopes" do
+    describe "::active" do
+      it "returns only active blogs" do
+        active_blogs   = create_list :blog, 1, is_active: true
+        inactive_blogs = create_list :blog, 2, is_active: false
+        Blog.active.should eq active_blogs
+      end
     end
   end
 
   #----------------
   
-  describe "cache_remote_entries" do
+  describe "::cache_remote_entries" do
     it "does not cache local blogs" do
       Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
       blog = create :blog
@@ -66,26 +60,6 @@ describe Blog do
       Feedzirra::Feed.stub!(:fetch_and_parse) { 0 }
       blog = create :blog, :remote, feed_url: "Invalid URL"
       Blog.cache_remote_entries.should be_blank
-    end
-    
-    it "responds with all the successful caches" do
-      pending "Need to solve the stubbing here"
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
-      create :blog, :remote
-      create :blog, :remote, feed_url: "Invalid"
-      Blog.cache_remote_entries.count.should eq 1
-    end
-  end
-  
-  #----------------
-  
-  describe "scopes" do
-    describe "#active" do
-      it "returns only active blogs" do
-        active_blogs   = create_list :blog, 1, is_active: true
-        inactive_blogs = create_list :blog, 2, is_active: false
-        Blog.active.should eq active_blogs
-      end
     end
   end
 end

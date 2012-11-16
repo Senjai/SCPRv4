@@ -37,7 +37,9 @@ class HomepageWorker
         
         if obj['key'] == "layout/homepage" || obj['action'] == 'publish' || obj['action'] == 'unpublish' || obj['status'] == ContentBase::STATUS_LIVE
           self.log("triggering caching based on action '#{obj['action']}' and status '#{obj['status']}'")
-          HomeController._cache_homepage(obj['key'])
+          task = CacheTasks::Homepage.new(obj['key'])
+          task.verbose = true
+          task.run
           self.log("completed homepage caching... back to listening")
         end
       end
