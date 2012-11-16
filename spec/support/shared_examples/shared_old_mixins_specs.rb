@@ -1,3 +1,7 @@
+def symbolize(klass)
+  klass.to_s.underscore.to_sym
+end
+
 #---------------------------
 # Basic unique slug validation
 shared_examples_for "slug unique validation" do

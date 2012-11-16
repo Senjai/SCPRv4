@@ -10,18 +10,22 @@ module CacheTasks
     def run
       @indexer.index
       
-      @homepage      = ::Homepage.published.first
-      scored_content = @homepage.scored_content
+      if homepage = ::Homepage.published.first
+        scored_content = homepage.scored_content
       
-      self.cache(scored_content[:headlines], "/home/cached/headlines", "home/headlines")
-      self.cache(scored_content[:sections], "/home/cached/sections", "home/sections")
+        self.cache(scored_content[:headlines], "/home/cached/headlines", "home/headlines")
+        self.cache(scored_content[:sections], "/home/cached/sections", "home/sections")
+      end
+      
       true
     end
     
     #---------------
     
+    attr_reader :indexer, :model
+    
     def initialize(obj_key = nil)
-      @model   = ContentBase.get_model_for_obj_key(@obj_key)
+      @model   = ContentBase.get_model_for_obj_key(obj_key)
       @indexer = Indexer.new(@model, ContentByline)
     end
   end # Homepage

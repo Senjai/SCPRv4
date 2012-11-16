@@ -38,28 +38,24 @@ describe Blog do
   
   describe "::cache_remote_entries" do
     it "does not cache local blogs" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
-      blog = create :blog
+      blog = create :blog, is_remote: false
       Blog.cache_remote_entries.should be_blank
     end
     
-    it "returns the blogs it cached" do
+    it "creates a cache for the remote blog" do
       Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
-      blogs = create_list :blog, 2, :remote
-      Blog.cache_remote_entries.count.should eq 2
-    end
-    
-    it "creates a cache for each remote blog" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
-      blogs = create_list :blog, 2, :remote
+      blog = create :blog, :remote, feed_url: "http://feed.com/cool_feed"
+      Rails.cache.fetch("remote_blog:#{blog.slug}").should eq nil
       Blog.cache_remote_entries
-      blogs.each { |blog| Rails.cache.fetch("remote_blog:#{blog.slug}").should_not be_blank }
+      Rails.cache.fetch("remote_blog:#{blog.slug}").should_not be_blank
     end
     
     it "Does not cache if the feed_url isn't found" do
-      Feedzirra::Feed.stub!(:fetch_and_parse) { 0 }
+      Feedzirra::Feed.stub!(:fetch_and_parse) { 500 }
       blog = create :blog, :remote, feed_url: "Invalid URL"
-      Blog.cache_remote_entries.should be_blank
+      Rails.cache.fetch("remote_blog:#{blog.slug}").should eq nil
+      Blog.cache_remote_entries
+      Rails.cache.fetch("remote_blog:#{blog.slug}").should eq nil
     end
   end
 end

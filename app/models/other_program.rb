@@ -89,11 +89,11 @@ class OtherProgram < ActiveRecord::Base
   
   def cache
     if self.podcast_url.present?
-      fetch_feed(self.podcast_url, "podcast")
+      fetch_and_cache_feed(self.podcast_url, "podcast")
     end
     
     if self.rss_url.present?
-      fetch_feed(self.rss_url, "rss")
+      fetch_and_cache_feed(self.rss_url, "rss")
     end
   end
 
@@ -101,12 +101,11 @@ class OtherProgram < ActiveRecord::Base
   
   private
   
-  def fetch_feed(url, cache_suffix)
+  def fetch_and_cache_feed(url, cache_suffix)
     cacher = CacheController.new
-    feed   = Feedzirra::Feed.fetch_and_parse url
     
-    if !feed.is_a?(Fixnum)
-      cacher.cache(feed.entries.first(5), "/programs/cached/podcast_entry", "ext_program:#{self.slug}:#{cache_suffix}", local: :entry)
+    Feedzirra::Feed.safe_fetch_and_parse(url) do |feed|
+      cacher.cache(feed.entries.first(5), "/programs/cached/podcast_entry", "ext_program:#{self.slug}:#{cache_suffix}", local: :entries)
     end
   end
 end

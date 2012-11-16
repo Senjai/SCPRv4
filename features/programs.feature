@@ -40,26 +40,6 @@ Scenario: View an Other Program's page
   Then I should see the program's information
   And I shouldn't see anything about episodes
 
-Scenario: View cached podcast feed for Other Program
-  Given an other program with the following attributes:
-   | podcast_url                     | rss_url |
-   | http://oncentral.org/rss/latest |         |
-
-  And the feeds are cached
-  When I go to the program's page
-  Then I should see a list of that program's podcast entries
-  And I should not see any RSS entries
-
-Scenario: View cached RSS feed for Other Program
-  Given an other program with the following attributes:
-   | podcast_url | rss_url                         |
-   |             | http://oncentral.org/rss/latest |
-
-  And the feeds are cached
-  When I go to the program's page
-  Then I should see a list of that program's RSS entries
-  And I should not see any podcast entries
-  
 Scenario: See a program's segments
   Given a kpcc program with the following attributes:
    | display_segments | display_episodes | segment_count | segment[asset_count] |

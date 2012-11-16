@@ -1,33 +1,35 @@
-<!-- Podcast Entry -->
-<article class="teaser program-external">
-  <div class="row-fluid">
-    <div class="<%= entry.enclosure_url.present? ? "span18" : "span24" %>">
-      <div class="info">
-        <header>
-          <h3><%= link_to entry.title, entry.url || entry.enclosure_url %></h3>
-          <p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
-        </header>
+<!-- Podcast Entries -->
+<% entries.each do |entry| %>
+  <article class="teaser program-external">
+    <div class="row-fluid">
+      <div class="<%= entry.enclosure_url.present? ? "span18" : "span24" %>">
+        <div class="info">
+          <header>
+            <h3><%= link_to entry.title, entry.url || entry.enclosure_url %></h3>
+            <p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
+          </header>
       
-        <%= simple_format relaxed_sanitize(entry.summary) %>
-      </div> <!-- info -->
-    </div> <!-- span -->
-    
-    <% if entry.enclosure_url.present? %>
-      <div class="span6">
-        <aside class="story-audio">
-          <div class="inner-container clearfix">
-            <div class="audio-content">
-              <h4>Listen Now</h4>
-            </div>
-            <a href="<%= entry.enclosure_url %>" class="play-btn audio-toggler" title="<%= entry.title %>"></a>
-            <ul class="audio-tools">
-              <li>
-                <a href="<%= entry.enclosure_url %>">Download</a>
-              </li>
-            </ul>
-          </div>
-        </aside>
+          <%= simple_format relaxed_sanitize(entry.summary) %>
+        </div> <!-- info -->
       </div> <!-- span -->
-    <% end %>
-  </div> <!-- row-fluid -->
-</article>
+    
+      <% if entry.enclosure_url.present? %>
+        <div class="span6">
+          <aside class="story-audio">
+            <div class="inner-container clearfix">
+              <div class="audio-content">
+                <h4>Listen Now</h4>
+              </div>
+              <a href="<%= entry.enclosure_url %>" class="play-btn audio-toggler" title="<%= entry.title %>"></a>
+              <ul class="audio-tools">
+                <li>
+                  <a href="<%= entry.enclosure_url %>">Download</a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </div> <!-- span -->
+      <% end %>
+    </div> <!-- row-fluid -->
+  </article>
+<% end %>

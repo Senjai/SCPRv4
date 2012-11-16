@@ -60,15 +60,6 @@ end
 
 
 
-#### Utility
-Given /^the feeds are cached$/ do
-  @program.cache.should be_true
-  Rails.cache.fetch("ext_program:#{@program.slug}:podcast").should_not be_blank if @program.podcast_url.present?
-  Rails.cache.fetch("ext_program:#{@program.slug}:rss").should_not be_blank if @program.rss_url.present?
-end
-
-
-
 #### Routing
 When /^I go to the programs page$/ do
   visit programs_path

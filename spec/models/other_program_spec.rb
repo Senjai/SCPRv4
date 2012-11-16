@@ -72,6 +72,20 @@ describe OtherProgram do
   #-----------------
   
   describe "cache" do
-    pending
+    it "fetches and caches the podcast url if it's present" do
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("podcast.xml")) }
+      program = build :other_program, podcast_url: "http://podcast.com/cool_podcast", rss_url: nil
+      Rails.cache.fetch("ext_program:#{program.slug}:podcast").should eq nil
+      program.cache
+      Rails.cache.fetch("ext_program:#{program.slug}:podcast").should be_present
+    end
+    
+    it "fetches and caches the rss url if it's present" do
+      Feedzirra::Feed.stub!(:fetch_and_parse) { Feedzirra::Feed.parse(load_fixture("rss.xml")) }
+      program = build :other_program, rss_url: "http://rss.com/cool_rss", podcast_url: nil
+      Rails.cache.fetch("ext_program:#{program.slug}:rss").should eq nil
+      program.cache
+      Rails.cache.fetch("ext_program:#{program.slug}:rss").should be_present
+    end
   end
 end

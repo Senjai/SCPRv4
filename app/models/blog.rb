@@ -52,11 +52,10 @@ class Blog < ActiveRecord::Base
   
   class << self
     def cache_remote_entries
+      cacher = CacheController.new
+
       self.where(is_remote: true).where("feed_url != ?", '').each do |blog|
-        feed = Feedzirra::Feed.fetch_and_parse(blog.feed_url)
-        # Feedzirra returns the response code as a FixNum if something goes wrong.
-        if !feed.is_a?(Fixnum)
-          cacher = CacheController.new
+        Feedzirra::Feed.safe_fetch_and_parse(blog.feed_url) do |feed|
           cacher.cache(feed.entries.first, "/blogs/cached/remote_blog_entry", "remote_blog:#{blog.slug}", local: :entry)
         end
       end
