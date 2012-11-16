@@ -32,4 +32,4 @@ class Tweeter
       )
     end
   end
-end # Twitter
+end # Tweeter
