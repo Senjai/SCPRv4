@@ -39,8 +39,8 @@ class HomepageWorker
           self.log("triggering caching based on action '#{obj['action']}' and status '#{obj['status']}'")
           task = CacheTasks::Homepage.new(obj['key'])
           task.verbose = true
-          task.run
-          self.log("completed homepage caching... back to listening")
+          task.enqueue(Job::Homepage)
+          self.log("enqueued homepage caching... back to listening")
         end
       end
       

@@ -30,29 +30,8 @@ class Indexer
   end
   
   #--------------------
-  # Enqueue the IndexJob task.
+  # Enqueue the Index task.
   def enqueue
-    Resque.enqueue(Indexer::IndexJob, @models.map(&:name))
-  end
-
-  #--------------------
-  # Indexer::IndexJob
-  #
-  # Perform sphinx indexing asynchronously
-  #
-  class IndexJob
-    extend LogsAsTask
-    logs_as_task
-    
-    @queue = "#{Rails.application.config.scpr.resque_queue}:sphinx"
-    
-    def self.perform(models)
-      begin
-        indexer = Indexer.new(*models.map(&:constantize)).index
-        self.log "Successfully indexed: #{models}"
-      rescue Exception => e
-        self.log "Failed to index: #{models}\n#{e}"
-      end
-    end
+    Resque.enqueue(Job::Index, @models.map(&:name))
   end
 end

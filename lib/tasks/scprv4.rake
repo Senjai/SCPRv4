@@ -79,7 +79,7 @@ namespace :scprv4 do
     
     desc "Cache KPCCForum tweets"
     task :twitter => [:environment] do
-      puts "*** [#{Time.now}] Caching KPCCForum tweets...."
+      puts "*** [#{Time.now}] Caching KPCCForum tweets (enqueue)...."
       task = CacheTasks::Twitter.new("KPCCForum")
       task.verbose = true
       task.run

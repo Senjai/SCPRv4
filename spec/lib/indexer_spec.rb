@@ -24,7 +24,7 @@ describe Indexer do
   
   describe "#enqueue" do
     it "sends off to Indexer::IndexJob with an array of model names" do
-      Resque.should_receive(:enqueue).with(Indexer::IndexJob, ["BlogEntry"])
+      Resque.should_receive(:enqueue).with(Job::Index, ["BlogEntry"])
       indexer = Indexer.new(BlogEntry)
       indexer.enqueue
     end
@@ -70,19 +70,6 @@ describe Indexer do
         indexer = Indexer.new
         indexer.indexes.should eq []
       end
-    end
-  end
-end
-
-#-------------------
-
-describe Indexer::IndexJob do
-  describe "::perform" do
-    it "constantizes the arguments and passed it off to Indexer" do
-      indexer = Indexer.new(BlogEntry)
-      Indexer.should_receive(:new).with(BlogEntry).and_return(indexer)
-      indexer.should_receive(:index)
-      Indexer::IndexJob.perform(["BlogEntry"])
     end
   end
 end

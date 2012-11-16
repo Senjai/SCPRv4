@@ -24,7 +24,7 @@ module CacheTasks
     
     attr_reader :indexer, :model
     
-    def initialize(obj_key = nil)
+    def initialize(obj_key=nil)
       @model   = ContentBase.get_model_for_obj_key(obj_key)
       @indexer = Indexer.new(@model, ContentByline)
     end
