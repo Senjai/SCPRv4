@@ -102,7 +102,37 @@ class ContentBase < ActiveRecord::Base
     def all_classes
       self.content_classes + self.other_classes
     end
-    
+
+    #--------------------
+    # Wrapper around ThinkingSphinx to just query all
+    # ContentBase classes.
+    def search(*args)
+      options = args.extract_options!
+      query   = args[0].to_s
+      
+      defaut_attributes = { status: ContentBase::STATUS_LIVE.to_s, findable: "1" }
+      
+      options.reverse_merge!({
+        :classes     => ContentBase.content_classes,
+        :page        => 1,
+        :order       => :published_at,
+        :sort_mode   => :desc,
+        :retry_stale => true,
+        :populate    => true
+      })
+      
+      if options[:with].present?
+        options[:with].reverse_merge! default_attributes
+      else
+        options[:with] = default_attributes
+      end
+      
+      begin
+        ThinkingSphinx.search(query, options)
+      rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
+        Kaminari.paginate_array([])
+      end
+    end
     #--------------------
     # Cut down body to get teaser
     def generate_teaser(text, length=180)

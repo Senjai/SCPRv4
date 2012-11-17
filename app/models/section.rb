@@ -57,20 +57,11 @@ class Section < ActiveRecord::Base
       options[:page] = 1 
     end
     
-    begin
-      ThinkingSphinx.search('',
-        :classes     => ContentBase.content_classes,
-        :page        => options[:page],
-        :per_page    => options[:per_page],
-        :order       => :published_at,
-        :sort_mode   => :desc,
-        :with        => { category: self.categories.map { |c| c.id } },
-        :retry_stale => true,
-        :populate    => true
-      )
-    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
-      Kaminari.paginate_array([]).page(options[:page])
-    end
+    ContentBase.search({
+      :page        => options[:page],
+      :per_page    => options[:per_page],
+      :with        => { category: self.categories.map { |c| c.id } }
+    })
   end
 
   #----------

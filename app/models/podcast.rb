@@ -88,14 +88,10 @@ class Podcast < ActiveRecord::Base
   private
   
   def search(limit, klasses, conditions={})
-    ThinkingSphinx.search('',
-      :with        => { has_audio: true }.merge!(conditions), 
-      :classes     => klasses, 
-      :order       => :published_at, 
-      :page        => 1, 
-      :per_page    => limit, 
-      :sort_mode   => :desc,
-      :retry_stale => true
-    )
+    ContentBase.search({
+      :with    => { has_audio: true }.merge!(conditions), 
+      :classes => klasses, 
+      :limit   => limit
+    })
   end
 end

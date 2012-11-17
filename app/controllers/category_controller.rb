@@ -65,20 +65,11 @@ class CategoryController < ApplicationController
       params[:page] = 1 
     end
     
-    begin
-      ThinkingSphinx.search('',
-        :classes     => ContentBase.content_classes,
-        :page        => params[:page],
-        :per_page    => options[:limit],
-        :order       => :published_at,
-        :sort_mode   => :desc,
-        :with        => { category: categories.map { |c| c.id } },
-        :retry_stale => true,
-        :populate    => true
-      )
-    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
-      Kaminari.paginate_array([]).page(params[:page])
-    end
+    ContentBase.search({
+      :page        => params[:page],
+      :per_page    => options[:limit],
+      :with        => { category: categories.map { |c| c.id } }
+    })
   end
 
   #------------------
@@ -92,21 +83,11 @@ class CategoryController < ApplicationController
     
     categories.each do |sec|
       # get stories in this section
-      content = begin
-        ThinkingSphinx.search('',
-          :classes     => ContentBase.content_classes,
-          :page        => 1,
-          :per_page    => 5,
-          :order       => :published_at,
-          :sort_mode   => :desc,
+      content = ContentBase.search({
+          :limit       => 5,
           :with        => { :category => sec.id },
-          :without_any => { :obj_key => without.obj_key.to_crc32 },
-          :retry_stale => true,
-          :populate    => true
-        )
-      rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
-        return []
-      end
+          :without_any => { :obj_key => without.obj_key.to_crc32 }
+        })
       
       top = nil
       more = []

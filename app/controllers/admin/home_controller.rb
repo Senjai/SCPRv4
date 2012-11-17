@@ -16,15 +16,8 @@ class Admin::HomeController < Admin::BaseController
   
   private
   def get_latest_story
-    begin
-      ThinkingSphinx.search('',
-        :classes    => ContentBase.content_classes,
-        :order      => :published_at,
-        :sort_mode  => :desc,
-        :limit      => 1
-      ).first
-    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
-      nil
-    end
+    ContentBase.search({
+      :limit => 1
+    }).first
   end
 end

@@ -17,16 +17,10 @@ class HomeController < ApplicationController
     @data_points = DataPoint.to_hash(@data)
     @category    = Category.find_by_slug('politics')
     
-    @content = ThinkingSphinx.search('',
-      :classes     => ContentBase.content_classes,
-      :page        => 1,
-      :per_page    => 15,
-      :order       => :published_at,
-      :sort_mode   => :desc,
-      :with        => { category: [@category.id] },
-      :retry_stale => true,
-      :populate    => true
-    )
+    @content = ContentBase.search({
+      :limit => 15,
+      :with  => { category: [@category.id] }
+    })
   end
   
   #----------

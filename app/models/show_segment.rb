@@ -68,11 +68,12 @@ class ShowSegment < ContentBase
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
+    has status
+    has "1", as: :findable, type: :boolean
     has "1", :as => :is_source_kpcc, :type => :boolean
     has "CRC32(CONCAT('shows/segment:',shows_segment.id))", :type => :integer, :as => :obj_key
     has "(shows_segment.segment_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
-    where "status = #{ContentBase::STATUS_LIVE}"
     join audio
   end
   
