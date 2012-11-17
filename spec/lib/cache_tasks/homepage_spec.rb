@@ -23,4 +23,20 @@ describe CacheTasks::Homepage do
       task.indexer.models.should eq [BlogEntry, ContentByline]
     end
   end
+  
+  #-----------------------
+  
+  describe "#enqueue" do
+    it "send to resque with the obj_key" do
+      Resque.should_receive(:enqueue).with(Job::Homepage, "something")
+      task = CacheTasks::Homepage.new("something")
+      task.enqueue
+    end
+    
+    it "can also have no object key" do
+      Resque.should_receive(:enqueue).with(Job::Homepage, "")
+      task = CacheTasks::Homepage.new
+      task.enqueue
+    end
+  end
 end

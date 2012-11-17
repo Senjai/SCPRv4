@@ -11,7 +11,7 @@ class Indexer
   attr_reader :indexes, :models
   
   def initialize(*models)
-    @models     = models.compact # Remove nil elements
+    @models     = models.reject { |e| e.blank? }
     @controller = ThinkingSphinx::Configuration.instance.controller
     @indexes    = @models.map(&:sphinx_index_names).flatten
     @full_index = @indexes.blank?

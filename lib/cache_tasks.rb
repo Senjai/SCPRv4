@@ -22,13 +22,6 @@ module CacheTasks
     
     #---------------
     
-    def enqueue(job_class=nil)
-      job_class ||= Job::CacheTask
-      Resque.enqueue(job_class, self.class.name)
-    end
-    
-    #---------------
-    
     def log(message)
       message = "*** #{message}"
       

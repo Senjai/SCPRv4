@@ -1,7 +1,10 @@
 require "spec_helper"
 
 describe Job::Homepage do
-  it "inherits from Job::CacheTask" do
-    (Job::Homepage < Job::CacheTask).should eq true
+  describe "::perform" do
+    it "makes a new task and runs it" do
+      CacheTasks::Homepage.any_instance.should_receive(:run)
+      Job::Homepage.perform("key")
+    end
   end
 end

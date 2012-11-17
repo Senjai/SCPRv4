@@ -19,12 +19,19 @@ module CacheTasks
       
       true
     end
+
+    #---------------
+    
+    def enqueue
+      Resque.enqueue(Job::Homepage, @obj_key.to_s)
+    end
     
     #---------------
     
     attr_reader :indexer, :model
     
     def initialize(obj_key=nil)
+      @obj_key = obj_key
       @model   = ContentBase.get_model_for_obj_key(obj_key)
       @indexer = Indexer.new(@model, ContentByline)
     end

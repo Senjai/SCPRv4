@@ -13,7 +13,13 @@
 # the other Sphinx indexing tasks!
 #
 module Job
-  class Homepage < CacheTask
+  class Homepage < JobBase
     @queue = "#{namespace}:sphinx"
+    
+    def self.perform(obj_key)
+      task = CacheTasks::Homepage.new(obj_key)
+      task.run
+      self.log "Performed Homepage caching"
+    end
   end
 end
