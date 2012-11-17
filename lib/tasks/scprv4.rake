@@ -1,4 +1,13 @@
 namespace :scprv4 do 
+  desc "Place a full sphinx index into the queue"
+  task :enqueue_index => [:environment] do
+    puts "*** [#{Time.now}] Enqueueing sphinx index into Resque..."    
+    indexer = Indexer.new
+    indexer.enqueue
+    puts "Finished."
+  end
+
+  #----------
   
   desc "Clear events cache"
   task :clear_events => [ :environment ] do 
