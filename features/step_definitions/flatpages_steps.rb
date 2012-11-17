@@ -13,10 +13,6 @@ Then /^I should see the flatpage content$/ do
   page.should have_content @flatpage.content
 end
 
-Then /^I should not see the flatpage content$/ do
-  page.should_not have_content @flatpage.content
-end
-
 Then /^I should see the sidebar$/ do
   page.should have_css "#sidebar"
 end

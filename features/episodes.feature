@@ -8,8 +8,6 @@ Background:
 Scenario: View an episode
   When I go to an episode's page
   Then I should see a list of that episode's segments
-  And the segments should be ordered by the segment order
-  And I should see each segment's primary asset
   
 Scenario: View an episode with no segments
   Given an episode with the following attributes:

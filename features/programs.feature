@@ -6,28 +6,6 @@ Scenario: No Programs
   When I go to the programs page
   Then I should not see any programs
 
-Scenario: See the featured programs on the index page
-  Given kpcc programs with the following attributes:
-    | slug     | title    |
-    | take-two | Take Two |
-    | airtalk  | Airtalk  |
-    | offramp  | Off-Ramp |
-    
-  When I go to the programs page
-  Then I should see the featured programs in the correct order
-
-Scenario Outline: View a Featured Program's page
-  Given a program titled "<title>" with slug "<slug>"
-  When I go to the program's page
-  Then I should see the program's information
-  Then I should see a headshot of the program's host
-  
-  Examples:
-    | slug     | title    |
-    | take-two | Take Two |
-    | airtalk  | Airtalk  |
-    | offramp  | Off-Ramp |
-    
 Scenario: View a KPCC Program's page
   Given there is 1 kpcc program
   When I go to the program's page
@@ -47,7 +25,6 @@ Scenario: See a program's segments
 
   When I go to the program's page
   Then I should see a list of that program's segments
-  And I should see each segment's primary asset
 
 Scenario: See an episodic program's episodes
   Given a kpcc program with the following attributes:
@@ -56,7 +33,6 @@ Scenario: See an episodic program's episodes
   
   When I go to the program's page
   Then I should see a list of older episodes below the current episode
-  And I should see each episode's primary asset
   
 Scenario: See an episodic program's current episode
   Given a kpcc program with the following attributes:
@@ -65,7 +41,6 @@ Scenario: See an episodic program's current episode
 
   When I go to the program's page
   Then I should see the current episode's information
-  And I should see the episode's primary asset
   And I should see a list of the current episode's segments
 
 Scenario: See a video player if the program has a dedicated Brightcove player

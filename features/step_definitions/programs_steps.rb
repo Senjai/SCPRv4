@@ -29,24 +29,6 @@ Then /^I should see a headshot of the program's host$/ do
   page.should have_xpath("//div[contains(@class, '#{@program.slug}')]")
 end
 
-Then /^I should see a list of that program's podcast entries$/ do
-  pending "caching not enabled in testing environment- need to work around this or enable it for one step"
-end
-
-Then /^I should see a list of that program's RSS entries$/ do
-  pending "caching not enabled in testing environment- need to work around this or enable it for one step"
-end
-
-Then /^I should not see any podcast entries$/ do
-  pending
-  # page.should_not have_content "<h2>Recently</h2>" # TODO: Need a better way to test this
-end
-
-Then /^I should not see any RSS entries$/ do
-  pending
-  # page.should_not have_content "<h2>Latest News</h2>" # TODO: Need a better way to test this
-end
-
 Then /^I should not see any programs$/ do
   page.should_not have_css ".programs-list"
   page.should_not have_css "#featured-programs .headshot"
@@ -66,23 +48,11 @@ When /^I go to the programs page$/ do
   current_path.should eq programs_path
 end
 
-Then /^I should be on the programs page$/ do
-  current_path.should eq programs_path
-end
-
 When /^I go to (?:the|a|that) program's page$/ do
   visit program_path @program.slug
   current_path.should eq program_path @program.slug
 end
 
-When /^I go to a program page with slug "([^"]*)"$/ do |slug|
-  visit program_path(slug)
-end
-
 Then /^I should be on (?:the|that) program's page$/ do
   current_path.should eq program_path @program.slug
-end
-
-Then /^I should not be on (?:the|that) program's page$/ do
-  current_path.should_not eq program_path @program.slug
 end

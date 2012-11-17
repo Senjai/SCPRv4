@@ -21,19 +21,11 @@ Then /^I should see a list of the current episode's segments$/ do
   page.find(".current-episode-segments").should have_css(".story-headline", count: KpccProgram.last.episodes.published.first.segments.count)
 end
 
-Then /^I should see each episode's primary asset$/ do
-  page.should have_css ".show-episode .contentasset img"
-end
-
 Then /^I shouldn't see anything about episodes$/ do
   page.should_not have_css ".show-episode"
   page.should_not have_css ".show-episodes"
   page.should_not have_css ".current-episode"
   page.should_not have_css ".upcoming-episode"
-end
-
-Then /^I should see the episode's primary asset$/ do
-  page.should have_css ".episode .contentasset img"
 end
 
 Then /^I should not see the archive select$/ do

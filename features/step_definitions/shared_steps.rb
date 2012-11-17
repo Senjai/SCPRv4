@@ -11,20 +11,12 @@ Then /^there should be pagination$/ do
   page.should have_css ".pagination"
 end
 
-Then /^I should see static content$/ do
-  page.should have_css ".static-content"
-end
-
 Then /^I should see a success message$/ do
   page.should have_css ".alert-success"
 end
 
 Then /^I should see a failure message$/ do
   page.should have_css ".alert-error"
-end
-
-Then /^I should be notified of errors$/ do
-  page.should have_css ".error"
 end
 
 Then /^I should see "([^"]*)"$/ do |text|
@@ -63,12 +55,6 @@ end
 
 
 #### Assertions
-When /^I'm looking at the "[^"]*" section$/ do
-  # Contextual
-  # TODO Replace with capybara's "within" block
-  true
-end
-
 Then /^that section should have (\d+) items$/ do |num|
   page.find(@css_finder + " ul").should have_css "li", count: num.to_i
 end
@@ -76,16 +62,6 @@ end
 
 
 #### Actions
-
-When /^I leave the fields empty$/ do
-  # Contextual
-  true
-end
-
-Then /^show me the page$/ do
-  save_and_open_page
-end
-
 When /^I filter by "([^"]*)"$/ do |filter|
   find("nav.filters").find_link(filter).click
 end
