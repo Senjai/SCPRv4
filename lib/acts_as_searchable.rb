@@ -10,18 +10,13 @@ module ActsAsSearchable
   
   module ClassMethods
     def acts_as_searchable
-      include InstanceMethods
       after_save :enqueue_index
     end
   end
   
-  #-----------------
-  
-  module InstanceMethods
-    def enqueue_index
-      indexer = Indexer.new(self.class)
-      indexer.enqueue
-    end
+  def enqueue_index
+    indexer = Indexer.new(self.class)
+    indexer.enqueue
   end
 end
 

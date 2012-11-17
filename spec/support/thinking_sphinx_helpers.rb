@@ -68,6 +68,7 @@ module ThinkingSphinxHelpers
 
   def index_sphinx
     ThinkingSphinx::Test.index
+    sleep 0.5
   end
 
   # -----------

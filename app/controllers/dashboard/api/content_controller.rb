@@ -79,7 +79,7 @@ class Dashboard::Api::ContentController < ApplicationController
     contents = ContentBase.search({
       :limit => 20
     })
-    
+        
     json = contents.to_json
     Rails.cache.write_entry("cbaseapi:recent", json, :objects => [contents,"contentbase:new"].flatten)
     render :json => json

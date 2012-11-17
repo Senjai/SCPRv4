@@ -71,7 +71,7 @@ class Podcast < ActiveRecord::Base
         klasses = ContentBase.content_classes if item_type == "content"
       end
       
-      search(limit, klasses, conditions)
+      content_query(limit, klasses, conditions)
     end
   end
   
@@ -87,7 +87,7 @@ class Podcast < ActiveRecord::Base
   
   private
   
-  def search(limit, klasses, conditions={})
+  def content_query(limit, klasses, conditions={})
     ContentBase.search({
       :with    => { has_audio: true }.merge!(conditions), 
       :classes => klasses, 

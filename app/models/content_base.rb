@@ -111,7 +111,7 @@ class ContentBase < ActiveRecord::Base
       options = args.extract_options!
       query   = args[0].to_s
       
-      defaut_attributes = { status: ContentBase::STATUS_LIVE.to_s, findable: "1" }
+      default_attributes = { status: ContentBase::STATUS_LIVE, findable: true }
       
       options.reverse_merge!({
         :classes     => ContentBase.content_classes,
@@ -127,13 +127,14 @@ class ContentBase < ActiveRecord::Base
       else
         options[:with] = default_attributes
       end
-      
+
       begin
         ThinkingSphinx.search(query, options)
       rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
         Kaminari.paginate_array([])
       end
     end
+    
     #--------------------
     # Cut down body to get teaser
     def generate_teaser(text, length=180)

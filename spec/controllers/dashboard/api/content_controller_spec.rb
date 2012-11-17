@@ -103,7 +103,6 @@ describe Dashboard::Api::ContentController do
   
   describe "GET /recent" do
     context "cache hit" do
-      let(:content) { create :blog_entry }
       let(:cache)   { "content.to_json" }
       
       before :each do
@@ -118,37 +117,18 @@ describe Dashboard::Api::ContentController do
     end
     
     context "cache miss" do
-      let(:sphinx_hash) do
-        {
-          :classes     => ContentBase.content_classes,
-          :page        => 1,
-          :per_page    => 20,
-          :order       => :published_at,
-          :sort_mode   => :desc,
-          :retry_stale => true,
-          :populate    => true
-        }
-      end
-
-      let(:content) { [create(:blog_entry), create(:news_story), create(:content_shell), create(:show_segment)] }
+      sphinx_spec(num: 1)
       
-      before :each do
-        Rails.cache.write("cbaseapi:recent", nil)
-        ThinkingSphinx.should_receive(:search).with('', sphinx_hash).and_return(content)
-      end
-        
       it "returns the sphinx results as json" do
         get :recent
-        response.body.should eq content.to_json
+        response.body.should eq @generated_content.to_json
         response.header['Content-Type'].should match /json/
       end
       
       it "writes the json to the cache" do
-        Rails.cache.fetch("cbaseapi:recent").should eq nil
-
         get :recent
         cache = Rails.cache.fetch("cbaseapi:recent")
-        cache.should eq content.to_json
+        cache.should eq @generated_content.to_json
       end
     end
   end

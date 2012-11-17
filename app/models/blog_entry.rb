@@ -68,9 +68,9 @@ class BlogEntry < ContentBase
     has status
     has blog.is_active, as: :findable, type: :boolean
     has "1", as: :is_source_kpcc, type: :boolean
-    has "CRC32(CONCAT('blogs/entry:',#{BlogEntry.table_name}.id))",     type: :integer, as: :obj_key
-    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')",  type: :boolean, as: :is_slideshow
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",       type: :boolean, as: :has_audio
+    has "CRC32(CONCAT('blogs/entry:',#{BlogEntry.table_name}.id))", type: :integer, as: :obj_key
+    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')", type: :boolean, as: :is_slideshow
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", type: :boolean, as: :has_audio
     join audio
   end
   
