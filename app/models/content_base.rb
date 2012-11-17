@@ -105,7 +105,8 @@ class ContentBase < ActiveRecord::Base
 
     #--------------------
     # Wrapper around ThinkingSphinx to just query all
-    # ContentBase classes.
+    # ContentBase classes and mix in some default search
+    # parameters.
     def search(*args)
       options = args.extract_options!
       query   = args[0].to_s
