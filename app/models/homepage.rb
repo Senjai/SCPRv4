@@ -11,9 +11,7 @@ class Homepage < ActiveRecord::Base
   # -------------------
   # Administration
   administrate do
-    define_list do
-      list_order "published_at desc"
-      
+    define_list do      
       column :published_at
       column :status
       column :base, header: "Base Template"

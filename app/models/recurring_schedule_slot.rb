@@ -29,7 +29,7 @@ class RecurringScheduleSlot < ActiveRecord::Base
   administrate do
     define_list do
       list_per_page :all
-      list_order :start_time
+      list_order "start_time"
       
       column :program, display: proc { self.program.title }
       column :starts_at, display: proc { self.format_time(:starts_at) }
@@ -39,6 +39,8 @@ class RecurringScheduleSlot < ActiveRecord::Base
 
   #--------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes program.title
   end

@@ -33,8 +33,6 @@ class FeaturedComment < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      list_order "published_at desc"
-
       column :bucket
       column :content
       column :username
@@ -46,6 +44,8 @@ class FeaturedComment < ActiveRecord::Base
   
   #----------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes username
     indexes excerpt

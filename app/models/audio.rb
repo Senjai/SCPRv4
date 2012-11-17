@@ -241,7 +241,7 @@ class Audio < ActiveRecord::Base
     end
   end
   
-  #------------  
+  #------------
   #------------
   # Queue the computation jobs
   def async_compute_file_info

@@ -36,13 +36,25 @@ class NewsStory < ContentBase
     ['NPR & KPCC',          'npr_kpcc']
   ]
   
+  #-------------------
+  # Scopes
   
-  # -------------------
+  #-------------------
+  # Association
+  
+  #------------------
+  # Validation
+  def should_validate?
+    pending? or published?
+  end
+  
+  #------------------
+  # Callbacks
+  
+  #-------------------
   # Administration
   administrate do
-    define_list do
-      list_order "published_at desc"
-      
+    define_list do            
       column :headline
       column :slug
       column :news_agency
@@ -52,19 +64,9 @@ class NewsStory < ContentBase
     end
   end
 
-
-  # ------------------
-  # Validation
-  def should_validate?
-    pending? or published?
-  end
-  
-  
-  # -------------------
-  # Scopes
-
-  
-  # -------------------
+  #-------------------
+  # Sphinx
+  acts_as_searchable
   
   define_index do
     indexes headline

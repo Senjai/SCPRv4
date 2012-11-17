@@ -12,30 +12,14 @@ class ShowEpisode < ContentBase
   self.table_name = "shows_episode"
   ROUTE_KEY       = "episode"
   has_secretary
-                    
-  # -------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "published_at desc"
-      
-      column :headline
-      column :show
-      column :air_date
-      column :status
-      column :published_at
-    end
-  end
   
+  #-------------------
+  # Scopes
+  scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc") }
+  scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
   
-  # -------------------
-  # Validations
-  validates :show, presence: true
-  validates :air_date, presence: true, if: :published?
-  
-  
-  # -------------------
-  # Associations
+  #-------------------
+  # Association
   belongs_to  :show,      class_name:   "KpccProgram"
   
   has_many    :rundowns,  class_name:   "ShowRundown", 
@@ -45,31 +29,36 @@ class ShowEpisode < ContentBase
                           foreign_key:  "segment_id", 
                           through:      :rundowns, 
                           order:        "segment_order asc"
-
-    
-  # -------------------
-  # Scopes
-  scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc") }
-  scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
-
-
-  # -------------------
+  
+  #-------------------
+  # Validations
+  validates :show, presence: true
+  validates :air_date, presence: true, if: :published?
+  
+  #-------------------
   # Callbacks
   before_validation :generate_headline, if: -> { self.headline.blank? }
-  
   def generate_headline
     if self.air_date.present?
       self.headline = "#{self.show.title} for #{self.air_date.strftime("%B %-d, %Y")}"
     end
   end
   
-  #--------------------
-  # Teaser just returns the body.
-  def teaser
-    self.body
+  # -------------------
+  # Administration
+  administrate do
+    define_list do            
+      column :headline
+      column :show
+      column :air_date
+      column :status
+      column :published_at
+    end
   end
   
-  # -------------------
+  #-------------------
+  # Sphinx
+  acts_as_searchable
   
   define_index do
     indexes headline
@@ -86,6 +75,12 @@ class ShowEpisode < ContentBase
     join audio
   end
 
+  #--------------------
+  # Teaser just returns the body.
+  def teaser
+    self.body
+  end
+  
   #----------
   
   def route_hash

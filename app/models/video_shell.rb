@@ -10,30 +10,31 @@ class VideoShell < ContentBase
   include Concern::Associations::AssetAssociation
   include Concern::Scopes::SinceScope
 
-
   self.table_name = "contentbase_videoshell"
-  ROUTE_KEY       = "video"  
+  ROUTE_KEY       = "video"
   has_secretary
   
   def self.content_key
     "content/video"
   end
-  
-  # -------------------
-  # Validations
-  validates :slug, uniqueness: true
-  
-  
-  # -------------------
+
+  #-------------------
   # Scopes
-  
-  
+
+  #-------------------
+  # Association
+    
   # -------------------
+  # Validation
+  validates :slug, uniqueness: true
+
+  #-------------------
+  # Callbacks
+  
+  #-------------------
   # Administration
   administrate do
-    define_list do
-      list_order "published_at desc"
-      
+    define_list do      
       column :headline
       column :slug
       column :bylines
@@ -41,10 +42,11 @@ class VideoShell < ContentBase
       column :published_at
     end
   end
-
-
-  # -------------------
-    
+  
+  #-------------------
+  # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes headline
     indexes body

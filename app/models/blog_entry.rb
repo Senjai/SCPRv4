@@ -22,6 +22,16 @@ class BlogEntry < ContentBase
   # Scopes
   
   #------------------
+  # Association
+  belongs_to :blog
+
+  has_many :tagged, class_name: "TaggedContent", as: :content
+  has_many :tags, through: :tagged, dependent: :destroy
+  
+  has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
+  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
+  
+  #------------------
   # Validation
   validates_presence_of :blog
   
@@ -33,21 +43,9 @@ class BlogEntry < ContentBase
   # Callbacks
   
   #------------------
-  # Association
-  belongs_to :blog
-
-  has_many :tagged, class_name: "TaggedContent", as: :content
-  has_many :tags, through: :tagged, dependent: :destroy
-  
-  has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
-  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
-  
-  #------------------
   # Administration
   administrate do
-    define_list do
-      list_order "published_at desc"
-      
+    define_list do      
       column :headline
       column :blog
       column :bylines
@@ -58,6 +56,8 @@ class BlogEntry < ContentBase
   
   #------------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes headline
     indexes body

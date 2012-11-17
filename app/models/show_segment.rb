@@ -23,31 +23,17 @@ class ShowSegment < ContentBase
     ["Float Right", "float"],
     ["Slideshow", "slideshow"]
   ]
-    
-  # -------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "published_at desc"
-      
-      column :headline
-      column :show
-      column :bylines
-      column :published_at
-      column :status
-    end
-  end
-
-
   
-  # -------------------
-  # Associations  
+  #-------------------
+  # Scopes
+  
+  #-------------------
+  # Associations
   belongs_to :show,   :class_name => "KpccProgram"
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id"
-  has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc" 
-
-
-  # -------------------
+  has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc"
+  
+  #-------------------
   # Validations
   validates :show, presence: true
   
@@ -55,12 +41,25 @@ class ShowSegment < ContentBase
     pending? or published?
   end
   
-  # -------------------
-  # Scopes
-
-
-  # -------------------
-
+  #-------------------
+  # Callbacks
+  
+  #-------------------
+  # Administration
+  administrate do
+    define_list do
+      column :headline
+      column :show
+      column :bylines
+      column :published_at
+      column :status
+    end
+  end
+  
+  #-------------------
+  # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes headline
     indexes teaser

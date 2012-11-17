@@ -42,6 +42,8 @@ class Blog < ActiveRecord::Base
   
   # ----------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes name
     indexes title

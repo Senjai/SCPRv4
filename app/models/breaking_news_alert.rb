@@ -26,7 +26,6 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      list_order "created_at desc"
       column :headline
       column :alert_type, display: proc { BreakingNewsAlert::ALERT_TYPES[self.alert_type] }
       column :visible
@@ -37,6 +36,8 @@ class BreakingNewsAlert < ActiveRecord::Base
   
   #-------------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes headline
     indexes alert_type

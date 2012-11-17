@@ -61,9 +61,7 @@ class Event < ActiveRecord::Base
   #-------------------
   # Administration
   administrate do
-    define_list do
-      list_order "created_at desc"
-      
+    define_list do      
       column :headline
       column :starts_at
       column :location_name, header: "Location"
@@ -75,6 +73,8 @@ class Event < ActiveRecord::Base
   
   #-------------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes headline
     indexes body

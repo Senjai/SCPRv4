@@ -44,9 +44,7 @@ class PijQuery < ActiveRecord::Base
   #------------
   # Administration
   administrate do
-    define_list do
-      list_order "created_at desc"
-      
+    define_list do      
       column :headline
       column :slug
       column :query_type
@@ -58,6 +56,8 @@ class PijQuery < ActiveRecord::Base
 
   #------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes headline
     indexes body

@@ -27,6 +27,8 @@ class MissedItBucket < ActiveRecord::Base
   
   #--------------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes title
   end

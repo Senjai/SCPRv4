@@ -48,6 +48,8 @@ class DataPoint < ActiveRecord::Base
   
   #--------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes data_key
     indexes data_value

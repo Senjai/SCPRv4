@@ -44,6 +44,8 @@ class AdminUser < ActiveRecord::Base
   
   # ----------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes username
     indexes first_name

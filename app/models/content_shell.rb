@@ -16,35 +16,38 @@ class ContentShell < ContentBase
     "content/shell"
   end
   
-  # ------------------
+  #-------------------
+  # Scopes
+  
+  #------------------
+  # Association
+  
+  #------------------
   # Validation
   validates :url, presence: true
 
   def should_validate?
     pending? or published?
   end
+
+  #------------------
+  # Callbacks
   
-  
-  # -------------------
+  #-------------------
   # Administration
   administrate do
-    define_list do
-      list_order "published_at desc"
-      
-      column "headline"
-      column "site"
-      column "bylines"
-      column "status"
-      column "published_at"
+    define_list do      
+      column :headline
+      column :site
+      column :bylines
+      column :status
+      column :published_at
     end
   end
 
-
-  # -------------------
-  # Scopes
-
-
-  # -------------------
+  #-------------------
+  # Sphinx
+  acts_as_searchable
   
   define_index do
     indexes headline
@@ -58,6 +61,8 @@ class ContentShell < ContentBase
     has "0", :as => :has_audio, :type => :boolean
     where "status = #{STATUS_LIVE}"
   end
+  
+  #-------------------
   
   def teaser
     self.body

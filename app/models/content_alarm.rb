@@ -3,23 +3,21 @@ class ContentAlarm < ActiveRecord::Base
   logs_as_task
   
   #----------
+  # Scopes
+  default_scope where("content_type is not null")
+  scope :pending, -> { where("fire_at <= ?", Time.now).order("fire_at") }
+  
+  #----------
   # Association
   map_content_type_for_django
   belongs_to :content, polymorphic: true
   
-  #----------
-  # Scopes
-  default_scope where("content_type is not null")
-  scope :pending, -> { where("fire_at <= ?", Time.now).order("fire_at") }
-
   #----------
   # Validation
   validates_presence_of :fire_at
   
   #----------
   # Callbacks
-  
-
   
   #---------------------
   

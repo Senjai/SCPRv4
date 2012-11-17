@@ -54,6 +54,8 @@ class Flatpage < ActiveRecord::Base
 
   # -------------------
   # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes url
     indexes title
