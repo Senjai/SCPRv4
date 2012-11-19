@@ -10,7 +10,7 @@ class CategoryController < ApplicationController
   #----------
   
   def news
-    @categories = Category.where(:is_news => true).all    
+    @categories = Category.where(:is_news => true).all
     respond_by_format
   end
   
@@ -33,7 +33,7 @@ class CategoryController < ApplicationController
   #------------------
   
   protected
-    
+  
   #------------------
   # Respond according to format requested
   def respond_by_format
@@ -107,7 +107,7 @@ class CategoryController < ApplicationController
       rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
         return []
       end
-              
+      
       top = nil
       more = []
       sorttime = nil
@@ -129,7 +129,7 @@ class CategoryController < ApplicationController
       
         # finally, just drop it in the more bucket
         more << c
-      end  
+      end
     
       # assemble section object
       obj = {
