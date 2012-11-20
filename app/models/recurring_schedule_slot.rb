@@ -197,6 +197,13 @@ class RecurringScheduleSlot < ActiveRecord::Base
   
   
   #--------------
+  # This will only be true for one slot...
+  # But we need to check.
+  def split_weeks?
+    @split_weeks ||= self.end_time < self.start_time
+  end
+  
+  #--------------
   # Has the slot ended already this week?
   def past?
     Time.now.second_of_week > self.end_time
@@ -210,10 +217,10 @@ class RecurringScheduleSlot < ActiveRecord::Base
   def current?
     now = Time.now.second_of_week
     
-    if !split_weeks?
+    if !self.split_weeks?
       self.start_time <= now && self.end_time > now
     else
-      now > self.start_time || now < self.end_time
+      now >= self.start_time || now < self.end_time
     end
   end
   
@@ -267,13 +274,6 @@ class RecurringScheduleSlot < ActiveRecord::Base
   #--------------
 
   private
-
-  #--------------
-  # This will only be true for one slot...
-  # But we need to check.
-  def split_weeks?
-    @split_weeks ||= self.end_time < self.start_time
-  end
   
   #--------------
   # If the slot is now or upcoming, use
