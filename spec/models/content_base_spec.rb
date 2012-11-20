@@ -57,6 +57,26 @@ describe ContentBase do # Using news_story here arbitrarily
       end
     end
   end
+
+  #---------------
+
+  describe "::search" do
+    sphinx_spec(num: 1, options: { status: ContentBase::STATUS_LIVE })
+    
+    it "searches across ContentBase classes" do
+      ContentBase.search.to_a.should eq @generated_content.sort_by(&:published_at).reverse
+    end
+    
+    it "has a graceful fallback if sphinx isn't working" do
+      %w{ ThinkingSphinx::SphinxError Riddle::ConnectionError }.each do |error|
+        ThinkingSphinx.should_receive(:search).and_raise(error.constantize)
+        content = ContentBase.search
+        content.should be_empty
+        content.should respond_to :total_pages
+        content.should respond_to :current_page
+      end
+    end
+  end
   
   #---------------
   
@@ -158,18 +178,6 @@ end
 # Basic functionality for ContentBase.content_classes
 ContentBase.content_classes.each do |c|
   describe c do
-    it "inherits from ContentBase" do
-      object = build symbolize(c)
-      object.should be_a ContentBase
-    end
-    
-    it { should respond_to :headline }
-    it { should respond_to :short_headline }
-    it { should respond_to :body }
-    it { should respond_to :teaser }
-    it { should respond_to :link_path }
-    it { should respond_to :remote_link_path }
-    it { should respond_to :obj_key }
     it { should respond_to :byline_elements }
     
     it "must return byline_elements as an array" do
@@ -188,23 +196,5 @@ ContentBase.content_classes.each do |c|
       it { should have_one :content_category }
       it { should have_one(:category).through(:content_category) }
     end
-
-    #-----------------
-    
-    describe "::published" do
-      it "returns an ActiveRecord::Relation" do
-        create symbolize(c)
-        c.published.class.should eq ActiveRecord::Relation
-      end
-      
-      it "only selects published content" do
-        published   = create_list symbolize(c), 3, :published
-        unpublished = create_list symbolize(c), 2, :draft
-        c.published.all.sort.should eq published.sort
-      end
-    end
-    
-    #-----------------
-    
   end
 end
