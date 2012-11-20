@@ -16,27 +16,9 @@ class PijQuery < ActiveRecord::Base
   ]
   
   #------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "created_at desc"
-      
-      column :headline
-      column :slug
-      column :query_type
-      column :is_active, header: "Active?"
-      column :is_featured, header: "Featured?"
-      column :published_at
-    end
-  end
-  
-  
-  #------------
   # Scopes  
   scope :news,          -> { where(query_type: "news") }
   scope :evergreen,     -> { where(query_type: "evergreen") }
-  scope :featured,      -> { where(is_featured: true) }
-  scope :not_featured,  -> { where(is_featured: false) }
 
   scope :visible, -> { where(
     'is_active = :is_active and published_at < :time and ' \
@@ -44,6 +26,8 @@ class PijQuery < ActiveRecord::Base
     is_active: true, time: Time.now
   ).order("published_at desc") }
   
+  #------------
+  # Association
   
   #------------
   # Validation
@@ -53,14 +37,40 @@ class PijQuery < ActiveRecord::Base
   validates :query_type,  presence: true
   validates :query_url,   presence: true
   validates :form_height, presence: true
+  
+  #------------
+  # Callbacks
+  
+  #------------
+  # Administration
+  administrate do
+    define_list do      
+      column :headline
+      column :slug
+      column :query_type
+      column :is_active, header: "Active?"
+      column :is_featured, header: "Featured?"
+      column :published_at
+    end
+  end
 
-  #------------  
+  #------------
+  # Sphinx
+  acts_as_searchable
+  
+  define_index do
+    indexes headline
+    indexes body
+    indexes query_url
+  end
+  
+  #------------
   
   def published?
     !!is_active
   end
 
-  #------------  
+  #------------
   
   def route_hash
     return {} if !self.published? || !self.persisted?

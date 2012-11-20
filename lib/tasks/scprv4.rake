@@ -1,4 +1,13 @@
 namespace :scprv4 do 
+  desc "Place a full sphinx index into the queue"
+  task :enqueue_index => [:environment] do
+    puts "*** [#{Time.now}] Enqueueing sphinx index into Resque..."    
+    indexer = Indexer.new
+    indexer.enqueue
+    puts "Finished."
+  end
+
+  #----------
   
   desc "Clear events cache"
   task :clear_events => [ :environment ] do 
@@ -63,6 +72,8 @@ namespace :scprv4 do
       task.run
       puts "Finished.\n"
     end
+
+    #----------
     
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
@@ -72,6 +83,8 @@ namespace :scprv4 do
       task.run
       puts "Finished.\n"
     end
+
+    #----------
     
     desc "Cache KPCCForum tweets"
     task :twitter => [:environment] do
@@ -95,8 +108,10 @@ namespace :scprv4 do
     
     desc "Cache homepage one time"
     task :homepage => [ :environment ] do
-      puts "Caching homepage..."
-      HomeController._cache_homepage(nil)
+      puts "*** [#{Time.now}] Caching homepage..."
+      task = CacheTasks::Homepage.new
+      task.verbose = true
+      task.run
       puts "Finished.\n"
     end
   end
@@ -105,7 +120,7 @@ namespace :scprv4 do
   
   namespace :worker do
     desc "Start a Homepage listener"
-    task :homepage => [ :environment ] do 
+    task :homepage => [ :environment ] do
       require 'homepage_worker'
     
       begin

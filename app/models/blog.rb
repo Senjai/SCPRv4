@@ -6,6 +6,27 @@ class Blog < ActiveRecord::Base
   ROUTE_KEY = "blog"
   
   # -------------------
+  # Scopes
+  scope :active, -> { where(is_active: true) }
+  
+  # -------------------
+  # Associations
+  has_many :entries, order: 'published_at desc', class_name: "BlogEntry"
+  has_many :tags, through: :entries
+  belongs_to :missed_it_bucket
+  has_many :authors, through: :blog_authors, order: "position"
+  has_many :blog_authors
+  has_many :blog_categories
+  
+  # -------------------
+  # Validations
+  validates :name, presence: true
+  validates :slug, uniqueness: true
+
+  # -------------------
+  # Callbacks
+  
+  # -------------------
   # Administration
   administrate do
     define_list do
@@ -18,49 +39,29 @@ class Blog < ActiveRecord::Base
       column :is_active, header: "Active?"
     end
   end
+  
+  # ----------------
+  # Sphinx
+  acts_as_searchable
+  
+  define_index do
+    indexes name
+    indexes title
+    indexes email
+  end
+  
+  # -------------------
+  
+  class << self
+    def cache_remote_entries
+      cacher = CacheController.new
 
-  # -------------------
-  # Validations
-  validates :name, presence: true
-  validates :slug, uniqueness: true
-  
-  # -------------------
-  # Associations
-  has_many :entries, order: 'published_at desc', class_name: "BlogEntry"
-  has_many :tags, through: :entries
-  belongs_to :missed_it_bucket
-  has_many :authors, through: :blog_authors, order: "position"
-  has_many :blog_authors
-  has_many :blog_categories
-  
-  # -------------------
-  # Scopes
-  scope :active,      -> { where(is_active: true) }
-  scope :is_news,     -> { where(is_news: true) }
-  scope :is_not_news, -> { where(is_news: false) }
-  scope :local,       -> { where(is_remote: false) }
-  scope :remote,      -> { where(is_remote: true) }
-
-  # -------------------
-  
-  def self.cache_remote_entries
-    view = ActionView::Base.new(ActionController::Base.view_paths, {})
-    class << view # So the partial can use the smart_date_js helper
-      include ApplicationHelper
-    end
-    
-    success = []
-    self.remote.each do |blog|
-      if blog.feed_url.present? # No reason to even try if the feed_url is blank
-        if feed = Feedzirra::Feed.fetch_and_parse(blog.feed_url) and !feed.is_a?(Fixnum) # Feedzirra returns the response code as a FixNum if something goes wrong.
-          success.push blog if Rails.cache.write(
-            "remote_blog:#{blog.slug}", 
-             view.render(partial: "blogs/cached/remote_blog_entry", collection: feed.entries.first(1), as: :entry)
-          )
+      self.where(is_remote: true).where("feed_url != ?", '').each do |blog|
+        Feedzirra::Feed.safe_fetch_and_parse(blog.feed_url) do |feed|
+          cacher.cache(feed.entries.first, "/blogs/cached/remote_blog_entry", "remote_blog:#{blog.slug}", local: :entry)
         end
       end
-    end # remote.each
-    return success
+    end
   end
   
   # -------------------

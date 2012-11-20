@@ -51,26 +51,6 @@ describe PijQuery do
         PijQuery.news.all.should eq [news]
       end
     end
-
-    #---------------
-    
-    describe "featured" do
-      it "only selects featured queries" do
-        featured     = create :pij_query, is_featured: true
-        not_featured = create :pij_query, is_featured: false
-        PijQuery.featured.should eq [featured]
-      end
-    end
-    
-    #---------------
-    
-    describe "not_featured" do
-      it "only selects not featured queries" do
-        featured     = create :pij_query, is_featured: true
-        not_featured = create :pij_query, is_featured: false
-        PijQuery.not_featured.should eq [not_featured]
-      end
-    end
     
     #---------------
     

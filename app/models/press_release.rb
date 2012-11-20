@@ -1,7 +1,21 @@
 class PressRelease < ActiveRecord::Base
   include Concern::Validations::SlugValidation  
   ROUTE_KEY = "press_release"
+  has_secretary
+
+  #-------------
+  # Scopes
   
+  #-------------
+  # Associations
+  
+  #-------------
+  # Validation
+  validates :short_title, presence: true
+  
+  #-------------
+  # Callbacks
+    
   #-------------
   # Administration
   administrate do
@@ -11,13 +25,14 @@ class PressRelease < ActiveRecord::Base
     end
   end
   
-  has_secretary
-  
-  
   #-------------
-  # Validation
-  validates :short_title, presence: true
+  # Sphinx
+  acts_as_searchable
   
+  define_index do
+    indexes title
+    indexes body
+  end
   
   #--------------
   

@@ -2,7 +2,7 @@ class PodcastsController < ApplicationController
   before_filter :set_headers, only: [:podcast]
   
   def index
-    @podcasts = Podcast.listed.order("title")
+    @podcasts = Podcast.where(is_listed: true).order("title")
   end
   
   #----------

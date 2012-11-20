@@ -4,6 +4,23 @@ class Category < ActiveRecord::Base
   self.table_name = 'contentbase_category'
   ROUTE_KEY       = "category"
   has_secretary
+  
+  #-------------------
+  # Scopes
+  
+  #-------------------
+  # Associations
+  belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
+  
+  #-------------------
+  # Validations
+  validates :title, presence: true
+  
+  #-------------------
+  # Callbacks
+  
+  #-------------------
+  # Administration
   administrate do
     define_list do
       list_per_page :all
@@ -15,8 +32,13 @@ class Category < ActiveRecord::Base
     end
   end
   
-  belongs_to :comment_bucket, :class_name => "FeaturedCommentBucket"
-  validates :title, presence: true
+  #-------------------
+  # Sphinx
+  acts_as_searchable
+  
+  define_index do
+    indexes title
+  end
   
   #----------
 
@@ -28,21 +50,16 @@ class Category < ActiveRecord::Base
     end
     
     args = {
-      :classes     => ContentBase.content_classes,
-      :page        => page,
-      :per_page    => per_page,
-      :order       => :published_at,
-      :sort_mode   => :desc,
-      :with        => { category: self.id },
-      :retry_stale => true,
-      :populate    => true
+      :page     => page,
+      :per_page => per_page,
+      :with     => { category: self.id }
     }
     
     if without_obj && without_obj.respond_to?("obj_key")
       args[:without] = { obj_key: without_obj.obj_key.to_crc32 }
     end
     
-    ThinkingSphinx.search('', args)
+    ContentBase.search(args)
   end
   
   #----------
@@ -76,16 +93,12 @@ class Category < ActiveRecord::Base
 
     # -- then try to feature videos since they are less common --#
     
-    video = ThinkingSphinx.search('',
-      :classes      => [VideoShell],
-      :page         => 1,
-      :per_page     => 1,
-      :order        => :published_at,
-      :sort_mode    => :desc,
-      :with         => { category: self.id },
-      :without_any  => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
-      :retry_stale  => true
-    ).to_a
+    video = ContentBase.search({
+      :classes     => [VideoShell],
+      :limit       => 1,
+      :with        => { category: self.id },
+      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+    })
     
     if video.present?
       # Initial score: 15
@@ -101,16 +114,11 @@ class Category < ActiveRecord::Base
     
     # -- now try slideshows -- #
 
-    slideshow = ThinkingSphinx.search('',
-      :classes     => ContentBase.content_classes,
-      :page        => 1,
-      :per_page    => 1,
-      :order       => :published_at,
-      :sort_mode   => :desc,
+    slideshow = ContentBase.search({
+      :limit       => 1,
       :with        => { category: self.id, is_slideshow: true },
-      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
-      :retry_stale => true
-    ).to_a
+      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+    })
 
     if slideshow.any?
       # Initial score:  5 + number of slides
@@ -126,16 +134,12 @@ class Category < ActiveRecord::Base
 
     # -- segment in the last two days? -- #
 
-    segments = ThinkingSphinx.search('',
+    segments = ContentBase.search({
       :classes     => [ShowSegment],
-      :page        => 1,
-      :per_page    => 1,
-      :order       => :published_at,
-      :sort_mode   => :desc,
+      :limit       => 1,
       :with        => { :category => self.id },
-      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] },
-      :retry_stale => true
-    ).to_a
+      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+    })
 
     if segments.any?
       # Initial score:  10

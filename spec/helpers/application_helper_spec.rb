@@ -50,53 +50,34 @@ describe ApplicationHelper do
       category_news     = create :category, :is_news
       category_not_news = create :category, :is_not_news
       
-      @news     = [create(:news_story), create(:blog_entry), create(:show_segment), create(:content_shell)]
-      @not_news = [create(:news_story), create(:blog_entry), create(:show_segment), create(:content_shell)]
+      news     = [create(:news_story), create(:blog_entry), create(:show_segment), create(:content_shell)]
+      not_news = [create(:news_story), create(:blog_entry), create(:show_segment), create(:content_shell)]
       
-      @news.each { |c| c.category = category_news; c.save! }
-      @not_news.each { |c| c.category = category_not_news; c.save! }
+      news.each { |c| c.category = category_news; c.save! }
+      not_news.each { |c| c.category = category_not_news; c.save! }
     end
     
     describe "#get_latest_news" do
-      let(:sphinx_hash) do
-        {
-          :classes     => ContentBase.content_classes,
-          :page        => 1,
-          :per_page    => 12,
-          :order       => :published_at,
-          :sort_mode   => :desc,
-          :with        => { category_is_news: true },
-          :retry_stale => true,
-          :populate    => true
-        }
-      end
-    
-      it "sends it off to sphinx" do
-        ThinkingSphinx.should_receive(:search).with('', sphinx_hash).and_return(@news)
-        helper.get_latest_news.should eq @news
+      sphinx_spec(num: 0)
+      
+      it "only gets objects where category is news" do
+        news = helper.get_latest_news.to_a # to_a otherwise == comparison fails
+        news.should_not be_blank
+        news.select { |c| c.category.is_news == false }.should eq []
+        news.select { |c| c.category.is_news == true }.should eq news
       end
     end
   
     #------------------------
   
     describe "#get_latest_arts" do
-      let(:sphinx_hash) do
-        {
-          :classes     => ContentBase.content_classes,
-          :page        => 1,
-          :per_page    => 12,
-          :order       => :published_at,
-          :sort_mode   => :desc,
-          :with        => { category_is_news: false },
-          :without     => { category: '' },
-          :retry_stale => true,
-          :populate    => true
-        }
-      end
-    
-      it "sends it off to sphinx" do
-        ThinkingSphinx.should_receive(:search).with('', sphinx_hash).and_return(@not_news)
-        helper.get_latest_arts.should eq @not_news
+      sphinx_spec(num: 0)
+      
+      it "only gets object where category is not news" do
+        arts = helper.get_latest_arts.to_a
+        arts.should_not be_blank
+        arts.select { |c| c.category.is_news == true }.should eq []
+        arts.select { |c| c.category.is_news == false }.should eq arts
       end
     end
   end

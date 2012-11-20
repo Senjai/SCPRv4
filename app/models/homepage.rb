@@ -1,33 +1,47 @@
 class Homepage < ActiveRecord::Base
+  include Concern::Scopes::PublishedScope
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Associations::ContentAlarmAssociation
   
   self.table_name =  "layout_homepage"
-
   has_secretary
 
-  # -------------------
+  TEMPLATES = {
+    "default"    => "Visual Left",
+    "lead_right" => "Visual Right"
+  }
+  
+  TEMPLATE_OPTIONS = TEMPLATES.map { |k, v| [v, k] }
+  
+  #-------------------
+  # Scopes
+  
+  #-------------------
+  # Associations
+  has_many :content, class_name: "HomepageContent", order: "position asc", dependent: :destroy
+  belongs_to :missed_it_bucket
+  
+  #-------------------
+  # Validations
+  validates :base, presence: true, inclusion: { in: TEMPLATES.keys }
+  
+  #-------------------
+  # Callbacks
+  
+  #-------------------
   # Administration
   administrate do
     define_list do
-      list_order "published_at desc"
-      
       column :published_at
       column :status
       column :base, header: "Base Template"
     end
   end
-  
-  # -------------------
-  # Associations
-  has_many :content, :class_name => "HomepageContent", :order => "position asc"
-  belongs_to :missed_it_bucket
-  
-  # -------------------
-  # Scopes
-  scope :published, -> { where(:status => ContentBase::STATUS_LIVE).order("published_at desc") }
+
+  #-------------------
+  # Sphinx
   
   #----------
   
@@ -39,17 +53,11 @@ class Homepage < ActiveRecord::Base
     # -- More Headlines -- #
     
     # Anything with a news category is eligible
-    headlines = ThinkingSphinx.search('',
-      :classes     => ContentBase.content_classes,
-      :page        => 1,
-      :per_page    => 12,
-      :order       => :published_at,
-      :sort_mode   => :desc,
+    headlines      = ContentBase.search({
+      :limit    => 12,
       :without     => { category: '' },
       :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } },
-      :retry_stale => true,
-      :populate    => true
-    )
+    })
         
     # -- Section Blocks -- #
     
@@ -58,16 +66,11 @@ class Homepage < ActiveRecord::Base
     # run a query for each section 
     Category.all.each do |cat|
       # exclude content that is used in our object
-      content = ThinkingSphinx.search('',
-        :classes     => ContentBase.content_classes,
-        :page        => 1,
-        :per_page    => 5,
-        :order       => :published_at,
-        :sort_mode   => :desc,
+      content = ContentBase.search({
+        :limit    => 5,
         :with        => { category: cat.id },
-        :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } },
-        :retry_stale => true
-      ).to_a
+        :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } }
+      })
       
       more     = []
       top      = nil

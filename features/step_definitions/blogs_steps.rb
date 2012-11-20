@@ -23,10 +23,6 @@ Then /^I should see (\d+) blogs? listed in the News section$/ do |num|
   page.find("#news").should have_css ".blog-widget", count: num.to_i
 end
 
-Then /^I should see that blog's teaser$/ do
-  page.should have_content @blog.teaser
-end
-
 
 #### Routing
 When /^I go to the blogs page$/ do
@@ -35,8 +31,4 @@ end
 
 When /^I go to (?:the|that) blog's page$/ do
   visit blog_path(@blog.slug)
-end
-
-Then /^I should be redirected to the blogs page$/ do
-  current_path.should eq blogs_path
 end

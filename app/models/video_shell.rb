@@ -10,30 +10,31 @@ class VideoShell < ContentBase
   include Concern::Associations::AssetAssociation
   include Concern::Scopes::SinceScope
 
-
   self.table_name = "contentbase_videoshell"
-  ROUTE_KEY       = "video"  
+  ROUTE_KEY       = "video"
   has_secretary
   
   def self.content_key
     "content/video"
   end
-  
-  # -------------------
-  # Validations
-  validates :slug, uniqueness: true
-  
-  
-  # -------------------
+
+  #-------------------
   # Scopes
-  
-  
+
+  #-------------------
+  # Association
+    
   # -------------------
+  # Validation
+  validates :slug, uniqueness: true
+
+  #-------------------
+  # Callbacks
+  
+  #-------------------
   # Administration
   administrate do
-    define_list do
-      list_order "published_at desc"
-      
+    define_list do      
       column :headline
       column :slug
       column :bylines
@@ -41,21 +42,23 @@ class VideoShell < ContentBase
       column :published_at
     end
   end
-
-
-  # -------------------
-    
+  
+  #-------------------
+  # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes headline
     indexes body
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
+    has status
+    has "1", as: :findable, type: :boolean
     has "CRC32(CONCAT('content/video:',contentbase_videoshell.id))", :type => :integer, :as => :obj_key
     has "1", :as => :is_source_kpcc, :type => :boolean
     has "0", :as => :is_slideshow, :type => :boolean
     has "0", :as => :has_audio, :type => :boolean
-    where "status = #{STATUS_LIVE}"
   end
   
   #--------------------

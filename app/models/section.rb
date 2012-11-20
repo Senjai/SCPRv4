@@ -2,19 +2,10 @@ class Section < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   has_secretary
   ROUTE_KEY = "section"
-  
-  #----------
-  # Administration
-  administrate do
-    define_list do
-      list_per_page :all
-      
-      column :id
-      column :title
-      column :slug
-    end
-  end
 
+  #----------
+  # Scopes
+  
   #----------
   # Association
   has_many    :section_categories
@@ -32,6 +23,29 @@ class Section < ActiveRecord::Base
   validates :slug, uniqueness: true
   
   #----------
+  # Callbacks
+  
+  #----------
+  # Administration
+  administrate do
+    define_list do
+      list_per_page :all
+      
+      column :id
+      column :title
+      column :slug
+    end
+  end
+  
+  #----------
+  # Sphinx
+  acts_as_searchable
+  
+  define_index do
+    indexes title
+  end
+  
+  #----------
   
   def content(options = {})
     options.reverse_merge!(per_page: 10, page: 1)
@@ -43,20 +57,11 @@ class Section < ActiveRecord::Base
       options[:page] = 1 
     end
     
-    begin
-      ThinkingSphinx.search('',
-        :classes     => ContentBase.content_classes,
-        :page        => options[:page],
-        :per_page    => options[:per_page],
-        :order       => :published_at,
-        :sort_mode   => :desc,
-        :with        => { category: self.categories.map { |c| c.id } },
-        :retry_stale => true,
-        :populate    => true
-      )
-    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
-      Kaminari.paginate_array([]).page(options[:page])
-    end
+    ContentBase.search({
+      :page        => options[:page],
+      :per_page    => options[:per_page],
+      :with        => { category: self.categories.map { |c| c.id } }
+    })
   end
 
   #----------

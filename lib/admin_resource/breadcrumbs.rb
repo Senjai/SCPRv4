@@ -2,7 +2,7 @@
 # AdminResource::Breadcrumbs
 #
 # Super-simple breadcrumbs for you and me.
-# Include it into a controller!
+# Include it into a controller
 # 
 # Arguments:
 # Pairs of strings. Title of breadcrumb, Path
@@ -22,8 +22,8 @@
 # your view:
 #
 #   <% breadcrumbs.each do |crumb| %>
-#      <%= link_to crumb.title, crumb.link %>
-#    <% end %>
+#     <%= link_to crumb.title, crumb.link %>
+#   <% end %>
 #
 # You can also define multiple breadcrumbs at once.
 # Every 2 arguments is a new breadcrumb:

@@ -8,34 +8,43 @@
 # the week.
 #
 class RecurringScheduleSlot < ActiveRecord::Base
+  has_secretary
   
+  #--------------
+  # Scopes
+  
+  #--------------
+  # Associations
+  belongs_to :program, polymorphic: true
+  
+  #--------------
+  # Validations
+  validates :start_time, :end_time, :program, presence: true
+  
+  #--------------
+  # Callbacks
+  
+  #--------------
+  # Administration
   administrate do
     define_list do
       list_per_page :all
-      list_order :start_time
+      list_order "start_time"
       
       column :program, display: proc { self.program.title }
       column :starts_at, display: proc { self.format_time(:starts_at) }
       column :ends_at, display: proc { self.format_time(:ends_at) }
     end
   end
+
+  #--------------
+  # Sphinx
+  acts_as_searchable
   
-  has_secretary
+  define_index do
+    indexes program.title
+  end
   
-  #--------------
-  # Associations
-  belongs_to :program, polymorphic: true
-
-
-  #--------------
-  # Validations  
-  validates :start_time, :end_time, :program, presence: true
-
-
-  #--------------
-  # Scopes
-
-
   #--------------
   
   class << self
@@ -188,6 +197,13 @@ class RecurringScheduleSlot < ActiveRecord::Base
   
   
   #--------------
+  # This will only be true for one slot...
+  # But we need to check.
+  def split_weeks?
+    @split_weeks ||= self.end_time < self.start_time
+  end
+  
+  #--------------
   # Has the slot ended already this week?
   def past?
     Time.now.second_of_week > self.end_time
@@ -201,10 +217,10 @@ class RecurringScheduleSlot < ActiveRecord::Base
   def current?
     now = Time.now.second_of_week
     
-    if !split_weeks?
+    if !self.split_weeks?
       self.start_time <= now && self.end_time > now
     else
-      now > self.start_time || now < self.end_time
+      now >= self.start_time || now < self.end_time
     end
   end
   
@@ -258,13 +274,6 @@ class RecurringScheduleSlot < ActiveRecord::Base
   #--------------
 
   private
-
-  #--------------
-  # This will only be true for one slot...
-  # But we need to check.
-  def split_weeks?
-    @split_weeks ||= self.end_time < self.start_time
-  end
   
   #--------------
   # If the slot is now or upcoming, use

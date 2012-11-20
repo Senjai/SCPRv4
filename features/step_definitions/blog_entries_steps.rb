@@ -9,10 +9,6 @@ Given /^a blog entry$/ do
   @blog_entry = create :blog_entry
 end
 
-Given /^(\d+) entr(?:ies|y) for that blog$/ do |num|
-  @entries = create_list :blog_entry, num.to_i, blog: @blog
-end
-
 Given /^(?:a? )?blog entr(?:ies|y) with the following attributes?:$/ do |table|
   table.hashes.each do |attributes|
     create(:blog_entry, Rack::Utils.parse_nested_query(attributes.to_query))

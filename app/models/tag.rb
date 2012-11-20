@@ -13,7 +13,7 @@ class Tag < ActiveRecord::Base
   end
   
   # -------------------
-  # Associations  
+  # Associations
   has_many :tagged, class_name: "TaggedContent"
   has_many :content, through: :tagged
 end

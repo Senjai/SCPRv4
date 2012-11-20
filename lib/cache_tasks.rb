@@ -1,19 +1,23 @@
-$: << "."
-
+##
+# CacheTasks
+#
+# An API for caching, and enqueing caching.
+# Meant to be run mostly as rake tasks.
+#
+# Each task should respond to a #run method.
+#
 module CacheTasks
-  def self.view
-    view = ActionView::Base.new(ActionController::Base.view_paths, {})
-    view.extend ApplicationHelper
-    view.extend WidgetsHelper
-  end
-  
   class Task
     attr_accessor :verbose
     
-    def cache(content, partial, cache_key)
-      cached = CacheTasks.view.render(partial: partial, object: content, as: :content)
-      Rails.cache.write(cache_key, cached)
-      true
+    def cacher
+      @cacher ||= CacheController.new
+    end
+
+    #---------------
+    
+    def cache(*args)
+      cacher.cache(*args)
     end
     
     #---------------
@@ -32,4 +36,4 @@ module CacheTasks
   end # Task
 end # CacheTasks
 
-Dir["cache_tasks/*"].each { |f| require f }
+Dir["#{Rails.root}/cache_tasks/*"].each { |f| require f }

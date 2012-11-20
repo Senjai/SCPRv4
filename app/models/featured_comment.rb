@@ -3,16 +3,36 @@ class FeaturedComment < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
+  include Concern::Scopes::PublishedScope
   
   self.table_name = 'contentbase_featuredcomment'
   has_secretary
   
   #----------------
+  # Scopes
+  
+  #----------------
+  # Associations
+  map_content_type_for_django
+  belongs_to :content, polymorphic: true
+  belongs_to :bucket, class_name: "FeaturedCommentBucket"
+  
+  #----------------
+  # Validation
+  validates :username, :status, presence: true
+  validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: -> { self.should_validate? }
+  
+  def should_validate?
+    pending? or published?
+  end
+  
+  #----------------
+  # Callbacks
+  
+  #----------------
   # Administration
   administrate do
     define_list do
-      list_order "published_at desc"
-
       column :bucket
       column :content
       column :username
@@ -22,32 +42,19 @@ class FeaturedComment < ActiveRecord::Base
     end
   end
   
+  #----------------
+  # Sphinx
+  acts_as_searchable
+  
+  define_index do
+    indexes username
+    indexes excerpt
+    indexes content_type
+  end
   
   #----------------
-  # Associations
-  map_content_type_for_django
-  belongs_to :content, polymorphic: true
-  belongs_to :bucket, class_name: "FeaturedCommentBucket"
-  
-  
-  #----------------
-  # Scopes
-  scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("published_at desc") }
-  
-  
-  #----------------
-  # Validation
-  validates :username, :status, presence: true
-  validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: -> { self.should_validate? }
-  
   
   def title
     "Featured Comment (for #{content.obj_key})"
-  end
-
-  #----------------
-  
-  def should_validate?
-    pending? or published?
   end
 end

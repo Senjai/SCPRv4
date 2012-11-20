@@ -11,6 +11,6 @@ class ShowRundown < ActiveRecord::Base
       self.segment_order = last_rundown.segment_order + 1
     else
       self.segment_order = 1
-    end        
+    end
   end
 end

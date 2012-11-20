@@ -9,7 +9,7 @@
   </div>
   
   <div class="span18">
-    <% for p in @podcasts %>
+    <% @podcasts.each do |p| %>
       <h3><%= p.title %></h3>
       <div class="row-fluid">
         <div class="span4">

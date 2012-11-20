@@ -15,12 +15,6 @@ end
 
 
 #### Finders
-Then /^I should see "([^"]*)" events ordered by "([^"]*)"$/ do |list, order|
-  Event.published.order(order).send(list.to_sym).each_with_index do |event, i|
-    page.find(".event-teaser")[i].should have_content event.headline 
-  end
-end
-
 Then /^I should see (\d+) events?$/ do |num|
   if num.to_i == 0
     page.find("#main, #forum").should_not have_css ".event"
@@ -58,26 +52,6 @@ Then /^I should see (\d+) past events$/ do |num|
   # end
 end
 
-Then /^I should see (\d+) past events in "([^"]*)"$/ do |num, text|
-  if num.to_i == 0
-    page.find(".#{text.gsub(/ /,"-")}").should_not have_css ".past-events .event"
-  else
-    page.find(".#{text.gsub(/ /,"-")}").should have_css ".past-events .event", count: num.to_i
-  end
-  # Event.limit(num.to_i).past.forum.each_with_index do |event, i|
-  #   page.find(".past-events .event")[i].should have_content event.headline
-  # end
-end
-
-Then /^I should see each event's primary asset$/ do
-  page.should have_css ".upcoming-events .event .contentasset img", count: Event.all.count
-end
-
-
-Then /^I should see that even has already occurred$/ do
-  page.should have_css ".past-date"
-end
-
 #### Routing
 When /^I go to the events page$/ do
   visit events_path
@@ -86,12 +60,3 @@ end
 When /^I go to (?:that|the|an) event's page$/ do
   visit @event.link_path
 end
-
-When /^I go to an event page for an event that doesn't exist$/ do
-  visit event_path(year: 1, month: 2, day: 3, slug: "doesnt-exist")
-end
-
-Then /^I should be redirected to the events page$/ do
-  current_path.should eq events_path
-end
-

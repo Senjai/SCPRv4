@@ -17,16 +17,10 @@ class HomeController < ApplicationController
     @data_points = DataPoint.to_hash(@data)
     @category    = Category.find_by_slug('politics')
     
-    @content = ThinkingSphinx.search('',
-      :classes     => ContentBase.content_classes,
-      :page        => 1,
-      :per_page    => 15,
-      :order       => :published_at,
-      :sort_mode   => :desc,
-      :with        => { category: [@category.id] },
-      :retry_stale => true,
-      :populate    => true
-    )
+    @content = ContentBase.search({
+      :limit => 15,
+      :with  => { category: [@category.id] }
+    })
   end
   
   #----------
@@ -55,60 +49,9 @@ class HomeController < ApplicationController
     render 'missed_it_content.js.erb'
   end
   
-  def self._cache_homepage(obj_key=nil)
-    view = ActionView::Base.new(ActionController::Base.view_paths, {})  
-    
-    class << view  
-      include ApplicationHelper  
-      include WidgetsHelper
-      include Rails.application.routes.url_helpers
-    end
-    
-    Rails.logger.info("in _cache_homepage for #{obj_key}")
-    
-    # -- Update Sphinx Index -- #
-    
-    # for now, just run the complete index for the object's model
-    if model = ContentBase.get_model_for_obj_key(obj_key)
-      idx = model.sphinx_index_names
-      
-      # For now, we'll update the byline index every time.
-      # TODO: Put a check to see if the byline has updated, and only index then
-      byline_idx = ContentByline.sphinx_index_names
-      idx += byline_idx
-      
-      if idx && idx.present?
-        tsc = ThinkingSphinx::Configuration.instance
-        # run index
-        out = tsc.controller.index idx
-        Rails.logger.info("Sphinx index updated for #{model.name}: #{out}")
-      end
-    end
-    
-    # get scored content from homepage
-    @homepage = Homepage.published.first
-    scored_content = @homepage.scored_content    
-        
-    # write cache...
-    Rails.cache.write(
-      "home/headlines", 
-      view.render(:partial => "home/cached/headlines", :object => scored_content[:headlines])
-    )
-    
-    # render and cache
-    Rails.cache.write(
-      "home/sections",
-      view.render(:partial => "home/cached/sections", :object => scored_content[:sections])
-    )
-  end
-  
-  class << self
-    include NewRelic::Agent::Instrumentation::ControllerInstrumentation
-    add_transaction_tracer :_cache_homepage, :category => :task
-  end
-  
   protected
+  
   def generate_homepage
-    self.class._cache_homepage
+    CacheTasks::Homepage.new.run
   end
 end

@@ -17,32 +17,11 @@ class BlogEntry < ContentBase
   
   PRIMARY_ASSET_SCHEME = :blog_asset_scheme
   ROUTE_KEY = "blog_entry"
-    
-  # ------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "published_at desc"
-      
-      column :headline
-      column :blog
-      column :bylines
-      column :status
-      column :published_at
-    end
-  end
 
-
-  # ------------------
-  # Validation
-  validates_presence_of :blog
+  #------------------
+  # Scopes
   
-  def should_validate?
-    pending? or published?
-  end
-  
-  
-  # ------------------
+  #------------------
   # Association
   belongs_to :blog
 
@@ -52,12 +31,32 @@ class BlogEntry < ContentBase
   has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
   has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
   
+  #------------------
+  # Validation
+  validates_presence_of :blog
   
-  # ------------------
-  # Scopes
+  def should_validate?
+    pending? or published?
+  end
   
-
-  # ------------------
+  #------------------
+  # Callbacks
+  
+  #------------------
+  # Administration
+  administrate do
+    define_list do
+      column :headline
+      column :blog
+      column :bylines
+      column :status
+      column :published_at
+    end
+  end
+  
+  #------------------
+  # Sphinx
+  acts_as_searchable
   
   define_index do
     indexes headline
@@ -66,21 +65,22 @@ class BlogEntry < ContentBase
     has category.id,      as: :category
     has category.is_news, as: :category_is_news
     has published_at
+    has status
+    has blog.is_active, as: :findable, type: :boolean
     has "1", as: :is_source_kpcc, type: :boolean
-    has "CRC32(CONCAT('blogs/entry:',#{BlogEntry.table_name}.id))",     type: :integer, as: :obj_key
-    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')",  type: :boolean, as: :is_slideshow
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",       type: :boolean, as: :has_audio
-    where "#{BlogEntry.table_name}.status = #{STATUS_LIVE} and #{Blog.table_name}.is_active = 1"
+    has "CRC32(CONCAT('blogs/entry:',#{BlogEntry.table_name}.id))", type: :integer, as: :obj_key
+    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')", type: :boolean, as: :is_slideshow
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", type: :boolean, as: :has_audio
     join audio
   end
-    
-  #----------
+  
+  #---------------------
   
   def byline_elements
     []
   end
-
-  #----------
+  
+  #-------------------
   # Need to work around multi-american until we can figure
   # out how to merge those comments in with kpcc
   def disqus_identifier
@@ -91,7 +91,7 @@ class BlogEntry < ContentBase
     end
   end
 
-  #----------
+  #-------------------
   
   def disqus_shortname
     if dsq_thread_id.present? && wp_id.present?
@@ -100,20 +100,20 @@ class BlogEntry < ContentBase
       super
     end
   end
-  
-  #----------
+
+  #-------------------
   
   def previous
     self.class.published.where("published_at < ? and blog_id = ?", self.published_at, self.blog_id).first
   end
 
-  #----------
+  #-------------------
 
   def next
     self.class.published.where("published_at > ? and blog_id = ?", self.published_at, self.blog_id).first
   end
   
-  #----------
+  #-------------------
   
   def extended_teaser(*args)
     target      = args[0] || 800
@@ -132,7 +132,7 @@ class BlogEntry < ContentBase
     return extended_teaser.to_html
   end
   
-  #----------
+  #-------------------
 
   def route_hash
     return {} if !self.persisted? or !self.published?

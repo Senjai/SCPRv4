@@ -185,7 +185,7 @@ describe BlogsController do
   # ------------------------
   
   describe "load_blog" do
-    before :all do
+    before :each do
       @blog = create :blog
       entry_published = create :blog_entry, blog: @blog
       p = entry_published.published_at
@@ -193,10 +193,6 @@ describe BlogsController do
                       tag: "news", 
                       id: entry_published.id, 
                       slug: entry_published.slug }.merge(date_path(p))
-    end
-    
-    after :all do
-      @blog = nil
     end
     
     %w{ show entry blog_tags blog_tagged }.each do |action|

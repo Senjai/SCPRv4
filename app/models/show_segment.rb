@@ -23,31 +23,17 @@ class ShowSegment < ContentBase
     ["Float Right", "float"],
     ["Slideshow", "slideshow"]
   ]
-    
-  # -------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "published_at desc"
-      
-      column :headline
-      column :show
-      column :bylines
-      column :published_at
-      column :status
-    end
-  end
-
-
   
-  # -------------------
-  # Associations  
+  #-------------------
+  # Scopes
+  
+  #-------------------
+  # Associations
   belongs_to :show,   :class_name => "KpccProgram"
   has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id"
-  has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc" 
-
-
-  # -------------------
+  has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc"
+  
+  #-------------------
   # Validations
   validates :show, presence: true
   
@@ -55,12 +41,25 @@ class ShowSegment < ContentBase
     pending? or published?
   end
   
-  # -------------------
-  # Scopes
-
-
-  # -------------------
-
+  #-------------------
+  # Callbacks
+  
+  #-------------------
+  # Administration
+  administrate do
+    define_list do
+      column :headline
+      column :show
+      column :bylines
+      column :published_at
+      column :status
+    end
+  end
+  
+  #-------------------
+  # Sphinx
+  acts_as_searchable
+  
   define_index do
     indexes headline
     indexes teaser
@@ -69,11 +68,12 @@ class ShowSegment < ContentBase
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
+    has status
+    has "1", as: :findable, type: :boolean
     has "1", :as => :is_source_kpcc, :type => :boolean
     has "CRC32(CONCAT('shows/segment:',shows_segment.id))", :type => :integer, :as => :obj_key
     has "(shows_segment.segment_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
-    where "status = #{ContentBase::STATUS_LIVE}"
     join audio
   end
   

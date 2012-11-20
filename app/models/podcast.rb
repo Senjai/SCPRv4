@@ -1,4 +1,6 @@
 class Podcast < ActiveRecord::Base
+  has_secretary
+  
   ROUTE_KEY = "podcast"
 
   ITEM_TYPES = [
@@ -8,6 +10,22 @@ class Podcast < ActiveRecord::Base
   ]
 
   SOURCES = ["KpccProgram", "OtherProgram", "Blog"]
+  
+  #-------------
+  # Scopes
+  
+  #-------------
+  # Association  
+  belongs_to :source, polymorphic: true
+  belongs_to :category
+  
+  #-------------
+  # Validation
+  validates :slug, uniqueness: true, presence: true
+  validates :title, :url, :podcast_url, presence: true
+  
+  #-------------
+  # Callbacks
   
   #-------------
   # Administration
@@ -21,27 +39,17 @@ class Podcast < ActiveRecord::Base
       column :is_listed
     end
   end
-
-  has_secretary
-
-
-  #-------------
-  # Association  
-  belongs_to :source, polymorphic: true
-  belongs_to :category
-  
   
   #-------------
-  # Validation
-  validates :slug, uniqueness: true, presence: true
-  validates :title, :url, :podcast_url, presence: true
+  # Sphinx
+  acts_as_searchable
   
+  define_index do
+    indexes title
+    indexes slug
+    indexes description
+  end
   
-  #-------------
-  # Scopes
-  scope :listed, -> { where(is_listed: true) }
-
-
   #-------------
   
   def content(limit=25)
@@ -63,7 +71,7 @@ class Podcast < ActiveRecord::Base
         klasses = ContentBase.content_classes if item_type == "content"
       end
       
-      search(limit, klasses, conditions)
+      content_query(limit, klasses, conditions)
     end
   end
   
@@ -79,15 +87,11 @@ class Podcast < ActiveRecord::Base
   
   private
   
-  def search(limit, klasses, conditions={})
-    ThinkingSphinx.search('',
-      :with        => { has_audio: true }.merge!(conditions), 
-      :classes     => klasses, 
-      :order       => :published_at, 
-      :page        => 1, 
-      :per_page    => limit, 
-      :sort_mode   => :desc,
-      :retry_stale => true
-    )
+  def content_query(limit, klasses, conditions={})
+    ContentBase.search({
+      :with    => { has_audio: true }.merge!(conditions), 
+      :classes => klasses, 
+      :limit   => limit
+    })
   end
 end

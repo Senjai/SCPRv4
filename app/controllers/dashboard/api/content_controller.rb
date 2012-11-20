@@ -76,16 +76,10 @@ class Dashboard::Api::ContentController < ApplicationController
     
     # build a new cache
     
-    contents = ThinkingSphinx.search('',
-      :classes     => ContentBase.content_classes,
-      :page        => 1,
-      :per_page    => 20,
-      :order       => :published_at,
-      :sort_mode   => :desc,
-      :retry_stale => true,
-      :populate    => true
-    )
-    
+    contents = ContentBase.search({
+      :limit => 20
+    })
+        
     json = contents.to_json
     Rails.cache.write_entry("cbaseapi:recent", json, :objects => [contents,"contentbase:new"].flatten)
     render :json => json

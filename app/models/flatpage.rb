@@ -1,25 +1,7 @@
 class Flatpage < ActiveRecord::Base
   self.table_name = "flatpages_flatpage" 
-  
   has_secretary
   
-  # -------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "url"
-      list_per_page 100
-      
-      column "url"
-      column "is_public", header: "Public?"
-      column "redirect_url"
-      column "title"
-      column "updated_at"
-    end
-  end
-
-  # -------------------
-
   TEMPLATE_OPTIONS = [
     ["Normal (with sidebar)",   "inherit"],
     ["Full Width (no sidebar)", "full"],
@@ -31,12 +13,8 @@ class Flatpage < ActiveRecord::Base
   # Scopes
   scope :visible, -> { where(is_public: true) }
 
-
   # -------------------
-  # Callbacks
-  before_validation :slashify
-  before_validation :downcase_url
-  
+  # Associations
   
   # -------------------
   # Validations
@@ -44,21 +22,47 @@ class Flatpage < ActiveRecord::Base
   validates_inclusion_of :template, in: TEMPLATE_OPTIONS.map { |o| o[1] }
   
   # -------------------
-  
+  # Callbacks
+  before_validation :slashify
   def slashify
     if url.present? and path.present?
       self.url = "/#{path}/"
     end
   end
   
-  # -------------------
-  
+  before_validation :downcase_url
   def downcase_url
     if url.present? 
       self.url = url.downcase
     end
   end
+  
+  # -------------------
+  # Administration
+  administrate do
+    define_list do
+      list_order "url"
+      list_per_page 50
+      
+      column :url
+      column :is_public, header: "Public?"
+      column :redirect_url
+      column :title
+      column :updated_at
+    end
+  end
 
+  # -------------------
+  # Sphinx
+  acts_as_searchable
+  
+  define_index do
+    indexes url
+    indexes title
+    indexes description
+    indexes redirect_url
+  end
+  
   # -------------------
 
   def path
@@ -82,7 +86,5 @@ class Flatpage < ActiveRecord::Base
   # Override AdminResource for this
   def link_path(options={})
     self.url
-  end
-  
-  # -------------------
+  end  
 end

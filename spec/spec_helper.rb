@@ -14,7 +14,6 @@ require 'fakeweb'
 require 'capybara/rspec'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
-Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|  
@@ -52,6 +51,7 @@ RSpec.configure do |config|
   end
   
   config.before do
+    FakeWeb.clean_registry
     FakeWeb.load_callback
     DatabaseCleaner.start
     ActionMailer::Base.deliveries.clear

@@ -6,22 +6,29 @@ class Bio < ActiveRecord::Base
   has_secretary
 
   #--------------
+  # Scopes
+  scope :visible, -> { where(is_public: true) }
+  
+  #--------------
   # Associations
   belongs_to  :user,    class_name: "AdminUser"
   has_many    :bylines, class_name: "ContentByline",  foreign_key: :user_id
 
-  
-  #--------------
-  # Scopes    
-  scope :visible, -> { where(is_public: true) }
-
-  
   #--------------
   # Validation
   validates :slug, uniqueness: true
   validates :name, presence: true
   validates :last_name, presence: true
   
+  #--------------
+  # Callbacks
+  before_validation :set_last_name, if: -> { self.last_name.blank? }
+  def set_last_name
+    if self.name.present?
+      self.last_name = self.name.split(" ").last
+    end
+  end
+
   #--------------
   # Administration
   administrate do
@@ -34,17 +41,16 @@ class Bio < ActiveRecord::Base
       column :is_public, header: "Show on Site?"
     end
   end
-
   
   #--------------
-  # Callbacks
-  before_validation :set_last_name, if: -> { self.last_name.blank? }
-  def set_last_name
-    if self.name.present?
-      self.last_name = self.name.split(" ").last
-    end
+  # Sphinx
+  acts_as_searchable
+  
+  define_index do
+    indexes name
+    indexes title
+    indexes email
   end
-
     
   #----------
   

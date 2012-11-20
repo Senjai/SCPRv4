@@ -2,17 +2,17 @@ class Promotion < ActiveRecord::Base
   has_secretary
   
   #-------------
+  # Validations
+  validates_presence_of :title, :url
+  
+  #-------------
   # Administration
   administrate do
-    define_list do      
+    define_list do
       column :id
       column :title
     end
   end
-  
-  #-------------
-  # Validations
-  validates_presence_of :title, :url
   
   #-------------
   

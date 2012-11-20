@@ -1,62 +1,8 @@
-#### Setup
-Given /^there (?:is|are) (\d+) upcoming forum events?$/ do |num|
-  @events = create_list :event, num.to_i, :future, :published
-  @event = @events[rand(@events.size)]
-  Event.all.count.should eq num.to_i
-end
-
-
-#### Routing
-When /^I go to the forum page$/ do
-  visit forum_events_path
-  current_path.should eq forum_events_path
-end
-
-When /^I go to the forum archive page$/ do
-  visit forum_events_archive_path
-end
-
-
 #### Finders
-Then /^I should see the (\d+) closest events?$/ do |num|
-  page.should have_css ".upcoming-events .event", count: num.to_i
-  page.first(".upcoming-events .event").should have_content Event.forum.upcoming.first.headline
-end
-
-Then /^I should see the closest event featured$/ do
-  page.should have_css ".event.closest"
-  page.find(".event.closest").should have_content Event.forum.upcoming.first.headline
-end
-
-Then /^I should see future events listed below the closest event$/ do
-  page.should have_css ".event.future"
-end
-
-Then /^the closest event should not be in the list of future events$/ do
-  page.find(".event.future").should_not have_content Event.forum.closest.headline
-end
-
-Then /^I should see a list of archived events in the archive strip$/ do
-  page.should have_css(".archive-strip .event"), count: Event.forum.past.first(3).count
-end
-
-Then /^I should only see forum events$/ do
-  non_forum_events = Event.all - Event.sponsored.all
-  non_forum.events.each do |event|
-    page.should_not match event.headline
-  end
-end
-
 Then /^I should see (\d+) more upcoming events listed$/ do |num|
   page.should have_css ".more-events .event", count: num.to_i
 end
 
 Then /^that event should not be in the upcoming events$/ do
   find(".more-events").should_not have_content @event.headline
-end
-
-
-#### Actions
-When /^I click on "([^"]*)" in the navigation$/ do |text|
-  page.find("nav.section-nav").click_link(text)
 end

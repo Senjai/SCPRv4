@@ -20,26 +20,6 @@ Given /^I am logged out$/ do
   current_path.should eq admin_login_path
 end
 
-
-
-#### Finders
-Then /^I should not see a logout link$/ do
-  page.should_not have_css '#logout'
-end
-
-
-
-#### Assertions
-Then /^I should be logged in$/ do
-  pending
-end
-
-Then /^I should not be logged in$/ do
-  pending
-end
-
-
-
 #### Actions
 When /^I fill in the login fields with invalid information$/ do
   fill_in 'username', with: @admin_user.username
