@@ -1,31 +1,43 @@
 class Homepage < ActiveRecord::Base
+  include Concern::Scopes::PublishedScope
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
   
   self.table_name =  "layout_homepage"
-
   has_secretary
 
-  # -------------------
+  TEMPLATES = [
+    ["default", "Visual Left"],
+    ["lead_right", "Visual Right"]
+  ]
+  
+  #-------------------
+  # Scopes
+  
+  #-------------------
+  # Associations
+  has_many :content, class_name: "HomepageContent", order: "position asc", dependent: :destroy
+  belongs_to :missed_it_bucket
+  
+  #-------------------
+  # Validations
+  validates :base, presence: true, inclusion: { in: TEMPLATES }
+  
+  #-------------------
+  # Callbacks
+  
+  #-------------------
   # Administration
   administrate do
-    define_list do      
+    define_list do
       column :published_at
       column :status
       column :base, header: "Base Template"
     end
   end
-  
-  # -------------------
-  # Associations
-  has_many :content, :class_name => "HomepageContent", :order => "position asc"
-  belongs_to :missed_it_bucket
-  
-  # -------------------
-  # Scopes
-  scope :published, -> { where(:status => ContentBase::STATUS_LIVE).order("published_at desc") }
+
   
   #----------
   
