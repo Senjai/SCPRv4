@@ -47,7 +47,7 @@ class ShowEpisode < ContentBase
   # -------------------
   # Administration
   administrate do
-    define_list do            
+    define_list do
       column :headline
       column :show
       column :air_date

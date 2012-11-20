@@ -45,7 +45,7 @@ class BlogEntry < ContentBase
   #------------------
   # Administration
   administrate do
-    define_list do      
+    define_list do
       column :headline
       column :blog
       column :bylines
