@@ -2,6 +2,9 @@ module TestClass
   class Story < ActiveRecord::Base
     self.table_name = "test_class_stories"
     
+    include Concern::Scopes::SinceScope
+    include Concern::Scopes::PublishedScope
+    
     include Concern::Associations::AssetAssociation
     include Concern::Associations::AudioAssociation
     include Concern::Associations::ContentAlarmAssociation
@@ -16,7 +19,5 @@ module TestClass
     
     include Concern::Validations::ContentValidation
     include Concern::Validations::SlugUniqueForPublishedAtValidation
-    
-    include Concern::Scopes::SinceScope
   end
 end

@@ -1,14 +1,15 @@
 class VideoShell < ContentBase
+  include Concern::Scopes::SinceScope
+  include Concern::Scopes::PublishedScope
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::AssetAssociation
+  include Concern::Validations::ContentValidation
+  include Concern::Validations::SlugValidation
+  include Concern::Validations::PublishedAtValidation
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
-  include Concern::Validations::ContentValidation
-  include Concern::Validations::SlugValidation
-  include Concern::Validations::PublishedAtValidation
-  include Concern::Associations::ContentAlarmAssociation
-  include Concern::Associations::AssetAssociation
-  include Concern::Scopes::SinceScope
 
   self.table_name = "contentbase_videoshell"
   ROUTE_KEY       = "video"
@@ -34,7 +35,7 @@ class VideoShell < ContentBase
   #-------------------
   # Administration
   administrate do
-    define_list do      
+    define_list do
       column :headline
       column :slug
       column :bylines

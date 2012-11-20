@@ -85,12 +85,6 @@ class ContentBase < ActiveRecord::Base
   #--------------------
 
   class << self
-    def published
-      where(status: STATUS_LIVE).order("published_at desc")
-    end
-  
-    #--------------------
-  
     def content_classes
       self::CONTENT_CLASSES[:content].collect {|k,v| v.constantize }
     end
@@ -131,7 +125,10 @@ class ContentBase < ActiveRecord::Base
       begin
         ThinkingSphinx.search(query, options)
       rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
-        Kaminari.paginate_array([])
+        # In this one scenario, we need to fail gracefully from a Sphinx error,
+        # because otherwise the entire website will be down if media isn't available,
+        # or if we need to stop the searchd daemon for some reason, like a rebuild.
+        Kaminari.paginate_array([]).page(0).per(0)
       end
     end
     

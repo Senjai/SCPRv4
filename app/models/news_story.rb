@@ -1,17 +1,17 @@
 class NewsStory < ContentBase
+  include Concern::Scopes::SinceScope
+  include Concern::Scopes::PublishedScope
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::AudioAssociation
+  include Concern::Associations::AssetAssociation
+  include Concern::Validations::ContentValidation
+  include Concern::Validations::SlugUniqueForPublishedAtValidation
+  include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
-  include Concern::Validations::ContentValidation
-  include Concern::Validations::SlugUniqueForPublishedAtValidation
-  include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Associations::ContentAlarmAssociation
-  include Concern::Associations::AudioAssociation
-  include Concern::Associations::AssetAssociation
-  include Concern::Scopes::SinceScope
-  
   
   self.table_name = 'news_story'
   has_secretary
@@ -54,7 +54,7 @@ class NewsStory < ContentBase
   #-------------------
   # Administration
   administrate do
-    define_list do            
+    define_list do
       column :headline
       column :slug
       column :news_agency

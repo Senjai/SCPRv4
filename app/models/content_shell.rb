@@ -1,14 +1,14 @@
 class ContentShell < ContentBase
+  include Concern::Scopes::SinceScope
+  include Concern::Scopes::PublishedScope
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::AssetAssociation
+  include Concern::Validations::ContentValidation
+  include Concern::Validations::PublishedAtValidation
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::HeadlineMethods
-  include Concern::Validations::ContentValidation
-  include Concern::Validations::PublishedAtValidation
-  include Concern::Associations::ContentAlarmAssociation
-  include Concern::Associations::AssetAssociation  
-  include Concern::Scopes::SinceScope
-  
-  
+
   self.table_name =  "contentbase_contentshell"
   has_secretary
       
@@ -36,7 +36,7 @@ class ContentShell < ContentBase
   #-------------------
   # Administration
   administrate do
-    define_list do      
+    define_list do
       column :headline
       column :site
       column :bylines

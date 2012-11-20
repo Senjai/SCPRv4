@@ -49,7 +49,7 @@ module Concern
       # If unpublishing
       def should_set_published_at_to_nil?
         self.unpublishing?
-      end        
+      end
       
       #--------------
       
