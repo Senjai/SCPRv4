@@ -1,17 +1,19 @@
 class Homepage < ActiveRecord::Base
   include Concern::Scopes::PublishedScope
+  include Concern::Associations::ContentAlarmAssociation
+  include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Associations::ContentAlarmAssociation
   
   self.table_name =  "layout_homepage"
   has_secretary
 
-  TEMPLATES = [
-    ["default", "Visual Left"],
-    ["lead_right", "Visual Right"]
-  ]
+  TEMPLATES = {
+    "default"    => "Visual Left",
+    "lead_right" => "Visual Right"
+  }
+  
+  TEMPLATE_OPTIONS = TEMPLATES.map { |k, v| [v, k] }
   
   #-------------------
   # Scopes
@@ -23,7 +25,7 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Validations
-  validates :base, presence: true, inclusion: { in: TEMPLATES }
+  validates :base, presence: true, inclusion: { in: TEMPLATES.keys }
   
   #-------------------
   # Callbacks
@@ -38,6 +40,8 @@ class Homepage < ActiveRecord::Base
     end
   end
 
+  #-------------------
+  # Sphinx
   
   #----------
   
