@@ -61,19 +61,23 @@ describe ContentBase do # Using news_story here arbitrarily
   #---------------
 
   describe "::search" do
-    sphinx_spec(num: 1, options: { status: ContentBase::STATUS_LIVE })
+    context "sphinx is running" do
+      sphinx_spec(num: 1, options: { status: ContentBase::STATUS_LIVE })
     
-    it "searches across ContentBase classes" do
-      ContentBase.search.to_a.should eq @generated_content.sort_by(&:published_at).reverse
+      it "searches across ContentBase classes" do
+        ContentBase.search.to_a.should eq @generated_content.sort_by(&:published_at).reverse
+      end
     end
     
-    it "has a graceful fallback if sphinx isn't working" do
-      %w{ ThinkingSphinx::SphinxError Riddle::ConnectionError }.each do |error|
-        ThinkingSphinx.should_receive(:search).and_raise(error.constantize)
-        content = ContentBase.search
-        content.should be_empty
-        content.should respond_to :total_pages
-        content.should respond_to :current_page
+    context "sphinx is not running" do
+      it "has a graceful fallback if sphinx isn't working" do
+        %w{ ThinkingSphinx::SphinxError Riddle::ConnectionError }.each do |error|
+          ThinkingSphinx.should_receive(:search).and_raise(error.constantize)
+          content = ContentBase.search
+          content.should be_empty
+          content.should respond_to :total_pages
+          content.should respond_to :current_page
+        end
       end
     end
   end
