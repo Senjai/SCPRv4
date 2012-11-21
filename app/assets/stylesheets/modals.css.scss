@@ -51,6 +51,7 @@
         position: absolute;
         left: 70px; // specify a new 'left' property on your specific class for the modal, flagged with !important to override the horizontal position of the arrow
         top: -12px;
+        display:none\9; // IE8 and below hack. Ugh.
     }
     .modal-close {
         background: url(image_path('broadcast-bar/episode-modal-close-btn.png')) no-repeat;
