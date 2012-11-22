@@ -97,13 +97,4 @@ describe ShowSegment do
       segment.canFeature?.should be_false
     end
   end
-
-  #------------------
-
-  describe "#public_datetime" do
-    it "is the published_at date" do
-      segment = create :show_segment
-      segment.public_datetime.should eq segment.published_at
-    end
-  end
 end

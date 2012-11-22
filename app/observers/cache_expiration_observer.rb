@@ -4,7 +4,8 @@
 # Watches classes, expires cache.
 #
 class CacheExpirationObserver < ActiveRecord::Observer
-  observe ContentBase
+  observe NewsStory, BlogEntry, ShowSegment, ShowEpisode, ContentShell, VideoShell
+  
   def after_save(content)
     # If we are going from published -> published (still),
     # or we are going from published -> unpublished,

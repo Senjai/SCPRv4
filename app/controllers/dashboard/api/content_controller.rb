@@ -50,7 +50,7 @@ class Dashboard::Api::ContentController < ApplicationController
     if @content
       render "preview", formats: [:js], :status => 200
     else
-      render :text => "Not Found", :status => :not_found      
+      render :text => "Not Found", :status => :not_found
     end
   end
   
@@ -79,8 +79,8 @@ class Dashboard::Api::ContentController < ApplicationController
     contents = ContentBase.search({
       :limit => 20
     })
-        
-    json = contents.to_json
+    
+    json = contents.as_json
     Rails.cache.write_entry("cbaseapi:recent", json, :objects => [contents,"contentbase:new"].flatten)
     render :json => json
   end

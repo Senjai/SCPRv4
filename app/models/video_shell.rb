@@ -1,8 +1,10 @@
-class VideoShell < ContentBase
+class VideoShell < ActiveRecord::Base
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AssetAssociation
+  include Concern::Associations::BylinesAssociation
+  include Concern::Associations::CategoryAssociation
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugValidation
   include Concern::Validations::PublishedAtValidation
@@ -10,6 +12,7 @@ class VideoShell < ContentBase
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
+  include Concern::Methods::ContentJsonMethods
 
   self.table_name = "contentbase_videoshell"
   ROUTE_KEY       = "video"

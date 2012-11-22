@@ -19,8 +19,11 @@ class ContentEmailController < ApplicationController
     end
   end
 
+  #---------------------
+
   protected
-    def get_content
-      @content = ContentBase.obj_by_key(params[:obj_key]) || raise_404
-    end
+
+  def get_content
+    @content = ContentBase.obj_by_key(params[:obj_key]) || raise_404
+  end
 end

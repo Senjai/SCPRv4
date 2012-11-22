@@ -95,7 +95,7 @@ class CategoryController < ApplicationController
     
       content.each do |c|
         # get the content time as Time
-        ctime = c.public_datetime
+        ctime = c.published_at
       
         # if we're still here, weigh this content for sorting
         if !sorttime || ctime > sorttime

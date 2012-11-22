@@ -7,7 +7,7 @@
 <div class="row-fluid">
 <% for c in @homepage.content %>
   <div class="span5">
-    <p><%= link_to c.content.obj_key, c.content.link_path %><br/><%= time_ago_in_words c.content.public_datetime %></p>
+    <p><%= link_to c.content.obj_key, c.content.link_path %><br/><%= time_ago_in_words c.content.published_at %></p>
   </div>
 <% end %>
 </div>
@@ -18,7 +18,7 @@
     <div class="span6">
       <b>Latest Content:</b>
       <% for c in sec[:content] %>
-        <p><%= link_to c.obj_key, c.link_path %><br/><%= time_ago_in_words c.public_datetime %></p>
+        <p><%= link_to c.obj_key, c.link_path %><br/><%= time_ago_in_words c.published_at %></p>
       <% end %>
     </div>
     <% for cc in sec[:candidates][0..2] %>
@@ -33,7 +33,7 @@
         <% else %>
           <p>
             <%= link_to cc[:content].obj_key, cc[:content].link_path %>
-            <br/><%= time_ago_in_words cc[:content].public_datetime %>
+            <br/><%= time_ago_in_words cc[:content].published_at %>
             <br/>Score: <%= number_with_precision cc[:score], :precision => 5 %> 
             <% if cc[:metric] == :slideshow %>
               <br/>(<%= cc[:content].assets.count %> assets)

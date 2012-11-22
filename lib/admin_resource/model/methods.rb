@@ -86,24 +86,22 @@ module AdminResource
       # Don't override as_json unless you don't
       # want its baked-in goodies
       def json
-        # Super is temporary for ContentBase stuff
-        # Since this module sits between CB and its subclasses
-        super rescue {}
+        {}
       end
       
       #-------------
       # Define some defaults for as_json
       # Override `self.json` to add attributes
       # or override any of these.
-      # TODO: Make this use ActiveModel's `as_json`
       def as_json(*args)
-        {
-          :id         => self.id,
-          :obj_key    => self.obj_key,
-          :link_path  => self.link_path,
-          :to_title   => self.to_title,
-          :edit_path  => self.admin_edit_path
-        }.merge! self.json
+        super.merge({
+          "id"         => self.obj_key, 
+          "obj_key"    => self.obj_key,
+          "link_path"  => self.link_path,
+          "to_title"   => self.to_title,
+          "edit_path"  => self.admin_edit_path,
+          "admin_path" => self.django_edit_url
+        }).merge(self.json.stringify_keys!)
       end
 
       #-------------

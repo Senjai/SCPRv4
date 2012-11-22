@@ -35,10 +35,4 @@ describe Related do
       notieins.include?(@normal).should be_true
     end
   end
-  
-  describe "sorted" do
-    it "sorts by the content's public_datetime" do
-      pending
-    end
-  end
 end

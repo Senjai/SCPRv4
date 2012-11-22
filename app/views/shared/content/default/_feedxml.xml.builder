@@ -34,5 +34,5 @@ xml.item do
   
   xml.description descript
   
-  xml.pubDate content.public_datetime.rfc822
+  xml.pubDate content.published_at.rfc822
 end

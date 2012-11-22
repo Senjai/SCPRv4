@@ -1,9 +1,13 @@
-class BlogEntry < ContentBase
+class BlogEntry < ActiveRecord::Base
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
+  include Concern::Associations::RelatedContentAssociation
+  include Concern::Associations::RelatedLinksAssociation
+  include Concern::Associations::BylinesAssociation
+  include Concern::Associations::CategoryAssociation
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
@@ -12,6 +16,7 @@ class BlogEntry < ContentBase
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
+  include Concern::Methods::ContentJsonMethods
   
   self.table_name = "blogs_entry"
   has_secretary
@@ -25,7 +30,7 @@ class BlogEntry < ContentBase
   #------------------
   # Association
   belongs_to :blog
-
+  
   has_many :tagged, class_name: "TaggedContent", as: :content
   has_many :tags, through: :tagged, dependent: :destroy
   

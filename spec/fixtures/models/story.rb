@@ -8,6 +8,10 @@ module TestClass
     include Concern::Associations::AssetAssociation
     include Concern::Associations::AudioAssociation
     include Concern::Associations::ContentAlarmAssociation
+    include Concern::Associations::RelatedContentAssociation
+    include Concern::Associations::RelatedLinksAssociation
+    include Concern::Associations::BylinesAssociation
+    include Concern::Associations::CategoryAssociation
     
     include Concern::Callbacks::SetPublishedAtCallback
     
@@ -16,6 +20,7 @@ module TestClass
     include Concern::Methods::PublishingMethods
     include Concern::Methods::StatusMethods
     include Concern::Methods::TeaserMethods
+    include Concern::Methods::ContentJsonMethods
     
     include Concern::Validations::ContentValidation
     include Concern::Validations::SlugUniqueForPublishedAtValidation

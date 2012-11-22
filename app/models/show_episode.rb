@@ -1,13 +1,15 @@
-class ShowEpisode < ContentBase
+class ShowEpisode < ActiveRecord::Base
   include Concern::Scopes::SinceScope
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
+  include Concern::Associations::BylinesAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::HeadlineMethods
+  include Concern::Methods::ContentJsonMethods
   
   self.table_name = "shows_episode"
   ROUTE_KEY       = "episode"
