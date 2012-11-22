@@ -1,15 +1,6 @@
 require 'spec_helper'
 
 describe ContentBase do
-  describe "::content_classes" do
-    it "is CONTENT_CLASSES" do
-      stub_const("ContentBase::CONTENT_CLASSES", [NewsStory])
-      ContentBase.content_classes.should eq [NewsStory]
-    end
-  end
-
-  #---------------
-
   describe "::search" do
     context "sphinx is running" do
       sphinx_spec(num: 1, options: { status: ContentBase::STATUS_LIVE })

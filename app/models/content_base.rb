@@ -62,12 +62,6 @@ module ContentBase
     ["Float Right", "right"],
     ["Slideshow", "slideshow"]
   ]
-    
-  #--------------------
-
-  def content_classes
-    CONTENT_CLASSES
-  end
 
   #--------------------
   # Wrapper around ThinkingSphinx to just query all
@@ -80,7 +74,7 @@ module ContentBase
     default_attributes = { status: ContentBase::STATUS_LIVE, findable: true }
     
     options.reverse_merge!({
-      :classes     => ContentBase.content_classes,
+      :classes     => CONTENT_CLASSES,
       :page        => 1,
       :order       => :published_at,
       :sort_mode   => :desc,

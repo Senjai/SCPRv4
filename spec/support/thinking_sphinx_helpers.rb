@@ -49,7 +49,7 @@ module ThinkingSphinxHelpers
     options ||= {}
     
     @generated_content = []
-    ContentBase.content_classes.each do |klass|
+    ContentBase::CONTENT_CLASSES.each do |klass|
       @generated_content.push FactoryGirl.create_list(
         klass.to_s.underscore.to_sym, num.to_i, options.reverse_merge!(with_category: true)
       )
