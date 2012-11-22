@@ -1,6 +1,16 @@
+##
+# ContentBase
+#
+# A set of definitions, collections, and utilities for
+# content in the application.
+#
 module ContentBase
   extend self
   
+  #--------------------
+  # Status definitions
+  # Always use these - don't hard-code the
+  # status numbers.
   STATUS_KILLED   = -1
   STATUS_DRAFT    = 0
   STATUS_REWORK   = 1
@@ -17,6 +27,11 @@ module ContentBase
       STATUS_LIVE     => "Published"
   }
   
+  #--------------------
+  # The classes to be included when querying Sphinx with
+  # ContentBase.search. These classes need to all have 
+  # the same attributes and indexes in their +define_index+
+  # block.
   CONTENT_CLASSES = [
     NewsStory,
     ShowSegment,
@@ -25,7 +40,9 @@ module ContentBase
     VideoShell,
     ContentShell
   ]
-        
+  
+  #--------------------
+  # URLS to match in ::obj_by_url
   CONTENT_MATCHES = {
     %r{^/news/\d+/\d\d/\d\d/(\d+)/.*}                => 'NewsStory',
     %r{^/admin/news/story/(\d+)/}                    => 'NewsStory',
@@ -41,6 +58,8 @@ module ContentBase
 
   OBJ_KEY_REGEX = %r{([^:]+):(\d+)}
 
+  #--------------------
+  # Sets of template schemes for various content.
   STORY_SCHEMES = [
     ["Float Right (default)", ""],
     ["Wide", "wide"],
@@ -119,14 +138,14 @@ module ContentBase
   end
 
   #--------------------
-  # convert key from "app/model:id" to AppModel
+  # Convert key from "app/model:id" to AppModel
   def get_model_for_obj_key(key)
     match = match_key(key)
     model_classes[match[1]] if match
   end
 
   #--------------------
-  # convert key from "app/model:id" to AppModel.find_by_id(id)
+  # Convert key from "app/model:id" to AppModel.find_by_id(id)
   def obj_by_key(key)
     if match = match_key(key)
       model = model_classes[match[1]]
@@ -135,7 +154,8 @@ module ContentBase
   end
 
   #--------------------
-
+  # Look to CONTENT_MATCHES to see if the passed-in URL
+  # corresponds to any model.
   def obj_by_url(url)
     begin
       u = URI.parse(url)
@@ -151,7 +171,7 @@ module ContentBase
 
 
   #--------------------
-
+  # For drop-down menus in the CMS
   def status_text_collect
     ContentBase::STATUS_TEXT.map { |p| [p[1], p[0]] }
   end
