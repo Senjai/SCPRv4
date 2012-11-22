@@ -53,8 +53,8 @@ class Homepage < ActiveRecord::Base
     # -- More Headlines -- #
     
     # Anything with a news category is eligible
-    headlines      = ContentBase.search({
-      :limit    => 12,
+    headlines = ContentBase.search({
+      :limit       => 12,
       :without     => { category: '' },
       :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } },
     })
