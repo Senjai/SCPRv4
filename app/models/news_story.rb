@@ -16,7 +16,6 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
-  include Concern::Methods::ContentJsonMethods
   
   self.table_name = 'news_story'
   has_secretary
@@ -68,6 +67,8 @@ class NewsStory < ActiveRecord::Base
       column :published_at
     end
   end
+  include Concern::Methods::ContentJsonMethods
+  
 
   #-------------------
   # Sphinx

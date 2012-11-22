@@ -47,6 +47,7 @@ class ContentShell < ActiveRecord::Base
       column :published_at
     end
   end
+  include Concern::Methods::ContentJsonMethods
 
   #-------------------
   # Sphinx

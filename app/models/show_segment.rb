@@ -60,6 +60,7 @@ class ShowSegment < ActiveRecord::Base
       column :status
     end
   end
+  include Concern::Methods::ContentJsonMethods
   
   #-------------------
   # Sphinx

@@ -16,7 +16,6 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
-  include Concern::Methods::ContentJsonMethods
   
   self.table_name = "blogs_entry"
   has_secretary
@@ -59,6 +58,8 @@ class BlogEntry < ActiveRecord::Base
       column :published_at
     end
   end
+  include Concern::Methods::ContentJsonMethods
+  
   
   #------------------
   # Sphinx

@@ -57,6 +57,7 @@ class ShowEpisode < ActiveRecord::Base
       column :published_at
     end
   end
+  include Concern::Methods::ContentJsonMethods
   
   #-------------------
   # Sphinx
