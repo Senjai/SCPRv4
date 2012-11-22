@@ -12,7 +12,6 @@ class VideoShell < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
-  include Concern::Methods::ContentJsonMethods
 
   self.table_name = "contentbase_videoshell"
   ROUTE_KEY       = "video"

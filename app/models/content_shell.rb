@@ -10,7 +10,6 @@ class ContentShell < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::HeadlineMethods
-  include Concern::Methods::ContentJsonMethods
 
   self.table_name =  "contentbase_contentshell"
   has_secretary
