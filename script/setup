@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+
+Dir['config/templates/*'].each do |template|
+  destination = "config/#{File.basename(template)}"
+  unless File.exist? destination
+    FileUtils.cp(template, destination)
+    puts "Generated #{destination}"
+  end
+end
+
+# run rake and setup tasks
+system "bundle"
+system "bundle exec rake db:create"
