@@ -1,0 +1,29 @@
+#= require scprbase
+#= require assethostbase
+
+class scpr.AssetHost
+    @Asset: Backbone.Model.extend
+        urlRoot: "#{assethost.SERVER}/api/assets/"
+
+        #----------
+
+        url: ->
+          url = if this.isNew() then @urlRoot else @urlRoot + encodeURIComponent(@id)
+
+          if assethost.TOKEN
+              url = url + "?" + $.param(auth_token: assethost.TOKEN)
+
+          url
+
+
+    #----------
+
+    @Assets: Backbone.Collection.extend
+        model: @Asset
+        
+        # If we have an ORDER attribute, sort by that.  Otherwise, sort by just 
+        # the asset ID.  
+        comparator: (asset) ->
+            asset.get("ORDER") || -Number(asset.get("id"))
+        
+        #----------

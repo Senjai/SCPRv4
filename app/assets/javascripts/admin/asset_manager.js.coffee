@@ -81,8 +81,8 @@ class scpr.AssetManager
         @el         = $ @options.el
         @collection = {}
         
-        @button = $("<button />", id: "asset-chooser").html("Popup Asset Chooser")
-        #@el.prepend @button
+        @button = $("<button />", id: "asset-chooser", style: "display:block;").html("Popup Asset Chooser")
+        @el.prepend @button
         
         @button.on
             click: (event) =>
@@ -98,19 +98,22 @@ class scpr.AssetManager
         for asset in @collection
             collection.push asset.toJSON
         collection
-        
+    
+    #---------------
+    # Load the asset thumbnails into @assets
+    _loadAssets: (assets) ->
+        for asset in assets
+            @collection[asset.content_asset_id] = new scpr.AssetThumbnail(asset)
+    
     #---------------
     # Render the assets into the asset bucket
     _renderAssets: ->
         for asset in _.pairs(@collection)
             asset[1].render(@el)
             
+    
     #---------------
-    # Load the asset thumbnails into @assets
-    _loadAssets: (assets) ->
-        for asset in assets
-            @collection[asset.content_asset_id] = new scpr.AssetThumbnail(asset)
-
+    # Popup the AssetHost chooser
     _popup: (event) ->
         event.originalEvent.stopPropagation()
         event.originalEvent.preventDefault()
@@ -122,6 +125,6 @@ class scpr.AssetManager
                 # dispatch our event with the asset data
                 newwindow.postMessage @toJSON(), @assethost.server
         , false
-                            
+        
         return false
         
