@@ -13,6 +13,8 @@
 
 //= require_directory ./templates/
 
+//= require assethost/assets
+
 //= require admin/notification
 //= require admin/newsroom
 //= require admin/utilities
@@ -21,5 +23,4 @@
 //= require admin/auto_slug_field
 //= require admin/field_counter
 //= require admin/audio_ui
-//= require admin/asset_manager
 //= require admin/index_manager
