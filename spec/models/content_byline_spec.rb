@@ -5,6 +5,8 @@ describe ContentByline do
     it { should belong_to(:user).class_name("Bio") }
     it { should belong_to(:content) }
   end
+
+  #------------------------
   
   describe "scopes" do
     describe "primary" do

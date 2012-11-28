@@ -107,13 +107,13 @@ describe ApplicationHelper do
       helper.render_asset(content, "thumb", false).should eq ''
     end
   end
-  
-  #------------------------
-  
-  describe "#render_byline" do
-    pending "needs tests"
-  end
 
+  #------------------------
+
+  describe "#render_byline" do
+    pending
+  end
+  
   #------------------------
   
   describe "#page_title" do

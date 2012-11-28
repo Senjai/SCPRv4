@@ -12,7 +12,9 @@ describe Dashboard::Api::ContentController do
     
     it "gets all the objects by key and returns them as json" do
       get :index, ids: [contents.first.obj_key, contents.last.obj_key]
-      response.body.should eq ActiveSupport::JSON.encode([contents.first, contents.last].as_json)
+      $stdout.puts contents.first.to_yaml
+      $stdout.puts contents.first.as_json
+      JSON.parse(response.body).should eq [contents.first, contents.last].as_json
       response.header['Content-Type'].should match /json/
     end
     

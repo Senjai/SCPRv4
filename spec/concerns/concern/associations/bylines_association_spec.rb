@@ -13,10 +13,4 @@ describe Concern::Associations::BylinesAssociation do
       TestClass::Story.new.byline_elements.should be_a Array
     end
   end
-  
-  #--------------------
-  
-  describe "#sorted_bylines" do
-    pending
-  end
 end

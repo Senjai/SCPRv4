@@ -114,42 +114,13 @@ module ApplicationHelper
   
   #----------
   
-  def render_byline(content,links = true)
-    if !content || !content.respond_to?(:sorted_bylines)
-      return ""
-    end
+  def render_byline(content,links=true)
+    primary = content.bylines_by_role(:primary)
+    secondary = content.bylines_by_role(:secondary)
     
-    key = "byline:#{content.cache_key}:#{links ? "links" : "text"}"
-    
-    # Check if we have a cache
-    if cached = Rails.cache.fetch(key)
-      return cached
-    end
-    
-    authors = content.sorted_bylines
-        
-    # go through each list and add links where needed
-    names = []
-    (0..1).each do |i|
-      if !authors[i] || !authors[i].any?
-        next
-      end
-      
-      authors[i].collect! do |b|
-        if links && b.user && b.user.is_public
-          link_to(b.user.name, bio_path(b.user.slug))
-        elsif b.user
-          b.user.name
-        else
-          b.name
-        end
-      end
-        
-      if authors[i].length == 1
-        names << authors[i][0]
-      elsif authors[i].length > 1
-        names << [ authors[i].pop,authors[i].join(", ") ].reverse.join(' and ')
-      end
+    bylines.each do |byline|
+      can_link = links && byline.user.try(:is_public)
+      link_to_if can_link, byline.display_name, byline.user.link_path
     end
     
     # add on any byline elements
