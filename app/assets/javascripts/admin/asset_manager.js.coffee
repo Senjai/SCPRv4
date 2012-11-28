@@ -19,11 +19,11 @@ class scpr.AssetManager
         # Register listener for AssetHost message
         window.addEventListener "message", (event) =>
             # If the data is an object (or not "LOADED"), do things
-            if event.data != "LOADED"
+            if _.isObject(event.data)
                 @assets.reset(event.data)
                 @assets.sort()
-                $(@options.jsonInput).val(JSON.stringify(@assets.simpleJSON()))
                 @assetsView.render()
+                $(@options.jsonInput).val(JSON.stringify(@assets.simpleJSON()))
         , false
         
     
