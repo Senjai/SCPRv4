@@ -1,5 +1,5 @@
 <div class="thumbnail">
-  <img src="<%= @asset.urls.lsquare %>" />
+  <%- @asset.tags.lsquare %>
   
   <div class="asset-info">
     <h6><%= @asset.title %></h6>

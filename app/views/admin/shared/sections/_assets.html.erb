@@ -2,7 +2,7 @@
   <%= extra %>
   
   <div id="asset_bucket" class="clearfix"></div>
-  <%= f.input :asset_json, as: :hidden %>
+  <%= f.input :asset_json, as: :hidden, input_html: { id: "asset_json" } %>
   
   <script>
     $(document).ready(function() {

@@ -2,43 +2,49 @@
 #= require assethost/assethostbase
 #= require backbone
 
+##
+# AssetHost
+# Models for AssetHost API interaction
+#
 class scpr.AssetHost
     @Asset: Backbone.Model.extend
         urlRoot: "#{assethost.SERVER}/api/assets/"
+        
+        simpleJSON: ->
+            {
+                id:          @get 'id'
+                caption:     @get 'caption'
+                asset_order: @get 'ORDER'
+            }
+        
+        #--------------
         
         url: ->
             url = if @isNew() then @urlRoot else @urlRoot + encodeURIComponent(@id)
             
             if assethost.TOKEN
-                url = url + "?" + $.param(auth_token:assethost.TOKEN)
+                token = $.param(auth_token:assethost.TOKEN)
+                url += "?#{token}"
                 
             url
             
-        #----------
-        
-        chopCaption: (count=100) ->
-            chopped = @get('caption')
-
-            if chopped and chopped.length > count
-                regstr = "^(.{#{count}}\\w*)\\W"
-                chopped = chopped.match(new RegExp(regstr))
-
-                if chopped
-                    chopped = "#{chopped[1]}..."
-                else
-                    chopped = @get('caption')
-
-            chopped
-
-
     #----------
 
     @Assets: Backbone.Collection.extend
         model: @Asset
         
-        # If we have an ORDER attribute, sort by that.  Otherwise, sort by just 
-        # the asset ID.  
+        # If we have an ORDER attribute, sort by that.
+        # Otherwise, sort by just the asset ID.
         comparator: (asset) ->
             asset.get("ORDER") || -Number(asset.get("id"))
         
+        #----------
+        # This is for passing on to the server
+        # We only need to pass a few attributes,
+        # not the entire asset JSON.
+        simpleJSON: ->
+            assets = []
+            @each (asset) -> assets.push(asset.simpleJSON())
+            assets
+                
         #----------
