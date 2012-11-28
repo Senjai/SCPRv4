@@ -109,6 +109,35 @@ class Asset
   def as_json(options={})
     @json
   end
+
+  #----------
+  
+  class Fallback < Asset
+    def self.logger
+      @logger ||= Logger.new(Rails.root.join("log/asset-fallback.log"))
+    end
+
+    def self.log(response, id)
+      logger.info "*** [#{Time.now}] AssetHost returned #{response} for Asset ##{id}"
+    end
+
+    def initialize
+      json = JSON.load(Rails.root.join("util/fixtures/assethost_fallback.json"))
+      super(json)
+    end
+  end
+  
+  #----------
+  # Accepts a hash of simple attributes
+  class Simple
+    attr_accessor :id, :caption, :asset_order
+    
+    def initialize(json)
+      @id          = json["id"].to_i
+      @caption     = json["caption"].to_s
+      @asset_order = json["asset_order"].to_i
+    end
+  end
 end
 
 #----------
@@ -128,22 +157,5 @@ class AssetSize
   
   def tag
     @tag.html_safe
-  end
-end
-
-#----------
-
-class Asset::Fallback < Asset
-  def self.logger
-    @logger ||= Logger.new(Rails.root.join("log/asset-fallback.log"))
-  end
-  
-  def self.log(response, id)
-    logger.info "*** [#{Time.now}] AssetHost returned #{response} for Asset ##{id}"
-  end
-  
-  def initialize
-    json = JSON.load(Rails.root.join("util/fixtures/assethost_fallback.json"))
-    super(json)
   end
 end

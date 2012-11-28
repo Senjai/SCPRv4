@@ -9,7 +9,11 @@
 class scpr.AssetHost
     @Asset: Backbone.Model.extend
         urlRoot: "#{assethost.SERVER}/api/assets/"
-        
+
+        #----------
+        # simpleJSON is an object of just the attributes
+        # we care about for SCPRv4. Everything else is
+        # pulled from the AssetHost API.
         simpleJSON: ->
             {
                 id:          @get 'id'
@@ -39,9 +43,8 @@ class scpr.AssetHost
             asset.get("ORDER") || -Number(asset.get("id"))
         
         #----------
-        # This is for passing on to the server
-        # We only need to pass a few attributes,
-        # not the entire asset JSON.
+        # An array of assets turned into simpleJSON. See
+        # Asset#simpleJSON for more.
         simpleJSON: ->
             assets = []
             @each (asset) -> assets.push(asset.simpleJSON())
