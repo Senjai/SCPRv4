@@ -45,8 +45,7 @@ class ContentByline < ActiveRecord::Base
       extra     = elements[2]
       
       names = [primary, secondary].reject { |e| e.blank? }.join(" with ")
-      string = [names, extra].reject { |e| e.blank? }.join(" | ")
-      string.present? ? "By #{string}" : ""
+      [names, extra].reject { |e| e.blank? }.join(" | ")
     end
   end
 

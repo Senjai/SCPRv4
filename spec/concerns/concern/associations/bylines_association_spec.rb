@@ -22,7 +22,7 @@ describe Concern::Associations::BylinesAssociation do
     end
     
     it "returns the full byline" do
-      subject.byline.should eq "By Bryan and John with Danny | Cindy"
+      subject.byline.should eq "Bryan and John with Danny | Cindy"
     end
   end
   

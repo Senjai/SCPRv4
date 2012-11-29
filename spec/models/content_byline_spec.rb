@@ -17,12 +17,12 @@ describe ContentByline do
   
   describe "::digest" do
     it "joins the three string arguments" do
-      ContentByline.digest(["one", "two", "three"]).should eq "By one with two | three"
+      ContentByline.digest(["one", "two", "three"]).should eq "one with two | three"
     end
     
     it "ignores blank elements" do
-      ContentByline.digest(["", "two", "three"]).should eq "By two | three"
-      ContentByline.digest(["one", "two", ""]).should eq "By one with two"
+      ContentByline.digest(["", "two", "three"]).should eq "two | three"
+      ContentByline.digest(["one", "two", ""]).should eq "one with two"
     end
     
     it "returns an empty string if no bylines are present" do

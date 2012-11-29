@@ -103,6 +103,14 @@ class BlogEntry < ActiveRecord::Base
   end
 
   #-------------------
+  # Blog Entries don't need the "KPCC" credit,
+  # so override the default +byline_extras+
+  # behavior to return empty array
+  def byline_extras
+    []
+  end
+  
+  #-------------------
   
   def previous
     self.class.published.where("published_at < ? and blog_id = ?", self.published_at, self.blog_id).first
