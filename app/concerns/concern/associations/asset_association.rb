@@ -24,6 +24,13 @@ module Concern
         attr_accessor :asset_json
         before_save :parse_asset_json
       end
+
+      #-------------------
+      # Return the first asset in the given medium and size.
+      # Returns nil if no assets are present.
+      def primary_asset(size, format=:tag)
+        self.assets.first.asset.send(size).send(format) if self.assets.present?
+      end
       
       #-------------------
       # Parse the input from #asset_json and turn it into real

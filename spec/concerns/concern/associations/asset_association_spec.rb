@@ -12,6 +12,27 @@ describe Concern::Associations::AssetAssociation do
   end
   
   #--------------------
+
+  describe "#primary_asset" do
+    it "is nil if content has no assets" do
+      record = TestClass::Story.create!(headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
+      record.reload.primary_asset(:thumb).should eq nil
+    end
+    
+    it "returns the first asset with tag by default" do
+      record = TestClass::Story.create!(headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
+      asset  = create :asset, content: record
+      record.reload.primary_asset(:thumb).should eq asset.asset.thumb.tag
+    end
+    
+    it "returns the first asset with whatever format is passed in" do
+      record = TestClass::Story.create!(headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
+      asset  = create :asset, content: record
+      record.reload.primary_asset(:lsquare, :url).should eq asset.asset.lsquare.url
+    end
+  end
+  
+  #--------------------
   
   describe "#parse_asset_json" do
     context "no asset_json passed in" do
