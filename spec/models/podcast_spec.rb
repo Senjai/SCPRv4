@@ -72,19 +72,18 @@ describe Podcast do
     
     context "for Content" do
       it "grabs content" do
-        story   = create :news_story
-        entry   = create :blog_entry
-        segment = create :show_segment
-        episode = create :show_episode
-                
-        [story, entry, segment, episode].each do |content|
+        story   = create :news_story, published_at: 1.days.ago
+        entry   = create :blog_entry, published_at: 2.days.ago
+        segment = create :show_segment, published_at: 3.days.ago
+        
+        [story, entry, segment].each do |content|
           create :audio, :direct, content: content
         end
                 
         index_sphinx
         
         podcast = create :podcast, item_type: "content", source: nil
-        podcast.content.to_a.should eq [story, entry, segment, episode]
+        podcast.content.to_a.should eq [story, entry, segment]
       end
     end   
   end
