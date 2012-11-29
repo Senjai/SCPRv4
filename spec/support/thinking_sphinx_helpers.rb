@@ -38,9 +38,7 @@
 # `make_content` assigns @generated_content for you, available for using in your specs. 
 
 module ThinkingSphinxHelpers
-  def self.included(base)
-    base.extend(ClassMethods)
-  end
+  extend ActiveSupport::Concern
   
   # Creates `num` of each ContentBase subclass for 
   # helping with Sphinx tests
@@ -75,6 +73,39 @@ module ThinkingSphinxHelpers
   
   def teardown_sphinx
     DatabaseCleaner.strategy = :transaction
+  end
+  
+  #-----------
+  # Sometimes the index takes too long, but we
+  # want to actually test the sphinx results.
+  #
+  # This method will help for slower computers,
+  # for example, that take longer to run the index.
+  # 
+  # Usage:
+  #
+  #   ts_retry(2) do
+  #     NewsStory.search('query').should eq @news_story
+  #   end
+  #
+  # If the expectation fails, then it will be retried
+  # +attempts+ times, sleeping 0.5 between each try.
+  # After the attempts have been made, the spec will
+  # fail as normal if it's still failing.
+  def ts_retry(attempts=1, &block)
+    attempt = 0
+    
+    begin
+      yield block
+    rescue RSpec::Expectations::ExpectationNotMetError => e
+      attempt += 1
+      if attempt > attempts
+        raise e
+      else
+        sleep 0.5
+        retry
+      end
+    end
   end
   
   # -----------

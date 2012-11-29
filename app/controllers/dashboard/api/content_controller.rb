@@ -1,6 +1,4 @@
-class Dashboard::Api::ContentController < ApplicationController
-  include ApplicationHelper
-  
+class Dashboard::Api::ContentController < ApplicationController  
   before_filter       :require_admin
   before_filter       :set_access_control_headers
   skip_before_filter  :verify_authenticity_token, only: :preview
@@ -20,7 +18,7 @@ class Dashboard::Api::ContentController < ApplicationController
       end
     end
     
-    render :json => contents.as_json
+    render :json => contents
   end
   
   #----------

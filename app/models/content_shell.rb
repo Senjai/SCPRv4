@@ -84,7 +84,7 @@ class ContentShell < ActiveRecord::Base
   
   #----------
   
-  def byline_elements
+  def byline_extras
     [self.site]
   end
   

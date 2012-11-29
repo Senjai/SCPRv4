@@ -1,6 +1,8 @@
 module ApplicationHelper
   include Twitter::Autolink
   
+  #---------------------------
+  
   def present(object, klass=nil)
     klass ||= "#{object.class}Presenter".constantize
     presenter = klass.new(object, self)
@@ -8,6 +10,7 @@ module ApplicationHelper
     presenter
   end
   
+  #---------------------------
   # render_content takes a ContentBase object and a context, and renders 
   # using the most specific version of that context it can find.
   # 
@@ -52,8 +55,7 @@ module ApplicationHelper
     return html.html_safe
   end
   
-  #----------
-  
+  #---------------------------  
   # render_asset takes a ContentBase object and a context, and renders using 
   # an optional context_asset_scheme attribute on the object.  
   #
@@ -113,97 +115,51 @@ module ApplicationHelper
   end
   
   #----------
-  
-  def render_byline(content,links = true)
-    if !content || !content.respond_to?(:sorted_bylines)
-      return ""
+  # Render a byline for the passed-in content
+  # If links is set to false, and the contet has
+  # bylines, this will yield the same as +content.byline+
+  # 
+  # If the content doesn't have bylines, just return
+  # "KPCC" for opengraph stuff.
+  def render_byline(content, links=true)
+    return "KPCC" if !content.respond_to?(:bylines)
+    
+    elements = content.joined_bylines(:primary, :secondary, :extra) do |bylines|
+      link_bylines(bylines, links)
     end
-    
-    key = "byline:#{content.cache_key}:#{links ? "links" : "text"}"
-    
-    # Check if we have a cache
-    if cached = Rails.cache.fetch(key)
-      return cached
-    end
-    
-    authors = content.sorted_bylines
-        
-    # go through each list and add links where needed
-    names = []
-    (0..1).each do |i|
-      if !authors[i] || !authors[i].any?
-        next
-      end
-      
-      authors[i].collect! do |b|
-        if links && b.user && b.user.is_public
-          link_to(b.user.name, bio_path(b.user.slug))
-        elsif b.user
-          b.user.name
-        else
-          b.name
-        end
-      end
-        
-      if authors[i].length == 1
-        names << authors[i][0]
-      elsif authors[i].length > 1
-        names << [ authors[i].pop,authors[i].join(", ") ].reverse.join(' and ')
-      end
-    end
-    
-    # add on any byline elements
-    
-    byels = content.byline_elements.collect { |e| e && e != '' ? e : nil }.compact
-    
-    if byels.length > 0
-      if authors[0].length == 0 and authors[1].length == 0
-        byline = byels.join(" | ").html_safe
-      else
-        byline = ("By " + [names.join(" with "), byels.join(" | ")].join(" | ")).html_safe
-      end
-    else
-      if names.any?
-        byline = ("By " + names.join(" with ")).html_safe
-      else
-        byline = ""
-      end
-    end
-    
-    key = Rails.cache.write(key, byline)
-    byline
+
+    ContentByline.digest(elements).html_safe
   end
   
-  #----------
+  #---------------------------
   
   def render_contributing_byline(content,links=true)
-    if !content || !content.respond_to?(:sorted_bylines)
-      return ""
-    end    
+    elements = content.joined_bylines(:contributing) do |bylines|
+      link_bylines(bylines, links)
+    end
     
-    authors = content.sorted_bylines
-    
-    if authors[2] && authors[2].any?
-      # go through each list and add links where needed
-      authors[2].collect! do |b|
-        if links && b.user
-          link_to(b.user.name, bio_path(b.user.slug))
-        elsif b.user
-          b.user.name
-        else
-          b.name
-        end
-      end    
-    
-      return "With contributions by #{ authors[2].length == 1 ? authors[2][0] : [ authors[2].pop,authors[2].join(", ") ].reverse.join(' and ') }.".html_safe
-    
-    else
-      return ""
+    "With contributions by #{elements.to_sentence}".html_safe
+  end
+
+  #---------------------------
+  # Return an array of the passed-in bylines
+  # either tranformed into links, or just
+  # the name.
+  #
+  # This is mostly for +render_byline+ and
+  # +render_contributing_byline+ to share.
+  def link_bylines(bylines, links)
+    bylines.map do |byline|
+      if links && byline.user.try(:is_public)
+        link_to byline.display_name, byline.user.link_path
+      else
+        byline.display_name
+      end
     end
   end
   
+  #---------------------------
   # Convert a given number of seconds into a human-readable duration. 
-  
   def format_duration(secs)
     if !secs
       return ''
@@ -236,6 +192,7 @@ module ApplicationHelper
     })
   end
   
+  #---------------------------
   # any_to_list?: A graceful fail-safe for any Enumerable that might be blank
   # With block: returns the block if there are records, or a message if there are no records.
   # Without block: Behaves the same as `.present?`
@@ -264,6 +221,7 @@ module ApplicationHelper
     end
   end
   
+  #---------------------------
   def page_title(elements, separator=" | ")
     if @PAGE_TITLE.present?
       return @PAGE_TITLE
@@ -285,6 +243,7 @@ module ApplicationHelper
     content_tag :div, link_to(title, object.audio.available.first.url, options), class: "story-audio inline"
   end
   
+  #---------------------------
   # easy date formatting
   # options:
   # * format: numbers (10-11-11)
@@ -311,23 +270,33 @@ module ApplicationHelper
     date.strftime(format_str)
   end
   
+  #---------------------------
+  
   def modal(cssClass, options={}, &block)
     content_for(:modal_content, capture(&block))
     render('shared/modal_shell', cssClass: cssClass, options: options)
   end
+  
+  #---------------------------
   
   def watch_gmaps(options={})
     content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_KEYS["google"]["maps"]}&sensor=true")
     content_for :footerjss, "var gmapsLoader = new scpr.GMapsLoader(#{raw options.to_json});".html_safe
   end
   
+  #---------------------------
+  
   def flash_bootstrap(flash_name)
     "alert-message " + { alert: "error", notice: "success", info: "info", warning: "warning" }[flash_name]
   end
   
+  #---------------------------
+  
   def relaxed_sanitize(html)
     Sanitize.clean(html.html_safe, Sanitize::Config::RELAXED)
   end
+  
+  #---------------------------
   
   def split_collection(array, num)
     last_num  = array.size - num

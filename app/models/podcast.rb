@@ -11,6 +11,12 @@ class Podcast < ActiveRecord::Base
 
   SOURCES = ["KpccProgram", "OtherProgram", "Blog"]
   
+  CONTENT_CLASSES = [
+    NewsStory,
+    ShowSegment,
+    BlogEntry
+  ]
+  
   #-------------
   # Scopes
   
@@ -68,7 +74,7 @@ class Podcast < ActiveRecord::Base
         klasses.push BlogEntry
 
       else
-        klasses = ContentBase::CONTENT_CLASSES if item_type == "content"
+        klasses = CONTENT_CLASSES if item_type == "content"
       end
       
       content_query(limit, klasses, conditions)

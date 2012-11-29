@@ -80,13 +80,7 @@ class BlogEntry < ActiveRecord::Base
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", type: :boolean, as: :has_audio
     join audio
   end
-  
-  #---------------------
-  
-  def byline_elements
-    []
-  end
-  
+
   #-------------------
   # Need to work around multi-american until we can figure
   # out how to merge those comments in with kpcc
