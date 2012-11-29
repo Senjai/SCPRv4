@@ -5,13 +5,11 @@
 #
 module Concern
   module Methods
-    module ContentJsonMethods
-      include ApplicationHelper
-      
+    module ContentJsonMethods      
       def json
         {
-          :asset          => self.assets.present? ? self.assets.first.asset.lsquare.tag : nil,
-          :byline         => render_byline(self,false),
+          :asset  => self.primary_asset(:lsquare),
+          :byline => self.byline
         }
       end
     end # ContentJsonMethods

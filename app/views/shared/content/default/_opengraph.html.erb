@@ -24,9 +24,9 @@
     <% end %>
   
     <% if content.assets.present? %>
-      <meta property="og:image" content="<%= content.assets.first.asset.lead.url %>" />
-      <link rel="image_src" href="<%= content.assets.first.asset.lead.url %>" />
-      <meta name="twitter:image" value="<%= content.assets.first.asset.lead.url %>">
+      <meta property="og:image" content="<%= content.primary_asset(:lead, :url) %>" />
+      <link rel="image_src" href="<%= content.primary_asset(:lead, :url) %>" />
+      <meta name="twitter:image" value="<%= content.primary_asset(:lead, :url) %>">
     <% end %>
   <% end %>
 <% end %>

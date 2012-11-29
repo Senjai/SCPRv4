@@ -107,13 +107,51 @@ describe ApplicationHelper do
       helper.render_asset(content, "thumb", false).should eq ''
     end
   end
-  
+
   #------------------------
-  
+
   describe "#render_byline" do
-    pending "needs tests"
+    context "for object without bylines association" do
+      it "returns KPCC if the object doesn't have bylines" do
+        helper.render_byline(Object.new).should eq "KPCC"
+      end
+    end
+    
+    context "for object with bylines association" do
+      let(:user) { create :bio, name: "Bryan" }
+      
+      before :each do
+        @content = create :news_story
+
+        primary   = create :byline, content: @content, role: ContentByline::ROLE_PRIMARY, user: user
+        secondary = create :byline, content: @content, role: ContentByline::ROLE_SECONDARY, name: "Danny"
+
+        @content.reload
+      end
+      
+      it "turns the bylines with a user into links if links=true" do
+        byline = helper.render_byline(@content)
+        byline.should match /a href/
+        byline.should match user.link_path
+        byline.should match /Danny/
+      end
+    
+      it "is does not use links if links=false" do
+        byline = helper.render_byline(@content, false)
+        byline.should_not match /a href/
+        byline.should_not match user.link_path
+        byline.should match /Bryan/
+        byline.should match /Danny/
+      end
+    end
   end
 
+  #------------------------
+
+  describe "#render_contributing_byline" do
+    pending
+  end
+  
   #------------------------
   
   describe "#page_title" do

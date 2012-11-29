@@ -1,127 +1,116 @@
 #= require scprbase
+#= require assethost/assethost
 
-##
-# scpr.AssetThumbnail
-#
-# An Asset thumbnail in the CMS
-#
-class scpr.AssetThumbnail
-    options:
-        assetTemplate: JST['admin/templates/asset']
-        fieldsPrefix:  "#asset-fields-"
-        destroyEl:     ".destroy-bool"
-        destroyField:  "input[type=checkbox][name*='[_destroy]']"
-        infoEl:       ".asset-info"
-        thumbnailEl:  ".thumbnail"
-    
-    constructor: (@attributes) ->
-        # Setup attributes
-        _(_.keys(attributes)).each (key) =>
-            @[key] = @attributes[key]
-        
-        # Setup elements
-        @el           = $ @options.assetTemplate(asset: @)
-        @thumbnailEl  = $ @options.thumbnailEl, @el
-        @infoEl       = $ @options.infoEl, @el
-        
-        @fieldsEl     = $ "#{@options.fieldsPrefix}#{@content_asset_id}"
-        @destroyEl    = $ @options.destroyEl, @fieldsEl
-        @destroyField = $ @options.destroyField, @fieldsEl
-
-        # Move the hidden fields into the thumbnail,
-        # Just to keep everything together.
-        @thumbnailEl.append @fieldsEl.detach()
-        
-        # Register listener for Destroy button click
-        @destroyField.on
-            click: (event) =>
-                if $(event.target).is(':checked')
-                    @dim @infoEl
-                else
-                    @brighten @infoEl
-    
-    toJSON: ->
-        @attributes
-        
-    render: (el) ->
-        el.append @el
-        
-    dim: (el) ->
-        el.addClass("transparent")
-    
-    brighten: (el) ->
-        el.removeClass("transparent")
-        
-#-----------------
-
-##
-# scpr.AssetManager
-# 
-# The block that contains the Asset Management tools
-#
 class scpr.AssetManager
     DefaultOptions:
-        el:         "#asset_bucket .thumbnails"
-        deleteBtn:  ".delete"
-        
-        assetAttr:
-          id:      "asset_id"
-          caption: "caption"
-          order:   "asset_order"
-        
-        assethost:
-            token:       "droQQ2LcESKeGPzldQr7"
-            server:      "http://ahhost-scpr.dev"
-            chooserPath: "/a/chooser"
-            
-    constructor: (assets, options) ->
-        @options   = _.defaults options||{}, @DefaultOptions
-        @assethost = @options.assethost
-        
-        @el         = $ @options.el
-        @collection = {}
-        
-        @button = $("<button />", id: "asset-chooser").html("Popup Asset Chooser")
-        #@el.prepend @button
-        
-        @button.on
-            click: (event) =>
-                @_popup(event)
-                
-        @_loadAssets assets
-        @_renderAssets()
+        jsonInput: "#asset_json"
 
-    #---------------
-    # Return an array of objects turned into JSON
-    toJSON: ->
-        collection = []
-        for asset in @collection
-            collection.push asset.toJSON
-        collection
-        
-    #---------------
-    # Render the assets into the asset bucket
-    _renderAssets: ->
-        for asset in _.pairs(@collection)
-            asset[1].render(@el)
-            
-    #---------------
-    # Load the asset thumbnails into @assets
-    _loadAssets: (assets) ->
-        for asset in assets
-            @collection[asset.content_asset_id] = new scpr.AssetThumbnail(asset)
+    #----------
 
-    _popup: (event) ->
-        event.originalEvent.stopPropagation()
-        event.originalEvent.preventDefault()
-        newwindow = window.open("#{@assethost.server}#{@assethost.chooserPath}", 'chooser', 'height=620,width=1000,scrollbars=1')
+    constructor: (assets, el, options={}) ->
+        _.extend @, Backbone.Events
+        @options = _.defaults options, @DefaultOptions
+
+        @assets     = new scpr.AssetHost.Assets(assets)
+        @assetsView = new scpr.AssetManager.Assets(collection: @assets)
         
-        # attach a listener to wait for the LOADED message
-        window.addEventListener "message", (event) => 
-            if event.data == "LOADED"
-                # dispatch our event with the asset data
-                newwindow.postMessage @toJSON(), @assethost.server
+        $(el).html @assetsView.el
+        
+        # Register listener for AssetHost message
+        window.addEventListener "message", (event) =>
+            # If the data is an object (or not "LOADED"), do things
+            if _.isObject(event.data)
+                @assets.reset(event.data)
+                @assets.sort()
+                @assetsView.render()
+                $(@options.jsonInput).val(JSON.stringify(@assets.simpleJSON()))
         , false
-                            
-        return false
         
+    
+    #----------
+    
+    @Asset: Backbone.View.extend
+        tagName: "li"
+        template: JST['admin/templates/asset']
+        
+        #----------
+        
+        initialize: ->
+            @render()
+            @model.bind "change", => @render()
+
+        #----------
+
+        render: ->
+            if @model.get('tags')
+                @$el.html @template(asset: @model.toJSON())
+                
+            @
+    
+    #----------
+
+    @Assets: Backbone.View.extend
+        tagName: "ul"
+        events: "click button": "_popup"
+        
+        initialize: ->
+            @_views = {}
+            
+            @collection.bind "reset", => 
+                @$el.detach() for view in @_views
+                @_views = {}
+                
+            @collection.bind 'add', (f) => 
+                @_views[f.cid] = new scpr.AssetManager.Asset
+                    model: f
+                    args:  @options.args
+                    rows:  @options.rows
+                
+                @render()
+
+            @collection.bind 'remove', (f) => 
+                $(@_views[f.cid].el).detach()
+                delete @_views[f.cid]
+                @render()
+            
+            @render()
+        
+        #----------
+        
+        _popup: (event) ->
+            event.originalEvent.stopPropagation()
+            event.originalEvent.preventDefault()
+            
+            popup =
+                url:     "#{assethost.SERVER}/a/chooser"
+                name:    "chooser"
+                options: "height=620,width=1000,scrollbars=1"
+                
+            newwindow = window.open popup.url, popup.name, popup.options
+            
+            # attach a listener to wait for the LOADED message
+            window.addEventListener "message", (evt) => 
+                if evt.data == "LOADED"
+                    # dispatch our event with the asset data
+                    newwindow.postMessage @collection.toJSON(), assethost.SERVER
+            , false
+            
+            return false
+            
+        #----------
+        
+        render: ->
+            @collection.each (asset) => 
+                @_views[asset.cid] ?= new scpr.AssetManager.Asset
+                    model: asset
+                    args:  @options.args
+                    rows:  @options.rows
+                
+            views = _(@_views).sortBy (a) => a.model.get("ORDER")
+            @$el.html( _(views).map (v) -> v.el )
+            
+            button = $('<button/>', style: "margin: 0 20px;", text: "Pop Up Asset Chooser")
+            title  = $('<h4/>', text: "Assets").append button
+            @$el.prepend title
+            @
+            

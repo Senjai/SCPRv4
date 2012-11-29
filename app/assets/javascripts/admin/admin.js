@@ -20,6 +20,6 @@
 //= require admin/content_alarm_ui
 //= require admin/auto_slug_field
 //= require admin/field_counter
-//= require admin/audio_ui
 //= require admin/asset_manager
+//= require admin/audio_ui
 //= require admin/index_manager

@@ -91,7 +91,7 @@ module AdminResource
       
       #-------------
       # Define some defaults for as_json
-      # Override `self.json` to add attributes
+      # Override +#json+ to add attributes
       # or override any of these.
       def as_json(*args)
         super.merge({

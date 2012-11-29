@@ -11,7 +11,11 @@ class ContentByline < ActiveRecord::Base
       ROLE_CONTRIBUTING => "Contributing"
   }
   
-  scope :primary, -> { where(role: ROLE_PRIMARY) }
+  ROLE_MAP = {
+    :primary      => ROLE_PRIMARY,
+    :secondary    => ROLE_SECONDARY,
+    :contributing => ROLE_CONTRIBUTING
+  }
   
   map_content_type_for_django
   belongs_to :content, polymorphic: true
@@ -24,5 +28,30 @@ class ContentByline < ActiveRecord::Base
     has content_id
     has content.published_at, as: :published_at,  type: :datetime
     has content.status,       as: :status,        type: :integer
+  end
+
+  #-----------------------
+  
+  class << self
+    #-----------------------
+    # Takes an array of strings and concatenates them intelligently
+    # It is assumed that the strings passed-in will be:
+    # 1. Primary byline
+    # 2. Secondary byline
+    # 3. Extra elements
+    def digest(elements)
+      primary   = elements[0]
+      secondary = elements[1]
+      extra     = elements[2]
+      
+      names = [primary, secondary].reject { |e| e.blank? }.join(" with ")
+      [names, extra].reject { |e| e.blank? }.join(" | ")
+    end
+  end
+
+  #-----------------------
+  
+  def display_name
+    @display_name ||= (self.user.try(:name) || self.name)
   end
 end

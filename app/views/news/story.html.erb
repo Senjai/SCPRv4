@@ -28,7 +28,7 @@
         <div class="visible-reader"><%= content_widget "extra_audio", @story %></div>
       </footer>
     </article>
-    <%= render :partial => "shared/cwidgets/author_info", :collection => @story.bylines.primary.all, :as => :byline %>
+    <%= render :partial => "shared/cwidgets/author_info", :collection => @story.grouped_bylines[:primary], :as => :byline %>
     <%= content_widget "social_tools", @story, cssClass: "bottom horizontal" %>
   </div> <!-- story -->
 <% end %>

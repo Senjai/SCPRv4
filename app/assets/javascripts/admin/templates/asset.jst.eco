@@ -1,9 +1,8 @@
-<li class="span2 asset" data-asset="<%=@asset.content_asset_id%>" id="asset-<%=@asset.content_asset_id%>">
-  <div class="thumbnail">
-    <div class="asset-info">
-      <img src="<%= @asset.urls.lsquare %>" />
-      <h6><%= @asset.title %></h6>
-      <small class="muted"><%= @asset.caption %></small>
-    </div>
+<div class="thumbnail">
+  <%- @asset.tags.lsquare %>
+  
+  <div class="asset-info">
+    <h6><%= @asset.title %></h6>
+    <small class="muted"><%= @asset.caption %></small>
   </div>
-</li>
+</div>

@@ -105,12 +105,7 @@ class NewsStory < ActiveRecord::Base
       
   #----------
   
-  def byline_elements
-    bylines = []
-        
-    if self.news_agency
-      bylines << self.news_agency
-    end
+  def byline_extras
+    Array(self.news_agency)
   end
-  
 end

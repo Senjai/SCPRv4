@@ -1,0 +1,7 @@
+##
+# AssetHost Base
+# Setup window.assethost and grab info 
+# from the Rails config
+window.assethost =
+    SERVER:      "http://<%= Rails.application.config.assethost.server %>"
+    TOKEN:       "<%= Rails.application.config.assethost.token %>"

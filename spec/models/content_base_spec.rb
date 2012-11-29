@@ -6,7 +6,9 @@ describe ContentBase do
       sphinx_spec(num: 1, options: { status: ContentBase::STATUS_LIVE })
     
       it "searches across ContentBase classes" do
-        ContentBase.search.to_a.should eq @generated_content.sort_by(&:published_at).reverse
+        ts_retry(2) do
+          ContentBase.search.to_a.should eq @generated_content.sort_by(&:published_at).reverse
+        end
       end
     end
     
