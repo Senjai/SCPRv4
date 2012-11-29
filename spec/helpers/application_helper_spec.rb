@@ -129,14 +129,14 @@ describe ApplicationHelper do
         @content.reload
       end
       
-      it "turns the bylines with a user into links if links=true", focus: true do
+      it "turns the bylines with a user into links if links=true" do
         byline = helper.render_byline(@content)
         byline.should match /a href/
         byline.should match user.link_path
         byline.should match /Danny/
       end
     
-      it "is does not use links if links=false", focus: true do
+      it "is does not use links if links=false" do
         byline = helper.render_byline(@content, false)
         byline.should_not match /a href/
         byline.should_not match user.link_path

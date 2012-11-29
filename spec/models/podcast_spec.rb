@@ -21,11 +21,6 @@ describe Podcast do
   end
   
   #---------------
-  
-  describe "scopes" do
-  end
-  
-  #---------------
 
   describe "#content" do
     before :all do
@@ -52,9 +47,11 @@ describe Podcast do
         create :audio, :direct, content: segment
 
         index_sphinx
-        
         podcast = create :podcast, source: segment.show, item_type: "segments"
-        podcast.content.to_a.should eq [segment]
+        
+        ts_retry(2) do
+          podcast.content.to_a.should eq [segment]
+        end
       end
     end
     
@@ -64,9 +61,11 @@ describe Podcast do
         create :audio, :direct, content: entry
 
         index_sphinx
-        
         podcast = create :podcast, source: entry.blog
-        podcast.content.to_a.should eq [entry]
+        
+        ts_retry(2) do
+          podcast.content.to_a.should eq [entry]
+        end
       end
     end
     
@@ -79,11 +78,13 @@ describe Podcast do
         [story, entry, segment].each do |content|
           create :audio, :direct, content: content
         end
-                
-        index_sphinx
         
+        index_sphinx
         podcast = create :podcast, item_type: "content", source: nil
-        podcast.content.to_a.should eq [story, entry, segment]
+        
+        ts_retry(2) do
+          podcast.content.to_a.should eq [story, entry, segment]
+        end
       end
     end   
   end
