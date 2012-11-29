@@ -77,10 +77,10 @@ describe ShowSegment do
 
   #------------------
 
-  describe "#byline_elements" do
+  describe "#byline_extras" do
     it "is an array with the show's title" do
       segment = build :show_segment
-      segment.byline_elements.should eq [segment.show.title]
+      segment.byline_extras.should eq [segment.show.title]
     end
   end     
 

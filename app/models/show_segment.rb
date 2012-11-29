@@ -96,7 +96,7 @@ class ShowSegment < ActiveRecord::Base
     end
   end
   
-  def byline_elements
+  def byline_extras
     [self.show.title]
   end
   

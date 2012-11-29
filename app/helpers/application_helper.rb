@@ -115,66 +115,46 @@ module ApplicationHelper
   end
   
   #----------
-  
-  def render_byline(content,links=true)
-    groups = content.grouped_bylines
-    groups.delete(:contributing) # Don't need it for this
+  # Render a byline for the passed-in content
+  # If links is set to false, and the contet has
+  # bylines, this will yield the same as +content.byline+
+  # 
+  # If the content doesn't have bylines, just return
+  # "KPCC" for opengraph stuff.
+  def render_byline(content, links=true)
+    return "KPCC" if !content.respond_to?(:bylines)
     
-    groups   = groups.values
-    elements = []
-    
-    # Go through the primary and secondary groups
-    # and convert each of its bylines into a string
-    groups[0..1].each do |group|
-      group.map! do |byline|
-        can_link = links && byline.user.try(:is_public)
-        link_to_if can_link, byline.display_name, byline.user.link_path
-      end
-      
-      # If the array is populated, turn it into a sentence
-      # and push that into the elements array.
-      # If not, then it will push an empty string
-      elements.push(group.to_sentence)
+    elements = content.joined_bylines(:primary, :secondary, :extra) do |bylines|
+      link_bylines(bylines, links)
     end
-    
-    # Turn the extra elements into a string and add it to
-    # the elements array
-    elements.push(groups[2].join(" | "))
-    
-    # Turn empty strings into nil so we can compact
-    elements.map! { |s| nil if s.blank? }
-    
-    # Go through the elements array and join everything
-    names = elements[0..1].compact.join(" with ")
-    extra = elements[2]
-    [names, elements[2]].compact.join(" | ").html_safe
+
+    ContentByline.digest(elements).html_safe
   end
   
-  #----------
+  #---------------------------
   
   def render_contributing_byline(content,links=true)
-    if !content || !content.respond_to?(:sorted_bylines)
-      return ""
+    elements = content.joined_bylines(:contributing) do |bylines|
+      link_bylines(bylines, links)
     end
     
-    authors = content.sorted_bylines
-    
-    if authors[2] && authors[2].any?
-      # go through each list and add links where needed
-      authors[2].collect! do |b|
-        if links && b.user
-          link_to(b.user.name, bio_path(b.user.slug))
-        elsif b.user
-          b.user.name
-        else
-          b.name
-        end
+    "With contributions by #{elements.to_sentence}".html_safe
+  end
+
+  #---------------------------
+  # Return an array of the passed-in bylines
+  # either tranformed into links, or just
+  # the name.
+  #
+  # This is mostly for +render_byline+ and
+  # +render_contributing_byline+ to share.
+  def link_bylines(bylines, links)
+    bylines.map do |byline|
+      if links && byline.user.try(:is_public)
+        link_to byline.display_name, byline.user.link_path
+      else
+        byline.display_name
       end
-    
-      return "With contributions by #{ authors[2].length == 1 ? authors[2][0] : [ authors[2].pop,authors[2].join(", ") ].reverse.join(' and ') }.".html_safe
-    
-    else
-      return ""
     end
   end
   

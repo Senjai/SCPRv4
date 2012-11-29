@@ -8,8 +8,8 @@ module Concern
     module ContentJsonMethods      
       def json
         {
-          :asset  => self.assets.present? ? self.assets.first.asset.lsquare.tag : nil,
-          :byline => ApplicationUtility.render_byline(self,false)
+          :asset  => self.primary_asset(:lsquare),
+          :byline => self.byline
         }
       end
     end # ContentJsonMethods

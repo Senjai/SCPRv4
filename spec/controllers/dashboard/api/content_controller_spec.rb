@@ -12,9 +12,7 @@ describe Dashboard::Api::ContentController do
     
     it "gets all the objects by key and returns them as json" do
       get :index, ids: [contents.first.obj_key, contents.last.obj_key]
-      $stdout.puts contents.first.to_yaml
-      $stdout.puts contents.first.as_json
-      JSON.parse(response.body).should eq [contents.first, contents.last].as_json
+      response.body.should eq [contents.first, contents.last].to_json
       response.header['Content-Type'].should match /json/
     end
     
@@ -122,16 +120,18 @@ describe Dashboard::Api::ContentController do
       sphinx_spec(num: 1)
       
       it "returns the sphinx results as json" do
+        Rails.cache.fetch("cbaseapi:recent").should eq nil
         get :recent
-        response.body.should eq ActiveSupport::JSON.encode(@generated_content.as_json)
+        response.body.should eq @generated_content.to_json
         response.header['Content-Type'].should match /json/
       end
       
       it "writes the json to the cache" do
         get :recent
+        sleep 0.5
         cache = Rails.cache.fetch("cbaseapi:recent")
         cache.should_not be_blank
-        ActiveSupport::JSON.encode(cache).should eq ActiveSupport::JSON.encode(@generated_content.as_json)
+        cache.to_json.should eq @generated_content.to_json
       end
     end
   end
