@@ -138,7 +138,11 @@ module ApplicationHelper
       link_bylines(bylines, links)
     end
     
-    "With contributions by #{elements.to_sentence}".html_safe
+    if elements.present?
+      "With contributions by #{elements.to_sentence}".html_safe
+    else
+      ""
+    end
   end
 
   #---------------------------
@@ -150,7 +154,7 @@ module ApplicationHelper
   # +render_contributing_byline+ to share.
   def link_bylines(bylines, links)
     bylines.map do |byline|
-      if links && byline.user.try(:is_public)
+      if !!links && byline.user.try(:is_public)
         link_to byline.display_name, byline.user.link_path
       else
         byline.display_name

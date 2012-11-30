@@ -149,7 +149,24 @@ describe ApplicationHelper do
   #------------------------
 
   describe "#render_contributing_byline" do
-    pending
+    let(:user) { create :bio, name: "Bryan" }
+    let(:content) { create :news_story }
+    
+    it "returns contributing bylines as a sentence" do
+      contributing1 = create :byline, content: content, role: ContentByline::ROLE_CONTRIBUTING, user: user
+      contributing2 = create :byline, content: content, role: ContentByline::ROLE_CONTRIBUTING, name: "Danny"
+      content.reload
+
+      helper.render_contributing_byline(content, false).should match /Bryan and Danny/
+    end
+    
+    it "returns a blank string if no contributing bylines are present" do
+      primary = create :byline, content: content, role: ContentByline::ROLE_PRIMARY, user: user
+      content.reload
+      
+      helper.render_contributing_byline(content, false).should eq ""
+    end
+    
   end
   
   #------------------------

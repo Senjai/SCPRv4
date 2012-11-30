@@ -63,10 +63,11 @@ module Concern
             grouped_bylines[:extra].join(" | ")
           else
             bylines = grouped_bylines[role]
-            (block_given? ? yield(bylines) : bylines.map(&:display_name)).to_sentence
+            strings = (block_given? ? yield(bylines) : bylines.map(&:display_name))
+            strings.reject { |e| e.blank? }.to_sentence
           end
           
-          elements.push string
+          elements.push(string) if string.present?
         end
 
         elements
