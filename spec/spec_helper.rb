@@ -16,7 +16,7 @@ require 'capybara/rspec'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 
-RSpec.configure do |config|  
+RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = true
   config.filter_run focus: true
@@ -47,10 +47,10 @@ RSpec.configure do |config|
   end
   
   config.before type: :feature do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   end
   
-  config.before do
+  config.before do    
     FakeWeb.clean_registry
     FakeWeb.load_callback
     DatabaseCleaner.start
