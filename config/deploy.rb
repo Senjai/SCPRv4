@@ -36,7 +36,7 @@ set :restart_delay, 40
 
 # --------------
 # Universal Callbacks
-after "deploy:restart", "deploy:cleanup"
+after "deploy:update", "deploy:cleanup"
 
 
 # --------------
