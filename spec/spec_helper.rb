@@ -31,8 +31,8 @@ RSpec.configure do |config|
   config.include DatePathHelper
   config.include StubTime
   config.include StubPublishingCallbacks
-  config.include FormFillers,           example_group: { file_path: %r{spec/requests} }
-  config.include AuthenticationHelper,  example_group: { file_path: %r{spec/requests} }
+  config.include FormFillers,           type: :feature
+  config.include AuthenticationHelper,  type: :feature
   
   config.before :suite do
     DatabaseCleaner.clean_with :truncation, { except: STATIC_TABLES }
@@ -46,7 +46,7 @@ RSpec.configure do |config|
     ThinkingSphinx::Test.start_with_autostop
   end
   
-  config.before type: :request do
+  config.before type: :feature do
     DatabaseCleaner.strategy = :truncation
   end
   

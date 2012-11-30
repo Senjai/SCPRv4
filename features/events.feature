@@ -34,12 +34,6 @@ Scenario: View "Sponsored" events list
   And I should see 0 past events
   And I should see 0 unpublished events
 
-Scenario: Pagination
-  Given there are 12 events
-  When I go to the events page
-  Then I should see 10 events
-  And there should be pagination
-
 Scenario: See more upcoming events
   Given an event with the following attributes:
    | etype | starts_at           |

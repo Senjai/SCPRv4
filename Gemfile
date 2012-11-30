@@ -76,7 +76,7 @@ group :test do
   gem "cucumber-rails", require: false
   gem 'factory_girl_rails', "~> 4.1"
   gem 'database_cleaner'
-  gem 'capybara', "~> 1.1"
+  gem 'capybara', "~> 2.0"
   gem 'shoulda-matchers'
   gem 'fakeweb'
 end

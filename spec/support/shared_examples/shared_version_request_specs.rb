@@ -32,7 +32,7 @@ shared_examples_for "versioned model" do
         click_link "history"
         current_path.should eq admin_history_path(valid_record.class.route_key, valid_record.id)
         page.should have_content "View"
-        click_link "View"
+        first(:link, "View").click # Capybara 2.0 throws error for ambigious match.
       end
     end
   end
