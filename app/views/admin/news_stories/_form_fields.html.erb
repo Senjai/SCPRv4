@@ -6,6 +6,7 @@
   <%= f.input :locale, collection: NewsStory::LOCALES, include_blank: true, selected: record.locale || NewsStory::LOCALES[0] %>
   <%= f.input :source, collection: NewsStory::SOURCES, include_blank: true, selected: record.source || NewsStory::SOURCES[0] %>
   <%= f.input :news_agency %>
+  <%= f.section "category" %>
 <% end %>
 
 <%= f.section "assets" do %>

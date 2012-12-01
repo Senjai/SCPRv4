@@ -3,6 +3,7 @@
   <%= f.input :url, input_html: { class: "wide" } %>
   <%= f.section "remote_published_at" %>
   <%= f.input :headline, input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
+  <%= f.section "category" %>
   <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 160, fuzziness: 20 } } %>
 <% end %>
 
