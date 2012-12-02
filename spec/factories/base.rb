@@ -7,7 +7,7 @@ def content_base_associations(object, evaluator)
   
   if evaluator.category_type.present? && evaluator.with_category
     category = FactoryGirl.create(evaluator.category_type)
-    FactoryGirl.create(:content_category, content: object, category: category)
+    object.update_column(:category_id, category.id)
   end
 end
 

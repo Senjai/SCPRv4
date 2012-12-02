@@ -9,8 +9,7 @@ module Concern
       extend ActiveSupport::Concern
       
       included do
-        has_one :content_category, as: :content
-        has_one :category, through: :content_category
+        belongs_to :category
       end
     end # CategoryAssociation
   end # Associations

@@ -459,12 +459,7 @@ end
     sequence(:title)  { |n| "Promotion #{n}" }
     url               { "http://scpr.org/promotions/#{title.parameterize}" }
   end
-  
 
-# ContentCategory #########################################################
-  factory :content_category do
-    # Empty, forcing us to pass content and category every time we create one
-  end
 
 # Related #########################################################
 factory :related_content, class: Related do

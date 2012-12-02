@@ -3,7 +3,10 @@
 <% end %>
 
 <%= f.section "full_details" %>
-<%= f.section "short_details" %>
+<%= f.section "short_details" do %>
+  <%= f.section "category" %>
+<% end %>
+
 <%= f.section "publishing" %>
 
 <%= f.section "assets" do %>
