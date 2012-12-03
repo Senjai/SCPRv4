@@ -9,3 +9,6 @@ scpr.API_ROOT = "http://<%= Rails.application.config.scpr.host %>/dashboard/api"
 if !window.console
     class window.console
         @log: ->
+
+# alerts are so 20th century
+window.alert = (msg) -> console.log(msg)
