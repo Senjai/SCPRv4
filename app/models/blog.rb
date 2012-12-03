@@ -46,8 +46,6 @@ class Blog < ActiveRecord::Base
   
   define_index do
     indexes name
-    indexes title
-    indexes email
   end
   
   # -------------------
