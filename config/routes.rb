@@ -153,6 +153,13 @@ Scprv4::Application.routes.draw do
   
   
   #------------------
+
+  namespace :api do
+    get '/content' => 'api#index'
+    get '/content/key' => 'api#show'
+  end
+  
+  #------------------
   
   namespace :dashboard do
     match '/sections' => 'main#sections', :as => :sections

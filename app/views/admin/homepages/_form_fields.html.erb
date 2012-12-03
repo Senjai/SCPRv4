@@ -4,3 +4,13 @@
 <% end %>
 
 <%= f.section "publishing" %>
+
+<%= form_block "Content" do %>
+  <div id="content_aggregator"></div>
+<% end %>
+
+<% content_for :footerjs do %>
+  <script>
+    aggregator = new scpr.ContentAggregator();
+  </script>
+<% end %>
