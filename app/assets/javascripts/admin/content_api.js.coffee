@@ -1,8 +1,8 @@
 #= require scprbase
 
 class scpr.ContentAPI
-    @Content: Backbone.Model.extend
-        
+    @Content: Backbone.Model.extend {}
+    
     @ContentCollection: Backbone.Model.extend
         url: "/api/content/"
     
