@@ -8,6 +8,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.string :slug
       t.datetime :published_at
       t.integer :status
+      t.integer :category_id
       t.timestamps
     end
     
@@ -19,6 +20,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.string :slug
       t.datetime :published_at
       t.integer :status
+      t.integer :category_id
       t.timestamps
     end
     
@@ -30,6 +32,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.string :slug
       t.datetime :published_at
       t.integer :status
+      t.integer :category_id
       t.timestamps
     end
     

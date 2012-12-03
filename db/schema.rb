@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114021309) do
+ActiveRecord::Schema.define(:version => 20121130235629) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -214,9 +214,11 @@ ActiveRecord::Schema.define(:version => 20121114021309) do
     t.integer  "dsq_thread_id"
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
+    t.integer  "category_id"
   end
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
+  add_index "blogs_entry", ["category_id"], :name => "blogs_entry_42dc49bc"
   add_index "blogs_entry", ["status", "published_at"], :name => "index_blogs_entry_on_status_and_published_at"
 
   create_table "blogs_entryblogcategory", :force => true do |t|
@@ -305,8 +307,10 @@ ActiveRecord::Schema.define(:version => 20121114021309) do
     t.datetime "published_at"
     t.datetime "created_at",                                             :null => false
     t.datetime "updated_at",                                             :null => false
+    t.integer  "category_id"
   end
 
+  add_index "contentbase_contentshell", ["category_id"], :name => "contentbase_contentshell_42dc49bc"
   add_index "contentbase_contentshell", ["status", "published_at"], :name => "index_contentbase_contentshell_on_status_and_published_at"
 
   create_table "contentbase_featuredcomment", :force => true do |t|
@@ -362,8 +366,10 @@ ActiveRecord::Schema.define(:version => 20121114021309) do
     t.string   "slug",         :limit => 50,                                            :null => false
     t.datetime "created_at",                                                            :null => false
     t.datetime "updated_at",                                                            :null => false
+    t.integer  "category_id"
   end
 
+  add_index "contentbase_videoshell", ["category_id"], :name => "contentbase_videoshell_42dc49bc"
   add_index "contentbase_videoshell", ["slug"], :name => "contentbase_videoshell_a951d5d6"
   add_index "contentbase_videoshell", ["status", "published_at"], :name => "index_contentbase_videoshell_on_status_and_published_at"
 
@@ -651,8 +657,10 @@ ActiveRecord::Schema.define(:version => 20121114021309) do
     t.string   "short_headline"
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+    t.integer  "category_id"
   end
 
+  add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
 
@@ -897,8 +905,10 @@ ActiveRecord::Schema.define(:version => 20121114021309) do
     t.string   "short_headline"
     t.datetime "published_at"
     t.datetime "updated_at",                                 :null => false
+    t.integer  "category_id"
   end
 
+  add_index "shows_segment", ["category_id"], :name => "shows_segment_42dc49bc"
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
   add_index "shows_segment", ["slug"], :name => "shows_segment_slug"
   add_index "shows_segment", ["status", "published_at"], :name => "index_shows_segment_on_status_and_published_at"

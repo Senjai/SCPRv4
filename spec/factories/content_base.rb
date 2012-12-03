@@ -120,7 +120,6 @@ FactoryGirl.define do
     blog
     
     slug      { headline.parameterize }
-    blog_slug { blog.slug }
 
     ignore { related_factory      "content_shell" }
     ignore { category_type        :category_not_news }

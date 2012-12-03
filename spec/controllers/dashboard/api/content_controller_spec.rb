@@ -121,8 +121,12 @@ describe Dashboard::Api::ContentController do
       
       it "returns the sphinx results as json" do
         Rails.cache.fetch("cbaseapi:recent").should eq nil
-        get :recent
-        response.body.should eq @generated_content.to_json
+        
+        ts_retry(2) do
+          get :recent
+          response.body.should eq @generated_content.to_json
+        end
+        
         response.header['Content-Type'].should match /json/
       end
       
