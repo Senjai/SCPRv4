@@ -1,6 +1,6 @@
-<div class="row">
-  <div id="content_bucket" class="content-bucket span5">
-    Currently Selected Content
+<div class="row" id="aggregator">
+  <div id="aggregator-dropzone" class="content-bucket span5">
+    Loading content...
   </div>
 
   <div class="span4">
@@ -15,10 +15,11 @@
     </ul>
 
     <div class="tab-content">
-      <div class="tab-pane active" id="js-content-recent">
+      <div class="tab-pane active" id="aggregator-recent-content">
+        Loading content...
       </div>
   
-      <div class="tab-pane" id="js-content-search">
+      <div class="tab-pane" id="aggregator-search">
         <input type="text" id="js-content-search-input" placeholder="Query">
       </div>
     </div>
