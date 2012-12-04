@@ -1,4 +1,4 @@
-<div class="row" id="aggregator">
+<div class="row">
   <div id="aggregator-dropzone" class="content-bucket span5">
     Loading content...
   </div>
@@ -6,11 +6,11 @@
   <div class="span4">
     <ul class="nav nav-tabs">
       <li class="active">
-        <a href="#js-content-recent" data-toggle="tab">Recent</a>
+        <a href="#aggregator-recent-content" data-toggle="tab">Recent</a>
       </li>
   
       <li>
-        <a href="#js-content-search" data-toggle="tab">Search</a>
+        <a href="#aggregator-search" data-toggle="tab">Search</a>
       </li>
     </ul>
 
@@ -20,7 +20,10 @@
       </div>
   
       <div class="tab-pane" id="aggregator-search">
-        <input type="text" id="js-content-search-input" placeholder="Query">
+        <div class="form-search">
+          <input type="text" id="js-content-search-input" class="search-query" placeholder="Query" />
+          <button class="btn">Go</button>
+        </div>
       </div>
     </div>
   </div>

@@ -1,6 +1,5 @@
 #= require scprbase
 #= require assethost/assethostbase
-#= require backbone
 
 ##
 # AssetHost

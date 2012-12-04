@@ -6,11 +6,11 @@
 <%= f.section "publishing" %>
 
 <%= form_block "Content" do %>
-  <div id="content_aggregator"></div>
+  <div id="aggregator" class="aggregator"></div>
 <% end %>
 
 <% content_for :footerjs do %>
   <script>
-    aggregator = new scpr.ContentAggregator();
+    aggregator = new scpr.Aggregator("#aggregator", <%= raw record.content.includes(:content).map(&:content).to_json %>);
   </script>
 <% end %>

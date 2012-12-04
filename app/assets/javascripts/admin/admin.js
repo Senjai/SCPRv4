@@ -1,6 +1,7 @@
 //= require scprbase
-//= require underscore
 //= require jquery
+//= require underscore
+//= require backbone
 //= require jquery-ui
 //= require jquery_ujs
 //= require bootstrap
@@ -11,12 +12,12 @@
 //= require bootstrap-datepicker
 //= require tinymce-jquery
 
-//= require_directory ./templates/
+//= require_tree ./templates/
 
 //= require admin/notification
 //= require admin/newsroom
 //= require admin/utilities
-//= require admin/content_aggregator
+//= require admin/aggregator
 //= require admin/date_time_input
 //= require admin/content_alarm_ui
 //= require admin/auto_slug_field

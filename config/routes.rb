@@ -155,6 +155,8 @@ Scprv4::Application.routes.draw do
   #------------------
 
   namespace :api do
+    match '/api/content/' => "api/content#options", constraints: { method: 'OPTIONS' }
+    
     get '/content' => 'api#index'
     get '/content/key' => 'api#show'
   end
