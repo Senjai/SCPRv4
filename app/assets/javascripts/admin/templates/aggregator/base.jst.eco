@@ -20,10 +20,7 @@
       </div>
   
       <div class="tab-pane" id="aggregator-search">
-        <div class="form-search">
-          <input type="text" id="js-content-search-input" class="search-query" placeholder="Query" />
-          <button class="btn">Go</button>
-        </div>
+        Loading Search...
       </div>
     </div>
   </div>

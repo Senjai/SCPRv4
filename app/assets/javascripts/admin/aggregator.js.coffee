@@ -30,10 +30,50 @@ class scpr.Aggregator
             
         @baseView.render()
         
-                
+        
     #----------------------------------
     # Views!
     class @Views
+        
+        #----------------------------------
+        # Some helper modules for you and me!
+        # Use this one to render a basic collection into
+        # any el
+        @CollectionRenderer: 
+            render: (args={}) ->
+                el         = args.el
+                collection = args.collection
+                modelView  = args.modelView
+                
+                el.empty()
+                
+                collection.each (model) =>
+                    view = new scpr.Aggregator.Views[modelView]
+                        model: model
+                    el.append view.render()
+                
+                el
+
+            #---------------------
+            # Use this when the aggregator is thinking!
+            transitionStart: (args={}) ->
+                spinEl = args.spinEl
+                dimEl  = args.dimEl
+                
+                dimEl.css opacity: 0.3
+                spinEl.spin(top: 100)
+            
+            #---------------------
+            # Use this when the aggregator is done thinking!
+            transitionEnd: (args={}) ->
+                spinEl = args.spinEl
+                dimEl  = args.dimEl
+                
+                dimEl.css opacity: 1
+                spinEl.spin(false)
+                
+                
+        #----------------------------------
         # The skeleton for the the different pieces!
         @Base: Backbone.View.extend
             template: JST['admin/templates/aggregator/base']
@@ -41,9 +81,6 @@ class scpr.Aggregator
             #---------------------
             
             initialize: ->
-                $ ->
-                    $("#js-content-search-input")
-                
                 @
             
             #---------------------
@@ -53,15 +90,12 @@ class scpr.Aggregator
                 @$el.html @template
                 
                 # Setup the Drop Zone section
-                # then render it
                 @dropZone = new scpr.Aggregator.Views.DropZone
-                    collection: @collection # The stuff that was already associated with the object when the page loaded
-                $("#aggregator-dropzone", @$el).html @dropZone.el
-                @dropZone.render()
+                    collection: @collection # The bootstrapped content
                 
                 # Setup the search/find section
                 @recentContent = new scpr.Aggregator.Views.RecentContent()
-                $("#aggregator-recent-content", @$el).html @recentContent.el
+                @search        = new scpr.Aggregator.Views.Search()
                 
                 @
                 
@@ -70,6 +104,7 @@ class scpr.Aggregator
         # The drop-zone!
         # Gets filled with ContentFull views
         @DropZone: Backbone.View.extend
+            container: "#aggregator-dropzone"
             tagName: 'ul'
             attributes:
                 class: "drop-zone"
@@ -77,17 +112,16 @@ class scpr.Aggregator
             #---------------------
                 
             initialize: ->
-                @
+                $(@container).html @$el
+                @render()
                 
             #---------------------
             
             render: ->
-                @$el.empty()
-                
-                @collection.each (model) =>
-                    view = new scpr.Aggregator.Views.ContentFull
-                        model: model
-                    @$el.append view.render()
+                scpr.Aggregator.Views.CollectionRenderer.render
+                    collection: @collection
+                    modelView: "ContentFull"
+                    el: @$el
                 
                 @
 
@@ -96,6 +130,7 @@ class scpr.Aggregator
         # The RecentContent list!
         # Gets filled with ContentMinimal views
         @RecentContent: Backbone.View.extend
+            container: "#aggregator-recent-content"
             tagName: 'ul'
             attributes:
                 class: "content-list"
@@ -106,30 +141,94 @@ class scpr.Aggregator
                 # Grab Recent Content using ContentAPI
                 # Render the list
                 @collection = new scpr.ContentAPI.ContentCollection()
+                @container  = $(@container)
+                @container.html @$el
+                
+                @transitionOpts =
+                    spinEl: @container
+                    dimEl: @$el
+                    
                 @populate()
-
+                
             #---------------------
         
             populate: ->
+                scpr.R.transitionStart @transitionOpts
+                
                 @collection.fetch
                     data:
                         limit: 10
                     success: (collection, response, options) =>
+                        scpr.R.transitionEnd @transitionOpts
                         @render()
         
             #---------------------
         
             render: ->
-                @$el.empty()
-
-                @collection.each (model) =>
-                    view = new scpr.Aggregator.Views.ContentMinimal
-                        model: model
-                    @$el.append view.render()
-                
+                scpr.Aggregator.Views.CollectionRenderer.render
+                    collection: @collection
+                    modelView: "ContentMinimal"
+                    el: @$el
+                    
                 @
         
-        
+
+        #----------------------------------
+        # SEARCH?!?!
+        @Search: Backbone.View.extend
+            container: "#aggregator-search"
+            template: JST["admin/templates/aggregator/search"]
+            attributes:
+                class: "form-search"
+            events: 
+                "click button": "search"
+                
+            initialize: ->
+                @collection = new scpr.ContentAPI.ContentCollection()
+                @container  = $(@container)
+                @container.html @$el
+                @render()
+                
+            #---------------------
+            # Search!
+            search: (event) ->
+                scpr.R.transitionStart @transitionOpts
+                query = $("#aggregator-search-input", @$el).val()
+                
+                @collection.fetch
+                    data: 
+                        query: query
+                    success: (collection, response, options) =>
+                        scpr.R.transitionEnd @transitionOpts
+                        @_renderCollection()
+                        
+                        
+                # Have to prevent the form from being actually submitted
+                # when the "Enter" key is pressed!
+                # Note that the "form" in this case is the actual
+                # form for the content (eg. Homepage or Missed It Bucket)
+                false
+                
+            #---------------------
+            
+            render: ->
+                @$el.html @template
+                @resultsEl = $("#aggregator-search-results", @$el)
+                @transitionOpts =
+                    spinEl: @$el
+                    dimEl: @resultsEl
+                @
+                
+            #---------------------
+                
+            _renderCollection: ->
+                scpr.R.render
+                    collection: @collection
+                    modelView: "ContentMinimal"
+                    el: @resultsEl
+                
+                @
+            
         #----------------------------------
         # A single piece of content in the drop zone!
         # Full with lots of information
@@ -156,4 +255,8 @@ class scpr.Aggregator
                 @$el.html @template(content: @model.toJSON())
         
         #---------------------
-        
+
+# Shortcuts!!!!!!!!
+# Before: scpr.Aggregator.Views.CollectionRenderer.render()
+# After:  scpr.R.render()
+scpr.R = scpr.Aggregator.Views.CollectionRenderer
