@@ -27,20 +27,46 @@
         Loading Search...
       </div>
       
+      <div class="tab-pane" id="aggregator-url">
+        URL Import
+      </div>
+      
       <div class="tab-pane" id="aggregator-help">
         <ul>
-          <h4>Options for importing content</h4>
-          The gray area on the left is known as the "<strong>Drop Zone</strong>"
-          <li>Drag content from the "<strong>Recent</strong>" panel into the <strong>Drop Zone</strong></li>
+          <li>The gray area on the left is known as the "<strong>Drop Zone</strong>" in this document.</li>
+          <hr />
+
+          <h4>Finding content</h4>
+          <li>The "Recent" tab loads the 10 most recent stories when the page loads.</li>
           <li>
-            Use the "<strong>Search</strong>" tab to find older content. <br />
-            Dragging from the Search panel works the same as from the Recent panel.<br />
-            You may press "Enter" or click the "Go" button to perform the search.
+            The "Search" tab allows you to search across the content types listed above.
+            Be specific! The search looks in the headline and body fields, among others.
           </li>
           <li>
-            Drag any <strong>SCPR.org URL</strong> into the <strong>Drop Zone</strong>.<br />
-            Alternatively, you can paste a URL into the form in the "<strong>URL</strong>" tab.<br /> 
-            Supported content types are: 
+            <strong>Pagination:</strong>
+            <ul>
+              <li>"Back" shows the previous 10 stories if available</li>
+              <li>"Next" shows the next 10 stories if available</li>
+              <li>
+                The "Refresh" icon (<i class="icon-refresh"></i>) refreshes the current page. 
+                This is is useful if you have been moving content out of the list and want to get it all back.
+              </li>
+            </ul>
+          </li>
+          <hr />
+          
+          <h4>Importing content</h4>
+          <li><strong>Recent Tab</strong>: Drag content from the "Recent" tab into the Drop Zone</strong</li>
+          <li>
+            <strong>Search Tab</strong>: 
+            Use the "Search" tab to find older content. 
+            Dragging from the Search panel works the same as from the Recent panel.
+          </li>
+          <li>
+            <strong>Via URL</strong>: 
+            Drag any SCPR.org/KPCC.org URL into the Drop Zone. 
+            Alternatively, you can paste a URL into the form in the "URL" tab and click "Import".<br /> 
+            Supported content types for URL import are currently: 
             <ul>
               <li>News Stories</li>
               <li>Blog Entries</li>
@@ -49,9 +75,12 @@
               <li>Show Episodes</li>
             </ul>
           </li>
-          <h4>Ordering &amp; Removing content</h4>
-          <li>Drag content Vertically within the <strong>Drop Zone</strong> to re-order it.</li>
-          <li>Drag and release content outside of the <strong>Drop Zone</strong> to remove it from the collection.</li>
+          <hr />
+
+          <h4>Managing content</h4>
+          <li><strong>Ordering</strong>: Drag content vertically within the Drop Zone to re-order it.</li>
+          <li><strong>Removing</strong>: Drag and release content outside of the Drop Zone to remove it from the collection.</li>
+          <hr />
         </ul>
       </div>
     </div>

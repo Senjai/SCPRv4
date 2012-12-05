@@ -4,6 +4,8 @@
       <a href="#" data-page="<%=@prev%>">&laquo; Back</a>
     </li>
     <li>
+      <a href="#" data-page="<%=@current%>"><i data-page="<%=@current%>" class="icon-refresh" style="vertical-align:sub"></i></a>
+    <li>
       <a href="#" data-page="<%=@next%>">More &raquo;</a>
     </li>
   </ul>
