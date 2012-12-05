@@ -23,21 +23,25 @@
     </ul>
 
     <div class="tab-content">
+      <!-- Recent Content Tab -->
       <div class="tab-pane active" id="aggregator-recent-content">
         Loading Recent Content...
       </div>
   
+      <!-- Search Tab -->
       <div class="tab-pane" id="aggregator-search">
         Loading Search...
       </div>
-      
+
+      <!-- URL Import Tab -->
       <div class="tab-pane" id="aggregator-url">
-        URL Import
+        Loading URL Import...
       </div>
       
+      <!-- Help Tab -->
       <div class="tab-pane" id="aggregator-help">
         <ul>
-          <li>The gray area on the left is known as the "<strong>Drop Zone</strong>" in this document.</li>
+          <li>The gray area on the left is referred to as the "<strong>Drop Zone</strong>" in this document.</li>
           <hr />
 
           <h4>Finding content</h4>

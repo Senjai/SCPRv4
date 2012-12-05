@@ -24,6 +24,13 @@ class Api::ApiController < ApplicationController
   
   #---------------------------
   
+  def by_url
+    @content = ContentBase.obj_by_url(params[:url])
+    respond_with @content
+  end  
+  
+  #---------------------------
+  
   def show
     @content = ContentBaby.obj_by_key(params[:obj_key])
     respond_with @content

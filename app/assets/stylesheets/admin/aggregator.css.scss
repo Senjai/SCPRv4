@@ -1,11 +1,17 @@
 .aggregator {
+  // Fancy UI things
+  .dim {
+    @include opacity(30);
+    @include transition(opacity 0.1s linear)
+  }
+  
   // Override the Twitter pagination
   // To reduce the padding
   .pagination {
     margin: 0 0 10px 0;
   }
   
-  input.search-query {
+  input {
     max-width: 250px;
   }
 
