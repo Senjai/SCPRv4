@@ -160,8 +160,8 @@ class scpr.Aggregator
                         # If that's the case, and the item was originally
                         # in the dropzone, then add the "removing" class
                         #
-                        # If that's the case but the element came from
-                        # somewhere else, then don't add the "removing"
+                        # If "drop event" is the case but the element came 
+                        # from somewhere else, then don't add the "removing"
                         # class. 
                         if !dropped && ui.sender[0] == @$el[0]
                             sortIn = false
@@ -182,7 +182,7 @@ class scpr.Aggregator
                         @add(ui.item)
                         
                         # Remove the dropped element because we're rendering
-                        # bigger, better one.
+                        # the bigger, better one.
                         ui.item.remove()
                         
                     # When dragging (sorting) stops
