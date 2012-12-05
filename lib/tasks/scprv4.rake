@@ -131,9 +131,6 @@ namespace :scprv4 do
       end
     
       if ENV['BACKGROUND']
-        unless Process.respond_to?('daemon')
-          abort "env var BACKGROUND is set, which requires ruby >= 1.9"
-        end
         Process.daemon(true)
       end
     
@@ -142,7 +139,6 @@ namespace :scprv4 do
       end
     
       worker.log "Starting worker #{worker}"
-    
       worker.work()
     end
     
@@ -160,9 +156,6 @@ namespace :scprv4 do
       end
     
       if ENV['BACKGROUND']
-        unless Process.respond_to?('daemon')
-          abort "env var BACKGROUND is set, which requires ruby >= 1.9"
-        end
         Process.daemon(true)
       end
     
@@ -171,7 +164,6 @@ namespace :scprv4 do
       end
     
       worker.log "Starting worker #{worker}"
-    
       worker.work()
     end
   
@@ -189,9 +181,6 @@ namespace :scprv4 do
       end
     
       if ENV['BACKGROUND']
-        unless Process.respond_to?('daemon')
-          abort "env var BACKGROUND is set, which requires ruby >= 1.9"
-        end
         Process.daemon(true)
       end
     
@@ -200,7 +189,6 @@ namespace :scprv4 do
       end
     
       worker.log "Starting worker #{worker}"
-    
       worker.work()
     end
   end
