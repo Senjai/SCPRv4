@@ -244,7 +244,7 @@ class scpr.Aggregator
 
             #---------------------
             # Proxy to @base.importUrl
-            # Grabs the dropped-in URl, passes it on
+            # Grabs the dropped-in URL, passes it on
             # Also does some animations and stuff
             importUrl: (event) ->
                 @container.spin()
@@ -255,15 +255,14 @@ class scpr.Aggregator
                 
                 @base.importUrl url, 
                     success: (data) =>
-                        if !data
-                            alert = new scpr.Notification(@$el, "error", 
-                                "<strong>Failure.</strong> Invalid URL (#{url})")
-                            @importNotice(alert)
-                        else
+                        if data
                             @buildFromData(data)
-                            
                             alert = new scpr.Notification(@$el, "success", 
                                 "<strong>Success!</strong> Imported #{data.id}")
+                            @importNotice(alert)
+                        else
+                            alert = new scpr.Notification(@$el, "error", 
+                                "<strong>Failure.</strong> Invalid URL (#{url})")
                             @importNotice(alert)
                         
                     error: (jqXHR) =>
@@ -315,7 +314,9 @@ class scpr.Aggregator
                 @$el.append view.render()
                 
             #---------------------
-            
+            # This only needs to be called once, when bootstrapping
+            # the DropZone on page load
+            # Ordering and everything will be handled elsewhere
             render: ->
                 scpr.R.render
                     collection: @collection
@@ -508,7 +509,7 @@ class scpr.Aggregator
         # the list of content is actually stored in @resultsEl, not @el
         #
         # @render() is for rendering the full section.
-        # Use @_renderCollection for rendering just the search results.
+        # Use @renderCollection for rendering just the search results.
         class @Search extends @ContentList
             container: "#aggregator-search"
             resultsId: "#aggregator-search-results"
@@ -519,6 +520,9 @@ class scpr.Aggregator
             
             #---------------------
             # Just a simple proxy to #request to fill in the args properly
+            # Can't make the event delegate straigh to #request because
+            # Backbone automatically passes the event object as the
+            # argument, but #request doesn't handle that.
             search: (event) ->
                 @request()
                 
@@ -555,7 +559,7 @@ class scpr.Aggregator
                 url   = input.val()
                 
                 @base.importUrl url, 
-                    success: (data) =>                    
+                    success: (data) =>
                         # Returns null if no record is found
                         # If no data, alert the person
                         # Otherwise, turn it into a ContentMinimal view

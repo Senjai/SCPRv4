@@ -29,6 +29,12 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Callbacks
+  # #content_json is a way to pass in a string representation
+  # of a javascript object to the model, which will then be
+  # parsed and turned into HomepageContent objects in the 
+  # #parse_content_json method.
+  attr_accessor :content_json
+  before_save :parse_content_json
   
   #-------------------
   # Administration
