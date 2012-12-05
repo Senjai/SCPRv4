@@ -1,6 +1,6 @@
 #= require scprbase
 #= require admin/content_api
-#= require jquery-ui-1.8.23.custom.min.js
+#= require jquery-ui-1.9.2.custom.min.js
 
 ##
 # scpr.Aggregator (like Alligator but more G's)
@@ -104,21 +104,72 @@ class scpr.Aggregator
         # The drop-zone!
         # Gets filled with ContentFull views
         @DropZone: Backbone.View.extend
+            template: JST['admin/templates/aggregator/drop_zone']
             container: "#aggregator-dropzone"
             tagName: 'ul'
             attributes:
-                class: "drop-zone"
-                
+                class: "drop-zone well"
+            
             #---------------------
                 
             initialize: ->
-                $(@container).html @$el
+                @container = $(@container)
+                
+                @container.html @template
+                @container.append @$el
                 @render()
                 
+                # DropZone callbacks!!
+                sortIn   = true
+                dropping = false
+                
+                @$el.sortable
+                    cursor: "move"
+                    # When dragging (sorting) starts
+                    start: (event, ui) ->
+                        sortIn   = true
+                        dropping = false
+                        ui.item.addClass("dragging")
+                    
+                    # Called whenever an item is moved and is over the
+                    # DropZone.
+                    over: (event, ui) ->
+                        sortIn = true
+                        ui.item.addClass("adding")
+                        ui.item.removeClass("removing")
+                    
+                    # This one gets called both when the item moves out of
+                    # the dropzone, AND when the item is dropped inside of
+                    # the dropzone. I don't know why jquery-ui decided to
+                    # make it this way, but we have to hack around it.
+                    out: (event, ui) ->
+                        # If this isn't a "drop" event, we can assume that
+                        # the item was just moved out of the DropZone. 
+                        if !dropping
+                            sortIn = false
+                            ui.item.addClass("removing")
+                        
+                        ui.item.removeClass("adding")
+                    
+                    # When dragging (sorting) stops, only if the item
+                    # being dragged belongs to the original list
+                    beforeStop: (event, ui) ->
+                        dropping = true
+                        ui.item.remove() if !sortIn
+                    
+                    # When an item from another list is dropped into this
+                    # DropZone
+                    receive: (event, ui) ->
+                        dropping = true
+                    
+                    # When dragging (sorting) stops
+                    stop: (event, ui) =>
+                        @collection.add
+                        
             #---------------------
             
             render: ->
-                scpr.Aggregator.Views.CollectionRenderer.render
+                scpr.R.render
                     collection: @collection
                     modelView: "ContentFull"
                     el: @$el
@@ -150,6 +201,12 @@ class scpr.Aggregator
                     
                 @populate()
                 
+                # Make her sortable!
+                @$el.sortable
+                    connectWith: "#aggregator-dropzone .drop-zone"
+                    cursor: "move"
+                
+                
             #---------------------
         
             populate: ->
@@ -165,7 +222,7 @@ class scpr.Aggregator
             #---------------------
         
             render: ->
-                scpr.Aggregator.Views.CollectionRenderer.render
+                scpr.R.render
                     collection: @collection
                     modelView: "ContentMinimal"
                     el: @$el
@@ -175,6 +232,14 @@ class scpr.Aggregator
 
         #----------------------------------
         # SEARCH?!?!
+        # This view is the entire Search section. It it made up of smaller
+        # "ContentMinimal" views
+        #
+        # Note that because of the Input field, the list of content is
+        # actually stored in @resultsEl, not @el
+        #
+        # @render() is for rendering the full section.
+        # Use @_renderCollection for rendering just the search results.
         @Search: Backbone.View.extend
             container: "#aggregator-search"
             template: JST["admin/templates/aggregator/search"]
@@ -188,7 +253,7 @@ class scpr.Aggregator
                 @container  = $(@container)
                 @container.html @$el
                 @render()
-                
+                    
             #---------------------
             # Search!
             search: (event) ->
@@ -200,7 +265,7 @@ class scpr.Aggregator
                         query: query
                     success: (collection, response, options) =>
                         scpr.R.transitionEnd @transitionOpts
-                        @_renderCollection()
+                        @renderCollection()
                         
                         
                 # Have to prevent the form from being actually submitted
@@ -214,6 +279,12 @@ class scpr.Aggregator
             render: ->
                 @$el.html @template
                 @resultsEl = $("#aggregator-search-results", @$el)
+                
+                # Make the Results div Sortable
+                @resultsEl.sortable
+                    connectWith: "#aggregator-dropzone .drop-zone"
+                    cursor: "move"
+                
                 @transitionOpts =
                     spinEl: @$el
                     dimEl: @resultsEl
@@ -221,7 +292,7 @@ class scpr.Aggregator
                 
             #---------------------
                 
-            _renderCollection: ->
+            renderCollection: ->
                 scpr.R.render
                     collection: @collection
                     modelView: "ContentMinimal"
@@ -234,10 +305,15 @@ class scpr.Aggregator
         # Full with lots of information
         @ContentFull: Backbone.View.extend
             tagName: 'li'
+            attributes:
+                class: "content-full"
             template: JST['admin/templates/aggregator/content_full']
         
             #---------------------
         
+            initialize: ->
+                @
+                
             render: ->
                 @$el.html @template(content: @model.toJSON())
                 
@@ -247,8 +323,15 @@ class scpr.Aggregator
         # Just the basic info
         @ContentMinimal: Backbone.View.extend
             tagName: 'li'
+            attributes:
+                class: "content-minimal"
             template: JST['admin/templates/aggregator/content_small']
             
+            #---------------------
+
+            initialize: ->
+                @
+                
             #---------------------
             
             render: ->

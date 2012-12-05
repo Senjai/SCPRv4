@@ -1,4 +1,14 @@
 <div class="row">
+  <div class="span9">
+    <ul>
+      <li>Drag content Right -> Left into the "Drop" area to add it.</li>
+      <li>Drag content Vertically within the "Drop" area to re-order it.</li>
+      <li>Drag content out of the "Drop" area and release to remove it from the collection.</li>
+      <li>Use the <strong>Search</strong> tab to find older content. <br />You may press "Enter" or click the "Go" button to perform the search.</li>
+  </div>
+</div>
+
+<div class="row">
   <div id="aggregator-dropzone" class="content-bucket span5">
     Loading content...
   </div>
