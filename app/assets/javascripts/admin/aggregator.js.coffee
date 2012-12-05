@@ -41,16 +41,23 @@ class scpr.Aggregator
         # any el
         @CollectionRenderer: 
             render: (args={}) ->
-                el         = args.el
-                collection = args.collection
-                modelView  = args.modelView
+                el         = args.el             # Where to place the collection
+                collection = args.collection     # The collection of models
+                modelView  = args.modelView      # The view to render a model in
+                views      = args.viewCollection # The collection of views to add to
                 
+                # Empty the el, since we're just replacing the collection
                 el.empty()
                 
+                # For each model, create a new model view and append it
+                # to the el
+                # If we were given a views object, place the model into
+                # that as well
                 collection.each (model) =>
                     view = new scpr.Aggregator.Views[modelView]
                         model: model
                     el.append view.render()
+                    views?[model.id] = view
                 
                 el
 
@@ -81,22 +88,24 @@ class scpr.Aggregator
             #---------------------
             
             initialize: ->
-                @
+                # childViews is how we're going to meaningfully share 
+                # views between all of the different areas. 
+                @childViews = {}
             
             #---------------------
             
             render: ->
                 # Build the skeleton. We'll fill everything in next.
                 @$el.html @template
+                                
+                # Setup the search/find section
+                @recentContent = new scpr.Aggregator.Views.RecentContent(base: @)
+                @search        = new scpr.Aggregator.Views.Search(base: @)
                 
                 # Setup the Drop Zone section
                 @dropZone = new scpr.Aggregator.Views.DropZone
                     collection: @collection # The bootstrapped content
-                
-                # Setup the search/find section
-                @recentContent = new scpr.Aggregator.Views.RecentContent()
-                @search        = new scpr.Aggregator.Views.Search()
-                
+                    base: @
                 @
                 
                 
@@ -113,10 +122,12 @@ class scpr.Aggregator
             #---------------------
                 
             initialize: ->
-                @container = $(@container)
+                @base = @options.base
                 
+                @container = $(@container)
                 @container.html @template
                 @container.append @$el
+                
                 @render()
                 
                 # DropZone callbacks!!
@@ -159,13 +170,35 @@ class scpr.Aggregator
                     
                     # When an item from another list is dropped into this
                     # DropZone
-                    receive: (event, ui) ->
+                    receive: (event, ui) =>
                         dropping = true
-                    
-                    # When dragging (sorting) stops
-                    stop: (event, ui) =>
-                        @collection.add
+                        @add(ui.item)
                         
+                        # Remove the dropped element because we're rendering
+                        # bigger, better one.
+                        ui.item.remove()
+                        
+                    # When dragging (sorting) stops
+                    stop: (event, ui) ->
+                        @
+                        
+            #---------------------
+            # Adds a model to the collection, and adds a new
+            # ContentFull view to the DropZone
+            add: (el) ->
+                id = el.attr("data-id")
+                
+                # Get the view for this DOM element
+                # and add its model to the DropZone
+                # collection
+                model = @base.childViews[id].model
+                @collection.add model
+                
+                # Render a ContentFull view using this model
+                view = new scpr.Aggregator.Views.ContentFull
+                    model: model
+                el.replaceWith view.render()
+                
             #---------------------
             
             render: ->
@@ -173,6 +206,7 @@ class scpr.Aggregator
                     collection: @collection
                     modelView: "ContentFull"
                     el: @$el
+                    viewCollection: @base.childViews
                 
                 @
 
@@ -189,9 +223,12 @@ class scpr.Aggregator
             #---------------------
 
             initialize: ->
+                @base = @options.base
+                
                 # Grab Recent Content using ContentAPI
                 # Render the list
                 @collection = new scpr.ContentAPI.ContentCollection()
+                
                 @container  = $(@container)
                 @container.html @$el
                 
@@ -226,6 +263,7 @@ class scpr.Aggregator
                     collection: @collection
                     modelView: "ContentMinimal"
                     el: @$el
+                    viewCollection: @base.childViews
                     
                 @
         
@@ -249,6 +287,8 @@ class scpr.Aggregator
                 "click button": "search"
                 
             initialize: ->
+                @base = @options.base
+                
                 @collection = new scpr.ContentAPI.ContentCollection()
                 @container  = $(@container)
                 @container.html @$el
@@ -293,10 +333,14 @@ class scpr.Aggregator
             #---------------------
                 
             renderCollection: ->
+                # Clear out the view collection since we're replacing the content
+                @viewCollection = {}
+                
                 scpr.R.render
                     collection: @collection
                     modelView: "ContentMinimal"
                     el: @resultsEl
+                    viewCollection: @base.childViews
                 
                 @
             
@@ -312,7 +356,10 @@ class scpr.Aggregator
             #---------------------
         
             initialize: ->
-                @
+                # Add the model ID to the DOM
+                # We have to do this so that we can share content
+                # between the lists.
+                @$el.attr("data-id", @model.id)
                 
             render: ->
                 @$el.html @template(content: @model.toJSON())
@@ -330,7 +377,10 @@ class scpr.Aggregator
             #---------------------
 
             initialize: ->
-                @
+                # Add the model ID to the DOM
+                # We have to do this so that we can share content
+                # between the lists.
+                @$el.attr("data-id", @model.id)
                 
             #---------------------
             
