@@ -76,28 +76,42 @@ class scpr.Newsroom
     # Remove a user from the list
     removeUser: (user) ->
         _t = @
-        $("#user-#{user.id}", @el).fadeOut 'fast', ->
+        userId = @_mungeUserId(user.id)
+        $("#user-#{userId}", @el).fadeOut 'fast', ->
             $(@).remove()
             _t.alerts['empty'].render() if _t._empty()
 
 
     #-----------------
     # Field highlighting
-    fieldFocus: (fieldId, user) ->
+    fieldFocus: (fieldId, user) ->  
+        userId = @_mungeUserId(user.id)
         @_mark ?= $("<div/>", class: "circle badge-mark", style: "background-color: #{user.color}")
         $("label[for='#{fieldId}']").prepend @_mark
-        $("#user-#{user.id}").addClass("highlighted")
+        $("#user-#{userId}").addClass("highlighted")
         
     #-----------------
     # Field de-highlighting
     fieldBlur: (fieldId, user) ->
+        userId = @_mungeUserId(user.id)
         @_mark.detach()
-        $("#user-#{user.id}").removeClass("highlighted")
+        $("#user-#{userId}").removeClass("highlighted")
+    
+
+    #-----------------
+    # Munge the user badge ID to be compatible with jQuery. This is a temporary solution.
+    _mungeUserId: (userId) ->
+        userId.replace(/:/g, "-").replace(/\//g, "-") 
     
     #-----------------
     # Add a user to the bucket by rendering the template
     _addUser: (user) ->
-        badge = $ @options.badgeTemplate(user: user, record: user.record, room: @room)
+        badge = $ @options.badgeTemplate
+            user: user
+            userId: @_mungeUserId(user.id)
+            record: user.record
+            room: @room
+            
         badge.hide()
         @el.append badge
         badge.fadeIn('fast')
