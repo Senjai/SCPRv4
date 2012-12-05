@@ -187,6 +187,7 @@ class scpr.Aggregator
                         
                     # When dragging (sorting) stops
                     stop: (event, ui) ->
+                        # noop for now
                         @
                         
             #---------------------
