@@ -1,4 +1,6 @@
 #= require scprbase
+#= require underscore
+#= requre backbone
 #= require admin/content_api
 #= require jquery-ui-1.9.2.custom.min.js
 
@@ -14,9 +16,8 @@
 #   and sorted and generally managed.
 #
 # * The "Content Finder" area, where the user can easily
-#   find content by either searching or selecting
-#   from the recent content. More ways to find 
-#   content will be added.
+#   find content by searching, selecting
+#   from the recent content, or dropping in a URL.
 #
 class scpr.Aggregator
     
@@ -106,6 +107,7 @@ class scpr.Aggregator
                 @dropZone = new scpr.Aggregator.Views.DropZone
                     collection: @collection # The bootstrapped content
                     base: @
+                    
                 @
                 
                 
@@ -232,9 +234,10 @@ class scpr.Aggregator
             #---------------------
 
             initialize: ->
-                @base = @options.base
-                @page = 1
-
+                @base     = @options.base
+                @page     = 1
+                @per_page = 10
+                
                 # Grab Recent Content using ContentAPI
                 # Render the list
                 @collection = new scpr.ContentAPI.ContentCollection()
@@ -263,19 +266,39 @@ class scpr.Aggregator
                     success: (collection, response, options) =>
                         scpr.R.transitionEnd @transitionOpts
 
-                        # We successfully retrieved the content,
-                        # So we can set @page to the requested page
-                        # and render the collection (including
-                        # the pagination)
-                        @page = params.page
-                        @renderCollection()
+                        # If the collection length is > 0, then 
+                        # call @renderCollection().
+                        # Otherwise render a notice that no results
+                        # were found.
+                        if collection.length > 0
+                            @renderCollection()
+                        else
+                            @alertNoResults()
+                        
+                        # Set the page and re-render the pagination
+                        @renderPagination(params, collection)
+                        
                     error: (collection, xhr, options) =>
                         scpr.R.transitionEnd @transitionOpts
-                        
-                        alert = new scpr.Notification(@resultsEl,
-                            "error", @errorTemplate(xhr: xhr))
-                        alert.render()
-                        
+                        @alertError(xhr)
+                
+                # Return the collection
+                @collection
+                
+            #---------------------
+            # Render a notice if the server returned an error
+            alertError: (xhr) ->
+                alert = new scpr.Notification(@resultsEl,
+                    "error", @errorTemplate(xhr: xhr))
+                alert.replace()
+
+            #---------------------
+            # Render a notice if no results were returned
+            alertNoResults: ->
+                alert = new scpr.Notification(@resultsEl,
+                    "notice", "No results")
+                alert.replace()
+                
             #---------------------
             # Fill in the @resultsEl with the model views
             renderCollection: ->
@@ -284,17 +307,35 @@ class scpr.Aggregator
                     modelView: "ContentMinimal"
                     el: @resultsEl
                     viewCollection: @base.childViews
+                
+                @
 
+            #---------------------
+            # Re-render the pagination with new page values,
+            # and set @page.
+            #
+            # If the passed-in length is less than the requested 
+            # limit, then assume that we reached the end of the 
+            # results and disable the "Next" link
+            renderPagination: (params, collection) ->
+                @page = params.page
+                
                 # Add in the pagination
+                # Prefer blank classes over "0" for consistency
+                # parseInt(null) and parseInt("") both return null
+                # null compared to any number is always false
                 $(".aggregator-pagination", @$el).html @paginationTemplate
                     current: @page
-                    prev: @page - 1
-                    next: @page + 1
+                    prev: @page - 1 unless @page < 1
+                    next: @page + 1 unless collection.length < params.limit
 
                 @
                 
             #---------------------
-
+            # Render the whole section.
+            # This should only be called once per page load.
+            # Rendering of indivial collections is done with
+            # @renderCollection().
             render: ->
                 @$el.html @template
                 @resultsEl = $(@resultsId, @$el)
@@ -331,7 +372,7 @@ class scpr.Aggregator
             # Sets up default parameters, and then proxies to #fetch
             request: (params={}) ->
                 _.defaults params,
-                    limit: 10
+                    limit: @per_page
                     page: 1
                     query: ""
                 
@@ -367,7 +408,7 @@ class scpr.Aggregator
             # Sets up default parameters, and then proxies to #fetch
             request: (params={}) ->
                 _.defaults params,
-                    limit: 10
+                    limit: @per_page
                     page: 1
                     query: $("#aggregator-search-input", @$el).val()
                 

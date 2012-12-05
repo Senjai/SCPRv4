@@ -9,6 +9,10 @@ class scpr.Notification
     render: ->
         @wrapper.append @el
     
+    # Replaces the wrapper's content with the alert
+    replace: ->
+        @wrapper.html @el
+        
     # Delegation for jQuery: @el.is(":visible")
     isVisible: ->
         @el.is(":visible")
