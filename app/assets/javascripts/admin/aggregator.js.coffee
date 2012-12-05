@@ -132,14 +132,14 @@ class scpr.Aggregator
                 
                 # DropZone callbacks!!
                 sortIn   = true
-                dropping = false
+                dropped = false
                 
                 @$el.sortable
                     cursor: "move"
                     # When dragging (sorting) starts
                     start: (event, ui) ->
                         sortIn   = true
-                        dropping = false
+                        dropped = false
                         ui.item.addClass("dragging")
                     
                     # Called whenever an item is moved and is over the
@@ -153,10 +153,17 @@ class scpr.Aggregator
                     # the dropzone, AND when the item is dropped inside of
                     # the dropzone. I don't know why jquery-ui decided to
                     # make it this way, but we have to hack around it.
-                    out: (event, ui) ->
+                    out: (event, ui) =>
                         # If this isn't a "drop" event, we can assume that
-                        # the item was just moved out of the DropZone. 
-                        if !dropping
+                        # the item was just moved out of the DropZone.
+                        #
+                        # If that's the case, and the item was originally
+                        # in the dropzone, then add the "removing" class
+                        #
+                        # If that's the case but the element came from
+                        # somewhere else, then don't add the "removing"
+                        # class. 
+                        if !dropped && ui.sender[0] == @$el[0]
                             sortIn = false
                             ui.item.addClass("removing")
                         
@@ -165,13 +172,13 @@ class scpr.Aggregator
                     # When dragging (sorting) stops, only if the item
                     # being dragged belongs to the original list
                     beforeStop: (event, ui) ->
-                        dropping = true
+                        dropped = true
                         ui.item.remove() if !sortIn
                     
                     # When an item from another list is dropped into this
                     # DropZone
                     receive: (event, ui) =>
-                        dropping = true
+                        dropped = true
                         @add(ui.item)
                         
                         # Remove the dropped element because we're rendering
