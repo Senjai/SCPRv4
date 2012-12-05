@@ -1,14 +1,4 @@
 <div class="row">
-  <div class="span9">
-    <ul>
-      <li>Drag content Right -> Left into the "Drop" area to add it.</li>
-      <li>Drag content Vertically within the "Drop" area to re-order it.</li>
-      <li>Drag content out of the "Drop" area and release to remove it from the collection.</li>
-      <li>Use the <strong>Search</strong> tab to find older content. <br />You may press "Enter" or click the "Go" button to perform the search.</li>
-  </div>
-</div>
-
-<div class="row">
   <div id="aggregator-dropzone" class="content-bucket span5">
     Loading content...
   </div>
@@ -22,6 +12,10 @@
       <li>
         <a href="#aggregator-search" data-toggle="tab">Search</a>
       </li>
+      
+      <li>
+        <a href="#aggregator-help" data-toggle="tab">Help</a>
+      </li>
     </ul>
 
     <div class="tab-content">
@@ -31,6 +25,34 @@
   
       <div class="tab-pane" id="aggregator-search">
         Loading Search...
+      </div>
+      
+      <div class="tab-pane" id="aggregator-help">
+        <ul>
+          <h4>Options for importing content</h4>
+          The gray area on the left is known as the "<strong>Drop Zone</strong>"
+          <li>Drag content from the "<strong>Recent</strong>" panel into the <strong>Drop Zone</strong></li>
+          <li>
+            Use the "<strong>Search</strong>" tab to find older content. <br />
+            Dragging from the Search panel works the same as from the Recent panel.<br />
+            You may press "Enter" or click the "Go" button to perform the search.
+          </li>
+          <li>
+            Drag any <strong>SCPR.org URL</strong> into the <strong>Drop Zone</strong>.<br />
+            Alternatively, you can paste a URL into the form in the "<strong>URL</strong>" tab.<br /> 
+            Supported content types are: 
+            <ul>
+              <li>News Stories</li>
+              <li>Blog Entries</li>
+              <li>Content Shells</li>
+              <li>Video Shells</li>
+              <li>Show Episodes</li>
+            </ul>
+          </li>
+          <h4>Ordering &amp; Removing content</h4>
+          <li>Drag content Vertically within the <strong>Drop Zone</strong> to re-order it.</li>
+          <li>Drag and release content outside of the <strong>Drop Zone</strong> to remove it from the collection.</li>
+        </ul>
       </div>
     </div>
   </div>
