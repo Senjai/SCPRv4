@@ -1,4 +1,4 @@
-<input type="text" id="aggregator-search-input" class="search-query" placeholder="Query" />
+<input type="text" id="aggregator-search-input" placeholder="Search Query" />
 <button class="btn">Go</button>
 <hr />
 

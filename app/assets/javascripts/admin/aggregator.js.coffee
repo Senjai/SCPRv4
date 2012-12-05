@@ -513,8 +513,6 @@ class scpr.Aggregator
             container: "#aggregator-search"
             resultsId: "#aggregator-search-results"
             template: JST["admin/templates/aggregator/search"]
-            attributes:
-                class: "form-search"
             events:
                 "click .pagination a": "changePage"
                 "click button"       : "search"
