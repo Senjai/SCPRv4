@@ -34,7 +34,6 @@ class scpr.Aggregator
     #----------------------------------
     # Views!
     class @Views
-        
         #----------------------------------
         # Some helper modules for you and me!
         # Use this one to render a basic collection into
@@ -81,27 +80,28 @@ class scpr.Aggregator
                 
                 
         #----------------------------------
+        #----------------------------------
         # The skeleton for the the different pieces!
-        @Base: Backbone.View.extend
+        class @Base extends Backbone.View
             template: JST['admin/templates/aggregator/base']
-            
+        
             #---------------------
-            
+        
             initialize: ->
                 # childViews is how we're going to meaningfully share 
                 # views between all of the different areas. 
                 @childViews = {}
-            
+        
             #---------------------
-            
+        
             render: ->
                 # Build the skeleton. We'll fill everything in next.
                 @$el.html @template
-                                
+                            
                 # Setup the search/find section
                 @recentContent = new scpr.Aggregator.Views.RecentContent(base: @)
                 @search        = new scpr.Aggregator.Views.Search(base: @)
-                
+            
                 # Setup the Drop Zone section
                 @dropZone = new scpr.Aggregator.Views.DropZone
                     collection: @collection # The bootstrapped content
@@ -112,7 +112,7 @@ class scpr.Aggregator
         #----------------------------------
         # The drop-zone!
         # Gets filled with ContentFull views
-        @DropZone: Backbone.View.extend
+        class @DropZone extends Backbone.View
             template: JST['admin/templates/aggregator/drop_zone']
             container: "#aggregator-dropzone"
             tagName: 'ul'
@@ -212,147 +212,168 @@ class scpr.Aggregator
 
 
         #----------------------------------
-        # The RecentContent list!
-        # Gets filled with ContentMinimal views
-        @RecentContent: Backbone.View.extend
-            container: "#aggregator-recent-content"
-            tagName: 'ul'
-            attributes:
-                class: "content-list"
-
+        #----------------------------------
+        # An abstract class from which the different
+        # collection views should inherit
+        class @ContentList extends Backbone.View
+            paginationTemplate: JST["admin/templates/aggregator/_pagination"]
+            errorTemplate: JST["admin/templates/aggregator/error"]
+            events: 
+                "click .pagination a": "changePage"
+                
             #---------------------
 
             initialize: ->
                 @base = @options.base
-                
+                @page = 1
+
                 # Grab Recent Content using ContentAPI
                 # Render the list
                 @collection = new scpr.ContentAPI.ContentCollection()
-                
-                @container  = $(@container)
-                @container.html @$el
-                
-                @transitionOpts =
-                    spinEl: @container
-                    dimEl: @$el
-                    
-                @populate()
-                
-                # Make her sortable!
-                @$el.sortable
-                    connectWith: "#aggregator-dropzone .drop-zone"
-                    cursor: "move"
-                
-                
-            #---------------------
-        
-            populate: ->
-                scpr.R.transitionStart @transitionOpts
-                
-                @collection.fetch
-                    data:
-                        limit: 10
-                    success: (collection, response, options) =>
-                        scpr.R.transitionEnd @transitionOpts
-                        @render()
-        
-            #---------------------
-        
-            render: ->
-                scpr.R.render
-                    collection: @collection
-                    modelView: "ContentMinimal"
-                    el: @$el
-                    viewCollection: @base.childViews
-                    
-                @
-        
 
-        #----------------------------------
-        # SEARCH?!?!
-        # This view is the entire Search section. It it made up of smaller
-        # "ContentMinimal" views
-        #
-        # Note that because of the Input field, the list of content is
-        # actually stored in @resultsEl, not @el
-        #
-        # @render() is for rendering the full section.
-        # Use @_renderCollection for rendering just the search results.
-        @Search: Backbone.View.extend
-            container: "#aggregator-search"
-            template: JST["admin/templates/aggregator/search"]
-            attributes:
-                class: "form-search"
-            events: 
-                "click button": "search"
-                
-            initialize: ->
-                @base = @options.base
-                
-                @collection = new scpr.ContentAPI.ContentCollection()
                 @container  = $(@container)
                 @container.html @$el
+
                 @render()
-                    
+                
             #---------------------
-            # Search!
-            search: (event) ->
+            # Get the page from the DOM
+            # Proxy to #request to setup params
+            changePage: (event) ->
+                page = parseInt $(event.target).attr("data-page")
+                @request(page: page) if page > 0
+                false
+
+            #---------------------
+            # Fire the actual request to the server
+            # Also handles transitions
+            fetch: (params) ->
                 scpr.R.transitionStart @transitionOpts
-                query = $("#aggregator-search-input", @$el).val()
                 
                 @collection.fetch
-                    data: 
-                        query: query
+                    data: params
                     success: (collection, response, options) =>
                         scpr.R.transitionEnd @transitionOpts
+
+                        # We successfully retrieved the content,
+                        # So we can set @page to the requested page
+                        # and render the collection (including
+                        # the pagination)
+                        @page = params.page
                         @renderCollection()
+                    error: (collection, xhr, options) =>
+                        scpr.R.transitionEnd @transitionOpts
                         
+                        alert = new scpr.Notification(@resultsEl,
+                            "error", @errorTemplate(xhr: xhr))
+                        alert.render()
                         
-                # Have to prevent the form from being actually submitted
-                # when the "Enter" key is pressed!
-                # Note that the "form" in this case is the actual
-                # form for the content (eg. Homepage or Missed It Bucket)
-                false
-                
             #---------------------
-            
-            render: ->
-                @$el.html @template
-                @resultsEl = $("#aggregator-search-results", @$el)
-                
-                # Make the Results div Sortable
-                @resultsEl.sortable
-                    connectWith: "#aggregator-dropzone .drop-zone"
-                    cursor: "move"
-                
-                @transitionOpts =
-                    spinEl: @$el
-                    dimEl: @resultsEl
-                @
-                
-            #---------------------
-                
+            # Fill in the @resultsEl with the model views
             renderCollection: ->
-                # Clear out the view collection since we're replacing the content
-                @viewCollection = {}
-                
                 scpr.R.render
                     collection: @collection
                     modelView: "ContentMinimal"
                     el: @resultsEl
                     viewCollection: @base.childViews
-                
+
+                # Add in the pagination
+                $(".aggregator-pagination", @$el).html @paginationTemplate
+                    current: @page
+                    prev: @page - 1
+                    next: @page + 1
+
                 @
-            
+                
+            #---------------------
+
+            render: ->
+                @$el.html @template
+                @resultsEl = $(@resultsId, @$el)
+
+                # Make the Results div Sortable
+                @resultsEl.sortable
+                    connectWith: "#aggregator-dropzone .drop-zone"
+                    cursor: "move"
+
+                @transitionOpts =
+                    spinEl: @$el
+                    dimEl: @resultsEl
+
+                @
+
         #----------------------------------
-        # A single piece of content in the drop zone!
-        # Full with lots of information
-        @ContentFull: Backbone.View.extend
-            tagName: 'li'
+        # The RecentContent list!
+        # Gets filled with ContentMinimal views
+        #
+        # Note that because of Pagination, the list of content is
+        # stored in @resultsEl, not @el
+        class @RecentContent extends @ContentList
+            container: "#aggregator-recent-content"
+            resultsId: "#aggregator-recent-content-results"
+            template: JST['admin/templates/aggregator/recent_content']
+            
+            #---------------------
+            # Need to populate right away for Recent Content
+            initialize: ->
+                super
+                @request()
+                
+            #---------------------
+            # Sets up default parameters, and then proxies to #fetch
+            request: (params={}) ->
+                _.defaults params,
+                    limit: 10
+                    page: 1
+                    query: ""
+                
+                @fetch(params)
+
+                
+        #----------------------------------
+        # SEARCH?!?!
+        # This view is the entire Search section. It it made up of 
+        # smaller "ContentMinimal" views
+        #
+        # Note that because of the Input field and pagination, 
+        # the list of content is actually stored in @resultsEl, not @el
+        #
+        # @render() is for rendering the full section.
+        # Use @_renderCollection for rendering just the search results.
+        class @Search extends @ContentList
+            container: "#aggregator-search"
+            resultsId: "#aggregator-search-results"
+            template: JST["admin/templates/aggregator/search"]
             attributes:
-                class: "content-full"
-            template: JST['admin/templates/aggregator/content_full']
-        
+                class: "form-search"
+            events:
+                "click .pagination a": "changePage"
+                "click button"       : "search"
+            
+            #---------------------
+            # Just a simple proxy to #request to fill in the args properly
+            search: (event) ->
+                @request()
+                
+            #---------------------
+            # Sets up default parameters, and then proxies to #fetch
+            request: (params={}) ->
+                _.defaults params,
+                    limit: 10
+                    page: 1
+                    query: $("#aggregator-search-input", @$el).val()
+                
+                @fetch(params)
+                false # to keep the Rails form from submitting
+                
+
+        #----------------------------------
+        #----------------------------------
+        # An abstract class from which the different
+        # representations of a model should inherit
+        class @ContentView extends Backbone.View
+            tagName: 'li'
+            
             #---------------------
         
             initialize: ->
@@ -360,33 +381,29 @@ class scpr.Aggregator
                 # We have to do this so that we can share content
                 # between the lists.
                 @$el.attr("data-id", @model.id)
-                
+            
+            #---------------------
+
             render: ->
                 @$el.html @template(content: @model.toJSON())
+                
+        #----------------------------------
+        # A single piece of content in the drop zone!
+        # Full with lots of information
+        class @ContentFull extends @ContentView
+            attributes:
+                class: "content-full"
+            template: JST['admin/templates/aggregator/content_full']
                 
         
         #----------------------------------
         # A single piece of recent content!
         # Just the basic info
-        @ContentMinimal: Backbone.View.extend
-            tagName: 'li'
+        class @ContentMinimal extends @ContentView
             attributes:
                 class: "content-minimal"
             template: JST['admin/templates/aggregator/content_small']
-            
-            #---------------------
 
-            initialize: ->
-                # Add the model ID to the DOM
-                # We have to do this so that we can share content
-                # between the lists.
-                @$el.attr("data-id", @model.id)
-                
-            #---------------------
-            
-            render: ->
-                @$el.html @template(content: @model.toJSON())
-        
         #---------------------
 
 # Shortcuts!!!!!!!!

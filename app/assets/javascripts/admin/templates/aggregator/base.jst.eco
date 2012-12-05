@@ -26,7 +26,7 @@
 
     <div class="tab-content">
       <div class="tab-pane active" id="aggregator-recent-content">
-        Loading content...
+        Loading Recent Content...
       </div>
   
       <div class="tab-pane" id="aggregator-search">

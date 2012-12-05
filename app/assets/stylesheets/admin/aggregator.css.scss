@@ -1,4 +1,10 @@
 .aggregator {
+  // Override the Twitter pagination
+  // To reduce the padding
+  .pagination {
+    margin: 0 0 10px 0;
+  }
+  
   input.search-query {
     max-width: 250px;
   }

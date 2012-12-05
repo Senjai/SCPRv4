@@ -2,7 +2,7 @@ class Api::ApiController < ApplicationController
   respond_to :json
   
   before_filter :set_access_control_headers
-  before_filter :set_classes, :set_limit, :set_query, only: [:index]
+  before_filter :set_classes, :sanitize_limit, :sanitize_page, :sanitize_query, only: [:index]
 
   #---------------------------
   
@@ -15,7 +15,8 @@ class Api::ApiController < ApplicationController
   def index
     @content = ContentBase.search(@query, {
       :classes => @classes,
-      :limit   => @limit
+      :limit   => @limit,
+      :page    => @page
     })
     
     respond_with @content
@@ -70,13 +71,17 @@ class Api::ApiController < ApplicationController
 
   #---------------------------
     
-  def set_limit
+  def sanitize_limit
     @limit = params[:limit] ? params[:limit].to_i : 10
+  end
+  
+  def sanitize_page
+    @page = params[:page] ? params[:page].to_i : 1
   end
   
   #---------------------------
   
-  def set_query
+  def sanitize_query
     @query = params[:query].to_s
   end
 end
