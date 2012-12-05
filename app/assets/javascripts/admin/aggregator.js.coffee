@@ -256,30 +256,35 @@ class scpr.Aggregator
                 @base.importUrl url, 
                     success: (data) =>
                         if !data
-                            alert = new scpr.Notification(@$el, "error", "Invalid URL (#{url})")
-                            @alertNotImported(alert)
+                            alert = new scpr.Notification(@$el, "error", 
+                                "<strong>Failure.</strong> Invalid URL (#{url})")
+                            @importNotice(alert)
                         else
-                            model = new scpr.ContentAPI.Content(data)
-                            view = new scpr.Aggregator.Views.ContentFull
-                                model: model
-                            @$el.append view.render()
+                            @buildFromData(data)
+                            
+                            alert = new scpr.Notification(@$el, "success", 
+                                "<strong>Success!</strong> Imported #{data.id}")
+                            @importNotice(alert)
                         
                     error: (jqXHR) =>
-                        alert = new scpr.Notification(@$el, "error", "Error. Try the Search tab.")
-                        @alertNotImported(alert)
-                        
+                        alert = new scpr.Notification(@$el, "error", 
+                            "<strong>Error.</strong> Try the Search tab.")
+                        @importNotice(alert)
+                    
+                    # Run this no matter what.
+                    # It just turns off the bells and whistles
                     complete: (jqXHR) =>
                         @container.spin(false)
                         @$el.removeClass('dim')
 
             #---------------------
-            # Alert the user that the URL drag-and-drop failed
-            # Received a Notification object
-            alertNotImported: (alert) ->
-                alert.prepend()
+            # Alert the user that the URL drag-and-drop failed or succeeded
+            # Receives a Notification object
+            importNotice: (notification) ->
+                notification.prepend()
                 
                 setTimeout ->
-                    alert.fadeOut()
+                    notification.fadeOut()
                 , 5000
                 
             #---------------------
@@ -298,6 +303,16 @@ class scpr.Aggregator
                 view = new scpr.Aggregator.Views.ContentFull
                     model: model
                 el.replaceWith view.render()
+
+            #---------------------
+            # Give a JSON object, build a model, and its corresponding
+            # ContentFull view for the DropZone,
+            # then append it to @el
+            buildFromData: (data) ->
+                model = new scpr.ContentAPI.Content(data)
+                view = new scpr.Aggregator.Views.ContentFull
+                    model: model
+                @$el.append view.render()
                 
             #---------------------
             
