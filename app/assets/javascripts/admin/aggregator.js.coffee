@@ -263,6 +263,20 @@ class scpr.Aggregator
                 return false # prevent default behavior
 
             #---------------------
+            # Give a JSON object, build a model, and its corresponding
+            # ContentFull view for the DropZone,
+            # then append it to @el and @collection
+            buildFromData: (data) ->
+                model = new scpr.ContentAPI.Content(data)
+
+                view = new scpr.Aggregator.Views.ContentFull
+                    model: model
+                @$el.append view.render()
+
+                # Add the new model to @collection
+                @collection.add model
+                    
+            #---------------------
             # Alert the user that the URL drag-and-drop failed or succeeded
             # Receives a Notification object
             importNotice: (notification) ->
@@ -287,7 +301,7 @@ class scpr.Aggregator
                 # let the user know and do not import it
                 # Otherwise, set the position and add it to the collection
                 if not @collection.get id
-                    @collection.add model                    
+                    @collection.add model
                     view = new scpr.Aggregator.Views.ContentFull
                         model: model
                     el.replaceWith view.render()
@@ -317,21 +331,6 @@ class scpr.Aggregator
                     id    = el.attr("data-id")
                     model = @collection.get id
                     model.set "position", el.index()
-                    
-            #---------------------
-            # Give a JSON object, build a model, and its corresponding
-            # ContentFull view for the DropZone,
-            # then append it to @el and @collection
-            buildFromData: (data) ->
-                model = new scpr.ContentAPI.Content(data)
-                                
-                view = new scpr.Aggregator.Views.ContentFull
-                    model: model
-                @$el.append view.render()
-                
-                # Add the new model to @collection
-                @collection.add model
-                
                 
             #---------------------
 
