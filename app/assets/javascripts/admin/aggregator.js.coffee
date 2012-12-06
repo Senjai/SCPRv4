@@ -38,37 +38,30 @@ class scpr.Aggregator
         #----------------------------------
         #----------------------------------
         # The skeleton for the the different pieces!
-        #
-        # @Base#collection is a collection of all of the models
-        # in the Aggregator. This includes everything in the 
-        # DropZone, the Search, the RecentContent, and anything
-        # added by the URL import tab.
         class @Base extends Backbone.View
             template: JST['admin/templates/aggregator/base']
         
             #---------------------
         
             initialize: ->
-                @ #noop for now
+                # @foundCollection is the collection for all the content 
+                # in the RIGHT panel.
+                @foundCollection = new scpr.ContentAPI.ContentCollection()
         
             #---------------------
             # Import a URL and turn it into content
             # Let the caller handle what happens after the request
             # via callbacks
             importUrl: (url, callbacks={}) ->
-                $.ajax 
-                    dataType: "json"
-                    url: "#{scpr.PUBLIC_API_ROOT}/content/by_url"
-                    data:
-                        url: url
-                    success: (data, textStatus, jqXHR)      -> callbacks.success?(data)
-                    error: (jqXHR, textStatus, errorThrown) -> callbacks.error?(jqXHR)
-                    complete: (jqXHR, status)               -> callbacks.complete?(jqXHR)
-                    
+                $.getJSON("#{scpr.PUBLIC_API_ROOT}/content/by_url", { url: url })
+                   .success((data, textStatus, jqXHR)      -> callbacks.success?(data))
+                   .error((jqXHR, textStatus, errorThrown) -> callbacks.error?(jqXHR))
+                   .complete((jqXHR, status)               -> callbacks.complete?(jqXHR))
+
                 true
                 
             #---------------------
-        
+            
             render: ->
                 # Build the skeleton. We'll fill everything in next.
                 @$el.html @template
@@ -114,21 +107,16 @@ class scpr.Aggregator
                 @$el.on "dragenter", (event)  => @_dragEnter(event)
                 @$el.on "dragleave", (event)  => @_dragLeave(event)
                 @$el.on "dragover", (event)   => @_dragOver(event)
-                @$el.on "drop", (event)       => @importUrl(event)
+                @$el.on "drop", (event)       => console.log event; @importUrl(event)
 
 
                 # Listeners for @collection events triggered
                 # by Backbone
-                @collection.bind "add remove", (model, collection) =>
+                @collection.bind "add remove reorder", =>
+                    @setPositions()                    
                     $("#content_json").val(
                         JSON.stringify(@collection.simpleJSON()))
-                        
-                    @render()
-
-                @collection.bind "add remove reorder", =>
-                    @setPositions()
-
-                
+                    
                 # DropZone callbacks!!
                 sortIn  = true
                 dropped = false
@@ -179,16 +167,17 @@ class scpr.Aggregator
                     # Move it from there to DropZone.
                     receive: (event, ui) =>
                         dropped = true
-                        
                         # If we're able to move it in, Remove the dropped 
                         # element because we're rendering the bigger, better one.
                         # Otherwise, revert the el back to the original element.
                         if @move(ui.item)
                             ui.item.remove()
                         else
-                            @$el.sortable "cancel"
+                            $(ui.item).effect 'highlight', color: "#f2dede", 1500
+                            $(ui.sender).sortable "cancel"
                             
-                    # When dragging (sorting) stops
+                    # When dragging (sorting) stops, only for items
+                    # in the original list.
                     # Update the position attribute for each
                     # model
                     #
@@ -204,12 +193,16 @@ class scpr.Aggregator
                             ui.item.remove()
                             @remove(ui.item)
                         else
-                            # Manually trigger a reorder
                             @collection.trigger "reorder"
 
+            _stopEvent: (event) ->
+                event.preventDefault()
+                event.stopPropagation()
+                
             #---------------------
             # When an element enters the zone
             _dragEnter: (event) ->
+                @_stopEvent event
                 @$el.addClass('dim')
                 
             #---------------------
@@ -222,7 +215,9 @@ class scpr.Aggregator
                 @dragOver = false
                 setTimeout =>
                     @$el.removeClass('dim') if !@dragOver
-                , 10
+                , 50
+
+                @_stopEvent event
                     
             #---------------------
             # When an element is in the zone and not yet released
@@ -231,16 +226,16 @@ class scpr.Aggregator
             # Set dragOver to true to stop dragleave from messing it up
             _dragOver: (event) ->
                 @dragOver = true
+                @_stopEvent event
                 
             #---------------------
             # Proxy to @base.importUrl
             # Grabs the dropped-in URL, passes it on
             # Also does some animations and stuff
             importUrl: (event) ->
-                @container.spin()
+                @_stopEvent event
 
-                event.stopPropagation()
-                event.preventDefault()
+                @container.spin()
                 url = event.originalEvent.dataTransfer.getData('text/uri-list')
                 alert = {}
                 
@@ -264,6 +259,8 @@ class scpr.Aggregator
                         @importNotice(alert)
                         @container.spin(false)
                         @$el.removeClass('dim')
+                
+                return false # prevent default behavior
 
             #---------------------
             # Alert the user that the URL drag-and-drop failed or succeeded
@@ -284,12 +281,16 @@ class scpr.Aggregator
                 # Get the model for this DOM element
                 # and add it to the DropZone
                 # collection
-                model = @base.collection.get id
+                model = @base.foundCollection.get id
                 
                 # If the model is already in @collection, then
                 # let the user know and do not import it
+                # Otherwise, set the position and add it to the collection
                 if not @collection.get id
-                    @collection.add model
+                    @collection.add model                    
+                    view = new scpr.Aggregator.Views.ContentFull
+                        model: model
+                    el.replaceWith view.render()
                 else
                     alert = new scpr.Notification(@$el, "warning", 
                         "That content is already in the drop zone.")
@@ -323,10 +324,12 @@ class scpr.Aggregator
             # then append it to @el and @collection
             buildFromData: (data) ->
                 model = new scpr.ContentAPI.Content(data)
-                model.position = @collection.length
+                                
+                view = new scpr.Aggregator.Views.ContentFull
+                    model: model
+                @$el.append view.render()
                 
                 # Add the new model to @collection
-                # The "add" event will deal with rendering
                 @collection.add model
                 
                 
@@ -353,7 +356,7 @@ class scpr.Aggregator
             errorTemplate: JST["admin/templates/aggregator/error"]
             events: 
                 "click .pagination a": "changePage"
-                
+            
             #---------------------
 
             initialize: ->
@@ -364,7 +367,15 @@ class scpr.Aggregator
                 # Grab Recent Content using ContentAPI
                 # Render the list
                 @collection = new scpr.ContentAPI.ContentCollection()
-
+                
+                # Add just the added model to @base.foundCollection
+                @collection.bind "add", (model, collection, options) =>
+                    @base.foundCollection.add model
+                
+                # Add the reset collection to @base.foundCollection
+                @collection.bind "reset", (collection, options) =>
+                    @base.foundCollection.add collection.models
+                
                 @container  = $(@container)
                 @container.html @$el
                 @render()
@@ -400,7 +411,7 @@ class scpr.Aggregator
                         
                     error: (collection, xhr, options) =>
                         @alertError(xhr: xhr)
-                .always @transitionEnd()
+                .always => @transitionEnd()
                 
                 # Return the collection
                 @collection
@@ -452,10 +463,12 @@ class scpr.Aggregator
             #---------------------
             # Fill in the @resultsEl with the model views
             renderCollection: ->
-                @collection.each (model) =>
+                @resultsEl.empty()
+                
+                @collection.each (model) =>                    
                     view = new scpr.Aggregator.Views.ContentMinimal
                         model: model
-                    @$el.append view.render()
+                    @resultsEl.append view.render()
                 
                 @$el
 
@@ -573,7 +586,16 @@ class scpr.Aggregator
             template: JST["admin/templates/aggregator/url"]
             events:
                 "click button" : "fetch"
-                        
+
+            #---------------------
+
+            append: (model) ->
+                view = new scpr.Aggregator.Views.ContentMinimal
+                    model: model
+                @resultsEl.append view.render()
+
+                @$el
+            
             #---------------------
             # Proxies to @base.importUrl
             # Also handles transitions
@@ -591,18 +613,15 @@ class scpr.Aggregator
                         # for easy dragging, and clear the input
                         if data
                             @collection.add data
-                            @renderCollection()
+                            @append @collection.get(data.id)
                             input.val("") # Empty the URL input
                         else 
                             @alertNoResults
                                 method: "render"
                                 message: "Invalid URL"
                     
-                    error: (jqXHR) =>
-                        @alertError(xhr: jqXHR)
-                    
-                    complete: (jqHXR) =>
-                        @transitionEnd()
+                    error: (jqXHR)    => @alertError(xhr: jqXHR)
+                    complete: (jqHXR) => @transitionEnd()
                         
                 false # Prevent the Rails form from submitting
 
