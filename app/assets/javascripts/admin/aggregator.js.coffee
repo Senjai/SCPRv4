@@ -44,7 +44,6 @@ class scpr.Aggregator
                 el         = args.el             # Where to place the collection
                 collection = args.collection     # The collection of models
                 modelView  = args.modelView      # The view to render a model in
-                views      = args.viewCollection # The collection of views to add to
                 
                 # Empty the el, since we're just replacing the collection
                 el.empty()
@@ -57,7 +56,6 @@ class scpr.Aggregator
                     view = new scpr.Aggregator.Views[modelView]
                         model: model
                     el.append view.render()
-                    views?[model.id] = view
                 
                 el
 
@@ -83,15 +81,18 @@ class scpr.Aggregator
         #----------------------------------
         #----------------------------------
         # The skeleton for the the different pieces!
+        #
+        # @Base#collection is a collection of all of the models
+        # in the Aggregator. This includes everything in the 
+        # DropZone, the Search, the RecentContent, and anything
+        # added by the URL import tab.
         class @Base extends Backbone.View
             template: JST['admin/templates/aggregator/base']
         
             #---------------------
         
             initialize: ->
-                # childViews is how we're going to meaningfully share 
-                # views between all of the different areas. 
-                @childViews = {}
+                @ #noop for now
         
             #---------------------
             # Import a URL and turn it into content
@@ -139,10 +140,12 @@ class scpr.Aggregator
                 class: "drop-zone well"
             
             #---------------------
-                
+            
             initialize: ->
                 @base = @options.base
                 
+                # Setup the container, render the template,
+                # and then add in the el (the list)
                 @container = $(@container)
                 @container.html @template
                 @container.append @$el
@@ -156,15 +159,36 @@ class scpr.Aggregator
                 @$el.on "dragover", (event)   => @_dragOver(event)
                 @$el.on "drop", (event)       => @importUrl(event)
 
+
+                # Listeners for @collection events triggered
+                # by Backbone
+                @collection.bind "add", (model, collection) =>
+                    # If the model doesn't exist in the base collection,
+                    # add it. This will only be the case when dragging
+                    # a URL directly into the DropZone.
+                    if not collection.get model.id
+                        @base.collection.add model
+                
+                # When we remove something from this collection,
+                
+                @collection.bind "remove", (model, collection) =>
+                    #@base.collection.remove model
+                    @
+                    
+                @collection.bind "add remove reorder", =>
+                    @setPositions()
+                    $("#content_json").val(
+                        JSON.stringify(@collection.simpleJSON()))
+                
                 # DropZone callbacks!!
-                sortIn   = true
+                sortIn  = true
                 dropped = false
                 
                 @$el.sortable
                     cursor: "move"
                     # When dragging (sorting) starts
                     start: (event, ui) ->
-                        sortIn   = true
+                        sortIn  = true
                         dropped = false
                         ui.item.addClass("dragging")
                     
@@ -197,24 +221,42 @@ class scpr.Aggregator
                     
                     # When dragging (sorting) stops, only if the item
                     # being dragged belongs to the original list
-                    beforeStop: (event, ui) ->
+                    # Before placeholder disappears
+                    beforeStop: (event, ui) =>
                         dropped = true
-                        ui.item.remove() if !sortIn
-                    
+                        
                     # When an item from another list is dropped into this
                     # DropZone
+                    # Move it from there to DropZone.
                     receive: (event, ui) =>
                         dropped = true
-                        @add(ui.item)
                         
-                        # Remove the dropped element because we're rendering
-                        # the bigger, better one.
-                        ui.item.remove()
-                        
+                        # If we're able to move it in, Remove the dropped 
+                        # element because we're rendering the bigger, better one.
+                        # Otherwise, revert the el back to the original element.
+                        if @move(ui.item)
+                            ui.item.remove()
+                        else
+                            @$el.sortable "cancel"
+                            
                     # When dragging (sorting) stops
-                    stop: (event, ui) ->
-                        # noop for now
-                        @
+                    # Update the position attribute for each
+                    # model
+                    #
+                    # If !sortIn (i.e. if we're dragging something out
+                    # of the DropZone), then remove that item. A trigger
+                    # on @collection.remove() will re-sort the models.
+                    #
+                    # If we stopped but sortIn is true, then it means
+                    # we have just re-ordered the elements in the UI,
+                    # so we manually trigger a "reorder" event.
+                    stop: (event, ui) =>
+                        if !sortIn
+                            ui.item.remove()
+                            @remove(ui.item)
+                        else
+                            # Manually trigger a reorder
+                            @collection.trigger "reorder"
 
             #---------------------
             # When an element enters the zone
@@ -241,7 +283,7 @@ class scpr.Aggregator
             # Set dragOver to true to stop dragleave from messing it up
             _dragOver: (event) ->
                 @dragOver = true
-
+                
             #---------------------
             # Proxy to @base.importUrl
             # Grabs the dropped-in URL, passes it on
@@ -287,31 +329,65 @@ class scpr.Aggregator
                 , 5000
                 
             #---------------------
-            # Adds a model to the collection, and adds a new
-            # ContentFull view to the DropZone
-            add: (el) ->
+            # Moves a model from the "found" section into the drop zone.
+            # Converts its view into a ContentFull view.
+            move: (el) ->
                 id = el.attr("data-id")
                 
                 # Get the view for this DOM element
                 # and add its model to the DropZone
                 # collection
-                model = @base.childViews[id].model
-                @collection.add model
+                model = @base.collection.get id
                 
-                # Render a ContentFull view using this model
-                view = new scpr.Aggregator.Views.ContentFull
-                    model: model
-                el.replaceWith view.render()
-
+                # If the model is already in @collection, then
+                # let the user know and do not import it
+                if not @collection.get id
+                    @collection.add model
+                
+                    # Render a ContentFull view using this model
+                    view = new scpr.Aggregator.Views.ContentFull
+                        model: model
+                    el.replaceWith view.render()
+                    true
+                else
+                    alert = new scpr.Notification(@$el, "warning", 
+                        "That content is already in the drop zone.")
+                    @importNotice(alert)
+                    false
+                
+            #---------------------
+            # Remove this el's model from @collection
+            # This is the only case where we want to 
+            # actually remove a view from @base.childViews
+            remove: (el) ->
+                id    = el.attr("data-id")
+                model = @collection.get id
+                @collection.remove model
+            
+            #---------------------
+            # Go through the li's and find the corresponding model.
+            # This is how we're able to save the order based on
+            # the positions in the DropZone.
+            # Returns a new Backbone Collection.
+            setPositions: ->
+                for el in $("li", @$el)
+                    el    = $ el
+                    id    = el.attr("data-id")
+                    model = @collection.get id
+                    model.set "position", el.index()
+                    
             #---------------------
             # Give a JSON object, build a model, and its corresponding
             # ContentFull view for the DropZone,
-            # then append it to @el
+            # then append it to @el and @collection
             buildFromData: (data) ->
                 model = new scpr.ContentAPI.Content(data)
                 view = new scpr.Aggregator.Views.ContentFull
                     model: model
                 @$el.append view.render()
+                
+                # Add the new model to @collection
+                @collection.add model
                 
             #---------------------
             # This only needs to be called once, when bootstrapping
@@ -322,7 +398,6 @@ class scpr.Aggregator
                     collection: @collection
                     modelView: "ContentFull"
                     el: @$el
-                    viewCollection: @base.childViews
                 
                 @
 
