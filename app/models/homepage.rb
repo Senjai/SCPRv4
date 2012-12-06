@@ -34,7 +34,7 @@ class Homepage < ActiveRecord::Base
   # parsed and turned into HomepageContent objects in the 
   # #parse_content_json method.
   attr_accessor :content_json
-  before_save :parse_content_json
+#  before_save :parse_content_json
   
   #-------------------
   # Administration
