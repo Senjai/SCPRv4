@@ -33,8 +33,8 @@ class Homepage < ActiveRecord::Base
   # of a javascript object to the model, which will then be
   # parsed and turned into HomepageContent objects in the 
   # #parse_content_json method.
-  attr_accessor :content_json
-#  before_save :parse_content_json
+  attr_accessor :content_json  
+  before_save :parse_content_json
   
   #-------------------
   # Administration
@@ -134,4 +134,24 @@ class Homepage < ActiveRecord::Base
     }
   end
   
+  
+  
+  #---------------------------------
+  
+  #-------------------
+
+  def parse_content_json
+    return if self.content_json.blank?
+    @_loaded_content = []
+    
+    Array(JSON.load(self.content_json)).each do |content_hash|
+      if content = ContentBase.obj_by_key(content_hash["id"])
+        homepage = HomepageContent.new(position: content_hash["position"], content: content)
+        @_loaded_content.push homepage
+      end
+    end
+    
+    self.content = @_loaded_content
+    true
+  end
 end
