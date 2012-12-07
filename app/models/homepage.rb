@@ -135,12 +135,12 @@ class Homepage < ActiveRecord::Base
   end
   
   
-  
-  #---------------------------------
-  
+    
   #-------------------
 
   def parse_content_json
+    # If content_json is blank, then that means we
+    # didn't make any updates. Return and move on.
     return if self.content_json.blank?
     @_loaded_content = []
     

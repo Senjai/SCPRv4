@@ -195,6 +195,8 @@ class scpr.Aggregator
                         else
                             @collection.trigger "reorder"
 
+            #---------------------
+
             _stopEvent: (event) ->
                 event.preventDefault()
                 event.stopPropagation()
