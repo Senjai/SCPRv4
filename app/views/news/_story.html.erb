@@ -28,7 +28,8 @@
       <% end %>
     </footer>
   </article>
-  
+
+  <%= content_widget "partners", @story %>  
   <%= render :partial => "/shared/cwidgets/author_info", :collection => story.grouped_bylines[:primary], :as => :byline %>
   <%= content_widget "social_tools", story, cssClass: "bottom horizontal" %>
 </div> <!-- story -->

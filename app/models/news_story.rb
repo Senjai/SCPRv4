@@ -25,17 +25,13 @@ class NewsStory < ActiveRecord::Base
 
   self.table_name = 'news_story'
   has_secretary
+
   ROUTE_KEY = "news_story"
-  
-  SOURCES = [
-    ['KPCC',                'kpcc'],
-    ['KPCC & wires',        'kpcc_plus_wire'],
-    ['AP',                  'ap'],
-    ['KPCC wire services',  'kpcc_wire'],
-    ['NPR',                 'npr'],
-    ['NPR & wire services', 'npr_wire'],
-    ['New America Media',   'new_america'],
-    ['NPR & KPCC',          'npr_kpcc']
+
+  PARTNERS = [
+    ['PIJ',                'pij'],
+    ['California Watch',   'calwatch'],
+    ['NBC 4 LA',           'nbcla']
   ]
   
   ASSET_SCHEMES = [
