@@ -81,6 +81,8 @@ class Api::ApiController < ApplicationController
   def sanitize_limit
     @limit = params[:limit] ? params[:limit].to_i : 10
   end
+
+  #---------------------------
   
   def sanitize_page
     @page = params[:page] ? params[:page].to_i : 1
