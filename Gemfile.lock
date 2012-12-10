@@ -6,9 +6,16 @@ GIT
       redis-activesupport (~> 3.2.2)
 
 GIT
+  remote: git://github.com/amatsuda/kaminari.git
+  revision: 150a57d734222d633aedcaaf687b31885530e95d
+  specs:
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
+GIT
   remote: git://github.com/nex3/sass.git
   revision: c962fa1b7d90fdb2e9df72ae2527a48f1f770276
-  branch: master
   specs:
     sass (3.3.0.alpha.0)
 
@@ -168,9 +175,6 @@ GEM
     json (1.7.5)
     jwt (0.1.5)
       multi_json (>= 1.0)
-    kaminari (0.14.1)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
     launchy (2.1.2)
       addressable (~> 2.3)
     libwebsocket (0.1.7.1)
@@ -365,7 +369,7 @@ DEPENDENCIES
   guard-rspec
   jasminerice
   jquery-rails
-  kaminari (~> 0.14)
+  kaminari!
   launchy
   mysql2
   newrelic_rpm
