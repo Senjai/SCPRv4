@@ -114,7 +114,7 @@ class scpr.Aggregator
                 # Listeners for @collection events triggered
                 # by Backbone
                 @collection.bind "add remove reorder", =>
-                    @setPositions()                    
+                    @setPositions()
                     $("#content_json").val(
                         JSON.stringify(@collection.simpleJSON()))
                     
@@ -467,7 +467,7 @@ class scpr.Aggregator
             renderCollection: ->
                 @resultsEl.empty()
                 
-                @collection.each (model) =>                    
+                @collection.each (model) =>
                     view = new scpr.Aggregator.Views.ContentMinimal
                         model: model
                     @resultsEl.append view.render()
@@ -636,7 +636,7 @@ class scpr.Aggregator
             tagName: 'li'
             
             #---------------------
-        
+            
             initialize: ->
                 # Add the model ID to the DOM
                 # We have to do this so that we can share content
