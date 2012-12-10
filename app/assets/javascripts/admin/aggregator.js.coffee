@@ -1,6 +1,7 @@
 #= require scprbase
 #= require underscore
 #= requre backbone
+#= require moment
 #= require admin/content_api
 #= require jquery-ui-1.9.2.custom.min.js
 
@@ -218,7 +219,7 @@ class scpr.Aggregator
                 , 50
 
                 @_stopEvent event
-                    
+                
             #---------------------
             # When an element is in the zone and not yet released
             # Get continuously and rapidly fired when hovering with
