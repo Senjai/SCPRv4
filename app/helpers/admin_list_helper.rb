@@ -84,6 +84,10 @@ module AdminListHelper
     content_tag :div, Audio::STATUS_TEXT[audio.first.try(:status)], class: audio_bootstrap_map[audio.first.try(:status)]
   end
   
+  def display_npr_link(link)
+    link_to "View at NPR", link
+  end
+  
   #-------------
   # Type helpers
   

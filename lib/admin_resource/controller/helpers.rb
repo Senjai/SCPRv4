@@ -13,6 +13,13 @@ module AdminResource
       end
 
       #------------------
+      # Adds to the flash[:notice] object, only if
+      # the request format is HTML.      
+      def notice(message)
+        flash[:notice] = message if request.format.html?
+      end
+      
+      #-----------------
       
       def resource_class
         @resource_class ||= AdminResource::Helpers::Naming.to_class(params[:controller])
