@@ -1,7 +1,7 @@
 <div id="article-related-content">
   <%= content_cache("related:#{content.obj_key}") do %>
     <% register_content content %>
-    <% if (rels = content.sorted_relations(content.frels.normal,content.brels.notiein)).present? %>
+    <% if (rels = content.sorted_relations(content.frels,content.brels)).present? %>
       <aside class="related-articles cbase">
         <div class="row-fluid">
           <div class="span6 row-title">

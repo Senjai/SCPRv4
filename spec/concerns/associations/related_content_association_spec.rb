@@ -13,14 +13,14 @@ describe Concern::Associations::RelatedContentAssociation do
   describe "#sorted_relations" do
     it "takes a list of frels and brels and returns an array of related records" do
       object = create :news_story, frel_count: 2, brel_count: 2
-      sorted_relations = object.sorted_relations(object.frels.normal, object.brels.normal)
+      sorted_relations = object.sorted_relations(object.frels, object.brels)
       sorted_relations.should include object.frels.first.content
       sorted_relations.should include object.brels.first.related
     end
     
     it "returns a blank array if there are no related objects" do
       object = create :news_story
-      object.sorted_relations(object.frels.normal, object.brels.notiein).should eq []
+      object.sorted_relations(object.frels, object.brels).should eq []
     end
   end
 end
