@@ -57,7 +57,7 @@ module AdminListHelper
   end
   
   def display_npr_link(link)
-    link_to "View at NPR", link
+    link_to "View at NPR", link, class: "btn btn-info"
   end
   
   #-------------
