@@ -1,12 +1,12 @@
 ##
-# CacheExpiration
+# CacheExpirationCallback
 #
 # Expires cache
 # Requires the methods defined in PublishingMethods
 #
 module Concern
   module Callbacks
-    module CacheExpiration
+    module CacheExpirationCallback
       extend ActiveSupport::Concern
       
       included do

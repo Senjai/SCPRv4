@@ -1,5 +1,5 @@
 ##
-# RedisPublish
+# RedisPublishCallback
 #
 # Sends message to Redis pub/sub
 # Requires the methods defined in PublishingMethods
@@ -8,7 +8,7 @@
 #
 module Concern
   module Callbacks
-    module RedisPublish
+    module RedisPublishCallback
       extend ActiveSupport::Concern
       
       included do
