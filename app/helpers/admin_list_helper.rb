@@ -3,8 +3,6 @@ module AdminListHelper
   # -- Used by index view -- #
   
   def render_attribute(column, record, options={})
-    options[:path] ||= url_for([:edit, :admin, record])
-    
     attrib         = record.send(column.attribute)
     display_helper = column.display
     
@@ -58,6 +56,10 @@ module AdminListHelper
     attrib
   end
   
+  def display_npr_link(link)
+    link_to "View at NPR", link
+  end
+  
   #-------------
   # Attribute Helpers
   
@@ -84,9 +86,6 @@ module AdminListHelper
     content_tag :div, Audio::STATUS_TEXT[audio.first.try(:status)], class: audio_bootstrap_map[audio.first.try(:status)]
   end
   
-  def display_npr_link(link)
-    link_to "View at NPR", link
-  end
   
   #-------------
   # Type helpers

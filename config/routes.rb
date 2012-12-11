@@ -220,8 +220,13 @@ Scprv4::Application.routes.draw do
       resources :content_shells
       resources :featured_comments
       resources :data_points
-      resources :npr_stories, only: [:index]
       ## -- END AdminResource --  ##
+
+      resources :npr_stories, only: [:index, :destroy] do
+        member do
+          put "import", as: :import
+        end
+      end
       
       get "/activity"                                        => "versions#activity",  as: :activity
       get "/:resources/:resource_id/history"                 => "versions#index",     as: :history

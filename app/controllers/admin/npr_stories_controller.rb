@@ -1,9 +1,9 @@
-class NprStoriesController < Admin::BaseController
+class Admin::NprStoriesController < Admin::BaseController
   include AdminResource::Controller::Helpers
   include AdminResource::Controller::Callbacks
 
-  before_filter :authorize_resource  
-  before_filter :get_record, only: [:destroy]
+  before_filter :authorize_resource
+  before_filter :get_record, only: [:import, :destroy]
   before_filter :get_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
 
@@ -12,6 +12,12 @@ class NprStoriesController < Admin::BaseController
   def index
     @list = resource_class.admin.list
     respond_with :admin, @records
+  end
+
+  #--------------
+  
+  def import
+    raise NotImplementedError
   end
   
   #--------------
