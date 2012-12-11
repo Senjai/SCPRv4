@@ -1,0 +1,4 @@
+<%= form_tag admin_search_path(resource: resource_class.route_key), method: :get, class: "form-search pull-left" do %>
+  <%= text_field_tag "query", params[:query], class: "search-query" %>
+  <%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
+<% end %>
