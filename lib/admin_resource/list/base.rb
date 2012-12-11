@@ -24,11 +24,10 @@ module AdminResource
       # So that pagination will not paginate
       def list_per_page(val)
         self.per_page = val
-        
       end
       
       def per_page=(val)
-        @per_page = val == :all ? nil : val.to_i
+        @per_page = (val == :all ? nil : val.to_i)
       end
       
       #---------------
