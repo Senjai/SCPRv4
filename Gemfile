@@ -42,6 +42,8 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.4"
 gem 'newrelic_rpm'
+#gem 'npr', github: "bricker88/npr"
+gem 'npr', path: "/Users/bricker/websites/kpcc/gems/npr"
 
 
 group :assets do
