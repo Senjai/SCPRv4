@@ -59,8 +59,8 @@ class NprStory < ActiveRecord::Base
     
     # Add in the primary asset if it exists
     if image = npr_story.primary_image
-      assethost_client = AssetHost::Client.new(auth_token: API_KEYS["assethost"]["token"])
-      assethost.create(
+      assethost = AssetHost::Client.new(auth_token: API_KEYS["assethost"]["token"])
+      asset = assethost.create(
         :hidden  => true,
         :url     => image.src,
         :title   => image.title,
@@ -68,6 +68,19 @@ class NprStory < ActiveRecord::Base
         :owner   => "#{image.producer}/#{image.provider['__content__']}",
         :note    => "Imported from NPR: #{npr_story.link.first['__content__']}"
       )
-    end    
+      
+      content_asset = ContentAsset.new(
+        :asset_order => 0,
+        :asset_id    => asset["id"],
+        :caption     => asset["caption"] || ""
+      )
+      
+      news_story.assets << content_asset
+    end
+    
+    # TODO Attach Audio?
+
+    news_story.save!
+    npr_story.destroy
   end
 end
