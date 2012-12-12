@@ -33,6 +33,7 @@ gem "ruby-mp3info", require: 'mp3info'
 ## HTTP
 gem "faraday", "~> 0.8"
 gem "faraday_middleware", "~> 0.8"
+gem "hashie", "~> 1.2.0"
 gem "feedzirra", github: "pauldix/feedzirra"
 
 

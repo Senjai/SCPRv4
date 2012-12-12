@@ -137,5 +137,5 @@ module AdminListHelper
       return args.first
     end
     super
-  end  
+  end
 end
