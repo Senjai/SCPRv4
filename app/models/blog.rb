@@ -14,7 +14,7 @@ class Blog < ActiveRecord::Base
   has_many :entries, order: 'published_at desc', class_name: "BlogEntry"
   has_many :tags, through: :entries
   belongs_to :missed_it_bucket
-  has_many :authors, through: :blog_authors, order: "position"
+  has_many :authors, through: :blog_authors
   has_many :blog_authors
   has_many :blog_categories
   
