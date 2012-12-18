@@ -6,6 +6,14 @@ GIT
       redis-activesupport (~> 3.2.2)
 
 GIT
+  remote: git://github.com/bricker/npr.git
+  revision: 08288f8aa6eaa364480ce8142d3451f5705b4b3e
+  specs:
+    npr (0.1.1)
+      faraday (>= 0.8.0)
+      faraday_middleware (>= 0.9.0)
+
+GIT
   remote: git://github.com/bricker88/kaminari.git
   revision: 873dcf9a90527307e8d9d1b6b90b442682ebe292
   specs:
@@ -204,9 +212,6 @@ GEM
       net-ssh (>= 1.99.1)
     newrelic_rpm (3.5.3.25)
     nokogiri (1.5.5)
-    npr (0.1.1)
-      faraday (>= 0.8.0)
-      faraday_middleware (>= 0.9.0)
     oauth2 (0.8.0)
       faraday (~> 0.8)
       httpauth (~> 0.1)
@@ -378,7 +383,7 @@ DEPENDENCIES
   launchy
   mysql2
   newrelic_rpm
-  npr
+  npr!
   oauth2 (~> 0.8)
   rails (~> 3.2)
   rb-fsevent (~> 0.9)

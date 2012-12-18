@@ -42,7 +42,7 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.4"
 gem 'newrelic_rpm'
-gem 'npr'
+gem 'npr', github: "bricker/npr"
 
 
 group :assets do
