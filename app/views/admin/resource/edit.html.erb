@@ -34,7 +34,6 @@
 <% content_for :footerjs do %>
   <script type="text/javascript">
     newsroom = new scpr.Newsroom(
-      '<%= j Rails.application.config.node.server %>', // server info
       "<%= j({ id: @record.obj_key, type: 'Active'}.to_json.html_safe) %>", // room info
       "<%= j admin_user.to_json.html_safe %>", // user info
       "<%= j @record.to_json.html_safe %>", // record info

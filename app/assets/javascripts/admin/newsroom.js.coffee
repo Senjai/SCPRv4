@@ -14,57 +14,51 @@ class scpr.Newsroom
         #-----------------
         # When there is an error reaching the Node server
         class @Offline extends scpr.Notification
-            constructor: ->
-                super $("*[id*='newsroom']"), "error", "Newsroom Alerts are currently offline."
+            constructor: (el) ->
+                super el, "error", "Newsroom Alerts are currently offline."
 
 
     #-----------------
     #-----------------
-    
+    # Job listener just listens for a message to a socket and redirects
     class @JobListener
-        constructor: (user) ->
+        constructor: (user) ->            
             @alerts  = 
-                offline: new Newsroom.Alert.Offline()
+                offline: new Newsroom.Alert.Offline($("#work_status"))
 
             # If io (sockets) isn't available, error and return
             # Otheriwse connect to Socket.io
             return @alerts['offline'].render() if !io?
-            @socket  = io.connect @server
+            @socket  = io.connect scpr.NODE
             
             $("#spinner").spin()
-                        
-            @socket.on 'finished-task', (data) ->
-                $("#work_status").html("Finished!");
-                $("#spinner").spin(false);
-
-                var location;
-                var queryStr = "?job="+data.job+"&errors="+data.errors+"&successes="+data.successes;
-                <% if params[:id] %>
-                  location = "<%= j admin_show_multi_american_resource_path(resource_name, params[:id]) %>"+queryStr;
-                <% else %>
-                  location = "<%= j admin_index_multi_american_resource_path(resource_name) %>"+queryStr;
-                <% end %>
-                window.location = location;
             
-        
+            @socket.on 'finished-task', (data) ->
+                $("#work_status").html("Finished!")
+                $("#spinner").spin(false)
+                
+                window.location = data.location
+
+    #-----------------
+
     DefaultOptions:
         badgeTemplate: JST["admin/templates/newsroom_badge"]
     
     #-----------------
 
-    constructor: (@server, @roomInfo, @user, @object, options) ->
+    constructor: (@roomInfo, @user, @object, options) ->
         @options = _.defaults options||{}, @DefaultOptions
         @el      = $ options.el
         @room    = JSON.parse(@roomInfo) # So we can use it here
         
         @alerts  = 
-            offline: new Newsroom.Alert.Offline()
+            offline: new Newsroom.Alert.Offline($("*[id*='newsroom']"))
             empty:   new Newsroom.Alert.Empty(@el)
 
         # If io (sockets) isn't available, error and return
         # Otheriwse connect to Socket.io
         return @alerts['offline'].render() if !io?
-        @socket  = io.connect @server
+        @socket  = io.connect scpr.NODE
 
         # Outgoing messages
         @socket.emit 'entered', @roomInfo, @user, @object

@@ -12,5 +12,6 @@
 
 <% content_for :footerjs do %>
   <script>
-    job_listener = new scpr.Newsroom.JobListener("<%= j admin_user.to_json.html_safe %>")
+    job_listener = new scpr.Newsroom.JobListener()
+  </script>
 <% end %>

@@ -139,7 +139,6 @@
 <% content_for :footerjs do %>
 <script type="text/javascript">
   newsroom = new scpr.Newsroom(
-    '<%= j Rails.application.config.node.server %>', // server info
     "<%= j({ id: 'dashboard', type: 'Inactive'}.to_json.html_safe) %>", // room info
     "<%= j admin_user.to_json.html_safe %>", // user info
     null, // No object for the dashboard

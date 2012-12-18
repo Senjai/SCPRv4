@@ -19,6 +19,7 @@ class Admin::NprStoriesController < Admin::BaseController
   def import
     story = NprStory.find(params[:id])
     story.async_import(admin_user.username)
+    render "import"
   end
   
   #--------------
