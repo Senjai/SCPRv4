@@ -2,7 +2,7 @@
 # Namespace for storing Resque jobs.
 #
 module Job
-  class JobBase
+  class Base
     extend LogsAsTask
     logs_as_task
     

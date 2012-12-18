@@ -21,6 +21,32 @@ class scpr.Newsroom
     #-----------------
     #-----------------
     
+    class @JobListener
+        constructor: (user) ->
+            @alerts  = 
+                offline: new Newsroom.Alert.Offline()
+
+            # If io (sockets) isn't available, error and return
+            # Otheriwse connect to Socket.io
+            return @alerts['offline'].render() if !io?
+            @socket  = io.connect @server
+            
+            $("#spinner").spin()
+                        
+            @socket.on 'finished-task', (data) ->
+                $("#work_status").html("Finished!");
+                $("#spinner").spin(false);
+
+                var location;
+                var queryStr = "?job="+data.job+"&errors="+data.errors+"&successes="+data.successes;
+                <% if params[:id] %>
+                  location = "<%= j admin_show_multi_american_resource_path(resource_name, params[:id]) %>"+queryStr;
+                <% else %>
+                  location = "<%= j admin_index_multi_american_resource_path(resource_name) %>"+queryStr;
+                <% end %>
+                window.location = location;
+            
+        
     DefaultOptions:
         badgeTemplate: JST["admin/templates/newsroom_badge"]
     
@@ -56,7 +82,7 @@ class scpr.Newsroom
         @socket.on 'removeUser', (user)          => @removeUser(user)
         @socket.on 'fieldFocus', (fieldId, user) => @fieldFocus(fieldId, user)
         @socket.on 'fieldBlur',  (fieldId, user) => @fieldBlur(fieldId, user)
-            
+        
 
     #-----------------
     # Load the list of users into the bucket

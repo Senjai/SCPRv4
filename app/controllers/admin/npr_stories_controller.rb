@@ -17,7 +17,8 @@ class Admin::NprStoriesController < Admin::BaseController
   #--------------
   
   def import
-    raise NotImplementedError
+    story = NprStory.find(params[:id])
+    story.async_import(admin_user.username)
   end
   
   #--------------
