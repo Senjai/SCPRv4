@@ -326,14 +326,6 @@ describe BlogsController do
           !e.published? 
         }.should be_blank
       end
-
-      it "paginates" do
-        entries = create_list :blog_entry, 15
-        @category.blog_entries.push entries
-      
-        get :category, blog: @blog.slug, category: @category.slug
-        assigns(:entries).size.should be < 15
-      end
     end
   end
   

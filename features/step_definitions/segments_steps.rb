@@ -7,10 +7,6 @@ Then /^I should see a list of that program's segments$/ do
   page.should have_css ".teaser", count: @program.segments.count
 end
 
-Then /^I should see a list of that episode's segments$/ do
-  page.should have_css ".teaser", count: ShowEpisode.last.segments.count
-end
-
 #### Assertions
 Then /^that section should not have the current segment listed$/ do
   page.find(@css_finder).should_not have_content @segment.headline

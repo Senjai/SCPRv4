@@ -9,20 +9,7 @@ Given /^(?:an )?events? with the following attributes?:$/ do |table|
   @event = events[rand(events.count)]
 end
 
-Given /^there (?:is|are) (\d+) events?$/ do |num|
-  @events = create_list :event, num.to_i, :published, ends_at: 1.year.from_now
-end
-
-
 #### Finders
-Then /^I should see (\d+) events?$/ do |num|
-  if num.to_i == 0
-    page.find("#main, #forum").should_not have_css ".event"
-  else
-    page.find("#main, #forum").should have_css ".event", count: num.to_i
-  end
-end
-
 Then /^I should see a list of (\d+) upcoming events$/ do |num|
   Event.upcoming.limit(num.to_i).each_with_index do |event|
     page.should have_content event.headline
