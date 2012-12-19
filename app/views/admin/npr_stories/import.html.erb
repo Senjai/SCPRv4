@@ -1,1 +1,3 @@
-<%= render "/admin/shared/working" %>
+<%= render "/admin/shared/working", 
+  room_info: { id: "#{@record.obj_key}:import", type: 'Inactive' },
+  record: @record %>

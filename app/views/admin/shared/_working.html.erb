@@ -12,6 +12,11 @@
 
 <% content_for :footerjs do %>
   <script>
-    job_listener = new scpr.Newsroom.JobListener()
+    newsroom = new scpr.Newsroom(
+      "<%= room_id %>", // room ID
+      "<%= j admin_user.to_json.html_safe %>", // user info
+      { record: "<%= j record.to_json.html_safe %>",
+        el: "#work_status" }
+    );
   </script>
 <% end %>

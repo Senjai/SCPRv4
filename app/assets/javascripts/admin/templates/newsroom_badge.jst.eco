@@ -1,12 +1,8 @@
 <li class="user-badge clearfix" id="user-<%=@user.id%>">
-  <div class="circle badge-mark" style="background-color:<%=@user.color%>"></div>
-  <% if @user.headshot?: %>
-    <img src="<%=@user.headshot %>" class="headshot" />
-  <% end %>
-  
+  <img src="<%=@user.headshot or '/assets/kpcc-twitter-logo.png' %>" class="headshot" />
   <h5><%= @user.name %></h5>
   
-  <% if @record? and @room.type isnt "Active": %>
+  <% if @record? %>
     <small class="muted">Currently editing <a href="<%=@record.edit_path%>"><%=@record.to_title%></a> (<%=@record.obj_key%>)</small>
   <% end %>  
 </li>
