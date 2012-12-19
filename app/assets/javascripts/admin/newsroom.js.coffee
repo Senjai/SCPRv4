@@ -14,49 +14,59 @@ class scpr.Newsroom
         #-----------------
         # When there is an error reaching the Node server
         class @Offline extends scpr.Notification
-            constructor: ->
-                super $("*[id*='newsroom']"), "error", "Newsroom Alerts are currently offline."
+            constructor: (el) ->
+                super el, "error", "Newsroom Alerts are currently offline."
 
 
     #-----------------
     #-----------------
-    
+    # Job listener just listens for a message to a socket and redirects
+    class @JobListener
+        constructor: (@user) ->
+            $("#spinner").spin()
+            
+            @alerts  = 
+                offline: new Newsroom.Alert.Offline($("#work_status"))
+
+            # If io (sockets) isn't available, error and return
+            # Otheriwse connect to Socket.io
+            return @alerts['offline'].render() if !io?
+            @socket  = io.connect scpr.NODE
+            @socket.emit 'task-waiting', @user
+            
+            @socket.on 'finished-task', (data) ->
+                $("#work_status").html("Finished!")
+                $("#spinner").spin(false)
+                window.location = data.location
+
+    #-----------------
+
     DefaultOptions:
         badgeTemplate: JST["admin/templates/newsroom_badge"]
     
     #-----------------
 
-    constructor: (@server, @roomInfo, @user, @object, options) ->
-        @options = _.defaults options||{}, @DefaultOptions
+    constructor: (@roomId, @userJson, options={}) ->
+        @options = _.defaults options, @DefaultOptions
         @el      = $ options.el
-        @room    = JSON.parse(@roomInfo) # So we can use it here
+        @record  = options.record
         
         @alerts  = 
-            offline: new Newsroom.Alert.Offline()
+            offline: new Newsroom.Alert.Offline($("*[id*='newsroom']"))
             empty:   new Newsroom.Alert.Empty(@el)
 
         # If io (sockets) isn't available, error and return
         # Otheriwse connect to Socket.io
         return @alerts['offline'].render() if !io?
-        @socket  = io.connect @server
+        @socket  = io.connect scpr.NODE
 
         # Outgoing messages
-        @socket.emit 'entered', @roomInfo, @user, @object
-        
-        $("input, textarea, select").on
-            focus: (event) =>
-                @socket.emit('fieldFocus', $(event.target).attr('id'))
-            blur: (event) =>
-                @socket.emit('fieldBlur', $(event.target).attr('id'))
-                
-        
+        @socket.emit 'entered', @roomId, @userJson, recordJson: @record
+
         # Incoming messages
-        @socket.on 'loadList',   (users)         => @loadList(users)
-        @socket.on 'newUser',    (user)          => @newUser(user)
-        @socket.on 'removeUser', (user)          => @removeUser(user)
-        @socket.on 'fieldFocus', (fieldId, user) => @fieldFocus(fieldId, user)
-        @socket.on 'fieldBlur',  (fieldId, user) => @fieldBlur(fieldId, user)
-            
+        @socket.on 'loadList',   (users) => @loadList(users)
+        @socket.on 'newUser',    (user)  => @newUser(user)
+        @socket.on 'removeUser', (user)  => @removeUser(user)
 
     #-----------------
     # Load the list of users into the bucket
@@ -79,25 +89,11 @@ class scpr.Newsroom
         $("#user-#{user.id}", @el).fadeOut 'fast', ->
             $(@).remove()
             _t.alerts['empty'].render() if _t._empty()
-
-
-    #-----------------
-    # Field highlighting
-    fieldFocus: (fieldId, user) ->
-        @_mark ?= $("<div/>", class: "circle badge-mark", style: "background-color: #{user.color}")
-        $("label[for='#{fieldId}']").prepend @_mark
-        $("#user-#{user.id}").addClass("highlighted")
-        
-    #-----------------
-    # Field de-highlighting
-    fieldBlur: (fieldId, user) ->
-        @_mark.detach()
-        $("#user-#{user.id}").removeClass("highlighted")
     
     #-----------------
     # Add a user to the bucket by rendering the template
     _addUser: (user) ->
-        badge = $ @options.badgeTemplate(user: user, record: user.record, room: @room)
+        badge = $@options.badgeTemplate(user: user, room: @room)
         badge.hide()
         @el.append badge
         badge.fadeIn('fast')

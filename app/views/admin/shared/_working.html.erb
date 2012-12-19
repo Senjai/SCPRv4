@@ -1,0 +1,22 @@
+<h2 id="work_status" style="text-align: center; height: 60px;">
+  Working...
+</h2>
+
+<div id="spinner"></div>
+
+<br /><hr />
+
+<h5 style="text-align: center;">
+  (You can leave this page if you want, or be redirected automatically.)
+</h5>
+
+<% content_for :footerjs do %>
+  <script>
+    newsroom = new scpr.Newsroom(
+      "<%= room_id %>", // room ID
+      "<%= j admin_user.to_json.html_safe %>", // user info
+      { record: "<%= j record.to_json.html_safe %>",
+        el: "#work_status" }
+    );
+  </script>
+<% end %>

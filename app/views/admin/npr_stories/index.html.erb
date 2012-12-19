@@ -17,7 +17,7 @@
       <% @records.each do |record| %>
         <tr class="<%= resource_class.singular_route_key.dasherize %>">
           <td>
-            <%= link_to "Import", import_admin_npr_story_path(record), class: "btn" %>
+            <%= link_to "Import", import_admin_npr_story_path(record), method: :post, class: "btn" %>
           </td>
           <td>
             <%= link_to "Skip", [:admin, record], method: :delete, class: "btn btn-danger", 

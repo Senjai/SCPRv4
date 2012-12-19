@@ -17,7 +17,8 @@ class Admin::NprStoriesController < Admin::BaseController
   #--------------
   
   def import
-    raise NotImplementedError
+    @record.async_import(admin_user.username)
+    render "import"
   end
   
   #--------------

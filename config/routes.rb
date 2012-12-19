@@ -224,7 +224,7 @@ Scprv4::Application.routes.draw do
 
       resources :npr_stories, only: [:index, :destroy] do
         member do
-          put "import", as: :import
+          post "import", as: :import
         end
       end
       

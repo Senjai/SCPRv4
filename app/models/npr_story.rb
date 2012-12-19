@@ -43,44 +43,63 @@ class NprStory < ActiveRecord::Base
       @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")
     end
   end
-  
+
   #---------------
   
+  def async_import(username)
+    Resque.enqueue(Job::NprImport, self.id, username)
+  end
+  
+  #---------------
+  # Import this NPR Story.
+  #
+  # Builds the news story, adds bylines, and adds assets.
   def import
-    npr_story = NPR::Story.find(self.npr_id)
+    npr_story = NPR::Story.find_by_id(self.npr_id)
+    return false if !npr_story
     
     news_story = NewsStory.new(
+      :news_agency    => "NPR",
+      :source         => "npr",
       :headline       => npr_story.title,
       :teaser         => npr_story.teaser,
       :short_headline => npr_story.shortTitle,
-      :slug           => npr_story.slug,
-      :published_at   => npr_story.pubDate
+      :published_at   => npr_story.pubDate,
+      :body           => npr_story.fullText
     )
+    
+    # Add in Bylines
+    npr_story.bylines.each do |npr_byline|
+      byline = ContentByline.new(name: npr_byline.name)
+      news_story.bylines.push byline
+    end
+    
     
     # Add in the primary asset if it exists
     if image = npr_story.primary_image
       assethost = AssetHost::Client.new(auth_token: API_KEYS["assethost"]["token"])
+      
       asset = assethost.create(
         :hidden  => true,
         :url     => image.src,
         :title   => image.title,
         :caption => image.caption,
-        :owner   => "#{image.producer}/#{image.provider['__content__']}",
-        :note    => "Imported from NPR: #{npr_story.link.first['__content__']}"
+        :owner   => "#{image.producer}/#{image.provider}",
+        :note    => "Imported from NPR: #{npr_story.link_for('html')}"
       )
       
-      content_asset = ContentAsset.new(
-        :asset_order => 0,
-        :asset_id    => asset["id"],
-        :caption     => asset["caption"] || ""
-      )
-      
-      news_story.assets << content_asset
+      if asset["id"]
+        content_asset = ContentAsset.new(
+          :asset_order => 0,
+          :asset_id    => asset["id"],
+          :caption     => asset["caption"] || ""
+        )
+        
+        news_story.assets << content_asset
+      end
     end
     
-    # TODO Attach Audio?
-
     news_story.save!
-    npr_story.destroy
+    npr_story.update_attribute(:new, false)
   end
 end

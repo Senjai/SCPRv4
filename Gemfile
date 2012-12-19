@@ -16,7 +16,7 @@ gem "resque", "~> 1.20"
 
 
 ## Views
-gem 'kaminari', github: "bricker88/kaminari"
+gem 'kaminari', github: "bricker/kaminari"
 gem 'tinymce-rails', "~> 3.5"
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
@@ -42,8 +42,7 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.4"
 gem 'newrelic_rpm'
-#gem 'npr', github: "bricker88/npr"
-gem 'npr', path: "/Users/bricker/websites/kpcc/gems/npr"
+gem 'npr', github: "bricker/npr"
 
 
 group :assets do
