@@ -124,7 +124,7 @@ module ApplicationHelper
   def render_byline(content, links=true)
     return "KPCC" if !content.respond_to?(:bylines)
     
-    elements = content.joined_bylines(:primary, :secondary, :extra) do |bylines|
+    elements = content.joined_bylines do |bylines|
       link_bylines(bylines, links)
     end
 
@@ -134,12 +134,12 @@ module ApplicationHelper
   #---------------------------
   
   def render_contributing_byline(content,links=true)
-    elements = content.joined_bylines(:contributing) do |bylines|
+    elements = content.joined_bylines do |bylines|
       link_bylines(bylines, links)
     end
     
-    if elements.present?
-      "With contributions by #{elements.to_sentence}".html_safe
+    if elements[:contributing].present?
+      "With contributions by #{elements[:contributing]}".html_safe
     else
       ""
     end

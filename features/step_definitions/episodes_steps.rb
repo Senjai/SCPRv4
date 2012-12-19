@@ -1,12 +1,4 @@
 #### Setup
-Given /^(?:an )?episodes? with the following attributes?:$/ do |table|
-  @episodes = []
-  table.hashes.each do |attributes|
-    @episodes << create(:show_episode, attributes)
-  end
-  @episode = @episodes[rand(table.hashes.count)]
-end
-
 
 #### Finders
 Then /^I should see a list of older episodes below the current episode$/ do
@@ -51,12 +43,6 @@ end
 
 
 #### Routing
-When /^I go to (?:the|an|that) episode's page$/ do
-  episode = ShowEpisode.last
-  visit episode.link_path
-  current_path.should eq episode.link_path
-end
-
 Then /^I should be on (?:the|that) episode's page$/ do
   current_path.should eq @episode.link_path
 end

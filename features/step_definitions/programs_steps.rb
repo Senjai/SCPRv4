@@ -5,10 +5,6 @@ Given /^there (?:is|are) (\d+) (kpcc|other) programs?$/ do |num, program_type|
   @program = @programs[rand(num.to_i)]
 end
 
-Given /^a program titled "([^"]*)" with slug "([^"]*)"$/ do |title, slug|
-  @program = create :kpcc_program, title: title, slug: slug
-end
-
 Given /^(?:an? )?(kpcc|other) programs? with the following attributes?:$/ do |program_type, table|
   factory = "#{program_type}_program"
   klass = factory.camelize.constantize
@@ -25,19 +21,9 @@ Then /^I should see the program's information$/ do
   find("h1.page-title").should have_content @program.title
 end
 
-Then /^I should see a headshot of the program's host$/ do
-  page.should have_xpath("//div[contains(@class, '#{@program.slug}')]")
-end
-
 Then /^I should not see any programs$/ do
   page.should_not have_css ".programs-list"
   page.should_not have_css "#featured-programs .headshot"
-end
-
-Then /^I should see the featured programs in the correct order$/ do
-  KpccProgram.all.each do |program|
-    page.find("#featured-programs li.#{program.slug}").should have_content program.title
-  end
 end
 
 

@@ -16,7 +16,7 @@ gem "resque", "~> 1.20"
 
 
 ## Views
-gem 'kaminari', github: "bricker88/kaminari"
+gem 'kaminari', github: "bricker/kaminari"
 gem 'tinymce-rails', "~> 3.5"
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"

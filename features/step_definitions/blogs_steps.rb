@@ -1,10 +1,4 @@
 #### Blog Creation
-Given /^(\d+) blogs?$/ do |num|
-  @blogs = create_list :blog, num.to_i
-  @blog = @blogs[rand(@blogs.size)]
-  @blogs.count.should eq Blog.all.count
-end
-
 Given /^(?:a )?blogs? with the following attributes?:$/ do |table|
   @blogs = []
   table.hashes.each do |attributes|
