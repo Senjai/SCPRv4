@@ -1,11 +1,3 @@
-#### Setup
-Given /^(?:a? )?blog entr(?:ies|y) with the following attributes?:$/ do |table|
-  table.hashes.each do |attributes|
-    create(:blog_entry, Rack::Utils.parse_nested_query(attributes.to_query))
-  end
-  @blog_entry =  BlogEntry.all[rand(BlogEntry.count.to_i)]
-end
-
 
 #### Finders
 Then /^I should see the latest entry for that blog$/ do
