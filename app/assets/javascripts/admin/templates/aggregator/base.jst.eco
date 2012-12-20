@@ -5,41 +5,41 @@
 
   <div class="span4">
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li class="<%= 'active' if @active is 'recent' %>">
         <a href="#aggregator-recent-content" data-toggle="tab">Recent</a>
       </li>
   
-      <li>
+      <li class="<%= 'active' if @active is 'search' %>">
         <a href="#aggregator-search" data-toggle="tab">Search</a>
       </li>
       
-      <li>
+      <li class"<%= 'active' if @active is 'url' %>">
         <a href="#aggregator-url" data-toggle="tab">URL</a>
       </li>
       
-      <li>
+      <li class="<%= 'active' if @active is 'help' %>">
         <a href="#aggregator-help" data-toggle="tab">Help</a>
       </li>
     </ul>
 
     <div class="tab-content">
       <!-- Recent Content Tab -->
-      <div class="tab-pane active" id="aggregator-recent-content">
+      <div class="tab-pane<%= ' active' if @active is 'recent' %>" id="aggregator-recent-content">
         Loading Recent Content...
       </div>
   
       <!-- Search Tab -->
-      <div class="tab-pane" id="aggregator-search">
+      <div class="tab-pane<%= ' active' if @active is 'search' %>" id="aggregator-search">
         Loading Search...
       </div>
 
       <!-- URL Import Tab -->
-      <div class="tab-pane" id="aggregator-url">
+      <div class="tab-pane<%= ' active' if @active is 'url' %>" id="aggregator-url">
         Loading URL Import...
       </div>
       
       <!-- Help Tab -->
-      <div class="tab-pane" id="aggregator-help">
+      <div class="tab-pane<%= ' active' if @active is 'help' %>" id="aggregator-help">
         <ul>
           <li>The gray area on the left is referred to as the "<strong>Drop Zone</strong>" in this document.</li>
           <hr />
