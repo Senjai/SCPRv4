@@ -1,7 +1,3 @@
-<%= form_block "Details" do %>
-  <%= f.input :title %>
-<% end %>
-
 <%= form_block "Content" do %>
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
@@ -10,7 +6,7 @@
 <% content_for :footerjs do %>
   <script>
     aggregator = new scpr.Aggregator("#aggregator", 
-      <%= raw record.contents.includes(:content).map(&:content).to_json %>, 
-      <%= raw({ active: 'search' }.to_json) %>);
+      <%= raw record.content.includes(:content).map(&:content).to_json %>, 
+      <%= raw options.to_json %>);
   </script>
 <% end %>

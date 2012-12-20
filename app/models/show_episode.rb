@@ -86,6 +86,15 @@ class ShowEpisode < ActiveRecord::Base
   
   #----------
   
+  def json
+    super.merge({
+      :teaser         => self.teaser,
+      :short_headline => self.headline
+    })
+  end
+  
+  #----------
+  
   def route_hash
     return {} if !self.published? || !self.persisted?
     {

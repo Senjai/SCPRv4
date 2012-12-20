@@ -4,14 +4,4 @@
 <% end %>
 
 <%= f.section "publishing" %>
-
-<%= form_block "Content" do %>
-  <div id="aggregator" class="aggregator"></div>
-  <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
-<% end %>
-
-<% content_for :footerjs do %>
-  <script>
-    aggregator = new scpr.Aggregator("#aggregator", <%= raw record.content.includes(:content).map(&:content).to_json %>);
-  </script>
-<% end %>
+<%= f.section "content" %>

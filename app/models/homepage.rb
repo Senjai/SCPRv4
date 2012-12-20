@@ -1,6 +1,7 @@
 class Homepage < ActiveRecord::Base
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
@@ -29,12 +30,7 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  # #content_json is a way to pass in a string representation
-  # of a javascript object to the model, which will then be
-  # parsed and turned into HomepageContent objects in the 
-  # #parse_content_json method.
-  attr_accessor :content_json  
-  before_save :parse_content_json
+
   
   #-------------------
   # Administration
@@ -134,24 +130,11 @@ class Homepage < ActiveRecord::Base
     }
   end
   
-  
-    
-  #-------------------
-
-  def parse_content_json
-    # If content_json is blank, then that means we
-    # didn't make any updates. Return and move on.
-    return if self.content_json.blank?
-    @_loaded_content = []
-    
-    Array(JSON.load(self.content_json)).each do |content_hash|
-      if content = ContentBase.obj_by_key(content_hash["id"])
-        homepage = HomepageContent.new(position: content_hash["position"], content: content)
-        @_loaded_content.push homepage
-      end
-    end
-    
-    self.content = @_loaded_content
-    true
+  #-------------------------
+  # These are temporary methods to get around the 
+  # discrepancy between content model field names and classes.
+  # It will go away once all the content association is in one table.
+  def build_content_association(content_hash, content)
+    HomepageContent.new(position: content_hash["position"], content: content)
   end
 end
