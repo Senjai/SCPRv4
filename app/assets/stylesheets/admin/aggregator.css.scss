@@ -41,8 +41,8 @@
       }
       
       // Removing content from drop zone
-      &.removing {
-        border-color: #f00;
+      &.removing .content-full{
+        @include opacity(30);
       }
       
       img {

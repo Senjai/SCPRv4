@@ -1,10 +1,12 @@
-<a href="<%= @content.link_path %>">
-  <%- @content.asset %><%= @content.short_headline %>
-</a> <small>(<strong><%=@content.short_headline?.length %></strong>)</small>
+<div class="content-full">
+  <a href="<%= @content.link_path %>">
+    <%- @content.asset %><%= @content.short_headline %>
+  </a> <small>(<strong><%=@content.short_headline?.length %></strong>)</small>
 
-<div style="font-size:11px">
-  <strong><%= @content.byline %></strong> - <%= moment(@content.published_at).format("YYYY-MM-DD, h:mma") %><br />
-  <%= @content.teaser %> (<strong><%= @content.teaser?.length %></strong>)<br />
+  <div style="font-size:11px">
+    <strong><%= @content.byline %></strong> - <%= moment(@content.published_at).format("YYYY-MM-DD, h:mma") %><br />
+    <%= @content.teaser %> (<strong><%= @content.teaser?.length %></strong>)<br />
 
-  (<a href="<%=@content.edit_path%>"><%= @content.obj_key%></a>)
+    (<a href="<%=@content.edit_path%>"><%= @content.obj_key%></a>)
+  </div>
 </div>

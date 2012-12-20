@@ -1,5 +1,7 @@
-<a href="<%= @content.link_path %>">
-  <%- @content.asset %><%= @content.headline %>
-</a>
+<div class="content-small">
+  <a href="<%= @content.link_path %>">
+    <%- @content.asset %><%= @content.headline %>
+  </a>
 
-<small>(<%= @content.obj_key%>)</small>
+  <small>(<%= @content.obj_key%>)</small>
+</div>
