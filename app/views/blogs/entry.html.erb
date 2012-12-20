@@ -2,7 +2,7 @@
 <% page_title [@blog.name, @entry.headline], " : " %>
 <% @OG_TYPE = "blog" %>
 
-<%= cache ["show", "v3", @entry] do %>
+<%= cache ["show", "v4", @entry] do %>
   <%= render "/blogs/entry", entry: @entry, blog: @blog %>
 <% end %>
 

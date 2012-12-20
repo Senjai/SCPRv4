@@ -32,16 +32,3 @@ Scenario: Redirect
   
   When I go to that flatpage's url
   Then I should be redirected to the redirect url
-
-Scenario: Flatpage paths overwrite most others
-  Given a category with the following attributes:
-   | title | is_news | slug |
-   | Foodxx | 0     | food |
-
-  And a flatpage with the following attributes:
-   | url     | title    | content      |
-   | /food/  | YumYums  | Hello, World |
-
-  When I go to the flatpage's url
-  Then I should see "Hello, World"
-  And I should not see "Foodxx"

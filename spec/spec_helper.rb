@@ -54,7 +54,6 @@ RSpec.configure do |config|
     FakeWeb.clean_registry
     FakeWeb.load_callback
     DatabaseCleaner.start
-    ActionMailer::Base.deliveries.clear
   end
     
   config.after do

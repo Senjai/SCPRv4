@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130235629) do
+ActiveRecord::Schema.define(:version => 20121211185222) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -877,8 +877,10 @@ ActiveRecord::Schema.define(:version => 20121130235629) do
     t.integer  "status"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
+    t.integer  "category_id"
   end
 
+  add_index "shows_episode", ["category_id"], :name => "shows_episode_42dc49bc"
   add_index "shows_episode", ["show_id"], :name => "shows_episode_show_id"
   add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
 

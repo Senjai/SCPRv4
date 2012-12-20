@@ -10,7 +10,7 @@ describe Concern::Associations::BylinesAssociation do
   #--------------------
   
   describe "#byline" do
-    let(:elements) { ["Bryan and John", "Danny", "Cindy"] }
+    let(:elements) { { primary: "Bryan and John", secondary: "Danny", extra: "Cindy"} }
     
     before :each do
       subject.stub(:joined_bylines) { elements }
@@ -71,38 +71,39 @@ describe Concern::Associations::BylinesAssociation do
     end
     
     context "without block" do
-      it "joins each role into a string and returns an array of those strings" do
-        @record.joined_bylines(:primary).should eq ["Bryan"]
-        @record.joined_bylines(:secondary).should eq ["Danny"]
-        @record.joined_bylines(:contributing).should eq ["Whitney"]
-        @record.joined_bylines(:extra).should eq ["KPCC"]
-        @record.joined_bylines(:primary, :secondary, :contributing, :extra).should eq ["Bryan", "Danny", "Whitney", "KPCC"]
-      end
-      
       it "Turns it into a sentence if there are multiple bylines" do
-        create :byline, role: ContentByline::ROLE_PRIMARY, name: "John", content: @record
         @record.stub(:byline_extras) { ["KPCC", "SCPR"] }
+        create :byline, role: ContentByline::ROLE_PRIMARY, name: "John", content: @record
         
-        bylines = @record.joined_bylines(:primary, :secondary, :contributing, :extra)
-        bylines.should eq ["Bryan and John", "Danny", "Whitney", "KPCC | SCPR"]
+        @record.joined_bylines.should eq Hash[
+          primary: "Bryan and John", 
+          secondary: "Danny", 
+          contributing: "Whitney", 
+          extra: "KPCC | SCPR"
+        ]
       end
     end
     
     context "with block" do
       it "sends primary, seconday, and contributing to the block" do
-        elements = @record.joined_bylines(:primary, :secondary, :contributing) do |bylines|
+        elements = @record.joined_bylines do |bylines|
           bylines.map { |b| b.name << " Ricker" }
         end
         
-        elements.should eq ["Bryan Ricker", "Danny Ricker", "Whitney Ricker"]
+        elements.should eq Hash[
+          primary: "Bryan Ricker", 
+          secondary: "Danny Ricker", 
+          contributing: "Whitney Ricker",
+          extra: "KPCC"
+        ]
       end
       
       it "doesn't pass extra to the block" do
-        elements = @record.joined_bylines(:extra) do |bylines|
+        elements = @record.joined_bylines do |bylines|
           bylines.map { |b| b.name << " Ricker" }
         end
         
-        elements.should eq ["KPCC"]
+        elements[:extra].should eq "KPCC"
       end
     end
   end
