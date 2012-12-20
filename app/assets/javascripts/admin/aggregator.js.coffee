@@ -21,12 +21,12 @@
 #   from the recent content, or dropping in a URL.
 #
 class scpr.Aggregator
-    
+
     #---------------------
     
-    constructor: (el, @contentJson) ->
+    constructor: (el, @contentJson, options={}) ->
         @el = $(el)
-        @baseView = new scpr.Aggregator.Views.Base
+        @baseView = new scpr.Aggregator.Views.Base _.extend options,
             el: @el
             collection: new scpr.ContentAPI.ContentCollection(@contentJson)
             
@@ -41,10 +41,14 @@ class scpr.Aggregator
         # The skeleton for the the different pieces!
         class @Base extends Backbone.View
             template: JST['admin/templates/aggregator/base']
-        
+            defaults:
+                active: "recent"
+                
             #---------------------
         
             initialize: ->
+                @options = _.defaults @options, @defaults
+                
                 # @foundCollection is the collection for all the content 
                 # in the RIGHT panel.
                 @foundCollection = new scpr.ContentAPI.ContentCollection()
@@ -65,7 +69,7 @@ class scpr.Aggregator
             
             render: ->
                 # Build the skeleton. We'll fill everything in next.
-                @$el.html @template
+                @$el.html @template(active: @options.active)
                             
                 # Build each of the tabs
                 @recentContent = new scpr.Aggregator.Views.RecentContent(base: @)
@@ -299,7 +303,7 @@ class scpr.Aggregator
                 # and add it to the DropZone
                 # collection
                 model = @base.foundCollection.get id
-                
+                console.log model
                 # If the model is already in @collection, then
                 # let the user know and do not import it
                 # Otherwise, set the position and add it to the collection
