@@ -11,13 +11,14 @@
 module ActionView
   module Helpers
     class FormBuilder
-      def section(partial, &block)
+      def section(partial, options={}, &block)
         @template.render( 
           :partial => "/admin/shared/sections/#{partial}", 
           :locals  => {
-            :f      => self,
-            :record => self.object, 
-            :extra  => block_given? ? @template.capture(&block) : ""
+            :f       => self,
+            :record  => self.object, 
+            :options => options,
+            :extra   => block_given? ? @template.capture(&block) : ""
           })
       end
     end
