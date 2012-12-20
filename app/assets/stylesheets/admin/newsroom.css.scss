@@ -1,6 +1,31 @@
 // Styles related to Newsroom.js functionality
 
+ul.small {
+  font-weight: normal;
+  font-size: 11px;
+  li { 
+    line-height: 12px; 
+  }
+}
+
+.viewers > ul {
+    margin-left: 0;
+    list-style: none;
+    li { 
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+}
+
 .user-badge {
+    vertical-align: top;
+    padding: 5px;
+    @include border-radius(5px);
+    
+    img {
+        padding: 5px;
+    }
+  
     position: relative;
     border: 1px solid $grayLight;
     padding-right: 30px; // make room for the badge
@@ -24,7 +49,9 @@
     }
 }
 
-.affix .user-badge .headshot { display: none; }
+.affix .user-badge {
+  .headshot, .editing { display: none; }
+}
 
 .circle {
     @include border-radius(20px);

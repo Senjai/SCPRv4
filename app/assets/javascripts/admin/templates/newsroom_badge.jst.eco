@@ -1,8 +1,0 @@
-<li class="user-badge clearfix" id="user-<%=@user.id%>">
-  <img src="<%=@user.headshot or '/assets/kpcc-twitter-logo.png' %>" class="headshot" />
-  <h5><%= @user.name %></h5>
-  
-  <% if @record? %>
-    <small class="muted">Currently editing <a href="<%=@record.edit_path%>"><%=@record.to_title%></a> (<%=@record.obj_key%>)</small>
-  <% end %>  
-</li>

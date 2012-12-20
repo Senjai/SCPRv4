@@ -2,6 +2,9 @@
 
 # Communicate with the Newsroom.js Node server
 class scpr.Newsroom
+    @templates =
+        badge: JST["admin/templates/badge"]
+    
     #-----------------
     # Alerts/Errors
     class @Alert
@@ -39,15 +42,10 @@ class scpr.Newsroom
                 $("#spinner").spin(false)
                 window.location = data.location
 
-    #-----------------
-
-    DefaultOptions:
-        badgeTemplate: JST["admin/templates/newsroom_badge"]
     
     #-----------------
-
+    
     constructor: (@roomId, @userJson, options={}) ->
-        @options = _.defaults options, @DefaultOptions
         @el      = $ options.el
         @record  = options.record
         
@@ -59,46 +57,24 @@ class scpr.Newsroom
         # Otheriwse connect to Socket.io
         return @alerts['offline'].render() if !io?
         @socket  = io.connect scpr.NODE
-
+        
         # Outgoing messages
         @socket.emit 'entered', @roomId, @userJson, recordJson: @record
 
         # Incoming messages
-        @socket.on 'loadList',   (users) => @loadList(users)
-        @socket.on 'newUser',    (user)  => @newUser(user)
-        @socket.on 'removeUser', (user)  => @removeUser(user)
+        @socket.on 'loadList', (users) => @loadList(users)
 
     #-----------------
     # Load the list of users into the bucket
     # If the list is empty, notify the user
-    loadList: (users) ->
-        @_addUser user for user in users
-        @alerts['empty'].render() if @_empty()
-        
-    #-----------------
-    # Add a user to the list
-    # Show/hide `Empty` notification as necessary
-    newUser: (user) ->
-        @_addUser user
-        @alerts['empty'].detach() if @alerts['empty'].isVisible()
+    loadList: (users) ->        
+        return @alerts['empty'].render() if _.isEmpty users
 
-    #-----------------
-    # Remove a user from the list
-    removeUser: (user) ->
-        _t = @
-        $("#user-#{user.id}", @el).fadeOut 'fast', ->
-            $(@).remove()
-            _t.alerts['empty'].render() if _t._empty()
-    
-    #-----------------
-    # Add a user to the bucket by rendering the template
-    _addUser: (user) ->
-        badge = $@options.badgeTemplate(user: user, room: @room)
-        badge.hide()
-        @el.append badge
-        badge.fadeIn('fast')
+        ul = $("<ul/>")
+                        
+        for id, user of users
+            badge = $ scpr.Newsroom.templates.badge(user: user)
+            ul.append badge
+                
+        @el.html ul
 
-    #-----------------
-    # Check if @el is empty
-    _empty: ->
-        !@el.html().trim()
