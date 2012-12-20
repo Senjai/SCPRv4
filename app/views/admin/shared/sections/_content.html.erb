@@ -5,8 +5,9 @@
 
 <% content_for :footerjs do %>
   <script>
-    aggregator = new scpr.Aggregator("#aggregator", 
-      <%= raw record.content.includes(:content).map(&:content).to_json %>, 
-      <%= raw options.to_json %>);
+    aggregator = new scpr.Aggregator(
+      "#aggregator", 
+      <%= j record.content.includes(:content).map(&:content).to_json.html_safe %>, 
+      <%= j options.to_json.html_safe %>);
   </script>
 <% end %>

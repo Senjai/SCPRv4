@@ -24,11 +24,11 @@ class scpr.Aggregator
 
     #---------------------
     
-    constructor: (el, @contentJson, options={}) ->
+    constructor: (el, json, options={}) ->
         @el = $(el)
         @baseView = new scpr.Aggregator.Views.Base _.extend options,
             el: @el
-            collection: new scpr.ContentAPI.ContentCollection(@contentJson)
+            collection: new scpr.ContentAPI.ContentCollection(json)
             
         @baseView.render()
         
@@ -49,7 +49,7 @@ class scpr.Aggregator
             initialize: ->
                 @options = _.defaults @options, @defaults
                 
-                # @foundCollection is the collection for all the content 
+                # @foundCollection is the collection for all the content
                 # in the RIGHT panel.
                 @foundCollection = new scpr.ContentAPI.ContentCollection()
         
