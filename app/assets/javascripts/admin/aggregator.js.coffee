@@ -112,7 +112,7 @@ class scpr.Aggregator
                 @$el.on "dragenter", (event)  => @_dragEnter(event)
                 @$el.on "dragleave", (event)  => @_dragLeave(event)
                 @$el.on "dragover", (event)   => @_dragOver(event)
-                @$el.on "drop", (event)       => console.log event; @importUrl(event)
+                @$el.on "drop", (event)       => @importUrl(event)
 
 
                 # Listeners for @collection events triggered
@@ -303,7 +303,6 @@ class scpr.Aggregator
                 # and add it to the DropZone
                 # collection
                 model = @base.foundCollection.get id
-                console.log model
                 # If the model is already in @collection, then
                 # let the user know and do not import it
                 # Otherwise, set the position and add it to the collection
