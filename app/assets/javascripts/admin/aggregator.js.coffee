@@ -1,6 +1,7 @@
 #= require scprbase
 #= require underscore
 #= requre backbone
+#= require moment
 #= require admin/content_api
 #= require jquery-ui-1.9.2.custom.min.js
 
@@ -113,7 +114,7 @@ class scpr.Aggregator
                 # Listeners for @collection events triggered
                 # by Backbone
                 @collection.bind "add remove reorder", =>
-                    @setPositions()                    
+                    @setPositions()
                     $("#content_json").val(
                         JSON.stringify(@collection.simpleJSON()))
                     
@@ -220,7 +221,7 @@ class scpr.Aggregator
                 , 50
 
                 @_stopEvent event
-                    
+                
             #---------------------
             # When an element is in the zone and not yet released
             # Get continuously and rapidly fired when hovering with
@@ -466,7 +467,7 @@ class scpr.Aggregator
             renderCollection: ->
                 @resultsEl.empty()
                 
-                @collection.each (model) =>                    
+                @collection.each (model) =>
                     view = new scpr.Aggregator.Views.ContentMinimal
                         model: model
                     @resultsEl.append view.render()
@@ -635,7 +636,7 @@ class scpr.Aggregator
             tagName: 'li'
             
             #---------------------
-        
+            
             initialize: ->
                 # Add the model ID to the DOM
                 # We have to do this so that we can share content
