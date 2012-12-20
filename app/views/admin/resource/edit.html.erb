@@ -35,9 +35,9 @@
   <script type="text/javascript">
     newsroom = new scpr.Newsroom(
       "<%= @record.obj_key %>", // room ID
-      "<%= j admin_user.to_json.html_safe %>", // user info
-      { record: "<%= j @record.to_json.html_safe %>",
-        el: "#newsroom-edit_user-list" }
+      <%= j admin_user.to_json.html_safe %>, // user info
+      { "record": <%= j @record.to_json.html_safe %>,
+        "el": "#newsroom-edit_user-list" }
     );
   </script>
   
