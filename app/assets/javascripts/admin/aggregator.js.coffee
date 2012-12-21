@@ -104,6 +104,7 @@ class scpr.Aggregator
                 @container = $(@container)
                 @container.html @template
                 @container.append @$el
+                @helper = $("<h1 />").html("Drop Content Here")
                 
                 @render()
                 
@@ -113,11 +114,12 @@ class scpr.Aggregator
                 @$el.on "dragleave", (event)  => @_dragLeave(event)
                 @$el.on "dragover", (event)   => @_dragOver(event)
                 @$el.on "drop", (event)       => @importUrl(event)
-
-
+                
+                
                 # Listeners for @collection events triggered
                 # by Backbone
                 @collection.bind "add remove reorder", =>
+                    @checkDropZone()
                     @setPositions()
                     $("#content_json").val(
                         JSON.stringify(@collection.simpleJSON()))
@@ -339,11 +341,29 @@ class scpr.Aggregator
                     model.set "position", el.index()
                 
             #---------------------
-
+            
+            checkDropZone: ->
+                if @collection.isEmpty()
+                    @_enableDropZoneHelper()
+                else
+                    @_disableDropZoneHelper()
+                    
+            _enableDropZoneHelper: ->
+                @$el.addClass('empty')
+                @$el.append @helper
+            
+            _disableDropZoneHelper: ->
+                @$el.removeClass('empty')
+                @helper.detach()
+                
+            #---------------------
+            
             render: ->
                 @$el.empty()
+                @checkDropZone()
+
                 # For each model, create a new model view and append it
-                # to the el
+                # to the el                
                 @collection.each (model) =>
                     view = new scpr.Aggregator.Views.ContentFull
                         model: model

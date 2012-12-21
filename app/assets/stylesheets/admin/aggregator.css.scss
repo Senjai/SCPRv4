@@ -15,6 +15,16 @@
     max-width: 250px;
   }
 
+  .drop-zone.empty {
+    position: relative;
+    color: $grayLight;
+    h1 { 
+      position: absolute;
+      top: 60px;
+      left: 50px;
+    }
+  }
+  
   .drop-zone, .content-list {
     min-height: 200px;
     @extend .unstyled;
