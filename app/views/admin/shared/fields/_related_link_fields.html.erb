@@ -4,6 +4,6 @@
     <td><%= nf.input :title, label: false, input_html: { class: "span3" } %></td>
     <td><%= nf.input :link, label: false, input_html: { class: "span3" } %></td>
     <td><%= nf.input :link_type, label: false, input_html: { class: "span2" }, collection: Link::TYPES, selected: record.link_type || Link::TYPES[0] %></td>
-    <td><%= nf.input :_destroy, as: :boolean, label: false %></td>
+    <td><%= nf.input :_destroy, as: :boolean, label: false, input_html: { class: "span1" } %></td>
   <% end %>
 </tr>

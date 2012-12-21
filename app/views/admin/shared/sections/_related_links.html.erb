@@ -11,16 +11,18 @@
       </tr>
     </thead>
     
-    <tbody>
-      <% record.related_links.each do |related_link| %>
-        <%= f.render_fields "related_link", for: related_link %>
-      <% end %>
-    
+    <tfoot>
       <tr>
         <td colspan="10">
-          <%= f.link_to_add_fields(:related_links, name: "Add another Related Link") %>
+          <%= f.link_to_add_fields(:related_links, title: "Add another Related Link", build_target: "#related-links-fields") %>
         </td>
       </tr>
+    </tfoot>
+    
+    <tbody id="related-links-fields">
+      <% record.related_links.each do |related_link| %>
+        <%= f.render_fields "related_link", record: related_link %>
+      <% end %>
     </tbody>
   </table>
 <% end %>

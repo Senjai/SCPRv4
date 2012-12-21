@@ -29,26 +29,27 @@ module ActionView
           :partial => "/admin/shared/fields/#{partial}_fields", 
           :locals  => {
             :f       => self,
-            :record  => options[:for]
+            :record  => options.delete(:record),
+            :options => options
           })
       end
       
       #----------------------
       
-      def link_to_add_fields(association, option={})
+      def link_to_add_fields(association, options={})
         association = association.to_s
         partial     = options[:partial] || association.singularize
-        name        = options[:name] || "Add Another #{association.singularize.titleize}"
+        title       = options[:title] || "Add Another #{association.singularize.titleize}"
         
-        new_object = self.object.send(association).build
+        new_object = self.object.send(association).klass.new
         id = new_object.object_id
         
         fields = self.simple_fields_for(association, new_object, child_index: id) do |nf|
-          render_fields(partial, for: new_object)
+          render_fields(partial, record: new_object)
         end
         
-        @template.link_to(name, "#", class: "js-add-fields", 
-          data: { id: id, fields: fields.gsub("\n", "") })
+        @template.link_to(title, "#", class: "js-add-fields", 
+          data: { id: id, build_target: options[:build_target], fields: fields.gsub("\n", "") })
       end
     end
   end

@@ -18,9 +18,14 @@ class scpr.FieldManager
         # Add fields
         $(".js-add-fields").on
             click: (event) ->
-                console.log @
                 target = $(@)
                 time   = new Date().getTime()
                 regexp = new RegExp(target.data('id'), 'g')
-                target.closest("tr").before(target.data('fields').replace(regexp, time))
+                fields = target.data('fields').replace(regexp, time)
+                
+                if buildTarget = target.data('build-target')
+                    $(buildTarget).append fields
+                else
+                    target.before(fields)
+                    
                 event.preventDefault()

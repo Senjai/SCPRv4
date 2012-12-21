@@ -1,0 +1,62 @@
+<%= f.simple_fields_for :audio, record do |nf| %>
+  <%= render '/admin/resource/errors', f: nf %>
+
+  <div class="audio-fields well" id="audio-fields-<%=record.id || "new"%>">
+    <div class="row">
+      <div class="span4">
+        <div class="details" id="audio-<%=record.id || "new"%>-details">
+          <%= nf.input :description, input_html: { class: "tiny thin" } %>
+          <%= nf.input :byline, input_html: { class: "thin" } %>
+          <%= nf.input :position, input_html: { class: "thin" } %>
+        </div>
+      </div> <!-- span -->
+      <div class="span4">
+        <div class="audio-info">
+          
+          <% if record.persisted? %>
+            <div class="existing-audio" id="audio-existing-<%=record.id%>">
+              <!-- existing audio -->
+              <% if record.mp3.present? %>
+                <h5 class="alert alert-success">Audio is Live</h5>
+                <%= link_to record.mp3.filename, record.url %>
+              <% else %>
+                <h5 class="alert alert-info">Awaiting Audio</h5>
+                <%= record.path %>
+              <% end %>
+            </div>
+        
+            <div class="audio-delete pull-right">
+              <%= nf.input :_destroy, as: :boolean, label: false, inline_label: "Delete?", wrapper_html: { class: "inline destroy-bool" } %>
+            </div> <!-- audio-delete -->
+
+          <% else %>
+            <div class="new-audio">
+              <!-- new audio -->
+              <ul class="nav nav-tabs">
+                <li class="<%= "active" if record.errors.blank? || (record.errors.keys & [:enco_number, :enco_audio, :base]).present? %>">
+                  <a href="#audio-new-enco-<%=options[:index]%>" data-toggle="tab">Enco</a>
+                </li>
+                <li class="<%= "active" if record.errors.keys == [:mp3] %>"><a href="#audio-new-upload-<%=options[:index]%>" data-toggle="tab">Upload</a></li>
+                <li class="<%= "active" if record.errors.keys == [:mp3_path] %>"><a href="#audio-new-direct-<%=options[:index]%>" data-toggle="tab">Path</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane <%= "active" if record.errors.blank? || (record.errors.keys & [:enco_number, :enco_audio, :base]).present? %>" id="audio-new-enco-<%=options[:index]%>">
+                  <%= nf.input :enco_number, as: :string, input_html: { class: "thin" }, wrapper_html: { class: "vertical" } %>
+                  <%= nf.input :enco_date, input_html: { class: "thin" }, wrapper_html: { class: "vertical" } %>
+                </div> <!-- enco -->
+
+                <div class="tab-pane <%= "active" if record.errors.keys == [:mp3] %>" id="audio-new-upload-<%=options[:index]%>">
+                  <%= nf.input :mp3, as: :file, wrapper_html: { class: "vertical" } %>
+                </div> <!-- upload -->
+
+                <div class="tab-pane <%= "active" if record.errors.keys == [:mp3_path] %>" id="audio-new-direct-<%=options[:index]%>">
+                  <%= nf.input :mp3_path, hint: "/events/2012/10/01/your_cool_audio.mp3", input_html: { class: "thin" }, wrapper_html: { class: "vertical"} %>
+                </div> <!-- path -->
+              </div> <!-- tab-content -->
+            </div> <!-- new-audio -->
+          <% end %>
+        </div> <!-- audio-info -->
+      </div> <!-- span -->
+    </div> <!-- row -->
+  </div> <!-- audio-fields -->
+<% end %>
