@@ -23,5 +23,4 @@
 //= require admin/auto_slug_field
 //= require admin/field_counter
 //= require admin/asset_manager
-//= require admin/audio_ui
 //= require admin/index_manager
