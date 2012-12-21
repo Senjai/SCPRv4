@@ -16,7 +16,7 @@
 
 //= require admin/notification
 //= require admin/newsroom
-//= require admin/utilities
+//= require admin/field_manager
 //= require admin/aggregator
 //= require admin/date_time_input
 //= require admin/content_alarm_ui

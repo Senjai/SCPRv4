@@ -21,7 +21,7 @@
       </aside>  
     <% end %>
   
-    <% if content.related_links.present? %>
+    <% if content.related_links.normal.present? %>
       <aside class="related-links cbase">
         <div class="row-fluid">
           <div class="span6 row-title">
@@ -29,7 +29,7 @@
           </div>
           <div class="span18">
             <ul>
-              <% content.related_links.each do |link| %>
+              <% content.related_links.normal.each do |link| %>
                 <li>
                 <%= link_to link.title, link.link %> <span class="domain"> | <%= link.domain.gsub(/^www\./, "") %></span>
                 </li>

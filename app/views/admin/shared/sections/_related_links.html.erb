@@ -1,0 +1,26 @@
+<%= form_block "Related Links" do %>
+  <% record.related_links.build %>
+  
+  <table class="field-rows">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Link</th>
+        <th>Type</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% record.related_links.each do |related_link| %>
+        <%= f.render_fields "related_link", for: related_link %>
+      <% end %>
+    
+      <tr>
+        <td colspan="10">
+          <%= f.link_to_add_fields(:related_links, name: "Add another Related Link") %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

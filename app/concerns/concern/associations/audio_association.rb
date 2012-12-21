@@ -13,6 +13,8 @@ module Concern
         accepts_nested_attributes_for :audio, allow_destroy: true, reject_if: :should_reject_audio?
       end
       
+      private
+      
       #------------------
       # If all of these attributes are blank, reject it,
       # because obviously they weren't trying to attach

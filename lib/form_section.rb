@@ -21,6 +21,35 @@ module ActionView
             :extra   => block_given? ? @template.capture(&block) : ""
           })
       end
+      
+      #----------------------
+      
+      def render_fields(partial, options={})
+        @template.render( 
+          :partial => "/admin/shared/fields/#{partial}_fields", 
+          :locals  => {
+            :f       => self,
+            :record  => options[:for]
+          })
+      end
+      
+      #----------------------
+      
+      def link_to_add_fields(association, option={})
+        association = association.to_s
+        partial     = options[:partial] || association.singularize
+        name        = options[:name] || "Add Another #{association.singularize.titleize}"
+        
+        new_object = self.object.send(association).build
+        id = new_object.object_id
+        
+        fields = self.simple_fields_for(association, new_object, child_index: id) do |nf|
+          render_fields(partial, for: new_object)
+        end
+        
+        @template.link_to(name, "#", class: "js-add-fields", 
+          data: { id: id, fields: fields.gsub("\n", "") })
+      end
     end
   end
 end
