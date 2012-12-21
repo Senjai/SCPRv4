@@ -1,10 +1,11 @@
 class OtherProgram < ActiveRecord::Base
   include Concern::Validations::SlugValidation
+  include Concern::Associations::RelatedLinksAssociation
   
   self.table_name =  'programs_otherprogram'  
   has_secretary
   ROUTE_KEY = "program"
-
+  
   #-------------------
   # Scopes
   scope :active, -> { where(:air_status => ['onair','online']) }

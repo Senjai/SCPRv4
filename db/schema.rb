@@ -626,12 +626,12 @@ ActiveRecord::Schema.define(:version => 20121211185222) do
 
   create_table "media_related", :force => true do |t|
     t.integer "django_content_type_id"
-    t.integer "content_id",                                              :null => false
+    t.integer "content_id",                               :null => false
     t.integer "rel_django_content_type_id"
-    t.integer "related_id",                                              :null => false
-    t.integer "flag",                                     :default => 0, :null => false
+    t.integer "related_id",                               :null => false
     t.string  "content_type",               :limit => 20
     t.string  "related_type",               :limit => 20
+    t.integer "position",                                 :null => false
   end
 
   add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
