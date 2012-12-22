@@ -87,6 +87,8 @@ class ShowSegment < ActiveRecord::Base
   def episode
     episodes.first
   end
+
+  #----------
   
   def sister_segments
     if episodes.present?
@@ -95,15 +97,11 @@ class ShowSegment < ActiveRecord::Base
       show.segments.published.where("shows_segment.id != ?", self.id).limit(5)
     end
   end
+
+  #----------
   
   def byline_extras
     [self.show.title]
-  end
-  
-  #----------
-  
-  def canFeature?
-    self.assets.present?
   end
   
   #----------
