@@ -1,26 +1,38 @@
 require "spec_helper"
 
 describe Concern::Associations::RelatedContentAssociation do
-  describe "associations" do
-    subject { TestClass::Story.new }
-  
-    it { should have_many(:brels).class_name("Related").dependent(:destroy) }
-    it { should have_many(:frels).class_name("Related").dependent(:destroy) }
-  end
-  
-  #-------------------------
-  # TODO: Rewrite this spec, and the method
-  describe "#sorted_relations" do
-    it "takes a list of frels and brels and returns an array of related records" do
-      object = create :news_story, frel_count: 2, brel_count: 2
-      sorted_relations = object.sorted_relations(object.frels, object.brels)
-      sorted_relations.should include object.frels.first.content
-      sorted_relations.should include object.brels.first.related
+  describe "#related_content" do
+    before :each do
+      @object  = build :news_story
+      @shell  = create :content_shell
+      @segment = create :show_segment
+      
+      @object.outgoing_references.build(related: @shell)
+      @object.incoming_references.build(content: @segment)
     end
     
-    it "returns a blank array if there are no related objects" do
-      object = create :news_story
-      object.sorted_relations(object.frels, object.brels).should eq []
+    it "Returns all the related records" do
+      @object.related_content.should include @shell
+      @object.related_content.should include @segment
+    end
+    
+    it "sorts by published_at desc" do
+      @shell.update_attribute(:published_at, Time.now)
+      @segment.update_attribute(:published_at, Time.now.yesterday)
+      
+      @object.related_content.first.should eq @shell
+      
+      @segment.update_attribute(:published_at, Time.now)
+      @shell.update_attribute(:published_at, Time.now.yesterday)
+      
+      @object.related_content.first.should eq @segment
+    end
+    
+    it "doesn't return duplicate content" do
+      @object.outgoing_references.build(related: @shell)
+      @object.incoming_references.build(content: @segment)
+
+      @object.related_content.size.should eq 2
     end
   end
 end
