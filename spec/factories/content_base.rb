@@ -19,12 +19,6 @@ FactoryGirl.define do
   end
   
   trait :content_base do
-    ignore { asset_count    0 }
-    ignore { link_count     0 }
-    ignore { brel_count     0 }
-    ignore { frel_count     0 }
-    ignore { with_category  false }
-    ignore { byline_count   0 }
     sequence(:published_at) { |n| Time.now - 60*60*n }
     required_cb_fields
   end
@@ -46,15 +40,7 @@ FactoryGirl.define do
 # VideoShell ##########################################################
   factory :video_shell do
     content_base
-    
-    slug    { headline.parameterize }
-    
-    ignore  { related_factory  "content_shell" }
-    ignore  { category_type    :category_not_news }
-    
-    after :create do |object, evaluator|
-      content_base_associations(object, evaluator)
-    end
+    slug { headline.parameterize }
   end
   
 
@@ -66,13 +52,6 @@ FactoryGirl.define do
     slug        { headline.parameterize }
     news_agency "KPCC"
     locale      "local"
-    
-    ignore { related_factory  "content_shell" }
-    ignore { category_type    :category_news }
-    
-    after :create do |object, evaluator|
-      content_base_associations(object, evaluator)
-    end
   end
 
 
@@ -80,18 +59,7 @@ FactoryGirl.define do
   factory :show_episode, aliases: [:episode] do
     content_base
     show
-    
     sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
-    
-    ignore { segment_count    0 }
-    ignore { related_factory  "content_shell" }
-    ignore { category_type    nil }
-    
-    after :create do |object, evaluator|
-      content_base_associations(object, evaluator)
-      segments = FactoryGirl.create_list(:show_segment, evaluator.segment_count.to_i, show: object.show)
-      segments.each { |segment| segment.episodes << object }
-    end
   end
 
 
@@ -100,52 +68,29 @@ FactoryGirl.define do
     content_base
     optional_cb_fields
     show
-    
     slug        { headline.parameterize }
     locale      "local"
-
-    ignore { related_factory  "content_shell" }
-    ignore { category_type    :category_news }
-    
-    after :create do |object, evaluator|
-      content_base_associations(object, evaluator)
-    end
   end
 
+# ShowRundown #########################################################
+  factory :show_rundown do
+    episode
+    segment
+  end
 
 # BlogEntry #########################################################
   factory :blog_entry do
     content_base
     optional_cb_fields 
     blog
-    
-    slug      { headline.parameterize }
-
-    ignore { related_factory      "content_shell" }
-    ignore { category_type        :category_not_news }
-    ignore { tag_count            0 }
-    ignore { blog_category_count  0 }
-
-    after :create do |object, evaluator|
-      content_base_associations(object, evaluator)
-      FactoryGirl.create_list :tagged_content, evaluator.tag_count.to_i, content: object
-      FactoryGirl.create_list :blog_entry_blog_category, evaluator.blog_category_count.to_i, blog_entry: object
-    end
+    slug { headline.parameterize }
   end
 
 
 # ContentShell #########################################################
   factory :content_shell do
     content_base
-    
     site  "blogdowntown"
     url   { "http://blogdowntown.com/2011/11/6494-#{headline.parameterize}" }
-    
-    ignore { related_factory  "video_shell" }
-    ignore { category_type    :category_news }
-
-    after :create do |object, evaluator|
-      content_base_associations(object, evaluator)
-    end
   end
 end

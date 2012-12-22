@@ -32,32 +32,46 @@ describe BlogEntry do
     it { should have_many(:blog_entry_blog_categories) }
     it { should have_many(:blog_categories).through(:blog_entry_blog_categories).dependent(:destroy) }
     
-    it "deletes tags in the join model when it's deleted" do
-      entry = create :blog_entry, tag_count: 1
-      TaggedContent.count.should eq 1
-      entry.destroy
-      TaggedContent.count.should eq 0
+    describe "deleting tags" do
+      before :each do
+        @entry = build :blog_entry
+        @tags = create_list :tag, 1
+        @entry.tags = @tags
+        @entry.save!
+      end
+      
+      it "deletes tags in the join model when it's deleted" do
+        TaggedContent.count.should eq 1
+        @entry.destroy
+        TaggedContent.count.should eq 0
+      end
+    
+      it "doesn't delete the tag when the entry is deleted" do
+        Tag.count.should eq 1
+        @entry.destroy
+        Tag.count.should eq 1
+      end
     end
     
-    it "doesn't delete the tag when the entry is deleted" do
-      entry = create :blog_entry, tag_count: 1
-      Tag.count.should eq 1
-      entry.destroy
-      Tag.count.should eq 1
-    end
+    describe "deleting categories" do
+      before :each do
+        @entry = build :blog_entry
+        @blog_categories = create_list :blog_category, 1
+        @entry.blog_categories = @blog_categories
+        @entry.save!
+      end
+      
+      it "deletes categories in the join model when it's deleted" do
+        BlogEntryBlogCategory.count.should eq 1
+        @entry.destroy
+        BlogEntryBlogCategory.count.should eq 0
+      end
     
-    it "deletes categories in the join model when it's deleted" do
-      entry = create :blog_entry, blog_category_count: 1
-      BlogEntryBlogCategory.count.should eq 1
-      entry.destroy
-      BlogEntryBlogCategory.count.should eq 0
-    end
-    
-    it "doesn't delete the category when the entry is deleted" do
-      entry = create :blog_entry, blog_category_count: 1
-      BlogCategory.count.should eq 1
-      entry.destroy
-      BlogCategory.count.should eq 1
+      it "doesn't delete the category when the entry is deleted" do
+        BlogCategory.count.should eq 1
+        @entry.destroy
+        BlogCategory.count.should eq 1
+      end
     end
   end
   
