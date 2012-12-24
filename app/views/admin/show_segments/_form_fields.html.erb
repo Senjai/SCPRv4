@@ -8,6 +8,7 @@
 <% end %>
 
 <%= f.section "publishing" %>
+<%= f.section "bylines" %>
 
 <%= f.section "assets" do %>
   <%= f.input :segment_asset_scheme, collection: ShowSegment::ASSET_SCHEMES, selected: record.segment_asset_scheme || ShowSegment::ASSET_SCHEMES[0] %>

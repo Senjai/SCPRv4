@@ -10,6 +10,7 @@ module Concern
       
       included do
         has_many :bylines, as: :content, class_name: "ContentByline",  dependent: :destroy
+        accepts_nested_attributes_for :bylines, allow_destroy: true, reject_if: :should_reject_bylines?
       end
 
       #-------------------
@@ -76,6 +77,11 @@ module Concern
       #-------------------
       
       private
+            
+      def should_reject_bylines?(attributes)
+        attributes['user'].blank? &&
+        attributes['name'].blank?
+      end
       
       #-------------------
       # Get the record's bylines, filtered by role.
