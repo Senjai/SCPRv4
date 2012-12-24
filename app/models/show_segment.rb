@@ -33,9 +33,9 @@ class ShowSegment < ActiveRecord::Base
   
   #-------------------
   # Associations
-  belongs_to :show,   :class_name => "KpccProgram"
-  has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id"
-  has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc"
+  belongs_to :show,   class_name: "KpccProgram"
+  has_many :rundowns, class_name: "ShowRundown", foreign_key: "segment_id"
+  has_many :episodes, through: :rundowns, source: :episode, order: "air_date asc", autosave: true
   
   #-------------------
   # Validations
