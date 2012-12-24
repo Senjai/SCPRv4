@@ -1,30 +1,29 @@
-<%= content_cache("episode:#{current_episode.id}:current") do %>
-<% register_content current_episode %>
-<div class="current-episode">
-  <div class="episode">
-    <div class="row-fluid">
-      <div class="span<%= current_episode.assets.present? ? "12" : "24" %>">
-        <h2><%= link_to current_episode.headline, current_episode.link_path %></h2>
-        <%= current_episode.body.html_safe %> 
-      </div>
-      <% if current_episode.assets.present? %>
-        <div class="span12">
-          <%= render_asset current_episode, "lead" %>
+<%= cache ["current_episode", "v1", current_episode] do %>
+  <div class="current-episode">
+    <div class="episode">
+      <div class="row-fluid">
+        <div class="span<%= current_episode.assets.present? ? "12" : "24" %>">
+          <h2><%= link_to current_episode.headline, current_episode.link_path %></h2>
+          <%= current_episode.body.html_safe %> 
         </div>
-      <% end %>
+        <% if current_episode.assets.present? %>
+          <div class="span12">
+            <%= render_asset current_episode, "lead" %>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <div class="current-episode-segments">
-    <div class="row-fluid">
-      <% split_num = ( current_episode.segments.published.length.to_f / 2 ).ceil %>
-      <div class="span12">
-        <%= render_content current_episode.segments.published.first(split_num), "seg_headline" %>
-      </div>
-      <div class="span12">
-        <%= render_content current_episode.segments.published[split_num..-1], "seg_headline" %>   
+    <div class="current-episode-segments">
+      <div class="row-fluid">
+        <% split_num = ( current_episode.segments.published.length.to_f / 2 ).ceil %>
+        <div class="span12">
+          <%= render_content current_episode.segments.published.first(split_num), "seg_headline" %>
+        </div>
+        <div class="span12">
+          <%= render_content current_episode.segments.published[split_num..-1], "seg_headline" %>   
+        </div>
       </div>
     </div>
   </div>
-</div>
 <% end %>
