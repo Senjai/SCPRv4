@@ -3,7 +3,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
-  include Concern::Associations::BylinesAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Methods::StatusMethods
@@ -82,6 +81,12 @@ class ShowEpisode < ActiveRecord::Base
   # Teaser just returns the body.
   def teaser
     self.body
+  end
+
+  #----------
+  # Fake the byline
+  def byline
+    self.show.title
   end
   
   #----------
