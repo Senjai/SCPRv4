@@ -25,7 +25,7 @@ module Concern
         # If we are going from "not published" -> "published".
         # Expire :new keys for the object's class and contentbase
         if self.publishing?
-          Rails.cache.expire_obj([self.class.content_key, "new"].join("/"))
+          Rails.cache.expire_obj([self.class.content_key, "new"].join(":"))
           Rails.cache.expire_obj("contentbase:new")
         end
       end
