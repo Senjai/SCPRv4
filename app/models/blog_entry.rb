@@ -25,6 +25,9 @@ class BlogEntry < ActiveRecord::Base
 
   #------------------
   # Scopes
+  scope :filtered_by_bylines, ->(bio_id) { 
+    self.includes(:bylines).where(ContentByline.table_name => { user_id: bio_id }) 
+  }
   
   #------------------
   # Association
@@ -56,6 +59,9 @@ class BlogEntry < ActiveRecord::Base
       column :bylines
       column :status
       column :published_at
+      
+      filter :blog_id, collection: Blog.scoped
+      filter :bylines, collection: Bio.scoped
     end
   end
   include Concern::Methods::ContentJsonMethods

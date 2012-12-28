@@ -3,7 +3,8 @@ class Admin::ResourceController < Admin::BaseController
   
   before_filter :authorize_resource
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
-  before_filter :get_records, only: :index
+  before_filter :get_records, only: [:index]
+  before_filter :filter_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
   before_filter :add_user_id_to_params, only: [:create, :update]
     
@@ -18,7 +19,7 @@ class Admin::ResourceController < Admin::BaseController
   #-----------------
   
   def get_records
-    @records = resource_class.order(resource_class.admin.list.order).page(params[:page]).per(resource_class.admin.list.per_page || 99999) # Temporary until Kaminari fixes this?
+    @records = resource_class.order("#{resource_class.table_name}.#{resource_class.admin.list.order}").page(params[:page]).per(resource_class.admin.list.per_page || 99999) # Temporary until Kaminari fixes this?
   end
 
   #-----------------
@@ -36,7 +37,24 @@ class Admin::ResourceController < Admin::BaseController
   #-----------------
   
   private
-  
+
+  def filter_records
+    if params[:filter].is_a? Hash
+      params[:filter].each do |attribute, value|
+        next if value.blank?
+        scope = "filtered_by_#{attribute}"
+
+        if @records.klass.respond_to? scope
+          @records = @records.send(scope, value)
+        else
+          @records = @records.where(attribute => value)
+        end
+      end
+    end
+  end
+
+  #-----------------
+    
   def authorize_resource
     authorize!(resource_class)
   end

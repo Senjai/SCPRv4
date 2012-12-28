@@ -141,6 +141,17 @@ ul.viewers {
     cursor: pointer;
 }
 
+.filters {
+  .filter.label {
+    display: inline-block; 
+    margin-right: 10px;
+  }
+  
+  form {
+    display: inline-block;    
+  }
+}
+
 .submit-row:last-of-type {
     position: fixed;
     bottom: 0px;

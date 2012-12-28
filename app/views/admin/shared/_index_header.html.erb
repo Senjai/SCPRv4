@@ -6,3 +6,27 @@
 
   <%= link_to "Add #{resource_class.to_s.titleize}", url_for([:new, :admin, resource_class.to_s.underscore]), class: "btn btn-success pull-right" %>
 </div>
+
+<% if resource_class.admin.list.filters.present? %>
+  <% content_for :footerjs do %>
+    <script type="text/javascript">
+      filters = new scpr.Filters();
+    </script>
+  <% end %>
+
+  <div class="filters">
+    <span class="filter label">Filter by:</span>
+  
+    <%= form_tag resource_class.admin_index_path, method: :get, class: "form-inline" do %>
+      <% resource_class.admin.list.filters.each do |filter| %>
+        <%= select_tag filter.attribute, 
+          options_from_collection_for_select(filter.collection, "id", "to_title", params[:filter].present? ? params[:filter][filter.attribute] : nil), 
+          prompt: filter.attribute.to_s.titleize, name: "filter[#{filter.attribute}]" %>
+      <% end %>
+    
+      <%= submit_tag "Go", class: "btn" %>
+      
+      <a href="<%=request.path%>" style="margin-left:10px;"><small>Clear Filters</small></a>
+    <% end %>
+  </div>
+<% end %>
