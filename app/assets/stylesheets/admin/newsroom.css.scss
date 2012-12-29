@@ -1,9 +1,10 @@
 // Styles related to Newsroom.js functionality
-
 .user-badge {
+    @include border-radius(5px);
+    vertical-align: top;
     position: relative;
     border: 1px solid $grayLight;
-    padding-right: 30px; // make room for the badge
+    padding: 5px 30px 5px 5px; // make room for the badge
     line-height: 12px;
     
     &.highlighted {
@@ -21,6 +22,10 @@
     
     .badge-mark {
       right: 10px;
+    }
+    
+    img {
+        padding: 5px;
     }
 }
 
@@ -42,4 +47,13 @@
 
 .badge-mark {
     position: absolute;
+}
+
+ul.viewers {
+    margin-left: 0;
+    list-style: none;
+    li { 
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
 }
