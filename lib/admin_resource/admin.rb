@@ -8,7 +8,7 @@ module AdminResource
     
     def initialize(klass)
       @model = klass
-      @list  = List::Base.new
+      @list  = List::Base.new(self)
     end
     
     #------------

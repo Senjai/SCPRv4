@@ -4,10 +4,11 @@
 module AdminResource
   module List
     class Base
-      attr_accessor :order # Must be a string since it gets passed directly to ActiveRecord
+      attr_accessor :admin, :order # Must be a string since it gets passed directly to ActiveRecord
       attr_reader :columns, :filters, :per_page
       
-      def initialize(attributes = {})
+      def initialize(admin, attributes = {})
+        @admin    = admin
         @columns  = []
         @filters  = []
         

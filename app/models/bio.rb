@@ -53,6 +53,16 @@ class Bio < ActiveRecord::Base
   end
     
   #----------
+
+  class << self
+    # Maps all records to an array of arrays, to be
+    # passed into a Rails select helper
+    def select_collection
+      self.all.map { |bio| [bio.name, bio.id] }
+    end
+  end
+  
+  #----------
   
   def indexed_bylines(page=1, per_page=15)
     # Sphinx max_matches limits how much it can offset results, so for Bios with a lot

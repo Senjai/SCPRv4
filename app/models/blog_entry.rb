@@ -60,8 +60,10 @@ class BlogEntry < ActiveRecord::Base
       column :status
       column :published_at
       
-      filter :blog_id, collection: Blog.scoped
-      filter :bylines, collection: Bio.scoped
+      filter :blog_id, collection: -> { Blog.select_collection }
+      filter :bylines, collection: -> { Bio.select_collection }
+      filter :status, collection: -> { ContentBase.status_text_collect }
+      
     end
   end
   include Concern::Methods::ContentJsonMethods
