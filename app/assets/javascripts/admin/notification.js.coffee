@@ -9,6 +9,13 @@ class scpr.Notification
     render: ->
         @wrapper.append @el
     
+    prepend: ->
+        @wrapper.prepend @el
+        
+    # Replaces the wrapper's content with the alert
+    replace: ->
+        @wrapper.html @el
+        
     # Delegation for jQuery: @el.is(":visible")
     isVisible: ->
         @el.is(":visible")
@@ -21,6 +28,14 @@ class scpr.Notification
     hide: -> 
         @el.hide()
     
+    # Delegation for jQuery: @el.fadeIn()
+    fadeIn: (speed=400, callback=null) ->
+        @el.fadeIn(speed, callback?())
+    
+    # Delegation for jQuery: @el.fadeOut()
+    fadeOut: (speed=400, callback=null) ->
+        @el.fadeOut(speed, callback?())
+        
     # Delegation for jQuery: @el.detach()
     detach: ->
         @el.detach()

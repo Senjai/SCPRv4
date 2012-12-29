@@ -168,8 +168,7 @@ module ContentBase
       self.obj_by_key(key)
     end
   end
-
-
+  
   #--------------------
   # For drop-down menus in the CMS
   def status_text_collect

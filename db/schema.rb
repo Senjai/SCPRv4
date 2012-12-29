@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121211185222) do
+ActiveRecord::Schema.define(:version => 20121221221537) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -629,9 +629,9 @@ ActiveRecord::Schema.define(:version => 20121211185222) do
     t.integer "content_id",                                              :null => false
     t.integer "rel_django_content_type_id"
     t.integer "related_id",                                              :null => false
-    t.integer "flag",                                     :default => 0, :null => false
     t.string  "content_type",               :limit => 20
     t.string  "related_type",               :limit => 20
+    t.integer "position",                                 :default => 0, :null => false
   end
 
   add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
@@ -941,6 +941,20 @@ ActiveRecord::Schema.define(:version => 20121211185222) do
   add_index "taggit_taggeditem", ["content_type", "content_id"], :name => "index_taggit_taggeditem_on_content_type_and_content_id"
   add_index "taggit_taggeditem", ["django_content_type_id"], :name => "taggit_taggeditem_e4470c6e"
   add_index "taggit_taggeditem", ["tag_id"], :name => "taggit_taggeditem_3747b463"
+
+  create_table "tickets", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "browser_info"
+    t.string   "link"
+    t.integer  "agrees"
+    t.string   "summary"
+    t.text     "description"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "tickets", ["agrees"], :name => "index_tickets_on_agrees"
+  add_index "tickets", ["user_id"], :name => "index_tickets_on_user_id"
 
   create_table "users_userprofile", :force => true do |t|
     t.integer  "userid",                    :null => false

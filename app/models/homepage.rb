@@ -1,6 +1,7 @@
 class Homepage < ActiveRecord::Base
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
+  include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
@@ -29,6 +30,7 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Callbacks
+
   
   #-------------------
   # Administration
@@ -128,4 +130,11 @@ class Homepage < ActiveRecord::Base
     }
   end
   
+  #-------------------------
+  # These are temporary methods to get around the 
+  # discrepancy between content model field names and classes.
+  # It will go away once all the content association is in one table.
+  def build_content_association(content_hash, content)
+    HomepageContent.new(position: content_hash["position"], content: content)
+  end
 end

@@ -22,7 +22,7 @@ describe Concern::Associations::AudioAssociation do
         'byline'      => ''
       }
       
-      subject.should_reject_audio?(attributes).should eq true
+      subject.send(:should_reject_audio?, attributes).should eq true
     end
     
     it "is false if any of the attributes are present" do
@@ -35,7 +35,7 @@ describe Concern::Associations::AudioAssociation do
         'byline'      => ''
       }
       
-      subject.should_reject_audio?(attributes).should eq false
+      subject.send(:should_reject_audio?, attributes).should eq false
     end
   end
 end

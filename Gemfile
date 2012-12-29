@@ -65,15 +65,12 @@ group :test, :development do
   gem 'rb-readline'
   gem 'guard', '~> 1.5'
   gem 'guard-rspec'
-  gem 'guard-cucumber'
   gem 'guard-jasmine'
-  gem 'guard-coffeescript'
 end
 
 group :test do
   gem 'simplecov', require: false
   gem "sqlite3"
-  gem "cucumber-rails", require: false
   gem 'factory_girl_rails', "~> 4.1"
   gem 'database_cleaner'
   gem 'capybara', "~> 2.0"

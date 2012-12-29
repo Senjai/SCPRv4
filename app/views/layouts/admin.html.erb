@@ -16,11 +16,10 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
-      <%= link_to "KPCC Admin", admin_root_path, class: "brand" %>
+      <a href="<%=admin_root_path%>" class="brand">KPCC Admin</a>
       
       <% if admin_user %>
         <ul class="nav">
-          <li><a href="<%=admin_root_path%>"><i class='icon-home icon-white'></i> Dashboard</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-plus-sign icon-white"></i> Add New <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -33,10 +32,13 @@
               <%= guard Event do        %><li><%= link_to "Event", new_admin_event_path %></li><% end %>
             </ul>
           </li>
-          <li><a href="http://a.scpr.org/a/assets" target="_new"><i class="icon-camera icon-white"></i> Launch AssetHost</a></li>
+          <li><a href="http://a.scpr.org/a/assets" target="_new"><i class="icon-camera icon-white"></i> AssetHost</a></li>
+          <li><a href="<%=root_path%>"><i class='icon-home icon-white'></i> KPCC.org</a></li>
         </ul>
 
         <ul class="nav pull-right">
+          <li><a href="#ticket-modal" data-toggle="modal"><i class='icon-wrench icon-white'></i> Report a Problem</a></li>
+          
           <li><a href="<%=admin_user.admin_edit_path%>"><i class='icon-user icon-white'></i> <%= admin_user.name %></a></li>
           <li><%= link_to "Logout", admin_logout_path, id: "logout" %></li>
         </ul>
@@ -93,7 +95,12 @@
   </div> <!-- row -->
 </div> <!-- container main -->
 
+<%= render 'admin/tickets/modal' %>
 <%= yield :footerjs %>
+
+<script>
+  field_manager = new scpr.FieldManager();
+</script>
 
 </body>
 </html>
