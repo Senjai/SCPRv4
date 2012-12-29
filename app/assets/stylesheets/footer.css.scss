@@ -236,3 +236,32 @@ $footerBackground: #2e2e2e;
         padding-top: 10px;
     }
 }
+
+.fb-callout {
+  background-color:rgba(59,88,149,0.9);
+  border-bottom:1px solid #3b5895;
+  display:none;
+  margin-bottom:30px;
+  padding:10px 0;
+  position:fixed;
+  left:0;
+  right:0;
+  top:0;
+  &.show {
+    display:block;
+  }
+  .container-fluid {
+    text-align:center;
+  }
+  h2 {
+    background:url(image_path('facebook/facebook-like.png')) no-repeat right top;
+    color:#081a40;
+    @include ie-inline-block();
+    @include font-heading();
+    padding-right:24px;
+    a {
+      color:$white;
+      text-shadow:0 1px 0 #3b5895;
+    }
+  }
+}
