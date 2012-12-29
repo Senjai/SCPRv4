@@ -1,0 +1,56 @@
+// We want content input to always be pretty big
+.simple_form {
+    input:not([type=submit]) {
+        @extend .span4;
+    }
+}
+
+form.simple_form {
+    input.wide, textarea {
+        @extend .span7;
+    }
+    
+    input.thin, textarea.thin {
+        @extend .span2;
+    }
+    
+    input.tiny {
+        @extend .span1;
+    }
+    
+    textarea {
+        &.tiny { height: 100px; }
+        &.short { height: 200px; }
+        &.tall { height: 600px; }
+    }
+    
+    fieldset legend {
+        cursor: pointer;
+        &:hover {
+            background: #ffffcc;
+        }
+    }
+    
+    .counter-notify {
+        @extend .span7;
+    }
+    
+    .inline { // Extend bootstrap .inline
+        display: inline-block;
+        margin-right: 5px;
+        input[type=text] { @extend .span2; }
+        input[type=checkbox] { width: 20px; }
+        
+        .controls {
+            margin-left: 10px;
+        }
+    }
+    
+    .control-group.vertical {
+        label { 
+            float: none;
+            text-align: left;
+        }
+        .controls { margin-left: 2px; }
+    }
+}
