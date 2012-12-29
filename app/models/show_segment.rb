@@ -57,6 +57,9 @@ class ShowSegment < ActiveRecord::Base
       column :bylines
       column :published_at
       column :status
+      
+      filter :show_id, collection: -> { KpccProgram.all.map { |program| [program.to_title, program.id] } }
+      filter :status, collection: -> { ContentBase.status_text_collect }
     end
   end
   include Concern::Methods::ContentJsonMethods
