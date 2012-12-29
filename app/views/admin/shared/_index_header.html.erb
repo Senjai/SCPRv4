@@ -1,32 +1,28 @@
 <div class="index-header clearfix">
-  <%= form_tag admin_search_path(resource: resource_class.route_key), method: :get, class: "form-search pull-left" do %>
-    <%= text_field_tag "query", params[:query], class: "search-query" %>
-    <%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
-  <% end %>
-
-  <%= link_to "Add #{resource_class.to_s.titleize}", url_for([:new, :admin, resource_class.to_s.underscore]), class: "btn btn-success pull-right" %>
-</div>
-
-<% if resource_class.admin.list.filters.present? %>
-  <% content_for :footerjs do %>
-    <script type="text/javascript">
-      filters = new scpr.Filters();
-    </script>
-  <% end %>
-
-  <div class="filters">
-    <span class="filter label">Filter by:</span>
+  <% if resource_class.admin.list.filters.present? %>
+    <div class="filters pull-left" style="margin-right:40px;">
+      <span class="filter label">Filter by:</span>
   
-    <%= form_tag resource_class.admin_index_path, method: :get, class: "form-inline" do %>
-      <% resource_class.admin.list.filters.each do |filter| %>
-        <%= select_tag filter.attribute, 
-          options_from_collection_for_select(filter.collection, "id", "to_title", params[:filter].present? ? params[:filter][filter.attribute] : nil), 
-          prompt: filter.attribute.to_s.titleize, name: "filter[#{filter.attribute}]" %>
-      <% end %>
-    
-      <%= submit_tag "Go", class: "btn" %>
+      <%= form_tag resource_class.admin_index_path, method: :get, class: "form-inline" do %>
+        <% resource_class.admin.list.filters.each do |filter| %>
+          <%= select_tag filter.attribute, 
+            options_for_select(filter.collection.call, params[:filter].present? ? params[:filter][filter.attribute] : nil), 
+            prompt: filter.title, name: "filter[#{filter.attribute}]", class: "input-medium" %>
+        <% end %>
       
-      <a href="<%=request.path%>" style="margin-left:10px;"><small>Clear Filters</small></a>
+        <%= submit_tag "Go", class: "btn" %>
+      
+        <a href="<%=request.path%>" style="margin-left:10px;"><small>Clear Filters</small></a>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <div class="search pull-left">
+    <%= form_tag admin_search_path(resource: resource_class.route_key), method: :get, class: "form-search" do %>
+      <%= text_field_tag "query", params[:query], class: "search-query input-medium" %>
+      <%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
     <% end %>
   </div>
-<% end %>
+  
+  <%= link_to "Add #{resource_class.to_s.titleize}", url_for([:new, :admin, resource_class.to_s.underscore]), class: "btn btn-success pull-right" %>
+</div>

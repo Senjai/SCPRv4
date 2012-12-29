@@ -5,7 +5,8 @@ class Admin::BaseController < ActionController::Base
   protect_from_forgery
   
   layout 'admin'
-  before_filter :require_admin, :root_breadcrumb, :set_sections
+  before_filter :require_admin
+  before_filter :set_sections
   
   #------------------------
   

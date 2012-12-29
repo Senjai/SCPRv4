@@ -36,7 +36,7 @@ module AdminResource
       #------------------
 
       def edit
-        breadcrumb "Edit"
+        breadcrumb "Edit", nil, @record.to_title
         respond_with :admin, @record
       end
 
@@ -60,7 +60,7 @@ module AdminResource
           notice "Saved #{@record.simple_title}"
           respond_with :admin, @record, location: requested_location
         else
-          breadcrumb "Edit"
+          breadcrumb "Edit", nil, @record.to_title
           render :edit
         end
       end

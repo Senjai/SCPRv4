@@ -50,38 +50,30 @@
 </div>
 
 <% if admin_user %>
-  <div class="container">
-    <% if breadcrumbs.present? %>
-      <ul class="breadcrumb">
-        <% breadcrumbs.each do |crumb| %>
-          <li>
-            <% if crumb.link.present? %>
-              <%= link_to crumb.title, crumb.link %>
-            <% else %>
-              <%= crumb.title %>
-            <% end %>
+  <div class="navbar navbar-fixed-top fixed-breadcrumbs">
+      <% if breadcrumbs.present? %>
+        <ul class="breadcrumb">
+          <div class="container">
+          <% breadcrumbs.each do |crumb| %>
+            <li>
+              <% if crumb.link.present? %>
+                <%= link_to crumb.title, crumb.link %>
+              <% else %>
+                <%= crumb.title %>
+              <% end %>
             
-            <% unless crumb == breadcrumbs.last %>
-              <span class="divider">/</span>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
+              <% unless crumb == breadcrumbs.last %>
+                <span class="divider">/</span>
+              <% end %>
+            </li>
+          <% end %>
+          </div>
+        </ul>
+      <% end %>
+  </div> <!-- navbar -->
 <% end %>
 
 <div id="main" class="container">
-  <div class="page-header">
-    <% if content_for? :page_header %>
-      <%= yield :page_header %>
-    <% else %>
-      <% if @PAGE_TITLE %>
-        <h3><%= @PAGE_TITLE %></h3>
-      <% end %>
-    <% end %>
-  </div>
-  
   <div class="row">
     <div class="span<%= content_for?(:sidebar) ? "9" : "12" %>">
       <% flash.select { |k, v| v.is_a? String }.each do |name, msg| %>
