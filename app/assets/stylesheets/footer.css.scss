@@ -258,7 +258,8 @@ $footerBackground: #2e2e2e;
     color:#081a40;
     @include ie-inline-block();
     @include font-heading();
-    padding-right:24px;
+    font-size:16px;
+    padding:2px 24px 0 0;
     a {
       color:$white;
       text-shadow:0 1px 0 #3b5895;
