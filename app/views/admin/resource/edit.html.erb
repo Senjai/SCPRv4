@@ -26,7 +26,7 @@
     <%= render "/admin/shared/form_nav" %>
   
     <h5>Currently Editing on This Page</h5>
-    <ul id="newsroom-edit_user-list" class="viewers"></ul>
+    <div id="newsroom-edit_user-list" class="viewers"></ul>
   </div>
     
 <% end %>
@@ -34,11 +34,10 @@
 <% content_for :footerjs do %>
   <script type="text/javascript">
     newsroom = new scpr.Newsroom(
-      '<%= j Rails.application.config.node.server %>', // server info
-      "<%= j({ id: @record.obj_key, type: 'Active'}.to_json.html_safe) %>", // room info
-      "<%= j admin_user.to_json.html_safe %>", // user info
-      "<%= j @record.to_json.html_safe %>", // record info
-      { el: "#newsroom-edit_user-list" }
+      "<%= @record.obj_key %>", // room ID
+      <%= j admin_user.to_json.html_safe %>, // user info
+      { "record": <%= j @record.to_json.html_safe %>,
+        "el": "#newsroom-edit_user-list" }
     );
   </script>
   

@@ -12,6 +12,10 @@ module AdminResource
 
       included do
         include AdminResource::Controller::Helpers
+        include AdminResource::Controller::Callbacks
+
+        before_filter :get_record, only: [:show, :edit, :update, :destroy]
+        before_filter :get_records, only: :index
       end
       
       def index
@@ -76,10 +80,6 @@ module AdminResource
       #--------------
       
       private
-      
-      def notice(message)
-        flash[:notice] = message if request.format.html?
-      end
       
       #--------------
       

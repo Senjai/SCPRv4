@@ -10,13 +10,13 @@ gem 'capistrano'
 
 
 ## Cache
-gem 'redis-content-store', :git => "git://github.com/SCPR/redis-content-store.git"
+gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', :path => "/Users/bryan/projects/redis-content-store"
 gem "resque", "~> 1.20"
 
 
 ## Views
-gem 'kaminari', "~> 0.14"
+gem 'kaminari', github: "bricker/kaminari"
 gem 'tinymce-rails', "~> 3.5"
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
@@ -33,7 +33,8 @@ gem "ruby-mp3info", require: 'mp3info'
 ## HTTP
 gem "faraday", "~> 0.8"
 gem "faraday_middleware", "~> 0.8"
-gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
+gem "hashie", "~> 1.2.0"
+gem "feedzirra", github: "pauldix/feedzirra"
 
 
 ## APIs
@@ -41,11 +42,12 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.4"
 gem 'newrelic_rpm'
-
+gem 'npr', github: "bricker/npr"
+#gem 'npr', path: "/Users/bricker/websites/kpcc/gems/npr"
 
 group :assets do
   gem "eco", "~> 1.0"
-  gem "sass", branch: 'master', git: 'git://github.com/nex3/sass.git'
+  gem "sass", github: 'nex3/sass'
   gem 'sass-rails', "~> 3.2"
   gem 'bootstrap-sass', '~> 2.1'
   gem "compass-rails"

@@ -1,0 +1,34 @@
+<% page_title resource_class.to_title.pluralize %>
+
+<div class="index-header clearfix">
+  <%= render "admin/shared/search_form" %>
+</div>
+
+<table class="table table-striped">
+  <%= any_to_list? @records, title: resource_class.to_title.pluralize do %>
+    <thead>
+      <tr>
+        <th>Import</th>
+        <th>Skip</th>        
+        <%= render "/admin/shared/headers", list: @list %>
+      </tr>
+    </thead>
+    <tbody class="list">
+      <% @records.each do |record| %>
+        <tr class="<%= resource_class.singular_route_key.dasherize %>">
+          <td>
+            <%= link_to "Import", import_admin_npr_story_path(record), method: :post, class: "btn" %>
+          </td>
+          <td>
+            <%= link_to "Skip", [:admin, record], method: :delete, class: "btn btn-danger", 
+              data: { confirm: "Click OK to delete this NPR Story.\nClick CANCEL to return to the list." } %>
+          </td>
+          
+          <%= render "/admin/shared/columns", list: @list, record: record %>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>
+
+<%= render "/admin/shared/pagination", records: @records %>

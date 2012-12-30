@@ -2,6 +2,9 @@
 
 # Communicate with the Newsroom.js Node server
 class scpr.Newsroom
+    @templates =
+        badge: JST["admin/templates/badge"]
+    
     #-----------------
     # Alerts/Errors
     class @Alert
@@ -14,109 +17,66 @@ class scpr.Newsroom
         #-----------------
         # When there is an error reaching the Node server
         class @Offline extends scpr.Notification
-            constructor: ->
-                super $("*[id*='newsroom']"), "error", "Newsroom Alerts are currently offline."
+            constructor: (el) ->
+                super el, "error", "Newsroom Alerts are currently offline."
 
 
     #-----------------
+    #-----------------
+    # Job listener just listens for a message to a socket and redirects
+    class @JobListener
+        constructor: ->
+            $("#spinner").spin()
+            
+            @alerts  = 
+                offline: new Newsroom.Alert.Offline($("#work_status"))
+
+            # If io (sockets) isn't available, error and return
+            # Otheriwse connect to Socket.io
+            if !io?
+                $("#spinner").spin(false)
+                $("#work_status").html()
+                return @alerts['offline'].render() 
+                
+            @socket  = io.connect scpr.NODE
+            @socket.on 'finished-task', (data) ->
+                $("#work_status").html("Finished!")
+                $("#spinner").spin(false)
+                window.location = data.location
+
+    
     #-----------------
     
-    DefaultOptions:
-        badgeTemplate: JST["admin/templates/newsroom_badge"]
-    
-    #-----------------
-
-    constructor: (@server, @roomInfo, @user, @object, options) ->
-        @options = _.defaults options||{}, @DefaultOptions
+    constructor: (@roomId, @userJson, options={}) ->
         @el      = $ options.el
-        @room    = JSON.parse(@roomInfo) # So we can use it here
+        @record  = options.record
         
         @alerts  = 
-            offline: new Newsroom.Alert.Offline()
+            offline: new Newsroom.Alert.Offline($("*[id*='newsroom']"))
             empty:   new Newsroom.Alert.Empty(@el)
 
         # If io (sockets) isn't available, error and return
         # Otheriwse connect to Socket.io
         return @alerts['offline'].render() if !io?
-        @socket  = io.connect @server
-
+        @socket  = io.connect scpr.NODE
+        
         # Outgoing messages
-        @socket.emit 'entered', @roomInfo, @user, @object
-        
-        $("input, textarea, select").on
-            focus: (event) =>
-                @socket.emit('fieldFocus', $(event.target).attr('id'))
-            blur: (event) =>
-                @socket.emit('fieldBlur', $(event.target).attr('id'))
-                
-        
+        @socket.emit 'entered', @roomId, @userJson, recordJson: @record
+
         # Incoming messages
-        @socket.on 'loadList',   (users)         => @loadList(users)
-        @socket.on 'newUser',    (user)          => @newUser(user)
-        @socket.on 'removeUser', (user)          => @removeUser(user)
-        @socket.on 'fieldFocus', (fieldId, user) => @fieldFocus(fieldId, user)
-        @socket.on 'fieldBlur',  (fieldId, user) => @fieldBlur(fieldId, user)
-            
+        @socket.on 'loadList', (users) => @loadList(users)
 
     #-----------------
     # Load the list of users into the bucket
     # If the list is empty, notify the user
-    loadList: (users) ->
-        @_addUser user for user in users
-        @alerts['empty'].render() if @_empty()
-        
-    #-----------------
-    # Add a user to the list
-    # Show/hide `Empty` notification as necessary
-    newUser: (user) ->
-        @_addUser user
-        @alerts['empty'].detach() if @alerts['empty'].isVisible()
+    loadList: (users) ->        
+        return @alerts['empty'].render() if _.isEmpty users
 
-    #-----------------
-    # Remove a user from the list
-    removeUser: (user) ->
-        _t = @
-        userId = @_mungeUserId(user.id)
-        $("#user-#{userId}", @el).fadeOut 'fast', ->
-            $(@).remove()
-            _t.alerts['empty'].render() if _t._empty()
+        ul = $("<ul/>")
+                        
+        for id, user of users
+            badge = $ scpr.Newsroom.templates.badge(user: user)
+            ul.append badge
+                
+        @el.html ul
 
-
-    #-----------------
-    # Field highlighting
-    fieldFocus: (fieldId, user) ->  
-        userId = @_mungeUserId(user.id)
-        @_mark ?= $("<div/>", class: "circle badge-mark", style: "background-color: #{user.color}")
-        $("label[for='#{fieldId}']").prepend @_mark
-        $("#user-#{userId}").addClass("highlighted")
-        
-    #-----------------
-    # Field de-highlighting
-    fieldBlur: (fieldId, user) ->
-        userId = @_mungeUserId(user.id)
-        @_mark.detach()
-        $("#user-#{userId}").removeClass("highlighted")
-    
-
-    #-----------------
-    # Munge the user badge ID to be compatible with jQuery. This is a temporary solution.
-    _mungeUserId: (userId) ->
-        userId.replace(/:/g, "-").replace(/\//g, "-") 
-    
-    #-----------------
-    # Add a user to the bucket by rendering the template
-    _addUser: (user) ->
-        badge = $ @options.badgeTemplate
-            user: user
-            userId: @_mungeUserId(user.id)
-            record: user.record
-            room: @room
-            
-        badge.hide()
-        @el.append badge
-        badge.fadeIn('fast')
-
-    #-----------------
-    # Check if @el is empty
-    _empty: ->
-        !@el.html().trim()

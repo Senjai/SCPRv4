@@ -4,7 +4,6 @@ describe Concern::Callbacks::SetPublishedAtCallback do
   subject { TestClass::Story.new(headline: "Headline", body: "Cool Body", status: ContentBase::STATUS_LIVE, slug: "headline") }
   
   describe "#should_set_published_at_to_now?" do
-    
     it "is true if publishing? is true and published_at if blank" do
       subject.stub(:publishing?) { true }
       subject.stub(:published_at) { nil }

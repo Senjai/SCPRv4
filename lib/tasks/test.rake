@@ -11,5 +11,5 @@ namespace :test do
   task :ar => :admin_resource
   
   desc "Run all library tests"
-  task :lib => [ :secretary, :admin_resource ]  
+  task :lib => [ :secretary, :admin_resource ]
 end

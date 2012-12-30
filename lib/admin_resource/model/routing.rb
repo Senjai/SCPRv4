@@ -10,19 +10,6 @@ module AdminResource
       extend ActiveSupport::Concern
             
       module ClassMethods
-        #--------------        
-        # Wrappers for ActiveModel::Naming
-        # NewsStory => news_stories
-        def route_key
-          @route_key ||= ActiveModel::Naming.route_key(self)
-        end
-        
-        #--------------
-        # NewsStory => news_story        
-        def singular_route_key
-          @singular_route_key ||= ActiveModel::Naming.singular_route_key(self)
-        end
-        
         #--------------
         # /admin/blog_entries/new
         def admin_new_path
@@ -34,15 +21,9 @@ module AdminResource
         def admin_index_path
           @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")
         end
-        
-        #--------------
-        # This should go away eventually
-        def django_admin_url
-          "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
-        end
       end
 
-      #--------------      
+      #--------------
       #--------------
       # /admin/blog_entries/20/edit
       def admin_edit_path
@@ -76,12 +57,6 @@ module AdminResource
       # http://scpr.org/blogs/2012/...
       def remote_link_path(options={})
         "http://#{Rails.application.config.scpr.host}#{self.link_path(options)}"
-      end
-      
-      #-------------
-      # This should go away eventually
-      def django_edit_url          
-        [self.class.django_admin_url, self.id || "add"].join "/"
       end
     end # Routing
   end # Model

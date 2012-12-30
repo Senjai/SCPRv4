@@ -1,28 +1,5 @@
 <div class="index-header clearfix">
-  <% if resource_class.admin.list.filters.present? %>
-    <div class="filters pull-left" style="margin-right:40px;">
-      <span class="filter label">Filter by:</span>
-  
-      <%= form_tag resource_class.admin_index_path, method: :get, class: "form-inline" do %>
-        <% resource_class.admin.list.filters.each do |filter| %>
-          <%= select_tag filter.attribute, 
-            options_for_select(filter.collection.call, params[:filter].present? ? params[:filter][filter.attribute] : nil), 
-            prompt: filter.title, name: "filter[#{filter.attribute}]", class: "input-medium" %>
-        <% end %>
-      
-        <%= submit_tag "Go", class: "btn" %>
-      
-        <a href="<%=request.path%>" style="margin-left:10px;"><small>Clear Filters</small></a>
-      <% end %>
-    </div>
-  <% end %>
-  
-  <div class="search pull-left">
-    <%= form_tag admin_search_path(resource: resource_class.route_key), method: :get, class: "form-search" do %>
-      <%= text_field_tag "query", params[:query], class: "search-query input-medium" %>
-      <%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
-    <% end %>
-  </div>
-  
-  <%= link_to "Add #{resource_class.to_s.titleize}", url_for([:new, :admin, resource_class.to_s.underscore]), class: "btn btn-success pull-right" %>
+  <%= render "/admin/shared/filters" %>
+  <%= render "/admin/shared/search_form" %>
+  <%= render "/admin/shared/add_link" %>
 </div>
