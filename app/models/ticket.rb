@@ -11,4 +11,15 @@ class Ticket < ActiveRecord::Base
   scope :closed, -> { where(status: STATUS_CLOSED) }
   
   belongs_to :user, class_name: "AdminUser"
+  
+  before_save :set_default_agree_count
+  before_save :set_default_status
+  
+  def set_default_agree_count
+    self.agrees = 1
+  end
+  
+  def set_default_status
+    self.status = STATUS_OPEN
+  end
 end

@@ -1,7 +1,6 @@
-class TicketsController < AdminController::Base
+class Admin::TicketsController < Admin::BaseController
   respond_to :html, :js
-  
-  before_filter :get_record, only: [:agree, :update, :destroy]
+  before_filter :get_ticket, only: [:agree, :update, :destroy]
   
   #----------------
   
@@ -13,7 +12,7 @@ class TicketsController < AdminController::Base
   #----------------
   
   def new
-    @record  = Ticket.new
+    @ticket  = Ticket.new
     @tickets = Ticket.open
     respond_with @ticket
   end
@@ -21,9 +20,10 @@ class TicketsController < AdminController::Base
   #----------------
   
   def create
-    @record = Ticket.new(params[:ticket])
-    @record.save
-    # do more things
+    @ticket = Ticket.new(params[:ticket])
+    @ticket.user = admin_user
+    @ticket.save
+    respond_with @ticket
   end
 
   #----------------
@@ -34,14 +34,14 @@ class TicketsController < AdminController::Base
   #----------------
   
   def update
-    @record.update_attributes(params[:ticket])
+    @ticket.update_attributes(params[:ticket])
     # do more things
   end
 
   #----------------
   
   def destroy
-    @record.destroy
+    @ticket.destroy
     # do more things
   end
   
@@ -49,7 +49,7 @@ class TicketsController < AdminController::Base
   
   protected
   
-  def get_record
-    @record = Ticket.find(params[:id])
+  def get_ticket
+    @ticket = Ticket.find(params[:id])
   end
 end

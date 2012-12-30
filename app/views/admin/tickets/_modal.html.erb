@@ -5,7 +5,18 @@
   </div>
 
   <div class="modal-body">
-    Form goes here.
+    <% if @tickets.present? %>
+      <h4>Recent Tickets</h4>
+      <ul>
+        <% @tickets.each do |ticket| %>
+          <li><%= ticket.summary %></li>
+        <% end %>
+      </ul>
+      
+      <h5>Don't see your issue? Submit a new one:</h5>
+    <% end %>
+    
+    <%= render "/admin/tickets/form" %>
   </div>
 
   <div class="modal-footer">

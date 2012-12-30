@@ -1,7 +1,7 @@
-<%= simple_form_for @record do |f| %>
+<%= simple_form_for [:admin, @ticket], remote: true do |f| %>
   <%= f.input :summary, hint: "A one-sentence summary of the issue" %>
-  <%= f.input :description, hint: "Describe the problem in detail. Include steps to reproduce, if applicable." %>
+  <%= f.input :description, hint: "Describe the problem in detail. Include steps to reproduce, if applicable.", input_html: { class: "tiny span4" } %>
   <%= f.input :browser_info, hint: "Include NAME and VERSION (eg. Chrome 23.0)" %>
   <%= f.input :link, hint: "The page where you are seeing the issue" %>
-  <%= f.submit %>
+  <%= f.button :submit, class: "btn" %>
 <% end %>
