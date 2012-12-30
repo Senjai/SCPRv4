@@ -17,7 +17,7 @@ class Admin::NprStoriesController < Admin::BaseController
   #--------------
   
   def import
-    @record.async_import(admin_user.username)
+    @record.async_import
     render "import"
   end
   

@@ -15,13 +15,25 @@ module AdminResource
     #--------------
     # Publish the message
     def publish
-      Net::HTTP.post_form(URI.parse(url), data)
+      response = connection.post do |request|
+        request.url @path
+        request.params = @data
+      end
+      
+      response
     end
-
+    
     #--------------
     
-    def url
-      File.join(Rails.application.config.node.server, self.path)
+    private
+    
+    def connection
+      @connection ||= begin
+        Faraday.new(url: Rails.application.config.node.server) do |conn|
+          conn.response :json
+          conn.adapter Faraday.default_adapter
+        end
+      end
     end
-  end
-end
+  end # Hook
+end # AdminResource

@@ -46,8 +46,8 @@ class NprStory < ActiveRecord::Base
 
   #---------------
   
-  def async_import(username)
-    Resque.enqueue(Job::NprImport, self.id, username)
+  def async_import
+    Resque.enqueue(Job::NprImport, self.id)
   end
   
   #---------------
@@ -61,6 +61,7 @@ class NprStory < ActiveRecord::Base
     news_story = NewsStory.new(
       :news_agency    => "NPR",
       :source         => "npr",
+      :status         => ContentBase::STATUS_DRAFT,
       :headline       => npr_story.title,
       :teaser         => npr_story.teaser,
       :short_headline => npr_story.shortTitle,
@@ -80,11 +81,10 @@ class NprStory < ActiveRecord::Base
       assethost = AssetHost::Client.new(auth_token: API_KEYS["assethost"]["token"])
       
       asset = assethost.create(
-        :hidden  => true,
         :url     => image.src,
         :title   => image.title,
         :caption => image.caption,
-        :owner   => "#{image.producer}/#{image.provider}",
+        :owner   => [image.producer, image.provider].join("/"),
         :note    => "Imported from NPR: #{npr_story.link_for('html')}"
       )
       
@@ -100,6 +100,7 @@ class NprStory < ActiveRecord::Base
     end
     
     news_story.save!
-    npr_story.update_attribute(:new, false)
+    self.update_attribute(:new, false)
+    news_story
   end
 end

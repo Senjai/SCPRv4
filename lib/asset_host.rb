@@ -4,5 +4,8 @@
 # API interaction with AssetHost
 #
 module AssetHost
-  API_ROOT = Rails.application.config.assethost.server
+  ah       = Rails.application.config.assethost
+  api_root = ah.server
+  
+  API_ROOT = "http://#{api_root}"
 end

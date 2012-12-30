@@ -12,11 +12,16 @@
 
 <% content_for :footerjs do %>
   <script>
+  // Create a room for this waiting page
+  // And listen for the "Finished task" message from Newsroom
+  // for this room.
     newsroom = new scpr.Newsroom(
-      "<%= room_id %>", // room ID
+      "<%= room_info[:id] %>", // room ID
       <%= j admin_user.to_json.html_safe %>, // user info
       { "record": <%= j record.to_json.html_safe %>,
         "el": "#work_status" }
     );
+    
+    listener = new scpr.Newsroom.JobListener();
   </script>
 <% end %>

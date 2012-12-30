@@ -19,11 +19,11 @@ module AssetHost
     # * caption -
     def create(params={})
       response = connection.post do |request|
-        request.url "as_asset"
+        request.url "/api/as_asset"
         request.params = @params.merge(params)
         request.params['auth_token'] = @auth_token
       end
-
+      
       response.body
     end
 
@@ -35,8 +35,8 @@ module AssetHost
 
     def connection
       @connection ||= begin
-        Faraday.new AssetHost::API_ROOT do |conn|
-          conn.response :json, content_type: /\bjson$/
+        Faraday.new(url: AssetHost::API_ROOT) do |conn|
+          conn.response :json
           conn.adapter Faraday.default_adapter
         end
       end

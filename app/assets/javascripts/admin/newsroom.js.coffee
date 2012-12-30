@@ -25,7 +25,7 @@ class scpr.Newsroom
     #-----------------
     # Job listener just listens for a message to a socket and redirects
     class @JobListener
-        constructor: (@user) ->
+        constructor: ->
             $("#spinner").spin()
             
             @alerts  = 
@@ -33,10 +33,12 @@ class scpr.Newsroom
 
             # If io (sockets) isn't available, error and return
             # Otheriwse connect to Socket.io
-            return @alerts['offline'].render() if !io?
+            if !io?
+                $("#spinner").spin(false)
+                $("#work_status").html()
+                return @alerts['offline'].render() 
+                
             @socket  = io.connect scpr.NODE
-            @socket.emit 'task-waiting', @user
-            
             @socket.on 'finished-task', (data) ->
                 $("#work_status").html("Finished!")
                 $("#spinner").spin(false)
