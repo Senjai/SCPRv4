@@ -1,13 +1,11 @@
 // We want content input to always be pretty big
 .simple_form {
-
+  input:not([type=submit]) {
+      @extend .span4;
+  }
 }
 
 form.simple_form {
-    input:not([type=submit]) {
-        @extend .span4;
-    }
-
     table.field-rows {
       td, th {
         text-align: left; 
