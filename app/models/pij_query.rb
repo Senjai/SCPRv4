@@ -1,6 +1,7 @@
 class PijQuery < ActiveRecord::Base
   include Concern::Scopes::SinceScope
   include Concern::Associations::AssetAssociation
+  include Concern::Callbacks::GenerateSlugCallback
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
   

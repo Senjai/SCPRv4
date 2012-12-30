@@ -11,6 +11,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Callbacks::GenerateSlugCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
