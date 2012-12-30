@@ -22,7 +22,7 @@ form.simple_form {
         @extend .span7;
     }
     
-    input {
+    input, textarea {
       &.span1 { @extend .span1 }
       &.span2 { @extend .span2 }
       &.span3 { @extend .span3 }
