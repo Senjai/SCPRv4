@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source :rubygems
 
 ## Core
 gem 'rails', "~> 3.2"
@@ -16,7 +16,7 @@ gem "resque", "~> 1.20"
 
 
 ## Views
-gem 'kaminari', github: "bricker/kaminari"
+gem 'kaminari', github: "amatsuda/kaminari"
 gem 'tinymce-rails', "~> 3.5"
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
@@ -47,7 +47,6 @@ gem 'npr', github: "bricker/npr"
 
 group :assets do
   gem "eco", "~> 1.0"
-  gem "sass", github: 'nex3/sass'
   gem 'sass-rails', "~> 3.2"
   gem 'bootstrap-sass', '~> 2.1'
   gem "compass-rails"

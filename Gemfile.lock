@@ -1,13 +1,6 @@
 GIT
-  remote: git://github.com/SCPR/redis-content-store.git
-  revision: 7838b07daee3c8ed9c1f0205e7f4fa9b4ff867c7
-  specs:
-    redis-content-store (3.2.2)
-      redis-activesupport (~> 3.2.2)
-
-GIT
-  remote: git://github.com/bricker/kaminari.git
-  revision: 873dcf9a90527307e8d9d1b6b90b442682ebe292
+  remote: git://github.com/amatsuda/kaminari.git
+  revision: d63ac017a9d115879e3c68684911cc7dea86c025
   specs:
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
@@ -20,12 +13,6 @@ GIT
     npr (0.1.2)
       faraday (>= 0.8.0)
       faraday_middleware (>= 0.9.0)
-
-GIT
-  remote: git://github.com/nex3/sass.git
-  revision: f2051741fd9b7025a9ad2a9601cabeaea16a9c35
-  specs:
-    sass (3.3.0.alpha.0)
 
 GIT
   remote: git://github.com/pauldix/feedzirra.git
@@ -241,13 +228,8 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     redis (3.0.2)
-    redis-activesupport (3.2.3)
-      activesupport (~> 3.2.3)
-      redis-store (~> 1.1.0)
     redis-namespace (1.2.1)
       redis (~> 3.0.0)
-    redis-store (1.1.3)
-      redis (>= 2.2.0)
     resque (1.23.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.0)
@@ -273,6 +255,8 @@ GEM
     rubyzip (0.9.9)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
+      nokogiri (>= 1.4.4, < 1.6)
+    sass (3.2.4)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -374,12 +358,11 @@ DEPENDENCIES
   rails (~> 3.2)
   rb-fsevent (~> 0.9)
   rb-readline
-  redis-content-store!
   resque (~> 1.20)
   rspec-rails (~> 2.11)
   ruby-mp3info
   sanitize (~> 2.0)
-  sass!
+  sass
   sass-rails (~> 3.2)
   shoulda-matchers
   simple_form (~> 2.0)
