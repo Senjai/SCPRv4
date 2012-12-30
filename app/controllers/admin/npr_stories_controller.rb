@@ -17,6 +17,7 @@ class Admin::NprStoriesController < Admin::BaseController
   #--------------
   
   def import
+    breadcrumb "Importing", nil, @record.to_title
     @record.async_import
     render "import"
   end
