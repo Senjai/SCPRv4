@@ -1,5 +1,4 @@
 <li class="user-badge clearfix" id="user-<%=@userId%>">
-  <div class="circle badge-mark" style="background-color:<%=@user.color%>"></div>
   <% if @user.headshot?: %>
     <img src="<%=@user.headshot %>" class="headshot" />
   <% end %>

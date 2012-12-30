@@ -28,11 +28,7 @@ ul.small {
       max-width: 60px;
       float: left;
     }
-    
-    .badge-mark {
-      right: 10px;
-    }
-    
+
     img {
         padding: 5px;
     }
@@ -42,25 +38,7 @@ ul.small {
   .headshot, .editing { display: none; }
 }
 
-.circle {
-    @include border-radius(20px);
-    width: 20px;
-    height: 20px;
-}
-
-// So we can position absolute inside
-.simple_form label {
-    position: relative;
-    .badge-mark {
-        left: 10px;
-    }
-}
-
-.badge-mark {
-    position: absolute;
-}
-
-ul.viewers {
+.viewers > ul {
     margin-left: 0;
     list-style: none;
     li { 
