@@ -14,4 +14,20 @@ describe AdminResource::Controller::Helpers do
       controller._helper_methods.should include :resource_class
     end
   end
+  
+  #------------------------
+  
+  describe "#notice" do
+    context "HTML request" do
+      it "adds the notice to flash" do
+        pending
+      end
+    end
+    
+    context "non-HTML request" do
+      it "doesn't add anything to flash" do
+        pending
+      end
+    end
+  end
 end

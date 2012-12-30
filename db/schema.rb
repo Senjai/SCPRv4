@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121211045802) do
+ActiveRecord::Schema.define(:version => 20121221221537) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -629,9 +629,9 @@ ActiveRecord::Schema.define(:version => 20121211045802) do
     t.integer "content_id",                                              :null => false
     t.integer "rel_django_content_type_id"
     t.integer "related_id",                                              :null => false
-    t.integer "flag",                                     :default => 0, :null => false
     t.string  "content_type",               :limit => 20
     t.string  "related_type",               :limit => 20
+    t.integer "position",                                 :default => 0, :null => false
   end
 
   add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
@@ -658,7 +658,6 @@ ActiveRecord::Schema.define(:version => 20121211045802) do
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
     t.integer  "category_id"
-    t.string   "partner"
   end
 
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
@@ -947,14 +946,16 @@ ActiveRecord::Schema.define(:version => 20121211045802) do
     t.integer  "user_id"
     t.string   "browser_info"
     t.string   "link"
-    t.integer  "agrees"
     t.string   "summary"
     t.text     "description"
+    t.integer  "agrees"
+    t.integer  "status"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
   add_index "tickets", ["agrees"], :name => "index_tickets_on_agrees"
+  add_index "tickets", ["status"], :name => "index_tickets_on_status"
   add_index "tickets", ["user_id"], :name => "index_tickets_on_user_id"
 
   create_table "users_userprofile", :force => true do |t|

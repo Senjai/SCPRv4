@@ -39,7 +39,10 @@ describe Podcast do
         index_sphinx
 
         podcast = create :podcast, source: episode.show, item_type: "episodes"
-        podcast.content.to_a.should eq [episode]
+        
+        ts_retry(2) do
+          podcast.content.to_a.should eq [episode]
+        end
       end
       
       it "grabs segments when item_type is segments" do

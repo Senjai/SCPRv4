@@ -1,5 +1,6 @@
 class Bio < ActiveRecord::Base
   include Concern::Validations::SlugValidation
+  include Concern::Associations::RelatedLinksAssociation
   
   ROUTE_KEY       = "bio"
   self.table_name = 'bios_bio'
@@ -52,6 +53,16 @@ class Bio < ActiveRecord::Base
     indexes email
   end
     
+  #----------
+
+  class << self
+    # Maps all records to an array of arrays, to be
+    # passed into a Rails select helper
+    def select_collection
+      self.all.map { |bio| [bio.name, bio.id] }
+    end
+  end
+  
   #----------
   
   def indexed_bylines(page=1, per_page=15)

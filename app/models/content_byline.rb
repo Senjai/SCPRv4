@@ -1,6 +1,7 @@
 class ContentByline < ActiveRecord::Base 
   self.table_name =  "contentbase_contentbyline"
   
+  ROLE_EXTRA        = -1
   ROLE_PRIMARY      = 0
   ROLE_SECONDARY    = 1
   ROLE_CONTRIBUTING = 2
@@ -8,14 +9,18 @@ class ContentByline < ActiveRecord::Base
   ROLE_TEXT = {
       ROLE_PRIMARY      => "Primary",
       ROLE_SECONDARY    => "Secondary",
-      ROLE_CONTRIBUTING => "Contributing"
+      ROLE_CONTRIBUTING => "Contributing",
+      ROLE_EXTRA        => "Extra"
   }
   
   ROLE_MAP = {
     :primary      => ROLE_PRIMARY,
     :secondary    => ROLE_SECONDARY,
-    :contributing => ROLE_CONTRIBUTING
+    :contributing => ROLE_CONTRIBUTING,
+    :extra        => ROLE_EXTRA
   }
+
+  ROLES = ROLE_TEXT.map { |k,v| [v, k] }[0..2] # TODO this is terrible
   
   map_content_type_for_django
   belongs_to :content, polymorphic: true
@@ -34,15 +39,12 @@ class ContentByline < ActiveRecord::Base
   
   class << self
     #-----------------------
-    # Takes an array of strings and concatenates them intelligently
+    # Takes a hash of bylines and concatenates them intelligently
     # It is assumed that the strings passed-in will be:
-    # 1. Primary byline
-    # 2. Secondary byline
-    # 3. Extra elements
     def digest(elements)
-      primary   = elements[0]
-      secondary = elements[1]
-      extra     = elements[2]
+      primary   = elements[:primary]
+      secondary = elements[:secondary]
+      extra     = elements[:extra]
       
       names = [primary, secondary].reject { |e| e.blank? }.join(" with ")
       [names, extra].reject { |e| e.blank? }.join(" | ")

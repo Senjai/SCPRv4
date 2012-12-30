@@ -5,28 +5,28 @@ class Blog < ActiveRecord::Base
   has_secretary
   ROUTE_KEY = "blog"
   
-  # -------------------
+  #-------------------
   # Scopes
   scope :active, -> { where(is_active: true) }
   
-  # -------------------
+  #-------------------
   # Associations
   has_many :entries, order: 'published_at desc', class_name: "BlogEntry"
   has_many :tags, through: :entries
   belongs_to :missed_it_bucket
-  has_many :authors, through: :blog_authors, order: "position"
+  has_many :authors, through: :blog_authors
   has_many :blog_authors
   has_many :blog_categories
   
-  # -------------------
+  #-------------------
   # Validations
   validates :name, presence: true
   validates :slug, uniqueness: true
 
-  # -------------------
+  #-------------------
   # Callbacks
   
-  # -------------------
+  #-------------------
   # Administration
   administrate do
     define_list do
@@ -40,7 +40,7 @@ class Blog < ActiveRecord::Base
     end
   end
   
-  # ----------------
+  #----------------
   # Sphinx
   acts_as_searchable
   
@@ -48,7 +48,7 @@ class Blog < ActiveRecord::Base
     indexes name
   end
   
-  # -------------------
+  #-------------------
   
   class << self
     def cache_remote_entries
@@ -60,9 +60,16 @@ class Blog < ActiveRecord::Base
         end
       end
     end
+    
+    #-------------------
+    # Maps all records to an array of arrays, to be
+    # passed into a Rails select helper
+    def select_collection
+      self.all.map { |blog| [blog.to_title, blog.id] }
+    end
   end
   
-  # -------------------
+  #-------------------
   
   def route_hash
     return {} if !self.persisted? or !self.is_active?

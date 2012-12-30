@@ -10,7 +10,6 @@ require 'fakeweb'
 require 'database_cleaner'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each             { |f| require f }
-Dir[Rails.root.join("spec/admin_resource/models/*.rb")].each  { |f| require f }
 Dir[Rails.root.join("lib/admin_resource/spec/db/*.rb")].each  { |f| require f }
 
 FakeWeb.allow_net_connect = false

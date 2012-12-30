@@ -35,13 +35,13 @@ module FormFillers
       
       if page.has_field? field_id
         value = record.send(attribute)
-        interact!(field_id, value)
+        interact(field_id, value)
       end
     end
     
     #----------------
     
-    def interact!(field_id, value)
+    def interact(field_id, value)
       field = find_field(field_id)
       
       case field.tag_name

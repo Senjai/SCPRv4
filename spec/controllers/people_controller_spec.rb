@@ -1,52 +1,54 @@
 require "spec_helper"
 
 describe PeopleController do
-  render_views
-  
-  describe "GET /index" do    
-    before :each do
-      create_list :bio, 2, is_public: false
-      create_list :bio, 2, is_public: true
-      get :index
+  describe "GET /index" do
+    describe "view" do
+      render_views
+      
+      it "renders the view" do
+        create :bio, is_public: true
+        get :index
+      end
     end
     
-    it "responds with success" do
-      response.should be_success
-    end
+    #-----------------
     
-    it "only shows public bios" do
-      assigns(:bios).reject { |b| b.is_public == true }.should be_blank
-    end
-    
-    it "orders bio's last name" do
-      assigns(:bios).to_sql.should match /order by last_name/i
+    describe "controller" do
+      before :each do
+        create :bio, is_public: false
+        create :bio, is_public: true
+        get :index
+      end
+
+      it "only shows public bios" do
+        assigns(:bios).reject { |b| b.is_public == true }.should be_blank
+      end
     end
   end
+
+  #-------------------
   
-  describe "GET /bio" do
-    let(:bio) { create :bio }
-    
-    before :all do
-      setup_sphinx
-      make_content(1, byline_count: 1)
-      index_sphinx
+  describe "GET /bio" do    
+    describe "view" do
+      render_views
+      
+      it "renders the view" do
+        content = create :content_shell
+        bylines = create_list :byline, 2, content: content
+        Bio.any_instance.should_receive(:indexed_bylines).and_return(Kaminari.paginate_array(bylines).page(1))
+        
+        bio = create :bio
+        get :bio, slug: bio.slug
+      end
     end
     
-    after :all do
-      teardown_sphinx
-    end
+    #-------------------
     
-    it "returns a Bio object" do
-      pending "Sphinx"
-      #get :bio, name: bio.slug
-      #assigns(:bio).should be_a Bio
-    end
-    
-    it "redirects with flash message if the bio isn't found" do
-      pending "Thinking Sphinx"
-      #get :bio, name: "noname"
-      #response.should be_redirect
-      #flash[:alert].should be_present 
+    describe "controller" do          
+      it "redirects if the bio isn't found" do
+        get :bio, slug: "nonsense"
+        response.should be_redirect
+      end
     end
   end
 end

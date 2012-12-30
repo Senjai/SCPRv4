@@ -276,7 +276,7 @@ $navHeight: 36px;
             min-height:$baseline * 10;
             position:absolute;
             z-index: 84;
-            $mega-shadow:0 2px 3px lighten($gray, 10%);
+            $mega-shadow:0 3px 3px lighten($gray, 10%);
             @include box-shadow($mega-shadow);
             
             nav {

@@ -1,0 +1,29 @@
+<%= form_block "Basic Information" do %>
+  <%= f.input :title %>
+  <%= f.section "slug" %>
+  <%= f.input :teaser, as: :string, hint: "Shown on summary/list pages that reference the program. Keep it to a sentence or so.", input_html: { class: "wide" } %>
+  <%= f.input :description, hint: "Shown on the program's page. Be as descriptive as you like (hosts, topics, staff, etc.)", input_html: { class: "tiny" } %>
+<% end %>
+
+<%= form_block "Who/When" do %>
+  <%= f.input :host %>
+  <%= f.association :blog %>
+  <%= f.input :air_status, collection: KpccProgram::AIR_STATUS, include_blank: false %>
+  <%= f.input :airtime, hint: "Times this program can be heard" %>
+<% end %>
+
+<%= form_block "Display Options" do %>
+  <%= f.input :display_episodes, hint: "Does this program use episodes to group segments?" %>
+  <%= f.input :display_segments, hint: "Should individual segments be displayed on the program page?" %>
+  <%= f.input :audio_dir, label: "Audio directory" %>
+  <%= f.association :missed_it_bucket %>
+<% end %>
+
+<%= form_block "Links" do %>
+  <%= f.input :podcast_url %>
+  <%= f.input :rss_url %>
+  <%= f.input :twitter_url, label: "Twitter account", hint: "Without the '@' sign: @kpcc -> kpcc" %>
+  <%= f.input :facebook_url %>
+<% end %>
+
+<%= f.section "related_links" %>

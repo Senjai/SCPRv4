@@ -153,6 +153,16 @@ Scprv4::Application.routes.draw do
   
   
   #------------------
+
+  namespace :api do
+    match '/api/content/' => "api/content#options", constraints: { method: 'OPTIONS' }
+    
+    get '/content'        => 'api#index',  defaults: { format: :json }
+    get '/content/key'    => 'api#show',   defaults: { format: :json }
+    get '/content/by_url' => 'api#by_url', defaults: { format: :json }
+  end
+  
+  #------------------
   
   namespace :dashboard do
     match '/sections' => 'main#sections', :as => :sections
@@ -224,6 +234,10 @@ Scprv4::Application.routes.draw do
       
       resources :tickets, except: [:edit] do
         put :agree, on: :member
+      end
+      
+      resources :npr_stories, only: [:index, :destroy] do
+        post "import", as: :import, on: :member
       end
       
       get "/activity"                                        => "versions#activity",  as: :activity

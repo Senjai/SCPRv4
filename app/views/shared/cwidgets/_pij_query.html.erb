@@ -1,4 +1,4 @@
-<% if content.queries.present? %>
+<% if content.related_links.query.present? %>
   <aside class="pij-query cbase">
     <div class="row-fluid">
       <div class="span6 row-title">
@@ -6,7 +6,7 @@
       </div>
       <div class="span18">
         <ul>
-          <% content.queries.each do |query| %>
+          <% content.related_links.query.each do |query| %>
             <li><%= link_to query.title, query.link %></li>
           <% end %>
         </ul>

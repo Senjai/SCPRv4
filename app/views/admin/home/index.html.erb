@@ -130,7 +130,7 @@
       <div class="span4">
         <h3>Current Activity</h3>
         <hr />
-        <ul class="viewers" id="newsroom-dashboard_currently-active"></ul>
+        <div class="viewers" id="newsroom-dashboard_currently-active"></ul>
       </div> <!-- span3 -->
     </div> <!-- row fluid -->
   </div> <!-- span9 -->
@@ -139,11 +139,9 @@
 <% content_for :footerjs do %>
 <script type="text/javascript">
   newsroom = new scpr.Newsroom(
-    '<%= j Rails.application.config.node.server %>', // server info
-    "<%= j({ id: 'dashboard', type: 'Inactive'}.to_json.html_safe) %>", // room info
-    "<%= j admin_user.to_json.html_safe %>", // user info
-    null, // No object for the dashboard
-    { el: "#newsroom-dashboard_currently-active" }
+    "dashboard", // room ID
+    <%= j admin_user.to_json.html_safe %>, // user info
+    { "el": "#newsroom-dashboard_currently-active" }
   );
 </script>
 <% end %>

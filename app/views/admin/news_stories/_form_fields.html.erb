@@ -1,6 +1,7 @@
 <%= f.section "full_details" %>
 <%= f.section "short_details" %>
 <%= f.section "publishing" %>
+<%= f.section "bylines" %>
 
 <%= form_block "Meta" do %>
   <%= f.input :locale, collection: NewsStory::LOCALES, include_blank: true, selected: record.locale || NewsStory::LOCALES[0] %>
@@ -16,3 +17,5 @@
 <% end %>
 
 <%= f.section "audio" %>
+<%= f.section "related_links" %>
+<%= f.section "related_content" %>

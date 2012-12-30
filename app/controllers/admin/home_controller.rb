@@ -1,5 +1,7 @@
 class Admin::HomeController < Admin::BaseController
   def index
+    breadcrumb "Dashboard", admin_root_path
+    
     # Grab registered model groups for the Navigation
     @nav_groups = AdminResource.config.nav_groups
     

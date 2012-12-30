@@ -1,8 +1,5 @@
 <div class="index-header clearfix">
-  <%= form_tag admin_search_path(resource: resource_class.route_key), method: :get, class: "form-search pull-left" do %>
-    <%= text_field_tag "query", params[:query], class: "search-query" %>
-    <%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
-  <% end %>
-
-  <%= link_to "Add #{resource_class.to_s.titleize}", url_for([:new, :admin, resource_class.to_s.underscore]), class: "btn btn-success pull-right" %>
+  <%= render "/admin/shared/filters" %>
+  <%= render "/admin/shared/search_form" %>
+  <%= render "/admin/shared/add_link" %>
 </div>

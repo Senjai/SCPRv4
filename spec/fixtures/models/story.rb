@@ -14,6 +14,7 @@ module TestClass
     include Concern::Associations::CategoryAssociation
     
     include Concern::Callbacks::SetPublishedAtCallback
+    include Concern::Callbacks::GenerateSlugCallback
     
     include Concern::Methods::CommentMethods
     include Concern::Methods::HeadlineMethods

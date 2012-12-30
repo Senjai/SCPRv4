@@ -9,9 +9,14 @@
 <%= form_block "Media" do %>
   <%= f.input :feed_url %>
   <%= f.input :is_news %>
+  <%= f.association :missed_it_bucket %>
 <% end %>
 
 <%= form_block "Remote" do %>
   <%= f.input :is_remote %>
   <%= f.input :custom_url %>
+<% end %>
+
+<%= form_block "Hosts" do %>
+  <%= f.association :authors %>
 <% end %>

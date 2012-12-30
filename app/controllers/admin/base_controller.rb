@@ -5,7 +5,9 @@ class Admin::BaseController < ActionController::Base
   protect_from_forgery
   
   layout 'admin'
-  before_filter :require_admin, :root_breadcrumb, :set_sections
+  before_filter :require_admin
+  before_filter :set_sections
+  before_filter :root_breadcrumb
   
   #------------------------
   
@@ -52,7 +54,7 @@ class Admin::BaseController < ActionController::Base
   #------------------------
   # Always want to add this link to the Breadcrumbs
   def root_breadcrumb
-    breadcrumb "KPCC Admin", admin_root_path
+    breadcrumb "Admin", admin_root_path
   end
 
   #------------------------
