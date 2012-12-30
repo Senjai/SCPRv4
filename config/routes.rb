@@ -221,7 +221,11 @@ Scprv4::Application.routes.draw do
       resources :featured_comments
       resources :data_points
       ## -- END AdminResource --  ##
-            
+      
+      resources :tickets, except: [:edit] do
+        put :agree, on: :member
+      end
+      
       get "/activity"                                        => "versions#activity",  as: :activity
       get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
       get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
