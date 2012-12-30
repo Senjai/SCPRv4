@@ -149,7 +149,7 @@ class NprStory < ActiveRecord::Base
         content_asset = ContentAsset.new(
           :asset_order => 0,
           :asset_id    => asset["id"],
-          :caption     => asset["caption"] || ""
+          :caption     => asset["caption"].to_s
         )
         
         news_story.assets << content_asset
