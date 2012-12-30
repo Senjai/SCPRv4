@@ -1,14 +1,6 @@
 #### Finders
-Then /^I should see that there is nothing to list$/ do
-  page.should have_css ".none-to-list"
-end
-
 Then /^I should see that there is nothing to list with the message "([^"]*)"$/ do |message|
   page.all(".none-to-list", text: message).should_not be_blank
-end
-
-Then /^there should be pagination$/ do
-  page.should have_css ".pagination"
 end
 
 Then /^I should see a success message$/ do
@@ -69,10 +61,6 @@ end
 # This assumes that the ID of the form uses underscores, which is how FormBuilder does it by default.
 When /^I submit the "([^"]*)" form$/ do |text|
   page.find("form[id*=#{text.gsub(/\s/, "_")}] *[type=submit]").click
-end
-
-When /^I am a robot that is fooled by hidden text fields$/ do
-  fill_in "content_email_lname", with: "Why, yes, I am a robot!"
 end
 
 When /^I click "(.*?)"$/ do |text|

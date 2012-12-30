@@ -15,7 +15,7 @@ module Concern
       #-------------------
       # Returns a nice string of bylines joined together
       def byline
-        ContentByline.digest self.joined_bylines(:primary, :secondary, :extra)
+        ContentByline.digest self.joined_bylines
       end
       
       #-------------------
@@ -50,14 +50,14 @@ module Concern
       # to just be an array of stirngs, it will always 
       # just be joined and isn't passed into the block.
       #
-      # Returns an array
-      def joined_bylines(*roles, &block)
-        elements = []
+      # Returns a hash
+      def joined_bylines(&block)
+        elements = {}
         
         # Go through each role and either pass that role's bylines
         # to the block, or just map to the display_name
         # Then convert to_sentence and push into elements
-        roles.each do |role|
+        ContentByline::ROLE_MAP.keys.each do |role|
           string = case role
           when :extra
             grouped_bylines[:extra].join(" | ")
@@ -67,7 +67,7 @@ module Concern
             strings.reject { |e| e.blank? }.to_sentence
           end
           
-          elements.push(string) if string.present?
+          elements[role] = string
         end
 
         elements
@@ -82,9 +82,8 @@ module Concern
       # This is to prevent multiple database queries.
       # Pass in one or more roles as a symbol. See
       # ContentByline::ROLE_MAP for possible arguments.
-      def bylines_by_role(*roles)
-        role_ids = roles.map { |role| ContentByline::ROLE_MAP[role] }
-        self.bylines.select { |b| role_ids.include? b.role  }
+      def bylines_by_role(role)
+        self.bylines.select { |b| b.role == ContentByline::ROLE_MAP[role] }
       end
     end # BylinesAssociation
   end # Associations

@@ -1,25 +1,6 @@
 require "spec_helper"
 
 describe ContentEmail do
-  describe "attributes" do
-    it { should respond_to :from_name }
-    it { should respond_to :from_name= }
-    it { should respond_to :from_email }
-    it { should respond_to :from_email= }
-    it { should respond_to :to_email }
-    it { should respond_to :to_email= }
-    it { should respond_to :subject }
-    it { should respond_to :subject= }
-    it { should respond_to :body }
-    it { should respond_to :body= }
-    it { should respond_to :lname }
-    it { should respond_to :lname= }
-    it { should respond_to :content }
-    it { should respond_to :content= }
-  end
-
-  #-----------
-
   describe "validations" do
     it { should validate_presence_of :from_email }
     it { should validate_presence_of :to_email }
@@ -29,14 +10,6 @@ describe ContentEmail do
     it { should_not allow_value("noway jose @ whatever").for(:to_email).with_message(/Invalid/) }
     it { should_not allow_value("nowayjose@whatever").for(:from_email).with_message(/Invalid/) }
     it { should ensure_length_of(:lname).is_at_most(0) }
-  end
-
-  #-----------
-
-  describe "persisted?" do
-    it "is false" do
-      build(:content_email).persisted?.should be_false
-    end
   end
 
   #-----------
@@ -61,6 +34,10 @@ describe ContentEmail do
   
   describe "save" do
     context "valid" do
+      after :each do
+        ActionMailer::Base.deliveries.clear
+      end
+      
       let(:content)       { create :news_story }
       let(:content_email) { build :content_email, 
                             from_email: "bricker@bricker.com", 
@@ -79,7 +56,7 @@ describe ContentEmail do
       end
     end
     
-    context "invalid" do
+    context "invalid" do      
       let(:content_email) { build :content_email, to_email: "invalid" }
 
       it "returns false" do
