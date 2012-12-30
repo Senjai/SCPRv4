@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe TicketsController do
+describe Admin::TicketsController do
   pending
 end
