@@ -35,7 +35,7 @@ small {
 /////////////////////////////////
 
 .fixed-breadcrumbs {
-  z-index: 0; // Make the drop-down header stuff visible
+  z-index: 1; // Make the drop-down header stuff visible
   margin-top: 40px;
   @include box-shadow(0 2px 6px rgba(0,0,0,.2));
 }
