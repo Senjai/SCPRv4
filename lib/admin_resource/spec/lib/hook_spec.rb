@@ -2,7 +2,7 @@ require File.expand_path("../../spec_helper", __FILE__)
 
 describe AdminResource::Hook do
   before :each do
-    @hook = AdminResource::Hook.new(action: "finished", user: "bricker")
+    @hook = AdminResource::Hook.new(path: "finished")
   end
   
   describe "#publish" do
