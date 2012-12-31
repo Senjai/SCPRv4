@@ -1,7 +1,14 @@
 module Publisher
   extend self
   
-  def publish(args={})
+  # Publish a message to redis
+  #
+  # Takes a hash of:
+  # * object
+  # * action
+  # * options
+  #
+  def publish(args)
     object  = args[:object]
     action  = args[:action]
     options = (args[:options] || {}).stringify_keys!
