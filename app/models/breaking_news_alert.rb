@@ -67,7 +67,7 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   #-------------------
   # Send the e-mail
-  def send_email
+  def publish_email
     if should_send_email?
       lyris = Lyris.new(self)
       

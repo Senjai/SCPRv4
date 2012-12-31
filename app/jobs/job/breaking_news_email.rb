@@ -11,7 +11,7 @@ module Job
     
     def self.perform(id)
       @alert = BreakingNewsAlert.find(id)
-      @alert.send_email
+      @alert.publish_email
     end
   end
 end

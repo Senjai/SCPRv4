@@ -1,0 +1,25 @@
+<%= form_block "Details" do %>
+  <%= f.input :alert_type, collection: BreakingNewsAlert::ALERT_TYPES.map { |k, v| [v, k] }, include_blank: false %>
+  <%= f.input :headline, input_html: { class: "wide" } %>
+  <%= f.input :teaser, input_html: { class: :tiny } %>
+  <%= f.input :alert_link, hint: "A full URL to more information", input_html: { class: "wide" } %>
+<% end %>
+
+<%= form_block "Actions" do %>
+  You can only send an e-mail once per alert. To send an email:
+  <ol>
+    <li>Select "Is Published"</li>
+    <li>Select "Send Email"</li>
+    <li>Save the alert</li>
+  </ol>
+  
+  <%= f.input :is_published, hint: "Make this alert public" %>
+  <%= f.input :visible, hint: "Show this alert on the website" %>
+  
+  <% if record.email_sent? %>
+    <div class="alert alert-info">An e-mail has already been sent for this alert.</div>
+  <% else %>
+    <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed" %>
+  <% end %>
+  
+<% end %>
