@@ -1,5 +1,6 @@
 class KpccProgram < ActiveRecord::Base
   include Concern::Validations::SlugValidation
+  include Concern::Associations::RelatedLinksAssociation
   
   self.table_name = 'programs_kpccprogram'
   ROUTE_KEY       = "program"
@@ -17,6 +18,8 @@ class KpccProgram < ActiveRecord::Base
     "archive"    => "No longer available",
     "hidden"     => "Not visible on site"
   }
+  
+  AIR_STATUS = PROGRAM_STATUS.map { |k, v| [v, k] }
   
   #-------------------
   # Scopes

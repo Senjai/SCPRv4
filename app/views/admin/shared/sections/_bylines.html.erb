@@ -1,0 +1,28 @@
+<%= form_block "Bylines" do %>
+  <% record.bylines.build %>
+  
+  <table class="field-rows">
+    <thead>
+      <tr>
+        <th>KPCC Bio</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    
+    <tfoot>
+      <tr>
+        <td colspan="10">
+          <%= f.link_to_add_fields(:bylines, title: "Add another Byline", build_target: "#bylines-fields") %>
+        </td>
+      </tr>
+    </tfoot>
+    
+    <tbody id="bylines-fields">
+      <% record.bylines.each do |byline| %>
+        <%= f.render_fields "byline", record: byline %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

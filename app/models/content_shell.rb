@@ -44,6 +44,9 @@ class ContentShell < ActiveRecord::Base
       column :bylines
       column :status
       column :published_at
+      
+      filter :site, collection: -> { ContentShell.select("distinct site").map { |c| c.site } }
+      filter :status, collection: -> { ContentBase.status_text_collect }
     end
   end
   include Concern::Methods::ContentJsonMethods

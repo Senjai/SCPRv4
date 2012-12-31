@@ -103,6 +103,11 @@ class scpr.TweetRotator
         
         
 #----------
+class scpr.PromoteFacebook
+    constructor: ->
+        $(document).ready =>
+            # Show callout to Like KPCC on Facebook if user came to scpr.org from Facebook.
+            $(".fb-callout").addClass "show"  unless document.referrer.search("facebook") is -1
 
 class scpr.SocialTools
     DefaultOptions:

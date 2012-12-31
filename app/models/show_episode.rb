@@ -3,7 +3,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
-  include Concern::Associations::BylinesAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Methods::StatusMethods
@@ -54,6 +53,9 @@ class ShowEpisode < ActiveRecord::Base
       column :air_date
       column :status
       column :published_at
+      
+      filter :show_id, collection: -> { KpccProgram.all.map { |program| [program.to_title, program.id] } }
+      filter :status, collection: -> { ContentBase.status_text_collect }
     end
   end
   include Concern::Methods::ContentJsonMethods
@@ -82,6 +84,21 @@ class ShowEpisode < ActiveRecord::Base
   # Teaser just returns the body.
   def teaser
     self.body
+  end
+
+  #----------
+  # Fake the byline
+  def byline
+    self.show.title
+  end
+  
+  #----------
+  
+  def json
+    super.merge({
+      :teaser         => self.teaser,
+      :short_headline => self.headline
+    })
   end
   
   #----------

@@ -49,6 +49,8 @@ class Flatpage < ActiveRecord::Base
       column :redirect_url
       column :title
       column :updated_at
+      
+      filter :is_public, collection: :boolean
     end
   end
 

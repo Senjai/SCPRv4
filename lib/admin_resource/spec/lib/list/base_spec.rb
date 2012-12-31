@@ -1,39 +1,34 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
 describe AdminResource::List::Base do
-  describe "attributes" do
-    it { should respond_to :order }
-    it { should respond_to :order= }
-    it { should respond_to :per_page }
-    it { should respond_to :per_page= }
-    it { should respond_to :columns }
-  end
   
   #--------------
   
+  let(:admin) { AdminResource::Admin.new(AdminResource::Test::Person) }
+  
   describe "initialize" do
     it "sets @columns to an empty array" do
-      list = AdminResource::List::Base.new
+      list = AdminResource::List::Base.new(admin)
       list.instance_variable_get(:@columns).should eq []
     end
     
     it "sets order to anything passed in" do
-      list = AdminResource::List::Base.new(order: "name desc")
+      list = AdminResource::List::Base.new(admin, order: "name desc")
       list.order.should eq "name desc"
     end
     
     it "sets order to default if nothing passed in" do
-      list = AdminResource::List::Base.new
+      list = AdminResource::List::Base.new(admin)
       list.order.should eq AdminResource::List::DEFAULTS[:order]
     end
     
     it "sets per_page to anything passed in" do
-      list = AdminResource::List::Base.new(per_page: 16)
+      list = AdminResource::List::Base.new(admin, per_page: 16)
       list.per_page.should eq 16
     end
     
     it "sets per_page to default is nothing passed in" do
-      list = AdminResource::List::Base.new
+      list = AdminResource::List::Base.new(admin)
       list.per_page.should eq AdminResource::List::DEFAULTS[:per_page]
     end
   end
@@ -41,7 +36,7 @@ describe AdminResource::List::Base do
   #--------------
 
   describe "column" do
-    let(:list)    { AdminResource::List::Base.new }
+    let(:list)    { AdminResource::List::Base.new(admin) }
 
     before :each do
       column = AdminResource::List::Column.new("name", list, {})
@@ -67,17 +62,17 @@ describe AdminResource::List::Base do
   
   describe "per_page=" do
     it "sets @per_page to nil if val is 'all'" do
-      list = AdminResource::List::Base.new(per_page: :all)
+      list = AdminResource::List::Base.new(admin, per_page: :all)
       list.per_page.should be_nil
     end
     
     it "sets @per_page to default if none specified" do
-      list = AdminResource::List::Base.new
+      list = AdminResource::List::Base.new(admin)
       list.per_page.should eq AdminResource::List::DEFAULTS[:per_page]
     end
     
     it "sets @per_page to passed-in value as an integer if specified" do
-      list = AdminResource::List::Base.new(per_page: "99")
+      list = AdminResource::List::Base.new(admin, per_page: "99")
       list.per_page.should eq 99
     end
   end

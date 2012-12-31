@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130235629) do
+ActiveRecord::Schema.define(:version => 20121230124902) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -626,12 +626,13 @@ ActiveRecord::Schema.define(:version => 20121130235629) do
 
   create_table "media_related", :force => true do |t|
     t.integer "django_content_type_id"
-    t.integer "content_id",                                              :null => false
+    t.integer "content_id",                               :null => false
     t.integer "rel_django_content_type_id"
-    t.integer "related_id",                                              :null => false
-    t.integer "flag",                                     :default => 0, :null => false
+    t.integer "related_id",                               :null => false
     t.string  "content_type",               :limit => 20
     t.string  "related_type",               :limit => 20
+    t.integer "flag",                                     :null => false
+    t.integer "position",                                 :null => false
   end
 
   add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
@@ -877,8 +878,10 @@ ActiveRecord::Schema.define(:version => 20121130235629) do
     t.integer  "status"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
+    t.integer  "category_id"
   end
 
+  add_index "shows_episode", ["category_id"], :name => "shows_episode_42dc49bc"
   add_index "shows_episode", ["show_id"], :name => "shows_episode_show_id"
   add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
 
@@ -939,6 +942,22 @@ ActiveRecord::Schema.define(:version => 20121130235629) do
   add_index "taggit_taggeditem", ["content_type", "content_id"], :name => "index_taggit_taggeditem_on_content_type_and_content_id"
   add_index "taggit_taggeditem", ["django_content_type_id"], :name => "taggit_taggeditem_e4470c6e"
   add_index "taggit_taggeditem", ["tag_id"], :name => "taggit_taggeditem_3747b463"
+
+  create_table "tickets", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "browser_info"
+    t.string   "link"
+    t.string   "summary"
+    t.text     "description"
+    t.integer  "agrees"
+    t.integer  "status"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "tickets", ["agrees"], :name => "index_tickets_on_agrees"
+  add_index "tickets", ["status"], :name => "index_tickets_on_status"
+  add_index "tickets", ["user_id"], :name => "index_tickets_on_user_id"
 
   create_table "users_userprofile", :force => true do |t|
     t.integer  "userid",                    :null => false

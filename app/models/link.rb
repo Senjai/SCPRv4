@@ -2,18 +2,43 @@ class Link < ActiveRecord::Base
   self.table_name   = 'media_link'
   self.primary_key = "id"
 
+  TYPES = [
+    ["Website", "website"],
+    ["Related Story", "related"],
+    ["PIJ Query", "query"],
+    ["Video (youtube, vimeo...)", "video"],
+    ["Facebook", "facebook"],
+    ["Twitter", "twitter"],
+    ["Document (pdf, doc, xls...)", "doc"],
+    ["RSS Feed (xml)", "rss"],
+    ["Podcast Feed (xml)", "podcast"],
+    ["Map", "map"],
+    ["Other", "other"]
+  ]
+  
+  #--------------
+  # Scopes
   default_scope where("content_type is not null")
+  scope :query, -> { where(link_type: "query") }
+  scope :normal, -> { where("link_type != ?", "query") }
 
-  map_content_type_for_django  
+  #--------------
+  # Association
+  map_content_type_for_django
   belongs_to :content, polymorphic: true
-    
+
+  #--------------
+  # Validation
+  validates :title, :link, presence: true
+  
+  #--------------
+  # Callbacks
+  
   #----------
   
   def domain
-    if !self.link
-      return nil
+    if self.link
+      URI.parse(URI.encode(self.link)).host
     end
-    
-    return domain = URI.parse(URI.encode(self.link)).host
   end
 end

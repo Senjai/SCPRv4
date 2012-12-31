@@ -11,6 +11,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Callbacks::GenerateSlugCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
@@ -33,9 +34,9 @@ class ShowSegment < ActiveRecord::Base
   
   #-------------------
   # Associations
-  belongs_to :show,   :class_name => "KpccProgram"
-  has_many :rundowns, :class_name => "ShowRundown", :foreign_key => "segment_id"
-  has_many :episodes, :through    => :rundowns, :source => :episode, :order => "air_date asc"
+  belongs_to :show,   class_name: "KpccProgram"
+  has_many :rundowns, class_name: "ShowRundown", foreign_key: "segment_id"
+  has_many :episodes, through: :rundowns, source: :episode, order: "air_date asc", autosave: true
   
   #-------------------
   # Validations
@@ -57,6 +58,9 @@ class ShowSegment < ActiveRecord::Base
       column :bylines
       column :published_at
       column :status
+      
+      filter :show_id, collection: -> { KpccProgram.all.map { |program| [program.to_title, program.id] } }
+      filter :status, collection: -> { ContentBase.status_text_collect }
     end
   end
   include Concern::Methods::ContentJsonMethods
@@ -87,6 +91,8 @@ class ShowSegment < ActiveRecord::Base
   def episode
     episodes.first
   end
+
+  #----------
   
   def sister_segments
     if episodes.present?
@@ -95,15 +101,11 @@ class ShowSegment < ActiveRecord::Base
       show.segments.published.where("shows_segment.id != ?", self.id).limit(5)
     end
   end
+
+  #----------
   
   def byline_extras
     [self.show.title]
-  end
-  
-  #----------
-  
-  def canFeature?
-    self.assets.present?
   end
   
   #----------

@@ -40,6 +40,10 @@ describe ContentEmailController do
                               to_email:   "bricker@kpcc.org" 
                             }
     end
+    
+    after :each do
+      ActionMailer::Base.deliveries.clear
+    end
 
     it "initializes a new ContentEmail with the form params" do
       message = assigns(:message)

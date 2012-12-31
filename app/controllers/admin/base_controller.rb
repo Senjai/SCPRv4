@@ -5,7 +5,10 @@ class Admin::BaseController < ActionController::Base
   protect_from_forgery
   
   layout 'admin'
-  before_filter :require_admin, :root_breadcrumb, :set_sections
+  before_filter :require_admin
+  before_filter :set_sections
+  before_filter :root_breadcrumb
+  before_filter :setup_tickets
   
   #------------------------
   
@@ -44,6 +47,15 @@ class Admin::BaseController < ActionController::Base
   
   protected
   
+  #------------------------
+  # We need a new Ticket on every page, since we're offering
+  # the ability to submit a ticket from any page in the CMS
+  def setup_tickets
+    @ticket  = Ticket.new
+    @tickets = Ticket.open
+  end
+  
+  #------------------------
   # Just setup the @sections variable so the views can add to it.
   def set_sections
     @sections = {}
@@ -52,7 +64,7 @@ class Admin::BaseController < ActionController::Base
   #------------------------
   # Always want to add this link to the Breadcrumbs
   def root_breadcrumb
-    breadcrumb "KPCC Admin", admin_root_path
+    breadcrumb "Admin", admin_root_path
   end
 
   #------------------------

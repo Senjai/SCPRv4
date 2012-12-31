@@ -18,24 +18,6 @@ describe AdminResource::Model::Routing do
       AdminResource::Test::Person.admin_index_path
     end
   end
-
-  #----------------
-  
-  describe "::route_key" do
-    it "uses ActiveModel's route_key method" do
-      ActiveModel::Naming.should_receive(:route_key)
-      AdminResource::Test::Person.route_key
-    end
-  end
-  
-  #----------------
-  
-  describe "::singular_route_key" do
-    it "uses ActiveModel's singular_route_key method" do
-      ActiveModel::Naming.should_receive(:singular_route_key)
-      AdminResource::Test::Person.singular_route_key
-    end
-  end
   
   #---------------------
   
@@ -83,6 +65,14 @@ describe AdminResource::Model::Routing do
   
   #----------------
   
+  describe "#route_hash" do
+    it "is just an empty hash, meant to be overridden" do
+      AdminResource::Test::Pidgeon.new.route_hash.should eq Hash.new
+    end
+  end
+  
+  #----------------
+  
   describe "#remote_link_path" do
     let(:person) { AdminResource::Test::Person.create(name: "Dude Bro") }
     
@@ -93,14 +83,6 @@ describe AdminResource::Model::Routing do
     
     it "contains the object's link path and configured remote URL" do
       person.remote_link_path.should eq "http://www.foodnstuff.com/people/linkpath"
-    end
-  end
-  
-  #----------------
-  
-  describe "#route_hash" do
-    it "is just an empty hash, meant to be overridden" do
-      AdminResource::Test::Pidgeon.new.route_hash.should eq Hash.new
     end
   end
 end

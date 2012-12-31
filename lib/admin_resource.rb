@@ -20,8 +20,10 @@ module AdminResource
   autoload :Error
   autoload :List
   autoload :Admin
+  autoload :Model
   autoload :Administrate
   autoload :Helpers
+  autoload :Controller
 end
 
 if defined?(ActiveRecord::Base)

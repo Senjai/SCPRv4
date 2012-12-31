@@ -1,0 +1,25 @@
+<div id="ticket-modal" class="modal hide fade" role="dialog">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">x</button>
+    <h3>Report a Problem</h3>
+  </div>
+
+  <div class="modal-body">
+    <% if @tickets.present? %>
+      <h4>Recent Tickets</h4>
+      <ul>
+        <% @tickets.each do |ticket| %>
+          <li><%= ticket.summary %></li>
+        <% end %>
+      </ul>
+      
+      <h5>Don't see your issue? Submit a new one:</h5>
+    <% end %>
+    
+    <%= render "/admin/tickets/form" %>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Close</button>
+  </div>
+</div>

@@ -1,24 +1,17 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
 describe AdminResource::List::Column do
+  let(:admin) { AdminResource::Admin.new(AdminResource::Test::Person) }
+
   describe "attributes" do
-    let(:list) { AdminResource::List::Base.new }
+    let(:list) { AdminResource::List::Base.new(admin) }
     subject { AdminResource::List::Column.new("name", list) }
-    
-    it { should respond_to :attribute }
-    it { should respond_to :attribute= }
-    it { should respond_to :header }
-    it { should respond_to :header= }
-    it { should respond_to :display }
-    it { should respond_to :display= }
   end
 
   #----------------
   
   describe "initialization" do
-    let(:list) {
-      AdminResource::List::Base.new
-    }
+    let(:list) { AdminResource::List::Base.new(admin) }
     
     let(:column) {
       AdminResource::List::Column.new("name", list, quick_edit: true, display: :display_full_name, header: "Full Name")
@@ -54,7 +47,7 @@ describe AdminResource::List::Column do
   #----------------
   
   describe "#header" do
-    let(:list) { AdminResource::List::Base.new }
+    let(:list) { AdminResource::List::Base.new(admin) }
     
     it "returns the header if passed in" do
       column = AdminResource::List::Column.new("name", list, header: "Person")
@@ -70,7 +63,7 @@ describe AdminResource::List::Column do
   #----------------
   
   describe "#quick_edit?" do
-    let(:list) { AdminResource::List::Base.new }
+    let(:list) { AdminResource::List::Base.new(admin) }
     
     it "is the same as #quick_edit" do
       column = AdminResource::List::Column.new("name", list, quick_edit: true)
