@@ -21,6 +21,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   
   #-------------------
   # Callbacks
+  after_save :async_send_email, if: :should_send_email?
   
   #-------------------
   # Administration
@@ -56,6 +57,25 @@ class BreakingNewsAlert < ActiveRecord::Base
       end
     end
   end
+
+  #-------------------
+  # Queue the e-mail sending task so that it doesn't have to
+  # occur during an HTTP request.
+  def async_send_email
+    Resque.enqueue(Job::BreakingNewsEmail, self.id)
+  end
+
+  #-------------------
+  # Send the e-mail
+  def send_email
+    if should_send_email?
+      lyris = Lyris.new(self)
+      
+      if lyris.add_message and lyris.send_message
+        self.update_column(:email_sent, true)
+      end
+    end
+  end
   
   #-------------------
   
@@ -67,5 +87,13 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   def email_subject
     @email_subject ||= "#{break_type}: #{headline}"
-  end  
+  end
+
+  #-------------------
+  
+  private
+  
+  def should_send_email?
+    self.is_published and self.send_email and !self.email_sent
+  end
 end
