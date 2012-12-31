@@ -1,9 +1,19 @@
 // Styles related to Newsroom.js functionality
 
+ul.small {
+  font-weight: normal;
+  font-size: 11px;
+  li { 
+    line-height: 12px; 
+  }
+}
+
 .user-badge {
+    vertical-align: top;
+    @include border-radius(5px);
     position: relative;
     border: 1px solid $grayLight;
-    padding-right: 30px; // make room for the badge
+    padding: 5px 30px 5px 5px; // make room for the badge
     line-height: 12px;
     
     &.highlighted {
@@ -18,28 +28,21 @@
       max-width: 60px;
       float: left;
     }
-    
-    .badge-mark {
-      right: 10px;
+
+    img {
+        padding: 5px;
     }
 }
 
-.affix .user-badge .headshot { display: none; }
-
-.circle {
-    @include border-radius(20px);
-    width: 20px;
-    height: 20px;
+.affix .user-badge {
+  .headshot, .editing { display: none; }
 }
 
-// So we can position absolute inside
-.simple_form label {
-    position: relative;
-    .badge-mark {
-        left: 10px;
+.viewers > ul {
+    margin-left: 0;
+    list-style: none;
+    li { 
+        margin-bottom: 5px;
+        font-weight: bold;
     }
-}
-
-.badge-mark {
-    position: absolute;
 }

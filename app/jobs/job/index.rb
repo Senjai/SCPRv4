@@ -4,7 +4,7 @@
 # Perform sphinx indexing asynchronously
 #
 module Job
-  class Index < JobBase
+  class Index < Base
     @queue = "#{namespace}:sphinx"
 
     def self.perform(models)

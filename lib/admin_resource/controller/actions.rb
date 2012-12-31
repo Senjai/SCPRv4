@@ -12,6 +12,10 @@ module AdminResource
 
       included do
         include AdminResource::Controller::Helpers
+        include AdminResource::Controller::Callbacks
+
+        before_filter :get_record, only: [:show, :edit, :update, :destroy]
+        before_filter :get_records, only: :index
       end
       
       def index
@@ -36,7 +40,7 @@ module AdminResource
       #------------------
 
       def edit
-        breadcrumb "Edit"
+        breadcrumb "Edit", nil, @record.to_title
         respond_with :admin, @record
       end
 
@@ -60,7 +64,7 @@ module AdminResource
           notice "Saved #{@record.simple_title}"
           respond_with :admin, @record, location: requested_location
         else
-          breadcrumb "Edit"
+          breadcrumb "Edit", nil, @record.to_title
           render :edit
         end
       end
@@ -76,10 +80,6 @@ module AdminResource
       #--------------
       
       private
-      
-      def notice(message)
-        flash[:notice] = message if request.format.html?
-      end
       
       #--------------
       

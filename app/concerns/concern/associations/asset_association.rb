@@ -88,7 +88,7 @@ module Concern
       def remove_assets
         self.assets.select { |a| !asset_passed_in?(a.asset_id) }.each do |asset|
           asset.mark_for_destruction
-        end        
+        end
       end
 
       #-------------------

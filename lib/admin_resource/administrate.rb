@@ -21,6 +21,8 @@ module AdminResource
       if !self.admin.fields_defined?
         set_default_fields
       end
+      
+      self.admin
     end
 
     #-------------------

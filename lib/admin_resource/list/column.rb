@@ -5,6 +5,8 @@ module AdminResource
       attr_writer :header
 
       alias_method :quick_edit?, :quick_edit
+
+      #------------------
       
       def initialize(attribute, list, attributes={})
         @attribute = attribute.to_s
@@ -15,7 +17,9 @@ module AdminResource
         @display    = attributes[:display]
         @quick_edit = !!attributes[:quick_edit]
       end
-    
+      
+      #------------------
+      
       def header
         @header ||= @attribute.titleize 
       end

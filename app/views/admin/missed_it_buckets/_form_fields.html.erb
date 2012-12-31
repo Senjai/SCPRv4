@@ -3,14 +3,14 @@
 <% end %>
 
 <%= form_block "Content" do %>
-  <%= f.association :contents %>
+  <div id="aggregator" class="aggregator"></div>
+  <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
 <% end %>
 
-<script type="text/javascript">
-    (function($) {
-        $.getScript("http://<%=Rails.application.config.scpr.host%>/assets/contentbase_api.js",function() {            
-            cbAPI = new scpr.ContentBaseAPI()
-            dropzone = cbAPI.buildContentDropZone({el:"#contents-group"{% if original.model_content_type == "content/missed" %},autofill:{bucket:{{ original.id }}}{% endif %}})
-        });
-    })(django.jQuery);
-</script>
+<% content_for :footerjs do %>
+  <script>
+    aggregator = new scpr.Aggregator("#aggregator", 
+      <%= j record.contents.includes(:content).map(&:content).to_json.html_safe %>, 
+      <%= j({ active: 'search' }.to_json.html_safe) %>);
+  </script>
+<% end %>

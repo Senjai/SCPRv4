@@ -105,12 +105,6 @@ describe BlogsController do
           get :show, blog: blog.slug
           assigns(:entries).should eq [entry_published]
         end
-    
-        it "paginates" do
-          blog = create(:blog, entry_count: 10)
-          get :show, blog: blog.slug, page: 1
-          assigns(:entries).size.should be < 10
-        end
       end
     end
   end

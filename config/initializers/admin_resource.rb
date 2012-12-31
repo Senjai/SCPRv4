@@ -6,13 +6,52 @@
 
 require_dependency 'admin_resource'
 
+# Monkey patches for Mercer additions
+module AdminResource
+  module Model
+    module Routing
+      module ClassMethods
+        def django_admin_url
+          "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
+        end
+      end
+      
+      #-----------------
+      
+      def django_edit_url
+        [self.class.django_admin_url, self.id || "add"].join "/"
+      end
+    end # Routing
+
+    #-----------------
+    
+    module Methods
+      module ClassMethods
+        # We're going to assume that if the table name does not use 
+        # Rails conventions, then this feature was never built in Django
+        def exists_in_django?
+          @exists_in_django ||= self.table_name != self.name.tableize
+        end
+      end
+
+      #-----------------
+    
+      def exists_in_django?
+        self.class.exists_in_django?
+      end
+    end
+  end
+end
+
+
 AdminResource::Config.configure do |config|
   config.registered_models = [
     "NewsStory", 
+    "NprStory",
     "ContentShell", 
     "VideoShell", 
     "PijQuery", 
-    "BlogEntry", 
+    "BlogEntry",
     "Blog", 
     "Tag",
     "ShowSegment", 
@@ -46,7 +85,7 @@ AdminResource::Config.configure do |config|
         "NewsStory",
         "ContentShell",
         "VideoShell",
-#        "NprStory",
+        "NprStory",
         "PijQuery"
       ]
     },

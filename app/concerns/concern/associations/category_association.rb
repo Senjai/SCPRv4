@@ -1,7 +1,7 @@
 ##
-# BylinesAssociation
+# CategoryAssociation
 #
-# Defines bylines association
+# Defines category association
 # 
 module Concern
   module Associations

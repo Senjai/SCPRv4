@@ -1,69 +1,11 @@
-<%# TODO Clean this view up! %>
-
 <%= form_block "Audio" do %>
-  <% record.audio.build %>
-  <% record.audio.each_with_index do |audio, index| %>
-    <%= f.simple_fields_for :audio, audio do |af| %>
-      <%= render '/admin/resource/errors', f: af %>
-    
-      <div class="audio-fields well" id="audio-fields-<%=af.object.id || "new"%>">
-        <div class="row">
-          <div class="span4">
-            <div class="details" id="audio-<%=af.object.id || "new"%>-details">
-              <%= af.input :description, input_html: { class: "tiny thin" } %>
-              <%= af.input :byline, input_html: { class: "thin" } %>
-              <%= af.input :position, input_html: { class: "thin" } %>
-            </div>
-          </div> <!-- span -->
-          <div class="span4">
-            <div class="audio-info">
-              
-              <% if audio.persisted? %>
-                <div class="existing-audio" id="audio-existing-<%=af.object.id%>">
-                  <!-- existing audio -->
-                  <% if af.object.mp3.present? %>
-                    <h5 class="alert alert-success">Audio is Live</h5>
-                    <%= link_to af.object.mp3.filename, af.object.url %>
-                  <% else %>
-                    <h5 class="alert alert-info">Awaiting Audio</h5>
-                    <%= af.object.path %>
-                  <% end %>
-                </div>
-            
-                <div class="audio-delete pull-right">
-                  <%= af.input :_destroy, as: :boolean, label: false, inline_label: "Delete?", wrapper_html: { class: "inline destroy-bool" } %>
-                </div> <!-- audio-delete -->
-
-              <% else %>
-                <div class="new-audio">
-                  <!-- new audio -->
-                  <ul class="nav nav-tabs">
-                    <li class="<%= "active" if audio.errors.blank? || (audio.errors.keys & [:enco_number, :enco_audio, :base]).present? %>">
-                      <a href="#audio-new-enco-<%=index%>" data-toggle="tab">Enco</a>
-                    </li>
-                    <li class="<%= "active" if audio.errors.keys == [:mp3] %>"><a href="#audio-new-upload-<%=index%>" data-toggle="tab">Upload</a></li>
-                    <li class="<%= "active" if audio.errors.keys == [:mp3_path] %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">Path</a></li>
-                  </ul>
-                  <div class="tab-content">
-                    <div class="tab-pane <%= "active" if audio.errors.blank? || (audio.errors.keys & [:enco_number, :enco_audio, :base]).present? %>" id="audio-new-enco-<%=index%>">
-                      <%= af.input :enco_number, as: :string, input_html: { class: "thin" }, wrapper_html: { class: "vertical" } %>
-                      <%= af.input :enco_date, input_html: { class: "thin" }, wrapper_html: { class: "vertical" } %>
-                    </div> <!-- enco -->
-
-                    <div class="tab-pane <%= "active" if audio.errors.keys == [:mp3] %>" id="audio-new-upload-<%=index%>">
-                      <%= af.input :mp3, as: :file, wrapper_html: { class: "vertical" } %>
-                    </div> <!-- upload -->
-
-                    <div class="tab-pane <%= "active" if audio.errors.keys == [:mp3_path] %>" id="audio-new-direct-<%=index%>">
-                      <%= af.input :mp3_path, hint: "/events/2012/10/01/your_cool_audio.mp3", input_html: { class: "thin" }, wrapper_html: { class: "vertical"} %>
-                    </div> <!-- path -->
-                  </div> <!-- tab-content -->
-                </div> <!-- new-audio -->
-              <% end %>
-            </div> <!-- audio-info -->
-          </div> <!-- span -->
-        </div> <!-- row -->
-      </div> <!-- audio-fields -->
-    <% end %>
+  <% if record.audio.empty? %>
+    <% record.audio.build %>
   <% end %>
+  
+  <% record.audio.each_with_index do |audio, index| %>
+    <%= f.render_fields "audio", record: audio, index: index %>
+  <% end %>
+  
+  <%= f.link_to_add_fields(:audio, title: "Add More Audio") %>
 <% end %>

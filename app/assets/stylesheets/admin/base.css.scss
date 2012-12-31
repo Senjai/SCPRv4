@@ -1,7 +1,8 @@
+// Core ext.
 body {
     // Allow space for the submit-row
     padding-bottom: 120px;
-    padding-top: 50px;
+    padding-top: 100px;
 }
 
 body, p {
@@ -12,80 +13,36 @@ small {
   font-size: 11px;
 }
 
-.page-header {
-  padding: 0;
-  margin: 5px 0;
+.breadcrumb {
+  &.unstyled {
+    padding: 0;
+  }
+  
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
 }
 
-ul.breadcrumb {
-  margin: 0;
+// Override a bug in bootstrap
+.dropup .btn-large .caret {
+    border-bottom-color: $white;
+}
+
+.alert .close {
+  line-height: 12px;
+}
+
+/////////////////////////////////
+
+.fixed-breadcrumbs {
+  z-index: 0; // Make the drop-down header stuff visible
+  margin-top: 40px;
+  @include box-shadow(0 2px 6px rgba(0,0,0,.2));
 }
 
 .well.tight {
   padding: 5px;
   h6 { margin: 0 0 5px 0; padding: 0;}
-}
-
-#dashboard-stats {
-  .well { min-height: 100px; }
-  .lead { line-height: inherit; }
-}
-
-// We want content input to always be pretty big
-.simple_form {
-    input:not([type=submit]) {
-        @extend .span4;
-    }
-}
-
-form.simple_form {
-    input.wide, textarea {
-        @extend .span7;
-    }
-    
-    input.thin, textarea.thin {
-        @extend .span2;
-    }
-    
-    input.tiny {
-        @extend .span1;
-    }
-    
-    textarea {
-        &.tiny { height: 100px; }
-        &.short { height: 200px; }
-        &.tall { height: 600px; }
-    }
-    
-    fieldset legend {
-        cursor: pointer;
-        &:hover {
-            background: #ffffcc;
-        }
-    }
-    
-    .counter-notify {
-        @extend .span7;
-    }
-    
-    .inline { // Extend bootstrap .inline
-        display: inline-block;
-        margin-right: 5px;
-        input[type=text] { @extend .span2; }
-        input[type=checkbox] { width: 20px; }
-        
-        .controls {
-            margin-left: 10px;
-        }
-    }
-    
-    .control-group.vertical {
-        label { 
-            float: none;
-            text-align: left;
-        }
-        .controls { margin-left: 2px; }
-    }
 }
 
 p.help-block {
@@ -111,24 +68,6 @@ p.help-block {
     }   
 }
 
-.user-badge {
-    vertical-align: top;
-    padding: 5px;
-    @include border-radius(5px);
-    img {
-        padding: 5px;
-    }
-}
-
-ul.viewers {
-    margin-left: 0;
-    list-style: none;
-    li { 
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-}
-
 .hidden {
     display: none;
 }
@@ -139,16 +78,6 @@ ul.viewers {
 
 .add-on.populate {
     cursor: pointer;
-}
-
-.submit-row:last-of-type {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    margin: 0px;
-    background: $grayDark;
-    padding: 10px 0;
 }
 
 // Style the dropdown buttons so they look like links
@@ -163,21 +92,10 @@ ul.dropdown-menu li button {
     }
 }
 
-// Override a bug in bootstrap
-.dropup .btn-large .caret {
-    border-bottom-color: $white;
-}
-
-.transparent { 
-    @include opacity(0.2);
-    @include transition(.1s linear all);
-}
 
 #fixed-sidebar.affix {
   width: 265px;
-  top: 60px;
+  top: 80px;
 }
 
-.alert .close {
-  line-height: 12px;
-}
+

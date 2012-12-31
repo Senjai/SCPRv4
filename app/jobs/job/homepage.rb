@@ -13,7 +13,7 @@
 # the other Sphinx indexing tasks!
 #
 module Job
-  class Homepage < JobBase
+  class Homepage < Base
     @queue = "#{namespace}:sphinx"
     
     def self.perform(obj_key)

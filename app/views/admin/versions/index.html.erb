@@ -22,7 +22,7 @@
           </td>
           <% @list.columns.each do |column| %>
             <td>
-              <%= render_attribute column, version, path: admin_version_path(version.versioned.class.name.tableize, version.versioned.id, version.version_number) %>
+              <%= render_attribute column, version %>
             </td>
           <% end %>
         </tr>

@@ -7,5 +7,8 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <!-- placeholder -->
+  <div id="fixed-sidebar" data-spy="affix" data-offset-top="30">
+    <!-- Be sure to change the data-offset-top attribute on this element if you move it vertically -->
+    <%= render "/admin/shared/form_nav" %>
+  </div>
 <% end %>

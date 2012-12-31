@@ -11,6 +11,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Validations::ContentValidation
   include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Callbacks::GenerateSlugCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
@@ -42,7 +43,10 @@ class NewsStory < ActiveRecord::Base
   
   #-------------------
   # Scopes
-  
+  scope :filtered_by_bylines, ->(bio_id) { 
+    self.includes(:bylines).where(ContentByline.table_name => { user_id: bio_id }) 
+  }
+    
   #-------------------
   # Association
   
@@ -65,6 +69,9 @@ class NewsStory < ActiveRecord::Base
       column :audio
       column :status
       column :published_at
+      
+      filter :status, collection: -> { ContentBase.status_text_collect }
+      filter :bylines, collection: -> { Bio.select_collection }
     end
   end
   include Concern::Methods::ContentJsonMethods

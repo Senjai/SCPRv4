@@ -1,6 +1,7 @@
 class PijQuery < ActiveRecord::Base
   include Concern::Scopes::SinceScope
   include Concern::Associations::AssetAssociation
+  include Concern::Callbacks::GenerateSlugCallback
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
   
@@ -44,13 +45,17 @@ class PijQuery < ActiveRecord::Base
   #------------
   # Administration
   administrate do
-    define_list do      
+    define_list do
       column :headline
       column :slug
       column :query_type
       column :is_active, header: "Active?"
       column :is_featured, header: "Featured?"
       column :published_at
+      
+      filter :query_type, collection: -> { PijQuery::QUERY_TYPES }
+      filter :is_active, collection: :boolean
+      filter :is_featured, collection: :boolean
     end
   end
 

@@ -3,6 +3,7 @@
   <%= f.input :title, hint: "Example: KPCC's Education Reporter" %>
   <%= f.input :short_bio, hint: "A short blurb (1-2 sentences) for this author." %>
   <%= f.input :bio, input_html: { class: "short" } %>
+  <%= f.input :asset_id, label: "Asset ID", input_html: { class: "tiny" } %>
 <% end %>
 
 <%= form_block "Website" do %>
@@ -18,3 +19,5 @@
   <%= f.input :phone_number %>
   <%= f.input :feed_url %>
 <% end %>
+
+<%= f.section "related_links" %>

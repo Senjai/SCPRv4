@@ -4,12 +4,15 @@
 module AdminResource
   module List
     class Base
-      attr_accessor :order # Must be a string since it gets passed directly to ActiveRecord
-      attr_reader :columns, :per_page
+      attr_accessor :admin, :order # Must be a string since it gets passed directly to ActiveRecord
+      attr_reader :columns, :filters, :per_page
       
-      def initialize(attributes = {})
+      def initialize(admin, attributes = {})
+        @admin    = admin
         @columns  = []
-        self.order    = attributes[:order] || List::DEFAULTS[:order]
+        @filters  = []
+        
+        self.order    = attributes[:order]    || List::DEFAULTS[:order]
         self.per_page = attributes[:per_page] || List::DEFAULTS[:per_page]
       end
       
@@ -24,11 +27,10 @@ module AdminResource
       # So that pagination will not paginate
       def list_per_page(val)
         self.per_page = val
-        
       end
       
       def per_page=(val)
-        @per_page = val == :all ? nil : val.to_i
+        @per_page = (val == :all ? nil : val.to_i)
       end
       
       #---------------
@@ -54,6 +56,14 @@ module AdminResource
         column = Column.new(attribute, self, options)
         self.columns.push column
         column
+      end
+      
+      #---------------
+      
+      def filter(attribute, options={})
+        filter = Filter.new(attribute, self, options)
+        self.filters.push filter
+        filter
       end
     end
   end
