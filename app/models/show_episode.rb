@@ -77,6 +77,7 @@ class ShowEpisode < ActiveRecord::Base
     has "''", :as => :category, :type => :integer
     has "0", :as => :category_is_news, :type => :boolean
     has published_at
+    has updated_at
     has status
     has "1", as: :findable, type: :boolean
     has "1", :as => :is_source_kpcc, :type => :boolean

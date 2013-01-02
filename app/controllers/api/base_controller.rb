@@ -24,6 +24,32 @@ class Api::BaseController < ApplicationController
   end
 
   #---------------------------
+
+  def set_classes
+    @classes = []
+    allowed_types = {
+      "news"     => [NewsStory, ContentShell],
+      "blogs"    => [BlogEntry],
+      "segments" => [ShowSegment],
+      "episodes" => [ShowEpisode],
+      "video"    => [VideoShell]
+    }
+    
+    if params[:types]
+      params[:types].split(",").each do |type|
+        if klasses = allowed_types[type]
+          @classes += klasses
+        end
+      end
+    else
+      # All classes
+      @classes = allowed_types.values.inject(:+)
+    end
+    
+    @classes.uniq!
+  end
+  
+  #---------------------------
     
   def sanitize_limit
     @limit = params[:limit] ? params[:limit].to_i : 10
@@ -39,5 +65,23 @@ class Api::BaseController < ApplicationController
   
   def sanitize_query
     @query = params[:query].to_s
+  end
+  
+  #---------------------------
+  
+  def sanitize_order
+    @order = params[:order]
+  end
+  
+  #---------------------------
+  
+  def sanitize_sort_mode
+    @sort_mode = params[:sort_mode].to_sym
+  end
+
+  #---------------------------
+  
+  def sanitize_conditions
+    @conditions = params[:with]
   end
 end

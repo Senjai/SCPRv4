@@ -158,17 +158,17 @@ Scprv4::Application.routes.draw do
     scope module: "public" do
       match '/' => "content#options", constraints: { method: 'OPTIONS' }
   
-      get '/content'       => 'content#index',  defaults: { format: :json }
-      get '/key'    => 'content#show',   defaults: { format: :json }
-      get '/by_url' => 'content#by_url', defaults: { format: :json }
+      get '/content'        => 'content#index',  defaults: { format: :json }
+      get '/content/:id'    => 'content#show',   defaults: { format: :json }
+      get '/content/by_url' => 'content#by_url', defaults: { format: :json }
     end
     
     namespace :private do
       match '/' => "content#options", constraints: { method: 'OPTIONS' }
   
-      get '/content'       => 'content#index',  defaults: { format: :json }
-      get '/key'    => 'content#show',   defaults: { format: :json }
-      get '/by_url' => 'content#by_url', defaults: { format: :json }
+      get '/content'        => 'content#index',  defaults: { format: :json }
+      get '/content/:id'    => 'content#show',   defaults: { format: :json }
+      get '/content/by_url' => 'content#by_url', defaults: { format: :json }
     end
   end
   

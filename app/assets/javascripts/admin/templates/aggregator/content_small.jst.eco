@@ -3,5 +3,5 @@
     <%- @content.asset %><%= @content.headline %>
   </a>
 
-  <small>(<%= @content.obj_key%>)</small>
+  <small>(<a href="<%=@content.edit_path%>"><%= @content.obj_key%></a>)</small>
 </div>

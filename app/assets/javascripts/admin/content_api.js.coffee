@@ -4,7 +4,7 @@ class scpr.ContentAPI
 
     #-----------------------------
 
-    @Content: Backbone.Model.extend
+    class @Content extends Backbone.Model
         #----------
         # simpleJSON is an object of just the attributes
         # we care about for SCPRv4. Everything else will
@@ -17,15 +17,15 @@ class scpr.ContentAPI
     
     #-----------------------------
     
-    @ContentCollection: Backbone.Collection.extend
+    class @ContentCollection extends Backbone.Collection
         url: "/api/content/"
-        model: @Content
-
+        model: ContentAPI.Content
+            
         #----------
         # Sort by position attribute
         comparator: (model) ->
             model.get 'position'
-            
+        
         #----------
         # An array of content turned into simpleJSON. See
         # Content#simpleJSON for more.
@@ -33,3 +33,11 @@ class scpr.ContentAPI
             contents = []
             @each (content) -> contents.push(content.simpleJSON())
             contents
+
+    #-----------------------------
+    
+    class @PrivateContentCollection extends @ContentCollection
+        url: "/api/private/content"
+        
+    #-----------------------------
+    

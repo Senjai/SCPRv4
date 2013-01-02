@@ -11,6 +11,9 @@
   <script>
     aggregator = new scpr.Aggregator("#aggregator", 
       <%= j record.contents.includes(:content).map(&:content).to_json.html_safe %>, 
-      { view: { active: 'search' } });
+      { 
+        view: { active: 'search' },
+        apiType: "public"
+      });
   </script>
 <% end %>

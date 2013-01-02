@@ -60,6 +60,7 @@ class VideoShell < ActiveRecord::Base
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
+    has updated_at
     has status
     has "1", as: :findable, type: :boolean
     has "CRC32(CONCAT('content/video:',contentbase_videoshell.id))", :type => :integer, :as => :obj_key

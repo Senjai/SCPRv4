@@ -4,7 +4,12 @@
   </a> <small>(<strong><%=@content.short_headline?.length %></strong>)</small>
 
   <div style="font-size:11px">
-    <strong><%= @content.byline %></strong> - <%= moment(@content.published_at).format("YYYY-MM-DD, h:mma") %><br />
+    <strong><%= @content.byline %></strong> - <% if @content.published_at?: %>
+      <%= moment(@content.published_at).format("YYYY-MM-DD, h:mma") %>
+    <% else: %>
+      <span class="text-error"><strong>UNPUBLISHED</strong></span>
+    <% end %><br />
+    
     <%= @content.teaser %> (<strong><%= @content.teaser?.length %></strong>)<br />
 
     (<a href="<%=@content.edit_path%>"><%= @content.obj_key%></a>)

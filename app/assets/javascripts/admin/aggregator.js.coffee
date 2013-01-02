@@ -24,11 +24,23 @@ class scpr.Aggregator
 
     #---------------------
     
+    defaults:
+        apiType: "public"
+        params: {}
+        
     constructor: (el, json, options={}) ->
+        @options = _.defaults options, @defaults
+        
         @el = $(el)
+        
+        # Set the type of API we're dealing with
+        apiClass = if @options.apiType is "public" then "ContentCollection" else "PrivateContentCollection"
+        
         @baseView = new scpr.Aggregator.Views.Base _.extend options.view || {},
             el: @el
-            collection: new scpr.ContentAPI.ContentCollection(json, options.api || {})
+            collection: new scpr.ContentAPI[apiClass](json)
+            apiClass: apiClass
+            params: @options.params
             
         @baseView.render()
         
@@ -37,13 +49,12 @@ class scpr.Aggregator
     # Views!
     class @Views
         #----------------------------------
-        #----------------------------------
         # The skeleton for the the different pieces!
         class @Base extends Backbone.View
             template: JST['admin/templates/aggregator/base']
             defaults:
                 active: "recent"
-                
+                    
             #---------------------
         
             initialize: ->
@@ -51,7 +62,7 @@ class scpr.Aggregator
                 
                 # @foundCollection is the collection for all the content
                 # in the RIGHT panel.
-                @foundCollection = new scpr.ContentAPI.ContentCollection()
+                @foundCollection = new scpr.ContentAPI[@options.apiClass]()
         
             #---------------------
             # Import a URL and turn it into content
@@ -387,11 +398,11 @@ class scpr.Aggregator
             initialize: ->
                 @base     = @options.base
                 @page     = 1
-                @per_page = 10
+                @per_page = @base.options.params.limit || 10
                 
                 # Grab Recent Content using ContentAPI
                 # Render the list
-                @collection = new scpr.ContentAPI.ContentCollection()
+                @collection = new scpr.ContentAPI[@base.options.apiClass]()
                 
                 # Add just the added model to @base.foundCollection
                 @collection.bind "add", (model, collection, options) =>
@@ -420,7 +431,7 @@ class scpr.Aggregator
                 @transitionStart()
                 
                 @collection.fetch
-                    data: params
+                    data: _.defaults params, @base.options.params
                     success: (collection, response, options) =>
                         # If the collection length is > 0, then 
                         # call @renderCollection().

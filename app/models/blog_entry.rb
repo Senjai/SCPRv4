@@ -83,6 +83,7 @@ class BlogEntry < ActiveRecord::Base
     has category.id,      as: :category
     has category.is_news, as: :category_is_news
     has published_at
+    has updated_at
     has status
     has blog.is_active, as: :findable, type: :boolean
     has "1", as: :is_source_kpcc, type: :boolean

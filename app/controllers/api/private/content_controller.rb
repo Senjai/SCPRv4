@@ -1,13 +1,19 @@
 class Api::Private::ContentController < Api::PrivateController
-  before_filter :set_classes, :sanitize_limit, :sanitize_page, :sanitize_query, only: [:index]
-
+  before_filter :set_classes, 
+    :sanitize_limit, :sanitize_page, :sanitize_query, 
+    :sanitize_order, :sanitize_sort_mode, :sanitize_conditions,
+    only: [:index]
+    
   #---------------------------
   
   def index
     @content = ContentBase.search(@query, {
-      :classes => @classes,
-      :limit   => @limit,
-      :page    => @page
+      :classes   => @classes,
+      :limit     => @limit,
+      :page      => @page,
+      :order     => @order,
+      :sort_mode => @sort_mode,
+      :with      => @conditions
     })
     
     respond_with @content
@@ -23,37 +29,7 @@ class Api::Private::ContentController < Api::PrivateController
   #---------------------------
   
   def show
-    @content = ContentBaby.obj_by_key(params[:obj_key])
+    @content = ContentBaby.obj_by_key(params[:id])
     respond_with @content
-  end
-    
-  #---------------------------
-  
-  private
-
-  #---------------------------
-  
-  def set_classes
-    @classes = []
-    allowed_types = {
-      "news"     => [NewsStory, ContentShell],
-      "blogs"    => [BlogEntry],
-      "segments" => [ShowSegment],
-      "episodes" => [ShowEpisode],
-      "video"    => [VideoShell]
-    }
-    
-    if params[:types]
-      params[:types].split(",").each do |type|
-        if klasses = allowed_types[type]
-          @classes += klasses
-        end
-      end
-    else
-      # All classes
-      @classes = allowed_types.values.inject(:+)
-    end
-    
-    @classes.uniq!
   end
 end

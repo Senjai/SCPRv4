@@ -9,6 +9,8 @@
 <% end %>
 
 <%= form_block "Segments" do %>
+  <div class="alert alert-info">This content builder only shows Segments, of ANY publishing status, ordered by the LAST UPDATED timestamp (descending).</div>
+  
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :segment_json, as: :hidden, input_html: { id: "content_json" } %>
 
@@ -17,7 +19,17 @@
       aggregator = new scpr.Aggregator(
         "#aggregator", 
         <%= j record.segments.to_json.html_safe %>,
-        { api: { url: "/api/private/content" } });
+        {
+          apiType: "private",
+          params: {
+            limit: 20,
+            token: "<%= Rails.application.config.assethost.token %>",
+            types: "segments",
+            order: "updated_at",
+            sort_mode: "desc",
+            with: { status: <%=ContentBase::STATUS_TEXT.keys%> }
+          }
+        });
     </script>
   <% end %>
 <% end %>

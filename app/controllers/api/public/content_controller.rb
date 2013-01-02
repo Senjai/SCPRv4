@@ -1,4 +1,4 @@
-class Api::Public::ContentController < Api::PublicController  
+  class Api::Public::ContentController < Api::PublicController  
   before_filter :set_classes, :sanitize_limit, :sanitize_page, :sanitize_query, only: [:index]
 
   #---------------------------
@@ -25,35 +25,5 @@ class Api::Public::ContentController < Api::PublicController
   def show
     @content = ContentBaby.obj_by_key(params[:obj_key])
     respond_with @content
-  end
-    
-  #---------------------------
-  
-  private
-
-  #---------------------------
-  
-  def set_classes
-    @classes = []
-    allowed_types = {
-      "news"     => [NewsStory, ContentShell],
-      "blogs"    => [BlogEntry],
-      "segments" => [ShowSegment],
-      "episodes" => [ShowEpisode],
-      "video"    => [VideoShell]
-    }
-    
-    if params[:types]
-      params[:types].split(",").each do |type|
-        if klasses = allowed_types[type]
-          @classes += klasses
-        end
-      end
-    else
-      # All classes
-      @classes = allowed_types.values.inject(:+)
-    end
-    
-    @classes.uniq!
   end
 end

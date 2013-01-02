@@ -45,7 +45,10 @@
           <hr />
 
           <h4>Finding content</h4>
-          <li>The "Recent" tab loads the 10 most recent stories when the page loads.</li>
+          <li>
+            The "Recent" tab loads the most recent stories when the page loads.
+            They will usually be ordered by reverse publish date.
+          </li>
           <li>
             The "Search" tab allows you to search across the content types listed above.
             Be specific! The search looks in the headline and body fields, among others.
@@ -53,8 +56,8 @@
           <li>
             <strong>Pagination:</strong>
             <ul>
-              <li>"Back" shows the previous 10 stories if available</li>
-              <li>"Next" shows the next 10 stories if available</li>
+              <li>"Back" shows the previous page of stories if available</li>
+              <li>"Next" shows the next page stories if available</li>
               <li>
                 The "Refresh" icon (<i class="icon-refresh"></i>) refreshes the current page. 
                 This is is useful if you have been moving content out of the list and want to get it all back.

@@ -89,6 +89,7 @@ class NewsStory < ActiveRecord::Base
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
+    has updated_at
     has status
     has "1", as: :findable, type: :boolean
     has "(news_story.source <=> 'kpcc')", :as => :is_source_kpcc, :type => :boolean
