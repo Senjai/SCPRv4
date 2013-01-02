@@ -22,6 +22,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   #-------------------
   # Callbacks
   after_save :async_send_email, if: :should_send_email?
+  after_save :expire_cache
   
   #-------------------
   # Administration
@@ -59,6 +60,12 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
   #-------------------
+
+  def expire_cache
+    Rails.cache.expire_obj("layout/breaking_news_alert")
+  end
+  
+  #-------------------
   # Queue the e-mail sending task so that it doesn't have to
   # occur during an HTTP request.
   def async_send_email
@@ -94,6 +101,6 @@ class BreakingNewsAlert < ActiveRecord::Base
   private
   
   def should_send_email?
-    self.is_published and self.send_email and !self.email_sent
+    self.is_published && self.send_email && !self.email_sent
   end
 end
