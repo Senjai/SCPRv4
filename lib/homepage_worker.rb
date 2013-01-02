@@ -35,7 +35,7 @@ class HomepageWorker
         # cache the homepage when the homepage is saved, new content is published, or published 
         # content is updated and saved
         
-        if obj['key'] == "layout/homepage" || obj['action'] == 'publish' || obj['action'] == 'unpublish' || obj['status'] == ContentBase::STATUS_LIVE
+        if obj['key'] =~ /layout\/homepage/ || obj['action'] == 'publish' || obj['action'] == 'unpublish' || obj['status'] == ContentBase::STATUS_LIVE
           self.log("triggering caching based on action '#{obj['action']}' and status '#{obj['status']}'")
           task = CacheTasks::Homepage.new(obj['key'])
           task.verbose = true
