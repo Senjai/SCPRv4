@@ -1,5 +1,6 @@
 ##
 # PublishingMethods
+#
 # A set of methods to help with determining
 # the status changes for an object
 #

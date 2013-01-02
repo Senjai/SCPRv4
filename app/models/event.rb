@@ -58,6 +58,7 @@ class Event < ActiveRecord::Base
   
   #-------------------
   # Callbacks
+  after_save :expire_cache
   
   #-------------------
   # Administration
@@ -88,6 +89,15 @@ class Event < ActiveRecord::Base
     indexes city
   end
   
+  # -------------------
+  
+  def expire_cache
+    if self.is_published
+      Rails.cache.expire_obj(self.obj_key)
+      Rails.cache.expire_obj("events/event:new") if self.new_record?
+    end
+  end
+
   # -------------------
   
   def status

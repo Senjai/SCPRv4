@@ -15,6 +15,7 @@ class MissedItBucket < ActiveRecord::Base
 
   #--------------------
   # Callbacks
+  after_save :expire_cache
   
   #--------------------
   # Administration
@@ -39,6 +40,12 @@ class MissedItBucket < ActiveRecord::Base
     def content_key
       "missed_it"
     end
+  end
+
+  #--------------------
+  
+  def expire_cache
+    Rails.cache.expire_obj(self.obj_key)
   end
   
   #--------------------

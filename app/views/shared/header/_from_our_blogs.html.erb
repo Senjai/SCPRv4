@@ -1,5 +1,5 @@
 <ul class="cbase">
-  <% for e in content do %>
+  <% content.each do |e| %>
     <% register_content(e) %>
     <li>
       <h4><%= link_to e.headline, e.link_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'Blog Post', 'ga-label' => 'Content'} %></h4>

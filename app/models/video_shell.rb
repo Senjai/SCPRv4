@@ -9,6 +9,8 @@ class VideoShell < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Validations::PublishedAtValidation
   include Concern::Callbacks::GenerateSlugCallback
+  include Concern::Callbacks::CacheExpirationCallback
+  include Concern::Callbacks::RedisPublishCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
