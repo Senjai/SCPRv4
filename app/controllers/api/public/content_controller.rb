@@ -23,7 +23,7 @@
   #---------------------------
   
   def show
-    @content = ContentBaby.obj_by_key(params[:obj_key])
+    @content = ContentBase.obj_by_key(params[:obj_key])
     respond_with @content
   end
 end
