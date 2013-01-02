@@ -3,6 +3,7 @@ class Homepage < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Callbacks::RedisPublishCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   
@@ -30,7 +31,7 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-
+  after_save :expire_cache
   
   #-------------------
   # Administration
@@ -44,6 +45,13 @@ class Homepage < ActiveRecord::Base
 
   #-------------------
   # Sphinx
+  
+  #----------
+  
+  def expire_cache
+    Rails.cache.expire_obj("layout/homepage")
+    Publisher.publish object: "layout/homepage", action: "save"
+  end
   
   #----------
   

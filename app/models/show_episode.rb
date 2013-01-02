@@ -5,6 +5,8 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Callbacks::CacheExpirationCallback
+  include Concern::Callbacks::RedisPublishCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::HeadlineMethods
