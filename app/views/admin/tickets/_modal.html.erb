@@ -6,10 +6,10 @@
 
   <div class="modal-body">
     <% if @tickets.present? %>
-      <h4>Recent Tickets</h4>
+      <h4>Open Tickets</h4>
       <ul>
         <% @tickets.each do |ticket| %>
-          <li><%= ticket.summary %></li>
+          <li><%= link_to ticket.summary, [:admin, ticket] %></li>
         <% end %>
       </ul>
       

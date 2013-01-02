@@ -1,0 +1,9 @@
+<h4><%= @ticket.summary %> (<%= Ticket::STATUS_TEXT[@ticket.status] %>)</h4>
+<strong>Reported by: </strong> <%= @ticket.user.name %><br />
+<strong>Browser: </strong> <%= @ticket.browser_info %><br />
+<strong>Link: </strong> <%= @ticket.link %><br />
+
+<p><%= @ticket.description %></p>
+
+<% if admin_user.is_superuser? || admin_user == @ticket.user %>
+<% end %>

@@ -1,12 +1,19 @@
 class Admin::TicketsController < Admin::BaseController
   respond_to :html, :js
-  before_filter :get_ticket, only: [:agree, :update, :destroy]
+  before_filter :get_ticket, only: [:show, :update, :destroy]
   
   #----------------
   
   def index
     @records = Ticket.all
     respond_with @records
+  end
+
+  #----------------
+  
+  def show
+    @ticket = Ticket.find(params[:id])
+    respond_with @ticket
   end
   
   #----------------
@@ -24,11 +31,6 @@ class Admin::TicketsController < Admin::BaseController
     @ticket.user = admin_user
     @ticket.save
     respond_with @ticket
-  end
-
-  #----------------
-  
-  def agree
   end
 
   #----------------
