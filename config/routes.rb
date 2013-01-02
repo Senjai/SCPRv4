@@ -155,11 +155,21 @@ Scprv4::Application.routes.draw do
   #------------------
 
   namespace :api do
-    match '/api/content/' => "api/content#options", constraints: { method: 'OPTIONS' }
+    scope module: "public" do
+      match '/' => "content#options", constraints: { method: 'OPTIONS' }
+  
+      get '/content'       => 'content#index',  defaults: { format: :json }
+      get '/key'    => 'content#show',   defaults: { format: :json }
+      get '/by_url' => 'content#by_url', defaults: { format: :json }
+    end
     
-    get '/content'        => 'api#index',  defaults: { format: :json }
-    get '/content/key'    => 'api#show',   defaults: { format: :json }
-    get '/content/by_url' => 'api#by_url', defaults: { format: :json }
+    namespace :private do
+      match '/' => "content#options", constraints: { method: 'OPTIONS' }
+  
+      get '/content'       => 'content#index',  defaults: { format: :json }
+      get '/key'    => 'content#show',   defaults: { format: :json }
+      get '/by_url' => 'content#by_url', defaults: { format: :json }
+    end
   end
   
   #------------------

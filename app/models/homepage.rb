@@ -21,7 +21,7 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Associations
-  has_many :content, class_name: "HomepageContent", order: "position asc", dependent: :destroy
+  has_many :content, class_name: "HomepageContent", order: "position", dependent: :destroy
   belongs_to :missed_it_bucket
   
   #-------------------

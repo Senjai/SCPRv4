@@ -20,16 +20,17 @@ class ShowEpisode < ActiveRecord::Base
   
   #-------------------
   # Association
-  belongs_to  :show,      class_name:   "KpccProgram"
+  belongs_to  :show,      :class_name  => "KpccProgram"
   
-  has_many    :rundowns,  class_name:   "ShowRundown", 
-                          foreign_key:  "episode_id"
+  has_many    :rundowns,  :class_name  => "ShowRundown", 
+                          :foreign_key => "episode_id",
+                          :dependent   => :destroy
   
-  has_many    :segments,  class_name:   "ShowSegment", 
-                          foreign_key:  "segment_id", 
-                          through:      :rundowns, 
-                          order:        "segment_order asc"
-  
+  has_many    :segments,  :class_name  => "ShowSegment", 
+                          :foreign_key => "segment_id", 
+                          :through     => :rundowns, 
+                          :order       => "segment_order"
+
   #-------------------
   # Validations
   validates :show, presence: true
@@ -37,6 +38,9 @@ class ShowEpisode < ActiveRecord::Base
   
   #-------------------
   # Callbacks
+  attr_accessor :segment_json
+  before_save :parse_segment_json
+  
   before_validation :generate_headline, if: -> { self.headline.blank? }
   def generate_headline
     if self.air_date.present?
@@ -112,5 +116,30 @@ class ShowEpisode < ActiveRecord::Base
       :day            => "%02d" % self.persisted_record.air_date.day,
       :trailing_slash => true
     }
+  end
+  
+  #----------
+    
+  def parse_segment_json
+    return if self.segment_json.blank?
+    @_loaded_rundowns = []
+
+    Array(JSON.load(self.segment_json)).each do |segment_hash|
+      if segment = ContentBase.obj_by_key(segment_hash["id"])
+        # Protect against AssociationMismatch Error
+        if segment.is_a? ShowSegment
+          association = ShowRundown.new(
+            :segment_order => segment_hash["position"], 
+            :segment       => segment, 
+            :episode       => self
+          )
+        
+          @_loaded_rundowns.push association
+        end
+      end
+    end
+    
+    self.rundowns = @_loaded_rundowns
+    true
   end
 end

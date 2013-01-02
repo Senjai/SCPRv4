@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Api::ApiController do
+describe Api::Public::ContentController do
   describe "OPTIONS options" do
     pending
   end

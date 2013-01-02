@@ -8,6 +8,20 @@
   <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
 <% end %>
 
+<%= form_block "Segments" do %>
+  <div id="aggregator" class="aggregator"></div>
+  <%= f.input :segment_json, as: :hidden, input_html: { id: "content_json" } %>
+
+  <% content_for :footerjs do %>
+    <script>
+      aggregator = new scpr.Aggregator(
+        "#aggregator", 
+        <%= j record.segments.to_json.html_safe %>,
+        { api: { url: "/api/private/content" } });
+    </script>
+  <% end %>
+<% end %>
+
 <%= f.section "publishing" %>
 <%= f.section "assets" %>
 <%= f.section "audio" %>

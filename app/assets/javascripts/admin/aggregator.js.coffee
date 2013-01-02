@@ -26,9 +26,9 @@ class scpr.Aggregator
     
     constructor: (el, json, options={}) ->
         @el = $(el)
-        @baseView = new scpr.Aggregator.Views.Base _.extend options,
+        @baseView = new scpr.Aggregator.Views.Base _.extend options.view || {},
             el: @el
-            collection: new scpr.ContentAPI.ContentCollection(json)
+            collection: new scpr.ContentAPI.ContentCollection(json, options.api || {})
             
         @baseView.render()
         
