@@ -1,7 +1,13 @@
 require "spec_helper"
 
 describe BreakingNewsAlert do
-  describe "email_subject" do
+  describe "#publish_email" do
+    pending
+  end
+  
+  #-----------------------
+  
+  describe '#email_subject' do
     it "contains break-type" do
       alert = build :breaking_news_alert
       alert.email_subject.should match alert.break_type
@@ -13,7 +19,9 @@ describe BreakingNewsAlert do
     end
   end
   
-  describe "published" do
+  #-----------------------
+  
+  describe "::published" do
     it "only returns published alerts" do
       pub = create :breaking_news_alert, is_published: true
       unpub = create :breaking_news_alert, is_published: false
@@ -25,15 +33,17 @@ describe BreakingNewsAlert do
     end
   end
   
-  describe "visible" do
+  describe "::visible" do
     it "only returns visible alerts" do
       visible = create :breaking_news_alert, visible: true
       invisible = create :breaking_news_alert, visible: false
       BreakingNewsAlert.visible.should eq [visible]
     end
   end
+
+  #-----------------------
   
-  describe "latest_alert" do
+  describe "::latest_alert" do
     it "returns the first alert if it is published and visible" do
       alert = create :breaking_news_alert, is_published: true, visible: true
       BreakingNewsAlert.latest_alert.should eq alert
