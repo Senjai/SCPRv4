@@ -50,7 +50,6 @@ class Homepage < ActiveRecord::Base
   
   def expire_cache
     Rails.cache.expire_obj("layout/homepage")
-    Publisher.publish object: "layout/homepage", action: "save"
   end
   
   #----------

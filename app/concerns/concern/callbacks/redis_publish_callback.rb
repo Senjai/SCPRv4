@@ -19,16 +19,16 @@ module Concern
       #---------------------------
       
       def publish_to_redis
-        if !self.status_changed?
-          Publisher.publish(object: self, action: "save", 
-            options: { status_change: false })
+        if self.publishing?
+          Publisher.publish(object: self, action: "publish",
+            options: { status_change: true, old_status: self.status_was })
+        elsif self.unpublishing?
+          Publisher.publish(object: self, action: "unpublish",
+           options: { status_change: true, old_status: self.status_was })
         else
-          if self.publishing?
-            Publisher.publish(object: self, action: "publish",
-              options: { status_change: true, old_status: self.status_was })
-          elsif self.unpublishing?
-            Publisher.publish(object: self, action: "unpublish",
-             options: { status_change: true, old_status: self.status_was })
+          if !self.status_was || !self.status_changed?
+            Publisher.publish(object: self, action: "save", 
+              options: { status_change: false })
           else
             Publisher.publish(object: self, action: "save",
               options: { status_change: true, old_status: self.status_was })

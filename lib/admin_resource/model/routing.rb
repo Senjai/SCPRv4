@@ -56,7 +56,9 @@ module AdminResource
       #-------------
       # http://scpr.org/blogs/2012/...
       def remote_link_path(options={})
-        "http://#{Rails.application.config.scpr.host}#{self.link_path(options)}"
+        if path = self.link_path(options)
+          File.join("http://#{Rails.application.config.scpr.host}", path)
+        end
       end
     end # Routing
   end # Model
