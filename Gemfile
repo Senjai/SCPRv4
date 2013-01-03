@@ -5,7 +5,7 @@ gem 'rails', "~> 3.2"
 gem 'mysql2'
 gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0"
-gem 'thinking-sphinx', '~> 2.0.10', require: "thinking_sphinx"
+gem 'thinking-sphinx', '~> 2.0', require: "thinking_sphinx"
 gem 'capistrano'
 
 
@@ -40,7 +40,7 @@ gem "feedzirra", github: "pauldix/feedzirra"
 ## APIs
 gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
-gem 'simple_postmark', "~> 0.4"
+gem 'simple_postmark', "~> 0.5"
 gem 'newrelic_rpm'
 gem 'npr', github: "bricker/npr"
 #gem 'npr', path: "/Users/bricker/websites/kpcc/gems/npr"
@@ -48,10 +48,10 @@ gem 'npr', github: "bricker/npr"
 group :assets do
   gem "eco", "~> 1.0"
   gem 'sass-rails', "~> 3.2"
-  gem 'bootstrap-sass', '~> 2.1'
+  gem 'bootstrap-sass', '~> 2.2'
   gem "compass-rails"
   gem 'coffee-rails', "~> 3.2"
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '>= 1.3'
 end
 
 group :development, :staging do
