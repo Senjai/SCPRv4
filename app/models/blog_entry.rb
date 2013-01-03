@@ -66,7 +66,6 @@ class BlogEntry < ActiveRecord::Base
       filter :blog_id, collection: -> { Blog.select_collection }
       filter :bylines, collection: -> { Bio.select_collection }
       filter :status, collection: -> { ContentBase.status_text_collect }
-      
     end
   end
   include Concern::Methods::ContentJsonMethods
