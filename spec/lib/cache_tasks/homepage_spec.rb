@@ -21,7 +21,7 @@ describe CacheTasks::Homepage do
       
       task.model.should eq BlogEntry
       task.indexer.models.should eq [ContentByline, BlogEntry]
-    end
+    end    
   end
   
   #-----------------------

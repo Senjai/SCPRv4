@@ -3,7 +3,7 @@
 <strong>Browser: </strong> <%= @ticket.browser_info %><br />
 <strong>Link: </strong> <%= @ticket.link %><br />
 
-<p><%= @ticket.description %></p>
+<%= simple_format @ticket.description, {}, sanitize: false %>
 
 <% if admin_user.is_superuser? || admin_user == @ticket.user %>
 <% end %>
