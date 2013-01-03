@@ -20,7 +20,7 @@ describe CacheTasks::Homepage do
       task = CacheTasks::Homepage.new(entry.obj_key)
       
       task.model.should eq BlogEntry
-      task.indexer.models.should eq [BlogEntry, ContentByline]
+      task.indexer.models.should eq [ContentByline, BlogEntry]
     end
   end
   
