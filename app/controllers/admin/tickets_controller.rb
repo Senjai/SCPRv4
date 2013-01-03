@@ -5,7 +5,7 @@ class Admin::TicketsController < Admin::ResourceController
   # Users should always be able to update their
   # own tickets.
   def authorize_resource
-    if admin_user == @record.user
+    if (admin_user == @record.user) || admin_user.is_superuser?
       return true
     else
       redirect_to admin_tickets_path, alert: "You don't have permission to edit that Ticket."
