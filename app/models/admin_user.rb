@@ -126,7 +126,10 @@ class AdminUser < ActiveRecord::Base
   # ----------------
         
   def allowed_resources
-    @allowed_resources ||= self.permissions.map { |p| p.resource.constantize }
+    @allowed_resources ||= begin
+      p = self.is_superuser? ? Permission.all : self.permissions
+      p.map { |p| p.resource.constantize }
+    end
   end
   
   protected
