@@ -33,6 +33,8 @@ class Ticket < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
+      list_order "status desc, created_at desc"
+      
       column :user
       column :summary
       column :created_at
