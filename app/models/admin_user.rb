@@ -27,7 +27,7 @@ class AdminUser < ActiveRecord::Base
   before_create :digest_password, if: -> { unencrypted_password.present? }
 
   #-------------------
-  # Administration
+  # Administration  
   administrate do
     define_list do
       list_per_page :all
@@ -66,6 +66,12 @@ class AdminUser < ActiveRecord::Base
       else
         return false
       end
+    end
+
+    # ----------------
+    
+    def select_collection
+      self.all.map { |u| [u.to_title, u.id] }
     end
   end
 
@@ -118,8 +124,13 @@ class AdminUser < ActiveRecord::Base
   end
 
   # ----------------
+        
+  def allowed_resources
+    @allowed_resources ||= self.permissions.map { |p| p.resource.constantize }
+  end
   
   protected
+  
   # ----------------
   # Generate a memorable password
   def generate_password
@@ -184,13 +195,5 @@ class AdminUser < ActiveRecord::Base
     begin
       self[column] = SecureRandom.urlsafe_base64
     end while AdminUser.exists?(column => self[column])
-  end
-
-  #----------------
-  
-  private
-    
-  def allowed_resources
-    @allowed_resources ||= self.permissions.map { |p| p.resource.constantize }
   end
 end

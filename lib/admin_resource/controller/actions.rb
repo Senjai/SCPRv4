@@ -13,9 +13,6 @@ module AdminResource
       included do
         include AdminResource::Controller::Helpers
         include AdminResource::Controller::Callbacks
-
-        before_filter :get_record, only: [:show, :edit, :update, :destroy]
-        before_filter :get_records, only: :index
       end
       
       def index
@@ -34,6 +31,7 @@ module AdminResource
       #------------------
 
       def show
+        breadcrumb @record.to_title
         respond_with :admin, @record
       end
 

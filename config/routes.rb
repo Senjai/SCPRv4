@@ -242,9 +242,7 @@ Scprv4::Application.routes.draw do
       resources :data_points
       ## -- END AdminResource --  ##
       
-      resources :tickets, except: [:edit] do
-        put :agree, on: :member
-      end
+      resources :tickets
       
       resources :npr_stories, only: [:index, :destroy] do
         post "import", as: :import, on: :member

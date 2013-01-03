@@ -71,6 +71,10 @@ module AdminListHelper
     content_tag :div, ContentBase::STATUS_TEXT[status], class: status_bootstrap_map[status]
   end
   
+  def display_ticket_status(status)
+    content_tag :div, Ticket::STATUS_TEXT[status], class: ticket_status_bootstrap_map[status]
+  end
+  
   def display_bylines(bylines)
     if bylines.present?
       bylines.first.user.try(:name) || bylines.first.name
@@ -108,6 +112,13 @@ module AdminListHelper
     {
       true  => { icon: "icon-white icon-ok",     badge: "badge badge-success"},
       false => { icon: "icon-white icon-remove", badge: "badge badge-important"}
+    }
+  end
+  
+  def ticket_status_bootstrap_map
+    {
+      Ticket::STATUS_CLOSED => "list-status label label-important",
+      Ticket::STATUS_OPEN   => "list-status label label-success",
     }
   end
   

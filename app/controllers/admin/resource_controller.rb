@@ -6,8 +6,8 @@ class Admin::ResourceController < Admin::BaseController
   include AdminResource::Controller
   
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
+  before_filter :get_records, only: :index
   before_filter :authorize_resource
-  before_filter :get_records, only: [:index]
   before_filter :filter_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
   before_filter :add_user_id_to_params, only: [:create, :update]
@@ -23,7 +23,9 @@ class Admin::ResourceController < Admin::BaseController
   #-----------------
   # For Secretary
   def add_user_id_to_params
-    params[resource_class.singular_route_key].merge!(logged_user_id: admin_user.id)
+    if resource_class.has_secretary?
+      params[resource_class.singular_route_key].merge!(logged_user_id: admin_user.id)
+    end
   end
   
   #-----------------

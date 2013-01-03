@@ -4,15 +4,16 @@
   <div class="span3">
     <ul class="nav nav-list well">
     
-    <% @nav_groups.each do |title, attributes| %>
-      <%# TODO this still shows headers even if the section is blank %>
-      <li class="nav-header"><i class="<%=attributes[:icon]%>"></i><%= title %></li>
-      <% attributes[:models].each do |model| %>
-        <%= guard model do %>
-          <li><%= link_to model.constantize.name.titleize.pluralize, url_for([:admin, model.constantize]) %></li>
+      <% @nav_groups.each do |title, attributes| %>
+        <% if (admin_user.allowed_resources & attributes[:models].map(&:constantize)).present? %>
+          <li class="nav-header"><i class="<%=attributes[:icon]%>"></i><%= title %></li>
+          <% attributes[:models].each do |model| %>
+            <%= guard model.constantize do %>
+              <li><%= link_to model.titleize.pluralize, url_for([:admin, model.constantize]) %></li>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
     
     </ul>
   </div> <!-- span3 -->

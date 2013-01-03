@@ -13,7 +13,10 @@
       <% @records.each do |record| %>
         <tr class="<%= resource_class.singular_route_key.dasherize %>">
           <td>
-            <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
+            <%= link_to "Details", [:admin, record], class: "btn" %>
+            <% if record.user == admin_user %>
+              <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
+            <% end %>
           </td>
 
           <%= render "/admin/shared/columns", list: @list, record: record %>

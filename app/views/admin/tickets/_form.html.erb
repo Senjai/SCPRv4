@@ -1,4 +1,5 @@
 <%= simple_form_for [:admin, @ticket], remote: true do |f| %>
+  <%= f.error_notification %>
   <%= f.input :summary, hint: "A one-sentence summary of the issue" %>
   <%= f.input :description, hint: "Describe the problem in detail. Include steps to reproduce, if applicable.", input_html: { class: "tiny span4" } %>
   <%= f.input :browser_info, hint: "Include NAME and VERSION (eg. Chrome 23.0)" %>

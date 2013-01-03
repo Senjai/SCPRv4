@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121230124902) do
+ActiveRecord::Schema.define(:version => 20130103053846) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -626,13 +626,12 @@ ActiveRecord::Schema.define(:version => 20121230124902) do
 
   create_table "media_related", :force => true do |t|
     t.integer "django_content_type_id"
-    t.integer "content_id",                               :null => false
+    t.integer "content_id",                                              :null => false
     t.integer "rel_django_content_type_id"
-    t.integer "related_id",                               :null => false
+    t.integer "related_id",                                              :null => false
     t.string  "content_type",               :limit => 20
     t.string  "related_type",               :limit => 20
-    t.integer "flag",                                     :null => false
-    t.integer "position",                                 :null => false
+    t.integer "position",                                 :default => 0, :null => false
   end
 
   add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
@@ -949,13 +948,11 @@ ActiveRecord::Schema.define(:version => 20121230124902) do
     t.string   "link"
     t.string   "summary"
     t.text     "description"
-    t.integer  "agrees"
     t.integer  "status"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
-  add_index "tickets", ["agrees"], :name => "index_tickets_on_agrees"
   add_index "tickets", ["status"], :name => "index_tickets_on_status"
   add_index "tickets", ["user_id"], :name => "index_tickets_on_user_id"
 

@@ -1,57 +1,36 @@
-class Admin::TicketsController < Admin::BaseController
-  respond_to :html, :js
-  before_filter :get_ticket, only: [:show, :update, :destroy]
+class Admin::TicketsController < Admin::ResourceController
+  before_filter :authorize_resource, only: [:edit, :update, :destroy]
   
-  #----------------
-  
-  def index
-    @records = Ticket.all
-    respond_with @records
+  # Override this method from Admin::ResourceController
+  # Users should always be able to update their
+  # own tickets.
+  def authorize_resource
+    if admin_user == @record.user
+      return true
+    else
+      redirect_to admin_tickets_path, alert: "You don't have permission to edit that Ticket."
+      return false
+    end
   end
 
-  #----------------
-  
-  def show
-    @ticket = Ticket.find(params[:id])
-    respond_with @ticket
-  end
-  
-  #----------------
-  
-  def new
-    @ticket  = Ticket.new
-    @tickets = Ticket.open
-    respond_with @ticket
-  end
-
-  #----------------
-  
+  #----------------  
+  # Override this method so that we can inject the user
   def create
     @ticket = Ticket.new(params[:ticket])
     @ticket.user = admin_user
-    @ticket.save
-    respond_with @ticket
-  end
-
-  #----------------
-  
-  def update
-    @ticket.update_attributes(params[:ticket])
-    # do more things
-  end
-
-  #----------------
-  
-  def destroy
-    @ticket.destroy
-    # do more things
-  end
-  
-  #----------------
-  
-  protected
-  
-  def get_ticket
-    @ticket = Ticket.find(params[:id])
+    
+    if @ticket.save
+      notice "Saved #{@ticket.simple_title}"
+      respond_with do |format|
+        format.html { redirect_to requested_location }
+        format.js { render :create }
+      end
+    else
+      breadcrumb "New"
+      respond_with do |format|
+        format.html { render :new }
+        format.js   { render :create }
+      end
+    end
   end
 end
