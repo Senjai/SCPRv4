@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
   include Concern::Callbacks::GenerateSlugCallback
+  include Concern::Callbacks::TouchCallback
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::TeaserMethods
