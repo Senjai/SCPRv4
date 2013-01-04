@@ -79,7 +79,7 @@ module Concern
       private
             
       def should_reject_bylines?(attributes)
-        attributes['user'].blank? &&
+        attributes['user_id'].blank? &&
         attributes['name'].blank?
       end
       
