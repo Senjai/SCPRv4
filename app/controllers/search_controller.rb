@@ -1,2 +1,2 @@
-class SearchController < ApplicationController  
+class SearchController < ApplicationController
 end

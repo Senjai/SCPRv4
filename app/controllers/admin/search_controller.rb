@@ -2,6 +2,8 @@ class Admin::SearchController < Admin::BaseController
   before_filter :set_class
   
   def index    
+    breadcrumb @klass.to_title.pluralize, @klass.admin_index_path, "Search"
+    
     @records = @klass.search(params[:query],
       :page     => params[:page] || 1,
       :per_page => 50
