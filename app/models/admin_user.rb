@@ -30,7 +30,6 @@ class AdminUser < ActiveRecord::Base
   # Administration  
   administrate do
     define_list do
-      list_per_page :all
       list_order "last_name"
       
       column :username
