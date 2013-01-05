@@ -68,7 +68,7 @@ class NewsStory < ActiveRecord::Base
     define_list do
       column :headline
       column :slug
-      column :news_agency
+      column :byline, display: ->(story) { story.byline }
       column :audio
       column :status
       column :published_at
@@ -87,15 +87,16 @@ class NewsStory < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
+    indexes bylines.user.name, as: :bylines
     has category.id, :as => :category
     has category.is_news, :as => :category_is_news
     has published_at
     has updated_at
     has status
     has "1", as: :findable, type: :boolean
-    has "(news_story.source <=> 'kpcc')", :as => :is_source_kpcc, :type => :boolean
-    has "CRC32(CONCAT('news/story:',news_story.id))", :type => :integer, :as => :obj_key
-    has "(news_story.story_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
+    has "(#{NewsStory.table_name}.source <=> 'kpcc')", :as => :is_source_kpcc, :type => :boolean
+    has "CRC32(CONCAT('news/story:',#{NewsStory.table_name}.id))", :type => :integer, :as => :obj_key
+    has "(#{NewsStory.table_name}.story_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
     join audio
   end

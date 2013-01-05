@@ -63,6 +63,7 @@ class ShowSegment < ActiveRecord::Base
       column :status
       
       filter :show_id, collection: -> { KpccProgram.all.map { |program| [program.to_title, program.id] } }
+      filter :bylines, collection: -> { Bio.select_collection }
       filter :status, collection: -> { ContentBase.status_text_collect }
     end
   end
@@ -76,17 +77,18 @@ class ShowSegment < ActiveRecord::Base
     indexes headline
     indexes teaser
     indexes body
+    indexes bylines.user.name, as: :bylines
     has show.id, as: :program
-    has category.id, :as => :category
-    has category.is_news, :as => :category_is_news
+    has category.id, as: :category
+    has category.is_news, as: :category_is_news
     has published_at
     has updated_at
     has status
     has "1", as: :findable, type: :boolean
-    has "1", :as => :is_source_kpcc, :type => :boolean
-    has "CRC32(CONCAT('shows/segment:',shows_segment.id))", :type => :integer, :as => :obj_key
-    has "(shows_segment.segment_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
+    has "1", as: :is_source_kpcc, type: :boolean
+    has "CRC32(CONCAT('shows/segment:',#{ShowSegment.table_name}.id))", type: :integer, as: :obj_key
+    has "(#{ShowSegment.table_name}.segment_asset_scheme <=> 'slideshow')", type: :boolean, as: :is_slideshow
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", as: :has_audio, type: :boolean
     join audio
   end
   

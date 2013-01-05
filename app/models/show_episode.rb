@@ -74,17 +74,18 @@ class ShowEpisode < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
-    has show.id, :as => :program
-    has "''", :as => :category, :type => :integer
-    has "0", :as => :category_is_news, :type => :boolean
+    indexes bylines.user.name, as: :bylines
+    has show.id, as: :program
+    has "''", as: :category, type: :integer
+    has "0", as: :category_is_news, type: :boolean
     has published_at
     has updated_at
     has status
     has "1", as: :findable, type: :boolean
-    has "1", :as => :is_source_kpcc, :type => :boolean
-    has "CRC32(CONCAT('shows/episode:',shows_episode.id))", :type => :integer, :as => :obj_key
-    has "0", :type => :boolean, :as => :is_slideshow
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
+    has "1", as: :is_source_kpcc, type: :boolean
+    has "CRC32(CONCAT('shows/episode:',#{ShowEpisode.table_name}.id))", type: :integer, as: :obj_key
+    has "0", type: :boolean, as: :is_slideshow
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", as: :has_audio, type: :boolean
     join audio
   end
 

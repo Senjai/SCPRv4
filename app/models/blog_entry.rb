@@ -79,8 +79,9 @@ class BlogEntry < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
-    has blog.id,          as: :blog
-    has category.id,      as: :category
+    indexes bylines.user.name, as: :bylines
+    has blog.id, as: :blog
+    has category.id, as: :category
     has category.is_news, as: :category_is_news
     has published_at
     has updated_at
