@@ -59,7 +59,7 @@ class Bio < ActiveRecord::Base
     # Maps all records to an array of arrays, to be
     # passed into a Rails select helper
     def select_collection
-      self.all.map { |bio| [bio.name, bio.id] }
+      self.order("name").all.map { |bio| [bio.name, bio.id] }
     end
   end
   
