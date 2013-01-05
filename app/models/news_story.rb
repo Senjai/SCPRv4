@@ -66,6 +66,8 @@ class NewsStory < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
+      list_order "updated_at desc"
+      
       column :headline
       column :slug
       column :byline, display: ->(story) { story.byline }
