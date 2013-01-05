@@ -1,5 +1,5 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe RedisPublishCallback do
+describe Concern::Callbacks::RedisPublishCallback do
   pending
 end

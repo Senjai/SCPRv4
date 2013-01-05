@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe TouchCallback do
+describe Concern::Callbacks::TouchCallback do
   pending
 end

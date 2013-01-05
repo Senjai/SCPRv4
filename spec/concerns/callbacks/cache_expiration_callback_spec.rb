@@ -1,5 +1,5 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe CacheExpirationCallback do
+describe Concern::Callbacks::CacheExpirationCallback do
   pending
 end
