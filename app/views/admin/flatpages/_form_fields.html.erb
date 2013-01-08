@@ -8,7 +8,7 @@
 <%= form_block "Display Options" do %>
   <%= f.input :enable_comments %>
   <%= f.input :is_public %>
-  <%= f.input :template, collection: Flatpage::TEMPLATE_OPTIONS, selected: record.template || Flatpage::TEMPLATE_OPTIONS[0] %>
+  <%= f.input :template, collection: Flatpage::TEMPLATE_OPTIONS, include_blank: false %>
 <% end %>
 
 <%= form_block "Content" do %>

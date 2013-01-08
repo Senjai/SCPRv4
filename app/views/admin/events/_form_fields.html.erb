@@ -1,6 +1,6 @@
 <%= form_block "Details" do %>
   <%= f.input :headline, label: "Title", input_html: { class: 'wide' } %>
-  <%= f.input :etype, label: "Type", collection: Event::EVENT_TYPES.map { |k, v| [v, k] }, selected: record.etype || Event::EVENT_TYPES[0] %>
+  <%= f.input :etype, label: "Type", collection: Event::EVENT_TYPES.map { |k, v| [v, k] }, include_blank: false %>
   <%= f.input :is_published, label: "Published?", hint: "Should this event show up on the website?" %>
   <%= f.input :body, input_html: { class: 'tinymce' } %>
 <% end %>
@@ -44,9 +44,9 @@
 
 <%= f.section "assets" do %>
   <%= f.input :event_asset_scheme, 
-              :collection => ContentBase::STORY_SCHEMES, 
-              :selected   => record.event_asset_scheme || ContentBase::STORY_SCHEMES[0], 
-              :hint       => "Sets up the top-of-story formatting for assets attached through AssetHost. " \
+              :collection    => ContentBase::STORY_SCHEMES, 
+              :include_blank => false,
+              :hint          => "Sets up the top-of-story formatting for assets attached through AssetHost. " \
                              "NOTE: For videos, choose 'Wide'" %>
 <% end %>
 

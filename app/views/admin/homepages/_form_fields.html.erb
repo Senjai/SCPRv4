@@ -1,8 +1,8 @@
 <%= f.section "content" %>
 
 <%= form_block "Details" do %>
-  <%= f.input :base, label: "Template", collection: Homepage::TEMPLATE_OPTIONS, selected: record.base || Homepages::TEMPLATE_OPTIONS[0]  %>
-  <%= f.association :missed_it_bucket %>
+  <%= f.input :base, label: "Template", collection: Homepage::TEMPLATE_OPTIONS, include_blank: false  %>
+  <%= f.association :missed_it_bucket, selected: record.missed_it_bucket_id || 3 %>
 <% end %>
 
 <%= f.section "publishing" %>

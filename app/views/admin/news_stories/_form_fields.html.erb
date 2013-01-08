@@ -4,16 +4,14 @@
 <%= f.section "bylines" %>
 
 <%= form_block "Meta" do %>
-  <%= f.input :locale, collection: NewsStory::LOCALES, include_blank: true, selected: record.locale || NewsStory::LOCALES[0] %>
-  <%= f.input :source, collection: NewsStory::SOURCES, include_blank: true, selected: record.source || NewsStory::SOURCES[0] %>
+  <%= f.input :source, collection: NewsStory::SOURCES, include_blank: false %>
   <%= f.input :news_agency %>
   <%= f.section "category" %>
 <% end %>
 
 <%= f.section "assets" do %>
-  <%= f.input :story_asset_scheme, collection: ContentBase::STORY_SCHEMES, selected: record.story_asset_scheme || ContentBase::STORY_SCHEMES[0] %>
-  <%= f.input :extra_asset_scheme, collection: ContentBase::STORY_EXTRA_SCHEMES, selected: record.extra_asset_scheme || ContentBase::STORY_EXTRA_SCHEMES[0] %>
-  <%= f.input :lead_asset_scheme, collection: ContentBase::LEAD_SCHEMES, selected: record.lead_asset_scheme || ContentBase::LEAD_SCHEMES[0] %>
+  <%= f.input :story_asset_scheme, collection: ContentBase::STORY_SCHEMES, include_blank: false %>
+  <%= f.input :extra_asset_scheme, collection: ContentBase::STORY_EXTRA_SCHEMES, include_blank: false, hint: "Where to show any extra assets." %>
 <% end %>
 
 <%= f.section "audio" %>
