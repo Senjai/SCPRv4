@@ -41,14 +41,6 @@ describe Admin::BaseController do
   #-----------------
   
   describe "require_admin" do
-    controller do
-      before_filter :require_admin
-      
-      def index
-        render nothing: true
-      end
-    end
-    
     context "admin_user true" do
       it "returns nil" do
         user = create :admin_user
@@ -58,6 +50,12 @@ describe Admin::BaseController do
     end
     
     context "admin_user false" do
+      controller do
+        def index
+          render nothing: true
+        end
+      end
+      
       before :each do
         controller.stub(:admin_user) { nil }
         controller.request.stub(:fullpath) { "/home" }
