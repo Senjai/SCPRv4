@@ -59,7 +59,7 @@ group :development, :staging do
 end
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.11"
+  gem "rspec-rails", "2.12.0"
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
   gem 'jasminerice'
