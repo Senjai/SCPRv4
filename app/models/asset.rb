@@ -126,18 +126,6 @@ class Asset
       super(json)
     end
   end
-  
-  #----------
-  # Accepts a hash of simple attributes
-  class Simple
-    attr_accessor :id, :caption, :asset_order
-    
-    def initialize(json)
-      @id          = json["id"].to_i
-      @caption     = json["caption"].to_s
-      @asset_order = json["asset_order"].to_i
-    end
-  end
 end
 
 #----------
