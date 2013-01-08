@@ -14,6 +14,17 @@ describe Admin::BaseController do
       controller.admin_user.should eq admin_user
     end
     
+    it "only finds user where is_staff is true" do
+      staff_user = create :admin_user, is_staff: true
+      controller.session['_auth_user_id'] = staff_user.id
+      controller.admin_user.should eq staff_user
+      
+      controller.instance_variable_set(:@admin_user, nil)
+      nostaff_user = create :admin_user, is_staff: false
+      controller.session['_auth_user_id'] = nostaff_user.id
+      controller.admin_user.should eq nil
+    end
+    
     it "returns false if session is blank" do
       controller.session['_auth_user_id'] = nil
       controller.admin_user.should eq nil
