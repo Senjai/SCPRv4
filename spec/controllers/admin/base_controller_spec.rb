@@ -41,22 +41,19 @@ describe Admin::BaseController do
   #-----------------
   
   describe "require_admin" do
-    controller { def index; render nothing: true; end }
+    controller do
+      before_filter :require_admin
+      
+      def index
+        render nothing: true
+      end
+    end
     
     context "admin_user true" do
       it "returns nil" do
         user = create :admin_user
         controller.stub(:admin_user) { user }
         controller.require_admin.should eq nil
-      end
-    end
-    
-    context "admin_user not staff" do
-      it "redirects" do
-        user = create :admin_user, is_staff: false
-        controller.stub(:admin_user) { user }
-        get :index
-        controller.response.should redirect_to admin_login_path
       end
     end
     
