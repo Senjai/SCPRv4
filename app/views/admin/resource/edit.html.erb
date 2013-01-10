@@ -3,6 +3,7 @@
 <%= simple_form_for [:admin, @record], html: { multipart: @record.respond_to?(:audio), class: "form-horizontal" } do |f| %>
   <%= render 'errors', f: f %>
   <%= render 'form_fields', record: @record, f: f %>
+  <%= render 'extra_fields', f: f %>
   <%= submit_row @record, @persisted_record %>
 <% end %>
 
