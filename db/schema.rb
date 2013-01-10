@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130103053846) do
+ActiveRecord::Schema.define(:version => 20130110183558) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.string   "headline"
     t.string   "slug",              :limit => 50
     t.text     "body",              :limit => 2147483647
-    t.integer  "blog_id",                                 :null => false
+    t.integer  "blog_id",                                                    :null => false
     t.string   "blog_slug",         :limit => 50
     t.datetime "published_at"
     t.integer  "status"
@@ -212,10 +212,10 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.text     "teaser",            :limit => 2147483647
     t.integer  "wp_id"
     t.integer  "dsq_thread_id"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
     t.integer  "category_id"
-    t.boolean  "is_from_pij",                             :null => false
+    t.boolean  "is_from_pij",                             :default => false, :null => false
   end
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
@@ -648,7 +648,6 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.string   "news_agency"
     t.text     "teaser",             :limit => 2147483647
     t.text     "body",               :limit => 2147483647
-    t.string   "locale"
     t.datetime "published_at"
     t.string   "source"
     t.string   "story_asset_scheme"
@@ -656,10 +655,10 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.string   "lead_asset_scheme",  :limit => 10
     t.integer  "status"
     t.string   "short_headline"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
     t.integer  "category_id"
-    t.boolean  "is_from_pij",                              :null => false
+    t.boolean  "is_from_pij",                              :default => false, :null => false
   end
 
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
@@ -902,7 +901,6 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.string   "slug",                 :limit => 50
     t.text     "teaser",               :limit => 2147483647
     t.text     "body",                 :limit => 2147483647
-    t.string   "locale"
     t.datetime "created_at",                                 :null => false
     t.integer  "status"
     t.string   "segment_asset_scheme"
