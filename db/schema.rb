@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
     t.integer  "category_id"
+    t.boolean  "is_from_pij",                             :null => false
   end
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
@@ -658,6 +659,7 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
     t.integer  "category_id"
+    t.boolean  "is_from_pij",                              :null => false
   end
 
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
