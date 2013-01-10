@@ -204,7 +204,6 @@ ActiveRecord::Schema.define(:version => 20130110183558) do
     t.string   "slug",              :limit => 50
     t.text     "body",              :limit => 2147483647
     t.integer  "blog_id",                                                    :null => false
-    t.string   "blog_slug",         :limit => 50
     t.datetime "published_at"
     t.integer  "status"
     t.string   "blog_asset_scheme"
@@ -461,19 +460,17 @@ ActiveRecord::Schema.define(:version => 20130110183558) do
   add_index "events_event", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
 
   create_table "flatpages_flatpage", :force => true do |t|
-    t.string   "url",                   :limit => 100,                           :null => false
-    t.string   "title",                 :limit => 200,                           :null => false
-    t.text     "content",               :limit => 2147483647,                    :null => false
-    t.text     "extra_head",            :limit => 2147483647,                    :null => false
-    t.text     "extra_tail",            :limit => 2147483647,                    :null => false
-    t.boolean  "enable_comments",                             :default => false, :null => false
-    t.boolean  "registration_required",                       :default => false, :null => false
+    t.string   "url",          :limit => 100,                           :null => false
+    t.string   "title",        :limit => 200,                           :null => false
+    t.text     "content",      :limit => 2147483647,                    :null => false
+    t.text     "extra_head",   :limit => 2147483647,                    :null => false
+    t.text     "extra_tail",   :limit => 2147483647,                    :null => false
     t.datetime "updated_at"
-    t.text     "description",           :limit => 2147483647,                    :null => false
-    t.string   "redirect_url",          :limit => 250
-    t.boolean  "is_public",                                   :default => false, :null => false
-    t.datetime "created_at",                                                     :null => false
-    t.string   "template",              :limit => 10,                            :null => false
+    t.text     "description",  :limit => 2147483647,                    :null => false
+    t.string   "redirect_url", :limit => 250
+    t.boolean  "is_public",                          :default => false, :null => false
+    t.datetime "created_at",                                            :null => false
+    t.string   "template",     :limit => 10,                            :null => false
   end
 
   add_index "flatpages_flatpage", ["is_public"], :name => "index_flatpages_flatpage_on_is_public"

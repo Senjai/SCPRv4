@@ -6,7 +6,6 @@
 <% end %>
 
 <%= form_block "Display Options" do %>
-  <%= f.input :enable_comments %>
   <%= f.input :is_public %>
   <%= f.input :template, collection: Flatpage::TEMPLATE_OPTIONS, include_blank: false %>
 <% end %>
