@@ -31,6 +31,8 @@ class Ticket < ActiveRecord::Base
   
   #--------------------
   # Administration
+  has_secretary
+  
   administrate do
     define_list do
       list_order "status desc, created_at desc"

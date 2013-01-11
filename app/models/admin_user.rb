@@ -89,7 +89,7 @@ class AdminUser < ActiveRecord::Base
   # Constants must be passed in.
   #
   def can_manage?(*resources)
-    self.is_superuser? || (allowed_resources & resources) == resources
+    self.is_superuser? or (allowed_resources & resources) == resources
   end
 
   
