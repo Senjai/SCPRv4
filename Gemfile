@@ -6,7 +6,6 @@ gem 'mysql2'
 gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0"
 gem 'thinking-sphinx', '~> 2.0', require: "thinking_sphinx"
-gem 'capistrano'
 
 
 ## Cache
@@ -24,7 +23,6 @@ gem 'simple_form', "~> 2.0"
 
 
 ## Utility
-gem 'chronic', "~> 0.8"
 gem "diffy", "~> 2.0"
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", require: 'mp3info'
@@ -45,6 +43,8 @@ gem 'newrelic_rpm'
 gem 'npr', github: "bricker/npr"
 #gem 'npr', path: "/Users/bricker/websites/kpcc/gems/npr"
 
+
+## Assets
 group :assets do
   gem "eco", "~> 1.0"
   gem 'sass-rails', "~> 3.2"
@@ -54,10 +54,20 @@ group :assets do
   gem 'uglifier', '>= 1.3'
 end
 
+
+## Development Only
+group :development do
+  gem 'capistrano'
+end
+
+
+## Development, Staging
 group :development, :staging do
   gem "dbsync"
 end
 
+
+## Test, Development
 group :test, :development do
   gem "rspec-rails", "2.12.0"
   gem 'rb-fsevent', '~> 0.9'
@@ -69,6 +79,8 @@ group :test, :development do
   gem 'guard-jasmine'
 end
 
+
+## Test Only
 group :test do
   gem 'simplecov', require: false
   gem "sqlite3"
@@ -77,4 +89,5 @@ group :test do
   gem 'capybara', "~> 2.0"
   gem 'shoulda-matchers'
   gem 'fakeweb'
+  gem 'chronic', "~> 0.8"
 end
