@@ -20,9 +20,7 @@
     </tfoot>
     
     <tbody id="bylines-fields">
-      <% record.bylines.each do |byline| %>
-        <%= f.render_fields "byline", record: byline %>
-      <% end %>
+      <%= f.has_many_fields :bylines %>
     </tbody>
   </table>
 <% end %>
