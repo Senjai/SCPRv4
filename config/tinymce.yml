@@ -1,4 +1,4 @@
-extended_valid_elements: 
+valid_elements: 
   - "+*[*]"
 mode: textareas
 height: 400
