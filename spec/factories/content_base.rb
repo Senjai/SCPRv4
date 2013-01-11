@@ -48,10 +48,7 @@ FactoryGirl.define do
   factory :news_story do
     content_base
     optional_cb_fields
-    
     slug        { headline.parameterize }
-    news_agency "KPCC"
-    locale      "local"
   end
 
 
@@ -69,7 +66,6 @@ FactoryGirl.define do
     optional_cb_fields
     show
     slug        { headline.parameterize }
-    locale      "local"
   end
 
 # ShowRundown #########################################################

@@ -14,6 +14,17 @@ describe Admin::BaseController do
       controller.admin_user.should eq admin_user
     end
     
+    it "only finds user where is_staff is true" do
+      staff_user = create :admin_user, is_staff: true
+      controller.session['_auth_user_id'] = staff_user.id
+      controller.admin_user.should eq staff_user
+      
+      controller.instance_variable_set(:@admin_user, nil)
+      nostaff_user = create :admin_user, is_staff: false
+      controller.session['_auth_user_id'] = nostaff_user.id
+      controller.admin_user.should eq nil
+    end
+    
     it "returns false if session is blank" do
       controller.session['_auth_user_id'] = nil
       controller.admin_user.should eq nil
@@ -30,8 +41,6 @@ describe Admin::BaseController do
   #-----------------
   
   describe "require_admin" do
-    controller { def index; render nothing: true; end }
-    
     context "admin_user true" do
       it "returns nil" do
         user = create :admin_user
@@ -40,16 +49,13 @@ describe Admin::BaseController do
       end
     end
     
-    context "admin_user not staff" do
-      it "redirects" do
-        user = create :admin_user, is_staff: false
-        controller.stub(:admin_user) { user }
-        get :index
-        controller.response.should redirect_to admin_login_path
-      end
-    end
-    
     context "admin_user false" do
+      controller do
+        def index
+          render nothing: true
+        end
+      end
+      
       before :each do
         controller.stub(:admin_user) { nil }
         controller.request.stub(:fullpath) { "/home" }

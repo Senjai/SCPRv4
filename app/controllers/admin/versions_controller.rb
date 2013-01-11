@@ -1,6 +1,7 @@
 class Admin::VersionsController < Admin::BaseController
   before_filter :get_admin_list, only: [:activity, :index]
   before_filter :get_object, only: [:index, :show, :compare]
+  before_filter :authorize_resource, only: [:index, :show]
   before_filter :extend_breadcrumbs_for_object, only: [:index, :show]
   
   #--------------
@@ -40,6 +41,12 @@ class Admin::VersionsController < Admin::BaseController
     authorize!(klass)
     redirect_to admin_root_path if !klass.has_secretary?
     @object = klass.find(params[:resource_id])
+  end
+
+  #--------------
+  
+  def authorize_resource
+    authorize!(@object.class)
   end
   
   #--------------

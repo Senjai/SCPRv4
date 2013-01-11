@@ -1,13 +1,22 @@
 #= require scprbase
 
 $ ->
-    for wrapper in $("form.simple_form div.datetime")
-        new scpr.DateTimeInput(wrapper: wrapper)
-    
-    for wrapper in $("form.simple_form div.date")
-        new scpr.DateTimeInput(wrapper: wrapper, time: false, field: "input.date")
+    scpr.DateTimeInput.buildDateTimeInputs($("form.simple_form"))
+    scpr.DateTimeInput.buildDateInputs($("form.simple_form"))
+
+#-----------------------
 
 class scpr.DateTimeInput
+    @buildDateTimeInputs: (els) ->
+        for wrapper in $("div.datetime", els)
+            new scpr.DateTimeInput(wrapper: wrapper)
+        
+    @buildDateInputs: (els) ->
+        for wrapper in $("div.date", els)
+            new scpr.DateTimeInput(wrapper: wrapper, time: false, field: "input.date")
+        
+    #-----------------------
+    
     DefaultOptions:
         time:          true
         dateTemplate:  JST["admin/templates/date_field"]
@@ -17,8 +26,8 @@ class scpr.DateTimeInput
         controls:      "div.controls"
         field:         "input.datetime"
         dateFormat:    "YYYY-MM-DD"
-        timeFormat:    "hh:mma"
-        dbFormat:      "YYYY-MM-DD hh:mm:ss"
+        timeFormat:    "HH:mm"
+        dbFormat:      "YYYY-MM-DD HH:mm:ss"
 
     constructor: (options) ->    
         @options = _.defaults options||{}, @DefaultOptions
@@ -33,15 +42,15 @@ class scpr.DateTimeInput
         @id     = @field.attr("id")
         @dateId = "#{@id}_date"
         @timeId = "#{@id}_time"
-
+        
         # Hide the field since we don't want anybody editing it directly
         @field.hide()
-        
+    
         # Render the templates
         # Prepend time first so it's second
         @controls.prepend(@options.timeTemplate(time_id: @timeId, time_format: @options.timeFormat)) if @time
         @controls.prepend(@options.dateTemplate(date_id: @dateId, date_format: @options.dateFormat))
-    
+
         # Register the newly-created elements
         @timestampEls   = $ @options.timestampEls, @wrapper
         @dateEl         = $ "##{@dateId}"
@@ -53,17 +62,17 @@ class scpr.DateTimeInput
         if @field.val()
             @dateEl.val @getDate(@options.dateFormat)
             @timeEl.val @getDate(@options.timeFormat) if @time
-
+            
         # Make the dateEl a datepicker
         @dateEl.datepicker(autoclose: true, format: @options.dateFormat.toLowerCase())
-
+    
         # Fill in hidden text field when visible field is changed
         @timestampEls.on
             change: (event) => (@field.trigger "update")
 
         @field.on
             update: => (@setDate(@dateEl.val(), @timeEl.val() if @time))
-                
+            
         # Fill in visible fields with right now time,
         # and trigger the "update" event on field hidden field
         @populateIcons.on
@@ -86,6 +95,7 @@ class scpr.DateTimeInput
     setDate: (date, time="") ->
         date = moment(Date.parse("#{date} #{time}"))
         console.log "date set to", date
+        
         if date
             formatted = date.format(@options.dbFormat) 
             @field.val(formatted)

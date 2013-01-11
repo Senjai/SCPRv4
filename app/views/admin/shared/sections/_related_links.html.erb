@@ -20,9 +20,7 @@
     </tfoot>
     
     <tbody id="related-links-fields">
-      <% record.related_links.each do |related_link| %>
-        <%= f.render_fields "related_link", record: related_link %>
-      <% end %>
+      <%= f.has_many_fields :related_links %>
     </tbody>
   </table>
 <% end %>

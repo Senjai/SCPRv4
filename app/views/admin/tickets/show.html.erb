@@ -27,7 +27,7 @@
 </div>
 
 <br />
-<%= simple_format @record.description, {}, sanitize: false %>
+<%= simple_format @record.description %>
 <br />
 <% if admin_user.is_superuser? || admin_user == @record.user %>
   <%= link_to "Edit", @record.admin_edit_path, class: "btn" %>

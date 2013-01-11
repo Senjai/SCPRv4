@@ -51,23 +51,6 @@ p.help-block {
     font-size: 12px;
 }
 
-.audio-fields {
-    margin-bottom: 10px;
-    padding: 5px;
-    
-    .audio-info {
-        .new-audio, .existing-audio {
-            height: 200px;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 10px;
-        }
-    }
-    
-    .control-group.file {
-        .controls { margin: 0; }
-    }   
-}
-
 .hidden {
     display: none;
 }

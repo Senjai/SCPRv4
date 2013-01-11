@@ -4,7 +4,7 @@
   <div class="content-alarm-ui">
     <% if record.respond_to? :alarm %>
       <%= f.simple_fields_for :alarm, @record.alarm || @record.build_alarm do |a| %>
-        <%= a.input :fire_at, wrapper_html: { class: "fire_at", style: "display: inline-block;"}, label: "Publish At", required: false, hint: "Schedule this record to publish on a future date. (optional)" %>
+        <%= a.input :fire_at, wrapper_html: { class: "fire_at", style: "display: inline-block;"}, label: "Publish At", required: false, hint: "Schedule this record to publish on a future date. (optional) <br />Time is in 24-hour format. Example: 2013-01-10 16:45" %>
       
         <% if @record.alarm.persisted? %>
           <%= a.input :_destroy, as: :boolean, label: false, inline_label: "Clear Scheduled Publishing?", wrapper_html: { class: "inline destroy-bool" } %>

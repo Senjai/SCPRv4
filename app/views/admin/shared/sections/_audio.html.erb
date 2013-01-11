@@ -3,9 +3,6 @@
     <% record.audio.build %>
   <% end %>
   
-  <% record.audio.each_with_index do |audio, index| %>
-    <%= f.render_fields "audio", record: audio, index: index %>
-  <% end %>
-  
+  <%= f.has_many_fields :audio %>
   <%= f.link_to_add_fields(:audio, title: "Add More Audio") %>
 <% end %>

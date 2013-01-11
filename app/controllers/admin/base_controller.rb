@@ -15,7 +15,7 @@ class Admin::BaseController < ActionController::Base
   helper_method :admin_user
   def admin_user
     begin
-      @admin_user ||= AdminUser.find(session['_auth_user_id'])
+      @admin_user ||= AdminUser.where(is_staff: true).find(session['_auth_user_id'])
     rescue ActiveRecord::RecordNotFound
       session['_auth_user_id'] = nil
       @admin_user              = nil
@@ -25,9 +25,8 @@ class Admin::BaseController < ActionController::Base
   #------------------------
   
   def require_admin
-    # Only allow in if admin_user is set, and 
-    # admin is_staff is true
-    if !admin_user.try(:is_staff?)
+    # Only allow in if admin_user is set
+    if !admin_user
       session[:return_to] = request.fullpath
       redirect_to admin_login_path and return false
     end

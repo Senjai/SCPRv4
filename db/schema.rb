@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130103053846) do
+ActiveRecord::Schema.define(:version => 20130110183558) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -203,8 +203,7 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.string   "headline"
     t.string   "slug",              :limit => 50
     t.text     "body",              :limit => 2147483647
-    t.integer  "blog_id",                                 :null => false
-    t.string   "blog_slug",         :limit => 50
+    t.integer  "blog_id",                                                    :null => false
     t.datetime "published_at"
     t.integer  "status"
     t.string   "blog_asset_scheme"
@@ -212,9 +211,10 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.text     "teaser",            :limit => 2147483647
     t.integer  "wp_id"
     t.integer  "dsq_thread_id"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
     t.integer  "category_id"
+    t.boolean  "is_from_pij",                             :default => false, :null => false
   end
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
@@ -460,19 +460,17 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
   add_index "events_event", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
 
   create_table "flatpages_flatpage", :force => true do |t|
-    t.string   "url",                   :limit => 100,                           :null => false
-    t.string   "title",                 :limit => 200,                           :null => false
-    t.text     "content",               :limit => 2147483647,                    :null => false
-    t.text     "extra_head",            :limit => 2147483647,                    :null => false
-    t.text     "extra_tail",            :limit => 2147483647,                    :null => false
-    t.boolean  "enable_comments",                             :default => false, :null => false
-    t.boolean  "registration_required",                       :default => false, :null => false
+    t.string   "url",          :limit => 100,                           :null => false
+    t.string   "title",        :limit => 200,                           :null => false
+    t.text     "content",      :limit => 2147483647,                    :null => false
+    t.text     "extra_head",   :limit => 2147483647,                    :null => false
+    t.text     "extra_tail",   :limit => 2147483647,                    :null => false
     t.datetime "updated_at"
-    t.text     "description",           :limit => 2147483647,                    :null => false
-    t.string   "redirect_url",          :limit => 250
-    t.boolean  "is_public",                                   :default => false, :null => false
-    t.datetime "created_at",                                                     :null => false
-    t.string   "template",              :limit => 10,                            :null => false
+    t.text     "description",  :limit => 2147483647,                    :null => false
+    t.string   "redirect_url", :limit => 250
+    t.boolean  "is_public",                          :default => false, :null => false
+    t.datetime "created_at",                                            :null => false
+    t.string   "template",     :limit => 10,                            :null => false
   end
 
   add_index "flatpages_flatpage", ["is_public"], :name => "index_flatpages_flatpage_on_is_public"
@@ -647,7 +645,6 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.string   "news_agency"
     t.text     "teaser",             :limit => 2147483647
     t.text     "body",               :limit => 2147483647
-    t.string   "locale"
     t.datetime "published_at"
     t.string   "source"
     t.string   "story_asset_scheme"
@@ -655,9 +652,10 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.string   "lead_asset_scheme",  :limit => 10
     t.integer  "status"
     t.string   "short_headline"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
     t.integer  "category_id"
+    t.boolean  "is_from_pij",                              :default => false, :null => false
   end
 
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
@@ -900,7 +898,6 @@ ActiveRecord::Schema.define(:version => 20130103053846) do
     t.string   "slug",                 :limit => 50
     t.text     "teaser",               :limit => 2147483647
     t.text     "body",                 :limit => 2147483647
-    t.string   "locale"
     t.datetime "created_at",                                 :null => false
     t.integer  "status"
     t.string   "segment_asset_scheme"
