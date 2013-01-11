@@ -17,8 +17,8 @@ class scpr.DateTimeInput
         controls:      "div.controls"
         field:         "input.datetime"
         dateFormat:    "YYYY-MM-DD"
-        timeFormat:    "hh:mma"
-        dbFormat:      "YYYY-MM-DD hh:mm:ss"
+        timeFormat:    "HH:mm"
+        dbFormat:      "YYYY-MM-DD HH:mm:ss"
 
     constructor: (options) ->    
         @options = _.defaults options||{}, @DefaultOptions
@@ -86,6 +86,7 @@ class scpr.DateTimeInput
     setDate: (date, time="") ->
         date = moment(Date.parse("#{date} #{time}"))
         console.log "date set to", date
+        
         if date
             formatted = date.format(@options.dbFormat) 
             @field.val(formatted)
