@@ -1,4 +1,5 @@
 $gridColumnWidth: 75px;
 
 @import "bootstrap";
-@import "*";
+@import "*"; // This only includes the files in this directory... it's a SCSS glab, not Sprockets.
+@import "datepicker";
