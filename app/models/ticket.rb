@@ -22,7 +22,7 @@ class Ticket < ActiveRecord::Base
     
   def set_default_status
     self.status = STATUS_OPEN
-  end  
+  end
   
   #--------------------
   # Validations
