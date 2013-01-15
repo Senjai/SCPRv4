@@ -97,6 +97,14 @@ describe ContentBase do
       end
     end
   end
+
+  #---------------
+  
+  describe "::obj_by_key!" do
+    it "raises an error if no object is found" do
+      -> { ContentBase.obj_by_key!("something") }.should raise_error ActiveRecord::RecordNotFound
+    end
+  end
   
   #---------------
   
