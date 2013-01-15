@@ -6,18 +6,33 @@
 # Preview functionality for the CMS
 #
 class scpr.Preview
-    constructor: ->        
+    constructor: ->
         $("form button#preview").on
             click: (event) ->
                 event.preventDefault()
                 
-                form = $(@).closest("form")[0]
-                originalTarget = form.target
-                originalAction = form.action
+                form = $(@).closest("form")
+                data = form.serialize()
                 
-                form.target = "_blank"
-                form.action = "/r/admin/preview"
-                form.submit()
+                modalEl   = $('#preview-modal')
+                modalBody = $('.modal-body', modalEl)
                 
-                form.target = originalTarget
-                form.action = originalAction
+                modalEl.modal('toggle')
+                modalBody.spin()
+                
+                $.ajax
+                    type: 'POST'
+                    dataType: "json"
+                    url: "/r/admin/preview/"
+                    data:
+                        data
+                    
+                    statusCode:
+                        200: (data, textStatus, jqXHR) ->
+                            modalBody.spin(false)
+                            modalBody.html data.preview
+                            console.log "200"
+                        404: (jqXHR, textStatus, errorThrown) ->
+                            console.log "404"
+                        500: (jqXHR, textStatus, errorThrown) ->
+                            console.log "500"

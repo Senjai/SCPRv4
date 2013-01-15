@@ -248,7 +248,7 @@ Scprv4::Application.routes.draw do
         post "import", as: :import, on: :member
       end
       
-      match "/preview" => "preview#show"
+      match "/preview" => "preview#preview", via: [:post, :put]
       
       get "/activity"                                        => "versions#activity",  as: :activity
       get "/:resources/:resource_id/history"                 => "versions#index",     as: :history

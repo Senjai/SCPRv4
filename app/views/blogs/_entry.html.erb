@@ -19,7 +19,7 @@
           </div>
           
           <p class="byline">
-            <%= render_byline entry %> <span class="pipe">|</span> <time pubdate><%= format_date entry.published_at, format: :full_date, time: true %></time>
+            <%= entry.byline %> <span class="pipe">|</span> <time pubdate><%= format_date entry.published_at, format: :full_date, time: true %></time>
           </p>
         </header>
     

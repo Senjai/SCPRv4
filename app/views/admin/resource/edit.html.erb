@@ -7,6 +7,8 @@
   <%= submit_row @record, @persisted_record %>
 <% end %>
 
+<%= render '/admin/shared/preview_modal' %>
+
 <% content_for :sidebar do %>
   <ul class="story-status unstyled">
     <h5>Status</h5>
@@ -29,7 +31,6 @@
     <h5>Currently Editing on This Page</h5>
     <div id="newsroom-edit_user-list" class="viewers"></div>
   </div>
-    
 <% end %>
 
 <% content_for :footerjs do %>
