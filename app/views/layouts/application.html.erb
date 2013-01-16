@@ -18,23 +18,23 @@
             <%= yield(:sidebar) %>
           <% else %>
             <%= yield :sidebar_top %>
-            <%= render "shared/widgets/oas", :ad_id => 'x01' %>
+            <%= render "/shared/widgets/oas", :ad_id => 'x01' %>
             <%= yield :sidebar_middle %>
-            <%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>
-            <%= render "shared/widgets/newsletter_subscribe" %>
-            <%= render "shared/widgets/most_popular" %>       
-            <%= render "shared/widgets/oas", :ad_id => 'x02' %>
-            <%= render "shared/widgets/promo_house_sidebar" %>
-            <%= render "shared/widgets/oas", :ad_id => 'x03' %>
+            <%= render "/shared/widgets/promo_membership_small", :ad_id => 'x13' %>
+            <%= render "/shared/widgets/newsletter_subscribe" %>
+            <%= render "/shared/widgets/most_popular" %>       
+            <%= render "/shared/widgets/oas", :ad_id => 'x02' %>
+            <%= render "/shared/widgets/promo_house_sidebar" %>
+            <%= render "/shared/widgets/oas", :ad_id => 'x03' %>
           <% end %>
         </div> <!-- sidebar -->
       </div> <!-- span8 -->
     </div> <!-- row-fluid -->
-    <%= render "shared/audio/inpage_audio_player" %>
+    <%= render "/shared/audio/inpage_audio_player" %>
   </div> <!-- container fluid main -->
 
-  <%= render :partial => "shared/footer" %>
-  <%= render :partial => "shared/footer/footer_js" %>
+  <%= render :partial => "/shared/footer" %>
+  <%= render :partial => "/shared/footer/footer_js" %>
 </div> <!-- viewport -->
 </body>
 </html>

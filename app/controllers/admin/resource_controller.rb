@@ -11,11 +11,12 @@ class Admin::ResourceController < Admin::BaseController
   before_filter :filter_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
   before_filter :add_user_id_to_params, only: [:create, :update]
+  before_filter :set_preview, only: [:preview]
   
   respond_to :html, :json, :js
 
   #-----------------
-  
+    
   def extend_breadcrumbs_with_resource_root
     breadcrumb resource_class.to_title.pluralize, resource_class.admin_index_path
   end
@@ -28,6 +29,12 @@ class Admin::ResourceController < Admin::BaseController
     end
   end
   
+  #-----------------
+
+  def set_preview
+    @PREVIEW = true
+  end
+
   #-----------------
   
   private

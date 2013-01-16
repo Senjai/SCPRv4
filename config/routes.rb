@@ -232,7 +232,13 @@ Scprv4::Application.routes.draw do
       resources :kpcc_programs
       resources :news_stories
       resources :blogs
-      resources :blog_entries
+      
+      resources :blog_entries do
+        member do
+          put "/preview", action: "preview"
+        end
+      end
+      
       resources :flatpages
       resources :video_shells
       resources :events
@@ -247,9 +253,7 @@ Scprv4::Application.routes.draw do
       resources :npr_stories, only: [:index, :destroy] do
         post "import", as: :import, on: :member
       end
-      
-      match "/preview" => "preview#preview", via: [:post, :put]
-      
+            
       get "/activity"                                        => "versions#activity",  as: :activity
       get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
       get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
