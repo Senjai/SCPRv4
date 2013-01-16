@@ -1,5 +1,5 @@
 CKEDITOR.editorConfig = (config) ->
-    config.extraPlugins = 'mediaembed,codemirror,backup,onchange'
+    config.extraPlugins = 'mediaembed,codemirror'
     
     # Note: All other theme CSS files have been removed from this repo.
     # See https://github.com/w8tcha/CKEditor-CodeMirror-Plugin to download more.
