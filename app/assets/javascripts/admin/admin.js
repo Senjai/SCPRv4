@@ -9,8 +9,15 @@
 //= require moment
 //= require date
 //= require bootstrap-datepicker
-//= require tinymce-jquery
+
+// CKEDITOR
+// Put plugins in: vendor/assets/javascripts/ckeditor/plugins
+//= require ckeditor-jquery
+//= require ckeditor/plugins/mediaembed/plugin
+//= require ckeditor/plugins/codemirror/plugin
+
 //= require_tree ./templates/
+
 //= require admin/notification
 //= require admin/newsroom
 //= require admin/field_manager
