@@ -5,7 +5,7 @@
 #
 module Concern
   module Methods
-    module ContentJsonMethods      
+    module ContentJsonMethods
       def json
         {
           :asset  => self.primary_asset(:lsquare),

@@ -2,7 +2,7 @@
 <%= index_header resource_class %>
 
 <table class="table table-striped">
-  <%= any_to_list? @records, title: resource_class.to_title.pluralize do %>
+  <%= any_to_list? @records, message: "No #{resource_class.to_title.pluralize} were found." do %>
     <thead>
       <tr>
         <th>Manage</th>

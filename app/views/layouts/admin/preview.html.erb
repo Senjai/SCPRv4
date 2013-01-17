@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  
+  <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js"></script>
+  <script type="text/javascript">ahClient = new AssetHost.Client()</script>
+  
+  <style type="text/css">
+    .fake-el {
+      background: #efefef;
+      border: 1px solid #cccccc;
+    }
+  </style>
+  <title>Preview: <%= @title %></title>
+</head>
+<body>
+  <header id="masthead">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span24 fake-el" style="height:110px;">
+          &nbsp;
+        </div>
+      </div>
+  </header>
+  
+  <div id="main" class="container-fluid main-content">
+    <div class="row-fluid">
+      <article class="span16 relative">
+        <%= yield %>
+        <div class="vert-divider"></div>
+      </article>
+      
+      <div class="span8">
+        <div id="sidebar" class="fake-el" style="height:1000px;">
+          &nbsp;
+        </div> <!-- sidebar -->
+      </div> <!-- span8 -->
+    </div> <!-- row-fluid -->
+  </div> <!-- container fluid main -->
+  
+  <div id="page-footer">
+    <footer style="background:none;">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span24 fake-el" style="height:200px;">
+            &nbsp;
+          </div>
+        </div> <!-- row-fluid -->
+      </div> <!-- container-fluid -->
+    </footer>
+  </div> <!-- page-footer -->
+</body>
+</html>

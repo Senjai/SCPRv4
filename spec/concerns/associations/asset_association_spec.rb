@@ -3,14 +3,6 @@ require "spec_helper"
 describe Concern::Associations::AssetAssociation do
   subject { TestClass::Story.new }
   
-  describe "association" do
-    it { should have_many(:assets).class_name("ContentAsset").dependent(:destroy) }
-  
-    it "orders by asset_order" do
-      subject.assets.to_sql.should match /order by asset_order/i
-    end
-  end
-  
   #--------------------
 
   describe "#primary_asset" do
@@ -34,15 +26,13 @@ describe Concern::Associations::AssetAssociation do
   
   #--------------------
   
-  describe "#parse_asset_json" do
+  describe "#asset_json=" do
     context "no asset_json passed in" do
       it "doesn't do anything" do
         newrecord = TestClass::Story.create!(asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]", headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
         newrecord.assets.size.should eq 1
         
         record = TestClass::Story.find(newrecord.id)
-        record.should_not_receive(:make_assets)
-        record.asset_json.should eq nil
         record.save!
         record.assets.size.should eq 1
       end
@@ -52,38 +42,33 @@ describe Concern::Associations::AssetAssociation do
       it "parses the json and adds the asset on save" do
         record = TestClass::Story.new(headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
         record.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
-        record.assets.size.should eq 0
-        record.save!
-        record.reload.assets.size.should eq 1
-        record.assets.first.caption.should eq "Caption"
-        record.assets.first.asset_order.should eq 12
-      end
-    end
-    
-    context "for persisted record with new asset" do
-      it "parses the json and adds the asset on save" do
-        record = TestClass::Story.create!(headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
-        record.assets.size.should eq 0
-        record.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
-        record.save!
-        record.reload.assets.size.should eq 1
-        record.assets.first.caption.should eq "Caption"
-        record.assets.first.asset_order.should eq 12
-      end
-    end
-    
-    context "for persisted record when updating asset" do
-      it "parses the json and updates the asset on save" do
-        record = TestClass::Story.create!(asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]", headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
         record.assets.size.should eq 1
-        record.assets.first.caption.should eq "Caption"
-        record.assets.first.asset_order.should eq 12
-        
-        record.asset_json = "[{\"id\":32459,\"caption\":\"New Caption\",\"asset_order\":5}]"
         record.save!
         record.reload.assets.size.should eq 1
-        record.assets.first.caption.should eq "New Caption"
-        record.assets.first.asset_order.should eq 5
+        record.assets.first.caption.should eq "Caption"
+        record.assets.first.asset_order.should eq 12
+      end
+      
+      it "runs #asset_json= when passig it in to .new" do
+        record = TestClass::Story.new(asset_json:  "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]", headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
+        record.assets.size.should eq 1
+      end
+    end
+    
+    context "updating assets" do
+      it "replaces the collection with the new one" do
+        record = TestClass::Story.create!(headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
+        record.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
+        record.assets.size.should eq 1
+        record.save!
+        
+        record.asset_json = "[{\"id\":32450,\"caption\":\"Other Caption\",\"asset_order\":1}]"
+        record.assets.size.should eq 1
+        record.assets.first.caption.should eq "Other Caption"
+        record.save!
+        
+        # Make sure it actually deleted the other asset
+        ContentAsset.count.should eq 1
       end
     end
     

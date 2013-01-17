@@ -6,4 +6,8 @@ class FeaturedCommentBucket < ActiveRecord::Base
   
   has_many :comments, :class_name => "FeaturedComment", :foreign_key => "bucket_id", :order => "published_at desc"  
   validates :title, presence: true
+  
+  define_index do
+    indexes title
+  end
 end

@@ -6,19 +6,18 @@ class ApplicationPresenter
   
   private
     
-    def self.presents(name)
-      define_method(name) do
-        @object
-      end
+  def self.presents(name)
+    define_method(name) do
+      @object
     end
-    
-    def h
-      @template
-    end
-    
-    def method_missing(*args, &block)
-      @template.send *args, &block
-    end
-  #
+  end
+  
+  def h
+    @template
+  end
+  
+  def method_missing(*args, &block)
+    @template.send *args, &block
+  end
   
 end

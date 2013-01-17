@@ -206,45 +206,127 @@ Scprv4::Application.routes.draw do
       get 'login'  => "sessions#new", as: :login
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
-      
-      get '/search(/:resource)' => "search#index", as: :search
-      
+            
       ## -- AdminResource -- ##
-      resources :press_releases
-      resources :recurring_schedule_slots
+      resources :recurring_schedule_slots do
+        get "search", on: :collection, as: :search
+      end
+      
       resources :permissions
-      resources :bios
-      resources :audio
-      resources :admin_users
-      resources :podcasts
-      resources :schedules
-      resources :breaking_news_alerts
-      resources :featured_comment_buckets
-      resources :categories
-      resources :missed_it_buckets
-      resources :promotions
-      resources :sections
-      resources :pij_queries
-      resources :tags
-      resources :other_programs
-      resources :show_segments
-      resources :show_episodes
-      resources :kpcc_programs
-      resources :news_stories
-      resources :blogs
-      resources :blog_entries
-      resources :flatpages
-      resources :video_shells
-      resources :events
-      resources :homepages
-      resources :content_shells
-      resources :featured_comments
-      resources :data_points
+      
+      resources :admin_users do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :podcasts do
+        get "search", on: :collection, as: :search
+      end
+            
+      resources :breaking_news_alerts do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :featured_comment_buckets do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :categories do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :missed_it_buckets do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :promotions do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :sections do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :other_programs do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :kpcc_programs do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :video_shells do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :blogs do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :content_shells do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :featured_comments do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :data_points do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :show_episodes do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :flatpages do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :bios do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :press_releases do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :homepages do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member, as: :preview
+      end
+      
+      resources :pij_queries do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member, as: :preview
+      end
+
+      resources :show_segments do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member, as: :preview
+      end
+      
+      resources :news_stories do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member, as: :preview
+      end
+      
+      resources :blog_entries do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member, as: :preview
+      end
+            
+      resources :events do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member, as: :preview
+      end
       ## -- END AdminResource --  ##
       
-      resources :tickets
+      resources :tickets do
+        get "search", on: :collection, as: :search
+      end
       
       resources :npr_stories, only: [:index, :destroy] do
+        get "search", on: :collection, as: :search
         post "import", as: :import, on: :member
       end
       

@@ -154,6 +154,13 @@ module ContentBase
   end
 
   #--------------------
+  # Same as #obj_by_key, but raises ActiveRecord::RecordNotFound
+  # if no object is found or if key doesn't match.
+  def obj_by_key!(key)
+    obj_by_key(key) or raise ActiveRecord::RecordNotFound
+  end
+  
+  #--------------------
   # Look to CONTENT_MATCHES to see if the passed-in URL
   # corresponds to any model.
   def obj_by_url(url)

@@ -3,12 +3,12 @@
 <% @OG_TYPE = "blog" %>
 
 <%= cache ["show", "v4", @entry] do %>
-  <%= render "/blogs/entry", entry: @entry, blog: @blog, full: true %>
+  <%= render "/blogs/entry", entry: @entry, full: true %>
 <% end %>
 
 <div class="fold" id="fold">
   <%= content_widget "related_content_and_links", @entry %>
-  <%= render "shared/cwidgets/pij_query", content: @entry %>
+  <%= render "/shared/cwidgets/pij_query", content: @entry %>
   <%= content_widget "next_prev", @entry %>
   
   <div class="comment-wrap">

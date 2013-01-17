@@ -9,7 +9,7 @@ class Ticket < ActiveRecord::Base
 
   #--------------------
   # Scopes
-  scope :open,   -> { where(status: STATUS_OPEN) }
+  scope :opened,   -> { where(status: STATUS_OPEN) }
   scope :closed, -> { where(status: STATUS_CLOSED) }
   
   #--------------------

@@ -1,7 +1,8 @@
 class Admin::NprStoriesController < Admin::BaseController
   include AdminResource::Controller::Helpers
   include AdminResource::Controller::Callbacks
-
+  include Concern::Controller::Searchable
+  
   before_filter :authorize_resource
   before_filter :get_record, only: [:import, :destroy]
   before_filter :get_records, only: [:index]

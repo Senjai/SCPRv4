@@ -2,40 +2,7 @@
 <%= render_content @story, "opengraph" %>
 
 <%= cache ["show", "v5", @story] do %>
-  <div class="story content-block">
-    <article>
-      <header>
-        <%= content_widget "social_tools", @story, cssClass: "top horizontal" %>
-        <h1 class="story-headline"><%= @story.headline %></h1>
-        <p class="byline"><%= render_byline @story %> <span class="pipe">|</span> <time pubdate><%= format_date @story.published_at, format: :full_date, time: true %></time></p>
-      </header>
-  
-      <div class="story-body <%= @story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
-        <div class="visible-reader"><%= content_widget "primary_audio", @story %></div>
-        <%= render_asset @story, "story" %>
-
-        <div class="storybar">
-          <%= comment_widget_for @story, cssClass: 'right-side' %>
-          <div class="hidden-reader"><%= content_widget "audio", @story %></div>
-          <%= render_asset(@story, "extra") if @story.extra_asset_scheme == "sidebar" %>
-        </div>
-
-        <%= @story.body.html_safe %>
-      </div>
-  
-      <footer>
-        <p><i><%= render_contributing_byline @story %></i></p>
-        <div class="visible-reader"><%= content_widget "extra_audio", @story %></div>
-        
-        <% if @story.is_from_pij? %>
-          <%= render '/shared/cwidgets/pij_notice' %>
-        <% end %>
-      </footer>
-    </article>
-    
-    <%= render :partial => "shared/cwidgets/author_info", :collection => @story.grouped_bylines[:primary], :as => :byline %>
-    <%= content_widget "social_tools", @story, cssClass: "bottom horizontal" %>
-  </div> <!-- story -->
+  <%= render "/news/story", story: @story %>
 <% end %>
 
 <div class="fold inline" id="fold">

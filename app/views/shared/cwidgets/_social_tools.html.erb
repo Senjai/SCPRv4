@@ -1,6 +1,6 @@
 <div class="sharing-tools <%= cssClass ||= nil %> clearfix" id="article-sharing-tools">
   <h5>Share this:</h5>
-  <% if content.published? %>
+  <% unless @PREVIEW %>
     <ul>
       <li class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= URI.escape(content.remote_link_path) %>">Facebook (<span class="count">&nbsp;&nbsp;</span>)</li>
       <li class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= URI.escape(content.remote_link_path) %>" data-text="<%= CGI.escape(content.short_headline) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</li>

@@ -1,22 +1,3 @@
 <% page_title @query.headline %>
 <%= render '/shared/content/default/opengraph', content: @query %>
-
-<div class="query content-block">
-  <article>
-    <header>
-      <%= render "/shared/cwidgets/social_tools", content: @query, cssClass: "top horizontal" %>  
-      <h1 class="story-headline"><%= @query.headline %></h1>
-      <hr />
-    </header>
-  
-    <div class="story-body storyleft">
-      <%= render_asset @query, "query" %>
-      <%= @query.body.html_safe %>
-    </div>
-  
-    <footer>
-    </footer>
-  </article>
-  
-  <iframe width="100%" id="pij-query-iframe" height="<%=@query.form_height%>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<%=@query.query_url%>"></iframe>
-</div> <!-- query -->
+<%= render "/pij_queries/pij_query", query: @query %>

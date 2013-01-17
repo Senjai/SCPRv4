@@ -31,8 +31,7 @@ module AdminResource
       #------------------
 
       def show
-        breadcrumb @record.to_title
-        respond_with :admin, @record
+        redirect_to @record.admin_edit_path
       end
 
       #------------------
