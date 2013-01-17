@@ -53,7 +53,7 @@ class Admin::VersionsController < Admin::BaseController
   
   def extend_breadcrumbs_for_object
     breadcrumb @object.class.name.titleize.pluralize, url_for([:admin, @object.class])
-    breadcrumb @object.simple_title, url_for([:admin, @object])
+    breadcrumb @object.simple_title, url_for([:edit, :admin, @object])
   end
 
   #--------------
