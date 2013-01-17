@@ -214,7 +214,6 @@ Scprv4::Application.routes.draw do
       resources :recurring_schedule_slots
       resources :permissions
       resources :bios
-      resources :audio
       resources :admin_users
       resources :podcasts
       resources :schedules
@@ -224,28 +223,36 @@ Scprv4::Application.routes.draw do
       resources :missed_it_buckets
       resources :promotions
       resources :sections
-      resources :pij_queries
-      resources :tags
       resources :other_programs
-      resources :show_segments
       resources :show_episodes
       resources :kpcc_programs
-      resources :news_stories
-      resources :blogs
-      
-      resources :blog_entries do
-        member do
-          put "/preview", action: "preview"
-        end
-      end
-      
       resources :flatpages
       resources :video_shells
-      resources :events
+      resources :blogs
       resources :homepages
       resources :content_shells
       resources :featured_comments
       resources :data_points
+      
+      resources :pij_queries do
+        put "/preview", action: "preview", on: :member
+      end
+
+      resources :show_segments do
+        put "/preview", action: "preview", on: :member
+      end
+      
+      resources :news_stories do
+        put "/preview", action: "preview", on: :member
+      end
+      
+      resources :blog_entries do
+        put "/preview", action: "preview", on: :member
+      end
+            
+      resources :events do
+        put "/preview", action: "preview", on: :member
+      end
       ## -- END AdminResource --  ##
       
       resources :tickets
