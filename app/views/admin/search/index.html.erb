@@ -1,0 +1,26 @@
+<% page_title resource_class.to_title.pluralize %>
+<%= index_header resource_class %>
+
+<table class="table table-striped">
+  <%= any_to_list? @records, title: resource_class.to_title.pluralize do %>
+    <thead>
+      <tr>
+        <th>Manage</th>
+        <%= render "/admin/shared/headers", list: @list %>
+      </tr>
+    </thead>
+    <tbody class="list">
+      <% @records.each do |record| %>
+        <tr class="<%= resource_class.singular_route_key.dasherize %>">
+          <td>
+            <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
+          </td>
+
+          <%= render "/admin/shared/columns", list: @list, record: record %>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>
+
+<%= render "/admin/shared/pagination", records: @records %>

@@ -27,6 +27,8 @@ class NprStory < ActiveRecord::Base
   # Administration
   self.admin = AdminResource::Admin.new(self)
   admin.define_list do
+    list_per_page 50
+    
     column :headline
     column :published_at
     column :teaser

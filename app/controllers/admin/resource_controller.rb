@@ -4,6 +4,7 @@
 # Adds in some default behavior for resources in the CMS.
 class Admin::ResourceController < Admin::BaseController
   include AdminResource::Controller
+  include Concern::Controller::Searchable
   
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
   before_filter :get_records, only: :index

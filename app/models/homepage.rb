@@ -45,6 +45,9 @@ class Homepage < ActiveRecord::Base
 
   #-------------------
   # Sphinx
+  define_index do
+    indexes base
+  end
   
   #----------
   
