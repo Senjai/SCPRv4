@@ -13,8 +13,13 @@ class scpr.Preview
             click: (event) ->
                 event.preventDefault()
                 target = $(@)
+                form   = target.closest("form")
                 
-                form = target.closest("form")
+                # Update any hidden textareas that are using CKEditor
+                # Then serialize the form.
+                for id,instance of CKEDITOR.instances
+                    instance.updateElement()
+
                 data = form.serialize()
                 
                 $.ajax
@@ -24,25 +29,32 @@ class scpr.Preview
                     data:
                         data
                     
-                    beforeSend: (jqXHR, settings) =>
+                    beforeSend: (jqXHR, settings) ->
                         _t.openWindow(target.data("windowOptions"))
-                        _t.window.document.write(JST['admin/templates/loading']())
-                        _t.window.document.close()
+                        _t.writeToWindow(JST['admin/templates/loading']())
+
                     statusCode:
                         200: (data, textStatus, jqXHR) ->
-                            _t.window.document.write(data)
-                            _t.window.document.close()
+                            _t.writeToWindow(data)
                         404: (jqXHR, textStatus, errorThrown) ->
-                            console.log "404"
+                            _t.writeToWindow("Error: #{errorThrown}")
                         500: (jqXHR, textStatus, errorThrown) ->
-                            console.log "500"
-    
+                            _t.writeToWindow("Error: #{errorThrown}")
+
+    #--------------------
+    # Open the preview window.
+    # If it doesn't exist yet, create it.
+    # If it already exists, just focus on it.
     openWindow: (options="")->
         if !@window or (@window and @window.closed)
             @window = window.open("/", "preview", "scrollbars=yes,menubar=no,location=no,directories=no,toolbar=no,#{options}")
         else
             @window.focus()
-    
-    writeWindow: ->
-        #
+
+    #--------------------
+    # Write some data to the preview window.
+    # This shouldn't get called before @window is set.
+    writeToWindow: (data) ->
+        @window.document.write(data)
+        @window.document.close()
     

@@ -4,6 +4,9 @@
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   
+  <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js"></script>
+  <script type="text/javascript">ahClient = new AssetHost.Client()</script>
+  
   <style type="text/css">
     .fake-el {
       background: #efefef;

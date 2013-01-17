@@ -14,21 +14,24 @@
 
     <div class="pull-right">      
       <% if record.persisted? %>
-        <div class="btn-group dropup" id="preview-submit">
-          <%= button_tag "Preview", class: "btn btn-info js-preview-btn", data: { "window-options" => "width=1200,height=1000" } %>
-          <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><%= button_tag "Mobile Portrait (320x480)", class: "js-preview-btn", data: { "window-options" => "width=320,height=480" } %></li>
-            <li><%= button_tag "Mobile Landscape (480x320)", class: "js-preview-btn", data: { "window-options" => "width=480,height=320" } %></li>
-            <li><%= button_tag "Tablet Portrait (768x1024)", class: "js-preview-btn", data: { "window-options" => "width=768,height=1024" } %></li>
-            <li><%= button_tag "Tablet Landscape (1024x768)", class: "js-preview-btn", data: { "window-options" => "width=1024,height=768" } %></li>
-            <li><%= button_tag "Small Desktop (960x900)", class: "js-preview-btn", data: { "window-options" => "width=960,height=900" } %></li>
-          </ul>
-        </div>
+        
+        <% if controller.action_methods.include? "preview" %>
+          <div class="btn-group dropup" id="preview-submit">
+            <%= button_tag "Preview", class: "btn btn-info js-preview-btn", data: { "window-options" => "width=1200,height=1000" } %>
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= button_tag "Mobile Portrait (320x480)", class: "js-preview-btn", data: { "window-options" => "width=320,height=480" } %></li>
+              <li><%= button_tag "Mobile Landscape (480x320)", class: "js-preview-btn", data: { "window-options" => "width=480,height=320" } %></li>
+              <li><%= button_tag "Tablet Portrait (768x1024)", class: "js-preview-btn", data: { "window-options" => "width=768,height=1024" } %></li>
+              <li><%= button_tag "Tablet Landscape (1024x768)", class: "js-preview-btn", data: { "window-options" => "width=1024,height=768" } %></li>
+              <li><%= button_tag "Small Desktop (960x900)", class: "js-preview-btn", data: { "window-options" => "width=960,height=900" } %></li>
+            </ul>
+          </div>
+        <% end %>
       
-      
+        
         <%= link_to("View Live", record.link_path, class: "btn btn-success", target: "_blank") if record.link_path.present? %>
         <%= link_to("Edit in Django", record.django_edit_url, class: "btn") if record.exists_in_django? %>
         <%= link_to("Delete", 
