@@ -11,11 +11,18 @@
   <ul class="story-status unstyled">
     <h5>Status</h5>
     <% if @record.respond_to? :status_text %>
-      <li>This story is <span class="<%=status_bootstrap_map[@record.status]%>"><%= @record.status_text %></span></li>
+      <li>
+        <span class="<%=status_bootstrap_map[@record.status]%>"><%= @record.status_text %></span>
+        
+        <% if @record.respond_to?(:published_at) and @record.respond_to?(:published?) and @record.published? %>
+          on <strong><%= format_date @record.published_at, time: true %></strong>
+        <% end %>
+      </li>
     <% end %>
+    
     <li>
       <a href="<%= admin_history_path(@record.class.route_key, @record.id) %>" title="history">
-        Last Updated <strong><%= format_date @record.updated_at, time: true %></strong>
+        Last Updated: <strong><%= format_date @record.updated_at, time: true %></strong>
       </a>
     </li>
   </ul>
