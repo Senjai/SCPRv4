@@ -53,7 +53,6 @@ AdminResource::Config.configure do |config|
     "PijQuery", 
     "BlogEntry",
     "Blog", 
-    "Tag",
     "ShowSegment", 
     "ShowEpisode", 
     "KpccProgram", 
@@ -95,7 +94,6 @@ AdminResource::Config.configure do |config|
       models: [
         "BlogEntry",
         "Blog",
-        "Tag"
       ]
     },
     

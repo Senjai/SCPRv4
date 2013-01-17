@@ -19,10 +19,10 @@ shared_examples_for "resource controller" do
   end
   
   describe "GET /show" do
-    it "responds with success" do
+    it "redirects to edit" do
       get :show, id: @object.id
       assigns(:record).should eq @object
-      response.should be_success
+      response.should be_redirect
     end
   end
   

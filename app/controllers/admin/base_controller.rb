@@ -51,7 +51,7 @@ class Admin::BaseController < ActionController::Base
   # the ability to submit a ticket from any page in the CMS
   def setup_tickets
     @ticket  = Ticket.new
-    @tickets = Ticket.open
+    @tickets = Ticket.opened
   end
   
   #------------------------

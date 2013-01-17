@@ -15,6 +15,13 @@ class Promotion < ActiveRecord::Base
   end
   
   #-------------
+  # Sphinx
+  define_index do
+    indexes title
+    indexes url
+  end
+  
+  #-------------
   
   def asset
     if self.asset_id.present?

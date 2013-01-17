@@ -37,7 +37,7 @@ shared_examples_for "admin routes" do
 
     it "returns success when following admin_show_path" do
       visit valid_record.admin_show_path
-      current_path.should eq valid_record.admin_show_path
+      current_path.should eq valid_record.admin_edit_path
     end
 
     it "returns success when following admin_new_path" do

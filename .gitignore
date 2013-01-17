@@ -9,3 +9,4 @@ tmp/
 .sass-cache/
 coverage/
 spec/fixtures/media/audio/upload/
+util/csv_scripts/results/

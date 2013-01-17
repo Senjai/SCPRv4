@@ -10,15 +10,16 @@ class scpr.AssetManager
     constructor: (assets, el, options={}) ->
         _.extend @, Backbone.Events
         @options = _.defaults options, @DefaultOptions
+        @el = $(el)
 
         @assets     = new scpr.AssetHost.Assets(assets)
         @assetsView = new scpr.AssetManager.Assets(collection: @assets)
         
-        $(el).html @assetsView.el
+        @el.html @assetsView.el
         
         # Register listener for AssetHost message
         window.addEventListener "message", (event) =>
-            # If the data is an object (or not "LOADED"), do things
+            # If the data is an object (i.e. not "LOADED"), do things
             if _.isObject(event.data)
                 @assets.reset(event.data)
                 @assets.sort()
@@ -57,7 +58,7 @@ class scpr.AssetManager
             @_views = {}
             
             @collection.bind "reset", => 
-                @$el.detach() for view in @_views
+                view.detach() for view in @_views
                 @_views = {}
                 
             @collection.bind 'add', (f) => 
@@ -66,12 +67,12 @@ class scpr.AssetManager
                     args:  @options.args
                     rows:  @options.rows
                 
-                @render()
+                @renderCollection()
 
             @collection.bind 'remove', (f) => 
                 $(@_views[f.cid].el).detach()
                 delete @_views[f.cid]
-                @render()
+                @renderCollection()
             
             @render()
         
@@ -98,19 +99,31 @@ class scpr.AssetManager
             return false
             
         #----------
-        
+        # Render the full view. This should only be called once.
         render: ->
+            @$el.html JST['admin/templates/asset_manager']
+            @collectionEl = $(".collection", @$el)
+            @emptyNotification = new scpr.Notification(
+                @collectionEl, 
+                "info", 
+                "There are no assets. Click the button to open AssetHost."
+            )
+            
+            @renderCollection()
+            @
+            
+        #----------
+        # Render the collection. This gets called every time AssetHost send a message.
+        renderCollection: ->
+            if @collection.isEmpty()
+                return @emptyNotification.render()
+                
             @collection.each (asset) => 
                 @_views[asset.cid] ?= new scpr.AssetManager.Asset
                     model: asset
                     args:  @options.args
                     rows:  @options.rows
-                
+            
             views = _(@_views).sortBy (a) => a.model.get("ORDER")
-            @$el.html( _(views).map (v) -> v.el )
-            
-            button = $('<button/>', style: "margin: 0 20px;", text: "Pop Up Asset Chooser")
-            title  = $('<h4/>', text: "Assets").append button
-            @$el.prepend title
+            @collectionEl.html( _(views).map (v) -> v.el )
             @
-            

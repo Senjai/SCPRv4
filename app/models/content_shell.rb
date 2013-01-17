@@ -54,7 +54,16 @@ class ContentShell < ActiveRecord::Base
       filter :status, collection: -> { ContentBase.status_text_collect }
     end
   end
+  
+  # TODO Fix this hack
   include Concern::Methods::ContentJsonMethods
+  def json
+    super.merge({
+      :short_headline => self.short_headline,
+      :teaser         => self.teaser
+    })
+  end
+  
 
   #-------------------
   # Sphinx
