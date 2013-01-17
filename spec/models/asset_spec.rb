@@ -17,8 +17,9 @@ describe Asset do
   #---------------------
   
   describe "outputs" do
-    after :each do
+    before :each do
       Asset.instance_variable_set :@outputs, nil
+      Rails.cache.clear
     end
     
     it "uses @outputs if it already exists" do
@@ -39,12 +40,12 @@ describe Asset do
     
     it "returns fallback outputs if the API can't be reached" do
       Faraday::Response.any_instance.stub(:status) { 500 }
-      JSON.should_receive(:load).with(load_fixture("assethost_outputs.json")).and_return({ some: "outputs" })
+      JSON.should_receive(:load).with(File.read(Rails.root.join("util/fixtures/assethost_outputs.json"))).and_return({ some: "outputs" })
       Asset.outputs.should eq({ some: "outputs" })
     end
     
     it "writes to cache on successful API response" do
-      Rails.cache.should_receive(:write).with("assets/outputs", JSON.load(load_fixture("assethost_outputs.json")))
+      Rails.cache.should_receive(:write).with("assets/outputs", anything)
       Asset.outputs
     end
   end
