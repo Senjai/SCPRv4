@@ -2,40 +2,7 @@
 <%= render_content @segment, "opengraph" %>
 
 <%= cache ["show", "v4", @segment] do %>
-  <div class="segment content-block">
-    <div class="row-fluid">
-      <%= content_widget "social_sidebar", @segment %>
-  
-      <div class="span18 mq-solo-span">
-        <article>
-          <header>
-            <h5 class="episode-title">
-              <% if @segment.episode.present? %>
-                <%= link_to @segment.episode.headline, @segment.episode.link_path %>
-              <% else %>
-                <%= link_to @program.title, program_path(@program.slug) %>
-              <% end %>
-            </h5>
-            <h1 class="story-headline"><%= @segment.headline %></h1>
-            <p class="byline">
-              <%= render_byline @segment %> <span class="pipe">|</span> <time pubdate><%= format_date @segment.published_at, format: :full_date, time: true %></time>
-            </p>
-          </header>
-      
-          <div class="story-body">
-            <div class="visible-reader"><%= content_widget "primary_audio", @segment %></div>
-            <%= render_asset @segment, "segment" %>
-            <%= @segment.body.html_safe %>
-            <br style="clear: both"/>
-          </div>
-        
-          <div class="visible-reader"><%= content_widget "extra_audio", @segment %></div>
-        </article><!-- article.segment -->
-      
-        <%= content_widget "social_tools", @segment, cssClass: "bottom horizontal" %>
-      </div> <!-- span -->
-    </div> <!-- row fluid -->
-  </div> <!-- segment -->
+  <%= render "/programs/segment", segment: @segment %>
 <% end %>
 
 <div class="fold" id="fold">

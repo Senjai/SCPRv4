@@ -1,24 +1,34 @@
-<div class="teaser cbase">
+<div class="segment content-block">
   <div class="row-fluid">
-    <% if segment.assets.present? %>
-      <div class="span6">
-        <%= render_asset segment, 'lsquare' %>
-      </div>
-      <div class="span12">
-    <% else %>
-      <div class="span18">
-    <% end %>
-      <div class="info">
-        <h3><%= link_to segment.headline, segment.link_path %></h3>
-        <p class="byline"><time pubdate=""><%= format_date segment.published_at, format: :full_date, time: true %></time> <span class="pipe">|</span> <%= render_byline segment %></p>
-        <%= segment.teaser %>
-      </div>
-    </div> <!-- span12/9 -->
-    <div class="span6">
-      <div class="interact">
-        <%= link_to_audio("Listen now", segment, class: "inline") if segment.audio.available.present? %>
-        <%= comment_count_for segment, class: "inline" %>
-      </div>
-    </div>
-  </div>
-</div>
+    <%= content_widget "social_sidebar", segment %>
+
+    <div class="span18 mq-solo-span">
+      <article>
+        <header>
+          <h5 class="episode-title">
+            <% if segment.episode.present? %>
+              <%= link_to segment.episode.headline, segment.episode.link_path %>
+            <% else %>
+              <%= link_to segment.show.title, program_path(segment.show.slug) %>
+            <% end %>
+          </h5>
+          <h1 class="story-headline"><%= segment.headline %></h1>
+          <p class="byline">
+            <%= render_byline segment %> <span class="pipe">|</span> <time pubdate><%= format_date segment.published_at, format: :full_date, time: true %></time>
+          </p>
+        </header>
+    
+        <div class="story-body">
+          <div class="visible-reader"><%= content_widget "primary_audio", segment %></div>
+          <%= render_asset segment, "segment" %>
+          <%= segment.body.html_safe %>
+          <br style="clear: both"/>
+        </div>
+      
+        <div class="visible-reader"><%= content_widget "extra_audio", segment %></div>
+      </article><!-- article.segment -->
+    
+      <%= content_widget "social_tools", segment, cssClass: "bottom horizontal" %>
+    </div> <!-- span -->
+  </div> <!-- row fluid -->
+</div> <!-- segment -->

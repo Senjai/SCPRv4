@@ -21,7 +21,8 @@
 
 <section class="show-segments episode">
   <%= any_to_list? @segments, title: "Segments" do %>
-      <%= render partial: 'programs/segment', collection: @segments %>
+      <%= render partial: '/programs/segment_teaser', collection: @segments, as: :segment %>
   <% end %>
 </section>
+
 <%= render "/programs/archive_select" %>
