@@ -13,7 +13,7 @@ describe Admin::BlogEntriesController do
       controller.stub(:admin_user) { @admin_user }
     end
     
-    it "previews the object", focus: true do
+    it "previews the object" do
       entry = create :blog_entry
       put :preview, id: entry.id, obj_key: entry.obj_key, blog_entry: entry.attributes
       assigns(:entry).should eq entry

@@ -278,10 +278,6 @@ Scprv4::Application.routes.draw do
         get "search", on: :collection, as: :search
       end
       
-      resources :homepages do
-        get "search", on: :collection, as: :search
-      end
-      
       resources :flatpages do
         get "search", on: :collection, as: :search
       end
@@ -292,6 +288,11 @@ Scprv4::Application.routes.draw do
       
       resources :press_releases do
         get "search", on: :collection, as: :search
+      end
+      
+      resources :homepages do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member, as: :preview
       end
       
       resources :pij_queries do
