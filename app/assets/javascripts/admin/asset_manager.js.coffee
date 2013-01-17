@@ -127,4 +127,3 @@ class scpr.AssetManager
             views = _(@_views).sortBy (a) => a.model.get("ORDER")
             @collectionEl.html( _(views).map (v) -> v.el )
             @
-            
