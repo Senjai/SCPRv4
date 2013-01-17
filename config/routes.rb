@@ -210,10 +210,8 @@ Scprv4::Application.routes.draw do
       get '/search(/:resource)' => "search#index", as: :search
       
       ## -- AdminResource -- ##
-      resources :press_releases
       resources :recurring_schedule_slots
       resources :permissions
-      resources :bios
       resources :admin_users
       resources :podcasts
       resources :schedules
@@ -224,15 +222,19 @@ Scprv4::Application.routes.draw do
       resources :promotions
       resources :sections
       resources :other_programs
-      resources :show_episodes
       resources :kpcc_programs
-      resources :flatpages
       resources :video_shells
       resources :blogs
-      resources :homepages
       resources :content_shells
       resources :featured_comments
       resources :data_points
+      resources :show_episodes
+      
+      # TODO Preview
+      resources :homepages
+      resources :flatpages
+      resources :bios
+      resources :press_releases
       
       resources :pij_queries do
         put "/preview", action: "preview", on: :member
