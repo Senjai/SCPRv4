@@ -57,4 +57,3 @@ class scpr.Preview
     writeToWindow: (data) ->
         @window.document.write(data)
         @window.document.close()
-    
