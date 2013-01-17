@@ -21,6 +21,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = true
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
+  config.order = 'random'
   
   config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }
   config.include FactoryGirl::Syntax::Methods
