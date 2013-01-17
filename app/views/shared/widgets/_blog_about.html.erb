@@ -12,17 +12,6 @@
   </div>
 </div>
 
-<div class="blog-categories widget blog">
-  <h6>Browse posts by Category</h6>
-  <ul>
-    <% @blog.blog_categories.each do |category| %>
-      <li><%= link_to category.title, blog_category_path(@blog.slug, category.slug) %></li>
-    <% end %>
-    
-    <li><%= link_to "Browse All", blog_path(@blog.slug) %></li>
-  </ul>
-</div>
-
 <div class="blog-archive widget blog">
   <h6>Browse the Archive</h6>
   <div class="archive-select" id="archive-select">

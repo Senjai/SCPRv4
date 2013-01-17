@@ -11,15 +11,9 @@
     <div class="span18 mq-solo-span">
       <article>
         <header>
-          <h1 class="story-headline"><%= link_to entry.headline, entry.link_path %></h1>
-          <div class="categories">
-            <%= entry.blog_categories.map { |c|
-              link_to(c.title, blog_category_path(entry.slug, c.slug))
-            }.join(" | ").html_safe %>
-          </div>
-          
+          <h1 class="story-headline"><%= link_to entry.headline, entry.link_path %></h1>          
           <p class="byline">
-            <%= entry.byline %> <span class="pipe">|</span> <time pubdate><%= format_date entry.published_at, format: :full_date, time: true %></time>
+            <%= render_byline entry %> <span class="pipe">|</span> <time pubdate><%= format_date entry.published_at, format: :full_date, time: true %></time>
           </p>
         </header>
     
