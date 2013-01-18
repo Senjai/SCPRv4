@@ -24,7 +24,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.timestamps
     end
     
-    create_table :test_class_thing_with_assets, force: true do |t|
+    create_table :test_class_posts, force: true do |t|
       t.string :headline
       t.string :short_headline
       t.text :body
@@ -33,6 +33,14 @@ class FixtureMigration < ActiveRecord::Migration
       t.datetime :published_at
       t.integer :status
       t.integer :category_id
+      t.timestamps
+    end
+
+    create_table :test_class_post_contents, force: true do |t|
+      t.integer :post_id
+      t.integer :position
+      t.string :content_type
+      t.integer :content_id
       t.timestamps
     end
     

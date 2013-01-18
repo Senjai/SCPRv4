@@ -15,6 +15,7 @@ require 'capybara/rspec'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
@@ -39,10 +40,8 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation, { except: STATIC_TABLES }
     load "#{Rails.root}/db/seeds.rb"
     DatabaseCleaner.strategy = :transaction
-    FactoryGirl.reload
     migration = -> { FixtureMigration.new.up }
     silence_stream STDOUT, &migration
-    Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| load f }
     ThinkingSphinx::Test.init
     ThinkingSphinx::Test.start_with_autostop
   end
@@ -51,7 +50,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   end
   
-  config.before do    
+  config.before do
     FakeWeb.clean_registry
     FakeWeb.load_callback
     DatabaseCleaner.start

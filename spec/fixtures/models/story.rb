@@ -25,5 +25,9 @@ module TestClass
     
     include Concern::Validations::ContentValidation
     include Concern::Validations::SlugUniqueForPublishedAtValidation
+    
+    def obj_key
+      "test_class_story:#{id}"
+    end
   end
 end
