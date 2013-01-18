@@ -17,7 +17,12 @@ describe Asset do
   #---------------------
   
   describe "outputs" do
-    after :each do
+    before :each do
+      Asset.instance_variable_set :@outputs, nil
+      Rails.cache.clear
+    end
+    
+    after :all do
       Asset.instance_variable_set :@outputs, nil
       Rails.cache.clear
     end
