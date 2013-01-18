@@ -39,6 +39,10 @@ class ShowEpisode < ActiveRecord::Base
   validates :show, presence: true
   validates :air_date, presence: true, if: :published?
   
+  def should_validate?
+    pending? or published?
+  end
+  
   #-------------------
   # Callbacks
   attr_accessor :segment_json
