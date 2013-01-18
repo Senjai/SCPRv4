@@ -10,9 +10,9 @@
 (function () {
     CKEDITOR.plugins.add('codemirror', {
         lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en-au,en-ca,en-gb,en,eo,es,et,eu,fa,fi,fo,fr-ca,fr,gl,gu,he,hi,hr,hu,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt-br,pt,ro,ru,sk,sl,sr-latn,sr,sv,th,tr,ug,uk,vi,zh-cn,zh',
-    init: function (editor) {
-
-            var rootPath = this.path;
+		init: function (editor) {
+			
+			var rootPath = this.path;
 
             // Get Config
             var config = editor.config;
@@ -25,21 +25,37 @@
                 // Load codemirror theme
                 CKEDITOR.document.appendStyleSheet(rootPath + 'theme/' + codeMirrorTheme + '.css');
             }
-
             CKEDITOR.scriptLoader.load(rootPath + 'js/codemirror.js', function (success) {
-                CKEDITOR.scriptLoader.load([rootPath + 'js/xml.js', rootPath + 'js/javascript.js', rootPath + 'js/css.js', rootPath + 'js/htmlmixed.js']);
+				CKEDITOR.scriptLoader.load([rootPath + 'js/xml.js', rootPath + 'js/javascript.js', rootPath + 'js/css.js', rootPath + 'js/htmlmixed.js']);
             });
 
             // Source mode isn't available in inline mode yet.
             if (editor.elementMode == CKEDITOR.ELEMENT_MODE_INLINE) return;
 
             var sourcearea = CKEDITOR.plugins.sourcearea;
-      
-      editor.addMode('source', function (callback) {
-                var contentsSpace = editor.ui.space('contents'),
+			
+			editor.addMode('source', function (callback) {
+			
+			if (typeof (CodeMirror) == 'undefined') {
+				CKEDITOR.scriptLoader.load([rootPath + 'js/codemirror.js',rootPath + 'js/xml.js', rootPath + 'js/javascript.js', rootPath + 'js/css.js', rootPath + 'js/htmlmixed.js'], function (success) {
+					loadCodeMirror (editor);
+					callback();
+				});
+			}
+			else {
+				loadCodeMirror (editor);
+				
+				callback();
+			}
+			
+            });
+			
+			function loadCodeMirror (editor)
+			{
+				var contentsSpace = editor.ui.space('contents'),
                     textarea = contentsSpace.getDocument().createElement('textarea');
-        
-        textarea.setStyles(
+				
+				textarea.setStyles(
                 CKEDITOR.tools.extend({
                     // IE7 has overflow the <textarea> from wrapping table cell.
                     width: CKEDITOR.env.ie7Compat ? '99%' : '100%',
@@ -64,13 +80,13 @@
                 editor.ui.space('contents').append(textarea);
 
                 window["editable_" +  editor.id] = editor.editable(new sourceEditable(editor, textarea));
-        
+				
                 // Fill the textarea with the current editor data.
                 window["editable_" +  editor.id].setData(editor.getData(1));
-        
-        window["editable_" +  editor.id].editorID = editor.id;
-        
-        editor.fire('ariaWidget', this);
+				
+				window["editable_" +  editor.id].editorID = editor.id;
+				
+				editor.fire('ariaWidget', this);
 
                 var delay;
 
@@ -79,30 +95,28 @@
 
                 var holderHeight = holderElement.$.clientHeight + 'px';
                 var holderWidth = holderElement.$.clientWidth + 'px';
-        
+				
                 codemirror = editor.id;
  
-        window["codemirror_" +  editor.id] = CodeMirror.fromTextArea(sourceAreaElement.$, {
+				window["codemirror_" +  editor.id] = CodeMirror.fromTextArea(sourceAreaElement.$, {
                     mode: 'text/html',
                     matchBrackets: true,
                     workDelay: 300,
                     workTime: 35,
                     lineNumbers: true,
                     lineWrapping: true,
-          theme: codeMirrorTheme,
+					theme: codeMirrorTheme,
                 });
-        
-        window["codemirror_" +  editor.id].on("change", function(cm, change) {
-          clearTimeout(delay);
+				
+				window["codemirror_" +  editor.id].on("change", function(cm, change) {
+					clearTimeout(delay);
                         delay = setTimeout(function () {
                             window["codemirror_" +  editor.id].save();
                         }, 300);
-        });
+				});
 
                 window["codemirror_" +  editor.id].setSize(holderWidth, holderHeight);
-
-                callback();
-            });
+			}
 
             editor.addCommand('source', sourcearea.commands.source);
 
@@ -115,18 +129,18 @@
             }
 
             editor.on('mode', function () {
-                editor.getCommand('source').setState(editor.mode == 'source' ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF);
+				editor.getCommand('source').setState(editor.mode == 'source' ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF);
             });
 
             editor.on('resize', function () {
-                if (window["editable_" +  editor.id]) {
-          var holderElement = window["editable_" +  editor.id].getParent();
+                if (window["editable_" +  editor.id] && editor.mode == 'source') {
+					var holderElement = window["editable_" +  editor.id].getParent();
 
-                  var holderHeight = holderElement.$.clientHeight + 'px';
-                  var holderWidth = holderElement.$.clientWidth + 'px';
-          
-          window["codemirror_" +  editor.id].setSize(holderWidth, holderHeight);
-        }
+                	var holderHeight = holderElement.$.clientHeight + 'px';
+                	var holderWidth = holderElement.$.clientWidth + 'px';
+					
+					window["codemirror_" +  editor.id].setSize(holderWidth, holderHeight);
+				}
             });
         }
     });
@@ -138,8 +152,8 @@
                 this.setValue(data);
                 this.editor.fire('dataReady');
             },
-      
-      getData: function () {
+			
+			getData: function () {
                 return this.getValue();
             },
             // Insertions are not supported in source editable.
@@ -151,13 +165,15 @@
             setReadOnly: function (isReadOnly) {
                 this[(isReadOnly ? 'set' : 'remove') + 'Attribute']('readOnly', 'readonly');
             },
-      editorID : null,
-      
+			editorID : null,
+			
+			
+			
 
             detach: function () {
-        
-        window["codemirror_" +  this.editorID].toTextArea();
-        
+				
+				window["codemirror_" +  this.editorID].toTextArea();
+				
                 sourceEditable.baseProto.detach.call(this);
                 this.clearCustomData();
                 this.remove();
@@ -179,7 +195,7 @@ CKEDITOR.plugins.sourcearea = {
             exec: function (editor) {
                 if (editor.mode == 'wysiwyg') editor.fire('saveSnapshot');
                 editor.getCommand('source').setState(CKEDITOR.TRISTATE_DISABLED);
-        
+				
                 editor.setMode(editor.mode == 'source' ? 'wysiwyg' : 'source');
             },
 
