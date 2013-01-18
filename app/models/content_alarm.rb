@@ -33,10 +33,10 @@ class ContentAlarm < ActiveRecord::Base
     if can_fire?
       ContentAlarm.log "Firing ContentAlarm ##{self.id} for #{self.content.simple_title}"
       if self.content.update_attributes(status: ContentBase::STATUS_LIVE)
-        ContentAlarm.log "Published #{self.content.simple_title}"
+        ContentAlarm.log "Published #{self.content.simple_title}. Removing this alarm."
         self.destroy
       else
-        ContentAlarm.log "Couldn't save #{self.content.simple_title}."
+        ContentAlarm.log "Couldn't save #{self.content.simple_title}. Will be tried again."
         false
       end
     else

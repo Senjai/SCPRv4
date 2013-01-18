@@ -17,7 +17,7 @@ CKEDITOR.editorConfig = (config) ->
     config.height = "400px"
     config.width  = "635px"
     config.bodyClass = 'ckeditor-body'
-    config.contentsCss = "/assets/application.css"
+    config.contentsCss = "/assets/application.css?bust=true"
     
 #    config.forcePasteAsPlainText = true
     
