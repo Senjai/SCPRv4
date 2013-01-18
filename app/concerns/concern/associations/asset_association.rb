@@ -20,7 +20,7 @@ module Concern
         # #asset_json is a way to pass in a string representation
         # of a javascript object to the model, which will then be
         # parsed and turned into ContentAsset objects in the 
-        # #parse_asset_json method.
+        # #asset_json= method.
         #
         # The reader is only for the form and doesn't need to be
         # automatically populated.

@@ -12,8 +12,7 @@ module Concern
         has_many :outgoing_references, as: :content, class_name: "Related", dependent: :destroy, order: "position"
         has_many :incoming_references, as: :related, class_name: "Related", dependent: :destroy, order: "position"
         
-        attr_accessor :content_json
-        before_save :parse_content_json
+        attr_reader :content_json
       end
       
       #-------------------------
@@ -34,14 +33,15 @@ module Concern
       end
       
       #-------------------------
-
-      def parse_content_json
+      # TODO Use ContentAssociation module for this
+      def content_json=(json)
         # If content_json is blank, then that means we
         # didn't make any updates. Return and move on.
-        return if self.content_json.blank?
+        return if json.blank?
+        
         @_loaded_content = []
 
-        Array(JSON.load(self.content_json)).each do |content_hash|
+        Array(JSON.load(json)).each do |content_hash|
           if related = ContentBase.obj_by_key(content_hash["id"])
             association = Related.new(position: content_hash["position"], content: self, related: related)
             @_loaded_content.push association
@@ -49,7 +49,6 @@ module Concern
         end
 
         self.outgoing_references = @_loaded_content
-        true
       end
     end # RelatedContentAssociation
   end # Associations
