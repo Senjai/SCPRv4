@@ -1,19 +1,12 @@
-//= require scprbase
-//= require underscore
-
 //= require modernizr.custom
-//= require jquery
-//= require jquery_ujs
 
 //= require jquery.jplayer.min
-//= require spin.js
-//= require moment
-//= require moment-strftime
-//= require bootstrap-tab
 //= require bootstrap-collapse
-//= require bootstrap-modal
-//= require content_carousel
 
+//= require_directory ./t_listen/
+//= require swfobject
+
+//= require content_carousel
 //= require audio
 //= require video
 //= require modal

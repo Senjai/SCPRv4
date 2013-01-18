@@ -1,5 +1,3 @@
-#= require scprbase
-
 # Watches for elements with class ".map-loader" and loads google maps into specified container
 # If `data-map-id` is not specified on the map loader, then it will find the first element with id="map-canvas"
 # data-address is required

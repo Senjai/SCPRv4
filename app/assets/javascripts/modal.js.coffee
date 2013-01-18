@@ -1,5 +1,3 @@
-#= require scprbase
-
 # Generic Modal-Toggler behavior adpated from z-base
 class scpr.Modal
     DefaultOptions:

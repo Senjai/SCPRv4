@@ -1,11 +1,14 @@
 <% page_title "Login" %>
 
 <%= form_tag admin_sessions_path, id: "login" do %>
-  <%= label_tag :username %>
-  <%= text_field_tag :username, nil, autofocus: "autofocus" %>
-  
-  <%= label_tag "Password" %>
-  <%= password_field_tag :unencrypted_password, nil, id: "password" %>
+  <fieldset>
+    <legend>Login</legend>
+    <%= label_tag :username %>
+    <%= text_field_tag :username, nil, autofocus: "autofocus" %>
+
+    <%= label_tag "Password" %>
+    <%= password_field_tag :unencrypted_password, nil, id: "password" %>
+  </fieldset>
   
   <div class="form-actions">
     <%= submit_tag "Submit", class: "btn" %>

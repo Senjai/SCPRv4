@@ -1,3 +1,6 @@
+// This file is for doing ckeditor-specific styling.
+// This is here just so we can include application.css into the 
+// CKEditor body.
 body.ckeditor-body {
   padding: 10px;
 }

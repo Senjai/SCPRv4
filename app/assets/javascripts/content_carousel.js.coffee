@@ -1,5 +1,3 @@
-#= require scprbase
-
 class scpr.ContentCarousel
     DefaultOptions:
         carouselWrapperClass: "content-carousel"

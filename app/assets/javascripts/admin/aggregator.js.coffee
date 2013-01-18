@@ -1,10 +1,3 @@
-#= require scprbase
-#= require underscore
-#= requre backbone
-#= require moment
-#= require admin/content_api
-#= require jquery-ui-1.9.2.custom.min.js
-
 ##
 # scpr.Aggregator (like Alligator but more G's)
 #

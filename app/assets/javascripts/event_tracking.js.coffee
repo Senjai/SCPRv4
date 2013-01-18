@@ -1,5 +1,3 @@
-#= require scprbase
-
 class scpr.EventTracking
     chooser: ".track-event"
     constructor: ->

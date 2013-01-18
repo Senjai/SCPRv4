@@ -1,5 +1,3 @@
-#= require scprbase
-
 # Hero fader
 class scpr.HeroFader
     DefaultOptions:

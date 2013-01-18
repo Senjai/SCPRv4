@@ -1,6 +1,3 @@
-#= require scprbase
-#= require assethost/assethostbase
-
 ##
 # AssetHost
 # Models for AssetHost API interaction

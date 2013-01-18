@@ -1,5 +1,8 @@
-#= require scprbase
-
+##
+# ContentAlarmUI
+#
+# The UI that helps figure out Content Alarms
+#
 class scpr.ContentAlarmUI
     DefaultOptions:
         form:             "form.simple_form"

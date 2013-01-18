@@ -1,5 +1,8 @@
-#= require scprbase
-
+##
+# ContentAPI
+#
+# Interaction with the SCPR API
+#
 class scpr.ContentAPI
 
     #-----------------------------

@@ -1,6 +1,8 @@
-#= require scprbase
-
-# Communicate with the Newsroom.js Node server
+##
+# Newsroom
+#
+# Client for the Newsroom.js Node server
+#
 class scpr.Newsroom
     @templates =
         badge: JST["admin/templates/badge"]

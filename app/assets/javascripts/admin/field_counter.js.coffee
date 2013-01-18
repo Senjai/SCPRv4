@@ -1,4 +1,3 @@
-#= require scprbase
 
 $ ->
     # Initialize a FieldCounter for any field that asks for it.

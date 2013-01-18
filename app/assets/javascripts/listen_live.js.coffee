@@ -1,11 +1,3 @@
-#= require scprbase
-#= require backbone
-#= require moment
-#= require moment-strftime
-
-#= require_directory ./t_listen/
-#= require swfobject
-
 class scpr.ListenLive
     DefaultOptions:
         playerEl:   "#llplayer"

@@ -1,9 +1,13 @@
-#= require scprbase
-
+# Find slug fields and load them up
 $ ->
     for field in $("form.simple_form input[name*='[slug]']")
         new scpr.AutoSlugField(field: field)
 
+##
+# AutoSlugField
+#
+# Takes a field and turns it into a slug on-the-fly
+#
 class scpr.AutoSlugField
     DefaultOptions:
         titleAttributes: ["headline", "name", "title"]

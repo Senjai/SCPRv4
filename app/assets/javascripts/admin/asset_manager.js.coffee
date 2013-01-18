@@ -1,6 +1,7 @@
-#= require scprbase
-#= require assethost/assethost
-
+##
+# AssetManager
+#
+# For Managing Assets
 class scpr.AssetManager
     DefaultOptions:
         jsonInput: "#asset_json"

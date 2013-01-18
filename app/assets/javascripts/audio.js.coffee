@@ -1,5 +1,3 @@
-#= require scprbase
-
 class scpr.Audio
     DefaultOptions:
         playEl:         "#jquery_jplayer_1"

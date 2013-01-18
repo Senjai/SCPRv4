@@ -1,7 +1,3 @@
-#= require scprbase
-#= require moment
-#= require moment-strftime
-
 class scpr.SmartTime
     DefaultOptions:
         finder:             ".smarttime"

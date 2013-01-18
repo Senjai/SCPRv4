@@ -1,15 +1,8 @@
-/*
- * This is a manifest file that'll automatically include all the stylesheets available in this directory
- * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
- * the top of the compiled file, but it's generally better to create a new file per style scope.
- *= require_self
- *
-*/
-
 // Global Stylesheet Imports
 @import "compass/css3/opacity";
 @import "compass/css3/images";
 @import "compass/utilities/sprites/base";
+
 @import "base/reset.css.scss";
 @import "base/bootstrap/mixins";
 @import "base/base.css.scss";
@@ -68,8 +61,3 @@
 
 // 99   : .broadcast-bar (ie7 only)
 // 100  : #masthead (ie7 only)
-
-
-
-
-

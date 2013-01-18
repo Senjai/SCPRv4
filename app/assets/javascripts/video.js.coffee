@@ -1,5 +1,3 @@
-#= require scprbase
-
 class scpr.VideoPage
     DefaultOptions:
         browseAll: '.browse-all-videos'

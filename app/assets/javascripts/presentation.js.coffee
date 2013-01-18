@@ -1,5 +1,3 @@
-#= require scprbase
-
 class scpr.Presentation
     DefaultOptions:
         el:         ".presentation"

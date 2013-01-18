@@ -1,5 +1,8 @@
-#= require scprbase
-
+##
+# IndexManager
+#
+# Load up special things in the index pages.
+#
 class scpr.IndexManager
     DefaultOptions:
         cellFinder:    "*[data-updatable='true']"
@@ -10,8 +13,12 @@ class scpr.IndexManager
         for cell in $(@options.cellFinder)
             new scpr.QuickEditCell $(cell), @baseUrl
 
-#--------------
-
+##
+# QuickEditCell
+#
+# Adds the ability to quick-edit any attribute from the index page.
+# Looks for fields with 'data-updatable="true"'
+#
 class scpr.QuickEditCell
     defaults:
         formTemplate:   JST["admin/templates/data_field"]

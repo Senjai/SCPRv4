@@ -1,7 +1,8 @@
-#= require scprbase
-
+##
+# Notification
 # Raise notifications from anywhere in the JS code
-# Pass the el to place the message into
+# Pass the $(el) to place the message into
+#
 class scpr.Notification
     constructor: (@wrapper, @type, @message) ->
         @el = $("<div />", class: "alert alert-#{type}").html("#{message}")

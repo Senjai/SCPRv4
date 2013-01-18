@@ -1,5 +1,3 @@
-#= require scprbase
-
 $ -> 
     $('.toggle-search').on
         click: ->

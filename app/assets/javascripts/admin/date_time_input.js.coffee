@@ -1,11 +1,16 @@
-#= require scprbase
-
+# Find the inputs and load them.
 $ ->
     scpr.DateTimeInput.buildDateTimeInputs($("form.simple_form"))
     scpr.DateTimeInput.buildDateInputs($("form.simple_form"))
 
-#-----------------------
-
+##
+# DateTimeInput
+# 
+# Turns simple textfields (for datetime attributes) into
+# awesome timetime picker things.
+#
+# Does both Date and Time inputs (separately)
+#
 class scpr.DateTimeInput
     @buildDateTimeInputs: (els) ->
         for wrapper in $("div.datetime", els)

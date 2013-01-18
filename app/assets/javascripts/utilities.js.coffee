@@ -1,5 +1,3 @@
-#= require scprbase
-
 class scpr.CompactNav
     constructor: ->
         @nav = $("#footer-nav")
