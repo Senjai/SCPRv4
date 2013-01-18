@@ -12,8 +12,16 @@ class Admin::TicketsController < Admin::ResourceController
       return false
     end
   end
-
-  #----------------  
+  
+  #----------------
+  # Override Newsroom default of edit redirect.
+  # Show is actually useful for us here.
+  def show
+    @record = Ticket.find(params[:id])
+    respond_with @record
+  end
+  
+  #----------------
   # Override this method so that we can inject the user
   def create
     @ticket = Ticket.new(params[:ticket])
