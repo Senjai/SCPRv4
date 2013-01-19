@@ -16,16 +16,18 @@
     </thead>
     <tbody class="list">
       <% @versions.each do |version| %>
-        <tr class="versions">
-          <td>
-            <%= link_to "View", admin_version_path(resources: version.versioned.class.route_key, resource_id: version.versioned.id, version_number: version.version_number), class: "btn" %>
-          </td>
-          <% @list.columns.each do |column| %>
+        <% if version.versioned.present? %> <%# Has to be here in a case a story gets deleted from Django %>
+          <tr class="versions">
             <td>
-              <%= render_attribute column, version %>
+              <%= link_to "View", admin_version_path(resources: version.versioned.class.route_key, resource_id: version.versioned.id, version_number: version.version_number), class: "btn" %>
             </td>
-          <% end %>
-        </tr>
+            <% @list.columns.each do |column| %>
+              <td>
+                <%= render_attribute column, version %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   <% end %>
