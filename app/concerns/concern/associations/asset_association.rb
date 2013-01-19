@@ -44,19 +44,18 @@ module Concern
         # Return and carry on
         return if json.blank?
         
-        @_loaded_assets = []
+        @_existing_assets = self.assets
+        @_loaded_assets   = []
         
         Array(JSON.load(json)).each do |asset_hash|
-          asset = ContentAsset.new(
+          self.assets.build(
             :asset_id    => asset_hash["id"].to_i, 
             :caption     => asset_hash["caption"].to_s, 
             :asset_order => asset_hash["asset_order"].to_i
           )
-
-          @_loaded_assets.push asset
         end
         
-        self.assets = @_loaded_assets
+        self.assets
       end
     end # AssetAssociation
   end # Associations
