@@ -8,6 +8,7 @@ class BreakingNewsAlert < ActiveRecord::Base
     "now"     => "Happening Now"
   }
   
+  # These ID's are hard-coded from Eloqua.
   ELOQUA = {
     :header_id => 10,
     :footer_id => 61
@@ -82,9 +83,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   def publish_email
     if should_send_email?
       client = Eloqua::Client.new(API_KEYS['eloqua'])
-      
-      if lyris.add_message and lyris.send_message
-        self.update_column(:email_sent, true)
+      self.update_column(:email_sent, true)
       end
     end
   end
