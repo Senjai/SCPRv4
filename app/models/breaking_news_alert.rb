@@ -8,6 +8,11 @@ class BreakingNewsAlert < ActiveRecord::Base
     "now"     => "Happening Now"
   }
   
+  ELOQUA = {
+    :header_id => 10,
+    :footer_id => 61
+  }
+  
   #-------------------
   # Scopes
   scope :published, -> { order("created_at desc").where(is_published: true) }
@@ -76,7 +81,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Send the e-mail
   def publish_email
     if should_send_email?
-      lyris = Lyris.new(self)
+      client = Eloqua::Client.new(API_KEYS['eloqua'])
       
       if lyris.add_message and lyris.send_message
         self.update_column(:email_sent, true)

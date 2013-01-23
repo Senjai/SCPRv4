@@ -27,20 +27,8 @@ class EmailWorker
         # Mercer is doing boolean checking, but we'll do it here too just to be extra-safe.
         
         obj = JSON.load(message)
-        self.log "obj is #{obj}"
         alert = BreakingNewsAlert.find(obj['id'])
-        self.log "alert is #{alert}"
-        
-        if alert.is_published and alert.send_email and !alert.email_sent
-          lyris = Lyris.new(alert)
-          if lyris.add_message and lyris.send_message
-            alert.update_column(:email_sent, true)
-            self.log "Set email_sent=true for #{alert}. Finished."
-          end
-        else
-          self.log "Alert not ready to send e-mail. Check attributes."
-          return false
-        end
+        alert.async_send_email
       end
       
       on.unsubscribe do |channel,subscriptions|
