@@ -26,7 +26,7 @@ class scpr.AutoSlugField
             break if !_.isEmpty(@titleField)
         
         # If there's no title field, then there's no 
-        # point in doing anything else.    
+        # point in doing anything else.
         return if !@titleField
         
         @maxLength  = @options.maxLength
