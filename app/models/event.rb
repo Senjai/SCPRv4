@@ -54,12 +54,16 @@ class Event < ActiveRecord::Base
   end
   
   def published?
-    !!is_published
+    is_published
   end
   
   #-------------------
   # Callbacks
   after_save :expire_cache
+  
+  def should_generate_slug?
+    self.slug.blank? && self.published?
+  end
   
   #-------------------
   # Administration

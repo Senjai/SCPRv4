@@ -9,7 +9,6 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Validations::ContentValidation
-  include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
@@ -48,11 +47,14 @@ class BlogEntry < ActiveRecord::Base
   validates_presence_of :blog
   
   def should_validate?
-    pending? or published?
+    pending? || published?
   end
-  
+    
   #------------------
   # Callbacks
+  def should_generate_slug?
+    self.slug.blank? && (self.pending? || self.published?)
+  end
   
   #------------------
   # Administration

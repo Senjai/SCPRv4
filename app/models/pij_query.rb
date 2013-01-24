@@ -41,7 +41,7 @@ class PijQuery < ActiveRecord::Base
   
   #------------
   # Callbacks
-  
+
   #------------
   # Administration
   administrate do
@@ -72,7 +72,7 @@ class PijQuery < ActiveRecord::Base
   #------------
   
   def published?
-    !!is_active
+    is_active
   end
 
   #------------

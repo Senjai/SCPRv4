@@ -24,10 +24,13 @@ module TestClass
     include Concern::Methods::ContentJsonMethods
     
     include Concern::Validations::ContentValidation
-    include Concern::Validations::SlugUniqueForPublishedAtValidation
     
     def obj_key
       "test_class_story:#{id}"
+    end
+    
+    def should_generate_slug?
+      self.slug.blank? && (self.pending? || self.published?)
     end
   end
 end

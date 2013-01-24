@@ -24,6 +24,10 @@ class VideoShell < ActiveRecord::Base
   def self.content_key
     "content/video"
   end
+  
+  def should_generate_slug?
+    self.slug.blank? && (self.pending? || self.published?)
+  end
 
   #-------------------
   # Scopes

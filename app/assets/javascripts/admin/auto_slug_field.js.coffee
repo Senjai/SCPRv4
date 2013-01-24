@@ -13,31 +13,39 @@ class scpr.AutoSlugField
         titleAttributes: ["headline", "name", "title"]
         maxLength:       50
     
-    constructor: (options) ->
-        @options = _.defaults options||{}, @DefaultOptions
+    constructor: (options={}) ->
+        @options = _.defaults options, @DefaultOptions
         
         # Setup Attributes
         @slugField  = $ @options.field
         @titleAttrs = @options.titleAttributes
-        @maxLength  = @options.maxLength
         
         # Loop through title attributes and find the first one that matches
         for attr in @titleAttrs
             @titleField = $ @slugField.closest("form").find("input[name*='[#{attr}]']")[0]
             break if !_.isEmpty(@titleField)
+        
+        # If there's no title field, then there's no 
+        # point in doing anything else.    
+        return if !@titleField
+        
+        @maxLength  = @options.maxLength
+        @button     = $ JST['admin/templates/slug_generate_button']()
 
         # If we found a matching field, 
-        # and if the slug field is empty when the page loads,
-        # register a keyup event for it
-        if @titleField and _.isEmpty(@slugField.val())
-            @titleField.on
-                keyup: (event) => @updateSlug($(event.target).val())
+        # render the generate button and add it after the slug field
+        @slugField.after(@button)
+        @button.on
+            click: (event) =>
+                @updateSlug(@titleField.val())
+                event.preventDefault()
+                
+    #------------------
     
     updateSlug: (value) ->
-        # Slugs should not be longer than @maxLength characters
-        slug = @slugify(value)
-        if slug.length < @maxLength
-            @slugField.val slug
+        @slugField.val @slugify(value)
+    
+    #------------------
     
     slugify: (str) ->
         str.toLowerCase()
@@ -46,3 +54,4 @@ class scpr.AutoSlugField
            .replace(/[^\w\-]+/g, '') # Remove non-word characters/hyphen
            .replace(/^-+/, '')       # Trim hyphens from beginning
            .replace(/-+$/, '')       # Trim hyphens from end
+           .substring(0, @maxLength) # Just the first 50 characters
