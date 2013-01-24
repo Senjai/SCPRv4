@@ -1,27 +1,43 @@
 <%= form_block "Publishing Status" do %>
-  <%= f.input :status, collection: ContentBase.status_text_collect, selected: record.status || ContentBase::STATUS_DRAFT %>
   
-  <div class="content-alarm-ui">
-    <% if record.respond_to? :alarm %>
-      <%= f.simple_fields_for :alarm, @record.alarm || @record.build_alarm do |a| %>
-        <%= a.input :fire_at, wrapper_html: { class: "fire_at", style: "display: inline-block;"}, label: "Publish At", required: false, hint: "Schedule this record to publish on a future date. (optional) <br />Time is in 24-hour format. Example: 2013-01-10 16:45" %>
+  <div class="pull-right">
+    <%= modal_toggle title: "Help: Publishing", id: "publishing-help-modal" do %>
+      <strong>For the most part, you can leave the timestamp alone - it will take care of itself.</strong>
       
-        <% if @record.alarm.persisted? %>
-          <%= a.input :_destroy, as: :boolean, label: false, inline_label: "Clear Scheduled Publishing?", wrapper_html: { class: "inline destroy-bool" } %>
-        <% end %>
-
-        <div id="alarm_status" class="notification block"></div>
-      <% end %>
-    
-      <% content_for :footerjs do %>
-        <script type="text/javascript">
-          $(function() {
-            contentAlarmUI = new scpr.ContentAlarmUI({form: "#<%=f.options[:html][:id]%>"});
-          });
-        </script>
-      <% end %>
+      <h4>Publishing</h4>
+      When <strong>PUBLISHING</strong> a story, the Timestamp will automatically be set to the current time.
+      <hr />
+      
+      <h4>Scheduling a story to automatically publish in the future</h4>
+      <ol>
+        <li>Set the <strong>STATUS</strong> to <strong>PENDING</strong>. The Timestamp fields should appear.</li>
+        <li>Fill in the <strong>Publish Timestamp</strong> with the time you want the story to be published.</li>
+        <li>Save the story.</li>
+      </ol>
+      <hr />
+      
+      <h4>Changing the Timestamp for a story</h4>
+      <div class="alert alert-warning"><strong>Beware!</strong> Manually changing the timestamp is not recommended.</div>
+      If the status is set to <strong>PUBLISHED</strong>, you can use the date/time fields to manually change the timestamp.
     <% end %>
   </div>
 
+  <%= f.input :status, collection: ContentBase.status_text_collect, selected: record.status || ContentBase::STATUS_DRAFT %>
+  
+  <div class="publishing-fields">
+    <%= f.input :published_at, label: "Publish Timestamp", hint: "Gets set automatically. See \"Help: Publishing\" for more information." %>
+  </div>
+
+  <div id="scheduled_status" class="notification block"></div>
+
+  <% content_for :footerjs do %>
+    <script type="text/javascript">
+      $(function() {
+        publishingUI = new scpr.PublishingUI({form: "#<%=f.options[:html][:id]%>"});
+      });
+    </script>
+  <% end %>
+
   <%= extra %>
 <% end %>
+
