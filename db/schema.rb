@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110183558) do
+ActiveRecord::Schema.define(:version => 20130125010349) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
