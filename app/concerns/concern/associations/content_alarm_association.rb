@@ -4,12 +4,7 @@
 # Association definition for content_alarm
 # Also includes related callbacks
 #
-# It's important that content_alarm is a has_one association, because
-# this takes advantage of the fact that you can just save right over the old one.
-# We do this to keep the code simple - rather than trying to update the alarm, just
-# make a new one when the published_at date is changed.
-#
-# Required attributes: [:status, :pending?, :published_at, :unpublishing]
+# Required attributes: [:status]
 #
 module Concern
   module Associations
