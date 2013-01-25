@@ -47,7 +47,7 @@ class BlogEntry < ActiveRecord::Base
   validates_presence_of :blog
   
   def should_validate?
-    pending? || published?
+    self.pending? || self.published?
   end
     
   #------------------

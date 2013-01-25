@@ -48,7 +48,7 @@ class ShowSegment < ActiveRecord::Base
   validates :show, presence: true
   
   def should_validate?
-    pending? || published?
+    self.pending? || self.published?
   end
   
   def should_generate_slug?

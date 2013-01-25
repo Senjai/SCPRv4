@@ -23,7 +23,7 @@ class FeaturedComment < ActiveRecord::Base
   validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: -> { self.should_validate? }
   
   def should_validate?
-    pending? || published?
+    self.pending? || self.published?
   end
   
   #----------------
