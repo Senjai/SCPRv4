@@ -34,6 +34,46 @@ small {
 
 /////////////////////////////////
 
+.cms-nav {
+  max-width: 820px;
+    
+  .grouper {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+  }
+  
+  li {
+    clear: both;
+    border-bottom: 1px solid $grayLighter;
+    
+    &:hover {
+      background: $linkColor;
+      &> a { color: $white; }
+    }
+    
+    &> a {
+      clear: none;
+      width: 240px;
+      display: inline-block;
+    }
+    
+    .btn-links {
+      display: inline-block;
+      clear: both;
+      vertical-align: bottom;
+      margin-bottom: 3px;
+      width: 110px;
+      
+      &> a {
+        margin: 0px 2px;
+        &.add { float: left; }
+        &.list { float: right; }
+      }
+    }
+  }
+}
+
 .fixed-breadcrumbs {
   z-index: 1; // Make the drop-down header stuff visible
   margin-top: 40px;
