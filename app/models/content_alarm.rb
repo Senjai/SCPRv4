@@ -14,7 +14,6 @@ class ContentAlarm < ActiveRecord::Base
   
   #----------
   # Validation
-  validates_presence_of :fire_at
   
   #----------
   # Callbacks

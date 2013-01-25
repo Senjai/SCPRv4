@@ -18,30 +18,28 @@ module Concern
       
       included do
         has_one :alarm, as: :content, class_name: "ContentAlarm", dependent: :destroy
-        before_save :generate_alarm, if: :should_generate_alarm?
+        accepts_nested_attributes_for :alarm, reject_if: :should_reject_alarm?, allow_destroy: true
+
         before_save :destroy_alarm, if: :should_destroy_alarm?
       end
-      
+
       #------------------
-      # When to generate an alarm
-      def should_generate_alarm?
-        self.pending? && self.published_at_changed? && self.published_at.present?
+      # Reject if the alarm doesn't already exist and the fire_at
+      # wasn't filled in.
+      #
+      # This allows someone to remove the scheduled publishing by
+      # clearing out the fire_at fields.
+      def should_reject_alarm?(attributes)
+        self.alarm.blank? && attributes['fire_at'].blank?
       end
       
       #------------------
       # If we're changing status from Pending to something else,
       # and there was an alarm, get rid of it.
+      # Also get rid of it if we saved it with blank fire_at fields.
       def should_destroy_alarm?
-        self.alarm.present? && self.status_changed? && self.status_was == ContentBase::STATUS_PENDING
-      end
-      
-      #------------------
-      # Build an alarm
-      # Double-check that published_at is present, otherwise errors.
-      def generate_alarm
-        if self.published_at.present?
-          self.build_alarm(fire_at: self.published_at)
-        end
+        (self.alarm.present? && self.status_changed? && self.status_was == ContentBase::STATUS_PENDING) ||
+        (self.alarm.present? && self.alarm.fire_at.blank?)
       end
       
       #------------------

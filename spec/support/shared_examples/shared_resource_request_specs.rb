@@ -27,7 +27,7 @@ shared_examples_for "managed resource create" do
       it "shows validation errors" do
         fill_required_fields(invalid_record)
         click_button "edit"
-        current_path.should eq described_class.admin_index_path # Technically "#create"
+        current_path.should eq described_class.admin_index_path
         described_class.count.should eq 0
         page.should_not have_css ".alert-success"
         page.should have_css ".alert-error"

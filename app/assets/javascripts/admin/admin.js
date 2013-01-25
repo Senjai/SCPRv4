@@ -24,7 +24,9 @@
 //= require admin/newsroom
 //= require admin/field_manager
 //= require admin/date_time_input
+//= require admin/publishing_helper
 //= require admin/publishing_ui
+//= require admin/content_alarm_ui
 //= require admin/auto_slug_field
 //= require admin/field_counter
 //= require admin/preview

@@ -2,10 +2,7 @@
 # SetPublishedAtCallback
 #
 # Sets published_at depending on various things
-# Required attributes: [:published_at, :publishing?, :unpublishing?]
-#
-# Note that these callbacks have to run before validation
-# in order to validate slug uniqueness for `published_at`
+# Required attributes: [:published_at, :publishing?, :pending?, :unpublishing?]
 #
 # Scenarios:
 # * Not publishing
@@ -31,7 +28,7 @@ module Concern
       #--------------
       # When to set published_at to Time.now
       def should_set_published_at_to_now?
-        self.publishing? and self.published_at.blank?
+        self.publishing? && self.published_at.blank?
       end
 
       #--------------
