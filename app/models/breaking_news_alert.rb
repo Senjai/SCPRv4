@@ -105,7 +105,6 @@ class BreakingNewsAlert < ActiveRecord::Base
         :description      => description,
         :subject          => email_subject,
         :isPlainTextEditable => true,
-        :sendPlainTextOnly => true,
         :plainText        => view.render_view(template: "/breaking_news/email/template", formats: [:text], locals: { alert: self }).to_s,
         :htmlContent      => {
           :type => "RawHtmlContent",
