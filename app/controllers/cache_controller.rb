@@ -19,7 +19,11 @@ class CacheController < AbstractController::Base
   # Set the view path to "app/views" so that we can cache
   # a partial anywhere under that directory.
   self.view_paths = "app/views"
-    
+  
+  def render_view(options)
+    render options
+  end
+  
   # Write a partial's output to cache.
   # 
   # Arguments:

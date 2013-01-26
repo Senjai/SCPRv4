@@ -15,6 +15,12 @@ module Eloqua
     end
 
     #----------------------
+    
+    def fetch_url
+      @url = api_urls["rest"]["standard"] if api_urls
+    end
+
+    #----------------------
     # Send a get request with the specified parameters.
     #
     # Example:
@@ -38,7 +44,8 @@ module Eloqua
     def post(path, body={})
       api.post do |request|
         request.url path
-        request.body = body
+        request.headers['Content-Type'] = "application/json"
+        request.body = body.to_json
       end
     end
 
@@ -52,7 +59,8 @@ module Eloqua
     def put(path, body={})
       api.put do |request|
         request.url path
-        request.body = body
+        request.headers['Content-Type'] = "application/json"
+        request.body = body.to_json
       end
     end
 
@@ -82,7 +90,7 @@ module Eloqua
     def connection(url)
       Faraday.new url do |conn|
         conn.basic_auth @company + "\\" + @user, @password
-        conn.response :json, content_type: /\bjson$/
+        conn.response :json
         conn.adapter Faraday.default_adapter
       end
     end
