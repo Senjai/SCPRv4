@@ -8,21 +8,6 @@ class BreakingNewsAlert < ActiveRecord::Base
     "now"     => "Happening Now"
   }
   
-  # These ID's are hard-coded from Eloqua.
-  # We *could* search for them on every request,
-  # but it would take like 10 times longer and these
-  # are unlikely to change often.
-  ELOQUA_DEFAULTS = {
-    :header_id            => 10,   # SCPR 20130122 Breaking News Alert Header
-    :footer_id            => 61,   # SCPR 20130122 Breaking News Alert Footer
-    :email_group_id       => 69,   # SCPR - Breaking News Alerts
-    :campaign_folder_id   => 1229, # Campaings/SCPR/Breaking News Alerts
-    :email_folder_id      => 1235, # Emails/SCPR/Breaking News Alerts
-    :segment_id           => 194,  # SCPR - Breaking News Alerts Segment
-    :campaign_template_id => 28,   # SCPR - Breaking News Alert Campaign Template
-    :email_template_id    => 29    # SCPR - Breaking News Alert E-mail Template
-  }
-  
   #-------------------
   # Scopes
   scope :published, -> { order("created_at desc").where(is_published: true) }
@@ -91,14 +76,15 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Send the e-mail
   def publish_email
     if should_send_email?
-      client = Eloqua::Client.new(API_KEYS['eloqua'])
+      attributes = API_KEYS['eloqua']['attributes']
+      client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])
       
       description = "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}"
       view = CacheController.new
       
       email = Eloqua::Email.create(
-        :folderId         => ELOQUA_DEFAULTS[:email_folder_id],
-        :emailGroupId     => ELOQUA_DEFAULTS[:email_group_id],
+        :folderId         => attributes['email_folder_id'],
+        :emailGroupId     => attributes['email_group_id'],
         :senderName       => "89.3 KPCC",
         :senderEmail      => "no-reply@kpcc.org",
         :name             => email_subject,
@@ -114,7 +100,7 @@ class BreakingNewsAlert < ActiveRecord::Base
       
       campaign = Eloqua::Campaign.create(
         {
-          :folderId         => ELOQUA_DEFAULTS[:campaign_folder_id],
+          :folderId         => attributes['campaign_folder_id'],
           :name             => email_subject,
           :description      => description,
           :startAt          => Time.now.to_i,
@@ -124,7 +110,7 @@ class BreakingNewsAlert < ActiveRecord::Base
               :type           => "CampaignSegment",
               :id             => "-980",
               :name           => "Segment Members",
-              :segmentId      => ELOQUA_DEFAULTS[:segment_id],
+              :segmentId      => attributes['segment_id'],
               :position       => {
                 :type => "Position",
                 :x    => 17,

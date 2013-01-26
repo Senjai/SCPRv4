@@ -10,7 +10,7 @@ module Eloqua
         :isMemberAllowedReEntry, :isReadOnly, :product, :region
         
     def activate
-      client = Eloqua::Client.new(API_KEYS['eloqua'])
+      client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])
 
       client.api.post do |request|
         request.url "assets/campaign/active/#{self.id}"
