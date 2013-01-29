@@ -51,10 +51,6 @@ class ShowSegment < ActiveRecord::Base
     self.pending? || self.published?
   end
   
-  def should_generate_slug?
-    self.slug.blank? && (self.pending? || self.published?)
-  end
-  
   #-------------------
   # Callbacks
   
