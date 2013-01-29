@@ -50,11 +50,15 @@
     </div> <!-- row -->
   </div> <!-- span6 -->
 </div> <!-- row -->
-    
+
+<hr />
+  
 <div class="row">
   <div class="span9">
-    <h4>Recently Saved by Me</h4>
-    <hr />
+    <h4 class="pull-left">Recently Saved by You</h4>
+    <div class="pull-right">
+      <%= link_to "View Your Activity", activity_admin_admin_user_path(admin_user), class: "btn" %>
+    </div>
     
     <%= any_to_list? @current_user_activities, message: "There is no activity to show." do %>
       <table class="table table-striped">
@@ -76,12 +80,15 @@
               </tr>
           <% end %>
         </tbody>
-      </table>
+      </table>      
     <% end %>
 
-    
-    <h4>Recently Saved by Others</h4>
     <hr />
+    
+    <h4 class="pull-left">Recently Saved by Others</h4>
+    <div class="pull-right">
+      <%= link_to "View All Activity", admin_activity_path, class: "btn" %>
+    </div>
     
     <%= any_to_list? @latest_activities, message: "There is no activity to show." do %>
       <table class="table table-striped">
@@ -106,6 +113,7 @@
       </table>
     <% end %>
     
+    <hr />
   </div> <!-- span -->
 
   <div class="span3">
