@@ -19,9 +19,17 @@ class Ticket < ActiveRecord::Base
   #--------------------
   # Callbacks
   before_save :set_default_status, if: -> { self.status.blank? }
-    
+  after_save :publish_ticket_to_redis, if: :status_changed?
+  
   def set_default_status
     self.status = STATUS_OPEN
+  end
+
+  #--------------------
+  
+  def publish_ticket_to_redis
+    text_status = self.status == STATUS_OPEN ? "Opened" : "Closed"
+    Hubot.message(channel: "scpr-tickets", message: "** Ticket #{text_status}: \"#{self.summary}\" (#{self.user.name}) (http://scpr.org#{self.admin_show_path})")
   end
   
   #--------------------
