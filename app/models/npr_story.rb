@@ -81,6 +81,16 @@ class NprStory < ActiveRecord::Base
   end
 
   #---------------
+
+  def as_json(*args)
+    super.merge({
+      "id"         => self.obj_key, 
+      "obj_key"    => self.obj_key,
+      "to_title"   => self.to_title,
+    })
+  end
+  
+  #---------------
   
   def async_import
     Resque.enqueue(Job::NprImport, self.id)
