@@ -1,6 +1,7 @@
 class PijQuery < ActiveRecord::Base
   include Concern::Scopes::SinceScope
   include Concern::Associations::AssetAssociation
+  include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
@@ -32,7 +33,7 @@ class PijQuery < ActiveRecord::Base
   
   #------------
   # Validation
-  validates :slug,        presence: true, uniqueness: true
+  validates :slug,        uniqueness: true
   validates :headline,    presence: true
   validates :body,        presence: true
   validates :query_type,  presence: true
