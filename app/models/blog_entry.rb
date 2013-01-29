@@ -21,11 +21,16 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::TeaserMethods
   
   self.table_name = "blogs_entry"
-  has_secretary
-  
-  PRIMARY_ASSET_SCHEME = :blog_asset_scheme
+  has_secretary  
   ROUTE_KEY = "blog_entry"
-
+  
+  ASSET_SCHEMES = [
+    ["Full Width (default)", ""],
+    ["Float Right", "right"],
+    ["Slideshow", "slideshow"],
+    ["No Display", "hidden"]
+  ]
+  
   #------------------
   # Scopes
   scope :filtered_by_bylines, ->(bio_id) { 
