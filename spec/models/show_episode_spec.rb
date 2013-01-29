@@ -1,9 +1,7 @@
 require "spec_helper"
 
 describe ShowEpisode do
-  describe "callbacks" do
-    it_behaves_like "set published at callback"
-    
+  describe "callbacks" do    
     describe "generate_headline" do
       let(:program) { build :kpcc_program, title: "Cool Show" }
 
@@ -21,23 +19,9 @@ describe ShowEpisode do
     end
   end
   
-  # ----------------
-  
-  describe "associations" do
-    it_behaves_like "content alarm association"
-    it_behaves_like "asset association"
-    it_behaves_like "audio association"
-    
-    it { should have_many(:rundowns) }
-    it { should have_many(:segments).through(:rundowns) }
-    it { should belong_to(:show) }
-  end
-  
   #------------------
   
   describe "validations" do
-    it_behaves_like "content validation"
-
     it { should validate_presence_of(:show) }
     
     it "validates air date on publish" do
@@ -48,12 +32,10 @@ describe ShowEpisode do
 
   #------------------
   
-  describe "scopes" do
-    it_behaves_like "since scope"
-    
+  describe "scopes" do    
     describe "#published" do
       it "orders published content by air_date descending" do
-        episodes = create_list :show_episode, 3, status: 5
+        episodes = create_list :show_episode, 3, status: ContentBase::STATUS_LIVE
         ShowEpisode.published.first.should eq episodes.last
         ShowEpisode.published.last.should eq episodes.first
       end
@@ -62,19 +44,10 @@ describe ShowEpisode do
   
   #------------------
   
-  it_behaves_like "status methods"
-  it_behaves_like "publishing methods"
-  
-  describe "content base methods" do
-    it { should_not respond_to :disqus_identifier }
-  end
-  
-  #------------------
-  
   describe "#teaser" do
     it "is the body" do
-      show_episode = build :show_episode, body: load_fixture("long_text.txt")
+      show_episode = build :show_episode, body: "hello"
       show_episode.teaser.should eq show_episode.body
     end
-  end  
+  end
 end
