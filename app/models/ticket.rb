@@ -29,7 +29,7 @@ class Ticket < ActiveRecord::Base
   
   def publish_ticket_to_redis
     text_status = self.status == STATUS_OPEN ? "Opened" : "Closed"
-    Hubot.message(channel: "scpr-tickets", message: "** Ticket #{text_status}: \"#{self.summary}\" (#{self.user.name}) (http://scpr.org#{self.admin_show_path})")
+    $redis.publish "scpr-tickets", "** Ticket #{text_status}: \"#{self.summary}\" (#{self.user.name}) (http://scpr.org#{self.admin_show_path})"
   end
   
   #--------------------

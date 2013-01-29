@@ -16,7 +16,7 @@ describe Ticket do
     let(:ticket) { build :ticket }
     
     it "publishes to redis if status changed" do
-      Hubot.should_receive(:message).twice
+      $redis.should_receive(:publish).twice
 
       ticket.save!
       ticket.status = Ticket::STATUS_CLOSED
@@ -25,7 +25,7 @@ describe Ticket do
     
     it "doesn't publish if status was not changed" do
       ticket.save!
-      Hubot.should_not_receive(:message)
+      $redis.should_not_receive(:publish)
       
       ticket.summary = "A new summary"
       ticket.save!
