@@ -34,6 +34,14 @@ describe Concern::Associations::ContentAlarmAssociation do
       subject.stub(:status_changed?) { false }
       subject.should_destroy_alarm?.should eq false
     end
+    
+    it "is true if fields are blank but an alarm exists" do
+      subject.alarm = create :content_alarm, :future
+      subject.save!
+      subject.should_destroy_alarm?.should eq false
+      subject.alarm.fire_at = ""
+      subject.should_destroy_alarm?.should eq true
+    end
   end
   
   
