@@ -52,6 +52,6 @@ class scpr.AutoSlugField
            .replace(/\s+/g, "-")     # Spaces -> `-`
            .replace(/-{2,}/g, '-')   # Fix accidental double-hyphens
            .replace(/[^\w\-]+/g, '') # Remove non-word characters/hyphen
+           .substring(0, @maxLength) # Just the first 50 characters
            .replace(/^-+/, '')       # Trim hyphens from beginning
            .replace(/-+$/, '')       # Trim hyphens from end
-           .substring(0, @maxLength) # Just the first 50 characters
