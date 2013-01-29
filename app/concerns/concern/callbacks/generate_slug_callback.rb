@@ -17,7 +17,7 @@ module Concern
       # When to generate the slug.
       # Override this if you want to control when it happens.
       def should_generate_slug?
-        self.slug.blank?
+        self.slug.blank? && self.should_validate?
       end
       
       #--------------------

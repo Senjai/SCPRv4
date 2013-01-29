@@ -25,10 +25,6 @@ class VideoShell < ActiveRecord::Base
     "content/video"
   end
   
-  def should_generate_slug?
-    self.slug.blank? && (self.pending? || self.published?)
-  end
-
   #-------------------
   # Scopes
 
@@ -37,7 +33,6 @@ class VideoShell < ActiveRecord::Base
     
   # -------------------
   # Validation
-  validates :slug, uniqueness: true
 
   #-------------------
   # Callbacks
