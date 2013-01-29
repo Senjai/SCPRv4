@@ -54,7 +54,7 @@ class BlogEntry < ActiveRecord::Base
   def should_validate?
     self.pending? || self.published?
   end
-    
+  
   #------------------
   # Callbacks
   def should_generate_slug?
