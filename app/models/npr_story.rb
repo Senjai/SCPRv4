@@ -106,7 +106,6 @@ class NprStory < ActiveRecord::Base
       :headline       => npr_story.title,
       :teaser         => npr_story.teaser,
       :short_headline => npr_story.shortTitle,
-      :published_at   => npr_story.pubDate,
       :body           => text
     )
     
@@ -157,6 +156,7 @@ class NprStory < ActiveRecord::Base
         news_story.assets << content_asset
       end
     end
+    
     
     #-------------------
     # Save the news story (including all associations),
