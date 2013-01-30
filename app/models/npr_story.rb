@@ -81,7 +81,7 @@ class NprStory < ActiveRecord::Base
             :new          => true
           )
           
-          if npr_story.save!
+          if npr_story.save
             added.push npr_story
             log "Saved NPR Story ##{story.id} as NprStory ##{npr_story.id}"
           else
