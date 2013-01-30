@@ -21,15 +21,15 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
   
-  self.table_name      = 'shows_segment'
+  self.table_name = 'shows_segment'
   has_secretary
-  PRIMARY_ASSET_SCHEME = :segment_asset_scheme
-  ROUTE_KEY            = "segment"
+  ROUTE_KEY = "segment"
   
   ASSET_SCHEMES = [
     ["Full Width (default)", ""],
     ["Float Right", "float"],
-    ["Slideshow", "slideshow"]
+    ["Slideshow", "slideshow"],
+    ["No Display", "hidden"]
   ]
   
   #-------------------
