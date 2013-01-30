@@ -36,9 +36,11 @@
               <% end %>
               
               <%= guard Homepage do %>
-                <li>
-                  <a href="<%=@current_homepage.admin_edit_path%>">Update Current Homepage (<%= format_date(@current_homepage.updated_at, time: true) %>)</a>
-                </li>
+                <% if @current_homepage %>
+                  <li>
+                    <a href="<%=@current_homepage.admin_edit_path%>">Update Current Homepage (<%= format_date(@current_homepage.updated_at, time: true) %>)</a>
+                  </li>
+                <% end %>
               <% end %>
             </ul> <!-- dropdown-menu -->
           </li> <!-- Quick Nav dropdown -->
