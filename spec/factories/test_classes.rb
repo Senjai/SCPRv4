@@ -2,13 +2,12 @@ require Rails.root.join("spec/fixtures/test_class")
 
 FactoryGirl.define do
   factory :test_class_story, class: TestClass::Story do
-    headline "Cool Headline"
-    short_headline "Cool Short Headline"
+    sequence(:headline) { |n| "Cool Headline #{n}" }
+    short_headline { "Short #{headline}" }
     body "Cool Body"
     teaser "Cool Teaser"
     slug { headline.parameterize }
     status 5
-    sequence(:published_at) { |n| Time.now  + n.days}
   end
   
   factory :test_class_remote_story, class: TestClass::RemoteStory do

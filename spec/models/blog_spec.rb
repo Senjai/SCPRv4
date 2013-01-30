@@ -1,24 +1,6 @@
 require "spec_helper"
 
-describe Blog do
-  describe "validations" do
-    it_behaves_like "slug validation"
-    it_behaves_like "slug unique validation"
-    it { should validate_presence_of(:name) }
-  end
-  
-  #----------------
-  
-  describe "associations" do
-    it { should have_many :entries }
-    it { should have_many(:tags).through(:entries) }
-    it { should belong_to(:missed_it_bucket) }
-    it { should have_many(:authors).through(:blog_authors) }
-    it { should have_many(:blog_categories) }
-  end
-
-  #----------------
-  
+describe Blog do  
   describe "scopes" do
     describe "::active" do
       it "returns only active blogs" do

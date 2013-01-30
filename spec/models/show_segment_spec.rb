@@ -1,47 +1,6 @@
 require "spec_helper"
 
 describe ShowSegment do
-  describe "callbacks" do
-    it_behaves_like "set published at callback"
-  end
-  
-  # ----------------
-  
-  describe "validations" do
-    it_behaves_like "slug validation"
-    it_behaves_like "content validation"
-    it_behaves_like "slug unique for date validation"
-  end
-
-  #------------------
-  
-  describe "associations" do
-    it_behaves_like "content alarm association"
-    it_behaves_like "asset association"
-    it_behaves_like "audio association"
-    
-    it { should belong_to :show }
-    it { should have_many :rundowns }
-    it { should have_many(:episodes).through(:rundowns) }
-  end
-
-  #------------------
-  
-  describe "scopes" do
-    it_behaves_like "since scope"
-    
-    describe "#published" do
-      it "orders published content by published_at descending" do
-        ShowSegment.published.to_sql.should match /order by published_at desc/i
-      end
-    end
-  end
-  
-  #------------------
-  
-  it_behaves_like "status methods"
-  it_behaves_like "publishing methods"
-  
   describe "#episode" do
     it "uses the first episode the segment is associated with" do
       segment = create :show_segment

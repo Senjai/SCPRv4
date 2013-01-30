@@ -29,15 +29,6 @@ describe AdminResource::Config do
   end
 
   #----------------------
-    
-  describe "#nav_groups" do
-    it "returns an empty hash if nothing is set" do
-      AdminResource.config.nav_groups = nil
-      AdminResource.config.nav_groups.should eq Hash.new
-    end
-  end
-
-  #----------------------
   
   describe "#title_attributes" do
     it "returns the defaults plus :simple_title if nothing is set" do

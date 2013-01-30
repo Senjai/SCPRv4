@@ -18,8 +18,7 @@
     newsroom = new scpr.Newsroom(
       "<%= room_info[:id] %>", // room ID
       <%= j admin_user.to_json.html_safe %>, // user info
-      { "record": <%= j record.to_json.html_safe %>,
-        "el": "#work_status" }
+      { "record": <%= j record.to_json.html_safe %> }
     );
     
     listener = new scpr.Newsroom.JobListener();

@@ -14,8 +14,12 @@
       <li>
         <span class="<%=status_bootstrap_map[@record.status]%>"><%= @record.status_text %></span>
         
-        <% if @record.respond_to?(:published_at) and @record.respond_to?(:published?) and @record.published? %>
+        <% if @record.respond_to?(:published_at) && @record.respond_to?(:published?) && @record.published? %>
           on <strong><%= format_date @record.published_at, time: true %></strong>
+        <% end %>
+        
+        <% if @record.respond_to?(:alarm) && @record.alarm.present? && @record.alarm.fire_at.present? %>
+          Alarm - <strong><%= format_date @record.alarm.fire_at, time: true %></strong>
         <% end %>
       </li>
     <% end %>

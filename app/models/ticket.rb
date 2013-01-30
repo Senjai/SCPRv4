@@ -19,9 +19,17 @@ class Ticket < ActiveRecord::Base
   #--------------------
   # Callbacks
   before_save :set_default_status, if: -> { self.status.blank? }
-    
+  after_save :publish_ticket_to_redis, if: :status_changed?
+  
   def set_default_status
     self.status = STATUS_OPEN
+  end
+
+  #--------------------
+  
+  def publish_ticket_to_redis
+    text_status = self.status == STATUS_OPEN ? "Opened" : "Closed"
+    $redis.publish "scpr-tickets", "** Ticket #{text_status}: \"#{self.summary}\" (#{self.user.name}) (http://scpr.org#{self.admin_show_path})"
   end
   
   #--------------------
@@ -38,6 +46,7 @@ class Ticket < ActiveRecord::Base
       list_order "status desc, created_at desc"
       
       column :user
+      column :id, header: "#"
       column :summary
       column :created_at
       column :status, display: :display_ticket_status

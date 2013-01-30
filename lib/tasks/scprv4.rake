@@ -1,12 +1,21 @@
 namespace :scprv4 do 
   desc "Place a full sphinx index into the queue"
   task :enqueue_index => [:environment] do
-    puts "*** [#{Time.now}] Enqueueing sphinx index into Resque..."    
+    puts "*** [#{Time.now}] Enqueueing sphinx index into Resque..."
     indexer = Indexer.new
     indexer.enqueue
     puts "Finished."
   end
 
+  #----------
+  
+  desc "Sync NPR Stories with NPR API"
+  task :npr_fetch => [:environment] do
+    puts "*** [#{Time.now}] Syncing NPR Stories..."
+    NprStory.sync_with_api
+    puts "Finished."
+  end
+  
   #----------
   
   desc "Clear events cache"

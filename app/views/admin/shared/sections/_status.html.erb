@@ -1,0 +1,1 @@
+<%= f.input :status, collection: ContentBase.status_text_collect, selected: record.status || ContentBase::STATUS_DRAFT, input_html: { id: "status-select" } %>

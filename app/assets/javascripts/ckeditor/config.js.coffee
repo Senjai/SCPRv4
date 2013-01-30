@@ -19,6 +19,6 @@ CKEDITOR.editorConfig = (config) ->
     config.bodyClass = 'ckeditor-body'
     config.contentsCss = "/assets/application.css?bust=true"
     
-#    config.forcePasteAsPlainText = true
+    config.forcePasteAsPlainText = true
     
     true

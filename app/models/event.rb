@@ -50,11 +50,11 @@ class Event < ActiveRecord::Base
     if: :should_validate?
   
   def should_validate?
-    published?
+    self.published?
   end
   
   def published?
-    !!is_published
+    self.is_published
   end
   
   #-------------------
