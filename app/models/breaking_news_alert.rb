@@ -160,9 +160,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
   #-------------------
-  
-  private
-  
+    
   def should_send_email?
     self.is_published && self.send_email && !self.email_sent
   end
