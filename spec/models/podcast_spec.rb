@@ -31,7 +31,7 @@ describe Podcast do
       teardown_sphinx
     end
     
-    context "for KpccProgram/OtherProgram" do
+    context "for KpccProgram" do
       it "grabs episodes when item_type is episodes" do
         episode = create :show_episode
         create :audio, :direct, content: episode
@@ -55,6 +55,14 @@ describe Podcast do
         ts_retry(2) do
           podcast.content.to_a.should eq [segment]
         end
+      end
+    end
+    
+    context "for OtherProgram" do
+      it "returns an empty array" do
+        program = create :other_program
+        podcast = create :podcast, source: program
+        podcast.content.should eq []
       end
     end
     

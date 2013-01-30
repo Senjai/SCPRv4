@@ -64,11 +64,17 @@ class Podcast < ActiveRecord::Base
       conditions = {}
       
       case self.source_type
-      when "KpccProgram" || "OtherProgram"
+      when "KpccProgram"
         conditions.merge!(program: self.source.id)
         klasses.push ShowEpisode if self.item_type == "episodes"
         klasses.push ShowSegment if self.item_type == "segments"
-
+      
+      when "OtherProgram"
+        # OtherProgram won't actually have any content
+        # So, just incase this method gets called,
+        # just return an empty array.
+        return []
+        
       when "Blog"
         conditions.merge!(blog: self.source.id)
         klasses.push BlogEntry
