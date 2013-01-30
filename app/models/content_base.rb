@@ -59,30 +59,6 @@ module ContentBase
   OBJ_KEY_REGEX = %r{([^:]+):(\d+)}
 
   #--------------------
-  # Sets of template schemes for various content.
-  STORY_SCHEMES = [
-    ["Float Right (default)", ""],
-    ["Wide", "wide"],
-    ["Slideshow", "slideshow"]
-  ]
-
-  STORY_EXTRA_SCHEMES = [
-    ["Hide (default)", ""],
-    ["Sidebar Display", "sidebar"]
-  ]
-
-  LEAD_SCHEMES = [
-    ["Default", ""],
-    ["Wide", "wide"]
-  ]
-
-  BLOG_SCHEMES = [
-    ["Full Width (default)", ""],
-    ["Float Right", "right"],
-    ["Slideshow", "slideshow"]
-  ]
-
-  #--------------------
   # Wrapper around ThinkingSphinx to just query all
   # ContentBase classes and mix in some default search
   # parameters.
