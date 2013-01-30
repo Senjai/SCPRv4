@@ -29,7 +29,7 @@ class ContentAlarm < ActiveRecord::Base
   #---------------------
   
   def fire
-    if can_fire?
+    if self.can_fire?
       ContentAlarm.log "Firing ContentAlarm ##{self.id} for #{self.content.simple_title}"
       if self.content.update_attributes(status: ContentBase::STATUS_LIVE)
         ContentAlarm.log "Published #{self.content.simple_title}. Removing this alarm."
@@ -51,8 +51,10 @@ class ContentAlarm < ActiveRecord::Base
   end
 
   #---------------------
-
+  # Can fire if this alarm is pending, and if the content is 
+  # Pending -OR- Published... in the case that it's published, 
+  # it will just serve to "touch" the content.
   def can_fire?
-    pending? and self.content.pending?
+    self.pending? && (self.content.pending? || self.content.published?)
   end
 end

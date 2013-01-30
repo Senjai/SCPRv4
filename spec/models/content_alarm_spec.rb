@@ -91,9 +91,16 @@ describe ContentAlarm do
   #---------------------
   
   describe "#can_fire?" do
-    let(:content) { create :news_story}
+    let(:content) { create :news_story }
+    
     it "is true if pending? and content status is pending" do
       content.status = ContentBase::STATUS_PENDING
+      alarm          = build :content_alarm, :pending, content: content
+      alarm.can_fire?.should be_true
+    end
+    
+    it "is true if content is published" do
+      content.status = ContentBase::STATUS_LIVE
       alarm          = build :content_alarm, :pending, content: content
       alarm.can_fire?.should be_true
     end
