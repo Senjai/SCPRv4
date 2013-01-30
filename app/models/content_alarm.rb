@@ -17,17 +17,21 @@ class ContentAlarm < ActiveRecord::Base
   
   #----------
   # Callbacks
-  
+
   #---------------------
   
-  def self.fire_pending
-    self.pending.each do |alarm|
-      alarm.fire
+  class << self
+    #---------------------
+    # Fire any pending alarms
+    def fire_pending
+      self.pending.each do |alarm|
+        alarm.fire
+      end
     end
   end
 
   #---------------------
-  
+  # Fire an alarm.
   def fire
     if self.can_fire?
       ContentAlarm.log "Firing ContentAlarm ##{self.id} for #{self.content.simple_title}"
@@ -54,6 +58,12 @@ class ContentAlarm < ActiveRecord::Base
   # Can fire if this alarm is pending, and if the content is 
   # Pending -OR- Published... in the case that it's published, 
   # it will just serve to "touch" the content.
+  #
+  # Note that SCPRv4 destroys content alarms when content moves 
+  # from Pending -> Not Pending, so once mercer is gone, there 
+  # shouldn't be any alarms with content that ISN'T Pending,
+  # so the extra `content.published?` condition can probably
+  # go away at that point.
   def can_fire?
     self.pending? && (self.content.pending? || self.content.published?)
   end
