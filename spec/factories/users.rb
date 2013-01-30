@@ -18,7 +18,7 @@ FactoryGirl.define do
 
   #---------------------------
   
-  factory :admin_user do
+  factory :admin_user, aliases: [:user] do
     # To be removed:
     sequence(:first_name) { |n| "Bryan #{n}" }
     last_name   "Ricker"

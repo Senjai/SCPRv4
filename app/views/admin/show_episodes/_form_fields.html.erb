@@ -9,8 +9,13 @@
 <% end %>
 
 <%= form_block "Segments" do %>
-  <div class="alert alert-info">This content builder only shows Segments, of ANY publishing status, ordered by the LAST UPDATED timestamp (descending).</div>
+  <div class="pull-right">
+    <%= modal_toggle title: "Info", id: "segment-aggregator-help-modal" do %>
+      This content builder only shows Segments, of ANY publishing status (except "Killed"), ordered by the LAST UPDATED timestamp (descending).
+    <% end %>
+  </div>
   
+  <!-- Aggregator -->
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :segment_json, as: :hidden, input_html: { id: "content_json" } %>
 
@@ -20,6 +25,10 @@
         "#aggregator", 
         <%= j record.segments.to_json.html_safe %>,
         {
+          viewOptions: {
+            template: "content_compact"
+          },
+          
           apiType: "private",
           params: {
             limit: 20,
@@ -27,7 +36,7 @@
             types: "segments",
             order: "updated_at",
             sort_mode: "desc",
-            with: { status: <%=ContentBase::STATUS_TEXT.keys%> }
+            with: { status: <%=ContentBase::STATUS_TEXT.keys.drop(1)%> }
           }
         });
     </script>

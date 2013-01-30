@@ -1,14 +1,6 @@
 require "spec_helper"
 
-describe ContentAlarm do
-  it { should belong_to :content }
-  
-  describe "validations" do
-    it { should validate_presence_of :fire_at }
-  end
-  
-  #---------------------
-  
+describe ContentAlarm do  
   describe "scopes" do
     describe "pending" do
       it "selects those with pending status" do

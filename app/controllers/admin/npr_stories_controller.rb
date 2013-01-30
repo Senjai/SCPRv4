@@ -12,6 +12,7 @@ class Admin::NprStoriesController < Admin::BaseController
   
   def index
     @list = resource_class.admin.list
+    @records = @records.where(new: true)
     respond_with :admin, @records
   end
 

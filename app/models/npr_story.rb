@@ -8,11 +8,18 @@ class NprStory < ActiveRecord::Base
   # An array of elements in an NPR::Story's 
   # +fullText+ attribute that we want to 
   # strip out before importing.
-  UNWANTED_ELEMENTS = [
+  UNWANTED_CSS = [
     '.storytitle',
     '#story-meta',
+    '.bucketwrap',
     '#primaryaudio',
-    '.bucketwrap.image'
+    'object'
+  ]
+  
+  UNWANTED_ATTRIBUTES = [
+    'class',
+    'id',
+    'data-metrics'
   ]
   
   #---------------
@@ -56,7 +63,23 @@ class NprStory < ActiveRecord::Base
     def admin_index_path
       @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")
     end
+    
+    #---------------
+    # Utility method for parsing an NPR Story's fullText
+    def parse_fullText(fullText)
+      full_text = Nokogiri::XML::DocumentFragment.parse(fullText)
 
+      UNWANTED_CSS.each do |css|
+        full_text.css(css).remove
+      end
+
+      UNWANTED_ATTRIBUTES.each do |attribute|
+        full_text.xpath(".//@#{attribute}").remove
+      end
+
+      full_text.to_html
+    end
+    
     #---------------
     # Sync the cached NPR stories with the NPR API
     def sync_with_api
@@ -96,6 +119,16 @@ class NprStory < ActiveRecord::Base
   end
 
   #---------------
+
+  def as_json(*args)
+    super.merge({
+      "id"         => self.obj_key, 
+      "obj_key"    => self.obj_key,
+      "to_title"   => self.to_title,
+    })
+  end
+  
+  #---------------
   
   def async_import
     Resque.enqueue(Job::NprImport, self.id)
@@ -127,7 +160,7 @@ class NprStory < ActiveRecord::Base
     #
     text = begin
       if npr_story.fullText.present?
-        parse_fullText(npr_story.fullText)
+        NprStory.parse_fullText(npr_story.fullText)
       elsif npr_story.textWithHtml.present?
         npr_story.textWithHtml.to_html
       elsif npr_story.text.present?
@@ -144,7 +177,6 @@ class NprStory < ActiveRecord::Base
       :headline       => npr_story.title,
       :teaser         => npr_story.teaser,
       :short_headline => npr_story.shortTitle,
-      :published_at   => npr_story.pubDate,
       :body           => text
     )
     
@@ -196,6 +228,7 @@ class NprStory < ActiveRecord::Base
       end
     end
     
+    
     #-------------------
     # Save the news story (including all associations),
     # set the NprStory to `:new => false`,
@@ -203,19 +236,5 @@ class NprStory < ActiveRecord::Base
     news_story.save!
     self.update_attribute(:new, false)
     news_story
-  end
-
-  #-------------------
-  
-  private
-  
-  def parse_fullText(fullText)
-    full_text = Nokogiri::XML::DocumentFragment.parse(fullText)
-    
-    UNWANTED_ELEMENTS.each do |css|
-      full_text.at_css(css).try(:remove)
-    end
-    
-    full_text.to_html
   end
 end

@@ -216,6 +216,7 @@ Scprv4::Application.routes.draw do
       
       resources :admin_users do
         get "search", on: :collection, as: :search
+        get "activity", on: :member, as: :activity
       end
       
       resources :podcasts do

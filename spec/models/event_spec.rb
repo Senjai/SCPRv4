@@ -1,58 +1,6 @@
 require "spec_helper"
 
-describe Event do  
-  describe "associations" do
-    it_behaves_like "asset association"
-    it_behaves_like "audio association"
-    it { should belong_to(:kpcc_program) }
-  end
-
-  #-------------------
-  
-  describe "validations" do
-    it_behaves_like "slug validation"
-    it_behaves_like "slug unique for date validation"
-
-    it { should validate_presence_of(:headline) }
-    
-    context "should validate" do
-      before :each do
-        Event.any_instance.stub(:should_validate?) { true }
-      end
-      
-      it { should validate_presence_of(:etype) }
-      it { should validate_presence_of(:starts_at) }
-      it { should validate_presence_of(:body) }
-      
-    end
-    
-    context "should not validate" do
-      before :each do
-        Event.any_instance.stub(:should_validate?) { false }
-      end
-      
-      it { should_not validate_presence_of(:etype) }
-      it { should_not validate_presence_of(:starts_at) }
-      it { should_not validate_presence_of(:body) }
-    end
-  end
-  
-  #-------------------
-  
-  describe "content base attributes" do
-    it { should respond_to :headline }
-    it { should respond_to :short_headline }
-    it { should respond_to :body }
-    it { should respond_to :teaser }
-    it { should respond_to :link_path }
-    it { should respond_to :remote_link_path }
-    it { should respond_to :obj_key }
-    it { should respond_to :disqus_identifier }
-    it { should respond_to :disqus_shortname }
-  end
-  
-  #-------------------
-  
+describe Event do
   describe "::sorted" do
     let(:past_one     ) { build :event, starts_at: 2.hours.ago,      ends_at: 1.hour.ago }
     let(:past_many    ) { build :event, starts_at: 3.days.ago,       ends_at: 1.day.ago }

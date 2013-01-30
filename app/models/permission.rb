@@ -17,7 +17,7 @@ class Permission < ActiveRecord::Base
   #-------------------
   # Association
   has_many :admin_user_permissions
-  has_many :admin_users, through: :admin_user_permissions
+  has_many :admin_users, through: :admin_user_permissions, dependent: :destroy
   
   
   #-------------------

@@ -24,7 +24,7 @@ class VideoShell < ActiveRecord::Base
   def self.content_key
     "content/video"
   end
-
+  
   #-------------------
   # Scopes
 
@@ -33,7 +33,6 @@ class VideoShell < ActiveRecord::Base
     
   # -------------------
   # Validation
-  validates :slug, uniqueness: true
 
   #-------------------
   # Callbacks
