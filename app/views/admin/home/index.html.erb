@@ -11,20 +11,21 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            <th>Manage</th>
             <th>Title</th>
             <th>Timestamp</th>
             <th>Description</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           <% @current_user_activities.each do |version| %>
-              <tr>
-                <td><%= guarded_link_to version.versioned.class, version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
-                <td><%= display_datetime(version.created_at) %></td>
-                <td><%= version.description %></td>
-                <td><%= display_status(version.frozen_object.status) if version.frozen_object.respond_to? :status %></td>
-              </tr>
+            <% record = version.versioned %>
+            <tr>
+              <td><%= link_to "Edit", record.admin_edit_path, class: "btn" %></td>
+              <td><%= record.to_title %></td>
+              <td><%= display_datetime(version.created_at) %></td>
+              <td><%= version.description %></td>
+            </tr>
           <% end %>
         </tbody>
       </table>      
