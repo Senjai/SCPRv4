@@ -81,6 +81,12 @@ class NprStory < ActiveRecord::Base
     end
     
     #---------------
+    # Queue an API sync
+    def async_sync_with_api
+      Resque.enqueue(Job::NprFetch)
+    end
+    
+    #---------------
     # Sync the cached NPR stories with the NPR API
     def sync_with_api
       # The "id" parameter in this case is actually referencing a list.

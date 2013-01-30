@@ -2,6 +2,10 @@
 
 <div class="index-header clearfix">
   <%= render "admin/shared/search_form" %>
+  
+  <div class="pull-right">
+    <%= link_to "Sync with NPR", sync_admin_npr_stories_path, class: "btn", method: :post %>
+  </div>
 </div>
 
 <table class="table table-striped">
@@ -9,7 +13,7 @@
     <thead>
       <tr>
         <th>Import</th>
-        <th>Skip</th>        
+        <th>Skip</th>
         <%= render "/admin/shared/headers", list: @list %>
       </tr>
     </thead>

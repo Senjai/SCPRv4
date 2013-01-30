@@ -18,6 +18,14 @@ class Admin::NprStoriesController < Admin::BaseController
 
   #--------------
   
+  def sync
+    breadcrumb "Sync"
+    NprStory.async_sync_with_api
+    render "sync"
+  end
+
+  #--------------
+  
   def import
     breadcrumb "Importing", nil, @record.to_title
     @record.async_import

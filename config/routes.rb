@@ -329,6 +329,7 @@ Scprv4::Application.routes.draw do
       resources :npr_stories, only: [:index, :destroy] do
         get "search", on: :collection, as: :search
         post "import", as: :import, on: :member
+        post "sync", as: :sync, on: :collection
       end
       
       get "/activity"                                        => "versions#activity",  as: :activity

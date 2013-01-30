@@ -11,7 +11,7 @@ namespace :scprv4 do
   
   desc "Sync NPR Stories with NPR API"
   task :npr_fetch => [:environment] do
-    puts "*** [#{Time.now}] Importing NPR Stories..."
+    puts "*** [#{Time.now}] Syncing NPR Stories..."
     NprStory.sync_with_api
     puts "Finished."
   end
