@@ -1,22 +1,6 @@
 require "spec_helper"
 
-describe Bio do
-  describe "validations" do
-    it_behaves_like "slug validation"
-    it_behaves_like "slug unique validation"
-    it { should validate_presence_of :name }
-    it { should validate_presence_of :last_name }
-  end
-
-  #--------------------
-  
-  describe "associations" do
-    it { should belong_to(:user).class_name("AdminUser") }
-    it { should have_many(:bylines).class_name("ContentByline") }
-  end
-
-  #--------------------
-  
+describe Bio do  
   describe "callbacks" do
     describe "set_last_name" do
       it "sets last name if last name isn't present" do

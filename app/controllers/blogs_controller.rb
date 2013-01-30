@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-  before_filter :load_blog, :except => :index
+  before_filter :load_blog, :except => [:index, :entry]
   respond_to :html, :xml, :rss
   
   #----------
@@ -24,7 +24,8 @@ class BlogsController < ApplicationController
   #----------
   
   def entry
-    @entry = @blog.entries.published.find(params[:id])
+    @entry = BlogEntry.published.includes(:blog).find(params[:id])
+    @blog  = @entry.blog
   end
   
   # Map old paths from "other blogs"

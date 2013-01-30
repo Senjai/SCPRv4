@@ -9,7 +9,6 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Validations::ContentValidation
-  include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
@@ -22,11 +21,16 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::TeaserMethods
   
   self.table_name = "blogs_entry"
-  has_secretary
-  
-  PRIMARY_ASSET_SCHEME = :blog_asset_scheme
+  has_secretary  
   ROUTE_KEY = "blog_entry"
-
+  
+  ASSET_SCHEMES = [
+    ["Full Width (default)", ""],
+    ["Float Right", "right"],
+    ["Slideshow", "slideshow"],
+    ["No Display", "hidden"]
+  ]
+  
   #------------------
   # Scopes
   scope :filtered_by_bylines, ->(bio_id) { 
@@ -48,7 +52,7 @@ class BlogEntry < ActiveRecord::Base
   validates_presence_of :blog
   
   def should_validate?
-    pending? or published?
+    self.pending? || self.published?
   end
   
   #------------------

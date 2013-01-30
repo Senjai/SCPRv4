@@ -54,4 +54,13 @@ module AdminHelper
   def form_block(title=nil, &block)
     render "/admin/shared/form_block", title: title, body: capture(&block)
   end
+  
+  #----------------
+  # Place a modal anywhere with a button to toggle it
+  #
+  # Takes a hash of options and a block with the content
+  #
+  def modal_toggle(options={}, &block)
+    render "/admin/shared/modal", options: options, body: capture(&block)
+  end
 end

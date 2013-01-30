@@ -216,6 +216,7 @@ Scprv4::Application.routes.draw do
       
       resources :admin_users do
         get "search", on: :collection, as: :search
+        get "activity", on: :member, as: :activity
       end
       
       resources :podcasts do
@@ -325,9 +326,16 @@ Scprv4::Application.routes.draw do
         get "search", on: :collection, as: :search
       end
       
-      resources :npr_stories, only: [:index, :destroy] do
-        get "search", on: :collection, as: :search
-        post "import", as: :import, on: :member
+      resources :npr_stories, only: [:index] do
+        member do
+          post "import", as: :import
+          put "skip", as: :skip
+        end
+        
+        collection do
+          get "search", as: :search
+          post "sync", as: :sync
+        end
       end
       
       get "/activity"                                        => "versions#activity",  as: :activity

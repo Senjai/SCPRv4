@@ -1,0 +1,22 @@
+<div class="content-alarm-fields">
+  <%= f.simple_fields_for :alarm, record.alarm || record.build_alarm do |a| %>
+    <%= a.input :fire_at, wrapper_html: { class: "fire_at", style: "display: inline-block;"}, label: "Publish At", required: false, hint: "Schedule this record to publish on a future date. (optional) <br />Time is in 24-hour format. Example: 2013-01-10 16:45" %>
+
+    <% if record.alarm.persisted? %>
+      <%= a.input :_destroy, as: :boolean, label: false, inline_label: "Clear Scheduled Publishing?", wrapper_html: { class: "inline destroy-bool" } %>
+    <% end %>
+  <% end %>
+
+  <% content_for :footerjs do %>
+    <script type="text/javascript">
+      $(function() {
+        contentAlarmUI = new scpr.ContentAlarmUI({
+          form: "#<%=f.options[:html][:id]%>",
+          container: ".content-alarm-fields",
+          notifications: "<%= options[:notifications] || "#scheduled_status" %>",
+          statusField: "#status-select"
+        });
+      });
+    </script>
+  <% end %>
+</div>
