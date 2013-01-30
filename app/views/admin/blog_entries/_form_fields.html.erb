@@ -12,7 +12,7 @@
 <%= f.section "bylines" %>
 
 <%= f.section "assets" do %>
-  <%= f.input :blog_asset_scheme, collection: ContentBase::BLOG_SCHEMES, include_blank: false %>
+  <%= f.input :blog_asset_scheme, collection: BlogEntry::ASSET_SCHEMES, include_blank: false %>
 <% end %>
 
 <%= f.section "audio" %>

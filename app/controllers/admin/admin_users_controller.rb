@@ -1,4 +1,4 @@
-class Admin::AdminUsersController < Admin::ResourceController  
+class Admin::AdminUsersController < Admin::ResourceController
   # Override this method from Admin::ResourceController
   # Users should always be able to see and update their
   # own profile.

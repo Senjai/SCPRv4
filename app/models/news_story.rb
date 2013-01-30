@@ -21,16 +21,8 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::TeaserMethods
   
   self.table_name = 'news_story'
-  has_secretary
-  
-  PRIMARY_ASSET_SCHEME = :story_asset_scheme
-  ROUTE_KEY            = "news_story"
-  
-  LOCALES = [ 
-    ["CA/Local",  "local"],
-    ["U.S.",      "natnl"],
-    ["World",     "world"]
-  ]
+  has_secretary  
+  ROUTE_KEY = "news_story"
   
   SOURCES = [
     ['KPCC',                'kpcc'],
@@ -41,6 +33,18 @@ class NewsStory < ActiveRecord::Base
     ['NPR & wire services', 'npr_wire'],
     ['New America Media',   'new_america'],
     ['NPR & KPCC',          'npr_kpcc']
+  ]
+  
+  ASSET_SCHEMES = [
+    ["Float Right (default)", ""],
+    ["Wide", "wide"],
+    ["Slideshow", "slideshow"],
+    ["No Display", "hidden"]
+  ]
+  
+  EXTRA_ASSET_SCHEMES = [
+    ["Hide (default)", ""],
+    ["Sidebar Display", "sidebar"]
   ]
   
   #-------------------
@@ -60,10 +64,6 @@ class NewsStory < ActiveRecord::Base
   
   #------------------
   # Callbacks
-  
-  def should_generate_slug?
-    self.slug.blank? && (self.pending? || self.published?)
-  end
   
   #-------------------
   # Administration

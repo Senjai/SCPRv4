@@ -46,6 +46,7 @@ class Ticket < ActiveRecord::Base
       list_order "status desc, created_at desc"
       
       column :user
+      column :id, header: "#"
       column :summary
       column :created_at
       column :status, display: :display_ticket_status

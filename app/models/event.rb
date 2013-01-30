@@ -50,20 +50,16 @@ class Event < ActiveRecord::Base
     if: :should_validate?
   
   def should_validate?
-    published?
+    self.published?
   end
   
   def published?
-    is_published
+    self.is_published
   end
   
   #-------------------
   # Callbacks
   after_save :expire_cache
-  
-  def should_generate_slug?
-    self.slug.blank? && self.published?
-  end
   
   #-------------------
   # Administration

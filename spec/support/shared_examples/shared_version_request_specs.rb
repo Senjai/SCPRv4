@@ -2,6 +2,7 @@ shared_examples_for "versioned model" do
   describe "Versions" do
     before :each do
       login
+      @user.update_attribute(:is_superuser, true)
       
       # touch records to created associated objects
       valid_record

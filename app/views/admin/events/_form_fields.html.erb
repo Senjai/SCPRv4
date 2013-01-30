@@ -44,7 +44,7 @@
 
 <%= f.section "assets" do %>
   <%= f.input :event_asset_scheme, 
-              :collection    => ContentBase::STORY_SCHEMES, 
+              :collection    => NewsStory::ASSET_SCHEMES, 
               :include_blank => false,
               :hint          => "Sets up the top-of-story formatting for assets attached through AssetHost. " \
                              "NOTE: For videos, choose 'Wide'" %>

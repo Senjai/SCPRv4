@@ -1,4 +1,4 @@
-<h4><%= @record.summary %> (<%= Ticket::STATUS_TEXT[@record.status] %>)</h4>
+<h4>#<%=@record.id%>: <%= @record.summary %> (<%= Ticket::STATUS_TEXT[@record.status] %>)</h4>
 <div class="row">
   <div class="span1">
     <strong>Reported by: </strong>
