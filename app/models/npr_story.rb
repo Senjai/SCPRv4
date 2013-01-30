@@ -1,6 +1,7 @@
 class NprStory < ActiveRecord::Base
   include AdminResource::Model::Identifier
   include AdminResource::Model::Naming
+  logs_as_task
   
   self.table_name = "npr_npr_story"
   
@@ -54,6 +55,43 @@ class NprStory < ActiveRecord::Base
     # Routing, we'll just manually put this one here.
     def admin_index_path
       @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")
+    end
+
+    #---------------
+    # Sync the cached NPR stories with the NPR API
+    def sync_with_api
+      # The "id" parameter in this case is actually referencing a list.
+      # Stories from the last hour are returned... be sure to run this script
+      # more often than that!
+      stories = NPR::Story.where(id: [1001], date: (1.hour.ago..Time.now)).set(requiredAssets: 'text').order("date descending").limit(20).to_a
+      log "#{stories.size} stories found from the past hour (max 20)"
+      
+      added = []
+      stories.each do |story|
+        # Check if this story was already cached - if not, cache it.
+        if NprStory.find_by_npr_id(story.id)
+          log "NPR Story ##{story.id} already cached"
+        else
+          npr_story = NprStory.new(
+            :npr_id       => story.id, 
+            :headline     => story.title, 
+            :teaser       => story.teaser,
+            :published_at => story.pubDate,
+            :link         => story.link_for("html"),
+            :new          => true
+          )
+          
+          if npr_story.save
+            added.push npr_story
+            log "Saved NPR Story ##{story.id} as NprStory ##{npr_story.id}"
+          else
+            log "Couldn't save NPR Story ##{story.id}"
+          end
+        end
+      end # each
+      
+      # Return which stories were actually cached
+      added
     end
   end
 

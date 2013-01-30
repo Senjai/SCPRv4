@@ -8,7 +8,7 @@ class PodcastsController < ApplicationController
   #----------
   
   def podcast
-    @podcast = Podcast.where(slug: params[:slug]).first!    
+    @podcast = Podcast.where(slug: params[:slug]).first!
     @content = @podcast.content
     render_to_string formats: [:xml]
   end
