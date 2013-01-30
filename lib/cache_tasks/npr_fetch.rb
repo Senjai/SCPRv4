@@ -8,7 +8,6 @@ module CacheTasks
     def run
       comments = self.fetch
       content  = self.parse(comments)
-      self.cache(content, "/shared/widgets/cached/most_popular_commented", "widget/popular_commented")
     end
 
     #--------------
@@ -22,47 +21,27 @@ module CacheTasks
     #--------------
     
     def fetch
-      response = connection.get do |request|
-        request.url "/api/3.0/threads/listPopular.json", 
-          :forum    => @forum, 
-          :interval => @interval, 
-          :api_key  => @api_key
-        #
-      end
+      # The "id" parameter in this case is actually referencing a list.
+      # Stories from the last hour are returned... be sure to run this script
+      # more often than that!
+      query = NPR::Story.where(id: [1001], date: (1.hour.ago..Time.now)).set(requiredAssets: 'text').order("date descending").limit(20)
       
-      response
+      query.to_a.each do |story|
+        # Check if this story was already cached - if not, cache it.
+        unless NprStory.find_by_npr_id(story.id)
+          NprStory.new(
+            :npr_id   => story.id, 
+            :headline => story.title, 
+            :teaser   => story.teaser
+          )
+        end
+      end
     end
 
     #--------------
     
     def parse(response)
-      content = []
 
-      response.body['response'].each do |thread|
-        if object = ContentBase.obj_by_key(thread['identifiers'].first)
-          popular = PopularThread.new(object, thread)
-          self.log "Content: #{object.obj_key}, Count: #{popular.posts}"
-          content.push popular
-        end
-      end
-      
-      content
-    end
-    
-    #--------------
-    
-    private
-    def connection
-      options = {
-        :headers => {'Accept' => "application/json", 'User-Agent' => "SCPR.org"},
-        :ssl     => { verify: false },
-        :url     => "https://disqus.com"
-      }
-
-      Faraday.new(options) do |builder|
-        builder.use Faraday::Response::ParseJson
-        builder.adapter Faraday.default_adapter
-      end
     end
   end # MostCommented
 end # CacheTasks
