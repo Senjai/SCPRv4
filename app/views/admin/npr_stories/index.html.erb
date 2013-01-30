@@ -24,8 +24,8 @@
             <%= link_to "Import", import_admin_npr_story_path(record), method: :post, class: "btn" %>
           </td>
           <td>
-            <%= link_to "Skip", [:admin, record], method: :delete, class: "btn btn-danger", 
-              data: { confirm: "Click OK to delete this NPR Story.\nClick CANCEL to return to the list." } %>
+            <%= link_to "Skip", [:skip, :admin, record], method: :put, class: "btn btn-danger", 
+              data: { confirm: "Click OK to hide this NPR Story.\nClick CANCEL to return to the list." } %>
           </td>
           
           <%= render "/admin/shared/columns", list: @list, record: record %>
