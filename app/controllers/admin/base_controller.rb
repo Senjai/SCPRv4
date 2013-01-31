@@ -90,9 +90,9 @@ class Admin::BaseController < ActionController::Base
   end
   
   #-------------------------
-  def with_rollback(object, &block)
+  def with_rollback(object)
     object.transaction do
-      block.call
+      yield if block_given?
       raise ActiveRecord::Rollback
     end
   end
