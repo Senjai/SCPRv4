@@ -21,7 +21,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  after_save :async_send_email, if: :should_send_email?
+  after_save :async_publish_email, if: :should_send_email?
   after_save :expire_cache
   
   #-------------------
@@ -68,7 +68,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   #-------------------
   # Queue the e-mail sending task so that it doesn't have to
   # occur during an HTTP request.
-  def async_send_email
+  def async_publish_email
     Resque.enqueue(Job::BreakingNewsEmail, self.id)
   end
 
@@ -76,11 +76,74 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Send the e-mail
   def publish_email
     if should_send_email?
-      lyris = Lyris.new(self)
+      eloqua_config = API_KEYS['eloqua']['attributes']
+      client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])
       
-      if lyris.add_message and lyris.send_message
-        self.update_column(:email_sent, true)
-      end
+      description = "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}"
+      view = CacheController.new
+      
+      email = Eloqua::Email.create(
+        :folderId         => eloqua_config['email_folder_id'],
+        :emailGroupId     => eloqua_config['email_group_id'],
+        :senderName       => "89.3 KPCC",
+        :senderEmail      => "no-reply@kpcc.org",
+        :name             => self.headline[0..100],
+        :description      => description,
+        :subject          => email_subject,
+        :isPlainTextEditable => true,
+        :plainText        => view.render_view(template: "/breaking_news/email/template", formats: [:text], locals: { alert: self }).to_s,
+        :htmlContent      => {
+          :type => "RawHtmlContent",
+          :html => view.render_view(template: "/breaking_news/email/template", formats: [:html], locals: { alert: self }).to_s
+        }
+      )
+      
+      campaign = Eloqua::Campaign.create(
+        {
+          :folderId         => eloqua_config['campaign_folder_id'],
+          :name             => email_subject,
+          :description      => description,
+          :startAt          => Time.now.yesterday.to_i,
+          :endAt            => Time.now.tomorrow.to_i,
+          :elements         => [
+            {
+              :type           => "CampaignSegment",
+              :id             => "-980",
+              :name           => "Segment Members",
+              :segmentId      => eloqua_config['segment_id'],
+              :position       => {
+                :type => "Position",
+                :x    => 17,
+                :y    => 14
+              },
+              :outputTerminals => [
+                {
+                  :type          => "CampaignOutputTerminal", 
+                  :id            => "-981",
+                  :connectedId   => "-990", 
+                  :connectedType => "CampaignEmail", 
+                  :terminalType  => "out"
+                }
+              ]
+            },
+            { 
+              :type             => "CampaignEmail",
+              :id               => "-990",
+              :emailId          => email.id,
+              :sendTimePeriod   => "sendAllEmailAtOnce",
+              :position       => {
+                :type => "Position",
+                :x    => 17,
+                :y    => 120
+              },
+            }
+          ]
+        }
+      )
+      
+      campaign.activate
+      
+      self.update_column(:email_sent, true)
     end
   end
   
@@ -97,9 +160,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
   #-------------------
-  
-  private
-  
+    
   def should_send_email?
     self.is_published && self.send_email && !self.email_sent
   end

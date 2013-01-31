@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Concern::Callbacks::SetPublishedAtCallback do
-  subject { TestClass::Story.new(headline: "Headline", body: "Cool Body", status: ContentBase::STATUS_LIVE, slug: "headline") }
+  subject { build :test_class_story }
   
   describe "#should_set_published_at_to_now?" do
     it "is true if publishing? is true and published_at if blank" do
@@ -54,61 +54,6 @@ describe Concern::Callbacks::SetPublishedAtCallback do
         time = freeze_time_at(Time.now)
         subject.save!
         subject.published_at.should be_nil
-      end
-    end
-  end
-
-  #-----------------
-  
-  describe "#should_set_published_at_to_alarm?" do
-    let(:content_alarm) { build :content_alarm }
-    
-    it "is true if alarm is present and alarm.fire_at has changed" do
-      subject.stub(:alarm) { content_alarm }
-      subject.alarm.stub(:fire_at_changed?) { true }
-      subject.should_set_published_at_to_alarm?.should be_true
-    end
-
-    it "is false if alarm is present and alarm.fire_at has not changed" do
-      subject.stub(:alarm) { content_alarm }
-      subject.alarm.stub(:fire_at_changed?) { false }
-      subject.should_set_published_at_to_alarm?.should be_false
-    end
-
-    it "is false if alarm is not present" do
-      subject.stub(:alarm) { nil }
-      subject.should_set_published_at_to_alarm?.should be_false
-    end
-  end
-  
-  #-----------------
-  
-  describe "#set_published_at_to_alarm" do
-    context "should_set_published_at_to_alarm? is true" do
-      before :each do
-        subject.published_at = Chronic.parse("8pm")
-        subject.stub(:should_set_published_at_to_alarm?) { true }
-        subject.build_alarm(fire_at: Chronic.parse("4pm"))
-        subject.save!
-      end
-      
-      it "sets published_at to the alarm's fire_at date" do
-        subject.published_at.should eq Chronic.parse("4pm")
-        subject.published_at.should_not eq Chronic.parse("8pm")
-      end
-    end
-
-    context "should_set_published_at_to_alarm? is false" do
-      before :each do
-        subject.published_at = Chronic.parse("8pm")
-        subject.stub(:should_set_published_at_to_alarm?) { false }
-        subject.build_alarm(fire_at: Chronic.parse("4pm"))
-        subject.save!
-      end
-      
-      it "does not set published_at to the alarm's fire_at date" do
-        subject.published_at.should_not eq Chronic.parse("4pm")
-        subject.published_at.should eq Chronic.parse("8pm")
       end
     end
   end

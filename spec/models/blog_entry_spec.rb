@@ -1,37 +1,7 @@
 require 'spec_helper'
 
-describe BlogEntry do
-  describe "validations" do
-    it_behaves_like "slug validation"
-    it_behaves_like "content validation"
-    it_behaves_like "slug unique for date validation"
-  end
-
-  # ----------------
-  
-  describe "callbacks" do
-    it_behaves_like "set published at callback"
-  end
-  
-  # ----------------
-  
-  describe "scopes" do
-    it_behaves_like "since scope"
-  end
-  
-  # ----------------
-  
+describe BlogEntry do  
   describe "associations" do
-    it_behaves_like "content alarm association"
-    it_behaves_like "asset association"
-    it_behaves_like "audio association"
-    
-    it { should belong_to :blog }
-    it { should have_many :tagged }
-    it { should have_many(:tags).through(:tagged).dependent(:destroy) }
-    it { should have_many(:blog_entry_blog_categories) }
-    it { should have_many(:blog_categories).through(:blog_entry_blog_categories).dependent(:destroy) }
-    
     describe "deleting tags" do
       before :each do
         @entry = build :blog_entry
@@ -75,11 +45,6 @@ describe BlogEntry do
     end
   end
   
-  # ----------------
-  
-  it_behaves_like "status methods"
-  it_behaves_like "publishing methods"
-
   # ----------------
   
   describe "extended_teaser" do

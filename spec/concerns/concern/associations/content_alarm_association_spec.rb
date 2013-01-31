@@ -1,9 +1,18 @@
 require "spec_helper"
 
 describe Concern::Associations::ContentAlarmAssociation do
-  subject { TestClass::Story.new }
+  subject { build :test_class_story }
   
-  it { should have_one(:alarm).class_name("ContentAlarm").dependent(:destroy) }
+  #--------------------
+  
+  describe '#should_reject_alarm?' do
+    it "rejects alarm is alarm doesn't exist and the fire_at fields are blank" do
+      subject.alarm.should eq nil
+      subject.should_reject_alarm?({"fire_at" => ""}).should eq true
+    end
+  end
+  
+  #--------------------
   
   describe "#should_destroy_alarm?" do
     it "is true if there was an alarm and status went from pending to not pending" do
@@ -25,23 +34,18 @@ describe Concern::Associations::ContentAlarmAssociation do
       subject.stub(:status_changed?) { false }
       subject.should_destroy_alarm?.should eq false
     end
-  end
-  
-  #---------------------
-  
-  describe "#should_reject_alarm?" do
-    it "is true if fire_at is blank" do
-      attributes = { 'fire_at' => "" }
-      subject.should_reject_alarm?(attributes).should eq true
-    end
     
-    it "is false if fire_at is present" do
-      attributes = { 'fire_at' => "now" }
-      subject.should_reject_alarm?(attributes).should eq false
+    it "is true if fields are blank but an alarm exists" do
+      subject.alarm = create :content_alarm, :future
+      subject.save!
+      subject.should_destroy_alarm?.should eq false
+      subject.alarm.fire_at = ""
+      subject.should_destroy_alarm?.should eq true
     end
   end
-
-  #---------------------
+  
+  
+  #--------------------
   
   describe "#destroy_alarm" do
     it "marks alarm for destruction" do

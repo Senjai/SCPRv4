@@ -37,10 +37,10 @@ class ShowEpisode < ActiveRecord::Base
   #-------------------
   # Validations
   validates :show, presence: true
-  validates :air_date, presence: true, if: :published?
+  validates :air_date, presence: true, if: :should_validate?
   
   def should_validate?
-    pending? or published?
+    self.pending? || self.published?
   end
   
   #-------------------

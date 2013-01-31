@@ -28,6 +28,10 @@ class Admin::TicketsController < Admin::ResourceController
     @ticket.user = admin_user
     
     if @ticket.save
+      # Need to set the @record var so that we can 
+      # use the requested_location method
+      @record = @ticket
+      
       notice "Saved #{@ticket.simple_title}"
       respond_with do |format|
         format.html { redirect_to requested_location }

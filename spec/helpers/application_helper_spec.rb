@@ -61,10 +61,12 @@ describe ApplicationHelper do
       sphinx_spec(num: 0)
       
       it "only gets objects where category is news" do
-        news = helper.get_latest_news.to_a # to_a otherwise == comparison fails
-        news.should_not be_blank
-        news.select { |c| c.category.is_news == false }.should eq []
-        news.select { |c| c.category.is_news == true }.should eq news
+        ts_retry(2) do
+          news = helper.get_latest_news.to_a # to_a otherwise == comparison fails
+          news.should_not be_blank
+          news.select { |c| c.category.is_news == false }.should eq []
+          news.select { |c| c.category.is_news == true }.should eq news
+        end
       end
     end
   
@@ -74,10 +76,12 @@ describe ApplicationHelper do
       sphinx_spec(num: 0)
       
       it "only gets object where category is not news" do
-        arts = helper.get_latest_arts.to_a
-        arts.should_not be_blank
-        arts.select { |c| c.category.is_news == true }.should eq []
-        arts.select { |c| c.category.is_news == false }.should eq arts
+        ts_retry(2) do
+          arts = helper.get_latest_arts.to_a
+          arts.should_not be_blank
+          arts.select { |c| c.category.is_news == true }.should eq []
+          arts.select { |c| c.category.is_news == false }.should eq arts
+        end        
       end
     end
   end
@@ -234,8 +238,8 @@ describe ApplicationHelper do
       @date = Time.at(0) # 1969-12-31 16:00:00 -0800
     end
     
-    it "returns a `numbers` format" do
-      helper.format_date(@date, format: :numbers).should match "12-31-69"
+    it "returns a `iso` format" do
+      helper.format_date(@date, format: :iso).should match "1969-12-31"
     end
     
     it "returns a `full-date` format" do

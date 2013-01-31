@@ -9,7 +9,6 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Validations::ContentValidation
-  include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
@@ -21,19 +20,22 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
   
-  self.table_name      = 'shows_segment'
+  self.table_name = 'shows_segment'
   has_secretary
-  PRIMARY_ASSET_SCHEME = :segment_asset_scheme
-  ROUTE_KEY            = "segment"
+  ROUTE_KEY = "segment"
   
   ASSET_SCHEMES = [
     ["Full Width (default)", ""],
     ["Float Right", "float"],
-    ["Slideshow", "slideshow"]
+    ["Slideshow", "slideshow"],
+    ["No Display", "hidden"]
   ]
   
   #-------------------
   # Scopes
+  scope :filtered_by_bylines, ->(bio_id) { 
+    self.includes(:bylines).where(ContentByline.table_name => { user_id: bio_id }) 
+  }
   
   #-------------------
   # Associations
@@ -46,7 +48,7 @@ class ShowSegment < ActiveRecord::Base
   validates :show, presence: true
   
   def should_validate?
-    pending? or published?
+    self.pending? || self.published?
   end
   
   #-------------------

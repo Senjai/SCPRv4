@@ -62,9 +62,9 @@ Scprv4::Application.routes.draw do
   
   
   # Podcasts
-  match '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast
+  match '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast, defaults: { format: :xml }
   match '/podcasts/'       => 'podcasts#index',   as: :podcasts
-    
+  
   
   # Blogs / Entries
   match '/blogs/:blog/tagged/:tag/(page/:page)'          => "blogs#blog_tagged",            as: :blog_entries_tagged
@@ -135,11 +135,6 @@ Scprv4::Application.routes.draw do
   # Archive
   post  '/archive/process/'               => "archive#process_form",  as: :archive_process_form
   match '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
-  
-
-  # catch error routes
-  match '/404', to: 'home#not_found'
-  match '/500', to: 'home#error'
   
   
   # Extra (internal stuff)
@@ -216,6 +211,7 @@ Scprv4::Application.routes.draw do
       
       resources :admin_users do
         get "search", on: :collection, as: :search
+        get "activity", on: :member, as: :activity
       end
       
       resources :podcasts do
@@ -325,14 +321,27 @@ Scprv4::Application.routes.draw do
         get "search", on: :collection, as: :search
       end
       
-      resources :npr_stories, only: [:index, :destroy] do
-        get "search", on: :collection, as: :search
-        post "import", as: :import, on: :member
+      resources :npr_stories, only: [:index] do
+        member do
+          post "import", as: :import
+          put "skip", as: :skip
+        end
+        
+        collection do
+          get "search", as: :search
+          post "sync", as: :sync
+        end
       end
       
       get "/activity"                                        => "versions#activity",  as: :activity
       get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
       get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
+
+      # 404 catch-all
+      match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
     end
   end
+
+  # 404 catch-all
+  match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
 end

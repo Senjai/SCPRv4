@@ -29,7 +29,6 @@ RSpec.configure do |config|
   config.include ThinkingSphinxHelpers
   config.include RemoteStubs
   config.include PresenterHelper
-  config.include LyrisXMLResponse
   config.include DatePathHelper
   config.include StubTime
   config.include StubPublishingCallbacks

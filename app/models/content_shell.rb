@@ -32,7 +32,7 @@ class ContentShell < ActiveRecord::Base
   validates :url, presence: true
 
   def should_validate?
-    pending? or published?
+    self.pending? || self.published?
   end
 
   #------------------

@@ -24,7 +24,6 @@ module TestClass
     include Concern::Methods::ContentJsonMethods
     
     include Concern::Validations::ContentValidation
-    include Concern::Validations::SlugUniqueForPublishedAtValidation
     
     def obj_key
       "test_class_story:#{id}"
