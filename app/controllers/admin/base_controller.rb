@@ -1,9 +1,10 @@
 class Admin::BaseController < ActionController::Base
+  include Concern::Controller::CustomErrors
   include AdminResource::Breadcrumbs
   
   abstract!
   protect_from_forgery
-  
+
   layout 'admin'
   before_filter :require_admin
   before_filter :set_sections
@@ -80,5 +81,11 @@ class Admin::BaseController < ActionController::Base
   def handle_unauthorized(resource)
     redirect_to admin_root_path, alert: "You don't have permission to manage #{resource.to_title.pluralize}"
     return false
+  end
+  
+  #-------------------------
+  # Override this method from CustomErrors so we can specify the template path
+  def render_error(status, e=Exception)
+    render template: "/admin/errors/error_#{status}", status: status, locals: { error: e }
   end
 end

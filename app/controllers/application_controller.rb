@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
+  include Concern::Controller::CustomErrors
+  
   protect_from_forgery
-  
   before_filter :check_session, :set_up_finders
-  
   before_filter :add_params_for_newrelic
+
   def add_params_for_newrelic
     NewRelic::Agent.add_custom_parameters(request_referer: request.referer, agent: request.env['HTTP_USER_AGENT'])
   end
@@ -15,10 +16,14 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user
   end
+
+  #----------
   
   def admin_user
     @admin_user
   end
+
+  #----------
   
   def require_admin
     if @admin_user
@@ -70,5 +75,11 @@ class ApplicationController < ActionController::Base
         session[:user_id] = nil
       end
     end
+  end
+  
+  #----------
+  # Override this method from CustomErrors to set the layout
+  def render_error(status, e=Exception)
+    render template: "/errors/error_#{status}", status: status, layout: "app_nosidebar", locals: { error: e }
   end
 end
