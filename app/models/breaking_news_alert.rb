@@ -21,7 +21,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  after_save :async_send_email, if: :should_send_email?
+  after_save :async_publish_email, if: :should_send_email?
   after_save :expire_cache
   
   #-------------------
@@ -68,7 +68,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   #-------------------
   # Queue the e-mail sending task so that it doesn't have to
   # occur during an HTTP request.
-  def async_send_email
+  def async_publish_email
     Resque.enqueue(Job::BreakingNewsEmail, self.id)
   end
 

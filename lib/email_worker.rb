@@ -28,7 +28,7 @@ class EmailWorker
         
         obj = JSON.load(message)
         alert = BreakingNewsAlert.find(obj['id'])
-        alert.async_send_email if alert.should_send_email?
+        alert.async_publish_email if alert.should_send_email?
       end
       
       on.unsubscribe do |channel,subscriptions|
