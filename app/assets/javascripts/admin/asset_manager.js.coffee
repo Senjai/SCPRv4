@@ -61,7 +61,7 @@ class scpr.AssetManager
         
         initialize: ->
             @_views = {}
-                            
+            
             @collection.bind "reset", => 
                 view.detach() for view in @_views
                 @_views = {}
