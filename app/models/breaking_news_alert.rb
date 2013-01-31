@@ -76,15 +76,15 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Send the e-mail
   def publish_email
     if should_send_email?
-      attributes = API_KEYS['eloqua']['attributes']
+      eloqua_config = API_KEYS['eloqua']['attributes']
       client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])
       
       description = "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}"
       view = CacheController.new
       
       email = Eloqua::Email.create(
-        :folderId         => attributes['email_folder_id'],
-        :emailGroupId     => attributes['email_group_id'],
+        :folderId         => eloqua_config['email_folder_id'],
+        :emailGroupId     => eloqua_config['email_group_id'],
         :senderName       => "89.3 KPCC",
         :senderEmail      => "no-reply@kpcc.org",
         :name             => email_subject,
@@ -100,7 +100,7 @@ class BreakingNewsAlert < ActiveRecord::Base
       
       campaign = Eloqua::Campaign.create(
         {
-          :folderId         => attributes['campaign_folder_id'],
+          :folderId         => eloqua_config['campaign_folder_id'],
           :name             => email_subject,
           :description      => description,
           :startAt          => Time.now.to_i,
@@ -110,7 +110,7 @@ class BreakingNewsAlert < ActiveRecord::Base
               :type           => "CampaignSegment",
               :id             => "-980",
               :name           => "Segment Members",
-              :segmentId      => attributes['segment_id'],
+              :segmentId      => eloqua_config['segment_id'],
               :position       => {
                 :type => "Position",
                 :x    => 17,
