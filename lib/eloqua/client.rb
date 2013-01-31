@@ -5,8 +5,8 @@ module Eloqua
   class Client
     #-------------------
     
-    def initialize(credentials, options={})
-      credentials.symbolize_keys!
+    def initialize(_credentials, options={})
+      credentials = _credentials.symbolize_keys
       
       @company  = credentials[:company]
       @user     = credentials[:user]
