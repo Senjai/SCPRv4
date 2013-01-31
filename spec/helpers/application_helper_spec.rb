@@ -238,8 +238,8 @@ describe ApplicationHelper do
       @date = Time.at(0) # 1969-12-31 16:00:00 -0800
     end
     
-    it "returns a `numbers` format" do
-      helper.format_date(@date, format: :numbers).should match "12-31-69"
+    it "returns a `iso` format" do
+      helper.format_date(@date, format: :iso).should match "1969-12-31"
     end
     
     it "returns a `full-date` format" do

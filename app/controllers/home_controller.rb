@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   # Only works in development
   before_filter :generate_homepage, only: :index, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
   
-  def index
+  def index        
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_at(Time.now).first
   end
@@ -33,14 +33,10 @@ class HomeController < ApplicationController
     render :layout => "app_nosidebar"
   end
   
-  def error
-    render :template => "/error/500.html", :status => 500, :layout => "app_nosidebar"
+  def not_found
+    render_error(404)
   end
   
-  def not_found
-    render :template => "/error/404.html", :status => 404, :layout => "app_nosidebar"
-  end
-    
   #----------
   
   def missed_it_content

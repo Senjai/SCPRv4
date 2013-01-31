@@ -17,6 +17,35 @@
       
       <% if admin_user %>
         <ul class="nav">
+          
+          <!-- Quick Nav -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-fast-forward icon-white"></i> Quick Nav <b class="caret"></b></a>
+            <ul class="dropdown-menu cms-nav" style="width: 400px;">
+              <% [BlogEntry, ShowSegment, NewsStory, ContentShell, Event].each do |model| %>
+                <%= guard model do %>
+                  <li>
+                    <a href="<%=model.admin_index_path%>"><%= model.to_title.pluralize %></a>
+                  
+                    <div class="btn-links">
+                      <a class="add btn btn-mini" href="<%=model.admin_new_path%>"><i class="icon-plus-sign"></i> Add</a>
+                      <a class="list btn btn-mini" href="<%=model.admin_index_path%>"><i class="icon-th-list"></i> List</a>
+                    </div>
+                  </li>
+                <% end %>
+              <% end %>
+              
+              <%= guard Homepage do %>
+                <% if @current_homepage %>
+                  <li>
+                    <a href="<%=@current_homepage.admin_edit_path%>">Update Current Homepage (<%= format_date(@current_homepage.updated_at, format: :iso, time: true) %>)</a>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul> <!-- dropdown-menu -->
+          </li> <!-- Quick Nav dropdown -->
+          
+          <!-- Full Navigation -->
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-align-justify icon-white"></i> Navigation <b class="caret"></b></a>
             <% models = admin_user.allowed_resources.sort_by(&:name) %>
@@ -50,11 +79,11 @@
                 <% end %>
                 
               <% end %>
-            </ul>
-          </li>
+            </ul> <!-- dropdown-menu -->
+          </li> <!-- dropdown -->
           <li><a href="http://a.scpr.org/a/assets" target="_new"><i class="icon-camera icon-white"></i> AssetHost</a></li>
           <li><a href="<%=root_path%>"><i class='icon-home icon-white'></i> KPCC.org</a></li>
-        </ul>
+        </ul> <!-- nav -->
 
         <ul class="nav pull-right">
           <li><a href="#ticket-modal" data-toggle="modal"><i class='icon-wrench icon-white'></i> Report a Problem</a></li>
@@ -62,6 +91,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-user icon-white'></i> <%= admin_user.name %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
+              <li><%= link_to "Your Activity", activity_admin_admin_user_path(admin_user) %></li>
               <li><%= link_to "Edit CMS Account", admin_user.admin_edit_path %></li>
               <% if admin_user.bio.present? %>
                 <li><%= link_to "Edit Bio", admin_user.bio.admin_edit_path %></li>
