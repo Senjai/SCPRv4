@@ -34,7 +34,7 @@ class PodcastsController < ApplicationController
       response.headers["Status"]         = "206 Partial Content"
       response.headers["Accept-Ranges"]  = "bytes"
     
-      request.headers["Range"].match(/bytes ?= ?(\d+)-(\d+)?/) do |match|        
+      request.headers["Range"].match(/bytes ?= ?(\d+)-(\d+)?/) do |match|
         rangeStart, rangeEnd        = match[1].to_i, match[2].to_i
         rangeLength                 = (rangeEnd - rangeStart).to_i
         response.headers["Content-Range"]  = "bytes #{rangeStart}-#{rangeEnd == 0 ? "" : rangeEnd}/*"

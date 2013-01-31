@@ -62,7 +62,7 @@ Scprv4::Application.routes.draw do
   
   
   # Podcasts
-  match '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast
+  match '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast, defaults: { format: :xml }
   match '/podcasts/'       => 'podcasts#index',   as: :podcasts
   
   
