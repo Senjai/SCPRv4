@@ -33,6 +33,13 @@ describe PodcastsController do
       assigns(:podcast).should eq podcast
     end
     
+    it "redirects to podcast_url if source is OtherProgram" do
+      program = create :other_program
+      podcast = create :podcast, source: program
+      get :podcast, slug: podcast.slug
+      response.should redirect_to podcast.podcast_url
+    end
+    
     context "sphinx search" do
       it "assigns the content" do
         entry = create :blog_entry

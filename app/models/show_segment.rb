@@ -9,7 +9,6 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Validations::ContentValidation
-  include Concern::Validations::SlugUniqueForPublishedAtValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
@@ -49,7 +48,7 @@ class ShowSegment < ActiveRecord::Base
   validates :show, presence: true
   
   def should_validate?
-    pending? or published?
+    self.pending? || self.published?
   end
   
   #-------------------

@@ -20,6 +20,7 @@ class scpr.Aggregator
     defaults:
         apiType: "public"
         params: {}
+        viewOptions: {}
         
     constructor: (el, json, options={}) ->
         @options = _.defaults options, @defaults
@@ -34,6 +35,7 @@ class scpr.Aggregator
             collection: new scpr.ContentAPI[apiClass](json)
             apiClass: apiClass
             params: @options.params
+            viewOptions: @options.viewOptions
             
         @baseView.render()
         
@@ -282,8 +284,9 @@ class scpr.Aggregator
             buildFromData: (data) ->
                 model = new scpr.ContentAPI.Content(data)
 
-                view = new scpr.Aggregator.Views.ContentFull
+                view = new scpr.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
                     model: model
+
                 @$el.append view.render()
 
                 # Add the new model to @collection
@@ -314,8 +317,9 @@ class scpr.Aggregator
                 # Otherwise, set the position and add it to the collection
                 if not @collection.get id
                     @collection.add model
-                    view = new scpr.Aggregator.Views.ContentFull
+                    view = new scpr.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
                         model: model
+                        
                     el.replaceWith view.render()
                 else
                     alert = new scpr.Notification(@$el, "warning", 
@@ -367,10 +371,11 @@ class scpr.Aggregator
                 @checkDropZone()
 
                 # For each model, create a new model view and append it
-                # to the el                
+                # to the el
                 @collection.each (model) =>
-                    view = new scpr.Aggregator.Views.ContentFull
+                    view = new scpr.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
                         model: model
+                        
                     @$el.append view.render()
 
                 @
@@ -497,6 +502,7 @@ class scpr.Aggregator
                 @collection.each (model) =>
                     view = new scpr.Aggregator.Views.ContentMinimal
                         model: model
+                        
                     @resultsEl.append view.render()
                 
                 @$el
@@ -621,6 +627,7 @@ class scpr.Aggregator
             append: (model) ->
                 view = new scpr.Aggregator.Views.ContentMinimal
                     model: model
+
                 @resultsEl.append view.render()
 
                 @$el
@@ -669,11 +676,12 @@ class scpr.Aggregator
                 # We have to do this so that we can share content
                 # between the lists.
                 @$el.attr("data-id", @model.id)
-            
+                @options = _.defaults @options, { template: @template }
+                
             #---------------------
 
             render: ->
-                @$el.html @template(content: @model.toJSON())
+                @$el.html JST["admin/templates/aggregator/#{@options.template}"](content: @model.toJSON(), opts: @viewOptions)
                 
         #----------------------------------
         # A single piece of content in the drop zone!
@@ -681,7 +689,7 @@ class scpr.Aggregator
         class @ContentFull extends @ContentView
             attributes:
                 class: "content-full"
-            template: JST['admin/templates/aggregator/content_full']
+            template: 'content_full'
             
         #----------------------------------
         # A single piece of recent content!
@@ -689,6 +697,6 @@ class scpr.Aggregator
         class @ContentMinimal extends @ContentView
             attributes:
                 class: "content-minimal"
-            template: JST['admin/templates/aggregator/content_small']
+            template: 'content_small'
 
         #---------------------

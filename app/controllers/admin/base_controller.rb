@@ -9,6 +9,7 @@ class Admin::BaseController < ActionController::Base
   before_filter :set_sections
   before_filter :root_breadcrumb
   before_filter :setup_tickets
+  before_filter :set_current_homepage
   
   #------------------------
   
@@ -52,6 +53,12 @@ class Admin::BaseController < ActionController::Base
   def setup_tickets
     @ticket  = Ticket.new
     @tickets = Ticket.opened
+  end
+
+  #------------------------
+  # Grab the most recent homepage for the Quicknav
+  def set_current_homepage
+    @current_homepage = Homepage.published.first
   end
   
   #------------------------

@@ -1,24 +1,6 @@
 require "spec_helper"
 
-describe PijQuery do
-  it { should respond_to :headline }
-  it { should respond_to :short_headline }
-  it { should respond_to :body }
-  it { should respond_to :teaser }
-  it { should respond_to :link_path }
-  it { should respond_to :remote_link_path }
-  it { should respond_to :obj_key }
-  
-  it { should_not respond_to :disqus_identifier }
-  
-  #---------------
-
-  describe "associations" do
-    it_behaves_like "asset association"
-  end
-  
-  #---------------
-    
+describe PijQuery do    
   describe "validations" do
     it "validates uniqueness" do
       create :pij_query

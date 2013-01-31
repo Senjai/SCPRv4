@@ -250,7 +250,7 @@ module ApplicationHelper
   #---------------------------
   # easy date formatting
   # options:
-  # * format: numbers (10-11-11)
+  # * format: iso (2012-10-11)
   # * format: full_date (October 11th, 2011)
   # * format: event (Wednesday, October 11)
   # * no format specified: Oct 11, 2011
@@ -260,8 +260,8 @@ module ApplicationHelper
     return nil if !date.respond_to?(:strftime)
     
     case options[:format].to_s
-      when "numbers"
-        format_str = "%m-%e-%y"
+      when "iso"
+        format_str = "%F"
       when "full_date"
         format_str = "%B #{date.day.ordinalize}, %Y"
       when "event"

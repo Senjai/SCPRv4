@@ -2,6 +2,10 @@
 
 <div class="index-header clearfix">
   <%= render "admin/shared/search_form" %>
+  
+  <div class="pull-right">
+    <%= link_to "Sync with NPR", sync_admin_npr_stories_path, class: "btn", method: :post %>
+  </div>
 </div>
 
 <table class="table table-striped">
@@ -9,7 +13,7 @@
     <thead>
       <tr>
         <th>Import</th>
-        <th>Skip</th>        
+        <th>Skip</th>
         <%= render "/admin/shared/headers", list: @list %>
       </tr>
     </thead>
@@ -20,8 +24,8 @@
             <%= link_to "Import", import_admin_npr_story_path(record), method: :post, class: "btn" %>
           </td>
           <td>
-            <%= link_to "Skip", [:admin, record], method: :delete, class: "btn btn-danger", 
-              data: { confirm: "Click OK to delete this NPR Story.\nClick CANCEL to return to the list." } %>
+            <%= link_to "Skip", [:skip, :admin, record], method: :put, class: "btn btn-danger", 
+              data: { confirm: "Click OK to hide this NPR Story.\nClick CANCEL to return to the list." } %>
           </td>
           
           <%= render "/admin/shared/columns", list: @list, record: record %>

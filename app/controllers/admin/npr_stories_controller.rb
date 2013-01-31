@@ -4,7 +4,7 @@ class Admin::NprStoriesController < Admin::BaseController
   include Concern::Controller::Searchable
   
   before_filter :authorize_resource
-  before_filter :get_record, only: [:import, :destroy]
+  before_filter :get_record, only: [:import, :skip]
   before_filter :get_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
 
@@ -12,7 +12,16 @@ class Admin::NprStoriesController < Admin::BaseController
   
   def index
     @list = resource_class.admin.list
+    @records = @records.where(new: true)
     respond_with :admin, @records
+  end
+
+  #--------------
+  
+  def sync
+    breadcrumb "Sync"
+    NprStory.async_sync_with_api
+    render "sync"
   end
 
   #--------------
@@ -25,10 +34,14 @@ class Admin::NprStoriesController < Admin::BaseController
   
   #--------------
   
-  def destroy
-    @record.destroy
-    notice "Deleted #{@record.simple_title}"
-    respond_with :admin, @record
+  def skip
+    if @record.update_attributes(new: false)
+      flash[:notice] = "Skipped NPR Story: \"#{@record.to_title}\""
+    else
+      flash[:alert] = "Could not skip NPR Story"
+    end
+    
+    redirect_to admin_npr_stories_path
   end
 
   #--------------

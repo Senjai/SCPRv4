@@ -12,7 +12,7 @@
     <tbody class="list">
       <% @records.each do |record| %>
         <tr class="<%= resource_class.singular_route_key.dasherize %>">
-          <td>
+          <td style="white-space:nowrap;">
             <%= link_to "Details", [:admin, record], class: "btn" %>
             <% if record.user == admin_user || admin_user.is_superuser? %>
               <%= link_to "Edit", record.admin_edit_path, class: "btn" %>

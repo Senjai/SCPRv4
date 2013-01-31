@@ -1,119 +1,59 @@
 ##
 # ContentAlarmUI
 #
-# The UI that helps figure out Content Alarms
+# Show/hide ContentAlarm fields based on status.
+# Also renders messages based on status & timestamp
 #
-class scpr.ContentAlarmUI
-    DefaultOptions:
-        form:             "form.simple_form"
-        timestampEl:      ".fire_at"
-        containerEl:      ".content-alarm-ui"
-        datetimeField:    "input.datetime[name*='[fire_at]']"
-        notificationEl:   ".notification#alarm_status"
-        destroyEl:        ".destroy-bool"
-        destroyField:     "input[type=checkbox][name*='[_destroy]']"
-        statusSelect:     "select[id*=status]"
-        statusPending:    "3"
+class scpr.ContentAlarmUI extends scpr.PublishingHelper
+    constructor: (@options={}) ->
+        super
         
-    constructor: (options) ->
-        @options         = _.defaults options||{}, @DefaultOptions
+        @datetimeField = @container.find("input.datetime") # The actual datetime input 
         
-        # Setup all of the attributes
-        @form            = @options.form
-        @container       = $ @options.containerEl,    @form
-        @statusSelect    = $ @options.statusSelect,   @form
-        @timestampEl     = $ @options.timestampEl,    @container # Wrapper
-        @datetimeField   = $ @options.datetimeField,  @container # Input
-        @destroyEl       = $ @options.destroyEl,      @container # Wrapper
-        @destroyField    = $ @options.destroyField,   @container  # Checkbox
-        @notificationEl  = $ @options.notificationEl, @container
-
-        @statusPending   = @options.statusPending # 3
-        
-        @pending   = false
-        @scheduled = false
-        
+        # Alerts
         @alerts =
-            publish: new scpr.Notification(@notificationEl, "success", "This content is scheduled to be published.")
-            notPublish: new scpr.Notification(@notificationEl, "warning", "This content is not scheduled to be published.")
+            isScheduled:    new scpr.Notification(@notifications, "success", "This content is <strong>scheduled</strong> to be published.")
+            isNotScheduled: new scpr.Notification(@notifications, "info", "This content is <strong>not scheduled</strong> to be published.")
+
+        # Notify the scheduled status
+        @originalStatus = @setStatus() # also sets @status
+        @hideFields() # Hidden by default.
+        @setTimestamp()
+        @notify()
         
-        # Check if the alarm fire_at is filled in
-        # Check which status is selected
-        @checkScheduled()
-        if @checkStatus(@statusSelect) then @show() else @hide()
-        @notify(@pending, @scheduled)
-                
+        # Event for when the timestamp field is changed
         @datetimeField.on
-            update: (event) =>
-                @checkScheduled()
-                @notify(@pending, @scheduled)
-                
-        # Setup listeners for status change
-        @statusSelect.on
-            change: (event) => 
-                if @checkStatus($ event.target) then @show() else @hide()
-                @notify(@pending, @scheduled)
-    
-        # Setup events for the destroy checkbox
-        @destroyField.on
-            change: (event) =>
-                destroyed = if $(event.target).is(':checked') then true else false
-                @toggleTransparency(destroyed)
-                @scheduled = !destroyed
-                @notify(@pending, @scheduled)
-                
+            update: (event) => 
+                @setTimestamp()
+                @notify()
+
     #----------
-    
-    # Do some boolean checking to figure out 
-    # which message to display
-    notify: (pending, scheduled) ->
-        if pending and scheduled
-            @alerts['publish'].render()
-            @alerts['notPublish'].detach()
-        if !pending and scheduled
-            @alerts['publish'].detach()
-            @alerts['notPublish'].render()
-        if pending and !scheduled
-            @alerts['publish'].detach()
-            @alerts['notPublish'].render()
+    # Set @timestamp to the current value of the timestamp field
+    setTimestamp: ->
+        @timestamp = @datetimeField.val()
+
+    #----------
+
+    notify: ->
+        @clearAlerts()
         
-    #----------
-
-    toggleTransparency: (direction) ->
-        if direction
-            @timestampEl.addClass "transparent"
-        else
-            @timestampEl.removeClass "transparent"
+        timestampFilled = !_.isEmpty(@timestamp)
+        isPending       = @isPending()
+        isPublished     = @isPublished()
         
-    #----------
-    
-    checkScheduled: ->
-        if !_.isEmpty(@datetimeField.val())
-            @scheduled = true
-        else
-            @scheduled = false
-
-        @scheduled
-
-    #----------
-
-    checkStatus: (selectEl) ->
-        status = $("option:selected", selectEl).val()
-        if status is @statusPending
-            @pending = true 
-        else 
-            @pending = false
-
-        @pending
-    
-    #----------
-
-    show: ->
-        @timestampEl.show()
-        @destroyEl.show()
-
-    #----------
-
-    hide: ->
-        @timestampEl.hide()
-        @destroyEl.hide()
+        # Show the fields if it's pending.
+        if isPending then @showFields() else @hideFields()
+        
+        # When it IS scheduled
+        if isPending and timestampFilled
+            return @alert 'isScheduled'
+        
+        # When it ISN'T scheduled
+        if isPending and !timestampFilled
+            return @alert 'isNotScheduled'
+        
+        # This one assumes that the PublishingUI script
+        # will let the user know about Publishing Immediately.
+        if !isPending and !isPublished and timestampFilled
+            @hideFields()
+            return @alert 'isNotScheduled'

@@ -26,13 +26,6 @@ module AdminResource
     end
     
     #--------------
-    # A hash of groups of models, for navigation
-    attr_writer :nav_groups
-    def nav_groups
-      @nav_groups || {}
-    end
-    
-    #--------------
     # Which attributes to look at for `to_title`
     attr_writer :title_attributes
     def title_attributes

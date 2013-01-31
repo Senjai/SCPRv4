@@ -1,0 +1,16 @@
+<div class="publishing-fields">
+  <%= f.input :published_at, label: "Publish Timestamp", hint: "Gets set automatically. See \"Help: Publishing\" for more information." %>
+</div>
+
+<% content_for :footerjs do %>
+  <script type="text/javascript">
+    $(function() {
+      publishingUI = new scpr.PublishingUI({
+        form: "#<%=f.options[:html][:id]%>",
+        container: ".publishing-fields",
+        notifications: "<%= options[:notifications] || "#scheduled_status" %>",
+        statusField: "#status-select"
+      });
+    });
+  </script>
+<% end %>
