@@ -43,9 +43,7 @@ module Concern
         # Blank json means no assets were modified.
         # Return and carry on
         return if json.blank?
-        
-        @_existing_assets = self.assets
-        @_loaded_assets   = []
+        @_loaded_assets = []
         
         Array(JSON.load(json)).each do |asset_hash|
           self.assets.build(
