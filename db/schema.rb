@@ -663,12 +663,12 @@ ActiveRecord::Schema.define(:version => 20130131121530) do
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
 
   create_table "npr_npr_story", :force => true do |t|
-    t.string   "headline",     :limit => 140,        :null => false
-    t.text     "teaser",       :limit => 2147483647, :null => false
-    t.datetime "published_at",                       :null => false
-    t.string   "link",         :limit => 200,        :null => false
-    t.string   "npr_id",       :limit => 20,         :null => false
-    t.boolean  "new",                                :null => false
+    t.string   "headline"
+    t.text     "teaser",       :limit => 2147483647
+    t.datetime "published_at"
+    t.string   "link",         :limit => 200
+    t.integer  "npr_id"
+    t.boolean  "new",                                :default => true, :null => false
   end
 
   create_table "permissions", :force => true do |t|
