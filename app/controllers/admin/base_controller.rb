@@ -88,4 +88,12 @@ class Admin::BaseController < ActionController::Base
   def render_error(status, e=Exception)
     render template: "/admin/errors/error_#{status}", status: status, locals: { error: e }
   end
+  
+  #-------------------------
+  def with_rollback(object, &block)
+    object.transaction do
+      block.call
+      raise ActiveRecord::Rollback
+    end
+  end
 end

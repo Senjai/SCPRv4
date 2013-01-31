@@ -25,10 +25,14 @@ class scpr.AssetManager
                 @assets.reset(event.data)
                 @assets.sort()
                 @assetsView.render()
-                $(@options.jsonInput).val(JSON.stringify(@assets.simpleJSON()))
+                @updateInput()
         , false
         
+        @updateInput()
     
+    updateInput: ->
+        $(@options.jsonInput).val(JSON.stringify(@assets.simpleJSON()))
+        
     #----------
     
     @Asset: Backbone.View.extend
@@ -57,7 +61,7 @@ class scpr.AssetManager
         
         initialize: ->
             @_views = {}
-            
+                            
             @collection.bind "reset", => 
                 view.detach() for view in @_views
                 @_views = {}

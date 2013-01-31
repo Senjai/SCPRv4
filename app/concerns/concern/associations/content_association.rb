@@ -21,22 +21,22 @@ module Concern
       end
       
       #-------------------
-
+      # See AssetAssociation for more information
       def content_json=(json)
-        # If content_json is blank, then that means we
-        # didn't make any updates. Return and move on.
-        return if json.blank?
+        return if json.empty?
         
-        @_loaded_content = []
-
-        Array(JSON.load(json)).each do |content_hash|
+        json = Array(JSON.load(json))
+        loaded_content = []
+        
+        json.each do |content_hash|
+          # Make sure the content actually exists, then build the association
           if content = ContentBase.obj_by_key(content_hash["id"])
-            association = self.build_content_association(content_hash, content)
-            @_loaded_content.push association
+            new_content = build_content_association(content_hash, content)
+            loaded_content.push new_content
           end
         end
 
-        self.content = @_loaded_content
+        self.content = loaded_content
       end
     end
   end

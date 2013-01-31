@@ -112,6 +112,7 @@ class scpr.Aggregator
                 @container.append @$el
                 @helper = $("<h1 />").html("Drop Content Here")
                 
+                @updateInput()
                 @render()
                 
                 # Register listeners for URL droppage
@@ -127,8 +128,7 @@ class scpr.Aggregator
                 @collection.bind "add remove reorder", =>
                     @checkDropZone()
                     @setPositions()
-                    $("#content_json").val(
-                        JSON.stringify(@collection.simpleJSON()))
+                    @updateInput()
                     
                 # DropZone callbacks!!
                 sortIn  = true
@@ -365,7 +365,12 @@ class scpr.Aggregator
                 @helper.detach()
                 
             #---------------------
-            
+            # Update the JSON input with current collection
+            updateInput: ->
+                $("#content_json").val(JSON.stringify(@collection.simpleJSON()))
+
+            #---------------------
+                
             render: ->
                 @$el.empty()
                 @checkDropZone()
