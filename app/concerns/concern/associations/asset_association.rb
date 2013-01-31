@@ -49,19 +49,19 @@ module Concern
         # would be incorrect.
         return if json.empty?
         
-        json = Array(JSON.load(json))
+        json = Array(JSON.load(json)).sort_by { |c| c["asset_order"] }
         loaded_assets = []
-    
+        
         json.each do |asset_hash|
           new_asset = ContentAsset.new(
             :asset_id    => asset_hash["id"].to_i, 
             :caption     => asset_hash["caption"].to_s, 
             :asset_order => asset_hash["asset_order"].to_i
           )
-      
+          
           loaded_assets.push new_asset
         end
-    
+        
         self.assets = loaded_assets
       end
     end # AssetAssociation

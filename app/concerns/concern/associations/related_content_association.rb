@@ -13,7 +13,7 @@ module Concern
         has_many :outgoing_references, as: :content, class_name: "Related", dependent: :destroy, order: "position"
         has_many :incoming_references, as: :related, class_name: "Related", dependent: :destroy, order: "position"
         
-        attr_reader :content_json
+        attr_reader :related_content_json
       end
       
       #-------------------------
@@ -28,7 +28,7 @@ module Concern
           content.push reference.related
         end
         
-        # Incoming references: Where `related` this is object
+        # Incoming references: Where `related` is this object
         # So we want to grab `content`
         self.incoming_references.each do |reference|
           content.push reference.content
@@ -39,18 +39,18 @@ module Concern
       
       #-------------------------
       # See AssetAssociation for more information.
-      def content_json=(json)
+      def related_content_json=(json)
         return if json.empty?
         
-        json = Array(JSON.load(json))
+        json = Array(JSON.load(json)).sort_by { |c| c["position"] }
         loaded_references = []
         
         json.each do |content_hash|
           if related_content = ContentBase.obj_by_key(content_hash["id"])
             new_reference = Related.new(
               :position => content_hash["position"].to_i,
-              :related => related_content,
-              :content => self
+              :related  => related_content,
+              :content  => self
             )
             
             loaded_references.push new_reference

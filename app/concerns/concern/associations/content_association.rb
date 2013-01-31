@@ -25,7 +25,7 @@ module Concern
       def content_json=(json)
         return if json.empty?
         
-        json = Array(JSON.load(json))
+        json = Array(JSON.load(json)).sort_by { |c| c["position"] }
         loaded_content = []
         
         json.each do |content_hash|

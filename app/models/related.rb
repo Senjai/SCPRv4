@@ -8,7 +8,9 @@ class Related < ActiveRecord::Base
   # Mapping for related content_type
   before_save :set_rel_django_content_type_id, on: :create, if: -> { self.rel_django_content_type_id.blank? }
   def set_rel_django_content_type_id
-    self.rel_django_content_type_id = RailsContentMap.find_by_rails_class_name(self.related_type).django_content_type_id
+    if rails_class = RailsContentMap.find_by_rails_class_name(self.related_type)
+      self.rel_django_content_type_id = rails_class.django_content_type_id
+    end
   end
 
   default_scope where("content_type is not null and related_type is not null")

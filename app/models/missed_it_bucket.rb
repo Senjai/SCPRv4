@@ -66,7 +66,7 @@ class MissedItBucket < ActiveRecord::Base
   # to `content`
   def build_content_association(content_hash, content)
     MissedItContent.new(
-      :position         => content_hash["position"],
+      :position         => content_hash["position"].to_i,
       :content          => content,
       :missed_it_bucket => self
     )

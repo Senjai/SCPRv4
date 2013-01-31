@@ -146,7 +146,7 @@ class Homepage < ActiveRecord::Base
   
   def build_content_association(content_hash, content)
     HomepageContent.new(
-      :position => content_hash["position"],
+      :position => content_hash["position"].to_i,
       :content  => content,
       :homepage => self
     )

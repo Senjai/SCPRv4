@@ -17,12 +17,12 @@
   
   <!-- Aggregator -->
   <div id="aggregator" class="aggregator"></div>
-  <%= f.input :segment_json, as: :hidden, input_html: { id: "content_json" } %>
+  <%= f.input :segment_json, as: :hidden, input_html: { id: "segment_json" } %>
 
   <% content_for :footerjs do %>
     <script>
       aggregator = new scpr.Aggregator(
-        "#aggregator", 
+        "#aggregator", "#segment_json",
         <%= j record.segments.to_json.html_safe %>,
         {
           viewOptions: {
