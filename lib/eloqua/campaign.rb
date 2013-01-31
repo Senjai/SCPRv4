@@ -7,7 +7,8 @@ module Eloqua
     
     attr_accessor :type, :currentStatus, :id, :createdAt, :createdBy, :depth, :description,
         :folderId, :name, :updatedAt, :updatedBy, :actualCost, :budgetedCost, :campaignType,
-        :isMemberAllowedReEntry, :isReadOnly, :product, :region
+        :isMemberAllowedReEntry, :isReadOnly, :product, :region, :scheduledFor, :crmId, :elements,
+        :endAt, :fieldValues, :startAt, :accessedAt, :permissions, :sourceTemplateId
         
     def activate
       client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])

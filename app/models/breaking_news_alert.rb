@@ -87,7 +87,7 @@ class BreakingNewsAlert < ActiveRecord::Base
         :emailGroupId     => eloqua_config['email_group_id'],
         :senderName       => "89.3 KPCC",
         :senderEmail      => "no-reply@kpcc.org",
-        :name             => email_subject,
+        :name             => self.headline[0..100],
         :description      => description,
         :subject          => email_subject,
         :isPlainTextEditable => true,
@@ -103,8 +103,8 @@ class BreakingNewsAlert < ActiveRecord::Base
           :folderId         => eloqua_config['campaign_folder_id'],
           :name             => email_subject,
           :description      => description,
-          :startAt          => Time.now.to_i,
-          :endAt            => Time.now.to_i,
+          :startAt          => Time.now.yesterday.to_i,
+          :endAt            => Time.now.tomorrow.to_i,
           :elements         => [
             {
               :type           => "CampaignSegment",
