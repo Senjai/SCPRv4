@@ -815,6 +815,21 @@ a.comment-count.inline {
             color:#5f5f5f;
         }
     }
+    
+    .LV_validation_message {
+      margin-left: 5px;
+      @include font-sans-serif($size: 11px);
+      vertical-align: top;
+      
+      &.LV_valid {
+        color: #00cc00;
+      }
+      
+      &.LV_invalid {
+        color: #cc0000;
+      }
+      
+    }
 }
 
 // Sidebar article listings

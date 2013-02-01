@@ -16,14 +16,17 @@
         
         <p>Breaking news alerts sent to your inbox</p>
         <input id="field0" name="emailAddress" type="text" class="required email" placeholder="Email address">
-        <input type="submit" value="Subscribe" name="subscribe" class="btn">
+        <input type="submit" value="Subscribe" name="subscribe" class="btn"><br />
+        <div id="eloqua-livevalidations" style="display: inline-block;width: 1px;height:20px;"></div>
         
         <input type="hidden" name="elqCustomerGUID" value="">
         <input type="hidden" name="elqCookieWrite" value="0">
       </form>
       <script src="https://img.en25.com/i/livevalidation_standalone.compressed.js" type="text/javascript"></script>
       <script type="text/javascript">
-        var field0 = new LiveValidation("field0", {validMessage: "", onlyOnBlur: true});
+        var field0 = new LiveValidation("field0", { validMessage: "✔", onlyOnSubmit: true, insertAfterWhatNode: "eloqua-livevalidations" });
+        field0.add(Validate.Presence, { failureMessage: "Please enter a valid e-mail address." });
+        field0.add(Validate.Email, { failureMessage: "Please enter a valid e-mail address." });
       </script>
 
         
