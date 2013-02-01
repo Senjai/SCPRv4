@@ -11,7 +11,7 @@
 <% end %>
 
 <%= form_block "Content" do %>
-  <%= f.input :content %>
-  <%= f.input :extra_head %>
-  <%= f.input :extra_tail %>
+  <%= f.input :content, input_html: { class: "ckeditor" } %>
+  <%= f.input :extra_head, hint: "Extra JS/CSS to place in the HEAD tag of the page.", input_html: { class: "fixed-font short" } %>
+  <%= f.input :extra_tail, hint: "Extra JS to place at the bottom of the page.", input_html: { class: "fixed-font short" } %>
 <% end %>

@@ -23,4 +23,7 @@
 </div>
 <h1><%= page_title @flatpage.title %></h1>
 <%= @flatpage.content.html_safe %><br />
-<%= @flatpage.extra_tail.html_safe %>
+
+<% content_for :extra_footer do %>
+  <%= @flatpage.extra_tail.html_safe %>
+<% end %>
