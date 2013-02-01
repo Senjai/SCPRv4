@@ -80,6 +80,7 @@ class BreakingNewsAlert < ActiveRecord::Base
       client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])
       
       description = "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}"
+      name = self.headline[0..100]
       view = CacheController.new
       
       email = Eloqua::Email.create(
@@ -87,7 +88,7 @@ class BreakingNewsAlert < ActiveRecord::Base
         :emailGroupId     => eloqua_config['email_group_id'],
         :senderName       => "89.3 KPCC",
         :senderEmail      => "no-reply@kpcc.org",
-        :name             => self.headline[0..100],
+        :name             => name,
         :description      => description,
         :subject          => email_subject,
         :isPlainTextEditable => true,
@@ -101,7 +102,7 @@ class BreakingNewsAlert < ActiveRecord::Base
       campaign = Eloqua::Campaign.create(
         {
           :folderId         => eloqua_config['campaign_folder_id'],
-          :name             => email_subject,
+          :name             => name,
           :description      => description,
           :startAt          => Time.now.yesterday.to_i,
           :endAt            => Time.now.tomorrow.to_i,

@@ -25,6 +25,7 @@ set :use_sudo, false
 set :group_writable, false
 
 set :maintenance_template_path, "public/maintenance.erb"
+set :maintenance_basename, "maintenance"
 
 # Pass these in with -s to override: 
 #    cap deploy -s force_assets=true
