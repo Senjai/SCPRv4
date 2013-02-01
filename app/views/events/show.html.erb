@@ -1,3 +1,5 @@
+<%= render_content @event, "opengraph" %>
+
 <% present @event do |p| %>
   <% page_title [p.headline, "Events"] %>
   <% watch_gmaps %>

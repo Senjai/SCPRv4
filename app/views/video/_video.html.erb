@@ -1,5 +1,6 @@
 <%# Featured video %>
-<% @OG_TYPE = "movie" %>
+<% @OG_TYPE = "video" %>
+
 <%= render_content video, "opengraph" %>
 <% if defined?(video) and video.assets.present? %> <%# This is a temporary fix that needs to be validated in the future %>
   <article class="video">

@@ -1,6 +1,7 @@
 <% content_for :opengraph do %>
   <% @META_DESCRIPT = h content.teaser %>
   <% @META_AUTHOR = h(render_byline(content,false)) %>
+  
   <%= cache ["opengraph", "v1", content] do %>
     <meta property="og:description" content="<%= content.teaser.gsub(/\"/, "'") %>">
     <meta property="og:title" content="<%= content.headline.gsub(/\"/, "'") %>">
