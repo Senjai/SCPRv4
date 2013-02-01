@@ -33,6 +33,7 @@ class BreakingNewsAlert < ActiveRecord::Base
       column :visible
       column :is_published
       column :email_sent
+      column :created_at
     end
   end
   
