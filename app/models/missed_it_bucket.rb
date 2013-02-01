@@ -1,4 +1,6 @@
 class MissedItBucket < ActiveRecord::Base
+  include Concern::Associations::ContentAssociation
+  
   self.table_name = "contentbase_misseditbucket"
   has_secretary
   
@@ -47,27 +49,26 @@ class MissedItBucket < ActiveRecord::Base
   def expire_cache
     Rails.cache.expire_obj(self.obj_key)
   end
-  
-  #--------------------
-  # TODO Replace this with ContentAssociation
-  attr_reader :content_json
-    
+
   #-------------------
-
-  def content_json=(json)
-    # If content_json is blank, then that means we
-    # didn't make any updates. Return and move on.
-    return if json.blank?
-    
-    @_loaded_content = []
-
-    Array(JSON.load(json)).each do |content_hash|
-      if content = ContentBase.obj_by_key(content_hash["id"])
-        association = MissedItContent.new(position: content_hash['position'], content: content)
-        @_loaded_content.push association
-      end
-    end
-
-    self.contents = @_loaded_content
-  end  
+  # Fake association getter until we can change
+  # `contents` to `content`
+  def content=(val)
+    self.contents = val
+  end
+  
+  #-------------------
+  
+  private
+  
+  # Override this from ContentAssociation until 
+  # we can change the association name from `contents` 
+  # to `content`
+  def build_content_association(content_hash, content)
+    MissedItContent.new(
+      :position         => content_hash["position"].to_i,
+      :content          => content,
+      :missed_it_bucket => self
+    )
+  end
 end

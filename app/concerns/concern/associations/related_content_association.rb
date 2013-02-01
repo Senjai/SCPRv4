@@ -9,10 +9,11 @@ module Concern
       extend ActiveSupport::Concern
       
       included do
+        # This should be "referrer" and "referee"
         has_many :outgoing_references, as: :content, class_name: "Related", dependent: :destroy, order: "position"
         has_many :incoming_references, as: :related, class_name: "Related", dependent: :destroy, order: "position"
         
-        attr_reader :content_json
+        attr_reader :related_content_json
       end
       
       #-------------------------
@@ -21,10 +22,14 @@ module Concern
       def related_content
         content = []
         
+        # Outgoing references: Where `content` is this object
+        # So we want to grab `related`
         self.outgoing_references.each do |reference|
           content.push reference.related
         end
         
+        # Incoming references: Where `related` is this object
+        # So we want to grab `content`
         self.incoming_references.each do |reference|
           content.push reference.content
         end
@@ -33,22 +38,26 @@ module Concern
       end
       
       #-------------------------
-      # TODO Use ContentAssociation module for this
-      def content_json=(json)
-        # If content_json is blank, then that means we
-        # didn't make any updates. Return and move on.
-        return if json.blank?
+      # See AssetAssociation for more information.
+      def related_content_json=(json)
+        return if json.empty?
         
-        @_loaded_content = []
-
-        Array(JSON.load(json)).each do |content_hash|
-          if related = ContentBase.obj_by_key(content_hash["id"])
-            association = Related.new(position: content_hash["position"], content: self, related: related)
-            @_loaded_content.push association
+        json = Array(JSON.load(json)).sort_by { |c| c["position"] }
+        loaded_references = []
+        
+        json.each do |content_hash|
+          if related_content = ContentBase.obj_by_key(content_hash["id"])
+            new_reference = Related.new(
+              :position => content_hash["position"].to_i,
+              :related  => related_content,
+              :content  => self
+            )
+            
+            loaded_references.push new_reference
           end
         end
 
-        self.outgoing_references = @_loaded_content
+        self.outgoing_references = loaded_references
       end
     end # RelatedContentAssociation
   end # Associations

@@ -1,5 +1,5 @@
 ##
-# scpr.Aggregator (like Alligator but more G's)
+# scpr.Aggregator
 #
 # Hooks into ContentAPI to help YOU, our loyal
 # customer, aggregate SCPR content for various
@@ -22,10 +22,11 @@ class scpr.Aggregator
         params: {}
         viewOptions: {}
         
-    constructor: (el, json, options={}) ->
+    constructor: (el, input, json, options={}) ->
         @options = _.defaults options, @defaults
         
-        @el = $(el)
+        @el    = $(el)
+        @input = $(input)
         
         # Set the type of API we're dealing with
         apiClass = if @options.apiType is "public" then "ContentCollection" else "PrivateContentCollection"
@@ -33,6 +34,7 @@ class scpr.Aggregator
         @baseView = new scpr.Aggregator.Views.Base _.extend options.view || {},
             el: @el
             collection: new scpr.ContentAPI[apiClass](json)
+            input: @input
             apiClass: apiClass
             params: @options.params
             viewOptions: @options.viewOptions
@@ -112,6 +114,7 @@ class scpr.Aggregator
                 @container.append @$el
                 @helper = $("<h1 />").html("Drop Content Here")
                 
+                @updateInput()
                 @render()
                 
                 # Register listeners for URL droppage
@@ -127,8 +130,7 @@ class scpr.Aggregator
                 @collection.bind "add remove reorder", =>
                     @checkDropZone()
                     @setPositions()
-                    $("#content_json").val(
-                        JSON.stringify(@collection.simpleJSON()))
+                    @updateInput()
                     
                 # DropZone callbacks!!
                 sortIn  = true
@@ -365,7 +367,12 @@ class scpr.Aggregator
                 @helper.detach()
                 
             #---------------------
-            
+            # Update the JSON input with current collection
+            updateInput: ->
+                @base.options.input.val(JSON.stringify(@collection.simpleJSON()))
+
+            #---------------------
+                
             render: ->
                 @$el.empty()
                 @checkDropZone()

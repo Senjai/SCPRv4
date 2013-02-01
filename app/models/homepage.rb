@@ -140,11 +140,15 @@ class Homepage < ActiveRecord::Base
     }
   end
   
-  #-------------------------
-  # These are temporary methods to get around the 
-  # discrepancy between content model field names and classes.
-  # It will go away once all the content association is in one table.
+  #---------------------
+  
+  private
+  
   def build_content_association(content_hash, content)
-    HomepageContent.new(position: content_hash["position"], content: content)
+    HomepageContent.new(
+      :position => content_hash["position"].to_i,
+      :content  => content,
+      :homepage => self
+    )
   end
 end
