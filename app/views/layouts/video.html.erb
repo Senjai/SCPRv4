@@ -1,15 +1,13 @@
-<% content_for :headerjs do %>
-  <script language="JavaScript">
-    GA_googleAddAttr("section", "video");
-  </script>
-<% end %>
+<%= render '/shared/header/document_header' %>
 
-<%= render 'shared/header/document_header' %>
+<% content_for :header_tag do %>
+  <script>GA_googleAddAttr("section", "video");</script>
+<% end %>
 
 <body id="multimedia" class="dark-theme">
 <div class="viewport">
   <!-- MASTHEAD-->
-  <%= render "shared/masthead" %>
+  <%= render "/shared/masthead" %>
 
   <div id="video" class="container-fluid main-content">
     <% if content_for? :wide_content %>
@@ -72,12 +70,11 @@
     <% end %>
   </div> <!-- #video container fluid -->
 
-  <% content_for :footerjss do %>
-    videoPage = new scpr.VideoPage();
+  <% content_for :footer do %>
+    <script>videoPage = new scpr.VideoPage();</script>
   <% end %>
 
-  <%= render :partial => "shared/footer" %>
-  <%= render :partial => "shared/footer/footer_js" %>
+  <%= render "/shared/footer/footer" %>
 </div> <!-- viewport -->
-</body>
-</html>
+
+<%= render "/shared/footer/document_footer" %>

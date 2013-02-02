@@ -1,0 +1,6 @@
+<% content_for :header_tag, flatpage.extra_head.html_safe %>
+
+<h1><%= flatpage.title %></h1>
+<%= @flatpage.content.html_safe %><br />
+
+<% content_for :footer, flatpage.extra_tail.html_safe %>

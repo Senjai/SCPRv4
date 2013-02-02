@@ -1,0 +1,54 @@
+<script type="text/javascript">
+  (function(doc) {
+    // Resize on orientation change
+      var addEvent = 'addEventListener',
+          type = 'gesturestart',
+          qsa = 'querySelectorAll',
+          scales = [1, 1],
+          meta = qsa in doc ? doc[qsa]('meta[name=viewport]') : [];
+
+      function fix() {
+          meta.content = 'width=device-width,minimum-scale=' + scales[0] + ',maximum-scale=' + scales[1];
+          doc.removeEventListener(type, fix, true);
+      }
+
+      if ((meta = meta[meta.length - 1]) && addEvent in doc) {
+          fix();
+          scales = [.25, 1.6];
+          doc[addEvent](type, fix, true);
+      }
+    
+    // Hacks for IE7/8
+    if (navigator.userAgent.match(/MSIE 7/)) {
+      $("html").addClass("ie7-fix");
+    } 
+    if (navigator.userAgent.match(/MSIE 8/)) {
+      $("html").addClass("ie8-fix");
+    }
+  }(document));
+</script>
+
+<%= stylesheet_link_tag "application", media: "all" %>
+<%= stylesheet_link_tag "base/print", media: "print" %>
+
+<%= javascript_include_tag "shared", "application" %>
+<script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js?busted=07272012-1808"></script>
+<script type="text/javascript" src="http://use.typekit.com/mhc7oxs.js"></script>
+
+
+<script>
+  ahClient = new AssetHost.Client() // Assethoset
+  try{Typekit.load();}catch(e){} // Typekit
+
+  // Setup Nav and MegaMenu
+  $(document).ready(function() {
+    compactNav = new scpr.CompactNav();
+    megaM = new scpr.MegaMenu({hidden:["#oas_x01"]});
+  });
+
+  // Open Listen Live Window
+  function open_popup(url) { 
+     window.open(url, 'pop_up','height=800,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no');
+     return false; 
+  }
+</script>

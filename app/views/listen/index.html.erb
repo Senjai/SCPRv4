@@ -1,86 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
-<head>
-  <title>Listen Live | 89.3 KPCC</title>
-  <meta name="viewport" content="width=556">
-  
-  <%= render "shared/header/header_js" %>
-  <%= render "shared/header/opengraph" %>
-  <%= csrf_meta_tags %>
-  
-  <style type="text/css">
+<% content_for :oas_listpos, 'x61,x62,x63' %>
 
-  </style>
-    <script>
-      <!-- OAS SETUP BEGIN --> 
-       <!--//configuration 
-       OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/'; 
-       OAS_sitepage = 'scpr.org'; 
-       //OAS_sitepage = window.location.hostname + window.location.pathname; 
-       OAS_listpos = 'x61,x62,x63'; 
-       OAS_query = ''; 
-       OAS_target = '_top'; 
-       //end of configuration 
-       OAS_version = 10; 
-       OAS_rn = '001234567890'; OAS_rns = '1234567890'; 
-       OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11); 
-       function OAS_NORMAL(pos) { 
-         document.write('<a href="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" target=' + OAS_target + '>');
-         document.write('<img src="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" border="0" /></a>');
-       } 
-       //--> 
-    </script>
+<%= render "/shared/header/document_header" %>
+<% page_title "Listen Live" %>
 
-    <script>
-       <!-- 
-       OAS_version = 11; 
-       if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)) 
-         OAS_version = 10; 
-       if (OAS_version >= 11) 
-         document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');//-->
-    </script>
-
-    <script>
-       <!-- 
-       document.write(''); 
-       function OAS_AD(pos) { 
-         if (OAS_version >= 11) 
-           OAS_RICH(pos); 
-         else 
-           OAS_NORMAL(pos); 
-       } 
-       //--> 
-    </script>
-
-<!--  
-  <script type='text/javascript'>
-  var googletag = googletag || {};
-  googletag.cmd = googletag.cmd || [];
-  (function() {
-  var gads = document.createElement('script');
-  gads.async = true;
-  gads.type = 'text/javascript';
-  var useSSL = 'https:' == document.location.protocol;
-  gads.src = (useSSL ? 'https:' : 'http:') + 
-  '//www.googletagservices.com/tag/js/gpt.js';
-  var node = document.getElementsByTagName('script')[0];
-  node.parentNode.insertBefore(gads, node);
-  })();
-  </script>
-
-  <script type='text/javascript'>
-  googletag.cmd.push(function() {
-  googletag.defineSlot('/127204706/listen_live', [234, 60], 'div-gpt-ad-1336163771924-0').addService(googletag.pubads());
-  googletag.pubads().enableSingleRequest();
-  googletag.enableServices();
-  });
-  </script>
-  
--->
-  
-</head>
 <body class="minimal listen">
-    
   <header class="topbar">
     <div class="wrapper">
       <a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>
@@ -197,15 +120,17 @@
     </div>
   </footer>
 
-<% content_for :footerjss do %>
-  llPlayer = new scpr.ListenLive.CurrentGen({
-    schedule:   <%= raw @schedule.to_json %>
-  })
-  
-  $("#llcontent a").attr("target","_blank")
+<% content_for :footer do %>
+  <script>
+    llPlayer = new scpr.ListenLive.CurrentGen({
+      schedule:   <%= raw @schedule.to_json %>
+    })
+    
+    $("#llcontent a").attr("target","_blank");
+  </script>
 <% end %>
 
-<% content_for :footerga do %>
+<% content_for :analytics do %>
   _gaq.push(['_setCustomVar',
         12,                   // This custom var is set to slot #2.  Required parameter.
         'Listen Live Visitor', // The name of the custom variable.  Required parameter.
@@ -215,7 +140,5 @@
      ]);
 <% end %>
 
-<%= render :partial => "shared/footer/footer_js" %>
-
-</body>
-</html>
+<%= render "/shared/footer/document_footer" %>
+  

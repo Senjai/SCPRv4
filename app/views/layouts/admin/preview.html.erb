@@ -4,6 +4,9 @@
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "shared", "application" %>
   
+  <%= render "/shared/header/assethost" %>
+  <%= render "/shared/header/typekit" %>
+  
   <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js"></script>
   <script type="text/javascript">ahClient = new AssetHost.Client()</script>
   
@@ -20,7 +23,7 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span24 fake-el" style="height:110px;">
-          &nbsp;
+          &nbsp; <!-- header -->
         </div>
       </div>
   </header>
@@ -34,7 +37,7 @@
       
       <div class="span8">
         <div id="sidebar" class="fake-el" style="height:1000px;">
-          &nbsp;
+          &nbsp; <!-- sidebar -->
         </div> <!-- sidebar -->
       </div> <!-- span8 -->
     </div> <!-- row-fluid -->

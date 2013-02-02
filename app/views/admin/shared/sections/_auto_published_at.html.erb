@@ -2,7 +2,7 @@
   <%= f.input :published_at, label: "Publish Timestamp", hint: "Gets set automatically. See \"Help: Publishing\" for more information." %>
 </div>
 
-<% content_for :footerjs do %>
+<% content_for :footer do %>
   <script type="text/javascript">
     $(function() {
       publishingUI = new scpr.PublishingUI({

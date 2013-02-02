@@ -35,7 +35,7 @@
       <h6>Latest Stories</h6>
         <% content_cache("mega_arts_latest") do %>
           <% register_content("contentbase:new") %>
-          <%= render "shared/header/featured", content: get_latest_arts.first(2) %>
+          <%= render "/shared/masthead/featured", content: get_latest_arts.first(2) %>
         <% end %>
       </div>
     </div>
@@ -45,7 +45,7 @@
         <h6>From Our Blogs</h6>     
         <% content_cache("mega_arts_blogs") do %>
           <% register_content("blogs/entry:new") %>
-          <%= render "shared/header/from_our_blogs", content: @g_latest_blogs_arts.limit(3) %>
+          <%= render "/shared/masthead/from_our_blogs", content: @g_latest_blogs_arts.limit(3) %>
         <% end %>
       </div> <!-- section -->
     </div> <!-- span -->

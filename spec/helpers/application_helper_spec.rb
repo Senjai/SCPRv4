@@ -332,13 +332,12 @@ describe ApplicationHelper do
     
     it "adds a GMapsLoader object to the footer js" do
       helper.watch_gmaps
-      helper.content_for(:footerjss).should match /GMapsLoader/
+      helper.content_for(:footer).should match /GMapsLoader/
     end
     
     it "takes options to pass into the GMaps Loader object" do
       helper.watch_gmaps(zoom: 0)
-      helper.content_for(:footerjss).should match "\"zoom\":0"
+      helper.content_for(:footer).should match "\"zoom\":0"
     end
   end
-
 end

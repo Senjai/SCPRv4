@@ -158,8 +158,8 @@ jQuery(document).ready(function() {
   					<div class="tweets">
   						<span class="live-tweet">@KPCC Live-Tweets:</span>
   						<%= Rails.cache.fetch("twitter:KPCC") %>
-  						<% content_for :footerjss do %>
-  							tweetRotator = new scpr.TweetRotator({el: "#election-tweets"});
+  						<% content_for :footer do %>
+  							<script>tweetRotator = new scpr.TweetRotator({el: "#election-tweets"});</script>
   						<% end %>
   					</div>
   				</div>

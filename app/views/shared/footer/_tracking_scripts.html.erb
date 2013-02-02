@@ -1,25 +1,5 @@
-<script type="text/javascript">
-
-  var DISQUSWIDGETS = {}; 
-  var megaM, smartTime;
-  $(function() {
-    smartTime = new scpr.SmartTime();
-    
-    social = new scpr.SocialTools();
-    audio = new scpr.Audio();
-    modal = new scpr.Modal();
-    adSizer = new scpr.adSizer();
-    eventTracking = new scpr.EventTracking();
-    promoteFacebook = new scpr.PromoteFacebook();
-    
-  })
-  
-  <%= yield :footerjss %>
-</script>
-
 <!-- google analytics -->
 <script type="text/javascript">
-
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-624724-1']);
   _gaq.push(['_setDomainName', 'none']); 
@@ -27,7 +7,7 @@
   _gaq.push(['_setAllowLinker', true]);
 
   //Additional page or section-specific GA tracking goes here
-  <%= yield :footerga %>
+  <%= yield :analytics %>
 
   // track page view
   _gaq.push(['_trackPageview']);
@@ -97,5 +77,3 @@ var _sf_async_config={uid:2825,domain:"scpr.org"};
 })();
 
 </script>
-
-<%= yield :extra_footer %>

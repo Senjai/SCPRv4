@@ -1,4 +1,4 @@
-<% content_for :headerjs, @flatpage.extra_head.html_safe %>
+<% page_title @flatpage.title %>
 
 <% content_for :opengraph do %>
   <meta property="og:description" content="<%= j @flatpage.description %>">
@@ -21,9 +21,5 @@
     <li class="print"><a href="javascript:window.print()">Print</a></li>
   </ul>
 </div>
-<h1><%= page_title @flatpage.title %></h1>
-<%= @flatpage.content.html_safe %><br />
 
-<% content_for :extra_footer do %>
-  <%= @flatpage.extra_tail.html_safe %>
-<% end %>
+<%= render '/flatpages/flatpage', flatpage: @flatpage %>

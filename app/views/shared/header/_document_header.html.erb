@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
+  <%= render "/shared/header/core_includes" %>
+
   <title><%= @PAGE_TITLE.present? ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
+
   <meta id="meta-viewport" name="viewport" content="width=device-width, minimum-scale=1">
   <meta name="apple-itunes-app" content="app-id=293825085"/>
   <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE; chrome=1" />
-  <%= render "shared/header/header_js" %>
-  <%= render "shared/header/opengraph" %>
+  <meta name="google-site-verification" content="_2mjWERX7nx8aNcwb9P45f6DETmmrldavP79tHOjr0Q" />
+  <meta property="og:site_name" content="KPCC" />
+  <meta property="fb:app_id" content="129848480405753" />
+  <meta name="description" content="<%= @META_DESCRIPT || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR." %>"/>
+  <meta name="author" content="<%= @META_AUTHOR || "Southern California Public Radio" %>"/>
+  <%= yield :opengraph %>
+
+  <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="http://media.scpr.org/apple-touch-icon.png" />
+  <link rel="publisher" href="https://plus.google.com/108872361044769229886/" />
+
   <%= csrf_meta_tags %>
+
+  <%= render "/shared/header/ad_scripts" %>
+  <%= yield :head_tag %>
 </head>
