@@ -134,7 +134,7 @@
 
 
 <!-- ARCHIVE STRIP -->
-<% if any_to_list? @past_events %>
+<% if @past_events.present? %>
   <% content_for :bottom do %>
     <section class="archive-strip">
       <h6 class="more-news-title">

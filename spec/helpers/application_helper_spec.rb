@@ -17,30 +17,6 @@ describe ApplicationHelper do
     it "returns a special message if: no records, no message, title is specified" do
       helper.any_to_list?([], title: "Events") { "Records list" }.should match "Events"
     end
-    
-    it "returns true if there are records and no block is given" do
-      helper.any_to_list?(1..5).should be_true
-    end
-    
-    it "returns false if there are no records and no block is given" do
-      helper.any_to_list?([]).should be_false
-    end
-    
-    it "uses a span wrapper by default" do
-      helper.any_to_list?([]) { "Records List" }.should match "span"
-    end
-    
-    it "uses a span wrapper if wrapper is true" do
-      helper.any_to_list?([], wrapper: true) { "Records List" }.should match "span"
-    end
-        
-    it "uses the wrapper passed in" do
-      helper.any_to_list?([], wrapper: :div) { "Records List" }.should match "div"
-    end
-    
-    it "does not use a wrapper if wrapper is false" do
-      helper.any_to_list?([], wrapper: false, message: "No") { "Records List" }.should eq "No"
-    end
   end
   
   #------------------------
@@ -314,30 +290,6 @@ describe ApplicationHelper do
       split = helper.split_collection(arr, 10)
       split[0].should eq (1..5).to_a
       split[1].should eq []
-    end
-  end
-  
-  #------------------------
-  
-  describe "watch_gmaps" do
-    it "adds the google maps API script reference to the header" do
-      helper.watch_gmaps
-      helper.content_for(:headerjs).should match /script/
-    end
-    
-    it "finds the google maps API key and uses that in the API script reference" do
-      helper.watch_gmaps
-      helper.content_for(:headerjs).should match API_KEYS["google"]["maps"]
-    end
-    
-    it "adds a GMapsLoader object to the footer js" do
-      helper.watch_gmaps
-      helper.content_for(:footer).should match /GMapsLoader/
-    end
-    
-    it "takes options to pass into the GMaps Loader object" do
-      helper.watch_gmaps(zoom: 0)
-      helper.content_for(:footer).should match "\"zoom\":0"
     end
   end
 
