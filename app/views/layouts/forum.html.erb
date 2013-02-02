@@ -3,7 +3,7 @@
 <body class="forum">
 <div class="viewport">
   <!-- MASTHEAD-->
-  <%= render "/shared/masthead" %>
+  <%= render "/shared/masthead/layout_header" %>
   <%= yield :masthead %>
 
   <div id="forum" class="container-fluid main-content">
@@ -15,7 +15,7 @@
       <!-- SIDEBAR -->
       <div id="forum-span-sidebar" class="span6">
         <div id="sidebar">
-          <% if !content_for(:sidebar) %>
+          <% if content_for?(:sidebar) %>
             <%= yield :sidebar %>
           <% else %>
             <%= render '/events/nav', navClass: "vertical" %>
@@ -52,6 +52,8 @@
     <%= yield :bottom %>
     <%= render "/shared/audio/inpage_audio_player" %>
   </div> <!-- container-fluid forum -->
+
+  <%= render "/shared/footer/application_footer" %>
 </div> <!-- viewport -->
 
 <%= render "/shared/footer/document_footer" %>

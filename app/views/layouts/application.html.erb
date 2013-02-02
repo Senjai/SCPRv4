@@ -2,8 +2,7 @@
 
 <body>
 <div class="viewport">
-  <!-- MASTHEAD-->
-  <%= render "/shared/masthead" %>
+  <%= render "/shared/masthead/layout_header" %>
 
   <div id="main" class="container-fluid main-content">
     <%= yield :title_bar %>
@@ -18,14 +17,14 @@
             <%= yield(:sidebar) %>
           <% else %>
             <%= yield :sidebar_top %>
-            <%= render "/shared/widgets/oas", :ad_id => 'x01' %>
+            <%= render "/shared/ads/oas", ad_id: 'x01' %>
             <%= yield :sidebar_middle %>
-            <%= render "/shared/widgets/promo_membership_small", :ad_id => 'x13' %>
+            <%= render "/shared/ads/dfp", ad_key: :membership_sidebar %>                        
             <%= render "/shared/widgets/newsletter_subscribe" %>
             <%= render "/shared/widgets/most_popular" %>       
-            <%= render "/shared/widgets/oas", :ad_id => 'x02' %>
-            <%= render "/shared/widgets/promo_house_sidebar" %>
-            <%= render "/shared/widgets/oas", :ad_id => 'x03' %>
+            <%= render "/shared/ads/oas", ad_id: 'x02' %>
+            <%= render "/shared/ads/dfp", ad_key: :sidebar_house_promo %>
+            <%= render "/shared/ads/oas", ad_id: 'x03' %>
           <% end %>
         </div> <!-- sidebar -->
       </div> <!-- span8 -->
@@ -33,7 +32,7 @@
     <%= render "/shared/audio/inpage_audio_player" %>
   </div> <!-- container fluid main -->
 
-  <%= render "/shared/footer/footer" %>
+  <%= render "/shared/footer/application_footer" %>
 </div> <!-- viewport -->
 
 <%= render "/shared/footer/document_footer" %>

@@ -7,7 +7,7 @@
 <body id="multimedia" class="dark-theme">
 <div class="viewport">
   <!-- MASTHEAD-->
-  <%= render "/shared/masthead" %>
+  <%= render "/shared/masthead/layout_header" %>
 
   <div id="video" class="container-fluid main-content">
     <% if content_for? :wide_content %>
@@ -74,7 +74,7 @@
     <script>videoPage = new scpr.VideoPage();</script>
   <% end %>
 
-  <%= render "/shared/footer/footer" %>
+  <%= render "/shared/footer/application_footer" %>
 </div> <!-- viewport -->
 
 <%= render "/shared/footer/document_footer" %>

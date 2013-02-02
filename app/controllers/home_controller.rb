@@ -9,6 +9,8 @@ class HomeController < ApplicationController
   def index        
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_at(Time.now).first
+    @latest_videos = VideoShell.published.limit(5)
+
   end
 
   # Elections - Remove this!

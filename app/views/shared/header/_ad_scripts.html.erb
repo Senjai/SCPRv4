@@ -15,16 +15,14 @@ node.parentNode.insertBefore(gads, node);
 </script>
 
 <script type='text/javascript'>
-googletag.cmd.push(function() {
-googletag.defineSlot('/127204706/membership_masthead', [123, 23], 'div-gpt-ad-1337671309327-1').addService(googletag.pubads());
-googletag.defineSlot('/127204706/membership_sidebar', [300, 100], 'div-gpt-ad-1337671309327-2').addService(googletag.pubads());
-googletag.defineSlot('/127204706/membership_lightbox', [700, 550], 'div-gpt-ad-1339807171110-5').addService(googletag.pubads());
-googletag.defineSlot('/127204706/homepage_house_promo', [343, 150], 'div-gpt-ad-1338021022612-0').addService(googletag.pubads());
-googletag.defineSlot('/127204706/sidebar_house_promo', [343, 150], 'div-gpt-ad-1338837727510-0').addService(googletag.pubads());
-googletag.defineSlot('/127204706/membership_leaderboard', [660, 82], 'div-gpt-ad-1351635520823-0').addService(googletag.pubads());
-googletag.pubads().enableSingleRequest();
-googletag.enableServices();
-});
+  googletag.cmd.push(function() {
+<% DFP_ADS.each do |ad| %>
+    googletag.defineSlot('/127204706/<%=ad[:id]%>', <%=ad[:size]%>, '<%=ad[:id]%>').addService(googletag.pubads());
+<% end %>
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+    
+  });
 </script>
 
 
