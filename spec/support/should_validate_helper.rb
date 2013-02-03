@@ -4,7 +4,7 @@
 #
 module ShouldValidateHelpers
   def should_validate
-    context "should validate" do      
+    context "should validate" do
       before :each do
         described_class.any_instance.stub(:should_validate?) { true }
       end
