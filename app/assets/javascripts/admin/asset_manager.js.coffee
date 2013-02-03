@@ -57,7 +57,7 @@ class scpr.AssetManager
 
     @Assets: Backbone.View.extend
         tagName: "ul"
-        events: "click button": "_popup"
+        events: "click a.popup": "_popup"
         
         initialize: ->
             @_views = {}
