@@ -1,2 +1,2 @@
-<h4>Assets <button style="margin: 0 20px;">Pop Up Asset Chooser</button></h4>
+<h4>Assets <a style="margin: 0 20px;" class="btn popup" href="#">Pop Up Asset Chooser</a></h4>
 <div class="collection"></div>
