@@ -1,23 +1,22 @@
 <%= render '/admin/shared/header/preview/document_header' %>
 
-<body>
+<body class="forum">
 <div class="viewport">
   <%= render '/admin/shared/header/preview/layout_header' %>
 
-  <div id="main" class="container-fluid main-content">
+  <div id="forum" class="container-fluid main-content">
     <div class="row-fluid">
-      <article class="span16 relative">
+      <div id="forum-span-content" class="span18">
         <%= yield %>
-        <div class="vert-divider"></div>
-      </article>
+      </div>
       
-      <div class="span8">
+      <div id="forum-span-sidebar" class="span6">
         <div id="sidebar" class="fake-el" style="height:1000px;">
           &nbsp; <!-- sidebar -->
         </div> <!-- sidebar -->
       </div> <!-- span8 -->
     </div> <!-- row-fluid -->
-  </div> <!-- container fluid main -->
+  </div> <!-- container fluid forum -->
   
   <%= render '/admin/shared/footer/preview/layout_footer' %>
 </div> <!-- viewport -->

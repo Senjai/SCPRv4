@@ -11,6 +11,7 @@
         <%= content_for?(:content) ? yield(:content) : yield %>
         <div class="vert-divider"></div>
       </article>
+      
       <div class="span8">
         <div id="sidebar">
           <% if content_for?(:sidebar) %> 
