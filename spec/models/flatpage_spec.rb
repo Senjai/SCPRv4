@@ -91,4 +91,18 @@ describe Flatpage do
       flatpage.url.should eq "/hello/whats/up/"
     end
   end
+
+  #--------------------
+
+  describe '#is_redirect?' do
+    it "is true if redirect_url is present" do
+      flatpage = build :flatpage, redirect_url: "/bros/"
+      flatpage.is_redirect?.should eq true
+    end
+
+    it "is false if redirect_url is blank" do
+      flatpage = build :flatpage, redirect_url: ""
+      flatpage.is_redirect?.should eq false
+    end
+  end
 end

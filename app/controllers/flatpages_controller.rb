@@ -4,7 +4,7 @@ class FlatpagesController < ApplicationController
     @flatpage = Flatpage.visible.find_by_url!("/#{params[:flatpage_path]}/")
     
     # Is this a redirect? Send them on their way.
-    if @flatpage.redirect_url.present?
+    if @flatpage.is_redirect?
       redirect_to @flatpage.redirect_url and return
     end
         
