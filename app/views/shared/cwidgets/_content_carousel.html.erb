@@ -11,7 +11,7 @@
     <div class="carousel" data-current-page="1"></div>
   </div>
 
-  <% content_for :footerjss do %>
-    var carousel = new scpr.ContentCarousel({dataUrl: "<%= category_carousel_path(content.class.to_s, content.id) %>"});
+  <% content_for :footer do %>
+    <script>var carousel = new scpr.ContentCarousel({dataUrl: "<%= category_carousel_path(content.class.to_s, content.id) %>"});</script>
   <% end %>
 <% end %>

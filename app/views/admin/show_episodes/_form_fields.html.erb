@@ -19,7 +19,7 @@
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :segment_json, as: :hidden, input_html: { id: "segment_json" } %>
 
-  <% content_for :footerjs do %>
+  <% content_for :footer do %>
     <script>
       aggregator = new scpr.Aggregator(
         "#aggregator", "#segment_json",

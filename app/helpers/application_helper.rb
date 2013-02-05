@@ -1,6 +1,6 @@
 module ApplicationHelper
   include Twitter::Autolink
-  
+
   #---------------------------
   
   def present(object, klass=nil)
@@ -206,26 +206,30 @@ module ApplicationHelper
   ### message: Custom message to return if there are no records.
   def any_to_list?(records, options={}, &block)
     if records.present?
-      block_given? ? capture(&block) : true
+      return capture(&block)
     else
-      if block_given?
-        if options[:message].blank?
-          if options[:title].present?
-            options[:message] = "There are currently no #{options[:title]}".html_safe
-          else
-            options[:message] = "There is nothing here to list.".html_safe
-          end
+      if options[:message].blank?
+        if options[:title].present?
+          options[:message] = "There are currently no #{options[:title]}"
+        else
+          options[:message] = "There is nothing here to list."
         end
-        return options[:message] if options[:wrapper] == false
-        options[:wrapper] = :span if options[:wrapper].blank? || options[:wrapper] == true
-        return content_tag(options[:wrapper], options[:message], class: "none-to-list")
-      else
-        return false
       end
+
+      return options[:message].html_safe
     end
   end
   
   #---------------------------
+  # Sets the page title.
+  #
+  # Pass in a string or an array of strings.
+  # Takes an optional separaptor argument.
+  #
+  # Example:
+  #
+  #   <% page_title [@event.headline, "Forum"] %>
+  #
   def page_title(elements, separator=" | ")
     if @PAGE_TITLE.present?
       return @PAGE_TITLE
@@ -259,18 +263,17 @@ module ApplicationHelper
   def format_date(date, options={})
     return nil if !date.respond_to?(:strftime)
     
-    case options[:format].to_s
-      when "iso"
-        format_str = "%F"
-      when "full_date"
-        format_str = "%B #{date.day.ordinalize}, %Y"
-      when "event"
-        format_str = "%A, %B %e"
+    format_str = options[:with] if options[:with].present?
+
+    format_str ||= case options[:format].to_s
+      when "iso"       then "%F"
+      when "full_date" then "%B #{date.day.ordinalize}, %Y"
+      when "event"     then "%A, %B %e"
     end
     
-    format_str = options[:with] if options[:with].present?
     format_str ||= "%b %e, %Y"
     format_str += ", %l:%M%P" if options[:time] == true
+
     date.strftime(format_str)
   end
   
@@ -280,20 +283,7 @@ module ApplicationHelper
     content_for(:modal_content, capture(&block))
     render('shared/modal_shell', cssClass: cssClass, options: options)
   end
-  
-  #---------------------------
-  
-  def watch_gmaps(options={})
-    content_for :headerjs, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_KEYS["google"]["maps"]}&sensor=true")
-    content_for :footerjss, "var gmapsLoader = new scpr.GMapsLoader(#{raw options.to_json});".html_safe
-  end
-  
-  #---------------------------
-  
-  def flash_bootstrap(flash_name)
-    "alert-message " + { alert: "error", notice: "success", info: "info", warning: "warning" }[flash_name]
-  end
-  
+
   #---------------------------
   
   def relaxed_sanitize(html)
@@ -308,4 +298,69 @@ module ApplicationHelper
     last      = array.last(last_num < 0 ? 0 : last_num)
     return [first, last]
   end
+
+  #---------------------------
+
+  def featured_comment(opts)
+    opts = { :style => "default", :bucket => nil, :comment => nil }.merge(opts||{})
+        
+    comment = nil
+    
+    if opts[:comment]
+      if opts[:comment].is_a?(FeaturedComment)
+        comment = opts[:comment]
+      else
+        begin
+          comment = FeaturedComment.find(opts[:comment])
+        rescue
+          return ''
+        end
+      end
+    elsif opts[:bucket]
+      bucket = FeaturedCommentBucket.find(opts[:bucket])
+      comment = bucket.comments.published.first()
+    else
+      comment = FeaturedComment.published.first()
+    end
+    
+    if comment && comment.content
+      return render(:partial => "shared/featured_comment/#{opts[:style]}", :object => comment, :as => :comment)
+    end
+  end
+  
+  #----------
+  
+  def comment_widget_for(object, options={})
+    if object.present? and object.respond_to?(:disqus_identifier)
+      render('shared/cwidgets/comment_count', { content: object, cssClass: "" }.merge!(options))
+    end
+  end
+  
+  #----------
+  
+  def comment_count_for(object, options={})
+    if object.present? and object.respond_to?(:disqus_identifier)
+      options[:class] = "comment_link social_disq #{options[:class]}"
+      options["data-objkey"] = object.obj_key
+      link_to( "Add your comments", object.link_path(anchor: "comments"), options )
+    end
+  end
+  
+  #----------
+  
+  def comments_for(object, options={})
+    if object.present? && object.respond_to?(:disqus_identifier)
+      render('shared/cwidgets/comments', { content: object, cssClass: "", header: true }.merge!(options))
+    end
+  end
+  
+  #----------
+  
+  def content_widget(partial, object, options={})
+    partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
+    render(partial, { content: object, cssClass: "" }.merge!(options))
+  end
+  
+  alias_method :widget, :content_widget
+  
 end

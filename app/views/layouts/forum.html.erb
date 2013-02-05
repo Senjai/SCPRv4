@@ -1,9 +1,8 @@
-<%= render 'shared/header/document_header' %>
+<%= render '/shared/header/document_header' %>
 
 <body class="forum">
 <div class="viewport">
-  <!-- MASTHEAD-->
-  <%= render "shared/masthead" %>
+  <%= render "/shared/masthead/layout_header" %>
   <%= yield :masthead %>
 
   <div id="forum" class="container-fluid main-content">
@@ -15,10 +14,10 @@
       <!-- SIDEBAR -->
       <div id="forum-span-sidebar" class="span6">
         <div id="sidebar">
-          <% if !content_for(:sidebar) %>
+          <% if content_for?(:sidebar) %>
             <%= yield :sidebar %>
           <% else %>
-            <%= render 'events/nav', navClass: "vertical" %>
+            <%= render '/events/nav', navClass: "vertical" %>
 
             <div class="mq-row-fluid">
               <div class="span8">
@@ -50,11 +49,10 @@
     </div> <!-- row fluid -->
 
     <%= yield :bottom %>
-    <%= render "shared/audio/inpage_audio_player" %>
+    <%= render "/shared/audio/inpage_audio_player" %>
   </div> <!-- container-fluid forum -->
 
-  <%= render :partial => "shared/footer" %>
-  <%= render :partial => "shared/footer/footer_js" %>
+  <%= render "/shared/footer/layout_footer" %>
 </div> <!-- viewport -->
-</body>
-</html>
+
+<%= render "/shared/footer/document_footer" %>

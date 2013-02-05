@@ -9,8 +9,38 @@
 <div class="fold" id="fold">
   <%= content_widget "related_content_and_links", @entry %>
   <%= render "/shared/cwidgets/pij_query", content: @entry %>
-  <%= content_widget "next_prev", @entry %>
   
+  <!-- Next/Previous Entries -->
+  <%= content_cache "next_prev/v1/#{@entry.obj_key}" do %>
+    <% register_content @entry %>
+    <div class="next-prev" id="article-next-prev">
+      <div class="row-fluid">
+        <div class="span6 row-title">
+          <h6>More from <%= @entry.blog.name %></h6>
+        </div>
+        <div class="span18">
+          <div class="row-fluid">
+            <div class="span12 left">
+              <% if @entry.previous.present? %>
+                <% register_content @entry.previous %>
+                <div class="arrow">&larr;</div>
+                <%= link_to @entry.previous.short_headline, @entry.previous.link_path %>
+              <% end %>
+            </div>
+            <div class="span12 right">
+              <% if @entry.next.present? %>
+                <% register_content @entry.next %>
+                <div class="arrow">&rarr;</div>
+                <%= link_to @entry.next.short_headline, @entry.next.link_path %>
+              <% end %>
+            </div>
+          </div> <!-- row fluid -->
+        </div> <!-- span -->
+      </div> <!-- row fluid -->
+    </div>
+  <% end %>
+  
+  <!-- Comments -->
   <div class="comment-wrap">
     <div class="row-fluid">
       <div class="span6" id="fold-comments-count-widget">

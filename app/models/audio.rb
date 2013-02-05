@@ -192,7 +192,6 @@ class Audio < ActiveRecord::Base
       File.join(PODCAST_URL_ROOT, self.path) if self.live?
     end
   end
-  
 
   #------------
   #------------
@@ -201,7 +200,7 @@ class Audio < ActiveRecord::Base
   def set_file_info
     if self.type.present?
       self.filename  = self.type.constantize.filename(self)
-      self.store_dir = self.type.constantize.store_dir(self)      
+      self.store_dir = self.type.constantize.store_dir(self)
     end
   end
   

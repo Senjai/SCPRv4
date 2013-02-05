@@ -20,9 +20,9 @@ class FeaturedComment < ActiveRecord::Base
   #----------------
   # Validation
   validates :username, :status, presence: true
-  validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: -> { self.should_validate? }
+  validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: :should_validate?
   
-  def should_validate?
+  def needs_validation?
     self.pending? || self.published?
   end
   

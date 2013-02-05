@@ -2,8 +2,13 @@
 
 <% present @event do |p| %>
   <% page_title [p.headline, "Events"] %>
-  <% watch_gmaps %>
 
+  <% content_for :head_tag, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_KEYS["google"]["maps"]}&sensor=true ") %>
+
+  <% content_for :footer do %>
+    <script>gmapsLoader = new scpr.GMapsLoader();</script>
+  <% end %>
+  
   <%# move this... %>
   <%
     expires = nil
@@ -40,10 +45,10 @@
 
     <div class="row-fluid">
       <div class="span6" id="fold-comments-count-widget">
-        <%= widget "comment_count", @event, cssClass: "left-side", name: "comments" %>
+        <%= content_widget "comment_count", @event, cssClass: "left-side", name: "comments" %>
       </div>
       <div class="span18 mq-solo-span">
-        <%= widget "comments", @event, header: false %>
+        <%= content_widget "comments", @event, header: false %>
       </div>
     </div> <!-- row-fluid -->
   </div>

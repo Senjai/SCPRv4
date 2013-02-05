@@ -1,5 +1,5 @@
 class Flatpage < ActiveRecord::Base
-  self.table_name = "flatpages_flatpage" 
+  self.table_name = "flatpages_flatpage"
   has_secretary
   
   TEMPLATE_OPTIONS = [

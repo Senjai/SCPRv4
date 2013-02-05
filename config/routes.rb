@@ -117,10 +117,6 @@ Scprv4::Application.routes.draw do
   match '/about'                    => "home#about_us",        as: :about
   
   
-  # Elections - Turn this into a flatpage and remove it!
-  match '/elections/2012/results/' => 'home#elections'
-  
-  
   # Videos
   match '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
   match '/video/'           => "video#index",   as: :video_index
@@ -273,11 +269,7 @@ Scprv4::Application.routes.draw do
       resources :show_episodes do
         get "search", on: :collection, as: :search
       end
-      
-      resources :flatpages do
-        get "search", on: :collection, as: :search
-      end
-      
+
       resources :bios do
         get "search", on: :collection, as: :search
       end
@@ -288,32 +280,44 @@ Scprv4::Application.routes.draw do
       
       resources :homepages do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
       
       resources :pij_queries do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
+      end
+
+      resources :flatpages do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member
+        post "preview", on: :collection
       end
 
       resources :show_segments do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
       
       resources :news_stories do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
       
       resources :blog_entries do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
-            
+      
       resources :events do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
       ## -- END AdminResource --  ##
       
