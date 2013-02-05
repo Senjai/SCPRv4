@@ -117,12 +117,11 @@ describe BlogsController do
       entry_published = create :blog_entry, blog: @blog
       p = entry_published.published_at
       @entry_attr = { blog: @blog.slug, 
-                      tag: "news", 
                       id: entry_published.id, 
                       slug: entry_published.slug }.merge(date_path(p))
     end
     
-    %w{ show entry blog_tags blog_tagged }.each do |action|
+    %w{ show entry }.each do |action|
       it "assigns @blog for #{action}" do
         get action, @entry_attr
         assigns(:blog).should eq @blog
