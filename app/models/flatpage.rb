@@ -1,5 +1,5 @@
 class Flatpage < ActiveRecord::Base
-  self.table_name = "flatpages_flatpage" 
+  self.table_name = "flatpages_flatpage"
   has_secretary
   
   TEMPLATE_OPTIONS = [
@@ -88,5 +88,11 @@ class Flatpage < ActiveRecord::Base
   # Override AdminResource for this
   def link_path(options={})
     self.url
-  end  
+  end
+
+  # -------------------
+
+  def is_redirect?
+    self.redirect_url.present?
+  end
 end

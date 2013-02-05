@@ -6,7 +6,7 @@
 
 <div class="entry content-block">
   <div class="row-fluid">
-    <%= widget "social_sidebar", entry %>
+    <%= content_widget "social_sidebar", entry %>
 
     <div class="span18 mq-solo-span">
       <article>
@@ -33,7 +33,7 @@
           <% end %>
         </footer>
       </article>
-      <%= widget("social_tools", entry, cssClass: "horizontal bottom") if full %>
+      <%= content_widget("social_tools", entry, cssClass: "horizontal bottom") if full %>
     </div> <!-- span18 -->
   </div> <!-- row fluid -->
 </div> <!-- entry -->

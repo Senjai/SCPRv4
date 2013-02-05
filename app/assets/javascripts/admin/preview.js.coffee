@@ -4,10 +4,10 @@
 # Preview functionality for the CMS
 #
 class scpr.Preview
-    constructor: ->
+    constructor: (@options) ->
         _t = @
         
-        $("form #preview-submit button.js-preview-btn").on
+        $("form #preview-submit a.js-preview-btn").on
             click: (event) ->
                 event.preventDefault()
                 target = $(@)
@@ -19,11 +19,11 @@ class scpr.Preview
                     instance.updateElement()
 
                 data = form.serialize()
-                
+
                 $.ajax
-                    type: 'PUT'
+                    type: 'POST'
                     dataType: "html"
-                    url: "preview"
+                    url: "#{_t.options.baseUrl}/preview"
                     data:
                         data
                     
@@ -38,6 +38,7 @@ class scpr.Preview
                             _t.writeToWindow("Error: #{errorThrown}")
                         500: (jqXHR, textStatus, errorThrown) ->
                             _t.writeToWindow("Error: #{errorThrown}")
+                false
 
     #--------------------
     # Open the preview window.

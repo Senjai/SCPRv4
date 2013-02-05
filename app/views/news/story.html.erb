@@ -12,6 +12,6 @@
   <%= comments_for @story %>
 </div>
 
-<% content_for :footerga do %>
+<% content_for :analytics do %>
   _gaq.push(['_setCustomVar',1,'Source','<%=@story.source%>',3]);
 <% end %>

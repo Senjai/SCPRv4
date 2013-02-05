@@ -47,7 +47,7 @@
       <div class="chooser" data-slide="hero-3">&nbsp;</div>
       <div class="chooser" data-slide="hero-4">&nbsp;</div>
     </div> <!-- choosers -->
-    </header>
+  </header>
 <% end %>
 
 <!-- CONTENT -->
@@ -134,7 +134,7 @@
 
 
 <!-- ARCHIVE STRIP -->
-<% if any_to_list? @past_events %>
+<% if @past_events.present? %>
   <% content_for :bottom do %>
     <section class="archive-strip">
       <h6 class="more-news-title">
@@ -173,6 +173,6 @@
   <% end %>
 <% end %>
 
-<% content_for :footerjss do %>
-  fader = new scpr.HeroFader;
+<% content_for :footer do %>
+  <script>fader = new scpr.HeroFader;</script>
 <% end %>

@@ -40,10 +40,6 @@
 @import "ckeditor";
 @import "tinymce";
 
-//Special Sections
-@import "specials/election";
-@import "specials/pledge_pushdown";
-
 // Put these at the bottom for overriding
 @import "base/ie-overrides";
 @import "base/responsive";

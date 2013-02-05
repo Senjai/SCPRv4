@@ -1,7 +1,7 @@
 <% present @event do |p| %>
 <div class="event content-block">
   <div class="row-fluid">
-    <%= widget "social_sidebar", event %>
+    <%= content_widget "social_sidebar", event %>
 
     <div class="span18 mq-solo-span" id="events-event-detail">
       <article>
@@ -35,7 +35,7 @@
         </div>
       </article>
 
-      <%= widget "social_tools", event, cssClass: "horizontal bottom" %>
+      <%= content_widget "social_tools", event, cssClass: "horizontal bottom" %>
     </div> <!-- span -->
   </div> <!-- row-fluid -->
 </div> <!-- event -->

@@ -42,7 +42,7 @@ module AdminResource
       # If an object doesn't have a front-end path,
       # do not define a ROUTE_KEY on the class.
       def link_path(options={})
-        if self.route_hash.present? and defined?(self.class::ROUTE_KEY)
+        if self.route_hash.present? && defined?(self.class::ROUTE_KEY)
           Rails.application.routes.url_helpers.send("#{self.class::ROUTE_KEY}_path", options.merge!(self.route_hash))
         end
       end

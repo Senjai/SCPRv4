@@ -13,3 +13,9 @@
     <%= render "/admin/shared/form_nav" %>
   </div>
 <% end %>
+
+<% content_for :footer do %>
+  <script>
+    preview = new scpr.Preview({baseUrl: '<%= resource_class.admin_index_path %>'});
+  </script>
+<% end %>

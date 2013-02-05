@@ -6,13 +6,13 @@ development: &local
     host: localhost
     port: 6379
     db: 6
-    
+
 test:
     <<: *local
-    
+
 staging:
     <<: *local
-    
+
 production:
     host: 10.226.4.238
     port: 6379

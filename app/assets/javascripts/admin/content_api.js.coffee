@@ -43,4 +43,3 @@ class scpr.ContentAPI
         url: "/api/private/content"
         
     #-----------------------------
-    

@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="span12">
-      <%= render "shared/widgets/events_at_the_forum" %>
+      <%= render "/events/forum_events" %>
     </div>  
   </div>
 </div>
@@ -42,8 +42,8 @@
       <div class="carousel" data-current-page="1"></div>
     </div> <!-- missed-it-bucket -->
     
-    <% content_for :footerjss do %>
-      var carousel = new scpr.ContentCarousel({dataUrl: "<%= homepage_missed_it_content_path(@homepage.id) %>"});
+    <% content_for :footer do %>
+      <script>var carousel = new scpr.ContentCarousel({dataUrl: "<%= homepage_missed_it_content_path(@homepage.id) %>"});</script>
     <% end %>
   <% end %>
 <% end %>

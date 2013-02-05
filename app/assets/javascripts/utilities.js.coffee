@@ -1,3 +1,10 @@
+# Open the Listen Live window
+window.open_popup = (url) ->
+    window.open(url, 'pop_up','height=800,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no');
+    return false; 
+
+#----------------------
+
 class scpr.CompactNav
     constructor: ->
         @nav = $("#footer-nav")
@@ -220,7 +227,6 @@ class scpr.SocialTools
         
         # how long did the load take?
         loadtime = Number(new Date) - @disqPending
-        console.log "disqus counts load took #{loadtime/1000} seconds"
         @gaq?.push ['_trackEvent','SocialTools','Disqus Load','',loadtime,true]
         
         # handle comment counts on the page
@@ -267,7 +273,6 @@ class scpr.SocialTools
                 clearTimeout @fbTimeout
                 @fbTimeout = null
                 loadtime = Number(new Date) - @fbPending
-                console.log "fb counts load took #{loadtime/1000} seconds"
                 @gaq?.push ['_trackEvent','SocialTools','Facebook Load','',loadtime,true]
                 
                 # fill in our numbers
@@ -296,7 +301,6 @@ class scpr.SocialTools
                 @twitTimeout = null
                 @twitCancel = null
                 loadtime = Number(new Date) - @twitPending
-                console.log "twit counts load took #{loadtime/1000} seconds"
                 @gaq?.push ['_trackEvent','SocialTools','Twitter Load','',loadtime,true]
                 
         # twitter url requests have to go off one-by-one

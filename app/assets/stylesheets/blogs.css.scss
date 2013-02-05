@@ -113,11 +113,17 @@
             width:120px;
             height:30px;
         }
-		&.patt-morrison a {
+		    &.patt-morrison a {
             @include hide-text();
             background-image:url(image_path("blogs/pattmorrison_sm.png"));
             width:160px;
             height:27px;
+        }
+        &.southla a {
+            @include hide-text();
+            background-image:url(image_path("blogs/oncentral_sm.png"));
+            width:116px;
+            height:21px;
         }
     }
     
@@ -153,11 +159,17 @@
             width:160px;
             height:46px;
         }
-		&.patt-morrison a {
+		    &.patt-morrison a {
             @include hide-text();
             background-image:url(image_path("blogs/pattmorrison_lg.png"));
             width:210px;
             height:35px;
+        }
+        &.southla a {
+            @include hide-text();
+            background-image:url(image_path("blogs/oncentral_lg.png"));
+            width:177px;
+            height:32px;
         }
     }
 }

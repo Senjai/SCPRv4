@@ -9,7 +9,7 @@ module Concern
   module Validations
     module ContentValidation
       extend ActiveSupport::Concern
-      BODY_MESSAGE = "can't be blank <br />when publishing"
+      BODY_MESSAGE = "can't be blank when publishing"
       
       included do
         validates_presence_of :headline  # always

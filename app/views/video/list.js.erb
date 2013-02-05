@@ -1,5 +1,5 @@
 <%# Handles the Modal pop-up %>
-<% if any_to_list? @videos %>
+<% if @videos.present? %>
   $('.videos-list .list').html("<%= escape_javascript(render partial: 'video_thumb', collection: @videos) %>");
   $('.videos-list .pages').html("<%= "#{params[:page].to_i} of #{@videos.total_pages}" %>");
   $('.arrow.right').attr("data-page", "<%= @videos.current_page + 1 %>");
