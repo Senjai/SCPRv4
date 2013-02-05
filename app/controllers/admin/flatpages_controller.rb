@@ -13,7 +13,7 @@ class Admin::FlatpagesController < Admin::ResourceController
 
     with_rollback @flatpage do
       @flatpage.assign_attributes(params[:flatpage])
-      render "/flatpages/_flatpage", layout: "/admin/#{layout_template}", locals: { flatpage: @flatpage }
+      render "/flatpages/_flatpage", layout: "/admin/preview/#{layout_template}", locals: { flatpage: @flatpage }
     end
   end
 end

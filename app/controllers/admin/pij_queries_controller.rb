@@ -5,7 +5,7 @@ class Admin::PijQueriesController < Admin::ResourceController
     with_rollback @query do
       @query.assign_attributes(params[:pij_query])
       @title = @query.to_title
-      render "/pij_queries/_pij_query", layout: "/admin/preview", locals: { query: @query }
+      render "/pij_queries/_pij_query", layout: "/admin/preview/application", locals: { query: @query }
     end
   end
 end

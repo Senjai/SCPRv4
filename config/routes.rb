@@ -117,10 +117,6 @@ Scprv4::Application.routes.draw do
   match '/about'                    => "home#about_us",        as: :about
   
   
-  # Elections - Turn this into a flatpage and remove it!
-  match '/elections/2012/results/' => 'home#elections'
-  
-  
   # Videos
   match '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
   match '/video/'           => "video#index",   as: :video_index

@@ -5,7 +5,7 @@ class Admin::ShowSegmentsController < Admin::ResourceController
     with_rollback @segment do
       @segment.assign_attributes(params[:show_segment])
       @title = @segment.to_title
-      render "/programs/_segment", layout: "/admin/preview", locals: { segment: @segment }
+      render "/programs/_segment", layout: "/admin/preview/application", locals: { segment: @segment }
     end
   end
 end

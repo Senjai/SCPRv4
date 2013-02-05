@@ -10,4 +10,4 @@
 /public/uploads
 /spec/fixtures/media/audio/upload
 /tmp
-
+/.sass-cache

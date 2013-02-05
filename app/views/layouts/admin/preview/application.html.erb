@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "shared", "application" %>
-  
-  <%= render "/shared/header/assethost" %>
-  <%= render "/shared/header/typekit" %>
-  
-  <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js"></script>
-  <script type="text/javascript">ahClient = new AssetHost.Client()</script>
-  
+  <%= render "/shared/header/core_includes" %>
+  <title>Preview: <%= @title %></title>
+
+  <meta id="meta-viewport" name="viewport" content="width=device-width, minimum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE; chrome=1" />
+
   <style type="text/css">
     .fake-el {
       background: #efefef;
       border: 1px solid #cccccc;
     }
   </style>
-  <title>Preview: <%= @title %></title>
+
+  <%= csrf_meta_tags %>
+  <%= yield :head_tag %>
 </head>
+
 <body>
   <header id="masthead">
     <div class="container-fluid">
@@ -54,5 +54,8 @@
       </div> <!-- container-fluid -->
     </footer>
   </div> <!-- page-footer -->
+
+  <%= yield :footer %>
+
 </body>
 </html>

@@ -5,7 +5,7 @@ class Admin::HomepagesController < Admin::ResourceController
     with_rollback @homepage do
       @homepage.assign_attributes(params[:homepage])
       @title = @homepage.to_title
-      render "/admin/homepages/previews/#{@homepage.base}", layout: "/admin/preview", locals: { homepage: @homepage }
+      render "/admin/homepages/previews/#{@homepage.base}", layout: "/admin/preview/application", locals: { homepage: @homepage }
     end
   end
 end
