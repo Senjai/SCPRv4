@@ -18,21 +18,6 @@ FactoryGirl.define do
       feed_url "http://oncentral.org/rss/latest"
     end
   end
-  
-  #-------------------------
-  
-  factory :blog_category do
-    blog
-    sequence(:title) { |n| "Category #{n}" }
-    slug { title.parameterize }
-  end
-
-  #-------------------------
-  
-  factory :blog_entry_blog_category do
-    blog_category
-    blog_entry
-  end
 
   #-------------------------
   

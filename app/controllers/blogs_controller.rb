@@ -41,44 +41,7 @@ class BlogsController < ApplicationController
 
     redirect_to blog_entry.link_path, permanent: true
   end
-  
-  #----------
-  
-  def blog_tags
-    @recent = @blog.tags.order("blogs_entry.published_at desc")
-  end
-  
-  #----------
-  
-  def blog_tagged
-    @tag = Tag.where(slug: params[:tag]).first
-    
-    # In this case we want to redirect, in case people just
-    # start guessing random tags
-    if !@tag
-      redirect_to blog_tags_path(@blog.slug) and return
-    end
-    
-    @entries = @blog.entries.published.joins(:tags).where(taggit_tag: { slug: @tag.slug }).page(params[:page]).per(5)
-  end
-  
-  #----------
-  
-  def category
-    @category = BlogCategory.where(slug: params[:category],
-                                      blog_id: @blog.id).first!
-                                    
-    @entries = @category.blog_entries.published
-                        .order("blogs_entry.published_at desc")
-                        .page(params[:page]).per(5)
-    
-    @BLOGTITLE_EXTRA = ": #{@category.title}"
-    @MESSAGE = "There are no blog posts for <b>#{@blog.name}</b> " \
-               "listed under <b>#{@category.title}</b>.".html_safe
-               
-    render 'show'
-  end
-  
+
   #----------
   
   # Process the form values for Archive and redirect to canonical URL
@@ -107,6 +70,6 @@ class BlogsController < ApplicationController
   
   protected
   def load_blog
-    @blog = Blog.where(is_remote: false).includes(:authors, :blog_categories).find_by_slug!(params[:blog])
+    @blog = Blog.where(is_remote: false).includes(:authors).find_by_slug!(params[:blog])
   end
 end

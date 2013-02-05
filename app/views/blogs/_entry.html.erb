@@ -11,7 +11,7 @@
     <div class="span18 mq-solo-span">
       <article>
         <header>
-          <h1 class="story-headline"><%= link_to entry.headline, entry.link_path %></h1>          
+          <h1 class="story-headline"><%= link_to entry.headline, entry.link_path %></h1>
           <p class="byline">
             <%= render_byline entry %> <span class="pipe">|</span> <time pubdate><%= format_date entry.published_at, format: :full_date, time: true %></time>
           </p>
@@ -30,10 +30,6 @@
           
           <% if entry.is_from_pij? %>
             <%= render '/shared/cwidgets/pij_notice' %>
-          <% end %>
-          
-          <% if entry.tags.present? %>
-            <br /><i>Tagged:</i> <%= raw entry.tags.collect {|t| link_to(t.name, blog_entries_tagged_path(entry.blog.slug,t.slug)) }.join(", ") %>
           <% end %>
         </footer>
       </article>
