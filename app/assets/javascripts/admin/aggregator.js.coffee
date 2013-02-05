@@ -277,7 +277,7 @@ class scpr.Aggregator
                         @container.spin(false)
                         @$el.removeClass('dim')
                 
-                return false # prevent default behavior
+                false # prevent default behavior
 
             #---------------------
             # Give a JSON object, build a model, and its corresponding
@@ -290,6 +290,7 @@ class scpr.Aggregator
                     model: model
 
                 @$el.append view.render()
+                @highlightSuccess(view.$el)
 
                 # Add the new model to @collection
                 @collection.add model
@@ -323,12 +324,19 @@ class scpr.Aggregator
                         model: model
                         
                     el.replaceWith view.render()
+                    @highlightSuccess(view.$el)
+
                 else
                     alert = new scpr.Notification(@$el, "warning", 
                         "That content is already in the drop zone.")
                     @importNotice(alert)
                     false
-                
+
+            #---------------------
+            # Hightlight the el with a success color            
+            highlightSuccess: (el) ->
+                el.effect 'highlight', color: "#dff0d8", 1500
+
             #---------------------
             # Remove this el's model from @collection
             # This is the only case where we want to 
