@@ -5,7 +5,7 @@ require 'pathname'
 # Given a directory, loop through all of its files recursively,
 # and then search the project for references to each file.
 name         = "image-references"
-app_base     = "/Users/bricker/websites/kpcc/SCPRv4"
+app_base     = "/Users/bryan/projects/SCPRv4"
 files_base   = "#{app_base}/app/assets/images"
 
 # Which paths to look in, recursively
