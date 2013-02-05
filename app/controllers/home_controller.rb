@@ -1,6 +1,7 @@
 class HomeController < ApplicationController  
   layout "homepage"
-  
+  before_filter :get_latest_videos, only: [:index]
+
   # Just for development purposes
   # Pass ?regenerate to the URL to regenerate the homepage category blocks
   # Only works in development
@@ -9,20 +10,6 @@ class HomeController < ApplicationController
   def index        
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_at(Time.now).first
-    @latest_videos = VideoShell.published.limit(5)
-
-  end
-
-  # Elections - Remove this!
-  def elections
-    @data        = DataPoint.where(group_name: 'election')
-    @data_points = DataPoint.to_hash(@data)
-    @category    = Category.find_by_slug('politics')
-    
-    @content = ContentBase.search({
-      :limit => 15,
-      :with  => { category: [@category.id] }
-    })
   end
   
   #----------
@@ -32,7 +19,7 @@ class HomeController < ApplicationController
   end
   
   def about_us
-    render :layout => "app_nosidebar"
+    render layout: "app_nosidebar"
   end
   
   def not_found
@@ -44,12 +31,16 @@ class HomeController < ApplicationController
   def missed_it_content
     @homepage = Homepage.find(params[:id])
     @carousel_contents = @homepage.missed_it_bucket.contents.page(params[:page]).per(6)
-    render 'missed_it_content.js.erb'
+    render 'missed_it_content', formats: [:js]
   end
   
   protected
   
   def generate_homepage
     CacheTasks::Homepage.new.run
+  end
+
+  def get_latest_videos
+    @latest_videos = VideoShell.published.limit(5)
   end
 end
