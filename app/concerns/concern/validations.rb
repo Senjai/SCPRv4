@@ -13,11 +13,11 @@ module Concern
       # for any validations that have the condition:
       # `if: :should_validate?`
       #
-      # Check for @_should_validate first
+      # Check for @_force_validation first
       # so we can stub this method if needed,
       # for previewing for example.
       def should_validate?
-        @_should_validate || needs_validation?
+        @_force_validation == true || needs_validation?
       end
 
       #--------------------
@@ -53,7 +53,7 @@ module Concern
       #   @event.unconditionally_valid? #=> false
       #
       def unconditionally_valid?
-        @_should_validate = true
+        @_force_validation = true
         self.valid?
       end
     end
