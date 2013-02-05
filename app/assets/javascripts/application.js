@@ -1,6 +1,6 @@
 //= require modernizr.custom
-
 //= require jquery.jplayer.min
+
 //= require bootstrap-collapse
 
 //= require_directory ./t_listen/
