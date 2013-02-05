@@ -1,0 +1,187 @@
+<div id="page-footer">
+  <section class="fb-callout">
+    <div class="container-fluid">
+      <h2>Want more great stories in your Facebook feed? <a href="http://facebook.com/kpcc" class="track-event" data-ga-category="Masthead" data-ga-action="Social Media" data-ga-label="Facebook Referral Callout">Like KPCC on Facebook!</a></h2>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container-fluid" id="footer-container">
+      <div class="row-fluid footer-mast" id="footer-mast">
+        <div class="span16">
+          <ul class="inline">
+            <li id="footer-mast-logo"><a href="/"><%= image_tag "logo-footer.png" %></a></li>
+            <li>89.1 KUOR</li>
+              <li class="bullet light">90.3 KVLA</li>
+          </ul>
+        </div>
+        <div class="span8" id="footer-support-button">
+          <h2>Support the voices you trust!</h2>
+          <div class="pledge">
+            <a href="https://scprcontribute.publicradio.org/contribute.php" class="track-event" data-ga-category="Footer" data-ga-action="Pledge" data-ga-label="Button">Pledge Now</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-nav" id="footer-nav">
+        <div class="compact-nav-head" id="compact-nav-head">
+          <div class="pledge">
+            <a href="https://scprcontribute.publicradio.org/contribute.php" class="track-event" data-ga-category="Mobile Nav" data-ga-action="Pledge" data-ga-label="Button">Pledge Now</a>
+          </div>
+          <span class="btn inverse in-btn">&laquo;</span>
+        </div>
+        <div class="row-fluid visible-reader hidden">
+          <div class="span12">
+            <div class="search-form">
+              <form action="/search/" method="get">
+                <input type="text" name="q" placeholder="Search" class="search" />
+                <input type="submit" value="" id="submit" class="submit" />
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="section first">
+              <h3>Sections</h3>
+              <nav>
+                <h4>News</h4>
+                <div class="row-fluid">
+                  <ul class="span12">
+                    <li><a href="/local/">Local</a></li>
+                    <li><a href="/california/">State</a></li>
+                    <li><a href="/world/">U.S./World</a></li>
+                    <li><a href="/politics/">Politics</a></li>
+                    <li><a href="/environment/">Science</a></li>
+                  </ul>
+                  <ul class="span12">
+                    <li><a href="/money/">Money</a></li>
+                    <li><a href="/crime/">Crime &amp; Safety</a></li>
+                    <li><a href="/education/">Education</a></li>
+                    <li><a href="/health/">Health</a></li>
+                    <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=news">Archive</a></li>
+                  </ul>
+                </div> <!-- row fluid -->
+              </nav>
+              <nav>
+                <h4>Arts &amp; Life</h4>
+                <div class="row-fluid">
+                  <ul class="span12">
+                    <li><a href="/culture/">Culture</a></li>
+                    <li><a href="/film/">Film</a></li>
+                    <li><a href="/books/">Books</a></li>
+                    <li><a href="/video/" class="video-icon">Video</a></li>
+                  </ul>
+                  <ul class="span12">
+                    <li><a href="/arts/">Arts</a></li>
+                    <li><a href="/music/">Music</a></li>
+                    <li><a href="/food/">Food</a></li>
+                  </ul>
+                </div>
+              </nav>
+            </div> <!-- section -->
+          </div> <!-- span6 -->
+        
+          <div class="span6">
+            <div class="section">
+              <nav>
+                <h3>Programs</h3>
+                <ul>
+                  <li><a href="/programs/take-two/">Take Two</a></li>
+                  <li><a href="/programs/airtalk/">AirTalk</a></li>
+                  <li><a href="/programs/offramp/">Off-Ramp</a></li>
+                </ul>
+                <ul class="inline">
+                  <li><a href="/programs/">Programs A-Z</a></li>
+                  <li><a href="/schedule/">Program Schedule</a></li>
+                  <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs">Program Archive</a></li>
+                </ul>
+              </nav>
+              <nav>
+                <h3>Events</h3>
+                <ul>
+                  <li><a href="<%= forum_events_path %>">The Crawford Family Forum</a></li>
+                  <li><a href="<%= sponsored_events_path %>">Sponsored Events</a></li>
+                </ul>
+              </nav>
+            </div> <!-- section -->
+          </div> <!-- span6 -->
+        
+          <div class="span6">
+            <div class="section">
+              <h3>Stay Connected</h3>
+              <nav>
+                <ul class="inline social-media">
+                  <li><a href="http://facebook.com/kpcc" class="facebook">Facebook</a></li>
+                  <li><a href="http://twitter.com/kpcc" class="twitter">Twitter</a></li>
+                  <li><a href="https://plus.google.com/108872361044769229886/" class="google-plus">Google +</a></li>
+                </ul>
+                <ul class="inline">
+                  <li class="nav-label">KPCC Accounts:</li>
+                  <li><a href="/accounts/login/">Log in</a></li>
+                  <li><a href="/accounts/register/">Register</a></li>
+                </ul>
+                <ul>
+                  <li><a href="/newsletters/">Newsletters</a></li>
+                  <li><a href="/rss/">RSS</a></li>
+                  <li><a href="/podcasts/">Podcasts</a></li>
+                </ul>
+              </nav>
+              <div class="mobile-apps">
+                <%= image_tag 'footer-mobileapps.png' %>
+                <a href="/listen/" class="btn primary">Get the KPCC Mobile Apps</a>
+              </div>
+            </div> <!-- section -->
+          </div> <!-- span6 -->
+        
+          <div class="span6">
+            <div class="section last">
+              <h3>About</h3>
+              <nav>
+                <ul>
+                  <li><a href="/about/">About KPCC</a></li>
+                  <li><a href="/about/people/">Staff</a></li>
+                  <li><a href="/contact/">Contact Us</a></li>
+                  <li><a href="/about/faq/">Help / FAQ</a></li>
+                  <li><a href="/web_site_feedback/">Feedback</a></li>
+                  <li><a href="/about/jobs/">Careers @ KPCC</a></li>
+                </ul>
+              </nav>
+              <address>
+                89.3 KPCC<br />
+                Southern California Public Radio<br />
+                474 S. Raymond Ave.<br />
+                Pasadena, CA 91105
+                <div class="phone">Call in: 866-893-5722</div>
+              </address>
+            </div> <!-- section -->
+          </div> <!-- span6 -->
+        </div> <!-- row fluid -->
+      </div> <!-- footer nav -->
+      <div class="row-fluid bottom-links" id="footer-bottom-links">
+        <div class="span12" id="footer-bottom-partners">
+          <ul class="inline partners">
+            <li><h5>Our Partners</h5></li>
+            <li><a class="apmg" href="http://publicradio.org/">American Public Media</a></li>
+            <li><a class="npr" href="http://npr.org">NPR</a></li>
+            <li><a class="bbc" href="http://bbc.co.uk">BBC</a></li>
+            <li><a class="pri" href="http://pri.org">PRI</a></li>
+            <li><a class="nbc" href="http://www.nbclosangeles.com/">NBC 4 LA</a></li>
+            <li><a class="pcc" href="http://pasadena.edu">Pasadena City College</a></li>
+          </ul>
+        </div>
+        <div class="span12" id="footer-bottom-legal">
+          <ul class="inline legal">
+            <li><a href="/terms/">Terms &amp; Conditions</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
+            <li><a href="/web_site_feedback/">Feedback</a></li>
+            <li>&copy; <%= Time.now.year %> Southern California Public Radio</li>
+          </ul>
+        </div>
+      </div> <!-- row fluid bottom links -->
+    </div>
+  </footer>
+</div> <!-- page-footer -->
+
+<!-- hidden div for modals, audio, and other pop-ups -->
+<div id="opaque-cover"></div>

@@ -14,11 +14,31 @@
             </div> <!-- program-info -->
     
             <% if current.show_modal? %>
+              <% program = current.program
+                 episode = program.episodes.published.first %>
+
               <div class="modal-container">
                 <%= modal("episode-guide", modal_id: "episode-guide") do %>
-                  <%= render partial: "shared/broadcast_bar/episode_guide", object: current.program.episodes.published.first, as: :episode, locals: { program: current.program } %>
+                  <%= content_cache("broadcast_bar:episode_guide:#{episode.id}") do %>
+                    <% register_content episode %>
+                    <h6><%= link_to episode.headline, episode.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
+                    <%= render_asset episode, "thumb" %>
+
+                    <!-- Segments -->
+                    <ul class="cbase">
+                      <% episode.segments.published.each_with_index do |segment, i| %>
+                        <li>
+                          <h5 class="headline"><%= link_to segment.short_headline, segment.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
+                          <% register_content segment %>
+                          <%= comment_count_for segment %>
+                        </li>
+                      <% end %>
+
+                      <li class="more"><a href="<%= program_path(program.slug) %>">More <%= program.title %></a></li>
+                    </ul>
+                  <% end %>
                 <% end %>
-              </div>
+              </div> <!-- modal-container -->
             <% end %>
           </div> <!-- current program -->
         </div> <!-- span -->
@@ -36,4 +56,4 @@
       </div> <!-- row-fluid -->
     </div> <!-- container-fluid -->
   </div> <!-- bb-inner-container -->
-</div>
+</div> <!-- broadcast-bar -->

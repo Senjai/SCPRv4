@@ -63,4 +63,16 @@ module AdminHelper
   def modal_toggle(options={}, &block)
     render "/admin/shared/modal", options: options, body: capture(&block)
   end
+
+  #----------------
+  # Render the submit row.
+  def submit_row(record, persisted_record)
+    render('admin/shared/submit_row', record: record, persisted_record: persisted_record)
+  end
+  
+  #----------------
+  # Render the index header
+  def index_header(resource_class)
+    render('admin/shared/index_header', resource_class: resource_class)
+  end
 end

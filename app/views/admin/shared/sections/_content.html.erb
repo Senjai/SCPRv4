@@ -3,7 +3,7 @@
   <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
 <% end %>
 
-<% content_for :footerjs do %>
+<% content_for :footer do %>
   <script>
     aggregator = new scpr.Aggregator(
       "#aggregator", "#content_json",

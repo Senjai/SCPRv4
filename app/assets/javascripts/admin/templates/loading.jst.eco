@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Loading...</title>
+    <script type="text/javascript" src="/assets/shared.js"></script>
     <script type="text/javascript" src="/assets/application.js"></script>
   </head>
   <body>

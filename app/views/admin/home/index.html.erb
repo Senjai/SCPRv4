@@ -9,7 +9,7 @@
       </div>
     </div>
         
-    <%= any_to_list? @current_user_activities, message: "There is no activity to show.", wrapper: :div do %>
+    <%= any_to_list? @current_user_activities, message: "<div>There is no activity to show.</div>" do %>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -75,7 +75,7 @@
   </div> <!-- span -->
 </div> <!-- row -->
 
-<% content_for :footerjs do %>
+<% content_for :footer do %>
   <script type="text/javascript">
     newsroom = new scpr.Newsroom(
       "dashboard", // room ID

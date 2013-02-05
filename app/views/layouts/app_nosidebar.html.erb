@@ -1,17 +1,14 @@
-<%= render 'shared/header/document_header' %>
+<%= render '/shared/header/document_header' %>
 
 <body>
 <div class="viewport">
-  <!-- MASTHEAD-->
-  <%= render "shared/masthead" %>
+  <%= render "/shared/masthead/layout_header" %>
   
   <div id="no-sidebar" class="container-fluid main-content">
     <%= yield %>
   </div> <!-- no-sidebar -->
   
-  <%= render :partial => "shared/footer" %>
-  <%= render :partial => "shared/footer/footer_js" %>
-  
+  <%= render "/shared/footer/layout_footer" %>
 </div> <!-- viewport -->
-</body>
-</html>
+
+<%= render "/shared/footer/document_footer" %>

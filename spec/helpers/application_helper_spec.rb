@@ -17,30 +17,6 @@ describe ApplicationHelper do
     it "returns a special message if: no records, no message, title is specified" do
       helper.any_to_list?([], title: "Events") { "Records list" }.should match "Events"
     end
-    
-    it "returns true if there are records and no block is given" do
-      helper.any_to_list?(1..5).should be_true
-    end
-    
-    it "returns false if there are no records and no block is given" do
-      helper.any_to_list?([]).should be_false
-    end
-    
-    it "uses a span wrapper by default" do
-      helper.any_to_list?([]) { "Records List" }.should match "span"
-    end
-    
-    it "uses a span wrapper if wrapper is true" do
-      helper.any_to_list?([], wrapper: true) { "Records List" }.should match "span"
-    end
-        
-    it "uses the wrapper passed in" do
-      helper.any_to_list?([], wrapper: :div) { "Records List" }.should match "div"
-    end
-    
-    it "does not use a wrapper if wrapper is false" do
-      helper.any_to_list?([], wrapper: false, message: "No") { "Records List" }.should eq "No"
-    end
   end
   
   #------------------------
@@ -316,29 +292,84 @@ describe ApplicationHelper do
       split[1].should eq []
     end
   end
-  
+
   #------------------------
-  
-  describe "watch_gmaps" do
-    it "adds the google maps API script reference to the header" do
-      helper.watch_gmaps
-      helper.content_for(:headerjs).should match /script/
+
+  context "widgets" do
+    let(:object) { create :blog_entry }
+    
+    describe "content_widget" do
+      it "looks in /shared/cwidgets if just the name of the partial is given" do
+        content_widget("social_tools", object).should match /Share this\:/
+      end
     end
     
-    it "finds the google maps API key and uses that in the API script reference" do
-      helper.watch_gmaps
-      helper.content_for(:headerjs).should match API_KEYS["google"]["maps"]
+    #------------------------
+    
+    describe "#comment_count_for" do
+      it "renders a link to the comments" do
+        comment_count_for(object).should match "href"
+        comment_count_for(object).should match object.link_path(anchor: "comments")
+      end
+      
+      it "uses the class passed in and preserves the hard-coded classes" do
+        comment_count = comment_count_for(object, class: "other")
+        comment_count.should match /comment_link/
+        comment_count.should match /social_disq/
+        comment_count.should match /other/
+      end
+        
+      it "doesn't render anything if content isn't present" do
+        comment_count_for(nil).should be_nil
+      end
+      
+      it "doesn't render anything if it doesn't respond to disqus_identifier" do
+        comment_count_for(create :blog).should be_nil
+      end
     end
     
-    it "adds a GMapsLoader object to the footer js" do
-      helper.watch_gmaps
-      helper.content_for(:footerjss).should match /GMapsLoader/
+    #------------------------
+
+    describe "#comment_widget_for" do
+      it "renders the comment_count partial" do
+        comment_widget = comment_widget_for(object)
+        comment_widget.should_not be_nil
+        comment_widget.should match /comment-count/
+      end
+      
+      it "has a link to the comments" do
+        comment_widget_for(object).should match object.link_path(anchor: "comments")
+      end
+      
+      it "doesn't render anything if object is not present" do
+        comment_widget_for(nil).should be_nil
+      end
+      
+      it "doesn't render anything if it doesn't respond to disqus_identifier" do
+        comment_widget_for(create :blog).should be_nil
+      end
+      
+      it "passes in the cssClass" do
+        comment_widget_for(object, cssClass: "someclass").should match /someclass/
+      end
     end
     
-    it "takes options to pass into the GMaps Loader object" do
-      helper.watch_gmaps(zoom: 0)
-      helper.content_for(:footerjss).should match "\"zoom\":0"
+    #------------------------
+    
+    describe "#featured_comment" do
+      pending
+    end
+
+    #------------------------
+    
+    describe "#comments_for" do
+      it "renders the comments partial" do
+        comments_for(object).should match 'comments'
+      end
+      
+      it "passes along the cssClass" do
+        comments_for(object, cssClass: "special_class").should match "special_class"
+      end
     end
   end
-
 end

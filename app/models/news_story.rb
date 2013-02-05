@@ -58,7 +58,7 @@ class NewsStory < ActiveRecord::Base
   
   #------------------
   # Validation
-  def should_validate?
+  def needs_validation?
     self.pending? || self.published?
   end
   

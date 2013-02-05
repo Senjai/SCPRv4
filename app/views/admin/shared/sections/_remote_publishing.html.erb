@@ -21,7 +21,7 @@
   <%= f.section 'status' %>
   <%= f.section('content_alarm') if record.respond_to?(:alarm) %>
 
-  <% content_for :footerjs do %>
+  <% content_for :footer do %>
     <script type="text/javascript">
       $(function() {
         publishingUI = new scpr.PublishingUI({

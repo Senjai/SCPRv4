@@ -1,0 +1,21 @@
+<!-- Don't put display things in here! It's not inside the viewport. -->
+<%= render "/shared/footer/tracking_scripts" %>
+
+<script type="text/javascript">
+  var DISQUSWIDGETS = {}; 
+  var megaM, smartTime;
+  $(function() {
+    smartTime = new scpr.SmartTime();
+    social = new scpr.SocialTools();
+    audio = new scpr.Audio();
+    modal = new scpr.Modal();
+    adSizer = new scpr.adSizer();
+    eventTracking = new scpr.EventTracking();
+    promoteFacebook = new scpr.PromoteFacebook();
+  })  
+</script>
+
+<%= yield :footer %>
+
+</body>
+</html>

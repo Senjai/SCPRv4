@@ -1,12 +1,12 @@
-<%= render 'shared/header/document_header' %>
+<%= render '/shared/header/document_header' %>
 
 <body>
 <div class="viewport">
   <!-- MASTHEAD-->
-  <%= render "shared/masthead" %>
+  <%= render "/shared/masthead/layout_header" %>
 
   <!-- BROADCAST BAR -->
-  <%= render("shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
+  <%= render("/shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
   <%= yield :hero_roadblock %>
   <div id="main" class="container-fluid main-content">
     <section class="homepage-top">
@@ -18,21 +18,11 @@
         
         <div class="span8">
           <div id="sidebar-top">
-            <%= render "shared/widgets/oas", :ad_id => 'x01' %>
-            <%= render "shared/widgets/promo_membership_small", :ad_id => 'x13' %>                        
-            <%= render "shared/widgets/newsletter_subscribe" %>
-            <!-- div class="ad widget" style="border-bottom: 1px solid #E0E0E0;padding-bottom: 16px;">
-              <img src="http://media.scpr.org/assets/images/campaigns/2012/billboard_ideas_large.png" alt="" />
-            </div -->
-            <%= render "shared/widgets/most_popular" %>
-            <div class="ad widget">
-              <div class="dfp" id='div-gpt-ad-1338021022612-0'>
-              <script type='text/javascript'>
-              googletag.cmd.push(function() { googletag.display('div-gpt-ad-1338021022612-0'); });
-              </script>
-              </div>
-            </div>
-            <!-- homepage_house_promo -->
+            <%= render "/shared/ads/oas", ad_id: 'x01' %>
+            <%= render "/shared/ads/dfp", ad_key: :membership_sidebar %>
+            <%= render "/shared/widgets/newsletter_subscribe" %>
+            <%= render "/shared/widgets/most_popular" %>
+            <%= render "/shared/ads/dfp", ad_key: :homepage_house_promo %>
           </div> <!-- sidebar-top -->
         </div> <!-- span8 -->
       </div> <!-- row-fluid -->
@@ -50,12 +40,37 @@
         </div> <!-- span16 -->
         <div class="span8">
           <div id="sidebar-bottom">
-            <%= render "shared/widgets/oas", :ad_id => 'x02' %>
-                          
-            <%= render "shared/widgets/promo_house_sidebar" %>
-            <%= render "shared/widgets/oas", :ad_id => 'x03' %>
-            <%= render "shared/widgets/recent_videos" %>
-            <%= render "shared/widgets/archive" %>
+            <%= render "/shared/ads/oas", ad_id: "x02" %>
+            <%= render "/shared/ads/dfp", ad_key: :sidebar_house_promo %>
+            <%= render "/shared/ads/oas", ad_id: "x03" %>
+
+            <!-- RECENT VIDEOS -->
+            <% content_cache("videos:recent_videos") do %>
+              <% register_content "content/video:new" %>
+              
+              <div class="recent-videos widget">
+                <h6>Recent Videos</h6>
+                <ul>
+                  <% @latest_videos.each do |video| %>
+                    <% register_content video %>
+                    <li>
+                      <div class="row-fluid">
+                        <div class="span8">
+                          <%= render_asset video, "three_video" %>
+                        </div>
+                    
+                        <div class="span16">
+                          <p><%= link_to video.short_headline, video.link_path, :class => 'track-event', :data => {'ga-category' => 'Sidebar', 'ga-action' => 'Watch Video', 'ga-label' => 'Recent Videos'} %></p>
+                          <span><%= format_date video.published_at %></span>
+                        </div>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+              </div> <!-- recent-videos -->
+            <% end %>
+
+            <%= render "/shared/widgets/archive" %>
           </div> <!-- sidebar bottom -->
         </div> <!-- span8 -->
       </div> <!-- row fluid -->
@@ -63,11 +78,8 @@
     
   </div> <!-- main container-fluid -->
 
-  <%= render :partial => "shared/footer" %>
-
-  <%= render :partial => "shared/widgets/homepage_modal" %>
-  
-  <%= render :partial => "shared/footer/footer_js" %>
+  <%= render "/shared/footer/layout_footer" %>
+  <%= render "/shared/widgets/homepage_modal" %>
 </div> <!-- viewport -->
-</body>
-</html>
+
+<%= render "/shared/footer/document_footer" %>

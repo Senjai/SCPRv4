@@ -14,7 +14,7 @@ class CacheController < AbstractController::Base
   include AbstractController::AssetPaths
   include Rails.application.routes.url_helpers
   
-  helper ApplicationHelper, WidgetsHelper
+  helper ApplicationHelper
   
   # Set the view path to "app/views" so that we can cache
   # a partial anywhere under that directory.

@@ -1,0 +1,14 @@
+<%= render '/admin/shared/header/preview/document_header' %>
+
+<body>
+<div class="viewport">
+  <%= render '/admin/shared/header/preview/layout_header' %>
+
+  <div id="no-sidebar" class="container-fluid main-content">
+    <%= yield %>
+  </div> <!-- no-sidebar -->
+  
+  <%= render '/admin/shared/footer/preview/layout_footer' %>
+</div> <!-- viewport -->
+
+<%= render '/admin/shared/footer/preview/document_footer' %>

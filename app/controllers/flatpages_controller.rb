@@ -10,10 +10,10 @@ class FlatpagesController < ApplicationController
         
     layout_template = begin
       case @flatpage.template
-      when "full"  then 'app_nosidebar'
-      when "forum" then "forum"
-      when "none"  then false
-      else 'application'
+        when "full"  then 'app_nosidebar'
+        when "forum" then "forum"
+        when "none"  then false
+        else 'application'
       end
     end
       

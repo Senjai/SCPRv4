@@ -61,17 +61,19 @@
 </div>
 
 
-<% content_for :footerjss do %>
-  <% if @current %>
-    var llPlayer = new scpr.ListenLive({
-      rewind:     "http://scprdev.org:8000/thecurrent.mp3",
-          host:       "http://scprdev.org:8000/thecurrent"
-        })
-  <% else %>
-    var llPlayer = new scpr.ListenLive({
-      schedule:   <%= raw @schedule.to_json %>
-    });
-  <% end %>
+<% content_for :footer do %>
+  <script>
+    <% if @current %>
+      var llPlayer = new scpr.ListenLive({
+        rewind:     "http://scprdev.org:8000/thecurrent.mp3",
+            host:       "http://scprdev.org:8000/thecurrent"
+          })
+    <% else %>
+      var llPlayer = new scpr.ListenLive({
+        schedule:   <%= raw @schedule.to_json %>
+      });
+    <% end %>
+  </script>
 <% end %>
 
 <% content_for :sidebar do %>
