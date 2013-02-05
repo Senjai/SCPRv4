@@ -17,14 +17,14 @@
           scales = [.25, 1.6];
           doc[addEvent](type, fix, true);
       }
-    
-    // Hacks for IE7/8
-    if (navigator.userAgent.match(/MSIE 7/)) {
-      $("html").addClass("ie7-fix");
-    } 
-    if (navigator.userAgent.match(/MSIE 8/)) {
-      $("html").addClass("ie8-fix");
-    }
+
+      // Hacks for IE7/8
+      if (navigator.userAgent.match(/MSIE 7/)) {
+        document.documentElement.className += " ie7-fix";
+      } 
+      if (navigator.userAgent.match(/MSIE 8/)) {
+        document.documentElement.className += " ie8-fix";
+      }
   }(document));
 </script>
 
@@ -45,10 +45,4 @@
     compactNav = new scpr.CompactNav();
     megaM = new scpr.MegaMenu({hidden:["#oas_x01"]});
   });
-
-  // Open Listen Live Window
-  function open_popup(url) { 
-     window.open(url, 'pop_up','height=800,width=556,resizable,left=10,top=10,scrollbars=no,toolbar=no');
-     return false; 
-  }
 </script>
