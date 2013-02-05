@@ -88,5 +88,11 @@ class Flatpage < ActiveRecord::Base
   # Override AdminResource for this
   def link_path(options={})
     self.url
-  end  
+  end
+
+  # -------------------
+  
+  def redirect?
+    self.redirect_url.present?
+  end
 end

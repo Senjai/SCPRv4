@@ -44,18 +44,19 @@ class Event < ActiveRecord::Base
   
   #-------------------
   # Validations
-  validates :headline, presence: true
+  validates :headline,  presence: true
   validates :etype, :starts_at, :body, presence: true, if: :should_validate?
   validates :slug, unique_by_date: { scope: :starts_at, filter: :day, message: "has already been used for that start date." },
     if: :should_validate?
   
-  def should_validate?
+  def needs_validation?
     self.published?
   end
   
   def published?
     self.is_published
   end
+
   
   #-------------------
   # Callbacks

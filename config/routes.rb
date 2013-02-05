@@ -280,37 +280,44 @@ Scprv4::Application.routes.draw do
       
       resources :homepages do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
       
       resources :pij_queries do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
 
       resources :flatpages do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
 
       resources :show_segments do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
       
       resources :news_stories do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
       
       resources :blog_entries do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
-            
+      
       resources :events do
         get "search", on: :collection, as: :search
-        put "preview", on: :member, as: :preview
+        put "preview", on: :member
+        post "preview", on: :collection
       end
       ## -- END AdminResource --  ##
       
