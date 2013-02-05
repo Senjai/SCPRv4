@@ -269,11 +269,7 @@ Scprv4::Application.routes.draw do
       resources :show_episodes do
         get "search", on: :collection, as: :search
       end
-      
-      resources :flatpages do
-        get "search", on: :collection, as: :search
-      end
-      
+
       resources :bios do
         get "search", on: :collection, as: :search
       end
@@ -288,6 +284,11 @@ Scprv4::Application.routes.draw do
       end
       
       resources :pij_queries do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member, as: :preview
+      end
+
+      resources :flatpages do
         get "search", on: :collection, as: :search
         put "preview", on: :member, as: :preview
       end
