@@ -1,33 +1,6 @@
 module ApplicationHelper
   include Twitter::Autolink
 
-  DFP_ADS = {
-    :membership_masthead    => {
-      :id   => "div-gpt-ad-1337671309327-1",
-      :size => "[123, 23]"
-    },
-    :membership_sidebar     => {
-      :id   => "div-gpt-ad-1337671309327-2",
-      :size => "[300, 100]"
-    },
-    :membership_lightbox    => {
-      :id   => "div-gpt-ad-1339807171110-5",
-      :size => "[700, 550]",
-    },
-    :homepage_house_promo   => {
-      :id   => "div-gpt-ad-1338021022612-0",
-      :size => "[343, 150]",
-    },
-    :sidebar_house_promo    => {
-      :id   => "div-gpt-ad-1338837727510-0",
-      :size => "[343, 150]",
-    },
-    :membership_leaderboard => {
-      :id   => "div-gpt-ad-1351635520823-0",
-      :size => "[660, 82]"
-    }
-  }
-
   #---------------------------
   
   def present(object, klass=nil)
