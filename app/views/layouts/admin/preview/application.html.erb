@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "shared", "application" %>
-  
-  <%= render "/shared/header/assethost" %>
-  <%= render "/shared/header/typekit" %>
-  
-  <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js"></script>
-  <script type="text/javascript">ahClient = new AssetHost.Client()</script>
-  
+  <%= render "/shared/header/core_includes" %>
+
   <style type="text/css">
     .fake-el {
       background: #efefef;
       border: 1px solid #cccccc;
     }
   </style>
+
   <title>Preview: <%= @title %></title>
+
+  <%= yield :head_tag %>
 </head>
 <body>
   <header id="masthead">
