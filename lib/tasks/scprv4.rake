@@ -2,8 +2,7 @@ namespace :scprv4 do
   desc "Place a full sphinx index into the queue"
   task :enqueue_index => [:environment] do
     puts "*** [#{Time.now}] Enqueueing sphinx index into Resque..."
-    indexer = Indexer.new
-    indexer.enqueue
+    Indexer.new.enqueue
     puts "Finished."
   end
 
@@ -12,10 +11,11 @@ namespace :scprv4 do
   desc "Sync NPR Stories with NPR API"
   task :npr_fetch => [:environment] do
     puts "*** [#{Time.now}] Syncing NPR Stories..."
-    ENV['NEWRELIC_DISPATCHER'] ||= 'passenger'
-    ::NewRelic::Agent.manual_start
-    NprStory.sync_with_api
-    ::NewRelic::Agent.shutdown
+    
+    ::NewRelic.with_manual_agent do
+      NprStory.sync_with_api
+    end
+    
     puts "Finished."
   end
   
@@ -31,7 +31,11 @@ namespace :scprv4 do
   desc "Fire pending content alarms"
   task :fire_content_alarms => [:environment] do
     puts "*** [#{Time.now}] Firing pending content alarms..."
-    ContentAlarm.fire_pending
+
+    ::NewRelic.with_manual_agent do
+      ContentAlarm.fire_pending
+    end
+
     puts "Finished."
   end
 
@@ -62,7 +66,11 @@ namespace :scprv4 do
     desc "Cache Remote Blog Entries"
     task :remote_blogs => [:environment] do
       puts "Caching remote blogs..."
-      cached = Blog.cache_remote_entries
+
+      ::NewRelic.with_manual_agent do
+        Blog.cache_remote_entries
+      end
+
       puts "Finished.\n"
     end
     
@@ -72,16 +80,19 @@ namespace :scprv4 do
     task :most_viewed => [:environment] do
       puts "*** [#{Time.now}] Caching most viewed..."
 
-      analytics = API_KEYS["google"]["analytics"]
-      task = CacheTasks::MostViewed.new(
-        analytics["client_id"],
-        analytics["client_secret"],
-        analytics["token"],
-        analytics["refresh_token"]
-      )
+      ::NewRelic.with_manual_agent do
+        analytics = API_KEYS["google"]["analytics"]
+        task = CacheTasks::MostViewed.new(
+          analytics["client_id"],
+          analytics["client_secret"],
+          analytics["token"],
+          analytics["refresh_token"]
+        )
 
-      task.verbose = true
-      task.run
+        task.verbose = true
+        task.run
+      end
+
       puts "Finished.\n"
     end
 
@@ -90,9 +101,13 @@ namespace :scprv4 do
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Caching most commented..."
-      task = CacheTasks::MostCommented.new("kpcc", "3d", API_KEYS['disqus']['api_key'], 5)
-      task.verbose = true
-      task.run
+
+      ::NewRelic.with_manual_agent do
+        task = CacheTasks::MostCommented.new("kpcc", "3d", API_KEYS['disqus']['api_key'], 5)
+        task.verbose = true
+        task.run
+      end
+
       puts "Finished.\n"
     end
 
@@ -101,9 +116,13 @@ namespace :scprv4 do
     desc "Cache KPCCForum tweets"
     task :twitter => [:environment] do
       puts "*** [#{Time.now}] Caching KPCCForum tweets...."
-      task = CacheTasks::Twitter.new("KPCCForum")
-      task.verbose = true
-      task.run
+
+      ::NewRelic.with_manual_agent do
+        task = CacheTasks::Twitter.new("KPCCForum")
+        task.verbose = true
+        task.run
+      end
+
       puts "Finished.\n"
     end
     
@@ -112,7 +131,11 @@ namespace :scprv4 do
     desc "Cache external programs"
     task :programs => [ :environment ] do
       puts "Caching remote programs..."
-      OtherProgram.active.each { |p| p.cache }
+
+      ::NewRelic.with_manual_agent do
+        OtherProgram.active.each { |p| p.cache }
+      end
+
       puts "Finished.\n"
     end
     
@@ -121,9 +144,11 @@ namespace :scprv4 do
     desc "Cache homepage one time"
     task :homepage => [ :environment ] do
       puts "*** [#{Time.now}] Caching homepage..."
+
       task = CacheTasks::Homepage.new
       task.verbose = true
       task.run
+
       puts "Finished.\n"
     end
   end
@@ -151,7 +176,10 @@ namespace :scprv4 do
       end
     
       worker.log "Starting worker #{worker}"
-      worker.work()
+
+      ::NewRelic.with_manual_agent do
+        worker.work()
+      end
     end
     
     #----------
@@ -176,7 +204,10 @@ namespace :scprv4 do
       end
     
       worker.log "Starting worker #{worker}"
-      worker.work()
+
+      ::NewRelic.with_manual_agent do
+        worker.work()
+      end
     end
   
     #----------
@@ -201,7 +232,10 @@ namespace :scprv4 do
       end
     
       worker.log "Starting worker #{worker}"
-      worker.work()
+
+      ::NewRelic.with_manual_agent do
+        worker.work()
+      end
     end
   end
 end
