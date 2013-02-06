@@ -74,13 +74,7 @@ module AdminListHelper
   def display_ticket_status(status)
     content_tag :div, Ticket::STATUS_TEXT[status], class: ticket_status_bootstrap_map[status]
   end
-  
-  def display_bylines(bylines)
-    if bylines.present?
-      bylines.first.user.try(:name) || bylines.first.name
-    end
-  end
-  
+    
   def display_air_status(air_status)
     KpccProgram::PROGRAM_STATUS[air_status]
   end

@@ -43,9 +43,9 @@ class VideoShell < ActiveRecord::Base
     define_list do
       column :headline
       column :slug
-      column :bylines
-      column :status
+      column :byline
       column :published_at
+      column :status
     end
   end
   include Concern::Methods::ContentJsonMethods

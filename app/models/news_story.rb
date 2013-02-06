@@ -73,10 +73,10 @@ class NewsStory < ActiveRecord::Base
       
       column :headline
       column :slug
-      column :byline, display: ->(story) { story.byline }
+      column :byline
       column :audio
-      column :status
       column :published_at
+      column :status
       
       filter :status, collection: -> { ContentBase.status_text_collect }
       filter :bylines, collection: -> { Bio.select_collection }

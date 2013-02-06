@@ -60,9 +60,9 @@ class BlogEntry < ActiveRecord::Base
       
       column :headline
       column :blog
-      column :bylines
-      column :status
+      column :byline
       column :published_at
+      column :status
       
       filter :blog_id, collection: -> { Blog.select_collection }
       filter :bylines, collection: -> { Bio.select_collection }
