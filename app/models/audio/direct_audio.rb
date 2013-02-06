@@ -18,14 +18,14 @@ class Audio
       end
     
       #------------
-      # Proxy to Audio::Sync::bulk_sync_awaiting_audio!
-      def bulk_sync!
-        Audio::Sync.bulk_sync_awaiting_audio!(self)
+      # Proxy to Audio::Sync::bulk_sync_awaiting_audio
+      def bulk_sync
+        Audio::Sync.bulk_sync_awaiting_audio(self)
       end
     end # singleton
     
-    def sync!
-      Audio::Sync.sync_if_file_exists!(self)
+    def sync
+      Audio::Sync.sync_if_file_exists(self)
     end
   end # DirectAudio
 end # Audio
