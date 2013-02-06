@@ -3,22 +3,18 @@ namespace :scprv4 do
   task :test_error => [:environment] do
     puts "*** [#{Time.now}] Testing Error..."
 
-    class ErrorTesting
-      include NewRelic::Agent::Instrumentation::ControllerInstrumentation
-      def test_error
-        raise StandardError, "NewRelic Test Exception"
-      end
-
-      add_transaction_tracer :test_error, category: :task
-    end
+    # Now test these errors. This Rake task will fail (that's the point)
+    Resque.enqueue(ErrorTestJob)
 
     NewRelic.with_manual_agent do
-      test = ErrorTesting.new
+      test = ErrorTest.new
       test.test_error
     end
 
     puts "Finished."
   end
+
+  #----------
 
   desc "Place a full sphinx index into the queue"
   task :enqueue_index => [:environment] do
@@ -31,12 +27,8 @@ namespace :scprv4 do
   
   desc "Sync NPR Stories with NPR API"
   task :npr_fetch => [:environment] do
-    puts "*** [#{Time.now}] Syncing NPR Stories..."
-    
-    NewRelic.with_manual_agent do
-      NprStory.sync_with_api
-    end
-    
+    puts "*** [#{Time.now}] Enqueueing sync of NPR Stories..."
+    NprStory.async_sync_with_api
     puts "Finished."
   end
   
