@@ -83,7 +83,7 @@ class Audio
               end
             end # Dir
           
-          rescue Exception => e
+          rescue => e
             self.log "Could not save ProgramAudio: #{e}"
             next
           end

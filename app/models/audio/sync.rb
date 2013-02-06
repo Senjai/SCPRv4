@@ -49,7 +49,7 @@ class Audio
             self.log "Still awaiting audio file for Audio ##{audio.id}: #{audio.full_path}"
             false
           end
-        rescue Exception => e
+        rescue => e
           self.log "Could not save Audio ##{audio.id}: #{e}"
           false
         end

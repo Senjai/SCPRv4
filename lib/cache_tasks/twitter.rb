@@ -38,7 +38,7 @@ module CacheTasks
         self.log "Fetching the latest #{@options[:count]} tweets for #{@screen_name}..."
         tweets = @tweeter.user_timeline(@screen_name, @options)
         tweets
-      rescue Exception => e
+      rescue => e
         self.log "Error: \n #{e}"
         false
       end

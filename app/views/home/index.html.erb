@@ -2,7 +2,7 @@
 <%=
   begin
     render :partial => @homepage.base, locals: { :homepage => @homepage }
-  rescue Exception => e
+  rescue => e
     if Rails.env == "production"
       render :partial => "default", locals: { :homepage => @homepage }
     else

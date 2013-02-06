@@ -85,7 +85,7 @@ class Admin::BaseController < ActionController::Base
   
   #-------------------------
   # Override this method from CustomErrors so we can specify the template path
-  def render_error(status, e=Exception)
+  def render_error(status, e=StandardError)
     render template: "/admin/errors/error_#{status}", status: status, locals: { error: e }
     report_error(e)
   end

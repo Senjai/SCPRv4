@@ -14,7 +14,7 @@ class Audio::ComputeFileInfoJob
       audio = Audio.find(id)
       audio.compute_file_info!
       self.log "Saved Audio ##{audio.id}. Duration: #{audio.duration}; Size: #{audio.size}"
-    rescue Exception => e
+    rescue => e
       self.log "Couldn't save audio file info: #{e}"
     end
   end

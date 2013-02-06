@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   
   #----------
   # Override this method from CustomErrors to set the layout
-  def render_error(status, e=Exception)
+  def render_error(status, e=StandardError)
     respond_to do |format|
       format.html { render template: "/errors/error_#{status}", status: status, layout: "app_nosidebar", locals: { error: e } }
       format.xml { render xml: { error: status.to_s }, status: status }

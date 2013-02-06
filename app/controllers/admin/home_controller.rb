@@ -14,6 +14,6 @@ class Admin::HomeController < Admin::BaseController
   end
 
   def trigger_error
-    raise Exception, "This is a test error. It works (or does it?)"
+    raise StandardError, "This is a test error. It works (or does it?)"
   end
 end

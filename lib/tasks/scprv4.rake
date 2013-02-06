@@ -4,15 +4,15 @@ namespace :scprv4 do
     puts "*** [#{Time.now}] Testing Error..."
 
     class ErrorTesting
-      include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+      include NewRelic::Agent::Instrumentation::ControllerInstrumentation
       def test_error
-        raise Exception, "NewRelic Test Exception"
+        raise StandardError, "NewRelic Test Exception"
       end
 
       add_transaction_tracer :test_error, category: :task
     end
 
-    ::NewRelic.with_manual_agent do
+    NewRelic.with_manual_agent do
       test = ErrorTesting.new
       test.test_error
     end
@@ -33,7 +33,7 @@ namespace :scprv4 do
   task :npr_fetch => [:environment] do
     puts "*** [#{Time.now}] Syncing NPR Stories..."
     
-    ::NewRelic.with_manual_agent do
+    NewRelic.with_manual_agent do
       NprStory.sync_with_api
     end
     
@@ -53,7 +53,7 @@ namespace :scprv4 do
   task :fire_content_alarms => [:environment] do
     puts "*** [#{Time.now}] Firing pending content alarms..."
 
-    ::NewRelic.with_manual_agent do
+    NewRelic.with_manual_agent do
       ContentAlarm.fire_pending
     end
 
@@ -88,7 +88,7 @@ namespace :scprv4 do
     task :remote_blogs => [:environment] do
       puts "Caching remote blogs..."
 
-      ::NewRelic.with_manual_agent do
+      NewRelic.with_manual_agent do
         Blog.cache_remote_entries
       end
 
@@ -101,7 +101,7 @@ namespace :scprv4 do
     task :most_viewed => [:environment] do
       puts "*** [#{Time.now}] Caching most viewed..."
 
-      ::NewRelic.with_manual_agent do
+      NewRelic.with_manual_agent do
         analytics = API_KEYS["google"]["analytics"]
         task = CacheTasks::MostViewed.new(
           analytics["client_id"],
@@ -123,7 +123,7 @@ namespace :scprv4 do
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Caching most commented..."
 
-      ::NewRelic.with_manual_agent do
+      NewRelic.with_manual_agent do
         task = CacheTasks::MostCommented.new("kpcc", "3d", API_KEYS['disqus']['api_key'], 5)
         task.verbose = true
         task.run
@@ -138,7 +138,7 @@ namespace :scprv4 do
     task :twitter => [:environment] do
       puts "*** [#{Time.now}] Caching KPCCForum tweets...."
 
-      ::NewRelic.with_manual_agent do
+      NewRelic.with_manual_agent do
         task = CacheTasks::Twitter.new("KPCCForum")
         task.verbose = true
         task.run
@@ -153,7 +153,7 @@ namespace :scprv4 do
     task :programs => [ :environment ] do
       puts "Caching remote programs..."
 
-      ::NewRelic.with_manual_agent do
+      NewRelic.with_manual_agent do
         OtherProgram.active.each { |p| p.cache }
       end
 
@@ -198,7 +198,7 @@ namespace :scprv4 do
     
       worker.log "Starting worker #{worker}"
 
-      ::NewRelic.with_manual_agent do
+      NewRelic.with_manual_agent do
         worker.work()
       end
     end
@@ -226,7 +226,7 @@ namespace :scprv4 do
     
       worker.log "Starting worker #{worker}"
 
-      ::NewRelic.with_manual_agent do
+      NewRelic.with_manual_agent do
         worker.work()
       end
     end
@@ -254,7 +254,7 @@ namespace :scprv4 do
     
       worker.log "Starting worker #{worker}"
 
-      ::NewRelic.with_manual_agent do
+      NewRelic.with_manual_agent do
         worker.work()
       end
     end
