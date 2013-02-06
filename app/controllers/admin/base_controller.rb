@@ -87,6 +87,7 @@ class Admin::BaseController < ActionController::Base
   # Override this method from CustomErrors so we can specify the template path
   def render_error(status, e=Exception)
     render template: "/admin/errors/error_#{status}", status: status, locals: { error: e }
+    NewRelic::Agent.agent.error_collector.notice_error(e)
   end
   
   #-------------------------
