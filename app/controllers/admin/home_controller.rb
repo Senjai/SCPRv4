@@ -1,5 +1,5 @@
 class Admin::HomeController < Admin::BaseController
-  def index    
+  def index
     breadcrumb "Dashboard", admin_root_path
     
     # Get the latest activity
@@ -11,5 +11,9 @@ class Admin::HomeController < Admin::BaseController
   
   def not_found
     render_error(404)
+  end
+
+  def trigger_error
+    raise Exception, "This is a test error. It works (or does it?)"
   end
 end

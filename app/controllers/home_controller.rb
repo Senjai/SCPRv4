@@ -7,7 +7,7 @@ class HomeController < ApplicationController
   # Only works in development
   before_filter :generate_homepage, only: :index, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
   
-  def index        
+  def index
     @homepage = Homepage.published.first
     @schedule_current = Schedule.on_at(Time.now).first
   end
@@ -24,6 +24,10 @@ class HomeController < ApplicationController
   
   def not_found
     render_error(404)
+  end
+
+  def trigger_error
+    raise Exception, "This is a test error. It works (or does it?)"
   end
   
   #----------

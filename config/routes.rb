@@ -338,10 +338,14 @@ Scprv4::Application.routes.draw do
       get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
       get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
 
+      match "trigger_error" => 'home#trigger_error'
+
       # 404 catch-all
       match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
     end
   end
+
+  match "trigger_error" => 'home#trigger_error'
 
   # 404 catch-all
   match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local

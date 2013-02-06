@@ -19,6 +19,7 @@ module Concern
       
       def render_error(status, e=Exception)
         render template: "/errors/error_#{status}", status: status, locals: { errors: e }
+        super
       end
     end # CustomErrors
   end # Controller
