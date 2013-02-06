@@ -24,9 +24,15 @@ class Audio
     #------------
     
     class << self
+      include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
+      #------------------------
+
       def store_dir(audio)
         audio.content.show.audio_dir
       end
+
+      #------------------------
   
       def filename(audio)
         audio.mp3.file.filename
@@ -85,8 +91,10 @@ class Audio
         
         self.log "Finished syncing ProgramAudio. Total synced: #{synced.size}"
         synced
-      end # sync
+      end # bulk_sync
     
+      add_transaction_tracer :bulk_sync, category: :task
+
       #------------
   
       private
@@ -101,7 +109,8 @@ class Audio
           existing_hash
         end
       end
-    
+
+      #------------------------
       # An array of what got synced
       def synced
         @synced ||= []

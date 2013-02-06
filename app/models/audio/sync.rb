@@ -4,6 +4,8 @@ class Audio
     logs_as_task
     
     class << self
+      include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
       #------------
       # Enqueue the sync task for any subclasses that need it
       def enqueue_all
@@ -30,6 +32,8 @@ class Audio
           self.log "Finished. Total synced: #{synced}"
         end
       end
+
+      add_transaction_tracer :bulk_sync_awaiting_audio, category: :task
     
       #------------
       # Enco and Direct audio sync this way
@@ -50,6 +54,8 @@ class Audio
           false
         end
       end
+
+      add_transaction_tracer :bulk_sync_awaiting_audio, category: :task
     end # singleton
   end # Sync
 end # Audio

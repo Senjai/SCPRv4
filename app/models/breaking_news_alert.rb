@@ -1,4 +1,6 @@
 class BreakingNewsAlert < ActiveRecord::Base
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
   self.table_name = 'layout_breakingnewsalert'
   has_secretary
   
@@ -146,11 +148,13 @@ class BreakingNewsAlert < ActiveRecord::Base
         }
       )
       
-      campaign.activate
-      
-      self.update_column(:email_sent, true)
+      if campaign.activate
+        self.update_column(:email_sent, true)
+      end
     end
   end
+  
+  add_transaction_tracer :publish_email, category: :task
   
   #-------------------
   
