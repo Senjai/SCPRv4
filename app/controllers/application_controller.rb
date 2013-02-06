@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
       format.xml { render xml: { error: status.to_s }, status: status }
       format.text { render text: status, status: status}
     end
-
-    NewRelic::Agent.agent.error_collector.notice_error(e)
+    
+    report_error(e)
   end
 end

@@ -19,6 +19,12 @@ module Concern
       
       def render_error(status, e=Exception)
         render template: "/errors/error_#{status}", status: status, locals: { errors: e }
+        report_error(e)
+      end
+      
+      #----------------------
+            
+      def report_error(e)
         NewRelic::Agent.agent.error_collector.notice_error(e)
       end
     end # CustomErrors
