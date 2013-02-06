@@ -42,7 +42,7 @@ module Concern
       def related_content_json=(json)
         return if json.empty?
         
-        json = Array(JSON.load(json)).sort_by { |c| c["position"] }
+        json = Array(JSON.load(json)).sort_by { |c| c["position"].to_i }
         loaded_references = []
         
         json.each do |content_hash|

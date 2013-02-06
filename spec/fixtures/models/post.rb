@@ -10,7 +10,7 @@ module TestClass
     
     def build_content_association(content_hash, content)
       TestClass::PostContent.new(
-        :position => content_hash["position"], 
+        :position => content_hash["position"].to_i, 
         :content  => content
       )
     end
