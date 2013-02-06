@@ -1,4 +1,5 @@
 module AuthenticationHelper
+  # For features
   def login(trait=:superuser, options={})
     @user = create :admin_user, trait, options.reverse_merge!(username: "bricker", unencrypted_password: "secret55")
     visit admin_login_path

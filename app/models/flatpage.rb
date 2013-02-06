@@ -19,7 +19,6 @@ class Flatpage < ActiveRecord::Base
   # -------------------
   # Validations
   validates :url, presence: true, uniqueness: true
-  validates_inclusion_of :template, in: TEMPLATE_OPTIONS.map { |o| o[1] }
   
   # -------------------
   # Callbacks

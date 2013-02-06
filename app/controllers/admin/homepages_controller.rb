@@ -7,7 +7,7 @@ class Admin::HomepagesController < Admin::ResourceController
 
       if @homepage.unconditionally_valid?
         @title = @homepage.to_title
-        render "/admin/homepages/previews/#{@homepage.base}", layout: "/admin/preview/application", locals: { homepage: @homepage }
+        render "/admin/homepages/previews/#{@homepage.base}", layout: "admin/preview/application", locals: { homepage: @homepage }
       else
         render_preview_validation_errors(@homepage)
       end

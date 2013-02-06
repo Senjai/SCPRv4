@@ -101,7 +101,7 @@ shared_examples_for "managed resource destroy" do
     updated_record
   end
       
-  describe "Destroy" do    
+  describe "Destroy" do
     before :each do
       valid_record.save!
       visit valid_record.admin_edit_path

@@ -8,7 +8,7 @@ class ProgramsController < ApplicationController
   def index
     @kpcc_programs = KpccProgram.active.order("title")
     @other_programs = OtherProgram.active.order("title")
-    render :layout => "application"
+    render layout: "application"
   end
   
   #----------

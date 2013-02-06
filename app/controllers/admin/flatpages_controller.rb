@@ -9,15 +9,15 @@ class Admin::FlatpagesController < Admin::ResourceController
         @title = @flatpage.to_title
 
         if @flatpage.is_redirect?
-          render '/admin/shared/_notice', layout: "/admin/minimal", 
+          render '/admin/shared/_notice', layout: "admin/minimal", 
             locals: { message: "This flatpage will redirect to <strong>#{@flatpage.redirect_url}</strong>".html_safe }
         else
           layout_template = begin
             case @flatpage.template
-              when "full"  then '/admin/preview/app_nosidebar'
-              when "forum" then '/admin/preview/forum'
+              when "full"  then 'admin/preview/app_nosidebar'
+              when "forum" then 'admin/preview/forum'
               when "none"  then false
-              else '/admin/preview/application'
+              else 'admin/preview/application'
             end
           end
 
