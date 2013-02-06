@@ -12,7 +12,10 @@ namespace :scprv4 do
   desc "Sync NPR Stories with NPR API"
   task :npr_fetch => [:environment] do
     puts "*** [#{Time.now}] Syncing NPR Stories..."
+    ENV['NEWRELIC_DISPATCHER'] ||= :passenger
+    ::NewRelic::Agent.manual_start
     NprStory.sync_with_api
+    ::NewRelic::Agent.shutdown
     puts "Finished."
   end
   
