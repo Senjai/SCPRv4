@@ -3,7 +3,7 @@ class Admin::AdminUsersController < Admin::ResourceController
   # Users should always be able to see and update their
   # own profile.
   def authorize_resource
-    if admin_user == @record && %w{show edit update}.include?(action_name)
+    if admin_user == @record && %w{show edit update activity}.include?(action_name)
       return true
     end
     
