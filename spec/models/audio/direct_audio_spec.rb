@@ -19,20 +19,20 @@ describe Audio::DirectAudio do
   
   #----------------
 
-  describe "::bulk_sync!" do
-    it "sends to Audio::Sync::bulk_sync_awaiting_audio!" do
-      Audio::Sync.should_receive(:bulk_sync_awaiting_audio!).with(Audio::DirectAudio)
-      Audio::DirectAudio.bulk_sync!
+  describe "::bulk_sync" do
+    it "sends to Audio::Sync::bulk_sync_awaiting_audio" do
+      Audio::Sync.should_receive(:bulk_sync_awaiting_audio).with(Audio::DirectAudio)
+      Audio::DirectAudio.bulk_sync
     end
   end
   
   #----------------
   
-  describe "::sync!" do
-    it "sends to Audio::Sync::sync_if_file_exists!" do
+  describe "::sync" do
+    it "sends to Audio::Sync::sync_if_file_exists" do
       direct = create :direct_audio
-      Audio::Sync.should_receive(:sync_if_file_exists!).with(direct)
-      direct.sync!
+      Audio::Sync.should_receive(:sync_if_file_exists).with(direct)
+      direct.sync
     end
   end
 end

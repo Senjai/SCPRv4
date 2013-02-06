@@ -6,7 +6,7 @@
 # It belongs to a ShowEpisode or ShowSegment
 # for a KpccProgram
 #
-# Doesn't need an instance `#sync!` method,
+# Doesn't need an instance `#sync` method,
 # because an instance is only created if
 # the audio exists.
 #
@@ -36,7 +36,7 @@ class Audio
       # TODO This could be broken up into smaller units
       # Since this is run as a task, we need some informative
       # logging in case of failure, hence the begin/rescue block.
-      def bulk_sync!
+      def bulk_sync
         # Each KpccProgram with episodes and which can sync audio
         KpccProgram.can_sync_audio.each do |program|
           begin
@@ -85,7 +85,7 @@ class Audio
         
         self.log "Finished syncing ProgramAudio. Total synced: #{synced.size}"
         synced
-      end # sync!
+      end # sync
     
       #------------
   

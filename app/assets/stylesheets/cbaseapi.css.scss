@@ -79,13 +79,15 @@ ul.cbaseList {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1040;
+  z-index: 0;
   background-color: #000000;
 }
 .modal-backdrop.fade {
+  display: none;
   opacity: 0;
 }
 .modal-backdrop, .modal-backdrop.fade.in {
+  display: block;
   opacity: 0.8;
   filter: alpha(opacity=80);
 }

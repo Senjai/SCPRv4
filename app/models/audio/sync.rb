@@ -13,8 +13,8 @@ class Audio
       end
     
       #------------
-      # Run `#sync!` on all awaiting audio
-      def bulk_sync_awaiting_audio!(klass, limit=nil)
+      # Run `#sync` on all awaiting audio
+      def bulk_sync_awaiting_audio(klass, limit=nil)
         limit ||= 2.weeks.ago
         awaiting = klass.awaiting_audio.where("created_at > ?", limit)
         synced = 0
@@ -24,7 +24,7 @@ class Audio
         else
         
           awaiting.each do |audio|
-            synced += 1 if audio.sync!
+            synced += 1 if audio.sync
           end
           
           self.log "Finished. Total synced: #{synced}"
@@ -33,8 +33,8 @@ class Audio
     
       #------------
       # Enco and Direct audio sync this way
-      # Don't use this method directly, use object.sync!
-      def sync_if_file_exists!(audio)
+      # Don't use this method directly, use object.sync
+      def sync_if_file_exists(audio)
         begin
           if File.exists? audio.full_path
             audio.send :write_attribute, :mp3, audio.filename

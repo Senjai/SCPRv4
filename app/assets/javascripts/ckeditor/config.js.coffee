@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = (config) ->
         ['Bold', 'Italic', 'Underline', "RemoveFormat"]
         ['NumberedList', 'BulletedList', 'Blockquote']
         ['Link', 'Unlink', 'Image', 'MediaEmbed']
-        ['Find', 'Paste', 'PasteText', 'PasteFromWord']
+        ['Find', 'Paste']
         ['Source', 'Maximize']
     ]
     

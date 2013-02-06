@@ -41,12 +41,6 @@ class BlogEntry < ActiveRecord::Base
   # Association
   belongs_to :blog
   
-  has_many :tagged, class_name: "TaggedContent", as: :content
-  has_many :tags, through: :tagged, dependent: :destroy
-  
-  has_many :blog_entry_blog_categories, foreign_key: 'entry_id'
-  has_many :blog_categories, through: :blog_entry_blog_categories, dependent: :destroy
-  
   #------------------
   # Validation
   validates_presence_of :blog
@@ -66,9 +60,9 @@ class BlogEntry < ActiveRecord::Base
       
       column :headline
       column :blog
-      column :bylines
-      column :status
+      column :byline
       column :published_at
+      column :status
       
       filter :blog_id, collection: -> { Blog.select_collection }
       filter :bylines, collection: -> { Bio.select_collection }

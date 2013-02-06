@@ -43,7 +43,7 @@ describe Audio::ProgramAudio do
   
   #----------------
   
-  describe "::bulk_sync!" do
+  describe "::bulk_sync" do
     let(:program) { create :kpcc_program, display_episodes: true, audio_dir: "coolshowbro", air_status: "onair" }
 
     before :each do
@@ -58,21 +58,21 @@ describe Audio::ProgramAudio do
         Audio::ProgramAudio.stub(:existing) { { } }
         Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
         File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(1.month.ago)
-        Audio::ProgramAudio.bulk_sync!.should eq []
+        Audio::ProgramAudio.bulk_sync.should eq []
       end
       
       it "if file has already been synced in database" do
         Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
         Audio::ProgramAudio.stub(:existing) { { "mbrand/20121002_mbrand.mp3" => true } }
         String.any_instance.should_not_receive(:match)
-        Audio::ProgramAudio.bulk_sync!.should eq []
+        Audio::ProgramAudio.bulk_sync.should eq []
       end
     
       it "if filename doesn't match the regex" do
         Audio::ProgramAudio.stub(:existing) { { } }
         Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["nomatch.mp3"])
         Time.should_not_receive(:new)
-        Audio::ProgramAudio.bulk_sync!.should eq []
+        Audio::ProgramAudio.bulk_sync.should eq []
       end
     end
     
@@ -89,7 +89,7 @@ describe Audio::ProgramAudio do
 
         audio = build :program_audio, content: program.episodes.first
         Audio::ProgramAudio.should_receive(:new).and_return(audio)
-        Audio::ProgramAudio.bulk_sync!.should eq [audio]
+        Audio::ProgramAudio.bulk_sync.should eq [audio]
       end
     
       it "if all the criteria pass for segments" do
@@ -99,7 +99,7 @@ describe Audio::ProgramAudio do
 
         audio = build :program_audio, content: program.segments.first
         Audio::ProgramAudio.should_receive(:new).and_return(audio)
-        Audio::ProgramAudio.bulk_sync!.should eq [audio]
+        Audio::ProgramAudio.bulk_sync.should eq [audio]
       end
       
       it "only grabs `existing` once" do
@@ -109,7 +109,7 @@ describe Audio::ProgramAudio do
         create :show_segment, show: p2
 
         Audio::ProgramAudio.should_receive(:all).once
-        Audio::ProgramAudio.bulk_sync!
+        Audio::ProgramAudio.bulk_sync
       end
     end
   end

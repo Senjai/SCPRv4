@@ -22,7 +22,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-fast-forward icon-white"></i> Quick Nav <b class="caret"></b></a>
             <ul class="dropdown-menu cms-nav" style="width: 400px;">
-              <% [BlogEntry, ShowSegment, NewsStory, ContentShell, Event].each do |model| %>
+              <% [BlogEntry, ShowSegment, NewsStory, ContentShell, Event, BreakingNewsAlert].each do |model| %>
                 <%= guard model do %>
                   <li>
                     <a href="<%=model.admin_index_path%>"><%= model.to_title.pluralize %></a>

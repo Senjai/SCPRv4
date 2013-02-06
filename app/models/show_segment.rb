@@ -62,7 +62,8 @@ class ShowSegment < ActiveRecord::Base
       
       column :headline
       column :show
-      column :bylines
+      column :byline
+      column :audio
       column :published_at
       column :status
       
