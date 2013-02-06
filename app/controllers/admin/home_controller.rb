@@ -10,7 +10,7 @@ class Admin::HomeController < Admin::BaseController
   #------------------------
   
   def not_found
-    render_error(404)
+    render_error(404, ActionController::RoutingError.new("Not Found"))
   end
 
   def trigger_error
