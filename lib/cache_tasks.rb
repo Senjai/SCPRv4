@@ -8,6 +8,8 @@
 #
 module CacheTasks
   class Task
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
     attr_accessor :verbose
     
     def cacher

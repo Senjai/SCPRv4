@@ -56,6 +56,8 @@ module CacheTasks
       
       resp.body
     end
+
+    add_transaction_tracer :fetch, category: :task
     
     #---------------
     
@@ -71,6 +73,8 @@ module CacheTasks
       
       objects.uniq
     end
+
+    add_transaction_tracer :parse, category: :task
     
     #---------------
     

@@ -40,6 +40,8 @@ module CacheTasks
       response
     end
 
+    add_transaction_tracer :fetch, category: :task
+
     #--------------
     
     def parse(response)
@@ -55,6 +57,9 @@ module CacheTasks
       
       content
     end
+
+    add_transaction_tracer :parse, category: :task
+
     
     #--------------
     

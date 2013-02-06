@@ -1,4 +1,6 @@
 class NprStory < ActiveRecord::Base
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
   include AdminResource::Model::Identifier
   include AdminResource::Model::Naming
   logs_as_task
@@ -56,6 +58,8 @@ class NprStory < ActiveRecord::Base
   #---------------
 
   class << self
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
     #---------------
     # Since this class isn't getting (and, for the
     # most part, doesn't need) the AdminResource
@@ -122,6 +126,8 @@ class NprStory < ActiveRecord::Base
       # Return which stories were actually cached
       added
     end
+
+    add_transaction_tracer :sync_with_api, category: :task
   end
 
   #---------------
@@ -243,4 +249,6 @@ class NprStory < ActiveRecord::Base
     self.update_attribute(:new, false)
     news_story
   end
+
+  add_transaction_tracer :import, category: :task
 end

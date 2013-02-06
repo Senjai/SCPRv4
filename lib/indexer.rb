@@ -8,6 +8,8 @@
 # Arguments: A list of model classes to index.
 #
 class Indexer
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
   attr_reader :indexes, :models
   
   def initialize(*models)
@@ -28,6 +30,8 @@ class Indexer
       @controller.index @indexes
     end
   end
+
+  add_transaction_tracer :index, category: :task
   
   #--------------------
   # Enqueue the Index task.

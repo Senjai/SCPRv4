@@ -1,4 +1,6 @@
 class OtherProgram < ActiveRecord::Base
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   
@@ -111,4 +113,6 @@ class OtherProgram < ActiveRecord::Base
       cacher.cache(feed.entries.first(5), "/programs/cached/podcast_entry", "ext_program:#{self.slug}:#{cache_suffix}", local: :entries)
     end
   end
+
+  add_transaction_tracer :cache, category: :task
 end

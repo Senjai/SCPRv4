@@ -49,6 +49,8 @@ class Blog < ActiveRecord::Base
   #-------------------
   
   class << self
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
     def cache_remote_entries
       cacher = CacheController.new
 
@@ -58,6 +60,8 @@ class Blog < ActiveRecord::Base
         end
       end
     end
+    
+    add_transaction_tracer :cache_remote_entries, category: :task
     
     #-------------------
     # Maps all records to an array of arrays, to be

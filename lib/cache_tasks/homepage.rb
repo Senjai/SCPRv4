@@ -20,6 +20,8 @@ module CacheTasks
       true
     end
 
+    add_transaction_tracer :run, category: :task
+
     #---------------
     
     def enqueue

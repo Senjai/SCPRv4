@@ -55,7 +55,7 @@ class Audio
         end
       end
 
-      add_transaction_tracer :bulk_sync_awaiting_audio, category: :task
+      add_transaction_tracer :sync_if_file_exists, category: :task
     end # singleton
   end # Sync
 end # Audio

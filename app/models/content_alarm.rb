@@ -1,4 +1,6 @@
 class ContentAlarm < ActiveRecord::Base
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
   self.table_name = "contentbase_contentalarm"
   logs_as_task
   
@@ -47,6 +49,8 @@ class ContentAlarm < ActiveRecord::Base
       false
     end
   end
+  
+  add_transaction_tracer :fire, category: :task
   
   #---------------------
   
