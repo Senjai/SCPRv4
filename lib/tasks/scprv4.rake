@@ -1,4 +1,25 @@
-namespace :scprv4 do 
+namespace :scprv4 do
+
+  task :test_error => [:environment] do
+    puts "*** [#{Time.now}] Testing Error..."
+
+    class ErrorTesting
+      include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+      def test_error
+        raise Exception, "NewRelic Test Exception"
+      end
+
+      add_transaction_tracer :test_error, category: :task
+    end
+
+    ::NewRelic.with_manual_agent do
+      test = ErrorTesting.new
+      test.test_error
+    end
+
+    puts "Finished."
+  end
+
   desc "Place a full sphinx index into the queue"
   task :enqueue_index => [:environment] do
     puts "*** [#{Time.now}] Enqueueing sphinx index into Resque..."
