@@ -87,4 +87,34 @@ class ApplicationController < ActionController::Base
     
     report_error(e)
   end
+
+  #----------
+  # Enforce both Upper and Lower page limits.
+  # Pass in the results per page.
+  def enforce_page_limits(per_page)
+    enforce_page_lower_limit
+    enforce_page_upper_limit(per_page)
+  end
+
+  #----------
+  # Enforce Lower page limit. This will not allow a page
+  # number to be below 1
+  def enforce_page_lower_limit
+    if params[:page] && params[:page].to_i < 1
+      params[:page] = 1
+    end
+  end
+
+  #----------
+  # Enforce an upper limit. Only necessary with Sphinx results.
+  def enforce_page_upper_limit(per_page)
+    return if !params[:page]
+
+    # Reset to page 1 if the requested page is too high
+    # Otherwise an error will occur
+    # TODO: Fallback to SQL query instead of just cutting it off.
+    if params[:page] && params[:page].to_i > (SPHINX_MAX_MATCHES / per_page.to_i)
+      params[:page] = 1 
+    end
+  end
 end
