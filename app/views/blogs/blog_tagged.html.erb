@@ -1,5 +1,5 @@
 <% page_title "Entries tagged '#{@tag.name}' at #{@blog.name}" %>
-<% @blogtitle_extra = ": Tagged '#{@tag.name}'" %>
+<% @BLOGTITLE_EXTRA = ": Tagged '#{@tag.name}'" %>
 
 <div class="blog-landing">
   <%= render partial: "/blogs/entry", collection: @entries, as: :entry, locals: { blog: @blog } %>
