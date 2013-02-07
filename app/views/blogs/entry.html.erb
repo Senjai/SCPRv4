@@ -7,7 +7,7 @@
 <% end %>
 
 <div class="fold" id="fold">
-  <%= render "/shared/cwidgets/pij_query", content: @entry %>
+  <%= render "/shared/cwidgets/related_content_and_links", content: @entry %>
   
   <!-- Next/Previous Entries -->
   <%= content_cache "next_prev/v1/#{@entry.obj_key}" do %>
