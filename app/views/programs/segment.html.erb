@@ -6,8 +6,7 @@
 <% end %>
 
 <div class="fold" id="fold">
-  <%= content_widget "related_content_and_links", @segment %>
-  <%= content_widget "pij_query", @segment %>
+  <%= render "/shared/cwidgets/related_content_and_links", content: @segment %>
   
   <aside class="other-segments" id="other-segments">
     <div class="row-fluid">
