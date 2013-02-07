@@ -157,14 +157,14 @@ class BlogEntry < ActiveRecord::Base
   #-------------------
 
   def route_hash
-    return {} if !self.persisted? or !self.published?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :blog           => self.persisted_record.blog.slug,
-      :year           => self.persisted_record.published_at_was.year, 
-      :month          => "%02d" % self.persisted_record.published_at_was.month,
-      :day            => "%02d" % self.persisted_record.published_at_was.day,
+      :year           => self.persisted_record.published_at.year, 
+      :month          => "%02d" % self.persisted_record.published_at.month,
+      :day            => "%02d" % self.persisted_record.published_at.day,
       :id             => self.persisted_record.id,
-      :slug           => self.persisted_record.slug_was,
+      :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }
   end

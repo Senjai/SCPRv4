@@ -111,7 +111,7 @@ class NewsStory < ActiveRecord::Base
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
-      :year           => self.persisted_record.published_at.year.to_s, 
+      :year           => self.persisted_record.published_at.year, 
       :month          => "%02d" % self.persisted_record.published_at.month, 
       :day            => "%02d" % self.persisted_record.published_at.day, 
       :id             => self.persisted_record.id,

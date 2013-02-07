@@ -122,7 +122,7 @@ class ShowSegment < ActiveRecord::Base
   #----------
   
   def route_hash
-    return {} if !self.published? || !self.persisted?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :show           => self.persisted_record.show.slug,
       :year           => self.persisted_record.published_at.year, 
