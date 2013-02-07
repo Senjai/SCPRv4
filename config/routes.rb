@@ -53,7 +53,7 @@ Scprv4::Application.routes.draw do
   # Flatpage paths will override anything below this route.
   match '*flatpage_path' => "flatpages#show", constraints: FlatpageConstraint.new
   match '/:slug(/:page)'     => "sections#show",  constraints: SectionConstraint.new,   defaults: { page: 1 }, as: :section
-  match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new,  defaults: { page: 1 }, as: :category
+  match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new,  defaults: { page: 1 }, as: :category, constraints: { page: /\d+/ }
   
   
   # RSS
@@ -82,8 +82,8 @@ Scprv4::Application.routes.draw do
   
   # Programs / Segments
   match '/programs/:show/archive/'                      => "programs#archive",    as: :program_archive
-  match '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",    as: :segment  
-  match '/programs/:show/:year/:month/:day/'            => "programs#episode",    as: :episode
+  match '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",    as: :segment,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
+  match '/programs/:show/:year/:month/:day/'            => "programs#episode",    as: :episode,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
   match '/programs/:show(/page/:page)'                  => 'programs#show',       as: :program,           constraints: { page: /\d+/ }
   match '/programs/'                                    => 'programs#index',      as: :programs
   match '/schedule/'                                    => 'programs#schedule',   as: :schedule
@@ -93,7 +93,7 @@ Scprv4::Application.routes.draw do
   match '/events/forum/archive/'            => 'events#archive',    as: :forum_events_archive
   match '/events/forum/'                    => 'events#forum',      as: :forum_events
   match '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }
-  match '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event
+  match '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/}
   match '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }
   
   
