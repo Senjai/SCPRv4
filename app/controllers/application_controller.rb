@@ -108,8 +108,6 @@ class ApplicationController < ActionController::Base
   #----------
   # Enforce an upper limit. Only necessary with Sphinx results.
   def enforce_page_upper_limit(per_page)
-    return if !params[:page]
-
     # Reset to page 1 if the requested page is too high
     # Otherwise an error will occur
     # TODO: Fallback to SQL query instead of just cutting it off.
