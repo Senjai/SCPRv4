@@ -52,7 +52,7 @@ Scprv4::Application.routes.draw do
   
   # Flatpage paths will override anything below this route.
   match '*flatpage_path' => "flatpages#show", constraints: FlatpageConstraint.new
-  match '/:slug(/:page)'     => "sections#show",  constraints: SectionConstraint.new,   defaults: { page: 1 }, as: :section
+  match '/:slug(/:page)'     => "sections#show",  constraints: SectionConstraint.new,   defaults: { page: 1 }, as: :section,  constraints: { page: /\d+/ }
   match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new,  defaults: { page: 1 }, as: :category, constraints: { page: /\d+/ }
   
   
