@@ -1,0 +1,10 @@
+<% page_title "Entries tagged '#{@tag.name}' at #{@blog.name}" %>
+<% @BLOGTITLE_EXTRA = ": Tagged '#{@tag.name}'" %>
+
+<div class="blog-landing">
+  <%= render partial: "/blogs/entry", collection: @entries, as: :entry, locals: { blog: @blog } %>
+</div>
+
+<div class="offset2 blog-pag">
+  <%= paginate @entries %>
+</div>

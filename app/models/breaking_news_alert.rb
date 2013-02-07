@@ -83,7 +83,7 @@ class BreakingNewsAlert < ActiveRecord::Base
       client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])
       
       description = "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}"
-      name = self.headline[0..100]
+      name = self.headline[0..50]
       view = CacheController.new
       
       email = Eloqua::Email.create(
