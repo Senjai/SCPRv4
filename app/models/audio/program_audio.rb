@@ -56,7 +56,7 @@ class Audio
               #    worry about files less than 14 days old
               file_date = File.mtime(absolute_mp3_path)
               next if file_date < 14.days.ago
-            
+
               # 1. File already exists (program audio only needs to exist once in the DB)
               next if existing[File.join(program.audio_dir, file)]
       
@@ -92,11 +92,11 @@ class Audio
         self.log "Finished syncing ProgramAudio. Total synced: #{synced.size}"
         synced
       end # bulk_sync
-    
+
       add_transaction_tracer :bulk_sync, category: :task
 
       #------------
-  
+
       private
 
       #------------
@@ -105,7 +105,7 @@ class Audio
       def existing
         @existing ||= begin
           existing_hash = {}
-          Audio::ProgramAudio.all.map { |a| existing_hash[a.path] = true }
+          Audio::ProgramAudio.all.each { |a| existing_hash[a.path] = true }
           existing_hash
         end
       end

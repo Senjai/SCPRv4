@@ -61,7 +61,6 @@ RSpec.configure do |config|
   end
 
   config.after :suite do
-    # Just incase
     FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
   end
 end

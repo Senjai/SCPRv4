@@ -46,71 +46,58 @@ describe Audio::ProgramAudio do
   describe "::bulk_sync" do
     let(:program) { create :kpcc_program, display_episodes: true, audio_dir: "coolshowbro", air_status: "onair" }
 
-    before :each do
+    before do
       # October 02, 2012 is the date on the fixture mp3 file
       episode = create :show_episode, air_date: Chronic.parse("October 02, 2012"), show: program
       segment = create :show_segment, :published, published_at: Chronic.parse("October 02, 2012"), show: program
       KpccProgram.can_sync_audio.count.should eq 1
     end
-    
-    context "doesn't sync" do
-      it "if file mtime is too old" do
-        Audio::ProgramAudio.stub(:existing) { { } }
-        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
-        File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(1.month.ago)
-        Audio::ProgramAudio.bulk_sync.should eq []
-      end
-      
-      it "if file has already been synced in database" do
-        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
-        Audio::ProgramAudio.stub(:existing) { { "mbrand/20121002_mbrand.mp3" => true } }
-        String.any_instance.should_not_receive(:match)
-        Audio::ProgramAudio.bulk_sync.should eq []
-      end
-    
-      it "if filename doesn't match the regex" do
-        Audio::ProgramAudio.stub(:existing) { { } }
-        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["nomatch.mp3"])
-        Time.should_not_receive(:new)
-        Audio::ProgramAudio.bulk_sync.should eq []
-      end
+
+    after do
+      Audio::ProgramAudio.instance_variable_set(:@synced, nil)
+      Audio::ProgramAudio.instance_variable_set(:@existing, nil)
+    end
+
+    it "doesn't sync if file mtime is too old" do
+      Audio::ProgramAudio.stub(:existing) { { } }
+      Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
+      File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(1.month.ago)
+      Audio::ProgramAudio.bulk_sync.should eq []
     end
     
-    context "syncs" do
-      before :each do
-        Audio::ProgramAudio.instance_variable_set(:@synced, nil)
-        Audio::ProgramAudio.instance_variable_set(:@existing, nil)
-      end
-      
-      it "if all the criteria pass for episodes" do
-        Audio::ProgramAudio.stub(:existing) { { } } # Not existing
-        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
-        File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(Time.now) # File new
+    it "doesn't sync if file has already been synced in database" do
+      Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"])
+      Audio::ProgramAudio.stub(:existing) { { "coolshowbro/20121002_mbrand.mp3" => true } }
+      String.any_instance.should_not_receive(:match)
+      Audio::ProgramAudio.bulk_sync.should eq []
+    end
+  
+    it "doesn't sync if filename doesn't match the regex" do
+      Audio::ProgramAudio.stub(:existing) { { } }
+      Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["nomatch.mp3"])
+      Time.should_not_receive(:new)
+      Audio::ProgramAudio.bulk_sync.should eq []
+    end
 
-        audio = build :program_audio, content: program.episodes.first
-        Audio::ProgramAudio.should_receive(:new).and_return(audio)
-        Audio::ProgramAudio.bulk_sync.should eq [audio]
-      end
     
-      it "if all the criteria pass for segments" do
-        Audio::ProgramAudio.stub(:existing) { { } } # Not existing
-        Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
-        File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(Time.now) # File new
+    it "syncs if all the criteria pass for episodes" do
+      Audio::ProgramAudio.stub(:existing) { { } } # Not existing
+      Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
+      File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(Time.now) # File new
 
-        audio = build :program_audio, content: program.segments.first
-        Audio::ProgramAudio.should_receive(:new).and_return(audio)
-        Audio::ProgramAudio.bulk_sync.should eq [audio]
-      end
-      
-      it "only grabs `existing` once" do
-        p1 = create :kpcc_program, audio_dir: "airtalk", display_episodes: false
-        p2 = create :kpcc_program, audio_dir: "mbrand", display_episodes: false
-        create :show_segment, show: p1
-        create :show_segment, show: p2
+      audio = build :program_audio, content: program.episodes.first
+      Audio::ProgramAudio.should_receive(:new).and_return(audio)
+      Audio::ProgramAudio.bulk_sync.should eq [audio]
+    end
+  
+    it "syncs if all the criteria pass for segments" do
+      Audio::ProgramAudio.stub(:existing) { { } } # Not existing
+      Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
+      File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(Time.now) # File new
 
-        Audio::ProgramAudio.should_receive(:all).once
-        Audio::ProgramAudio.bulk_sync
-      end
+      audio = build :program_audio, content: program.segments.first
+      Audio::ProgramAudio.should_receive(:new).and_return(audio)
+      Audio::ProgramAudio.bulk_sync.should eq [audio]
     end
   end
 end
