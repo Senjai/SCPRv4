@@ -27,7 +27,15 @@ class BlogsController < ApplicationController
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
     @blog  = @entry.blog
   end
+
+  #----------
   
+  def blog_tagged
+    @tag = Tag.where(slug: params[:tag]).first!
+    @entries = @blog.entries.published.joins(:tags).where(taggit_tag: { slug: @tag.slug }).page(params[:page]).per(5)
+  end
+
+  #----------
   # Map old paths from "other blogs"
   def legacy_path
     date = Date.new(params[:year].to_i, params[:month].to_i)
@@ -69,6 +77,7 @@ class BlogsController < ApplicationController
   #----------
   
   protected
+
   def load_blog
     @blog = Blog.where(is_remote: false).includes(:authors).find_by_slug!(params[:blog])
   end

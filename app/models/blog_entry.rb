@@ -40,7 +40,9 @@ class BlogEntry < ActiveRecord::Base
   #------------------
   # Association
   belongs_to :blog
-  
+  has_many :tagged, class_name: "TaggedContent", as: :content
+  has_many :tags, through: :tagged, dependent: :destroy
+
   #------------------
   # Validation
   validates_presence_of :blog
