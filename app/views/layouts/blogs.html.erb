@@ -1,4 +1,4 @@
-<% content_for :content do %>  
+<% content_for :content do %>
   <div class="blog-masthead">
     <div class="row-fluid">
       <div class="span24 mq-solo-span">
@@ -24,7 +24,9 @@
     <div class="row-fluid">
       <div class="span10">
         <nav class="connect">
-          <%= link_to "RSS", @blog.feed_url, class: "rss with-icon" %>
+          <%= link_to("RSS", @blog.feed_url, class: "rss with-icon") if @blog.feed_url.present? %>
+          <%= link_to("Facebook", @blog.facebook_url, class: "facebook with-icon") if @blog.facebook_url.present? %>
+          <%= link_to("@#{@blog.twitter_handle}", twitter_profile_url(@blog.twitter_handle), class: "twitter with-icon") if @blog.twitter_handle.present? %>
         </nav>
       </div>
       <div class="span14">

@@ -1,4 +1,4 @@
-class Blog < ActiveRecord::Base
+  class Blog < ActiveRecord::Base
   include Concern::Validations::SlugValidation
 
   self.table_name = 'blogs_blog'
@@ -20,7 +20,8 @@ class Blog < ActiveRecord::Base
   # Validations
   validates :name, presence: true
   validates :slug, uniqueness: true
-
+  validates :description, presence: true
+  
   #-------------------
   # Callbacks
   

@@ -362,6 +362,19 @@ describe ApplicationHelper do
 
     #------------------------
     
+    describe '#twitter_profile_url' do
+      it 'returns the full twitter url with the handle added' do
+        helper.twitter_profile_url('kpcc').should match /twitter\.com/
+        helper.twitter_profile_url('kpcc').should match /kpcc$/
+      end
+
+      it 'parameterizes the handle' do
+        helper.twitter_profile_url('@KPCC').should_not match /@/
+      end
+    end
+    
+    #------------------------
+
     describe "#comments_for" do
       it "renders the comments partial" do
         comments_for(object).should match 'comments'

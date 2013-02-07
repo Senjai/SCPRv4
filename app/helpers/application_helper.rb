@@ -278,7 +278,13 @@ module ApplicationHelper
   end
   
   #---------------------------
-  
+
+  def twitter_profile_url(handle)
+    "http://twitter.com/#{handle.parameterize}"
+  end
+
+  #---------------------------
+
   def modal(cssClass, options={}, &block)
     content_for(:modal_content, capture(&block))
     render('shared/modal_shell', cssClass: cssClass, options: options)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131121530) do
+ActiveRecord::Schema.define(:version => 20130207195431) do
 
   create_table "about_town_feature", :force => true do |t|
     t.string   "slug",          :limit => 50,         :null => false
@@ -169,6 +169,8 @@ ActiveRecord::Schema.define(:version => 20130131121530) do
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
+    t.string   "facebook_url"
+    t.string   "twitter_handle"
   end
 
   add_index "blogs_blog", ["missed_it_bucket_id"], :name => "blogs_blog_d12628ce"

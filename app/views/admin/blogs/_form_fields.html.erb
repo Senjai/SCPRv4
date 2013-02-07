@@ -8,6 +8,8 @@
 
 <%= form_block "Media" do %>
   <%= f.input :feed_url %>
+  <%= f.input :facebook_url %>
+  <%= f.input :twitter_handle, hint: "No '@'. Example: kpcc" %>
   <%= f.input :is_news %>
   <%= f.association :missed_it_bucket %>
 <% end %>
