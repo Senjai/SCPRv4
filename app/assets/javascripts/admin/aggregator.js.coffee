@@ -124,7 +124,6 @@ class scpr.Aggregator
                 @$el.on "dragover", (event)   => @_dragOver(event)
                 @$el.on "drop", (event)       => @importUrl(event)
                 
-                
                 # Listeners for @collection events triggered
                 # by Backbone
                 @collection.bind "add remove reorder", =>
@@ -137,7 +136,6 @@ class scpr.Aggregator
                 dropped = false
                 
                 @$el.sortable
-                    cursor: "move"
                     # When dragging (sorting) starts
                     start: (event, ui) ->
                         sortIn  = true
@@ -427,6 +425,7 @@ class scpr.Aggregator
                 
                 @container  = $(@container)
                 @container.html @$el
+                
                 @render()
                 
             #---------------------
@@ -555,7 +554,6 @@ class scpr.Aggregator
                 # Make the Results div Sortable
                 @resultsEl.sortable
                     connectWith: "#aggregator-dropzone .drop-zone"
-                    cursor: "move"
 
                 @
 
@@ -697,7 +695,7 @@ class scpr.Aggregator
 
             render: ->
                 @$el.html JST["admin/templates/aggregator/#{@options.template}"](content: @model.toJSON(), opts: @viewOptions)
-                
+
         #----------------------------------
         # A single piece of content in the drop zone!
         # Full with lots of information
