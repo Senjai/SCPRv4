@@ -16,15 +16,16 @@ class SectionConstraint
   end
   
   def matches?(request)
-    slug_exists? && page_is_valid?
+    slug_exists?(request) && page_is_valid?(request)
   end
 
-  def slug_exists?
+  def page_is_valid?(request)
+    return true if request.query_parameters['page'].nil?
+    request.query_parameters['page'].match(/\d+/)
+  end
+
+  def slug_exists?(request)
     @sections.include?(request.params[:slug])
-  end
-
-  def page_is_valid?
-    request.query_parameters['page'].to_i.match(/\d+/)
   end
 end
 
@@ -36,15 +37,16 @@ class CategoryConstraint
   end
 
   def matches?(request)
-    slug_exists? && page_is_valid?
+    slug_exists?(request) && page_is_valid?(request)
   end
 
-  def slug_exists?
+  def page_is_valid?(request)
+    return true if request.query_parameters['page'].nil?
+    request.query_parameters['page'].match(/\d+/)
+  end
+
+  def slug_exists?(request)
     @categories.include?(request.params[:category])
-  end
-
-  def page_is_valid?
-    request.query_parameters['page'].to_i.match(/\d+/)
   end
 end
 

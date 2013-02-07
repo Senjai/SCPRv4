@@ -57,7 +57,7 @@ class CategoryController < ApplicationController
     categories = [categories].flatten
     options[:limit] ||= 15
     params[:page] ||= 1
-    
+
     # Reset to page 1 if the requested page is too high
     # Otherwise an error will occur
     # TODO: Fallback to SQL query instead of just cutting it off.
