@@ -16,7 +16,15 @@ class SectionConstraint
   end
   
   def matches?(request)
+    slug_exists? && page_is_valid?
+  end
+
+  def slug_exists?
     @sections.include?(request.params[:slug])
+  end
+
+  def page_is_valid?
+    request.query_parameters['page'].to_i.match(/\d+/)
   end
 end
 
@@ -26,9 +34,17 @@ class CategoryConstraint
   def initialize
     @categories = Category.all.map { |c| c.slug } rescue []
   end
-  
+
   def matches?(request)
+    slug_exists? && page_is_valid?
+  end
+
+  def slug_exists?
     @categories.include?(request.params[:category])
+  end
+
+  def page_is_valid?
+    request.query_parameters['page'].to_i.match(/\d+/)
   end
 end
 
@@ -52,8 +68,8 @@ Scprv4::Application.routes.draw do
   
   # Flatpage paths will override anything below this route.
   match '*flatpage_path' => "flatpages#show", constraints: FlatpageConstraint.new
-  match '/:slug(/:page)'     => "sections#show",  constraints: SectionConstraint.new,   defaults: { page: 1 }, as: :section,  constraints: { page: /\d+/ }
-  match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new,  defaults: { page: 1 }, as: :category, constraints: { page: /\d+/ }
+  match '/:slug(/:page)'     => "sections#show",  constraints: SectionConstraint.new,   defaults: { page: 1 }, as: :section
+  match '/:category(/:page)' => "category#index", constraints: CategoryConstraint.new,  defaults: { page: 1 }, as: :category
   
   
   # RSS
