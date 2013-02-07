@@ -11,6 +11,8 @@ $ ->
         target: nav
         offset: offset
 
+    $('[rel="tooltip"]').tooltip()
+
     # Since we have some fixed elements at the
     # top of the screen, we have to offset the
     # anchors when they're clicked in the form

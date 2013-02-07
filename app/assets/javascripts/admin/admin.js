@@ -4,6 +4,7 @@
 //= require bootstrap-scrollspy
 //= require bootstrap-alert
 //= require bootstrap-affix
+//= require bootstrap-tooltip
 
 // NOTE This is not an official bootstrap JS
 //= require bootstrap-datepicker
