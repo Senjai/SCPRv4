@@ -71,7 +71,7 @@ class Admin::BaseController < ActionController::Base
   #------------------------
   # Always want to add this link to the Breadcrumbs
   def root_breadcrumb
-    breadcrumb "Admin", admin_root_path
+    breadcrumb "Outpost", admin_root_path
   end
 
   #------------------------
