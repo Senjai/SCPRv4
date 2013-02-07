@@ -49,13 +49,13 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   end
   
-  config.before do
+  config.before :each do
     FakeWeb.clean_registry
     FakeWeb.load_callback
     DatabaseCleaner.start
   end
     
-  config.after do
+  config.after :each do
     DatabaseCleaner.clean
     Rails.cache.clear
   end
