@@ -1,4 +1,4 @@
-  class Blog < ActiveRecord::Base
+class Blog < ActiveRecord::Base
   include Concern::Validations::SlugValidation
 
   self.table_name = 'blogs_blog'
