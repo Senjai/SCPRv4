@@ -7,7 +7,7 @@
     <ul class="editing small muted unstyled">
       Currently Editing:
       <% for record in @user.records: %>
-        <li>- <a href="<%= record.edit_path %>"><%= record.to_title.substring(0, 20) %>...</a></li>
+        <li>- <a href="<%= record.edit_path %>" title="<%=record.to_title%>"><%= record.to_title.substring(0, 20) %>...</a></li>
       <% end %>
     </ul>
   <% end %>
