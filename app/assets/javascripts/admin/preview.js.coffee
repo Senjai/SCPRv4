@@ -46,7 +46,7 @@ class scpr.Preview
     # If it already exists, just focus on it.
     openWindow: (options="")->
         if !@window or (@window and @window.closed)
-            @window = window.open("/", "preview", "scrollbars=yes,menubar=no,location=no,directories=no,toolbar=no,#{options}")
+            @window = window.open("", "preview", "scrollbars=yes,menubar=no,location=no,directories=no,toolbar=no,#{options}")
         else
             @window.focus()
 
