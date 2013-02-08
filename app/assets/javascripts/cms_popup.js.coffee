@@ -1,4 +1,4 @@
-# Popup the edit page in Outlet based on the current path
+# Popup the edit page in Outpost based on the current path
 window.openCMS = ->
     domain = window.location.origin
     path   = window.location.pathname
