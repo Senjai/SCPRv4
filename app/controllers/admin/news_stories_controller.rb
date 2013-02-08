@@ -13,4 +13,15 @@ class Admin::NewsStoriesController < Admin::ResourceController
       end
     end
   end
+
+  #----------------
+
+  private
+
+  def search_params
+    @search_params ||= {
+      :order       => :published_at,
+      :sort_mode   => :desc
+    }
+  end
 end

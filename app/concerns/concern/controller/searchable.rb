@@ -12,12 +12,19 @@ module Concern
       def search
         breadcrumb resource_class.to_title, resource_class.admin_index_path, "Search"
 
-        @records = resource_class.search(params[:query],
+        @records = resource_class.search(params[:query], {
           :page     => params[:page] || 1,
           :per_page => 50
+          }.merge(search_params)
         )
 
         @list = resource_class.admin.list
+      end
+
+      private
+
+      def search_params
+        @search_params ||= {}
       end
     end
   end
