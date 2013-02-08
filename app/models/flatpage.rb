@@ -40,7 +40,7 @@ class Flatpage < ActiveRecord::Base
   # Administration
   administrate do
     define_list do
-      list_order "url"
+      list_order "updated_at desc"
       list_per_page 50
       
       column :url
