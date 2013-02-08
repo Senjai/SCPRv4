@@ -10,6 +10,8 @@ module Secretary
   class Version
     administrate do
       define_list do
+        list_per_page 10
+        
         column :user, display: proc { self.user.try(:to_title) || "System" }
         column :description
         column :versioned, header: "Object", display: proc { self.versioned.simple_title }
