@@ -1,4 +1,5 @@
-openCMS = ->
+# Popup the edit page in Outlet based on the current path
+window.openCMS = ->
     domain = window.location.origin
     path   = window.location.pathname
     redirectUrl = null
@@ -35,6 +36,4 @@ openCMS = ->
     if redirectUrl
         window.open redirectUrl, '_blank', 'width=1200,height=800'
     else
-        alert "Can't find this in the CMS. Only News Stories, Blog Entries, Show Segments, and Video Shells are supported."
-
-openCMS()
+        alert "Only News Stories, Blog Entries, Show Segments, and Video Shells are supported."

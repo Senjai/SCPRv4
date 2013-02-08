@@ -18,3 +18,4 @@
 //= require smart_time
 //= require event_tracking
 //= require utilities
+//= require cms_popup
