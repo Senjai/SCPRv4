@@ -1,6 +1,6 @@
 # Popup the edit page in Outpost based on the current path
-window.openCMS = ->
-    domain = window.location.origin
+window.openCMS = (newWin) ->
+    domain = window.location.protocol + '//' + window.location.host
     path   = window.location.pathname
     redirectUrl = null
     
@@ -34,6 +34,12 @@ window.openCMS = ->
             break
 
     if redirectUrl
-        window.open redirectUrl, '_blank', 'width=1200,height=800'
+        newWin.location = redirectUrl
+        newWin.focus()
     else
+        newWin.close()
         alert "Only News Stories, Blog Entries, Show Segments, and Video Shells are supported."
+
+# Bookmark JS
+# Paste here to turn it into bookmark-safe code: http://ted.mielczarek.org/code/mozilla/bookmarklet.html
+# var newWin; try { newWin = window.open("", "cms-" + (new Date().getTime() / 1000)); openCMS(newWin) } catch(e) { newWin.close(); alert("This function is not available on this page."); }

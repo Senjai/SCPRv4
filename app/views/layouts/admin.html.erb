@@ -86,7 +86,7 @@
         </ul> <!-- nav -->
 
         <ul class="nav pull-right">
-          <li><a href="javascript:(function()%7Btry%7BopenCMS()%7Dcatch(e)%7Balert(%27That%20function%20is%20not%20available%20on%20this%20page.%27)%7D%7D)()%3B" rel="tooltip" data-original-title="Drag this link into your Bookmarks Bar. Clicking on it while on a News Story, Show Segment, Blog Entry, or Video Shell will open its edit page in Outpost." data-placement="bottom">Edit in Outpost</a></li>
+          <li><a href="javascript:(function()%7Bvar%20newWin%3Btry%7BnewWin%3Dwindow.open('',%22cms-%22%2B(new%20Date().getTime()/1000))%3BopenCMS(newWin)%7Dcatch(e)%7BnewWin.close()%3Balert(%22This%20function%20is%20not%20available%20on%20this%20page.%22)%3B%7D%7D)()%3B" rel="tooltip" data-original-title="Drag this link into your Bookmarks Bar. Clicking on it while on a News Story, Show Segment, Blog Entry, or Video Shell will open its edit page in Outpost." data-placement="bottom">Edit in Outpost</a></li>
 
           <li><a href="#ticket-modal" data-toggle="modal"><i class='icon-wrench icon-white'></i> Report a Problem</a></li>
           
