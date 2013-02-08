@@ -16,6 +16,8 @@ class EmailWorker
       end
       
       on.message do |channel,message|
+        log "got message #{message}"
+
         # message is a JSON object:
         # data = {
         #     'key': obj.obj_key(),
