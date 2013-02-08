@@ -1,6 +1,6 @@
 CKEDITOR.editorConfig = (config) ->
     config.extraPlugins = 'mediaembed,codemirror'
-    
+
     # Note: All other theme CSS files have been removed from this repo.
     # See https://github.com/w8tcha/CKEditor-CodeMirror-Plugin to download more.
     config.codemirror_theme = "monokai"
@@ -19,6 +19,7 @@ CKEDITOR.editorConfig = (config) ->
     config.bodyClass = 'ckeditor-body'
     config.contentsCss = "/assets/application.css?bust=true"
     
+    config.disableNativeSpellChecker = false
     config.forcePasteAsPlainText = true
     
     true
