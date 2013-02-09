@@ -29,7 +29,6 @@
                   
                     <div class="btn-links">
                       <a class="add btn btn-mini" href="<%=model.admin_new_path%>"><i class="icon-plus-sign"></i> Add</a>
-                      <a class="list btn btn-mini" href="<%=model.admin_index_path%>"><i class="icon-th-list"></i> List</a>
                     </div>
                   </li>
                 <% end %>
@@ -67,10 +66,6 @@
                     <% if model.respond_to?(:admin_new_path) %>
                       <a class="add btn btn-mini" href="<%=model.admin_new_path%>"><i class="icon-plus-sign"></i> Add</a>
                     <% end %>
-                  
-                    <% if model.respond_to?(:admin_index_path) %>
-                      <a class="list btn btn-mini" href="<%=model.admin_index_path%>"><i class="icon-th-list"></i> List</a>
-                    <% end %>
                   </div>
                 </li>
                 
@@ -82,12 +77,9 @@
             </ul> <!-- dropdown-menu -->
           </li> <!-- dropdown -->
           <li><a href="http://a.scpr.org/a/assets" target="_new"><i class="icon-camera icon-white"></i> AssetHost</a></li>
-          <li><a href="<%=root_path%>"><i class='icon-home icon-white'></i> KPCC.org</a></li>
         </ul> <!-- nav -->
 
         <ul class="nav pull-right">
-          <li><a href="javascript:(function()%7Bvar%20newWin%3Btry%7BnewWin%3Dwindow.open('',%22cms-%22%2B(new%20Date().getTime()/1000))%3BopenCMS(newWin)%7Dcatch(e)%7BnewWin.close()%3Balert(%22This%20function%20is%20not%20available%20on%20this%20page.%22)%3B%7D%7D)()%3B" rel="tooltip" data-original-title="Drag this link into your Bookmarks Bar. Clicking on it while on a News Story, Show Segment, Blog Entry, or Video Shell will open its edit page in Outpost." data-placement="bottom">Edit in Outpost</a></li>
-
           <li><a href="#ticket-modal" data-toggle="modal"><i class='icon-wrench icon-white'></i> Report a Problem</a></li>
           
           <li class="dropdown">
