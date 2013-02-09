@@ -15,6 +15,8 @@
 //= require ckeditor/plugins/mediaembed/plugin
 //= require ckeditor/plugins/codemirror/plugin
 
+//= require select2
+
 //= require admin/assethost/assethostbase
 //= require admin/content_api
 //= require admin/assethost/assethost
@@ -33,5 +35,5 @@
 //= require admin/preview
 //= require admin/asset_manager
 //= require admin/index_manager
-//= require admin/bootstrap
+//= require admin/global_plugins
 //= require admin/aggregator

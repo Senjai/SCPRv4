@@ -7,6 +7,8 @@ offset = 160
 nav    = "#form-nav"
 
 $ ->
+    $("select").select2()
+
     $spy = $("body").scrollspy
         target: nav
         offset: offset
