@@ -5,13 +5,13 @@
     <%= form_tag resource_class.admin_index_path, method: :get, class: "form-inline" do %>
       <% resource_class.admin.list.filters.each do |filter| %>
         <%= select_tag filter.attribute, 
-          options_for_select(filter.collection.call, params[:filter].present? ? params[:filter][filter.attribute] : nil), 
-          prompt: filter.title, name: "filter[#{filter.attribute}]", class: "input-medium" %>
+          options_for_select(filter.collection.call, params[:filter].present? ? params[:filter][filter.attribute] : nil), include_blank: true, 
+          data: { placeholder: filter.title }, name: "filter[#{filter.attribute}]", class: "input-medium" %>
       <% end %>
     
       <%= submit_tag "Go", class: "btn" %>
     
-      <a href="<%=request.path%>" style="margin-left:10px;"><small>Clear Filters</small></a>
+    <a href="<%=resource_class.admin_index_path%>" class="btn btn-danger"><i class="icon-remove icon-white"></i></a>
     <% end %>
   </div>
 <% end %>
