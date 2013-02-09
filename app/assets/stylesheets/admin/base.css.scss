@@ -32,6 +32,11 @@ small {
   line-height: 12px;
 }
 
+$iconRedSpritePath: 'glyphicons-halflings-red.png';
+.icon-red {
+  background-image: url($iconRedSpritePath);
+}
+
 /////////////////////////////////
 
 .cms-nav {

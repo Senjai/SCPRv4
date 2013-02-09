@@ -10,8 +10,7 @@
       <% end %>
     
       <%= submit_tag "Go", class: "btn" %>
-    
-    <a href="<%=resource_class.admin_index_path%>" class="btn btn-danger"><i class="icon-remove icon-white"></i></a>
+      <%= render "/admin/shared/cancel_link", href: resource_class.admin_index_path %>
     <% end %>
   </div>
 <% end %>
