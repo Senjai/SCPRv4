@@ -7,6 +7,15 @@ offset = 160
 nav    = "#form-nav"
 
 $ ->
+    # Set a blank placeholder for all selects.
+    # Also allow clearing for any option.
+    # If you don't want this on a certain select element,
+    # add the `include_blank: false` option to the rails
+    # helper.
+    $("select").select2
+        placeholder: " "
+        allowClear: true
+    
     $spy = $("body").scrollspy
         target: nav
         offset: offset

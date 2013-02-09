@@ -8,13 +8,15 @@
   <%= f.input :email %>
 <% end %>
 
+<div class="alert alert-info">Please manage your password in the old CMS for now. <a href="http://scpr.org/admin/auth/user/<%=params[:id]%>/password">Click Here to change your password.</a></div>
+
 <%= form_block "Permissions" do %>
   <% if admin_user.is_superuser? %>
-    <%= f.input :is_staff, hint: "May this user login to the admin?" %>
+    <%= f.input :is_staff, hint: "May this user login to the CMS?" %>
     <%= f.input :is_active %>
     <%= f.input :is_superuser %>
   
-    <%= f.association :permissions, include_blank: "NO PERMISSIONS",
+    <%= f.association :permissions,
         hint: "Which resources can this user manage?<br />" \
         "Selecting a resource gives this user the ability to <br />" \
         "Create, Read, Update, and Delete *any* of those records." %>
