@@ -12,6 +12,9 @@ $ ->
     # If you don't want this on a certain select element,
     # add the `include_blank: false` option to the rails
     # helper.
+    #
+    # Note: This also gets called in field_manager.
+    # TODO: Make it so we don't have to call it twice.
     $("select").select2
         placeholder: " "
         allowClear: true
