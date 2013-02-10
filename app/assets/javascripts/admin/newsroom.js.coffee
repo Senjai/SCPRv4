@@ -50,7 +50,6 @@ class scpr.Newsroom
     #-----------------
     
     constructor: (@roomId, @userJson, options={}) ->
-        console.log "init"
         @el      = $ options.el
         @record  = options.record
         
@@ -62,7 +61,6 @@ class scpr.Newsroom
         # Otheriwse connect to Socket.io
         return @alerts['offline'].render() if !io?
 
-        console.log "spinning..."
         @el.spin()
         @socket  = io.connect scpr.NODE
         
@@ -71,7 +69,6 @@ class scpr.Newsroom
 
         # Incoming messages
         @socket.on 'loadList', (users) =>
-            console.log "got message"
             @el.spin(false)
             @loadList(users)
 
