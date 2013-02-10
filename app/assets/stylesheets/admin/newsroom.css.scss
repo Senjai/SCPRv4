@@ -40,6 +40,8 @@ ul.small {
 
 .viewers {
   min-height: 100px;
+  z-index: 1;
+  position: relative;
   &> ul {
     margin-left: 0;
     list-style: none;
