@@ -1,10 +1,11 @@
 module Outpost
   module List
     class Column
-      attr_accessor :attribute, :display, :position, :list, :quick_edit
+      attr_accessor :attribute, :display, :position, :list, :quick_edit, :sortable, :default_sort_mode
       attr_writer :header
 
       alias_method :quick_edit?, :quick_edit
+      alias_method :sortable?, :sortable
 
       #------------------
       
@@ -16,6 +17,9 @@ module Outpost
         @header     = attributes[:header]
         @display    = attributes[:display]
         @quick_edit = !!attributes[:quick_edit]
+        @sortable   = !!attributes[:sortable]
+
+        @default_sort_mode = attributes[:default_sort_mode] || "asc"
       end
       
       #------------------
