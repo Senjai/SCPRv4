@@ -19,7 +19,7 @@
         </h4>
       <% end %>
       
-      <p class="story-content clearfix"><%= h strip_tags(content.teaser) %></p>
+      <p class="story-content clearfix"><%= content.teaser.html_safe %></p>
     </div> <!-- span -->
   </div> <!-- row -->
 </div>
