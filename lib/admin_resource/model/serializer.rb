@@ -1,4 +1,4 @@
-module AdminResource
+module Outpost
   module Model
     module Serializer
       extend ActiveSupport::Concern
@@ -27,4 +27,4 @@ module AdminResource
       end
     end # JSON
   end # Model
-end # AdminResource
+end # Outpost

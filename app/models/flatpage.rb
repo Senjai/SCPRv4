@@ -84,7 +84,7 @@ class Flatpage < ActiveRecord::Base
   end
 
   # -------------------
-  # Override AdminResource for this
+  # Override Outpost for this
   def link_path(options={})
     self.url
   end

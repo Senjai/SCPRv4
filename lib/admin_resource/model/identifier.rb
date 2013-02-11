@@ -4,7 +4,7 @@
 # Some unique keys which can be used for routing
 # and APIs
 #
-module AdminResource
+module Outpost
   module Model
     module Identifier
       extend ActiveSupport::Concern
@@ -41,4 +41,4 @@ module AdminResource
       end
     end # Identifier
   end # Model
-end # AdminResource
+end # Outpost

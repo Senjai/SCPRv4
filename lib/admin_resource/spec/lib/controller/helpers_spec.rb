@@ -1,11 +1,11 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
-describe AdminResource::Controller::Helpers do
+describe Outpost::Controller::Helpers do
   describe "#resource_class" do
-    let(:controller) { AdminResource::Test::PeopleController.new }
+    let(:controller) { Outpost::Test::PeopleController.new }
     
     it "sends off to Naming#to_class with the :controller param" do
-      AdminResource::Helpers::Naming.should_receive(:to_class).with("admin/people")
+      Outpost::Helpers::Naming.should_receive(:to_class).with("admin/people")
       stub_const("Person", nil)
       controller.resource_class.should eq Person
     end

@@ -1,8 +1,8 @@
 ##
-# AdminResource::Config
-# Define configuration for AdminResource
+# Outpost::Config
+# Define configuration for Outpost
 #
-module AdminResource
+module Outpost
   class Config
     DEFAULTS = {
       :title_attributes      => [:name, :title],
@@ -15,7 +15,7 @@ module AdminResource
     def self.configure
       config = new
       yield config if block_given?
-      AdminResource.config = config
+      Outpost.config = config
     end
     
     #------------------

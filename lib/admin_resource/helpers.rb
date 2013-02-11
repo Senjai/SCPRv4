@@ -1,7 +1,7 @@
-module AdminResource
+module Outpost
   module Helpers
     # okay!
   end
 end
 
-require "admin_resource/helpers/naming"
+require "outpost/helpers/naming"

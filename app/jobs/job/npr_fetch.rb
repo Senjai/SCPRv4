@@ -8,7 +8,7 @@ module Job
     @queue = namespace
     
     def self.after_perform
-      hook = AdminResource::Hook.new(
+      hook = Outpost::Hook.new(
         :path => "/task/finished/npr_stories:sync",
         :data => {
           :location => NprStory.admin_index_path

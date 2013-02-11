@@ -1,7 +1,7 @@
 ##
-# AdminResource::List
+# Outpost::List
 
-module AdminResource
+module Outpost
   module List
     DEFAULTS = {
       :order    => "id desc",
@@ -10,5 +10,5 @@ module AdminResource
   end
 end
 
-require "admin_resource/list/base"
-require "admin_resource/list/column"
+require "outpost/list/base"
+require "outpost/list/column"

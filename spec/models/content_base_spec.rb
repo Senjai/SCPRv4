@@ -68,7 +68,7 @@ describe ContentBase do
     end
     
     it "returns the model constant if it does match" do
-      AdminResource.config.stub(:registered_models) { ["NewsStory"] }
+      Outpost.config.stub(:registered_models) { ["NewsStory"] }
       ContentBase.get_model_for_obj_key("news/story:123").should eq NewsStory
     end
   end

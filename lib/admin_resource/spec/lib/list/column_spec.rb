@@ -1,20 +1,20 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
-describe AdminResource::List::Column do
-  let(:admin) { AdminResource::Admin.new(AdminResource::Test::Person) }
+describe Outpost::List::Column do
+  let(:admin) { Outpost::Admin.new(Outpost::Test::Person) }
 
   describe "attributes" do
-    let(:list) { AdminResource::List::Base.new(admin) }
-    subject { AdminResource::List::Column.new("name", list) }
+    let(:list) { Outpost::List::Base.new(admin) }
+    subject { Outpost::List::Column.new("name", list) }
   end
 
   #----------------
   
   describe "initialization" do
-    let(:list) { AdminResource::List::Base.new(admin) }
+    let(:list) { Outpost::List::Base.new(admin) }
     
     let(:column) {
-      AdminResource::List::Column.new("name", list, quick_edit: true, display: :display_full_name, header: "Full Name")
+      Outpost::List::Column.new("name", list, quick_edit: true, display: :display_full_name, header: "Full Name")
     }
     
     before :each do
@@ -47,15 +47,15 @@ describe AdminResource::List::Column do
   #----------------
   
   describe "#header" do
-    let(:list) { AdminResource::List::Base.new(admin) }
+    let(:list) { Outpost::List::Base.new(admin) }
     
     it "returns the header if passed in" do
-      column = AdminResource::List::Column.new("name", list, header: "Person")
+      column = Outpost::List::Column.new("name", list, header: "Person")
       column.header = "Person"
     end
     
     it "returns the titleized attribute if no header specified" do
-      column = AdminResource::List::Column.new("name", list)
+      column = Outpost::List::Column.new("name", list)
       column.header.should eq "Name"
     end
   end
@@ -63,10 +63,10 @@ describe AdminResource::List::Column do
   #----------------
   
   describe "#quick_edit?" do
-    let(:list) { AdminResource::List::Base.new(admin) }
+    let(:list) { Outpost::List::Base.new(admin) }
     
     it "is the same as #quick_edit" do
-      column = AdminResource::List::Column.new("name", list, quick_edit: true)
+      column = Outpost::List::Column.new("name", list, quick_edit: true)
       column.quick_edit.should eq true
       column.quick_edit?.should eq true
     end

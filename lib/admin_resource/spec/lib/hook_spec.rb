@@ -1,8 +1,8 @@
 require File.expand_path("../../spec_helper", __FILE__)
 
-describe AdminResource::Hook do
+describe Outpost::Hook do
   before :each do
-    @hook = AdminResource::Hook.new(path: "finished")
+    @hook = Outpost::Hook.new(path: "finished")
   end
   
   describe "#publish" do

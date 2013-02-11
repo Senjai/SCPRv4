@@ -1,6 +1,6 @@
 class Admin::NprStoriesController < Admin::BaseController
-  include AdminResource::Controller::Helpers
-  include AdminResource::Controller::Callbacks
+  include Outpost::Controller::Helpers
+  include Outpost::Controller::Callbacks
   include Concern::Controller::Searchable
   
   before_filter :authorize_resource

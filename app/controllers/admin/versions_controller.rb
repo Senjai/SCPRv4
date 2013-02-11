@@ -37,7 +37,7 @@ class Admin::VersionsController < Admin::BaseController
   protected
 
   def get_object
-    klass = AdminResource::Helpers::Naming.to_class(params[:resources])
+    klass = Outpost::Helpers::Naming.to_class(params[:resources])
     authorize!(klass)
     redirect_to admin_root_path if !klass.has_secretary?
     @object = klass.find(params[:resource_id])

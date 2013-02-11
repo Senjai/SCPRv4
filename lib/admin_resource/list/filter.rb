@@ -1,7 +1,7 @@
 ##
 # Filter
 #
-module AdminResource
+module Outpost
   module List
     class Filter
       attr_accessor :attribute, :collection, :title

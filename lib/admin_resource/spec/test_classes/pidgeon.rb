@@ -1,7 +1,7 @@
-module AdminResource
+module Outpost
   module Test
     class Pidgeon < ActiveRecord::Base
-      include AdminResource::Model::Routing
+      include Outpost::Model::Routing
     end
   end
 end

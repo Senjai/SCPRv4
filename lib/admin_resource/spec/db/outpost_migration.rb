@@ -1,4 +1,4 @@
-class AdminResourceMigration < ActiveRecord::Migration
+class OutpostMigration < ActiveRecord::Migration
   def up
     create_table "people", force: true do |t|
       t.string  "name"

@@ -1,4 +1,4 @@
-module AdminResource
+module Outpost
   module List
     class Column
       attr_accessor :attribute, :display, :position, :list, :quick_edit

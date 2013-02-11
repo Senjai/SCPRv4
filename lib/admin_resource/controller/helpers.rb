@@ -1,7 +1,7 @@
 ## 
-# AdminResource::Controller::Helpers
+# Outpost::Controller::Helpers
 #
-module AdminResource
+module Outpost
   module Controller
     module Helpers
       extend ActiveSupport::Concern
@@ -22,7 +22,7 @@ module AdminResource
       #-----------------
       
       def resource_class
-        @resource_class ||= AdminResource::Helpers::Naming.to_class(params[:controller])
+        @resource_class ||= Outpost::Helpers::Naming.to_class(params[:controller])
       end
 
       #----------------------
@@ -44,4 +44,4 @@ module AdminResource
       end
     end # Helpers
   end # Controller
-end # AdminResource
+end # Outpost

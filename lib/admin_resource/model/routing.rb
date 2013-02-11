@@ -1,10 +1,10 @@
 ##
-# AdminResource::Model::Routing
+# Outpost::Model::Routing
 #
 # Provides easy access to any object's admin paths,
 # and any class's admin paths
 #
-module AdminResource
+module Outpost
   module Model
     module Routing
       extend ActiveSupport::Concern
@@ -62,4 +62,4 @@ module AdminResource
       end
     end # Routing
   end # Model
-end # AdminResource
+end # Outpost

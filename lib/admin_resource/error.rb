@@ -1,7 +1,7 @@
 ##
-# AdminResource::Error
+# Outpost::Error
 #
-module AdminResource
+module Outpost
   module Error
     #
   end

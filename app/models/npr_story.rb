@@ -1,8 +1,8 @@
 class NprStory < ActiveRecord::Base
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
-  include AdminResource::Model::Identifier
-  include AdminResource::Model::Naming
+  include Outpost::Model::Identifier
+  include Outpost::Model::Naming
   logs_as_task
   
   self.table_name = "npr_npr_story"
@@ -35,7 +35,7 @@ class NprStory < ActiveRecord::Base
 
   #---------------
   # Administration
-  self.admin = AdminResource::Admin.new(self)
+  self.admin = Outpost::Admin.new(self)
   admin.define_list do
     list_per_page 50
     
@@ -62,7 +62,7 @@ class NprStory < ActiveRecord::Base
 
     #---------------
     # Since this class isn't getting (and, for the
-    # most part, doesn't need) the AdminResource
+    # most part, doesn't need) the Outpost
     # Routing, we'll just manually put this one here.
     def admin_index_path
       @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")

@@ -1,9 +1,9 @@
 ##
-# AdminResource::Hook
+# Outpost::Hook
 #
 # Hook into Newsroom.js
 #
-module AdminResource
+module Outpost
   class Hook
     attr_accessor :data, :path
     
@@ -36,4 +36,4 @@ module AdminResource
       end
     end
   end # Hook
-end # AdminResource
+end # Outpost

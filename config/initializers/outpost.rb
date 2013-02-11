@@ -4,10 +4,10 @@
 # some cool Rails functionality.
 # Use strings here so the classes aren't loaded yet.
 
-require_dependency 'admin_resource'
+require_dependency 'outpost'
 
 # Monkey patches for Mercer additions
-module AdminResource
+module Outpost
   module Model
     module Routing
       module ClassMethods
@@ -44,7 +44,7 @@ module AdminResource
 end
 
 
-AdminResource::Config.configure do |config|
+Outpost::Config.configure do |config|
   config.registered_models = [
     "NewsStory", 
     "NprStory",

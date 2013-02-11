@@ -1,5 +1,5 @@
 ##
-# AdminResource::Breadcrumbs
+# Outpost::Breadcrumbs
 #
 # Super-simple breadcrumbs for you and me.
 # Include it into a controller
@@ -36,7 +36,7 @@
 #
 #   breadcrumb "Edit", nil, @post.title
 #
-module AdminResource
+module Outpost
   class Breadcrumb
     attr_accessor :title, :link
   end
@@ -56,13 +56,13 @@ module AdminResource
     
     #--------------
     # Use this method to add breadcrumbs.
-    # See AdminResource::Breadcrumbs 
+    # See Outpost::Breadcrumbs 
     # for usage.
     def breadcrumb(*args)
       @breadcrumbs ||= []
       
       args.each_slice(2).map do |pair|
-        crumb       = AdminResource::Breadcrumb.new
+        crumb       = Outpost::Breadcrumb.new
         crumb.title = pair[0]
         crumb.link  = pair[1]
         

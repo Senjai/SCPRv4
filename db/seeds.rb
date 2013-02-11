@@ -12,7 +12,7 @@ RailsContentMap.create(django_content_type_id: 12,  rails_class_name: "OtherProg
 RailsContentMap.create(django_content_type_id: 58,  rails_class_name: "Homepage")
 RailsContentMap.create(django_content_type_id: 121,  rails_class_name: "FeaturedComment")
 
-# Setup permissions based on Admin Resource's regsitered models.
-AdminResource.config.registered_models.each do |resource|
+# Setup permissions based on Outpost's regsitered models.
+Outpost.config.registered_models.each do |resource|
   Permission.create(resource: resource)
 end

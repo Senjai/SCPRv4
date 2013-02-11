@@ -1,8 +1,8 @@
-module AdminResource
+module Outpost
   module Test
     class PeopleController < ActionController::Base
-      include AdminResource::Controller::Actions # Auto-magically includes Helpers as well
-      include AdminResource::Breadcrumbs
+      include Outpost::Controller::Actions # Auto-magically includes Helpers as well
+      include Outpost::Breadcrumbs
   
       def params
         {
@@ -11,4 +11,4 @@ module AdminResource
       end
     end # PeopleController
   end # Test
-end # AdminResource
+end # Outpost

@@ -1,4 +1,4 @@
-module AdminResource
+module Outpost
   module Test
     class Person < ActiveRecord::Base
       attr_accessible :name, :email, :location, :age

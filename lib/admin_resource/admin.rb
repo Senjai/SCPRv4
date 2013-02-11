@@ -1,7 +1,7 @@
 ## 
-# AdminResource::Admin
+# Outpost::Admin
 #
-module AdminResource
+module Outpost
   class Admin
     attr_accessor :model, :fields
     attr_reader   :list

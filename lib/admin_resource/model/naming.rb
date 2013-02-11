@@ -3,7 +3,7 @@
 #
 # Some methods for naming things, and stuff
 #
-module AdminResource
+module Outpost
   module Model
     module Naming
       extend ActiveSupport::Concern
@@ -25,7 +25,7 @@ module AdminResource
       #
       # To define your own set of attributes, do so with the config
       #
-      #   AdminResource.config.title_attributes = [:title, :full_name]
+      #   Outpost.config.title_attributes = [:title, :full_name]
       #
       # The :simple_title method will automatically be added to the array
       # and acts as the fallback.
@@ -42,7 +42,7 @@ module AdminResource
       #
       def title_method
         @title_method ||= begin
-          attributes = AdminResource.config.title_attributes
+          attributes = Outpost.config.title_attributes
           attributes.find { |a| self.respond_to?(a) }
         end
       end
@@ -66,4 +66,4 @@ module AdminResource
       end
     end # Naming
   end # Model
-end # AdminResource
+end # Outpost

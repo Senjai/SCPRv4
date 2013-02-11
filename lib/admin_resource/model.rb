@@ -1,7 +1,7 @@
 ##
-# AdminResource::Model
+# Outpost::Model
 #
-module AdminResource
+module Outpost
   module Model
     extend ActiveSupport::Autoload
     extend ActiveSupport::Concern

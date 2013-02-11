@@ -1,6 +1,6 @@
 class Admin::BaseController < ActionController::Base
   include Concern::Controller::CustomErrors
-  include AdminResource::Breadcrumbs
+  include Outpost::Breadcrumbs
   
   abstract!
   protect_from_forgery
@@ -37,7 +37,7 @@ class Admin::BaseController < ActionController::Base
   #------------------------
   
   def authorize!(resource=nil)
-    resource ||= AdminResource::Helpers::Naming.to_class(params[:controller])
+    resource ||= Outpost::Helpers::Naming.to_class(params[:controller])
     
     if !admin_user.can_manage?(resource)
       handle_unauthorized(resource)

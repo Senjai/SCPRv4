@@ -1,4 +1,4 @@
-module AdminResource
+module Outpost
   module Controller
     module Callbacks
       extend ActiveSupport::Concern
@@ -33,4 +33,4 @@ module AdminResource
       end
     end # Callbacks
   end # Controller
-end # AdminResource
+end # Outpost

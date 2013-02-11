@@ -1,9 +1,9 @@
 ##
-# AdminResource::Model::Methods
+# Outpost::Model::Methods
 #
 # This could be renamed to something more specific
 #
-module AdminResource
+module Outpost
   module Model
     module Methods
       extend ActiveSupport::Concern
@@ -25,4 +25,4 @@ module AdminResource
       end
     end # Methods
   end # Model
-end # AdminResource
+end # Outpost

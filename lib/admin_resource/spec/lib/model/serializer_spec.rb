@@ -1,6 +1,6 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
-describe AdminResource::Model::Serializer do
+describe Outpost::Model::Serializer do
   describe "#as_json" do
     pending
   end

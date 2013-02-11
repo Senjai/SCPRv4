@@ -5,9 +5,9 @@
 #
 # Example:
 #
-#   AdminResource::Helpers::Naming.to_class("admin/news_stories")
+#   Outpost::Helpers::Naming.to_class("admin/news_stories")
 #
-module AdminResource
+module Outpost
   module Helpers
     module Naming
       extend self
@@ -20,4 +20,4 @@ module AdminResource
       end
     end # Naming
   end # Helpers
-end # AdminResource
+end # Outpost

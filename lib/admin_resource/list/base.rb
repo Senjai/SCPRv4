@@ -1,7 +1,7 @@
 ##
-# AdminResource::List::Base
+# Outpost::List::Base
 
-module AdminResource
+module Outpost
   module List
     class Base
       attr_accessor :admin, :order # Must be a string since it gets passed directly to ActiveRecord

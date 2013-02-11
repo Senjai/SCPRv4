@@ -10,7 +10,7 @@ require 'fakeweb'
 require 'database_cleaner'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each             { |f| require f }
-Dir[Rails.root.join("lib/admin_resource/spec/db/*.rb")].each  { |f| require f }
+Dir[Rails.root.join("lib/outpost/spec/db/*.rb")].each  { |f| require f }
 
 FakeWeb.allow_net_connect = false
 
@@ -22,9 +22,9 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
     ActiveRecord::Base.establish_connection("isolated")
-    migration = -> { AdminResourceMigration.new.up }
+    migration = -> { OutpostMigration.new.up }
     silence_stream STDOUT, &migration
-    Dir[Rails.root.join("lib/admin_resource/spec/test_classes/*.rb")].each { |f| load f }
+    Dir[Rails.root.join("lib/outpost/spec/test_classes/*.rb")].each { |f| load f }
   end
   
   config.before do

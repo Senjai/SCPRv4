@@ -1,19 +1,19 @@
 ##
-# Admin Resource
+# Outpost
 # Build admin pages with Ruby
 
 require 'active_record'
 require 'action_controller'
 
-require 'admin_resource/config'
+require 'outpost/config'
 
-module AdminResource
+module Outpost
   extend ActiveSupport::Autoload
   
   class << self
     attr_writer :config
     def config
-      @config || AdminResource::Config.configure
+      @config || Outpost::Config.configure
     end    
   end
   
@@ -27,5 +27,5 @@ module AdminResource
 end
 
 if defined?(ActiveRecord::Base)
-  ActiveRecord::Base.send :extend, AdminResource::Administrate
+  ActiveRecord::Base.send :extend, Outpost::Administrate
 end

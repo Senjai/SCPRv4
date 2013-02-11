@@ -1,17 +1,17 @@
 ##
-# AdminResource::Controller::Actions
+# Outpost::Controller::Actions
 #
 # This provides basic CRUD actions for you to include into any
 # controller that you want to behave like an resource management
 # area.
 #
-module AdminResource
+module Outpost
   module Controller
     module Actions
       extend ActiveSupport::Concern
 
       included do
-        include AdminResource::Controller::Callbacks
+        include Outpost::Controller::Callbacks
       end
       
       def index
@@ -88,4 +88,4 @@ module AdminResource
       end
     end # Actions
   end # Controller
-end # AdminResource
+end # Outpost

@@ -92,7 +92,7 @@ class ContentShell < ActiveRecord::Base
   end
   
   #----------
-  # Override AdminResource's `link_path` for these
+  # Override Outpost's `link_path` for these
   def link_path(options={})
     self.url
   end

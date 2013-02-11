@@ -214,7 +214,7 @@ Scprv4::Application.routes.draw do
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
             
-      ## -- AdminResource -- ##
+      ## -- Outpost -- ##
       resources :recurring_schedule_slots do
         get "search", on: :collection, as: :search
       end
@@ -335,7 +335,7 @@ Scprv4::Application.routes.draw do
         put "preview", on: :member
         post "preview", on: :collection
       end
-      ## -- END AdminResource --  ##
+      ## -- END Outpost --  ##
       
       resources :tickets do
         get "search", on: :collection, as: :search

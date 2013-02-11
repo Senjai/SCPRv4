@@ -1,17 +1,17 @@
 ##
-# AdminResource::Controller
+# Outpost::Controller
 #
-module AdminResource
+module Outpost
   module Controller
     extend ActiveSupport::Autoload
     extend ActiveSupport::Concern
     
     included do
-      include AdminResource::Controller::Actions
-      include AdminResource::Controller::Helpers
+      include Outpost::Controller::Actions
+      include Outpost::Controller::Helpers
     end
     
     autoload :Actions
     autoload :Helpers
   end # Controller
-end # AdminResource
+end # Outpost

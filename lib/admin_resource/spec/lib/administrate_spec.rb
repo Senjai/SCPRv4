@@ -1,53 +1,53 @@
 require File.expand_path("../../spec_helper", __FILE__)
 
-describe AdminResource::Administrate do
+describe Outpost::Administrate do
   describe "administrate" do
     it "yields the block with the Admin object" do
-      AdminResource::Test::Person.administrate do
-        self.class.should == AdminResource::Admin
+      Outpost::Test::Person.administrate do
+        self.class.should == Outpost::Admin
       end
     end
     
     it "creates an Admin object for the model" do
-      AdminResource::Test::Person.administrate
-      AdminResource::Test::Person.admin.should be_a AdminResource::Admin
+      Outpost::Test::Person.administrate
+      Outpost::Test::Person.admin.should be_a Outpost::Admin
     end
     
     it "uses columns in the define_list block if given" do
-      AdminResource::Test::Person.should_not_receive(:set_default_columns)
-      AdminResource::Test::Person.administrate do
+      Outpost::Test::Person.should_not_receive(:set_default_columns)
+      Outpost::Test::Person.administrate do
         define_list do
           column :name
         end
       end
-      AdminResource::Test::Person.admin.list.columns.map(&:attribute).should eq ["name"]
+      Outpost::Test::Person.admin.list.columns.map(&:attribute).should eq ["name"]
     end
     
     it "generates default columns if no define_list block is given" do
-      AdminResource::Test::Person.administrate
-      AdminResource::Test::Person.admin.list.columns.map(&:attribute).should include "name"
-      AdminResource::Test::Person.admin.list.columns.map(&:attribute).should include "email"
+      Outpost::Test::Person.administrate
+      Outpost::Test::Person.admin.list.columns.map(&:attribute).should include "name"
+      Outpost::Test::Person.admin.list.columns.map(&:attribute).should include "email"
     end
     
     it "generates default fields" do
-      AdminResource::Test::Person.administrate
-      AdminResource::Test::Person.admin.fields.should include "name"
-      AdminResource::Test::Person.admin.fields.should include "email"
-      AdminResource::Test::Person.admin.fields.should_not include "id"
-      AdminResource::Test::Person.admin.fields.should_not include "updated_at"
-      AdminResource::Test::Person.admin.fields.should_not include "created_at"
+      Outpost::Test::Person.administrate
+      Outpost::Test::Person.admin.fields.should include "name"
+      Outpost::Test::Person.admin.fields.should include "email"
+      Outpost::Test::Person.admin.fields.should_not include "id"
+      Outpost::Test::Person.admin.fields.should_not include "updated_at"
+      Outpost::Test::Person.admin.fields.should_not include "created_at"
     end
   end
   
   describe "admin" do
     it "returns an Admin object" do
-      AdminResource::Test::Person.admin.should be_a AdminResource::Admin
+      Outpost::Test::Person.admin.should be_a Outpost::Admin
     end
     
     it "uses @admin if it already exists" do
-      AdminResource::Test::Person.admin
-      AdminResource::Admin.should_not_receive :new
-      AdminResource::Test::Person.admin
+      Outpost::Test::Person.admin
+      Outpost::Admin.should_not_receive :new
+      Outpost::Test::Person.admin
     end
   end
 end

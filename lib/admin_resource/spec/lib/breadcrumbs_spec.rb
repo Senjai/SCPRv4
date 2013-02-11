@@ -1,8 +1,8 @@
 require File.expand_path("../../spec_helper", __FILE__)
 
-describe AdminResource::Breadcrumb do
+describe Outpost::Breadcrumb do
   it "has a title and a link" do
-    breadcrumb = AdminResource::Breadcrumb.new
+    breadcrumb = Outpost::Breadcrumb.new
     breadcrumb.should respond_to :title
     breadcrumb.should respond_to :link
   end
@@ -10,13 +10,13 @@ end
 
 #------------------
 
-describe AdminResource::Breadcrumbs do
+describe Outpost::Breadcrumbs do
   describe "#breadcrumb" do
     context "ActionController::Base class" do
-      let(:controller) { AdminResource::Test::PeopleController.new }
+      let(:controller) { Outpost::Test::PeopleController.new }
       
       it "has the breadcrumbs helper methods" do
-        AdminResource::Test::PeopleController._helper_methods.should include :breadcrumbs
+        Outpost::Test::PeopleController._helper_methods.should include :breadcrumbs
       end
       
       it "has both a title and link when both specified" do
@@ -47,7 +47,7 @@ describe AdminResource::Breadcrumbs do
     
     context "other class" do
       it "doesn't complain about helper_method" do
-        class AdminResource::Test::Pidgeon; include AdminResource::Breadcrumbs; end
+        class Outpost::Test::Pidgeon; include Outpost::Breadcrumbs; end
       end
     end
   end
