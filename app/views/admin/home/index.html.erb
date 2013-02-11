@@ -22,15 +22,17 @@
         <tbody>
           <% @current_user_activities.each do |version| %>
             <% record = version.versioned %>
-            <tr>
-              <td><%= link_to "Edit", record.admin_edit_path, class: "btn" %></td>
-              <td><%= record.to_title %></td>
-              <td><%= display_datetime(version.created_at) %></td>
-              <td><%= version.description %></td>
-            </tr>
+            <% if record.present? %>
+              <tr>
+                <td><%= link_to "Edit", record.admin_edit_path, class: "btn" %></td>
+                <td><%= record.to_title %></td>
+                <td><%= display_datetime(version.created_at) %></td>
+                <td><%= version.description %></td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
-      </table>      
+      </table>
     <% end %>
     <hr />
     
@@ -53,12 +55,15 @@
         </thead>
         <tbody>
           <% @latest_activities.each do |version| %>
+            <% record = version.versioned %>
+            <% if record.present? %>
               <tr>
-                <td><%= guarded_link_to version.versioned.class, version.versioned.to_title, url_for([:edit, :admin, version.versioned]) %></td>
+                <td><%= guarded_link_to record.class, record.to_title, url_for([:edit, :admin, record]) %></td>
                 <td><%= display_datetime(version.created_at) %></td>
                 <td><%= version.description %></td>
                 <td><%= version.user.to_title %></td>
               </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
