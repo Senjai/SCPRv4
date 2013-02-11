@@ -1,18 +1,10 @@
 class Promotion < ActiveRecord::Base
+  outpost_model
   has_secretary
   
   #-------------
   # Validations
   validates_presence_of :title, :url
-  
-  #-------------
-  # Administration
-  administrate do
-    define_list do
-      column :id
-      column :title
-    end
-  end
   
   #-------------
   # Sphinx

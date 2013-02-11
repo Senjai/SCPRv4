@@ -1,8 +1,10 @@
 class Blog < ActiveRecord::Base
+  self.table_name = 'blogs_blog'
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
 
-  self.table_name = 'blogs_blog'
-  has_secretary
   ROUTE_KEY = "blog"
   
   #-------------------
@@ -24,20 +26,6 @@ class Blog < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "is_active desc, name"
-      list_per_page :all
-      
-      column :name
-      column :slug
-      column :teaser,    header: "Tagline"
-      column :is_active, header: "Active?"
-    end
-  end
   
   #----------------
   # Sphinx

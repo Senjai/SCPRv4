@@ -1,4 +1,7 @@
 class PijQuery < ActiveRecord::Base
+  self.table_name = 'pij_query'
+  outpost_model
+
   include Concern::Scopes::SinceScope
   include Concern::Associations::AssetAssociation
   include Concern::Validations::SlugValidation
@@ -6,7 +9,6 @@ class PijQuery < ActiveRecord::Base
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
   
-  self.table_name = 'pij_query'
   ROUTE_KEY       = "pij_query"
   
   has_secretary
@@ -42,23 +44,6 @@ class PijQuery < ActiveRecord::Base
   
   #------------
   # Callbacks
-
-  #------------
-  # Administration
-  administrate do
-    define_list do
-      column :headline
-      column :slug
-      column :query_type
-      column :is_active, header: "Active?"
-      column :is_featured, header: "Featured?"
-      column :published_at
-      
-      filter :query_type, collection: -> { PijQuery::QUERY_TYPES }
-      filter :is_active, collection: :boolean
-      filter :is_featured, collection: :boolean
-    end
-  end
 
   #------------
   # Sphinx

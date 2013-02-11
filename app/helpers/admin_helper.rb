@@ -82,7 +82,7 @@ module AdminHelper
   
   #----------------
   # Render the index header
-  def index_header(resource_class)
-    render('admin/shared/index_header', resource_class: resource_class)
+  def index_header(model)
+    render('admin/shared/index_header', model: model)
   end
 end

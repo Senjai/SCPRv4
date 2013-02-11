@@ -1,17 +1,17 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
 describe Outpost::Controller::Helpers do
-  describe "#resource_class" do
+  describe "#model" do
     let(:controller) { Outpost::Test::PeopleController.new }
     
     it "sends off to Naming#to_class with the :controller param" do
       Outpost::Helpers::Naming.should_receive(:to_class).with("admin/people")
       stub_const("Person", nil)
-      controller.resource_class.should eq Person
+      controller.model.should eq Person
     end
     
-    it "adds resource_class as a helper" do
-      controller._helper_methods.should include :resource_class
+    it "adds model as a helper" do
+      controller._helper_methods.should include :model
     end
   end
   

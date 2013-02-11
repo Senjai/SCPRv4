@@ -1,10 +1,12 @@
 class Bio < ActiveRecord::Base
+  self.table_name = 'bios_bio'
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   
-  ROUTE_KEY       = "bio"
-  self.table_name = 'bios_bio'
-  has_secretary
+  ROUTE_KEY = "bio"
 
   #--------------
   # Scopes
@@ -30,19 +32,6 @@ class Bio < ActiveRecord::Base
     end
   end
 
-  #--------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "last_name"
-      list_per_page :all
-      
-      column :name
-      column :email
-      column :is_public, header: "Show on Site?"
-    end
-  end
-  
   #--------------
   # Sphinx
   acts_as_searchable

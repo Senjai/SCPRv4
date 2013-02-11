@@ -7,9 +7,7 @@ module Outpost
       extend ActiveSupport::Concern
       
       included do
-        if self < ActionController::Base
-          helper_method :resource_class, :sort_mode
-        end
+        helper_method :sort_mode
       end
 
       #------------------
@@ -19,13 +17,7 @@ module Outpost
         flash[:notice] = message if request.format.html?
       end
       
-      #-----------------
-      
-      def resource_class
-        @resource_class ||= Outpost::Helpers::Naming.to_class(params[:controller])
-      end
-
-      #----------------------
+      #------------------
       # Figure out which sort mode to use.
       # If the current order is the one we're requesting,
       # then use either the column's default sort mode 
@@ -34,9 +26,9 @@ module Outpost
       def sort_mode(column, order, current_sort_mode)
         if order == params[:order]
           case current_sort_mode
-            when "asc"  then "desc"
-            when "desc" then "asc"
-            else column.default_sort_mode
+          when "asc"  then "desc"
+          when "desc" then "asc"
+          else column.default_sort_mode
           end
         else
           column.default_sort_mode

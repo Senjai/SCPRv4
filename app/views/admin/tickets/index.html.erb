@@ -1,17 +1,17 @@
-<% page_title resource_class.to_title.pluralize %>
-<%= index_header resource_class %>
+<% page_title model.to_title.pluralize %>
+<%= index_header model %>
 
 <table class="table table-striped">
-  <%= any_to_list? @records, title: resource_class.to_title.pluralize do %>
+  <%= any_to_list? @records, title: model.to_title.pluralize do %>
     <thead>
       <tr>
         <th>Manage</th>
-        <%= render "/admin/shared/headers", list: @list %>
+        <%= render "/admin/shared/headers", list: list %>
       </tr>
     </thead>
     <tbody class="list">
       <% @records.each do |record| %>
-        <tr class="<%= resource_class.singular_route_key.dasherize %>">
+        <tr class="<%= model.singular_route_key.dasherize %>">
           <td style="white-space:nowrap;">
             <%= link_to "Details", [:admin, record], class: "btn" %>
             <% if record.user == admin_user || admin_user.is_superuser? %>
@@ -19,7 +19,7 @@
             <% end %>
           </td>
 
-          <%= render "/admin/shared/columns", list: @list, record: record %>
+          <%= render "/admin/shared/columns", list: list, record: record %>
         </tr>
       <% end %>
     </tbody>

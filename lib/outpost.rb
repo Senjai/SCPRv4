@@ -1,7 +1,5 @@
 ##
 # Outpost
-# Build admin pages with Ruby
-
 require 'active_record'
 require 'action_controller'
 
@@ -10,22 +8,31 @@ require 'outpost/config'
 module Outpost
   extend ActiveSupport::Autoload
   
+  autoload :Controller
+  autoload :Model
+  autoload :Hook
+  autoload :Helpers
+  autoload :List
+  autoload :Breadcrumbs
+
+  #----------------------
+
   class << self
     attr_writer :config
     def config
       @config || Outpost::Config.configure
-    end    
+    end
   end
-  
-  autoload :Error
-  autoload :List
-  autoload :Admin
-  autoload :Model
-  autoload :Administrate
-  autoload :Helpers
-  autoload :Controller
 end
 
+#----------------------
+
 if defined?(ActiveRecord::Base)
-  ActiveRecord::Base.send :extend, Outpost::Administrate
+  ActiveRecord::Base.send :include, Outpost::Model
+end
+
+#----------------------
+
+if defined?(ActionController::Base)
+  ActionController::Base.send :include, Outpost::Controller
 end

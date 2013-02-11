@@ -1,8 +1,10 @@
 class PressRelease < ActiveRecord::Base
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
   
   ROUTE_KEY = "press_release"
-  has_secretary
 
   #-------------
   # Scopes
@@ -26,16 +28,7 @@ class PressRelease < ActiveRecord::Base
       self.slug = self.short_title.parameterize[0...50].sub(/-+\z/, "")
     end
   end
-  
-  #-------------
-  # Administration
-  administrate do
-    define_list do
-      column :short_title
-      column :created_at
-    end
-  end
-  
+
   #-------------
   # Sphinx
   acts_as_searchable

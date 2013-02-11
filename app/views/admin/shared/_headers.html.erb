@@ -7,7 +7,7 @@
 
       <%= link_to_if column.sortable?, column.header, request.parameters.merge(order: column.attribute, sort_mode: sort_mode(column, params[:order], params[:sort_mode])) %>
 
-      <%= render('/admin/shared/cancel_link', href: resource_class.admin_index_path) if is_sorting %>
+      <%= render('/admin/shared/cancel_link', href: model.admin_index_path) if is_sorting %>
     <% else %>
       <%= column.header %>
     <% end %>

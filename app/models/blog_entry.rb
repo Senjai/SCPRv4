@@ -1,4 +1,8 @@
 class BlogEntry < ActiveRecord::Base
+  self.table_name = "blogs_entry"
+  outpost_model
+  has_secretary
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -19,9 +23,8 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
+  include Concern::Methods::ContentJsonMethods
   
-  self.table_name = "blogs_entry"
-  has_secretary  
   ROUTE_KEY = "blog_entry"
   
   ASSET_SCHEMES = [
@@ -53,27 +56,7 @@ class BlogEntry < ActiveRecord::Base
   
   #------------------
   # Callbacks
-  
-  #------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "updated_at desc"
-      
-      column :headline
-      column :blog
-      column :byline
-      column :published_at, sortable: true, default_sort_mode: "desc"
-      column :status
-      
-      filter :blog_id, collection: -> { Blog.select_collection }
-      filter :bylines, collection: -> { Bio.select_collection }
-      filter :status, collection: -> { ContentBase.status_text_collect }
-    end
-  end
-  include Concern::Methods::ContentJsonMethods
-  
-  
+
   #------------------
   # Sphinx
   acts_as_searchable

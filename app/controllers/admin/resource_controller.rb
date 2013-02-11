@@ -3,7 +3,8 @@
 #
 # Adds in some default behavior for resources in the CMS.
 class Admin::ResourceController < Admin::BaseController
-  include Outpost::Controller
+  outpost_controller
+  
   include Concern::Controller::Searchable
   
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
@@ -19,14 +20,14 @@ class Admin::ResourceController < Admin::BaseController
   #-----------------
   
   def extend_breadcrumbs_with_resource_root
-    breadcrumb resource_class.to_title.pluralize, resource_class.admin_index_path
+    breadcrumb model.to_title.pluralize, model.admin_index_path
   end
 
   #-----------------
   # For Secretary
   def add_user_id_to_params
-    if resource_class.has_secretary?
-      params[resource_class.singular_route_key].merge!(logged_user_id: admin_user.id)
+    if model.has_secretary?
+      params[model.singular_route_key].merge!(logged_user_id: admin_user.id)
     end
   end
   
@@ -43,7 +44,7 @@ class Admin::ResourceController < Admin::BaseController
   #-----------------
     
   def authorize_resource
-    authorize!(resource_class)
+    authorize!(model)
   end
 
   #-----------------

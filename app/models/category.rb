@@ -1,9 +1,11 @@
 class Category < ActiveRecord::Base
+  self.table_name = 'contentbase_category'
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
   
-  self.table_name = 'contentbase_category'
-  ROUTE_KEY       = "category"
-  has_secretary
+  ROUTE_KEY = "category"
   
   #-------------------
   # Scopes
@@ -18,20 +20,7 @@ class Category < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_per_page :all
-      
-      column :title
-      column :slug
-      column :is_news
-      column :comment_bucket
-    end
-  end
-  
+
   #-------------------
   # Sphinx
   acts_as_searchable

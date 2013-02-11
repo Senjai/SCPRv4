@@ -1,4 +1,8 @@
 class Homepage < ActiveRecord::Base
+  self.table_name = "layout_homepage"
+  outpost_model
+  has_secretary
+
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::ContentAssociation
@@ -7,9 +11,6 @@ class Homepage < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   
-  self.table_name =  "layout_homepage"
-  has_secretary
-
   TEMPLATES = {
     "default"    => "Visual Left",
     "lead_right" => "Visual Right"
@@ -32,16 +33,6 @@ class Homepage < ActiveRecord::Base
   #-------------------
   # Callbacks
   after_save :expire_cache
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      column :published_at
-      column :status
-      column :base, header: "Base Template"
-    end
-  end
 
   #-------------------
   # Sphinx

@@ -1,6 +1,8 @@
+require 'digest/sha1'
+
 class AdminUser < ActiveRecord::Base
-  require 'digest/sha1'
   self.table_name = "auth_user"
+  outpost_model
   has_secretary
   
   # ----------------
@@ -26,21 +28,6 @@ class AdminUser < ActiveRecord::Base
   before_create :generate_username, if: -> { username.blank? }
   before_create :digest_password, if: -> { unencrypted_password.present? }
 
-  #-------------------
-  # Administration  
-  administrate do
-    define_list do
-      list_order "last_name"
-      
-      column :username
-      column :email
-      column :first_name
-      column :last_name
-      column :is_superuser
-      column :is_staff
-    end
-  end
-  
   # ----------------
   # Sphinx
   acts_as_searchable

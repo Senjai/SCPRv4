@@ -1,12 +1,13 @@
 class FeaturedComment < ActiveRecord::Base
+  self.table_name = 'contentbase_featuredcomment'
+  outpost_model
+  has_secretary
+
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Scopes::PublishedScope
-  
-  self.table_name = 'contentbase_featuredcomment'
-  has_secretary
   
   #----------------
   # Scopes
@@ -28,20 +29,7 @@ class FeaturedComment < ActiveRecord::Base
   
   #----------------
   # Callbacks
-  
-  #----------------
-  # Administration
-  administrate do
-    define_list do
-      column :bucket
-      column :content
-      column :username
-      column :excerpt
-      column :status
-      column :published_at
-    end
-  end
-  
+
   #----------------
   # Sphinx
   acts_as_searchable

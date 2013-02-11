@@ -1,4 +1,16 @@
 class Admin::HomepagesController < Admin::ResourceController
+  #--------------------
+  # Outpost
+  self.model = Homepage
+
+  define_list do
+    column :published_at
+    column :status
+    column :base, header: "Base Template"
+  end
+
+  #--------------------
+
   def preview
     @homepage = ContentBase.obj_by_key(params[:obj_key]) || Homepage.new
     

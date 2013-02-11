@@ -1,4 +1,24 @@
-class Admin::BlogEntriesController < Admin::ResourceController  
+class Admin::BlogEntriesController < Admin::ResourceController
+  #----------------
+  # Outpost
+  self.model = BlogEntry
+  
+  define_list do
+    list_order "updated_at desc"
+    
+    column :headline
+    column :blog
+    column :byline
+    column :published_at, sortable: true, default_sort_mode: "desc"
+    column :status
+    
+    filter :blog_id, collection: -> { Blog.select_collection }
+    filter :bylines, collection: -> { Bio.select_collection }
+    filter :status, collection: -> { ContentBase.status_text_collect }
+  end
+
+  #----------------
+
   def preview
     @entry = ContentBase.obj_by_key(params[:obj_key]) || BlogEntry.new
     

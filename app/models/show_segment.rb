@@ -1,4 +1,8 @@
 class ShowSegment < ActiveRecord::Base
+  self.table_name = 'shows_segment'
+  outpost_model
+  has_secretary
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -19,9 +23,8 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
-  
-  self.table_name = 'shows_segment'
-  has_secretary
+  include Concern::Methods::ContentJsonMethods
+
   ROUTE_KEY = "segment"
   
   ASSET_SCHEMES = [
@@ -53,26 +56,6 @@ class ShowSegment < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "updated_at desc"
-      
-      column :headline
-      column :show
-      column :byline
-      column :audio
-      column :published_at
-      column :status
-      
-      filter :show_id, collection: -> { KpccProgram.all.map { |program| [program.to_title, program.id] } }
-      filter :bylines, collection: -> { Bio.select_collection }
-      filter :status, collection: -> { ContentBase.status_text_collect }
-    end
-  end
-  include Concern::Methods::ContentJsonMethods
   
   #-------------------
   # Sphinx

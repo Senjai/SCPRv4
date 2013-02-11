@@ -1,4 +1,24 @@
 class Admin::NewsStoriesController < Admin::ResourceController
+  #----------------
+  # Outpost
+  self.model = NewsStory
+
+  define_list do
+    list_order "updated_at desc"
+    
+    column :headline
+    column :slug
+    column :byline
+    column :audio
+    column :published_at
+    column :status
+    
+    filter :status, collection: -> { ContentBase.status_text_collect }
+    filter :bylines, collection: -> { Bio.select_collection }
+  end
+
+  #----------------
+
   def preview
     @story = ContentBase.obj_by_key(params[:obj_key]) || NewsStory.new
     

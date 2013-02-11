@@ -1,6 +1,26 @@
 class Admin::TicketsController < Admin::ResourceController
+  #---------------
+  # Outpost
+  self.model = Ticket
+
+  define_list do
+    list_order "status desc, created_at desc"
+    
+    column :user
+    column :id, header: "#"
+    column :summary
+    column :created_at
+    column :status, display: :display_ticket_status
+    
+    filter :status, collection: -> { Ticket.status_text_collection }
+    filter :user, collection: -> { AdminUser.select_collection }
+  end
+
+  #---------------
+
   before_filter :authorize_resource, only: [:edit, :update, :destroy]
   
+  #---------------
   # Override this method from Admin::ResourceController
   # Users should always be able to update their
   # own tickets.

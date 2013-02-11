@@ -1,4 +1,23 @@
 class Admin::PijQueriesController < Admin::ResourceController
+  #----------------
+  # Outpost
+  self.model = PijQuery
+
+  define_list do
+    column :headline
+    column :slug
+    column :query_type
+    column :is_active, header: "Active?"
+    column :is_featured, header: "Featured?"
+    column :published_at
+    
+    filter :query_type, collection: -> { PijQuery::QUERY_TYPES }
+    filter :is_active, collection: :boolean
+    filter :is_featured, collection: :boolean
+  end
+
+  #----------------
+
   def preview
     @query = ContentBase.obj_by_key(params[:obj_key]) || PijQuery.new
     

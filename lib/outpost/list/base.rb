@@ -4,11 +4,10 @@
 module Outpost
   module List
     class Base
-      attr_accessor :admin, :order # Must be a string since it gets passed directly to ActiveRecord
+      attr_accessor :order # Must be a string since it gets passed directly to ActiveRecord
       attr_reader :columns, :filters, :per_page
       
-      def initialize(admin, attributes = {})
-        @admin    = admin
+      def initialize(attributes = {})
         @columns  = []
         @filters  = []
         

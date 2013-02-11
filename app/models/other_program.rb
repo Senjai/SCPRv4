@@ -1,11 +1,12 @@
 class OtherProgram < ActiveRecord::Base
-  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+  self.table_name =  'programs_otherprogram'
+  outpost_model
+  has_secretary
 
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   
-  self.table_name =  'programs_otherprogram'  
-  has_secretary
   ROUTE_KEY = "program"
   
   #-------------------
@@ -37,20 +38,7 @@ class OtherProgram < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "title"
-      list_per_page :all
-      
-      column :title
-      column :produced_by
-      column :air_status
-    end
-  end
-  
+
   #-------------------
   # Sphinx
   acts_as_searchable

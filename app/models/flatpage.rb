@@ -1,5 +1,6 @@
 class Flatpage < ActiveRecord::Base
   self.table_name = "flatpages_flatpage"
+  outpost_model
   has_secretary
   
   TEMPLATE_OPTIONS = [
@@ -33,23 +34,6 @@ class Flatpage < ActiveRecord::Base
   def downcase_url
     if url.present? 
       self.url = url.downcase
-    end
-  end
-  
-  # -------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "updated_at desc"
-      list_per_page 50
-      
-      column :url
-      column :is_public, header: "Public?"
-      column :redirect_url
-      column :title
-      column :updated_at
-      
-      filter :is_public, collection: :boolean
     end
   end
 

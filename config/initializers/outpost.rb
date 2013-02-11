@@ -71,7 +71,6 @@ Outpost::Config.configure do |config|
     "Promotion", 
     "AdminUser", 
     "Bio",
-    "Permission",
     "DataPoint",
     "PressRelease"
   ]

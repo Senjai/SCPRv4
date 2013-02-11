@@ -3,16 +3,18 @@ module Outpost
     module Callbacks
       extend ActiveSupport::Concern
       
+      private
+
       #-----------------
 
       def get_record
-        @record = resource_class.find(params[:id])
+        @record = model.find(params[:id])
       end
 
       #-----------------
 
       def get_records
-        @records = resource_class.order("#{resource_class.table_name}.#{resource_class.admin.list.order}").page(params[:page]).per(resource_class.admin.list.per_page)        
+        @records = model.order("#{model.table_name}.#{self.list.order}").page(params[:page]).per(self.list.per_page)
       end
 
       #-----------------

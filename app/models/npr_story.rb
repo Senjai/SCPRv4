@@ -1,11 +1,10 @@
 class NprStory < ActiveRecord::Base
-  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+  self.table_name = "npr_npr_story"
 
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Outpost::Model::Identifier
   include Outpost::Model::Naming
   logs_as_task
-  
-  self.table_name = "npr_npr_story"
   
   # An array of elements in an NPR::Story's 
   # +fullText+ attribute that we want to 
@@ -32,20 +31,6 @@ class NprStory < ActiveRecord::Base
 
   #---------------
   # Callbacks
-
-  #---------------
-  # Administration
-  self.admin = Outpost::Admin.new(self)
-  admin.define_list do
-    list_per_page 50
-    
-    column :headline
-    column :published_at
-    column :teaser
-    column :link, display: :display_npr_link
-    column :npr_id, header: "NPR ID"
-  end
-  
   
   #---------------
   # Sphinx

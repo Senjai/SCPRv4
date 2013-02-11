@@ -1,4 +1,4 @@
-<% page_title "Add #{resource_class.to_title}" %>
+<% page_title "Add #{model.to_title}" %>
 
 <%= simple_form_for [:admin, @record], html: { multipart: @record.respond_to?(:audio), class: "form-horizontal" } do |f| %>
   <%= render 'errors', f: f %>
@@ -16,6 +16,6 @@
 
 <% content_for :footer do %>
   <script>
-    preview = new scpr.Preview({baseUrl: '<%= resource_class.admin_index_path %>'});
+    preview = new scpr.Preview({baseUrl: '<%= model.admin_index_path %>'});
   </script>
 <% end %>

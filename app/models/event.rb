@@ -1,4 +1,9 @@
 class Event < ActiveRecord::Base
+  self.table_name  = 'events_event'
+  self.primary_key = "id"
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
@@ -8,11 +13,7 @@ class Event < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::TeaserMethods
   
-  self.table_name  = 'events_event'
-  self.primary_key = "id"
-  ROUTE_KEY        = "event"
-  
-  has_secretary
+  ROUTE_KEY = "event"
   
   ForumTypes = [
     "comm",
@@ -61,24 +62,7 @@ class Event < ActiveRecord::Base
   #-------------------
   # Callbacks
   after_save :expire_cache
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      column :headline
-      column :starts_at
-      column :location_name, header: "Location"
-      column :etype,         header: "Type", display: proc { Event::EVENT_TYPES[self.etype] }
-      column :kpcc_event,    header: "KPCC Event?"
-      column :is_published,  header: "Published?"
-    
-      filter :kpcc_event, collection: :boolean
-      filter :etype, title: "Type", collection: -> { Event::EVENT_TYPES.map { |k,v| [v, k] } }
-      filter :is_published, collection: :boolean
-    end
-  end
-  
+
   #-------------------
   # Sphinx
   acts_as_searchable

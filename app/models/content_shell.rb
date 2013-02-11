@@ -1,4 +1,8 @@
 class ContentShell < ActiveRecord::Base
+  self.table_name =  "contentbase_contentshell"
+  outpost_model
+  has_secretary
+  
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -13,10 +17,8 @@ class ContentShell < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::HeadlineMethods
-
-  self.table_name =  "contentbase_contentshell"
-  has_secretary
-      
+  include Concern::Methods::ContentJsonMethods
+  
   def self.content_key
     "content/shell"
   end
@@ -37,26 +39,9 @@ class ContentShell < ActiveRecord::Base
 
   #------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "updated_at desc"
-      
-      column :headline
-      column :site
-      column :byline
-      column :published_at
-      column :status
-      
-      filter :site, collection: -> { ContentShell.select("distinct site").map { |c| c.site } }
-      filter :status, collection: -> { ContentBase.status_text_collect }
-    end
-  end
-  
+
+
   # TODO Fix this hack
-  include Concern::Methods::ContentJsonMethods
   def json
     super.merge({
       :short_headline => self.short_headline,

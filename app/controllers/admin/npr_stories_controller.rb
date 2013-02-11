@@ -1,17 +1,38 @@
 class Admin::NprStoriesController < Admin::BaseController
+  # We don't want to include the Outpost actions here,
+  # so we include stuff manually.
   include Outpost::Controller::Helpers
   include Outpost::Controller::Callbacks
   include Concern::Controller::Searchable
   
+  #------------------
+  # Outpost
+  self.model = NprStory
+
+  define_list do
+    list_per_page 50
+    
+    column :headline
+    column :published_at
+    column :teaser
+    column :link, display: :display_npr_link
+    column :npr_id, header: "NPR ID"
+  end
+
+  #------------------
+
   before_filter :authorize_resource
   before_filter :get_record, only: [:import, :skip]
   before_filter :get_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
 
+  #------------------
+
   respond_to :html, :json, :js
+
+  #------------------
   
   def index
-    @list = resource_class.admin.list
     @records = @records.where(new: true)
     respond_with :admin, @records
   end
@@ -47,7 +68,7 @@ class Admin::NprStoriesController < Admin::BaseController
   #--------------
   
   def extend_breadcrumbs_with_resource_root
-    breadcrumb resource_class.to_title.pluralize, resource_class.admin_index_path
+    breadcrumb model.to_title.pluralize, model.admin_index_path
   end
 
   #--------------
@@ -57,6 +78,6 @@ class Admin::NprStoriesController < Admin::BaseController
   #--------------
   
   def authorize_resource
-    authorize!(resource_class)
+    authorize!(model)
   end
 end

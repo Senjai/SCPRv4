@@ -1,5 +1,20 @@
 class Admin::VersionsController < Admin::BaseController
-  before_filter :get_admin_list, only: [:activity, :index]
+  #--------------
+  # Outpost
+  self.model = Secretary::Version
+
+  define_list do
+    list_per_page 10
+    
+    column :user, display: proc { self.user.try(:to_title) || "System" }
+    column :description
+    column :versioned, header: "Object", display: proc { self.versioned.simple_title }
+    column :version_number, header: "Version"
+    column :created_at, header: "Timestamp"
+  end
+
+  #--------------
+
   before_filter :get_object, only: [:index, :show, :compare]
   before_filter :authorize_resource, only: [:index, :show]
   before_filter :extend_breadcrumbs_for_object, only: [:index, :show]
@@ -8,7 +23,7 @@ class Admin::VersionsController < Admin::BaseController
   # See all activity
   def activity
     breadcrumb "Activity"
-    @versions = Secretary::Version.order(@list.order).page(params[:page]).per(@list.per_page)
+    @versions = Secretary::Version.order(list.order).page(params[:page]).per(list.per_page)
     render :index
   end
   
@@ -16,7 +31,7 @@ class Admin::VersionsController < Admin::BaseController
   # See activity for a single object
   def index
     breadcrumb "History"
-    @versions = @object.versions.order(@list.order).page(params[:page]).per(@list.per_page)
+    @versions = @object.versions.order(list.order).page(params[:page]).per(list.per_page)
   end
   
   #--------------
@@ -54,11 +69,5 @@ class Admin::VersionsController < Admin::BaseController
   def extend_breadcrumbs_for_object
     breadcrumb @object.class.name.titleize.pluralize, url_for([:admin, @object.class])
     breadcrumb @object.simple_title, url_for([:edit, :admin, @object])
-  end
-
-  #--------------
-  
-  def get_admin_list
-    @list = Secretary::Version.admin.list
   end
 end

@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th>Manage</th>
-        <% @list.columns.each do |column| %>
+        <% list.columns.each do |column| %>
           <th><%= column.header %></th>
         <% end %>
       </tr>
@@ -23,7 +23,7 @@
                 <%= link_to "View", admin_version_path(resources: version.versioned.class.route_key, resource_id: version.versioned.id, version_number: version.version_number), class: "btn" %>
               <% end %>
             </td>
-            <% @list.columns.each do |column| %>
+            <% list.columns.each do |column| %>
               <td>
                 <%= render_attribute column, version %>
               </td>

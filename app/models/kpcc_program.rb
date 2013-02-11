@@ -1,10 +1,12 @@
 class KpccProgram < ActiveRecord::Base
+  self.table_name = 'programs_kpccprogram'
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   
-  self.table_name = 'programs_kpccprogram'
-  ROUTE_KEY       = "program"
-  has_secretary
+  ROUTE_KEY = "program"
   
   Featured = [
     'take-two',
@@ -42,19 +44,7 @@ class KpccProgram < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "title"
-      list_per_page :all
-      
-      column :title
-      column :air_status
-    end
-  end
-  
+
   #-------------------
   # Sphinx
   acts_as_searchable

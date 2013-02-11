@@ -2,7 +2,7 @@
 # Outpost::Controller::Actions
 #
 # This provides basic CRUD actions for you to include into any
-# controller that you want to behave like an resource management
+# controller that you want to behave like a resource management
 # area.
 #
 module Outpost
@@ -13,9 +13,10 @@ module Outpost
       included do
         include Outpost::Controller::Callbacks
       end
+
+      #------------------
       
       def index
-        @list = resource_class.admin.list
         respond_with :admin, @records
       end
 
@@ -23,7 +24,7 @@ module Outpost
 
       def new
         breadcrumb "New"
-        @record = resource_class.new
+        @record = model.new
         respond_with :admin, @record
       end
 
@@ -43,7 +44,8 @@ module Outpost
       #------------------
 
       def create
-        @record = resource_class.new(params[resource_class.singular_route_key])
+        @record = model.new(params[model.singular_route_key])
+        
         if @record.save
           notice "Saved #{@record.simple_title}"
           respond_with :admin, @record, location: requested_location
@@ -56,7 +58,7 @@ module Outpost
       #------------------
 
       def update
-        if @record.update_attributes(params[@record.class.singular_route_key])
+        if @record.update_attributes(params[model.singular_route_key])
           notice "Saved #{@record.simple_title}"
           respond_with :admin, @record, location: requested_location
         else
@@ -82,8 +84,8 @@ module Outpost
       def requested_location
         case params[:commit_action]
         when "edit" then @record.admin_edit_path
-        when "new"  then @record.class.admin_new_path
-        else @record.class.admin_index_path
+        when "new"  then model.admin_new_path
+        else model.admin_index_path
         end
       end
     end # Actions

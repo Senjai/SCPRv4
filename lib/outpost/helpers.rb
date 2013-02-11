@@ -1,7 +1,6 @@
 module Outpost
   module Helpers
-    # okay!
+    extend ActiveSupport::Autoload
+    autoload :Naming
   end
 end
-
-require "outpost/helpers/naming"
