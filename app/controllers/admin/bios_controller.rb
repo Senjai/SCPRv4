@@ -5,7 +5,6 @@ class Admin::BiosController < Admin::ResourceController
 
   define_list do
     list_order "last_name"
-    list_per_page :all
     
     column :name
     column :email

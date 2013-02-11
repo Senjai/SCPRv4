@@ -1,11 +1,11 @@
 <% list.columns.each do |column| %>
-  <% is_sorting = params[:order] == column.attribute.to_s %>
+  <% is_sorting = order_attribute == column.attribute.to_s %>
 
   <th class="<%= 'header-highlighted' if is_sorting %>">
     <% if column.sortable? %>
-      <i class="icon <%=sort_mode_icon(params[:sort_mode] || column.default_sort_mode)%>"></i>
+      <i class="icon <%=sort_mode_icon(sort_mode || column.default_sort_mode)%>"></i>
 
-      <%= link_to_if column.sortable?, column.header, request.parameters.merge(order: column.attribute, sort_mode: sort_mode(column, params[:order], params[:sort_mode])) %>
+      <%= link_to_if column.sortable?, column.header, request.parameters.merge(order: column.attribute, sort_mode: to_sort_mode(column, order_attribute, sort_mode)) %>
 
       <%= render('/admin/shared/cancel_link', href: model.admin_index_path) if is_sorting %>
     <% else %>

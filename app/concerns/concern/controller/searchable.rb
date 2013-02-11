@@ -11,7 +11,7 @@ module Concern
       # Action
       def search
         breadcrumb model.to_title, model.admin_index_path, "Search"
-
+        
         @records = model.search(params[:query], {
           :page     => params[:page] || 1,
           :per_page => 50

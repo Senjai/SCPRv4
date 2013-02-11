@@ -18,6 +18,25 @@ module AdminHelper
     end
   end
 
+  #------------------
+  # Figure out which sort mode to switch to.
+  #
+  # If the current order is the one we're requesting,
+  # then use either the column's default sort mode 
+  # (if current_sort_mode is nil), or the requested
+  # sort mode.
+  def to_sort_mode(column, order, current_sort_mode)
+    if order == params[:order]
+      case current_sort_mode
+      when "asc"  then "desc"
+      when "desc" then "asc"
+      else column.default_sort_mode
+      end
+    else
+      column.default_sort_mode
+    end
+  end
+
   #----------------
   # Use this to block out whole chunks of code 
   # based on permissions. If the user has permission

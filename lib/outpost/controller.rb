@@ -7,7 +7,7 @@ module Outpost
     extend ActiveSupport::Concern
 
     autoload :Actions
-    autoload :Callback
+    autoload :Callbacks
     autoload :Helpers
 
     #----------------------

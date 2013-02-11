@@ -40,8 +40,8 @@ class Admin::BlogEntriesController < Admin::ResourceController
 
   def search_params
     @search_params ||= {
-      :order       => :published_at,
-      :sort_mode   => :desc
+      :order       => order_attribute ||= :published_at,
+      :sort_mode   => current_sort_mode ||= :desc
     }
   end
 end

@@ -3,7 +3,9 @@ module Outpost
     module Callbacks
       extend ActiveSupport::Concern
       
-      private
+      included do
+        include Outpost::Controller::Helpers
+      end
 
       #-----------------
 
@@ -14,7 +16,17 @@ module Outpost
       #-----------------
 
       def get_records
-        @records = model.order("#{model.table_name}.#{self.list.order}").page(params[:page]).per(self.list.per_page)
+        @records = model.page(params[:page]).per(self.list.per_page)
+      end
+
+      #-----------------
+
+      def order_records
+        if order_attribute && current_sort_mode
+          @records = @records.order("#{model.table_name}.#{order_attribute} #{current_sort_mode}")
+        else
+          @records = @records.order("#{model.table_name}.#{self.list.order}")
+        end
       end
 
       #-----------------

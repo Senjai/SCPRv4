@@ -2,7 +2,7 @@
   <div class="filters pull-left" style="margin-right:40px;">
     <span class="filter label">Filter by:</span>
 
-    <%= form_tag model.admin_index_path, method: :get, class: "form-inline" do %>
+    <%= form_tag model.admin_index_path + url_for(request.parameters), method: :get, class: "form-inline" do %>
       <% list.filters.each do |filter| %>
         <%= select_tag filter.attribute, 
           options_for_select(filter.collection.call, params[:filter].present? ? params[:filter][filter.attribute] : nil), include_blank: true, 

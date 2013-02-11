@@ -8,8 +8,9 @@ class Admin::ResourceController < Admin::BaseController
   include Concern::Controller::Searchable
   
   before_filter :get_record, only: [:show, :edit, :update, :destroy]
-  before_filter :get_records, only: :index
+  before_filter :get_records, only: [:index]
   before_filter :authorize_resource
+  before_filter :order_records, only: [:index]
   before_filter :filter_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
   before_filter :add_user_id_to_params, only: [:create, :update]
