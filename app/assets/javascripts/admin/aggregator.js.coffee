@@ -158,13 +158,15 @@ class scpr.Aggregator
                         # the item was just moved out of the DropZone.
                         #
                         # If that's the case, and the item was originally
-                        # in the dropzone, then add the "removing" class
+                        # in the dropzone, then add the "removing" class.
+                        # Also stop any animation immediately.
                         #
                         # If "drop event" is the case but the element came 
                         # from somewhere else, then don't add the "removing"
                         # class. 
                         if !dropped && ui.sender[0] == @$el[0]
                             sortIn = false
+                            ui.item.stop(false, true)
                             ui.item.addClass("removing")
                         
                         ui.item.removeClass("adding")

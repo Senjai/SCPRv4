@@ -38,11 +38,16 @@ ul.small {
   .headshot, .editing { display: none; }
 }
 
-.viewers > ul {
+.viewers {
+  min-height: 100px;
+  z-index: 1;
+  position: relative;
+  &> ul {
     margin-left: 0;
     list-style: none;
     li { 
         margin-bottom: 5px;
         font-weight: bold;
     }
+  }
 }

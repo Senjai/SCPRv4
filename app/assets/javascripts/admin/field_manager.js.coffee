@@ -32,3 +32,6 @@ class scpr.FieldManager
                 # TODO: Can we accomplish this with triggers?
                 scpr.DateTimeInput.buildDateTimeInputs(fields)
                 scpr.DateTimeInput.buildDateInputs(fields)
+                $("select", fields).select2
+                    placeholder: " "
+                    allowClear: true

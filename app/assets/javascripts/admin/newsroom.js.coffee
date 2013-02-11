@@ -60,13 +60,17 @@ class scpr.Newsroom
         # If io (sockets) isn't available, error and return
         # Otheriwse connect to Socket.io
         return @alerts['offline'].render() if !io?
+
+        @el.spin()
         @socket  = io.connect scpr.NODE
         
         # Outgoing messages
         @socket.emit 'entered', @roomId, @userJson, recordJson: @record
 
         # Incoming messages
-        @socket.on 'loadList', (users) => @loadList(users)
+        @socket.on 'loadList', (users) =>
+            @el.spin(false)
+            @loadList(users)
 
     #-----------------
     # Load the list of users into the bucket

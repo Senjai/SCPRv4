@@ -36,7 +36,7 @@ form.simple_form {
     &.span11 { @extend .span11 }
     &.span12 { @extend .span12 }
   }
-    
+  
   input.thin, textarea.thin {
       @extend .span2;
   }
@@ -86,5 +86,15 @@ form.simple_form {
           text-align: left;
       }
       .controls { margin-left: 2px; }
+  }
+
+  // Select 2 overrides
+  .select[class*="span"] {
+    margin-left: 0;
+    float: none;
+  }
+
+  .select2-container {
+    min-width: 200px;
   }
 }
