@@ -22,7 +22,7 @@ module AdminResource
       #-----------------
       
       def resource_class
-        @resource_class ||= Newsroom::Helpers::Naming.to_class(params[:controller])
+        @resource_class ||= AdminResource::Helpers::Naming.to_class(params[:controller])
       end
 
       #----------------------

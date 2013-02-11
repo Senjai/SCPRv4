@@ -14,7 +14,7 @@ class Admin::TicketsController < Admin::ResourceController
   end
   
   #----------------
-  # Override Newsroom default of edit redirect.
+  # Override Outpost default of edit redirect.
   # Show is actually useful for us here.
   def show
     @record = Ticket.find(params[:id])
