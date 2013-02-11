@@ -23,7 +23,7 @@ class HomepageWorker
         # message will be a simple JSON object with a :key and an :action
         # right now all we care about is the key
         self.log("got message!")
-        obj = JSON.load(message)
+        obj = JSON.parse(message)
         self.log("message is from #{obj['key']}!")
         
         if obj["key"] =~ /:new$/
