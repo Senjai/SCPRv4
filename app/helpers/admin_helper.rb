@@ -9,6 +9,16 @@ module AdminHelper
   end
 
   #----------------
+
+  def sort_mode_icon(sort_mode)
+    case sort_mode
+      when "desc" then "icon-arrow-down"
+      when "asc"  then "icon-arrow-up"
+      else "icon-resize-vertical"
+    end
+  end
+
+  #----------------
   # Use this to block out whole chunks of code 
   # based on permissions. If the user has permission
   # to manage the resource, show the block.

@@ -1,3 +1,15 @@
 <% list.columns.each do |column| %>
-  <th><%= column.header %></th>
+  <% is_sorting = params[:order] == column.attribute.to_s %>
+
+  <th class="<%= 'header-highlighted' if is_sorting %>">
+    <% if column.sortable? %>
+      <i class="icon <%=sort_mode_icon(params[:sort_mode] || column.default_sort_mode)%>"></i>
+
+      <%= link_to_if column.sortable?, column.header, request.parameters.merge(order: column.attribute, sort_mode: sort_mode(column, params[:order], params[:sort_mode])) %>
+
+      <%= render('/admin/shared/cancel_link', href: resource_class.admin_index_path) if is_sorting %>
+    <% else %>
+      <%= column.header %>
+    <% end %>
+  </th>
 <% end %>

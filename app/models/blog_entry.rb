@@ -63,7 +63,7 @@ class BlogEntry < ActiveRecord::Base
       column :headline
       column :blog
       column :byline
-      column :published_at
+      column :published_at, sortable: true, default_sort_mode: "desc"
       column :status
       
       filter :blog_id, collection: -> { Blog.select_collection }
