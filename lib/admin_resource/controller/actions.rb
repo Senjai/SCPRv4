@@ -11,7 +11,6 @@ module AdminResource
       extend ActiveSupport::Concern
 
       included do
-        include AdminResource::Controller::Helpers
         include AdminResource::Controller::Callbacks
       end
       

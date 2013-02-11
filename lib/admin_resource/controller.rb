@@ -8,6 +8,7 @@ module AdminResource
     
     included do
       include AdminResource::Controller::Actions
+      include Newsroom::Controller::Helpers
     end
     
     autoload :Actions
