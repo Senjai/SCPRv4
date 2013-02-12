@@ -8,12 +8,12 @@
   </div>
 </div>
 
-<table class="table table-striped index-list">
+<table class="table table-striped index-list list-<%=model.route_key%>">
   <%= any_to_list? @records, title: model.to_title.pluralize do %>
     <thead>
       <tr>
-        <th>Import</th>
-        <th>Skip</th>
+        <th class="column-import">Import</th>
+        <th class="column-skip">Skip</th>
         <%= render "/admin/shared/headers", list: list %>
       </tr>
     </thead>

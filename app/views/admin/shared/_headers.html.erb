@@ -1,7 +1,7 @@
 <% list.columns.each do |column| %>
   <% is_sorting = order_attribute == column.attribute.to_s %>
 
-  <th class="<%= 'header-highlighted' if is_sorting %>">
+  <th class="<%= 'header-highlighted' if is_sorting %> column-<%=column.attribute%>">
     <% if column.sortable? %>
       <i class="icon <%=sort_mode_icon(sort_mode || column.default_sort_mode)%>"></i>
 

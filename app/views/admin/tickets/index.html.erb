@@ -1,11 +1,11 @@
 <% page_title model.to_title.pluralize %>
 <%= index_header model %>
 
-<table class="table table-striped index-list">
+<table class="table table-striped index-list list-<%=model.route_key%>">
   <%= any_to_list? @records, title: model.to_title.pluralize do %>
     <thead>
       <tr>
-        <th>Manage</th>
+        <th class="column-manage">Manage</th>
         <%= render "/admin/shared/headers", list: list %>
       </tr>
     </thead>

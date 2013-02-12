@@ -4,11 +4,11 @@
   <%= render 'header', page_title: @PAGE_TITLE, object: @object %>
 <% end %>
 
-<table class="table table-striped index-list">
+<table class="table table-striped index-list list-<%=model.route_key%>">
   <%= any_to_list? @versions, message: "This object has no logged history in the Rails CMS." do %>
     <thead>
       <tr>
-        <th>Manage</th>
+        <th class="column-manage">Manage</th>
         <% list.columns.each do |column| %>
           <th><%= column.header %></th>
         <% end %>
