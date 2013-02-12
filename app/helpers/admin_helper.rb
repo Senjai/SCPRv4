@@ -25,7 +25,7 @@ module AdminHelper
   # then use either the column's default sort mode 
   # (if current_sort_mode is nil), or the requested
   # sort mode.
-  def to_sort_mode(column, order, current_sort_mode)
+  def switch_sort_mode(column, order, current_sort_mode)
     if order == params[:order]
       case current_sort_mode
       when "asc"  then "desc"

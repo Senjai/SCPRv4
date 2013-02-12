@@ -7,7 +7,7 @@ module Outpost
       extend ActiveSupport::Concern
       
       included do
-        helper_method :sort_mode, :order_attribute
+        helper_method :sort_mode, :order
       end
 
       #------------------
@@ -19,9 +19,15 @@ module Outpost
 
       #------------------
       # Which attribute is doing the sorting
-      attr_writer :order_attribute
-      def order_attribute
-        @order_attribute ||= (params[:order].to_s if params[:order].present?)
+      attr_writer :order
+      def order
+        @order ||= begin
+          if params[:order].present?
+            params[:order]
+          else
+            list.default_order
+          end
+        end
       end
 
       #------------------
@@ -32,7 +38,13 @@ module Outpost
       # sort mode.
       attr_writer :sort_mode
       def sort_mode
-        @sort_mode ||= (params[:sort_mode] if %w{ asc desc }.include?(params[:sort_mode]))
+        @sort_mode ||= begin
+          if %w{ asc desc }.include?(params[:sort_mode]))
+            params[:sort_mode]
+          else
+            list.default_sort_mode
+          end
+        end
       end
     end # Helpers
   end # Controller

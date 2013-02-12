@@ -5,10 +5,9 @@ module Outpost
   module List
     extend ActiveSupport::Autoload
 
-    DEFAULTS = {
-      :order    => "id desc",
-      :per_page => 25,
-    }
+    DEFAULT_ORDER     = "id"
+    DEFAULT_SORT_MODE = "desc"
+    DEFAULT_PER_PAGE  = 25
 
     autoload :Base
     autoload :Column

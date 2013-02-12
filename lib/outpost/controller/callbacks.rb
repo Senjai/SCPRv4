@@ -22,11 +22,7 @@ module Outpost
       #-----------------
 
       def order_records
-        if order_attribute && sort_mode
-          @records = @records.order("#{model.table_name}.#{order_attribute} #{sort_mode}")
-        else
-          @records = @records.order("#{model.table_name}.#{self.list.order}")
-        end
+        @records = @records.order("#{model.table_name}.#{order} #{sort_mode}")
       end
 
       #-----------------

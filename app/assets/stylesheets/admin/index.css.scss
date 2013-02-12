@@ -17,6 +17,11 @@
 
 .index-list {
     position: relative;
+    table-layout: fixed;
+
+    th, td {
+        overflow: hidden;
+    }
 
     thead {
         background: $white;

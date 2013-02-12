@@ -4,34 +4,52 @@
 module Outpost
   module List
     class Base
-      attr_accessor :order # Must be a string since it gets passed directly to ActiveRecord
-      attr_reader :columns, :filters, :per_page
-      
-      def initialize(attributes = {})
-        @columns  = []
-        @filters  = []
+      def initialize(model)
+        @model = model
         
-        self.order    = attributes[:order]    || List::DEFAULTS[:order]
-        self.per_page = attributes[:per_page] || List::DEFAULTS[:per_page]
+        @columns = []
+        @fields  = []
+        
+        @default_order     = List::DEFAULT_ORDER
+        @default_sort_mode = List::DEFAULT_SORT_MODE
+        @per_page          = List::DEFAULT_PER_PAGE
+
+        yield if block_given?
       end
       
       #---------------
-      
-      def list_order(val)
-        self.order = val
-      end
+
+      attr_accessor :default_order
+      alias_method :list_default_order, :default_order=
+
+      #---------------
+
+      attr_accessor :default_sort_mode
+      alias_method :list_default_sort_mode, :default_sort_mode=
       
       #---------------
       # Return nil if per_page is set to :all
       # So that pagination will not paginate
-      def list_per_page(val)
-        self.per_page = val
-      end
-      
+      attr_reader :per_page
+
       def per_page=(val)
         @per_page = (val == :all ? nil : val.to_i)
       end
-      
+
+      alias_method :list_per_page, :per_page=
+
+      #---------------
+
+      def columns
+        @columns ||= default_columns
+      end
+
+      #---------------
+
+      def fields
+        @fields ||= default_fields
+      end
+
       #---------------
       # This is the method that should be used to add columns
       # to a list, rather than directly creating a new Column
@@ -53,7 +71,7 @@ module Outpost
       #
       def column(attribute, options={})
         column = Column.new(attribute, self, options)
-        self.columns.push column
+        @columns.push column
         column
       end
       
@@ -61,8 +79,20 @@ module Outpost
       
       def filter(attribute, options={})
         filter = Filter.new(attribute, self, options)
-        self.filters.push filter
+        @filters.push filter
         filter
+      end
+
+      #---------------
+
+      private
+
+      def default_columns
+        @model.column_names - Outpost.config.excluded_list_columns
+      end
+
+      def default_fields
+        @model.column_names - Outpost.config.excluded_form_fields
       end
     end
   end

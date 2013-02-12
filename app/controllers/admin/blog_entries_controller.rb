@@ -6,6 +6,7 @@ class Admin::BlogEntriesController < Admin::ResourceController
   define_list do
     default_order "updated_at"
     default_sort_mode "desc"
+    list_per_page "desc"
     
     column :headline
     column :blog
