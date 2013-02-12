@@ -346,22 +346,6 @@ class scpr.Aggregator
                 @collection.remove model
             
             #---------------------
-            # Go through the li's and find the corresponding model.
-            # This is how we're able to save the order based on
-            # the positions in the DropZone.
-            # Note that this method uses the actual DOM, and 
-            # therefore requires that the list has already been
-            # rendered.
-            #
-            # Returns a new Backbone Collection.
-            setPositions: ->
-                for el in $("li", @$el)
-                    el    = $ el
-                    id    = el.attr("data-id")
-                    model = @collection.get id
-                    model.set "position", el.index()
-                
-            #---------------------
             # Render or hide the "Empty message" for the DropZone,
             # based on if there is content inside or not
             checkDropZone: ->
@@ -381,7 +365,23 @@ class scpr.Aggregator
             _disableDropZoneHelper: ->
                 @$el.removeClass('empty')
                 @helper.detach()
-                
+            
+            #---------------------
+            # Go through the li's and find the corresponding model.
+            # This is how we're able to save the order based on
+            # the positions in the DropZone.
+            # Note that this method uses the actual DOM, and 
+            # therefore requires that the list has already been
+            # rendered.
+            #
+            # Returns an array of Content (due to some Coffeescript magic)
+            setPositions: ->
+                for el in $("li", @$el)
+                    el    = $ el
+                    id    = el.attr("data-id")
+                    model = @collection.get id
+                    model.set "position", el.index()
+            
             #---------------------
             # Update the JSON input with current collection
             updateInput: ->
