@@ -23,7 +23,7 @@ class AssetWorker
         # message will be a simple JSON object with an :action and an :id
         # in either case we'll just delete the cache for now
         self.log("got message!")
-        obj = JSON.load(message)
+        obj = JSON.parse(message)
         self.log("message is from #{obj['id']}!")
         
         Rails.cache.delete("asset/asset-#{obj['id']}")

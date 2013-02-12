@@ -49,7 +49,7 @@ module Concern
         # would be incorrect.
         return if json.empty?
         
-        json = Array(JSON.load(json)).sort_by { |c| c["asset_order"].to_i }
+        json = Array(JSON.parse(json)).sort_by { |c| c["asset_order"].to_i }
         loaded_assets = []
         
         json.each do |asset_hash|

@@ -120,7 +120,7 @@ class ShowEpisode < ActiveRecord::Base
     return if self.segment_json.blank?
     @_loaded_rundowns = []
 
-    Array(JSON.load(self.segment_json)).each do |segment_hash|
+    Array(JSON.parse(self.segment_json)).each do |segment_hash|
       if segment = ContentBase.obj_by_key(segment_hash["id"])
         # Protect against AssociationMismatch Error
         if segment.is_a? ShowSegment

@@ -29,7 +29,7 @@ class EmailWorker
         # Mercer is doing boolean checking, but we'll do it here too just to be extra-safe.
         sleep 5 # make sure the transaction is finished in mercer
 
-        obj = JSON.load(message)
+        obj = JSON.parse(message)
         alert = BreakingNewsAlert.find(obj['id'])
         alert.async_publish_email if alert.should_send_email?
       end
