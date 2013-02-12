@@ -38,6 +38,8 @@ $iconRedSpritePath: 'glyphicons-halflings-red.png';
 }
 
 /////////////////////////////////
+$navOffset: 40px;
+$breadcrumbOffset: 36px;
 
 .cms-nav {
   max-width: 820px;
@@ -96,10 +98,6 @@ p.help-block {
     margin-top: 10px;
 }
 
-.hidden {
-    display: none;
-}
-
 .list-status {
     text-align: center;
 }
@@ -121,8 +119,5 @@ ul.dropdown-menu li button {
 }
 
 #fixed-sidebar.affix {
-  width: 265px;
-  top: 80px;
+  top: $navOffset + $breadcrumbOffset + 4px;
 }
-
-

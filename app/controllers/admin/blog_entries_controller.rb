@@ -11,7 +11,8 @@ class Admin::BlogEntriesController < Admin::ResourceController
     column :byline
     column :published_at, sortable: true, default_sort_mode: "desc"
     column :status
-    
+    column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
+
     filter :blog_id, collection: -> { Blog.select_collection }
     filter :bylines, collection: -> { Bio.select_collection }
     filter :status, collection: -> { ContentBase.status_text_collect }
