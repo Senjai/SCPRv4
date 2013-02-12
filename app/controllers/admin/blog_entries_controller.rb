@@ -4,7 +4,8 @@ class Admin::BlogEntriesController < Admin::ResourceController
   self.model = BlogEntry
   
   define_list do
-    list_order "updated_at desc"
+    default_order "updated_at"
+    default_sort_mode "desc"
     
     column :headline
     column :blog
