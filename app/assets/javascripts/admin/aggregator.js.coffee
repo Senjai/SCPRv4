@@ -114,7 +114,6 @@ class scpr.Aggregator
                 @container.append @$el
                 @helper = $("<h1 />").html("Drop Content Here")
                 
-                @updateInput()
                 @render()
                 
                 # Register listeners for URL droppage
@@ -333,7 +332,7 @@ class scpr.Aggregator
                     false
 
             #---------------------
-            # Hightlight the el with a success color            
+            # Hightlight the el with a success color
             highlightSuccess: (el) ->
                 el.effect 'highlight', color: "#dff0d8", 1500
 
@@ -347,40 +346,49 @@ class scpr.Aggregator
                 @collection.remove model
             
             #---------------------
+            # Render or hide the "Empty message" for the DropZone,
+            # based on if there is content inside or not
+            checkDropZone: ->
+                if @collection.isEmpty()
+                    @_enableDropZoneHelper()
+                else
+                    @_disableDropZoneHelper()
+
+            #---------------------
+            # Show the helper, for when there is no content in the dropzone
+            _enableDropZoneHelper: ->
+                @$el.addClass('empty')
+                @$el.append @helper
+
+            #---------------------
+            # Hide the helper, for when there is content in the dropzone
+            _disableDropZoneHelper: ->
+                @$el.removeClass('empty')
+                @helper.detach()
+            
+            #---------------------
             # Go through the li's and find the corresponding model.
             # This is how we're able to save the order based on
             # the positions in the DropZone.
-            # Returns a new Backbone Collection.
+            # Note that this method uses the actual DOM, and 
+            # therefore requires that the list has already been
+            # rendered.
+            #
+            # Returns an array of Content (due to some Coffeescript magic)
             setPositions: ->
                 for el in $("li", @$el)
                     el    = $ el
                     id    = el.attr("data-id")
                     model = @collection.get id
                     model.set "position", el.index()
-                
-            #---------------------
             
-            checkDropZone: ->
-                if @collection.isEmpty()
-                    @_enableDropZoneHelper()
-                else
-                    @_disableDropZoneHelper()
-                    
-            _enableDropZoneHelper: ->
-                @$el.addClass('empty')
-                @$el.append @helper
-            
-            _disableDropZoneHelper: ->
-                @$el.removeClass('empty')
-                @helper.detach()
-                
             #---------------------
             # Update the JSON input with current collection
             updateInput: ->
                 @base.options.input.val(JSON.stringify(@collection.simpleJSON()))
 
             #---------------------
-                
+            
             render: ->
                 @$el.empty()
                 @checkDropZone()
@@ -392,6 +400,15 @@ class scpr.Aggregator
                         model: model
                         
                     @$el.append view.render()
+
+                # Set positions, and then fill out the input.
+                # setPositions depends on the DOM, so it has to be called
+                # after the list has been rendered for it to work.
+                # We assume that the boostrapped content is ordered properly
+                # and can therefore use the DOM to do the ordering and set
+                # the "position" attribute.
+                @setPositions()
+                @updateInput()
 
                 @
 
