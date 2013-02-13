@@ -53,6 +53,8 @@ class PijQuery < ActiveRecord::Base
     indexes headline
     indexes body
     indexes query_url
+
+    has published_at
   end
   
   #------------

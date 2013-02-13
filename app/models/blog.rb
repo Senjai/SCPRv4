@@ -33,6 +33,8 @@ class Blog < ActiveRecord::Base
   
   define_index do
     indexes name
+    indexes teaser
+    has is_active
   end
   
   #-------------------

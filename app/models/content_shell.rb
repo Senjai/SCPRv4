@@ -33,6 +33,16 @@ class ContentShell < ActiveRecord::Base
   # Validation
   validates :url, presence: true
 
+  #------------------
+
+  class << self
+    def sites_select_collection
+      ContentShell.select("distinct site").order("site").map(&:site)
+    end
+  end
+
+  #------------------
+
   def needs_validation?
     self.pending? || self.published?
   end

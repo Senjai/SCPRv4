@@ -4,14 +4,15 @@ class Admin::NewsStoriesController < Admin::ResourceController
   self.model = NewsStory
 
   define_list do
-    list_order "updated_at desc"
+    list_default_order "updated_at"
+    list_default_sort_mode "desc"
     
     column :headline
-    column :slug
     column :byline
     column :audio
-    column :published_at
+    column :published_at, sortable: true, default_sort_mode: "desc"
     column :status
+    column :updated_at, sortable: true, default_sort_mode: "desc"
     
     filter :status, collection: -> { ContentBase.status_text_collect }
     filter :bylines, collection: -> { Bio.select_collection }
@@ -32,16 +33,5 @@ class Admin::NewsStoriesController < Admin::ResourceController
         render_preview_validation_errors(@story)
       end
     end
-  end
-
-  #----------------
-
-  private
-
-  def search_params
-    @search_params ||= {
-      :order       => :published_at,
-      :sort_mode   => :desc
-    }
   end
 end

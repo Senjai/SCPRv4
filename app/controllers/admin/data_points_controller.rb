@@ -4,13 +4,16 @@ class Admin::DataPointsController < Admin::ResourceController
   self.model = DataPoint
 
   define_list do
-    list_order "group_name, data_key"
+    list_default_order "group_name"
+    list_default_sort_mode "asc"
     list_per_page :all
     
-    column :group_name
-    column :data_key
-    column :data_value, quick_edit: true
+    column :group_name, header: "Group"
+    column :data_key, header: "Key"
+    column :data_value, header: "Value", quick_edit: true
     column :notes
-    column :updated_at
+    column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
+
+    filter :group_name, collection: -> { DataPoint.group_names_select_collection }
   end
 end

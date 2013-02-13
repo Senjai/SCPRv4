@@ -1,9 +1,9 @@
 // Set column widths
-
 table {
+    ///////////////////
     // Global
     .column-manage {
-        width: 50px;
+        width: 60px;
         white-space: nowrap;
     }
 
@@ -11,18 +11,23 @@ table {
         width: 105px;
     }
 
-    .column-published_at {
+    .column-audio {
+        width: 105px;
+    }
+    
+    .column-datetime {
         width: 140px;
     }
 
-    .column-updated_at {
-        width: 140px;
+    .column-boolean {
+        width: 60px;
     }
 
-    .column-created_at {
-        width: 140px;
+    .column-id {
+        width: 40px;
     }
 
+    ///////////////////
     // BlogEntry
     &.list-blog_entries {
         .column-headline {
@@ -30,6 +35,7 @@ table {
         }
     }
 
+    ///////////////////
     // NprStory
     &.list-npr_stories {
         .column-manage {
@@ -37,6 +43,7 @@ table {
         }
     }
 
+    ///////////////////
     // Ticket
     &.list-tickets {
         .column-manage {
@@ -47,4 +54,138 @@ table {
             width: 50px;
         }
     }
+
+    ///////////////////
+    // AdminUser
+    &.list-admin_users {
+        .column-first_name, .column-last_name {
+            width: 170px;
+        }
+
+        .column-username {
+            width: 120px;
+        }
+    }
+
+    ///////////////////
+    // Blog
+    &.list-blogs {
+        .column-teaser {
+            width: 400px;
+        }
+        .column-is_active {
+            width: 100px;
+        }
+    }
+
+    ///////////////////
+    // Blog
+    &.list-breaking_news_alerts {
+        .column-email_sent {
+            width: 100px;
+        }
+
+        .column-headline {
+            width: 450px;
+        }
+    }
+
+    ///////////////////
+    // Blog
+    &.list-categories {
+        .column-title {
+            width: 200px;
+        }
+
+        .column-slug {
+            width: 200px;
+        }
+
+        .column-comment_bucket_id {
+            width: 200px;
+        }
+    }
+
+    ///////////////////
+    // DataPoint
+    &.list-data_points {
+        .column-group_name {
+            width: 120px;
+        }
+
+        .column-data_key {
+            width: 200px;
+        }
+    }
+
+    ///////////////////
+    // Event
+    &.list-events {
+        .column-kpcc_event {
+            width: 100px;
+        }
+
+        .column-headline {
+            width: 350px;
+        }
+    }
+
+    ///////////////////
+    // FeaturedCommentBucket
+    &.list-featured_comment_buckets {
+        td, th {
+            width: auto;
+        } 
+    }
+
+    ///////////////////
+    // Flatpage
+    &.list-flatpages {
+        .column-title {
+            width: 250px;
+        }
+
+        .column-url {
+            width: 200px;
+        }
+
+        .column-redirect_url {
+            width: 250px;
+            word-break: break-all;
+        }
+    }
+
+    ///////////////////
+    // OtherProgram
+    &.list-other_programs {
+        .column-title {
+            width: 250px;
+        }
+
+        .column-air_status {
+            width: 150px;
+        }
+    }
+
+    ///////////////////
+    // PijQuery
+    &.list-pij_queries {
+        .column-headline {
+            width: 450px;
+        }
+    }
+
+    ///////////////////
+    // Podcast
+    &.list-podcasts {
+        .column-keywords {
+            width: 250px;
+        }
+
+        .column-podcast_url {
+            width: 250px;
+            word-break: break-all;
+        }
+    }
+
 }

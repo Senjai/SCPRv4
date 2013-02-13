@@ -24,9 +24,11 @@ class Admin::NprStoriesController < Admin::BaseController
 
   #------------------
 
-  before_filter :authorize_resource
   before_filter :get_record, only: [:import, :skip]
   before_filter :get_records, only: [:index]
+  before_filter :authorize_resource
+  before_filter :order_records, only: [:index]
+  before_filter :filter_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
 
   #------------------

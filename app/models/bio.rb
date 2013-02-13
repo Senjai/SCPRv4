@@ -37,7 +37,7 @@ class Bio < ActiveRecord::Base
   acts_as_searchable
   
   define_index do
-    indexes name
+    indexes name, sortable: true
     indexes title
     indexes email
   end

@@ -4,7 +4,11 @@ class Admin::MissedItBucketsController < Admin::ResourceController
   self.model = MissedItBucket
 
   define_list do
+    list_default_order "title"
+    list_default_sort_mode "asc"
+    list_per_page :all
+
     column :id
-    column :title
+    column :title, sortable: true, default_sort_mode: "asc"
   end
 end

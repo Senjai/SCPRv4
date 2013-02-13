@@ -35,6 +35,7 @@ class BreakingNewsAlert < ActiveRecord::Base
     indexes headline
     indexes alert_type
     indexes teaser
+    has created_at
   end
   
   #-------------------
@@ -47,6 +48,10 @@ class BreakingNewsAlert < ActiveRecord::Base
       else
         nil
       end
+    end
+
+    def types_select_collection
+      ALERT_TYPES.map { |k, v| [v, k] }
     end
   end
 

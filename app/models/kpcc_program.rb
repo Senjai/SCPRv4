@@ -25,7 +25,7 @@ class KpccProgram < ActiveRecord::Base
   
   #-------------------
   # Scopes
-  scope :active,         -> { where(:air_status => ['onair','online']) }
+  scope :active,         -> { where(air_status: ['onair','online']) }
   scope :can_sync_audio, -> { where(air_status: "onair").where("audio_dir is not null").where("audio_dir != ?", "") }
   
   #-------------------
@@ -50,12 +50,19 @@ class KpccProgram < ActiveRecord::Base
   acts_as_searchable
   
   define_index do
-    indexes title
+    indexes title, sortable: true
+    indexes airtime
     indexes description
     indexes host
   end
   
   #-------------------
+  
+  class << self
+    def select_collection
+      KpccProgram.all.map { |p| [p.to_title, p.id] }
+    end
+  end
   
   def published?
     self.air_status != "hidden"

@@ -7,8 +7,10 @@ module Outpost
       extend ActiveSupport::Concern
       
       included do
-        helper_method :sort_mode, :order
+        helper_method :sort_mode, :order, :preference
       end
+
+      attr_reader :order, :sort_mode
 
       #------------------
       # Adds to the flash[:notice] object, only if
@@ -18,32 +20,25 @@ module Outpost
       end
 
       #------------------
-      # Which attribute is doing the sorting
-      attr_writer :order
-      def order
-        @order ||= begin
-          if params[:order].present?
-            params[:order]
-          else
-            list.default_order
-          end
-        end
+      # Access session preferences
+      def preference(key)
+        session["preference_#{key}"]
       end
 
       #------------------
-      # Get the sort model
-      #
-      # It will either be the requested sort mode, or if not available, 
-      # then the table's default sort mode.
-      attr_writer :sort_mode
-      def sort_mode
-        @sort_mode ||= begin
-          if %w{ asc desc }.include?(params[:sort_mode])
-            params[:sort_mode]
-          else
-            list.default_sort_mode
-          end
-        end
+      
+      private
+
+      #------------------
+      # Writer for preference
+      def set_preference(key, value)
+        session["preference_#{key}"] = value
+      end
+
+      #------------------
+      # Helper to unset a preference
+      def unset_preference(key)
+        set_preference(key, nil)
       end
     end # Helpers
   end # Controller

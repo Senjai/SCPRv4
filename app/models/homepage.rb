@@ -28,7 +28,7 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Validations
-  validates :base, presence: true, inclusion: { in: TEMPLATES.keys }
+  validates :base, presence: true
   
   #-------------------
   # Callbacks
@@ -38,6 +38,8 @@ class Homepage < ActiveRecord::Base
   # Sphinx
   define_index do
     indexes base
+    has published_at
+    has updated_at
   end
   
   #----------

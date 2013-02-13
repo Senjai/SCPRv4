@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  self.table_name  = 'events_event'
+  self.table_name  = "events_event"
   self.primary_key = "id"
   outpost_model
   has_secretary
@@ -73,6 +73,15 @@ class Event < ActiveRecord::Base
     indexes sponsor
     indexes location_name
     indexes city
+    has starts_at
+  end
+  
+  # -------------------
+  
+  class << self
+    def event_types_select_collection
+      Event::EVENT_TYPES.map { |k,v| [v, k] }
+    end
   end
   
   # -------------------

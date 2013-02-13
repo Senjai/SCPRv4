@@ -4,16 +4,16 @@ class Admin::FlatpagesController < Admin::ResourceController
   self.model = Flatpage
 
   define_list do
-    list_order "updated_at desc"
-    list_per_page 50
+    list_default_order "url"
+    list_default_sort_mode "asc"
     
-    column :url
-    column :is_public, header: "Public?"
-    column :redirect_url
     column :title
-    column :updated_at
+    column :url, sortable: true, default_sort_mode: "asc"
+    column :redirect_url
+    column :updated_at, sortable: true, default_sort_mode: "desc"
+    column :is_public, header: "Public?"
     
-    filter :is_public, collection: :boolean
+    filter :is_public, title: "Public?", collection: :boolean
   end
 
   #------------------

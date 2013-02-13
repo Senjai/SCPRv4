@@ -14,7 +14,7 @@ class Admin::ResourceController < Admin::BaseController
   before_filter :extend_breadcrumbs_with_resource_root
   before_filter :add_user_id_to_params, only: [:create, :update]
   before_filter :set_preview, only: [:preview]
-  
+
   respond_to :html, :json, :js
 
   #-----------------

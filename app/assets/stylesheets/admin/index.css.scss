@@ -15,6 +15,13 @@
     background-color: $successBackground;
 }
 
+th.clickable {
+    cursor: pointer;
+    &:hover {
+        background-color: $infoBackground;
+    }
+}
+
 .index-list {
     position: relative;
 

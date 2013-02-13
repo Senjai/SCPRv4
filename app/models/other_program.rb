@@ -8,7 +8,7 @@ class OtherProgram < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   
   ROUTE_KEY = "program"
-  
+
   #-------------------
   # Scopes
   scope :active, -> { where(:air_status => ['onair','online']) }
@@ -44,7 +44,8 @@ class OtherProgram < ActiveRecord::Base
   acts_as_searchable
   
   define_index do
-    indexes title
+    indexes title, sortable: true
+    indexes teaser
     indexes description
     indexes host
     indexes produced_by

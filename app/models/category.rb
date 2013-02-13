@@ -26,7 +26,9 @@ class Category < ActiveRecord::Base
   acts_as_searchable
   
   define_index do
-    indexes title
+    indexes title, sortable: true
+    indexes slug, sortable: true
+    has is_news
   end
   
   #----------

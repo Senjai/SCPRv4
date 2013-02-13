@@ -35,7 +35,7 @@ class AdminUser < ActiveRecord::Base
   define_index do
     indexes username
     indexes first_name
-    indexes last_name
+    indexes last_name, sortable: true
   end
 
   # ----------------

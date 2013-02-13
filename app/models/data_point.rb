@@ -39,6 +39,8 @@ class DataPoint < ActiveRecord::Base
   define_index do
     indexes data_key
     indexes data_value
+    indexes group_name, sortable: true
+    has updated_at
   end
   
   #--------------
@@ -59,6 +61,12 @@ class DataPoint < ActiveRecord::Base
       hash = {}
       collection.each { |obj| hash[obj.data_key] = DataPoint::Hashed.new(obj) }
       hash
+    end
+
+    #--------------
+
+    def group_names_select_collection
+      DataPoint.select("distinct group_name").order("group_name").map(&:group_name)
     end
   end
 

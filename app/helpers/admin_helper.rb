@@ -12,9 +12,8 @@ module AdminHelper
 
   def sort_mode_icon(sort_mode)
     case sort_mode
-      when "desc" then "icon-arrow-down"
-      when "asc"  then "icon-arrow-up"
-      else "icon-resize-vertical"
+    when "desc" then "icon-arrow-down"
+    when "asc"  then "icon-arrow-up"
     end
   end
 
@@ -35,6 +34,22 @@ module AdminHelper
     else
       column.default_sort_mode
     end
+  end
+
+  #----------------
+  # Find the column type for the column classes
+  def column_type_class(model, attribute)
+    if column = model.columns_hash[attribute]
+      "column-#{column.type}"
+    else
+      "column-association"
+    end
+  end
+
+  #----------------
+  # Convert the attribute to a class for the column class  
+  def column_attribute_class(attribute)
+    "column-#{attribute}"
   end
 
   #----------------

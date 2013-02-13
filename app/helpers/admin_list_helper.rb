@@ -59,7 +59,19 @@ module AdminListHelper
   def display_npr_link(link)
     link_to content_tag(:i, nil, class: "icon-share-alt"), link, class: "btn"
   end
-  
+
+  #-------------
+  # Associations
+
+  # For a content association - requires headline and obj_key
+  def display_content(content)
+    if content && content.respond_to?(:headline) && content.respond_to?(:obj_key)
+      s = content.headline
+      s += " (" + link_to(content.obj_key, content.admin_edit_path) + ")"
+      s.html_safe
+    end
+  end
+
   #-------------
   # Attribute Helpers
   
@@ -81,7 +93,8 @@ module AdminListHelper
   
   def display_audio(audio)
     return audio if !audio.is_a? Array
-    content_tag :div, Audio::STATUS_TEXT[audio.first.try(:status)], class: audio_bootstrap_map[audio.first.try(:status)]
+    status = audio.first.try(:status)
+    content_tag :div, Audio::STATUS_TEXT[status], class: audio_bootstrap_map[status]
   end
   
   

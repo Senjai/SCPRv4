@@ -4,11 +4,16 @@ class Admin::PodcastsController < Admin::ResourceController
   self.model = Podcast
 
   define_list do
-    column :title
+    list_default_order "title"
+    list_default_sort_mode "asc"
+
+    column :title, sortable: true, default_sort_mode: "asc"
     column :slug
     column :source
     column :podcast_url
     column :keywords
-    column :is_listed
+    column :is_listed, header: "Listed?"
+
+    filter :is_listed, title: "Listed?", collection: :boolean
   end
 end

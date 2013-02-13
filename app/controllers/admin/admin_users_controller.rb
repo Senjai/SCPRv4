@@ -4,14 +4,18 @@ class Admin::AdminUsersController < Admin::ResourceController
   self.model = AdminUser
 
   define_list do
-    list_order "last_name"
-    
+    list_default_order "last_name"
+    list_default_sort_mode "asc"
+
     column :username
     column :email
     column :first_name
-    column :last_name
-    column :is_superuser
-    column :is_staff
+    column :last_name, sortable: true
+    column :is_superuser, header: "Admin?"
+    column :is_staff, header: "Staff?"
+
+    filter :is_superuser, collection: :boolean
+    filter :is_staff, collection: :boolean
   end
 
   #---------------

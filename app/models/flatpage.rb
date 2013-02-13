@@ -42,10 +42,11 @@ class Flatpage < ActiveRecord::Base
   acts_as_searchable
   
   define_index do
-    indexes url
+    indexes url, sortable: true
     indexes title
     indexes description
     indexes redirect_url
+    has updated_at
   end
   
   # -------------------

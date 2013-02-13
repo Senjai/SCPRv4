@@ -4,11 +4,15 @@ class Admin::BiosController < Admin::ResourceController
   self.model = Bio
 
   define_list do
-    list_order "last_name"
-    
-    column :name
+    list_default_order "name"
+    list_default_sort_mode "asc"
+
+    column :name, sortable: true
     column :email
-    column :is_public, header: "Show on Site?"
+    column :title
+    column :is_public, header: "Public?"
+
+    filter :is_public, title: "Public?", collection: :boolean
   end
 
   #---------------

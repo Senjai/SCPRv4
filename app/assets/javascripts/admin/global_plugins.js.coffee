@@ -65,4 +65,12 @@ $ ->
             window.scrollBy(0, -offset + 80)
             false
 
+    # Make highlighted TH's clickable
+    # TODO Move this into a better place
+    $("th.header-highlighted, th.header-sortable").each ->
+        if href = $(".js-sort-link", @).attr("href")
+            $(@).addClass("clickable")
+            $(@).on click: (event) ->
+                window.location = href
+
     true

@@ -37,7 +37,7 @@ class FeaturedComment < ActiveRecord::Base
   define_index do
     indexes username
     indexes excerpt
-    indexes content_type
+    has published_at
   end
   
   #----------------

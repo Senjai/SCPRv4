@@ -4,9 +4,14 @@ class Admin::HomepagesController < Admin::ResourceController
   self.model = Homepage
 
   define_list do
-    column :published_at
+    list_default_order "updated_at"
+    list_default_sort_mode "desc"
+    list_per_page 3
+
+    column :published_at, sortable: true, default_sort_mode: "desc"
     column :status
-    column :base, header: "Base Template"
+    column :base, header: "Template"
+    column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
   end
 
   #--------------------
