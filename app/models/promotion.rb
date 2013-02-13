@@ -9,8 +9,10 @@ class Promotion < ActiveRecord::Base
   #-------------
   # Sphinx
   define_index do
-    indexes title
+    indexes title, sortable: true
     indexes url
+
+    has created_at
   end
   
   #-------------

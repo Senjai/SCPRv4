@@ -1,4 +1,14 @@
 // Set column widths
+$datetimeWidth: 140px;
+$booleanWidth: 60px;
+$integerWidth: 50px;
+$statusWidth: 105px;
+
+@mixin url-cell { 
+    width: 250px;
+    word-break: break-all;
+}
+
 table {
     ///////////////////
     // Global
@@ -8,29 +18,29 @@ table {
     }
 
     .column-status {
-        width: 105px;
+        width: $statusWidth;
     }
 
     .column-audio {
-        width: 105px;
+        width: $statusWidth;
     }
     
-    .column-datetime {
-        width: 140px;
+    .column-datetime, .column-date {
+        width: $datetimeWidth;
     }
 
     .column-boolean {
-        width: 60px;
+        width: $booleanWidth;
     }
 
     .column-id {
-        width: 40px;
+        width: $integerWidth;
     }
 
     ///////////////////
     // BlogEntry
     &.list-blog_entries {
-        .column-headline {
+        .column-headline { // blog_entry.headline
             width: 320px;
         }
     }
@@ -49,20 +59,16 @@ table {
         .column-manage {
             width: 100px;
         }
-
-        .column-id {
-            width: 50px;
-        }
     }
 
     ///////////////////
     // AdminUser
     &.list-admin_users {
-        .column-first_name, .column-last_name {
+        .column-first_name, .column-last_name { // admin_user.first_name admin_user.last_name
             width: 170px;
         }
 
-        .column-username {
+        .column-username { // admin_user.username
             width: 120px;
         }
     }
@@ -70,10 +76,10 @@ table {
     ///////////////////
     // Blog
     &.list-blogs {
-        .column-teaser {
+        .column-teaser { // blog.teaser
             width: 400px;
         }
-        .column-is_active {
+        .column-is_active { // blog.is_active
             width: 100px;
         }
     }
@@ -81,11 +87,11 @@ table {
     ///////////////////
     // Blog
     &.list-breaking_news_alerts {
-        .column-email_sent {
+        .column-email_sent { // breaking_news_alert.email_sent
             width: 100px;
         }
 
-        .column-headline {
+        .column-headline { // breaking_news_alert.headline
             width: 450px;
         }
     }
@@ -93,15 +99,15 @@ table {
     ///////////////////
     // Blog
     &.list-categories {
-        .column-title {
+        .column-title { // category.title
             width: 200px;
         }
 
-        .column-slug {
+        .column-slug { // category.slug
             width: 200px;
         }
 
-        .column-comment_bucket_id {
+        .column-comment_bucket_id { // category.comment_bucket_id
             width: 200px;
         }
     }
@@ -109,11 +115,11 @@ table {
     ///////////////////
     // DataPoint
     &.list-data_points {
-        .column-group_name {
+        .column-group_name { // data_point.group_name
             width: 120px;
         }
 
-        .column-data_key {
+        .column-data_key { // data_point.data_key
             width: 200px;
         }
     }
@@ -121,11 +127,11 @@ table {
     ///////////////////
     // Event
     &.list-events {
-        .column-kpcc_event {
+        .column-kpcc_event { // event.kpcc_event
             width: 100px;
         }
 
-        .column-headline {
+        .column-headline { // event.headline
             width: 350px;
         }
     }
@@ -141,28 +147,27 @@ table {
     ///////////////////
     // Flatpage
     &.list-flatpages {
-        .column-title {
+        .column-title { // flatpage.title
             width: 250px;
         }
 
-        .column-url {
+        .column-url { // flatpage.url (actually a path)
             width: 200px;
         }
 
-        .column-redirect_url {
-            width: 250px;
-            word-break: break-all;
+        .column-redirect_url { // flatpage.redirect_url
+            @include url-cell;
         }
     }
 
     ///////////////////
     // OtherProgram
     &.list-other_programs {
-        .column-title {
+        .column-title { // other_program.title
             width: 250px;
         }
 
-        .column-air_status {
+        .column-air_status { // other_program.air_status
             width: 150px;
         }
     }
@@ -170,7 +175,7 @@ table {
     ///////////////////
     // PijQuery
     &.list-pij_queries {
-        .column-headline {
+        .column-headline { // pij_query.headline
             width: 450px;
         }
     }
@@ -178,14 +183,36 @@ table {
     ///////////////////
     // Podcast
     &.list-podcasts {
-        .column-keywords {
+        .column-keywords { // podcast.keywords
             width: 250px;
         }
 
-        .column-podcast_url {
-            width: 250px;
-            word-break: break-all;
+        .column-podcast_url { // podcast.podcast_url
+            @include url-cell;
         }
     }
 
+    ///////////////////
+    // RecurringScheduleSlot
+    &.list-recurring_schedule_slots {
+        .column-program { // recurring_schedule_slot.program
+            width: 500px;
+        }
+    }
+
+    ///////////////////
+    // ShowEpisode
+    &.list-show_episodes {
+        .column-show { // show_episode.show
+            width: 100px;
+        }
+    }
+
+    ///////////////////
+    // VideoShell
+    &.list-video_shells {
+        .column-headline {
+            width: 350px;
+        }
+    }
 }

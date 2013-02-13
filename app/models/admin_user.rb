@@ -43,7 +43,7 @@ class AdminUser < ActiveRecord::Base
   class << self
     def authenticate(username, unencrypted_password)
       if user = find_by_username(username)
-        algorithm, salt, hash = user.password.split('$')      
+        algorithm, salt, hash = user.password.split('$')
         if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
           return user
         else
@@ -57,7 +57,7 @@ class AdminUser < ActiveRecord::Base
     # ----------------
     
     def select_collection
-      self.all.map { |u| [u.to_title, u.id] }
+      AdminUser.order("last_name").map { |u| [u.to_title, u.id] }
     end
   end
 

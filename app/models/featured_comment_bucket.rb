@@ -14,7 +14,7 @@ class FeaturedCommentBucket < ActiveRecord::Base
 
   class << self
     def select_collection
-      FeaturedCommentBucket.all.map { |b| [b.title, b.id] }
+      FeaturedCommentBucket.order("title").map { |b| [b.title, b.id] }
     end
   end
 end

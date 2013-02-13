@@ -1,6 +1,10 @@
 // Styles for index lists
 
 .filters {
+    .select2-container {
+        min-width: 130px;
+    }
+    
     .filter.label {
     display: inline-block; 
     margin-right: 10px;

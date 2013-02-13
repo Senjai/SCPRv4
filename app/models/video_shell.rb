@@ -33,7 +33,7 @@ class VideoShell < ActiveRecord::Base
 
   #-------------------
   # Association
-    
+
   # -------------------
   # Validation
 
