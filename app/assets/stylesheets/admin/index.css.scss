@@ -37,6 +37,7 @@ th.clickable {
             position: absolute;
 
             &.affix {
+                z-index: 5;
                 border: 1px solid $grayLight;
                 position: fixed; // Have to use redefine it here to override .ready
                 top: $navOffset + $breadcrumbOffset + 10px !important;
