@@ -1,0 +1,50 @@
+// Set column widths
+
+table {
+    // Global
+    .column-manage {
+        width: 50px;
+        white-space: nowrap;
+    }
+
+    .column-status {
+        width: 105px;
+    }
+
+    .column-published_at {
+        width: 140px;
+    }
+
+    .column-updated_at {
+        width: 140px;
+    }
+
+    .column-created_at {
+        width: 140px;
+    }
+
+    // BlogEntry
+    &.list-blog_entries {
+        .column-headline {
+            width: 320px;
+        }
+    }
+
+    // NprStory
+    &.list-npr_stories {
+        .column-manage {
+            width: 100px;
+        }
+    }
+
+    // Ticket
+    &.list-tickets {
+        .column-manage {
+            width: 100px;
+        }
+
+        .column-id {
+            width: 50px;
+        }
+    }
+}

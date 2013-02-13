@@ -1,26 +1,21 @@
 <% page_title model.to_title.pluralize %>
 <%= index_header model %>
 
-<table class="table table-striped index-list list-<%=model.route_key%>">
-  <%= any_to_list? @records, message: "No #{model.to_title.pluralize} were found." do %>
-    <thead>
-      <tr>
-        <th class="column-manage">Manage</th>
-        <%= render "/admin/shared/headers", list: list %>
+<%= list_table @records, model do %>
+  <thead>
+    <tr>
+      <%= render "/admin/shared/headers", list: list %>
+    </tr>
+  </thead>
+  <tbody class="list">
+    <% @records.each do |record| %>
+      <tr class="<%= model.singular_route_key.dasherize %>">
+        <td class="column-manage">
+          <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
+        </td>
+
+        <%= render "/admin/shared/columns", list: list, record: record %>
       </tr>
-    </thead>
-    <tbody class="list">
-      <% @records.each do |record| %>
-        <tr class="<%= model.singular_route_key.dasherize %>">
-          <td>
-            <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
-          </td>
-
-          <%= render "/admin/shared/columns", list: list, record: record %>
-        </tr>
-      <% end %>
-    </tbody>
-  <% end %>
-</table>
-
-<%= render "/admin/shared/pagination", records: @records %>
+    <% end %>
+  </tbody>
+<% end %>

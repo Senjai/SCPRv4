@@ -4,36 +4,26 @@
   <%= render 'header', page_title: @PAGE_TITLE, object: @object %>
 <% end %>
 
-<table class="table table-striped index-list list-<%=model.route_key%>">
-  <%= any_to_list? @versions, message: "This object has no logged history in the Rails CMS." do %>
-    <thead>
-      <tr>
-        <th class="column-manage">Manage</th>
-        <% list.columns.each do |column| %>
-          <th><%= column.header %></th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody class="list">
-      <% @versions.each do |version| %>
-        <% record = version.versioned %>
-        <% if record.present? %> <%# Has to be here in a case a story gets deleted from Django %>
-          <tr class="versions">
-            <td>
-              <%= guard record.class do %>
-                <%= link_to "View", admin_version_path(resources: record.class.route_key, resource_id: record.id, version_number: version.version_number), class: "btn" %>
-              <% end %>
-            </td>
-            <% list.columns.each do |column| %>
-              <td>
-                <%= render_attribute column, version %>
-              </td>
+<%= list_table @versions, model do %>
+  <thead>
+    <tr>
+      <%= render "/admin/shared/headers", list: list %>
+    </tr>
+  </thead>
+  <tbody class="list">
+    <% @versions.each do |version| %>
+      <% record = version.versioned %>
+      <% if record.present? %> <%# Has to be here in a case a story gets deleted from Django %>
+        <tr class="versions">
+          <td class="column-manage">
+            <%= guard record.class do %>
+              <%= link_to "View", admin_version_path(resources: record.class.route_key, resource_id: record.id, version_number: version.version_number), class: "btn" %>
             <% end %>
-          </tr>
-        <% end %>
+          </td>
+          
+          <%= render "/admin/shared/columns", list: list, record: version %>
+        </tr>
       <% end %>
-    </tbody>
-  <% end %>
-</table>
-
-<%= paginate @versions, theme: 'bootstrap', window: 4%>
+    <% end %>
+  </tbody>
+<% end %>

@@ -8,47 +8,34 @@ module Outpost
         @model = model
         
         @columns = []
-        @fields  = []
+        @filers  = []
+        @filters = []
         
+        # Set the defaults. This is expected to get
+        # overridden in the define_list block, but we can't
+        # assume that it will be.
         @default_order     = List::DEFAULT_ORDER
         @default_sort_mode = List::DEFAULT_SORT_MODE
         @per_page          = List::DEFAULT_PER_PAGE
-
-        yield if block_given?
       end
       
       #---------------
+      # Default order
+      attr_accessor :default_order, :default_sort_mode
+      attr_reader :columns, :fields, :filters, :per_page
 
-      attr_accessor :default_order
+      # Alias the writer methods so that we can use them in the 
+      # define_list without an explicit caller.
       alias_method :list_default_order, :default_order=
-
-      #---------------
-
-      attr_accessor :default_sort_mode
       alias_method :list_default_sort_mode, :default_sort_mode=
       
-      #---------------
       # Return nil if per_page is set to :all
       # So that pagination will not paginate
-      attr_reader :per_page
-
       def per_page=(val)
         @per_page = (val == :all ? nil : val.to_i)
       end
 
       alias_method :list_per_page, :per_page=
-
-      #---------------
-
-      def columns
-        @columns ||= default_columns
-      end
-
-      #---------------
-
-      def fields
-        @fields ||= default_fields
-      end
 
       #---------------
       # This is the method that should be used to add columns
@@ -89,10 +76,6 @@ module Outpost
 
       def default_columns
         @model.column_names - Outpost.config.excluded_list_columns
-      end
-
-      def default_fields
-        @model.column_names - Outpost.config.excluded_form_fields
       end
     end
   end

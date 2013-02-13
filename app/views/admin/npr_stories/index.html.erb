@@ -8,31 +8,23 @@
   </div>
 </div>
 
-<table class="table table-striped index-list list-<%=model.route_key%>">
-  <%= any_to_list? @records, title: model.to_title.pluralize do %>
-    <thead>
-      <tr>
-        <th class="column-import">Import</th>
-        <th class="column-skip">Skip</th>
-        <%= render "/admin/shared/headers", list: list %>
+<%= list_table @records, model do %>
+  <thead>
+    <tr>
+      <%= render "/admin/shared/headers", list: list %>
+    </tr>
+  </thead>
+  <tbody class="list">
+    <% @records.each do |record| %>
+      <tr class="<%= model.singular_route_key.dasherize %>">
+        <td class="column-manage">
+          <%= link_to "Import", import_admin_npr_story_path(record), method: :post, class: "btn" %>
+          <%= link_to "Skip", [:skip, :admin, record], method: :put, class: "btn btn-danger", 
+            data: { confirm: "Click OK to hide this NPR Story.\nClick CANCEL to return to the list." } %>
+        </td>
+        
+        <%= render "/admin/shared/columns", list: list, record: record %>
       </tr>
-    </thead>
-    <tbody class="list">
-      <% @records.each do |record| %>
-        <tr class="<%= model.singular_route_key.dasherize %>">
-          <td>
-            <%= link_to "Import", import_admin_npr_story_path(record), method: :post, class: "btn" %>
-          </td>
-          <td>
-            <%= link_to "Skip", [:skip, :admin, record], method: :put, class: "btn btn-danger", 
-              data: { confirm: "Click OK to hide this NPR Story.\nClick CANCEL to return to the list." } %>
-          </td>
-          
-          <%= render "/admin/shared/columns", list: list, record: record %>
-        </tr>
-      <% end %>
-    </tbody>
-  <% end %>
-</table>
-
-<%= render "/admin/shared/pagination", records: @records %>
+    <% end %>
+  </tbody>
+<% end %>

@@ -10,10 +10,13 @@ class Admin::NprStoriesController < Admin::BaseController
   self.model = NprStory
 
   define_list do
+    list_default_order "published_at"
+    list_default_sort_mode "desc"
+
     list_per_page 50
     
     column :headline
-    column :published_at
+    column :published_at, sortable: true, default_sort_mode: "desc"
     column :teaser
     column :link, display: :display_npr_link
     column :npr_id, header: "NPR ID"

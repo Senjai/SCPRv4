@@ -1,9 +1,9 @@
 ##
 # Concern::Controller::Searchable
 #
-# Requires that "model" is defined, and that
-# that class is a Newsroom'd class, and that it has
-# a Sphinx index defined.
+# Requirements:
+# * This model for this class (`model`) is indexed by Sphinx
+# * This controller has been bootstrapped by Outpost
 #
 module Concern
   module Controller
@@ -19,10 +19,15 @@ module Concern
         )
       end
 
+      #-----------------
+
       private
 
       def search_params
-        @search_params ||= {}
+        @search_params ||= {
+          :order       => order.to_sym,
+          :sort_mode   => sort_mode.to_sym
+        }
       end
     end
   end

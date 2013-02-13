@@ -48,6 +48,10 @@ class Ticket < ActiveRecord::Base
     indexes summary
     indexes description
     indexes browser_info
+
+    has id
+    has created_at
+    has status
   end
   
   #--------------------

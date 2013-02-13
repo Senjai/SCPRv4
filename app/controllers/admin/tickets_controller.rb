@@ -4,13 +4,14 @@ class Admin::TicketsController < Admin::ResourceController
   self.model = Ticket
 
   define_list do
-    list_order "status desc, created_at desc"
+    list_default_order "status"
+    list_default_sort_mode "desc"
     
     column :user
-    column :id, header: "#"
+    column :id, header: "#", sortable: true, default_sort_mode: "desc"
     column :summary
-    column :created_at
-    column :status, display: :display_ticket_status
+    column :created_at, sortable: true, default_sort_mode: "desc"
+    column :status, display: :display_ticket_status, sortable: true, default_sort_mode: "desc"
     
     filter :status, collection: -> { Ticket.status_text_collection }
     filter :user, collection: -> { AdminUser.select_collection }

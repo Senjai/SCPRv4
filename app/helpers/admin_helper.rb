@@ -25,8 +25,8 @@ module AdminHelper
   # then use either the column's default sort mode 
   # (if current_sort_mode is nil), or the requested
   # sort mode.
-  def switch_sort_mode(column, order, current_sort_mode)
-    if order == params[:order]
+  def switch_sort_mode(column, current_order, current_sort_mode)
+    if column.attribute == current_order
       case current_sort_mode
       when "asc"  then "desc"
       when "desc" then "asc"
@@ -96,12 +96,18 @@ module AdminHelper
   #----------------
   # Render the submit row.
   def submit_row(record, persisted_record)
-    render('admin/shared/submit_row', record: record, persisted_record: persisted_record)
+    render '/admin/shared/submit_row', record: record, persisted_record: persisted_record
   end
   
   #----------------
   # Render the index header
   def index_header(model)
-    render('admin/shared/index_header', model: model)
+    render '/admin/shared/index_header', model: model
+  end
+
+  #----------------
+  # Simple table wrapper for index listing
+  def list_table(records, model, &block)
+    render '/admin/shared/list_table', model: model, records: records, table: capture(&block)
   end
 end

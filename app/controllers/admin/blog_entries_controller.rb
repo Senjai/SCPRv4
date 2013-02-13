@@ -4,9 +4,8 @@ class Admin::BlogEntriesController < Admin::ResourceController
   self.model = BlogEntry
   
   define_list do
-    default_order "updated_at"
-    default_sort_mode "desc"
-    list_per_page "desc"
+    list_default_order "updated_at"
+    list_default_sort_mode "desc"
     
     column :headline
     column :blog
@@ -35,16 +34,5 @@ class Admin::BlogEntriesController < Admin::ResourceController
         render_preview_validation_errors(@entry)
       end
     end
-  end
-
-  #----------------
-
-  private
-
-  def search_params
-    @search_params ||= {
-      :order       => order_attribute ||= :published_at,
-      :sort_mode   => sort_mode ||= :desc
-    }
   end
 end

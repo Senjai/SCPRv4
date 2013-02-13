@@ -1,15 +1,17 @@
+<th class="column-manage">Manage</th>
+
 <% list.columns.each do |column| %>
-  <% is_sorting = order_attribute == column.attribute.to_s %>
+  <% is_sorting = order == column.attribute.to_s %>
 
   <th class="<%= 'header-highlighted' if is_sorting %> column-<%=column.attribute%>">
     <% if column.sortable? %>
-      <i class="icon <%=sort_mode_icon(is_sorting ? sort_mode || column.default_sort_mode : column.default_sort_mode)%>"></i>
+      <i class="icon <%=sort_mode_icon(is_sorting ? sort_mode : column.default_sort_mode)%>"></i>
 
-      <%= link_to_if column.sortable?, column.header, request.parameters.merge(order: column.attribute, sort_mode: is_sorting ? switch_sort_mode(column, order_attribute, sort_mode) : column.default_sort_mode) %>
-
-      <%= render('/admin/shared/cancel_link', href: model.admin_index_path) if is_sorting %>
+      <%= link_to_if column.sortable?, column.header, request.parameters.merge(order: column.attribute, sort_mode: switch_sort_mode(column, order, sort_mode)) %>
+      <%= render('/admin/shared/cancel_link', href: url_for(request.parameters.except("order", "sort_mode"))) if (is_sorting && (order != list.default_order || sort_mode != list.default_sort_mode)) %>
     <% else %>
       <%= column.header %>
     <% end %>
   </th>
 <% end %>
+  

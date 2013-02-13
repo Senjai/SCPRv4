@@ -37,7 +37,8 @@ module Outpost
 
     module ClassMethods
       attr_accessor :model
-      attr_writer :list, :fields
+      attr_writer :fields
+      attr_reader :list
 
       #----------------------
     
@@ -51,15 +52,7 @@ module Outpost
       # If `list` hasn't yet been defined,
       # then we'll figure out some sensible columns to use.
       # Otherwise use the defined list.
-      def list
-        @list ||= begin
-          List::Base.new model do
-            default_columns.each do |column|
-              list.column column
-            end
-          end
-        end
-      end
+
 
       #----------------------
       # Define the list for this controller.
@@ -67,7 +60,8 @@ module Outpost
       # Pass a block.
       #
       def define_list(&block)
-        @list = List::Base.new(&block)
+        @list = List::Base.new(model)
+        @list.instance_eval(&block)
       end
 
       #----------------------
@@ -89,6 +83,14 @@ module Outpost
 
         include Outpost::Controller::Actions
         include Outpost::Controller::Helpers
+      end
+
+      #----------------------
+
+      private
+
+      def default_fields
+        @model.column_names - Outpost.config.excluded_form_fields
       end
     end # ClassMethods
   end # Controller

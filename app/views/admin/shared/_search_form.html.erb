@@ -1,9 +1,12 @@
 <% if controller.action_methods.include? "search" %>
 <div class="search pull-left">
   <%= form_tag url_for([:search, :admin, model]), method: :get, class: "form-search" do %>
+    <%= hidden_field_tag :order, order %>
+    <%= hidden_field_tag :sort_mode, sort_mode %>
+
     <%= text_field_tag "query", params[:query], class: "search-query input-medium", placeholder: "Search" %>
     <%= button_tag "<i class='icon-search'></i>".html_safe, class: "btn" %>
-    <%= render "/admin/shared/cancel_link", href: model.admin_index_path %>
+    <%= render "/admin/shared/cancel_link", href: url_for(request.params.except("query").merge(action: "index")) %>
   <% end %>
 </div>
 <% end %>

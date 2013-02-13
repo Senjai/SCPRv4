@@ -35,9 +35,11 @@ class NprStory < ActiveRecord::Base
   #---------------
   # Sphinx
   define_index do
-    indexes :headline
-    indexes :teaser
-    indexes :link
+    indexes headline
+    indexes teaser
+    indexes link
+
+    has published_at
   end
   
   #---------------

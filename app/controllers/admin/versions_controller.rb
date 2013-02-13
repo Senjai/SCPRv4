@@ -1,16 +1,22 @@
 class Admin::VersionsController < Admin::BaseController
+  include Outpost::Controller::Helpers
+
   #--------------
   # Outpost
   self.model = Secretary::Version
 
   define_list do
+    list_default_order "version_number"
+    list_default_sort_mode "asc"
     list_per_page 10
     
     column :user, display: proc { self.user.try(:to_title) || "System" }
     column :description
     column :versioned, header: "Object", display: proc { self.versioned.simple_title }
-    column :version_number, header: "Version"
-    column :created_at, header: "Timestamp"
+    column :version_number, header: "Version", sortable: true, default_sort_model: "asc"
+    column :created_at, header: "Timestamp", sortable: true, default_sort_mode: "desc"
+
+    filter :user_id, collection: -> { Bio.select_collection } 
   end
 
   #--------------
@@ -23,7 +29,7 @@ class Admin::VersionsController < Admin::BaseController
   # See all activity
   def activity
     breadcrumb "Activity"
-    @versions = Secretary::Version.order(list.order).page(params[:page]).per(list.per_page)
+    @versions = Secretary::Version.order("#{order} #{sort_mode}").page(params[:page]).per(list.per_page)
     render :index
   end
   
@@ -31,7 +37,7 @@ class Admin::VersionsController < Admin::BaseController
   # See activity for a single object
   def index
     breadcrumb "History"
-    @versions = @object.versions.order(list.order).page(params[:page]).per(list.per_page)
+    @versions = @object.versions.order("#{order} #{sort_mode}").page(params[:page]).per(list.per_page)
   end
   
   #--------------
@@ -46,9 +52,9 @@ class Admin::VersionsController < Admin::BaseController
       @attribute_diffs = Secretary::Diff.new(@version_a, @version_b)
     end
   end
-    
-  #--------------
   
+  #--------------
+
   protected
 
   def get_object

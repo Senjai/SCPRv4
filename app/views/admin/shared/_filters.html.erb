@@ -3,7 +3,7 @@
     <span class="filter label">Filter by:</span>
 
     <%= form_tag model.admin_index_path, method: :get, class: "form-inline" do %>
-      <%= hidden_field_tag :order, order_attribute %>
+      <%= hidden_field_tag :order, order %>
       <%= hidden_field_tag :sort_mode, sort_mode %>
       
       <% list.filters.each do |filter| %>
@@ -13,7 +13,7 @@
       <% end %>
 
       <%= submit_tag "Go", class: "btn" %>
-      <%= render "/admin/shared/cancel_link", href: model.admin_index_path %>
+      <%= render "/admin/shared/cancel_link", href: url_for(request.parameters.except("filter")) %>
     <% end %>
   </div>
 <% end %>

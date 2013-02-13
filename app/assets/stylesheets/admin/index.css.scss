@@ -1,14 +1,14 @@
 // Styles for index lists
 
 .filters {
-  .filter.label {
+    .filter.label {
     display: inline-block; 
     margin-right: 10px;
-  }
-  
-  form {
+    }
+
+    form {
     display: inline-block;
-  }
+    }
 }
 
 .header-highlighted {
@@ -17,10 +17,10 @@
 
 .index-list {
     position: relative;
-    table-layout: fixed;
 
     th, td {
         overflow: hidden;
+        .cancel-link { float: right; }
     }
 
     thead {

@@ -40,6 +40,7 @@ $ ->
         $('th', @).each -> $(@).width $(@).width()
         height = $(@).height()
         $(@).closest("table").css("margin-top": height)
+
         $(@).addClass("ready")
         $(@).css("top": -height)
 

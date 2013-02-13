@@ -31,15 +31,14 @@ module Outpost
       end
 
       #------------------
-      # Figure out which sort mode to use.
-      # If the current order is the one we're requesting,
-      # then use either the column's default sort mode 
-      # (if current_sort_mode is nil), or the requested
-      # sort mode.
+      # Get the sort model
+      #
+      # It will either be the requested sort mode, or if not available, 
+      # then the table's default sort mode.
       attr_writer :sort_mode
       def sort_mode
         @sort_mode ||= begin
-          if %w{ asc desc }.include?(params[:sort_mode]))
+          if %w{ asc desc }.include?(params[:sort_mode])
             params[:sort_mode]
           else
             list.default_sort_mode
