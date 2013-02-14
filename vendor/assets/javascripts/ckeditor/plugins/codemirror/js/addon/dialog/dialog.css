@@ -1,7 +1,7 @@
 .CodeMirror-dialog {
   position: absolute;
   left: 0; right: 0;
-  background: white;
+  background: #D0D2D0;
   z-index: 15;
   padding: .1em .8em;
   overflow: hidden;
@@ -9,7 +9,7 @@
 }
 
 .CodeMirror-dialog-top {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #A6A6A6;
   top: 0;
 }
 
@@ -19,9 +19,9 @@
 }
 
 .CodeMirror-dialog input {
-  border: none;
+  border: 1px solid #A6A6A6;
   outline: none;
-  background: transparent;
+  background: #F7F7F7;
   width: 20em;
   color: inherit;
   font-family: monospace;
