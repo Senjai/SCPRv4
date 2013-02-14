@@ -69,6 +69,7 @@ class ShowEpisode < ActiveRecord::Base
     has show.id, as: :program
     has "''", as: :category, type: :integer
     has "0", as: :category_is_news, type: :boolean
+    has air_date
     has published_at
     has updated_at
     has status

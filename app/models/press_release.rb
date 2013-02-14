@@ -36,6 +36,8 @@ class PressRelease < ActiveRecord::Base
   define_index do
     indexes title
     indexes body
+
+    has created_at
   end
   
   #--------------

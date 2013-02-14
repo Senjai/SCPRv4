@@ -52,10 +52,7 @@ class NewsStory < ActiveRecord::Base
   
   #-------------------
   # Scopes
-  scope :filtered_by_bylines, ->(bio_id) { 
-    self.includes(:bylines).where(ContentByline.table_name => { user_id: bio_id }) 
-  }
-    
+
   #-------------------
   # Association
   

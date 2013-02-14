@@ -60,7 +60,7 @@ class KpccProgram < ActiveRecord::Base
   
   class << self
     def select_collection
-      KpccProgram.all.map { |p| [p.to_title, p.id] }
+      KpccProgram.order("title").map { |p| [p.to_title, p.id] }
     end
   end
   

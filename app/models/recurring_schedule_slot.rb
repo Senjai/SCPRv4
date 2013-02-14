@@ -31,6 +31,7 @@ class RecurringScheduleSlot < ActiveRecord::Base
   
   define_index do
     indexes program.title
+    has start_time
   end
   
   #--------------
@@ -179,8 +180,16 @@ class RecurringScheduleSlot < ActiveRecord::Base
     at_time(:end_time)
   end
 
+  #-----------------
+  # The day as an integer
   def day
     self.starts_at.wday
+  end
+
+  #-----------------
+  # The day as a string (eg. "Monday")
+  def day_word
+    Date::DAYNAMES[day]
   end
   
   

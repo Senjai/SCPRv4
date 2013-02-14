@@ -14,7 +14,7 @@ class Admin::TicketsController < Admin::ResourceController
     column :status, display: :display_ticket_status, sortable: true, default_sort_mode: "desc"
     
     filter :status, collection: -> { Ticket.status_text_collection }
-    filter :user, collection: -> { AdminUser.select_collection }
+    filter :user_id, collection: -> { AdminUser.select_collection }
   end
 
   #---------------

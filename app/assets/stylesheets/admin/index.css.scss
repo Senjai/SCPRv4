@@ -1,6 +1,10 @@
 // Styles for index lists
 
 .filters {
+    .select2-container {
+        min-width: 130px;
+    }
+    
     .filter.label {
     display: inline-block; 
     margin-right: 10px;
@@ -37,6 +41,7 @@ th.clickable {
             position: absolute;
 
             &.affix {
+                z-index: 5;
                 border: 1px solid $grayLight;
                 position: fixed; // Have to use redefine it here to override .ready
                 top: $navOffset + $breadcrumbOffset + 10px !important;

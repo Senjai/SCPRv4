@@ -37,7 +37,7 @@ module AdminListHelper
       rendered_item = send(display_helper, attrib)
     end
     
-    return rendered_item  
+    return rendered_item
   end
   
   
@@ -63,7 +63,7 @@ module AdminListHelper
   #-------------
   # Associations
 
-  # For a content association - requires headline and obj_key
+  # For a polymorphic content association - requires headline and obj_key
   def display_content(content)
     if content && content.respond_to?(:headline) && content.respond_to?(:obj_key)
       s = content.headline

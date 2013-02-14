@@ -109,18 +109,6 @@ module AdminHelper
   end
 
   #----------------
-  # Render the submit row.
-  def submit_row(record, persisted_record)
-    render '/admin/shared/submit_row', record: record, persisted_record: persisted_record
-  end
-  
-  #----------------
-  # Render the index header
-  def index_header(model)
-    render '/admin/shared/index_header', model: model
-  end
-
-  #----------------
   # Simple table wrapper for index listing
   def list_table(records, model, &block)
     render '/admin/shared/list_table', model: model, records: records, table: capture(&block)

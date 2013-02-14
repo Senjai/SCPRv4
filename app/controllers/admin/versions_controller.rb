@@ -6,22 +6,23 @@ class Admin::VersionsController < Admin::BaseController
   self.model = Secretary::Version
 
   define_list do
-    list_default_order "version_number"
-    list_default_sort_mode "asc"
+    list_default_order "created_at"
+    list_default_sort_mode "desc"
     list_per_page 10
     
     column :user, display: proc { self.user.try(:to_title) || "System" }
     column :description
     column :versioned, header: "Object", display: proc { self.versioned.simple_title }
-    column :version_number, header: "Version", sortable: true, default_sort_model: "asc"
-    column :created_at, header: "Timestamp", sortable: true, default_sort_mode: "desc"
+    column :version_number, header: "Version"
+    column :created_at, header: "Timestamp"
 
     filter :user_id, collection: -> { Bio.select_collection } 
   end
 
   #--------------
 
-  before_filter :get_object, only: [:index, :show, :compare]
+  before_filter :set_order_and_sort_mode, only: [:index, :show, :activity]
+  before_filter :get_object, only: [:index, :show]
   before_filter :authorize_resource, only: [:index, :show]
   before_filter :extend_breadcrumbs_for_object, only: [:index, :show]
   
@@ -56,6 +57,13 @@ class Admin::VersionsController < Admin::BaseController
   #--------------
 
   protected
+
+  def set_order_and_sort_mode
+    @order     = "created_at"
+    @sort_mode = "desc"
+  end
+
+  #--------------
 
   def get_object
     klass = Outpost::Helpers::Naming.to_class(params[:resources])

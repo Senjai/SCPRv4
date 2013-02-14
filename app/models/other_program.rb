@@ -53,6 +53,14 @@ class OtherProgram < ActiveRecord::Base
 
   #-------------------
   
+  class << self
+    def select_collection
+      OtherProgram.order("title").map { |p| [p.to_title, p.id] }
+    end
+  end
+
+  #-------------------  
+
   def display_segments
     false
   end

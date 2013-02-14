@@ -18,15 +18,11 @@ class AdminUser < ActiveRecord::Base
   
   # ------------------
   # Validation
-  validates :unencrypted_password, confirmation: true
-  validates_presence_of :unencrypted_password, on: :create
-  
+
   # ----------------
   # Callbacks
   before_validation :downcase_email
-  before_validation :generate_password, on: :create, if: -> { unencrypted_password.blank? }
-  before_create :generate_username, if: -> { username.blank? }
-  before_create :digest_password, if: -> { unencrypted_password.present? }
+  before_save :digest_password, if: -> { unencrypted_password.present? }, on: :create
 
   # ----------------
   # Sphinx
@@ -38,12 +34,14 @@ class AdminUser < ActiveRecord::Base
     indexes last_name, sortable: true
   end
 
+  attr_accessor :unencrypted_password
+
   # ----------------
   
   class << self
     def authenticate(username, unencrypted_password)
       if user = find_by_username(username)
-        algorithm, salt, hash = user.password.split('$')      
+        algorithm, salt, hash = user.password.split('$')
         if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
           return user
         else
@@ -57,14 +55,9 @@ class AdminUser < ActiveRecord::Base
     # ----------------
     
     def select_collection
-      self.all.map { |u| [u.to_title, u.id] }
+      AdminUser.order("last_name").map { |u| [u.to_title, u.id] }
     end
   end
-
-
-  # ----------------
-  
-  attr_accessor :unencrypted_password, :unencrypted_password_confirmation
   
   #----------------
   # Check if a user can manage the passed-in resource(s)
@@ -110,7 +103,7 @@ class AdminUser < ActiveRecord::Base
   end
 
   # ----------------
-        
+  
   def allowed_resources
     @allowed_resources ||= begin
       p = self.is_superuser? ? Permission.all : self.permissions
@@ -118,22 +111,10 @@ class AdminUser < ActiveRecord::Base
     end
   end
   
-  protected
-  
   # ----------------
-  # Generate a memorable password
-  def generate_password
-    consonants = %w(b c d f g h j k l m n p qu r s t v w x z ch cr fr nd ng nk nt ph pr rd sh sl sp st th tr)
-    vowels = %w(a e i o u y)
-    i, password = true, ''
-    8.times do
-      password << (i ? consonants[rand * consonants.size] : vowels[rand * vowels.size])
-      i = !i
-    end
-    self.unencrypted_password, self.unencrypted_password_confirmation = password, password
-  end
-  
-    
+
+  private
+
   # ----------------
   # Setup the password digest like Mercer does
   def digest_password
@@ -143,46 +124,10 @@ class AdminUser < ActiveRecord::Base
     self.password = [algorithm, salt, hash].join("$")
   end
 
-
-  # ----------------
-  # Bryan Ricker            #=> bricker
-  # Blake Ricker            #=> bricker1
-  # Bob Ricker              #=> bricker2
-  # Bryan Cameron Ricker    #=> bcricker
-  # Adolfo Guzman-Lopez     #=> aguzmanlopez
-  def generate_username
-    names = self.name.split(" ")
-    uname = ""
-    names[0..-2].each { |n| uname += n.chars.first }
-    uname += names.last
-    uname = uname.gsub(/\W/, "").downcase
-
-    if !AdminUser.find_by_username(uname)
-      self.username = uname
-    else
-      i = 1
-      begin
-        self.username = uname + i.to_s
-        i += 1
-      end while AdminUser.exists?(username: self.username)
-    end
-    self.username
-  end
-
-
   # ----------------
   # This helps us validate that e-mails are unique,
   # because the case_sensitive validation is slow.
   def downcase_email
     self.email = email.downcase if email.present?
-  end
-  
-  
-  # ----------------
-  # This will be used to generate auth_token when we need it
-  def generate_token(column)
-    begin
-      self[column] = SecureRandom.urlsafe_base64
-    end while AdminUser.exists?(column => self[column])
   end
 end

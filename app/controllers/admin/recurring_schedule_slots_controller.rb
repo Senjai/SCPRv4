@@ -4,11 +4,12 @@ class Admin::RecurringScheduleSlotsController < Admin::ResourceController
   self.model = RecurringScheduleSlot
 
   define_list do
+    list_default_order "start_time"
+    list_default_sort_mode "asc"
     list_per_page :all
-    list_order "start_time"
     
     column :program, display: proc { self.program.title }
-    column :starts_at, display: proc { self.format_time(:starts_at) }
-    column :ends_at, display: proc { self.format_time(:ends_at) }
+    column :start_time, header: "Start Time", display: proc { "#{self.day_word}, #{self.format_time(:starts_at)}" }, sortable: true, default_sort_mode: "asc"
+    column :end_time, header: "End Time", display: proc { "#{self.day_word}, #{self.format_time(:ends_at)}" }
   end
 end

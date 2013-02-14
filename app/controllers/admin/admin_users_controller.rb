@@ -10,7 +10,7 @@ class Admin::AdminUsersController < Admin::ResourceController
     column :username
     column :email
     column :first_name
-    column :last_name, sortable: true
+    column :last_name, sortable: true, default_sort_mode: "asc"
     column :is_superuser, header: "Admin?"
     column :is_staff, header: "Staff?"
 
@@ -36,7 +36,7 @@ class Admin::AdminUsersController < Admin::ResourceController
     get_record
     breadcrumb @record.to_title, @record.admin_edit_path, "Activity"
     list = Admin::VersionsController.list
-    @versions = @record.activities.order(list.order).page(params[:page]).per(list.per_page)
+    @versions = @record.activities.order(list.default_order).page(params[:page]).per(list.per_page)
     render '/admin/versions/index', locals: { list: list }
   end
 end

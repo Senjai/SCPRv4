@@ -1,5 +1,5 @@
 <% page_title model.to_title.pluralize %>
-<%= index_header model %>
+<%= render "/admin/shared/index_header", model: model %>
 
 <%= list_table @records, model do %>
   <thead>

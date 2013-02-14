@@ -4,7 +4,7 @@
   <%= render 'errors', f: f %>
   <%= render 'form_fields', record: @record, f: f %>
   <%= render 'extra_fields', f: f %>
-  <%= submit_row @record, @persisted_record %>
+  <%= render "/admin/shared/submit_row", record: @record %>
 <% end %>
 
 <% content_for :sidebar do %>
