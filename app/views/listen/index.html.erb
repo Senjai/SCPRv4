@@ -10,7 +10,26 @@
     <span class="pledge"><a href="https://scprcontribute.publicradio.org/contribute.php?" target="_blank">Pledge now</a></span>
     </div>
   </header>
-
+  
+  <!-- SURVEY INVITE ALERT - Pull after 2/20/2013 -->
+  <style type="text/css">
+  @-webkit-keyframes bluePulse {
+    from { background-color: #007d9a; -webkit-box-shadow: 0 0 9px #fff; }
+    50% { background-color: #2daebf; -webkit-box-shadow: 0 0 18px #2daebf; }
+    to { background-color: #007d9a; -webkit-box-shadow: 0 0 9px #fff; }
+  }
+  .alert-message {
+  -webkit-animation-name: bluePulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: 3;
+  }
+  </style>
+  <br />
+  <div class="alert-message info no-radius">
+    <h3><a href="http://kpcc.polldaddy.com/s/kpcc-audience-survey-mobile-usage" target="_blank"><strong>Take our 3 minute survey - help KPCC serve you better on you mobile device!</strong></a></h3>
+  </div>
+  <!-- END SURVEY INVITE ALERT -->
+  
   <div id="content">
     <div class="player">
       <div class="wrapper clearfix">
@@ -119,7 +138,7 @@
       </ul>
     </div>
   </footer>
-
+  
 <% content_for :footer do %>
   <script>
     llPlayer = new scpr.ListenLive.CurrentGen({

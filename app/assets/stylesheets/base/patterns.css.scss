@@ -308,7 +308,7 @@ body {
   border: 1px solid rgba(0,0,0,.3);
   @include border-radius(4px);
   @include box-shadow(inset 0 1px 0 rgba(255,255,255,.25));
-  p {
+  p, a {
     color: #fff;
     @include font-sans-serif();
     margin-bottom: 0;
@@ -316,13 +316,16 @@ body {
       margin-top: 5px;
     }
   }
+  &.no-radius {
+    @include border-radius(0);
+  }
   &.error {
-    @include gradientBar(#EE5F5B, #C43C35); 
-    a {
-        color:$white;
-        font-weight:bold;
-        text-decoration:underline;
-    }
+  @include gradientBar(#EE5F5B, #C43C35); 
+  a {
+      color:$white;
+      font-weight:bold;
+      text-decoration:underline;
+  }
   }
   &.warning {
     @include gradientBar(lighten(#fceec1, 10%), lighten(#eedc94, 10%)); 
@@ -850,6 +853,10 @@ color:$nearBlack;
   &.wide {
     margin: -320px 0 0 -370px;
     width:740px;
+  }
+  &.narrow {
+    margin: -320px 0 0 -200px;
+    width:400px;
   }
   &.hide {
     display:none;
