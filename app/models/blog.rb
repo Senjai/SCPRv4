@@ -58,7 +58,7 @@ class Blog < ActiveRecord::Base
     # Maps all records to an array of arrays, to be
     # passed into a Rails select helper
     def select_collection
-      self.order("name").map { |blog| [blog.to_title, blog.id] }
+      Blog.order("name").map { |blog| [blog.to_title, blog.id] }
     end
   end
   

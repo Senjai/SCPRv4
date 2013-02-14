@@ -10,7 +10,7 @@ class Admin::AdminUsersController < Admin::ResourceController
     column :username
     column :email
     column :first_name
-    column :last_name, sortable: true
+    column :last_name, sortable: true, default_sort_mode: "asc"
     column :is_superuser, header: "Admin?"
     column :is_staff, header: "Staff?"
 

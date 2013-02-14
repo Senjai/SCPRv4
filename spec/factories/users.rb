@@ -22,12 +22,11 @@ FactoryGirl.define do
     # To be removed:
     sequence(:first_name) { |n| "Bryan #{n}" }
     last_name   "Ricker"
+    username { "#{first_name} #{last_name}".parameterize }
     password    "sha1$vxA3aP5quIgd$aa7c53395bf8d6126c02ec8ef4e8a9b784c9a2f7" # `secret`, salted & digested
     date_joined { Time.now }
     #
 
-    unencrypted_password "secret"
-    unencrypted_password_confirmation { unencrypted_password }
     last_login { Time.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
 
