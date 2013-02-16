@@ -28,7 +28,7 @@ module Eloqua
       #--------------------
       
       def client
-        @client ||= Eloqua::Client.new(API_KEYS['eloqua']['auth'])
+        @client ||= Eloqua::Client.new(API_CONFIG['eloqua']['auth'])
       end
 
       #--------------------

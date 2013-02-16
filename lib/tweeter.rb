@@ -23,7 +23,7 @@ class Tweeter
   
   def client
     @client ||= begin
-      auth = API_KEYS['twitter'][@screen_name]
+      auth = API_CONFIG['twitter'][@screen_name]
       Twitter::Client.new(
         :consumer_key       => auth["consumer_key"],
         :consumer_secret    => auth["consumer_secret"],

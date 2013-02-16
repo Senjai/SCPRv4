@@ -206,7 +206,7 @@ class NprStory < ActiveRecord::Base
     #-------------------
     # Add in the primary asset if it exists
     if image = npr_story.primary_image
-      assethost = AssetHost::Client.new(auth_token: API_KEYS["assethost"]["token"])
+      assethost = AssetHost::Client.new(auth_token: API_CONFIG["assethost"]["token"])
       
       asset = assethost.create(
         :url     => image.src,

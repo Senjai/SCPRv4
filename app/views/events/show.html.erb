@@ -3,7 +3,7 @@
 <% present @event do |p| %>
   <% page_title [p.headline, "Events"] %>
 
-  <% content_for :head_tag, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_KEYS["google"]["maps"]}&sensor=true ") %>
+  <% content_for :head_tag, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{API_CONFIG["google"]["maps"]}&sensor=true ") %>
 
   <% content_for :footer do %>
     <script>gmapsLoader = new scpr.GMapsLoader();</script>

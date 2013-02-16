@@ -72,8 +72,8 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Send the e-mail
   def publish_email
     if should_send_email?
-      eloqua_config = API_KEYS['eloqua']['attributes']
-      client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])
+      eloqua_config = API_CONFIG['eloqua']['attributes']
+      client = Eloqua::Client.new(API_CONFIG['eloqua']['auth'])
       
       description = "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}"
       name = self.headline[0..50]

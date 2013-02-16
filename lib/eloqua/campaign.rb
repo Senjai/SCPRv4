@@ -11,7 +11,7 @@ module Eloqua
         :endAt, :fieldValues, :startAt, :accessedAt, :permissions, :sourceTemplateId
         
     def activate
-      client = Eloqua::Client.new(API_KEYS['eloqua']['auth'])
+      client = Eloqua::Client.new(API_CONFIG['eloqua']['auth'])
 
       client.api.post do |request|
         request.url "assets/campaign/active/#{self.id}"
