@@ -32,7 +32,7 @@
           apiType: "private",
           params: {
             limit: 20,
-            token: "<%= Rails.application.config.assethost.token %>",
+            token: "<%= API_CONFIG['assethost']['token'] %>",
             types: "segments",
             order: "updated_at",
             sort_mode: "desc",

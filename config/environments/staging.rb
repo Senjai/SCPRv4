@@ -58,7 +58,6 @@ Scprv4::Application.configure do
 
   # Enable Postmark for transactional mail sending
   config.action_mailer.delivery_method          = :simple_postmark
-  config.action_mailer.simple_postmark_settings = { api_key: API_CONFIG['postmark']['api_key'] }
   config.action_mailer.raise_delivery_errors    = true
   
   # Disable delivery errors, bad email addresses will be ignored
@@ -87,6 +86,5 @@ Scprv4::Application.configure do
   config.node.server = "http://node.scprdev.org"
   
   config.assethost.server = "a.scpr.org"
-  config.assethost.token  = API_CONFIG['assethost']['token']
   config.assethost.prefix = "/api"
 end

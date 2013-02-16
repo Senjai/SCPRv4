@@ -4,7 +4,7 @@ class Api::PrivateController < Api::BaseController
   private
   
   def authorize
-    if params[:token] != Rails.application.config.assethost.token
+    if params[:token] != API_CONFIG['assethost']['token']
       render status: :unauthorized
       return false
     end
