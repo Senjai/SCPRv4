@@ -48,7 +48,6 @@ module ActionDispatch
     end
   end
 end
-      
 
 Scprv4::Application.config.session_store :cookie_store, key: '_scprv4_session'
 

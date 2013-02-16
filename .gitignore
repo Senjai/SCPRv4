@@ -1,7 +1,13 @@
 /.bundle
 /coverage
 /config/*.sphinx.conf
+
 /config/database.yml
+/config/newrelic.yml
+/config/api_config.yml
+/config/app_config.yml
+/config/sphinx.yml
+
 /config/environments/development.rb
 /db/*.sqlite3
 /db/sphinx
