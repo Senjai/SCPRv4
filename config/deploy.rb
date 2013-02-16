@@ -37,8 +37,8 @@ set :restart_delay, 40
 
 # --------------
 # Universal Callbacks
+before "deploy:update_code", "deploy:symlink_config"
 after "deploy:update", "deploy:cleanup"
-after "deploy:update_code", "deploy:symlink_config"
 
 # --------------
 # Universal Tasks
