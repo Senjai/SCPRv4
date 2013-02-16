@@ -38,7 +38,7 @@ set :restart_delay, 40
 # --------------
 # Universal Callbacks
 after "deploy:update", "deploy:cleanup"
-
+after "deploy:update_code", "deploy:symlink_config"
 
 # --------------
 # Universal Tasks
@@ -57,7 +57,7 @@ namespace :deploy do
       template = File.read(maintenance_template_path)
       result   = ERB.new(template).result(binding)
 
-      put result, "#{shared_path}/system/#{maintenance_basename}.html", :mode => 0644      
+      put result, "#{shared_path}/system/#{maintenance_basename}.html", :mode => 0644
     end
 
     task :enable, :roles => :web, :except => { :no_release => true } do
@@ -83,6 +83,12 @@ namespace :deploy do
       else
         logger.info "No changes in assets. SKIPPING asset pre-compilation"
       end
+    end
+  end
+
+  task :symlink_config do
+    %w{ database.yml api_config.yml app_config.yml sphinx.yml newrelic.yml }.each do |file|
+      run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
   end
 end
