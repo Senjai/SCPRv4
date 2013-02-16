@@ -9,7 +9,7 @@ require 'chronic'
 require 'fakeweb'
 require 'database_cleaner'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each             { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("lib/outpost/spec/db/*.rb")].each  { |f| require f }
 
 FakeWeb.allow_net_connect = false

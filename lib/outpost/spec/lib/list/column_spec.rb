@@ -1,17 +1,12 @@
 require File.expand_path("../../../spec_helper", __FILE__)
 
 describe Outpost::List::Column do
-  let(:admin) { Outpost::Admin.new(Outpost::Test::Person) }
-
-  describe "attributes" do
-    let(:list) { Outpost::List::Base.new(admin) }
-    subject { Outpost::List::Column.new("name", list) }
-  end
+  let(:model) { Outpost::Test::Person }
 
   #----------------
   
   describe "initialization" do
-    let(:list) { Outpost::List::Base.new(admin) }
+    let(:list) { Outpost::List::Base.new(model) }
     
     let(:column) {
       Outpost::List::Column.new("name", list, quick_edit: true, display: :display_full_name, header: "Full Name")
@@ -47,7 +42,7 @@ describe Outpost::List::Column do
   #----------------
   
   describe "#header" do
-    let(:list) { Outpost::List::Base.new(admin) }
+    let(:list) { Outpost::List::Base.new(model) }
     
     it "returns the header if passed in" do
       column = Outpost::List::Column.new("name", list, header: "Person")
@@ -63,12 +58,24 @@ describe Outpost::List::Column do
   #----------------
   
   describe "#quick_edit?" do
-    let(:list) { Outpost::List::Base.new(admin) }
+    let(:list) { Outpost::List::Base.new(model) }
     
     it "is the same as #quick_edit" do
       column = Outpost::List::Column.new("name", list, quick_edit: true)
       column.quick_edit.should eq true
       column.quick_edit?.should eq true
     end
+  end
+
+  #----------------
+
+  describe '#sortable?' do
+    pending
+  end
+
+  #----------------
+
+  describe '#default_sort_mode' do
+    pending
   end
 end

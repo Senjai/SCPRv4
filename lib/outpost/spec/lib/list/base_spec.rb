@@ -4,39 +4,34 @@ describe Outpost::List::Base do
   
   #--------------
   
-  let(:admin) { Outpost::Admin.new(Outpost::Test::Person) }
+  let(:model) { Outpost::Test::Person }
   
   describe "initialize" do
     it "sets @columns to an empty array" do
-      list = Outpost::List::Base.new(admin)
+      list = Outpost::List::Base.new(model)
       list.instance_variable_get(:@columns).should eq []
     end
     
-    it "sets order to anything passed in" do
-      list = Outpost::List::Base.new(admin, order: "name desc")
-      list.order.should eq "name desc"
+    it "sets order to default" do
+      list = Outpost::List::Base.new(model)
+      list.default_order.should eq Outpost::List::DEFAULT_ORDER
     end
-    
-    it "sets order to default if nothing passed in" do
-      list = Outpost::List::Base.new(admin)
-      list.order.should eq Outpost::List::DEFAULTS[:order]
+
+    it "sets sort_mode to default" do
+      list = Outpost::List::Base.new(model)
+      list.default_sort_mode.should eq Outpost::List::DEFAULT_SORT_MODE
     end
-    
-    it "sets per_page to anything passed in" do
-      list = Outpost::List::Base.new(admin, per_page: 16)
-      list.per_page.should eq 16
-    end
-    
-    it "sets per_page to default is nothing passed in" do
-      list = Outpost::List::Base.new(admin)
-      list.per_page.should eq Outpost::List::DEFAULTS[:per_page]
+
+    it "sets per_page to default" do
+      list = Outpost::List::Base.new(model)
+      list.per_page.should eq Outpost::List::DEFAULT_PER_PAGE
     end
   end
   
   #--------------
 
   describe "column" do
-    let(:list)    { Outpost::List::Base.new(admin) }
+    let(:list) { Outpost::List::Base.new(model) }
 
     before :each do
       column = Outpost::List::Column.new("name", list, {})
@@ -61,18 +56,15 @@ describe Outpost::List::Base do
   #--------------
   
   describe "per_page=" do
+    let(:list) { Outpost::List::Base.new(model) }
+
     it "sets @per_page to nil if val is 'all'" do
-      list = Outpost::List::Base.new(admin, per_page: :all)
+      list.per_page = :all
       list.per_page.should be_nil
     end
     
-    it "sets @per_page to default if none specified" do
-      list = Outpost::List::Base.new(admin)
-      list.per_page.should eq Outpost::List::DEFAULTS[:per_page]
-    end
-    
     it "sets @per_page to passed-in value as an integer if specified" do
-      list = Outpost::List::Base.new(admin, per_page: "99")
+      list.per_page = "99"
       list.per_page.should eq 99
     end
   end
