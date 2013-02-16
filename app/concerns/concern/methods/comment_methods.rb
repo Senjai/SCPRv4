@@ -11,7 +11,7 @@ module Concern
       end
 
       def disqus_shortname
-        API_CONFIG["disqus"]["shortname"]
+        Rails.application.config.api["disqus"]["shortname"]
       end
     end # CommentMethods
   end # Methods

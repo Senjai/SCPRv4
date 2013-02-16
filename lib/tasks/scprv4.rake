@@ -94,7 +94,7 @@ namespace :scprv4 do
       puts "*** [#{Time.now}] Caching most viewed..."
 
       NewRelic.with_manual_agent do
-        analytics = API_CONFIG["google"]["analytics"]
+        analytics = Rails.application.config.api["google"]["analytics"]
         task = CacheTasks::MostViewed.new(
           analytics["client_id"],
           analytics["client_secret"],
@@ -116,7 +116,7 @@ namespace :scprv4 do
       puts "*** [#{Time.now}] Caching most commented..."
 
       NewRelic.with_manual_agent do
-        task = CacheTasks::MostCommented.new("kpcc", "3d", API_CONFIG['disqus']['api_key'], 5)
+        task = CacheTasks::MostCommented.new("kpcc", "3d", Rails.application.config.api['disqus']['api_key'], 5)
         task.verbose = true
         task.run
       end

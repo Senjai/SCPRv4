@@ -3,7 +3,7 @@ class Dashboard::MainController < ApplicationController
   skip_before_filter :set_up_finders, :check_sessions, :add_params_for_newrelic, only: :notify
   
   def notify
-    if params[:auth_token] != API_CONFIG['assethost']['token']
+    if params[:auth_token] != Rails.application.config.api['assethost']['token']
       render text: "Unauthorized", status: :unauthorized
       return false
     end

@@ -51,5 +51,8 @@ module Scprv4
     config.assethost = ActiveSupport::OrderedOptions.new
     config.node      = ActiveSupport::OrderedOptions.new
     config.dbsync    = ActiveSupport::OrderedOptions.new
+
+    config.api     = YAML.load_file("#{Rails.root}/config/api_config.yml")[Rails.env]
+    config.secrets = YAML.load_file("#{Rails.root}/config/app_config.yml")
   end
 end
