@@ -1,4 +1,6 @@
 class NewsStory < ActiveRecord::Base
+  outpost_model
+  
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -19,9 +21,10 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
-  
+    include Concern::Methods::ContentJsonMethods
+
   self.table_name = 'news_story'
-  has_secretary  
+  has_secretary
   ROUTE_KEY = "news_story"
   
   SOURCES = [
@@ -49,10 +52,7 @@ class NewsStory < ActiveRecord::Base
   
   #-------------------
   # Scopes
-  scope :filtered_by_bylines, ->(bio_id) { 
-    self.includes(:bylines).where(ContentByline.table_name => { user_id: bio_id }) 
-  }
-    
+
   #-------------------
   # Association
   
@@ -64,26 +64,6 @@ class NewsStory < ActiveRecord::Base
   
   #------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "updated_at desc"
-      
-      column :headline
-      column :slug
-      column :byline
-      column :audio
-      column :published_at
-      column :status
-      
-      filter :status, collection: -> { ContentBase.status_text_collect }
-      filter :bylines, collection: -> { Bio.select_collection }
-    end
-  end
-  include Concern::Methods::ContentJsonMethods
-  
 
   #-------------------
   # Sphinx

@@ -1,4 +1,8 @@
 class VideoShell < ActiveRecord::Base
+  self.table_name = "contentbase_videoshell"
+  outpost_model
+  has_secretary
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -16,10 +20,9 @@ class VideoShell < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::HeadlineMethods
+  include Concern::Methods::ContentJsonMethods
 
-  self.table_name = "contentbase_videoshell"
-  ROUTE_KEY       = "video"
-  has_secretary
+  ROUTE_KEY = "video"
   
   def self.content_key
     "content/video"
@@ -30,26 +33,13 @@ class VideoShell < ActiveRecord::Base
 
   #-------------------
   # Association
-    
+
   # -------------------
   # Validation
 
   #-------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      column :headline
-      column :slug
-      column :byline
-      column :published_at
-      column :status
-    end
-  end
-  include Concern::Methods::ContentJsonMethods
-  
+
   #-------------------
   # Sphinx
   acts_as_searchable

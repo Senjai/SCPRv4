@@ -1,8 +1,10 @@
 class Blog < ActiveRecord::Base
+  self.table_name = 'blogs_blog'
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
 
-  self.table_name = 'blogs_blog'
-  has_secretary
   ROUTE_KEY = "blog"
   
   #-------------------
@@ -25,26 +27,14 @@ class Blog < ActiveRecord::Base
   #-------------------
   # Callbacks
   
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "is_active desc, name"
-      list_per_page :all
-      
-      column :name
-      column :slug
-      column :teaser,    header: "Tagline"
-      column :is_active, header: "Active?"
-    end
-  end
-  
   #----------------
   # Sphinx
   acts_as_searchable
   
   define_index do
     indexes name
+    indexes teaser
+    has is_active
   end
   
   #-------------------
@@ -68,7 +58,7 @@ class Blog < ActiveRecord::Base
     # Maps all records to an array of arrays, to be
     # passed into a Rails select helper
     def select_collection
-      self.all.map { |blog| [blog.to_title, blog.id] }
+      Blog.order("name").map { |blog| [blog.to_title, blog.id] }
     end
   end
   

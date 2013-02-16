@@ -1,10 +1,12 @@
 class Bio < ActiveRecord::Base
+  self.table_name = 'bios_bio'
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   
-  ROUTE_KEY       = "bio"
-  self.table_name = 'bios_bio'
-  has_secretary
+  ROUTE_KEY = "bio"
 
   #--------------
   # Scopes
@@ -31,24 +33,11 @@ class Bio < ActiveRecord::Base
   end
 
   #--------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "last_name"
-      list_per_page :all
-      
-      column :name
-      column :email
-      column :is_public, header: "Show on Site?"
-    end
-  end
-  
-  #--------------
   # Sphinx
   acts_as_searchable
   
   define_index do
-    indexes name
+    indexes name, sortable: true
     indexes title
     indexes email
   end
@@ -59,7 +48,7 @@ class Bio < ActiveRecord::Base
     # Maps all records to an array of arrays, to be
     # passed into a Rails select helper
     def select_collection
-      self.order("name").all.map { |bio| [bio.name, bio.id] }
+      self.order("last_name").map { |bio| [bio.name, bio.id] }
     end
   end
   

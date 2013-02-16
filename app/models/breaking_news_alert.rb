@@ -1,9 +1,10 @@
 class BreakingNewsAlert < ActiveRecord::Base
+  self.table_name = 'layout_breakingnewsalert'
+  outpost_model
+  has_secretary
+
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
-  self.table_name = 'layout_breakingnewsalert'
-  has_secretary
-  
   ALERT_TYPES = {
     "break"   => "Breaking News",
     "audio"   => "Listen Live",
@@ -25,20 +26,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Callbacks
   after_save :async_publish_email, if: :should_send_email?
   after_save :expire_cache
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      column :headline
-      column :alert_type, display: proc { BreakingNewsAlert::ALERT_TYPES[self.alert_type] }
-      column :visible
-      column :is_published
-      column :email_sent
-      column :created_at
-    end
-  end
-  
+
   #-------------------
   # Sphinx
   acts_as_searchable
@@ -47,6 +35,7 @@ class BreakingNewsAlert < ActiveRecord::Base
     indexes headline
     indexes alert_type
     indexes teaser
+    has created_at
   end
   
   #-------------------
@@ -59,6 +48,10 @@ class BreakingNewsAlert < ActiveRecord::Base
       else
         nil
       end
+    end
+
+    def types_select_collection
+      ALERT_TYPES.map { |k, v| [v, k] }
     end
   end
 

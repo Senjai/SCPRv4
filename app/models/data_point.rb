@@ -15,7 +15,8 @@
 # is deployed that relies on that key.
 # Don't assume the key will be there!
 #
-class DataPoint < ActiveRecord::Base  
+class DataPoint < ActiveRecord::Base
+  outpost_model
   has_secretary
   
   #--------------
@@ -30,22 +31,7 @@ class DataPoint < ActiveRecord::Base
   
   #--------------
   # Callbacks
-  
-  #--------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "group_name, data_key"
-      list_per_page :all
-      
-      column :group_name
-      column :data_key
-      column :data_value, quick_edit: true
-      column :notes
-      column :updated_at
-    end
-  end
-  
+
   #--------------
   # Sphinx
   acts_as_searchable
@@ -53,6 +39,8 @@ class DataPoint < ActiveRecord::Base
   define_index do
     indexes data_key
     indexes data_value
+    indexes group_name, sortable: true
+    has updated_at
   end
   
   #--------------
@@ -73,6 +61,12 @@ class DataPoint < ActiveRecord::Base
       hash = {}
       collection.each { |obj| hash[obj.data_key] = DataPoint::Hashed.new(obj) }
       hash
+    end
+
+    #--------------
+
+    def group_names_select_collection
+      DataPoint.select("distinct group_name").order("group_name").map(&:group_name)
     end
   end
 

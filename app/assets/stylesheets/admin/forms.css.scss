@@ -87,14 +87,23 @@ form.simple_form {
       }
       .controls { margin-left: 2px; }
   }
+}
 
-  // Select 2 overrides
-  .select[class*="span"] {
-    margin-left: 0;
-    float: none;
-  }
+// Select 2 overrides
+.select[class*="span"] {
+  margin-left: 0;
+  float: none;
+}
 
-  .select2-container {
-    min-width: 200px;
-  }
+.select2-container {
+  min-width: 200px;
+}
+
+// Select2 has z-index:9999 by default... no thanks
+.select2-drop-mask {
+  z-index: 4;
+}
+
+.select2-drop {
+  z-index: 4;
 }

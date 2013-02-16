@@ -1,29 +1,24 @@
-<% page_title resource_class.to_title.pluralize %>
-<%= index_header resource_class %>
+<% page_title model.to_title.pluralize %>
+<%= render "/admin/shared/index_header", model: model %>
 
-<table class="table table-striped">
-  <%= any_to_list? @records, title: resource_class.to_title.pluralize do %>
-    <thead>
-      <tr>
-        <th>Manage</th>
-        <%= render "/admin/shared/headers", list: @list %>
+<%= list_table @records, model do %>
+  <thead>
+    <tr>
+      <%= render "/admin/shared/headers", list: list %>
+    </tr>
+  </thead>
+  <tbody class="list">
+    <% @records.each do |record| %>
+      <tr class="<%= model.singular_route_key.dasherize %>">
+        <td class="column-manage">
+          <%= link_to "Details", [:admin, record], class: "btn" %>
+          <% if record.user == admin_user || admin_user.is_superuser? %>
+            <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
+          <% end %>
+        </td>
+
+        <%= render "/admin/shared/columns", list: list, record: record %>
       </tr>
-    </thead>
-    <tbody class="list">
-      <% @records.each do |record| %>
-        <tr class="<%= resource_class.singular_route_key.dasherize %>">
-          <td style="white-space:nowrap;">
-            <%= link_to "Details", [:admin, record], class: "btn" %>
-            <% if record.user == admin_user || admin_user.is_superuser? %>
-              <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
-            <% end %>
-          </td>
-
-          <%= render "/admin/shared/columns", list: @list, record: record %>
-        </tr>
-      <% end %>
-    </tbody>
-  <% end %>
-</table>
-
-<%= render "/admin/shared/pagination", records: @records %>
+    <% end %>
+  </tbody>
+<% end %>

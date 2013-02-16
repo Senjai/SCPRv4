@@ -1,4 +1,27 @@
 class Admin::ShowSegmentsController < Admin::ResourceController
+  #----------------
+  # Outpost
+  self.model = ShowSegment
+
+  define_list do
+    list_default_order "updated_at"
+    list_default_sort_mode "desc"
+    
+    column :headline
+    column :show
+    column :byline
+    column :audio
+    column :published_at, sortable: true, default_sort_mode: "desc"
+    column :status
+    column :updated_at, sortable: true, default_sort_mode: "desc"
+    
+    filter :show_id, collection: -> { KpccProgram.select_collection }
+    filter :bylines, collection: -> { Bio.select_collection }
+    filter :status, collection: -> { ContentBase.status_text_collect }
+  end
+
+  #----------------
+
   def preview
     @segment = ContentBase.obj_by_key(params[:obj_key]) || ShowSegment.new
     
@@ -13,15 +36,4 @@ class Admin::ShowSegmentsController < Admin::ResourceController
       end
     end
   end
-
-  #----------------
-
-  private
-  
-  def search_params
-    @search_params ||= {
-      :order       => :published_at,
-      :sort_mode   => :desc
-    }
-  end 
 end

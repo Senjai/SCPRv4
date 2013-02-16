@@ -1,4 +1,24 @@
 class Admin::AdminUsersController < Admin::ResourceController
+  #---------------
+  # Outpost
+  self.model = AdminUser
+
+  define_list do
+    list_default_order "last_name"
+    list_default_sort_mode "asc"
+
+    column :username
+    column :email
+    column :first_name
+    column :last_name, sortable: true, default_sort_mode: "asc"
+    column :is_superuser, header: "Admin?"
+    column :is_staff, header: "Staff?"
+
+    filter :is_superuser, collection: :boolean
+    filter :is_staff, collection: :boolean
+  end
+
+  #---------------
   # Override this method from Admin::ResourceController
   # Users should always be able to see and update their
   # own profile.
@@ -10,12 +30,13 @@ class Admin::AdminUsersController < Admin::ResourceController
     super
   end
   
+  #---------------
+
   def activity
     get_record
     breadcrumb @record.to_title, @record.admin_edit_path, "Activity"
-    
-    @list = Secretary::Version.admin.list
-    @versions = @record.activities.order(@list.order).page(params[:page]).per(@list.per_page)
-    render '/admin/versions/index'
+    list = Admin::VersionsController.list
+    @versions = @record.activities.order(list.default_order).page(params[:page]).per(list.per_page)
+    render '/admin/versions/index', locals: { list: list }
   end
 end

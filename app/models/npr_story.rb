@@ -1,11 +1,10 @@
 class NprStory < ActiveRecord::Base
-  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
-
-  include AdminResource::Model::Identifier
-  include AdminResource::Model::Naming
-  logs_as_task
-  
   self.table_name = "npr_npr_story"
+
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+  include Outpost::Model::Identifier
+  include Outpost::Model::Naming
+  logs_as_task
   
   # An array of elements in an NPR::Story's 
   # +fullText+ attribute that we want to 
@@ -32,27 +31,15 @@ class NprStory < ActiveRecord::Base
 
   #---------------
   # Callbacks
-
-  #---------------
-  # Administration
-  self.admin = AdminResource::Admin.new(self)
-  admin.define_list do
-    list_per_page 50
-    
-    column :headline
-    column :published_at
-    column :teaser
-    column :link, display: :display_npr_link
-    column :npr_id, header: "NPR ID"
-  end
-  
   
   #---------------
   # Sphinx
   define_index do
-    indexes :headline
-    indexes :teaser
-    indexes :link
+    indexes headline
+    indexes teaser
+    indexes link
+
+    has published_at
   end
   
   #---------------
@@ -62,7 +49,7 @@ class NprStory < ActiveRecord::Base
 
     #---------------
     # Since this class isn't getting (and, for the
-    # most part, doesn't need) the AdminResource
+    # most part, doesn't need) the Outpost
     # Routing, we'll just manually put this one here.
     def admin_index_path
       @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")

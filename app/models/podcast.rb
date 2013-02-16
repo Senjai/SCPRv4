@@ -1,4 +1,5 @@
 class Podcast < ActiveRecord::Base
+  outpost_model
   has_secretary
   
   ROUTE_KEY = "podcast"
@@ -32,26 +33,13 @@ class Podcast < ActiveRecord::Base
   
   #-------------
   # Callbacks
-  
-  #-------------
-  # Administration
-  administrate do
-    define_list do
-      column :title
-      column :slug
-      column :source
-      column :podcast_url
-      column :keywords
-      column :is_listed
-    end
-  end
-  
+
   #-------------
   # Sphinx
   acts_as_searchable
   
   define_index do
-    indexes title
+    indexes title, sortable: true
     indexes slug
     indexes description
   end

@@ -9,6 +9,50 @@ module AdminHelper
   end
 
   #----------------
+
+  def sort_mode_icon(sort_mode)
+    case sort_mode
+    when "desc" then "icon-arrow-down"
+    when "asc"  then "icon-arrow-up"
+    end
+  end
+
+  #------------------
+  # Figure out which sort mode to switch to.
+  #
+  # If the current order is the one we're requesting,
+  # then use either the column's default sort mode 
+  # (if current_sort_mode is nil), or the requested
+  # sort mode.
+  def switch_sort_mode(column, current_order, current_sort_mode)
+    if column.attribute == current_order
+      case current_sort_mode
+      when "asc"  then "desc"
+      when "desc" then "asc"
+      else column.default_sort_mode
+      end
+    else
+      column.default_sort_mode
+    end
+  end
+
+  #----------------
+  # Find the column type for the column classes
+  def column_type_class(model, attribute)
+    if column = model.columns_hash[attribute]
+      "column-#{column.type}"
+    else
+      "column-association"
+    end
+  end
+
+  #----------------
+  # Convert the attribute to a class for the column class  
+  def column_attribute_class(attribute)
+    "column-#{attribute}"
+  end
+
+  #----------------
   # Use this to block out whole chunks of code 
   # based on permissions. If the user has permission
   # to manage the resource, show the block.
@@ -65,14 +109,8 @@ module AdminHelper
   end
 
   #----------------
-  # Render the submit row.
-  def submit_row(record, persisted_record)
-    render('admin/shared/submit_row', record: record, persisted_record: persisted_record)
-  end
-  
-  #----------------
-  # Render the index header
-  def index_header(resource_class)
-    render('admin/shared/index_header', resource_class: resource_class)
+  # Simple table wrapper for index listing
+  def list_table(records, model, &block)
+    render '/admin/shared/list_table', model: model, records: records, table: capture(&block)
   end
 end

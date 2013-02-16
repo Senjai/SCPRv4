@@ -8,7 +8,7 @@ module Job
     @queue = namespace
     
     def self.after_perform(id)
-      hook = AdminResource::Hook.new(
+      hook = Outpost::Hook.new(
         :path => "/task/finished/#{@npr_story.obj_key.gsub(/\//, "-")}:import",
         :data => {
           :location => @story.admin_edit_path

@@ -5,19 +5,9 @@ Secretary::Config.configure do |config|
   config.user_class = "::AdminUser"
 end
 
-# Administration for Versions
+# Setup Secretary to be Outposty
 module Secretary
   class Version
-    administrate do
-      define_list do
-        list_per_page 10
-        
-        column :user, display: proc { self.user.try(:to_title) || "System" }
-        column :description
-        column :versioned, header: "Object", display: proc { self.versioned.simple_title }
-        column :version_number, header: "Version"
-        column :created_at, header: "Timestamp"
-      end
-    end
+    outpost_model
   end
 end

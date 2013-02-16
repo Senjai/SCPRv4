@@ -1,10 +1,12 @@
 class KpccProgram < ActiveRecord::Base
+  self.table_name = 'programs_kpccprogram'
+  outpost_model
+  has_secretary
+
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   
-  self.table_name = 'programs_kpccprogram'
-  ROUTE_KEY       = "program"
-  has_secretary
+  ROUTE_KEY = "program"
   
   Featured = [
     'take-two',
@@ -23,7 +25,7 @@ class KpccProgram < ActiveRecord::Base
   
   #-------------------
   # Scopes
-  scope :active,         -> { where(:air_status => ['onair','online']) }
+  scope :active,         -> { where(air_status: ['onair','online']) }
   scope :can_sync_audio, -> { where(air_status: "onair").where("audio_dir is not null").where("audio_dir != ?", "") }
   
   #-------------------
@@ -42,30 +44,25 @@ class KpccProgram < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  
-  #-------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "title"
-      list_per_page :all
-      
-      column :title
-      column :air_status
-    end
-  end
-  
+
   #-------------------
   # Sphinx
   acts_as_searchable
   
   define_index do
-    indexes title
+    indexes title, sortable: true
+    indexes airtime
     indexes description
     indexes host
   end
   
   #-------------------
+  
+  class << self
+    def select_collection
+      KpccProgram.order("title").map { |p| [p.to_title, p.id] }
+    end
+  end
   
   def published?
     self.air_status != "hidden"

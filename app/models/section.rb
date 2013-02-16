@@ -1,6 +1,8 @@
 class Section < ActiveRecord::Base
-  include Concern::Validations::SlugValidation
+  outpost_model
   has_secretary
+
+  include Concern::Validations::SlugValidation
   ROUTE_KEY = "section"
 
   #----------
@@ -24,18 +26,6 @@ class Section < ActiveRecord::Base
   
   #----------
   # Callbacks
-  
-  #----------
-  # Administration
-  administrate do
-    define_list do
-      list_per_page :all
-      
-      column :id
-      column :title
-      column :slug
-    end
-  end
   
   #----------
   # Sphinx

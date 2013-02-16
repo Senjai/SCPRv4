@@ -1,4 +1,26 @@
-class Admin::BlogEntriesController < Admin::ResourceController  
+class Admin::BlogEntriesController < Admin::ResourceController
+  #----------------
+  # Outpost
+  self.model = BlogEntry
+  
+  define_list do
+    list_default_order "updated_at"
+    list_default_sort_mode "desc"
+    
+    column :headline
+    column :blog
+    column :byline
+    column :published_at, sortable: true, default_sort_mode: "desc"
+    column :status
+    column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
+
+    filter :blog_id, collection: -> { Blog.select_collection }
+    filter :bylines, collection: -> { Bio.select_collection }
+    filter :status, collection: -> { ContentBase.status_text_collect }
+  end
+
+  #----------------
+
   def preview
     @entry = ContentBase.obj_by_key(params[:obj_key]) || BlogEntry.new
     
@@ -12,16 +34,5 @@ class Admin::BlogEntriesController < Admin::ResourceController
         render_preview_validation_errors(@entry)
       end
     end
-  end
-
-  #----------------
-
-  private
-
-  def search_params
-    @search_params ||= {
-      :order       => :published_at,
-      :sort_mode   => :desc
-    }
   end
 end

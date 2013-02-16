@@ -1,4 +1,5 @@
 class Promotion < ActiveRecord::Base
+  outpost_model
   has_secretary
   
   #-------------
@@ -6,19 +7,12 @@ class Promotion < ActiveRecord::Base
   validates_presence_of :title, :url
   
   #-------------
-  # Administration
-  administrate do
-    define_list do
-      column :id
-      column :title
-    end
-  end
-  
-  #-------------
   # Sphinx
   define_index do
-    indexes title
+    indexes title, sortable: true
     indexes url
+
+    has created_at
   end
   
   #-------------

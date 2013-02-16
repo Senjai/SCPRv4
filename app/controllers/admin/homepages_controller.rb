@@ -1,4 +1,21 @@
 class Admin::HomepagesController < Admin::ResourceController
+  #--------------------
+  # Outpost
+  self.model = Homepage
+
+  define_list do
+    list_default_order "updated_at"
+    list_default_sort_mode "desc"
+    list_per_page 3
+
+    column :published_at, sortable: true, default_sort_mode: "desc"
+    column :status
+    column :base, header: "Template"
+    column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
+  end
+
+  #--------------------
+
   def preview
     @homepage = ContentBase.obj_by_key(params[:obj_key]) || Homepage.new
     

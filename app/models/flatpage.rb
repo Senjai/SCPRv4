@@ -1,5 +1,6 @@
 class Flatpage < ActiveRecord::Base
   self.table_name = "flatpages_flatpage"
+  outpost_model
   has_secretary
   
   TEMPLATE_OPTIONS = [
@@ -35,33 +36,17 @@ class Flatpage < ActiveRecord::Base
       self.url = url.downcase
     end
   end
-  
-  # -------------------
-  # Administration
-  administrate do
-    define_list do
-      list_order "updated_at desc"
-      list_per_page 50
-      
-      column :url
-      column :is_public, header: "Public?"
-      column :redirect_url
-      column :title
-      column :updated_at
-      
-      filter :is_public, collection: :boolean
-    end
-  end
 
   # -------------------
   # Sphinx
   acts_as_searchable
   
   define_index do
-    indexes url
+    indexes url, sortable: true
     indexes title
     indexes description
     indexes redirect_url
+    has updated_at
   end
   
   # -------------------
@@ -84,7 +69,7 @@ class Flatpage < ActiveRecord::Base
   end
 
   # -------------------
-  # Override AdminResource for this
+  # Override Outpost for this
   def link_path(options={})
     self.url
   end

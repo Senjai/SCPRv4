@@ -1,4 +1,8 @@
 class ShowEpisode < ActiveRecord::Base
+  self.table_name = "shows_episode"
+  outpost_model
+  has_secretary
+
   include Concern::Scopes::SinceScope
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AudioAssociation
@@ -11,10 +15,9 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::HeadlineMethods
-  
-  self.table_name = "shows_episode"
-  ROUTE_KEY       = "episode"
-  has_secretary
+  include Concern::Methods::ContentJsonMethods
+
+  ROUTE_KEY = "episode"
   
   #-------------------
   # Scopes
@@ -55,22 +58,6 @@ class ShowEpisode < ActiveRecord::Base
     end
   end
   
-  # -------------------
-  # Administration
-  administrate do
-    define_list do
-      column :headline
-      column :show
-      column :air_date
-      column :status
-      column :published_at
-      
-      filter :show_id, collection: -> { KpccProgram.all.map { |program| [program.to_title, program.id] } }
-      filter :status, collection: -> { ContentBase.status_text_collect }
-    end
-  end
-  include Concern::Methods::ContentJsonMethods
-  
   #-------------------
   # Sphinx
   acts_as_searchable
@@ -82,6 +69,7 @@ class ShowEpisode < ActiveRecord::Base
     has show.id, as: :program
     has "''", as: :category, type: :integer
     has "0", as: :category_is_news, type: :boolean
+    has air_date
     has published_at
     has updated_at
     has status

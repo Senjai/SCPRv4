@@ -7,6 +7,7 @@ offset = 160
 nav    = "#form-nav"
 
 $ ->
+    # Select2
     # Set a blank placeholder for all selects.
     # Also allow clearing for any option.
     # If you don't want this on a certain select element,
@@ -19,11 +20,37 @@ $ ->
         placeholder: " "
         allowClear: true
     
+    # Tooltip
+    $('[rel="tooltip"]').tooltip()
+
+    # Affix
+    # Fix the width for all of these elements
+    $('[data-spy="affix"]').each ->
+        $(@).width $(@).width()
+
+    # For table headers, we want them to act cool so we have 
+    # to treat them special. First fix the widths of the "th"
+    # elements. Then make the top margin of the table the 
+    # same as the height of the header. Then move the header
+    # up its height in pixels to give the appearance of
+    # sitting on top.
+    $('table.index-list thead').each ->
+        $(@).width $(@).width()
+
+        $('th', @).each -> $(@).width $(@).width()
+        height = $(@).height()
+        $(@).closest("table").css("margin-top": height)
+
+        $(@).addClass("ready")
+        $(@).css("top": -height)
+
+    $('table.index-list thead').affix
+        offset: 65
+
+    # Scrollspy
     $spy = $("body").scrollspy
         target: nav
         offset: offset
-
-    $('[rel="tooltip"]').tooltip()
 
     # Since we have some fixed elements at the
     # top of the screen, we have to offset the
@@ -37,5 +64,13 @@ $ ->
             $(href)[0].scrollIntoView()
             window.scrollBy(0, -offset + 80)
             false
+
+    # Make highlighted TH's clickable
+    # TODO Move this into a better place
+    $("th.header-highlighted, th.header-sortable").each ->
+        if href = $(".js-sort-link", @).attr("href")
+            $(@).addClass("clickable")
+            $(@).on click: (event) ->
+                window.location = href
 
     true

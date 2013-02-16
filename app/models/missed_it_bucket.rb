@@ -1,8 +1,9 @@
 class MissedItBucket < ActiveRecord::Base
-  include Concern::Associations::ContentAssociation
-  
   self.table_name = "contentbase_misseditbucket"
+  outpost_model
   has_secretary
+
+  include Concern::Associations::ContentAssociation
   
   #--------------------
   # Scopes
@@ -18,22 +19,13 @@ class MissedItBucket < ActiveRecord::Base
   #--------------------
   # Callbacks
   after_save :expire_cache
-  
-  #--------------------
-  # Administration
-  administrate do
-    define_list do
-      column :id
-      column :title
-    end
-  end
-  
+
   #--------------------
   # Sphinx
   acts_as_searchable
   
   define_index do
-    indexes title
+    indexes title, sortable: true
   end
 
   #--------------------

@@ -1,4 +1,7 @@
 class Ticket < ActiveRecord::Base
+  outpost_model
+  has_secretary
+
   STATUS_OPEN   = 1
   STATUS_CLOSED = 0
   
@@ -36,27 +39,7 @@ class Ticket < ActiveRecord::Base
   # Validations
   validates :user, presence: true
   validates :summary, presence: true
-  
-  #--------------------
-  # Administration
-  has_secretary
-  
-  administrate do
-    define_list do
-      list_order "status desc, created_at desc"
-      
-      column :user
-      column :id, header: "#"
-      column :summary
-      column :created_at
-      column :status, display: :display_ticket_status
-      
-      filter :status, collection: -> { Ticket.status_text_collection }
-      filter :user, collection: -> { AdminUser.select_collection }
-    end
-  end
-  
-  
+
   #--------------------
   # Sphinx
   acts_as_searchable
@@ -65,6 +48,10 @@ class Ticket < ActiveRecord::Base
     indexes summary
     indexes description
     indexes browser_info
+
+    has id
+    has created_at
+    has status
   end
   
   #--------------------

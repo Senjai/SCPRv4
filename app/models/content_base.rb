@@ -171,7 +171,7 @@ module ContentBase
   def model_classes
     klasses = {}
     
-    AdminResource.config.registered_models.each do |name|
+    Outpost.config.registered_models.each do |name|
       klass = name.constantize
       klasses.merge!(klass.content_key => klass)
     end

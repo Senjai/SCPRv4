@@ -1,4 +1,4 @@
-<% resource_class.admin.fields.each do |field| %>
+<% fields.each do |field| %>
   <% association = field.gsub(/_id/, "").to_sym %>
   <% reflection = f.object.class.reflect_on_association(association) %>
   <% if reflection && !reflection.options[:polymorphic] %>
