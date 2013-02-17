@@ -37,7 +37,7 @@ set :restart_delay, 40
 
 # --------------
 # Universal Callbacks
-after "deploy:update_code", "deploy:symlink_config"
+before "deploy:assets:precompile", "deploy:symlink_config"
 after "deploy:update", "deploy:cleanup"
 
 # --------------
