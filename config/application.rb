@@ -54,5 +54,7 @@ module Scprv4
 
     config.api     = YAML.load_file("#{Rails.root}/config/api_config.yml")[Rails.env]
     config.secrets = YAML.load_file("#{Rails.root}/config/app_config.yml")
+
+    config.action_mailer.simple_postmark_settings = { api_key: config.api['postmark']['api_key'] }
   end
 end
