@@ -78,5 +78,6 @@ Scprv4::Application.configure do
 
 #  config.assethost.server = "ahhost-scpr.dev"
   config.assethost.server  = ENV["AH_SERVER"] || "a.scpr.org"
+  config.assethost.token  = "droQQ2LcESKeGPzldQr7" 
   config.assethost.prefix  = "/api"
 end
