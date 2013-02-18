@@ -50,10 +50,8 @@ namespace :deploy do
   # --------------
   
   task :notify do
-    token = YAML.load_file Rails.root.join("config/api_config.yml")['production']['token']
-
     data = {
-      :auth_token  => token,
+      :auth_token  => "droQQ2LcESKeGPzldQr7",
       :user        => `whoami`.gsub("\n", ""),
       :datetime    => Time.now.strftime("%F %T"),
       :application => application
