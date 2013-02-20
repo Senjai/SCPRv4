@@ -8,14 +8,17 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="newsletter_tab1">
+      
+      <div>
         
       <form method="post" name="untitledForm-1359591262588" action="https://s1715082578.t.eloqua.com/e/f2" id="form148">
-        <input value="untitledForm-1359591262588" type="hidden" name="elqFormName">
-        <input value="1715082578" type="hidden" name="elqSiteId">
+        <input value="untitledForm-1359591262588" type="hidden" name="elqFormName"  />
+        <input value="1715082578" type="hidden" name="elqSiteId"  />
         <input name="elqCampaignId" type="hidden">
         
         <p>Breaking news alerts sent to your inbox</p>
-        <input id="newsletter_field0" name="emailAddress" type="text" class="required email" placeholder="Email address">
+        <input id="field0" name="emailAddress" type="text" class="required email" placeholder="Email address">
+        <div style="display:none;"><input name="SCPRBreakingAlerts" type="checkbox" value="on" checked="checked"  /></div>
         <input type="submit" value="Subscribe" name="subscribe" class="btn"><br />
         
         <div id="newsletter_eloqua-livevalidations" style="display: inline-block;width: 1px;height:20px;"></div>
@@ -25,11 +28,7 @@
       </form>
 
       <script src="https://img.en25.com/i/livevalidation_standalone.compressed.js" type="text/javascript"></script>
-      <script type="text/javascript">
-        var field0 = new LiveValidation("newsletter_field0", { validMessage: "✔", onlyOnSubmit: true, insertAfterWhatNode: "newsletter_eloqua-livevalidations" });
-        field0.add(Validate.Presence, { failureMessage: "Please enter a valid e-mail address." });
-        field0.add(Validate.Email, { failureMessage: "Please enter a valid e-mail address." });
-      </script>
+      <script type="text/javascript" >var field0 = new LiveValidation("field0", {validMessage: "", onlyOnBlur: true});</script>
 
         
     </div>
