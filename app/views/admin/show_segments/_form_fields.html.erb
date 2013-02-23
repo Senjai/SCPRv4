@@ -1,5 +1,5 @@
 <%= form_block "Source" do %>
-  <%= f.association :show, collection: KpccProgram.active.all %>
+  <%= f.association :show, collection: KpccProgram.order("field(air_status, 'onair', '') desc, title").all %>
 <% end %>
 
 <%= f.section "full_details" %>
