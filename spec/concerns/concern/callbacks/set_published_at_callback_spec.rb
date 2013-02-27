@@ -2,30 +2,25 @@ require "spec_helper"
 
 describe Concern::Callbacks::SetPublishedAtCallback do
   subject { build :test_class_story }
-  
+
+  #-----------------
+
   describe "#should_set_published_at_to_now?" do
-    it "is true if publishing? is true and published_at if blank" do
-      subject.stub(:publishing?) { true }
-      subject.stub(:published_at) { nil }
-      subject.should_set_published_at_to_now?.should be_true
+    it "is true if the object is published but doesn't have a published_at date" do
+      subject.status = ContentBase::STATUS_LIVE
+      subject.published_at = nil
+      subject.should_set_published_at_to_now?.should eq true
     end
-    
-    it "is false if publishing? is false and published_at is blank" do
-      subject.stub(:publishing?) { false }
-      subject.stub(:published_at) { nil }
-      subject.should_set_published_at_to_now?.should be_false
+
+    it "is false if not published" do
+      subject.status = ContentBase::STATUS_DRAFT
+      subject.should_set_published_at_to_now?.should eq false
     end
-    
-    it "is false if publishing? is true and published_at is present" do
-      subject.stub(:publishing?) { true }
-      subject.stub(:published_at) { Time.now }
-      subject.should_set_published_at_to_now?.should be_false
-    end
-    
-    it "is false if publishing? is false and published_at is present" do
-      subject.stub(:publishing?) { false }
-      subject.stub(:published_at) { Time.now }
-      subject.should_set_published_at_to_now?.should be_false
+
+    it "is false if published_at is present" do
+      subject.status = ContentBase::STATUS_LIVE
+      subject.published_at = Time.now
+      subject.should_set_published_at_to_now?.should eq false
     end
   end
 
@@ -61,14 +56,15 @@ describe Concern::Callbacks::SetPublishedAtCallback do
   #-----------------
   
   describe "#should_set_published_at_to_nil?" do
-    it "is true if #unpublishing? is true" do
-      subject.stub(:unpublishing?) { true }
-      subject.should_set_published_at_to_nil?.should be_true
+    it "is true if the object is not published and the published_at date is set" do
+      subject.status = ContentBase::STATUS_DRAFT
+      subject.published_at = Time.now
+      subject.should_set_published_at_to_nil?.should eq true
     end
-    
-    it "is false if #unpublishing? is false" do
-      subject.stub(:unpublishing?) { false }
-      subject.should_set_published_at_to_nil?.should be_false
+
+    it "is false if object is published" do
+      subject.published_at = Time.now
+      subject.should_set_published_at_to_nil?.should eq false
     end
   end
   
@@ -78,6 +74,7 @@ describe Concern::Callbacks::SetPublishedAtCallback do
     context "should_set_published_at_to_nil? is true" do
       before :each do
         subject.published_at = Time.now - 1.hour
+        subject.status = ContentBase::STATUS_DRAFT
         subject.stub(:should_set_published_at_to_nil?) { true }
         subject.published_at.should_not be_nil
         subject.save!
