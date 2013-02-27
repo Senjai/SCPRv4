@@ -9,7 +9,7 @@ class Admin::DataPointsController < Admin::ResourceController
     list_per_page :all
     
     column :group_name, header: "Group"
-    column :data_key, header: "Key"
+    column :data_key, header: "Key", sortable: true, default_sort_mode: "asc"
     column :data_value, header: "Value", quick_edit: true
     column :notes
     column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"

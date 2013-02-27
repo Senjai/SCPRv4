@@ -37,7 +37,7 @@ class DataPoint < ActiveRecord::Base
   acts_as_searchable
   
   define_index do
-    indexes data_key
+    indexes data_key, sortable: true
     indexes data_value
     indexes group_name, sortable: true
     has updated_at
