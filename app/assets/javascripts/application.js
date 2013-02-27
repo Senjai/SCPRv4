@@ -1,8 +1,6 @@
 //= require modernizr.custom
 //= require jquery.jplayer.min
 
-//= require bootstrap-collapse
-
 //= require_directory ./t_listen/
 //= require swfobject
 
@@ -18,4 +16,5 @@
 //= require smart_time
 //= require event_tracking
 //= require utilities
+//= require collapse
 //= require cms_popup
