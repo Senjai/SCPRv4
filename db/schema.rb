@@ -11,27 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130211102418) do
-
-  create_table "about_town_feature", :force => true do |t|
-    t.string   "slug",          :limit => 50,         :null => false
-    t.string   "title",         :limit => 140,        :null => false
-    t.text     "body",          :limit => 2147483647, :null => false
-    t.string   "thumbnail",     :limit => 100,        :null => false
-    t.string   "author",        :limit => 80,         :null => false
-    t.string   "author_link",   :limit => 200,        :null => false
-    t.string   "categories",    :limit => 180,        :null => false
-    t.string   "location_name", :limit => 140,        :null => false
-    t.string   "location_link", :limit => 200,        :null => false
-    t.string   "address_1",     :limit => 140,        :null => false
-    t.string   "address_2",     :limit => 140,        :null => false
-    t.string   "city",          :limit => 140,        :null => false
-    t.string   "state",         :limit => 2,          :null => false
-    t.integer  "zip_code",                            :null => false
-    t.datetime "published_at",                        :null => false
-  end
-
-  add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
+ActiveRecord::Schema.define(:version => 20130227005630) do
 
   create_table "admin_user_permissions", :force => true do |t|
     t.integer  "admin_user_id"
@@ -478,24 +458,6 @@ ActiveRecord::Schema.define(:version => 20130211102418) do
   add_index "flatpages_flatpage", ["is_public"], :name => "index_flatpages_flatpage_on_is_public"
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
 
-  create_table "jobs_department", :force => true do |t|
-    t.string "slug",       :limit => 150, :null => false
-    t.string "name",       :limit => 150, :null => false
-    t.float  "dept_total",                :null => false
-  end
-
-  add_index "jobs_department", ["slug"], :name => "slug", :unique => true
-
-  create_table "jobs_employee", :force => true do |t|
-    t.string  "job_title",     :limit => 150, :null => false
-    t.float   "salary",                       :null => false
-    t.integer "department_id",                :null => false
-    t.string  "dept_name",     :limit => 150, :null => false
-    t.string  "dept_slug",     :limit => 150, :null => false
-  end
-
-  add_index "jobs_employee", ["department_id"], :name => "jobs_employee_2ae7390"
-
   create_table "layout_breakingnewsalert", :force => true do |t|
     t.string   "headline",     :limit => 140,                           :null => false
     t.time     "alert_time"
@@ -537,26 +499,6 @@ ActiveRecord::Schema.define(:version => 20130211102418) do
   add_index "layout_homepagecontent", ["content_type", "content_id"], :name => "index_layout_homepagecontent_on_content_type_and_content_id"
   add_index "layout_homepagecontent", ["django_content_type_id"], :name => "layout_homepagecontent_e4470c6e"
   add_index "layout_homepagecontent", ["homepage_id"], :name => "layout_homepagecontent_35da0e60"
-
-  create_table "letters_letter", :force => true do |t|
-    t.integer "letter_number",                                :null => false
-    t.integer "original_letter_number",                       :null => false
-    t.text    "description",            :limit => 2147483647, :null => false
-    t.integer "total_pages"
-  end
-
-  create_table "letters_page", :force => true do |t|
-    t.integer "letter_id",                    :null => false
-    t.integer "letter_number",                :null => false
-    t.integer "total_letters",                :null => false
-    t.integer "page_number",                  :null => false
-    t.integer "total_pages"
-    t.string  "full_url",      :limit => 350, :null => false
-    t.string  "viewer_url",    :limit => 350, :null => false
-    t.string  "thumb_url",     :limit => 350, :null => false
-  end
-
-  add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
 
   create_table "media_audio", :force => true do |t|
     t.string   "django_mp3"
