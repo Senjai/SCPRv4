@@ -63,11 +63,11 @@ class Homepage < ActiveRecord::Base
       :without     => { category: '' },
       :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } },
     })
-        
+    
     # -- Section Blocks -- #
     
     sections = []
-        
+    
     # run a query for each section 
     Category.all.each do |cat|
       # exclude content that is used in our object
@@ -106,7 +106,7 @@ class Homepage < ActiveRecord::Base
       # assemble section object
       sec = {
         :section  => cat,
-        :content  => [top,more].flatten,
+        :content  => [top,more].flatten.compact,
         :sorttime => sorttime
       }
       
@@ -115,7 +115,7 @@ class Homepage < ActiveRecord::Base
       # -- Right Feature Candidates -- #
       #----------
       
-      sec[:candidates] = cat.feature_candidates :exclude => [ citems,top ].flatten
+      sec[:candidates] = cat.feature_candidates :exclude => [ citems,top ].flatten.compact
       sec[:right] = sec[:candidates] ? sec[:candidates][0][:content] : nil
       
       # Add this to our section list
