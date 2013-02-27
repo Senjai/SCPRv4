@@ -151,15 +151,6 @@ describe BlogsController do
     
     describe "controller" do
       context "for invalid entry" do
-        it "raises a routing error for unpublished" do
-          entry = create :blog_entry, :pending
-          -> {
-            get :entry, { blog: entry.blog.slug, 
-                          id: entry.id, 
-                          slug: entry.slug }.merge!(date_path(entry.published_at))
-          }.should raise_error ActiveRecord::RecordNotFound
-        end
-      
         it "raises a routing error for invalid ID" do
           entry = create :blog_entry
           -> {
@@ -255,18 +246,7 @@ describe BlogsController do
         get :legacy_path, blog: entry.blog.slug, year: "2000", month: "01", slug: "nonsense"
       }.should raise_error ActiveRecord::RecordNotFound
     end
-    
-    it "only responds to published entries" do
-      entry = create :blog_entry, :pending
-      date  = entry.published_at
-      -> {
-        get :legacy_path, blog: entry.blog.slug, 
-                          year: date.year.to_s, 
-                          month: "%02d" % date.month, 
-                          slug: entry.slug
-      }.should raise_error ActiveRecord::RecordNotFound
-    end
-    
+
     it "truncates the slug if it's more than 50 characters" do
       slug  = "this-is-a-really-long-slug-that-we-will-have-to-truncate-otherwise-its-just-riduculous"
       entry = create :blog_entry, slug: slug[0,50]

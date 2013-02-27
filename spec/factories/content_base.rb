@@ -10,22 +10,16 @@ FactoryGirl.define do
   trait :required_cb_fields do
     sequence(:headline) { |n| "Some Content #{n}" }
     body    { "Body for #{headline}" }
-    status 5
+    published
   end
 
   trait :optional_cb_fields do
     sequence(:short_headline) { |n| "Short #{n}" }
     teaser  { "Teaser for #{headline}" }
   end
-  
-  trait :content_base do
-    sequence(:published_at) { |n| Time.now - 60*60*n }
-    required_cb_fields
-  end
-  
+
   trait :pending do
     status 3
-    sequence(:published_at) { |n| Time.now + n.hours }
   end
   
   trait :published do
@@ -39,22 +33,22 @@ FactoryGirl.define do
 
 # VideoShell ##########################################################
   factory :video_shell do
-    content_base
+    required_cb_fields
     slug { headline.parameterize }
   end
   
 
 # NewsStory #########################################################
   factory :news_story do
-    content_base
+    required_cb_fields
     optional_cb_fields
-    slug        { headline.parameterize }
+    slug { headline.parameterize }
   end
 
 
 # ShowEpisode #########################################################
   factory :show_episode, aliases: [:episode] do
-    content_base
+    required_cb_fields
     show
     sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
   end
@@ -62,10 +56,10 @@ FactoryGirl.define do
 
 # ShowSegment #########################################################
   factory :show_segment, aliases: [:segment] do
-    content_base
+    required_cb_fields
     optional_cb_fields
     show
-    slug        { headline.parameterize }
+    slug { headline.parameterize }
   end
 
 # ShowRundown #########################################################
@@ -76,7 +70,7 @@ FactoryGirl.define do
 
 # BlogEntry #########################################################
   factory :blog_entry do
-    content_base
+    required_cb_fields
     optional_cb_fields 
     blog
     slug { headline.parameterize }
@@ -85,8 +79,8 @@ FactoryGirl.define do
 
 # ContentShell #########################################################
   factory :content_shell do
-    content_base
-    site  "blogdowntown"
-    url   { "http://blogdowntown.com/2011/11/6494-#{headline.parameterize}" }
+    required_cb_fields
+    site "blogdowntown"
+    url { "http://blogdowntown.com/2011/11/6494-#{headline.parameterize}" }
   end
 end
