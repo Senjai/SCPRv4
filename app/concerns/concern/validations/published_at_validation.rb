@@ -7,6 +7,7 @@
 # automatically updated. It's for models where
 # the published_at attribute needs to be manually
 # inserted, such as ContentShell and VideoShell.
+# See SetPublishedAtCallback for more information.
 #
 # Required attributes: [:published_at]
 # Also requires object to respond to :should_validate?
