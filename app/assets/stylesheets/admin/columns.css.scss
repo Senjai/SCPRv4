@@ -122,6 +122,14 @@ table {
         .column-data_key { // data_point.data_key
             width: 200px;
         }
+
+        .column-data_value { // data_point.data_value
+            width: 120px;
+
+            input {
+                width: 100px;
+            }
+        }
     }
 
     ///////////////////

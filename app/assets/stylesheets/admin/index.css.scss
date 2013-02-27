@@ -1,4 +1,5 @@
 // Styles for index lists
+// To manage column widths, go to columns.css
 
 .filters {
     .select2-container {
@@ -32,6 +33,20 @@ th.clickable {
     th, td {
         overflow: hidden;
         .cancel-link { float: right; }
+    }
+
+    tbody.list {
+        tr {
+            // Style quick-edit cells
+            td[data-updatable=true] {
+                background: $warningBackground;
+
+                &:hover {
+                    background: $infoBackground;
+                    cursor: text;
+                }
+            }
+        }
     }
 
     thead {
