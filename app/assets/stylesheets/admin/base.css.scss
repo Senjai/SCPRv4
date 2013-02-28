@@ -63,6 +63,10 @@ $breadcrumbOffset: 36px;
       clear: none;
       width: 285px;
       display: inline-block;
+
+      // Everything below is copied from Bootstrap .dropdown-menu > li > a
+      // It has to be this way because of the .grouper div
+      // This should be fixed.
       padding: 3px 20px;
       font-weight: normal;
       line-height: 20px;
