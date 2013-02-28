@@ -146,7 +146,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # CD1
     {
       group_name: GROUP_NAME,
-      title: "City Countil CD1: Percent Reporting",
+      title: "City Council CD1: Percent Reporting",
       data_key: "council_cd01_percent_reporting",
       notes: NOTES
     },{
@@ -169,7 +169,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # CD3
     {
       group_name: GROUP_NAME,
-      title: "City Countil CD3: Percent Reporting",
+      title: "City Council CD3: Percent Reporting",
       data_key: "council_cd03_percent_reporting",
       notes: NOTES
     },{
@@ -207,7 +207,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     #CD5
     {
       group_name: GROUP_NAME,
-      title: "City Countil CD5: Percent Reporting",
+      title: "City Council CD5: Percent Reporting",
       data_key: "council_cd05_percent_reporting",
       notes: NOTES
     },{
@@ -225,7 +225,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     #CD7
     {
       group_name: GROUP_NAME,
-      title: "City Countil CD7: Percent Reporting",
+      title: "City Council CD7: Percent Reporting",
       data_key: "council_cd07_percent_reporting",
       notes: NOTES
     },{
@@ -253,7 +253,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # CD9
     {
       group_name: GROUP_NAME,
-      title: "City Countil CD9: Percent Reporting",
+      title: "City Council CD9: Percent Reporting",
       data_key: "council_cd09_percent_reporting",
       notes: NOTES
     },{
@@ -296,7 +296,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # CD11
     {
       group_name: GROUP_NAME,
-      title: "City Countil CD11: Percent Reporting",
+      title: "City Council CD11: Percent Reporting",
       data_key: "council_cd11_percent_reporting",
       notes: NOTES
     },{
@@ -324,7 +324,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # CD13
     {
       group_name: GROUP_NAME,
-      title: "City Countil CD13: Percent Reporting",
+      title: "City Council CD13: Percent Reporting",
       data_key: "council_cd13_percent_reporting",
       notes: NOTES
     },{
@@ -392,7 +392,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # CD15
     {
       group_name: GROUP_NAME,
-      title: "City Countil CD15: Percent Reporting",
+      title: "City Council CD15: Percent Reporting",
       data_key: "council_cd15_percent_reporting",
       notes: NOTES
     },{
@@ -412,7 +412,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # D2
     {
       group_name: GROUP_NAME,
-      title: "Unified School District D2: Percent Reporting",
+      title: "LAUSD D2: Percent Reporting",
       data_key: "usd_d02_percent_reporting",
       notes: NOTES
     },{
@@ -445,7 +445,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # D4
     {
       group_name: GROUP_NAME,
-      title: "Unified School District D4: Percent Reporting",
+      title: "LAUSD D4: Percent Reporting",
       data_key: "usd_d04_percent_reporting",
       notes: NOTES
     },{
@@ -463,7 +463,7 @@ class AddMarchDataPoints < ActiveRecord::Migration
     # D6
     {
       group_name: GROUP_NAME,
-      title: "Unified School District D6: Percent Reporting",
+      title: "LAUSD D6: Percent Reporting",
       data_key: "usd_d06_percent_reporting",
       notes: NOTES
     },{
