@@ -37,6 +37,7 @@ class DataPoint < ActiveRecord::Base
   acts_as_searchable
   
   define_index do
+    indexes title
     indexes data_key, sortable: true
     indexes data_value
     indexes group_name, sortable: true
@@ -75,6 +76,7 @@ class DataPoint < ActiveRecord::Base
   def json
     {
       :group_name => self.group_name,
+      :title      => self.title,
       :data_key   => self.data_key,
       :data_value => self.data_value
     }
@@ -84,7 +86,7 @@ class DataPoint < ActiveRecord::Base
   # DataPoint::Hashed
   #
   class Hashed
-    delegate :data_value, :data_key, to: :@object
+    delegate :data_value, :data_key, :title, to: :@object
     
     attr_accessor :object
     def initialize(object)

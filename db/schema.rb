@@ -362,6 +362,7 @@ ActiveRecord::Schema.define(:version => 20130227005630) do
     t.text     "data_value"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "title"
   end
 
   add_index "data_points", ["data_key"], :name => "index_data_points_on_data_key"
