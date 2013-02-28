@@ -56,7 +56,10 @@ $breadcrumbOffset: 36px;
     
     &:hover {
       background: $linkColor;
-      &> a { color: $white; }
+      &> a { 
+        color: $white;
+        text-decoration: none;
+      }
     }
     
     &> a {
