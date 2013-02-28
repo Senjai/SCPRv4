@@ -22,9 +22,9 @@ module CacheTasks
 
     #---------------
     
-    CACHE_KEY = 'data_point:election-march2013'
+    CACHE_KEY = 'data_point:election-march2013:'
     KEYS = {
-      :mayor     => "mayor:percent_reporting"
+      :mayor     => "mayor:percent_reporting",
       :attorney  => "attorney:percent_reporting",
       :measure_a => "measure_a:percent_reporting",
       :lausd_d2  => "lausd:d2:percent_reporting",
@@ -65,39 +65,53 @@ module CacheTasks
 
       if should_tweet?(mayor)
         top_two = build_top_two("mayor")
+        Rails.cache.write(CACHE_KEY + KEYS[:mayor], mayor[:current])
         tweet("Mayor: #{top_two.first}, #{top_two.last} (#{mayor[:current]}% reporting)")
-        Rails.cache.write(KEYS[:mayor], mayor[:current])
+      else
+        self.log "Threshold not passed for mayor (Prev: #{mayor[:prev]}; Current: #{mayor[:current]}). Not tweeting."
       end
 
       if should_tweet?(attorney)
         top_two = build_top_two("attorney")
+        Rails.cache.write(CACHE_KEY + KEYS[:attorney], attorney[:current])
         tweet("City Attorney: #{top_two.first}, #{top_two.last} (#{attorney[:current]}% reporting)")
-        Rails.cache.write(KEYS[:attorney], attorney[:current])
+      else
+        self.log "Threshold not passed for attorney (Prev: #{attorney[:prev]}; Current: #{attorney[:current]}). Not tweeting."
       end
       
       if should_tweet?(measure_a)
         top_two = build_top_two("measure_a")
+        Rails.cache.write(CACHE_KEY + KEYS[:measure_a], measure_a[:current])
         tweet("Measure A: #{top_two.first}, #{top_two.last} (#{measure_a[:current]}% reporting)")
-        Rails.cache.write(KEYS[:measure_a], measure_a[:current])
+      else
+        self.log "Threshold not passed for measure_a (Prev: #{measure_a[:prev]}; Current: #{measure_a[:current]}). Not tweeting."
       end
 
       if should_tweet?(lausd_d2)
-        top_two = build_top_two("lausd_d2")
+        top_two = build_top_two("lausd:d2")
+        Rails.cache.write(CACHE_KEY + KEYS[:lausd_d2], lausd_d2[:current])
         tweet("LAUSD District 2: #{top_two.first}, #{top_two.last} (#{lausd_d2[:current]}% reporting)")
-        Rails.cache.write(KEYS[:lausd_d2], lausd_d2[:current])
+      else
+        self.log "Threshold not passed for lausd_d2 (Prev: #{lausd_d2[:prev]}; Current: #{lausd_d2[:current]}). Not tweeting."
       end
 
       if should_tweet?(lausd_d4)
-        top_two = build_top_two("lausd_d4")
+        top_two = build_top_two("lausd:d4")
+        Rails.cache.write(CACHE_KEY + KEYS[:lausd_d4], lausd_d4[:current])
         tweet("LAUSD District 4: #{top_two.first}, #{top_two.last} (#{lausd_d4[:current]}% reporting)")
-        Rails.cache.write(KEYS[:usd_d04], lausd_d4[:current])
+      else
+        self.log "Threshold not passed for lausd_d4 (Prev: #{lausd_d4[:prev]}; Current: #{lausd_d4[:current]}). Not tweeting."
       end
 
       if should_tweet?(lausd_d6)
-        top_two = build_top_two("lausd_d6")
+        top_two = build_top_two("lausd:d6")
+        Rails.cache.write(CACHE_KEY + KEYS[:lausd_d6], lausd_d6[:current])
         tweet("LAUSD District 6: #{top_two.first}, #{top_two.last} (#{lausd_d6[:current]}% reporting)")
-        Rails.cache.write(KEYS[:usd_d06], lausd_d6[:current])
+      else
+        self.log "Threshold not passed for lausd_d6 (Prev: #{lausd_d6[:prev]}; Current: #{lausd_d6[:current]}). Not tweeting."
       end
+
+      true
     end
     
     #------------
@@ -105,24 +119,28 @@ module CacheTasks
     private
         
     def tweet(message)
-      if @twitter_points['auto_tweet'].data_value.downcase == "true"
+      if @twitter_points['auto_tweet'].data_value.to_s.downcase == "true"
         self.log "Tweeting: #{message}"
-        @tweeter.update "#{message} #{@tweet_append}"
+        begin
+          @tweeter.update "#{message} #{@tweet_append}"
+        rescue Twitter::Error::Forbidden => e
+          self.log "Twitter error: #{e}"
+        end
       else
         self.log "auto_tweet turned off. Skipping tweet."
       end
     end
     
     def should_tweet?(group)
-      (group[:current].to_i - group[:prev].to_i) >= 10
+      tweet = (group[:current].to_i - group[:prev].to_i) >= 10
     end
 
     def build_top_two(key_prepend)
-      @points.select { |p| p.data_key =~ /\A#{key_prepend}:percent_/ && p.data_key !~ /reporting\z/ }
-        .sort { |p| p.data_value.to_i }.reverse.first(2)
+      @points.select { |k, _| k =~ /\A#{key_prepend}:percent_/ && k !~ /reporting\z/ }
+        .sort { |p| p[1].data_value.to_i }.reverse.first(2)
         .map { |p| 
-          title = p.title.split(' ')
-          "#{p.data_value}% #{title[1] || title[0]}" 
+          title = p[1].title.split(' ')
+          "#{p[1].data_value.to_i}% #{title[1] || title[0]}" 
         }
     end
   end # ElectionTweeter

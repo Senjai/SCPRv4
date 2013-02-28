@@ -4,7 +4,7 @@ namespace :scprv4 do
   desc "Auto-tweet election results"
   task :tweet_results => [:environment] do
     puts "*** [#{Time.now}] Tweeting Election Results...."
-    task = CacheTasks::ElectionTweeter.new("kpccweb")
+    task = CacheTasks::ElectionTweeter.new(ENV['screenname'])
     task.verbose = true
     task.run
     puts "Finished.\n"
