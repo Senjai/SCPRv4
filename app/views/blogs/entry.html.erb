@@ -6,9 +6,7 @@
   <%= render "/blogs/entry", entry: @entry, full: true %>
 <% end %>
 
-<div class="fold" id="fold">
-  <%= render "/shared/cwidgets/related_content_and_links", content: @entry %>
-  
+<div class="fold" id="fold">  
   <!-- Next/Previous Entries -->
   <%= content_cache "next_prev/v1/#{@entry.obj_key}" do %>
     <% register_content @entry %>
@@ -38,6 +36,8 @@
       </div> <!-- row fluid -->
     </div>
   <% end %>
+
+  <%= render "/shared/cwidgets/related_content_and_links", content: @entry %>
   
   <!-- Comments -->
   <div class="comment-wrap">
