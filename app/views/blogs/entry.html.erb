@@ -6,7 +6,7 @@
   <%= render "/blogs/entry", entry: @entry, full: true %>
 <% end %>
 
-<div class="fold" id="fold">  
+<div class="fold" id="fold">
   <!-- Next/Previous Entries -->
   <%= content_cache "next_prev/v1/#{@entry.obj_key}" do %>
     <% register_content @entry %>
