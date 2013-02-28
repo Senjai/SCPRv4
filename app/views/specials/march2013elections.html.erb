@@ -1,0 +1,19 @@
+<h1>2013 LA Election Results</h1>
+<% @data_points.each do |data_point| %>
+
+  <% if data_point.data_key =~ /_reporting\z/i %>
+    <% if data_point.data_value.present? %>
+      <hr />
+
+      <% race = data_point.title.split(":")[0] %>
+      <h3><%= race %> (<%= data_point.data_value %>% Reporting)</h3>
+    <% end %>
+
+  <% elsif data_point.data_value.present? %>
+    <strong><%= data_point.title %></strong>: <%= data_point.data_value %>%<br />
+  <% end %>
+<% end %>
+
+<hr />
+
+<%= render template: '/flatpages/show' if @flatpage %>
