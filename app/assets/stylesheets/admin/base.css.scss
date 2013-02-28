@@ -43,7 +43,7 @@ $breadcrumbOffset: 36px;
 
 .cms-nav {
   max-width: 820px;
-    
+  
   .grouper {
     display: inline-block;
     width: 400px;
@@ -63,6 +63,11 @@ $breadcrumbOffset: 36px;
       clear: none;
       width: 285px;
       display: inline-block;
+      padding: 3px 20px;
+      font-weight: normal;
+      line-height: 20px;
+      color: #333333;
+      white-space: nowrap;
     }
     
     .btn-links {
