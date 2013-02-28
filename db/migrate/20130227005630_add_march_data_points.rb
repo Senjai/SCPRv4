@@ -11,47 +11,47 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "Mayor: Percent Reporting",
-      data_key: "mayor_percent_reporting",
+      data_key: "mayor:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "YJ Draiman",
-      data_key: "mayor_percent_DRAIMAN",
+      data_key: "mayor:percent_DRAIMAN",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Eric Garcetti",
-      data_key: "mayor_percent_GARCETTI",
+      data_key: "mayor:percent_GARCETTI",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Wendy Greuel",
-      data_key: "mayor_percent_GREUEL",
+      data_key: "mayor:percent_GREUEL",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Kevin James",
-      data_key: "mayor_percent_JAMES",
+      data_key: "mayor:percent_JAMES",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Addie Miller",
-      data_key: "mayor_percent_MILLER",
+      data_key: "mayor:percent_MILLER",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Jan Perry",
-      data_key: "mayor_percent_PERRY",
+      data_key: "mayor:percent_PERRY",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Emanuel Pleitez",
-      data_key: "mayor_percent_PLEITEZ",
+      data_key: "mayor:percent_PLEITEZ",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Norton Sandler",
-      data_key: "mayor_percent_SANDLER",
+      data_key: "mayor:percent_SANDLER",
       notes: NOTES
     },
 
@@ -60,27 +60,27 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Attorney: Percent Reporting",
-      data_key: "attorney_percent_reporting",
+      data_key: "attorney:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Mike Feuer",
-      data_key: "attorney_percent_FEUER",
+      data_key: "attorney:percent_FEUER",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Gregory Smith",
-      data_key: "attorney_percent_SMITH",
+      data_key: "attorney:percent_SMITH",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Carmen Trutanich",
-      data_key: "attorney_percent_TRUTANICH",
+      data_key: "attorney:percent_TRUTANICH",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Noel Weiss",
-      data_key: "attorney_percent_WEISS",
+      data_key: "attorney:percent_WEISS",
       notes: NOTES
     },
 
@@ -89,37 +89,37 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Controller: Percent Reporting",
-      data_key: "controller_percent_reporting",
+      data_key: "controller:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Jeff Bornstein",
-      data_key: "controller_percent_BORNSTEIN",
+      data_key: "controller:percent_BORNSTEIN",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Cary Brazeman",
-      data_key: "controller_percent_BRAZEMAN",
+      data_key: "controller:percent_BRAZEMAN",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Ron Galperin",
-      data_key: "controller_percent_GALPERIN",
+      data_key: "controller:percent_GALPERIN",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Analilia Joya",
-      data_key: "controller_percent_JOYA",
+      data_key: "controller:percent_JOYA",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Ankur Patel",
-      data_key: "controller_percent_PATEL",
+      data_key: "controller:percent_PATEL",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Dennis Zine",
-      data_key: "controller_percent_ZINE",
+      data_key: "controller:percent_ZINE",
       notes: NOTES
     },
 
@@ -128,17 +128,17 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "Measure A: Percent Reporting",
-      data_key: "measureA_percent_reporting",
+      data_key: "measure_a:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Yes",
-      data_key: "measureA_percent_YES",
+      data_key: "measure_a:percent_YES",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "No",
-      data_key: "measureA_percent_NO",
+      data_key: "measure_a:percent_NO",
       notes: NOTES
     },
 
@@ -147,22 +147,22 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Council CD1: Percent Reporting",
-      data_key: "council_cd01_percent_reporting",
+      data_key: "council:cd1:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Gil Cedillo",
-      data_key: "council_cd01_percent_CEDILLO",
+      data_key: "council:cd1:percent_CEDILLO",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "José Gardea",
-      data_key: "council_cd01_percent_GARDEA",
+      data_key: "council:cd1:percent_GARDEA",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Jesus Rosas",
-      data_key: "council_cd01_percent_ROSAS",
+      data_key: "council:cd1:percent_ROSAS",
       notes: NOTES
     },
 
@@ -170,37 +170,37 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Council CD3: Percent Reporting",
-      data_key: "council_cd03_percent_reporting",
+      data_key: "council:cd3:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Elizabeth Badger",
-      data_key: "council_cd03_percent_BADGER",
+      data_key: "council:cd3:percent_BADGER",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Bob Blumenfield",
-      data_key: "council_cd03_percent_BLUMENFIELD",
+      data_key: "council:cd3:percent_BLUMENFIELD",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Cary Iaccino",
-      data_key: "council_cd03_percent_IACCINO",
+      data_key: "council:cd3:percent_IACCINO",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Joyce Pearson",
-      data_key: "council_cd03_percent_PEARSON",
+      data_key: "council:cd3:percent_PEARSON",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Steven Presberg",
-      data_key: "council_cd03_percent_PRESBERG",
+      data_key: "council:cd3:percent_PRESBERG",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Scott Silverstein",
-      data_key: "council_cd03_percent_SILVERSTEIN",
+      data_key: "council:cd3:percent_SILVERSTEIN",
       notes: NOTES
     },
 
@@ -208,17 +208,17 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Council CD5: Percent Reporting",
-      data_key: "council_cd05_percent_reporting",
+      data_key: "council:cd5:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Mark Herd",
-      data_key: "council_cd05_percent_HERD",
+      data_key: "council:cd5:percent_HERD",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Paul Koretz (incumbent)",
-      data_key: "council_cd05_percent_KORETZ",
+      data_key: "council:cd5:percent_KORETZ",
       notes: NOTES
     },
 
@@ -226,27 +226,27 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Council CD7: Percent Reporting",
-      data_key: "council_cd07_percent_reporting",
+      data_key: "council:cd7:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Jesse David Barron",
-      data_key: "council_cd07_percent_BARRON",
+      data_key: "council:cd7:percent_BARRON",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Nicole Chase",
-      data_key: "council_cd07_percent_CHASE",
+      data_key: "council:cd7:percent_CHASE",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Krystee Clark",
-      data_key: "council_cd07_percent_CLARK",
+      data_key: "council:cd7:percent_CLARK",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Felipe Fuentes",
-      data_key: "council_cd07_percent_FUENTES",
+      data_key: "council:cd7:percent_FUENTES",
       notes: NOTES
     },
 
@@ -254,42 +254,42 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Council CD9: Percent Reporting",
-      data_key: "council_cd09_percent_reporting",
+      data_key: "council:cd9:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Manuel Aldana",
-      data_key: "council_cd09_percent_ALDANA",
+      data_key: "council:cd9:percent_ALDANA",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Ana Cubas",
-      data_key: "council_cd09_percent_CUBAS",
+      data_key: "council:cd9:percent_CUBAS",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Michael Davis",
-      data_key: "council_cd09_percent_DAVIS",
+      data_key: "council:cd9:percent_DAVIS",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Ronald Gochez",
-      data_key: "council_cd09_percent_GOCHEZ",
+      data_key: "council:cd9:percent_GOCHEZ",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Terry Hara",
-      data_key: "council_cd09_percent_HARA",
+      data_key: "council:cd9:percent_HARA",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Curren Price",
-      data_key: "council_cd09_percent_PRICE",
+      data_key: "council:cd9:percent_PRICE",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "David Roberts",
-      data_key: "council_cd09_percent_ROBERTS",
+      data_key: "council:cd9:percent_ROBERTS",
       notes: NOTES
     },
 
@@ -297,27 +297,27 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Council CD11: Percent Reporting",
-      data_key: "council_cd11_percent_reporting",
+      data_key: "council:cd11:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Mike Bonin",
-      data_key: "council_cd11_percent_BONIN",
+      data_key: "council:cd11:percent_BONIN",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Odysseus Bostick",
-      data_key: "council_cd11_percent_BOSTICK",
+      data_key: "council:cd11:percent_BOSTICK",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Tina Hess",
-      data_key: "council_cd11_percent_HESS",
+      data_key: "council:cd11:percent_HESS",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Frederick Sutton",
-      data_key: "council_cd11_percent_SUTTON",
+      data_key: "council:cd11:percent_SUTTON",
       notes: NOTES
     },
 
@@ -325,67 +325,67 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Council CD13: Percent Reporting",
-      data_key: "council_cd13_percent_reporting",
+      data_key: "council:cd13:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "John Choi",
-      data_key: "council_cd13_percent_CHOI",
+      data_key: "council:cd13:percent_CHOI",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Alexander Cruz De Ocampo",
-      data_key: "council_cd13_percent_OCAMPO",
+      data_key: "council:cd13:percent_OCAMPO",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Roberto Haraldson",
-      data_key: "council_cd13_percent_HARALDSON",
+      data_key: "council:cd13:percent_HARALDSON",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Sam Kbushyan",
-      data_key: "council_cd13_percent_KBUSHYAN",
+      data_key: "council:cd13:percent_KBUSHYAN",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Emile Mack",
-      data_key: "council_cd13_percent_MACK",
+      data_key: "council:cd13:percent_MACK",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Robert Negrete",
-      data_key: "council_cd13_percent_NEGRETE",
+      data_key: "council:cd13:percent_NEGRETE",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Mitch O’Farrell",
-      data_key: "council_cd13_percent_OFARRELL",
+      data_key: "council:cd13:percent_OFARRELL",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title:  "Dr. Octavio Pescador",
-      data_key: "council_cd13_percent_PESCADOR",
+      data_key: "council:cd13:percent_PESCADOR",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Josh Post",
-      data_key: "council_cd13_percent_POST",
+      data_key: "council:cd13:percent_POST",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Michael Schaefer",
-      data_key: "council_cd13_percent_SCHAEFER",
+      data_key: "council:cd13:percent_SCHAEFER",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Jose Sigala",
-      data_key: "council_cd13_percent_SIGALA",
+      data_key: "council:cd13:percent_SIGALA",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Matt Szabo",
-      data_key: "council_cd13_percent_SZABO",
+      data_key: "council:cd13:percent_SZABO",
       notes: NOTES
     },
 
@@ -393,17 +393,17 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "City Council CD15: Percent Reporting",
-      data_key: "council_cd15_percent_reporting",
+      data_key: "council:cd15:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title:  "Joe Buscaino (incumbent)",
-      data_key: "council_cd15_percent_BUSCAINO",
+      data_key: "council:cd15:percent_BUSCAINO",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "James Law",
-      data_key: "council_cd15_percent_LAW",
+      data_key: "council:cd15:percent_LAW",
       notes: NOTES
     },
 
@@ -413,32 +413,32 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "LAUSD D2: Percent Reporting",
-      data_key: "usd_d02_percent_reporting",
+      data_key: "lausd:d2:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Abelardo Diaz",
-      data_key: "usd_d02_percent_DIAZ",
+      data_key: "lausd:d2:percent_DIAZ",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Monica Garcia (incumbent)",
-      data_key: "usd_d02_percent_GARCIA",
+      data_key: "lausd:d2:percent_GARCIA",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Annamarie Montanez",
-      data_key: "usd_d02_percent_MONTANEZ",
+      data_key: "lausd:d2:percent_MONTANEZ",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Robert Skeels",
-      data_key: "usd_d02_percent_SKEELS",
+      data_key: "lausd:d2:percent_SKEELS",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Isabel Vazquez",
-      data_key: "usd_d02_percent_VASQUEZ",
+      data_key: "lausd:d2:percent_VASQUEZ",
       notes: NOTES
     },
 
@@ -446,17 +446,17 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "LAUSD D4: Percent Reporting",
-      data_key: "usd_d04_percent_reporting",
+      data_key: "lausd:d4:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Kate Anderson",
-      data_key: "usd_d04_percent_ANDERSON",
+      data_key: "lausd:d4:percent_ANDERSON",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Steve Zimmer",
-      data_key: "usd_d04_percent_ZIMMER",
+      data_key: "lausd:d4:percent_ZIMMER",
       notes: NOTES
     },
 
@@ -464,27 +464,27 @@ class AddMarchDataPoints < ActiveRecord::Migration
     {
       group_name: GROUP_NAME,
       title: "LAUSD D6: Percent Reporting",
-      data_key: "usd_d06_percent_reporting",
+      data_key: "lausd:d6:percent_reporting",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Maria Cano",
-      data_key: "usd_d06_percent_CANO",
+      data_key: "lausd:d6:percent_CANO",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Monica Ratliff",
-      data_key: "usd_d06_percent_RATLIFF",
+      data_key: "lausd:d6:percent_RATLIFF",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Antonio Sanchez",
-      data_key: "usd_d06_percent_SANCHEZ",
+      data_key: "lausd:d6:percent_SANCHEZ",
       notes: NOTES
     },{
       group_name: GROUP_NAME,
       title: "Iris Zuniga",
-      data_key: "usd_d06_percent_ZUNIGA",
+      data_key: "lausd:d6:percent_ZUNIGA",
       notes: NOTES
     },
 
