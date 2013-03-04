@@ -68,7 +68,7 @@ module CacheTasks
       if should_tweet?(mayor)
         top_two = build_top_two("mayor")
         Rails.cache.write(CACHE_KEY + KEYS[:mayor], mayor[:current])
-        tweet("Mayor: #{top_two.first}, #{top_two.last} (#{mayor[:current]}% reporting)")
+        tweet("Mayor: #{top_two.first}; #{top_two.last} / #{mayor[:current]}% reporting;")
       else
         self.log "Threshold not passed for mayor (Prev: #{mayor[:prev]}; Current: #{mayor[:current]}). Not tweeting."
       end
@@ -76,7 +76,7 @@ module CacheTasks
       if should_tweet?(attorney)
         top_two = build_top_two("attorney")
         Rails.cache.write(CACHE_KEY + KEYS[:attorney], attorney[:current])
-        tweet("City Attorney: #{top_two.first}, #{top_two.last} (#{attorney[:current]}% reporting)")
+        tweet("City Attorney: #{top_two.first}; #{top_two.last} / #{attorney[:current]}% reporting;")
       else
         self.log "Threshold not passed for attorney (Prev: #{attorney[:prev]}; Current: #{attorney[:current]}). Not tweeting."
       end
@@ -84,7 +84,7 @@ module CacheTasks
       if should_tweet?(measure_a)
         top_two = build_top_two("measure_a")
         Rails.cache.write(CACHE_KEY + KEYS[:measure_a], measure_a[:current])
-        tweet("Measure A: #{top_two.first}, #{top_two.last} (#{measure_a[:current]}% reporting)")
+        tweet("Measure A: #{top_two.first}; #{top_two.last} / #{measure_a[:current]}% reporting;")
       else
         self.log "Threshold not passed for measure_a (Prev: #{measure_a[:prev]}; Current: #{measure_a[:current]}). Not tweeting."
       end
@@ -92,7 +92,7 @@ module CacheTasks
       if should_tweet?(lausd_d2)
         top_two = build_top_two("lausd:d2")
         Rails.cache.write(CACHE_KEY + KEYS[:lausd_d2], lausd_d2[:current])
-        tweet("LAUSD District 2: #{top_two.first}, #{top_two.last} (#{lausd_d2[:current]}% reporting)")
+        tweet("LAUSD District 2: #{top_two.first}; #{top_two.last} / #{lausd_d2[:current]}% reporting;")
       else
         self.log "Threshold not passed for lausd_d2 (Prev: #{lausd_d2[:prev]}; Current: #{lausd_d2[:current]}). Not tweeting."
       end
@@ -100,7 +100,7 @@ module CacheTasks
       if should_tweet?(lausd_d4)
         top_two = build_top_two("lausd:d4")
         Rails.cache.write(CACHE_KEY + KEYS[:lausd_d4], lausd_d4[:current])
-        tweet("LAUSD District 4: #{top_two.first}, #{top_two.last} (#{lausd_d4[:current]}% reporting)")
+        tweet("LAUSD District 4: #{top_two.first}; #{top_two.last} / #{lausd_d4[:current]}% reporting;")
       else
         self.log "Threshold not passed for lausd_d4 (Prev: #{lausd_d4[:prev]}; Current: #{lausd_d4[:current]}). Not tweeting."
       end
@@ -108,7 +108,7 @@ module CacheTasks
       if should_tweet?(lausd_d6)
         top_two = build_top_two("lausd:d6")
         Rails.cache.write(CACHE_KEY + KEYS[:lausd_d6], lausd_d6[:current])
-        tweet("LAUSD District 6: #{top_two.first}, #{top_two.last} (#{lausd_d6[:current]}% reporting)")
+        tweet("LAUSD District 6: #{top_two.first}; #{top_two.last} / #{lausd_d6[:current]}% reporting;")
       else
         self.log "Threshold not passed for lausd_d6 (Prev: #{lausd_d6[:prev]}; Current: #{lausd_d6[:current]}). Not tweeting."
       end
@@ -142,7 +142,7 @@ module CacheTasks
         .sort { |p| p[1].data_value.to_i }.reverse.first(2)
         .map { |p| 
           title = p[1].title.split(' ')
-          "#{p[1].data_value.to_i}% #{title[1] || title[0]}" 
+          "#{title[1] || title[0]} (#{p[1].data_value.to_i}%)" 
         }
     end
   end # ElectionTweeter
