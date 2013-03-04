@@ -1,5 +1,5 @@
 <input type="text" id="aggregator-url-input" placeholder="URL" />
-<button class="btn">Import</button>
+<a class="btn">Import</a>
 <hr />
 
 <ul id="aggregator-url-results" class="content-list"></ul>

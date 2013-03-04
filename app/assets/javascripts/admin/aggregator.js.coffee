@@ -251,7 +251,7 @@ class scpr.Aggregator
             importUrl: (event) ->
                 @_stopEvent event
 
-                @container.spin(zIndex: 1)
+                @container.spin(zIndex: 1, length: 0)
                 url = event.originalEvent.dataTransfer.getData('text/uri-list')
                 alert = {}
                 
@@ -456,9 +456,16 @@ class scpr.Aggregator
                 false # To prevent the link from being followed
 
             #---------------------
+            # Use this method to fire the request.
+            # Proxies to #_fetch by default.
+            request: (params={}) ->
+                @_fetch(params)
+
+            #---------------------
+            # Private method,
             # Fire the actual request to the server
             # Also handles transitions
-            fetch: (params) ->
+            _fetch: (params) ->
                 @transitionStart()
                 
                 @collection.fetch
@@ -488,7 +495,7 @@ class scpr.Aggregator
             # Adds spin and dimming effects
             transitionStart: ->
                 @resultsEl.addClass('dim')
-                @$el.spin(top: 100, zIndex: 1)
+                @$el.spin(top: 100, zIndex: 1, length: 0)
 
             #---------------------
             # Use this when the aggregator is done thinking!
@@ -496,7 +503,19 @@ class scpr.Aggregator
             transitionEnd: ->
                 @resultsEl.removeClass('dim')
                 @$el.spin(false)
-                
+
+            #---------------------
+            
+            _stopEvent: (event) ->
+                event.preventDefault()
+                event.stopPropagation()
+
+            #---------------------
+
+            _keypressIsEnter: (event) ->
+                key = event.keyCode || event.which
+                key == 13
+
             #---------------------
             # Render a notice if the server returned an error
             alertError: (options={}) ->
@@ -595,14 +614,14 @@ class scpr.Aggregator
                 @request()
                 
             #---------------------
-            # Sets up default parameters, and then proxies to #fetch
+            # Sets up default parameters, and then proxies to #_fetch
             request: (params={}) ->
                 _.defaults params,
                     limit: @per_page
                     page: 1
                     query: ""
                 
-                @fetch(params)
+                @_fetch(params)
                 false # To keep consistent with Search#request
 
                 
@@ -631,26 +650,24 @@ class scpr.Aggregator
             # Backbone automatically passes the event object as the
             # argument, but #request doesn't handle that.
             search: (event) ->
-                event.preventDefault()
-                event.stopPropagation()
+                @_stopEvent(event)
                 @request()
                 false
 
             #---------------------
             # Perform a search if the key pressed was the Enter key
             searchIfKeyIsEnter: (event) ->
-                key = event.keyCode || event.which
-                @search(event) if key == 13 # Enter
+                @search(event) if @_keypressIsEnter(event)
 
             #---------------------
-            # Sets up default parameters, and then proxies to #fetch
+            # Sets up default parameters, and then proxies to #_fetch
             request: (params={}) ->
                 _.defaults params,
                     limit: @per_page
                     page: 1
                     query: $("#aggregator-search-input", @$el).val()
                 
-                @fetch(params)
+                @_fetch(params)
                 false # to keep the Rails form from submitting
                 
 
@@ -663,7 +680,18 @@ class scpr.Aggregator
             resultsId: "#aggregator-url-results"
             template: JST["admin/templates/aggregator/url"]
             events:
-                "click button" : "fetch"
+                "click a.btn" : "importUrl"
+                "keyup input" : "importUrlIfKeyIsEnter"
+
+            importUrl: (event) ->
+                @_stopEvent(event)
+                @request()
+                false
+
+            #---------------------
+            # Perform a fetch if the key pressed was the Enter key
+            importUrlIfKeyIsEnter: (event) ->
+                @importUrl(event) if @_keypressIsEnter(event)
 
             #---------------------
 
@@ -672,13 +700,13 @@ class scpr.Aggregator
                     model: model
 
                 @resultsEl.append view.render()
-
                 @$el
-            
+
             #---------------------
             # Proxies to @base.importUrl
             # Also handles transitions
-            fetch: (params) ->
+            # This overrides the default ContentList#_fetch
+            _fetch: (params={}) ->
                 @transitionStart()
                 
                 input = $("#aggregator-url-input", @$el)
