@@ -89,10 +89,10 @@ end
 class MigrateNprPermissions < ActiveRecord::Migration
   def up
     @npr_permission = Permission.find_by_resource("NprStory")
+    dp = Django::Permission.find(252) # Django NPR Change permission
 
     Django::User.all.each do |du|
       ru = AdminUser.find(du.id)
-      dp = Django::Permission.find(252) # Django NPR Change permission
 
       if du.permissions.include? dp
         add_npr_permission(ru)
