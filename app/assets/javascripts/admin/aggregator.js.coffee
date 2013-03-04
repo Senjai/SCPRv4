@@ -629,6 +629,7 @@ class scpr.Aggregator
             # Backbone automatically passes the event object as the
             # argument, but #request doesn't handle that.
             search: (event) ->
+                event.preventDefault()
                 @request()
                 
             #---------------------
