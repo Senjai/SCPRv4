@@ -1,0 +1,40 @@
+<div class="hero-election">
+  <div class="row-fluid">
+    <header class="span24 election-header">
+      <h1>2013 LA Election Results</h1>
+    </header>
+  </div>
+  <div class="results">
+    <article class="results-block">
+    <% @data_points.each do |data_point| %>
+
+      <% if data_point.data_key =~ /_reporting\z/i %>
+        <% if data_point.data_value.present? %>
+        
+          <% race = data_point.title.split(":")[0] %>
+          <div class="results-block">
+            <header>
+              <h2><%= race %></h2>
+              <aside>(<%= data_point.data_value %>% Reporting)</aside>
+            </header>
+          </div>
+        <% end %>
+
+      <% elsif data_point.data_value.present? %>
+        
+      <section class="initiative local condensed">
+        <div class="title">
+          <h3><%= data_point.title %></h3>
+        </div>
+        <div class="result relative">
+          <div class="yes "><strong><%= data_point.data_value %><b class="percentage">%</b></strong></div>
+        </div>
+      </section>
+      <% end %>
+    <% end %>
+    </article>
+  </div>
+</div>
+<hr />
+
+<%= render template: '/flatpages/show' if @flatpage %>
