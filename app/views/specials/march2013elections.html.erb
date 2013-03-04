@@ -1,3 +1,4 @@
+<% if @data_points.any? { |p| p.data_value.present? } %>
 <div class="hero-election">
   <div class="row-fluid">
     <header class="span24 election-header">
@@ -572,6 +573,7 @@ div.results-block + .initiative {
   }
 }
 </style>
+<% end %>
 <% end %>
 
 <%= render template: '/flatpages/show' if @flatpage %>
