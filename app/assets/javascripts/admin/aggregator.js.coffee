@@ -251,7 +251,7 @@ class scpr.Aggregator
             importUrl: (event) ->
                 @_stopEvent event
 
-                @container.spin()
+                @container.spin(zIndex: 1)
                 url = event.originalEvent.dataTransfer.getData('text/uri-list')
                 alert = {}
                 
@@ -488,7 +488,7 @@ class scpr.Aggregator
             # Adds spin and dimming effects
             transitionStart: ->
                 @resultsEl.addClass('dim')
-                @$el.spin(top: 100)
+                @$el.spin(top: 100, zIndex: 1)
 
             #---------------------
             # Use this when the aggregator is done thinking!
