@@ -554,10 +554,11 @@ class scpr.Aggregator
                 # Prefer blank classes over "0" for consistency
                 # parseInt(null) and parseInt("") both return null
                 # null compared to any number is always false
-                $(".aggregator-pagination", @$el).html @paginationTemplate
+                $(".aggregator-pagination", @$el).html(@paginationTemplate
                     current: @page
                     prev: @page - 1 unless @page < 1
                     next: @page + 1 unless collection.length < params.limit
+                )
 
                 @$el
                 
@@ -620,9 +621,10 @@ class scpr.Aggregator
             resultsId: "#aggregator-search-results"
             template: JST["admin/templates/aggregator/search"]
             events:
-                "click .pagination a": "changePage"
-                "click button"       : "search"
-            
+                "click .pagination a" : "changePage"
+                "click a.btn"         : "search"
+                "keyup input"         : "searchIfKeyIsEnter"
+
             #---------------------
             # Just a simple proxy to #request to fill in the args properly
             # Can't make the event delegate straigh to #request because
@@ -630,8 +632,16 @@ class scpr.Aggregator
             # argument, but #request doesn't handle that.
             search: (event) ->
                 event.preventDefault()
+                event.stopPropagation()
                 @request()
-                
+                false
+
+            #---------------------
+            # Perform a search if the key pressed was the Enter key
+            searchIfKeyIsEnter: (event) ->
+                key = event.keyCode || event.which
+                @search(event) if key == 13 # Enter
+
             #---------------------
             # Sets up default parameters, and then proxies to #fetch
             request: (params={}) ->
