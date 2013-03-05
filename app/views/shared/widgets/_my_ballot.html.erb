@@ -101,25 +101,35 @@
 }
 </style>
 
-<div class="my-ballot">
-  <header class="collapse-toggle" data-target="#VoterGuideForm">
-      <h4>2013 Voter Guide: Create your personalized ballot <span>Get Started</span></h4>
-  </header>
-  <form id="VoterGuideForm" action="http://myballot.kpcc.org/get-started.do" method="GET" class="collapse">
-    <p><strong>Find the races in Southern California that matter to you!</strong></p>
-    <p>Get started by entering your address* and clicking "Go".</p>
-    <div class="form-inline">
-      <label>Address</label>
-      <input type="text" name="address1" maxlength="200" class="input-address" placeholder="Street Address" autofocus="autofocus" />
-      
-      <label>City</label>
-      <input type="text" name="city" maxlength="50" class="input-city" placeholder="City" />
-      
-      <label>Zip</label>
-      <input type="text" name="zip" maxlength="10" class="input-zip" placeholder="Zip" />
-      
-      <input value="Go" type="submit" class="btn" />
+<% if Time.now < Time.new(2013, 3, 5, 20) %>
+    <div class="my-ballot">
+      <header class="collapse-toggle" data-target="#VoterGuideForm">
+          <h4>2013 Voter Guide: Create your personalized ballot <span>Get Started</span></h4>
+      </header>
+      <form id="VoterGuideForm" action="http://myballot.kpcc.org/get-started.do" method="GET" class="collapse">
+        <p><strong>Find the races in Southern California that matter to you!</strong></p>
+        <p>Get started by entering your address* and clicking "Go".</p>
+        <div class="form-inline">
+          <label>Address</label>
+          <input type="text" name="address1" maxlength="200" class="input-address" placeholder="Street Address" autofocus="autofocus" />
+          
+          <label>City</label>
+          <input type="text" name="city" maxlength="50" class="input-city" placeholder="City" />
+          
+          <label>Zip</label>
+          <input type="text" name="zip" maxlength="10" class="input-zip" placeholder="Zip" />
+          
+          <input value="Go" type="submit" class="btn" />
+        </div>
+        <p class="small">*None of the data you submit is collected by KPCC.</p>
+       </form>
     </div>
-    <p class="small">*None of the data you submit is collected by KPCC.</p>
-   </form>
-</div>
+<% else %>
+    <a href="/mayor" style="display:block;">
+        <div class="my-ballot">
+          <header>
+              <h4>Full Election Results</h4>
+          </header>
+        </div>
+    </a>
+<% end %>
