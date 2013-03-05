@@ -8,7 +8,11 @@
 module CacheTasks
   class ElectionTweeter < Task
     def run
-      self.handle_tweeting
+      if @twitter_points['auto_tweet'].data_value.to_s.downcase == "true"
+        self.handle_tweeting
+      else
+        self.log "auto_tweet turned off. Skipping."
+      end
     end
     
     #---------------
@@ -65,53 +69,12 @@ module CacheTasks
         :current => @points[KEYS[:lausd_d6]].data_value
       }
 
-      if should_tweet?(mayor)
-        top_two = build_top_two("mayor")
-        Rails.cache.write(CACHE_KEY + KEYS[:mayor], mayor[:current])
-        tweet("Mayor: #{top_two.first}; #{top_two.last} / #{mayor[:current]}% reporting;")
-      else
-        self.log "Threshold not passed for mayor (Prev: #{mayor[:prev]}; Current: #{mayor[:current]}). Not tweeting."
-      end
-
-      if should_tweet?(attorney)
-        top_two = build_top_two("attorney")
-        Rails.cache.write(CACHE_KEY + KEYS[:attorney], attorney[:current])
-        tweet("City Attorney: #{top_two.first}; #{top_two.last} / #{attorney[:current]}% reporting;")
-      else
-        self.log "Threshold not passed for attorney (Prev: #{attorney[:prev]}; Current: #{attorney[:current]}). Not tweeting."
-      end
-      
-      if should_tweet?(measure_a)
-        top_two = build_top_two("measure_a")
-        Rails.cache.write(CACHE_KEY + KEYS[:measure_a], measure_a[:current])
-        tweet("Measure A: #{top_two.first}; #{top_two.last} / #{measure_a[:current]}% reporting;")
-      else
-        self.log "Threshold not passed for measure_a (Prev: #{measure_a[:prev]}; Current: #{measure_a[:current]}). Not tweeting."
-      end
-
-      if should_tweet?(lausd_d2)
-        top_two = build_top_two("lausd:d2")
-        Rails.cache.write(CACHE_KEY + KEYS[:lausd_d2], lausd_d2[:current])
-        tweet("LAUSD District 2: #{top_two.first}; #{top_two.last} / #{lausd_d2[:current]}% reporting;")
-      else
-        self.log "Threshold not passed for lausd_d2 (Prev: #{lausd_d2[:prev]}; Current: #{lausd_d2[:current]}). Not tweeting."
-      end
-
-      if should_tweet?(lausd_d4)
-        top_two = build_top_two("lausd:d4")
-        Rails.cache.write(CACHE_KEY + KEYS[:lausd_d4], lausd_d4[:current])
-        tweet("LAUSD District 4: #{top_two.first}; #{top_two.last} / #{lausd_d4[:current]}% reporting;")
-      else
-        self.log "Threshold not passed for lausd_d4 (Prev: #{lausd_d4[:prev]}; Current: #{lausd_d4[:current]}). Not tweeting."
-      end
-
-      if should_tweet?(lausd_d6)
-        top_two = build_top_two("lausd:d6")
-        Rails.cache.write(CACHE_KEY + KEYS[:lausd_d6], lausd_d6[:current])
-        tweet("LAUSD District 6: #{top_two.first}; #{top_two.last} / #{lausd_d6[:current]}% reporting;")
-      else
-        self.log "Threshold not passed for lausd_d6 (Prev: #{lausd_d6[:prev]}; Current: #{lausd_d6[:current]}). Not tweeting."
-      end
+      try_tweet(group: mayor, key_prepend: "mayor", reporting_key: :mayor, title: "Mayor")
+      try_tweet(group: attorney, key_prepend: "attorney", reporting_key: :attorney, title: "City Attorney")
+      try_tweet(group: measure_a, key_prepend: "measure_a", reporting_key: :measure_a, title: "Measure A")
+      try_tweet(group: lausd_d2, key_prepend: "lausd:d2", reporting_key: :lausd_d2, title: "LAUSD District 2")
+      try_tweet(group: lausd_d4, key_prepend: "lausd:d4", reporting_key: :lausd_d4, title: "LAUSD District 4")
+      try_tweet(group: lausd_d6, key_prepend: "lausd:d6", reporting_key: :lausd_d6, title: "LAUSD District 6")
 
       true
     end
@@ -119,17 +82,28 @@ module CacheTasks
     #------------
     
     private
-        
-    def tweet(message)
-      if @twitter_points['auto_tweet'].data_value.to_s.downcase == "true"
-        self.log "Tweeting: #{message}"
-        begin
-          @tweeter.update "#{message} #{@tweet_append}"
-        rescue Twitter::Error::Forbidden => e
-          self.log "Twitter error: #{e}"
-        end
+    
+    def try_tweet(options={})
+      group         = options[:group]
+      key_prepend   = options[:key_prepend]
+      reporting_key = options[:reporting_key]
+      title         = options[:title]
+
+      if should_tweet?(group)
+        top_two = build_top_two(key_prepend)
+        Rails.cache.write(CACHE_KEY + KEYS[reporting_key], group[:current])
+        tweet("#{title}: #{top_two.first}; #{top_two.last} / #{group[:current]}% reporting;")
       else
-        self.log "auto_tweet turned off. Skipping tweet."
+        self.log "Threshold not passed for #{key_prepend} (Prev: #{group[:prev]}; Current: #{group[:current]}). Not tweeting."
+      end
+    end
+
+    def tweet(message)
+      self.log "Tweeting: #{message}"
+      begin
+        @tweeter.update "#{message} #{@tweet_append}"
+      rescue Twitter::Error::Forbidden => e
+        self.log "Twitter error: #{e}"
       end
     end
     
