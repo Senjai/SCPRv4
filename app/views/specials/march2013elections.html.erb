@@ -4,6 +4,13 @@
       <h1>2013 LA Election Results</h1>
     </header>
   </div>
+  <div class="row-fluid">
+    <section class="span24">
+      <div class="header-well clearfix">
+        <h2 class="callout center-contents"><a href="#coverage">Jump to KPCC's complete election coverage</a></h2>
+      </div>
+    </section>
+  </div>
   <div class="results">
     <article class="results-block">
     <% @data_points.each do |data_point| %>
@@ -144,24 +151,15 @@
 }
 /* line 77, ../../app/assets/stylesheets/specials/election.css.scss */
 .hero-election .header-well h2.callout a {
-  background-color: #db343d;
   color: white;
-  font-size: .818181818em;
-  display: inline-block;
-  zoom: 1;
-  *display: inline;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  margin-left: 10px;
-  padding: 4px 8px;
+  font-size: .7em;
   text-shadow: 0 -2px 0 rgba(0, 0, 0, 0.67059);
   text-transform: uppercase;
 }
 /* line 87, ../../app/assets/stylesheets/specials/election.css.scss */
 .hero-election .header-well h2.callout a:hover {
-  background-color: #bc242c;
-  text-decoration: none;
+  color:#6bc6f2;
+  text-decoration:none;
 }
 /* line 94, ../../app/assets/stylesheets/specials/election.css.scss */
 .hero-election .results {
@@ -580,4 +578,6 @@ div.results-block + .initiative {
 </style>
 <% end %>
 
-<%= render template: '/flatpages/show' if @flatpage %>
+<div id="coverage">
+  <%= render template: '/flatpages/show' if @flatpage %>
+</div>
