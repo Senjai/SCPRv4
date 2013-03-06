@@ -113,7 +113,7 @@ module CacheTasks
 
     def build_top_two(key_prepend)
       @points.select { |k, _| k =~ /\A#{key_prepend}:percent_/ && k !~ /reporting\z/ }
-        .sort { |p| p[1].data_value.to_i }.reverse.first(2)
+        .sort_by { |p| p[1].data_value.to_i }.reverse.first(2)
         .map { |p| 
           title = p[1].title.split(' ')
           "#{title[1] || title[0]} (#{p[1].data_value.to_i}%)" 
