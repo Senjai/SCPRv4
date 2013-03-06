@@ -205,162 +205,146 @@ Scprv4::Application.routes.draw do
   
   #------------------
   
-  scope "r" do
-    namespace :admin do
-      root to: 'home#index'
-      
-      get 'login'  => "sessions#new", as: :login
-      get 'logout' => "sessions#destroy", as: :logout
-      resources :sessions, only: [:create, :destroy]
-            
-      ## -- Outpost -- ##
-      resources :recurring_schedule_slots do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :permissions
-      
-      resources :admin_users do
-        get "search", on: :collection, as: :search
-        get "activity", on: :member, as: :activity
-      end
-      
-      resources :podcasts do
-        get "search", on: :collection, as: :search
-      end
-            
-      resources :breaking_news_alerts do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :featured_comment_buckets do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :categories do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :missed_it_buckets do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :promotions do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :sections do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :other_programs do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :kpcc_programs do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :video_shells do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :blogs do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :content_shells do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :featured_comments do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :data_points do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :show_episodes do
-        get "search", on: :collection, as: :search
-      end
-
-      resources :bios do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :press_releases do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :homepages do
-        get "search", on: :collection, as: :search
-        put "preview", on: :member
-        post "preview", on: :collection
-      end
-      
-      resources :pij_queries do
-        get "search", on: :collection, as: :search
-        put "preview", on: :member
-        post "preview", on: :collection
-      end
-
-      resources :flatpages do
-        get "search", on: :collection, as: :search
-        put "preview", on: :member
-        post "preview", on: :collection
-      end
-
-      resources :show_segments do
-        get "search", on: :collection, as: :search
-        put "preview", on: :member
-        post "preview", on: :collection
-      end
-      
-      resources :news_stories do
-        get "search", on: :collection, as: :search
-        put "preview", on: :member
-        post "preview", on: :collection
-      end
-      
-      resources :blog_entries do
-        get "search", on: :collection, as: :search
-        put "preview", on: :member
-        post "preview", on: :collection
-      end
-      
-      resources :events do
-        get "search", on: :collection, as: :search
-        put "preview", on: :member
-        post "preview", on: :collection
-      end
-      ## -- END Outpost --  ##
-      
-      resources :tickets do
-        get "search", on: :collection, as: :search
-      end
-      
-      resources :npr_stories, only: [:index] do
-        member do
-          post "import", as: :import
-          put "skip", as: :skip
-        end
-        
-        collection do
-          get "search", as: :search
-          post "sync", as: :sync
-        end
-      end
-      
-      get "/activity"                                        => "versions#activity",  as: :activity
-      get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
-      get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
-
-      match "trigger_error" => 'home#trigger_error'
-
-      # 404 catch-all
-      match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
+  namespace :outpost do
+    resources :recurring_schedule_slots do
+      get "search", on: :collection, as: :search
     end
+          
+    resources :admin_users do
+      get "search", on: :collection, as: :search
+      get "activity", on: :member, as: :activity
+    end
+    
+    resources :podcasts do
+      get "search", on: :collection, as: :search
+    end
+          
+    resources :breaking_news_alerts do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :featured_comment_buckets do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :categories do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :missed_it_buckets do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :promotions do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :sections do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :other_programs do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :kpcc_programs do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :video_shells do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :blogs do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :content_shells do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :featured_comments do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :data_points do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :show_episodes do
+      get "search", on: :collection, as: :search
+    end
+
+    resources :bios do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :press_releases do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :homepages do
+      get "search", on: :collection, as: :search
+      put "preview", on: :member
+      post "preview", on: :collection
+    end
+    
+    resources :pij_queries do
+      get "search", on: :collection, as: :search
+      put "preview", on: :member
+      post "preview", on: :collection
+    end
+
+    resources :flatpages do
+      get "search", on: :collection, as: :search
+      put "preview", on: :member
+      post "preview", on: :collection
+    end
+
+    resources :show_segments do
+      get "search", on: :collection, as: :search
+      put "preview", on: :member
+      post "preview", on: :collection
+    end
+    
+    resources :news_stories do
+      get "search", on: :collection, as: :search
+      put "preview", on: :member
+      post "preview", on: :collection
+    end
+    
+    resources :blog_entries do
+      get "search", on: :collection, as: :search
+      put "preview", on: :member
+      post "preview", on: :collection
+    end
+    
+    resources :events do
+      get "search", on: :collection, as: :search
+      put "preview", on: :member
+      post "preview", on: :collection
+    end
+    
+    resources :tickets do
+      get "search", on: :collection, as: :search
+    end
+    
+    resources :npr_stories, only: [:index] do
+      member do
+        post "import", as: :import
+        put "skip", as: :skip
+      end
+      
+      collection do
+        get "search", as: :search
+        post "sync", as: :sync
+      end
+    end
+
+    match "trigger_error" => 'home#trigger_error'
+
+    # 404 catch-all
+    match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
   end
 
   match "trigger_error" => 'home#trigger_error'

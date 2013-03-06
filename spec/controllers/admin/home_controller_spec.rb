@@ -1,5 +1,5 @@
 require "spec_helper"
 
-describe Admin::HomeController do
+describe Outpost::HomeController do
   pending
 end

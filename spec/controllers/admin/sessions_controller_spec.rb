@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::SessionsController do
+describe Outpost::SessionsController do
   # -------------------------
   
   describe "GET /new" do

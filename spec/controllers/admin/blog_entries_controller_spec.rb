@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::BlogEntriesController do
+describe Outpost::BlogEntriesController do
   it_behaves_like "resource controller" do
     let(:resource) { :blog_entry }
   end

@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Admin::TicketsController do
+describe Outpost::TicketsController do
   pending
 end

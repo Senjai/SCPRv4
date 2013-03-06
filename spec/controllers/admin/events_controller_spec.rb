@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::EventsController do
+describe Outpost::EventsController do
   it_behaves_like "resource controller" do
     let(:resource) { :event }
   end

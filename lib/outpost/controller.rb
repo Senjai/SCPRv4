@@ -74,7 +74,7 @@ module Outpost
       #
       # Example:
       #
-      #   class Admin::NewsStoriesController < Admin::ResourceController
+      #   class Outpost::NewsStoriesController < Outpost::ResourceController
       #     outpost_controller model: NewsStory
       #   end
       #

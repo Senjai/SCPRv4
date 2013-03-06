@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::ResourceController do
+describe Outpost::ResourceController do
   describe "#get_record" do
     it "returns the record if it exists" do
       record = create :news_story

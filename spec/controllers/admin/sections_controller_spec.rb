@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::SectionsController do
+describe Outpost::SectionsController do
   it_behaves_like "resource controller" do
     let(:resource) { :section }
   end

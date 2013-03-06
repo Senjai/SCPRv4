@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::HomepagesController do
+describe Outpost::HomepagesController do
   describe "preview" do
     render_views 
     

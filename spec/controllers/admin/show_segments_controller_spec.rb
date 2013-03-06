@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::ShowSegmentsController do
+describe Outpost::ShowSegmentsController do
   it_behaves_like "resource controller" do
     let(:resource) { :show_segment }
   end

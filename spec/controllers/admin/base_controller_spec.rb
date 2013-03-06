@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::BaseController do
+describe Outpost::BaseController do
   describe "admin_user" do
     it "returns @admin_user if it exists" do
       controller.instance_variable_set(:@admin_user, "admin user")
