@@ -14,7 +14,7 @@ CKEDITOR.editorConfig = (config) ->
         enableCodeFolding: false # Whether or not you wish to enable code folding (requires 'lineNumbers' to be set to 'true')
         enableCodeFormatting: true # Whether or not to enable code formatting
         autoFormatOnStart: false # Whether or not to automatically format code should be done every time the source view is opened
-        autoFormatOnUncomment: true # Whether or not to automatically format code which has just been uncommented
+        autoFormatOnUncomment: false # Whether or not to automatically format code which has just been uncommented
         highlightActiveLine: false # Whether or not to highlight the currently active line
         highlightMatches: false # Whether or not to highlight all matches of current word/selection
         showTabs: false # Whether or not to display tabs
