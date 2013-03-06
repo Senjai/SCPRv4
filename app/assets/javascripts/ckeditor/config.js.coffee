@@ -13,7 +13,7 @@ CKEDITOR.editorConfig = (config) ->
         enableSearchTools: false  # Whether or not to enable search tools, CTRL+F (Find), CTRL+SHIFT+F (Replace), CTRL+SHIFT+R (Replace All), CTRL+G (Find Next), CTRL+SHIFT+G (Find Previous)
         enableCodeFolding: false # Whether or not you wish to enable code folding (requires 'lineNumbers' to be set to 'true')
         enableCodeFormatting: true # Whether or not to enable code formatting
-        autoFormatOnStart: true # Whether or not to automatically format code should be done every time the source view is opened
+        autoFormatOnStart: false # Whether or not to automatically format code should be done every time the source view is opened
         autoFormatOnUncomment: true # Whether or not to automatically format code which has just been uncommented
         highlightActiveLine: false # Whether or not to highlight the currently active line
         highlightMatches: false # Whether or not to highlight all matches of current word/selection
