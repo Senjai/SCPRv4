@@ -1,3 +1,4 @@
+<%= cache [@cache_control['cache_version'], 'election-march2013'], expires_in: 20.minutes do %>
 <div class="hero-election">
   <div class="row-fluid">
     <header class="span24 election-header">
@@ -13,9 +14,9 @@
   </div>
   <div class="results">
     <article class="results-block">
-    <% @data_points.each do |data_point| %>
+    <% @data_points.each do |key, data_point| %>
 
-      <% if data_point.data_key =~ /_reporting\z/i %>
+      <% if key =~ /_reporting\z/i %>
         <% if data_point.data_value.present? %>
         
           <% race = data_point.title.split(":")[0] %>
@@ -46,6 +47,7 @@
   </div>
 </div>
 <hr />
+<% end %>
 
 <% content_for :head_tag do %>
 <!-- STYLE -->

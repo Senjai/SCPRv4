@@ -10,6 +10,7 @@
 class SpecialsController < ApplicationController
   def march2013elections
     @flatpage    = Flatpage.where(id: 360).first # Mayor flatpage
-    @data_points = DataPoint.where(group_name: "election-march2013").order('id asc')
+    @data_points = DataPoint.to_hash(DataPoint.where(group_name: "election-march2013").order('id asc'))
+    @cache_control = DataPoint.to_hash(DataPoint.where(group_name: "cache-control"))
   end
 end
