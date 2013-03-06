@@ -1,16 +1,4 @@
 namespace :scprv4 do
-
-  # March Elections
-  desc "Auto-tweet election results"
-  task :tweet_results => [:environment] do
-    puts "*** [#{Time.now}] Tweeting Election Results...."
-    screenname = ENV['screenname'] || 'kpccweb'
-    task = CacheTasks::ElectionTweeter.new(screenname)
-    task.verbose = true
-    task.run
-    puts "Finished.\n"
-  end
-
   task :test_error => [:environment] do
     puts "*** [#{Time.now}] Testing Error..."
 
