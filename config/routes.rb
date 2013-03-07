@@ -205,6 +205,8 @@ Scprv4::Application.routes.draw do
   
   #------------------
   
+  mount Outpost::Engine, at: '/outpost', as: "outpost"
+
   namespace :outpost do
     resources :recurring_schedule_slots do
       get "search", on: :collection, as: :search
