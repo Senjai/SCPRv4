@@ -1,6 +1,7 @@
-class Outpost::ApplicationController < ActionController::Base
+class Outpost::BaseController < Outpost::ApplicationController
   include Concern::Controller::CustomErrors
   
+  before_filter :set_sections
   before_filter :setup_tickets
   before_filter :set_current_homepage
   
@@ -20,6 +21,12 @@ class Outpost::ApplicationController < ActionController::Base
   
   protected
   
+  #------------------------
+  # Just setup the @sections variable so the views can add to it.
+  def set_sections
+    @sections = {}
+  end
+
   #------------------------
   # We need a new Ticket on every page, since we're offering
   # the ability to submit a ticket from any page in the CMS

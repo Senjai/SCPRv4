@@ -4,8 +4,6 @@
 # some cool Rails functionality.
 # Use strings here so the classes aren't loaded yet.
 
-require_dependency 'outpost'
-
 # Monkey patches for Mercer additions
 module Outpost
   module Model

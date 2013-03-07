@@ -25,7 +25,7 @@
     <% end %>
     
     <li>
-      <a href="<%= admin_history_path(@record.class.route_key, @record.id) %>" title="history">
+      <a href="<%= outpost.history_path(@record.class.route_key, @record.id) %>" title="history">
         Last Updated: <strong><%= format_date @record.updated_at, time: true %></strong>
       </a>
     </li>

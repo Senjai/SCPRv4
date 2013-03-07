@@ -4,7 +4,7 @@
   <%= render "admin/shared/search_form" %>
   
   <div class="pull-right">
-    <%= link_to "Sync with NPR", sync_admin_npr_stories_path, class: "btn", method: :post %>
+    <%= link_to "Sync with NPR", sync_outpost_npr_stories_path, class: "btn", method: :post %>
   </div>
 </div>
 
@@ -18,7 +18,7 @@
     <% @records.each do |record| %>
       <tr class="<%= model.singular_route_key.dasherize %>">
         <td class="column-manage">
-          <%= link_to "Import", import_admin_npr_story_path(record), method: :post, class: "btn" %>
+          <%= link_to "Import", import_outposet_npr_story_path(record), method: :post, class: "btn" %>
           <%= link_to "Skip", [:skip, :admin, record], method: :put, class: "btn btn-danger", 
             data: { confirm: "Click OK to hide this NPR Story.\nClick CANCEL to return to the list." } %>
         </td>

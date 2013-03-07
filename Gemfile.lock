@@ -31,6 +31,14 @@ GIT
       nokogiri (~> 1.5.3)
       sax-machine (~> 0.2.0.rc1)
 
+PATH
+  remote: /Users/bryan/projects/outpost
+  specs:
+    outpost (0.0.1)
+      bcrypt-ruby (~> 3.0)
+      jquery-rails
+      rails (~> 3.2.12)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -371,6 +379,7 @@ DEPENDENCIES
   newrelic_rpm
   npr!
   oauth2 (~> 0.8)
+  outpost!
   rails (~> 3.2)
   rb-fsevent (~> 0.9)
   rb-readline

@@ -67,7 +67,7 @@ class Outpost::NprStoriesController < Outpost::BaseController
       flash[:alert] = "Could not skip NPR Story"
     end
     
-    redirect_to admin_npr_stories_path
+    redirect_to outpost_npr_stories_path
   end
 
   #--------------

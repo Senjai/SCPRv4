@@ -29,7 +29,7 @@ class Outpost::TicketsController < Outpost::ResourceController
     if admin_user == @record.user or admin_user.is_superuser?
       return true
     else
-      redirect_to admin_tickets_path, alert: "You don't have permission to edit that Ticket."
+      redirect_to outpost_tickets_path, alert: "You don't have permission to edit that Ticket."
       return false
     end
   end

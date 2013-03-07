@@ -3,7 +3,7 @@ class Outpost::SessionsController < Outpost::BaseController
   respond_to :html
   
   def new
-    redirect_to admin_root_path if admin_user
+    redirect_to outpost.root_path if admin_user
   end
   
   def create
@@ -12,7 +12,7 @@ class Outpost::SessionsController < Outpost::BaseController
       # For Django
       session['_auth_user_backend'] = 'django.contrib.auth.backends.ModelBackend'
       user.update_attribute(:last_login, Time.now)
-      redirect_to session[:return_to] || admin_root_path, notice: "Logged in."
+      redirect_to session[:return_to] || outpost.root_path, notice: "Logged in."
     else
       flash.now[:alert] = "Invalid login information."
       render 'new'
@@ -22,6 +22,6 @@ class Outpost::SessionsController < Outpost::BaseController
   def destroy
     @admin_user = nil
     session['_auth_user_id'] = nil
-    redirect_to admin_login_path, notice: "Logged Out."
+    redirect_to outpost_login_path, notice: "Logged Out."
   end
 end

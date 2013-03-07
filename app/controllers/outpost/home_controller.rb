@@ -1,6 +1,6 @@
 class Outpost::HomeController < Outpost::BaseController
   def index
-    breadcrumb "Dashboard", admin_root_path
+    breadcrumb "Dashboard", outpost.root_path
     
     # Get the latest activity
     @current_user_activities = @admin_user.activities.order("created_at desc").limit(10)

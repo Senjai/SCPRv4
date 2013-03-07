@@ -14,7 +14,7 @@ describe Outpost::SessionsController do
     it "redirects to home page if admin_user if true" do
       controller.stub(:admin_user) { true }
       get :new
-      response.should redirect_to admin_root_path
+      response.should redirect_to outpost.root_path
     end
   end
   
@@ -47,7 +47,7 @@ describe Outpost::SessionsController do
       end
   
       it "redirects to admin root" do
-        controller.response.should redirect_to admin_root_path
+        controller.response.should redirect_to outpost.root_path
       end
       
       it "sets the flash" do
@@ -75,7 +75,7 @@ describe Outpost::SessionsController do
     
     it "redirects to login page" do
       get :destroy
-      controller.response.should redirect_to admin_login_path
+      controller.response.should redirect_to outpost_login_path
     end
     
     it "sets the flash" do

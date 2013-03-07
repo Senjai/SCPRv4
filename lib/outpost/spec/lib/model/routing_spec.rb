@@ -4,7 +4,7 @@ describe Outpost::Model::Routing do
   describe "::admin_new_path" do
     it "figures out the new path using singular_route_key" do
       Outpost::Test::Person.stub(:singular_route_key) { "coolguy" }
-      Rails.application.routes.url_helpers.should_receive("new_admin_coolguy_path")
+      Rails.application.routes.url_helpers.should_receive("new_outpost_coolguy_path")
      Outpost::Test::Person.admin_new_path
     end
   end
@@ -14,7 +14,7 @@ describe Outpost::Model::Routing do
   describe "::admin_index_path" do
     it "figures out the index path using route_key" do
       Outpost::Test::Person.stub(:route_key) { "coolguys" }
-      Rails.application.routes.url_helpers.should_receive("admin_coolguys_path")
+      Rails.application.routes.url_helpers.should_receive("outpost_coolguys_path")
       Outpost::Test::Person.admin_index_path
     end
   end
@@ -25,7 +25,7 @@ describe Outpost::Model::Routing do
     it "figures out the edit path using singular_route_key and the record's id" do
       Outpost::Test::Person.stub(:singular_route_key) { "coolguy" }
       person = Outpost::Test::Person.new(name: "Cool Guy")
-      Rails.application.routes.url_helpers.should_receive("edit_admin_coolguy_path").with(person.id)
+      Rails.application.routes.url_helpers.should_receive("edit_outpost_coolguy_path").with(person.id)
       person.admin_edit_path
     end
   end
@@ -36,7 +36,7 @@ describe Outpost::Model::Routing do
     it "figures out the show path using singular_route_key and the record's id" do
       Outpost::Test::Person.stub(:singular_route_key) { "coolguy" }
       person = Outpost::Test::Person.new(name: "Cool Guy")
-      Rails.application.routes.url_helpers.should_receive("admin_coolguy_path").with(person.id)
+      Rails.application.routes.url_helpers.should_receive("outpost_coolguy_path").with(person.id)
       person.admin_show_path
     end
   end
