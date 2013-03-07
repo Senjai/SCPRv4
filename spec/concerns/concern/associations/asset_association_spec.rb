@@ -21,6 +21,18 @@ describe Concern::Associations::AssetAssociation do
   end
   
   #--------------------
+
+  describe '#asset_json' do
+    it "uses simple_json for the asset" do
+      record = create :test_class_story
+      asset = create :asset, caption: "Hello", asset_id: 999, asset_order: 4
+      record.assets << asset
+
+      record.asset_json.should eq [asset.simple_json].to_json
+    end
+  end
+
+  #--------------------
   
   describe "#asset_json=" do
     context "create with asset_json passed in" do

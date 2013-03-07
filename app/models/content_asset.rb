@@ -26,7 +26,6 @@ class ContentAsset < ActiveRecord::Base
   end
   
   #----------
-  
   # Fetch asset JSON and then merge in our caption and position
   def as_json(options={})
     # grab asset as_json, merge in our values
@@ -36,5 +35,15 @@ class ContentAsset < ActiveRecord::Base
       "ORDER"            => self.asset_order, 
       "credit"           => self.asset.owner
     })
+  end
+
+  #----------
+  # This is for the asset manager
+  def simple_json
+    {
+      "id"          => self.asset_id,
+      "caption"     => self.caption,
+      "asset_order" => self.asset_order.to_i
+    }
   end
 end

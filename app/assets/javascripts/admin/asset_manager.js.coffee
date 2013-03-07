@@ -27,9 +27,9 @@ class scpr.AssetManager
                 @assetsView.render()
                 @updateInput()
         , false
+
+    #----------
         
-        @updateInput()
-    
     updateInput: ->
         $(@options.jsonInput).val(JSON.stringify(@assets.simpleJSON()))
         
