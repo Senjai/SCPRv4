@@ -1,7 +1,7 @@
 <% page_title model.to_title.pluralize %>
 
 <div class="index-header clearfix">
-  <%= render "admin/shared/search_form" %>
+  <%= render "outpost/shared/search_form" %>
   
   <div class="pull-right">
     <%= link_to "Sync with NPR", sync_outpost_npr_stories_path, class: "btn", method: :post %>

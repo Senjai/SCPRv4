@@ -29,7 +29,7 @@ class Outpost::PijQueriesController < Outpost::ResourceController
 
       if @query.unconditionally_valid?
         @title = @query.to_title
-        render "/pij_queries/_pij_query", layout: "admin/preview/application", locals: { query: @query }
+        render "/pij_queries/_pij_query", layout: "outpost/preview/application", locals: { query: @query }
       else
         render_preview_validation_errors(@query)
       end

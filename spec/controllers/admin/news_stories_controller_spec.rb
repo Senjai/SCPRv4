@@ -25,7 +25,7 @@ describe Outpost::NewsStoriesController do
       it "renders validation errors if the object is not unconditionally valid" do
         news_story = create :news_story, headline: "Okay"
         put :preview, id: news_story.id, obj_key: news_story.obj_key, news_story: news_story.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
 
@@ -40,7 +40,7 @@ describe Outpost::NewsStoriesController do
       it "renders validation errors if the object is not unconditionally valid" do
         news_story = build :news_story, headline: "okay"
         post :preview, obj_key: news_story.obj_key, news_story: news_story.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
   end

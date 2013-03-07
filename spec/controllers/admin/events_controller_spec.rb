@@ -25,7 +25,7 @@ describe Outpost::EventsController do
       it "renders validation errors if the object is not unconditionally valid" do
         event = create :event, headline: "Okay"
         put :preview, id: event.id, obj_key: event.obj_key, event: event.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
 
@@ -40,7 +40,7 @@ describe Outpost::EventsController do
       it "renders validation errors if the object is not unconditionally valid" do
         event = build :event, headline: "okay"
         post :preview, obj_key: event.obj_key, event: event.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
   end

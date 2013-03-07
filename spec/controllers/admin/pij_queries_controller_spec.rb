@@ -25,7 +25,7 @@ describe Outpost::PijQueriesController do
       it "renders validation errors if the object is not unconditionally valid" do
         pij_query = create :pij_query, headline: "Okay"
         put :preview, id: pij_query.id, obj_key: pij_query.obj_key, pij_query: pij_query.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
 
@@ -40,7 +40,7 @@ describe Outpost::PijQueriesController do
       it "renders validation errors if the object is not unconditionally valid" do
         pij_query = build :pij_query, headline: "okay"
         post :preview, obj_key: pij_query.obj_key, pij_query: pij_query.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
   end

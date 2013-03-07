@@ -30,7 +30,7 @@ class Outpost::ShowSegmentsController < Outpost::ResourceController
 
       if @segment.unconditionally_valid?
         @title = @segment.to_title
-        render "/programs/_segment", layout: "admin/preview/application", locals: { segment: @segment }
+        render "/programs/_segment", layout: "outpost/preview/application", locals: { segment: @segment }
       else
         render_preview_validation_errors(@segment)
       end

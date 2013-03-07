@@ -31,7 +31,7 @@ describe Outpost::FlatpagesController do
       it "renders the correct layout" do
         flatpage = create :flatpage, template: "full"
         put :preview, id: flatpage.id, obj_key: flatpage.obj_key, flatpage: flatpage.attributes
-        response.should render_template "/admin/preview/app_nosidebar"
+        response.should render_template "/outpost/preview/app_nosidebar"
         flatpage.template = "none"
         put :preview, id: flatpage.id, obj_key: flatpage.obj_key, flatpage: flatpage.attributes
         response.should render_template false
@@ -40,7 +40,7 @@ describe Outpost::FlatpagesController do
       it "renders validation errors if the object is not unconditionally valid" do
         flatpage = create :flatpage
         put :preview, id: flatpage.id, obj_key: flatpage.obj_key, flatpage: flatpage.attributes.merge(url: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
 
@@ -61,7 +61,7 @@ describe Outpost::FlatpagesController do
       it "renders validation errors if the object is not unconditionally valid" do
         flatpage = build :flatpage
         post :preview, obj_key: flatpage.obj_key, flatpage: flatpage.attributes.merge(url: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
   end

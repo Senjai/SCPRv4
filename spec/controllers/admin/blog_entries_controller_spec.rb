@@ -25,7 +25,7 @@ describe Outpost::BlogEntriesController do
       it "renders validation errors if the object is not unconditionally valid" do
         entry = create :blog_entry, headline: "Okay"
         put :preview, id: entry.id, obj_key: entry.obj_key, blog_entry: entry.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
 
@@ -40,7 +40,7 @@ describe Outpost::BlogEntriesController do
       it "renders validation errors if the object is not unconditionally valid" do
         entry = build :blog_entry, headline: "okay"
         post :preview, obj_key: entry.obj_key, blog_entry: entry.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
   end

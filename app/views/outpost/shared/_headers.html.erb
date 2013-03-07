@@ -8,7 +8,7 @@
       <i class="icon <%=sort_mode_icon(is_sorting ? sort_mode : column.default_sort_mode)%>"></i>
 
       <%= link_to_if column.sortable?, column.header, request.parameters.merge(order: column.attribute, sort_mode: switch_sort_mode(column, order, sort_mode)), class: "js-sort-link" %>
-      <%= render('/admin/shared/cancel_link', href: url_for(request.parameters.merge(order: "", sort_mode: ""))) if (is_sorting && (order != list.default_order || sort_mode != list.default_sort_mode)) %>
+      <%= render('/outpost/shared/cancel_link', href: url_for(request.parameters.merge(order: "", sort_mode: ""))) if (is_sorting && (order != list.default_order || sort_mode != list.default_sort_mode)) %>
     <% else %>
       <%= column.header %>
     <% end %>

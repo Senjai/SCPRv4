@@ -33,10 +33,10 @@ class Outpost::FlatpagesController < Outpost::ResourceController
         else
           layout_template = begin
             case @flatpage.template
-              when "full"  then 'admin/preview/app_nosidebar'
-              when "forum" then 'admin/preview/forum'
+              when "full"  then 'outpost/preview/app_nosidebar'
+              when "forum" then 'outpost/preview/forum'
               when "none"  then false
-              else 'admin/preview/application'
+              else 'outpost/preview/application'
             end
           end
 
