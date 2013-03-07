@@ -47,7 +47,7 @@ class Outpost::VersionsController < Outpost::BaseController
     @version_b = @object.versions.find_by_version_number!(params[:version_number])
     @version_a = @version_b.previous_version
     
-    breadcrumb "History", outpost.history_path(@object.class.route_key, @object.id), @version_b.to_title
+    breadcrumb "History", outpost_history_path(@object.class.route_key, @object.id), @version_b.to_title
         
     if !Rails.cache.read(@version_b.cache_key)
       @attribute_diffs = Secretary::Diff.new(@version_a, @version_b)
@@ -68,7 +68,7 @@ class Outpost::VersionsController < Outpost::BaseController
   def get_object
     klass = Outpost::Helpers::Naming.to_class(params[:resources])
     authorize!(klass)
-    redirect_to outpost.root_path if !klass.has_secretary?
+    redirect_to outpost_root_path if !klass.has_secretary?
     @object = klass.find(params[:resource_id])
   end
 
@@ -81,7 +81,7 @@ class Outpost::VersionsController < Outpost::BaseController
   #--------------
   
   def extend_breadcrumbs_for_object
-    breadcrumb @object.class.name.titleize.pluralize, url_for([:admin, @object.class])
-    breadcrumb @object.simple_title, url_for([:edit, :admin, @object])
+    breadcrumb @object.class.name.titleize.pluralize, @object.class.admin_index_path
+    breadcrumb @object.simple_title, @object.admin_edit_path
   end
 end

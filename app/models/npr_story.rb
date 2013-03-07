@@ -52,7 +52,7 @@ class NprStory < ActiveRecord::Base
     # most part, doesn't need) the Outpost
     # Routing, we'll just manually put this one here.
     def admin_index_path
-      @admin_index_path ||= Rails.application.routes.url_helpers.send("admin_#{self.route_key}_path")
+      @admin_index_path ||= Rails.application.routes.url_helpers.send("outpost_#{self.route_key}_path")
     end
     
     #---------------

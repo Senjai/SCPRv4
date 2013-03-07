@@ -9,7 +9,7 @@
       <h4>Open Tickets</h4>
       <ul>
         <% @tickets.each do |ticket| %>
-          <li><%= link_to ticket.summary, [:admin, ticket] %></li>
+          <li><%= link_to ticket.summary, [:outpost, ticket] %></li>
         <% end %>
         
         <li><%= link_to "View All Tickets &raquo;".html_safe, outpost_tickets_path %></li>
@@ -18,7 +18,7 @@
       <h5>Don't see your issue? Submit a new one:</h5>
     <% end %>
     
-    <%= render "/admin/tickets/form" %>
+    <%= render "/outpost/tickets/form" %>
   </div>
 
   <div class="modal-footer">

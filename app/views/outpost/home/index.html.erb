@@ -46,7 +46,7 @@
     <div class="clearfix">
       <h4 class="pull-left">Recently Saved by Others</h4>
       <div class="pull-right">
-        <%= link_to "View All Activity", outpost.activity_path, class: "btn" %>
+        <%= link_to "View All Activity", outpost_activity_path, class: "btn" %>
       </div>
     </div>
     
@@ -65,7 +65,7 @@
             <% record = version.versioned %>
             <% if record.present? %>
               <tr>
-                <td><%= guarded_link_to record.class, record.to_title, url_for([:edit, :admin, record]) %></td>
+                <td><%= guarded_link_to record.class, record.to_title, record.admin_edit_path %></td>
                 <td><%= display_datetime(version.created_at) %></td>
                 <td><%= version.description %></td>
                 <td><%= version.user.to_title %></td>

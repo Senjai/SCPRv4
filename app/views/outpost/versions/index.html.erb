@@ -7,7 +7,7 @@
 <%= list_table @versions, model do %>
   <thead>
     <tr>
-      <%= render "/admin/shared/headers", list: list %>
+      <%= render "/outpost/shared/headers", list: list %>
     </tr>
   </thead>
   <tbody class="list">
@@ -17,11 +17,11 @@
         <tr class="versions">
           <td class="column-manage">
             <%= guard record.class do %>
-              <%= link_to "View", outpost.version_path(resources: record.class.route_key, resource_id: record.id, version_number: version.version_number), class: "btn" %>
+              <%= link_to "View", outpost_version_path(resources: record.class.route_key, resource_id: record.id, version_number: version.version_number), class: "btn" %>
             <% end %>
           </td>
           
-          <%= render "/admin/shared/columns", list: list, record: version %>
+          <%= render "/outpost/shared/columns", list: list, record: version %>
         </tr>
       <% end %>
     <% end %>

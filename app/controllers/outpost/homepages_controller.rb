@@ -24,7 +24,7 @@ class Outpost::HomepagesController < Outpost::ResourceController
 
       if @homepage.unconditionally_valid?
         @title = @homepage.to_title
-        render "/admin/homepages/previews/#{@homepage.base}", layout: "admin/preview/application", locals: { homepage: @homepage }
+        render "/outpost/homepages/previews/#{@homepage.base}", layout: "admin/preview/application", locals: { homepage: @homepage }
       else
         render_preview_validation_errors(@homepage)
       end

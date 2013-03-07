@@ -1,4 +1,4 @@
-<%= simple_form_for [:admin, @ticket], remote: true do |f| %>
+<%= simple_form_for [:outpost, @ticket], remote: true do |f| %>
   <%= f.error_notification %>
   <%= f.input :summary, hint: "A one-sentence summary of the issue" %>
   <%= f.input :description, hint: "Describe the problem in detail. Include steps to reproduce, if applicable.", input_html: { class: "tiny span4" } %>

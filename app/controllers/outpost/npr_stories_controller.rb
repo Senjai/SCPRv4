@@ -39,7 +39,7 @@ class Outpost::NprStoriesController < Outpost::BaseController
   
   def index
     @records = @records.where(new: true)
-    respond_with :admin, @records
+    respond_with :outpost, @records
   end
 
   #--------------

@@ -10,7 +10,7 @@
       <% end %>
 
       <%= submit_tag "Go", class: "btn" %>
-      <%= render "/admin/shared/cancel_link", href: url_for(request.parameters.except("filter")) %>
+      <%= render "/outpost/shared/cancel_link", href: url_for(request.parameters.except("filter")) %>
     <% end %>
   </div>
 <% end %>

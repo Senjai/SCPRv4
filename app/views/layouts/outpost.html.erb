@@ -13,7 +13,7 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
-      <a href="<%=outpost.root_path%>" class="brand">Outpost</a>
+      <a href="<%=outpost_root_path%>" class="brand">Outpost</a>
       
       <% if admin_user %>
         <ul class="nav">
@@ -151,7 +151,7 @@
   </div> <!-- row -->
 </div> <!-- container main -->
 
-<%= render '/admin/tickets/modal' %>
+<%= render '/outpost/tickets/modal' %>
 <%= yield :footer %>
 
 <%= javascript_include_tag "#{Rails.application.config.node.server}/socket.io/socket.io.js" %>

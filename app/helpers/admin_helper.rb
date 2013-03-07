@@ -96,7 +96,7 @@ module AdminHelper
   #----------------
   # Render the block inside of the fieldset template
   def form_block(title=nil, &block)
-    render "/admin/shared/form_block", title: title, body: capture(&block)
+    render "/outpost/shared/form_block", title: title, body: capture(&block)
   end
   
   #----------------
@@ -105,12 +105,12 @@ module AdminHelper
   # Takes a hash of options and a block with the content
   #
   def modal_toggle(options={}, &block)
-    render "/admin/shared/modal", options: options, body: capture(&block)
+    render "/outpost/shared/modal", options: options, body: capture(&block)
   end
 
   #----------------
   # Simple table wrapper for index listing
   def list_table(records, model, &block)
-    render '/admin/shared/list_table', model: model, records: records, table: capture(&block)
+    render '/outpost/shared/list_table', model: model, records: records, table: capture(&block)
   end
 end

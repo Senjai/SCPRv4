@@ -1,10 +1,10 @@
 <% page_title model.to_title.pluralize %>
-<%= render "/admin/shared/index_header", model: model %>
+<%= render "/outpost/shared/index_header", model: model %>
 
 <%= list_table @records, model do %>
   <thead>
     <tr>
-      <%= render "/admin/shared/headers", list: list %>
+      <%= render "/outpost/shared/headers", list: list %>
     </tr>
   </thead>
   <tbody class="list">
@@ -14,7 +14,7 @@
           <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
         </td>
 
-        <%= render "/admin/shared/columns", list: list, record: record %>
+        <%= render "/outpost/shared/columns", list: list, record: record %>
       </tr>
     <% end %>
   </tbody>
