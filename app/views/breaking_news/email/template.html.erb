@@ -13,13 +13,20 @@
 <!--NEWSLETTER HEADER--><table border="0" cellpadding="0" cellspacing="0" class="head-wrap" style="font-family: Georgia, serif; width: 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"><tr style="font-family: Georgia, serif; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
 <td style="font-family: Georgia, serif; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"></td>
 <td class="header container" style="font-family: Georgia, serif; display: block !important; max-width: 600px !important; clear: both !important; width: 600px; margin-top: 0; margin-right: auto; margin-bottom: 0; margin-left: auto; padding-top: 18px; padding-right: 0; padding-bottom: 14px; padding-left: 0;"><table border="0" cellpadding="0" cellspacing="0" class="content-nopad" style="font-family: Georgia, serif; display: block !important; max-width: 600px !important; clear: both !important; width: 600px; margin-top: 0; margin-right: auto; margin-bottom: 0; margin-left: auto; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"><tr style="font-family: Georgia, serif; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"><td style="font-family: Georgia, serif; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
-<img class="header-cc" height="25" src="http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/%7B3d85c9a2-65c2-406d-930e-f8640a6fbb88%7D_header-breakingnews.png" width="269" style="font-family: Georgia, serif; max-width: 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
-<!-- LISTEN LIVE HEADER IMG
+
+<% if alert.alert_type == "live" %>
+  <!-- LISTEN LIVE HEADER IMG -->
   <img class="header-cc" height="24" src="http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/%7Bfe10c5fd-136f-4c3f-9ff8-a31e5061c634%7D_header-listenlive.png" width="188" style="font-family: Georgia, serif; max-width: 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
--->
-<!-- HAPPENING NOW HEADER IMG
+
+<% elsif alert.alert_type == "now" %>
+  <!-- HAPPENING NOW HEADER IMG -->
   <img class="header-cc" height="22" src="http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/%7Bf7940535-8ad3-4004-a727-9310f01f021c%7D_header-happeningnow.png" width="256" style="font-family: Georgia, serif; max-width: 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
--->
+
+<% else %>
+  <!-- BREAKING NEWS HEADER IMG -->
+  <img class="header-cc" height="25" src="http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/%7B3d85c9a2-65c2-406d-930e-f8640a6fbb88%7D_header-breakingnews.png" width="269" style="font-family: Georgia, serif; max-width: 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+<% end %>
+
 <h6 class="collapse" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.1; color: #888888 !important; font-weight: bold; font-size: 14px; text-shadow: 0 1px 0 white; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"><%= time_tag Date.today %></h6>
 </td></tr></table></td>
 <td style="font-family: Georgia, serif; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"></td>
