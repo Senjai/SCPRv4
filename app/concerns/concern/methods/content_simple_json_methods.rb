@@ -11,7 +11,7 @@ module Concern
     module ContentSimpleJsonMethods
       #---------------------
       # For the aggregator
-        # Keep this in sync with ContentAPI's simpleJSON method
+      # Keep this in sync with ContentAPI's simpleJSON method
       def simple_json
         {
           "id"       => self.id,
