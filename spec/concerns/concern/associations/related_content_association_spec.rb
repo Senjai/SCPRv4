@@ -27,6 +27,18 @@ describe Concern::Associations::RelatedContentAssociation do
   
   #---------------------------
   
+  describe '#related_content_json' do
+    it "uses simple_json for the join model" do
+      story1  = create :test_class_story
+      story2  = create :test_class_story
+      related = Related.create(content: story1, related: story2, position: 0)
+
+      story1.related_content_json.should eq [related.simple_json].to_json
+    end
+  end
+
+  #---------------------------
+
   describe '#related_content_json=' do
     let(:post)   { create :test_class_post }
     let(:story1) { create :test_class_story }

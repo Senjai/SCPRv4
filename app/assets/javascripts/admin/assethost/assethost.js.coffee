@@ -10,6 +10,8 @@ class scpr.AssetHost
         # simpleJSON is an object of just the attributes
         # we care about for SCPRv4. Everything else is
         # pulled from the AssetHost API.
+        # 
+        # This should be kept in sync with ContentAsset#simple_json
         simpleJSON: ->
             {
                 id:          @get 'id'

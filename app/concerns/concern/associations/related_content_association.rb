@@ -12,8 +12,6 @@ module Concern
         # This should be "referrer" and "referee"
         has_many :outgoing_references, as: :content, class_name: "Related", dependent: :destroy, order: "position"
         has_many :incoming_references, as: :related, class_name: "Related", dependent: :destroy, order: "position"
-        
-        attr_reader :related_content_json
       end
       
       #-------------------------
@@ -36,7 +34,13 @@ module Concern
         
         content.compact.uniq.sort_by { |c| c.published_at }.reverse
       end
+
+      #-------------------------
       
+      def related_content_json
+        self.outgoing_references.map(&:simple_json).to_json
+      end
+
       #-------------------------
       # See AssetAssociation for more information.
       def related_content_json=(json)
