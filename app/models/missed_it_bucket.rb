@@ -43,8 +43,12 @@ class MissedItBucket < ActiveRecord::Base
   end
 
   #-------------------
-  # Fake association getter until we can change
-  # `contents` to `content`
+  # Fake association accessor until we can change
+  # `contents` to `content` (after mercer)
+  def content
+    self.contents
+  end
+
   def content=(val)
     self.contents = val
   end
