@@ -12,14 +12,15 @@ module Concern
     module ContentAssociation
       extend ActiveSupport::Concern
       
-      included do
-        # #content_json is a way to pass in a string representation
-        # of a javascript object to the model, which will then be
-        # parsed and turned into content objects in the 
-        # #content_json= method.
-        attr_reader :content_json
+      #-------------------
+      # #content_json is a way to pass in a string representation
+      # of a javascript object to the model, which will then be
+      # parsed and turned into content objects in the 
+      # #content_json= method.
+      def content_json
+        self.content.map(&:simple_json).to_json
       end
-      
+
       #-------------------
       # See AssetAssociation for more information
       def content_json=(json)

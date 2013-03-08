@@ -401,15 +401,13 @@ class scpr.Aggregator
                         
                     @$el.append view.render()
 
-                # Set positions, and then fill out the input.
+                # Set positions.
                 # setPositions depends on the DOM, so it has to be called
                 # after the list has been rendered for it to work.
                 # We assume that the boostrapped content is ordered properly
                 # and can therefore use the DOM to do the ordering and set
                 # the "position" attribute.
                 @setPositions()
-                @updateInput()
-
                 @
 
 

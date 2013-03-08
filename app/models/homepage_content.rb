@@ -1,4 +1,5 @@
 class HomepageContent < ActiveRecord::Base
+  include Concern::Methods::ContentSimpleJsonMethods
   self.table_name =  "layout_homepagecontent"
 
   map_content_type_for_django

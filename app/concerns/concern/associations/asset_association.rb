@@ -16,15 +16,6 @@ module Concern
           :dependent  => :destroy,
           :autosave   => true
         }
-        
-        #-------------------
-        # #asset_json is a way to pass in a string representation
-        # of a javascript object to the model, which will then be
-        # parsed and turned into ContentAsset objects in the 
-        # #asset_json= method.
-        #
-        # This gets populated in the form by javascript
-        attr_reader :asset_json
       end
 
       #-------------------
@@ -34,6 +25,15 @@ module Concern
         self.assets.first.asset.send(size).send(format) if self.assets.present?
       end
       
+      #-------------------
+      # #asset_json is a way to pass in a string representation
+      # of a javascript object to the model, which will then be
+      # parsed and turned into ContentAsset objects in the 
+      # #asset_json= method.
+      def asset_json
+        self.assets.map(&:simple_json).to_json
+      end
+
       #-------------------
       # Parse the input from #asset_json and turn it into real
       # ContentAsset objects. 

@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe Concern::Associations::ContentAssociation do
+  describe '#content_json' do
+    it "uses simple_json for the join model" do
+      post  = create :test_class_post
+      story = create :test_class_story
+      content = post.content.build(content: story, position: 0)
+
+      post.content_json.should eq [content.simple_json].to_json
+    end
+  end
+
+  #------------------
+
   describe '#content_json=' do
     let(:post)   { create :test_class_post }
     let(:story1) { create :test_class_story }

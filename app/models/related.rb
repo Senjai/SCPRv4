@@ -1,6 +1,7 @@
 class Related < ActiveRecord::Base
   self.table_name =  'media_related'
-  
+  include Concern::Methods::ContentSimpleJsonMethods
+
   map_content_type_for_django
   belongs_to :content, polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }
   belongs_to :related, polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }
