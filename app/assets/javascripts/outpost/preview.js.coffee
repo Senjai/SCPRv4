@@ -29,7 +29,7 @@ class scpr.Preview
                     
                     beforeSend: (jqXHR, settings) ->
                         _t.openWindow(target.data("windowOptions"))
-                        _t.writeToWindow(JST['admin/templates/loading']())
+                        _t.writeToWindow(JST['outpost/templates/loading']())
 
                     statusCode:
                         200: (data, textStatus, jqXHR) ->
