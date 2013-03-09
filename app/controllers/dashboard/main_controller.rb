@@ -59,14 +59,4 @@ class Dashboard::MainController < ApplicationController
     @awaiting  = Audio::EncoAudio.awaiting_audio.count
     @this_week = Audio::EncoAudio.awaiting_audio.where( :enco_date => Date.today-7..Date.today ).order("enco_date desc, enco_number asc")
   end
-  
-  #----------
-  
-  def listen
-    @current = params[:current] ? true : false
-    
-    # grab eight hours worth of schedule, starting four hours ago
-    @schedule = Schedule.block(Time.now - 60*60*4, 6.hours)
-  end
-  
 end
