@@ -28,7 +28,7 @@ class Outpost::FlatpagesController < Outpost::ResourceController
         @title = @flatpage.to_title
 
         if @flatpage.is_redirect?
-          render '/outpost/shared/_notice', layout: "admin/minimal", 
+          render '/outpost/shared/_notice', layout: "outpost/minimal", 
             locals: { message: "This flatpage will redirect to <strong>#{@flatpage.redirect_url}</strong>".html_safe }
         else
           layout_template = begin

@@ -50,6 +50,6 @@ class Outpost::ResourceController < Outpost::BaseController
   #-----------------
 
   def render_preview_validation_errors(record)
-    render "/outpost/shared/_preview_errors", layout: "admin/minimal", locals: { record: record }
+    render "/outpost/shared/_preview_errors", layout: "outpost/minimal", locals: { record: record }
   end
 end
