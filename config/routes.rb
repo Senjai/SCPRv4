@@ -179,12 +179,7 @@ Scprv4::Application.routes.draw do
       get '/content/:id'    => 'content#show',   defaults: { format: :json }
     end
   end
-  
-  #------------------
-  
-  namespace :dashboard do
-  end
-  
+
   #------------------
   
   scope "r" do
