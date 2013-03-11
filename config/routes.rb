@@ -181,8 +181,6 @@ Scprv4::Application.routes.draw do
   #------------------
   
   namespace :dashboard do
-    match '/sections' => 'main#sections', :as => :sections
-    match '/enco'     => 'main#enco', :as => :enco
     match '/notify'   => 'main#notify'
     
     # ContentBase API
@@ -199,8 +197,6 @@ Scprv4::Application.routes.draw do
         end
       end
     end
-    
-    match '/' => 'main#index', :as => :home
   end
   
   #------------------
