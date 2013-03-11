@@ -76,6 +76,18 @@
         }
     // end Pledge Banner to Button
     
+    // Adjust signup call-to-action in Breaking News Alerts
+    .live-update {
+      .inner-container {
+        .newsletter-sign-up {
+          background-color:rgba(255,255,255,0.35);
+          float:none;
+          font-size:12px;
+          margin-top:4px;
+        }
+      }
+    }
+    
     // Adjust Featured Programs in Megamenu 
     .megamenu {
         #programs-mega {

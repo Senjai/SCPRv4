@@ -171,7 +171,9 @@ Scprv4::Application.routes.draw do
     
     namespace :private do
       match '/' => "content#options", constraints: { method: 'OPTIONS' }
-  
+      
+      post '/utility/notify'   => 'utility#notify'
+
       get '/content'        => 'content#index',  defaults: { format: :json }
       get '/content/by_url' => 'content#by_url', defaults: { format: :json }
       get '/content/:id'    => 'content#show',   defaults: { format: :json }
@@ -181,10 +183,6 @@ Scprv4::Application.routes.draw do
   #------------------
   
   namespace :dashboard do
-    match '/sections' => 'main#sections', :as => :sections
-    match '/enco'     => 'main#enco', :as => :enco
-    match '/notify'   => 'main#notify'
-    match '/' => 'main#index', :as => :home
   end
   
   #------------------
