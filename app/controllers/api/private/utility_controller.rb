@@ -1,6 +1,5 @@
 class Api::Private::UtilityController < Api::PrivateController
   def notify
-    redis = Rails.cache.instance_variable_get :@data
     
     data = {
       :user        => params["user"],
@@ -9,7 +8,8 @@ class Api::Private::UtilityController < Api::PrivateController
     }
     
     logger.info "Publishing deploy notification to Redis on channel scprdeploy"
-    redis.publish "scprdeploy", data.to_json
+    
+    $redis.publish "scprdeploy", data.to_json
     render text: "Success", status: :ok
   end
 end
