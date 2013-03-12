@@ -13,61 +13,56 @@ class scpr.ListenLive
         
         
     constructor: (options) ->
-        @options = _(_({}).extend(@DefaultOptions)).extend options || {}
-        
         if window.LLINIT == true
-            console.log "tried to init a second ListenLive"
-            return false
-        else
-            console.log "setting LLINIT to true"
+            @options = _(_({}).extend(@DefaultOptions)).extend options || {}
             window.LLINIT = true
-        
-        @playing = false
-        @started = 0
-        @offset = 0
-        @serverBuffer = 0
-        
-        @currentShow = null
-        @playerUI = null
-        @audio = null
-        
-        @playUIdiv = $("<div/>")
-        $(@options.playerEl).append(@playUIdiv)
-                
-        # -- build program schedule -- #
 
-        if @options.schedule
-            @schedule = new ListenLive.Schedule @options.schedule
-            @guide = new ListenLive.ProgramGuide collection:@schedule
+            @playing = false
+            @started = 0
+            @offset = 0
+            @serverBuffer = 0
             
-            $(@options.scheduleId).html @guide.render().el
+            @currentShow = null
+            @playerUI = null
+            @audio = null
             
-            @schedule.bind "playMe", (m) =>
-                # seek to start time of this show
-                offset = moment().diff m.start, "seconds"
-                console.log "guide click wants to play at ", offset
-                @offsetTo offset
+            @playUIdiv = $("<div/>")
+            $(@options.playerEl).append(@playUIdiv)
+                    
+            # -- build program schedule -- #
 
-        # -- connect to the rewind server -- #
+            if @options.schedule
+                @schedule = new ListenLive.Schedule @options.schedule
+                @guide = new ListenLive.ProgramGuide collection:@schedule
                 
-        $.getScript @options.socketJS, =>
-            # set up the socket
-            @io = io.connect @options.host
-            
-            @io.on "ready", (data) =>
-                console.log "got ready with ", data
-                                
-                # set up our audio player at @audio
-                @_setUpPlayer()
+                $(@options.scheduleId).html @guide.render().el
                 
-                # update our display
-                @_updateDisplay data
+                @schedule.bind "playMe", (m) =>
+                    # seek to start time of this show
+                    offset = moment().diff m.start, "seconds"
+                    console.log "guide click wants to play at ", offset
+                    @offsetTo offset
+
+            # -- connect to the rewind server -- #
+                    
+            $.getScript @options.socketJS, =>
+                # set up the socket
+                @io = io.connect @options.host
                 
-                # attach our extra buttons
-                @_attachExtraUI()
-                
-            # each time we get a timecheck from the server, update our play view
-            @io.on "timecheck", (data) => @_updateDisplay data
+                @io.on "ready", (data) =>
+                    console.log "got ready with ", data
+                                    
+                    # set up our audio player at @audio
+                    @_setUpPlayer()
+                    
+                    # update our display
+                    @_updateDisplay data
+                    
+                    # attach our extra buttons
+                    @_attachExtraUI()
+                    
+                # each time we get a timecheck from the server, update our play view
+                @io.on "timecheck", (data) => @_updateDisplay data
                 
     #----------
         
