@@ -69,8 +69,6 @@ class scpr.AssetManager
             @collection.bind 'add', (f) => 
                 @_views[f.cid] = new scpr.AssetManager.Asset
                     model: f
-                    args:  @options.args
-                    rows:  @options.rows
                 
                 @renderCollection()
 
@@ -79,8 +77,21 @@ class scpr.AssetManager
                 delete @_views[f.cid]
                 @renderCollection()
             
+            # attach a listener to wait for the LOADED message
+            window.addEventListener "message", (evt) => 
+                if evt.data == "LOADED" and @chooserIsAvailable()
+                    console.log @collection.toJSON()
+                    # dispatch our event with the asset data
+                    window.assethostChooser.postMessage @collection.toJSON(), assethost.SERVER
+            , false
+
             @render()
         
+        #----------
+
+        chooserIsAvailable: ->
+            window.assethostChooser and !window.assethostChooser.closed
+
         #----------
         
         _popup: (event) ->
@@ -91,15 +102,11 @@ class scpr.AssetManager
                 url:     "#{assethost.SERVER}/a/chooser"
                 name:    "chooser"
                 options: "height=620,width=1000,scrollbars=1"
-                
-            newwindow = window.open popup.url, popup.name, popup.options
             
-            # attach a listener to wait for the LOADED message
-            window.addEventListener "message", (evt) => 
-                if evt.data == "LOADED"
-                    # dispatch our event with the asset data
-                    newwindow.postMessage @collection.toJSON(), assethost.SERVER
-            , false
+            if @chooserIsAvailable()
+                window.assethostChooser.focus()
+            else
+                window.assethostChooser = window.open(popup.url, popup.name, popup.options)
             
             false
             
@@ -123,11 +130,11 @@ class scpr.AssetManager
             if @collection.isEmpty()
                 return @emptyNotification.render()
                 
-            @collection.each (asset) => 
+            @collection.each (asset, index) =>
+                asset.set(ORDER: index)
+
                 @_views[asset.cid] ?= new scpr.AssetManager.Asset
                     model: asset
-                    args:  @options.args
-                    rows:  @options.rows
             
             views = _(@_views).sortBy (a) => a.model.get("ORDER")
             @collectionEl.html( _(views).map (v) -> v.el )
