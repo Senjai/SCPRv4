@@ -34,18 +34,18 @@ class scpr.Newsroom
                 offline: new Newsroom.Alert.Offline($("#work_status"))
 
             $ =>
-                # If io (sockets) isn't available, error and return
+                # If io (sockets) isn't available, render error
                 # Otheriwse connect to Socket.io
                 if !io?
                     $("#spinner").spin(false)
                     $("#work_status").html()
-                    return @alerts['offline'].render() 
-                    
-                @socket  = io.connect scpr.NODE
-                @socket.on 'finished-task', (data) ->
-                    $("#work_status").html("Finished!")
-                    $("#spinner").spin(false)
-                    window.location = data.location
+                    @alerts['offline'].render() 
+                else
+                    @socket  = io.connect scpr.NODE
+                    @socket.on 'finished-task', (data) ->
+                        $("#work_status").html("Finished!")
+                        $("#spinner").spin(false)
+                        window.location = data.location
 
     
     #-----------------
@@ -61,26 +61,26 @@ class scpr.Newsroom
             empty:   new Newsroom.Alert.Empty(@el)
 
         $ =>
-            # If io (sockets) isn't available, error and return
+            # If io (sockets) isn't available, render error
             # Otheriwse connect to Socket.io
             if !io?
                 @el.spin(false)
-                return @alerts['offline'].render()
+                @alerts['offline'].render()
+            else
+                @socket  = io.connect scpr.NODE
+                
+                # Outgoing messages
+                @socket.emit 'entered', @roomId, @userJson, recordJson: @record
 
-            @socket  = io.connect scpr.NODE
-            
-            # Outgoing messages
-            @socket.emit 'entered', @roomId, @userJson, recordJson: @record
-
-            # Incoming messages
-            @socket.on 'loadList', (users) =>
-                @el.spin(false)
-                @loadList(users)
+                # Incoming messages
+                @socket.on 'loadList', (users) =>
+                    @el.spin(false)
+                    @loadList(users)
 
     #-----------------
     # Load the list of users into the bucket
     # If the list is empty, notify the user
-    loadList: (users) ->        
+    loadList: (users) ->
         return @alerts['empty'].render() if _.isEmpty users
 
         ul = $("<ul/>")
