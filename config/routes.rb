@@ -149,7 +149,6 @@ Scprv4::Application.routes.draw do
   
   
   # Extra (internal stuff)
-  match '/listen_live/demo' => 'dashboard/main#listen', :as => :listen_demo
   match '/breaking_email'   => 'breaking_news#show'
   
   
