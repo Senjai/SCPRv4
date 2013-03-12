@@ -170,34 +170,15 @@ Scprv4::Application.routes.draw do
     
     namespace :private do
       match '/' => "content#options", constraints: { method: 'OPTIONS' }
-  
+      
+      post '/utility/notify'   => 'utility#notify'
+
       get '/content'        => 'content#index',  defaults: { format: :json }
       get '/content/by_url' => 'content#by_url', defaults: { format: :json }
       get '/content/:id'    => 'content#show',   defaults: { format: :json }
     end
   end
-  
-  #------------------
-  
-  namespace :dashboard do
-    match '/notify'   => 'main#notify'
-    
-    # ContentBase API
-    match '/api/content/', :controller => 'api/content', :action => 'options', :constraints => {:method => 'OPTIONS'}
-    namespace :api do
-      resources :content, :id => /[\w\/\%]+(?:\:|%3A)\d+/ do
-        collection do
-          get :by_url
-          get :recent
-        end
-        
-        member do
-          post :preview
-        end
-      end
-    end
-  end
-  
+
   #------------------
   
   scope "r" do

@@ -51,7 +51,7 @@ namespace :deploy do
   
   task :notify do
     data = {
-      :auth_token  => "droQQ2LcESKeGPzldQr7",
+      :token  => "droQQ2LcESKeGPzldQr7",
       :user        => `whoami`.gsub("\n", ""),
       :datetime    => Time.now.strftime("%F %T"),
       :application => application

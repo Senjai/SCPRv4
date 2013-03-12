@@ -22,30 +22,28 @@
           </div> <!-- mid header wrapper -->
         </div> <!-- span -->
       
-          <div class="span9" id="masthead-right-header-wrapper">
+        <div class="span9" id="masthead-right-header-wrapper">
           <nav class="utils">
             <ul>
+
+              <!-- Social Media -->
               <li class="social">
                 Follow us
                 <a href="http://facebook.com/kpcc" class="track-event" data-ga-category="Masthead" data-ga-action="Social Media" data-ga-label="KPCC Facebook Page"><img src="http://media.scpr.org/assets/images/icons/header-icn-facebook.png" alt="Facebook" /></a>
                       <a href="http://twitter.com/kpcc" class="track-event" data-ga-category="Masthead" data-ga-action="Social Media" data-ga-label="KPCC Twitter Page"><img src="http://media.scpr.org/assets/images/icons/header-icn-twitter.png" alt="Twitter" /></a>
                 <a href="https://plus.google.com/108872361044769229886/" class="track-event" data-ga-category="Masthead" data-ga-action="Social Media" data-ga-label="KPCC Google Plus Page"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" alt="Google +" width="14" height="14" /></a>
               </li>
-              <% if current_user %>
-                <li class="username">Hi, <a href="/accounts/profile/"><%= current_user.nickname %></a></li>
-                <li><a href="/accounts/logout/">Log Out</a></li>
-              <% else %>
-                    <li><a href="/accounts/login/">Login</a></li>
-                    <li><a href="/accounts/register/">Register</a></li>         
-              <% end %>
-              </ul>
-            </nav>
+
+              <!-- Login -->
+              <li><a href="https://scprcontribute.publicradio.org/account/view.php" target="_blank">Member Login</a></li>
+            </ul>
+          </nav>
           <div class="pledge-button-container">
-            <a href="https://scprcontribute.publicradio.org/contribute.php" class="track-event" data-ga-category="Masthead" data-ga-action="Pledge" data-ga-label="Button"><%= image_tag('pledge-btn.png')%></a>         
+            <a href="https://scprcontribute.publicradio.org/contribute.php" class="track-event" data-ga-category="Masthead" data-ga-action="Pledge" data-ga-label="Button"><%= image_tag('pledge-btn.png')%></a>
           </div> <!-- pledge button container -->
-        </div>
+        </div> <!-- span -->
       </div> <!-- row fluid -->
-    </div>
+    </div> <!-- head-lead -->
 
     <div id="megamenu" class="megamenu">
       <div class="nav-primary clearfix">
