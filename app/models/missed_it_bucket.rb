@@ -4,6 +4,7 @@ class MissedItBucket < ActiveRecord::Base
   has_secretary
 
   include Concern::Associations::ContentAssociation
+  include Concern::Callbacks::TouchCallback
   
   #--------------------
   # Scopes

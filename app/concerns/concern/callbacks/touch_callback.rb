@@ -10,8 +10,8 @@ module Concern
       extend ActiveSupport::Concern
       
       included do
-        after_save -> { self.touch}
-      end      
+        after_save -> { self.touch }
+      end
     end
   end
 end
