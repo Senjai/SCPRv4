@@ -1,0 +1,95 @@
+class Dashboard::Api::ContentController < ApplicationController  
+  before_filter       :set_access_control_headers
+  
+  def options
+    head :ok
+  end
+  
+  #----------
+  
+  def index
+    contents = []
+    
+    [params[:ids]].flatten.each do |id|
+      if content = ContentBase.obj_by_key(id)
+        contents.push content
+      end
+    end
+    
+    render :json => contents
+  end
+  
+  #----------
+  
+  def show
+    # is this valid content?
+    content = ContentBase.obj_by_key(params[:id])
+    
+    if content
+      render :json => content.as_json
+    else
+      render :text => "Not Found", :status => :not_found
+    end
+  end
+  
+  #----------
+
+  def preview
+    # is this valid content?
+    @content = ContentBase.obj_by_key(params[:id])
+    [:headline, :short_headline, :teaser, :body, :content].each do |f|
+      if params[ f ]
+        @content[ f ] = params[ f ]
+      end
+    end
+    
+    if @content
+      render "preview", formats: [:js], :status => 200
+    else
+      render :text => "Not Found", :status => :not_found
+    end
+  end
+  
+  #----------
+  
+  def by_url
+    content = ContentBase.obj_by_url(params[:id])
+    
+    if content
+      render :json => content.as_json
+    else
+      render :text => "Not Found", :status => :not_found
+    end
+  end
+  
+  #----------
+  
+  def recent
+    # Check if cache is already written. If so, short-circuit and return it
+    if cache = Rails.cache.fetch("cbaseapi:recent")
+      render :json => cache and return
+    end
+    
+    # build a new cache
+    
+    contents = ContentBase.search({
+      :limit => 20
+    })
+    
+    json = contents.as_json
+    Rails.cache.write_entry("cbaseapi:recent", json, :objects => [contents,"contentbase:new"].flatten)
+    render :json => json
+  end
+  
+  #----------
+  
+  private
+
+  def set_access_control_headers
+    headers['Access-Control-Allow-Origin']      = request.env['HTTP_ORIGIN'] || "*"
+    headers['Access-Control-Allow-Methods']     = 'POST, GET, OPTIONS'
+    headers['Access-Control-Max-Age']           = '1000'
+    headers['Access-Control-Allow-Headers']     = 'x-requested-with,content-type,X-CSRF-Token'
+    headers['Access-Control-Allow-Credentials'] = "true"
+  end
+end

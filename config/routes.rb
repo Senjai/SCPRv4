@@ -179,6 +179,22 @@ Scprv4::Application.routes.draw do
     end
   end
 
+  namespace :dashboard do    
+    # ContentBase API
+    match '/api/content/', :controller => 'api/content', :action => 'options', :constraints => {:method => 'OPTIONS'}
+    namespace :api do
+      resources :content, :id => /[\w\/\%]+(?:\:|%3A)\d+/ do
+        collection do
+          get :by_url
+          get :recent
+        end
+        
+        member do
+          post :preview
+        end
+      end
+    end
+  end
   #------------------
   
   scope "r" do
