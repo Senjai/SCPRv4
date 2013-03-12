@@ -101,7 +101,7 @@ class scpr.AssetManager
                     newwindow.postMessage @collection.toJSON(), assethost.SERVER
             , false
             
-            return false
+            false
             
         #----------
         # Render the full view. This should only be called once.
