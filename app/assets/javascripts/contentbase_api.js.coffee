@@ -124,7 +124,7 @@ class scpr.ContentBaseAPI
                 if !_(@el).first()
                     console.log "Element invalid."
                     return false
-                    
+
                 console.log "form html was ", @el.clone()
 
                 # read in existing django-admin forms
@@ -397,7 +397,6 @@ class scpr.ContentBaseAPI
     
             if !_(@el).first()
                 console.log "Element invalid."
-                return false
             
             # create our collection via the given API function
             @contents = new ContentBaseAPI.ContentCollection()
