@@ -1,5 +1,5 @@
 <%= form_block "Bio Information" do %>
-  <%= f.input :name, hint: "The name that will show up around the website." %>
+  <%= f.input :name, hint: "The name that will show up around the website.", input_html: { class: "sluggable"} %>
   <%= f.input :title, hint: "Example: KPCC's Education Reporter" %>
   <%= f.input :short_bio, hint: "A short blurb (1-2 sentences) for this author." %>
   <%= f.input :bio, input_html: { class: "short" } %>

@@ -1,5 +1,5 @@
 <%= form_block "Details" do %>
-  <%= f.input :title %>
+  <%= f.input :title, input_html: { class: "sluggable" } %>
   <%= f.input :slug %>
   <%= f.input :is_news %>
   <%= f.association :comment_bucket %>

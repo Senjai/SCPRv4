@@ -1,5 +1,5 @@
 <%= form_block "Details" do %>
-  <%= f.input :title, input_html: { class: "wide" } %>
+  <%= f.input :title, input_html: { class: "wide sluggable" } %>
   <%= f.input :slug %>
   <%= f.association :categories %>
 <% end %>
