@@ -1,5 +1,6 @@
-<% page_title @version_b.to_title %>
-<%= render 'header', page_title: @PAGE_TITLE, object: @object %>
+<% add_to_page_title @version_b.to_title, "History" %>
+
+<%= render 'header', page_title: content_for(:page_title), object: @object %>
 
 <%= cache @version_b do %>
   <% @attribute_diffs.each do |attribute, diff| %>

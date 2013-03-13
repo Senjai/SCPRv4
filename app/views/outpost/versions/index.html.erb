@@ -1,8 +1,9 @@
-<% page_title "History" %>
-
 <% if @object %>
-  <%= render 'header', page_title: @PAGE_TITLE, object: @object %>
+  <%= render 'header', page_title: content_for(:page_title), object: @object %>
+  <% add_to_page_title @object.simple_title %>
 <% end %>
+
+<% add_to_page_title "History" %>
 
 <%= list_table @versions, model do %>
   <thead>

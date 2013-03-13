@@ -1,5 +1,5 @@
 <%= render_content @entry, "opengraph" %>
-<% page_title [@blog.name, @entry.headline], " : " %>
+<% add_to_page_title @entry.headline %>
 <% @OG_TYPE = "blog" %>
 
 <%= cache ["show", "v4", @entry] do %>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
-  <title><%= @PAGE_TITLE ? @PAGE_TITLE + " | Outpost" : "Outpost" %></title>
-  <%= stylesheet_link_tag "admin/admin" %>
-  <%= javascript_include_tag "shared", "admin/admin" %>
+  <% add_to_page_title "Outpost" %>
+  <title><%= page_title %></title>
+  <%= stylesheet_link_tag "outpost/outpost" %>
+  <%= javascript_include_tag "shared", "outpost/outpost" %>
   
   <%= csrf_meta_tags %>
 </head>

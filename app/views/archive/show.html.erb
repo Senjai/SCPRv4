@@ -1,9 +1,9 @@
 <% if !@date %>
-  <h1><%= page_title "Archive" %></h1>
+  <h1><%= add_to_page_title "Archive" %></h1>
   <strong>Select a date:</strong>
 <% else %>
 
-<h1><%= page_title "Archive for #{format_date @date, format: :full_date}" %></h1>
+<h1><%= add_to_page_title "Archive for #{format_date @date, format: :full_date}" %></h1>
 
 <nav class="filters">
   <ul class="clearfix" id="archive_nav">

@@ -1,4 +1,4 @@
-<% page_title @story.headline %>
+<% add_to_page_title @story.headline %>
 <%= render_content @story, "opengraph" %>
 
 <%= cache ["show", "v5", @story] do %>

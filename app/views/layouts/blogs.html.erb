@@ -4,13 +4,13 @@
       <div class="span24 mq-solo-span">
         <h2 class="blog-header">
           <div class="blog-logo large <%=@blog.slug%>">
-            <%= link_to @blog.name, blog_path(@blog.slug) %>
+            <%= link_to @blog.name, @blog.link_path %>
           </div>
           <div class="extra">
-            <%= link_to @BLOGTITLE_EXTRA.to_s, blog_path(@blog.slug) %>
+            <%= link_to @BLOGTITLE_EXTRA.to_s, @blog.link_path %>
           </div>
         </h2>
-        <p class="blog-tagline"><%=@blog.teaser%></p>
+        <p class="blog-tagline"><%= @blog.teaser %></p>
       </div>
     </div>
   </div>
@@ -79,4 +79,5 @@
   <%= render "/shared/widgets/missed_it_bucket", object: @blog %>
 <% end %>
 
+<% add_to_page_title @blog.name + @BLOGTITLE_EXTRA.to_s %>
 <%= render template: "/layouts/application" %>

@@ -1,5 +1,3 @@
-<% page_title @blog.name + @BLOGTITLE_EXTRA.to_s %>
-
 <div class="blog-landing">
   <%= any_to_list? @entries, message: @MESSAGE do %>
     <%= render partial: "/blogs/entry", collection: @entries, as: :entry, locals: { blog: @blog, full: false } %>
