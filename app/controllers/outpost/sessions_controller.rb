@@ -13,10 +13,11 @@ class Outpost::SessionsController < Outpost::BaseController
       session['_auth_user_backend'] = 'django.contrib.auth.backends.ModelBackend'
       user.update_attribute(:last_login, Time.now)
       redirect_to session[:return_to] || outpost_root_path, notice: "Logged in."
+      session[:return_to] = nil
     else
       flash.now[:alert] = "Invalid login information."
       render 'new'
-    end    
+    end
   end
   
   def destroy
