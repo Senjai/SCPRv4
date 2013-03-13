@@ -25,10 +25,6 @@
         "#aggregator", "#segment_json",
         <%= j record.segments.to_json.html_safe %>,
         {
-          viewOptions: {
-            template: "content_compact"
-          },
-          
           apiType: "private",
           params: {
             limit: 20,

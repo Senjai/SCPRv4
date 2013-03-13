@@ -3,5 +3,13 @@
     <%- @content.asset %><%= @content.short_headline %>
   </a>
 
-  <small>(<a href="<%=@content.edit_path%>"><%= @content.obj_key%></a>)</small>
+  <div style="font-size:11px;">
+    <% if @content.published_at?: %>
+      <%= moment(@content.published_at).format("YYYY-MM-DD, h:mma") %>
+    <% else: %>
+      <span class="text-error"><strong>UNPUBLISHED</strong></span>
+    <% end %>
+  
+    (<a href="<%=@content.edit_path%>"><%= @content.obj_key%></a>)
+  </div>
 </div>

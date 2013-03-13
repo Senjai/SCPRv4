@@ -102,6 +102,24 @@ class scpr.Aggregator
             attributes:
                 class: "drop-zone well"
             
+            # Define alerts as functions
+            @Alerts:
+                success: (el, data) ->
+                    new scpr.Notification(el, "success", 
+                        "<strong>Success!</strong> Imported #{data.id}")
+
+                alreadyExists: (el) ->
+                    new scpr.Notification(el, "warning", 
+                        "That content is already in the drop zone.")
+
+                invalidUrl: (el, url) ->
+                    new scpr.Notification(el, "error", 
+                        "<strong>Failure.</strong> Invalid URL (#{url})")
+
+                error: (el) -> 
+                    new scpr.Notification(el, "error", 
+                        "<strong>Error.</strong> Try the Search tab.")
+
             #---------------------
             
             initialize: ->
@@ -129,11 +147,11 @@ class scpr.Aggregator
                     @checkDropZone()
                     @setPositions()
                     @updateInput()
-                    
+
                 # DropZone callbacks!!
                 sortIn  = true
                 dropped = false
-                
+
                 @$el.sortable
                     # When dragging (sorting) starts
                     start: (event, ui) ->
@@ -258,21 +276,19 @@ class scpr.Aggregator
                 @base.importUrl url, 
                     success: (data) =>
                         if data
-                            @buildFromData(data)
-                            alert = new scpr.Notification(@$el, "success", 
-                                "<strong>Success!</strong> Imported #{data.id}")
+                            if @buildFromData(data)
+                                @alert('success', data)
+                            else
+                                @alert('alreadyExists')
                         else
-                            alert = new scpr.Notification(@$el, "error", 
-                                "<strong>Failure.</strong> Invalid URL (#{url})")
+                            @alert('invalidUrl', url)
                         
                     error: (jqXHR) =>
-                        alert = new scpr.Notification(@$el, "error", 
-                            "<strong>Error.</strong> Try the Search tab.")
-                    
+                        @alert('error')
+
                     # Run this no matter what.
                     # It just turns off the bells and whistles
                     complete: (jqXHR) =>
-                        @importNotice(alert)
                         @container.spin(false)
                         @$el.removeClass('dim')
                 
@@ -285,25 +301,32 @@ class scpr.Aggregator
             buildFromData: (data) ->
                 model = new scpr.ContentAPI.Content(data)
 
-                view = new scpr.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
-                    model: model
+                # If the model doesn't already exist, then add it,
+                # render it, highlight it
+                # If it does already exist, then just return false
+                if not @collection.get model.id
+                    view = new scpr.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
+                        model: model
 
-                @$el.append view.render()
-                @highlightSuccess(view.$el)
+                    @$el.append view.render()
+                    @highlightSuccess(view.$el)
 
-                # Add the new model to @collection
-                @collection.add model
-                    
+                    # Add the new model to @collection
+                    @collection.add model
+                else
+                    false
+
             #---------------------
             # Alert the user that the URL drag-and-drop failed or succeeded
             # Receives a Notification object
-            importNotice: (notification) ->
+            alert: (alertKey, args...) ->
+                notification = DropZone.Alerts[alertKey](@$el, args...)
                 notification.prepend()
                 
                 setTimeout ->
-                    notification.fadeOut()
+                    notification.fadeOut -> @remove()
                 , 5000
-                
+
             #---------------------
             # Moves a model from the "found" section into the drop zone.
             # Converts its view into a ContentFull view.
@@ -326,9 +349,7 @@ class scpr.Aggregator
                     @highlightSuccess(view.$el)
 
                 else
-                    alert = new scpr.Notification(@$el, "warning", 
-                        "That content is already in the drop zone.")
-                    @importNotice(alert)
+                    @alert('alreadyExists')
                     false
 
             #---------------------
