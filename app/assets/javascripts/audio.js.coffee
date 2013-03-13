@@ -65,7 +65,7 @@ class scpr.Audio
         @playing = false
         @active = null
         
-        return false
+        false
 
     play: (widget) ->
         if @playing && @active == widget

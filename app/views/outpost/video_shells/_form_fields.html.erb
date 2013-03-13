@@ -1,5 +1,5 @@
 <%= form_block "Details" do %>
-  <%= f.input :headline, teaser: "Short Headline", input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
+  <%= f.input :headline, teaser: "Short Headline", input_html: { class: "wide sluggable" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
   <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
   <%= f.section "slug" %>
   <%= f.section "category" %>

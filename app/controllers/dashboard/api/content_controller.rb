@@ -1,7 +1,5 @@
 class Dashboard::Api::ContentController < ApplicationController  
-  before_filter       :require_admin
   before_filter       :set_access_control_headers
-  skip_before_filter  :verify_authenticity_token, only: :preview
   
   def options
     head :ok
@@ -86,6 +84,7 @@ class Dashboard::Api::ContentController < ApplicationController
   #----------
   
   private
+
   def set_access_control_headers
     headers['Access-Control-Allow-Origin']      = request.env['HTTP_ORIGIN'] || "*"
     headers['Access-Control-Allow-Methods']     = 'POST, GET, OPTIONS'
@@ -93,5 +92,4 @@ class Dashboard::Api::ContentController < ApplicationController
     headers['Access-Control-Allow-Headers']     = 'x-requested-with,content-type,X-CSRF-Token'
     headers['Access-Control-Allow-Credentials'] = "true"
   end
-    
 end

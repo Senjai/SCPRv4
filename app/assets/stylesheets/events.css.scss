@@ -345,7 +345,6 @@ nav.section-nav {
     height: 468px;
     min-width: $mediaDesktopSmall;
     @include gradient-vertical(#2e2e2e, lighten(#2e2e2e, 10%));
-    @include box-shadow(0 6px 10px rgba(0,0,0,.5));
     width:100%;
     overflow: hidden;
     z-index: 20;
@@ -381,11 +380,31 @@ nav.section-nav {
     .slides-wrapper {
         position: relative;
         max-width: 1500px;
+        height:468px;
         margin: 0 auto;
         .slide {
+            background-position:center top;
+            background-repeat: no-repeat;
+            background-size:cover;
             z-index: 8;
             visibility: hidden;
             position: relative; // to make opacity happy in IE
+            height:468px;
+            &#hero-1 {
+              background-image:url(image_path("event-headers/hero-1.jpg"));
+            }
+            &#hero-2 {
+              background-image:url(image_path("event-headers/hero-2.jpg"));
+              margin-top:-468px;
+            }
+            &#hero-3 {
+              background-image: url(image_path("event-headers/hero-3.jpg"));
+              margin-top:-468px;
+            }
+            &#hero-4 {
+              background-image: url(image_path("event-headers/hero-4.jpg"));
+              margin-top:-468px;
+            }
             img {
                 width: 100%;
                 position: absolute;
@@ -396,6 +415,7 @@ nav.section-nav {
                 z-index: 20;
                 top: 45px;
                 left: 5%;
+                left: 200px\9;
                 width: 523px;
                 text-align: left;
                 padding: 35px 0 0 37px;

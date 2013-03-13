@@ -44,10 +44,6 @@ class scpr.SmartTime
                 # a datetime value is our next fallback. for now, we'll just let 
                 # moment try to figure it out
                 @time = moment @$el.attr("datetime")
-            
-            else
-                # failure.
-                return false
                 
             # -- look for display limits -- #
             

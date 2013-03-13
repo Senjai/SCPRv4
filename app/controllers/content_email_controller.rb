@@ -3,7 +3,6 @@ class ContentEmailController < ApplicationController
   before_filter :get_content
 
   def new
-    # initialize email sharing form
     @message = ContentEmail.new
   end
 
@@ -24,6 +23,6 @@ class ContentEmailController < ApplicationController
   protected
 
   def get_content
-    @content = ContentBase.obj_by_key(params[:obj_key]) || raise_404
+    @content = ContentBase.obj_by_key!(params[:obj_key])
   end
 end

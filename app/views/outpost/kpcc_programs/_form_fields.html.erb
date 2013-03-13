@@ -1,5 +1,5 @@
 <%= form_block "Basic Information" do %>
-  <%= f.input :title %>
+  <%= f.input :title, input_html: { class: "sluggable" } %>
   <%= f.section "slug" %>
   <%= f.input :teaser, as: :string, hint: "Shown on summary/list pages that reference the program. Keep it to a sentence or so.", input_html: { class: "wide" } %>
   <%= f.input :description, hint: "Shown on the program's page. Be as descriptive as you like (hosts, topics, staff, etc.)", input_html: { class: "tiny" } %>

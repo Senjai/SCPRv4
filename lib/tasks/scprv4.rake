@@ -220,34 +220,6 @@ namespace :scprv4 do
       NewRelic.with_manual_agent do
         worker.work()
       end
-    end
-  
-    #----------
-  
-    desc "Start an assethost listener"
-    task :assets => [ :environment ] do 
-      require 'asset_worker'
-    
-      begin
-        worker = AssetWorker.new()
-        worker.verbose = ENV['LOGGING'] || ENV['VERBOSE']
-      rescue
-        abort "Failed to launch AssetWorker!"
-      end
-    
-      if ENV['BACKGROUND']
-        Process.daemon(true)
-      end
-    
-      if ENV['PIDFILE']
-        File.open(ENV['PIDFILE'], 'w') { |f| f << worker.pid }
-      end
-    
-      worker.log "Starting worker #{worker}"
-
-      NewRelic.with_manual_agent do
-        worker.work()
-      end
-    end
+    end  
   end
 end

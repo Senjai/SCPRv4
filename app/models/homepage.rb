@@ -8,6 +8,7 @@ class Homepage < ActiveRecord::Base
   include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   

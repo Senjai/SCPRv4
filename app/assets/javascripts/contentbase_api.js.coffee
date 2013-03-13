@@ -124,7 +124,7 @@ class scpr.ContentBaseAPI
                 if !_(@el).first()
                     console.log "Element invalid."
                     return false
-                    
+
                 console.log "form html was ", @el.clone()
 
                 # read in existing django-admin forms
@@ -233,7 +233,7 @@ class scpr.ContentBaseAPI
         objKeyToDjango: (obj_key) ->
             [ctype,id] = obj_key.split(":")
 
-            return [ContentBaseAPI.ContentTypeToDjango[ctype],id]
+            [ContentBaseAPI.ContentTypeToDjango[ctype],id]
 
         #----------
 
@@ -397,7 +397,6 @@ class scpr.ContentBaseAPI
     
             if !_(@el).first()
                 console.log "Element invalid."
-                return false
             
             # create our collection via the given API function
             @contents = new ContentBaseAPI.ContentCollection()
@@ -465,7 +464,7 @@ class scpr.ContentBaseAPI
             # make sure all of our view elements are added
             @$el.append( _(@_views).map (v) -> v.el )
 
-            return @
+            @
             
     #----------
     
@@ -567,5 +566,4 @@ class scpr.ContentBaseAPI
                         value:  "on"
             
             # and return the div
-            return div
-                    
+            div

@@ -34,7 +34,7 @@ class ProgramsController < ApplicationController
               # don't include the current episodes segments in the segments list
               @segments = @segments.where("id not in (?)", @current_episode.segments.published.collect(&:id) )
             end
-          end        
+          end
         end
       end
       
@@ -110,7 +110,7 @@ class ProgramsController < ApplicationController
     @program = KpccProgram.find_by_slug(params[:show]) || OtherProgram.find_by_slug(params[:show])
     
     if !@program
-      raise ActionController::RoutingError.new("Not Found")
+      raise_404
     end
   end
 

@@ -25,6 +25,20 @@
     }
   }
   
+  .drop-zone {
+    max-height: 500px;
+    overflow: auto;
+  }
+
+  .content-list, .help-content {
+    max-height: 455px;
+    overflow: auto;
+  }
+
+  .help-content {
+    padding-right: 10px;
+  }
+
   .drop-zone, .content-list {
     min-height: 200px;
     @extend .unstyled;

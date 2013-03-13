@@ -10,36 +10,32 @@ $ ->
 #
 class scpr.AutoSlugField
     DefaultOptions:
-        titleAttributes: ["headline", "name", "title"]
-        maxLength:       50
+        titleClass: ".sluggable"
+        maxLength:  50
     
     constructor: (options={}) ->
         @options = _.defaults options, @DefaultOptions
-        
-        # Setup Attributes
-        @slugField  = $ @options.field
-        @titleAttrs = @options.titleAttributes
-        
-        # Loop through title attributes and find the first one that matches
-        for attr in @titleAttrs
-            @titleField = $ @slugField.closest("form").find("input[name*='[#{attr}]']")[0]
-            break if !_.isEmpty(@titleField)
-        
-        # If there's no title field, then there's no 
-        # point in doing anything else.
-        return if !@titleField
-        
-        @maxLength  = @options.maxLength
-        @button     = $ JST['admin/templates/slug_generate_button']()
 
-        # If we found a matching field, 
-        # render the generate button and add it after the slug field
-        @slugField.after(@button)
-        @button.on
-            click: (event) =>
-                @updateSlug(@titleField.val())
-                event.preventDefault()
-                
+        # Find the sluggable title field - if it doesn't 
+        # exist then we can't auto-generate a slug
+        @titleField = $(@options.titleClass)[0]
+
+        if @titleField
+            @slugField  = $ @options.field
+            @maxLength  = @options.maxLength
+            @button     = $ JST['admin/templates/slug_generate_button']()
+
+            # If we found a matching field, 
+            # render the generate button and add it after the slug field
+            @slugField.after(@button)
+            @button.on
+                click: (event) =>
+                    @updateSlug($(@titleField).val())
+                    event.preventDefault()
+                    false
+
+        true
+
     #------------------
     
     updateSlug: (value) ->

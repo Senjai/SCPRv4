@@ -40,7 +40,7 @@
       
       <!-- Help Tab -->
       <div class="tab-pane<%= ' active' if @active is 'help' %>" id="aggregator-help">
-        <ul>
+        <ul class="help-content">
           <li>The gray area on the left is referred to as the "<strong>Drop Zone</strong>" in this document.</li>
           <hr />
 
