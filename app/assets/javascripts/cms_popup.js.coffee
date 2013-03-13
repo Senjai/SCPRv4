@@ -7,22 +7,22 @@ window.openCMS = (newWin) ->
     res = [
             { 
                 re: new RegExp "^/blogs/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/?$", "gi"
-                cmsPath: "/r/admin/blog_entries" 
+                cmsPath: "/outpost/blog_entries" 
                 idSlot: 5
             },
             { 
                 re: new RegExp "^/programs/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/?$", "gi"
-                cmsPath: "/r/admin/show_segments" 
+                cmsPath: "/outpost/show_segments" 
                 idSlot: 5
             },
             { 
                 re: new RegExp "^/news/(.+)/(.+)/(.+)/(.+)/(.+)/?$", "gi"
-                cmsPath: "/r/admin/news_stories"
+                cmsPath: "/outpost/news_stories"
                 idSlot: 4
             },
             { 
                 re: new RegExp "^/video/(.+)/(.+)/?$", "gi"
-                cmsPath: "/r/admin/video_shells"
+                cmsPath: "/outpost/video_shells"
                 idSlot: 1
             }
         ]
