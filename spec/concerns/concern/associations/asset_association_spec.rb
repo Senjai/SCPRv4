@@ -27,8 +27,10 @@ describe Concern::Associations::AssetAssociation do
       record = create :test_class_story
       asset = create :asset, caption: "Hello", asset_id: 999, asset_order: 4
       record.assets << asset
+      record.save!
 
       record.asset_json.should eq [asset.simple_json].to_json
+      record.assets.should eq [asset]
     end
   end
 

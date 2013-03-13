@@ -6,8 +6,10 @@ describe Concern::Associations::ContentAssociation do
       post  = create :test_class_post
       story = create :test_class_story
       content = post.content.build(content: story, position: 0)
+      post.save!
 
       post.content_json.should eq [content.simple_json].to_json
+      post.content.should eq [content]
     end
   end
 

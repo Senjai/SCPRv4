@@ -14,7 +14,7 @@ module Concern
       # Keep this in sync with ContentAPI's simpleJSON method
       def simple_json
         {
-          "id"       => self.id,
+          "id"       => self.content.obj_key, # TODO Store this in join table
           "position" => self.position.to_i
         }
       end
