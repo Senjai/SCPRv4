@@ -23,11 +23,11 @@
     </div>
     <div class="span10">
       <div class="section sponsored-events">
-        <h6>Sponsored Events</h6>     
+        <h6>Sponsored Events</h6>
         <% content_cache("events:upcoming_sponsored") do %>
           <% register_content "events/event:new" %>
           <ul class="cbase">
-            <% @g_upcoming_events_sponsored.first(3).each do |event| %>
+            <% @upcoming_events_sponsored.each do |event| %>
               <% register_content event %>
               <li>
                 <h4><%= link_to event.headline, event.link_path %></h4>

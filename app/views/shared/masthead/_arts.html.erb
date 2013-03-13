@@ -42,10 +42,10 @@
   
     <div class="span10">
       <div class="section">
-        <h6>From Our Blogs</h6>     
+        <h6>From Our Blogs</h6>
         <% content_cache("mega_arts_blogs") do %>
           <% register_content("blogs/entry:new") %>
-          <%= render "/shared/masthead/from_our_blogs", content: @g_latest_blogs_arts.limit(3) %>
+          <%= render "/shared/masthead/from_our_blogs", content: @latest_blogs_arts %>
         <% end %>
       </div> <!-- section -->
     </div> <!-- span -->

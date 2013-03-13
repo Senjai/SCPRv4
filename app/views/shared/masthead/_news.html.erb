@@ -47,7 +47,7 @@
         <h6>From Our Blogs</h6>     
         <% content_cache("mega_news_blogs") do %>
           <% register_content("blogs/entry:new") %>
-          <%= render "/shared/masthead/from_our_blogs", content: @g_latest_blogs_news.limit(3) %>
+          <%= render "/shared/masthead/from_our_blogs", content: @latest_blogs_news %>
         <% end %>
       </div> <!-- section -->
     </div> <!-- span -->

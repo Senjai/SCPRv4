@@ -2,7 +2,7 @@
   <% register_content "events/event:new" %>
   <div class="events-forum">
     <h6>Events at the Crawford Family Forum</h6>
-    <% @g_upcoming_events_forum.first(2).each do |event| %>
+    <% @upcoming_events_forum.each do |event| %>
       <% register_content event %>
       <div class="span12 cbase">
         <div class="event future">

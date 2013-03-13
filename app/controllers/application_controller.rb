@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Concern::Controller::CustomErrors
   
   protect_from_forgery
-  before_filter :set_up_finders
+  before_filter :get_content_for_masthead
   before_filter :add_params_for_newrelic
 
   def add_params_for_newrelic
@@ -21,13 +21,11 @@ class ApplicationController < ActionController::Base
     
   private
 
-  def set_up_finders
-    @g_upcoming_events_forum = Event.published.upcoming.forum.limit(4)
-    @g_upcoming_events_sponsored = Event.published.upcoming.sponsored
-  
-    # FIXME: Isn't there a way to do this without hardcoding the table name in the where clause?
-    @g_latest_blogs_news = BlogEntry.published.joins(:blog).where("blogs_blog.is_news = true").order("published_at desc")
-    @g_latest_blogs_arts = BlogEntry.published.joins(:blog).where("blogs_blog.is_news = false").order("published_at desc")
+  def get_content_for_masthead
+    @upcoming_events_forum      = Event.published.upcoming.forum.limit(2)
+    @upcoming_events_sponsored  = Event.published.upcoming.sponsored.limit(3)
+    @latest_blogs_news          = BlogEntry.published.joins(:blog).where(Blog.table_name => { is_news: true }).limit(3)
+    @latest_blogs_arts          = BlogEntry.published.joins(:blog).where(Blog.table_name => { is_news: false }).limit(3)
   end
 
   #----------
