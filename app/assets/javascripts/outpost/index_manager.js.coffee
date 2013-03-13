@@ -21,7 +21,7 @@ class scpr.IndexManager
 #
 class scpr.QuickEditCell
     defaults:
-        formTemplate:   JST["admin/templates/data_field"]
+        formTemplate:   JST["outpost/templates/data_field"]
         attribute:      "data-attribute"
         id:             "data-id"
         highlightColor: "#dff0d8"

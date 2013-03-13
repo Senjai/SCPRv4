@@ -23,7 +23,7 @@ class scpr.AutoSlugField
         if @titleField
             @slugField  = $ @options.field
             @maxLength  = @options.maxLength
-            @button     = $ JST['admin/templates/slug_generate_button']()
+            @button     = $ JST['outpost/templates/slug_generate_button']()
 
             # If we found a matching field, 
             # render the generate button and add it after the slug field

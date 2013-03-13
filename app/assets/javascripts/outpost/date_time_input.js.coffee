@@ -24,8 +24,8 @@ class scpr.DateTimeInput
     
     DefaultOptions:
         time:          true
-        dateTemplate:  JST["admin/templates/date_field"]
-        timeTemplate:  JST["admin/templates/time_field"]
+        dateTemplate:  JST["outpost/templates/date_field"]
+        timeTemplate:  JST["outpost/templates/time_field"]
         timestampEls:  ".timestamp-el"
         populateIcons: "span.populate"
         controls:      "div.controls"

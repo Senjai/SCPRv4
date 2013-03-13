@@ -45,7 +45,7 @@ module Scprv4
 
     # For testing purposes
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-    config.assets.precompile += %w( shared.js admin/admin.css admin/admin.js base/print.css contentbase_api.js cbaseapi.css )
+    config.assets.precompile += %w( shared.js outpost/outpost.css outpost/outpost.js base/print.css contentbase_api.js cbaseapi.css )
 
     config.scpr      = ActiveSupport::OrderedOptions.new
     config.assethost = ActiveSupport::OrderedOptions.new

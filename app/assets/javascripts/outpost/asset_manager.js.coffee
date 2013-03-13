@@ -37,7 +37,7 @@ class scpr.AssetManager
     
     @Asset: Backbone.View.extend
         tagName: "li"
-        template: JST['admin/templates/asset']
+        template: JST['outpost/templates/asset']
         
         #----------
         
@@ -113,7 +113,7 @@ class scpr.AssetManager
         #----------
         # Render the full view. This should only be called once.
         render: ->
-            @$el.html JST['admin/templates/asset_manager']
+            @$el.html JST['outpost/templates/asset_manager']
             @collectionEl = $(".collection", @$el)
             @emptyNotification = new scpr.Notification(
                 @collectionEl, 

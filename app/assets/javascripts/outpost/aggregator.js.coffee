@@ -48,7 +48,7 @@ class scpr.Aggregator
         #----------------------------------
         # The skeleton for the the different pieces!
         class @Base extends Backbone.View
-            template: JST['admin/templates/aggregator/base']
+            template: JST['outpost/templates/aggregator/base']
             defaults:
                 active: "recent"
                     
@@ -96,7 +96,7 @@ class scpr.Aggregator
         # The drop-zone!
         # Gets filled with ContentFull views
         class @DropZone extends Backbone.View
-            template: JST['admin/templates/aggregator/drop_zone']
+            template: JST['outpost/templates/aggregator/drop_zone']
             container: "#aggregator-dropzone"
             tagName: 'ul'
             attributes:
@@ -437,8 +437,8 @@ class scpr.Aggregator
         # An abstract class from which the different
         # collection views should inherit
         class @ContentList extends Backbone.View
-            paginationTemplate: JST["admin/templates/aggregator/_pagination"]
-            errorTemplate: JST["admin/templates/aggregator/error"]
+            paginationTemplate: JST["outpost/templates/aggregator/_pagination"]
+            errorTemplate: JST["outpost/templates/aggregator/error"]
             events: 
                 "click .pagination a": "changePage"
             
@@ -624,7 +624,7 @@ class scpr.Aggregator
         class @RecentContent extends @ContentList
             container: "#aggregator-recent-content"
             resultsId: "#aggregator-recent-content-results"
-            template: JST['admin/templates/aggregator/recent_content']
+            template: JST['outpost/templates/aggregator/recent_content']
             
             #---------------------
             # Need to populate right away for Recent Content
@@ -657,7 +657,7 @@ class scpr.Aggregator
         class @Search extends @ContentList
             container: "#aggregator-search"
             resultsId: "#aggregator-search-results"
-            template: JST["admin/templates/aggregator/search"]
+            template: JST["outpost/templates/aggregator/search"]
             events:
                 "click .pagination a" : "changePage"
                 "click a.btn"         : "search"
@@ -697,7 +697,7 @@ class scpr.Aggregator
         class @URL extends @ContentList
             container: "#aggregator-url"
             resultsId: "#aggregator-url-results"
-            template: JST["admin/templates/aggregator/url"]
+            template: JST["outpost/templates/aggregator/url"]
             events:
                 "click a.btn" : "importUrl"
                 "keyup input" : "importUrlIfKeyIsEnter"
@@ -771,7 +771,7 @@ class scpr.Aggregator
             #---------------------
 
             render: ->
-                @$el.html JST["admin/templates/aggregator/#{@options.template}"](content: @model.toJSON(), opts: @viewOptions)
+                @$el.html JST["outpost/templates/aggregator/#{@options.template}"](content: @model.toJSON(), opts: @viewOptions)
 
         #----------------------------------
         # A single piece of content in the drop zone!

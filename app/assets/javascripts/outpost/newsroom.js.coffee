@@ -4,8 +4,8 @@
 # Client for the Newsroom.js Node server
 #
 class scpr.Newsroom
-    @templates =
-        badge: JST["admin/templates/badge"]
+    @templates:
+        badge: JST["outpost/templates/badge"]
     
     #-----------------
     # Alerts/Errors
@@ -84,7 +84,7 @@ class scpr.Newsroom
         return @alerts['empty'].render() if _.isEmpty users
 
         ul = $("<ul/>")
-                        
+
         for id, user of users
             badge = $ scpr.Newsroom.templates.badge(user: user)
             ul.append badge
