@@ -197,15 +197,6 @@ Scprv4::Application.routes.draw do
   end
   #------------------
   
-  concern :search do
-    get "search", on: :collection, as: :search
-  end
-
-  concern :preview do
-    put "preview", on: :member
-    post "preview", on: :collection
-  end
-
   scope "r" do
     namespace :admin do
       root to: 'home#index'
@@ -214,48 +205,141 @@ Scprv4::Application.routes.draw do
       get 'logout' => "sessions#destroy", as: :logout
       resources :sessions, only: [:create, :destroy]
             
-      ## -- Outpost -- ##      
-      resources :admin_users, concerns: [:search] do
+      ## -- Outpost -- ##
+      resources :recurring_schedule_slots do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :permissions
+      
+      resources :admin_users do
+        get "search", on: :collection, as: :search
         get "activity", on: :member, as: :activity
       end
       
-      resources :recurring_schedule_slots, concerns: [:search]
-      resources :podcasts, concerns: [:search]
-      resources :breaking_news_alerts, concerns: [:search]
-      resources :featured_comment_buckets, concerns: [:search]
-      resources :categories, concerns: [:search]
-      resources :missed_it_buckets, concerns: [:search]
-      resources :promotions, concerns: [:search]
-      resources :sections, concerns: [:search]
-      resources :other_programs, concerns: [:search]
-      resources :kpcc_programs, concerns: [:search]
-      resources :video_shells,concerns: [:search]
-      resources :blogs, concerns: [:search]
-      resources :content_shells, concerns: [:search]
-      resources :featured_comments, concerns: [:search]
-      resources :data_points, concerns: [:search]
-      resources :show_episodes, concerns: [:search]
-      resources :bios, concerns: [:search]
-      resources :press_releases, concerns: [:search]
+      resources :podcasts do
+        get "search", on: :collection, as: :search
+      end
+            
+      resources :breaking_news_alerts do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :featured_comment_buckets do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :categories do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :missed_it_buckets do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :promotions do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :sections do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :other_programs do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :kpcc_programs do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :video_shells do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :blogs do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :content_shells do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :featured_comments do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :data_points do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :show_episodes do
+        get "search", on: :collection, as: :search
+      end
 
-      resources :homepages, concerns: [:search, :preview]
-      resources :pij_queries, concerns: [:search, :preview]
-      resources :flatpages, concerns: [:search, :preview]
-      resources :show_segments, concerns: [:search, :preview]
-      resources :news_stories, concerns: [:search, :preview]
-      resources :blog_entries, concerns: [:search, :preview]
-      resources :events, concerns: [:search, :preview]
+      resources :bios do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :press_releases do
+        get "search", on: :collection, as: :search
+      end
+      
+      resources :homepages do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member
+        post "preview", on: :collection
+      end
+      
+      resources :pij_queries do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member
+        post "preview", on: :collection
+      end
+
+      resources :flatpages do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member
+        post "preview", on: :collection
+      end
+
+      resources :show_segments do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member
+        post "preview", on: :collection
+      end
+      
+      resources :news_stories do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member
+        post "preview", on: :collection
+      end
+      
+      resources :blog_entries do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member
+        post "preview", on: :collection
+      end
+      
+      resources :events do
+        get "search", on: :collection, as: :search
+        put "preview", on: :member
+        post "preview", on: :collection
+      end
       ## -- END Outpost --  ##
       
-      resources :tickets, concerns: [:search]
+      resources :tickets do
+        get "search", on: :collection, as: :search
+      end
       
-      resources :npr_stories, only: [:index], concerns: [:search] do
+      resources :npr_stories, only: [:index] do
         member do
           post "import", as: :import
           put "skip", as: :skip
         end
         
         collection do
+          get "search", as: :search
           post "sync", as: :sync
         end
       end
