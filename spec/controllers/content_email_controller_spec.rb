@@ -22,8 +22,8 @@ describe ContentEmailController do
     end
     
     it "raises 404 if content isnt found" do
-      -> { get :new }.should raise_error ActionController::RoutingError
-      -> { get :new, obj_key: "wrong" }.should raise_error ActionController::RoutingError
+      -> { get :new }.should raise_error ActiveRecord::RecordNotFound
+      -> { get :new, obj_key: "wrong" }.should raise_error ActiveRecord::RecordNotFound
     end
   end
   
