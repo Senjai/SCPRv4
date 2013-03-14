@@ -57,11 +57,11 @@ Scprv4::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
   
-  default_url_options[:host] = "scpr.org"
-
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
+  default_url_options[:host] = "www.scpr.org"
+
   config.scpr.host         = "www.scpr.org"
   config.scpr.media_root   = "/home/kpcc/media"
   config.scpr.media_url    = "http://media.scpr.org"
