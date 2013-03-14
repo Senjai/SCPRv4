@@ -4,7 +4,8 @@ class AdminUser < ActiveRecord::Base
   self.table_name = "auth_user"
   outpost_model
   has_secretary
-  
+  has_secure_password
+
   # ----------------
   # Scopes
   scope :active, -> { where(is_active: true) }
@@ -13,9 +14,7 @@ class AdminUser < ActiveRecord::Base
   # Association
   has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
   has_one  :bio, foreign_key: "user_id"
-  has_many :admin_user_permissions
-  has_many :permissions, through: :admin_user_permissions
-  
+
   # ------------------
   # Validation
 
@@ -43,6 +42,8 @@ class AdminUser < ActiveRecord::Base
       if user = find_by_username(username)
         algorithm, salt, hash = user.password.split('$')
         if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
+          user.password = unencrypted_password
+          user.save
           return user
         else
           return false
@@ -58,21 +59,7 @@ class AdminUser < ActiveRecord::Base
       AdminUser.order("last_name").map { |u| [u.to_title, u.id] }
     end
   end
-  
-  #----------------
-  # Check if a user can manage the passed-in resource(s)
-  #
-  # If multiple resources are passed in, a user must be
-  # allowed to manage ALL of them in order for this to
-  # return true.
-  #
-  # Constants must be passed in.
-  #
-  def can_manage?(*resources)
-    self.is_superuser? or (allowed_resources & resources) == resources
-  end
 
-  
   # ----------------
   
   def json
@@ -100,15 +87,6 @@ class AdminUser < ActiveRecord::Base
     self.first_name = name[0]
     self.last_name = name[1]
     @name = name
-  end
-
-  # ----------------
-  
-  def allowed_resources
-    @allowed_resources ||= begin
-      p = self.is_superuser? ? Permission.all : self.permissions
-      p.map { |p| p.resource.constantize }
-    end
   end
   
   # ----------------
