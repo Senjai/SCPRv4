@@ -34,6 +34,7 @@ describe Concern::Associations::RelatedContentAssociation do
       related = Related.create(content: story1, related: story2, position: 0)
 
       story1.related_content_json.should eq [related.simple_json].to_json
+      story1.outgoing_references.map(&:related).should eq [story2]
     end
   end
 
