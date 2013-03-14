@@ -4,18 +4,6 @@ class Outpost::BaseController < Outpost::ApplicationController
   before_filter :set_sections
   before_filter :setup_tickets
   before_filter :set_current_homepage
-  
-  #------------------------
-  
-  helper_method :admin_user
-  def admin_user
-    begin
-      @admin_user ||= AdminUser.where(is_staff: true).find(session['_auth_user_id'])
-    rescue ActiveRecord::RecordNotFound
-      session['_auth_user_id'] = nil
-      @admin_user              = nil
-    end
-  end
 
   #------------------------
   
