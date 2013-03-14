@@ -21,7 +21,7 @@ class scpr.FieldManager
                 target = $(@)
                 time   = new Date().getTime()
                 regexp = new RegExp(target.data('id'), 'g')
-                fields = target.data('fields').trim().replace(regexp, time)
+                fields = $(target.data('fields').trim().replace(regexp, time))
                 
                 if buildTarget = target.data('build-target')
                     $(buildTarget).append fields
