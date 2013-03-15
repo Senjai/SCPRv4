@@ -44,6 +44,6 @@ class Outpost::FlatpagesController < Outpost::ResourceController
   def layout_template
     template = ::FlatpagesController::TEMPLATE_MAP[@flatpage.template]
     template = "application" if template.nil?
-    template ? "admin/preview/#{template}" : false
+    template ? "outpost/preview/#{template}" : false
   end
 end
