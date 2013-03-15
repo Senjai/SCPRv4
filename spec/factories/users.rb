@@ -19,31 +19,12 @@ FactoryGirl.define do
   #---------------------------
   
   factory :admin_user, aliases: [:user] do
-    # To be removed:
-    sequence(:first_name) { |n| "Bryan #{n}" }
-    last_name   "Ricker"
-    username { "#{first_name} #{last_name}".parameterize }
-    password    "sha1$vxA3aP5quIgd$aa7c53395bf8d6126c02ec8ef4e8a9b784c9a2f7" # `secret`, salted & digested
-    date_joined { Time.now }
-    #
-
+    name "Bryan Ricker"
+    password "secret"
     last_login { Time.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
 
-    is_staff 1
-    is_active 1
+    can_login 1
     is_superuser 1
-
-    trait :staff_user do
-      is_staff     1
-      is_active    1
-      is_superuser 0
-    end
-
-    trait :superuser do
-      is_staff     1
-      is_active    1
-      is_superuser 1
-    end
   end
 end

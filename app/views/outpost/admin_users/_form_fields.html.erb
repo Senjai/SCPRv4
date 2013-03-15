@@ -1,10 +1,8 @@
 <%= form_block "Details" do %>
   <%= f.input :name %>
-  <%= f.input :username, hint: "This will be automatically generated if left blank." %>
+  <%= f.input :username, hint: "This will be automatically generated if left blank." if record.new_record? %>
   <%= f.input :email %>
 <% end %>
-
-<div class="alert alert-info">Please manage your password in the old CMS for now. <a href="http://scpr.org/admin/auth/user/<%=params[:id]%>/password">Click Here to change your password.</a></div>
 
 <%= form_block "Permissions" do %>
   <% if current_user.is_superuser? %>
@@ -14,16 +12,15 @@
     <%= f.association :permissions,
         hint: "Which resources can this user manage?<br />" \
         "Selecting a resource gives this user the ability to <br />" \
-        "Create, Read, Update, and Delete *any* of those records." %>
+        "Create, Update, and Delete *any* of those records." %>
   <% else %>
-    <% if record.permissions.blank? %>
-      You have no permissions.
-    <% else %>
+    <%= any_to_list? record.permissions, message: "You have no permissions" do %>
+      <strong>You have permission to manage the following:</strong>
       <ul>
         <% record.permissions.each do |permission| %>
-          <li><%= permission %></li>
+          <li><%= permission.title.pluralize %></li>
         <% end %>
       </ul>
-    <% end %>
+    <% end >
   <% end %>
 <% end %>

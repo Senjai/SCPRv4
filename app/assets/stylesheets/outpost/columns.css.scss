@@ -64,12 +64,16 @@ table {
     ///////////////////
     // AdminUser
     &.list-admin_users {
-        .column-first_name, .column-last_name { // admin_user.first_name admin_user.last_name
-            width: 170px;
+        .column-name { // admin_user.name
+            width: 340px;
         }
 
         .column-username { // admin_user.username
             width: 120px;
+        }
+
+        .column-can_login { // admin_user.can_login
+            width: $booleanWidth + 20px;
         }
     }
 

@@ -10,7 +10,6 @@ class AdminUser < ActiveRecord::Base
 
   # ----------------
   # Scopes
-  scope :active, -> { where(is_active: true) }
   
   # ----------------
   # Association
@@ -23,8 +22,7 @@ class AdminUser < ActiveRecord::Base
   
   define_index do
     indexes username
-    indexes first_name
-    indexes last_name, sortable: true
+    indexes name, sortable: true
   end
 
   # ----------------
@@ -37,7 +35,7 @@ class AdminUser < ActiveRecord::Base
     # ----------------
     
     def select_collection
-      AdminUser.order("last_name").map { |u| [u.to_title, u.id] }
+      AdminUser.order("name").map { |u| [u.to_title, u.id] }
     end
   end
 

@@ -3,6 +3,9 @@ class ChangeAdminUserTable < ActiveRecord::Migration
     rename_column :auth_user, :password, :old_password
     rename_column :auth_user, :is_staff, :can_login
 
+    add_index :auth_user, [:username, :can_login]
+    remove_index :auth_user, name: "username"
+
     add_column :auth_user, :password_digest, :string
     add_column :auth_user, :name, :string
 

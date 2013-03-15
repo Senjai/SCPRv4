@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(:version => 20130315185244) do
     t.string   "name"
   end
 
-  add_index "auth_user", ["username"], :name => "username", :unique => true
+  add_index "auth_user", ["username", "can_login"], :name => "index_auth_user_on_username_and_can_login"
 
   create_table "auth_user_groups", :force => true do |t|
     t.integer "user_id",  :null => false
