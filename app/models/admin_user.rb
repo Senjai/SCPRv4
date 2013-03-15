@@ -4,6 +4,7 @@ class AdminUser < ActiveRecord::Base
   self.table_name = 'auth_user'
   
   include Outpost::Model::Authentication
+  include Outpost::Model::Authorization
   outpost_model
   has_secretary
 
@@ -29,8 +30,8 @@ class AdminUser < ActiveRecord::Base
   # ----------------
   
   class << self
-    def authenticate(email, unencrypted_password)
-      self.find_by_email(email).try(:authenticate, unencrypted_password)
+    def authenticate(username, unencrypted_password)
+      self.find_by_username(username).try(:authenticate, unencrypted_password)
     end
 
     # ----------------
