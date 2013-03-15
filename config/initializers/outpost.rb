@@ -73,6 +73,7 @@ Outpost::Config.configure do |config|
     "PressRelease"
   ]
   
+  config.user_class            = "AdminUser"
   config.title_attributes      = [:name, :short_headline, :title, :headline]
   config.excluded_form_fields  = ["django_content_type_id"]
   config.excluded_list_columns = ["body", "django_content_type_id"]
