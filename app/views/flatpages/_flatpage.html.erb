@@ -1,6 +1,7 @@
-<% content_for :head_tag, flatpage.extra_head.html_safe %>
+<% unless flatpage.template == "none" %>
+    <% content_for :head_tag, flatpage.extra_head.html_safe %>
+    <% content_for :footer, flatpage.extra_tail.html_safe %>
+    <h1><%= flatpage.title %></h1>
+<% end %>
 
-<h1><%= flatpage.title %></h1>
-<%= @flatpage.content.html_safe %><br />
-
-<% content_for :footer, flatpage.extra_tail.html_safe %>
+<%= flatpage.content.html_safe %>
