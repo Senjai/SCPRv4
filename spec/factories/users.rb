@@ -20,6 +20,7 @@ FactoryGirl.define do
   
   factory :admin_user, aliases: [:user] do
     name "Bryan Ricker"
+    old_password '$2a$10$HSJMxubR06Ap.xKmxiPpf.Kbbl/lgHadoVB.wynnEfte7b4BY4bDy'
     password "secret"
     last_login { Time.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
