@@ -72,9 +72,9 @@ ActiveRecord::Schema.define(:version => 20130315185244) do
   create_table "auth_user", :force => true do |t|
     t.string   "username"
     t.string   "email"
-    t.string   "old_password",    :limit => 128, :null => false
-    t.boolean  "can_login",                      :null => false
-    t.boolean  "is_superuser",                   :null => false
+    t.string   "old_password"
+    t.boolean  "can_login",       :null => false
+    t.boolean  "is_superuser",    :null => false
     t.datetime "last_login"
     t.datetime "created_at"
     t.datetime "updated_at"

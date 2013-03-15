@@ -12,7 +12,8 @@ class ChangeAdminUserTable < ActiveRecord::Migration
     change_column :auth_user, :email, :string, null: true
     change_column :auth_user, :username, :string, null: true
     change_column :auth_user, :last_login, :datetime, null: true
-
+    change_column :auth_user, :old_password, :string, null: true
+    
     AdminUser.all.each do |user|
       if user.first_name.blank? && user.last_name.blank?
         user.name = "KPCC Employee"
