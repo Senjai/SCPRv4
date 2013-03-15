@@ -7,9 +7,8 @@
 <div class="alert alert-info">Please manage your password in the old CMS for now. <a href="http://scpr.org/admin/auth/user/<%=params[:id]%>/password">Click Here to change your password.</a></div>
 
 <%= form_block "Permissions" do %>
-  <% if admin_user.is_superuser? %>
-    <%= f.input :is_staff, hint: "May this user login to the CMS?" %>
-    <%= f.input :is_active %>
+  <% if current_user.is_superuser? %>
+    <%= f.input :can_login, hint: "May this user login to the CMS?" %>
     <%= f.input :is_superuser %>
   
     <%= f.association :permissions,
