@@ -618,12 +618,13 @@ $navHeight: 36px;
     @include font-headline();
     font-size:18px;
     font-weight:600;
-    margin-bottom:$baseline;
     vertical-align:text-bottom;
     .inner-container {
         padding:6px 6px;
         a {
             color:$white;
+            display:inline-block;
+            max-width:800px;
         }
         strong {
             background-color:$gray;
@@ -635,6 +636,7 @@ $navHeight: 36px;
             padding:3px 6px;
             text-shadow:0 1px 0 rgba(0,0,0,0.35);
             text-transform:uppercase;
+            vertical-align:top;
         }
         .newsletter-sign-up {
           background:url(image_path('icons/newsletter-subscribe-white.png')) no-repeat 4px 3px;
