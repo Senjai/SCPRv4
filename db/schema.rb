@@ -11,17 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130315012353) do
-
-  create_table "admin_user_permissions", :force => true do |t|
-    t.integer  "admin_user_id"
-    t.integer  "permission_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "admin_user_permissions", ["admin_user_id"], :name => "index_admin_user_permissions_on_admin_user_id"
-  add_index "admin_user_permissions", ["permission_id"], :name => "index_admin_user_permissions_on_permission_id"
+ActiveRecord::Schema.define(:version => 20130315185244) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id"
@@ -895,6 +885,16 @@ ActiveRecord::Schema.define(:version => 20130315012353) do
 
   add_index "tickets", ["status"], :name => "index_tickets_on_status"
   add_index "tickets", ["user_id"], :name => "index_tickets_on_user_id"
+
+  create_table "user_permissions", :force => true do |t|
+    t.integer  "admin_user_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "user_permissions", ["admin_user_id"], :name => "index_admin_user_permissions_on_admin_user_id"
+  add_index "user_permissions", ["permission_id"], :name => "index_admin_user_permissions_on_permission_id"
 
   create_table "users_userprofile", :force => true do |t|
     t.integer  "userid",                    :null => false
