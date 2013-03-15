@@ -1,6 +1,8 @@
 require 'digest/sha1'
 
 class AdminUser < ActiveRecord::Base
+  self.table_name = 'auth_user'
+  
   include Outpost::Model::Authentication
   outpost_model
   has_secretary
@@ -58,29 +60,13 @@ class AdminUser < ActiveRecord::Base
     end
   end
 
-  # ----------------
-  # Getter and Setter for name
-  # Should eventually be stored in database
-  def name
-    @name ||= begin
-      name = [first_name, last_name].join(" ")
-      name.present? ? name : "Anonymous"
-    end
-  end
-  
-  def name=(name)
-    split_name = name.split(" ", 2)
-    self.first_name = name[0]
-    self.last_name = name[1]
-    @name = name
-  end
-
   private
 
   def authenticate_legacy(unencrypted_password)
     algorithm, salt, hash = self.old_password.split('$')
     if hash.to_s == Digest::SHA1.hexdigest(salt.to_s + unencrypted_password)
       self.password = unencrypted_password
+      self.save
       self
     else
       false
