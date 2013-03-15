@@ -1,10 +1,9 @@
 require 'digest/sha1'
 
 class AdminUser < ActiveRecord::Base
-  self.table_name = "auth_user"
+  include Outpost::Model::Authentication
   outpost_model
   has_secretary
-  has_secure_password
 
   # ----------------
   # Scopes
@@ -14,13 +13,6 @@ class AdminUser < ActiveRecord::Base
   # Association
   has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
   has_one  :bio, foreign_key: "user_id"
-
-  # ------------------
-  # Validation
-
-  # ----------------
-  # Callbacks
-  before_save :digest_password, if: -> { unencrypted_password.present? }, on: :create
 
   # ----------------
   # Sphinx
@@ -32,24 +24,11 @@ class AdminUser < ActiveRecord::Base
     indexes last_name, sortable: true
   end
 
-  attr_accessor :unencrypted_password
-
   # ----------------
   
   class << self
-    def authenticate(username, unencrypted_password)
-      if user = find_by_username(username)
-        algorithm, salt, hash = user.password.split('$')
-        if hash == Digest::SHA1.hexdigest(salt + unencrypted_password)
-          user.password = unencrypted_password
-          user.save
-          return user
-        else
-          return false
-        end
-      else
-        return false
-      end
+    def authenticate(email, unencrypted_password)
+      self.find_by_email(email).try(:authenticate, unencrypted_password)
     end
 
     # ----------------
@@ -71,6 +50,14 @@ class AdminUser < ActiveRecord::Base
     }
   end
   
+  def authenticate(unencrypted_password)
+    if self.password_digest.present?
+      super
+    else
+      authenticate_legacy(unencrypted_password)
+    end
+  end
+
   # ----------------
   # Getter and Setter for name
   # Should eventually be stored in database
@@ -87,18 +74,16 @@ class AdminUser < ActiveRecord::Base
     self.last_name = name[1]
     @name = name
   end
-  
-  # ----------------
 
   private
 
-  # ----------------
-  # Setup the password digest like Mercer does
-  def digest_password
-    algorithm = "sha1"
-    salt = rand(36**8).to_s(36)[0..4]
-    hash = Digest::SHA1.hexdigest(salt + self.unencrypted_password)
-    self.password = [algorithm, salt, hash].join("$")
+  def authenticate_legacy(unencrypted_password)
+    algorithm, salt, hash = self.old_password.split('$')
+    if hash.to_s == Digest::SHA1.hexdigest(salt.to_s + unencrypted_password)
+      self.password = unencrypted_password
+      self
+    else
+      false
+    end
   end
-
 end
