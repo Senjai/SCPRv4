@@ -1,7 +1,12 @@
 <%= form_block "Details" do %>
   <%= f.input :name %>
-  <%= f.input :username, hint: "This will be automatically generated if left blank." if record.new_record? %>
+  <%= f.input :username, hint: ("This will be automatically generated if left blank." if record.new_record?) %>
   <%= f.input :email %>
+<% end %>
+
+<%= form_block record.new_record? ? "Password" : "Change Password" do %>
+  <%= f.input :password, label: ("New Password" if record.persisted?) %>
+  <%= f.input :password_confirmation %>
 <% end %>
 
 <%= form_block "Permissions" do %>
@@ -21,6 +26,6 @@
           <li><%= permission.title.pluralize %></li>
         <% end %>
       </ul>
-    <% end >
+    <% end %>
   <% end %>
 <% end %>
