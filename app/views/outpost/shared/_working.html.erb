@@ -17,7 +17,7 @@
   // for this room.
     newsroom = new scpr.Newsroom(
       "<%= room_info[:id] %>", // room ID
-      <%= j admin_user.to_json.html_safe %>, // user info
+      <%= j current_user.to_json.html_safe %>, // user info
       { "record": <%= j record.to_json.html_safe %> }
     );
     

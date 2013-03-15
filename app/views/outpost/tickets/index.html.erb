@@ -12,7 +12,7 @@
       <tr class="<%= model.singular_route_key.dasherize %>">
         <td class="column-manage">
           <%= link_to "Details", [:outpost, record], class: "btn" %>
-          <% if record.user == admin_user || admin_user.is_superuser? %>
+          <% if record.user == current_user || current_user.is_superuser? %>
             <%= link_to "Edit", record.admin_edit_path, class: "btn" %>
           <% end %>
         </td>

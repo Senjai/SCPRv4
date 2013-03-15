@@ -5,8 +5,8 @@ describe Outpost::HomepagesController do
     render_views 
     
     before :each do
-      @admin_user = create :admin_user
-      controller.stub(:admin_user) { @admin_user }
+      @current_user = create :admin_user
+      controller.stub(:current_user) { @current_user }
     end
     
     context "existing object" do

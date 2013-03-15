@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Dashboard::Api::ContentController do
   before :each do
-    controller.stub(:require_admin) { create :admin_user }
+    controller.stub(:require_login) { create :admin_user }
   end
 
   #--------------

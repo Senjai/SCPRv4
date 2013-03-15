@@ -26,7 +26,7 @@ class Outpost::TicketsController < Outpost::ResourceController
   # Users should always be able to update their
   # own tickets.
   def authorize_resource
-    if admin_user == @record.user or admin_user.is_superuser?
+    if current_user == @record.user or current_user.is_superuser?
       return true
     else
       redirect_to outpost_tickets_path, alert: "You don't have permission to edit that Ticket."
@@ -46,7 +46,7 @@ class Outpost::TicketsController < Outpost::ResourceController
   # Override this method so that we can inject the user
   def create
     @ticket = Ticket.new(params[:ticket])
-    @ticket.user = admin_user
+    @ticket.user = current_user
     
     if @ticket.save
       # Need to set the @record var so that we can 
