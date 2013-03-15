@@ -31,20 +31,19 @@ class Outpost::FlatpagesController < Outpost::ResourceController
           render '/outpost/shared/_notice', layout: "outpost/minimal", 
             locals: { message: "This flatpage will redirect to <strong>#{@flatpage.redirect_url}</strong>".html_safe }
         else
-          layout_template = begin
-            case @flatpage.template
-              when "full"  then 'outpost/preview/app_nosidebar'
-              when "forum" then 'outpost/preview/forum'
-              when "none"  then false
-              else 'outpost/preview/application'
-            end
-          end
-
           render "/flatpages/_flatpage", layout: layout_template, locals: { flatpage: @flatpage }
         end
       else
         render_preview_validation_errors(@flatpage)
       end
     end
+  end
+
+  private
+
+  def layout_template
+    template = ::FlatpagesController::TEMPLATE_MAP[@flatpage.template]
+    template = "application" if template.nil?
+    template ? "admin/preview/#{template}" : false
   end
 end

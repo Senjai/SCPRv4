@@ -20,7 +20,6 @@ class AdminUser < ActiveRecord::Base
 
   # ----------------
   # Callbacks
-  before_validation :downcase_email
   before_save :digest_password, if: -> { unencrypted_password.present? }, on: :create
 
   # ----------------
@@ -102,10 +101,4 @@ class AdminUser < ActiveRecord::Base
     self.password = [algorithm, salt, hash].join("$")
   end
 
-  # ----------------
-  # This helps us validate that e-mails are unique,
-  # because the case_sensitive validation is slow.
-  def downcase_email
-    self.email = email.downcase if email.present?
-  end
 end

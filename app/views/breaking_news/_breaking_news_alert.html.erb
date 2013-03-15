@@ -1,14 +1,16 @@
 <% if alert = BreakingNewsAlert.latest_alert %>
-  <div class="container-fluid" id="breaking-news">
-    <div class="live-update <%= alert.alert_type %>">
-      <div class="inner-container">
-        <div class="row-fluid">
-          <div class="span24">
-            <strong><%= alert.break_type %></strong><%= link_to alert.headline, alert.alert_link %>
-            <a href="http://info.americanpublicmediagroup.org/LP=238" class="newsletter-sign-up">Sign up for alerts</a>
+  <div id="breaking-news">
+      <div class="live-update <%= alert.alert_type %>">
+        <div class="container-fluid">
+          <div class="inner-container">
+            <div class="row-fluid">
+              <div class="span24">
+                <strong><%= alert.break_type %></strong><%= link_to alert.headline, alert.alert_link %>
+                <a href="http://info.americanpublicmediagroup.org/LP=238" class="newsletter-sign-up">Sign up for alerts</a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 <% end %>

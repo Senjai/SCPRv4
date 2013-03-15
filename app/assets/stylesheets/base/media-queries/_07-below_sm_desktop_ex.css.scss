@@ -78,13 +78,39 @@
     
     // Adjust signup call-to-action in Breaking News Alerts
     .live-update {
+      background-color:$black;
+      border-bottom:1px solid #555;
+      .container-fluid {
+        padding:0;
+        width:100%;
+      }
       .inner-container {
+        padding:0;
+        strong {
+          @include border-radius(0);
+          margin:0 0 8px;
+          padding-left:0;
+          padding-right:0;
+          text-align:center;
+          width:100%;
+        }
+        a {
+          display:block;
+          margin:0 10px;
+          text-align:center;
+        }
         .newsletter-sign-up {
-          background-color:rgba(255,255,255,0.35);
+          background-image:none;
+          color:$gray;
+          display:block;
           float:none;
           font-size:12px;
-          margin-top:4px;
+          margin:4px 0 0;
+          text-align:center;
         }
+      }
+      &.break, &.now, &.audio {
+        border-top:0;
       }
     }
     

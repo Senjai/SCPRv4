@@ -26,7 +26,7 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
           item.itunes :summary,   raw(content.teaser)
           item.description        raw(content.teaser)
           item.guid               content.remote_link_path, :isPermaLink => true
-          item.pubDate            content.published_at
+          item.pubDate            content.published_at.in_time_zone("GMT").strftime("%a, %d %b %Y %T %Z")
           item.itunes :keywords,  raw(@podcast.keywords)
           item.link               content.remote_link_path
 

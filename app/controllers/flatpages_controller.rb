@@ -1,4 +1,10 @@
-class FlatpagesController < ApplicationController  
+class FlatpagesController < ApplicationController
+  TEMPLATE_MAP = {
+    "full"    => "app_nosidebar",
+    "forum"   => "forum",
+    "none"    => false
+  }
+
   def show
     # params[:flatpage_path] gets its slashes stripped by route globbing
     @flatpage = Flatpage.visible.find_by_url!("/#{params[:flatpage_path]}/")
@@ -7,16 +13,14 @@ class FlatpagesController < ApplicationController
     if @flatpage.is_redirect?
       redirect_to @flatpage.redirect_url and return
     end
-        
-    layout_template = begin
-      case @flatpage.template
-        when "full"  then 'app_nosidebar'
-        when "forum" then "forum"
-        when "none"  then false
-        else 'application'
-      end
-    end
       
     render layout: layout_template
+  end
+
+  private
+
+  def layout_template
+    template = TEMPLATE_MAP[@flatpage.template]
+    template.nil? ? "application" : template
   end
 end
