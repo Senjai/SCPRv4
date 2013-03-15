@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304190148) do
+ActiveRecord::Schema.define(:version => 20130315012353) do
 
   create_table "admin_user_permissions", :force => true do |t|
     t.integer  "admin_user_id"
@@ -80,18 +80,16 @@ ActiveRecord::Schema.define(:version => 20130304190148) do
   add_index "auth_permission", ["content_type_id"], :name => "auth_permission_content_type_id"
 
   create_table "auth_user", :force => true do |t|
-    t.string   "username",     :limit => 30,  :null => false
-    t.string   "first_name",   :limit => 30,  :null => false
-    t.string   "last_name",    :limit => 30,  :null => false
-    t.string   "email",        :limit => 75,  :null => false
-    t.string   "password",     :limit => 128, :null => false
-    t.boolean  "is_staff",                    :null => false
-    t.boolean  "is_active",                   :null => false
-    t.boolean  "is_superuser",                :null => false
-    t.datetime "last_login",                  :null => false
-    t.datetime "date_joined",                 :null => false
+    t.string   "username",        :limit => 30,  :null => false
+    t.string   "email"
+    t.string   "old_password",    :limit => 128, :null => false
+    t.boolean  "can_login",                      :null => false
+    t.boolean  "is_superuser",                   :null => false
+    t.datetime "last_login",                     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_digest"
+    t.string   "name"
   end
 
   add_index "auth_user", ["username"], :name => "username", :unique => true
