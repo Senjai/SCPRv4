@@ -70,12 +70,12 @@ ActiveRecord::Schema.define(:version => 20130315185244) do
   add_index "auth_permission", ["content_type_id"], :name => "auth_permission_content_type_id"
 
   create_table "auth_user", :force => true do |t|
-    t.string   "username",        :limit => 30,  :null => false
+    t.string   "username"
     t.string   "email"
     t.string   "old_password",    :limit => 128, :null => false
     t.boolean  "can_login",                      :null => false
     t.boolean  "is_superuser",                   :null => false
-    t.datetime "last_login",                     :null => false
+    t.datetime "last_login"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"

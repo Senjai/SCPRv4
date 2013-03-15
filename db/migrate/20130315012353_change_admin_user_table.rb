@@ -10,6 +10,8 @@ class ChangeAdminUserTable < ActiveRecord::Migration
     add_column :auth_user, :name, :string
 
     change_column :auth_user, :email, :string, null: true
+    change_column :auth_user, :username, :string, null: true
+    change_column :auth_user, :last_login, :datetime, null: true
 
     AdminUser.all.each do |user|
       if user.first_name.blank? && user.last_name.blank?
@@ -31,6 +33,9 @@ class ChangeAdminUserTable < ActiveRecord::Migration
   def down
     rename_column :auth_user, :old_password, :password
     rename_column :auth_user, :can_login, :is_staff
+
+    remove_index :auth_user, column: [:username, :can_login]
+    add_index :auth_user, :username, name: "username"
 
     remove_column :auth_user, :password_digest
     remove_column :auth_user, :name
