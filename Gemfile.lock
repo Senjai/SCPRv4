@@ -1,4 +1,17 @@
 GIT
+  remote: git://github.com/SCPR/outpost.git
+  revision: d6e1f61948a26a0778187688361e9ed0af4eccbc
+  specs:
+    outpost (0.0.2)
+      bcrypt-ruby (~> 3.0)
+      bootstrap-sass (~> 2.2)
+      coffee-rails (~> 3.2)
+      eco (~> 1.0)
+      jquery-rails
+      rails (~> 3.2.12)
+      sass-rails (~> 3.2)
+
+GIT
   remote: git://github.com/SCPR/redis-content-store.git
   revision: 7838b07daee3c8ed9c1f0205e7f4fa9b4ff867c7
   specs:
@@ -30,14 +43,6 @@ GIT
       loofah (~> 1.2.1)
       nokogiri (~> 1.5.3)
       sax-machine (~> 0.2.0.rc1)
-
-PATH
-  remote: /Users/bryan/projects/outpost
-  specs:
-    outpost (0.0.1)
-      bcrypt-ruby (~> 3.0)
-      jquery-rails
-      rails (~> 3.2.12)
 
 GEM
   remote: https://rubygems.org/
