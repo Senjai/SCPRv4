@@ -75,14 +75,4 @@ class Outpost::NprStoriesController < Outpost::BaseController
   def extend_breadcrumbs_with_resource_root
     breadcrumb model.to_title.pluralize, model.admin_index_path
   end
-
-  #--------------
-  
-  private
-
-  #--------------
-  
-  def authorize_resource
-    authorize!(model)
-  end
 end

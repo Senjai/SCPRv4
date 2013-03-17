@@ -6,10 +6,6 @@ class Outpost::BaseController < Outpost::ApplicationController
   before_filter :set_current_homepage
 
   #------------------------
-  
-  protected
-  
-  #------------------------
   # Just setup the @sections variable so the views can add to it.
   def set_sections
     @sections = {}
@@ -28,11 +24,7 @@ class Outpost::BaseController < Outpost::ApplicationController
   def set_current_homepage
     @current_homepage = Homepage.published.first
   end
-  
-  #------------------------
-  
-  private
-  
+
   #-------------------------
   # Override this method from CustomErrors so we can specify the template path
   def render_error(status, e=StandardError)

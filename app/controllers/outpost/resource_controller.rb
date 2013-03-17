@@ -38,16 +38,6 @@ class Outpost::ResourceController < Outpost::BaseController
   end
 
   #-----------------
-  
-  private
-
-  #-----------------
-    
-  def authorize_resource
-    authorize!(model)
-  end
-
-  #-----------------
 
   def render_preview_validation_errors(record)
     render "/outpost/shared/_preview_errors", layout: "outpost/minimal", locals: { record: record }
