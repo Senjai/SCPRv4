@@ -1,26 +1,6 @@
 require 'spec_helper'
 
 describe ApplicationHelper do
-  describe "#any_to_list?" do
-    it "returns the block if there are records" do
-      helper.any_to_list?(1..5) { "Records list" }.should match "Records list"
-    end
-    
-    it "returns a default message if there are no records and no message is specified" do
-      helper.any_to_list?([]) { "Records list" }.should match "There is nothing here to list."
-    end
-    
-    it "returns a specified message if there are no records" do
-      helper.any_to_list?([], message: "None!") { "Records list" }.should match "None!"
-    end
-    
-    it "returns a special message if: no records, no message, title is specified" do
-      helper.any_to_list?([], title: "Events") { "Records list" }.should match "Events"
-    end
-  end
-  
-  #------------------------
-  
   describe "sphinx category searches" do
     before :each do
       category_news     = create :category, :is_news
@@ -151,27 +131,6 @@ describe ApplicationHelper do
   
   #------------------------
   
-  describe "#page_title" do
-    it "accepts and array and joins them by the default separator" do
-      helper.page_title([1, 2]).should eq "1 | 2"
-    end
-    
-    it "accepts and uses a different separator" do
-      helper.page_title([1, 2], " - ").should eq "1 - 2"
-    end
-    
-    it "Return the first argument as a string if it is not an array" do
-      helper.page_title("Page").should eq "Page"
-    end
-    
-    it "returns @PAGE_TITLE if it exists" do
-      @PAGE_TITLE = "some title"
-      helper.page_title("anything else").should eq "some title"
-    end
-  end  
-  
-  #------------------------
-  
   describe "#smart_date_js" do # These tests could be dryed up
     it "returns a time tag with all attributes filled in if some sort of Timestamp object is passed in" do
       [Time, DateTime].each do |datetime|
@@ -208,39 +167,7 @@ describe ApplicationHelper do
   end
   
   #------------------------
-  
-  describe "#format_date" do
-    before :each do
-      @date = Time.at(0) # 1969-12-31 16:00:00 -0800
-    end
-    
-    it "returns a `iso` format" do
-      helper.format_date(@date, format: :iso).should match "1969-12-31"
-    end
-    
-    it "returns a `full-date` format" do
-      helper.format_date(@date, format: :full_date).should match "December 31st, 1969"
-    end
-    
-    it "returns a 'event' format" do
-      helper.format_date(@date, format: :event).should match "Wednesday, December 31"
-    end
-    
-    it "accepts a custom format" do
-      helper.format_date(@date, with: "%D").should match "12/31/69"
-    end
-    
-    it "prefers the custom format if a premade format is also specified" do
-      helper.format_date(@date, with: "%D", format: :event).should match "12/31/69"
-    end
-    
-    it "includes the time if specified" do
-      helper.format_date(@date, format: :event, time: true).should match "4:00pm"
-    end
-  end
-  
-  #------------------------
-  
+
   describe "modal" do
     it "renders the modal shell partial" do
       helper.modal("anything") { "content" }.should_not be_blank

@@ -1,5 +1,5 @@
 require "spec_helper"
 
-describe Admin::NprStoriesController do
+describe Outpost::NprStoriesController do
   pending
 end

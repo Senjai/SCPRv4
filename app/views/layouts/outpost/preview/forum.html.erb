@@ -1,0 +1,24 @@
+<%= render '/outpost/shared/header/preview/document_header' %>
+
+<body class="forum">
+<div class="viewport">
+  <%= render '/outpost/shared/header/preview/layout_header' %>
+
+  <div id="forum" class="container-fluid main-content">
+    <div class="row-fluid">
+      <div id="forum-span-content" class="span18">
+        <%= yield %>
+      </div>
+      
+      <div id="forum-span-sidebar" class="span6">
+        <div id="sidebar" class="fake-el" style="height:1000px;">
+          &nbsp; <!-- sidebar -->
+        </div> <!-- sidebar -->
+      </div> <!-- span8 -->
+    </div> <!-- row-fluid -->
+  </div> <!-- container fluid forum -->
+  
+  <%= render '/outpost/shared/footer/preview/layout_footer' %>
+</div> <!-- viewport -->
+
+<%= render '/outpost/shared/footer/preview/document_footer' %>

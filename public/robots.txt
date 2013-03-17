@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /admin/
+Disallow: /outpost/
 Allow: /
 
 Sitemap: http://scpr.org/sitemap.xml

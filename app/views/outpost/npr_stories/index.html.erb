@@ -1,0 +1,30 @@
+<% add_to_page_title model.to_title.pluralize %>
+
+<div class="index-header clearfix">
+  <%= render "outpost/shared/search_form" %>
+  
+  <div class="pull-right">
+    <%= link_to "Sync with NPR", sync_outpost_npr_stories_path, class: "btn", method: :post %>
+  </div>
+</div>
+
+<%= list_table @records, model do %>
+  <thead>
+    <tr>
+      <%= render "/outpost/shared/headers", list: list %>
+    </tr>
+  </thead>
+  <tbody class="list">
+    <% @records.each do |record| %>
+      <tr class="<%= model.singular_route_key.dasherize %>">
+        <td class="column-manage">
+          <%= link_to "Import", import_outpost_npr_story_path(record), method: :post, class: "btn" %>
+          <%= link_to "Skip", [:skip, :outpost, record], method: :put, class: "btn btn-danger", 
+            data: { confirm: "Click OK to hide this NPR Story.\nClick CANCEL to return to the list." } %>
+        </td>
+        
+        <%= render "/outpost/shared/columns", list: list, record: record %>
+      </tr>
+    <% end %>
+  </tbody>
+<% end %>

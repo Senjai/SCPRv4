@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::ShowSegmentsController do
+describe Outpost::ShowSegmentsController do
   it_behaves_like "resource controller" do
     let(:resource) { :show_segment }
   end
@@ -9,8 +9,8 @@ describe Admin::ShowSegmentsController do
     render_views 
     
     before :each do
-      @admin_user = create :admin_user
-      controller.stub(:admin_user) { @admin_user }
+      @current_user = create :admin_user
+      controller.stub(:current_user) { @current_user }
     end
     
     context "existing object" do
@@ -25,7 +25,7 @@ describe Admin::ShowSegmentsController do
       it "renders validation errors if the object is not unconditionally valid" do
         show_segment = create :show_segment, headline: "Okay"
         put :preview, id: show_segment.id, obj_key: show_segment.obj_key, show_segment: show_segment.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
 
@@ -40,7 +40,7 @@ describe Admin::ShowSegmentsController do
       it "renders validation errors if the object is not unconditionally valid" do
         show_segment = build :show_segment, headline: "okay"
         post :preview, obj_key: show_segment.obj_key, show_segment: show_segment.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
   end

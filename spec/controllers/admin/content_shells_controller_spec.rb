@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::ContentShellsController do
+describe Outpost::ContentShellsController do
   it_behaves_like "resource controller" do
     let(:resource) { :content_shell }
   end

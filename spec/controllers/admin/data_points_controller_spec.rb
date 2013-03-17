@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::DataPointsController do
+describe Outpost::DataPointsController do
   it_behaves_like "resource controller" do
     let(:resource) { :data_point }
   end

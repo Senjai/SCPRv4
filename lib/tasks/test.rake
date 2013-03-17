@@ -3,12 +3,7 @@ namespace :test do
   task :secretary do
     $stdout.puts %x{bundle exec rspec --tty lib/secretary/spec}
   end
-  
-  desc "Run tests for Outpost"
-  task :outpost do
-    $stdout.puts %x{bundle exec rspec --tty lib/outpost/spec}
-  end
-  
+
   desc "Run all library tests"
-  task :lib => [ :secretary, :outpost ]
+  task :lib => [:secretary]
 end

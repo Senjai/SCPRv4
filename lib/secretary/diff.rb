@@ -3,7 +3,7 @@
 
 module Secretary
   class Diff < Hash
-    IGNORE = ["id", "created_at", "updated_at"]
+    IGNORE = ["id", "created_at", "updated_at", "password_digest"]
     
     def self.should_ignore(key)
       IGNORE.include? key

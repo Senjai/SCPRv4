@@ -48,9 +48,7 @@ Scprv4::Application.configure do
   
   # Serve files from public/
   config.serve_static_assets = true
-  
-  default_url_options[:host] = "localhost:3000"
-  
+    
   # Gmail
   config.action_mailer.delivery_method       = :smtp
   config.action_mailer.raise_delivery_errors = true
@@ -69,6 +67,8 @@ Scprv4::Application.configure do
   config.dbsync.remote_host = "66.226.4.229"
   config.dbsync.remote_dir  = "~scprdb"
   
+  default_url_options[:host] = "localhost:3000"
+
   config.scpr.host         = "localhost:3000"
   config.scpr.media_root   = "/Users/bryan/projects/media"
   config.scpr.media_url    = "file:///Users/bryan/projects/media"

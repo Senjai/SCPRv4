@@ -1,4 +1,4 @@
-<% page_title [@segment.headline, @program.title] %>
+<% add_to_page_title @segment.headline %>
 <%= render_content @segment, "opengraph" %>
 
 <%= cache ["show", "v4", @segment] do %>

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::BlogEntriesController do
+describe Outpost::BlogEntriesController do
   it_behaves_like "resource controller" do
     let(:resource) { :blog_entry }
   end
@@ -9,8 +9,8 @@ describe Admin::BlogEntriesController do
     render_views 
     
     before :each do
-      @admin_user = create :admin_user
-      controller.stub(:admin_user) { @admin_user }
+      @current_user = create :admin_user
+      controller.stub(:current_user) { @current_user }
     end
     
     context "existing object" do
@@ -25,7 +25,7 @@ describe Admin::BlogEntriesController do
       it "renders validation errors if the object is not unconditionally valid" do
         entry = create :blog_entry, headline: "Okay"
         put :preview, id: entry.id, obj_key: entry.obj_key, blog_entry: entry.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
 
@@ -40,7 +40,7 @@ describe Admin::BlogEntriesController do
       it "renders validation errors if the object is not unconditionally valid" do
         entry = build :blog_entry, headline: "okay"
         post :preview, obj_key: entry.obj_key, blog_entry: entry.attributes.merge(headline: "")
-        response.should render_template "/admin/shared/_preview_errors"
+        response.should render_template "/outpost/shared/_preview_errors"
       end
     end
   end

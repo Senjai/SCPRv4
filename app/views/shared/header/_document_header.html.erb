@@ -2,8 +2,8 @@
 <html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
   <%= render "/shared/header/core_includes" %>
-
-  <title><%= @PAGE_TITLE.present? ? @PAGE_TITLE + " | 89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %></title>
+  <% add_to_page_title @TITLE_ELEMENTS.present? ? "89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %>
+  <title><%= page_title %></title>
 
   <meta id="meta-viewport" name="viewport" content="width=device-width, minimum-scale=1">
   <meta name="apple-itunes-app" content="app-id=293825085"/>

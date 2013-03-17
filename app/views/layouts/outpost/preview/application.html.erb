@@ -1,0 +1,25 @@
+<%= render '/outpost/shared/header/preview/document_header' %>
+
+<body>
+<div class="viewport">
+  <%= render '/outpost/shared/header/preview/layout_header' %>
+
+  <div id="main" class="container-fluid main-content">
+    <div class="row-fluid">
+      <article class="span16 relative">
+        <%= yield %>
+        <div class="vert-divider"></div>
+      </article>
+      
+      <div class="span8">
+        <div id="sidebar" class="fake-el" style="height:1000px;">
+          &nbsp; <!-- sidebar -->
+        </div> <!-- sidebar -->
+      </div> <!-- span8 -->
+    </div> <!-- row-fluid -->
+  </div> <!-- container fluid main -->
+  
+  <%= render '/outpost/shared/footer/preview/layout_footer' %>
+</div> <!-- viewport -->
+
+<%= render '/outpost/shared/footer/preview/document_footer' %>

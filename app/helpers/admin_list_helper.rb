@@ -1,61 +1,5 @@
 module AdminListHelper
-  
-  # -- Used by index view -- #
-  
-  def render_attribute(column, record, options={})
-    attrib         = record.send(column.attribute)
-    display_helper = column.display
-    
-    # If no helper was specified, try some defaults
-    # More specific helpers are favored
-    if !display_helper
-      
-      # Just return the value
-      display_helper = "display_as_is"
-      
-      # If it's an AR model and the attribute is a column,
-      # we can use display_#{type}
-      if record.class.respond_to?(:columns_hash) and record.class.columns_hash[column.attribute]
-        display_helper = "display_#{record.class.columns_hash[column.attribute].type}"
-      end
-      
-      # If it's an AR model and the attribute is an AssociationReflection,
-      # we can use display_association
-      if record.class.respond_to?(:reflect_on_association) and record.class.reflect_on_association(column.attribute.to_sym)
-        display_helper = "display_association"
-      end
-      
-      # If this helper module defines display_#{attribute}, we should use that
-      if self.methods.include? "display_#{column.attribute}".to_sym
-        display_helper = "display_#{column.attribute}"
-      end
-    end
 
-    if display_helper.is_a? Proc
-      rendered_item = record.instance_eval(&display_helper)
-    else
-      rendered_item = send(display_helper, attrib)
-    end
-    
-    return rendered_item
-  end
-  
-  
-  
-  # -- Custom Render methods -- #
-  
-  def display_date(date)
-    format_date(date, format: :full_date)
-  end
-  
-  def display_or_fallback(attrib)
-    attrib.present? ? attrib : content_tag(:em, "[blank]")
-  end
-  
-  def display_as_is(attrib)
-    attrib
-  end
-  
   def display_npr_link(link)
     link_to content_tag(:i, nil, class: "icon-share-alt"), link, class: "btn"
   end
@@ -75,10 +19,6 @@ module AdminListHelper
   #-------------
   # Attribute Helpers
   
-  def display_association(attrib)
-    attrib.try(:to_title)
-  end
-  
   def display_status(status)
     content_tag :div, ContentBase::STATUS_TEXT[status], class: status_bootstrap_map[status]
   end
@@ -97,31 +37,8 @@ module AdminListHelper
     content_tag :div, Audio::STATUS_TEXT[status], class: audio_bootstrap_map[status]
   end
   
-  
-  #-------------
-  # Type helpers
-  
-  def display_datetime(datetime)
-    format_date(datetime, format: :full_date, time: true)
-  end
-  
-  def display_boolean(boolean)
-    content_tag(:span, 
-      content_tag(:i, "", class: boolean_bootstrap_map[!!boolean][:icon]), 
-      class: boolean_bootstrap_map[!!boolean][:badge])
-  end
-  
-  
   #-------------
   # Maps
-    
-  def boolean_bootstrap_map
-    {
-      true  => { icon: "icon-white icon-ok",     badge: "badge badge-success"},
-      false => { icon: "icon-white icon-remove", badge: "badge badge-important"}
-    }
-  end
-  
   def ticket_status_bootstrap_map
     {
       Ticket::STATUS_CLOSED => "list-status label label-important",
@@ -146,14 +63,5 @@ module AdminListHelper
       Audio::STATUS_WAIT => "list-status label label-warning",
       Audio::STATUS_LIVE => "list-status label label-success"
     }
-  end
-  
-  # If we just want the helper to return the value,
-  # it will fall back to this
-  def method_missing(method, *args, &block)
-    if method =~ /^display_/
-      return args.first
-    end
-    super
   end
 end

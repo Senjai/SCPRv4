@@ -1,0 +1,250 @@
+// Set column widths
+$datetimeWidth: 140px;
+$booleanWidth: 60px;
+$integerWidth: 50px;
+$statusWidth: 105px;
+
+@mixin url-cell { 
+    width: 250px;
+    word-break: break-all;
+}
+
+table {
+    ///////////////////
+    // Global
+    .column-manage {
+        width: 60px;
+        white-space: nowrap;
+    }
+
+    .column-status {
+        width: $statusWidth;
+    }
+
+    .column-audio {
+        width: $statusWidth;
+    }
+    
+    .column-datetime, .column-date {
+        width: $datetimeWidth;
+    }
+
+    .column-boolean {
+        width: $booleanWidth;
+    }
+
+    .column-id {
+        width: $integerWidth;
+    }
+
+    ///////////////////
+    // BlogEntry
+    &.list-blog_entries {
+        .column-headline { // blog_entry.headline
+            width: 320px;
+        }
+    }
+
+    ///////////////////
+    // NprStory
+    &.list-npr_stories {
+        .column-manage {
+            width: 100px;
+        }
+    }
+
+    ///////////////////
+    // Ticket
+    &.list-tickets {
+        .column-manage {
+            width: 100px;
+        }
+    }
+
+    ///////////////////
+    // AdminUser
+    &.list-admin_users {
+        .column-name { // admin_user.name
+            width: 340px;
+        }
+
+        .column-username { // admin_user.username
+            width: 120px;
+        }
+
+        .column-can_login { // admin_user.can_login
+            width: $booleanWidth + 20px;
+        }
+    }
+
+    ///////////////////
+    // Blog
+    &.list-blogs {
+        .column-teaser { // blog.teaser
+            width: 400px;
+        }
+        .column-is_active { // blog.is_active
+            width: 100px;
+        }
+    }
+
+    ///////////////////
+    // Blog
+    &.list-breaking_news_alerts {
+        .column-email_sent { // breaking_news_alert.email_sent
+            width: 100px;
+        }
+
+        .column-headline { // breaking_news_alert.headline
+            width: 450px;
+        }
+    }
+
+    ///////////////////
+    // Blog
+    &.list-categories {
+        .column-title { // category.title
+            width: 200px;
+        }
+
+        .column-slug { // category.slug
+            width: 200px;
+        }
+
+        .column-comment_bucket_id { // category.comment_bucket_id
+            width: 200px;
+        }
+    }
+
+    ///////////////////
+    // DataPoint
+    &.list-data_points {
+        .column-group_name { // data_point.group_name
+            width: 120px;
+        }
+
+        .column-title { // data_point.title
+            width: 200px;
+        }
+
+        .column-data_key { // data_point.data_key
+            width: 200px;
+        }
+
+        .column-data_value { // data_point.data_value
+            width: 120px;
+
+            input {
+                width: 100px;
+            }
+        }
+    }
+
+    ///////////////////
+    // Event
+    &.list-events {
+        .column-kpcc_event { // event.kpcc_event
+            width: 100px;
+        }
+
+        .column-headline { // event.headline
+            width: 350px;
+        }
+    }
+
+    ///////////////////
+    // FeaturedCommentBucket
+    &.list-featured_comment_buckets {
+        td, th {
+            width: auto;
+        } 
+    }
+
+    ///////////////////
+    // Flatpage
+    &.list-flatpages {
+        .column-title { // flatpage.title
+            width: 250px;
+        }
+
+        .column-url { // flatpage.url (actually a path)
+            width: 200px;
+        }
+
+        .column-redirect_url { // flatpage.redirect_url
+            @include url-cell;
+        }
+    }
+
+    ///////////////////
+    // OtherProgram
+    &.list-other_programs {
+        .column-title { // other_program.title
+            width: 250px;
+        }
+
+        .column-air_status { // other_program.air_status
+            width: 150px;
+        }
+    }
+
+    ///////////////////
+    // PijQuery
+    &.list-pij_queries {
+        .column-headline { // pij_query.headline
+            width: 450px;
+        }
+    }
+
+    ///////////////////
+    // Podcast
+    &.list-podcasts {
+        .column-keywords { // podcast.keywords
+            width: 250px;
+        }
+
+        .column-podcast_url { // podcast.podcast_url
+            @include url-cell;
+        }
+    }
+
+    ///////////////////
+    // RecurringScheduleSlot
+    &.list-recurring_schedule_slots {
+        .column-program { // recurring_schedule_slot.program
+            width: 500px;
+        }
+    }
+
+    ///////////////////
+    // Secretary::Version
+    &.list-secretary_versions {
+        .column-user {
+            width: 150px;
+        }
+
+        .column-description {
+            width: 350px;
+        }
+
+        .column-versioned {
+            width: 200px;
+        }
+    }
+
+    ///////////////////
+    // ShowEpisode
+    &.list-show_episodes {
+        .column-show { // show_episode.show
+            width: 100px;
+        }
+    }
+
+    ///////////////////
+    // VideoShell
+    &.list-video_shells {
+        .column-headline { // vidoe_shell.headline
+            width: 350px;
+        }
+    }
+}

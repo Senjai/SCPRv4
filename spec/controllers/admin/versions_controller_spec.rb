@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::VersionsController do
+describe Outpost::VersionsController do
   describe "GET /activity" do
     pending
   end

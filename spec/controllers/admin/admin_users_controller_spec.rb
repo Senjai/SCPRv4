@@ -1,5 +1,5 @@
 require "spec_helper"
 
-describe Admin::AdminUsersController do
+describe Outpost::AdminUsersController do
   pending
 end

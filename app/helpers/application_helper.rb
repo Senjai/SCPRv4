@@ -196,52 +196,6 @@ module ApplicationHelper
     })
   end
   
-  #---------------------------
-  # any_to_list?: A graceful fail-safe for any Enumerable that might be blank
-  # With block: returns the block if there are records, or a message if there are no records.
-  # Without block: Behaves the same as `.present?`
-  # Options: 
-  ### wrapper: a tag to use for the wrapper. Pass false if you do not want a wrapper
-  ### title: What to call the records. If you don't pass this or a message, it will return a generic message if there are no records.
-  ### message: Custom message to return if there are no records.
-  def any_to_list?(records, options={}, &block)
-    if records.present?
-      return capture(&block)
-    else
-      if options[:message].blank?
-        if options[:title].present?
-          options[:message] = "There are currently no #{options[:title]}"
-        else
-          options[:message] = "There is nothing here to list."
-        end
-      end
-
-      return options[:message].html_safe
-    end
-  end
-  
-  #---------------------------
-  # Sets the page title.
-  #
-  # Pass in a string or an array of strings.
-  # Takes an optional separaptor argument.
-  #
-  # Example:
-  #
-  #   <% page_title [@event.headline, "Forum"] %>
-  #
-  def page_title(elements, separator=" | ")
-    if @PAGE_TITLE.present?
-      return @PAGE_TITLE
-    end
-    
-    if elements.is_a? Array
-      @PAGE_TITLE = elements.join(separator)
-    else
-      @PAGE_TITLE = elements.to_s
-    end
-  end
-  
   #----------
   
   def link_to_audio(title, object, options={}) # This needs to be more useful
@@ -249,32 +203,6 @@ module ApplicationHelper
     options[:title] ||= object.short_headline
     options["data-duration"] = object.audio.available.first.duration
     content_tag :div, link_to(title, object.audio.available.first.url, options), class: "story-audio inline"
-  end
-  
-  #---------------------------
-  # easy date formatting
-  # options:
-  # * format: iso (2012-10-11)
-  # * format: full_date (October 11th, 2011)
-  # * format: event (Wednesday, October 11)
-  # * no format specified: Oct 11, 2011
-  # * time: true (9:35pm)
-  # * with: (custom strftime string)
-  def format_date(date, options={})
-    return nil if !date.respond_to?(:strftime)
-    
-    format_str = options[:with] if options[:with].present?
-
-    format_str ||= case options[:format].to_s
-      when "iso"       then "%F"
-      when "full_date" then "%B #{date.day.ordinalize}, %Y"
-      when "event"     then "%A, %B %e"
-    end
-    
-    format_str ||= "%b %e, %Y"
-    format_str += ", %l:%M%P" if options[:time] == true
-
-    date.strftime(format_str)
   end
   
   #---------------------------

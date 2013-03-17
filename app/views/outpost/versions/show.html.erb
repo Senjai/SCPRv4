@@ -1,0 +1,13 @@
+<% add_to_page_title @version_b.to_title, "History" %>
+
+<%= render 'header', page_title: content_for(:page_title), object: @object %>
+
+<%= cache @version_b do %>
+  <% @attribute_diffs.each do |attribute, diff| %>
+    <h4><%= attribute.titleize %></h4>
+    <div class="well">
+      <%= diff.to_s(:html).html_safe %>
+    </div>
+    <hr />
+  <% end %>
+<% end %>

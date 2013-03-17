@@ -13,7 +13,7 @@ module ActionView
     class FormBuilder
       def section(partial, options={}, &block)
         @template.render( 
-          :partial => "/admin/shared/sections/#{partial}", 
+          :partial => "/outpost/shared/sections/#{partial}", 
           :locals  => {
             :f       => self,
             :record  => self.object, 
@@ -26,7 +26,7 @@ module ActionView
       
       def render_fields(partial, options={})
         @template.render( 
-          :partial => "/admin/shared/fields/#{partial}_fields", 
+          :partial => "/outpost/shared/fields/#{partial}_fields", 
           :locals  => {
             :f       => self,
             :index   => self.object.object_id,

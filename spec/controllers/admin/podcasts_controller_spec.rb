@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::PodcastsController do
+describe Outpost::PodcastsController do
   it_behaves_like "resource controller" do
     let(:resource) { :podcast }
   end

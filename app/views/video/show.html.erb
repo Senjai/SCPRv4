@@ -1,3 +1,4 @@
 <%# Loads a specific video and features it %>
-<% page_title @video.headline %>
+<% add_to_page_title @video.headline %>
+
 <%= render partial: 'video', object: @video %>

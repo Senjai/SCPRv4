@@ -1,0 +1,30 @@
+<% if @object %>
+  <%= render 'header', page_title: content_for(:page_title), object: @object %>
+  <% add_to_page_title @object.simple_title %>
+<% end %>
+
+<% add_to_page_title "History" %>
+
+<%= list_table @versions, model do %>
+  <thead>
+    <tr>
+      <%= render "/outpost/shared/headers", list: list %>
+    </tr>
+  </thead>
+  <tbody class="list">
+    <% @versions.each do |version| %>
+      <% record = version.versioned %>
+      <% if record.present? %> <%# Has to be here in a case a story gets deleted from Django %>
+        <tr class="versions">
+          <td class="column-manage">
+            <%= guard record.class do %>
+              <%= link_to "View", outpost_version_path(resources: record.class.route_key, resource_id: record.id, version_number: version.version_number), class: "btn" %>
+            <% end %>
+          </td>
+          
+          <%= render "/outpost/shared/columns", list: list, record: version %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+<% end %>

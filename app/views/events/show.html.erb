@@ -1,7 +1,7 @@
 <%= render_content @event, "opengraph" %>
 
 <% present @event do |p| %>
-  <% page_title [p.headline, "Events"] %>
+  <% add_to_page_title p.headline %>
 
   <% content_for :head_tag, javascript_include_tag("http://maps.googleapis.com/maps/api/js?key=#{Rails.application.config.api["google"]["maps"]}&sensor=true ") %>
 

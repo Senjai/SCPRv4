@@ -1,0 +1,31 @@
+<%= form_block "Details" do %>
+  <%= f.input :name %>
+  <%= f.input :username, hint: ("This will be automatically generated if left blank." if record.new_record?) %>
+  <%= f.input :email %>
+<% end %>
+
+<%= form_block record.new_record? ? "Password" : "Change Password" do %>
+  <%= f.input :password, label: ("New Password" if record.persisted?) %>
+  <%= f.input :password_confirmation %>
+<% end %>
+
+<%= form_block "Permissions" do %>
+  <% if current_user.is_superuser? %>
+    <%= f.input :can_login, hint: "May this user login to the CMS?" %>
+    <%= f.input :is_superuser %>
+  
+    <%= f.association :permissions,
+        hint: "Which resources can this user manage?<br />" \
+        "Selecting a resource gives this user the ability to <br />" \
+        "Create, Update, and Delete *any* of those records." %>
+  <% else %>
+    <%= any_to_list? record.permissions, message: "You have no permissions" do %>
+      <strong>You have permission to manage the following:</strong>
+      <ul>
+        <% record.permissions.each do |permission| %>
+          <li><%= permission.title.pluralize %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>

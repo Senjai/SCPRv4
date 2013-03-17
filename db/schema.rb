@@ -11,17 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304190148) do
-
-  create_table "admin_user_permissions", :force => true do |t|
-    t.integer  "admin_user_id"
-    t.integer  "permission_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "admin_user_permissions", ["admin_user_id"], :name => "index_admin_user_permissions_on_admin_user_id"
-  add_index "admin_user_permissions", ["permission_id"], :name => "index_admin_user_permissions_on_permission_id"
+ActiveRecord::Schema.define(:version => 20130315185244) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id"
@@ -80,21 +70,19 @@ ActiveRecord::Schema.define(:version => 20130304190148) do
   add_index "auth_permission", ["content_type_id"], :name => "auth_permission_content_type_id"
 
   create_table "auth_user", :force => true do |t|
-    t.string   "username",     :limit => 30,  :null => false
-    t.string   "first_name",   :limit => 30,  :null => false
-    t.string   "last_name",    :limit => 30,  :null => false
-    t.string   "email",        :limit => 75,  :null => false
-    t.string   "password",     :limit => 128, :null => false
-    t.boolean  "is_staff",                    :null => false
-    t.boolean  "is_active",                   :null => false
-    t.boolean  "is_superuser",                :null => false
-    t.datetime "last_login",                  :null => false
-    t.datetime "date_joined",                 :null => false
+    t.string   "username"
+    t.string   "email"
+    t.string   "old_password"
+    t.boolean  "can_login",       :null => false
+    t.boolean  "is_superuser",    :null => false
+    t.datetime "last_login"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_digest"
+    t.string   "name"
   end
 
-  add_index "auth_user", ["username"], :name => "username", :unique => true
+  add_index "auth_user", ["username", "can_login"], :name => "index_auth_user_on_username_and_can_login"
 
   create_table "auth_user_groups", :force => true do |t|
     t.integer "user_id",  :null => false
@@ -897,6 +885,16 @@ ActiveRecord::Schema.define(:version => 20130304190148) do
 
   add_index "tickets", ["status"], :name => "index_tickets_on_status"
   add_index "tickets", ["user_id"], :name => "index_tickets_on_user_id"
+
+  create_table "user_permissions", :force => true do |t|
+    t.integer  "admin_user_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "user_permissions", ["admin_user_id"], :name => "index_admin_user_permissions_on_admin_user_id"
+  add_index "user_permissions", ["permission_id"], :name => "index_admin_user_permissions_on_permission_id"
 
   create_table "users_userprofile", :force => true do |t|
     t.integer  "userid",                    :null => false

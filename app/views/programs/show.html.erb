@@ -1,5 +1,3 @@
-<% page_title @program.title %>
-
 <% if @program.display_episodes %>
   <section class="show-feature">
     <%= render partial: "/programs/current_episode", object: @program.episodes.published.first if @program.episodes.published.present? %>
