@@ -14,7 +14,6 @@ class FeaturedComment < ActiveRecord::Base
   
   #----------------
   # Associations
-  map_content_type_for_django
   belongs_to :content, polymorphic: true
   belongs_to :bucket, class_name: "FeaturedCommentBucket"
   

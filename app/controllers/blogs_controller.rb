@@ -36,21 +36,6 @@ class BlogsController < ApplicationController
   end
 
   #----------
-  # Map old paths from "other blogs"
-  def legacy_path
-    date = Date.new(params[:year].to_i, params[:month].to_i)
-    slug = params[:slug][0,50]
-    
-    blog_entry = BlogEntry.published
-      .where(
-        "published_at > ? and published_at < ? and slug = ?", 
-        date, date + 1.month, slug
-      ).first!
-
-    redirect_to blog_entry.link_path, permanent: true
-  end
-
-  #----------
   
   # Process the form values for Archive and redirect to canonical URL
   def process_archive_select

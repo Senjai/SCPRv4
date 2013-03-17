@@ -4,44 +4,6 @@
 # some cool Rails functionality.
 # Use strings here so the classes aren't loaded yet.
 
-# Monkey patches for Mercer additions
-module Outpost
-  module Model
-    module Routing
-      module ClassMethods
-        def django_admin_url
-          "http://scpr.org/admin/#{self.table_name.gsub("_", "/")}"
-        end
-      end
-      
-      #-----------------
-      
-      def django_edit_url
-        [self.class.django_admin_url, self.id || "add"].join "/"
-      end
-    end # Routing
-
-    #-----------------
-    
-    module Methods
-      module ClassMethods
-        # We're going to assume that if the table name does not use 
-        # Rails conventions, then this feature was never built in Django
-        def exists_in_django?
-          @exists_in_django ||= self.table_name != self.name.tableize
-        end
-      end
-
-      #-----------------
-    
-      def exists_in_django?
-        self.class.exists_in_django?
-      end
-    end
-  end
-end
-
-
 Outpost::Config.configure do |config|
   config.registered_models = [
     "NewsStory", 

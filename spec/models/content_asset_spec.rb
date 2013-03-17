@@ -30,11 +30,4 @@ describe ContentAsset do
       # (content_asset.as_json.keys & extras).should eq extras
     end
   end
-    
-  it "assigns django_content_type_id before it is created" do
-    asset = build :asset
-    asset.django_content_type_id.should be_nil
-    asset.save
-    asset.django_content_type_id.should be_a Fixnum
-  end
 end

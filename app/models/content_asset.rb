@@ -2,7 +2,6 @@ class ContentAsset < ActiveRecord::Base
   self.table_name =  "assethost_contentasset"
   self.primary_key = "id"
   
-  map_content_type_for_django
   belongs_to :content, polymorphic: true
   
   @@loaded = false

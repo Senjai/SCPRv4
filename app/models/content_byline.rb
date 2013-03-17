@@ -22,7 +22,6 @@ class ContentByline < ActiveRecord::Base
 
   ROLES = ROLE_TEXT.map { |k,v| [v, k] }[0..2] # TODO this is terrible
   
-  map_content_type_for_django
   belongs_to :content, polymorphic: true
   belongs_to :user, class_name: "Bio"
     

@@ -17,12 +17,4 @@ describe NewsController do
       }.should raise_error ActiveRecord::RecordNotFound
     end
   end
-  
-  describe "GET /old_story" do
-    it "redirects to correct URL if story is found" do
-      story = create :news_story, :published
-      get :old_story, { slug: story.slug }.merge!(date_path(story.published_at))
-      response.should redirect_to story.link_path
-    end
-  end
 end

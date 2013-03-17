@@ -226,36 +226,4 @@ describe BlogsController do
       end
     end
   end
-  
-  # ------------------------
-  
-  describe "GET /legacy_path" do
-    it "redirects if blog entry is found" do
-      entry = create :blog_entry
-      date  = entry.published_at
-      get :legacy_path, blog: entry.blog.slug, 
-                        year: date.year.to_s, 
-                        month: "%02d" % date.month, 
-                        slug: entry.slug
-      controller.should redirect_to entry.link_path
-    end
-    
-    it "raises RecordNotFound if post not found" do
-      entry = create :blog_entry
-      -> {
-        get :legacy_path, blog: entry.blog.slug, year: "2000", month: "01", slug: "nonsense"
-      }.should raise_error ActiveRecord::RecordNotFound
-    end
-
-    it "truncates the slug if it's more than 50 characters" do
-      slug  = "this-is-a-really-long-slug-that-we-will-have-to-truncate-otherwise-its-just-riduculous"
-      entry = create :blog_entry, slug: slug[0,50]
-      date  = entry.published_at
-      get :legacy_path, blog: entry.blog.slug,
-                        year: date.year.to_s, 
-                        month: "%02d" % date.month, 
-                        slug: slug
-      controller.should redirect_to entry.link_path
-    end
-  end
 end

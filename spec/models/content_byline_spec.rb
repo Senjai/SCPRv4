@@ -4,13 +4,6 @@ describe ContentByline do
   describe "associations" do
     it { should belong_to(:user).class_name("Bio") }
     it { should belong_to(:content) }
-  
-    it "assigns django_content_type_id before it is created" do
-      byline = build :byline
-      byline.django_content_type_id.should be_nil
-      byline.save
-      byline.django_content_type_id.should be_a Fixnum
-    end
   end
   
   #-----------------------

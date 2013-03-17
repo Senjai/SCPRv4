@@ -46,7 +46,6 @@ class Audio < ActiveRecord::Base
   
   #------------
   # Association
-  map_content_type_for_django
   belongs_to :content, polymorphic: true, touch: true
   mount_uploader :mp3, AudioUploader
   
@@ -97,17 +96,8 @@ class Audio < ActiveRecord::Base
   # Callbacks
   before_save   :set_type, if: -> { self.type.blank? }
   before_save   :set_file_info, if: -> { self.filename.blank? || self.store_dir.blank? }
-  before_save   :set_django_mp3, if: -> { self.mp3_changed? }
   before_save   :nilify_blanks
   after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
-
-  # This could get run before the file info is set,
-  # So we need to use the actual mp3 info rather than #path
-  def set_django_mp3
-    if self.mp3.present?
-      self.django_mp3 = File.join("audio", self.store_dir, self.filename)
-    end
-  end
   
   #------------
   # Nilify these attributes just to keep everything consistent in the DB
