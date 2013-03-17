@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 65531fcad42de0a4403fc58efdfc0621b9cadb4f
+  revision: a170eeae1766b08dccf128357484aa540bcf2c6f
   specs:
     outpost (0.0.2)
       bcrypt-ruby (~> 3.0)
