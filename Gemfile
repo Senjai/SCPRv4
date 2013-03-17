@@ -61,6 +61,7 @@ end
 ## Development Only
 group :development do
   gem 'capistrano'
+  gem 'pry'
 end
 
 
