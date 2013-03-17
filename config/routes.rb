@@ -201,7 +201,7 @@ Scprv4::Application.routes.draw do
     resources :recurring_schedule_slots do
       get "search", on: :collection, as: :search
     end
-          
+
     resources :admin_users do
       get "search", on: :collection, as: :search
       get "activity", on: :member, as: :activity
@@ -332,6 +332,11 @@ Scprv4::Application.routes.draw do
         post "sync", as: :sync
       end
     end
+
+
+    get "/activity"                                        => "versions#activity",  as: :activity
+    get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
+    get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
 
     match "trigger_error" => 'home#trigger_error'
 
