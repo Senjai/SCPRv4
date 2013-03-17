@@ -67,7 +67,6 @@ class Outpost::VersionsController < Outpost::BaseController
 
   def get_object
     klass = Outpost::Helpers::Naming.to_class(params[:resources])
-    authorize!(klass)
     redirect_to outpost_root_path if !klass.has_secretary?
     @object = klass.find(params[:resource_id])
   end
@@ -75,7 +74,7 @@ class Outpost::VersionsController < Outpost::BaseController
   #--------------
   
   def authorize_resource
-    authorize!(@object.class)
+    authorize(@object.class)
   end
   
   #--------------
