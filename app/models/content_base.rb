@@ -45,15 +45,9 @@ module ContentBase
   # URLS to match in ::obj_by_url
   CONTENT_MATCHES = {
     %r{^/news/\d+/\d\d/\d\d/(\d+)/.*}                => 'NewsStory',
-    %r{^/admin/news/story/(\d+)/}                    => 'NewsStory',
     %r{^/blogs/[-_\w]+/\d+/\d\d/\d\d/(\d+)/.*}       => 'BlogEntry',
-    %r{^/admin/blogs/entry/(\d+)/}                   => 'BlogEntry',
     %r{^/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment',
-    %r{^/admin/shows/segment/(\d+)/}                 => 'ShowSegment',
-    %r{^/admin/shows/episode/(\d+)/}                 => 'ShowEpisode',
-    %r{^/admin/contentbase/contentshell/(\d+)/}      => 'ContentShell',
     %r{^/video/(\d+)/.*}                             => 'VideoShell',
-    %r{^/admin/contentbase/videoshell/(\d+)/}        => 'VideoShell'
   }
 
   OBJ_KEY_REGEX = %r{([^:]+):(\d+)}
