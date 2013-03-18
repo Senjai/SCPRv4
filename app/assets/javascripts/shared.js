@@ -6,7 +6,7 @@
 //= require moment
 //= require moment-strftime
 //= require jquery_ujs
-//= require spin.js
+//= require spin
 
 //= require bootstrap-transition
 //= require bootstrap-dropdown

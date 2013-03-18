@@ -2,7 +2,7 @@
 //= require jquery.jplayer.min
 
 //= require_directory ./t_listen/
-//= require swfobject
+//= require swfobject.min
 
 //= require content_carousel
 //= require audio

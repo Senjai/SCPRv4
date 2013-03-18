@@ -1,5 +1,5 @@
 //= require jquery-ui-1.10.0.custom.min
-//= require date
+//= require date.min
 
 //= require bootstrap-scrollspy
 //= require bootstrap-alert
