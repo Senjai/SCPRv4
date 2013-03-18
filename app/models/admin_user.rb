@@ -28,12 +28,6 @@ class AdminUser < ActiveRecord::Base
   # ----------------
   
   class << self
-    def authenticate(username, unencrypted_password)
-      self.find_by_username(username).try(:authenticate, unencrypted_password)
-    end
-
-    # ----------------
-    
     def select_collection
       AdminUser.order("name").map { |u| [u.to_title, u.id] }
     end
