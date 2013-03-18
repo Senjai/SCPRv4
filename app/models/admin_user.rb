@@ -9,6 +9,13 @@ class AdminUser < ActiveRecord::Base
   has_secretary
 
   # ----------------
+  # Callbacks
+  before_validation :generate_username, on: :create, if: -> { self.username.blank? }
+
+  # ----------------
+  # Validation
+
+  # ----------------
   # Scopes
   
   # ----------------
@@ -52,6 +59,27 @@ class AdminUser < ActiveRecord::Base
       authenticate_legacy(unencrypted_password)
     end
   end
+
+  # Private: Generate a username based on real name
+  #
+  # Returns String of the username
+  def generate_username
+    return nil if !self.name.present?
+
+    names       = self.name.to_s.split
+    base        = (names.first.chars.first + names.last).downcase.gsub(/\W/, "")
+    dirty_name  = base
+
+    i = 1
+    while self.class.exists?(username: dirty_name)
+      dirty_name = base + i.to_s
+      i += 1
+    end
+
+    self.username = dirty_name
+  end
+  
+  # ----------------
 
   private
 
