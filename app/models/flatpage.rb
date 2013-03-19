@@ -30,6 +30,7 @@ class Flatpage < ActiveRecord::Base
     end
   end
   
+  # Downcase URL so uniqueness validation works.
   before_validation :downcase_url
   def downcase_url
     if url.present? 
