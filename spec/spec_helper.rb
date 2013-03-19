@@ -1,7 +1,7 @@
+ENV["RAILS_ENV"] ||= 'test'
+
 require 'simplecov'
 SimpleCov.start 'rails'
-
-ENV["RAILS_ENV"] ||= 'test'
 
 require 'rubygems'
 require File.expand_path("../../config/environment", __FILE__)
