@@ -1,3 +1,0 @@
-<div class="input-prepend inline">
-  <span class="add-on populate date"><i class="icon-calendar"></i></span><input type="text" class="datepicker timestamp-el" placeholder="<%=@date_format%>" id="<%= @date_id %>">
-</div>
