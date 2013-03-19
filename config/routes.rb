@@ -339,11 +339,11 @@ Scprv4::Application.routes.draw do
     match "trigger_error" => 'home#trigger_error'
 
     # 404 catch-all
-    match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
+    #match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
   end
 
   match "trigger_error" => 'home#trigger_error'
 
   # 404 catch-all
-  match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
+  #match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
 end
