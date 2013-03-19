@@ -196,6 +196,8 @@ Scprv4::Application.routes.draw do
   #------------------
   
   namespace :outpost do
+    root to: 'home#index'
+
     resources :recurring_schedule_slots do
       get "search", on: :collection, as: :search
     end
@@ -339,11 +341,11 @@ Scprv4::Application.routes.draw do
     match "trigger_error" => 'home#trigger_error'
 
     # 404 catch-all
-    #match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
+    match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
   end
 
   match "trigger_error" => 'home#trigger_error'
 
   # 404 catch-all
-  #match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
+  match "*path" => 'home#not_found' unless Rails.application.config.consider_all_requests_local
 end
