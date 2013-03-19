@@ -5,16 +5,19 @@
     @extend .span4;
     margin: 0 5px 5px 0;
     float: left;
-    height: 160px;
+    height: 165px;
     overflow: hidden;
   }
     
   .thumbnail {
+    border: 1px solid $grayLighter;
+    padding: 5px;
     @include clearfix;
+
     img {
       float: left;
       max-width: 150px;
-      margin: 0 5px;
+      margin-right: 5px;
     }
     
     .asset-info {
