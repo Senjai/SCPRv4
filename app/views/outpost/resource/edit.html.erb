@@ -44,7 +44,7 @@
 
 <% content_for :footer do %>
   <script type="text/javascript">
-    preview = new scpr.Preview({baseUrl: '<%= @record.admin_show_path %>'});
+    preview = new outpost.Preview({baseUrl: '<%= @record.admin_show_path %>'});
 
     newsroom = new scpr.Newsroom(
       "<%= @record.obj_key %>", // room ID

@@ -5,7 +5,7 @@
 
 <% content_for :footer do %>
   <script>
-    aggregator = new scpr.Aggregator(
+    aggregator = new outpost.Aggregator(
       "#aggregator", "#related_content_json", 
       <%= j record.outgoing_references.includes(:related).map(&:related).to_json.html_safe %>, 
       { view: { active: 'search' } });

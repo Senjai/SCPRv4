@@ -12,13 +12,13 @@ class scpr.Newsroom
     class @Alert
         #-----------------
         # When the requested room(s) are empty
-        class @Empty extends scpr.Notification
+        class @Empty extends outpost.Notification
             constructor: (el) ->
                 super el, "info", "There is nobody else here."
     
         #-----------------
         # When there is an error reaching the Node server
-        class @Offline extends scpr.Notification
+        class @Offline extends outpost.Notification
             constructor: (el) ->
                 super el, "error", "Newsroom Alerts are currently offline."
 

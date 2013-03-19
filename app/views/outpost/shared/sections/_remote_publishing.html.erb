@@ -24,7 +24,7 @@
   <% content_for :footer do %>
     <script type="text/javascript">
       $(function() {
-        publishingUI = new scpr.PublishingUI({
+        publishingUI = new outpost.PublishingUI({
           form: "#<%=f.options[:html][:id]%>",
           notifications: "#scheduled_status",
           statusField: "#status-select"

@@ -1,5 +1,5 @@
 ##
-# scpr.Aggregator
+# outpost.Aggregator
 #
 # Hooks into ContentAPI to help YOU, our loyal
 # customer, aggregate SCPR content for various
@@ -13,7 +13,7 @@
 #   find content by searching, selecting
 #   from the recent content, or dropping in a URL.
 #
-class scpr.Aggregator
+class outpost.Aggregator
 
     #---------------------
     
@@ -31,7 +31,7 @@ class scpr.Aggregator
         # Set the type of API we're dealing with
         apiClass = if @options.apiType is "public" then "ContentCollection" else "PrivateContentCollection"
         
-        @baseView = new scpr.Aggregator.Views.Base _.extend options.view || {},
+        @baseView = new outpost.Aggregator.Views.Base _.extend options.view || {},
             el: @el
             collection: new scpr.ContentAPI[apiClass](json)
             input: @input
@@ -80,12 +80,12 @@ class scpr.Aggregator
                 @$el.html @template(active: @options.active)
                             
                 # Build each of the tabs
-                @recentContent = new scpr.Aggregator.Views.RecentContent(base: @)
-                @search        = new scpr.Aggregator.Views.Search(base: @)
-                @url           = new scpr.Aggregator.Views.URL(base: @)
+                @recentContent = new outpost.Aggregator.Views.RecentContent(base: @)
+                @search        = new outpost.Aggregator.Views.Search(base: @)
+                @url           = new outpost.Aggregator.Views.URL(base: @)
                 
                 # Build the Drop Zone section
-                @dropZone = new scpr.Aggregator.Views.DropZone
+                @dropZone = new outpost.Aggregator.Views.DropZone
                     collection: @collection # The bootstrapped content
                     base: @
                     
@@ -105,19 +105,19 @@ class scpr.Aggregator
             # Define alerts as functions
             @Alerts:
                 success: (el, data) ->
-                    new scpr.Notification(el, "success", 
+                    new outpost.Notification(el, "success", 
                         "<strong>Success!</strong> Imported #{data.id}")
 
                 alreadyExists: (el) ->
-                    new scpr.Notification(el, "warning", 
+                    new outpost.Notification(el, "warning", 
                         "That content is already in the drop zone.")
 
                 invalidUrl: (el, url) ->
-                    new scpr.Notification(el, "error", 
+                    new outpost.Notification(el, "error", 
                         "<strong>Failure.</strong> Invalid URL (#{url})")
 
                 error: (el) -> 
-                    new scpr.Notification(el, "error", 
+                    new outpost.Notification(el, "error", 
                         "<strong>Error.</strong> Try the Search tab.")
 
             #---------------------
@@ -305,7 +305,7 @@ class scpr.Aggregator
                 # render it, highlight it
                 # If it does already exist, then just return false
                 if not @collection.get model.id
-                    view = new scpr.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
+                    view = new outpost.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
                         model: model
 
                     @$el.append view.render()
@@ -342,7 +342,7 @@ class scpr.Aggregator
                 # Otherwise, set the position and add it to the collection
                 if not @collection.get id
                     @collection.add model
-                    view = new scpr.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
+                    view = new outpost.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
                         model: model
                         
                     el.replaceWith view.render()
@@ -417,7 +417,7 @@ class scpr.Aggregator
                 # For each model, create a new model view and append it
                 # to the el
                 @collection.each (model) =>
-                    view = new scpr.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
+                    view = new outpost.Aggregator.Views.ContentFull _.extend @base.options.viewOptions,
                         model: model
                         
                     @$el.append view.render()
@@ -546,7 +546,7 @@ class scpr.Aggregator
                     message: @errorTemplate(xhr: xhr)
                     method: "replace"
                     
-                alert = new scpr.Notification(options.el, 
+                alert = new outpost.Notification(options.el, 
                     options.type, options.message)
                     
                 alert[options.method]()
@@ -560,7 +560,7 @@ class scpr.Aggregator
                     message: "No results"
                     method: "replace"
                     
-                alert = new scpr.Notification(options.el, 
+                alert = new outpost.Notification(options.el, 
                     options.type, options.message)
                     
                 alert[options.method]()
@@ -571,7 +571,7 @@ class scpr.Aggregator
                 @resultsEl.empty()
                 
                 @collection.each (model) =>
-                    view = new scpr.Aggregator.Views.ContentMinimal
+                    view = new outpost.Aggregator.Views.ContentMinimal
                         model: model
                         
                     @resultsEl.append view.render()
@@ -715,7 +715,7 @@ class scpr.Aggregator
             #---------------------
 
             append: (model) ->
-                view = new scpr.Aggregator.Views.ContentMinimal
+                view = new outpost.Aggregator.Views.ContentMinimal
                     model: model
 
                 @resultsEl.append view.render()

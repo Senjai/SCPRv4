@@ -3,7 +3,7 @@
 #
 # Some shared code for rendering alerts, and toggling fields
 #
-class scpr.PublishingHelper
+class outpost.PublishingHelper
     statusPending:    "3"
     statusPublished:  "5"
     

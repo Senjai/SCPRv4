@@ -2,7 +2,7 @@
 # AssetManager
 #
 # For Managing Assets
-class scpr.AssetManager
+class outpost.AssetManager
     DefaultOptions:
         jsonInput: "#asset_json"
 
@@ -14,7 +14,7 @@ class scpr.AssetManager
         @el = $(el)
 
         @assets     = new scpr.AssetHost.Assets(assets)
-        @assetsView = new scpr.AssetManager.Assets(collection: @assets)
+        @assetsView = new outpost.AssetManager.Assets(collection: @assets)
         
         @el.html @assetsView.el
         
@@ -67,7 +67,7 @@ class scpr.AssetManager
                 @_views = {}
                 
             @collection.bind 'add', (f) => 
-                @_views[f.cid] = new scpr.AssetManager.Asset
+                @_views[f.cid] = new outpost.AssetManager.Asset
                     model: f
                 
                 @renderCollection()
@@ -115,7 +115,7 @@ class scpr.AssetManager
         render: ->
             @$el.html JST['outpost/templates/asset_manager']
             @collectionEl = $(".collection", @$el)
-            @emptyNotification = new scpr.Notification(
+            @emptyNotification = new outpost.Notification(
                 @collectionEl, 
                 "info", 
                 "There are no assets. Click the button to open AssetHost."
@@ -133,7 +133,7 @@ class scpr.AssetManager
             @collection.each (asset, index) =>
                 asset.set(ORDER: index)
 
-                @_views[asset.cid] ?= new scpr.AssetManager.Asset
+                @_views[asset.cid] ?= new outpost.AssetManager.Asset
                     model: asset
             
             views = _(@_views).sortBy (a) => a.model.get("ORDER")

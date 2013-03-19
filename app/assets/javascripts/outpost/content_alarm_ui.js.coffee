@@ -4,16 +4,17 @@
 # Show/hide ContentAlarm fields based on status.
 # Also renders messages based on status & timestamp
 #
-class scpr.ContentAlarmUI extends scpr.PublishingHelper
+class outpost.ContentAlarmUI extends outpost.PublishingHelper
     constructor: (@options={}) ->
         super
         
-        @datetimeField = @container.find("input.datetime") # The actual datetime input 
+        # The actual datetime input 
+        @datetimeField = @container.find("input.datetime")
         
         # Alerts
         @alerts =
-            isScheduled:    new scpr.Notification(@notifications, "success", "This content is <strong>scheduled</strong> to be published.")
-            isNotScheduled: new scpr.Notification(@notifications, "info", "This content is <strong>not scheduled</strong> to be published.")
+            isScheduled:    new outpost.Notification(@notifications, "success", "This content is <strong>scheduled</strong> to be published.")
+            isNotScheduled: new outpost.Notification(@notifications, "info", "This content is <strong>not scheduled</strong> to be published.")
 
         # Notify the scheduled status
         @originalStatus = @setStatus() # also sets @status

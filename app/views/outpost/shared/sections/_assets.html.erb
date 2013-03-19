@@ -6,7 +6,7 @@
   
   <script>
     $(document).ready(function() {
-      new scpr.AssetManager(<%= raw record.assets.to_json %>, "#asset_bucket")
+      new outpost.AssetManager(<%= raw record.assets.to_json %>, "#asset_bucket")
     });
   </script>
 <% end %>

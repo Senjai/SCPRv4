@@ -21,7 +21,7 @@
 
   <% content_for :footer do %>
     <script>
-      aggregator = new scpr.Aggregator(
+      aggregator = new outpost.Aggregator(
         "#aggregator", "#segment_json",
         <%= j record.segments.to_json.html_safe %>,
         {
