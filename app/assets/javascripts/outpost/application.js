@@ -1,27 +1,24 @@
 //= require jquery-ui-1.10.0.custom.min
 //= require date.min
+//= require select2
 
 //= require bootstrap-scrollspy
 //= require bootstrap-alert
 //= require bootstrap-affix
 //= require bootstrap-tooltip
-
-// NOTE This is not an official bootstrap JS
 //= require bootstrap-datepicker
 
-// CKEDITOR
-// Put plugins in: vendor/assets/javascripts/ckeditor/plugins
 //= require ckeditor-jquery
 //= require ckeditor/plugins/mediaembed/plugin
 //= require ckeditor/plugins/codemirror/plugin
 
-//= require select2
-
+//= require outpost/base
 //= require outpost/assethost/assethostbase
 //= require outpost/content_api
 //= require outpost/assethost/assethost
 
 //= require_tree ./templates/
+//= require outpost/templates
 
 //= require outpost/notification
 //= require outpost/newsroom
