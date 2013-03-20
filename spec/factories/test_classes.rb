@@ -8,6 +8,7 @@ FactoryGirl.define do
     teaser "Cool Teaser"
     slug { headline.parameterize }
     status 5
+    short_url "http://bit.ly/kpcc"
   end
   
   factory :test_class_remote_story, class: TestClass::RemoteStory do
@@ -18,6 +19,7 @@ FactoryGirl.define do
     slug { headline.parameterize }
     status 5
     published_at { Time.now }
+    remote_url "http://kpcc.org"
   end
   
   factory :test_class_post, class: TestClass::Post do

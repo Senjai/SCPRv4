@@ -29,7 +29,7 @@ class Link < ActiveRecord::Base
   #--------------
   # Validation
   validates :title, presence: true
-  validates :link, presence: true, url: true
+  validates :link, presence: true, url: { allowed: [URI::HTTP, URI::FTP]}
 
   #--------------
   # Callbacks

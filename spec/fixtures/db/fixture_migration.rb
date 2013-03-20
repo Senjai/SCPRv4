@@ -9,6 +9,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.datetime :published_at
       t.integer :status
       t.integer :category_id
+      t.string :short_url
       t.timestamps
     end
     
@@ -48,6 +49,7 @@ class FixtureMigration < ActiveRecord::Migration
     create_table :test_class_people, force: true do |t|
       t.string :name
       t.string :slug
+      t.string :twitter_url
       t.timestamps
     end
   end
