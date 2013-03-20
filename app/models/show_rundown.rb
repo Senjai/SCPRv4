@@ -6,6 +6,13 @@ class ShowRundown < ActiveRecord::Base
   
   #------------------------
   
+  def simple_json
+    {
+      "id"       => self.segment.try(:obj_key), # TODO Store this in join table
+      "position" => self.segment_order.to_i
+    }
+  end
+
   before_create :check_segment_order, if: -> { self.segment_order.blank? }
   
   def check_segment_order

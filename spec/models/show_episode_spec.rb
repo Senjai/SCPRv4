@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe ShowEpisode do
-  describe "callbacks" do    
+  describe "callbacks" do
     describe "generate_headline" do
       let(:program) { build :kpcc_program, title: "Cool Show" }
 
@@ -32,7 +32,7 @@ describe ShowEpisode do
 
   #------------------
   
-  describe "scopes" do    
+  describe "scopes" do
     describe "#published" do
       it "orders published content by air_date descending" do
         episodes = create_list :show_episode, 3, status: ContentBase::STATUS_LIVE
@@ -48,6 +48,51 @@ describe ShowEpisode do
     it "is the body" do
       show_episode = build :show_episode, body: "hello"
       show_episode.teaser.should eq show_episode.body
+    end
+  end
+
+  #------------------
+
+  describe '#rundown_json' do
+    it "uses simple_json for the join model" do
+      episode = create :show_episode
+      segment = create :show_segment
+      rundown = episode.rundowns.build(segment: segment, segment_order: 0)
+      rundown.save!
+
+      episode.rundown_json.should eq [rundown.simple_json].to_json
+      episode.segments.should eq [segment]
+    end
+  end
+
+  #------------------
+
+  describe '#rundown_json=' do
+    let(:episode)  { create :show_episode }
+    let(:segment1) { create :show_segment }
+    let(:segment2) { create :show_segment }
+
+    it "adds them ordered by position" do
+      episode.rundown_json = "[{ \"id\": \"#{segment2.obj_key}\", \"position\": 1 }, {\"id\": \"#{segment1.obj_key}\", \"position\": 0 }]"
+      episode.segments.should eq [segment1, segment2]
+    end
+    
+    it "parses the json and sets the content" do
+      episode.segments.should be_empty
+      episode.rundown_json = "[{\"id\": \"#{segment1.obj_key}\", \"position\": 0 }, { \"id\": \"#{segment2.obj_key}\", \"position\": 1 }]"
+      episode.segments.should eq [segment1, segment2]
+    end
+    
+    it 'does not do anything if json is an empty string' do
+      episode.segments.should be_empty
+      episode.rundown_json = "[{\"id\": \"#{segment1.obj_key}\", \"position\": 0 }, { \"id\": \"#{segment2.obj_key}\", \"position\": 1 }]"
+      episode.segments.should_not be_empty
+      
+      episode.rundown_json = ""
+      episode.segments.should_not be_empty
+      
+      episode.rundown_json = "[]"
+      episode.segments.should be_empty
     end
   end
 end

@@ -48,9 +48,6 @@ class ShowEpisode < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  attr_accessor :segment_json
-  before_save :parse_segment_json
-  
   before_validation :generate_headline, if: -> { self.headline.blank? }
   def generate_headline
     if self.air_date.present?
@@ -116,27 +113,30 @@ class ShowEpisode < ActiveRecord::Base
   end
   
   #----------
-    
-  def parse_segment_json
-    return if self.segment_json.blank?
-    @_loaded_rundowns = []
+  
+  def rundown_json
+    self.rundowns.map(&:simple_json).to_json
+  end
 
-    Array(JSON.parse(self.segment_json)).each do |segment_hash|
-      if segment = ContentBase.obj_by_key(segment_hash["id"])
-        # Protect against AssociationMismatch Error
-        if segment.is_a? ShowSegment
-          association = ShowRundown.new(
-            :segment_order => segment_hash["position"], 
-            :segment       => segment, 
-            :episode       => self
-          )
-        
-          @_loaded_rundowns.push association
-        end
+  #----------
+
+  def rundown_json=(json)
+    return if json.empty?
+
+    json = Array(JSON.parse(json)).sort_by { |c| c["position"].to_i }
+    loaded_rundowns = []
+
+    json.each do |rundown_hash|
+      if (segment = ContentBase.obj_by_key(rundown_hash["id"])) && segment.is_a?(ShowSegment)
+        rundown = ShowRundown.new(
+          :segment_order => rundown_hash["position"].to_i, 
+          :segment       => segment
+        )
+      
+        loaded_rundowns.push rundown
       end
     end
     
-    self.rundowns = @_loaded_rundowns
-    true
+    self.rundowns = loaded_rundowns
   end
 end
