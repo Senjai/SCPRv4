@@ -1,5 +1,8 @@
 <%= form_block "Full Details" do %>
   <%= f.input :headline, input_html: { class: "wide sluggable" } %>
+  <div class="alert alert-warning" style="text-align:center;">
+    <h4 style="display:inline-block;">Save often!</h4><a class="close" data-dismiss="alert">&times;</a>
+  </div>
   <%= f.input :body, input_html: { class: "ckeditor" } %>
   <%= extra %>
 <% end %>
