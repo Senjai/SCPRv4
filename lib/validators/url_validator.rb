@@ -1,7 +1,7 @@
 class UrlValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     if !valid_uri?(value)
-      record.errors[attribute].push "is not a valid url. Be sure to include 'http://'."
+      record.errors[attribute].push "is not a valid url. Be sure to include a valid protocol, such as 'http://'."
     end
   end
 
@@ -11,8 +11,9 @@ class UrlValidator < ActiveModel::EachValidator
 
   def valid_uri?(value)
     begin
-      URI.parse(URI.encode(value)).kind_of?(URI::HTTP)
-    rescue URI::InvalidURIError
+      uri = URI.parse(URI.encode(value))
+      uri.is_a?(URI::HTTP) || uri.is_a?(URI::FTP)
+    rescue URI::Error
       false
     end
   end
