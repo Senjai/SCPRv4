@@ -35,7 +35,7 @@ class UrlValidator < ActiveModel::EachValidator
 
   def valid_uri?(value)
     begin
-      uri       = URI.parse(URI.encode(value))
+      uri       = URI.parse(URI.encode(value.to_s))
       allowed   = options[:allowed] || DEFAULT_ALLOWED_CLASSES
       allowed.any? { |klass| uri.is_a?(klass) }
     rescue URI::Error
