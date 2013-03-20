@@ -9,7 +9,7 @@ module Concern
       extend ActiveSupport::Concern
       
       included do
-        has_many :related_links, as: :content, class_name: "Link", dependent: :destroy
+        has_many :related_links, as: :content, dependent: :destroy
         accepts_nested_attributes_for :related_links, allow_destroy: true, reject_if: :should_reject_related_links?
       end
       
@@ -19,7 +19,7 @@ module Concern
       
       def should_reject_related_links?(attributes)
         attributes['title'].blank? &&
-        attributes['link'].blank?
+        attributes['url'].blank?
       end
     end # RelatedLinksAssociation
   end # Associations
