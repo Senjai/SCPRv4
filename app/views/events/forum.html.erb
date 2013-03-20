@@ -151,11 +151,14 @@
                   <div class="info">
                     <h4 class="story-title"><%= link_to event.headline, event.link_path %></h4>
                     <p class="byline"><%= format_date event.starts_at, format: :full_date %></p>
+
                     <% if event.audio.present? %>
                       <%= content_tag :div, link_to("Listen to this event", event.audio.first.url, class: "inline audio-toggler", title: event.headline), class: "story-audio inline" %>
-                    <% elsif event.show_comments %>
-                      <%= comment_count_for event %>
+                      <br />
                     <% end %>
+
+                    <%= comment_count_for event %>
+
                   </div> <!-- info -->
                 </div> <!-- span -->
               </div> <!-- row fluid -->

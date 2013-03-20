@@ -33,15 +33,15 @@ describe EventPresenter do
       p.sponsor.should eq nil
     end
     
-    it "contains a link if sponsor_link is present" do
-      event = build :event, sponsor: "KPCC", sponsor_link: "scpr.org"
+    it "contains a link if sponsor_url is present" do
+      event = build :event, sponsor: "KPCC", sponsor_url: "scpr.org"
       p = presenter(event)
       p.sponsor.should match /a href/
       p.sponsor.should match /scpr\.org/
       p.sponsor.should match /KPCC/
     end
     
-    it "returns the sponsor if no sponsor_link is present" do
+    it "returns the sponsor if no sponsor_url is present" do
       event = build :event, sponsor: "KPCC"
       p = presenter(event)
       p.sponsor.should_not match /a href/
@@ -81,43 +81,43 @@ describe EventPresenter do
   
   #-------------------
   
-  describe "#rsvp_link" do
-    it "returns nil if rsvp_link is blank" do
-      event = build :event, rsvp_link: nil
+  describe "#rsvp_url" do
+    it "returns nil if rsvp_url is blank" do
+      event = build :event, rsvp_url: nil
       p = presenter(event)
-      event.rsvp_link.should eq nil
+      event.rsvp_url.should eq nil
     end
 
     it "returns nil if event not upcoming" do
       event = build :event
       event.stub(:upcoming?) { false }
       p = presenter(event)
-      p.rsvp_link.should eq nil
+      p.rsvp_url.should eq nil
     end
     
-    it "returns a link if rsvp_link is present and event is upcoming" do
-      event = build :event, rsvp_link: "scpr.org"
+    it "returns a link if rsvp_url is present and event is upcoming" do
+      event = build :event, rsvp_url: "scpr.org"
       event.stub(:upcoming?) { true }
       p = presenter(event)
-      p.rsvp_link.should match /a href/
-      p.rsvp_link.should match /scpr\.org/
-      p.rsvp_link.should match /RSVP/
+      p.rsvp_url.should match /a href/
+      p.rsvp_url.should match /scpr\.org/
+      p.rsvp_url.should match /RSVP/
     end
   end
   
   #-------------------
   
   describe "#location_name" do
-    it "contains a link if location_link is present" do
-      event = build :event, location_name: "Forum", location_link: "scpr.org/forum"
+    it "contains a link if location_url is present" do
+      event = build :event, location_name: "Forum", location_url: "scpr.org/forum"
       p = presenter(event)
       p.location_name.should match /a href/
       p.location_name.should match /scpr\.org/
       p.location_name.should match /Forum/
     end
     
-    it "returns the location name plain if location_link not present" do
-      event = build :event, location_name: "Forum", location_link: nil
+    it "returns the location name plain if location_url not present" do
+      event = build :event, location_name: "Forum", location_url: nil
       p = presenter(event)
       p.location_name.should_not match /a href/
       p.location_name.should match /Forum/

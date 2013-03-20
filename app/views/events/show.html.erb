@@ -23,6 +23,8 @@
   <% end %>
 
   <div class="fold events-fold" id="fold">
+    <%= render "/shared/cwidgets/related_content_and_links", content: @event %>
+
     <% if @more_events.present? && (@event.upcoming? || @event.current?) && @event.is_forum_event? %>
       <aside class="more-events" id="more-events">
         <div class="row-fluid">

@@ -20,8 +20,8 @@ class EventPresenter < ApplicationPresenter
     if event.sponsor.present?
       h.content_tag :p, class: "sponsor" do
         s = "Sponsor: " 
-        if event.sponsor_link?
-          s += h.link_to event.sponsor, event.sponsor_link
+        if event.sponsor_url.present?
+          s += h.link_to event.sponsor, event.sponsor_url
         else
           s += event.sponsor
         end
@@ -45,17 +45,17 @@ class EventPresenter < ApplicationPresenter
 
   #-------------
   
-  def rsvp_link
-    if event.rsvp_link.present? && event.upcoming?
-      h.link_to "RSVP for this event", event.rsvp_link, class: "btn primary", id: "events-rsvp-btn"
+  def rsvp_url
+    if event.rsvp_url.present? && event.upcoming?
+      h.link_to "RSVP for this event", event.rsvp_url, class: "btn primary", id: "events-rsvp-btn"
     end
   end
 
   #-------------
   
   def location_name
-    if event.location_link.present?
-      h.link_to event.location_name, event.location_link
+    if event.location_url.present?
+      h.link_to event.location_name, event.location_url
     else
       event.location_name
     end

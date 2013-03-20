@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320153616) do
+ActiveRecord::Schema.define(:version => 20130320212113) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id"
@@ -394,19 +394,19 @@ ActiveRecord::Schema.define(:version => 20130320153616) do
     t.datetime "expire_date",                        :null => false
   end
 
-  create_table "events_event", :force => true do |t|
+  create_table "events", :force => true do |t|
     t.string   "headline"
     t.string   "slug",                :limit => 50
     t.text     "body",                :limit => 2147483647
-    t.string   "etype"
+    t.string   "event_type"
     t.string   "sponsor"
-    t.string   "sponsor_link",        :limit => 200
+    t.string   "sponsor_url"
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.boolean  "is_all_day",                                :default => false, :null => false
     t.string   "location_name"
-    t.string   "location_link",       :limit => 200
-    t.string   "rsvp_link",           :limit => 200
+    t.string   "location_url"
+    t.string   "rsvp_url"
     t.boolean  "show_map",                                  :default => true,  :null => false
     t.string   "address_1"
     t.string   "address_2"
@@ -415,20 +415,19 @@ ActiveRecord::Schema.define(:version => 20130320153616) do
     t.string   "zip_code"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
-    t.boolean  "kpcc_event",                                :default => false, :null => false
+    t.boolean  "is_kpcc_event",                             :default => false, :null => false
     t.text     "archive_description", :limit => 2147483647
-    t.string   "old_audio",           :limit => 100
-    t.boolean  "is_published",                              :default => false, :null => false
-    t.boolean  "show_comments",                             :default => false, :null => false
     t.text     "teaser",              :limit => 2147483647
     t.string   "event_asset_scheme"
     t.integer  "kpcc_program_id"
+    t.integer  "status"
   end
 
-  add_index "events_event", ["etype"], :name => "index_events_event_on_etype"
-  add_index "events_event", ["kpcc_program_id"], :name => "events_event_7666a8c6"
-  add_index "events_event", ["slug"], :name => "events_event_slug"
-  add_index "events_event", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
+  add_index "events", ["event_type"], :name => "index_events_event_on_etype"
+  add_index "events", ["kpcc_program_id"], :name => "events_event_7666a8c6"
+  add_index "events", ["slug"], :name => "events_event_slug"
+  add_index "events", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
+  add_index "events", ["status"], :name => "index_events_on_status"
 
   create_table "flatpages_flatpage", :force => true do |t|
     t.string   "url",          :limit => 100,                           :null => false

@@ -172,7 +172,7 @@ describe Event do
     describe "published" do
       it "only selects published content" do
         published   = create :event, :published
-        unpublished = create :event, is_published: 0
+        unpublished = create :event, status: Event::STATUS_HIDDEN
         Event.published.should eq [published]
       end
     end
@@ -214,9 +214,9 @@ describe Event do
     
     describe "forum" do
       it "only selects events of types in ForumTypes array" do
-        spon_event   = create :event, :published, etype: "spon" # "spon" = sponsored
-        pick_event   = create :event, :published, etype: "pick"
-        comm_event   = create :event, :published, etype: "comm"
+        spon_event   = create :event, :published, event_type: "spon" # "spon" = sponsored
+        pick_event   = create :event, :published, event_type: "pick"
+        comm_event   = create :event, :published, event_type: "comm"
         forum_events = Event.forum
         forum_events.should eq [comm_event]
       end
@@ -224,9 +224,9 @@ describe Event do
     
     describe "sponsored" do
       it "only selects events of type 'spon'" do
-        spon_event  = create :event, :published, etype: "spon"
-        pick_event  = create :event, :published, etype: "pick"
-        comm_event  = create :event, :published, etype: "comm"
+        spon_event  = create :event, :published, event_type: "spon"
+        pick_event  = create :event, :published, event_type: "pick"
+        comm_event  = create :event, :published, event_type: "comm"
         spon_events = Event.sponsored
         spon_events.should eq [spon_event]
       end
@@ -237,14 +237,14 @@ describe Event do
   
   describe "#is_forum_event" do
     it "is true if event type in the ForumTypes variable" do
-      Event::ForumTypes.each do |etype|
-        event = build :event, etype: etype
+      Event::ForumTypes.each do |event_type|
+        event = build :event, event_type: event_type
         event.is_forum_event?.should be_true
       end
     end
     
     it "is false if event is something else" do
-      event = build :event, etype: "spon"
+      event = build :event, event_type: "spon"
       event.is_forum_event?.should be_false
     end
   end

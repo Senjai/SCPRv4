@@ -1,12 +1,12 @@
 class Event < ActiveRecord::Base
-  self.table_name  = "events_event"
-  self.primary_key = "id"
   outpost_model
   has_secretary
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
+  include Concern::Associations::RelatedLinksAssociation
+  include Concern::Associations::RelatedContentAssociation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::HeadlineMethods
@@ -28,17 +28,25 @@ class Event < ActiveRecord::Base
     'spon' => 'Sponsored',
     'pick' => 'Staff Picks'
   }
-  
+
+  STATUS_HIDDEN = ContentBase::STATUS_DRAFT
+  STATUS_LIVE   = ContentBase::STATUS_LIVE
+
+  STATUS_TEXT = {
+    STATUS_HIDDEN => "Hidden",
+    STATUS_LIVE   => "Live"
+  }
+
   #-------------------
   # Scopes
-  scope :published,             -> { where(is_published: true) }
-  scope :forum,                 -> { published.where("etype IN (?)", ForumTypes) }
-  scope :sponsored,             -> { published.where("etype = ?", "spon") }
+  scope :published,             -> { where(status: STATUS_LIVE) }
+  scope :forum,                 -> { published.where("event_type IN (?)", ForumTypes) }
+  scope :sponsored,             -> { published.where("event_type = ?", "spon") }
   
   scope :upcoming,              -> { published.where("starts_at > ?", Time.now).order("starts_at") }
   scope :upcoming_and_current,  -> { published.where("ends_at > :now or starts_at > :now", now: Time.now).order("starts_at") }
   scope :past,                  -> { published.where("ends_at < :now", now: Time.now).order("starts_at desc") }
-  
+
   #-------------------
   # Associations
   belongs_to :kpcc_program
@@ -46,19 +54,25 @@ class Event < ActiveRecord::Base
   #-------------------
   # Validations
   validates :headline, presence: true
-  validates :etype, :starts_at, :body, presence: true, if: :should_validate?
-  validates :slug, unique_by_date: { scope: :starts_at, filter: :day, message: "has already been used for that start date." },
-    if: :should_validate?
+  validates :event_type, :starts_at, :body, presence: true, if: :should_validate?
+  
+  validates :location_url, :sponsor_url, url: { allow_blank: true }
+  validates :rsvp_url, url: { allow_blank: true, allowed: [URI::HTTP, URI::MailTo] }
+
+  validates :slug, unique_by_date: { 
+    :scope      => :starts_at,
+    :filter     => :day,
+    :message    => "has already been used for that start date."
+  }, if: :should_validate?
   
   def needs_validation?
     self.published?
   end
   
   def published?
-    self.is_published
+    self.status == STATUS_LIVE
   end
 
-  
   #-------------------
   # Callbacks
   after_save :expire_cache
@@ -82,21 +96,26 @@ class Event < ActiveRecord::Base
     def event_types_select_collection
       Event::EVENT_TYPES.map { |k,v| [v, k] }
     end
+
+    def status_select_collection
+      STATUS_TEXT.map { |status, text| [text, status] }
+    end
   end
   
   # -------------------
   
   def expire_cache
-    if self.is_published
+    if self.published?
       Rails.cache.expire_obj(self.obj_key)
       Rails.cache.expire_obj("events/event:new") if self.new_record?
     end
   end
 
   # -------------------
-  
-  def status
-    is_published ? ContentBase::STATUS_LIVE : ContentBase::STATUS_DRAFT
+  # Event doesn't really have a "Publish" date, so we'll just use the 
+  # start date to fake this.
+  def published_at
+    self.starts_at
   end
   
   # -------------------
@@ -157,7 +176,7 @@ class Event < ActiveRecord::Base
   #----------
   
   def is_forum_event?
-    ForumTypes.include? self.etype
+    ForumTypes.include? self.event_type
   end
   
   #----------
