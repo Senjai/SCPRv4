@@ -28,8 +28,6 @@ class RelatedLink < ActiveRecord::Base
   validates :title, presence: true
   validates :url, presence: true, url: { allowed: [URI::HTTP, URI::FTP]}
 
-#  alias_attribute :link, :url
-
   #--------------
   # Callbacks
   
