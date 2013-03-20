@@ -51,14 +51,6 @@ class AdminUser < ActiveRecord::Base
       :headshot     => self.bio.try(:headshot) ? self.bio.headshot.thumb.url : nil
     }
   end
-  
-  def authenticate(unencrypted_password)
-    if self.password_digest.present?
-      super
-    else
-      authenticate_legacy(unencrypted_password)
-    end
-  end
 
   # Private: Generate a username based on real name
   #
@@ -78,11 +70,25 @@ class AdminUser < ActiveRecord::Base
 
     self.username = dirty_name
   end
-  
+
+  # ----------------
+  # Override has_secure_password, so we can authenticate
+  # with legacy password if necessary.
+  def authenticate(unencrypted_password)
+    if self.password_digest.present?
+      super
+    else
+      authenticate_legacy(unencrypted_password)
+    end
+  end
+
   # ----------------
 
   private
 
+  # ----------------
+  # Authenticate using the django-style password.
+  # Save the new password on success.
   def authenticate_legacy(unencrypted_password)
     algorithm, salt, hash = self.old_password.split('$')
     if hash.to_s == Digest::SHA1.hexdigest(salt.to_s + unencrypted_password)

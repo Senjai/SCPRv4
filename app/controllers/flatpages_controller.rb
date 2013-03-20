@@ -7,7 +7,7 @@ class FlatpagesController < ApplicationController
 
   def show
     # params[:flatpage_path] gets its slashes stripped by route globbing
-    @flatpage = Flatpage.visible.find_by_url!("/#{params[:flatpage_path]}/")
+    @flatpage = Flatpage.visible.find_by_url!("/#{params[:flatpage_path].downcase}/")
     
     # Is this a redirect? Send them on their way.
     if @flatpage.is_redirect?
