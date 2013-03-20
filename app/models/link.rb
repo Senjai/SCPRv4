@@ -28,16 +28,19 @@ class Link < ActiveRecord::Base
 
   #--------------
   # Validation
-  validates :title, :link, presence: true
-  
+  validates :title, presence: true
+  validates :link, presence: true, url: true
+
   #--------------
   # Callbacks
   
   #----------
   
   def domain
-    if self.link
-      URI.parse(URI.encode(self.link)).host
+    @domain ||= begin
+      if self.link
+        URI.parse(URI.encode(self.link)).host
+      end
     end
   end
 end

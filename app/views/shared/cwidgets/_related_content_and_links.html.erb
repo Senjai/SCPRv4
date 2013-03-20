@@ -31,7 +31,7 @@
             <ul>
               <% content.related_links.normal.each do |link| %>
                 <li>
-                <%= link_to link.title, link.link %> <span class="domain"> | <%= link.domain.gsub(/^www\./, "") %></span>
+                <%= link_to link.title, link.link %> <span class="domain"> | <%= link.domain ? link.domain.gsub(/^www\./, "") : link.link %></span>
                 </li>
               <% end %>
             </ul>

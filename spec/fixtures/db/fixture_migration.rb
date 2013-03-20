@@ -21,6 +21,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.datetime :published_at
       t.integer :status
       t.integer :category_id
+      t.string :remote_url
       t.timestamps
     end
     

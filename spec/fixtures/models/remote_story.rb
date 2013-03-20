@@ -4,5 +4,7 @@ module TestClass
     
     include Concern::Validations::PublishedAtValidation
     include Concern::Validations::SlugValidation
+
+    validates :remote_url, url: true
   end
 end
