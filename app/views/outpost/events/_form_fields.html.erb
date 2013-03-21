@@ -2,6 +2,8 @@
   <%= f.input :headline, label: "Title", input_html: { class: 'wide sluggable' } %>
   <%= f.input :event_type, label: "Type", collection: Event::EVENT_TYPES.map { |k, v| [v, k] }, include_blank: false %>
   <%= f.input :status, collection: Event.status_select_collection, input_html: { id: "status-select" } %>
+
+  <%= render "/outpost/shared/hero" %>
   <%= f.input :body, input_html: { class: 'ckeditor' } %>
 <% end %>
 
