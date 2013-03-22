@@ -264,6 +264,16 @@ module ApplicationHelper
   
   #----------
   
+  def pij_source(content, options={})
+    message = options[:message] || "This story was informed by KPCC listeners."
+
+    if content.is_from_pij?
+      render '/shared/cwidgets/pij_notice', message: message
+    end
+  end
+
+  #----------
+
   def comment_widget_for(object, options={})
     if object.present? and object.respond_to?(:disqus_identifier)
       render('shared/cwidgets/comment_count', { content: object, cssClass: "" }.merge!(options))

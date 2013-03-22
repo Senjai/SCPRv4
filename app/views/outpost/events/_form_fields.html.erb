@@ -37,6 +37,7 @@
   <%= f.input :sponsor_url, hint: "If present, makes the contact text a link to this URL." %>
   <%= f.association :kpcc_program, hint: "If this event belongs to a KPCC-produced show, select it here." %>
   <%= f.input :is_kpcc_event, label: "KPCC Event?", hint: "Event is sponsored by or on behalf of KPCC." %>
+  <%= f.input :is_from_pij, hint: "Was this event informed by PIJ Sources?" %>
 <% end %>
 
 <%= form_block "Extra" do %>

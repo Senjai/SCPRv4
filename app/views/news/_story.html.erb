@@ -23,9 +23,7 @@
       <p><i><%= render_contributing_byline story %></i></p>
       <div class="visible-reader"><%= content_widget "extra_audio", story %></div>
       
-      <% if story.is_from_pij? %>
-        <%= render '/shared/cwidgets/pij_notice' %>
-      <% end %>
+      <%= pij_source(story) %>
     </footer>
   </article>
   

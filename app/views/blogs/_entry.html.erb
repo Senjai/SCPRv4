@@ -18,21 +18,20 @@
         </header>
     
         <div class="story-body">
-          <div class="visible-reader"><%= widget "primary_audio", entry %></div>
+          <div class="visible-reader"><%= content_widget "primary_audio", entry %></div>
           
           <%= render_asset entry, "blog" %>
           <%= entry.send(full ? :body : :extended_teaser).html_safe %>
         </div>
     
         <footer>
-          <i><%= render_contributing_byline entry %></i>
-          <div class="visible-reader"><%= widget "extra_audio", entry %></div>
-          
-          <% if entry.is_from_pij? %>
-            <%= render '/shared/cwidgets/pij_notice' %>
-          <% end %>
+          <p><i><%= render_contributing_byline entry %></i></p>
+          <div class="visible-reader"><%= content_widget "extra_audio", entry %></div>
+
+          <%= pij_source(entry) %>
         </footer>
       </article>
+
       <%= content_widget("social_tools", entry, cssClass: "horizontal bottom") if full %>
     </div> <!-- span18 -->
   </div> <!-- row fluid -->
