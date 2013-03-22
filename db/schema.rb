@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320212113) do
+ActiveRecord::Schema.define(:version => 20130322175046) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id"
@@ -421,6 +421,7 @@ ActiveRecord::Schema.define(:version => 20130320212113) do
     t.string   "event_asset_scheme"
     t.integer  "kpcc_program_id"
     t.integer  "status"
+    t.boolean  "is_from_pij"
   end
 
   add_index "events", ["event_type"], :name => "index_events_event_on_etype"
@@ -833,6 +834,7 @@ ActiveRecord::Schema.define(:version => 20130320212113) do
     t.datetime "published_at"
     t.datetime "updated_at",                                 :null => false
     t.integer  "category_id"
+    t.boolean  "is_from_pij"
   end
 
   add_index "shows_segment", ["category_id"], :name => "shows_segment_42dc49bc"
