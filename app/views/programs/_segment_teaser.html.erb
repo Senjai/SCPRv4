@@ -9,7 +9,7 @@
       <div class="span18">
     <% end %>
       <div class="info">
-        <h3><%= link_to segment.headline, segment.link_path %></h3>
+        <h3><%= link_to segment.short_headline, segment.link_path %></h3>
         <span class="byline">
           <%= timestamp(segment.published_at) %> <span class="pipe">|</span> <%= render_byline segment %>
         </span>
