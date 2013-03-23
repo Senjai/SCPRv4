@@ -12,10 +12,10 @@
               <%= link_to segment.show.title, program_path(segment.show.slug) %>
             <% end %>
           </h5>
-          <h1 class="story-headline"><%= segment.headline %></h1>
-          <p class="byline">
-            <%= render_byline segment %> <span class="pipe">|</span> <time pubdate><%= format_date segment.published_at, format: :full_date, time: true %></time>
-          </p>
+          <h1 class="story-headline"><%= link_to segment.headline, segment.link_path %></h1>
+          <span class="byline">
+            <%= render_byline segment %> <span class="pipe">|</span> <%= timestamp(segment.published_at) %></time>
+          </span>
         </header>
     
         <div class="story-body">

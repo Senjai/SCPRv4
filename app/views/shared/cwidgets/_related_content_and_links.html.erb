@@ -12,7 +12,7 @@
               <% relations.each do |content| %>
                 <li>
                 <% register_content content %>
-                <%= link_to content.short_headline, content.link_path %> <span class="pipe">|</span> <time><%= format_date content.published_at, format: :full_date, time: true %></time>
+                <%= link_to content.short_headline, content.link_path %> <span class="pipe">|</span> <%= smart_date_js content.published_at %>
                 </li>
               <% end %>
             </ul>

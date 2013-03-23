@@ -12,9 +12,9 @@
       <article>
         <header>
           <h1 class="story-headline"><%= link_to entry.headline, entry.link_path %></h1>
-          <p class="byline">
-            <%= render_byline entry %> <span class="pipe">|</span> <time pubdate><%= format_date entry.published_at, format: :full_date, time: true %></time>
-          </p>
+          <span class="byline">
+            <%= render_byline entry %> <span class="pipe">|</span> <%= timestamp(entry.published_at) %>
+          </span>
         </header>
     
         <div class="story-body">

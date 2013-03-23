@@ -13,10 +13,10 @@
       <div class="span24">
     <% end %>
       <% if options[:show_byline] %>
-        <h4>
+        <span class="byline">
           <%= render_byline content %> 
           <%= smart_date_js content, "data-window" => "8h", "data-relative" => "2h" %>
-        </h4>
+        </span>
       <% end %>
       
       <p class="story-content clearfix"><%= content.teaser.html_safe %></p>
