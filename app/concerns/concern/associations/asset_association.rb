@@ -25,13 +25,25 @@ module Concern
         self.assets.first.asset.send(size).send(format) if self.assets.present?
       end
       
+
+      # Define these methods manually since Rails uses a cache (not method_missing 
+      # directly) to call them, and we don't want (or need) to reset that.
+      def assets_changed?
+        attribute_changed?('assets')
+      end
+
+      def assets_was
+        assets_changed? ? changed_attributes['assets'] : current_assets_json
+      end
+
+
       #-------------------
       # #asset_json is a way to pass in a string representation
       # of a javascript object to the model, which will then be
       # parsed and turned into ContentAsset objects in the 
       # #asset_json= method.
       def asset_json
-        self.assets.map(&:simple_json).to_json
+        current_assets_json.to_json
       end
 
       #-------------------
@@ -41,14 +53,10 @@ module Concern
         # If this is literally an empty string (as opposed to an 
         # empty JSON object, which is what it would be if there were no assets),
         # then we can assume something went wrong and just abort.
-        #
-        # Since javascript is populating the json field on load (to keep
-        # us from having to bootstrap it here), it's possible that the javascript
-        # won't load and the field will never get populated, in which case, if we
-        # tried to save, this method would clear out all of the assets, which
-        # would be incorrect.
+        # This shouldn't happen since we're populating the field in the template.
         return if json.empty?
-        
+        @_original_assets ||= self.assets.dup
+
         json = Array(JSON.parse(json)).sort_by { |c| c["asset_order"].to_i }
         loaded_assets = []
         
@@ -62,7 +70,36 @@ module Concern
           loaded_assets.push new_asset
         end
         
-        self.assets = loaded_assets
+        loaded_assets_json = assets_to_simple_json(loaded_assets)
+
+        # If the assets didn't change, there's no need to bother the database.        
+        if current_assets_json != loaded_assets_json
+          self.assets = loaded_assets
+
+          # So we can properly track the status of the assets on an object.
+          if original_assets_json == loaded_assets_json
+            self.changed_attributes.delete('assets')
+          else
+            self.changed_attributes['assets'] = original_assets_json
+          end
+        end
+
+        self.assets
+      end
+
+
+      private
+
+      def original_assets_json
+        assets_to_simple_json(@_original_assets)
+      end
+
+      def current_assets_json
+        assets_to_simple_json(self.assets)
+      end
+
+      def assets_to_simple_json(array)
+        Array(array).map(&:simple_json)
       end
     end # AssetAssociation
   end # Associations
