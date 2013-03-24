@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322175046) do
+ActiveRecord::Schema.define(:version => 20130323210858) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id"
@@ -566,7 +566,6 @@ ActiveRecord::Schema.define(:version => 20130322175046) do
     t.string   "source"
     t.string   "story_asset_scheme"
     t.string   "extra_asset_scheme"
-    t.string   "lead_asset_scheme",  :limit => 10
     t.integer  "status"
     t.string   "short_headline"
     t.datetime "created_at",                                                  :null => false
