@@ -9,7 +9,7 @@
 
       <h1 class="story-headline"><%= link_to video.headline, video.link_path %></h1>
       <span class="byline">
-        <%= render_byline video %> <span class="pipe">|</span> <%= timetamp(video.published_at) %>
+        <%= render_byline video %> <span class="pipe">|</span> <%= timestamp(video.published_at) %>
       </span>
     </header>
     
