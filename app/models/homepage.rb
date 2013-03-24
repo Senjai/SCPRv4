@@ -8,6 +8,7 @@ class Homepage < ActiveRecord::Base
   include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
@@ -34,6 +35,11 @@ class Homepage < ActiveRecord::Base
   #-------------------
   # Callbacks
   after_save :expire_cache
+  after_save :enqueue_homepage_cache
+
+  def enqueue_homepage_cache
+    CacheTasks::Homepage.enqueue
+  end
 
   #-------------------
   # Sphinx

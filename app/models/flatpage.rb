@@ -3,6 +3,8 @@ class Flatpage < ActiveRecord::Base
   outpost_model
   has_secretary
   
+  include Concern::Callbacks::SphinxIndexCallback
+
   TEMPLATE_OPTIONS = [
     ["Normal (with sidebar)",   "inherit"],
     ["Full Width (no sidebar)", "full"],
@@ -39,9 +41,7 @@ class Flatpage < ActiveRecord::Base
   end
 
   # -------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes url, sortable: true
     indexes title

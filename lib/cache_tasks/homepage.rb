@@ -8,8 +8,6 @@
 module CacheTasks
   class Homepage < Task
     def run
-      @indexer.index
-      
       if homepage = ::Homepage.published.first
         scored_content = homepage.scored_content
       
@@ -24,24 +22,10 @@ module CacheTasks
 
     #---------------
     
-    def enqueue
-      Resque.enqueue(Job::Homepage, @obj_key.to_s)
-    end
-    
-    #---------------
-    
-    attr_reader :indexer, :model
-    
-    def initialize(obj_key=nil)
-      models = [ContentByline]
-
-      @obj_key = obj_key
-      
-      if @model = ContentBase.get_model_for_obj_key(obj_key)
-        models.push(model) if ContentBase::CONTENT_CLASSES.include?(@model)
+    class << self
+      def enqueue
+        Resque.enqueue(Job::Homepage)
       end
-      
-      @indexer = Indexer.new(*models)
     end
   end # Homepage
 end # CacheTasks

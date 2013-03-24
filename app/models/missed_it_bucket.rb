@@ -4,8 +4,9 @@ class MissedItBucket < ActiveRecord::Base
   has_secretary
 
   include Concern::Associations::ContentAssociation
+  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
-  
+
   #--------------------
   # Scopes
   
@@ -22,9 +23,7 @@ class MissedItBucket < ActiveRecord::Base
   after_save :expire_cache
 
   #--------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title, sortable: true
   end

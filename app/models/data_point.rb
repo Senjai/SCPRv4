@@ -18,7 +18,9 @@
 class DataPoint < ActiveRecord::Base
   outpost_model
   has_secretary
-  
+
+  include Concern::Callbacks::SphinxIndexCallback
+
   #--------------
   # Scopes
   
@@ -33,9 +35,7 @@ class DataPoint < ActiveRecord::Base
   # Callbacks
 
   #--------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title
     indexes data_key, sortable: true

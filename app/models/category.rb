@@ -4,7 +4,8 @@ class Category < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
-  
+  include Concern::Callbacks::SphinxIndexCallback
+
   ROUTE_KEY = "category"
   
   #-------------------
@@ -22,9 +23,7 @@ class Category < ActiveRecord::Base
   # Callbacks
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title, sortable: true
     indexes slug, sortable: true

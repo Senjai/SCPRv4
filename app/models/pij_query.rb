@@ -6,6 +6,7 @@ class PijQuery < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
+  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
   
@@ -46,9 +47,7 @@ class PijQuery < ActiveRecord::Base
   # Callbacks
 
   #------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes body

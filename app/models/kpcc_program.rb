@@ -5,7 +5,8 @@ class KpccProgram < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
-  
+  include Concern::Callbacks::SphinxIndexCallback
+
   ROUTE_KEY = "program"
   
   Featured = [
@@ -46,9 +47,7 @@ class KpccProgram < ActiveRecord::Base
   # Callbacks
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title, sortable: true
     indexes airtime

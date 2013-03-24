@@ -6,7 +6,8 @@ class OtherProgram < ActiveRecord::Base
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
-  
+  include Concern::Callbacks::SphinxIndexCallback
+
   ROUTE_KEY = "program"
 
   #-------------------
@@ -40,9 +41,7 @@ class OtherProgram < ActiveRecord::Base
   # Callbacks
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title, sortable: true
     indexes teaser

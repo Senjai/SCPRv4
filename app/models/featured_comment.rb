@@ -6,6 +6,8 @@ class FeaturedComment < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Scopes::PublishedScope
   
@@ -30,9 +32,7 @@ class FeaturedComment < ActiveRecord::Base
   # Callbacks
 
   #----------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes username
     indexes excerpt

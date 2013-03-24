@@ -5,7 +5,8 @@ class Bio < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
-  
+  include Concern::Callbacks::SphinxIndexCallback
+
   ROUTE_KEY = "bio"
 
   #--------------
@@ -33,9 +34,7 @@ class Bio < ActiveRecord::Base
   end
 
   #--------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes name, sortable: true
     indexes title

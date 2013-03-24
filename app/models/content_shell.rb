@@ -13,6 +13,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Validations::PublishedAtValidation
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
@@ -61,9 +62,7 @@ class ContentShell < ActiveRecord::Base
   
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes body
