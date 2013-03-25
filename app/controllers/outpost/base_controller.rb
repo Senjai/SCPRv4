@@ -26,10 +26,17 @@ class Outpost::BaseController < Outpost::ApplicationController
     @current_homepage = Homepage.published.first
   end
 
+  #-------------------------
+
   def add_params_for_newrelic
     if current_user
-      NewRelic::Agent.add_custom_parameters(current_user_id: current_user.id, current_user_name: current_user.name)
+      NewRelic::Agent.add_custom_parameters(
+        :current_user_id   => current_user.id, 
+        :current_user_name => current_user.name
+      )
     end
+
+    NewRelic::Agent.add_custom_parameters(path: request.path)
   end
 
   #-------------------------
