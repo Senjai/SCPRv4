@@ -27,6 +27,12 @@ describe Outpost::PijQueriesController do
         put :preview, id: pij_query.id, obj_key: pij_query.obj_key, pij_query: pij_query.attributes.merge(headline: "")
         response.should render_template "/outpost/shared/_preview_errors"
       end
+
+      it "renders for unpublished queries" do
+        pij_query = create :pij_query, :unpublished, headline: "This is a story"
+        put :preview, id: pij_query.id, obj_key: pij_query.obj_key, pij_query: pij_query.attributes
+        response.should render_template "/pij_queries/_pij_query"
+      end
     end
 
     context "new object" do

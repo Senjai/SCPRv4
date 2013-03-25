@@ -15,7 +15,7 @@ describe Outpost::EventsController do
     
     context "existing object" do
       it "builds the object from existing attributes and assigns new ones" do
-        event = create :event, headline: "This is a story"
+        event = create :event, :published, headline: "This is a story"
         put :preview, id: event.id, obj_key: event.obj_key, event: event.attributes.merge(headline: "Updated")
         assigns(:event).should eq event
         assigns(:event).headline.should eq "Updated"
@@ -26,6 +26,12 @@ describe Outpost::EventsController do
         event = create :event, headline: "Okay"
         put :preview, id: event.id, obj_key: event.obj_key, event: event.attributes.merge(headline: "")
         response.should render_template "/outpost/shared/_preview_errors"
+      end
+
+      it "renders for hidden events" do
+        event = create :event, status: Event::STATUS_HIDDEN, headline: "This is a story"
+        put :preview, id: event.id, obj_key: event.obj_key, event: event.attributes
+        response.should render_template "/events/_event"
       end
     end
 
