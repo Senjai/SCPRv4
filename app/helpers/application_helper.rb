@@ -273,8 +273,11 @@ module ApplicationHelper
   end
 
   def timestamp(datetime)
-    time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
+    if datetime
+      time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
+    end
   end
+  
   #----------
 
   def comment_widget_for(object, options={})
