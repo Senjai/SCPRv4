@@ -308,10 +308,6 @@ describe ApplicationHelper do
         helper.timestamp(Time.now).should match /\<time/
       end
 
-      # time_tag uses i18n's `localize` method, which raises
-      # if the date passed in doesn't respond to strftime, so we 
-      # need to check that this is the case before rendering the
-      # time tag. Otherwise previewing unpublished content breaks.
       it "doesn't render anything if datetime isn't a date/time" do
         helper.timestamp(nil).should eq nil
         helper.timestamp("nothing").should eq nil
