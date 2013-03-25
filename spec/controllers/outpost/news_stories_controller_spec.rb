@@ -15,7 +15,7 @@ describe Outpost::NewsStoriesController do
     
     context "existing object" do
       it "builds the object from existing attributes and assigns new ones" do
-        news_story = create :news_story, headline: "This is a story"
+        news_story = create :news_story, :published, headline: "This is a story"
         put :preview, id: news_story.id, obj_key: news_story.obj_key, news_story: news_story.attributes.merge(headline: "Updated")
         assigns(:story).should eq news_story
         assigns(:story).headline.should eq "Updated"
@@ -26,6 +26,12 @@ describe Outpost::NewsStoriesController do
         news_story = create :news_story, headline: "Okay"
         put :preview, id: news_story.id, obj_key: news_story.obj_key, news_story: news_story.attributes.merge(headline: "")
         response.should render_template "/outpost/shared/_preview_errors"
+      end
+
+      it "renders properly for unpublished content" do
+        news_story = create :news_story, :draft, headline: "This is a story"
+        put :preview, id: news_story.id, obj_key: news_story.obj_key, news_story: news_story.attributes
+        response.should render_template "/news/_story"
       end
     end
 
