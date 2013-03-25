@@ -273,7 +273,7 @@ module ApplicationHelper
   end
 
   def timestamp(datetime)
-    if datetime
+    if datetime.respond_to?(:strftime)
       time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
     end
   end
