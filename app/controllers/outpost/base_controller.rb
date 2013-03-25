@@ -4,6 +4,7 @@ class Outpost::BaseController < Outpost::ApplicationController
   before_filter :set_sections
   before_filter :setup_tickets
   before_filter :set_current_homepage
+  before_filter :add_params_for_newrelic
 
   #------------------------
   # Just setup the @sections variable so the views can add to it.
@@ -23,6 +24,12 @@ class Outpost::BaseController < Outpost::ApplicationController
   # Grab the most recent homepage for the Quicknav
   def set_current_homepage
     @current_homepage = Homepage.published.first
+  end
+
+  def add_params_for_newrelic
+    if current_user
+      NewRelic::Agent.add_custom_parameters(current_user_id: current_user.id, current_user_name: current_user.name)
+    end
   end
 
   #-------------------------
