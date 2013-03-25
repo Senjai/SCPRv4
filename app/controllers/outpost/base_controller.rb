@@ -35,8 +35,6 @@ class Outpost::BaseController < Outpost::ApplicationController
         :current_user_name => current_user.name
       )
     end
-
-    NewRelic::Agent.add_custom_parameters(path: request.path)
   end
 
   #-------------------------
