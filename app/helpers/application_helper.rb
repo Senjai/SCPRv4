@@ -22,14 +22,13 @@ module ApplicationHelper
   # * shared/content/default/lead
   #
   def render_content(content,context,options={})
-    if !content
-      return ''
-    end
+    return if content.blank?
 
     html = ''
     
-    (content.is_a?(Array) ? content : [content]).each do |c|
+    Array(content).each do |c|
       if c.respond_to?(:content)
+        next if c.content.blank?
         c = c.content
       end
 
@@ -49,10 +48,14 @@ module ApplicationHelper
       ]
 
       partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }      
-      html << render(options.merge({:partial => "shared/content/#{partial}", :object => c, :as => :content}))
+      html << render(options.merge({
+        :partial    => "shared/content/#{partial}",
+        :object     => c,
+        :as         => :content
+      }))
     end
     
-    return html.html_safe
+    html.html_safe
   end
   
   #---------------------------  
@@ -235,8 +238,8 @@ module ApplicationHelper
 
   #---------------------------
 
-  def featured_comment(opts)
-    opts = { :style => "default", :bucket => nil, :comment => nil }.merge(opts||{})
+  def featured_comment(opts={})
+    opts = { :style => "default", :bucket => nil, :comment => nil }.merge(opts)
         
     comment = nil
     
