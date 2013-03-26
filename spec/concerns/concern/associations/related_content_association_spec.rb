@@ -45,14 +45,20 @@ describe Concern::Associations::RelatedContentAssociation do
     before :each do
       @object  = build :test_class_story
       @shell   = build :test_class_post, published_at: 2.days.ago
-      @segment = create :test_class_remote_story, published_at: 1.day.ago
-      @story   = create :test_class_story, published_at: 3.days.ago
-      
+      @segment = build :test_class_remote_story, published_at: 1.day.ago
+      @story   = build :test_class_story, published_at: 3.days.ago
+      @post    = build :test_class_post, status: ContentBase::STATUS_DRAFT
+
       @object.outgoing_references.build(related: @shell)
       @object.outgoing_references.build(related: @story)
       @object.incoming_references.build(content: @segment)
+      @object.outgoing_references.build(content: @post)
     end
     
+    it "doesn't return unpublished content" do
+      @object.related_content.should_not include @post
+    end
+
     it "Returns all the related records and sorted by published_at desc" do
       @object.related_content.should eq [@segment, @shell, @story]
     end
