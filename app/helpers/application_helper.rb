@@ -22,7 +22,7 @@ module ApplicationHelper
   # * shared/content/default/lead
   #
   def render_content(content,context,options={})
-    return if content.blank?
+    return '' if content.blank?
 
     html = ''
     
@@ -70,9 +70,12 @@ module ApplicationHelper
   # * shared/assets/default/wide
   # * shared/assets/story/default
   # * shared/assets/default/default
-  
-  def render_asset(content,context, fallback=false)
-    if content.blank? || !content.respond_to?(:assets) || content.assets.blank?
+  def render_asset(content, context, fallback=false)
+    if content.blank? || !content.respond_to?(:assets)
+      return ''
+    end
+
+    if content.assets.blank?
       return fallback ? render("shared/assets/#{context}/fallback", content: content) : ''
     end
     
@@ -89,7 +92,7 @@ module ApplicationHelper
     
     partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/assets"],true) }
 
-    render :partial => "shared/assets/#{partial}", :object => content.assets, :as => :assets, :locals => { :content => content }
+    render "shared/assets/#{partial}", assets: content.assets, content: content
   end
   
   #----------

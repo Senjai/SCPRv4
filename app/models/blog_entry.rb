@@ -12,6 +12,9 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::CategoryAssociation
+  include Concern::Associations::HomepageContentAssociation
+  include Concern::Associations::FeaturedCommentAssociation
+  include Concern::Associations::MissedItContentAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateSlugCallback

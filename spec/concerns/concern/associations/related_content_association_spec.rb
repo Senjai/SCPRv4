@@ -1,6 +1,46 @@
 require "spec_helper"
 
 describe Concern::Associations::RelatedContentAssociation do
+  describe "destroying or unpublishing" do
+    before :each do
+      @post     = create :test_class_post, status: ContentBase::STATUS_LIVE
+      @story    = create :test_class_story, status: ContentBase::STATUS_LIVE
+      @related  = create :related_content, content: @post, related: @story
+
+      @related.content.should eq @post
+      @related.related.should eq @story
+
+      @post.outgoing_references(true).should eq [@related]
+      @story.incoming_references(true).should eq [@related]
+    end
+
+    it "destroys the incoming references on destroy" do
+      @post.destroy
+      @story.incoming_references(true).should eq []
+    end
+
+    it "destroys the incoming references on unpublish" do
+      @story.status = ContentBase::STATUS_PENDING
+      @story.save!
+
+      @story.incoming_references(true).should eq []
+    end
+
+    it "doesn't destroy the incoming associations on normal save" do
+      @story.headline = "Updated"
+      @story.save!
+
+      @story.incoming_references(true).should eq [@related]
+    end
+
+    it "doesn't destroy outgoing references on unpublish" do
+      @post.status = ContentBase::STATUS_PENDING
+      @post.save!
+
+      @post.outgoing_references(true).should eq [@related]
+    end
+  end
+
   describe "#related_content" do
     before :each do
       @object  = build :test_class_story

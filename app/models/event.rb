@@ -7,11 +7,13 @@ class Event < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::RelatedContentAssociation
+  include Concern::Associations::FeaturedCommentAssociation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::TeaserMethods
+  include Concern::Methods::PublishingMethods
   
   ROUTE_KEY = "event"
   
@@ -70,7 +72,7 @@ class Event < ActiveRecord::Base
   end
   
   def published?
-    self.status == STATUS_LIVE
+    self.status == Event::STATUS_LIVE
   end
 
   #-------------------
