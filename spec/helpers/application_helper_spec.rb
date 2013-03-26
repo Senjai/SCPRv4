@@ -280,12 +280,6 @@ describe ApplicationHelper do
         comment_widget_for(object, cssClass: "someclass").should match /someclass/
       end
     end
-    
-    #------------------------
-    
-    describe "#featured_comment" do
-      pending
-    end
 
     #------------------------
     

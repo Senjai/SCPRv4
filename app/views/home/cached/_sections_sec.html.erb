@@ -17,7 +17,7 @@
     <div class="span10">
       <div class="related-content">
         <% if section[:right] && section[:right].is_a?(FeaturedComment) %>
-          <%= featured_comment :comment => section[:right], :style => "sec_right" %>
+          <%= render '/shared/featured_comment/sec_right', comment: section[:right] %>
         <% else %>
           <%= render_content section[:right], "sec_right" %>
         <% end %>
