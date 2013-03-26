@@ -5,10 +5,10 @@ describe ContentEmail do
     it { should validate_presence_of :from_email }
     it { should validate_presence_of :to_email }
     it { should validate_presence_of :content }
-    it { should allow_value("other-guy@gmail.com").for(:from_email).with_message(/Invalid/) }
-    it { should allow_value("other-guy@gmail.com").for(:to_email).with_message(/Invalid/) }
-    it { should_not allow_value("noway jose @ whatever").for(:to_email).with_message(/Invalid/) }
-    it { should_not allow_value("nowayjose@whatever").for(:from_email).with_message(/Invalid/) }
+    it { should allow_value("other-guy@gmail.com").for(:from_email) }
+    it { should allow_value("other-guy@gmail.com").for(:to_email) }
+    it { should_not allow_value("noway jose @ whatever").for(:to_email).with_message(/invalid/i) }
+    it { should_not allow_value("nowayjose@whatever").for(:from_email).with_message(/invalid/i) }
     it { should ensure_length_of(:lname).is_at_most(0) }
   end
 
@@ -54,9 +54,20 @@ describe ContentEmail do
       it "returns self" do
         content_email.save.should eq content_email
       end
+
+      it "adds errors and returns false if a SimplePostmark::APIError is raised" do
+        # Fake a response from Postmark API
+        response = {}
+        msg      = "There was an API error."
+        response.stub(:parsed_response) { Hash['Message', msg] }
+        
+        Mail::Message.any_instance.should_receive(:deliver).and_raise(SimplePostmark::APIError.new(response))
+        content_email.save.should eq false
+        content_email.errors[:base].should eq [msg]
+      end
     end
     
-    context "invalid" do      
+    context "invalid" do
       let(:content_email) { build :content_email, to_email: "invalid" }
 
       it "returns false" do
