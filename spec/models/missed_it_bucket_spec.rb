@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe MissedItBucket do
   describe "associations" do
-    it { should have_many(:contents).class_name("MissedItContent") }
+    it { should have_many(:content).class_name("MissedItContent") }
   end
   
   describe "validations" do

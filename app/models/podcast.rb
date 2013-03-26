@@ -22,7 +22,7 @@ class Podcast < ActiveRecord::Base
   # Scopes
   
   #-------------
-  # Association  
+  # Association
   belongs_to :source, polymorphic: true
   belongs_to :category
   

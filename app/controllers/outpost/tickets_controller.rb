@@ -5,7 +5,7 @@ class Outpost::TicketsController < Outpost::ResourceController
 
   define_list do
     list_default_order "status"
-    list_default_sort_mode "desc"
+    list_default_sort_mode "asc"
     
     column :user
     column :id, header: "#", sortable: true, default_sort_mode: "desc"
