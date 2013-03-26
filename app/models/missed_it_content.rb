@@ -3,7 +3,7 @@ class MissedItContent < ActiveRecord::Base
 
   self.table_name = "contentbase_misseditcontent"
 
-  belongs_to :content,          polymorphic: true
+  belongs_to :content,          polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }
   belongs_to :missed_it_bucket, foreign_key: "bucket_id"
   
   def obj_key

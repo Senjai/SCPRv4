@@ -1,6 +1,6 @@
 <%= form_block "Association" do %>
   <%= f.association :bucket %>
-  <%= f.input :content_type, collection: ContentBase::CONTENT_CLASSES.map { |c| [c.to_s.titleize, c] } %>
+  <%= f.input :content_type, collection: FeaturedComment::FEATUREABLE_CLASSES.map { |c| [c.to_s.titleize, c] } %>
   <%= f.input :content_id, label: "Content ID", input_html: { class: 'thin' } %>
 <% end %>
 

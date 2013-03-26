@@ -1,6 +1,5 @@
 class ContentAsset < ActiveRecord::Base  
   self.table_name =  "assethost_contentasset"
-  self.primary_key = "id"
   
   belongs_to :content, polymorphic: true
   

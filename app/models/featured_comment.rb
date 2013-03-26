@@ -9,12 +9,21 @@ class FeaturedComment < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Scopes::PublishedScope
   
+  FEATUREABLE_CLASSES = [
+    NewsStory,
+    BlogEntry,
+    ContentShell,
+    ShowSegment,
+    VideoShell,
+    Event
+  ]
+
   #----------------
   # Scopes
   
   #----------------
   # Associations
-  belongs_to :content, polymorphic: true
+  belongs_to :content, polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }
   belongs_to :bucket, class_name: "FeaturedCommentBucket"
   
   #----------------
@@ -22,10 +31,28 @@ class FeaturedComment < ActiveRecord::Base
   validates :username, :status, presence: true
   validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: :should_validate?
   
+  validate :content_exists?, :content_is_published?
+
   def needs_validation?
     self.pending? || self.published?
   end
   
+  #-----------------
+
+  def content_exists?
+    if self.content.nil?
+      errors.add(:content_id, "Content doesn't exist. Check the ID.")
+    end
+  end
+
+  #-----------------
+
+  def content_is_published?
+    if self.content && !self.content.published?
+      errors.add(:content_id, "Content must be published in order to be featured.")
+    end
+  end
+
   #----------------
   # Callbacks
 
