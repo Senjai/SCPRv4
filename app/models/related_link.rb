@@ -15,7 +15,6 @@ class RelatedLink < ActiveRecord::Base
   
   #--------------
   # Scopes
-  default_scope where("content_type is not null")
   scope :query, -> { where(link_type: "query") }
   scope :normal, -> { where("link_type != ?", "query") }
 
