@@ -69,7 +69,7 @@ class VideoShell < ActiveRecord::Base
   #--------------------
   
   def route_hash
-    return {} if !self.persisted? || !self.published?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :id             => self.persisted_record.id,
       :slug           => self.persisted_record.slug,

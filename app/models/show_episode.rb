@@ -50,7 +50,7 @@ class ShowEpisode < ActiveRecord::Base
   # Callbacks
   before_validation :generate_headline, if: -> { self.headline.blank? }
   def generate_headline
-    if self.air_date.present?
+    if self.air_date.present? && self.show.present?
       self.headline = "#{self.show.title} for #{self.air_date.strftime("%B %-d, %Y")}"
     end
   end
@@ -102,7 +102,7 @@ class ShowEpisode < ActiveRecord::Base
   #----------
   
   def route_hash
-    return {} if !self.published? || !self.persisted?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :show           => self.persisted_record.show.slug,
       :year           => self.persisted_record.air_date.year, 
