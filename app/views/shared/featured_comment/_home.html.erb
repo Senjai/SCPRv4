@@ -1,7 +1,11 @@
+<% content = comment.content %>
+
+<% if comment && content %>
 <section class="join_conversation home">
   <h6>Join the Conversation</h6>
   <blockquote>
-    <%= link_to "&ldquo;#{comment.excerpt}&rdquo;".html_safe, comment.content.link_path, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Lead Section'} %>
+    <%= link_to "&ldquo;#{comment.excerpt}&rdquo;".html_safe, content.link_path, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Lead Section'} %>
   </blockquote>
-  <p class="quotee">from <%= link_to comment.content.headline, comment.content.link_path %></p>
+  <p class="quotee">from <%= link_to content.headline, content.link_path %></p>
 </section>
+<% end %>

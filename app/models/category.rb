@@ -69,14 +69,14 @@ class Category < ActiveRecord::Base
 
     # -- first look for featured comments -- #
 
-    featured = self.comment_bucket.comments.published
+    featured = self.comment_bucket.comments.published.first
 
-    if featured.any?
+    if featured.present?
       # Initial score:  20
       # Decay rate:     0.05
       candidates << {
-        :content  => featured.first,
-        :score    => 20 * Math.exp( -0.04 * ((Time.now - featured.first.published_at) / 3600) ),
+        :content  => featured,
+        :score    => 20 * Math.exp( -0.04 * ((Time.now - featured.created_at) / 3600) ),
         :metric   => :comment
       }
     end

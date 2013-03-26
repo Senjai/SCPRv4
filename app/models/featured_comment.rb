@@ -2,13 +2,15 @@ class FeaturedComment < ActiveRecord::Base
   self.table_name = 'contentbase_featuredcomment'
   outpost_model
   has_secretary
-
-  include Concern::Methods::StatusMethods
-  include Concern::Methods::PublishingMethods
-  include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Associations::ContentAlarmAssociation
-  include Concern::Scopes::PublishedScope
   
+  STATUS_LIVE  = ContentBase::STATUS_LIVE
+  STATUS_DRAFT = ContentBase::STATUS_DRAFT
+
+  STATUS_TEXT = {
+    STATUS_DRAFT => "Draft",
+    STATUS_LIVE  => "Live"
+  }
+
   FEATUREABLE_CLASSES = [
     NewsStory,
     BlogEntry,
@@ -20,7 +22,8 @@ class FeaturedComment < ActiveRecord::Base
 
   #----------------
   # Scopes
-  
+  scope :published, -> { where(status: FeaturedComment::STATUS_LIVE).order("created_at desc") }
+
   #----------------
   # Associations
   belongs_to :content, polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }
@@ -28,15 +31,9 @@ class FeaturedComment < ActiveRecord::Base
   
   #----------------
   # Validation
-  validates :username, :status, presence: true
-  validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: :should_validate?
-  
+  validates :username, :status, :excerpt, :bucket_id, :content_type, :content_id, presence: true
   validate :content_exists?, :content_is_published?
 
-  def needs_validation?
-    self.pending? || self.published?
-  end
-  
   #-----------------
 
   def content_exists?
@@ -63,11 +60,22 @@ class FeaturedComment < ActiveRecord::Base
   define_index do
     indexes username
     indexes excerpt
-    has published_at
   end
   
   #----------------
   
+  class << self
+    def status_select_collection
+      FeaturedComment::STATUS_TEXT.map { |p| [p[1], p[0]] }
+    end
+
+    def featurable_classes_select_collection
+      FeaturedComment::FEATUREABLE_CLASSES.map { |c| [c.to_s.titleize, c] }
+    end
+  end
+
+  #----------------
+
   def title
     "Featured Comment (for #{content.obj_key})"
   end

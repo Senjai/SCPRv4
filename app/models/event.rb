@@ -55,7 +55,7 @@ class Event < ActiveRecord::Base
   
   #-------------------
   # Validations
-  validates :headline, presence: true
+  validates :headline, :status, presence: true
   validates :event_type, :starts_at, :body, presence: true, if: :should_validate?
   
   validates :location_url, :sponsor_url, url: { allow_blank: true }

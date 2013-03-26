@@ -2,8 +2,8 @@ class Ticket < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  STATUS_OPEN   = 1
-  STATUS_CLOSED = 0
+  STATUS_OPEN   = 0
+  STATUS_CLOSED = 5
   
   STATUS_TEXT = {
     STATUS_OPEN   => "Open",
@@ -12,7 +12,7 @@ class Ticket < ActiveRecord::Base
 
   #--------------------
   # Scopes
-  scope :opened,   -> { where(status: STATUS_OPEN) }
+  scope :opened, -> { where(status: STATUS_OPEN) }
   scope :closed, -> { where(status: STATUS_CLOSED) }
   
   #--------------------
@@ -21,12 +21,7 @@ class Ticket < ActiveRecord::Base
   
   #--------------------
   # Callbacks
-  before_save :set_default_status, if: -> { self.status.blank? }
   after_save :publish_ticket_to_redis, if: :status_changed?
-  
-  def set_default_status
-    self.status = STATUS_OPEN
-  end
 
   #--------------------
   
@@ -37,8 +32,7 @@ class Ticket < ActiveRecord::Base
   
   #--------------------
   # Validations
-  validates :user, presence: true
-  validates :summary, presence: true
+  validates :user, :status, :summary, presence: true
 
   #--------------------
   # Sphinx

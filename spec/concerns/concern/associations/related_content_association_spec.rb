@@ -115,6 +115,12 @@ describe Concern::Associations::RelatedContentAssociation do
       post.outgoing_references.map(&:related).should eq [story1, story2]
     end
     
+    it "doesn't add unpublished content" do
+      unpublished = create :test_class_story, status: ContentBase::STATUS_DRAFT
+      post.related_content_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 0 }]"
+      post.outgoing_references.map(&:related).should eq [story1]
+    end
+
     it "adds them ordered by position" do
       post.related_content_json = "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 0 }]"
       post.outgoing_references.map(&:related).should eq [story1, story2]

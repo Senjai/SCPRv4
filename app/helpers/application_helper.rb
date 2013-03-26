@@ -239,35 +239,6 @@ module ApplicationHelper
     return [first, last]
   end
 
-  #---------------------------
-
-  def featured_comment(opts={})
-    opts = { :style => "default", :bucket => nil, :comment => nil }.merge(opts)
-        
-    comment = nil
-    
-    if opts[:comment]
-      if opts[:comment].is_a?(FeaturedComment)
-        comment = opts[:comment]
-      else
-        begin
-          comment = FeaturedComment.find(opts[:comment])
-        rescue
-          return ''
-        end
-      end
-    elsif opts[:bucket]
-      bucket = FeaturedCommentBucket.find(opts[:bucket])
-      comment = bucket.comments.published.first()
-    else
-      comment = FeaturedComment.published.first()
-    end
-    
-    if comment && comment.content
-      return render(:partial => "shared/featured_comment/#{opts[:style]}", :object => comment, :as => :comment)
-    end
-  end
-  
   #----------
   
   def pij_source(content, options={})

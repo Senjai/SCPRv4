@@ -5,11 +5,12 @@ class HomeController < ApplicationController
   # Just for development purposes
   # Pass ?regenerate to the URL to regenerate the homepage category blocks
   # Only works in development
-  before_filter :generate_homepage, only: :index, if: -> { Rails.env == "development" && params.has_key?(:regenerate) }
+  before_filter :generate_homepage, only: :index, if: -> { %w{development staging}.include?(Rails.env) && params.has_key?(:regenerate) }
   
   def index
-    @homepage = Homepage.published.first
+    @homepage         = Homepage.published.first
     @schedule_current = Schedule.on_at(Time.now).first
+    @featured_comment = FeaturedComment.published.first
   end
   
   #----------
@@ -34,9 +35,10 @@ class HomeController < ApplicationController
   
   def missed_it_content
     @homepage = Homepage.find(params[:id])
-    @carousel_contents = @homepage.missed_it_bucket.contents.page(params[:page]).per(6)
+    @carousel_contents = @homepage.missed_it_bucket.content.includes(&:content).page(params[:page]).per(6)
     render 'missed_it_content', formats: [:js]
   end
+  
   
   protected
   
