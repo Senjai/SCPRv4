@@ -1,7 +1,7 @@
 <div class="homepage-lead default">
   <div class="row-fluid">
-    <%= content_cache("home_leads") do %>
-      <% register_content("layout/homepage") %>
+    <%= content_cache(@homepage) do %>
+      <% register_content(@homepage) %>
       <div class="span15">
         <%= render_content @homepage.content[0], "lead5" if @homepage %>
       </div>

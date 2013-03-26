@@ -33,7 +33,6 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  after_save :expire_cache
 
   #-------------------
   # Sphinx
@@ -42,13 +41,7 @@ class Homepage < ActiveRecord::Base
     has published_at
     has updated_at
   end
-  
-  #----------
-  
-  def expire_cache
-    Rails.cache.expire_obj("layout/homepage")
-  end
-  
+
   #----------
   
   def scored_content
@@ -135,6 +128,7 @@ class Homepage < ActiveRecord::Base
   end
   
   #---------------------
+  
   
   private
   
