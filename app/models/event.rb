@@ -184,7 +184,7 @@ class Event < ActiveRecord::Base
   #----------
   
   def route_hash
-    return {} if !self.published? || !self.persisted?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :year           => self.persisted_record.starts_at.year, 
       :month          => self.persisted_record.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 
