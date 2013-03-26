@@ -8,7 +8,7 @@ class Outpost::FeaturedCommentsController < Outpost::ResourceController
     list_default_sort_mode "desc"
 
     column :bucket
-    column :content, display: :display_content
+    column :content
     column :username
     column :excerpt
     column :status
