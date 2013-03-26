@@ -1,9 +1,9 @@
 <div class="cbase thumbnail">
   <h3 class="story-headline"><%= link_to content.short_headline, content.link_path %></h3>
-  <h4>
+  <span class="byline">
     <%= render_byline content %>
     | <%= format_date content.published_at, format: :full_date, time: true %>
-  </h4>
+  </span>
 
   <p><%= strip_tags content.teaser %></p>
 </div>

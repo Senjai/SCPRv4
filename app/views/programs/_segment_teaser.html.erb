@@ -10,9 +10,12 @@
     <% end %>
       <div class="info">
         <h3><%= link_to segment.headline, segment.link_path %></h3>
-        <p class="byline"><time pubdate=""><%= format_date segment.published_at, format: :full_date, time: true %></time> <span class="pipe">|</span> <%= render_byline segment %></p>
-        <%= segment.teaser.html_safe %>
+        <span class="byline">
+          <%= timestamp(segment.published_at) %> <span class="pipe">|</span> <%= render_byline segment %>
+        </span>
       </div>
+
+      <%= segment.teaser.html_safe %>
     </div> <!-- span12/9 -->
     <div class="span6">
       <div class="interact">

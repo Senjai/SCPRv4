@@ -69,11 +69,7 @@ describe ContentEmailController do
               obj_key:        content.obj_key,
               content_email:  { to_email: "invalid" }
       end
-      
-      it "sets the flash alert" do
-        controller.should set_the_flash[:alert]
-      end
-      
+
       it "renders the new template" do
         response.should render_template 'new'
       end

@@ -12,7 +12,7 @@
               <% relations.each do |content| %>
                 <li>
                 <% register_content content %>
-                <%= link_to content.short_headline, content.link_path %> <span class="pipe">|</span> <time><%= format_date content.published_at, format: :full_date, time: true %></time>
+                <%= link_to content.short_headline, content.link_path %> <span class="pipe">|</span> <%= smart_date_js content.published_at %>
                 </li>
               <% end %>
             </ul>
@@ -31,7 +31,7 @@
             <ul>
               <% content.related_links.normal.each do |link| %>
                 <li>
-                <%= link_to link.title, link.link %> <span class="domain"> | <%= link.domain.gsub(/^www\./, "") %></span>
+                <%= link_to link.title, link.url %> <span class="domain"> | <%= link.domain ? link.domain.gsub(/^www\./, "") : link.url %></span>
                 </li>
               <% end %>
             </ul>
@@ -49,7 +49,7 @@
           <div class="span18">
             <ul>
               <% content.related_links.query.each do |query| %>
-                <li><%= link_to query.title, query.link %></li>
+                <li><%= link_to query.title, query.url %></li>
               <% end %>
             </ul>
           </div> <!-- span -->

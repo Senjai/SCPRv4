@@ -10,7 +10,7 @@ class ContentEmail
 
   attr_accessor :from_name, :from_email, :to_email, :subject, :body, :lname, :content
 
-  validates :from_email, :to_email, presence: true, format: { with: %r{^\S+@\S+\.\S+$}, message: "Invalid E-mail format" }
+  validates :from_email, :to_email, presence: true, format: { with: %r{\A\S+?@\S+?\.\S+\z}, message: "is an invalid e-mail format." }
   validates :content,               presence: true
   validates :lname,                 length: { maximum: 0 }
  
@@ -31,10 +31,13 @@ class ContentEmail
   #---------------
   
   def save
-    if self.valid?
+    return false unless self.valid?
+
+    begin
       ContentMailer.email_content(self).deliver
       self
-    else
+    rescue SimplePostmark::APIError => e
+      self.errors.add(:base, e.message)
       false
     end
   end

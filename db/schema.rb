@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130315185244) do
+ActiveRecord::Schema.define(:version => 20130322175046) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "django_content_type_id"
@@ -394,19 +394,19 @@ ActiveRecord::Schema.define(:version => 20130315185244) do
     t.datetime "expire_date",                        :null => false
   end
 
-  create_table "events_event", :force => true do |t|
+  create_table "events", :force => true do |t|
     t.string   "headline"
     t.string   "slug",                :limit => 50
     t.text     "body",                :limit => 2147483647
-    t.string   "etype"
+    t.string   "event_type"
     t.string   "sponsor"
-    t.string   "sponsor_link",        :limit => 200
+    t.string   "sponsor_url"
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.boolean  "is_all_day",                                :default => false, :null => false
     t.string   "location_name"
-    t.string   "location_link",       :limit => 200
-    t.string   "rsvp_link",           :limit => 200
+    t.string   "location_url"
+    t.string   "rsvp_url"
     t.boolean  "show_map",                                  :default => true,  :null => false
     t.string   "address_1"
     t.string   "address_2"
@@ -415,20 +415,20 @@ ActiveRecord::Schema.define(:version => 20130315185244) do
     t.string   "zip_code"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
-    t.boolean  "kpcc_event",                                :default => false, :null => false
+    t.boolean  "is_kpcc_event",                             :default => false, :null => false
     t.text     "archive_description", :limit => 2147483647
-    t.string   "old_audio",           :limit => 100
-    t.boolean  "is_published",                              :default => false, :null => false
-    t.boolean  "show_comments",                             :default => false, :null => false
     t.text     "teaser",              :limit => 2147483647
     t.string   "event_asset_scheme"
     t.integer  "kpcc_program_id"
+    t.integer  "status"
+    t.boolean  "is_from_pij"
   end
 
-  add_index "events_event", ["etype"], :name => "index_events_event_on_etype"
-  add_index "events_event", ["kpcc_program_id"], :name => "events_event_7666a8c6"
-  add_index "events_event", ["slug"], :name => "events_event_slug"
-  add_index "events_event", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
+  add_index "events", ["event_type"], :name => "index_events_event_on_etype"
+  add_index "events", ["kpcc_program_id"], :name => "events_event_7666a8c6"
+  add_index "events", ["slug"], :name => "events_event_slug"
+  add_index "events", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
+  add_index "events", ["status"], :name => "index_events_on_status"
 
   create_table "flatpages_flatpage", :force => true do |t|
     t.string   "url",          :limit => 100,                           :null => false
@@ -538,22 +538,6 @@ ActiveRecord::Schema.define(:version => 20130315185244) do
   end
 
   add_index "media_imageinstance", ["instance_of_id"], :name => "media_imageinstance_29b6bd08"
-
-  create_table "media_link", :force => true do |t|
-    t.string  "title",                  :limit => 150, :default => "", :null => false
-    t.string  "link",                   :limit => 300,                 :null => false
-    t.string  "link_type",              :limit => 10,                  :null => false
-    t.string  "sort_order",             :limit => 2,   :default => "", :null => false
-    t.integer "django_content_type_id"
-    t.integer "content_id",                                            :null => false
-    t.string  "content_type",           :limit => 20
-  end
-
-  add_index "media_link", ["content_id"], :name => "index_media_link_on_content_id"
-  add_index "media_link", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
-  add_index "media_link", ["django_content_type_id", "content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
-  add_index "media_link", ["django_content_type_id"], :name => "media_link_content_type_id"
-  add_index "media_link", ["sort_order"], :name => "index_media_link_on_sort_order"
 
   create_table "media_related", :force => true do |t|
     t.integer "django_content_type_id"
@@ -743,6 +727,18 @@ ActiveRecord::Schema.define(:version => 20130315185244) do
   add_index "recurring_schedule_slots", ["program_id", "program_type"], :name => "index_recurring_schedule_slots_on_program_id_and_program_type"
   add_index "recurring_schedule_slots", ["start_time", "end_time"], :name => "index_recurring_schedule_slots_on_start_time_and_end_time"
 
+  create_table "related_links", :force => true do |t|
+    t.string  "title",        :default => ""
+    t.string  "url"
+    t.string  "link_type"
+    t.integer "content_id"
+    t.string  "content_type"
+  end
+
+  add_index "related_links", ["content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
+  add_index "related_links", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
+  add_index "related_links", ["link_type"], :name => "index_related_links_on_link_type"
+
   create_table "schedule_program", :force => true do |t|
     t.integer  "day",                             :null => false
     t.integer  "kpcc_program_id"
@@ -838,6 +834,7 @@ ActiveRecord::Schema.define(:version => 20130315185244) do
     t.datetime "published_at"
     t.datetime "updated_at",                                 :null => false
     t.integer  "category_id"
+    t.boolean  "is_from_pij"
   end
 
   add_index "shows_segment", ["category_id"], :name => "shows_segment_42dc49bc"

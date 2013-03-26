@@ -16,10 +16,9 @@ FactoryGirl.define do
 
   #----------------------------
   
-  factory :link do
-    sequence(:id, 1)
+  factory :related_link do
     title     "A Related Link"
-    link      "http://oncentral.org"
+    url      "http://oncentral.org"
     link_type "website"
   end
 end

@@ -1,5 +1,5 @@
 <div class="content-small">
-  <a href="<%= @content.link_path %>">
+  <a href="<%= @content.link_path %>" target="_blank">
     <%- @content.asset %><%= @content.short_headline %>
   </a>
 
@@ -10,6 +10,6 @@
       <span class="text-error"><strong>UNPUBLISHED</strong></span>
     <% end %>
   
-    (<a href="<%=@content.edit_path%>"><%= @content.obj_key%></a>)
+    (<a href="<%=@content.edit_path%>" target="_blank"><%= @content.obj_key%></a>)
   </div>
 </div>

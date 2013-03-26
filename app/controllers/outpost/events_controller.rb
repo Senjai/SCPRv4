@@ -10,13 +10,13 @@ class Outpost::EventsController < Outpost::ResourceController
     column :headline
     column :starts_at, sortable: true, default_sort_mode: "desc"
     column :location_name, header: "Location"
-    column :etype,         header: "Type", display: proc { Event::EVENT_TYPES[self.etype] }
-    column :kpcc_event,    header: "KPCC Event?"
-    column :is_published,  header: "Published?"
+    column :event_type,         header: "Type", display: proc { Event::EVENT_TYPES[self.event_type] }
+    column :is_kpcc_event,    header: "KPCC Event?"
+    column :status
   
-    filter :kpcc_event, title: "KPCC Event?", collection: :boolean
-    filter :etype, title: "Type", collection: -> { Event.event_types_select_collection }
-    filter :is_published, title: "Published?", collection: :boolean
+    filter :is_kpcc_event, title: "KPCC Event?", collection: :boolean
+    filter :event_type, title: "Type", collection: -> { Event.event_types_select_collection }
+    filter :status, title: "Status", collection: -> { Event.status_select_collection }
   end
 
   #------------------

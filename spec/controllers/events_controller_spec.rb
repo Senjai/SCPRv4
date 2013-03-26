@@ -21,8 +21,8 @@ describe EventsController do
   
       describe "scoping" do
         before :each do
-          @forum = create :event, :published, :future, etype: "comm"
-          @spon  = create :event, :published, :future, etype: "spon"
+          @forum = create :event, :published, :future, event_type: "comm"
+          @spon  = create :event, :published, :future, event_type: "spon"
         end
     
         it "scopes by forum if requested" do
@@ -35,7 +35,7 @@ describe EventsController do
           assigns(:scoped_events).should eq [@spon]
         end
 
-        it "does not scope by etype if nothing requested" do
+        it "does not scope by event_type if nothing requested" do
           get :index
           scoped_events = assigns(:scoped_events)
           scoped_events.should include @forum
@@ -58,9 +58,9 @@ describe EventsController do
     
     describe "controller" do
       it "assigns @upcoming_events using upcoming_and_current scope" do
-        past_event    = create :event, :published, starts_at: 2.hours.ago, ends_at: 1.hour.ago, etype: 'comm'
-        current_event = create :event, :published, starts_at: 2.hours.ago, ends_at: 2.hours.from_now, etype: 'comm'
-        future_event  = create :event, :published, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now, etype: 'comm'
+        past_event    = create :event, :published, starts_at: 2.hours.ago, ends_at: 1.hour.ago, event_type: 'comm'
+        current_event = create :event, :published, starts_at: 2.hours.ago, ends_at: 2.hours.from_now, event_type: 'comm'
+        future_event  = create :event, :published, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now, event_type: 'comm'
         get :forum
         assigns(:upcoming_events).should eq [current_event,future_event]
       end

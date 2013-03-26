@@ -1,7 +1,4 @@
-class Link < ActiveRecord::Base
-  self.table_name   = 'media_link'
-  self.primary_key = "id"
-
+class RelatedLink < ActiveRecord::Base
   TYPES = [
     ["Website", "website"],
     ["Related Story", "related"],
@@ -28,16 +25,19 @@ class Link < ActiveRecord::Base
 
   #--------------
   # Validation
-  validates :title, :link, presence: true
-  
+  validates :title, presence: true
+  validates :url, presence: true, url: { allowed: [URI::HTTP, URI::FTP]}
+
   #--------------
   # Callbacks
   
   #----------
-  
+  # TODO Move this into a presenter
   def domain
-    if self.link
-      URI.parse(URI.encode(self.link)).host
+    @domain ||= begin
+      if self.url
+        URI.parse(URI.encode(self.url)).host
+      end
     end
   end
 end

@@ -80,16 +80,18 @@ class ShowSegment < ActiveRecord::Base
   #----------
   
   def episode
-    episodes.first
+    @episode ||= episodes.first
   end
 
   #----------
   
   def sister_segments
-    if episodes.present?
-      episode.segments.published.where("shows_segment.id != ?", self.id)
-    else
-      show.segments.published.where("shows_segment.id != ?", self.id).limit(5)
+    @sister_segments ||= begin
+      if episodes.present?
+        episode.segments.published.where("shows_segment.id != ?", self.id)
+      else
+        show.segments.published.where("shows_segment.id != ?", self.id).limit(5)
+      end
     end
   end
 

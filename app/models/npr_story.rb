@@ -194,10 +194,10 @@ class NprStory < ActiveRecord::Base
 
     #-------------------
     # Add a related link pointing to this story at NPR
-    related_link = Link.new(
+    related_link = RelatedLink.new(
       :link_type => "website", 
       :title     => "View this story at NPR",
-      :link      => npr_story.link_for('html')
+      :url      => npr_story.link_for('html')
     )
     
     news_story.related_links.push related_link

@@ -9,8 +9,7 @@
 # columns that can be null depending on audio source
 #
 class Audio < ActiveRecord::Base
-  self.table_name  = 'media_audio'
-  self.primary_key = "id"
+  self.table_name = "media_audio"
   logs_as_task
   
   # Server path root - /home/media/kpcc/audio
@@ -250,24 +249,23 @@ class Audio < ActiveRecord::Base
   
   private
 
-    #------------
-    # Set audio type based on conditions
-    # This only gets run if self.type is blank,
-    # which won't be true for ProgramAudio, since
-    # it gets created through the subclass,
-    # so if we're here and the mp3 is present,
-    # we can safely assume it's uploaded audio
-    def set_type
-      if self.live?
-        self.type = "Audio::UploadedAudio"
-      
-      elsif self.enco_number.present? && self.enco_date.present?
-        self.type = "Audio::EncoAudio"
-      
-      elsif self.mp3_path.present?
-        self.type = "Audio::DirectAudio"
-      
-      end
+  #------------
+  # Set audio type based on conditions
+  # This only gets run if self.type is blank,
+  # which won't be true for ProgramAudio, since
+  # it gets created through the subclass,
+  # so if we're here and the mp3 is present,
+  # we can safely assume it's uploaded audio
+  def set_type
+    if self.live?
+      self.type = "Audio::UploadedAudio"
+    
+    elsif self.enco_number.present? && self.enco_date.present?
+      self.type = "Audio::EncoAudio"
+    
+    elsif self.mp3_path.present?
+      self.type = "Audio::DirectAudio"
+    
     end
-  #
+  end
 end

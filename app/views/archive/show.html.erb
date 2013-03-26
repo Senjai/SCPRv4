@@ -39,17 +39,18 @@
           <% end %>
             <div class="info">
               <h3><%= link_to content.short_headline, content.link_path %></h3>
-              <p class="byline">
+              <span class="byline">
                 <% if content.category.present? %>
                   <span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
                   <span class="pipe">|</span> 
                 <% end %>
-                <time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
+                <%= timestamp(content.published_at) %> 
                 <span class="pipe">|</span> 
                 <%= render_byline content %>
-              </p>
-              <%= content.teaser %>
+              </span>
             </div>
+
+            <%= content.teaser %>
           </div> <!-- span18/24 -->
         </div>
       </div>
@@ -82,15 +83,16 @@
           <% end %>
             <div class="info">
               <h3><%= link_to content.short_headline, content.link_path %></h3>
-              <p class="byline">
+              <span class="byline">
                 <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span> 
                 <span class="pipe">|</span> 
-                <time pubdate=""><%= format_date content.published_at, format: :full_date, time: true %></time> 
+                <%= timestamp(content.published_at) %>
                 <span class="pipe">|</span> 
                 <%= render_byline content %>
-              </p>
-              <%= content.teaser %>
+              </span>
             </div>
+            
+            <%= content.teaser %>
           </div> <!-- span18/24 -->
         </div>
       </div>
@@ -123,17 +125,18 @@
           <% end %>
             <div class="info">
               <h3><%= link_to content.short_headline, content.link_path %></h3>
-              <p class="byline">
+              <span class="byline">
                 <% if content.category.present? %>
                   <span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
                   <span class="pipe">|</span>
                 <% end %>
-                <time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
+                <%= timestamp(content.published_at) %>
                 <span class="pipe">|</span> 
                 <%= render_byline content %>
-              </p>
-              <%= content.teaser %>
+              </span>
             </div>
+            
+            <%= content.teaser %>
           </div> <!-- span18/24 -->
         </div>
       </div>
@@ -189,17 +192,18 @@
               <% end %>
                 <div class="info">
                   <h3><%= link_to content.short_headline, content.link_path %></h3>
-                  <p class="byline">
+                  <span class="byline">
                     <% if content.category.present? %>
                       <span class="categories"><%= link_to content.category.title, category_path(content.category.slug) %></span> 
                       <span class="pipe">|</span>
                     <% end %>
-                    <time pubdate=""><%= content.published_at.strftime("%l:%M%P") %></time> 
+                    <%= timestamp(content.published_at) %> 
                     <span class="pipe">|</span> 
                     <%= render_byline content %>
-                  </p>
-                  <%= content.teaser %>
+                  </span>
                 </div>
+                
+                <%= content.teaser %>
               </div> <!-- span18/24 -->
             </div> <!-- row fluid -->
           </div> <!-- teaser -->

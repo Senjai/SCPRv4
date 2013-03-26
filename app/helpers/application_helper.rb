@@ -92,7 +92,7 @@ module ApplicationHelper
   #----------
   
   def random_headshot
-    images = ["romo.png", "stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png", "trujillo.png"]
+    images = ["stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png", "trujillo.png"]
     image_tag "personalities/#{images[rand(images.size)]}"
   end
   
@@ -264,6 +264,29 @@ module ApplicationHelper
   
   #----------
   
+  def pij_source(content, options={})
+    message = options[:message] || "This story was informed by KPCC listeners."
+
+    if content.is_from_pij?
+      render '/shared/cwidgets/pij_notice', message: message
+    end
+  end
+
+  #----------
+  # Render a timestamp inside of a time tag.
+  #
+  # time_tag uses i18n's `localize` method, which raises
+  # if the date passed in doesn't respond to strftime, so we 
+  # need to check that this is the case before rendering the
+  # time tag. Otherwise previewing unpublished content breaks.
+  def timestamp(datetime)
+    if datetime.respond_to?(:strftime)
+      time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
+    end
+  end
+  
+  #----------
+
   def comment_widget_for(object, options={})
     if object.present? and object.respond_to?(:disqus_identifier)
       render('shared/cwidgets/comment_count', { content: object, cssClass: "" }.merge!(options))

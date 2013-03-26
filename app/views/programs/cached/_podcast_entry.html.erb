@@ -6,13 +6,15 @@
         <div class="info">
           <header>
             <h3><%= link_to entry.title, entry.url || entry.enclosure_url %></h3>
-            <p class="byline"><time pubdate=""><%= smart_date_js entry.published %></time></p>
+            <span class="byline">
+              <%= timestamp(entry.published) %>
+            </span>
           </header>
       
           <%= simple_format relaxed_sanitize(entry.summary) %>
         </div> <!-- info -->
       </div> <!-- span -->
-    
+      
       <% if entry.enclosure_url.present? %>
         <div class="span6">
           <aside class="story-audio">

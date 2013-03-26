@@ -3,16 +3,16 @@
 #
 FactoryGirl.define do
   factory :event do
-    sequence(:id, 1)
     sequence(:headline)   { |n| "A Very Special Event #{n}" }
     sequence(:starts_at)  { |n| Time.now + 60*60*24*n }
 
     slug                { headline.parameterize }
     body                "This is a very special event."
-    etype               "comm"
+    event_type          "comm"
+    status 0
 
     trait :published do
-      is_published true
+      status 5
     end
 
     trait :with_address do

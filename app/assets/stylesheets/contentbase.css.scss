@@ -8,7 +8,7 @@
         padding:5px 0 2px;
         margin: 0;
     }
-    h4 {
+    h4, .byline {
         color:$gray;
         @include font-sans-serif(normal, 11px);
         line-height: $baseLineHeight;
