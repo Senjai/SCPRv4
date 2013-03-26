@@ -15,7 +15,7 @@ describe Outpost::ShowSegmentsController do
     
     context "existing object" do
       it "builds the object from existing attributes and assigns new ones" do
-        show_segment = create :show_segment, headline: "This is a story"
+        show_segment = create :show_segment, :published, headline: "This is a story"
         put :preview, id: show_segment.id, obj_key: show_segment.obj_key, show_segment: show_segment.attributes.merge(headline: "Updated")
         assigns(:segment).should eq show_segment
         assigns(:segment).headline.should eq "Updated"
@@ -26,6 +26,12 @@ describe Outpost::ShowSegmentsController do
         show_segment = create :show_segment, headline: "Okay"
         put :preview, id: show_segment.id, obj_key: show_segment.obj_key, show_segment: show_segment.attributes.merge(headline: "")
         response.should render_template "/outpost/shared/_preview_errors"
+      end
+
+      it "renders properly for unpublished content" do
+        show_segment = create :show_segment, :draft, headline: "This is a story"
+        put :preview, id: show_segment.id, obj_key: show_segment.obj_key, show_segment: show_segment.attributes
+        response.should render_template "/programs/_segment"
       end
     end
 

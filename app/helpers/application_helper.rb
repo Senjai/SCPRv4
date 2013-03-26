@@ -272,9 +272,19 @@ module ApplicationHelper
     end
   end
 
+  #----------
+  # Render a timestamp inside of a time tag.
+  #
+  # time_tag uses i18n's `localize` method, which raises
+  # if the date passed in doesn't respond to strftime, so we 
+  # need to check that this is the case before rendering the
+  # time tag. Otherwise previewing unpublished content breaks.
   def timestamp(datetime)
-    time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
+    if datetime.respond_to?(:strftime)
+      time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
+    end
   end
+  
   #----------
 
   def comment_widget_for(object, options={})
