@@ -8,13 +8,21 @@
   <hr />
 
   <fieldset class="fields">
-    <% unless flash[:alert].blank? %>
-      <div class="error"><%=h flash[:alert] %></div>
+    
+    <% if @message.errors.present? %>
+      <div class="error">
+        <ul>
+          <% @message.errors.full_messages.each do |error| %>
+            <li><%= error %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
+
     <ul class="inputs-list">
       <li class="field">
         <%= f.label :to_email, "Send This To:" %>
-        <%= f.text_field :to_email, class: "xlarge", placeholder: "Email address" %>
+        <%= f.text_field :to_email, class: "xlarge", placeholder: "Email address (Maximum one)" %>
       </li>
       <li class="field">
         <%= f.label :from_name, "From:" %>
