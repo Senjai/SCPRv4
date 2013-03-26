@@ -1,5 +1,6 @@
 class RemoveOrphanRecords < ActiveRecord::Migration
   def up
+    versions  = []
     assets    = []
     homepage  = []
     missedit  = []
@@ -7,6 +8,16 @@ class RemoveOrphanRecords < ActiveRecord::Migration
     links     = []
     audio     = []
     related   = []
+    bylines   = []
+
+    Secretary::Version.find_in_batches do |group|
+      group.each do |item|
+        if item.versioned.blank?
+          item.destroy
+          versions << item.id
+        end
+      end
+    end
 
     ContentAsset.find_in_batches do |group|
       group.each do |item|
@@ -71,13 +82,24 @@ class RemoveOrphanRecords < ActiveRecord::Migration
       end
     end
 
+    ContentByline.find_in_batches do |group|
+      group.each do |item|
+        if item.content.blank?
+          item.destroy
+          bylines << item.id
+        end
+      end
+    end
+
+    $stdout.puts "Version: (#{versions.size} total) #{versions}"
     $stdout.puts "ContentAsset: (#{assets.size} total) #{assets}"
     $stdout.puts "HomepageContent: (#{homepage.size} total) #{homepage}"
     $stdout.puts "MissedItContent: (#{missedit.size} total) #{missedit}"
     $stdout.puts "FeaturedComment: (#{comments.size} total) #{comments}"
-    $stdout.puts "RelatedLinks: (#{links.size} total) #{links}"
+    $stdout.puts "RelatedLink: (#{links.size} total) #{links}"
     $stdout.puts "Audio: (#{audio.size} total) #{audio}"
     $stdout.puts "Related: (#{related.size} total) #{related}"
+    $stdout.puts "ContentByline: (#{bylines.size} total) #{bylines}"
   end
 
   def down
