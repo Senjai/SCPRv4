@@ -11,7 +11,7 @@ class MissedItBucket < ActiveRecord::Base
   
   #--------------------
   # Association
-  has_many :contents, class_name: "MissedItContent", foreign_key: "bucket_id", order: "position asc"
+  has_many :contents, class_name: "MissedItContent", foreign_key: "bucket_id", order: "position asc", dependent: :destroy
   
   #--------------------
   # Validation
