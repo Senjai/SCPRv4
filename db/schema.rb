@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.text     "body",              :limit => 2147483647
     t.integer  "blog_id",                                                    :null => false
     t.datetime "published_at"
-    t.integer  "status",                                  :default => 0,     :null => false
+    t.integer  "status",                                                     :null => false
     t.string   "blog_asset_scheme"
     t.string   "short_headline"
     t.text     "teaser",            :limit => 2147483647
@@ -403,7 +403,7 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.text     "teaser",              :limit => 2147483647
     t.string   "event_asset_scheme"
     t.integer  "kpcc_program_id"
-    t.integer  "status",                                    :default => 0,     :null => false
+    t.integer  "status",                                                       :null => false
     t.boolean  "is_from_pij"
   end
 
@@ -450,10 +450,10 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
   create_table "layout_homepage", :force => true do |t|
     t.string   "base"
     t.datetime "published_at"
-    t.integer  "status",              :default => 0, :null => false
+    t.integer  "status",              :null => false
     t.integer  "missed_it_bucket_id"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "layout_homepage", ["missed_it_bucket_id"], :name => "layout_homepage_d12628ce"
@@ -541,7 +541,7 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.string   "story_asset_scheme"
     t.string   "extra_asset_scheme"
     t.string   "lead_asset_scheme",  :limit => 10
-    t.integer  "status",                                   :default => 0,     :null => false
+    t.integer  "status",                                                      :null => false
     t.string   "short_headline"
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
@@ -765,14 +765,14 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
   add_index "sections", ["missed_it_bucket_id"], :name => "index_sections_on_missed_it_bucket_id"
 
   create_table "shows_episode", :force => true do |t|
-    t.integer  "show_id",                                           :null => false
+    t.integer  "show_id",                            :null => false
     t.date     "air_date"
     t.string   "headline"
     t.text     "body",         :limit => 2147483647
     t.datetime "published_at"
-    t.integer  "status",                             :default => 0, :null => false
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.integer  "status",                             :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "category_id"
   end
 
@@ -791,17 +791,17 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
   add_index "shows_rundown", ["segment_order"], :name => "index_shows_rundown_on_segment_order"
 
   create_table "shows_segment", :force => true do |t|
-    t.integer  "show_id",                                                   :null => false
+    t.integer  "show_id",                                    :null => false
     t.string   "headline"
     t.string   "slug",                 :limit => 50
     t.text     "teaser",               :limit => 2147483647
     t.text     "body",                 :limit => 2147483647
-    t.datetime "created_at",                                                :null => false
-    t.integer  "status",                                     :default => 0, :null => false
+    t.datetime "created_at",                                 :null => false
+    t.integer  "status",                                     :null => false
     t.string   "segment_asset_scheme"
     t.string   "short_headline"
     t.datetime "published_at"
-    t.datetime "updated_at",                                                :null => false
+    t.datetime "updated_at",                                 :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij"
   end
@@ -844,9 +844,9 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.string   "link"
     t.string   "summary"
     t.text     "description"
-    t.integer  "status",       :default => 0, :null => false
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.integer  "status",       :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "tickets", ["status"], :name => "index_tickets_on_status"
