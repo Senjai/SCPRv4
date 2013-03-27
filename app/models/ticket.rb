@@ -21,7 +21,7 @@ class Ticket < ActiveRecord::Base
   
   #--------------------
   # Callbacks
-  after_save :publish_ticket_to_redis, if: -> { self.opening? || self.closing? }
+  after_save :publish_ticket_to_redis, if: :status_changed?
 
   #--------------------
   
@@ -36,11 +36,11 @@ class Ticket < ActiveRecord::Base
   #--------------------
 
   def opening?
-    (self.id_changed? && self.open?) || (self.status_was == STATUS_CLOSED && self.open?)
+    self.status_changed? && self.open?
   end
 
   def closing?
-    self.status_was == STATUS_OPEN && self.closed?
+    self.status_changed && self.closed?
   end
 
   #--------------------
