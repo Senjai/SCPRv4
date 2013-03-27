@@ -28,7 +28,7 @@ module Concern
       # doesn't need to be concerned about it.
       IGNORE_ATTRIBUTES = ['headline', 'body', 'slug', 'source', 
         'news_agency', 'is_from_pij', 'extra_asset_scheme', 
-        'updated_at', 'base']
+        'updated_at', 'base', 'related_content']
 
       included do
         after_save :enqueue_homepage_cache, if: :should_enqueue_homepage_cache?
