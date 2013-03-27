@@ -32,11 +32,6 @@ module Concern
         attribute_changed?('assets')
       end
 
-      def assets_was
-        assets_changed? ? changed_attributes['assets'] : current_assets_json
-      end
-
-
       #-------------------
       # #asset_json is a way to pass in a string representation
       # of a javascript object to the model, which will then be
@@ -55,7 +50,6 @@ module Concern
         # then we can assume something went wrong and just abort.
         # This shouldn't happen since we're populating the field in the template.
         return if json.empty?
-        @_original_assets ||= self.assets.dup
 
         json = Array(JSON.parse(json)).sort_by { |c| c["asset_order"].to_i }
         loaded_assets = []
@@ -74,14 +68,8 @@ module Concern
 
         # If the assets didn't change, there's no need to bother the database.        
         if current_assets_json != loaded_assets_json
+          self.changed_attributes['assets'] = current_assets_json
           self.assets = loaded_assets
-
-          # So we can properly track the status of the assets on an object.
-          if original_assets_json == loaded_assets_json
-            self.changed_attributes.delete('assets')
-          else
-            self.changed_attributes['assets'] = original_assets_json
-          end
         end
 
         self.assets
@@ -89,10 +77,6 @@ module Concern
 
 
       private
-
-      def original_assets_json
-        assets_to_simple_json(@_original_assets)
-      end
 
       def current_assets_json
         assets_to_simple_json(self.assets)

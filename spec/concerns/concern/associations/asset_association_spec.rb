@@ -51,38 +51,12 @@ describe Concern::Associations::AssetAssociation do
       newrecord.assets_changed?.should eq false
     end
 
-    it "is false if we changed it to something, then back to the original value" do
-      original_json = "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
-      
-      newrecord = create :test_class_story, asset_json: original_json
-      newrecord = TestClass::Story.find(newrecord.id)
-
-      newrecord.assets_changed?.should eq false
-      newrecord.asset_json = "[{\"id\":32459,\"caption\":\"Changed Caption\",\"asset_order\":12}]"
-      newrecord.assets_changed?.should eq true
-      newrecord.asset_json = original_json
-      newrecord.assets_changed?.should eq false
-    end
-
     it "is false after the record has been saved" do
       newrecord = build :test_class_story, asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
       newrecord.assets_changed?.should eq true
       newrecord.save
 
       newrecord.assets_changed?.should eq false
-    end
-  end
-
-  describe '#assets_was' do
-    it "is the value stored in changed_attributes if it has been changed" do
-      newrecord = build :test_class_story, asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
-      newrecord.assets_was.should eq []
-    end
-
-    it "is the current assets if it has not been changed" do
-      newrecord = create :test_class_story, asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
-      newrecord = TestClass::Story.find(newrecord.id)
-      newrecord.assets_was.should eq newrecord.assets.map(&:simple_json)
     end
   end
 
