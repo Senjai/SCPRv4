@@ -540,7 +540,6 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.string   "source"
     t.string   "story_asset_scheme"
     t.string   "extra_asset_scheme"
-    t.string   "lead_asset_scheme",  :limit => 10
     t.integer  "status",                                                      :null => false
     t.string   "short_headline"
     t.datetime "created_at",                                                  :null => false
