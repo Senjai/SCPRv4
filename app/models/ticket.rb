@@ -21,10 +21,30 @@ class Ticket < ActiveRecord::Base
   
   #--------------------
   # Callbacks
-  after_save :publish_ticket_to_redis, if: :status_changed?
+  after_save :publish_ticket_to_redis, if: -> { self.opening? || self.closing? }
 
   #--------------------
   
+  def open?
+    self.status == STATUS_OPEN
+  end
+
+  def closed?
+    self.status == STATUS_CLOSED
+  end
+
+  #--------------------
+
+  def opening?
+    (self.id_changed? && self.open?) || (self.status_was == STATUS_CLOSED && self.open?)
+  end
+
+  def closing?
+    self.status_was == STATUS_OPEN && self.closed?
+  end
+
+  #--------------------
+
   def publish_ticket_to_redis
     text_status = self.status == STATUS_OPEN ? "Opened" : "Closed"
     $redis.publish "scpr-tickets", "** Ticket #{text_status}: \"#{self.summary}\" (#{self.user.name}) (http://scpr.org#{self.admin_show_path})"
