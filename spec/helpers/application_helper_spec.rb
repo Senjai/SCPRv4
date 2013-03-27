@@ -281,7 +281,7 @@ describe ApplicationHelper do
       it 'returns the full twitter url with the handle added' do
         url = helper.twitter_profile_url('kpcc')
         url.should match /twitter\.com/
-        url.should match /kpcc$/
+        url.should match /kpcc\z/
       end
 
       it 'parameterizes the handle' do

@@ -101,7 +101,7 @@ module CacheTasks
       Faraday.new API_URL, headers: { "Authorization" => "Bearer #{@oauth_token.token}"} do |builder|
         builder.use Faraday::Request::UrlEncoded
         builder.use Faraday::Response::Logger
-        builder.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
+        builder.use FaradayMiddleware::ParseJson, content_type: /\bjson\z/
         builder.adapter Faraday.default_adapter
       end        
     end

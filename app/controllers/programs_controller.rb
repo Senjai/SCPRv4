@@ -79,7 +79,7 @@ class ProgramsController < ApplicationController
     @program = @segment.show
     
     # check whether this is the correct URL for the segment
-    if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
+    if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
       redirect_to @segment.link_path and return
     end
   end
