@@ -15,7 +15,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
-  include Concern::Callbacks::HomepageCachingCallback # Technically an Episode can be featured on the homepage
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
