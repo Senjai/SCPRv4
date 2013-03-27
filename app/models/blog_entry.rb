@@ -12,11 +12,16 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::CategoryAssociation
+  include Concern::Associations::HomepageContentAssociation
+  include Concern::Associations::FeaturedCommentAssociation
+  include Concern::Associations::MissedItContentAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
@@ -55,9 +60,7 @@ class BlogEntry < ActiveRecord::Base
   # Callbacks
 
   #------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes body

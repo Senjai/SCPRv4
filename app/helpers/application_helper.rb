@@ -22,14 +22,13 @@ module ApplicationHelper
   # * shared/content/default/lead
   #
   def render_content(content,context,options={})
-    if !content
-      return ''
-    end
+    return '' if content.blank?
 
     html = ''
     
-    (content.is_a?(Array) ? content : [content]).each do |c|
+    Array(content).each do |c|
       if c.respond_to?(:content)
+        next if c.content.blank?
         c = c.content
       end
 
@@ -48,11 +47,15 @@ module ApplicationHelper
         ['default',context].join("/")
       ]
 
-      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }      
-      html << render(options.merge({:partial => "shared/content/#{partial}", :object => c, :as => :content}))
+      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }
+      html << render(options.merge({
+        :partial    => "shared/content/#{partial}",
+        :object     => c,
+        :as         => :content
+      }))
     end
     
-    return html.html_safe
+    html.html_safe
   end
   
   #---------------------------  
@@ -67,9 +70,12 @@ module ApplicationHelper
   # * shared/assets/default/wide
   # * shared/assets/story/default
   # * shared/assets/default/default
-  
-  def render_asset(content,context, fallback=false)
-    if content.blank? || !content.respond_to?(:assets) || content.assets.blank?
+  def render_asset(content, context, fallback=false)
+    if content.blank? || !content.respond_to?(:assets)
+      return ''
+    end
+
+    if content.assets.blank?
       return fallback ? render("shared/assets/#{context}/fallback", content: content) : ''
     end
     
@@ -86,32 +92,25 @@ module ApplicationHelper
     
     partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/assets"],true) }
 
-    render :partial => "shared/assets/#{partial}", :object => content.assets, :as => :assets, :locals => { :content => content }
+    render "shared/assets/#{partial}", assets: content.assets, content: content
   end
   
   #----------
   
   def random_headshot
     images = ["stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png", "trujillo.png"]
-    image_tag "personalities/#{images[rand(images.size)]}"
+    image_tag "personalities/#{images.sample}"
   end
   
   #----------
   
-  def smart_date_js(content, options={})
-    # If we pass in something that's not a Time-y object, then look for a "published_at" attribute. 
-    # Only create the time tag if there is a time-y object to work with, otherwise the tag is useless.
-    if content.respond_to?(:strftime) # This is a Time or DateTime object (or something similar)
-      datetime = content
-    elsif content.respond_to?(:published_at) # This is an object with a published_at attribute
-      datetime = content.published_at
-    end
-    
-    if datetime ||= nil
-      content_tag(:time, '', { class: "#{options[:class] + " " if options[:class]}smart smarttime", "datetime" => datetime.strftime("%FT%R"), "data-unixtime" => datetime.to_i }.merge!(options.except(:class)))  
-    else
-      return nil
-    end
+  def smart_date_js(datetime, options={})
+    return '' if !datetime.respond_to?(:strftime)
+
+    time_tag datetime, '', {
+      "class"         => "#{options[:class]} smart smarttime", 
+      "data-unixtime" => datetime.to_i
+    }.merge(options.except(:class))
   end
   
   #----------
@@ -233,35 +232,6 @@ module ApplicationHelper
     return [first, last]
   end
 
-  #---------------------------
-
-  def featured_comment(opts)
-    opts = { :style => "default", :bucket => nil, :comment => nil }.merge(opts||{})
-        
-    comment = nil
-    
-    if opts[:comment]
-      if opts[:comment].is_a?(FeaturedComment)
-        comment = opts[:comment]
-      else
-        begin
-          comment = FeaturedComment.find(opts[:comment])
-        rescue
-          return ''
-        end
-      end
-    elsif opts[:bucket]
-      bucket = FeaturedCommentBucket.find(opts[:bucket])
-      comment = bucket.comments.published.first()
-    else
-      comment = FeaturedComment.published.first()
-    end
-    
-    if comment && comment.content
-      return render(:partial => "shared/featured_comment/#{opts[:style]}", :object => comment, :as => :comment)
-    end
-  end
-  
   #----------
   
   def pij_source(content, options={})

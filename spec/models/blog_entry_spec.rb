@@ -11,8 +11,8 @@ describe BlogEntry do
     it "includes paragraphs until the the target length is exceeded" do
       entry.body = "<p>Something</p><p>Something Else</p>"
       extended_teaser = entry.extended_teaser(2)
-      extended_teaser.should match /^<p>Something/
-      extended_teaser.should_not match /Something Else<\/p>$/
+      extended_teaser.should match /\A<p>Something/
+      extended_teaser.should_not match /Something Else<\/p>\z/
     end
     
     it "breaks if the class is story-break" do

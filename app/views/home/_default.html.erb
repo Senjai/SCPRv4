@@ -1,7 +1,7 @@
 <div class="homepage-lead default">
   <div class="row-fluid">
-    <%= content_cache("home_leads") do %>
-      <% register_content("layout/homepage") %>
+    <%= content_cache(@homepage) do %>
+      <% register_content(@homepage) %>
       <div class="span15">
         <%= render_content @homepage.content[0], "lead5" if @homepage %>
       </div>
@@ -15,7 +15,9 @@
 </div> <!-- homepage default -->
 
 <% content_for :conversation_slot do %>
-  <div class="join-conversation-container home">
-    <%= featured_comment :bucket => nil, :style => "home" %>
-  </div>
+  <% if @featured_comment %>
+    <div class="join-conversation-container home">
+      <%= render '/shared/featured_comment/home', comment: @featured_comment %>
+    </div>
+  <% end %>
 <% end %>

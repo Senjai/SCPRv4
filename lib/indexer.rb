@@ -12,6 +12,16 @@ class Indexer
 
   attr_reader :indexes, :models
   
+  class << self
+    #--------------------
+    # Enqueue the Index task.
+    def enqueue(*class_names)
+      Resque.enqueue(Job::Index, class_names.map(&:to_s))
+    end
+  end
+
+  #--------------
+
   def initialize(*models)
     @models     = models.reject { |e| e.blank? }
     @controller = ThinkingSphinx::Configuration.instance.controller
@@ -32,10 +42,4 @@ class Indexer
   end
 
   add_transaction_tracer :index, category: :task
-  
-  #--------------------
-  # Enqueue the Index task.
-  def enqueue
-    Resque.enqueue(Job::Index, @models.map(&:name))
-  end
 end

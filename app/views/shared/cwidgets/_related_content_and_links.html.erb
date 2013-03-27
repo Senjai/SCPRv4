@@ -12,7 +12,7 @@
               <% relations.each do |content| %>
                 <li>
                 <% register_content content %>
-                <%= link_to content.short_headline, content.link_path %> <span class="pipe">|</span> <%= smart_date_js content.published_at %>
+                <%= link_to "#{'EVENT: ' if content.is_a?(Event)}" + content.short_headline, content.link_path %> <span class="pipe">|</span> <%= timestamp content.published_at %>
                 </li>
               <% end %>
             </ul>
@@ -31,7 +31,7 @@
             <ul>
               <% content.related_links.normal.each do |link| %>
                 <li>
-                <%= link_to link.title, link.url %> <span class="domain"> | <%= link.domain ? link.domain.gsub(/^www\./, "") : link.url %></span>
+                <%= link_to link.title, link.url %> <span class="domain"> | <%= link.domain ? link.domain.gsub(/\Awww\./, "") : link.url %></span>
                 </li>
               <% end %>
             </ul>

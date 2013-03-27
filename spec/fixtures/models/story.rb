@@ -15,6 +15,8 @@ module TestClass
     
     include Concern::Callbacks::SetPublishedAtCallback
     include Concern::Callbacks::GenerateSlugCallback
+    include Concern::Callbacks::SphinxIndexCallback
+    include Concern::Callbacks::HomepageCachingCallback
     
     include Concern::Methods::CommentMethods
     include Concern::Methods::HeadlineMethods

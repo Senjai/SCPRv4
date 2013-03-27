@@ -1,19 +1,8 @@
 require "spec_helper"
 
-describe Ticket do
-  describe '#set_default_status' do
-    it "sets default status to OPEN" do
-      ticket = build :ticket, status: nil
-      ticket.save!
-      
-      ticket.status.should eq Ticket::STATUS_OPEN
-    end
-  end
-  
-  #--------------------
-  
+describe Ticket do  
   describe "publishing to redis" do
-    let(:ticket) { build :ticket }
+    let(:ticket) { build :ticket, status: Ticket::STATUS_OPEN }
     
     it "publishes to redis if status changed" do
       $redis.should_receive(:publish).twice

@@ -3,6 +3,8 @@ class Section < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
+  include Concern::Callbacks::SphinxIndexCallback
+
   ROUTE_KEY = "section"
 
   #----------
@@ -28,9 +30,7 @@ class Section < ActiveRecord::Base
   # Callbacks
   
   #----------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title
   end
@@ -63,7 +63,7 @@ class Section < ActiveRecord::Base
   #----------
 
   def route_hash
-    return {} if !self.published? || !self.persisted?
+    return {} if !self.persisted?
     {
       :slug           => self.persisted_record.slug,
       :trailing_slash => true

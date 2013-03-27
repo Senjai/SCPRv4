@@ -2,8 +2,10 @@ class Ticket < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  STATUS_OPEN   = 1
-  STATUS_CLOSED = 0
+  include Concern::Callbacks::SphinxIndexCallback
+
+  STATUS_OPEN   = 0
+  STATUS_CLOSED = 5
   
   STATUS_TEXT = {
     STATUS_OPEN   => "Open",
@@ -12,7 +14,7 @@ class Ticket < ActiveRecord::Base
 
   #--------------------
   # Scopes
-  scope :opened,   -> { where(status: STATUS_OPEN) }
+  scope :opened, -> { where(status: STATUS_OPEN) }
   scope :closed, -> { where(status: STATUS_CLOSED) }
   
   #--------------------
@@ -21,15 +23,30 @@ class Ticket < ActiveRecord::Base
   
   #--------------------
   # Callbacks
-  before_save :set_default_status, if: -> { self.status.blank? }
   after_save :publish_ticket_to_redis, if: :status_changed?
-  
-  def set_default_status
-    self.status = STATUS_OPEN
-  end
 
   #--------------------
   
+  def open?
+    self.status == STATUS_OPEN
+  end
+
+  def closed?
+    self.status == STATUS_CLOSED
+  end
+
+  #--------------------
+
+  def opening?
+    self.status_changed? && self.open?
+  end
+
+  def closing?
+    self.status_changed && self.closed?
+  end
+
+  #--------------------
+
   def publish_ticket_to_redis
     text_status = self.status == STATUS_OPEN ? "Opened" : "Closed"
     $redis.publish "scpr-tickets", "** Ticket #{text_status}: \"#{self.summary}\" (#{self.user.name}) (http://scpr.org#{self.admin_show_path})"
@@ -37,13 +54,10 @@ class Ticket < ActiveRecord::Base
   
   #--------------------
   # Validations
-  validates :user, presence: true
-  validates :summary, presence: true
+  validates :user, :status, :summary, presence: true
 
   #--------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes summary
     indexes description
