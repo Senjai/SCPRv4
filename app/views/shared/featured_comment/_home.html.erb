@@ -6,6 +6,6 @@
   <blockquote>
     <%= link_to "&ldquo;#{comment.excerpt}&rdquo;".html_safe, content.link_path, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Lead Section'} %>
   </blockquote>
-  <p class="quotee">from <%= link_to comment.content.short_headline, comment.content.link_path %></p>
+  <p class="quotee">from <%= link_to content.short_headline, content.link_path %></p>
 </section>
 <% end %>
