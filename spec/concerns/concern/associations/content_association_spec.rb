@@ -32,8 +32,9 @@ describe Concern::Associations::ContentAssociation do
     
     it "doesn't add unpublished content" do
       unpublished = create :test_class_story, status: ContentBase::STATUS_DRAFT
-      post.content_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 0 }]"
-      post.content.map(&:content).should eq [story1]
+      ContentBase.should_receive(:obj_by_key).with(unpublished.obj_key).and_return(unpublished)
+      post.content_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 2 }, {\"id\": \"#{story2.obj_key}\", \"position\": 3 }]"
+      post.content.map(&:content).should eq [story1, story2]
     end
 
     it "parses the json and sets the content" do
