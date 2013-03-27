@@ -52,12 +52,6 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  after_save :enqueue_homepage_cache
-
-  def enqueue_homepage_cache
-    CacheTasks::Homepage.enqueue
-  end
-
 
   #-------------------
   # Sphinx
