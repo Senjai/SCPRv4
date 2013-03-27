@@ -47,7 +47,7 @@ module ApplicationHelper
         ['default',context].join("/")
       ]
 
-      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }      
+      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }
       html << render(options.merge({
         :partial    => "shared/content/#{partial}",
         :object     => c,
