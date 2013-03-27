@@ -23,6 +23,12 @@ class Ticket < ActiveRecord::Base
   
   #--------------------
   # Callbacks
+  before_validation :set_default_status, if: -> { self.status.blank? }
+
+  def set_default_status
+    self.status = STATUS_OPEN
+  end
+  
   after_save :publish_ticket_to_redis, if: :status_changed?
 
   #--------------------
