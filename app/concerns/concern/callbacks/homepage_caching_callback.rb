@@ -27,7 +27,8 @@ module Concern
       # If they only changed these attributes, then the homepage
       # doesn't need to be concerned about it.
       IGNORE_ATTRIBUTES = ['headline', 'body', 'slug', 'source', 
-        'news_agency', 'is_from_pij', 'extra_asset_scheme']
+        'news_agency', 'is_from_pij', 'extra_asset_scheme', 
+        'updated_at', 'base']
 
       included do
         after_save :enqueue_homepage_cache, if: :should_enqueue_homepage_cache?
@@ -38,13 +39,13 @@ module Concern
           (self.published? && changed_attribute_to_trigger_homepage_cache?)
       end
 
+
+      private
+
       # Enqueue homepage caching
       def enqueue_homepage_cache
         CacheTasks::Homepage.enqueue
       end
-
-
-      private
 
       # Were any attributes changed that should trigger homepage caching?
       def changed_attribute_to_trigger_homepage_cache?

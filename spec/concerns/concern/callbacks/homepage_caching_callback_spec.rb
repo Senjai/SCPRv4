@@ -71,5 +71,18 @@ describe Concern::Callbacks::HomepageCachingCallback do
       story.should_not_receive(:enqueue_homepage_cache)
       story.save!
     end
+
+    it "occurs if significant attributes changed" do
+      story = build :test_class_story, short_headline: "Newsflash"
+      story.should_receive(:enqueue_homepage_cache)
+      story.save!
+    end
+
+    it "doesn't occur if no significant attributes changed" do
+      story = create :test_class_story, short_headline: "Newsflash"
+      story.should_not_receive(:enqueue_homepage_cache)
+      story.headline = "Full Newsflash"
+      story.save!
+    end
   end
 end
