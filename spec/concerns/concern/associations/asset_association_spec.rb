@@ -54,7 +54,7 @@ describe Concern::Associations::AssetAssociation do
     it "is false after the record has been saved" do
       newrecord = build :test_class_story, asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
       newrecord.assets_changed?.should eq true
-      newrecord.save
+      newrecord.save!
 
       newrecord.assets_changed?.should eq false
     end

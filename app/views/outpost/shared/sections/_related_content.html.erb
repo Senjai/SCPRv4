@@ -7,7 +7,7 @@
   <script>
     aggregator = new scpr.Aggregator(
       "#aggregator", "#related_content_json", 
-      <%= j record.outgoing_references.includes(:related).map(&:related).to_json.html_safe %>, 
+      <%= raw record.outgoing_references.includes(:related).map(&:related).to_json %>, 
       { view: { active: 'search' } });
   </script>
 <% end %>

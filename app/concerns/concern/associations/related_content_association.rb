@@ -1,7 +1,7 @@
 ##
 # RelatedContentAssociation
 #
-# Defines forward and backwards relations
+# Defines forward and backwards relations between two pieces of content.
 # 
 module Concern
   module Associations
@@ -40,9 +40,15 @@ module Concern
       end
 
       #-------------------------
-      
+      # This should actually be called "outgoing_references_json"
       def related_content_json
-        self.outgoing_references.map(&:simple_json).to_json
+        current_related_content_json.to_json
+      end
+
+      #-------------------------
+
+      def related_content_changed?
+        attribute_changed?('related_content')
       end
 
       #-------------------------
@@ -66,11 +72,26 @@ module Concern
           end
         end
 
-        self.outgoing_references = loaded_references
+        loaded_related_content_json = related_content_to_simple_json(loaded_references)
+
+        if current_related_content_json != loaded_related_content_json
+          self.changed_attributes['related_content'] = loaded_related_content_json
+          self.outgoing_references = loaded_references
+        end
+
+        self.outgoing_references
       end
 
 
       private
+
+      def current_related_content_json
+        related_content_to_simple_json(self.outgoing_references)
+      end
+
+      def related_content_to_simple_json(array)
+        Array(array).map(&:simple_json)
+      end
 
       def _destroy_incoming_references
         self.incoming_references.clear

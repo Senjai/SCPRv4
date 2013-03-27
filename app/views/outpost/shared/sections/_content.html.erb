@@ -7,7 +7,7 @@
   <script>
     aggregator = new scpr.Aggregator(
       "#aggregator", "#content_json",
-      <%= j record.content.includes(:content).map(&:content).to_json.html_safe %>, 
-      <%= j options.to_json.html_safe %>);
+      <%= raw record.content.includes(:content).map(&:content).to_json %>, 
+      <%= raw options.to_json %>);
   </script>
 <% end %>

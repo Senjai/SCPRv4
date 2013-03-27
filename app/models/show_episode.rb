@@ -15,6 +15,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback # Technically an Episode can be featured on the homepage
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
@@ -53,6 +54,7 @@ class ShowEpisode < ActiveRecord::Base
   #-------------------
   # Callbacks
   before_validation :generate_headline, if: -> { self.headline.blank? }
+
   def generate_headline
     if self.air_date.present? && self.show.present?
       self.headline = "#{self.show.title} for #{self.air_date.strftime("%B %-d, %Y")}"
@@ -116,8 +118,12 @@ class ShowEpisode < ActiveRecord::Base
   
   #----------
   
+  def rundowns_changed?
+    attribute_changed?('rundowns')
+  end
+
   def rundown_json
-    self.rundowns.map(&:simple_json).to_json
+    current_rundown_json.to_json
   end
 
   #----------
@@ -129,7 +135,8 @@ class ShowEpisode < ActiveRecord::Base
     loaded_rundowns = []
 
     json.each do |rundown_hash|
-      if (segment = ContentBase.obj_by_key(rundown_hash["id"])) && segment.is_a?(ShowSegment)
+      segment = ContentBase.obj_by_key(rundown_hash["id"])
+      if segment && segment.is_a?(ShowSegment)
         rundown = ShowRundown.new(
           :segment_order => rundown_hash["position"].to_i, 
           :segment       => segment
@@ -139,6 +146,24 @@ class ShowEpisode < ActiveRecord::Base
       end
     end
     
-    self.rundowns = loaded_rundowns
+    loaded_rundowns_json = rundowns_to_simple_json(loaded_rundowns)
+
+    if current_rundown_json != loaded_rundowns_json
+      self.changed_attributes['rundowns'] = current_rundown_json
+      self.rundowns = loaded_rundowns
+    end
+
+    self.rundowns
+  end
+
+
+  private
+
+  def current_rundown_json
+    rundowns_to_simple_json(self.rundowns)
+  end
+
+  def rundowns_to_simple_json(array)
+    Array(array).map(&:simple_json)
   end
 end
