@@ -5,6 +5,8 @@ class FeaturedComment < ActiveRecord::Base
 
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Methods::PublishingMethods
+  include Concern::Methods::StatusMethods
   
   STATUS_LIVE  = ContentBase::STATUS_LIVE
   STATUS_DRAFT = ContentBase::STATUS_DRAFT
@@ -15,12 +17,12 @@ class FeaturedComment < ActiveRecord::Base
   }
 
   FEATUREABLE_CLASSES = [
-    NewsStory,
-    BlogEntry,
-    ContentShell,
-    ShowSegment,
-    VideoShell,
-    Event
+    "NewsStory",
+    "BlogEntry",
+    "ContentShell",
+    "ShowSegment",
+    "VideoShell",
+    "Event"
   ]
 
   #----------------
@@ -71,7 +73,7 @@ class FeaturedComment < ActiveRecord::Base
     end
 
     def featurable_classes_select_collection
-      FeaturedComment::FEATUREABLE_CLASSES.map { |c| [c.to_s.titleize, c] }
+      FeaturedComment::FEATUREABLE_CLASSES.map { |c| [c.titleize, c] }
     end
   end
 
