@@ -133,21 +133,15 @@ describe ApplicationHelper do
   
   describe "#smart_date_js" do # These tests could be dryed up
     it "returns a time tag with all attributes filled in if some sort of Timestamp object is passed in" do
-      [Time, DateTime].each do |datetime|
-        time = datetime.now
-        time.should respond_to(:strftime)
-        helper.smart_date_js(time).should eq content_tag(:time, '', class: "smart smarttime", "datetime" => time.strftime("%FT%R"), "data-unixtime" => time.to_i)
-      end
+      time = Time.now
+      tag = helper.smart_date_js(time)
+      tag.should match /\<time/
+      tag.should match /smart smarttime/
+      tag.should match /#{time.to_i.to_s}/
     end
-    
-    it "returns a time tag with all attributes filled in if some sort of content is passed in" do
-      content = create :video_shell # arbitrary object which will respond to published_at
-      content.should respond_to(:published_at)
-      helper.smart_date_js(content).should eq helper.content_tag(:time, '', class: "smart smarttime", "datetime" => content.published_at.strftime("%FT%R"), "data-unixtime" => content.published_at.to_i)
-    end
-    
-    it "returns nil if passed-in object can't respond to published_at or strftime" do
-      helper.smart_date_js("invalid").should eq nil
+
+    it "returns nil if passed-in object can't respond to strftime" do
+      helper.smart_date_js("invalid").should eq ''
     end
     
     it "accepts an optional options hash and merges it into the options for the content_tag" do

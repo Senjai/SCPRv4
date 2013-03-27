@@ -14,7 +14,7 @@
             <span class="blog-title"><%= link_to c.category.title, c.category.link_path %></span>
           <% end %>
           
-          <%= smart_date_js c, "data-window" => "8h", "data-relative" => "2h" %>
+          <%= smart_date_js c.published_at, "data-window" => "8h", "data-relative" => "2h" %>
           
           <% if c.is_a? ContentShell %>
             <span class="shell-link">| <%= c.site %></span>

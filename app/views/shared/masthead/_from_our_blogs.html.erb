@@ -4,7 +4,7 @@
     <li>
       <h4><%= link_to entry.headline, entry.link_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'Blog Post', 'ga-label' => 'Content'} %></h4>
       <span class="blog-title"><%= link_to entry.blog.name, entry.blog.link_path %></span>
-      <%= smart_date_js entry, "data-window" => "8h", "data-relative" => "2h" %>
+      <%= smart_date_js entry.published_at, "data-window" => "8h", "data-relative" => "2h" %>
     </li>
   <% end %>
 </ul>

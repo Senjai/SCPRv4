@@ -104,20 +104,13 @@ module ApplicationHelper
   
   #----------
   
-  def smart_date_js(content, options={})
-    # If we pass in something that's not a Time-y object, then look for a "published_at" attribute. 
-    # Only create the time tag if there is a time-y object to work with, otherwise the tag is useless.
-    if content.respond_to?(:strftime) # This is a Time or DateTime object (or something similar)
-      datetime = content
-    elsif content.respond_to?(:published_at) # This is an object with a published_at attribute
-      datetime = content.published_at
-    end
-    
-    if datetime ||= nil
-      content_tag(:time, '', { class: "#{options[:class] + " " if options[:class]}smart smarttime", "datetime" => datetime.strftime("%FT%R"), "data-unixtime" => datetime.to_i }.merge!(options.except(:class)))  
-    else
-      return nil
-    end
+  def smart_date_js(datetime, options={})
+    return '' if !datetime.respond_to?(:strftime)
+
+    time_tag datetime, '', {
+      "class"         => "#{options[:class]} smart smarttime", 
+      "data-unixtime" => datetime.to_i
+    }.merge(options.except(:class))
   end
   
   #----------
