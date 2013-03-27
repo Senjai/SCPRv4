@@ -9,6 +9,7 @@ class Homepage < ActiveRecord::Base
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods

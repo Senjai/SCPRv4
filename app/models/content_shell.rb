@@ -17,6 +17,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
