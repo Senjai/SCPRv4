@@ -7,6 +7,9 @@
 # JSON string of the important content attributes,
 # and parses that string on save.
 #
+# Requires you to define a `has_many :content` association,
+# and a `build_content_association` method.
+#
 module Concern
   module Associations
     module ContentAssociation
