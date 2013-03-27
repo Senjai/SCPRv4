@@ -43,7 +43,7 @@ describe ContentBase do
       long_body = load_fixture("long_text.txt")
       long_body.should match /\n/
       teaser = ContentBase.generate_teaser(long_body)
-      teaser.should match /^Lorem ipsum (.+)\.{3,}$/
+      teaser.should match /\ALorem ipsum (.+)\.{3,}\z/
       teaser.should_not match /\n/
     end
     
@@ -117,7 +117,7 @@ describe ContentBase do
     
     context "valid URI" do
       before :each do
-        stub_const("ContentBase::CONTENT_MATCHES", {  %r{^/news/(\d+)/.*} => 'NewsStory' } )
+        stub_const("ContentBase::CONTENT_MATCHES", {  %r{\A/news/(\d+)/.*} => 'NewsStory' } )
         @url = "http://something.com/news/123/somethingelse/"
       end
       

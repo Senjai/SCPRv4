@@ -71,7 +71,7 @@ class Asset
   def self.connection
     @connection ||= begin
       Faraday.new("http://#{config.server}", params: { auth_token: config.token }) do |c|
-        c.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
+        c.use FaradayMiddleware::ParseJson, content_type: /\bjson\z/
         c.use FaradayMiddleware::Instrumentation
         c.adapter Faraday.default_adapter
       end

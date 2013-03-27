@@ -4,13 +4,13 @@
   
   <%= cache ["opengraph", "v1", content] do %>
     <meta property="og:description" content="<%= content.teaser.gsub(/\"/, "'") %>">
-    <meta property="og:title" content="<%= content.headline.gsub(/\"/, "'") %>">
+    <meta property="og:title" content="<%= content.short_headline.gsub(/\"/, "'") %>">
     <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
     <meta property="og:url" content="<%= content.remote_link_path %>"/>
     <meta name="twitter:card" value="summary">
     <meta name="twitter:site" value="@kpcc">
     <meta name="twitter:url" value="<%= content.remote_link_path %>">
-    <meta name="twitter:title" value="<%= content.headline.gsub(/\"/, "'") %>">
+    <meta name="twitter:title" value="<%= content.short_headline.gsub(/\"/, "'") %>">
     <meta name="twitter:description" value="<%= content.teaser.gsub(/\"/, "'") %>">
   
     <% if content.is_a?(VideoShell) and content.assets.present? %>

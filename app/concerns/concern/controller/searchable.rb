@@ -14,7 +14,7 @@ module Concern
         
         @records = model.search(params[:query], {
           :page     => params[:page] || 1,
-          :per_page => 50 # More results = higher efficiency
+          :per_page => 50
           }.merge(search_params)
         )
       end

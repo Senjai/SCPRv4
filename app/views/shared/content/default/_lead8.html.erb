@@ -4,7 +4,7 @@
   <h1 class="story-headline"><%= link_to content.short_headline, content.link_path %></h1>
   <span class="byline">
     <%= render_byline content %> 
-    <%= smart_date_js content, "data-window" => "8h", "data-relative" => "2h" %>
+    <%= smart_date_js content.published_at, "data-window" => "8h", "data-relative" => "2h" %>
   </span>
 
   <p><%=h strip_tags(content.teaser) %></p>

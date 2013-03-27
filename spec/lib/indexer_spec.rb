@@ -25,8 +25,7 @@ describe Indexer do
   describe "#enqueue" do
     it "sends off to Indexer::IndexJob with an array of model names" do
       Resque.should_receive(:enqueue).with(Job::Index, ["BlogEntry"])
-      indexer = Indexer.new(BlogEntry)
-      indexer.enqueue
+      indexer = Indexer.enqueue(BlogEntry)
     end
   end
   
