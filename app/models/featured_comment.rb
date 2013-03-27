@@ -3,8 +3,8 @@ class FeaturedComment < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Methods::PublishingMethods
   include Concern::Methods::StatusMethods
   
