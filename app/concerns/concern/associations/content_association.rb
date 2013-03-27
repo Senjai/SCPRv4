@@ -30,8 +30,10 @@ module Concern
         loaded_content = []
         
         json.each do |content_hash|
-          # Make sure the content actually exists, then build the association
-          if content = ContentBase.obj_by_key(content_hash["id"])
+          # Make sure the content actually exists, and that it's
+          # published, then build the association.
+          content = ContentBase.obj_by_key(content_hash["id"])
+          if content && content.published?
             new_content = build_content_association(content_hash, content)
             loaded_content.push new_content
           end

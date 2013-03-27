@@ -1,0 +1,18 @@
+<div class="pull-right">
+  <%= modal_toggle title: "Help: Publishing", id: "publishing-help-modal" do %>
+    <h4>Publishing</h4>
+    For remote content (Content Shells, Video Shells), the <strong>Published Timestamp</strong> does NOT get set automatically. It should be set to the original publish date of the remote content.
+    <hr />
+
+    <h4>Scheduling a story to automatically publish in the future</h4>
+    <ol>
+      <li>Set the <strong>STATUS</strong> to <strong>PENDING</strong>. The Timestamp fields should appear.</li>
+      <li>Fill in the <strong>Publish At</strong> fields with the date and time you want the story to be published.</li>
+      <li>Save the story.</li>
+    </ol>
+    <hr />
+
+    <h4>Changing the Timestamp for a story</h4>
+    You can do this by editing the "Published At" timestamp in the fields below. For remote content, the timestamp is entirely manual and can be treated like any other field.
+  <% end %>
+</div>

@@ -79,7 +79,7 @@ class OtherProgram < ActiveRecord::Base
   #----------
   
   def route_hash
-    return {} if !self.persisted? || !self.published?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :show           => self.persisted_record.slug,
       :trailing_slash => true

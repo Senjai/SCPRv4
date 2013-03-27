@@ -1,0 +1,21 @@
+<div class="pull-right">
+  <%= modal_toggle title: "Help: Publishing", id: "publishing-help-modal" do %>
+    <strong>For the most part, you can leave the timestamp alone - it will take care of itself.</strong>
+  
+    <h4>Publishing</h4>
+    When <strong>PUBLISHING</strong> a story, the Timestamp will automatically be set to the current time.
+    <hr />
+  
+    <h4>Scheduling a story to automatically publish in the future</h4>
+    <ol>
+      <li>Set the <strong>STATUS</strong> to <strong>PENDING</strong>. The Timestamp fields should appear.</li>
+      <li>Fill in the <strong>Publish At</strong> fields with the date and time you want the story to be published.</li>
+      <li>Save the story.</li>
+    </ol>
+    <hr />
+  
+    <h4>Changing the Timestamp for a story</h4>
+    <div class="alert alert-warning"><strong>Beware!</strong> Manually changing the timestamp is not recommended.</div>
+    If the status is set to <strong>PUBLISHED</strong>, you can use the date/time fields to manually change the timestamp.
+  <% end %>
+</div>

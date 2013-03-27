@@ -12,6 +12,8 @@ module Concern
         # This should be "referrer" and "referee"
         has_many :outgoing_references, as: :content, class_name: "Related", dependent: :destroy, order: "position"
         has_many :incoming_references, as: :related, class_name: "Related", dependent: :destroy, order: "position"
+        
+        after_save :_destroy_incoming_references, if: -> { self.unpublishing? }
       end
       
       #-------------------------
@@ -32,6 +34,8 @@ module Concern
           content.push reference.content
         end
         
+        # Compact to make sure no nil records get through - those would
+        # be unpublished content.
         content.compact.uniq.sort_by { |c| c.published_at }.reverse
       end
 
@@ -50,10 +54,11 @@ module Concern
         loaded_references = []
         
         json.each do |content_hash|
-          if related_content = ContentBase.obj_by_key(content_hash["id"])
+          content = ContentBase.obj_by_key(content_hash["id"])
+          if content && content.published?
             new_reference = Related.new(
               :position => content_hash["position"].to_i,
-              :related  => related_content,
+              :related  => content,
               :content  => self
             )
             
@@ -62,6 +67,13 @@ module Concern
         end
 
         self.outgoing_references = loaded_references
+      end
+
+
+      private
+
+      def _destroy_incoming_references
+        self.incoming_references.clear
       end
     end # RelatedContentAssociation
   end # Associations

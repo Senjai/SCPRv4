@@ -63,7 +63,7 @@ class Section < ActiveRecord::Base
   #----------
 
   def route_hash
-    return {} if !self.published? || !self.persisted?
+    return {} if !self.persisted?
     {
       :slug           => self.persisted_record.slug,
       :trailing_slash => true

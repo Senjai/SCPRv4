@@ -20,6 +20,23 @@ class Homepage < ActiveRecord::Base
   
   TEMPLATE_OPTIONS = TEMPLATES.map { |k, v| [v, k] }
   
+
+  STATUS_DRAFT    = ContentBase::STATUS_DRAFT
+  STATUS_PENDING  = ContentBase::STATUS_PENDING
+  STATUS_LIVE     = ContentBase::STATUS_LIVE
+
+  STATUS_TEXT = {
+    STATUS_DRAFT      => "Draft",
+    STATUS_PENDING    => "Pending",
+    STATUS_LIVE       => "Live"
+  }
+
+  class << self
+    def status_text_collect
+      Homepage::STATUS_TEXT.map { |p| [p[1], p[0]] }
+    end
+  end
+
   #-------------------
   # Scopes
   
@@ -30,16 +47,16 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Validations
-  validates :base, presence: true
+  validates :base, :status, presence: true
   
   #-------------------
   # Callbacks
-  after_save :expire_cache
   after_save :enqueue_homepage_cache
 
   def enqueue_homepage_cache
     CacheTasks::Homepage.enqueue
   end
+
 
   #-------------------
   # Sphinx
@@ -48,13 +65,7 @@ class Homepage < ActiveRecord::Base
     has published_at
     has updated_at
   end
-  
-  #----------
-  
-  def expire_cache
-    Rails.cache.expire_obj("layout/homepage")
-  end
-  
+
   #----------
   
   def scored_content
@@ -141,6 +152,7 @@ class Homepage < ActiveRecord::Base
   end
   
   #---------------------
+  
   
   private
   

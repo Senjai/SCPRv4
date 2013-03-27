@@ -3,31 +3,56 @@ class FeaturedComment < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  include Concern::Methods::StatusMethods
-  include Concern::Methods::PublishingMethods
-  include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
-  include Concern::Associations::ContentAlarmAssociation
-  include Concern::Scopes::PublishedScope
+  include Concern::Callbacks::SphinxIndexCallback
   
+  STATUS_LIVE  = ContentBase::STATUS_LIVE
+  STATUS_DRAFT = ContentBase::STATUS_DRAFT
+
+  STATUS_TEXT = {
+    STATUS_DRAFT => "Draft",
+    STATUS_LIVE  => "Live"
+  }
+
+  FEATUREABLE_CLASSES = [
+    NewsStory,
+    BlogEntry,
+    ContentShell,
+    ShowSegment,
+    VideoShell,
+    Event
+  ]
+
   #----------------
   # Scopes
-  
+  scope :published, -> { where(status: FeaturedComment::STATUS_LIVE).order("created_at desc") }
+
   #----------------
   # Associations
-  belongs_to :content, polymorphic: true
+  belongs_to :content, polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }
   belongs_to :bucket, class_name: "FeaturedCommentBucket"
   
   #----------------
   # Validation
-  validates :username, :status, presence: true
-  validates :excerpt, :bucket_id, :content_id, :content_type, presence: true, if: :should_validate?
-  
-  def needs_validation?
-    self.pending? || self.published?
+  validates :username, :status, :excerpt, :bucket_id, :content_type, :content_id, presence: true
+  validate :content_exists?, :content_is_published?
+
+  #-----------------
+
+  def content_exists?
+    if self.content.nil?
+      errors.add(:content_id, "Content doesn't exist. Check the ID.")
+    end
   end
-  
+
+  #-----------------
+
+  def content_is_published?
+    if self.content && !self.content.published?
+      errors.add(:content_id, "Content must be published in order to be featured.")
+    end
+  end
+
   #----------------
   # Callbacks
 
@@ -36,11 +61,22 @@ class FeaturedComment < ActiveRecord::Base
   define_index do
     indexes username
     indexes excerpt
-    has published_at
   end
   
   #----------------
   
+  class << self
+    def status_select_collection
+      FeaturedComment::STATUS_TEXT.map { |p| [p[1], p[0]] }
+    end
+
+    def featurable_classes_select_collection
+      FeaturedComment::FEATUREABLE_CLASSES.map { |c| [c.to_s.titleize, c] }
+    end
+  end
+
+  #----------------
+
   def title
     "Featured Comment (for #{content.obj_key})"
   end

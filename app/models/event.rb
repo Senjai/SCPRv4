@@ -7,12 +7,14 @@ class Event < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::RelatedContentAssociation
+  include Concern::Associations::FeaturedCommentAssociation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::TeaserMethods
+  include Concern::Methods::PublishingMethods
   
   ROUTE_KEY = "event"
   
@@ -54,7 +56,7 @@ class Event < ActiveRecord::Base
   
   #-------------------
   # Validations
-  validates :headline, presence: true
+  validates :headline, :status, presence: true
   validates :event_type, :starts_at, :body, presence: true, if: :should_validate?
   
   validates :location_url, :sponsor_url, url: { allow_blank: true }
@@ -71,7 +73,7 @@ class Event < ActiveRecord::Base
   end
   
   def published?
-    self.status == STATUS_LIVE
+    self.status == Event::STATUS_LIVE
   end
 
   #-------------------
@@ -181,7 +183,7 @@ class Event < ActiveRecord::Base
   #----------
   
   def route_hash
-    return {} if !self.published? || !self.persisted?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :year           => self.persisted_record.starts_at.year, 
       :month          => self.persisted_record.starts_at.month.to_s.sub(/^[^0]$/) { |n| "0#{n}" }, 

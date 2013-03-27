@@ -5,6 +5,6 @@ FactoryGirl.define do
   factory :ticket do
     user
     summary "Sweet Ticket, Bro"
-    status 1
+    status 0
   end
 end

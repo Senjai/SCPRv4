@@ -10,6 +10,4 @@ class Related < ActiveRecord::Base
       "position" => self.position.to_i
     }
   end
-
-  default_scope where("content_type is not null and related_type is not null")
 end

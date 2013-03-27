@@ -14,17 +14,15 @@
   <tbody class="list">
     <% @versions.each do |version| %>
       <% record = version.versioned %>
-      <% if record.present? %> <%# Has to be here in a case a story gets deleted from Django %>
-        <tr class="versions">
-          <td class="column-manage">
-            <%= guard record.class do %>
-              <%= link_to "View", outpost_version_path(resources: record.class.route_key, resource_id: record.id, version_number: version.version_number), class: "btn" %>
-            <% end %>
-          </td>
-          
-          <%= render "/outpost/shared/columns", list: list, record: version %>
-        </tr>
-      <% end %>
+      <tr class="versions">
+        <td class="column-manage">
+          <%= guard record.class do %>
+            <%= link_to "View", outpost_version_path(resources: record.class.route_key, resource_id: record.id, version_number: version.version_number), class: "btn" %>
+          <% end %>
+        </td>
+        
+        <%= render "/outpost/shared/columns", list: list, record: version %>
+      </tr>
     <% end %>
   </tbody>
 <% end %>

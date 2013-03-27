@@ -2,14 +2,14 @@
   <% register_content bucket %>
   <div class="carousel-section">
     <div class="row-fluid">
-      <% contents.each do |extra_content| %>
-        <% register_content extra_content %>
+      <% contents.map(&:content).each do |content| %>
+        <% register_content content %>
         <div class="span4">
           <div class="carousel-item">
-            <%= render_asset extra_content.content, "lsquare", true %>
-            <span class="title"><%= link_to extra_content.content.short_headline, extra_content.content.link_path %></span>
+            <%= render_asset content, "lsquare", true %>
+            <span class="title"><%= link_to content.short_headline, content.link_path %></span>
           </div>
-        </div> <!-- span2 -->
+        </div> <!-- span -->
         <hr />
       <% end %>
     </div> <!-- row fluid -->
