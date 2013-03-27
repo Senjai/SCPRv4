@@ -3,9 +3,6 @@
 #
 # Sends message to Redis pub/sub
 # Requires the methods defined in PublishingMethods
-#
-# This has to match what Mercer is doing for now.
-#
 module Concern
   module Callbacks
     module RedisPublishCallback

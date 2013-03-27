@@ -2,6 +2,7 @@ require 'digest/sha1'
 
 class AdminUser < ActiveRecord::Base
   self.table_name = 'auth_user'
+  include Concern::Callbacks::SphinxIndexCallback
   
   include Outpost::Model::Authentication
   include Outpost::Model::Authorization
@@ -25,7 +26,6 @@ class AdminUser < ActiveRecord::Base
 
   # ----------------
   # Sphinx
-  acts_as_searchable
   
   define_index do
     indexes username

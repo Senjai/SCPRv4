@@ -67,10 +67,39 @@ describe ShowEpisode do
 
   #------------------
 
+  describe "rundowns_changed?" do
+    let(:segment) { create :show_segment }
+
+    it "is true on initialize" do
+      episode = build :show_episode, rundown_json: "[{ \"id\": \"#{segment.obj_key}\", \"position\": 1 }]"
+      episode.rundowns_changed?.should eq true
+    end
+
+    it "is false if the rundown has not changed" do
+      original_json = "[{ \"id\": \"#{segment.obj_key}\", \"position\": 1 }]"
+      
+      episode = create :show_episode, rundown_json: original_json
+      episode.rundown_json = original_json
+
+      episode.rundowns_changed?.should eq false
+    end
+
+    it "is false after the record has been saved" do
+      episode = build :show_episode, rundown_json: "[{ \"id\": \"#{segment.obj_key}\", \"position\": 1 }]"
+      episode.rundowns_changed?.should eq true
+      episode.save!
+
+      episode.rundowns_changed?.should eq false
+    end
+  end
+
+  #------------------
+
   describe '#rundown_json=' do
     let(:episode)  { create :show_episode }
     let(:segment1) { create :show_segment }
     let(:segment2) { create :show_segment }
+
 
     it "adds them ordered by position" do
       episode.rundown_json = "[{ \"id\": \"#{segment2.obj_key}\", \"position\": 1 }, {\"id\": \"#{segment1.obj_key}\", \"position\": 0 }]"
@@ -93,6 +122,16 @@ describe ShowEpisode do
       
       episode.rundown_json = "[]"
       episode.segments.should be_empty
+    end
+
+    context "when no content has changed" do
+      it "doesn't set the rundowns" do
+        original_json = "[{ \"id\": \"#{segment1.obj_key}\", \"position\": 1 }]"
+        record = create :show_episode, rundown_json: original_json
+
+        record.should_not_receive :rundowns=
+        record.rundown_json = original_json
+      end
     end
   end
 end

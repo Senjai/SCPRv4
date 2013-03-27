@@ -2,6 +2,11 @@ class FeaturedComment < ActiveRecord::Base
   self.table_name = 'contentbase_featuredcomment'
   outpost_model
   has_secretary
+
+  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
+  include Concern::Methods::PublishingMethods
+  include Concern::Methods::StatusMethods
   
   STATUS_LIVE  = ContentBase::STATUS_LIVE
   STATUS_DRAFT = ContentBase::STATUS_DRAFT
@@ -12,12 +17,12 @@ class FeaturedComment < ActiveRecord::Base
   }
 
   FEATUREABLE_CLASSES = [
-    NewsStory,
-    BlogEntry,
-    ContentShell,
-    ShowSegment,
-    VideoShell,
-    Event
+    "NewsStory",
+    "BlogEntry",
+    "ContentShell",
+    "ShowSegment",
+    "VideoShell",
+    "Event"
   ]
 
   #----------------
@@ -54,9 +59,7 @@ class FeaturedComment < ActiveRecord::Base
   # Callbacks
 
   #----------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes username
     indexes excerpt
@@ -70,7 +73,7 @@ class FeaturedComment < ActiveRecord::Base
     end
 
     def featurable_classes_select_collection
-      FeaturedComment::FEATUREABLE_CLASSES.map { |c| [c.to_s.titleize, c] }
+      FeaturedComment::FEATUREABLE_CLASSES.map { |c| [c.titleize, c] }
     end
   end
 

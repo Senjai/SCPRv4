@@ -1,24 +1,36 @@
 ##
 # ContentAssociation
 #
-# Polymorphic association to content
+# Polymorphic association to content.
+# This is different from RelatedContentAssociation. This one can join
+# anything to a piece of content - it's only a one-way association, 
+# whereas RelatedContentAssociation is a two-way association.
 #
 # Adds a content_json attribute which will accept a
 # JSON string of the important content attributes,
 # and parses that string on save.
 #
+# Requires you to define a `has_many :content` association,
+# and a `build_content_association` method.
+#
+# It also requires that the join model has defined `simple_json`.
+# See HomepageContent or MissedItContent for examples.
 module Concern
   module Associations
     module ContentAssociation
       extend ActiveSupport::Concern
       
+      def content_changed?
+        attribute_changed?('content')
+      end
+
       #-------------------
       # #content_json is a way to pass in a string representation
       # of a javascript object to the model, which will then be
       # parsed and turned into content objects in the 
       # #content_json= method.
       def content_json
-        self.content.map(&:simple_json).to_json
+        current_content_json.to_json
       end
 
       #-------------------
@@ -39,7 +51,25 @@ module Concern
           end
         end
 
-        self.content = loaded_content
+        loaded_content_json = content_to_simple_json(loaded_content)
+
+        if current_content_json != loaded_content_json
+          self.changed_attributes['content'] = current_content_json
+          self.content = loaded_content
+        end
+
+        self.content
+      end
+
+
+      private
+
+      def current_content_json
+        content_to_simple_json(self.content)
+      end
+
+      def content_to_simple_json(array)
+        Array(array).map(&:simple_json)
       end
     end
   end

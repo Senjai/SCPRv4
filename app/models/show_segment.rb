@@ -20,6 +20,8 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
@@ -58,9 +60,7 @@ class ShowSegment < ActiveRecord::Base
   # Callbacks
   
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes teaser

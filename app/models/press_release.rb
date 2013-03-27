@@ -3,7 +3,8 @@ class PressRelease < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
-  
+  include Concern::Callbacks::SphinxIndexCallback
+
   ROUTE_KEY = "press_release"
 
   #-------------
@@ -30,9 +31,7 @@ class PressRelease < ActiveRecord::Base
   end
 
   #-------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title
     indexes body

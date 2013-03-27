@@ -14,10 +14,14 @@
 #
 module Job
   class Homepage < Base
+    # This job needs to be on the sphinx queue so
+    # that it runs *after* a sphinx index has
+    # occurred, because the homepage caching relies
+    # on an up-to-date index.
     @queue = "#{namespace}:sphinx"
     
-    def self.perform(obj_key)
-      task = CacheTasks::Homepage.new(obj_key)
+    def self.perform
+      task = CacheTasks::Homepage.new
       task.run
       self.log "Performed Homepage caching"
     end

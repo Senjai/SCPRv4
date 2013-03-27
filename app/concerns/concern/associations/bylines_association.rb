@@ -56,7 +56,7 @@ module Concern
       # Otherwise, it will just use the display_name
       #
       # Note that because the :extra role is assumed
-      # to just be an array of stirngs, it will always 
+      # to just be an array of strings, it will always 
       # just be joined and isn't passed into the block.
       #
       # Returns a hash
@@ -83,9 +83,9 @@ module Concern
       end
       
       #-------------------
-      
+
       private
-            
+
       def should_reject_bylines?(attributes)
         attributes['user_id'].blank? &&
         attributes['name'].blank?

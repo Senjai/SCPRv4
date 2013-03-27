@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Callbacks::GenerateSlugCallback
+  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::HeadlineMethods
   include Concern::Methods::CommentMethods
@@ -80,9 +81,7 @@ class Event < ActiveRecord::Base
   after_save :expire_cache
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes body

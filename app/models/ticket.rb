@@ -2,6 +2,8 @@ class Ticket < ActiveRecord::Base
   outpost_model
   has_secretary
 
+  include Concern::Callbacks::SphinxIndexCallback
+
   STATUS_OPEN   = 0
   STATUS_CLOSED = 5
   
@@ -55,9 +57,7 @@ class Ticket < ActiveRecord::Base
   validates :user, :status, :summary, presence: true
 
   #--------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes summary
     indexes description
