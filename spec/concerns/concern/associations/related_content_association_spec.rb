@@ -117,8 +117,10 @@ describe Concern::Associations::RelatedContentAssociation do
     
     it "doesn't add unpublished content" do
       unpublished = create :test_class_story, status: ContentBase::STATUS_DRAFT
-      post.related_content_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 0 }]"
-      post.outgoing_references.map(&:related).should eq [story1]
+      ContentBase.should_receive(:obj_by_key).with(unpublished.obj_key).and_return(unpublished)
+
+      post.related_content_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 2 }, {\"id\": \"#{story2.obj_key}\", \"position\": 3 }]"
+      post.outgoing_references.map(&:related).should eq [story1, story2]
     end
 
     it "adds them ordered by position" do
