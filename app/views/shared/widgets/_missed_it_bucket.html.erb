@@ -3,7 +3,7 @@
 <% if bucket.present? %>
   <nav class="recent-posts widget">
     <h6>In Case You Missed It</h6>
-    <%= content_cache(bucket) do %>
+    <%= content_cache(bucket.obj_key) do %>
       <% register_content bucket %>
       <% bucket.content.includes(:content).limit(5).map(&:content).each do |content| %>
         <% register_content content %>
