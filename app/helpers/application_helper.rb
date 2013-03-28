@@ -26,7 +26,7 @@ module ApplicationHelper
 
     html = ''
     
-    Array(content).each do |c|
+    Array(content).compact.each do |c|
       if c.respond_to?(:content)
         next if c.content.blank?
         c = c.content
