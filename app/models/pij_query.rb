@@ -7,7 +7,6 @@ class PijQuery < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::SphinxIndexCallback
-  include Concern::Methods::HeadlineMethods
   include Concern::Methods::TeaserMethods
   
   ROUTE_KEY       = "pij_query"
@@ -59,7 +58,11 @@ class PijQuery < ActiveRecord::Base
   #------------
   
   def published?
-    is_active
+    self.is_active?
+  end
+
+  def short_headline
+    self.headline
   end
 
   #------------

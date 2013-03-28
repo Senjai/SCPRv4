@@ -11,7 +11,6 @@ class Event < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::HeadlineMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::TeaserMethods
   include Concern::Methods::PublishingMethods
@@ -119,6 +118,10 @@ class Event < ActiveRecord::Base
     self.starts_at
   end
   
+  def short_headline
+    self.headline
+  end
+
   # -------------------
   
   def self.sorted(events, direction=:asc)

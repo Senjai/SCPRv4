@@ -19,7 +19,6 @@ module TestClass
     include Concern::Callbacks::HomepageCachingCallback
     
     include Concern::Methods::CommentMethods
-    include Concern::Methods::HeadlineMethods
     include Concern::Methods::PublishingMethods
     include Concern::Methods::StatusMethods
     include Concern::Methods::TeaserMethods
