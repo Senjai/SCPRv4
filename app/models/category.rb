@@ -5,8 +5,8 @@ class Category < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
-
-  ROUTE_KEY = "category"
+  
+  ROUTE_KEY = 'root_slug'
   
   #-------------------
   # Scopes
@@ -32,11 +32,16 @@ class Category < ActiveRecord::Base
   
   #----------
 
+  def route_hash
+    return {} if !self.persisted?
+    { path: self.persisted_record.slug }
+  end
+
+  #----------
+
   def content(page=1,per_page=10,without_obj=nil)
-    ts_max_matches = 1000 # Thinking Sphinx config 'max_matches', throws an error if the offset (from pagination) is higher than this number
-    
-    if page.to_i*per_page.to_i > ts_max_matches
-      return []
+    if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
+      page = 1
     end
     
     args = {
@@ -52,13 +57,6 @@ class Category < ActiveRecord::Base
     ContentBase.search(args)
   end
   
-  #----------
-  
-  def route_hash
-    return {} if !self.persisted?
-    { category: self.persisted_record.slug }
-  end
-
   #----------
   
   def feature_candidates(args={})

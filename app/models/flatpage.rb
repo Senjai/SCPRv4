@@ -5,6 +5,8 @@ class Flatpage < ActiveRecord::Base
   
   include Concern::Callbacks::SphinxIndexCallback
 
+  ROUTE_KEY = 'root_slug'
+
   TEMPLATE_OPTIONS = [
     ["Normal (with sidebar)",   "inherit"],
     ["Full Width (no sidebar)", "full"],
@@ -70,9 +72,10 @@ class Flatpage < ActiveRecord::Base
   end
 
   # -------------------
-  # Override Outpost for this
-  def link_path(options={})
-    self.url
+
+  def route_hash
+    return {} if !self.persisted? || !self.persisted_record.is_public?
+    { path: self.persisted_record.path }
   end
 
   # -------------------

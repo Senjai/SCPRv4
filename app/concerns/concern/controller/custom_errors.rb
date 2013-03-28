@@ -9,17 +9,19 @@ module Concern
       extend ActiveSupport::Concern
       
       included do
-        unless Rails.application.config.consider_all_requests_local
-          rescue_from StandardError, with: ->(e) { render_error(500, e) }
-          rescue_from ActionController::RoutingError, ActionView::MissingTemplate, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: ->(e) { render_error(404, e) }
-        end
+        rescue_from StandardError, with: ->(e) { render_error(500, e) }
+        rescue_from ActionController::RoutingError, ActionView::MissingTemplate, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: ->(e) { render_error(404, e) }
       end
       
       #----------------------
       
       def render_error(status, e=StandardError)
-        render template: "/errors/error_#{status}", status: status, locals: { errors: e }
-        report_error(e)
+        if Rails.application.config.consider_all_requests_local
+          raise e
+        else
+          render template: "/errors/error_#{status}", status: status, locals: { errors: e }
+          report_error(e)
+        end
       end
       
       #----------------------
