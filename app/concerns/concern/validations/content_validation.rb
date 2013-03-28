@@ -15,6 +15,11 @@ module Concern
         validates_presence_of :headline  # always
         validates_presence_of :body,     message: BODY_MESSAGE, if: :should_validate?
         validates_presence_of :status    # always
+
+        # The following two will probably be generated automatically, but we put them
+        # here just to be safe.
+        validates_presence_of :short_headline, if: :should_validate?
+        validates_presence_of :teaser, if: :should_validate?
       end
     end # ContentValidation
   end # Validations

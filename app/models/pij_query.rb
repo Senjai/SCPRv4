@@ -6,8 +6,8 @@ class PijQuery < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
+  include Concern::Callbacks::GenerateTeaserCallback
   include Concern::Callbacks::SphinxIndexCallback
-  include Concern::Methods::TeaserMethods
   
   ROUTE_KEY       = "pij_query"
   

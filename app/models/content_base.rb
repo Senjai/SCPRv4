@@ -88,26 +88,6 @@ module ContentBase
   end
   
   #--------------------
-  # Cut down body to get teaser
-  def generate_teaser(text, length=180)
-    stripped_body = ActionController::Base.helpers.strip_tags(text).gsub("&nbsp;"," ").gsub(/\r/,'')
-    match = stripped_body.match(/^(.+)/)
-
-    if !match
-      return ""
-    else
-      first = match[1]
-      if first.length < length
-        return first
-      else
-        # try shortening this paragraph
-        short = first.match /^(.{#{length}}\w*)\W/
-        return short ? "#{short[1]}..." : first
-      end
-    end
-  end
-
-  #--------------------
   # Convert key from "app/model:id" to AppModel
   def get_model_for_obj_key(key)
     match = match_key(key)

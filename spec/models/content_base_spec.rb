@@ -27,37 +27,6 @@ describe ContentBase do
   
   #---------------
   
-  describe "::generate_teaser" do
-    it "returns empty string if text is blank" do
-      ContentBase.generate_teaser("").should eq ""
-    end
-    
-    it "returns the full first paragraph if it's short enough" do
-      first   = "This is just a short paragraph."
-      body    = "#{first}\n And some more!"
-      teaser  = ContentBase.generate_teaser(body)
-      teaser.should eq first
-    end
-    
-    it "creates teaser from long paragraph if not defined" do
-      long_body = load_fixture("long_text.txt")
-      long_body.should match /\n/
-      teaser = ContentBase.generate_teaser(long_body)
-      teaser.should match /\ALorem ipsum (.+)\.{3,}\z/
-      teaser.should_not match /\n/
-    end
-    
-    it "uses the length passed in as a guideline for cutting off the text" do
-      teaser1 = ContentBase.generate_teaser("Testing a Teaser.", 1)
-      teaser1.should eq "Testing..."
-      
-      teaser2 = ContentBase.generate_teaser("Testing a Teaser.", 10)
-      teaser2.should eq "Testing a Teaser..."      
-    end
-  end
-  
-  #---------------
-  
   describe "::get_model_for_obj_key" do
     it "accepts nil" do
       ContentBase.get_model_for_obj_key(nil).should eq nil
