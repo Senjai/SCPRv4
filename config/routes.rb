@@ -23,11 +23,11 @@ Scprv4::Application.routes.draw do
   
   
   # Blogs / Entries
-  get '/blogs/:blog/archive/:year/:month/(page/:page)' => "blogs#archive",                as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
-  post  '/blogs/:blog/process_archive_select'            => "blogs#process_archive_select", as: :blog_process_archive_select
+  get '/blogs/:blog/archive/:year/:month/'             => "blogs#archive",                as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
+  post  '/blogs/:blog/process_archive_select'          => "blogs#process_archive_select", as: :blog_process_archive_select
   get '/blogs/:blog/:year/:month/:day/:id/:slug/'      => "blogs#entry",                  as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
-  get '/blogs/:blog/tagged/:tag/(page/:page)'          => "blogs#blog_tagged",            as: :blog_entries_tagged
-  get '/blogs/:blog/(page/:page)'                      => 'blogs#show',                   as: :blog,                 constraints: { page: /\d+/ }
+  get '/blogs/:blog/tagged/:tag/'                      => "blogs#blog_tagged",            as: :blog_entries_tagged
+  get '/blogs/:blog/'                                  => 'blogs#show',                   as: :blog
   get '/blogs/'                                        => 'blogs#index',                  as: :blogs
   
   
@@ -39,7 +39,7 @@ Scprv4::Application.routes.draw do
   get '/programs/:show/archive/'                      => "programs#archive",    as: :program_archive
   get '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",    as: :segment,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
   get '/programs/:show/:year/:month/:day/'            => "programs#episode",    as: :episode,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
-  get '/programs/:show(/page/:page)'                  => 'programs#show',       as: :program,           constraints: { page: /\d+/ }
+  get '/programs/:show'                               => 'programs#show',       as: :program
   get '/programs/'                                    => 'programs#index',      as: :programs
   get '/schedule/'                                    => 'programs#schedule',   as: :schedule
   
@@ -81,8 +81,8 @@ Scprv4::Application.routes.draw do
 
 
   # Archive
-  post  '/archive/process/'               => "archive#process_form",  as: :archive_process_form
-  match '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
+  post  '/archive/process/'             => "archive#process_form",  as: :archive_process_form
+  get '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
   
   
   # Extra (internal stuff)
