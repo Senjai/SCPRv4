@@ -21,15 +21,10 @@ class VideoShell < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
-  include Concern::Methods::HeadlineMethods
   include Concern::Methods::ContentJsonMethods
 
   ROUTE_KEY = "video"
-  
-  def self.content_key
-    "content/video"
-  end
-  
+
   #-------------------
   # Scopes
 
@@ -66,6 +61,10 @@ class VideoShell < ActiveRecord::Base
     self.body
   end
 
+  def short_headline
+    self.headline
+  end
+  
   #--------------------
   
   def route_hash

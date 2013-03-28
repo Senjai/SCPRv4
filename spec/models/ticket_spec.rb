@@ -20,4 +20,18 @@ describe Ticket do
       ticket.save!
     end
   end
+
+  describe "default status" do
+    it "sets default status before save if it's blank" do
+      ticket = build :ticket, status: nil
+      ticket.save!
+      ticket.status.should eq Ticket::STATUS_OPEN
+    end
+
+    it "doesn't set default status if it's already been set" do
+      ticket = build :ticket, status: Ticket::STATUS_CLOSED
+      ticket.save!
+      ticket.status.should eq Ticket::STATUS_CLOSED
+    end
+  end
 end
