@@ -1,4 +1,4 @@
-<div class="gray-strip archive-select" id="archive-select">
+<div class="gray-strip archive-select" id="archive">
   <span class="more">Find an archived Episode:</span>
   <%= form_tag program_archive_path(@program.slug), id: "archive_date_select", class: "archive-date-select" do %>
       <%= date_select 'archive', 'date', 

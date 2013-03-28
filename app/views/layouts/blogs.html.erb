@@ -37,7 +37,7 @@
 
   <div class="blog-archive widget blog">
     <h6>Browse the Archive</h6>
-    <div class="archive-select" id="archive-select">
+    <div class="archive-select" id="archive">
       <p>
         <%= form_tag blog_process_archive_select_path(@blog.slug), id: "archive_date_select", class: "archive-date-select" do %>
           <%= date_select 'archive', 'date', 
