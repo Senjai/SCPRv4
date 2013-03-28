@@ -6,7 +6,6 @@ class PijQuery < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
-  include Concern::Callbacks::GenerateTeaserCallback
   include Concern::Callbacks::SphinxIndexCallback
   
   ROUTE_KEY       = "pij_query"
@@ -37,6 +36,7 @@ class PijQuery < ActiveRecord::Base
   # Validation
   validates :slug,        uniqueness: true
   validates :headline,    presence: true
+  validates :teaser,      presence: true
   validates :body,        presence: true
   validates :query_type,  presence: true
   validates :query_url,   presence: true
