@@ -86,7 +86,33 @@ module ContentBase
       Kaminari.paginate_array([]).page(0).per(0)
     end
   end
-  
+
+  #--------------------
+  # Generate a teaser from the passed-in text.
+  # If the text is blank, return an empty string.
+  # If the first paragraph is <= target length, return the first paragraph.
+  # Otherwise get everything up to the target length, the up to the next period.
+  def generate_teaser(text, length=180)
+    return '' if text.blank?
+    teaser = ''
+
+    stripped_body = ActionController::Base.helpers.strip_tags(text)
+      .gsub("&nbsp;"," ").gsub(/\r/,'').strip
+
+    stripped_body.match(/^.+/) do |match|
+      first_paragraph = match[0]
+
+      if first_paragraph.length <= length
+        teaser = first_paragraph
+      else
+        shortened_paragraph = first_paragraph.match(/\A.{#{length}}[^\.]*\.?/)
+        teaser = shortened_paragraph ? "#{shortened_paragraph[0]}" : first_paragraph
+      end
+    end
+
+    teaser
+  end
+
   #--------------------
   # Convert key from "app/model:id" to AppModel
   def get_model_for_obj_key(key)

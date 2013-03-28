@@ -8,19 +8,10 @@ describe Concern::Callbacks::GenerateTeaserCallback do
       story.teaser.should eq "Hello"
     end
 
-    it "returns the full first paragraph if it's short enough" do
-      first   = "This is just a short paragraph."
-      story = build :test_class_story, body: "#{first}\n And some more!"
-      story.generate_teaser
-      story.teaser.should eq first
-    end
-    
-    it "creates teaser from long paragraph if not defined" do
-      long_body = load_fixture("long_text.txt")
-      long_body.should match /\n/
-      story.generate_teaser
-      story.teaser.should match /\ALorem ipsum (.+)\.{3,}\z/
-      story.teaser.should_not match /\n/
+    it "doesn't run if teaser is present" do
+      story = build :test_class_story, body: "Okay", teaser: "Okedoke"
+      story.save!
+      story.teaser.should eq "Okedoke"
     end
   end
 end

@@ -17,22 +17,9 @@ module Concern
       end
 
       def generate_teaser
-        length = TARGET_LENGTH
-        stripped_body = ActionController::Base.helpers.strip_tags(self.body).gsub("&nbsp;"," ").gsub(/\r/,'')
-        
-        stripped_body.match(/^(.+)/) do |match|
-          first_paragraph = match[1]
-
-          if first_paragraph.length < length
-            self.teaser = first_paragraph
-          else
-            # try shortening this paragraph
-            shortened_paragraph = first_paragraph.match(/^(.{#{length}}\w*)\W/)
-            self.teaser = shortened_paragraph ? "#{shortened_paragraph[1]}..." : first_paragraph
-          end
+        if self.body.present?
+          self.teaser = ContentBase.generate_teaser(self.body, 180)
         end
-
-        self.teaser
       end
     end
   end
