@@ -1,6 +1,6 @@
 <%= form_block "Short Details" do %>
   <%= f.input :short_headline, input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
-  <%= f.input :teaser, as: :text, input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20} } %>
+  <%= f.input :teaser, as: :text, hint: "This will be generated on publish if left blank.", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20} } %>
   <%= f.section "slug" %>
   <%= extra %>
 <% end %>
