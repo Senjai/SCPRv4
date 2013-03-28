@@ -54,7 +54,7 @@ class ProgramsController < ApplicationController
   
   #----------
   
-  def archive    
+  def archive
     # If the date wasn't specified, send them to the program page's archive section
     if params[:archive].blank?
       redirect_to program_path(@program.slug, anchor: "archive-select") and return

@@ -11,6 +11,8 @@ describe Concern::Validations::ContentValidation do
     it { should validate_presence_of(:status) }
     it { should validate_presence_of(:headline) }
     it { should validate_presence_of(:body).with_message(Concern::Validations::ContentValidation::BODY_MESSAGE) }
+    it { should validate_presence_of :short_headline }
+    it { should validate_presence_of :teaser }
   end
   
   context "should not validate" do
@@ -21,5 +23,7 @@ describe Concern::Validations::ContentValidation do
     it { should validate_presence_of :status }
     it { should validate_presence_of :headline }
     it { should_not validate_presence_of :body }
+    it { should_not validate_presence_of :short_headline }
+    it { should_not validate_presence_of :teaser }
   end
 end

@@ -18,7 +18,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  include Concern::Methods::HeadlineMethods
   include Concern::Methods::ContentJsonMethods
 
   ROUTE_KEY = "episode"
@@ -85,6 +84,10 @@ class ShowEpisode < ActiveRecord::Base
   # Teaser just returns the body.
   def teaser
     self.body
+  end
+
+  def short_headline
+    self.headline
   end
 
   #----------
