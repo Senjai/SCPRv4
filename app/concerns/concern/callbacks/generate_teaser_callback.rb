@@ -6,8 +6,6 @@ module Concern
     module GenerateTeaserCallback
       extend ActiveSupport::Concern
 
-      TARGET_LENGTH = 180
-
       included do
         before_validation :generate_teaser, if: :should_generate_teaser?
       end
