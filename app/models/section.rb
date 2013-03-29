@@ -3,7 +3,9 @@ class Section < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
-  ROUTE_KEY = "section"
+  include Concern::Callbacks::SphinxIndexCallback
+
+  ROUTE_KEY = 'root_slug'
 
   #----------
   # Scopes
@@ -28,22 +30,27 @@ class Section < ActiveRecord::Base
   # Callbacks
   
   #----------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title
   end
   
   #----------
   
+  def route_hash
+    return {} if !self.persisted?
+    { path: self.persisted_record.slug }
+  end
+
+  #----------
+
   def content(options = {})
     options.reverse_merge!(per_page: 10, page: 1)
     
     # Reset to page 1 if the requested page is too high
     # Otherwise an error will occur
     # TODO: Fallback to SQL query instead of just cutting it off.
-    if options[:page].to_i > (SPHINX_MAX_MATCHES / options[:per_page].to_i)
+    if (options[:page].to_i * options[:per_page].to_i > SPHINX_MAX_MATCHES) || options[:page].to_i < 1
       options[:page] = 1 
     end
     
@@ -58,15 +65,5 @@ class Section < ActiveRecord::Base
   
   def published?
     !self.new_record?
-  end
-  
-  #----------
-
-  def route_hash
-    return {} if !self.published? || !self.persisted?
-    {
-      :slug           => self.persisted_record.slug,
-      :trailing_slash => true
-    }
   end
 end

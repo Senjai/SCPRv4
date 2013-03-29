@@ -9,14 +9,18 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::CategoryAssociation
+  include Concern::Associations::HomepageContentAssociation
+  include Concern::Associations::FeaturedCommentAssociation
+  include Concern::Associations::MissedItContentAssociation
   include Concern::Validations::ContentValidation
   include Concern::Validations::PublishedAtValidation
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  include Concern::Methods::HeadlineMethods
   include Concern::Methods::ContentJsonMethods
   
   def self.content_key
@@ -61,9 +65,7 @@ class ContentShell < ActiveRecord::Base
   
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes body
@@ -86,6 +88,10 @@ class ContentShell < ActiveRecord::Base
     self.body
   end
   
+  def short_headline
+    self.headline
+  end
+
   #----------
   # Override Outpost's `link_path` for these
   def link_path(options={})

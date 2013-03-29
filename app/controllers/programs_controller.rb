@@ -54,21 +54,15 @@ class ProgramsController < ApplicationController
   
   #----------
   
-  def archive    
-    # If the date wasn't specified, send them to the program page's archive section
-    if params[:archive].blank?
-      redirect_to program_path(@program.slug, anchor: "archive-select") and return
-      
+  def archive
+    @date = Time.new(params[:archive]["date(1i)"].to_i, params[:archive]["date(2i)"].to_i, params[:archive]["date(3i)"].to_i)
+    @episode = @program.episodes.published.where(air_date: @date).first
+   
+    if !@episode
+      flash[:alert] = "There is no #{@program.title} episode for #{@date.strftime('%F')}."
+      redirect_to program_path(@program.slug, anchor: "archive") and return
     else
-      @date = Time.new(params[:archive]["date(1i)"].to_i, params[:archive]["date(2i)"].to_i, params[:archive]["date(3i)"].to_i)
-      @episode = ShowEpisode.where(air_date: @date, show_id: @program.id).first
-     
-      if @episode.blank?
-        # TODO: Display some kind of notice that there is no episode
-        redirect_to program_path(@program.slug, anchor: "archive-select") and return
-      else
-        redirect_to @episode.link_path
-      end
+      redirect_to @episode.link_path
     end
   end
   
@@ -79,7 +73,7 @@ class ProgramsController < ApplicationController
     @program = @segment.show
     
     # check whether this is the correct URL for the segment
-    if ( request.env['PATH_INFO'] =~ /\/$/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
+    if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
       redirect_to @segment.link_path and return
     end
   end

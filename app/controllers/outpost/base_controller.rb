@@ -4,6 +4,7 @@ class Outpost::BaseController < Outpost::ApplicationController
   before_filter :set_sections
   before_filter :setup_tickets
   before_filter :set_current_homepage
+  before_filter :add_params_for_newrelic
 
   #------------------------
   # Just setup the @sections variable so the views can add to it.
@@ -26,10 +27,25 @@ class Outpost::BaseController < Outpost::ApplicationController
   end
 
   #-------------------------
+
+  def add_params_for_newrelic
+    if current_user
+      NewRelic::Agent.add_custom_parameters(
+        :current_user_id   => current_user.id, 
+        :current_user_name => current_user.name
+      )
+    end
+  end
+
+  #-------------------------
   # Override this method from CustomErrors so we can specify the template path
   def render_error(status, e=StandardError)
-    render template: "/outpost/errors/error_#{status}", status: status, locals: { error: e }
-    report_error(e)
+    if Rails.application.config.consider_all_requests_local
+      raise e
+    else
+      render template: "/outpost/errors/error_#{status}", status: status, locals: { error: e }
+      report_error(e)
+    end
   end
   
   #-------------------------

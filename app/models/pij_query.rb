@@ -6,8 +6,7 @@ class PijQuery < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
-  include Concern::Methods::HeadlineMethods
-  include Concern::Methods::TeaserMethods
+  include Concern::Callbacks::SphinxIndexCallback
   
   ROUTE_KEY       = "pij_query"
   
@@ -37,6 +36,7 @@ class PijQuery < ActiveRecord::Base
   # Validation
   validates :slug,        uniqueness: true
   validates :headline,    presence: true
+  validates :teaser,      presence: true
   validates :body,        presence: true
   validates :query_type,  presence: true
   validates :query_url,   presence: true
@@ -46,9 +46,7 @@ class PijQuery < ActiveRecord::Base
   # Callbacks
 
   #------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes body
@@ -60,13 +58,17 @@ class PijQuery < ActiveRecord::Base
   #------------
   
   def published?
-    is_active
+    self.is_active?
+  end
+
+  def short_headline
+    self.headline
   end
 
   #------------
   
   def route_hash
-    return {} if !self.published? || !self.persisted?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :slug           => self.persisted_record.slug,
       :trailing_slash => true

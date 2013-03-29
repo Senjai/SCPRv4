@@ -1,7 +1,9 @@
 class Podcast < ActiveRecord::Base
   outpost_model
   has_secretary
-  
+
+  include Concern::Callbacks::SphinxIndexCallback
+
   ROUTE_KEY = "podcast"
 
   ITEM_TYPES = [
@@ -22,7 +24,7 @@ class Podcast < ActiveRecord::Base
   # Scopes
   
   #-------------
-  # Association  
+  # Association
   belongs_to :source, polymorphic: true
   belongs_to :category
   
@@ -35,9 +37,7 @@ class Podcast < ActiveRecord::Base
   # Callbacks
 
   #-------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title, sortable: true
     indexes slug

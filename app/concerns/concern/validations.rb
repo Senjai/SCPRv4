@@ -5,7 +5,7 @@ module Concern
   module Validations
     # Define some defaults
     DEFAULTS = {
-      slug_format: %r{^[\w-]+$}
+      slug_format: %r{\A[\w-]+\z}
     }
     
     module InstanceMethods

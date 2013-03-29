@@ -3,6 +3,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   outpost_model
   has_secretary
 
+  include Concern::Callbacks::SphinxIndexCallback
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
   ALERT_TYPES = {
@@ -28,9 +29,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   after_save :expire_cache
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes alert_type

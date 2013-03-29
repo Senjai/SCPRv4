@@ -44,7 +44,7 @@
     
     <div class="span10">
       <div class="section">
-        <h6>From Our Blogs</h6>     
+        <h6>From Our Blogs</h6>
         <% content_cache("mega_news_blogs") do %>
           <% register_content("blogs/entry:new") %>
           <%= render "/shared/masthead/from_our_blogs", content: @latest_blogs_news %>

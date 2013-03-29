@@ -15,19 +15,16 @@ class VideoShell < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
-  include Concern::Methods::HeadlineMethods
   include Concern::Methods::ContentJsonMethods
 
   ROUTE_KEY = "video"
-  
-  def self.content_key
-    "content/video"
-  end
-  
+
   #-------------------
   # Scopes
 
@@ -41,9 +38,7 @@ class VideoShell < ActiveRecord::Base
   # Callbacks
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes headline
     indexes body
@@ -66,10 +61,14 @@ class VideoShell < ActiveRecord::Base
     self.body
   end
 
+  def short_headline
+    self.headline
+  end
+  
   #--------------------
   
   def route_hash
-    return {} if !self.persisted? || !self.published?
+    return {} if !self.persisted? || !self.persisted_record.published?
     {
       :id             => self.persisted_record.id,
       :slug           => self.persisted_record.slug,

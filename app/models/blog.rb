@@ -4,6 +4,7 @@ class Blog < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
+  include Concern::Callbacks::SphinxIndexCallback
 
   ROUTE_KEY = "blog"
   
@@ -28,9 +29,7 @@ class Blog < ActiveRecord::Base
   # Callbacks
   
   #----------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes name
     indexes teaser
@@ -65,7 +64,7 @@ class Blog < ActiveRecord::Base
   #-------------------
   
   def route_hash
-    return {} if !self.persisted? or !self.is_active?
+    return {} if !self.persisted? || !self.persisted_record.is_active?
     { :blog => self.persisted_record.slug }
   end
 end

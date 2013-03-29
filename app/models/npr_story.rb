@@ -175,7 +175,7 @@ class NprStory < ActiveRecord::Base
       :status         => ContentBase::STATUS_DRAFT,
       :headline       => npr_story.title,
       :teaser         => npr_story.teaser,
-      :short_headline => npr_story.shortTitle,
+      :short_headline => npr_story.shortTitle.present? ? npr_story.shortTitle : npr_story.title,
       :body           => text
     )
     

@@ -8,6 +8,8 @@ class Homepage < ActiveRecord::Base
   include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
@@ -19,6 +21,23 @@ class Homepage < ActiveRecord::Base
   
   TEMPLATE_OPTIONS = TEMPLATES.map { |k, v| [v, k] }
   
+
+  STATUS_DRAFT    = ContentBase::STATUS_DRAFT
+  STATUS_PENDING  = ContentBase::STATUS_PENDING
+  STATUS_LIVE     = ContentBase::STATUS_LIVE
+
+  STATUS_TEXT = {
+    STATUS_DRAFT      => "Draft",
+    STATUS_PENDING    => "Pending",
+    STATUS_LIVE       => "Live"
+  }
+
+  class << self
+    def status_text_collect
+      Homepage::STATUS_TEXT.map { |p| [p[1], p[0]] }
+    end
+  end
+
   #-------------------
   # Scopes
   
@@ -29,11 +48,15 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Validations
-  validates :base, presence: true
+  validates :base, :status, presence: true
   
   #-------------------
   # Callbacks
   after_save :expire_cache
+
+  def expire_cache
+    Rails.cache.expire_obj(self)
+  end
 
   #-------------------
   # Sphinx
@@ -42,13 +65,7 @@ class Homepage < ActiveRecord::Base
     has published_at
     has updated_at
   end
-  
-  #----------
-  
-  def expire_cache
-    Rails.cache.expire_obj("layout/homepage")
-  end
-  
+
   #----------
   
   def scored_content
@@ -135,6 +152,7 @@ class Homepage < ActiveRecord::Base
   end
   
   #---------------------
+  
   
   private
   

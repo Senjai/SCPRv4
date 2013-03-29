@@ -1,3 +1,7 @@
+<% content = comment.content %>
+
+<% if comment && content %>
 <h6>From the Comments</h6>
-<blockquote><%= link_to "&ldquo;#{comment.excerpt}&rdquo;".html_safe, comment.content.link_path, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Section Block'} %></blockquote>
+<blockquote><%= link_to "&ldquo;#{comment.excerpt}&rdquo;".html_safe, content.link_path, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Section Block'} %></blockquote>
 <div class="comments-quotee">&mdash; <%= comment.username %></div>
+<% end %>

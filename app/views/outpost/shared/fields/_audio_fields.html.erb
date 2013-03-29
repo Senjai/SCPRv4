@@ -17,7 +17,7 @@
             <!-- existing audio -->
             <% if f.object.mp3.present? %>
               <h5 class="alert alert-success">Audio is Live</h5>
-              <%= link_to f.object.mp3.filename, f.object.url %>
+              <%= link_to f.object.mp3.filename, f.object.url, target: "_blank" %>
             <% else %>
               <h5 class="alert alert-info">Awaiting Audio</h5>
               <%= f.object.path %>

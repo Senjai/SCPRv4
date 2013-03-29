@@ -2,7 +2,6 @@
 # BylinesAssociation
 #
 # Defines bylines association
-# 
 module Concern
   module Associations
     module BylinesAssociation
@@ -19,6 +18,10 @@ module Concern
         scope :filtered_by_bylines, ->(bio_id) { 
           self.includes(:bylines).where(ContentByline.table_name => { user_id: bio_id }) 
         }
+
+        # TODO Only enqueue this if bylines changed
+        after_save :enqueue_sphinx_index_for_bylines
+        after_destroy :enqueue_sphinx_index_for_bylines
       end
 
       #-------------------
@@ -56,7 +59,7 @@ module Concern
       # Otherwise, it will just use the display_name
       #
       # Note that because the :extra role is assumed
-      # to just be an array of stirngs, it will always 
+      # to just be an array of strings, it will always 
       # just be joined and isn't passed into the block.
       #
       # Returns a hash
@@ -83,9 +86,15 @@ module Concern
       end
       
       #-------------------
-      
+
       private
-            
+
+      def enqueue_sphinx_index_for_bylines
+        Indexer.enqueue("ContentByline")
+      end
+
+      #-------------------
+
       def should_reject_bylines?(attributes)
         attributes['user_id'].blank? &&
         attributes['name'].blank?

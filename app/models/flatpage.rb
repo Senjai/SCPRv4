@@ -3,6 +3,10 @@ class Flatpage < ActiveRecord::Base
   outpost_model
   has_secretary
   
+  include Concern::Callbacks::SphinxIndexCallback
+
+  ROUTE_KEY = 'root_slug'
+
   TEMPLATE_OPTIONS = [
     ["Normal (with sidebar)",   "inherit"],
     ["Full Width (no sidebar)", "full"],
@@ -39,9 +43,7 @@ class Flatpage < ActiveRecord::Base
   end
 
   # -------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes url, sortable: true
     indexes title
@@ -53,7 +55,7 @@ class Flatpage < ActiveRecord::Base
   # -------------------
 
   def path
-    url.gsub(/^\//, "").gsub(/\/$/, "")
+    url.gsub(/\A\//, "").gsub(/\/\z/, "")
   end
   
   # -------------------
@@ -61,7 +63,7 @@ class Flatpage < ActiveRecord::Base
   # Just to be safe while the URLs are still being created in mercer
   def url
     if self[:url].present?
-      if self[:url] !~ /^\//
+      if self[:url] !~ /\A\//
         "/#{self[:url]}"
       else
         self[:url]
@@ -70,9 +72,10 @@ class Flatpage < ActiveRecord::Base
   end
 
   # -------------------
-  # Override Outpost for this
-  def link_path(options={})
-    self.url
+
+  def route_hash
+    return {} if !self.persisted? || !self.persisted_record.is_public?
+    { path: self.persisted_record.path }
   end
 
   # -------------------

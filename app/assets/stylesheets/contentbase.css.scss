@@ -8,7 +8,9 @@
         padding:5px 0 2px;
         margin: 0;
     }
-    .byline {
+    h4, .byline {
+        color:$gray;
+        @include font-sans-serif(normal, 11px);
         line-height: $baseLineHeight;
         margin-top: 6px;
         text-transform: uppercase;

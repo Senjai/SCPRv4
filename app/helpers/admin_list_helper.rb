@@ -1,5 +1,4 @@
 module AdminListHelper
-
   def display_npr_link(link)
     link_to content_tag(:i, nil, class: "icon-share-alt"), link, class: "btn"
   end

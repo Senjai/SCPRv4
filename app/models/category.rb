@@ -4,8 +4,9 @@ class Category < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
+  include Concern::Callbacks::SphinxIndexCallback
   
-  ROUTE_KEY = "category"
+  ROUTE_KEY = 'root_slug'
   
   #-------------------
   # Scopes
@@ -22,9 +23,7 @@ class Category < ActiveRecord::Base
   # Callbacks
 
   #-------------------
-  # Sphinx
-  acts_as_searchable
-  
+  # Sphinx  
   define_index do
     indexes title, sortable: true
     indexes slug, sortable: true
@@ -33,11 +32,16 @@ class Category < ActiveRecord::Base
   
   #----------
 
+  def route_hash
+    return {} if !self.persisted?
+    { path: self.persisted_record.slug }
+  end
+
+  #----------
+
   def content(page=1,per_page=10,without_obj=nil)
-    ts_max_matches = 1000 # Thinking Sphinx config 'max_matches', throws an error if the offset (from pagination) is higher than this number
-    
-    if page.to_i*per_page.to_i > ts_max_matches
-      return []
+    if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
+      page = 1
     end
     
     args = {
@@ -55,13 +59,6 @@ class Category < ActiveRecord::Base
   
   #----------
   
-  def route_hash
-    return {} if !self.persisted?
-    { category: self.persisted_record.slug }
-  end
-
-  #----------
-  
   def feature_candidates(args={})
     # lower decay decays more slowly. eg. rate of -0.01 will have a lower score after 3 days than -0.05
     
@@ -69,14 +66,14 @@ class Category < ActiveRecord::Base
 
     # -- first look for featured comments -- #
 
-    featured = self.comment_bucket.comments.published
+    featured = self.comment_bucket.comments.published.first
 
-    if featured.any?
+    if featured.present?
       # Initial score:  20
       # Decay rate:     0.05
       candidates << {
-        :content  => featured.first,
-        :score    => 20 * Math.exp( -0.04 * ((Time.now - featured.first.published_at) / 3600) ),
+        :content  => featured,
+        :score    => 20 * Math.exp( -0.04 * ((Time.now - featured.created_at) / 3600) ),
         :metric   => :comment
       }
     end

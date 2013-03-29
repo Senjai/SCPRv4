@@ -13,7 +13,6 @@ class ContentEmailController < ApplicationController
     if @message.save
       render :success
     else
-      flash.alert = "Please fill out all fields."
       render :new
     end
   end
