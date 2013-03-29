@@ -1,6 +1,6 @@
 <div class="homepage-lead default">
   <div class="row-fluid">
-    <%= content_cache(@homepage) do %>
+    <%= content_cache("homepage-lead-stories") do %>
       <% register_content(@homepage) %>
       <div class="span15">
         <%= render_content @homepage.content[0], "lead5" if @homepage %>

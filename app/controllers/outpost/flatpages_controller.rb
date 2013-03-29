@@ -31,7 +31,7 @@ class Outpost::FlatpagesController < Outpost::ResourceController
           render '/outpost/shared/_notice', layout: "outpost/minimal", 
             locals: { message: "This flatpage will redirect to <strong>#{@flatpage.redirect_url}</strong>".html_safe }
         else
-          render "/flatpages/_flatpage", layout: layout_template, locals: { flatpage: @flatpage }
+          render "/flatpages/_flatpage", layout: flatpage_layout_template, locals: { flatpage: @flatpage }
         end
       else
         render_preview_validation_errors(@flatpage)
@@ -41,8 +41,8 @@ class Outpost::FlatpagesController < Outpost::ResourceController
 
   private
 
-  def layout_template
-    template = ::FlatpagesController::TEMPLATE_MAP[@flatpage.template]
+  def flatpage_layout_template
+    template = FlatpageHandler::FLATPAGE_TEMPLATE_MAP[@flatpage.template]
     template = "application" if template.nil?
     template ? "outpost/preview/#{template}" : false
   end

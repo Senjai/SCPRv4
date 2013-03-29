@@ -40,8 +40,12 @@ class Outpost::BaseController < Outpost::ApplicationController
   #-------------------------
   # Override this method from CustomErrors so we can specify the template path
   def render_error(status, e=StandardError)
-    render template: "/outpost/errors/error_#{status}", status: status, locals: { error: e }
-    report_error(e)
+    if Rails.application.config.consider_all_requests_local
+      raise e
+    else
+      render template: "/outpost/errors/error_#{status}", status: status, locals: { error: e }
+      report_error(e)
+    end
   end
   
   #-------------------------

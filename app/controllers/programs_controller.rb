@@ -55,20 +55,14 @@ class ProgramsController < ApplicationController
   #----------
   
   def archive
-    # If the date wasn't specified, send them to the program page's archive section
-    if params[:archive].blank?
-      redirect_to program_path(@program.slug, anchor: "archive-select") and return
-      
+    @date = Time.new(params[:archive]["date(1i)"].to_i, params[:archive]["date(2i)"].to_i, params[:archive]["date(3i)"].to_i)
+    @episode = @program.episodes.published.where(air_date: @date).first
+   
+    if !@episode
+      flash[:alert] = "There is no #{@program.title} episode for #{@date.strftime('%F')}."
+      redirect_to program_path(@program.slug, anchor: "archive") and return
     else
-      @date = Time.new(params[:archive]["date(1i)"].to_i, params[:archive]["date(2i)"].to_i, params[:archive]["date(3i)"].to_i)
-      @episode = ShowEpisode.where(air_date: @date, show_id: @program.id).first
-     
-      if @episode.blank?
-        # TODO: Display some kind of notice that there is no episode
-        redirect_to program_path(@program.slug, anchor: "archive-select") and return
-      else
-        redirect_to @episode.link_path
-      end
+      redirect_to @episode.link_path
     end
   end
   

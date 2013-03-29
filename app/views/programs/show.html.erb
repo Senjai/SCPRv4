@@ -10,15 +10,17 @@
     <% end %>
   </section>
   
-<%= render "/programs/archive_select" %>
+  <%= render "/programs/archive_select" %>
+  <% if flash[:alert] %>
+    <h4 style="color:#f00;"><%= flash[:alert] %></h4>
+  <% end %>
 <% end %>
 
-<a name="archive"></a>
 <% if @program.display_segments %>
   <% nav = paginate @segments, params: { anchor: "archive"} %>
   <section class="show-segments">
     <%= any_to_list? @segments, title: "Segments" do %>
-      <h2>Recently on <%= @program.title %></h2>    
+      <h2>Recently on <%= @program.title %></h2>
       <%= nav if @segments.current_page > 1 %>
       <%= render partial: "/programs/segment_teaser", collection: @segments, as: :segment %>
       <%= nav %>

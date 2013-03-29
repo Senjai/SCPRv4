@@ -1,13 +1,5 @@
 class CategoryController < ApplicationController
   respond_to :html, :xml, :rss
-
-  def index
-    @category = Category.find_by_slug(params[:category])
-    @content = get_content_from(@category, limit: 15)
-    respond_with @content
-  end
-  
-  #----------
   
   def news
     @categories = Category.where(:is_news => true).all
