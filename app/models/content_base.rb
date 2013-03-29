@@ -86,25 +86,31 @@ module ContentBase
       Kaminari.paginate_array([]).page(0).per(0)
     end
   end
-  
-  #--------------------
-  # Cut down body to get teaser
-  def generate_teaser(text, length=180)
-    stripped_body = ActionController::Base.helpers.strip_tags(text).gsub("&nbsp;"," ").gsub(/\r/,'')
-    match = stripped_body.match(/^(.+)/)
 
-    if !match
-      return ""
-    else
-      first = match[1]
-      if first.length < length
-        return first
+  #--------------------
+  # Generate a teaser from the passed-in text.
+  # If the text is blank, return an empty string.
+  # If the first paragraph is <= target length, return the first paragraph.
+  # Otherwise get everything up to the target length, the up to the next period.
+  def generate_teaser(text, length=180)
+    return '' if text.blank?
+    teaser = ''
+
+    stripped_body = ActionController::Base.helpers.strip_tags(text)
+      .gsub("&nbsp;"," ").gsub(/\r/,'').strip
+
+    stripped_body.match(/^.+/) do |match|
+      first_paragraph = match[0]
+
+      if first_paragraph.length <= length
+        teaser = first_paragraph
       else
-        # try shortening this paragraph
-        short = first.match /^(.{#{length}}\w*)\W/
-        return short ? "#{short[1]}..." : first
+        shortened_paragraph = first_paragraph.match(/\A.{#{length}}[^\.]*\.?/)
+        teaser = shortened_paragraph ? "#{shortened_paragraph[0]}" : first_paragraph
       end
     end
+
+    teaser
   end
 
   #--------------------

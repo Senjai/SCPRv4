@@ -21,7 +21,6 @@ class ContentShell < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  include Concern::Methods::HeadlineMethods
   include Concern::Methods::ContentJsonMethods
   
   def self.content_key
@@ -89,6 +88,10 @@ class ContentShell < ActiveRecord::Base
     self.body
   end
   
+  def short_headline
+    self.headline
+  end
+
   #----------
   # Override Outpost's `link_path` for these
   def link_path(options={})

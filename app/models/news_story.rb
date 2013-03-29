@@ -15,6 +15,8 @@ class NewsStory < ActiveRecord::Base
   include Concern::Associations::MissedItContentAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Callbacks::GenerateShortHeadlineCallback
+  include Concern::Callbacks::GenerateTeaserCallback
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
@@ -24,8 +26,6 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
-  include Concern::Methods::HeadlineMethods
-  include Concern::Methods::TeaserMethods
   include Concern::Methods::ContentJsonMethods
 
   self.table_name = 'news_story'

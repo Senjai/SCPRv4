@@ -13,16 +13,16 @@ module TestClass
     include Concern::Associations::BylinesAssociation
     include Concern::Associations::CategoryAssociation
     
+    include Concern::Callbacks::GenerateShortHeadlineCallback
+    include Concern::Callbacks::GenerateTeaserCallback
     include Concern::Callbacks::SetPublishedAtCallback
     include Concern::Callbacks::GenerateSlugCallback
     include Concern::Callbacks::SphinxIndexCallback
     include Concern::Callbacks::HomepageCachingCallback
     
     include Concern::Methods::CommentMethods
-    include Concern::Methods::HeadlineMethods
     include Concern::Methods::PublishingMethods
     include Concern::Methods::StatusMethods
-    include Concern::Methods::TeaserMethods
     include Concern::Methods::ContentJsonMethods
     
     include Concern::Validations::ContentValidation
