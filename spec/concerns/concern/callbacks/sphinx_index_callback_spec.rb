@@ -8,6 +8,12 @@ describe Concern::Callbacks::SphinxIndexCallback do
     story.save!
   end
 
+  it "enqueues the index after destroy" do
+    story = create :test_class_story
+    story.should_receive :enqueue_sphinx_index_for_class
+    story.destroy
+  end
+
   it "doesn't enqueue index if not changed" do
     story = create :test_class_story
     story.changed?.should eq false
@@ -18,6 +24,7 @@ describe Concern::Callbacks::SphinxIndexCallback do
   it 'sends off to Indexer with class name' do
     story = create :test_class_story
     Indexer.should_receive(:enqueue).with("TestClass::Story")
+    Indexer.should_receive(:enqueue).with("ContentByline")
     story.headline = "Wat"
     story.save!
   end

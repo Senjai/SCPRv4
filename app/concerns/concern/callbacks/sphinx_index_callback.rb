@@ -10,7 +10,10 @@ module Concern
 
       included do
         after_save :enqueue_sphinx_index_for_class, if: -> { self.changed? }
+        after_destroy :enqueue_sphinx_index_for_class
       end
+
+      private
 
       # Enqueue a sphinx index for this model
       def enqueue_sphinx_index_for_class
