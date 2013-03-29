@@ -6,7 +6,34 @@ describe Concern::Associations::BylinesAssociation do
   describe "associations" do
     it { should have_many(:bylines).class_name("ContentByline").dependent(:destroy) }
   end
+
+  #--------------------
   
+  describe "sphinx index callback" do
+    let(:story) { build :test_class_story, status: ContentBase::STATUS_LIVE }
+    let(:bio) { create :bio }
+    let(:byline) { create :byline, user: bio }
+
+    before :each do
+      story.bylines << byline
+
+    end
+
+    it "should enqueue an index of ContentByline after save" do
+      Indexer.should_receive(:enqueue).with("ContentByline")
+      Indexer.should_receive(:enqueue).with("TestClass::Story")
+
+      story.save!
+    end
+
+    it "should enqueue an index of ContentByline after save if destroying" do
+      Indexer.should_receive(:enqueue).with("ContentByline")
+      Indexer.should_receive(:enqueue).with("TestClass::Story")
+
+      story.destroy
+    end
+  end
+
   #--------------------
   
   describe "#byline" do

@@ -2,7 +2,6 @@
 # BylinesAssociation
 #
 # Defines bylines association
-# 
 module Concern
   module Associations
     module BylinesAssociation
@@ -19,6 +18,10 @@ module Concern
         scope :filtered_by_bylines, ->(bio_id) { 
           self.includes(:bylines).where(ContentByline.table_name => { user_id: bio_id }) 
         }
+
+        # TODO Only enqueue this if bylines changed
+        after_save :enqueue_sphinx_index_for_bylines
+        after_destroy :enqueue_sphinx_index_for_bylines
       end
 
       #-------------------
@@ -85,6 +88,12 @@ module Concern
       #-------------------
 
       private
+
+      def enqueue_sphinx_index_for_bylines
+        Indexer.enqueue("ContentByline")
+      end
+
+      #-------------------
 
       def should_reject_bylines?(attributes)
         attributes['user_id'].blank? &&
