@@ -22,7 +22,7 @@
                   <%= content_cache("broadcast_bar:episode_guide:#{episode.id}") do %>
                     <% register_content episode %>
                     <h6><%= link_to episode.headline, episode.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
-                    <%= render_asset episode, "thumb" %>
+                    <%= render_asset episode, 'thumbnail' %>
 
                     <!-- Segments -->
                     <ul class="cbase">

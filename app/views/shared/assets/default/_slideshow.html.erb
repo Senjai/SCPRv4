@@ -7,8 +7,8 @@
   
     ahSlides = new AssetHost.Slideshow({
 <% if params[:id].present? %>
-        start: params["slide"],
-    deeplink: true,
+      start: params["slide"],
+      deeplink: true,
 <% end %>
 
         el: "#asset_slideshow_<%= content.id %>",

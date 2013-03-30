@@ -54,7 +54,7 @@
         <h6 class="upcoming">Attend an Upcoming Event</h6>
         <% if @closest_event.present? %>
           <div class="event closest">
-            <%= render_asset @closest_event, 'lead5' %>
+            <%= render_asset @closest_event, 'large' %>
             <%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.link_path, class: "event-link" %>
             <h1 class="story-title"><%= link_to @closest_event.headline, @closest_event.link_path %></h1>
             <%= @closest_event.teaser %>
@@ -67,7 +67,7 @@
               <div class="row-fluid">
                 <% if event.assets.present? %>
                   <div class="span8">
-                    <%= render_asset event, 'lsquare' %>
+                    <%= render_asset event, 'thumbnail' %>
                   </div>
                   <div class="span16">
                 <% else %>
@@ -142,7 +142,7 @@
               <div class="row-fluid">
                 <% if event.assets.present? %>
                   <div class="span8">
-                    <%= render_asset event, 'thumb' %>
+                    <%= render_asset event, 'thumbnail', true %>
                   </div>
                   <div class="span16">
                 <% else %>
