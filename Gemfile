@@ -9,6 +9,7 @@ gem 'thinking-sphinx', '~> 2.0', require: "thinking_sphinx"
 #gem 'outpost', path: '/Users/bryan/projects/outpost'
 #gem 'outpost', path: '/Users/bricker/websites/kpcc/outpost'
 gem 'outpost', github: 'SCPR/outpost'
+gem 'outpost-asset_host', github: "SCPR/outpost-asset_host"
 gem 'turbo-sprockets-rails3'
 
 ## Cache

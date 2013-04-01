@@ -13,9 +13,8 @@
 //= require ckeditor/plugins/codemirror/plugin
 
 //= require outpost/base
-//= require outpost/assethost/assethostbase
+//= require outpost/asset_host/assethostbase
 //= require outpost/content_api
-//= require outpost/assethost/assethost
 
 //= require_tree ./templates/
 //= require outpost/templates
@@ -30,7 +29,7 @@
 //= require outpost/auto_slug_field
 //= require outpost/field_counter
 //= require outpost/preview
-//= require outpost/asset_manager
+//= require outpost/asset_host
 //= require outpost/index_manager
 //= require outpost/global_plugins
 //= require outpost/aggregator
