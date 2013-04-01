@@ -41,7 +41,7 @@ class scpr.Newsroom
                     $("#work_status").html()
                     @alerts['offline'].render() 
                 else
-                    @socket  = io.connect scpr.NODE
+                    @socket  = io.connect scpr.NODE, 'connect timeout': 5000
                     @socket.on 'finished-task', (data) ->
                         $("#work_status").html("Finished!")
                         $("#spinner").spin(false)
@@ -67,7 +67,7 @@ class scpr.Newsroom
                 @el.spin(false)
                 @alerts['offline'].render()
             else
-                @socket  = io.connect scpr.NODE
+                @socket  = io.connect scpr.NODE, 'connect timeout': 5000
                 
                 # Outgoing messages
                 @socket.emit 'entered', @roomId, @userJson, recordJson: @record
