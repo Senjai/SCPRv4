@@ -1,7 +1,7 @@
+require 'faraday'
+require 'faraday_middleware'
+
 class Asset
-  require 'faraday'
-  require 'faraday_middleware'
-  
   BAD_STATUS  = [400, 404, 500, 502]
   GOOD_STATUS = [200]
   

@@ -3,8 +3,6 @@ class ContentAsset < ActiveRecord::Base
   
   belongs_to :content, polymorphic: true
   
-  @@loaded = false
-  
   #----------
   
   def asset
