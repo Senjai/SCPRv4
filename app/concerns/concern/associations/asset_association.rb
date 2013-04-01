@@ -1,4 +1,4 @@
-##
+\##
 # AssetAssociation
 #
 # Association for Asset
@@ -12,7 +12,7 @@ module Concern
         has_many :assets, {
           :class_name => "ContentAsset", 
           :as         => :content, 
-          :order      => "asset_order", 
+          :order      => "position", 
           :dependent  => :destroy,
           :autosave   => true
         }
@@ -51,14 +51,14 @@ module Concern
         # This shouldn't happen since we're populating the field in the template.
         return if json.empty?
 
-        json = Array(JSON.parse(json)).sort_by { |c| c["asset_order"].to_i }
+        json = Array(JSON.parse(json)).sort_by { |c| c["position"].to_i }
         loaded_assets = []
         
         json.each do |asset_hash|
           new_asset = ContentAsset.new(
-            :asset_id    => asset_hash["id"].to_i, 
-            :caption     => asset_hash["caption"].to_s, 
-            :asset_order => asset_hash["asset_order"].to_i
+            :asset_id   => asset_hash["id"].to_i,
+            :caption    => asset_hash["caption"].to_s,
+            :position   => asset_hash["position"].to_i
           )
           
           loaded_assets.push new_asset

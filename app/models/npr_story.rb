@@ -218,9 +218,9 @@ class NprStory < ActiveRecord::Base
       
       if asset["id"]
         content_asset = ContentAsset.new(
-          :asset_order => 0,
-          :asset_id    => asset["id"],
-          :caption     => asset["caption"].to_s
+          :position   => 0,
+          :asset_id   => asset["id"],
+          :caption    => asset["caption"].to_s
         )
         
         news_story.assets << content_asset

@@ -52,7 +52,7 @@ describe Concern::Callbacks::HomepageCachingCallback do
     it "is true if only assets were changed" do
       story = create :test_class_story, status: ContentBase::STATUS_LIVE
       story.should_enqueue_homepage_cache?.should eq false
-      story.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"asset_order\":12}]"
+      story.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}]"
       story.should_enqueue_homepage_cache?.should eq true
     end
   end
