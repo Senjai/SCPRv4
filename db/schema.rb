@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326225128) do
+ActiveRecord::Schema.define(:version => 20130401190054) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false
@@ -23,16 +23,16 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_id",                                         :null => false
-    t.integer "asset_order",                        :default => 99, :null => false
+    t.integer "position",                           :default => 99, :null => false
     t.integer "asset_id",                                           :null => false
     t.text    "caption",      :limit => 2147483647,                 :null => false
     t.string  "content_type", :limit => 20
   end
 
-  add_index "assethost_contentasset", ["asset_order"], :name => "index_assethost_contentasset_on_asset_order"
   add_index "assethost_contentasset", ["content_id"], :name => "content_type_id"
   add_index "assethost_contentasset", ["content_id"], :name => "index_assethost_contentasset_on_content_id"
   add_index "assethost_contentasset", ["content_type", "content_id"], :name => "index_assethost_contentasset_on_content_type_and_content_id"
+  add_index "assethost_contentasset", ["position"], :name => "index_assethost_contentasset_on_asset_order"
 
   create_table "auth_group", :force => true do |t|
     t.string "name", :limit => 80, :null => false
