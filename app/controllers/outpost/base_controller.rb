@@ -1,16 +1,9 @@
 class Outpost::BaseController < Outpost::ApplicationController
   include Concern::Controller::CustomErrors
   
-  before_filter :set_sections
   before_filter :setup_tickets
   before_filter :set_current_homepage
   before_filter :add_params_for_newrelic
-
-  #------------------------
-  # Just setup the @sections variable so the views can add to it.
-  def set_sections
-    @sections = {}
-  end
 
   #------------------------
   # We need a new Ticket on every page, since we're offering
