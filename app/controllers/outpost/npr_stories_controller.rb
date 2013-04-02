@@ -9,17 +9,17 @@ class Outpost::NprStoriesController < Outpost::BaseController
   # Outpost
   self.model = NprStory
 
-  define_list do
-    list_default_order "published_at"
-    list_default_sort_mode "desc"
+  define_list do |l|
+    l.default_order = "published_at"
+    l.default_sort_mode = "desc"
 
-    list_per_page 50
+    l.per_page = 50
     
-    column :headline
-    column :published_at, sortable: true, default_sort_mode: "desc"
-    column :teaser
-    column :link, display: :display_npr_link
-    column :npr_id, header: "NPR ID"
+    l.column :headline
+    l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :teaser
+    l.column :link, display: :display_npr_link
+    l.column :npr_id, header: "NPR ID"
   end
 
   #------------------

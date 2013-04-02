@@ -1,19 +1,17 @@
 class Outpost::ShowEpisodesController < Outpost::ResourceController
-  #---------------
-  # Outpost
-  self.model = ShowEpisode
+  outpost_controller
+  
+  define_list do |l|
+    l.default_order = "air_date"
+    l.default_sort_mode = "desc"
 
-  define_list do
-    list_default_order "air_date"
-    list_default_sort_mode "desc"
-
-    column :headline
-    column :show
-    column :air_date, sortable: true, default_sort_mode: "desc"
-    column :status
-    column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :headline
+    l.column :show
+    l.column :air_date, sortable: true, default_sort_mode: "desc"
+    l.column :status
+    l.column :published_at, sortable: true, default_sort_mode: "desc"
     
-    filter :show_id, collection: -> { KpccProgram.select_collection }
-    filter :status, collection: -> { ContentBase.status_text_collect }
+    l.filter :show_id, collection: -> { KpccProgram.select_collection }
+    l.filter :status, collection: -> { ContentBase.status_text_collect }
   end
 end

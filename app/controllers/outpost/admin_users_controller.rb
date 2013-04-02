@@ -1,20 +1,18 @@
 class Outpost::AdminUsersController < Outpost::ResourceController
-  #---------------
-  # Outpost
-  self.model = AdminUser
+  outpost_controller
 
-  define_list do
-    list_default_order "name"
-    list_default_sort_mode "asc"
+  define_list do |l|
+    l.default_order = "name"
+    l.default_sort_mode = "asc"
 
-    column :username
-    column :email
-    column :name, sortable: true, default_sort_mode: "asc"
-    column :is_superuser, header: "Superuser?"
-    column :can_login, header: "Can Login?"
+    l.column :username
+    l.column :email
+    l.column :name, sortable: true, default_sort_mode: "asc"
+    l.column :is_superuser, header: "Superuser?"
+    l.column :can_login, header: "Can Login?"
 
-    filter :is_superuser, collection: :boolean
-    filter :can_login, collection: :boolean
+    l.filter :is_superuser, collection: :boolean
+    l.filter :can_login, collection: :boolean
   end
 
   #---------------

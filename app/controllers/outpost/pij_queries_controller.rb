@@ -1,22 +1,20 @@
 class Outpost::PijQueriesController < Outpost::ResourceController
-  #----------------
-  # Outpost
-  self.model = PijQuery
+  outpost_controller
+  
+  define_list do |l|
+    l.default_order = "published_at"
+    l.default_sort_mode = "desc"
 
-  define_list do
-    list_default_order "published_at"
-    list_default_sort_mode "desc"
-
-    column :headline
-    column :slug
-    column :query_type, header: "Type"
-    column :is_active, header: "Active?"
-    column :is_featured, header: "Featured?"
-    column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :headline
+    l.column :slug
+    l.column :query_type, header: "Type"
+    l.column :is_active, header: "Active?"
+    l.column :is_featured, header: "Featured?"
+    l.column :published_at, sortable: true, default_sort_mode: "desc"
     
-    filter :query_type, title: "Type", collection: -> { PijQuery::QUERY_TYPES }
-    filter :is_active, title: "Active?", collection: :boolean
-    filter :is_featured, title: "Featured?", collection: :boolean
+    l.filter :query_type, title: "Type", collection: -> { PijQuery::QUERY_TYPES }
+    l.filter :is_active, title: "Active?", collection: :boolean
+    l.filter :is_featured, title: "Featured?", collection: :boolean
   end
 
   #----------------

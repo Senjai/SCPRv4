@@ -1,17 +1,18 @@
 class Outpost::HomepagesController < Outpost::ResourceController
+  outpost_controller
   #--------------------
   # Outpost
   self.model = Homepage
 
-  define_list do
-    list_default_order "updated_at"
-    list_default_sort_mode "desc"
-    list_per_page 3
+  define_list do |l|
+    l.default_order = "updated_at"
+    l.default_sort_mode = "desc"
+    l.per_page = 3
 
-    column :published_at, sortable: true, default_sort_mode: "desc"
-    column :status
-    column :base, header: "Template"
-    column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
+    l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :status
+    l.column :base, header: "Template"
+    l.column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
   end
 
   #--------------------

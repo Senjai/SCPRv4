@@ -1,19 +1,17 @@
 class Outpost::FlatpagesController < Outpost::ResourceController
-  #------------------
-  # Outpost
-  self.model = Flatpage
-
-  define_list do
-    list_default_order "url"
-    list_default_sort_mode "asc"
+  outpost_controller
+  
+  define_list do |l|
+    l.default_order = "url"
+    l.default_sort_mode = "asc"
     
-    column :title
-    column :url, sortable: true, default_sort_mode: "asc"
-    column :redirect_url
-    column :updated_at, sortable: true, default_sort_mode: "desc"
-    column :is_public, header: "Public?"
+    l.column :title
+    l.column :url, sortable: true, default_sort_mode: "asc"
+    l.column :redirect_url
+    l.column :updated_at, sortable: true, default_sort_mode: "desc"
+    l.column :is_public, header: "Public?"
     
-    filter :is_public, title: "Public?", collection: :boolean
+    l.filter :is_public, title: "Public?", collection: :boolean
   end
 
   #------------------

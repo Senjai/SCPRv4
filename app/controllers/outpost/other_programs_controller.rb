@@ -1,18 +1,19 @@
 class Outpost::OtherProgramsController < Outpost::ResourceController
+  outpost_controller
   #--------------------
   # Outpost
   self.model = OtherProgram
 
-  define_list do
-    list_default_order "title"
-    list_default_sort_mode "asc"
-    list_per_page :all
+  define_list do |l|
+    l.default_order = "title"
+    l.default_sort_mode = "asc"
+    l.per_page = :all
     
-    column :title, sortable: true, default_sort_mode: "asc"
-    column :airtime
-    column :produced_by
-    column :air_status
+    l.column :title, sortable: true, default_sort_mode: "asc"
+    l.column :airtime
+    l.column :produced_by
+    l.column :air_status
 
-    filter :air_status, collection: -> { KpccProgram::AIR_STATUS }
+    l.filter :air_status, collection: -> { KpccProgram::AIR_STATUS }
   end
 end

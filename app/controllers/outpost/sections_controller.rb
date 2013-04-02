@@ -1,15 +1,16 @@
 class Outpost::SectionsController < Outpost::ResourceController
+  outpost_controller
   #--------------
   # Outpost
   self.model = Section
 
-  define_list do
-    list_default_order "title"
-    list_default_sort_mode "asc"
-    list_per_page :all
+  define_list do |l|
+    l.default_order = "title"
+    l.default_sort_mode = "asc"
+    l.per_page = :all
     
-    column :id
-    column :title
-    column :slug
+    l.column :id
+    l.column :title
+    l.column :slug
   end
 end

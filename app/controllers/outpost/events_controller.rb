@@ -1,22 +1,20 @@
 class Outpost::EventsController < Outpost::ResourceController
-  #------------------
-  # Outpost
-  self.model = Event
-
-  define_list do
-    list_default_order "starts_at"
-    list_default_sort_mode "desc"
-
-    column :headline
-    column :starts_at, sortable: true, default_sort_mode: "desc"
-    column :location_name, header: "Location"
-    column :event_type,         header: "Type", display: proc { Event::EVENT_TYPES[self.event_type] }
-    column :is_kpcc_event,    header: "KPCC?"
-    column :status
+  outpost_controller
   
-    filter :is_kpcc_event, title: "KPCC Event?", collection: :boolean
-    filter :event_type, title: "Type", collection: -> { Event.event_types_select_collection }
-    filter :status, title: "Status", collection: -> { Event.status_select_collection }
+  define_list do |l|
+    l.default_order = "starts_at"
+    l.default_sort_mode = "desc"
+
+    l.column :headline
+    l.column :starts_at, sortable: true, default_sort_mode: "desc"
+    l.column :location_name, header: "Location"
+    l.column :event_type,         header: "Type", display: proc { Event::EVENT_TYPES[self.event_type] }
+    l.column :is_kpcc_event,    header: "KPCC?"
+    l.column :status
+  
+    l.filter :is_kpcc_event, title: "KPCC Event?", collection: :boolean
+    l.filter :event_type, title: "Type", collection: -> { Event.event_types_select_collection }
+    l.filter :status, title: "Status", collection: -> { Event.status_select_collection }
   end
 
   #------------------

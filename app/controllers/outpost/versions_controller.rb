@@ -5,18 +5,18 @@ class Outpost::VersionsController < Outpost::BaseController
   # Outpost
   self.model = Secretary::Version
 
-  define_list do
-    list_default_order "created_at"
-    list_default_sort_mode "desc"
-    list_per_page 10
+  define_list do |l|
+    l.default_order = "created_at"
+    l.default_sort_mode = "desc"
+    l.per_page = 10
     
-    column :user, display: proc { self.user.try(:to_title) || "System" }
-    column :description
-    column :versioned, header: "Object", display: proc { self.versioned.simple_title }
-    column :version_number, header: "Version"
-    column :created_at, header: "Timestamp"
+    l.column :user, display: proc { self.user.try(:to_title) || "System" }
+    l.column :description
+    l.column :versioned, header: "Object", display: proc { self.versioned.simple_title }
+    l.column :version_number, header: "Version"
+    l.column :created_at, header: "Timestamp"
 
-    filter :user_id, collection: -> { Bio.select_collection } 
+    l.filter :user_id, collection: -> { Bio.select_collection } 
   end
 
   #--------------

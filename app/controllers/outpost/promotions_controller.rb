@@ -1,14 +1,12 @@
 class Outpost::PromotionsController < Outpost::ResourceController
-  #---------------
-  # Outpost
-  self.model = Promotion
+  outpost_controller
+  
+  define_list do |l|
+    l.default_order = "title"
+    l.default_sort_mode = "asc"
 
-  define_list do
-    list_default_order "title"
-    list_default_sort_mode "asc"
-
-    column :id
-    column :title, sortable: true, default_sort_mode: "asc"
-    column :created_at, sortable: true, default_sort_mode: "desc"
+    l.column :id
+    l.column :title, sortable: true, default_sort_mode: "asc"
+    l.column :created_at, sortable: true, default_sort_mode: "desc"
   end
 end
