@@ -1,12 +1,15 @@
 class Outpost::NprStoriesController < Outpost::BaseController
+  include Concern::Controller::Searchable
+  
   # We don't want to include the Outpost actions here,
   # so we include stuff manually.
   include Outpost::Controller::Helpers
   include Outpost::Controller::Callbacks
-  include Concern::Controller::Searchable
-  
-  #------------------
-  # Outpost
+  include Outpost::Controller::Actions
+  include Outpost::Controller::Ordering
+  include Outpost::Controller::Filtering
+  include Outpost::Controller::Preferences
+
   self.model = NprStory
 
   define_list do |l|
@@ -24,10 +27,9 @@ class Outpost::NprStoriesController < Outpost::BaseController
 
   #------------------
 
+  before_filter :authorize_resource
   before_filter :get_record, only: [:import, :skip]
   before_filter :get_records, only: [:index]
-  before_filter :authorize_resource
-  before_filter :order_records, only: [:index]
   before_filter :filter_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
 
