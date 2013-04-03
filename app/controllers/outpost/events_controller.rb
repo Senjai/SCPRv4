@@ -8,7 +8,7 @@ class Outpost::EventsController < Outpost::ResourceController
     l.column :headline
     l.column :starts_at, sortable: true, default_sort_mode: "desc"
     l.column :location_name, header: "Location"
-    l.column :event_type,         header: "Type", display: proc { Event::EVENT_TYPES[self.event_type] }
+    l.column :event_type,         header: "Type", display: ->(r) { Event::EVENT_TYPES[r.event_type] }
     l.column :is_kpcc_event,    header: "KPCC?"
     l.column :status
   

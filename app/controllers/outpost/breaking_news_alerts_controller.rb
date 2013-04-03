@@ -6,7 +6,7 @@ class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
     l.default_sort_mode = "desc"
     
     l.column :headline
-    l.column :alert_type, header: "Type", display: proc { BreakingNewsAlert::ALERT_TYPES[self.alert_type] }
+    l.column :alert_type, header: "Type", display: ->(r) { BreakingNewsAlert::ALERT_TYPES[r.alert_type] }
     l.column :visible, header: "Visible?"
     l.column :is_published, header: "Published?"
     l.column :email_sent, header: "Email Sent?"

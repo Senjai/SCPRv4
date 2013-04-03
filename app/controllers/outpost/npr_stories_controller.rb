@@ -5,7 +5,6 @@ class Outpost::NprStoriesController < Outpost::BaseController
   # so we include stuff manually.
   include Outpost::Controller::Helpers
   include Outpost::Controller::Callbacks
-  include Outpost::Controller::Actions
   include Outpost::Controller::Ordering
   include Outpost::Controller::Filtering
   include Outpost::Controller::Preferences

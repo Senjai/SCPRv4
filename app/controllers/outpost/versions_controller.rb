@@ -10,9 +10,9 @@ class Outpost::VersionsController < Outpost::BaseController
     l.default_sort_mode = "desc"
     l.per_page = 10
     
-    l.column :user, display: proc { self.user.try(:to_title) || "System" }
+    l.column :user, display: ->(r) { r.user.try(:to_title) || "System" }
     l.column :description
-    l.column :versioned, header: "Object", display: proc { self.versioned.simple_title }
+    l.column :versioned, header: "Object", display: ->(r) { r.versioned.simple_title }
     l.column :version_number, header: "Version"
     l.column :created_at, header: "Timestamp"
 
