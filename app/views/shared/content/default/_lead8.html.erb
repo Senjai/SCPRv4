@@ -7,7 +7,7 @@
     <%= smart_date_js content.published_at, "data-window" => "8h", "data-relative" => "2h" %>
   </span>
 
-  <p><%=h strip_tags(content.teaser) %></p>
+  <p><%= content.teaser.html_safe %></p>
   
   <%= comment_count_for content %>
 </div>

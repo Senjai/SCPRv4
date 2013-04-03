@@ -10,7 +10,7 @@
             <%= link_to @BLOGTITLE_EXTRA.to_s, @blog.link_path %>
           </div>
         </h2>
-        <p class="blog-tagline"><%= @blog.teaser %></p>
+        <p class="blog-tagline"><%= @blog.teaser.html_safe %></p>
       </div>
     </div>
   </div>
