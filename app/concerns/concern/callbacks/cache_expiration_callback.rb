@@ -19,7 +19,7 @@ module Concern
         # or we are going from "published" -> "unpublished",
         # just expire this object
         if (self.published? && !self.publishing?) || self.unpublishing?
-          Rails.cache.expire_obj(self.obj_key)
+          Rails.cache.expire_obj(self)
         end
 
         # If we are going from "not published" -> "published".

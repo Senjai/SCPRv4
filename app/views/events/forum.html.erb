@@ -57,7 +57,7 @@
             <%= render_asset @closest_event, 'large' %>
             <%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.link_path, class: "event-link" %>
             <h1 class="story-title"><%= link_to @closest_event.headline, @closest_event.link_path %></h1>
-            <%= @closest_event.teaser %>
+            <%= @closest_event.teaser.html_safe %>
           </div>
         <% end %>
     
@@ -76,7 +76,7 @@
                   <div class="info">
                     <%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %> 
                     <h2 class="story-title"><%= link_to event.headline, event.link_path %></h2>
-                    <%= event.teaser %>
+                    <%= event.teaser.html_safe %>
                   </div>
                 </div> <!-- span -->
               </div> <!-- row fluid -->

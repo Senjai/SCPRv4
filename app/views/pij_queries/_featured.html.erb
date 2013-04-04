@@ -15,7 +15,7 @@
             <% end %>
           
               <h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
-              <p><%= query.teaser %></p>
+              <p><%= query.teaser.html_safe %></p>
             </div> <!-- span -->
           </div> <!-- row-fluid -->
         </div> <!-- card -->

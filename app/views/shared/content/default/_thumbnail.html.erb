@@ -5,5 +5,5 @@
     | <%= format_date content.published_at, format: :full_date, time: true %>
   </span>
 
-  <p><%= strip_tags content.teaser %></p>
+  <p><%= content.teaser.html_safe %></p>
 </div>
