@@ -9,7 +9,7 @@ class ErrorTest
   include NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
   def test_error
-    raise StandardError, "NewRelic Test Exception"
+    raise StandardError, "NewRelic Test Exception (This is supposed to fail!)"
   end
 
   add_transaction_tracer :test_error, category: :task
