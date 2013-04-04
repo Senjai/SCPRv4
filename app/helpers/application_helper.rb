@@ -97,6 +97,12 @@ module ApplicationHelper
   
   #----------
   
+  def is_vertical?(asset)
+    asset.height.to_i > asset.width.to_i
+  end
+  
+  #----------
+  
   def random_headshot
     images = ["stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png", "trujillo.png"]
     image_tag "personalities/#{images.sample}"

@@ -48,23 +48,23 @@ describe ApplicationHelper do
     it "should render a fallback image if there are no assets and fallback is true" do
       content = build :content_shell
       content.stub(:assets) { [] }
-      helper.render_asset(content, "thumb", true).should match "fallback"
+      helper.render_asset(content, 'thumbnail', true).should match "fallback"
     end
     
     it "should move on to render_asset if there are assets" do
       content = build :content_shell
       content.stub(:assets) { [1, 2, 3] }
       view.stub(:render) { "asset rendered" }
-      helper.render_asset(content, "thumb", true).should match "asset rendered"
+      helper.render_asset(content, 'thumbnail', true).should match "asset rendered"
     end
     
     it "should return a blank string if object does not have assets method" do
-      helper.render_asset("string", "thumb").should eq ''
+      helper.render_asset("string", 'thumbnail').should eq ''
     end
     
     it "should return a blank string if object does not have assets and no fallback is requested" do
       content = create :content_shell
-      helper.render_asset(content, "thumb", false).should eq ''
+      helper.render_asset(content, 'thumbnail', false).should eq ''
     end
   end
 
