@@ -45,10 +45,6 @@ module Eloqua
       api.post do |request|
         request.url path
         request.headers['Content-Type'] = "application/json"
-        
-        request.options[:timeout]      = 3*60
-        request.options[:open_timeout] = 1*60
-        
         request.body = body.to_json
       end
     end
