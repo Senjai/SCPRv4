@@ -52,6 +52,10 @@ class BreakingNewsAlert < ActiveRecord::Base
     def types_select_collection
       ALERT_TYPES.map { |k, v| [v, k] }
     end
+
+    def eloqua_config
+      @eloqua_config ||= Rails.application.config.api['eloqua']['attributes']
+    end
   end
 
   #-------------------
@@ -71,37 +75,30 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Send the e-mail
   def publish_email
     if should_send_email?
-      eloqua_config = Rails.application.config.api['eloqua']['attributes']
-      client = Eloqua::Client.new(Rails.application.config.api['eloqua']['auth'])
-      
-      description = "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}"
-      name = self.headline[0..50]
-      view = CacheController.new
-      
       email = Eloqua::Email.create(
-        :folderId         => eloqua_config['email_folder_id'],
-        :emailGroupId     => eloqua_config['email_group_id'],
+        :folderId         => self.class.eloqua_config['email_folder_id'],
+        :emailGroupId     => self.class.eloqua_config['email_group_id'],
         :senderName       => "89.3 KPCC",
         :senderEmail      => "no-reply@kpcc.org",
         :replyToName      => "89.3 KPCC",
         :replyToEmail     => "no-reply@kpcc.org",
         :isTracked        => true,
-        :name             => name,
-        :description      => description,
+        :name             => email_name,
+        :description      => email_description,
         :subject          => email_subject,
         :isPlainTextEditable => true,
-        :plainText        => view.render_view(template: "/breaking_news/email/template", formats: [:text], locals: { alert: self }).to_s,
+        :plainText        => email_plain_text_body,
         :htmlContent      => {
           :type => "RawHtmlContent",
-          :html => view.render_view(template: "/breaking_news/email/template", formats: [:html], locals: { alert: self }).to_s
+          :html => email_html_body
         }
       )
       
       campaign = Eloqua::Campaign.create(
         {
-          :folderId         => eloqua_config['campaign_folder_id'],
-          :name             => name,
-          :description      => description,
+          :folderId         => self.class.eloqua_config['campaign_folder_id'],
+          :name             => email_name,
+          :description      => email_description,
           :startAt          => Time.now.yesterday.to_i,
           :endAt            => Time.now.tomorrow.to_i,
           :elements         => [
@@ -109,7 +106,7 @@ class BreakingNewsAlert < ActiveRecord::Base
               :type           => "CampaignSegment",
               :id             => "-980",
               :name           => "Segment Members",
-              :segmentId      => eloqua_config['segment_id'],
+              :segmentId      => self.class.eloqua_config['segment_id'],
               :position       => {
                 :type => "Position",
                 :x    => 17,
@@ -156,13 +153,36 @@ class BreakingNewsAlert < ActiveRecord::Base
   
   #-------------------
 
+  def email_html_body
+    @email_html_body ||= view.render_view(template: "/breaking_news/email/template", formats: [:html], locals: { alert: self }).to_s.html_safe
+  end
+
+  def email_plain_text_body
+    @email_plain_text_body ||= view.render_view(template: "/breaking_news/email/template", formats: [:text], locals: { alert: self }).to_s.html_safe
+  end
+
+  def email_name
+    @email_name ||= self.headline[0..50].html_safe
+  end
+
+  def email_description
+    @email_description ||= "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}".html_safe
+  end
+
   def email_subject
-    @email_subject ||= "#{break_type}: #{headline}"
+    @email_subject ||= "#{break_type}: #{headline}".html_safe
   end
 
   #-------------------
     
   def should_send_email?
     self.is_published && self.send_email && !self.email_sent
+  end
+
+
+  private
+
+  def view
+    @view ||= CacheController.new
   end
 end

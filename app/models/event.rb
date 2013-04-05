@@ -106,7 +106,7 @@ class Event < ActiveRecord::Base
   
   def expire_cache
     if self.published?
-      Rails.cache.expire_obj(self.obj_key)
+      Rails.cache.expire_obj(self)
       Rails.cache.expire_obj("events/event:new") if self.new_record?
     end
   end

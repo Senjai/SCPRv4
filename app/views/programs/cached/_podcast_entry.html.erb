@@ -5,7 +5,7 @@
       <div class="<%= entry.enclosure_url.present? ? "span18" : "span24" %>">
         <div class="info">
           <header>
-            <h3><%= link_to entry.title, entry.url || entry.enclosure_url %></h3>
+            <h3><%= link_to relaxed_sanitize(entry.title), entry.url || entry.enclosure_url %></h3>
             <span class="byline">
               <%= timestamp(entry.published) %>
             </span>
