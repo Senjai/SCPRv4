@@ -64,27 +64,6 @@ namespace :deploy do
       run "rm -f #{shared_path}/system/#{maintenance_basename}.html"
     end
   end
-  
-  # --------------
-  # Skip asset precompile if no assets were changed
-  namespace :assets do
-    task :precompile, roles: :web do
-      from = source.next_revision(current_revision) rescue nil
-      
-      # Previous revision is blank or git log doesn't 
-      # have any new lines mentioning assets
-      if [true, 1].include?(force_assets) || from.nil? || 
-          capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-          if ![true, 1].include? skip_assets
-            run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
-          else
-            logger.info "SKIPPING asset pre-compilation (skip_assets true)"
-          end
-      else
-        logger.info "No changes in assets. SKIPPING asset pre-compilation"
-      end
-    end
-  end
 
   task :symlink_config do
     %w{ database.yml api_config.yml app_config.yml sphinx.yml newrelic.yml }.each do |file|
