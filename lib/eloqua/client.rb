@@ -3,6 +3,7 @@
 #
 module Eloqua
   class Client
+
     #-------------------
     
     def initialize(_credentials, options={})
@@ -45,7 +46,7 @@ module Eloqua
       api.post do |request|
         request.url path
         request.headers['Content-Type'] = "application/json"
-        request.body = body.to_json
+        request.body = encode_for_eloqua(body.to_json)
       end
     end
 
@@ -60,7 +61,7 @@ module Eloqua
       api.put do |request|
         request.url path
         request.headers['Content-Type'] = "application/json"
-        request.body = body.to_json
+        request.body = encode_for_eloqua(body.to_json)
       end
     end
 
@@ -102,6 +103,12 @@ module Eloqua
         response = connection(Eloqua::LOGIN_ROOT).get
         response.success? ? response.body['urls'] : nil
       end
+    end
+
+    #-----------------
+
+    def encode_for_eloqua(string)
+      string.force_encoding("ASCII-8BIT")
     end
   end
 end
