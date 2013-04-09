@@ -6,13 +6,22 @@ gem 'mysql2'
 gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0"
 gem 'thinking-sphinx', '~> 2.0', require: "thinking_sphinx"
+gem 'turbo-sprockets-rails3'
 
+
+## Outpost
 #gem 'outpost', path: '/Users/bryan/projects/outpost'
 #gem 'outpost', path: '/Users/bricker/websites/kpcc/outpost'
 gem 'outpost', github: 'SCPR/outpost'
-gem 'outpost-asset_host', github: "SCPR/outpost-asset_host"
 
-gem 'turbo-sprockets-rails3'
+gem 'outpost-asset_host', github: "SCPR/outpost-asset_host"
+#gem 'outpost-asset_host', path: "/Users/bryan/projects/outpost-asset_host"
+
+gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
+#gem 'outpost-aggregator', path: "/Users/bryan/projects/outpost-aggregator"
+
+
+
 
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
