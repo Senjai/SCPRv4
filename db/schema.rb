@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401190054) do
+ActiveRecord::Schema.define(:version => 20130410202345) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false
@@ -780,14 +780,14 @@ ActiveRecord::Schema.define(:version => 20130401190054) do
   add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
 
   create_table "shows_rundown", :force => true do |t|
-    t.integer "episode_id",    :null => false
-    t.integer "segment_id",    :null => false
-    t.integer "segment_order", :null => false
+    t.integer "episode_id", :null => false
+    t.integer "segment_id", :null => false
+    t.integer "position",   :null => false
   end
 
   add_index "shows_rundown", ["episode_id"], :name => "shows_rundown_episode_id"
+  add_index "shows_rundown", ["position"], :name => "index_shows_rundown_on_segment_order"
   add_index "shows_rundown", ["segment_id"], :name => "shows_rundown_segment_id"
-  add_index "shows_rundown", ["segment_order"], :name => "index_shows_rundown_on_segment_order"
 
   create_table "shows_segment", :force => true do |t|
     t.integer  "show_id",                                    :null => false

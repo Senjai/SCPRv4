@@ -57,7 +57,7 @@ describe ShowEpisode do
     it "uses simple_json for the join model" do
       episode = create :show_episode
       segment = create :show_segment
-      rundown = episode.rundowns.build(segment: segment, segment_order: 0)
+      rundown = episode.rundowns.build(segment: segment, position: 0)
       rundown.save!
 
       episode.rundown_json.should eq [rundown.simple_json].to_json
