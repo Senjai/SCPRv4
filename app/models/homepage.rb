@@ -5,7 +5,6 @@ class Homepage < ActiveRecord::Base
 
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
-  include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
@@ -44,8 +43,11 @@ class Homepage < ActiveRecord::Base
   #-------------------
   # Associations
   has_many :content, class_name: "HomepageContent", order: "position", dependent: :destroy
+  accepts_json_input_for_content
+
   belongs_to :missed_it_bucket
   
+
   #-------------------
   # Validations
   validates :base, :status, presence: true
