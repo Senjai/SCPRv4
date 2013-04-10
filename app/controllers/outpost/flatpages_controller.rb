@@ -17,7 +17,7 @@ class Outpost::FlatpagesController < Outpost::ResourceController
   #------------------
 
   def preview
-    @flatpage = ContentBase.obj_by_key(params[:obj_key]) || Flatpage.new
+    @flatpage = Outpost.obj_by_key(params[:obj_key]) || Flatpage.new
 
     with_rollback @flatpage do
       @flatpage.assign_attributes(params[:flatpage])

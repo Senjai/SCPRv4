@@ -29,7 +29,7 @@ class Api::Private::ContentController < Api::PrivateController
   #---------------------------
   
   def show
-    @content = ContentBase.obj_by_key(params[:id])
+    @content = Outpost.obj_by_key(params[:id])
     respond_with @content
   end
 end

@@ -20,7 +20,7 @@ class Outpost::PijQueriesController < Outpost::ResourceController
   #----------------
 
   def preview
-    @query = ContentBase.obj_by_key(params[:obj_key]) || PijQuery.new
+    @query = Outpost.obj_by_key(params[:obj_key]) || PijQuery.new
     
     with_rollback @query do
       @query.assign_attributes(params[:pij_query])

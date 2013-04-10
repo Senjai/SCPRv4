@@ -60,7 +60,7 @@ module Concern
         loaded_references = []
         
         json.each do |content_hash|
-          content = ContentBase.obj_by_key(content_hash["id"])
+          content = Outpost.obj_by_key(content_hash["id"])
           if content && content.published?
             new_reference = Related.new(
               :position => content_hash["position"].to_i,

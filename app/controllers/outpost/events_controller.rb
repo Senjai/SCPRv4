@@ -20,7 +20,7 @@ class Outpost::EventsController < Outpost::ResourceController
   #------------------
 
   def preview
-    @event = ContentBase.obj_by_key(params[:obj_key]) || Event.new
+    @event = Outpost.obj_by_key(params[:obj_key]) || Event.new
     
     with_rollback @event do
       @event.assign_attributes(params[:event])

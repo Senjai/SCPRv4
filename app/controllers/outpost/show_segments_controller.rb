@@ -21,7 +21,7 @@ class Outpost::ShowSegmentsController < Outpost::ResourceController
   #----------------
 
   def preview
-    @segment = ContentBase.obj_by_key(params[:obj_key]) || ShowSegment.new
+    @segment = Outpost.obj_by_key(params[:obj_key]) || ShowSegment.new
     
     with_rollback @segment do
       @segment.assign_attributes(params[:show_segment])

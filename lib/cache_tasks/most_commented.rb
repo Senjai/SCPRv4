@@ -48,7 +48,7 @@ module CacheTasks
       content = []
 
       response.body['response'].each do |thread|
-        if object = ContentBase.obj_by_key(thread['identifiers'].first)
+        if object = Outpost.obj_by_key(thread['identifiers'].first)
           popular = PopularThread.new(object, thread)
           self.log "Content: #{object.obj_key}, Count: #{popular.posts}"
           content.push popular

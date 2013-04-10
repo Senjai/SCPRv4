@@ -19,7 +19,7 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
   #----------------
 
   def preview
-    @story = ContentBase.obj_by_key(params[:obj_key]) || NewsStory.new
+    @story = Outpost.obj_by_key(params[:obj_key]) || NewsStory.new
     
     with_rollback @story do
       @story.assign_attributes(params[:news_story])

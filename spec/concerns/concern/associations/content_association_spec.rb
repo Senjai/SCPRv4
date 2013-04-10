@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Concern::Associations::ContentAssociation do
+describe "Concern::Associations::ContentAssociation" do
   describe '#content_json' do
     it "uses simple_json for the join model" do
       post  = create :test_class_post
@@ -19,7 +19,7 @@ describe Concern::Associations::ContentAssociation do
     let(:story2) { create :test_class_story }
 
     it "is true on initialize" do
-      ContentBase.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
+      Outpost.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
 
       newrecord = build :test_class_post, content_json: "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
       newrecord.content_changed?.should eq true
@@ -27,7 +27,7 @@ describe Concern::Associations::ContentAssociation do
 
     it "is false if the content has not changed" do
       original_json = "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
-      ContentBase.should_receive(:obj_by_key).twice.with(story2.obj_key).and_return(story2)
+      Outpost.should_receive(:obj_by_key).twice.with(story2.obj_key).and_return(story2)
       
       newrecord = create :test_class_post, content_json: original_json
       newrecord.content_json = original_json
@@ -36,7 +36,7 @@ describe Concern::Associations::ContentAssociation do
     end
 
     it "is false after the record has been saved" do
-      ContentBase.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
+      Outpost.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
 
       newrecord = build :test_class_post, content_json: "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
       newrecord.content_changed?.should eq true
@@ -55,8 +55,8 @@ describe Concern::Associations::ContentAssociation do
     
     context "when content has changed" do
       before :each do
-        ContentBase.should_receive(:obj_by_key).with(story1.obj_key).and_return(story1)
-        ContentBase.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
+        Outpost.should_receive(:obj_by_key).with(story1.obj_key).and_return(story1)
+        Outpost.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
       end
       
       it "adds them ordered by position" do
@@ -66,7 +66,7 @@ describe Concern::Associations::ContentAssociation do
       
       it "doesn't add unpublished content" do
         unpublished = create :test_class_story, status: ContentBase::STATUS_DRAFT
-        ContentBase.should_receive(:obj_by_key).with(unpublished.obj_key).and_return(unpublished)
+        Outpost.should_receive(:obj_by_key).with(unpublished.obj_key).and_return(unpublished)
 
         post.content_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 2 }, {\"id\": \"#{story2.obj_key}\", \"position\": 3 }]"
         post.content.map(&:content).should eq [story1, story2]

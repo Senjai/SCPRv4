@@ -46,56 +46,6 @@ describe ContentBase do
       teaser.should_not match /\n/
     end
   end
-
-  #---------------
-  
-  describe "::get_model_for_obj_key" do
-    it "accepts nil" do
-      ContentBase.get_model_for_obj_key(nil).should eq nil
-    end
-    
-    it "returns nil if key doesn't match anything" do
-      ContentBase.get_model_for_obj_key("doesnt/match:123").should eq nil
-    end
-    
-    it "returns the model constant if it does match" do
-      Outpost.config.stub(:registered_models) { ["NewsStory"] }
-      ContentBase.get_model_for_obj_key("news/story:123").should eq NewsStory
-    end
-  end
-  
-  #---------------
-  
-  describe "::obj_by_key" do
-    context "no match" do
-      it "returns nil" do
-          ContentBase.obj_by_key("nomatch").should eq nil
-      end
-      
-      it "accepts nil argument" do
-        ContentBase.obj_by_key(nil).should eq nil
-      end
-    end
-    
-    context "match" do
-      it "is nil if no record exists" do
-        ContentBase.obj_by_key("blogs/entry:9999999").should eq nil
-      end
-    
-      it "finds and returns the record if everything matches" do
-        blog_entry = create :blog_entry
-        ContentBase.obj_by_key(blog_entry.obj_key).should eq blog_entry
-      end
-    end
-  end
-
-  #---------------
-  
-  describe "::obj_by_key!" do
-    it "raises an error if no object is found" do
-      -> { ContentBase.obj_by_key!("something") }.should raise_error ActiveRecord::RecordNotFound
-    end
-  end
   
   #---------------
   
@@ -113,7 +63,7 @@ describe ContentBase do
       end
       
       it "sends to obj_by_key if the URI matches" do
-        ContentBase.should_receive(:obj_by_key).with("news/story:123").and_return("news story")
+        Outpost.should_receive(:obj_by_key).with("news/story:123").and_return("news story")
         ContentBase.obj_by_url(@url).should eq "news story"
       end
   
