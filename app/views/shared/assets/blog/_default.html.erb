@@ -1,7 +1,6 @@
-<% vert = ( assets[0].asset.six.height.to_i > assets[0].asset.six.width.to_i ) ? true : false %>
-<div class="asset-block <%= vert ? "right" : "wide" %>" style="width:<%= assets[0].asset.six.width %>px">
+<div class="asset-block <%= is_vertical?(assets[0].asset.eight) ? "right" : "wide" %>">
   <div class="contentasset">
-    <%= assets[0].asset.six.tag %>
+    <%= assets[0].asset.eight.tag %>
   </div>
 
   <h4><%= assets[0].asset.owner %></h4>

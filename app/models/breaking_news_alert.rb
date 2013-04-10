@@ -154,23 +154,23 @@ class BreakingNewsAlert < ActiveRecord::Base
   #-------------------
 
   def email_html_body
-    @email_html_body ||= view.render_view(template: "/breaking_news/email/template", formats: [:html], locals: { alert: self }).to_s.html_safe
+    @email_html_body ||= view.render_view(template: "/breaking_news/email/template", formats: [:html], locals: { alert: self }).to_s
   end
 
   def email_plain_text_body
-    @email_plain_text_body ||= view.render_view(template: "/breaking_news/email/template", formats: [:text], locals: { alert: self }).to_s.html_safe
+    @email_plain_text_body ||= view.render_view(template: "/breaking_news/email/template", formats: [:text], locals: { alert: self }).to_s
   end
 
   def email_name
-    @email_name ||= self.headline[0..50].html_safe
+    @email_name ||= self.headline[0..50]
   end
 
   def email_description
-    @email_description ||= "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}".html_safe
+    @email_description ||= "SCPR Breaking News Alert\nSent: #{Time.now}\nSubject: #{email_subject}"
   end
 
   def email_subject
-    @email_subject ||= "#{break_type}: #{headline}".html_safe
+    @email_subject ||= "#{break_type}: #{headline}"
   end
 
   #-------------------
