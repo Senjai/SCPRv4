@@ -3,7 +3,7 @@
 #
 # Interaction with the SCPR API
 #
-class scpr.ContentAPI
+class outpost.ContentAPI
 
     #-----------------------------
 
