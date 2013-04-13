@@ -32,7 +32,7 @@ gem "resque", "~> 1.20"
 ## Views
 gem 'kaminari', github: "amatsuda/kaminari"
 gem 'ckeditor_rails', "~> 4.1"
-gem 'select2-rails', '~> 3.3.1'
+gem 'select2-rails', '~> 3.3'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
 gem 'simple_form', "~> 2.0"
