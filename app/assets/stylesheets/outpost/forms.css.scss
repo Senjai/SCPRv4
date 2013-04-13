@@ -99,6 +99,11 @@ form.simple_form {
   min-width: 200px;
 }
 
+.select2-offscreen {
+  position: static;
+  display: none !important;
+}
+
 // Select2 has z-index:9999 by default... no thanks
 .select2-drop-mask {
   z-index: 4;
