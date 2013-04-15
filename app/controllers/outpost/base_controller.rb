@@ -38,13 +38,4 @@ class Outpost::BaseController < Outpost::ApplicationController
       report_error(e)
     end
   end
-  
-  #-------------------------
-
-  def with_rollback(object)
-    object.transaction do
-      yield if block_given?
-      raise ActiveRecord::Rollback
-    end
-  end
 end
