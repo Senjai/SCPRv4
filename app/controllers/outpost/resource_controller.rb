@@ -30,10 +30,4 @@ class Outpost::ResourceController < Outpost::BaseController
   def set_preview
     @PREVIEW = true
   end
-
-  #-----------------
-
-  def render_preview_validation_errors(record)
-    render "/outpost/shared/_preview_errors", layout: "outpost/minimal", locals: { record: record }
-  end
 end
