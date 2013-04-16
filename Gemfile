@@ -10,22 +10,24 @@ gem 'turbo-sprockets-rails3'
 
 
 ## Outpost
-#gem 'outpost', path: '/Users/bryan/projects/outpost'
-#gem 'outpost', path: '/Users/bricker/websites/kpcc/outpost'
 gem 'outpost', github: 'SCPR/outpost'
+#gem 'outpost', path: "#{ENV['PROJECT_HOME']}/outpost"
+
+gem 'outpost-publishing', github: "SCPR/outpost-publishing"
+#gem 'outpost-publishing', path: "#{ENV['PROJECT_HOME']}/outpost-publishing"
 
 gem 'outpost-asset_host', github: "SCPR/outpost-asset_host"
-#gem 'outpost-asset_host', path: "/Users/bryan/projects/outpost-asset_host"
+#gem 'outpost-asset_host', path: "#{ENV['PROJECT_HOME']}/outpost-asset_host"
 
 gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
-#gem 'outpost-aggregator', path: "/Users/bryan/projects/outpost-aggregator"
+#gem 'outpost-aggregator', path: "#{ENV['PROJECT_HOME']}/outpost-aggregator"
 
 
 
 
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
-# gem 'redis-content-store', :path => "/Users/bryan/projects/redis-content-store"
+# gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
 gem "resque", "~> 1.20"
 
 
@@ -57,7 +59,7 @@ gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.5"
 gem 'newrelic_rpm'
 gem 'npr', github: "bricker/npr"
-#gem 'npr', path: "/Users/bricker/websites/kpcc/gems/npr"
+#gem 'npr', path: "#{ENV['PROJECT_HOME']}/npr"
 
 
 ## Assets

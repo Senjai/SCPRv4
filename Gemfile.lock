@@ -11,6 +11,12 @@ GIT
     outpost-asset_host (1.0.0)
 
 GIT
+  remote: git://github.com/SCPR/outpost-publishing.git
+  revision: 4c0d568cf4d454b9d59e4ace8005a5fa65b1b0bd
+  specs:
+    outpost-publishing (0.0.1)
+
+GIT
   remote: git://github.com/SCPR/outpost.git
   revision: 57089cadadb0d7f1d373e2f351de08a0bf219dfd
   specs:
@@ -389,6 +395,7 @@ DEPENDENCIES
   outpost!
   outpost-aggregator!
   outpost-asset_host!
+  outpost-publishing!
   pry
   rails (~> 3.2)
   rb-fsevent (~> 0.9)
