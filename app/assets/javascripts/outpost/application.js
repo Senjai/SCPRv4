@@ -19,13 +19,13 @@
 //= require_tree ./templates/
 //= require outpost/templates
 
+//= require outpost/publishing
+//= require outpost/content_alarm
+
 //= require outpost/notification
 //= require outpost/newsroom
 //= require outpost/field_manager
 //= require outpost/date_time_input
-//= require outpost/publishing_helper
-//= require outpost/publishing_ui
-//= require outpost/content_alarm_ui
 //= require outpost/auto_slug_field
 //= require outpost/field_counter
 //= require outpost/preview
