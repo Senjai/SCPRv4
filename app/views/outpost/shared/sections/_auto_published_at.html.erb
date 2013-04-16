@@ -5,7 +5,7 @@
 <% content_for :footer do %>
   <script type="text/javascript">
     $(function() {
-      publishingUI = new outpost.PublishingUI({
+      publishing = new outpost.Publishing({
         form: "#<%=f.options[:html][:id]%>",
         container: ".publishing-fields",
         notifications: "<%= options[:notifications] || "#scheduled_status" %>",
