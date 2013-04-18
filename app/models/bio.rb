@@ -87,7 +87,7 @@ class Bio < ActiveRecord::Base
   
   def headshot
     if self.asset_id?
-      @_asset ||= Asset.find(self.asset_id)
+      @_asset ||= AssetHost::Asset.find(self.asset_id)
     else
       return nil
     end

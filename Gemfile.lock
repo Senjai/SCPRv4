@@ -58,6 +58,13 @@ GIT
       nokogiri (~> 1.5.3)
       sax-machine (~> 0.2.0.rc1)
 
+PATH
+  remote: /Users/bryan/projects/asset_host_client
+  specs:
+    asset_host_client (0.0.1)
+      faraday (~> 0.8)
+      faraday_middleware (~> 0.8)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -192,7 +199,7 @@ GEM
     json (1.7.7)
     jwt (0.1.8)
       multi_json (>= 1.5)
-    launchy (2.2.0)
+    launchy (2.3.0)
       addressable (~> 2.3)
     listen (0.7.3)
     loofah (1.2.1)
@@ -362,6 +369,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  asset_host_client!
   bcrypt-ruby (~> 3.0)
   bootstrap-sass (~> 2.2)
   capistrano

@@ -12,12 +12,12 @@ describe ContentAsset do
     
     it "finds the asset if @_asset not assigned" do
       content_asset = build :asset
-      content_asset.asset.should be_a Asset # JSON response
+      content_asset.asset.should be_a AssetHost::Asset # JSON response
     end
     
     it "Adds in a fallback caption if @_asset is a Fallback" do
       content_asset = build :asset
-      content_asset.stub(:asset) { Asset::Fallback.new }
+      content_asset.stub(:asset) { AssetHost::Asset::Fallback.new }
       content_asset.asset.caption.should match "We encountered a problem"
     end
   end

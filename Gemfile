@@ -8,6 +8,8 @@ gem "bcrypt-ruby", "~> 3.0"
 gem 'thinking-sphinx', '~> 2.0', require: "thinking_sphinx"
 gem 'turbo-sprockets-rails3'
 
+gem 'asset_host_client', github: "SCPR/asset_host_client"
+#gem 'asset_host_client', path: "#{ENV['PROJECT_HOME']}/asset_host_client"
 
 ## Outpost
 gem 'outpost', github: 'SCPR/outpost'
