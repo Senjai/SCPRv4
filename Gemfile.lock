@@ -183,6 +183,7 @@ GEM
     haml (4.0.2)
       tilt
     hashie (1.2.0)
+    highline (1.6.16)
     highline (1.6.18)
     hike (1.2.2)
     httparty (0.10.2)
@@ -211,7 +212,10 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.1)
+    mime-types (1.21)
     mime-types (1.22)
+    mocha (0.12.7)
+      metaclass (~> 0.0.1)
     mono_logger (1.0.1)
     multi_json (1.7.2)
     multi_xml (0.5.3)
