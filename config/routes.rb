@@ -24,7 +24,7 @@ Scprv4::Application.routes.draw do
   
   # Blogs / Entries
   get '/blogs/:blog/archive/:year/:month/'             => "blogs#archive",                as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
-  post  '/blogs/:blog/process_archive_select'          => "blogs#process_archive_select", as: :blog_process_archive_select
+  post '/blogs/:blog/process_archive_select'           => "blogs#process_archive_select", as: :blog_process_archive_select
   get '/blogs/:blog/:year/:month/:day/:id/:slug/'      => "blogs#entry",                  as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
   get '/blogs/:blog/tagged/:tag/'                      => "blogs#blog_tagged",            as: :blog_entries_tagged
   get '/blogs/:blog/'                                  => 'blogs#show',                   as: :blog
@@ -99,22 +99,56 @@ Scprv4::Application.routes.draw do
   #------------------
 
   namespace :api do
+    # PUBLIC
     scope module: "public" do
-      match '/' => "content#options", constraints: { method: 'OPTIONS' }
-  
-      get '/content'        => 'content#index',  defaults: { format: :json }
-      get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-      get '/content/:id'    => 'content#show',   defaults: { format: :json }
+      # Temporary legacy routes
+      match '/' => "v1/content#options", constraints: { method: 'OPTIONS' }
+      
+      get '/content'        => 'v1/content#index',  defaults: { format: :json }
+      get '/content/by_url' => 'v1/content#by_url', defaults: { format: :json }
+      get '/content/*obj_key'    => 'v1/content#show',   defaults: { format: :json }
+
+      # V1
+      namespace :v1 do
+        match '/' => "content#options", constraints: { method: 'OPTIONS' }
+    
+        get '/content'        => 'content#index',  defaults: { format: :json }
+        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
+        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
+      end
+
+      # V2
+      namespace :v2 do
+        match '/' => "content#options", constraints: { method: 'OPTIONS' }
+        
+        get '/content'        => 'content#index',  defaults: { format: :json }
+        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
+        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
+      end
     end
     
+    
+    # PRIVATE
     namespace :private do
-      match '/' => "content#options", constraints: { method: 'OPTIONS' }
-      
-      post '/utility/notify'   => 'utility#notify'
+      # V1
+      namespace :v1 do
+        match '/' => "content#options", constraints: { method: 'OPTIONS' }
+        
+        post '/utility/notify'   => 'utility#notify'
 
-      get '/content'        => 'content#index',  defaults: { format: :json }
-      get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-      get '/content/:id'    => 'content#show',   defaults: { format: :json }
+        get '/content'        => 'content#index',  defaults: { format: :json }
+        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
+        get '/content/:id'    => 'content#show',   defaults: { format: :json }
+      end
+
+      # V2
+      namespace :v2 do
+        match '/' => "content#options", constraints: { method: 'OPTIONS' }
+        
+        get '/content'        => 'content#index',  defaults: { format: :json }
+        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
+        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
+      end
     end
   end
 
