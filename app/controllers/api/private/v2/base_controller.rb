@@ -19,7 +19,7 @@ module Api::Private::V2
     
     def authorize
       if params[:token] != Rails.application.config.api['assethost']['token']
-        render text: "Unauthorized", status: :unauthorized
+        render json: { error: "Unauthorized" }, status: :unauthorized
         return false
       end
     end
