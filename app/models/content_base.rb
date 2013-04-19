@@ -152,6 +152,12 @@ module ContentBase
     end
   end
   
+  #---------------------
+  # obj_by_url or raise
+  def obj_by_url!(url)
+    obj_by_url(url) or raise ActiveRecord::RecordNotFound
+  end
+  
   #--------------------
   # For drop-down menus in the CMS
   def status_text_collect
