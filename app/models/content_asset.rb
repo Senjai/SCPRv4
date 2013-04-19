@@ -3,8 +3,11 @@ class ContentAsset < ActiveRecord::Base
   
   belongs_to :content, polymorphic: true
   
-  @@loaded = false
-  
+  delegate :title, :size, 
+    :taken_at, :owner, :url, :api_url, 
+    :native, :image_file_size,
+    :lsquare, :small, :eight, :full, to: :asset
+
   #----------
   
   def asset

@@ -8,7 +8,7 @@ module Concern
     module ContentJsonMethods
       def json
         {
-          :asset  => self.primary_asset(:lsquare),
+          :asset  => self.asset.lsquare.tag,
           :byline => self.byline
         }
       end
