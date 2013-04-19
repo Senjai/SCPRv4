@@ -1,12 +1,6 @@
 require "spec_helper"
 
-describe Api::Public::ContentController do
-  describe "OPTIONS options" do
-    pending
-  end
-  
-  #---------------------
-  
+describe Api::Public::V1::ContentController do  
   describe "GET /index" do
     pending
   end
