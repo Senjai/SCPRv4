@@ -109,6 +109,33 @@ GET /api/v2/content?query=Obama&types=news,blogs,segments&limit=25&page=4
 A JSON array of article objects, ordered by **descending published_at date**.
 
 
+### Errors ###
+
+These are some errors you might come across when interacting with the API.
+
+<table>
+  <tr>
+    <th>Error Name</th>
+    <th>Status</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Unauthorized</td>
+    <td>401</td>
+    <td>The API key is incorrect or missing (Private API only)</td>
+  </tr>
+  <tr>
+    <td>Bad Request</td>
+    <td>400</td>
+    <td>Some parameter is malformed, such as an invalid URI in #by_url</td>
+  </tr>
+  <tr>
+    <td>Not Found</td>
+    <td>404</td>
+    <td>The requested article can't be found.</td>
+  </tr>
+</table>
+
 
 ## v1 ##
 Please do not use API v1. It will be removed after 2013-05-01.
