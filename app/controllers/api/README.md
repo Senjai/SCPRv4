@@ -54,7 +54,7 @@ This is how every article is represented by the API in its response:
   <tr><td>id</td><td>The object key. (blogs/entry:999)</td></tr>
   <tr><td>title</td><td>The full title.</td></tr>
   <tr><td>short_title</td><td>The short title.</td></tr>
-  <tr><td>published_at</td><td>The original publish date of the content.</td></tr>
+  <tr><td>published_at</td><td>The original publish date of the content. (ISO 8601)</td></tr>
   <tr><td>teaser</td><td>The teaser.</td></tr>
   <tr><td>body</td><td>The full body copy.</td></tr>
   <tr><td>permalink</td><td>The full, canonical URL.</td></tr>
@@ -75,6 +75,7 @@ GET /api/v2/content/by_url?url=http://www.scpr.org/blogs/politics/2013/04/16/133
 **Returns**
 A single JSON object representation of the requested content.
 
+
 #### Article by ID (obj_key) ####
 Find an article by its obj_key (blogs/entry:999)
 
@@ -91,7 +92,7 @@ A single JSON object representation of the requested content.
 #### Content Collection ####
 Find a collection of articles based on several parameters.
 
-**Endpoint**: /api/v2/content?{optional params}  
+**Endpoint**: /api/v2/content?{optional params} (GET)  
 **Params**: (All parameters are optional)
 * `query` - (string) A search query.  
 Example: ?query=Obama+Healthcare
@@ -105,7 +106,7 @@ Maximum is 40. (default: 10)
 **Example**
 GET /api/v2/content?query=Obama&types=news,blogs,segments&limit=25&page=4  
 **Returns**
-A JSON array of article objects.
+A JSON array of article objects, ordered by **descending published_at date**.
 
 
 
