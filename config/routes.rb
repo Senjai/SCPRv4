@@ -138,7 +138,7 @@ Scprv4::Application.routes.draw do
 
         get '/content'        => 'content#index',  defaults: { format: :json }
         get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-        get '/content/:id'    => 'content#show',   defaults: { format: :json }
+        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
       end
 
       # V2
