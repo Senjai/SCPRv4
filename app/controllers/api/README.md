@@ -134,6 +134,11 @@ These are some errors you might come across when interacting with the API.
     <td>404</td>
     <td>The requested article can't be found.</td>
   </tr>
+  <tr>
+    <td>Server Error</td>
+    <td>500</td>
+    <td>An unexpected error occurred.</td>
+  </tr>
 </table>
 
 
