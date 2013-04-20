@@ -26,5 +26,26 @@ module Api::Public::V2
       response.headers['Access-Control-Allow-Headers']     = 'x-requested-with,content-type,X-CSRF-Token'
       response.headers['Access-Control-Allow-Credentials'] = "true"
     end
+
+    #---------------------------
+
+    def render_not_found(options={})
+      message = options[:message] || "Not Found"
+      render status: :not_found, json: { error: message }
+    end
+
+    #---------------------------
+
+    def render_bad_request(options={})
+      message = options[:message] || "Bad Request"
+      render status: :bad_request, json: { error: message }
+    end
+
+    #---------------------------
+
+    def render_unauthorized(options={})
+      message = options[:message] || "Unauthorized"
+      render status: :unauthorized, json: { error: message }
+    end
   end
 end
