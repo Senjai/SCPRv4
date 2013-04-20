@@ -64,13 +64,19 @@ module Api::Public::V1
     #---------------------------
       
     def sanitize_limit
-      @limit = params[:limit] ? params[:limit].to_i : 10
+      if params[:limit].present?
+        limit = params[:limit].to_i
+        @limit = limit > 40 ? 40 : limit
+      else
+        @limit = 10
+      end
     end
 
     #---------------------------
     
     def sanitize_page
-      @page = params[:page] ? params[:page].to_i : 1
+      page = params[:page].to_i
+      @page = page > 0 ? page : 1
     end
     
     #---------------------------

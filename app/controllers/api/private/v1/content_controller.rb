@@ -68,7 +68,7 @@ module Api::Private::V1
     end
     
     #---------------------------
-      
+    # No limit for Private API
     def sanitize_limit
       @limit = params[:limit] ? params[:limit].to_i : 10
     end
@@ -76,7 +76,8 @@ module Api::Private::V1
     #---------------------------
     
     def sanitize_page
-      @page = params[:page] ? params[:page].to_i : 1
+      page = params[:page].to_i
+      @page = page > 0 ? page : 1
     end
     
     #---------------------------
@@ -88,13 +89,13 @@ module Api::Private::V1
     #---------------------------
     
     def sanitize_order
-      @order = params[:order]
+      @order = params[:order] ? params[:order].to_s : "published_at"
     end
     
     #---------------------------
     
     def sanitize_sort_mode
-      @sort_mode = params[:sort_mode].to_sym
+      @sort_mode = %w{desc asc}.include?(params[:sort_mode]) ? params[:sort_mode].to_sym : :desc
     end
 
     #---------------------------

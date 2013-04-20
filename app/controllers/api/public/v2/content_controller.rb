@@ -78,7 +78,8 @@ module Api::Public::V2
     #---------------------------
     
     def sanitize_page
-      @page = params[:page] ? params[:page].to_i : 1
+      page = params[:page].to_i
+      @page = page > 0 ? page : 1
     end
     
     #---------------------------
