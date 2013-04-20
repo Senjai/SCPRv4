@@ -1,1 +1,1 @@
-json.partial! "content", content: @content
+json.partial! "api/public/v2/content/content", content: @content
