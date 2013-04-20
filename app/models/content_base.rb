@@ -72,7 +72,7 @@ module ContentBase
     })
     
     if options[:with].present?
-      options[:with].reverse_merge! default_attributes
+      options[:with] = options[:with].reverse_merge(default_attributes)
     else
       options[:with] = default_attributes
     end
