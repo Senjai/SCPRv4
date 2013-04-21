@@ -25,9 +25,9 @@
     <% end %>
   
     <% if content.assets.present? %>
-      <meta property="og:image" content="<%= content.asset.lead.url %>" />
-      <link rel="image_src" href="<%= content.asset.lead.url %>" />
-      <meta name="twitter:image" value="<%= content.asset.lead.url %>">
+      <meta property="og:image" content="<%= content.asset.small.url %>" />
+      <link rel="image_src" href="<%= content.asset.small.url %>" />
+      <meta name="twitter:image" value="<%= content.asset.small.url %>">
     <% end %>
   <% end %>
 <% end %>
