@@ -6,7 +6,8 @@ class ContentAsset < ActiveRecord::Base
   delegate :title, :size, 
     :taken_at, :owner, :url, :api_url, 
     :native, :image_file_size,
-    :lsquare, :small, :eight, :full, to: :asset
+    :lsquare, :small, :eight, :full, 
+    to: :asset
 
   #----------
   
