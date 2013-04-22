@@ -1,11 +1,13 @@
 module Secretary
   class Version < ActiveRecord::Base
+    serialize :object_changes
+
     belongs_to  :versioned, polymorphic: true
     belongs_to  :user, class_name: Secretary.config.user_class
     
     #---------------
     
-    validates_presence_of :versioned, :object_yaml
+    validates_presence_of :versioned, :object_changes
     
     #---------------
 
@@ -26,7 +28,7 @@ module Secretary
       object.versions.create(
         user_id:      object.logged_user_id,
         description:  generate_description(object),
-        object_yaml:  object.to_yaml
+        object_changes:  object.changes
       )
     end
     
@@ -37,7 +39,7 @@ module Secretary
         when :create
           "Created #{object.class.name.demodulize.titleize} ##{object.id}"
         when :update
-          attributes = object.changed_attributes.keys
+          attributes = object.changed
           attributes.delete_if { |key| Diff.should_ignore key }
           "Changed #{attributes.to_sentence}"
         else
@@ -58,8 +60,6 @@ module Secretary
     def siblings
       @siblings ||= versioned.versions.order("version_number desc").where("version_number != ?", self.version_number)
     end
-    
-    #---------------
 
     def frozen_object
       @frozen_object ||= YAML.load(self.object_yaml)
@@ -67,7 +67,7 @@ module Secretary
     
     #---------------
     # Look for the closest version below the current one
-    def previous_version      
+    def previous_version
       @previous_version ||= self.siblings.where("version_number < ?", self.version_number).first
     end
   end

@@ -3,7 +3,7 @@ require File.expand_path("../../spec_helper", __FILE__)
 describe Secretary::Version do
   it { should belong_to(:versioned) }
   it { should belong_to(:user).class_name("::User") }
-  it { should validate_presence_of :object_yaml }
+  it { should validate_presence_of :frozen_object }
   it { should validate_presence_of :versioned }
   
   #------------------
@@ -11,25 +11,6 @@ describe Secretary::Version do
   before :each do
     user = User.create(name: "Bryan")
     Secretary::Test::Story.any_instance.stub(:logged_user_id).and_return(user.id)
-  end
-
-  describe "#frozen_object" do
-    it "should load in the serialized object with YAML" do
-      story   = Secretary::Test::Story.create(headline: "Cool story, bro", body: load_fixture("long_text.txt"))
-      user    = User.create(name: "Bryan")
-      version = Secretary::Version.new(versioned: story, version_number: "1", user: user, description: "Updates", object_yaml: story.to_yaml)
-    
-      YAML.should_receive(:load).with(version.object_yaml).and_return "Loaded Yaml"
-      version.frozen_object.should eq "Loaded Yaml"
-    end
-  
-    it "returns a model object" do
-      story   = Secretary::Test::Story.create(headline: "Cool story, bro", body: load_fixture("long_text.txt"))
-      user    = User.create(name: "Bryan")
-      version = Secretary::Version.new(versioned: story, version_number: "1", user: user, description: "Updates", object_yaml: story.to_yaml)
-    
-      version.frozen_object.should eq story
-    end
   end
 
   #------------------
@@ -58,8 +39,6 @@ describe Secretary::Version do
       version = Secretary::Version.generate(story)
       story.versions.should include version
       
-      yaml = story.to_yaml
-      
       Secretary::Version.count.should eq 2
       story.update_attributes!(headline: "Something else")
       Secretary::Version.count.should eq 3
@@ -68,7 +47,7 @@ describe Secretary::Version do
       story.reload
       story.versions.size.should eq 4
       story.versions.last.frozen_object.headline.should eq story.headline
-      story.versions.last.object_yaml.should_not eq yaml
+      story.versions.last.frozen_object.should_not eq story
     end
   end
 

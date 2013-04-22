@@ -17,7 +17,7 @@ class SecretaryMigration < ActiveRecord::Migration
       t.integer   "versioned_id"
       t.string    "user_id"
       t.text      "description"
-      t.text      "object_yaml"
+      t.text      "object_changes"
       t.datetime  "created_at"
     end    
   end
