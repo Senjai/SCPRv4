@@ -1,0 +1,10 @@
+<div class="row-fluid">
+  <div class="span5">
+    <%= render_asset content, 'thumbnail', true %>
+  </div>
+  <div class="span19">
+    <a href="<%= content.link_path %>" class="track-event" data-ga-category="Popular Box" data-ga-action="Most Viewed" data-ga-label="<%= content.obj_key %> :: <%= j content.headline %>">
+      <%= content.short_headline %>
+    </a>
+  </div>
+</div> <!-- row -->

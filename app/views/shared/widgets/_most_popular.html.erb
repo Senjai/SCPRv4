@@ -1,4 +1,4 @@
-<div id="most-popular" class="widget">   
+<div id="most-popular" class="widget">
   <h6>Most Popular</h6>
   <ul class="nav nav-tabs">
     <li class="active"><a href="#pop_tab1" data-toggle="tab">Viewed</a></li>
@@ -6,10 +6,10 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active popular" id="pop_tab1">
-      <%= raw Rails.cache.read("widget/popular_viewed") %>
+      <%= render_content Array(Rails.cache.read("popular/viewed")).first(4), "popular" %>
     </div>
     <div class="tab-pane popular" id="pop_tab2">
-      <%= raw Rails.cache.read("widget/popular_commented") %>
+      <%= render_content Array(Rails.cache.read("popular/commented")).first(4), "popular" %>
     </div>
   </div>
 </div>
