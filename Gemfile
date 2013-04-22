@@ -80,6 +80,7 @@ group :test, :development do
   gem 'jasminerice'
   gem 'rb-readline'
   gem 'guard', '~> 1.5'
+  gem 'guard-resque'
   gem 'guard-rspec'
   gem 'guard-jasmine'
 end
