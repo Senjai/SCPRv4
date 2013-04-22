@@ -19,12 +19,11 @@ module Concern
       end
 
       #-------------------
-      # Return the first asset in the given medium and size.
-      # Returns nil if no assets are present.
-      def primary_asset(size, format=:tag)
-        self.assets.first.asset.send(size).send(format) if self.assets.present?
-      end
       
+      def asset
+        @asset ||= self.assets.first
+      end
+
 
       # Define these methods manually since Rails uses a cache (not method_missing 
       # directly) to call them, and we don't want (or need) to reset that.

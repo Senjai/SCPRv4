@@ -1,4 +1,4 @@
-<%= assets.first.asset.small.tag %>
+<%= assets.first.small.tag %>
 
 <%
   caption = ''
@@ -7,8 +7,8 @@
     caption << assets.first.caption
   end
   
-  if assets.first.asset.owner
-    caption << ";  Credit: #{assets.first.asset.owner}"
+  if assets.first.owner
+    caption << ";  Credit: #{assets.first.owner}"
   end
 %>
 

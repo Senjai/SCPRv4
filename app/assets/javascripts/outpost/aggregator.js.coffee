@@ -66,7 +66,7 @@ class scpr.Aggregator
             # Let the caller handle what happens after the request
             # via callbacks
             importUrl: (url, callbacks={}) ->
-                $.getJSON("#{scpr.PUBLIC_API_ROOT}/content/by_url", { url: url })
+                $.getJSON("#{scpr.PUBLIC_API_ROOT}/v1/content/by_url", { url: url })
                    .success((data, textStatus, jqXHR)      -> callbacks.success?(data))
                    .error((jqXHR, textStatus, errorThrown) -> callbacks.error?(jqXHR))
                    .complete((jqXHR, status)               -> callbacks.complete?(jqXHR))

@@ -1,11 +1,11 @@
-<div class="asset-block <%= is_vertical?(assets[0].asset.eight) ? "right" : "wide" %>">
+<div class="asset-block <%= is_vertical?(assets.first.eight) ? "right" : "wide" %>">
   <div class="contentasset">
-    <%= assets[0].asset.eight.tag %>
+    <%= assets.first.eight.tag %>
   </div>
 
-  <h4><%= assets[0].asset.owner %></h4>
+  <h4><%= assets.first.owner %></h4>
 
-  <% if assets[0].caption %>
-    <p><%= assets[0].caption %></p>
+  <% if assets.first.caption %>
+    <p><%= assets.first.caption %></p>
   <% end %>
 </div>
