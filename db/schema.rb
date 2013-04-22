@@ -75,6 +75,9 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.datetime "updated_at"
     t.string   "password_digest"
     t.string   "name"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.boolean  "is_staff"
   end
 
   add_index "auth_user", ["username", "can_login"], :name => "index_auth_user_on_username_and_can_login"
@@ -546,6 +549,8 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.datetime "updated_at",                                                  :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij",                              :default => false, :null => false
+    t.string   "locale"
+    t.string   "lead_asset_scheme"
   end
 
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
@@ -646,6 +651,7 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
+    t.string   "quick_slug"
   end
 
   add_index "programs_kpccprogram", ["air_status"], :name => "index_programs_kpccprogram_on_air_status"
@@ -883,6 +889,7 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.text     "description"
     t.text     "object_yaml"
     t.datetime "created_at"
+    t.text     "object_changes"
   end
 
   add_index "versions", ["user_id"], :name => "index_versions_on_user_id"
