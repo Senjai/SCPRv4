@@ -11,7 +11,7 @@
   <script>
     aggregator = new outpost.Aggregator(
       "#aggregator", "#content_json",
-      <%= j record.content.includes(:content).map(&:content).to_json.html_safe %>, 
+      <%= raw render(partial: 'api/private/v2/content/collection', formats: [:json], locals: { content: record.content.includes(:content).map(&:content) }) %>,
       { 
         view: { active: 'search' },
         apiType: "public"

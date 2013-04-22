@@ -7,7 +7,7 @@
   <script>
     aggregator = new outpost.Aggregator(
       "#aggregator", "#related_content_json", 
-      <%= j record.outgoing_references.includes(:related).map(&:related).to_json.html_safe %>, 
+      <%= raw render(partial: 'api/private/v2/content/collection', formats: [:json], locals: { content: record.outgoing_references.includes(:related).map(&:related) }) %>,
       { view: { active: 'search' } });
   </script>
 <% end %>

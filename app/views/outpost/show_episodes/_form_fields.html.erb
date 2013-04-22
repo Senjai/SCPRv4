@@ -23,7 +23,7 @@
     <script>
       aggregator = new outpost.Aggregator(
         "#aggregator", "#rundown_json",
-        <%= j record.segments.to_json.html_safe %>,
+        <%= raw render(partial: 'api/private/v2/content/collection', formats: [:json], locals: { content: record.segments }) %>,
         {
           apiType: "private",
           params: {
