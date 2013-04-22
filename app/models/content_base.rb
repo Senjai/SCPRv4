@@ -68,7 +68,7 @@ module ContentBase
     })
     
     if options[:with].present?
-      options[:with].reverse_merge! default_attributes
+      options[:with] = options[:with].reverse_merge(default_attributes)
     else
       options[:with] = default_attributes
     end
@@ -123,6 +123,12 @@ module ContentBase
       key = [match[1].constantize.content_key, $~[1]].join(":")
       Outpost.obj_by_key(key)
     end
+  end
+  
+  #---------------------
+  # obj_by_url or raise
+  def obj_by_url!(url)
+    obj_by_url(url) or raise ActiveRecord::RecordNotFound
   end
   
   #--------------------

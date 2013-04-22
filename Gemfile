@@ -40,6 +40,7 @@ gem 'select2-rails', '~> 3.3'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
 gem 'simple_form', "~> 2.0"
+gem 'jbuilder'
 
 
 ## Utility

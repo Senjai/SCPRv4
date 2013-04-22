@@ -1,24 +1,6 @@
 require "spec_helper"
 
-describe Concern::Associations::AssetAssociation do  
-  describe "#primary_asset" do
-    it "is nil if content has no assets" do
-      record = create :test_class_story
-      record.reload.primary_asset(:thumb).should eq nil
-    end
-    
-    it "returns the first asset with tag by default" do
-      record = create :test_class_story
-      asset  = create :asset, content: record
-      record.reload.primary_asset(:thumb).should eq asset.asset.thumb.tag
-    end
-    
-    it "returns the first asset with whatever format is passed in" do
-      record = create :test_class_story
-      asset  = create :asset, content: record
-      record.reload.primary_asset(:lsquare, :url).should eq asset.asset.lsquare.url
-    end
-  end
+describe Concern::Associations::AssetAssociation do
   
   #--------------------
 

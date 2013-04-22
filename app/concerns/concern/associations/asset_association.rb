@@ -21,10 +21,9 @@ module Concern
       end
 
       #-------------------
-      # Return the first asset in the given medium and size.
-      # Returns nil if no assets are present.
-      def primary_asset(size, format=:tag)
-        self.assets.first.asset.send(size).send(format) if self.assets.present?
+
+      def asset
+        @asset ||= self.assets.first
       end
     end # AssetAssociation
   end # Associations

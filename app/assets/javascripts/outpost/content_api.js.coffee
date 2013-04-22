@@ -21,7 +21,7 @@ class outpost.ContentAPI
     #-----------------------------
     
     class @ContentCollection extends Backbone.Collection
-        url: "/api/content/"
+        url: "/api/v1/content"
         model: ContentAPI.Content
             
         #----------
@@ -40,6 +40,6 @@ class outpost.ContentAPI
     #-----------------------------
     
     class @PrivateContentCollection extends @ContentCollection
-        url: "/api/private/content"
+        url: "/api/private/v1/content"
         
     #-----------------------------
