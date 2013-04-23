@@ -28,10 +28,16 @@ class RenameFrozenObjectField < ActiveRecord::Migration
 
     NewsStory
 
-    Secretary::Version.where("object_yaml is null").find_in_batches do |group|
+    Secretary::Version.where("object_changes is null").find_in_batches do |group|
       group.each do |version|
         obj = YAML.load(version.object_yaml)
-        prev_obj = version.previous_version.try(:frozen_object) || obj.class.new
+        
+        prev = version.previous_version
+        if prev.present?
+          prev_obj = YAML.load(prev.object_yaml)
+        else
+          prev_obj = obj.class.new
+        end
 
         changes = nil
 
@@ -74,6 +80,6 @@ class RenameFrozenObjectField < ActiveRecord::Migration
 
 
   def down
-    remove_column :version, :object_changes
+    remove_column :versions, :object_changes
   end
 end
