@@ -3,8 +3,7 @@ require File.expand_path("../../spec_helper", __FILE__)
 describe Secretary::Version do
   it { should belong_to(:versioned) }
   it { should belong_to(:user).class_name("::User") }
-  it { should validate_presence_of :frozen_object }
-  it { should validate_presence_of :versioned }
+  it { should validate_presence_of(:versioned) }
   
   #------------------
   
@@ -33,6 +32,35 @@ describe Secretary::Version do
 
   #------------------
 
+  describe '#attribute_diffs' do
+    it 'is a hash of attribute keys, and Diffy::Diff objects' do
+      story = Secretary::Test::Story.create(headline: "Cool story, bro", body: load_fixture("long_text.txt"))
+      story.update_attributes!(headline: "Updated Headline")
+
+      version = story.versions.last
+      version.attribute_diffs.keys.should eq ["headline"]
+      version.attribute_diffs["headline"].should be_a Diffy::Diff
+    end
+  end
+
+  #------------------
+
+  describe "::should_ignore?" do
+    before :each do
+      stub_const("Secretary::Version::IGNORE", ["id"])
+    end
+    
+    it "returns true if IGNORE includes the passed-in string" do
+      Secretary::Version.should_ignore?("id").should be_true
+    end
+    
+    it "returns false if IGNORE does not include the passed-in string" do
+      Secretary::Version.should_ignore?("body").should be_false
+    end
+  end
+
+  #------------------
+
   describe "::generate" do
     it "generates a new version for passed-in object" do
       story   = Secretary::Test::Story.create(headline: "Cool story, bro", body: "Cool text, bro.")
@@ -40,14 +68,6 @@ describe Secretary::Version do
       story.versions.should include version
       
       Secretary::Version.count.should eq 2
-      story.update_attributes!(headline: "Something else")
-      Secretary::Version.count.should eq 3
-      
-      story.update_attributes!(headline: "Cooler story, bro", body: "Coolio text")
-      story.reload
-      story.versions.size.should eq 4
-      story.versions.last.frozen_object.headline.should eq story.headline
-      story.versions.last.frozen_object.should_not eq story
     end
   end
 

@@ -18,7 +18,7 @@ module Secretary
       
       before_create :set_create
       before_update :set_update
-      after_save    :generate_version, if: -> { self.changed_attributes.present? }
+      after_save    :generate_version, if: -> { self.changes.present? }
       after_save    :clean_action
       
       send :include, InstanceMethods
@@ -30,7 +30,33 @@ module Secretary
       def generate_version
         Version.generate(self)
       end
-      
+
+      # Use Rails built-in Dirty attributions to get
+      # the easy ones. By the time we're generating 
+      # this version, this hash could already
+      # exist with some custom changes, such as 
+      # assets or content.
+      def changes
+        self.custom_changes.reverse_merge super
+      end
+
+      #-----------
+      # Similar to ActiveModel::Dirty#changes, but lets us
+      # pass in some custom changes (such as associations)
+      # which wouldn't be picked up by the built-in method.
+      #
+      # This method should only be used for adding custom changes
+      # to the changes hash. For storing and comparing and whatnot,
+      # use #changes as usual.
+      #
+      # This method basically exists just to get around the behavior
+      # of #changes (since it sends the attribute message to the 
+      # object, which we don't always want, for associations for
+      # example).
+      def custom_changes
+        @custom_changes ||= HashWithIndifferentAccess.new
+      end
+
       #-----------
       
       def set_create
