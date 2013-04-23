@@ -9,6 +9,10 @@ class RootPathController < ApplicationController
     begin
       path = URI.encode(params[:path].to_s)
     rescue ArgumentError
+      # This is to prevent `ArgumentError: invalid byte sequence in UTF-8`
+      # Some spam bot or whatever is posting invalid params to our site and
+      # I'm tired of the errors in newrelic, and I can't just ignore all
+      # ArgumentErrors.
       path = URI.encode(params[:path].to_s.encode('UTF-8', invalid: :replace))
     end
     
