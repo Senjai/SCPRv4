@@ -30,7 +30,7 @@ class RenameFrozenObjectField < ActiveRecord::Migration
 
     Secretary::Version.where("object_yaml is null").find_in_batches do |group|
       group.each do |version|
-        obj = version.frozen_object
+        obj = YAML.load(version.object_yaml)
         prev_obj = version.previous_version.try(:frozen_object) || obj.class.new
 
         changes = nil
@@ -69,14 +69,11 @@ class RenameFrozenObjectField < ActiveRecord::Migration
     remove_column :events, :show_comments
     remove_column :contentbase_featuredcomment, :django_content_type_id
     remove_column :contentbase_featuredcomment, :published_at
-
-    remove_column :versions, :object_yaml
   end
 
 
 
   def down
-    add_column :versions, :object_yaml, :text
     remove_column :version, :object_changes
   end
 end
