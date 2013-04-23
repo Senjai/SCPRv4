@@ -152,6 +152,9 @@ GEM
       guard (>= 1.1.0)
       multi_json
       thor
+    guard-resque (0.0.5)
+      guard (>= 0.8)
+      resque
     guard-rspec (2.5.1)
       guard (>= 1.1)
       rspec (~> 2.11)
@@ -375,6 +378,7 @@ DEPENDENCIES
   feedzirra!
   guard (~> 1.5)
   guard-jasmine
+  guard-resque
   guard-rspec
   hashie (~> 1.2.0)
   jasminerice
