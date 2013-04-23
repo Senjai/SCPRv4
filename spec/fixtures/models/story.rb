@@ -26,6 +26,8 @@ module TestClass
     include Concern::Methods::ContentJsonMethods
     
     include Concern::Validations::ContentValidation
+
+    validates :short_url, url: { allowed: [URI::HTTP, URI::FTP] }
     
     def obj_key
       "test_class_story:#{id}"
