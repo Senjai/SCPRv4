@@ -54,7 +54,7 @@ class Outpost::NprStoriesController < Outpost::BaseController
   
   def import
     breadcrumb "Importing", nil, @record.to_title
-    @record.async_import
+    @record.async_import(import_to_class: params[:import_to_class])
     render "import"
   end
   
