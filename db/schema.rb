@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326225128) do
+ActiveRecord::Schema.define(:version => 20130423193502) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.string   "headline"
     t.string   "slug",              :limit => 50
     t.text     "body",              :limit => 2147483647
-    t.integer  "blog_id",                                                    :null => false
+    t.integer  "blog_id"
     t.datetime "published_at"
     t.integer  "status",                                                     :null => false
     t.string   "blog_asset_scheme"
@@ -883,6 +883,7 @@ ActiveRecord::Schema.define(:version => 20130326225128) do
     t.text     "description"
     t.text     "object_yaml"
     t.datetime "created_at"
+    t.text     "object_changes"
   end
 
   add_index "versions", ["user_id"], :name => "index_versions_on_user_id"
