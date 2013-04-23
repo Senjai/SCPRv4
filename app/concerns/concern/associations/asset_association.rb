@@ -61,7 +61,10 @@ module Concern
 
         # If the assets didn't change, there's no need to bother the database.        
         if current_assets_json != loaded_assets_json
-          self.custom_changes['assets'] = [current_assets_json, loaded_assets_json]
+          if self.class.has_secretary?
+            self.custom_changes['assets'] = [current_assets_json, loaded_assets_json]
+          end
+          
           self.assets = loaded_assets
         end
 
