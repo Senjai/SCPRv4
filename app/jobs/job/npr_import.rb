@@ -11,7 +11,7 @@ module Job
       hook = Outpost::Hook.new(
         :path => "/task/finished/#{@npr_story.obj_key.gsub(/\//, "-")}:import",
         :data => {
-          :location => @story.admin_edit_path
+          :location => @story ? @story.admin_edit_path : NewsStory.admin_index_path
         })
         
       hook.publish
