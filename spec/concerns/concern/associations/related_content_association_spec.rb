@@ -70,39 +70,6 @@ describe Concern::Associations::RelatedContentAssociation do
       @object.related_content.size.should eq 3
     end
   end
-  
-  #---------------------------
-  
-  describe "content_changed?" do
-    let(:story2) { create :test_class_story }
-
-    it "is true on initialize" do
-      ContentBase.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
-
-      newrecord = build :test_class_story, related_content_json: "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
-      newrecord.related_content_changed?.should eq true
-    end
-
-    it "is false if the related content has not changed" do
-      original_json = "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
-      ContentBase.should_receive(:obj_by_key).twice.with(story2.obj_key).and_return(story2)
-      
-      newrecord = create :test_class_story, related_content_json: original_json
-      newrecord.related_content_json = original_json
-
-      newrecord.related_content_changed?.should eq false
-    end
-
-    it "is false after the record has been saved" do
-      ContentBase.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
-
-      newrecord = build :test_class_story, related_content_json: "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
-      newrecord.related_content_changed?.should eq true
-      newrecord.save!
-
-      newrecord.related_content_changed?.should eq false
-    end
-  end
 
   #---------------------------
 
