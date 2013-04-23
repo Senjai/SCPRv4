@@ -42,7 +42,6 @@ describe Api::Public::V2::ContentController do
 
   describe "GET most_viewed" do
     it "returns the cached articles" do
-      pending
       articles = create_list :blog_entry, 2
       Rails.cache.write("popular/viewed", articles)
 
@@ -59,13 +58,10 @@ describe Api::Public::V2::ContentController do
   end
 
   describe "GET most_commented" do
-    it "returns the cached articles", focus: true do
-      articles = create_list :blog, 3
-      dump = Marshal.dump(articles)
-      puts Marshal.load(dump)
-      return
-
+    it "returns the cached articles" do
+      articles = create_list :blog, 2
       Rails.cache.write("popular/commented", articles)
+      
       get :most_commented, request_params
       assigns(:content).should eq articles
       response.body.should render_template "index"
