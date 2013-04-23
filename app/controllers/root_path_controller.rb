@@ -6,8 +6,12 @@ class RootPathController < ApplicationController
   respond_to :html, :xml, :rss
 
   def handle_path
-    path = URI.encode(params[:path].to_s.encode('UTF-8', invalid: :replace))
-
+    begin
+      path = URI.encode(params[:path].to_s)
+    rescue ArgumentError
+      path = URI.encode(params[:path].to_s.encode('UTF-8', invalid: :replace))
+    end
+    
     if @flatpage = Flatpage.visible.find_by_url("/#{path.downcase}/")
       handle_flatpage and return
     else
