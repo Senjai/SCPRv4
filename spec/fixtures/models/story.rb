@@ -27,7 +27,7 @@ module TestClass
     
     include Concern::Validations::ContentValidation
 
-    validates :short_url, url: { allowed: [URI::HTTP, URI::FTP] }
+    validates :short_url, url: { allow_blank: true, allowed: [URI::HTTP, URI::FTP] }
     
     def obj_key
       "test_class_story:#{id}"
