@@ -25,12 +25,6 @@ module Concern
       end
 
 
-      # Define these methods manually since Rails uses a cache (not method_missing 
-      # directly) to call them, and we don't want (or need) to reset that.
-      def assets_changed?
-        attribute_changed?('assets')
-      end
-
       #-------------------
       # #asset_json is a way to pass in a string representation
       # of a javascript object to the model, which will then be
@@ -67,7 +61,7 @@ module Concern
 
         # If the assets didn't change, there's no need to bother the database.        
         if current_assets_json != loaded_assets_json
-          self.changed_attributes['assets'] = current_assets_json
+          self.custom_changes['assets'] = [current_assets_json, loaded_assets_json]
           self.assets = loaded_assets
         end
 
