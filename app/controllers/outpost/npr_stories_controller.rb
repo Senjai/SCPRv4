@@ -18,7 +18,7 @@ class Outpost::NprStoriesController < Outpost::BaseController
     column :headline
     column :published_at, sortable: true, default_sort_mode: "desc"
     column :teaser
-    column :link, display: :display_npr_link
+    column :link
     column :npr_id, header: "NPR ID"
   end
 
