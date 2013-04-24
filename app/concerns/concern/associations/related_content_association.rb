@@ -46,12 +46,6 @@ module Concern
       end
 
       #-------------------------
-
-      def related_content_changed?
-        attribute_changed?('related_content')
-      end
-
-      #-------------------------
       # See AssetAssociation for more information.
       def related_content_json=(json)
         return if json.empty?
@@ -75,6 +69,10 @@ module Concern
         loaded_related_content_json = related_content_to_simple_json(loaded_references)
 
         if current_related_content_json != loaded_related_content_json
+          if self.respond_to?(:custom_changes)
+            self.custom_changes['related_content'] = [current_related_content_json, loaded_related_content_json]
+          end
+
           self.changed_attributes['related_content'] = loaded_related_content_json
           self.outgoing_references = loaded_references
         end

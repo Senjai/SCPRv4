@@ -156,6 +156,28 @@ GET /api/v2/content?query=Obama&types=news,blogs,segments&limit=25&page=4
 A JSON array of article objects, ordered by **descending published_at date**.
 
 
+#### Most Viewed
+Grab the most viewed content.
+
+**Endpoint**: /api/v2/content/most_viewed (GET)  
+**Params**: None  
+**Example**
+GET /api/v2/content/most_viewed  
+**Returns**
+A JSON array of article objects.
+
+
+#### Most Commented
+Grab the most commented content.
+
+**Endpoint**: /api/v2/content/most_commented (GET)  
+**Params**: None  
+**Example**
+GET /api/v2/content/most_commented  
+**Returns**
+A JSON array of article objects.
+
+
 ### Errors ###
 
 These are some errors you might come across when interacting with the API.

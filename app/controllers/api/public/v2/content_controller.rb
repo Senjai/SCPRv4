@@ -49,6 +49,38 @@ module Api::Public::V2
 
     #---------------------------
 
+    def most_viewed
+      @content = Rails.cache.read("popular/viewed")
+      
+      if !@content
+        render_service_unavailable(
+          message: "Cache not warm. Try again in a few minutes."
+        ) and return false
+      end
+
+      respond_with @content do |format|
+        format.json { render :index }
+      end
+    end
+
+    #---------------------------
+
+    def most_commented
+      @content = Rails.cache.read("popular/commented")
+
+      if !@content
+        render_service_unavailable(
+          message: "Cache not warm. Try again in a few minutes."
+        ) and return false
+      end
+
+      respond_with @content do |format|
+        format.json { render :index }
+      end
+    end
+
+    #---------------------------
+
     private
 
     def set_classes
@@ -76,7 +108,7 @@ module Api::Public::V2
     end
     
     #---------------------------
-      
+    # Limit to 40 for public API
     def sanitize_limit
       if params[:limit].present?
         limit = params[:limit].to_i
