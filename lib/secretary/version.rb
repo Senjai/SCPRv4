@@ -79,7 +79,7 @@ module Secretary
     #---------------
 
     def increment_version_number
-      latest_version = versioned.versions.last
+      latest_version = versioned.versions.order("version_number").last
       self.version_number = latest_version.try(:version_number).to_i + 1
     end
 
