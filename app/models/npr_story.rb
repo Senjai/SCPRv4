@@ -199,7 +199,7 @@ class NprStory < ActiveRecord::Base
     )
     
     if article.is_a? NewsStory
-      article.news_agency   = "NPR",
+      article.news_agency   = "NPR"
       article.source        = "npr"
     end
     
