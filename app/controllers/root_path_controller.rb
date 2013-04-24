@@ -6,14 +6,7 @@ class RootPathController < ApplicationController
   respond_to :html, :xml, :rss
 
   def handle_path
-    begin
-      path = URI.encode(params[:path].to_s)
-    rescue ArgumentError
-      # If you don't pass the URI.encode test, 
-      # then you get NOTHING.
-      # http://www.youtube.com/watch?v=xKG07305CBs
-      render status: :bad_request and return
-    end
+    path = URI.encode(params[:path].to_s.force_encoding('UTF-8'))
     
     if @flatpage = Flatpage.visible.find_by_url("/#{path.downcase}/")
       handle_flatpage and return
