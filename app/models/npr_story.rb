@@ -94,8 +94,14 @@ class NprStory < ActiveRecord::Base
       # The "id" parameter in this case is actually referencing a list.
       # Stories from the last hour are returned... be sure to run this script
       # more often than that!
-      # 
-      stories = NPR::Story.where(id: IMPORT_IDS, date: (1.hour.ago..Time.now)).set(requiredAssets: 'text').order("date descending").limit(20).to_a
+      stories = NPR::Story.where(
+          :id     => IMPORT_IDS,
+          :date   => (1.hour.ago..Time.now))
+        .set(
+          :requiredAssets   => 'text',
+          :action           => "or")
+        .order("date descending").limit(20).to_a
+      
       log "#{stories.size} stories found from the past hour (max 20)"
       
       added = []
