@@ -20,6 +20,13 @@ role :db,       web2, :primary => true
 role :sphinx,   media
 
 namespace :deploy do
+  task :check_lock do
+    if deploy_lock == true
+      puts "*** Deployment is temporarily locked! Pass '-s deploy_lock=false' to override."
+      raise
+    end
+  end
+
   desc "Restart Application"
   task :restart, roles: [:app, :workers] do
     restart_file = "#{current_release}/tmp/restart.txt"
@@ -70,6 +77,7 @@ end
 
 # --------------
 # Callbacks
+before "deploy", "deploy:check_lock"
 before "deploy:update_code", "deploy:notify"
 before "deploy:create_symlink", "thinking_sphinx:configure"
 after "deploy:restart", "newrelic:notice_deployment"
