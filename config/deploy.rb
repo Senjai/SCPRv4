@@ -35,7 +35,7 @@ set :ts_index,      false # Staging only - Whether or not to run the sphinx inde
 set :syncdb,        false # Staging only - Whether or not to run a dbsync to mercer_staging
 set :restart_delay, 40
 
-set :deploy_lock, true
+set :deploy_lock, false
 
 # --------------
 # Universal Callbacks
