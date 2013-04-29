@@ -38,7 +38,7 @@ module Api::Public::V2
     #---------------------------
     
     def show
-      @content = ContentBase.obj_by_key(@obj_key)
+      @content = Outpost.obj_by_key(@obj_key)
 
       if !@content
         render_not_found and return false

@@ -41,7 +41,7 @@ module Job
       articles = []
 
       response.body['response'].each do |thread|
-        if article = ContentBase.obj_by_key(thread['identifiers'].first)
+        if article = Outpost.obj_by_key(thread['identifiers'].first)
           self.log "Content: #{article.obj_key}, Count: #{thread['posts']}"
           articles.push article
         end
