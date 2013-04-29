@@ -22,7 +22,7 @@ role :sphinx,   media
 namespace :deploy do
   task :check_lock do
     if deploy_lock == true
-      puts "*** Deployment is temporarily locked! Pass '-s deploy_lock=false' to override."
+      puts "*** WARNING: Deployment is temporarily locked. Pass '-s deploy_lock=false' to override."
       raise
     end
   end

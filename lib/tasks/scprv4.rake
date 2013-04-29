@@ -96,7 +96,13 @@ namespace :scprv4 do
     desc "Cache Most Viewed"
     task :most_viewed => [:environment] do
       puts "*** [#{Time.now}] Enqueing most viewed..."
-      Resque.enqueue(Job::MostViewed)
+      
+      if Rails.env == "development"
+        Job::MostViewed.perform
+      else
+        Resque.enqueue(Job::MostViewed)
+      end
+
       puts "Finished.\n"
     end
 
@@ -105,7 +111,13 @@ namespace :scprv4 do
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Enqueing most commented..."
-      Resque.enqueue(Job::MostCommented)
+
+      if Rails.env == "development"
+        Job::MostCommented.perform
+      else
+        Resque.enqueue(Job::MostCommented)
+      end
+
       puts "Finished.\n"
     end
 
