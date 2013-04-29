@@ -71,11 +71,6 @@ describe AssetHost::Asset do
       it "Returns a fallback asset" do
         AssetHost::Asset.find(1).should be_a AssetHost::Asset::Fallback
       end
-  
-      it "logs the fallback" do
-        AssetHost::Asset::Fallback.should_receive(:log).with(500, 1)
-        AssetHost::Asset.find(1)
-      end
     end
     
     context "bad response 502" do
@@ -85,11 +80,6 @@ describe AssetHost::Asset do
       
       it "Returns a fallback asset" do
         AssetHost::Asset.find(1).should be_a AssetHost::Asset::Fallback
-      end
-  
-      it "logs the fallback" do
-        AssetHost::Asset::Fallback.should_receive(:log).with(502, 1)
-        AssetHost::Asset.find(1)
       end
     end
     
@@ -134,7 +124,7 @@ end
 
 describe AssetHost::Asset::Fallback do
   it "loads the fallback json" do
-    JSON.should_receive(:load).with(Rails.root.join("util/fixtures/assethost_fallback.json")).and_return({ some: "json" })
+    JSON.should_receive(:parse).with(File.join(AssetHost.fallback_root, "asset.json")).and_return({ some: "json" })
     AssetHost::Asset::Fallback.new.json.should eq({ some: "json" })
   end
   
