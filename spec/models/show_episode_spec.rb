@@ -67,34 +67,6 @@ describe ShowEpisode do
 
   #------------------
 
-  describe "rundowns_changed?" do
-    let(:segment) { create :show_segment }
-
-    it "is true on initialize" do
-      episode = build :show_episode, rundown_json: "[{ \"id\": \"#{segment.obj_key}\", \"position\": 1 }]"
-      episode.rundowns_changed?.should eq true
-    end
-
-    it "is false if the rundown has not changed" do
-      original_json = "[{ \"id\": \"#{segment.obj_key}\", \"position\": 1 }]"
-      
-      episode = create :show_episode, rundown_json: original_json
-      episode.rundown_json = original_json
-
-      episode.rundowns_changed?.should eq false
-    end
-
-    it "is false after the record has been saved" do
-      episode = build :show_episode, rundown_json: "[{ \"id\": \"#{segment.obj_key}\", \"position\": 1 }]"
-      episode.rundowns_changed?.should eq true
-      episode.save!
-
-      episode.rundowns_changed?.should eq false
-    end
-  end
-
-  #------------------
-
   describe '#rundown_json=' do
     let(:episode)  { create :show_episode }
     let(:segment1) { create :show_segment }

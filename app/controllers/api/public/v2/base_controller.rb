@@ -47,5 +47,12 @@ module Api::Public::V2
       message = options[:message] || "Unauthorized"
       render status: :unauthorized, json: { error: message }
     end
+
+    #---------------------------
+
+    def render_service_unavailable(options={})
+      message = options[:message] || "Service Unavailable"
+      render status: :service_unavailable, json: { error: message }
+    end
   end
 end

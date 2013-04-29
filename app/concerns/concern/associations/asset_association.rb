@@ -20,8 +20,8 @@ module Concern
         accepts_json_input_for_assets
       end
 
-      #-------------------
-
+      #--------------------
+      
       def asset
         @asset ||= self.assets.first
       end

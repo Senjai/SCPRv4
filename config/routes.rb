@@ -121,9 +121,11 @@ Scprv4::Application.routes.draw do
       namespace :v2 do
         match '/' => "content#options", constraints: { method: 'OPTIONS' }
         
-        get '/content'        => 'content#index',  defaults: { format: :json }
-        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
+        get '/content'                  => 'content#index',  defaults: { format: :json }
+        get '/content/by_url'           => 'content#by_url', defaults: { format: :json }
+        get '/content/most_viewed'      => 'content#most_viewed', defaults: { format: :json }
+        get '/content/most_commented'   => 'content#most_commented', defaults: { format: :json }
+        get '/content/*obj_key'         => 'content#show',   defaults: { format: :json }
       end
     end
     

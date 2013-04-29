@@ -22,7 +22,18 @@ class NprStory < ActiveRecord::Base
     'id',
     'data-metrics'
   ]
+
+  # NPR IDs we're importing:
+  # Reference: http://www.npr.org/api/inputReference.php  
+  IMPORT_IDS = [
+    '1001',      # News (topic)
+    '93559255',  # Planet Money (blog)
+    '93568166',  # Monkey See (blog)
+    '15709577',  # All Songs Considered (blog)
+    '173754155'  # Code Switch (blog)
+  ]
   
+
   #---------------
   # Scopes
   
@@ -83,7 +94,14 @@ class NprStory < ActiveRecord::Base
       # The "id" parameter in this case is actually referencing a list.
       # Stories from the last hour are returned... be sure to run this script
       # more often than that!
-      stories = NPR::Story.where(id: [1001], date: (1.hour.ago..Time.now)).set(requiredAssets: 'text').order("date descending").limit(20).to_a
+      stories = NPR::Story.where(
+          :id     => IMPORT_IDS,
+          :date   => (1.hour.ago..Time.now))
+        .set(
+          :requiredAssets   => 'text',
+          :action           => "or")
+        .order("date descending").limit(20).to_a
+      
       log "#{stories.size} stories found from the past hour (max 20)"
       
       added = []
@@ -129,8 +147,9 @@ class NprStory < ActiveRecord::Base
   
   #---------------
   
-  def async_import
-    Resque.enqueue(Job::NprImport, self.id)
+  def async_import(options={})
+    import_to_class = options[:import_to_class]
+    Resque.enqueue(Job::NprImport, self.id, import_to_class)
   end
   
   #---------------
@@ -141,7 +160,9 @@ class NprStory < ActiveRecord::Base
   # Returns the created NewsStory, or `false` if the API
   # didn't return anything.
   #
-  def import
+  def import(options={})
+    import_to_class = options[:import_to_class] || "NewsStory"
+
     npr_story = NPR::Story.find_by_id(self.npr_id)
     return false if !npr_story
     
@@ -169,9 +190,7 @@ class NprStory < ActiveRecord::Base
     
     #-------------------
     # Build the NewsStory from the API response
-    news_story = NewsStory.new(
-      :news_agency    => "NPR",
-      :source         => "npr",
+    article = import_to_class.constantize.new(
       :status         => ContentBase::STATUS_DRAFT,
       :headline       => npr_story.title,
       :teaser         => npr_story.teaser,
@@ -179,6 +198,10 @@ class NprStory < ActiveRecord::Base
       :body           => text
     )
     
+    if article.is_a? NewsStory
+      article.news_agency   = "NPR"
+      article.source        = "npr"
+    end
     
     #-------------------
     # Add in Bylines
@@ -187,7 +210,7 @@ class NprStory < ActiveRecord::Base
       
       if name.present?
         byline = ContentByline.new(name: name)
-        news_story.bylines.push byline
+        article.bylines.push byline
       end
     end
     
@@ -200,7 +223,7 @@ class NprStory < ActiveRecord::Base
       :url      => npr_story.link_for('html')
     )
     
-    news_story.related_links.push related_link
+    article.related_links.push related_link
     
     
     #-------------------
@@ -221,7 +244,7 @@ class NprStory < ActiveRecord::Base
           :caption    => asset["caption"].to_s
         )
         
-        news_story.assets << content_asset
+        article.assets << content_asset
       end
     end
     
@@ -230,9 +253,9 @@ class NprStory < ActiveRecord::Base
     # Save the news story (including all associations),
     # set the NprStory to `:new => false`,
     # and return the NewsStory that was generated.
-    news_story.save!
+    article.save!
     self.update_attribute(:new, false)
-    news_story
+    article
   end
 
   add_transaction_tracer :import, category: :task

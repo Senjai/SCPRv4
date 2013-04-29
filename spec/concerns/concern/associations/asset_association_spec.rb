@@ -18,30 +18,6 @@ describe Concern::Associations::AssetAssociation do
 
   #--------------------
 
-  describe "assets_changed?" do
-    it "is true on initialize" do
-      newrecord = build :test_class_story, asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}]"
-      newrecord.assets_changed?.should eq true
-    end
-
-    it "is false if the assets have not changed" do
-      original_json = "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}]"
-      
-      newrecord = create :test_class_story, asset_json: original_json
-      newrecord.asset_json = original_json
-
-      newrecord.assets_changed?.should eq false
-    end
-
-    it "is false after the record has been saved" do
-      newrecord = build :test_class_story, asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}]"
-      newrecord.assets_changed?.should eq true
-      newrecord.save!
-
-      newrecord.assets_changed?.should eq false
-    end
-  end
-
   describe "#asset_json=" do
     context "create with asset_json passed in" do
       it "creates assets" do

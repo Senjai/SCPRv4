@@ -20,7 +20,7 @@ class Outpost::NprStoriesController < Outpost::BaseController
     l.column :headline
     l.column :published_at, sortable: true, default_sort_mode: "desc"
     l.column :teaser
-    l.column :link, display: :display_npr_link
+    l.column :link
     l.column :npr_id, header: "NPR ID"
   end
 
@@ -55,7 +55,7 @@ class Outpost::NprStoriesController < Outpost::BaseController
   
   def import
     breadcrumb "Importing", nil, @record.to_title
-    @record.async_import
+    @record.async_import(import_to_class: params[:import_to_class])
     render "import"
   end
   

@@ -90,19 +90,12 @@ namespace :scprv4 do
     
     desc "Cache Most Viewed"
     task :most_viewed => [:environment] do
-      puts "*** [#{Time.now}] Caching most viewed..."
-
-      NewRelic.with_manual_agent do
-        analytics = Rails.application.config.api["google"]["analytics"]
-        task = CacheTasks::MostViewed.new(
-          analytics["client_id"],
-          analytics["client_secret"],
-          analytics["token"],
-          analytics["refresh_token"]
-        )
-
-        task.verbose = true
-        task.run
+      puts "*** [#{Time.now}] Enqueing most viewed..."
+      
+      if Rails.env == "development"
+        Job::MostViewed.perform
+      else
+        Resque.enqueue(Job::MostViewed)
       end
 
       puts "Finished.\n"
@@ -112,12 +105,12 @@ namespace :scprv4 do
     
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
-      puts "*** [#{Time.now}] Caching most commented..."
+      puts "*** [#{Time.now}] Enqueing most commented..."
 
-      NewRelic.with_manual_agent do
-        task = CacheTasks::MostCommented.new("kpcc", "3d", Rails.application.config.api['disqus']['api_key'], 5)
-        task.verbose = true
-        task.run
+      if Rails.env == "development"
+        Job::MostCommented.perform
+      else
+        Resque.enqueue(Job::MostCommented)
       end
 
       puts "Finished.\n"

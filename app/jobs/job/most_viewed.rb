@@ -1,6 +1,24 @@
-module CacheTasks
-  class MostViewed < Task
-    require 'oauth2'
+require 'oauth2'
+
+module Job
+  class MostViewed < Base
+    @queue = namespace
+
+    def self.perform
+      analytics = Rails.application.config.api["google"]["analytics"]
+
+      task = new(
+        analytics["client_id"],
+        analytics["client_secret"],
+        analytics["token"],
+        analytics["refresh_token"]
+      )
+      
+      data     = task.fetch(api_params)
+      articles = task.parse(data['rows'])
+
+      Rails.cache.write("popular/viewed", articles)
+    end
 
     #---------------
       
@@ -11,7 +29,7 @@ module CacheTasks
     
     #---------------
 
-    def self.api_params(options={})
+    def self.api_params
       {
         "ids"         => "ga:1028848",
         "metrics"     => "ga:pageviews",
@@ -22,35 +40,24 @@ module CacheTasks
         "pp"          => "1",
         "start-date"  => Date.today - 2,
         "end-date"    => Date.today
-      }.merge(options)
-    end
-
-    #---------------
-    
-    def run
-      data    = self.fetch(MostViewed.api_params)
-      content = self.parse(data['rows'])
-      self.cache(content, "/shared/widgets/cached/most_popular_viewed", "widget/popular_viewed")
-      true
+      }
     end
 
     #---------------
         
-    def initialize(client_id, client_secret, token, refresh_token, options={})
+    def initialize(client_id, client_secret, token, refresh_token)
       @client_id     = client_id
       @client_secret = client_secret
       @token         = token
       @refresh_token = refresh_token
       
-      @client        = client
       @oauth_token   = oauth_token
-      @connection    = connection
     end
 
     #---------------
 
     def fetch(api_params={})
-      resp = @connection.get do |req|
+      resp = connection.get do |req|
         req.url API_PATH, api_params
       end
       
@@ -62,48 +69,54 @@ module CacheTasks
     #---------------
     
     def parse(rows)
-      objects = []
+      articles = []
 
       rows.each do |row|
-        if object = ContentBase.obj_by_url(row[0])
+        if article = ContentBase.obj_by_url(row[0])
           self.log "(#{row[1]}) #{row[0]}"
-          objects.push object
+          articles.push article
         end
       end
       
-      objects.uniq
+      articles.uniq
     end
 
     add_transaction_tracer :parse, category: :task
     
+    
     #---------------
     
     private
+
     def client
+      @client ||= begin
         OAuth2::Client.new(
           @client_id, 
           @client_secret,
           :authorization_url => AUTH_URL,
           :token_url         => TOKEN_URL
         )
+      end
     end
   
     #---------------
 
     def oauth_token
-      token = OAuth2::AccessToken.new @client, @token, refresh_token: @refresh_token
+      token = OAuth2::AccessToken.new client, @token, refresh_token: @refresh_token
       token.refresh!
     end
 
     #---------------
 
     def connection
-      Faraday.new API_URL, headers: { "Authorization" => "Bearer #{@oauth_token.token}"} do |builder|
-        builder.use Faraday::Request::UrlEncoded
-        builder.use Faraday::Response::Logger
-        builder.use FaradayMiddleware::ParseJson, content_type: /\bjson\z/
-        builder.adapter Faraday.default_adapter
-      end        
+      @connection ||= begin
+        Faraday.new API_URL, headers: { "Authorization" => "Bearer #{@oauth_token.token}"} do |builder|
+          builder.use Faraday::Request::UrlEncoded
+          builder.use Faraday::Response::Logger
+          builder.use FaradayMiddleware::ParseJson, content_type: /\bjson\z/
+          builder.adapter Faraday.default_adapter
+        end
+      end
     end
   end # MostViewed
-end # CacheTasks
+end # Job

@@ -16,7 +16,7 @@ Dir[Rails.root.join("lib/secretary/spec/db/*.rb")].each     { |f| require f }
 # Because when the application is initialized it sets the user_class
 # to ::AdminUser
 Secretary.config.user_class = "::User"
-load "lib/secretary/version.rb"
+silence_warnings { load "lib/secretary/version.rb" }
 
 RSpec.configure do |config|
   config.include RemoteStubs

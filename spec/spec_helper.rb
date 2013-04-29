@@ -49,6 +49,10 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   end
   
+  config.before :all do
+    DeferredGarbageCollection.start
+  end
+
   config.before :each do
     FakeWeb.clean_registry
     FakeWeb.load_callback
@@ -60,6 +64,10 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
+  config.after :all do
+    DeferredGarbageCollection.reconsider
+  end
+  
   config.after :suite do
     FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
   end

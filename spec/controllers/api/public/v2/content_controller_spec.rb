@@ -40,6 +40,40 @@ describe Api::Public::V2::ContentController do
     end
   end
 
+  describe "GET most_viewed" do
+    it "returns the cached articles" do
+      articles = create_list :blog_entry, 2
+      Rails.cache.write("popular/viewed", articles)
+
+      get :most_viewed, request_params
+      assigns(:content).should eq articles
+      response.body.should render_template "index"
+    end
+
+    it "returns an error if the cache is nil" do
+      get :most_viewed, request_params
+      assigns(:content).should eq nil
+      response.response_code.should eq 503
+    end
+  end
+
+  describe "GET most_commented" do
+    it "returns the cached articles" do
+      articles = create_list :blog, 2
+      Rails.cache.write("popular/commented", articles)
+      
+      get :most_commented, request_params
+      assigns(:content).should eq articles
+      response.body.should render_template "index"
+    end
+
+    it "returns an error if the cache is nil" do
+      get :most_commented, request_params
+      assigns(:content).should eq nil
+      response.response_code.should eq 503
+    end
+  end
+
   describe "GET index" do
     sphinx_spec(num: 1)
 
