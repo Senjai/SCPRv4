@@ -35,7 +35,7 @@ class HomeController < ApplicationController
   
   def missed_it_content
     @homepage = Homepage.find(params[:id])
-    @carousel_contents = @homepage.missed_it_bucket.content.includes(&:content).page(params[:page]).per(6)
+    @carousel_contents = @homepage.missed_it_bucket.includes(:content).content.includes(&:content).page(params[:page]).per(6)
     render 'missed_it_content', formats: [:js]
   end
   
@@ -47,6 +47,6 @@ class HomeController < ApplicationController
   end
 
   def get_latest_videos
-    @latest_videos = VideoShell.published.limit(5)
+    @latest_videos = VideoShell.published.includes(:assets).limit(5)
   end
 end
