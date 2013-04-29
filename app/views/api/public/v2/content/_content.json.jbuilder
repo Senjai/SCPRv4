@@ -7,6 +7,7 @@ json.teaser content.teaser.html_safe
 json.body content.body.html_safe
 json.permalink content.remote_link_path
 
+
 asset = content.assets.first
 json.thumbnail asset ? content.asset.lsquare.tag : nil
 
