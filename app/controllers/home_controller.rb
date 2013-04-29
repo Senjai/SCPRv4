@@ -34,8 +34,8 @@ class HomeController < ApplicationController
   #----------
   
   def missed_it_content
-    @homepage = Homepage.find(params[:id])
-    @carousel_contents = @homepage.missed_it_bucket.includes(:content).content.includes(&:content).page(params[:page]).per(6)
+    @homepage = Homepage.includes(:missed_it_bucket).find(params[:id])
+    @carousel_contents = @homepage.missed_it_bucket.content.includes(:content).page(params[:page]).per(6)
     render 'missed_it_content', formats: [:js]
   end
   
