@@ -1,3 +1,6 @@
+<% popular_viewed = Array(Rails.cache.read("popular/viewed")).first(4) %>
+<% popular_commented = Array(Rails.cache.read("popular/commented")).first(4) %>
+
 <div id="most-popular" class="widget">
   <h6>Most Popular</h6>
   <ul class="nav nav-tabs">
@@ -6,10 +9,22 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active popular" id="pop_tab1">
-      <%= render_content Array(Rails.cache.read("popular/viewed")).first(4), "popular" %>
+
+    <% if popular_viewed.present? %>
+      <%= cache popular_viewed do %>
+        <%= render_content popular_viewed, "popular" %>
+      <% end %>
+    <% end %>
+
     </div>
     <div class="tab-pane popular" id="pop_tab2">
-      <%= render_content Array(Rails.cache.read("popular/commented")).first(4), "popular" %>
+
+    <% if popular_commented.present? %>
+      <%= cache popular_commented do %>
+        <%= render_content popular_commented, "popular" %>
+      <% end %>
+    <% end %>
+    
     </div>
   </div>
 </div>
