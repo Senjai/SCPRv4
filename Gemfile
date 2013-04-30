@@ -95,7 +95,6 @@ group :test, :development do
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
   gem 'jasminerice'
-  gem 'rb-readline', '~> 0.4.0'
   gem 'guard', '~> 1.5'
   gem 'guard-resque'
   gem 'guard-rspec'
