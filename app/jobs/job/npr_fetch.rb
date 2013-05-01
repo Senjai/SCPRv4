@@ -20,7 +20,8 @@ module Job
     #---------------------
     
     def self.perform
-      NprStory.sync_with_api
+      added = NprStory.sync_with_api
+      self.log "Added #{added.size} stories."
     end
   end
 end
