@@ -26,7 +26,6 @@ gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
 
 
 
-
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
@@ -98,7 +97,6 @@ group :test, :development do
   gem 'guard', '~> 1.5'
   gem 'guard-resque'
   gem 'guard-rspec'
-  gem 'guard-jasmine'
   gem 'rb-readline', '~> 0.4.2'
 end
 
