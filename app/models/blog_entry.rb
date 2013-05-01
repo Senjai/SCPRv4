@@ -79,6 +79,23 @@ class BlogEntry < ActiveRecord::Base
     join audio
   end
 
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.headline,
+      :short_title        => self.short_headline,
+      :public_datetime    => self.published_at,
+      :teaser             => self.teaser,
+      :body               => self.body,
+      :assets             => self.assets,
+      :byline             => self.byline,
+      :permalink          => self.remote_link_path
+    })
+  end
+
+
   #-------------------
   # Need to work around multi-american until we can figure
   # out how to merge those comments in with kpcc
