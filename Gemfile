@@ -99,6 +99,7 @@ group :test, :development do
   gem 'guard-resque'
   gem 'guard-rspec'
   gem 'guard-jasmine'
+  gem 'rb-readline', '~> 0.4.2'
 end
 
 
