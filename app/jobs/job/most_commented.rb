@@ -9,6 +9,7 @@ module Job
       articles  = task.parse(comments)
       
       Rails.cache.write("popular/commented", articles)
+      Rails.cache.delete("views/popular/widget")
     end
 
     #--------------
