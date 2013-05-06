@@ -5,6 +5,7 @@ module Job
       
       if bucket.present?
         Rails.cache.write("audiovision:featured-posts", bucket.posts)
+        Rails.cache.delete("views/homepage:audiovision")
       end
     end
   end
