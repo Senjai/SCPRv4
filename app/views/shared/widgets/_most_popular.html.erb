@@ -1,4 +1,4 @@
-<%= content_cache "popular/widget" do %>
+<%= cache "popular/widget" do %>
 
 <% popular_viewed    = Array(Rails.cache.read("popular/viewed")).first(4) %>
 <% popular_commented = Array(Rails.cache.read("popular/commented")).first(4) %>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="tab-pane popular" id="pop_tab2">
-    <%= render_content popular_commented, "popular" %>    
+    <%= render_content popular_commented, "popular" %>
     </div>
 
   </div>
