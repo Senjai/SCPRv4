@@ -22,17 +22,11 @@ module AudioVision
 
 
     ATTRIBUTES = [
-      :id, 
-      :title, 
-      :teaser, 
-      :body,
-      :published_at, 
-      :thumbnail,
-      :assets, 
-      :category, 
-      :byline, 
-      :attributions, 
-      :permalink
+      :id,
+      :title,
+      :description,
+      :updated_at,
+      :posts
     ]
 
     attr_accessor *ATTRIBUTES
@@ -41,14 +35,17 @@ module AudioVision
     def initialize(attributes={})
       @id           = attributes["id"]
       @title        = attributes["title"]
-      @teaser       = attributes["teaser"]
-      @body         = attributes["body"]
-      @thumbnail    = attributes["thumbnail"]
-      @assets       = attributes["assets"]
-      @byline       = attributes["byline"]
-      @attributions = attributes["attributions"]
-      @permalink    = attributes["permalink"]
-      @published_at = Time.parse(attributes["published_at"].to_s)
+      @description  = attributes["description"]
+      @updated_at   = Time.parse(attributes["updated_at"].to_s)
+
+
+      if attributes["posts"]
+        @posts = []
+
+        attributes["posts"].each do |json|
+          @posts << AudioVision::Post.new(json)
+        end
+      end
     end
   end
 end
