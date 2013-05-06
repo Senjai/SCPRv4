@@ -44,11 +44,17 @@ module AudioVision
       @teaser       = attributes["teaser"]
       @body         = attributes["body"]
       @thumbnail    = attributes["thumbnail"]
-      @assets       = attributes["assets"]
       @byline       = attributes["byline"]
       @attributions = attributes["attributions"]
       @permalink    = attributes["permalink"]
       @published_at = Time.parse(attributes["published_at"].to_s)
+
+      @assets = []
+
+      Array(attributes["assets"]).each do |json|
+        @assets << Asset.new(json)
+      end
     end
+    
   end
 end

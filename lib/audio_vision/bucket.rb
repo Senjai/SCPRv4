@@ -38,14 +38,12 @@ module AudioVision
       @description  = attributes["description"]
       @updated_at   = Time.parse(attributes["updated_at"].to_s)
 
+      @posts = []
 
-      if attributes["posts"]
-        @posts = []
-
-        attributes["posts"].each do |json|
-          @posts << AudioVision::Post.new(json)
-        end
+      Array(attributes["posts"]).each do |json|
+        @posts << AudioVision::Post.new(json)
       end
     end
+    
   end
 end
