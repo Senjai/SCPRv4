@@ -74,15 +74,31 @@ namespace :scprv4 do
     Rake::Task["scprv4:cache:homepage"].invoke
     Rake::Task["scprv4:cache:most_viewed"].invoke
     Rake::Task["scprv4:cache:most_commented"].invoke
+    Rake::Task["scprv4:cache:audiovision"].invoke
     Rake::Task["scprv4:cache:twitter"].invoke
   end
   
   #----------
   
   namespace :cache do
+    desc "Cache Audiovision Homepage Module"
+    task :audiovision => [:environment] do
+      puts "*** [#{Time.now}] Caching AudioVision for homepage..."
+
+      if Rails.env == "development"
+        Job::AudioVisionCache.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::AudioVisionCache)
+        puts "Job was placed in queue.\n"
+      end
+    end
+
+    #----------
+
     desc "Cache Remote Blog Entries"
     task :remote_blogs => [:environment] do
-      puts "Caching remote blogs..."
+      puts "*** [#{Time.now}] Caching remote blogs..."
 
       NewRelic.with_manual_agent do
         Blog.cache_remote_entries
@@ -95,30 +111,31 @@ namespace :scprv4 do
     
     desc "Cache Most Viewed"
     task :most_viewed => [:environment] do
-      puts "*** [#{Time.now}] Enqueing most viewed..."
+      puts "*** [#{Time.now}] Caching most viewed..."
       
       if Rails.env == "development"
         Job::MostViewed.perform
+        puts "Finished.\n"
       else
         Resque.enqueue(Job::MostViewed)
+        puts "Job was placed in queue.\n"
       end
-
-      puts "Finished.\n"
     end
 
     #----------
     
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
-      puts "*** [#{Time.now}] Enqueing most commented..."
+      puts "*** [#{Time.now}] Caching most commented..."
 
       if Rails.env == "development"
         Job::MostCommented.perform
+        puts "Finished.\n"
       else
         Resque.enqueue(Job::MostCommented)
+        puts "Job was placed in queue.\n"
       end
 
-      puts "Finished.\n"
     end
 
     #----------
