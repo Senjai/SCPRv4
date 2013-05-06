@@ -18,6 +18,7 @@ module Job
       articles = task.parse(data['rows'])
 
       Rails.cache.write("popular/viewed", articles)
+      Rails.cache.delete("views/popular/widget")
     end
 
     #---------------
