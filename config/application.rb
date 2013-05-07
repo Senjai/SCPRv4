@@ -57,5 +57,15 @@ module Scprv4
     config.secrets = YAML.load_file("#{Rails.root}/config/app_config.yml")
 
     config.action_mailer.simple_postmark_settings = { api_key: config.api['postmark']['api_key'] }
+
+
+
+    config.to_prepare do
+      Dir[File.expand_path(Rails.root.join("lib/audio_vision/*.rb")) ].each do |file|
+        require_dependency file
+      end
+
+      require_dependency 'audio_vision'
+    end
   end
 end

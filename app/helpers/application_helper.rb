@@ -80,7 +80,8 @@ module ApplicationHelper
     end
     
     # look for a scheme on the content object
-    scheme = content["#{context}_asset_scheme"] || "default"
+    attribute = "#{context}_asset_scheme"
+    scheme = content.respond_to?(attribute) ? content.send(attribute) : "default"
 
     # set up our template precendence
     tmplt_opts = [
