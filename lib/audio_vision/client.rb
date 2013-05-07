@@ -21,8 +21,7 @@ module AudioVision
     end
 
     def api_root
-      @api_root ||= Rails.application.config.audio_vision.host + 
-        Rails.application.config.audio_vision.api_path
+      @api_root ||= Rails.application.config.audio_vision.host + API_PATH
     end
   end
 end
