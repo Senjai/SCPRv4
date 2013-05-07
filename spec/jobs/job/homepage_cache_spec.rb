@@ -5,9 +5,11 @@ describe Job::HomepageCache do
     it "scores and caches the homepage" do
       create :homepage, :published
       Homepage.any_instance.should_receive(:scored_content).and_return(Hash.new)
-      Job::HomepageCache.any_instance.should_receive(:cache).twice
+      Rails.cache.read("views/home/sections").should eq nil
       
       Job::HomepageCache.perform
+
+      Rails.cache.read("home/sections").should_not eq nil
     end
   end
 end
