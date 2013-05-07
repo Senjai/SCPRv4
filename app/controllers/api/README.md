@@ -1,7 +1,7 @@
 # KPCC Public API Documentation
 
 ## v2 ##
-**Current Version**: 2.1.0  
+**Current Version**: 2.1.1  
 **Endpoint**: /api/v2/  
 **Response**: JSON only
 
