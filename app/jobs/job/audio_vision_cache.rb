@@ -4,8 +4,10 @@ module Job
       bucket = AudioVision::Bucket.find_by_key("featured-posts")
       
       if bucket.present?
-        Rails.cache.write("audiovision:featured-posts", bucket.posts)
-        Rails.cache.delete("views/homepage:audiovision")
+        posts = bucket.posts
+
+        Rails.cache.write("audiovision:featured-posts", posts)
+        self.cache(posts.first, "/home/cached/audiovision", "views/home/audiovision", local: :post)
       end
     end
   end

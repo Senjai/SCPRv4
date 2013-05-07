@@ -22,29 +22,7 @@
         <h6>AudioVision</h6>
       </a>
 
-  <%= cache "homepage:audiovision" do %>
-    <% if post = Array(Rails.cache.read("audiovision:featured-posts")).first %>
-
-      <div class="cbase">
-        <% if asset = post.assets.first %>
-        <div class="asset-block">
-          <div class="contentasset">
-            <a href="<%= post.permalink %>">
-              <img src="<%= asset.small.url %>" />
-            </a>
-          </div>
-          
-          <h4><%= asset.owner %></h4> 
-        </div>
-        <% end %>
-
-        <h1 class="story-headline"><%= link_to post.title, post.permalink %></h1>
-        <p><%= post.teaser.html_safe %></p>
-      </div>
-
-    <% end %>
-  <% end %>
-    
+      <%= raw Rails.cache.read("views/home/audiovision") %>
     </div> <!-- .audiovision -->
 
     <div class="span12">
