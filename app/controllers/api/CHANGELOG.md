@@ -1,3 +1,6 @@
+### 2.1.1 (2013-05-07)
+* Cache content objects.
+
 ### 2.1.0 (2013-04-22)
 * Added assets array (4 sizes: thumbnail, small, large, full), each with URL and dimensions. Assets array will always be present, even if there are no assets (blank array.)
 * Added category node (id, title, and URL). Only shows up if available.

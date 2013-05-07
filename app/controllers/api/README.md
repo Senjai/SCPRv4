@@ -54,7 +54,7 @@ This is how every article is represented by the API in its response.
 Otherwise, the node will only be present if it isn't empty.
 
 <table>
-  <tr><td><strong>id</strong></td><td>The object key. (blogs/entry:999)</td></tr>
+  <tr><td><strong>id</strong></td><td>The object key (i.e. UUID, such as blogs/entry:999)</td></tr>
   <tr><td><strong>title</strong></td><td>The full title.</td></tr>
   <tr><td><strong>short_title</strong></td><td>The short title.</td></tr>
   <tr><td><strong>byline</strong></td><td>The byline.</td></tr>
