@@ -29,7 +29,7 @@ class ShowEpisode < ActiveRecord::Base
   
   #-------------------
   # Association
-  belongs_to  :show,      :class_name  => "KpccProgram"
+  belongs_to  :show,      :class_name  => "KpccProgram", touch: true
   
   has_many    :rundowns,  :class_name  => "ShowRundown", 
                           :foreign_key => "episode_id",

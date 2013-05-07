@@ -1,0 +1,15 @@
+.audiovision-block {
+    a.logo {
+        display: block;
+    }
+
+    h6 {
+        background-image: image-url('audiovision/logo-av-fullcolor.png');
+        background-repeat: no-repeat;
+        background-size: auto 100%;
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-bottom: 5px;
+    }
+}

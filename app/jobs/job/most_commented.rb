@@ -9,7 +9,7 @@ module Job
       articles  = task.parse(comments)
       
       Rails.cache.write("popular/commented", articles)
-      Rails.cache.delete("views/popular/widget")
+      self.cache(articles, "/shared/widgets/cached/popular", "views/popular/commented", local: :articles)
     end
 
     #--------------
@@ -44,7 +44,7 @@ module Job
       response.body['response'].each do |thread|
         if article = ContentBase.obj_by_key(thread['identifiers'].first)
           self.log "Content: #{article.obj_key}, Count: #{thread['posts']}"
-          articles.push article
+          articles.push(article) if article.published?
         end
       end
       

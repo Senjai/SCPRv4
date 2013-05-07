@@ -5,8 +5,8 @@ class scpr.Modal
         modalId: 'data-modal-id'
         modal: ".modal-popup"
 
-    constructor: (options) ->
-        @options = _(_({}).extend(@DefaultOptions)).extend( options || {} )
+    constructor: (options={}) ->
+        @options = _.defaults options, @DefaultOptions
         
         if $(@options.toggler).length and $(@options.modal).length
             $(@options.toggler).on

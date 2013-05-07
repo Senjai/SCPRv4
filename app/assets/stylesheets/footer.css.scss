@@ -79,7 +79,7 @@ $footerBackground: #2e2e2e;
                 margin: 0;
                 
                 // Using border-left because IE7/8 do not support :last-child selector
-                border-left: 1px solid #242424;             
+                border-left: 1px solid #242424;
                 &:first-child { border-left: none; }
             }
             a { color:#717171; }

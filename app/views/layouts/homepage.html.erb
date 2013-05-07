@@ -6,8 +6,79 @@
   <%= render "/shared/masthead/layout_header" %>
 
   <!-- BROADCAST BAR -->
-  <%= render("/shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
+<% if @schedule_current.present? %>
+  <% program = @schedule_current.program %>
+
+  <%= cache [Time.now.beginning_of_day.to_i, program] do %>
+
+  <div class="broadcast-bar<%= " with-headshot" if KpccProgram::Featured.include? program.slug %>" id="broadcast-bar">
+    <div class="bb-inner-container">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span12" id="bb-current-program">
+            <div class="current program">
+
+            <% if KpccProgram::Featured.include? program.slug %>
+              <a href="<%= program.link_path %>" class="headshot <%= program.slug %>">&nbsp;</a>
+            <% end %>
+        
+              <div class="program-info <%= program.slug %>">
+                <a href="<%= program.link_path %>" class="show-title<%= " modal-toggler" if @schedule_current.show_modal? %>" data-modal-id="<%= "episode-guide" if @schedule_current.show_modal? %>"><%= program.title %></a>
+                <span class="show-time"><%= @schedule_current.format_time %> - <%= @schedule_current.format_time(:ends_at) %></span>
+              </div> <!-- program-info -->
+      
+            <% if @schedule_current.show_modal? %>
+              <% episode = program.episodes.published.first %>
+
+              <div class="modal-container">
+
+              <%= modal("episode-guide", modal_id: "episode-guide") do %>
+                <h6><%= link_to episode.headline, episode.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
+                <%= render_asset episode, 'thumbnail' %>
+
+                <!-- Segments -->
+                <ul class="cbase">
+
+                <% episode.segments.published.each_with_index do |segment, i| %>
+                  <li>
+                    <h5 class="headline"><%= link_to segment.short_headline, segment.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
+                    <%= comment_count_for segment %>
+                  </li>
+                <% end %>
+
+                  <li class="more"><a href="<%= program.link_path %>">More <%= program.title %></a></li>
+                </ul>
+              <% end %><%# modal %>
+
+              </div> <!-- modal-container -->
+            <% end %><%# show_modal? %>
+
+            </div> <!-- current program -->
+          </div> <!-- span -->
+    
+          <div class="span12" id="bb-next-program">
+            <div class="next program">
+
+            <% if up_next = @schedule_current.next %>
+              <div class="program-info">
+                <a href="<%= up_next.program.link_path %>" class="show-title"><%= up_next.program.title %></a>
+                <span class="show-time"><%= up_next.format_time %> - <%= up_next.format_time(:ends_at) %></span>
+              </div> <!-- program-info -->
+            <% end %><%# up_next %>
+
+            </div> <!-- next program -->
+          </div> <!-- span -->
+        </div> <!-- row-fluid -->
+      </div> <!-- container-fluid -->
+    </div> <!-- bb-inner-container -->
+  </div> <!-- broadcast-bar -->
+
+  <% end %><%# content_cache %>
+<% end %><%# present? %>
+
+
   <%= yield :hero_roadblock %>
+
   <div id="main" class="container-fluid main-content">
     <section class="homepage-top">
       <div class="row-fluid">
@@ -43,33 +114,6 @@
             <%= render "/shared/ads/oas", ad_id: "x02" %>
             <%= render "/shared/ads/dfp", ad_key: :sidebar_house_promo %>
             <%= render "/shared/ads/oas", ad_id: "x03" %>
-
-            <!-- RECENT VIDEOS -->
-            <% content_cache("videos:recent_videos") do %>
-              <% register_content "content/video:new" %>
-              
-              <div class="recent-videos widget">
-                <h6>Recent Videos</h6>
-                <ul>
-                  <% @latest_videos.each do |video| %>
-                    <% register_content video %>
-                    <li>
-                      <div class="row-fluid">
-                        <div class="span8">
-                          <%= render_asset video, "small_video" %>
-                        </div>
-                    
-                        <div class="span16">
-                          <p><%= link_to video.short_headline, video.link_path, :class => 'track-event', :data => {'ga-category' => 'Sidebar', 'ga-action' => 'Watch Video', 'ga-label' => 'Recent Videos'} %></p>
-                          <span><%= format_date video.published_at %></span>
-                        </div>
-                      </div>
-                    </li>
-                  <% end %>
-                </ul>
-              </div> <!-- recent-videos -->
-            <% end %>
-
             <%= render "/shared/widgets/archive" %>
           </div> <!-- sidebar bottom -->
         </div> <!-- span8 -->
@@ -79,7 +123,34 @@
   </div> <!-- main container-fluid -->
 
   <%= render "/shared/footer/layout_footer" %>
-  <%= render "/shared/widgets/homepage_modal" %>
+
+
+
+  <div class="modal wide hide" id="homepageModal">
+    <div class="modal-body">
+      <%= render "/shared/ads/dfp", ad_key: :membership_lightbox, widget: false %>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+      <a href="http://scprcontribute.publicradio.org/" class="btn primary">Contribute Now</a>
+    </div>
+  </div>
+
+<% content_for :footer do %>
+<script type="text/javascript">
+$(document).ready(function(){
+  setTimeout(function(){
+    //check if DFP is loading in a line item
+    if($("#<%= DFP_ADS[:membership_lightbox][:id] %> iframe").contents().find("img").length > 0) {
+      // launch modal
+      $('#homepageModal').modal();
+    }
+  }, 1000);
+});
+</script>
+<% end %>
+
 </div> <!-- viewport -->
 
 <%= render "/shared/footer/document_footer" %>
