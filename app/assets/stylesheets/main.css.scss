@@ -394,7 +394,7 @@ h6.more-news-title {
                 }
             }
         }
-        div.related-content {           
+        div.related-content {
             h6 {
                 @include font-shorthand(bold, 13px, $baseLineHeight);
                 padding:5px 0;
@@ -491,7 +491,7 @@ nav.filters {
             max-width:450px;
             width:100%;
             font-size:15px;
-            padding:5px;            
+            padding:5px;
         }
     }
 }
