@@ -9,7 +9,7 @@
 <% if @schedule_current.present? %>
   <% program = @schedule_current.program %>
 
-  <%= cache program do %>
+  <%= cache [Time.now.beginning_of_day.to_i, program] do %>
 
   <div class="broadcast-bar<%= " with-headshot" if KpccProgram::Featured.include? program.slug %>" id="broadcast-bar">
     <div class="bb-inner-container">
