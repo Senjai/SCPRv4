@@ -7,11 +7,11 @@
   <div class="tab-content">
 
     <div class="tab-pane active popular" id="pop_tab1">
-    <%= Rails.cache.read("views/popular/viewed").html_safe %>
+    <%= raw Rails.cache.read("views/popular/viewed") %>
     </div>
 
     <div class="tab-pane popular" id="pop_tab2">
-    <%= Rails.cache.read("views/popular/commented").html_safe %>
+    <%= raw Rails.cache.read("views/popular/commented") %>
     </div>
 
   </div>
