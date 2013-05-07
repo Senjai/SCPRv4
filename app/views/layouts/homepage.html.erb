@@ -6,8 +6,79 @@
   <%= render "/shared/masthead/layout_header" %>
 
   <!-- BROADCAST BAR -->
-  <%= render("/shared/broadcast_bar", current: @schedule_current) if @schedule_current.present? %>
+<% if @schedule_current.present? %>
+  <% program = @schedule_current.program %>
+
+  <%= cache program do %>
+
+  <div class="broadcast-bar<%= " with-headshot" if KpccProgram::Featured.include? program.slug %>" id="broadcast-bar">
+    <div class="bb-inner-container">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span12" id="bb-current-program">
+            <div class="current program">
+
+            <% if KpccProgram::Featured.include? program.slug %>
+              <a href="<%= program.link_path %>" class="headshot <%= program.slug %>">&nbsp;</a>
+            <% end %>
+        
+              <div class="program-info <%= program.slug %>">
+                <a href="<%= program.link_path %>" class="show-title<%= " modal-toggler" if @schedule_current.show_modal? %>" data-modal-id="<%= "episode-guide" if @schedule_current.show_modal? %>"><%= program.title %></a>
+                <span class="show-time"><%= @schedule_current.format_time %> - <%= @schedule_current.format_time(:ends_at) %></span>
+              </div> <!-- program-info -->
+      
+            <% if @schedule_current.show_modal? %>
+              <% episode = program.episodes.published.first %>
+
+              <div class="modal-container">
+
+              <%= modal("episode-guide", modal_id: "episode-guide") do %>
+                <h6><%= link_to episode.headline, episode.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
+                <%= render_asset episode, 'thumbnail' %>
+
+                <!-- Segments -->
+                <ul class="cbase">
+
+                <% episode.segments.published.each_with_index do |segment, i| %>
+                  <li>
+                    <h5 class="headline"><%= link_to segment.short_headline, segment.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
+                    <%= comment_count_for segment %>
+                  </li>
+                <% end %>
+
+                  <li class="more"><a href="<%= program.link_path %>">More <%= program.title %></a></li>
+                </ul>
+              <% end %><%# modal %>
+
+              </div> <!-- modal-container -->
+            <% end %><%# show_modal? %>
+
+            </div> <!-- current program -->
+          </div> <!-- span -->
+    
+          <div class="span12" id="bb-next-program">
+            <div class="next program">
+
+            <% if up_next = @schedule_current.next %>
+              <div class="program-info">
+                <a href="<%= up_next.program.link_path %>" class="show-title"><%= up_next.program.title %></a>
+                <span class="show-time"><%= up_next.format_time %> - <%= up_next.format_time(:ends_at) %></span>
+              </div> <!-- program-info -->
+            <% end %><%# up_next %>
+
+            </div> <!-- next program -->
+          </div> <!-- span -->
+        </div> <!-- row-fluid -->
+      </div> <!-- container-fluid -->
+    </div> <!-- bb-inner-container -->
+  </div> <!-- broadcast-bar -->
+
+  <% end %><%# content_cache %>
+<% end %><%# present? %>
+
+
   <%= yield :hero_roadblock %>
+
   <div id="main" class="container-fluid main-content">
     <section class="homepage-top">
       <div class="row-fluid">
