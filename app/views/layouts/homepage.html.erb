@@ -79,7 +79,34 @@
   </div> <!-- main container-fluid -->
 
   <%= render "/shared/footer/layout_footer" %>
-  <%= render "/shared/widgets/homepage_modal" %>
+
+
+
+  <div class="modal wide hide" id="homepageModal">
+    <div class="modal-body">
+      <%= render "/shared/ads/dfp", ad_key: :membership_lightbox, widget: false %>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+      <a href="http://scprcontribute.publicradio.org/" class="btn primary">Contribute Now</a>
+    </div>
+  </div>
+
+<% content_for :footer do %>
+<script type="text/javascript">
+$(document).ready(function(){
+  setTimeout(function(){
+    //check if DFP is loading in a line item
+    if($("#<%= DFP_ADS[:membership_lightbox][:id] %> iframe").contents().find("img").length > 0) {
+      // launch modal
+      $('#homepageModal').modal();
+    }
+  }, 1000);
+});
+</script>
+<% end %>
+
 </div> <!-- viewport -->
 
 <%= render "/shared/footer/document_footer" %>
