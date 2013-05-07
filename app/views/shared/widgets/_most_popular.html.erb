@@ -1,4 +1,6 @@
-<% popular_viewed = Array(Rails.cache.read("popular/viewed")).first(4) %>
+<%= content_cache "popular/widget" do %>
+
+<% popular_viewed    = Array(Rails.cache.read("popular/viewed")).first(4) %>
 <% popular_commented = Array(Rails.cache.read("popular/commented")).first(4) %>
 
 <div id="most-popular" class="widget">
@@ -8,23 +10,16 @@
     <li><a href="#pop_tab2" data-toggle="tab">Discussed</a></li>
   </ul>
   <div class="tab-content">
+
     <div class="tab-pane active popular" id="pop_tab1">
-
-    <% if popular_viewed.present? %>
-      <%= cache popular_viewed do %>
-        <%= render_content popular_viewed, "popular" %>
-      <% end %>
-    <% end %>
-
+    <%= render_content popular_viewed, "popular" %>
     </div>
+
     <div class="tab-pane popular" id="pop_tab2">
-
-    <% if popular_commented.present? %>
-      <%= cache popular_commented do %>
-        <%= render_content popular_commented, "popular" %>
-      <% end %>
-    <% end %>
-    
+    <%= render_content popular_commented, "popular" %>    
     </div>
+
   </div>
 </div>
+
+<% end %>
