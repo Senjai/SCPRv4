@@ -2,7 +2,7 @@
 <%=
   begin
     render @homepage.base, homepage: @homepage
-  rescue => e
+  rescue ActionView::MissingTemplate => e
     if Rails.env == "production"
       render "default", homepage: @homepage
     else
