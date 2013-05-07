@@ -30,11 +30,11 @@ namespace :scprv4 do
     
     if Rails.env == "development"
       Job::NprFetch.perform
+      puts "Finished.\n"
     else
-      NprStory.async_sync_with_api
+      Resque.enqueue(Job::NprFetch)
+      puts "Job was placed in queue.\n"
     end
-
-    puts "Finished."
   end
   
   #----------
