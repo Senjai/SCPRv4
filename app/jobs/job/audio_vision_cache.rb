@@ -1,7 +1,7 @@
 module Job
   class AudioVisionCache < Base
-    @queue = namesapce
-    
+    @queue = namespace
+
     def self.perform
       billboard = AudioVision::Billboard.current
       
