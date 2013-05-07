@@ -174,15 +174,17 @@ namespace :scprv4 do
     
     #----------
     
-    desc "Cache homepage one time"
+    desc "Cache homepage sections"
     task :homepage => [ :environment ] do
       puts "*** [#{Time.now}] Caching homepage..."
 
-      task = CacheTasks::Homepage.new
-      task.verbose = true
-      task.run
-
-      puts "Finished.\n"
+      if Rails.env == "development"
+        Job::HomepageCache.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::HomepageCache)
+        puts "Job was placed in queue.\n"
+      end
     end
   end
 end

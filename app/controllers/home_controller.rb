@@ -1,6 +1,5 @@
 class HomeController < ApplicationController  
   layout "homepage"
-  before_filter :get_latest_videos, only: [:index]
 
   # Just for development purposes
   # Pass ?regenerate to the URL to regenerate the homepage category blocks
@@ -43,10 +42,6 @@ class HomeController < ApplicationController
   protected
   
   def generate_homepage
-    CacheTasks::Homepage.new.run
-  end
-
-  def get_latest_videos
-    @latest_videos = VideoShell.published.includes(:assets).limit(5)
+    Job::HomepageCache.perform
   end
 end
