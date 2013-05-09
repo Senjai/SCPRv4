@@ -120,6 +120,19 @@ describe ContentBase do
       it "returns nil if the URI doesn't match" do
         ContentBase.obj_by_url("http://nope.com/wrong").should eq nil
       end
+
+      it 'returns nil if the article is not published' do
+        article = create :news_story, :draft
+        ContentBase.should_receive(:obj_by_key).and_return(article)
+        ContentBase.obj_by_url(@url).should eq nil
+      end
+
+      it 'returns article if it is published' do
+        # Sanity check
+        article = create :news_story
+        ContentBase.should_receive(:obj_by_key).and_return(article)
+        ContentBase.obj_by_url(@url).should eq article
+      end
     end
   end
 end

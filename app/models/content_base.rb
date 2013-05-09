@@ -139,6 +139,7 @@ module ContentBase
   #--------------------
   # Look to CONTENT_MATCHES to see if the passed-in URL
   # corresponds to any model.
+  # Only find published articles.
   def obj_by_url(url)
     begin
       u = URI.parse(url)
@@ -148,7 +149,9 @@ module ContentBase
     
     if match = CONTENT_MATCHES.find { |k,_| u.path =~ k }
       key = [match[1].constantize.content_key, $~[1]].join(":")
-      self.obj_by_key(key)
+      article = self.obj_by_key(key)
+
+      article && article.published? ? article : nil
     end
   end
   
