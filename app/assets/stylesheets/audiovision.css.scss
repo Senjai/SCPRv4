@@ -1,6 +1,11 @@
 .audiovision-block {
     margin-bottom: 5px;
     
+    .asset-block .contentasset {
+        max-height: 239px;
+        overflow: hidden;
+    }
+
     a.logo {
         display: block;
     }
