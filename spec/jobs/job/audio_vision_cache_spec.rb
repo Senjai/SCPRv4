@@ -50,5 +50,15 @@ describe Job::AudioVisionCache do
         last_title = featured.title
       end
     end
+
+    it "writes the view cache" do
+      FakeWeb.register_uri(:get, %r{audiovision\.scpr\.org/api/v1/billboards/current},
+        content_type: 'application/json', body: load_fixture('audiovision/billboard1_v1.json'))
+
+      Rails.cache.read("views/home/audiovision").should eq nil
+
+      Job::AudioVisionCache.perform
+      Rails.cache.read("views/home/audiovision").should match /Big Cats/
+    end
   end
 end
