@@ -1,0 +1,737 @@
+{
+  "id": "billboards:1",
+  "published_at": "2013-05-10T18:11:00.000Z",
+  "layout": 3,
+  "updated_at": "2013-06-09T17:51:50.000Z",
+  "posts": [
+    {
+      "id": "posts:29",
+      "title": "The Color of Space",
+      "byline": "Maya Sugarman",
+      "published_at": "2013-05-09T17:48:12.000Z",
+      "teaser": "Siri Kaur's telescope photos excite the space nerd in all of us. Her photo subjects are millions of lightyears away, and they're stunningly psychedelic.",
+      "body": "<p>What color is space?</p>\r\n\r\n<p>That&#39;s all in the eye of the beholder. Images taken from many telescopes return black and white images or data that must be manipulated.</p>\r\n\r\n<p>Amateur and professional astrophotographers <a href=\"http://hubblesite.org/gallery/behind_the_pictures/meaning_of_color/index.php\" target=\"_blank\">spend hours&nbsp;colorizing images from across the galaxy</a>&nbsp;with exacting precision. They add color to the clouds of the <a href=\"http://www.nasa.gov/multimedia/imagegallery/image_feature_89.html\" target=\"_blank\">Horsehead&nbsp;Nebula</a>&nbsp;or&nbsp;paint the <a href=\"http://en.wikipedia.org/wiki/File:Unraveling_Saturn%27s_Rings.jpg\" target=\"_blank\">rings of Saturn</a>.</p>\r\n\r\n<p>Los Angeles-based art photographer&nbsp;<a href=\"http://www.sirikaur.com/\">Siri Kaur</a>&nbsp;takes a more impressionistic approach to the craft.</p>\r\n\r\n<p>Four or five times a year since 2007, she&#39;s driven 480 miles&nbsp;to the <a href=\"http://www.noao.edu/kpno/\" target=\"_blank\">Kitt Peak National Observatory</a> in Arizona to point her film camera at the sky.</p>\r\n\r\n<p>&quot;Their telescopes are the size of a house, they&#39;re enormous,&quot; Kaur said.</p>\r\n\r\n<p>Since the observatory sits at 7,000 feet, Kaur always has a little headache.</p>\r\n\r\n<p>Getting a good image off the telescopes is a challenge.&nbsp;It takes five to eight&nbsp;hours to expose one picture through the night. And after all this, sometimes Kaur may come back with nothing.</p>\r\n\r\n<p>If you have some time,&nbsp;this fascinating video of Astronaut Don Pettit explaining the challenge of photographing space is well worth it.</p>\r\n\r\n<p><iframe allowfullscreen=\"\" frameborder=\"0\" height=\"360\" mozallowfullscreen=\"\" src=\"http://player.vimeo.com/video/61083440?title=0&amp;byline=0&amp;portrait=0\" webkitallowfullscreen=\"\" width=\"640\"></iframe></p>\r\n\r\n<p>At first, Kaur developed her photos traditionally,&nbsp;then one day a slip changed everything.</p>\r\n\r\n<p>&quot;I started in the darkroom printing them, and I messed up one of the prints,&quot; she said.&nbsp;&quot;It was really off, and it looked amazing.&quot;</p>\r\n\r\n<p>Siri Kaur began experimenting, intentionally exposing the photos to light and sprinkling them with chemicals.</p>\r\n\r\n<p>She now names her astronomical works of distorted light and color after the images they conjure instead of the subjects they capture &ndash;&nbsp;&nbsp;a rose, clouds,&nbsp;the desert.</p>\r\n\r\n<p>Despite her distorting development&nbsp;process,&nbsp;Kaur is still amazed by the enormity of astrophotography.</p>\r\n\r\n<p>&quot;This light has been traveling for as long as the planet&#39;s been around,&quot; she said. &quot;It hits my camera, and I capture it.&quot;</p>\r\n\r\n<p>Siri Kaur is a photography professor at&nbsp;<a href=\"http://www.otis.edu\">Otis College&nbsp;of Art and Design</a>.</p>\r\n\r\n<p>You can see Kaur&#39;s work in person at the <a href=\"http://www.stephencohengallery.com/\">Cohen Gallery</a> from March 28 &ndash; May 11, as part of the show &quot;Falling From Great Heights.&quot;</p>\r\n",
+      "permalink": "http://audiovision.scpr.org/29/out-of-this-world",
+      "thumbnail": "<img src=\"http://a.scpr.org/i/a170f2d0aff1ef1449bc251f690ab23f/58205-lsquare.jpg\" width=\"188\" height=\"188\" alt=\"Siri Kaur - 1\" />",
+      "category": {
+        "id": 2,
+        "title": "Images",
+        "slug": "images",
+        "description": "The heartbeat of AudioVision. The best from our team of photojournalists — and discover images from the photographers who inspire them.",
+        "permalink": "http://audiovision.scpr.org/images"
+      },
+      "assets": [
+        {
+          "title": "Siri Kaur - 1",
+          "caption": "Clouds (Darkroom Experiment #1)",
+          "owner": "Siri Kaur/Stephen Cohen Gallery",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/a170f2d0aff1ef1449bc251f690ab23f/58205-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/a170f2d0aff1ef1449bc251f690ab23f/58205-small.jpg",
+            "width": 352,
+            "height": 450
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/a170f2d0aff1ef1449bc251f690ab23f/58205-eight.jpg",
+            "width": 380,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/a170f2d0aff1ef1449bc251f690ab23f/58205-full.jpg",
+            "width": 675,
+            "height": 864
+          }
+        },
+        {
+          "title": "Siri Kaur - 2",
+          "caption": "Rose (Darkroom Experiment #2)",
+          "owner": "Siri Kaur/Stephen Cohen Gallery",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/f1a3540a80619360a4b557aac3ce9c76/58207-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/f1a3540a80619360a4b557aac3ce9c76/58207-small.jpg",
+            "width": 354,
+            "height": 450
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/f1a3540a80619360a4b557aac3ce9c76/58207-eight.jpg",
+            "width": 383,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/f1a3540a80619360a4b557aac3ce9c76/58207-full.jpg",
+            "width": 680,
+            "height": 864
+          }
+        },
+        {
+          "title": "Siri Kaur - 3",
+          "caption": "Desert (Darkroom Experiment #1)",
+          "owner": "Siri Kaur/Stephen Cohen Gallery",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/3bab72af4aadcc145e19251fa2b98cb9/58206-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/3bab72af4aadcc145e19251fa2b98cb9/58206-small.jpg",
+            "width": 362,
+            "height": 450
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/3bab72af4aadcc145e19251fa2b98cb9/58206-eight.jpg",
+            "width": 391,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/3bab72af4aadcc145e19251fa2b98cb9/58206-full.jpg",
+            "width": 692,
+            "height": 861
+          }
+        },
+        {
+          "title": "Siri Kaur - 4",
+          "caption": "Whiplash (Darkroom Experiment #3)",
+          "owner": "Siri Kaur/Stephen Cohen Gallery",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/61f1e8bd5630aa7e3f0a80cfd4d435de/58208-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/61f1e8bd5630aa7e3f0a80cfd4d435de/58208-small.jpg",
+            "width": 354,
+            "height": 450
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/61f1e8bd5630aa7e3f0a80cfd4d435de/58208-eight.jpg",
+            "width": 382,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/61f1e8bd5630aa7e3f0a80cfd4d435de/58208-full.jpg",
+            "width": 805,
+            "height": 1024
+          }
+        },
+        {
+          "title": "Siri Kaur - 5",
+          "caption": "A Little Death (Darkroom Experiment #3)",
+          "owner": "Siri Kaur/Stephen Cohen Gallery",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/d0818390792a82a169ec49ae6b828967/58201-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/d0818390792a82a169ec49ae6b828967/58201-small.jpg",
+            "width": 360,
+            "height": 450
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/d0818390792a82a169ec49ae6b828967/58201-eight.jpg",
+            "width": 389,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/d0818390792a82a169ec49ae6b828967/58201-full.jpg",
+            "width": 461,
+            "height": 576
+          }
+        },
+        {
+          "title": "Siri Kaur - 6",
+          "caption": "Frost (Darkroom Experiment #4)",
+          "owner": "Siri Kaur/Stephen Cohen Gallery",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/0551131eed6ebbacb479b4e4c6fe64eb/58203-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/0551131eed6ebbacb479b4e4c6fe64eb/58203-small.jpg",
+            "width": 306,
+            "height": 450
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/0551131eed6ebbacb479b4e4c6fe64eb/58203-eight.jpg",
+            "width": 330,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/0551131eed6ebbacb479b4e4c6fe64eb/58203-full.jpg",
+            "width": 587,
+            "height": 864
+          }
+        },
+        {
+          "title": "Siri Kaur - 7",
+          "caption": "Hive (Darkroom Experiment #4)",
+          "owner": "Siri Kaur/Stephen Cohen Gallery",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/591d3382bec3e9d35a6df3b964793892/58204-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/591d3382bec3e9d35a6df3b964793892/58204-small.jpg",
+            "width": 284,
+            "height": 450
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/591d3382bec3e9d35a6df3b964793892/58204-eight.jpg",
+            "width": 307,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/591d3382bec3e9d35a6df3b964793892/58204-full.jpg",
+            "width": 647,
+            "height": 1024
+          }
+        },
+        {
+          "title": "Siri Kaur - 8",
+          "caption": "Black Hole (Darkroom Experiment #4)",
+          "owner": "Siri Kaur/Stephen Cohen Gallery",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/7fdb7435e8ab78d6f5557eff96cfaec9/58202-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/7fdb7435e8ab78d6f5557eff96cfaec9/58202-small.jpg",
+            "width": 345,
+            "height": 450
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/7fdb7435e8ab78d6f5557eff96cfaec9/58202-eight.jpg",
+            "width": 372,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/7fdb7435e8ab78d6f5557eff96cfaec9/58202-full.jpg",
+            "width": 662,
+            "height": 864
+          }
+        }
+      ],
+      "attributions": [
+        {
+          "name": "Maya Sugarman",
+          "url": "http://audiovision.scpr.org/about/maya-sugarman",
+          "role_text": "Author",
+          "role": 1
+        }
+      ]
+    },
+    {
+      "id": "posts:53",
+      "title": "This Is AudioVision",
+      "byline": "Grant Slater",
+      "published_at": "2013-04-16T23:31:34.000Z",
+      "teaser": "Welcome to our corner of the web for the visual side of public radio. Make yourself at home.",
+      "body": "<p>Welcome to AudioVision, our little corner of the Internet for exploring&nbsp;the world through images&nbsp;from Southern California and beyond.</p>\r\n\r\n<p>This site has three hosts, <a href=\"http://www.maeryan.com\" target=\"_blank\">Mae Ryan</a>, <a href=\"http://audiovision.scpr.org/92/follow-this-grantslater\">Grant Slater</a><a href=\"http://grant-slater.com/\"> </a>and <a href=\"http://www.mayasugarman.com/\">Maya Sugarman</a>. We post extra delights to&nbsp;<a href=\"http://twitter.com/audiovision\" target=\"_blank\">Twitter</a>, <a href=\"http://audiovision.tumblr.com/\" target=\"_blank\">Tumblr</a> and <a href=\"http://www.facebook.com/Audiovision\" target=\"_blank\">Facebook</a>. We play around on <a href=\"http://instagram.com/kpcc\">Instagram</a>, too.</p>\r\n\r\n<p>As photojournalists, we approach people in public nearly every day and ask to take their picture.</p>\r\n\r\n<p>This conversation always begins with some version of the phrase, &quot;My name is Grant, and I&#39;m a photographer for public radio.&quot; Nine times out of 10, the&nbsp;reply comes with a confused look:&nbsp;&quot;How do you take pictures for the radio?&quot;</p>\r\n\r\n<p>The short answer is &quot;for the website.&quot; But there&#39;s a longer version of this conversation, and it goes to the heart of what public radio does for listeners.</p>\r\n\r\n<p>Public radio is not a number on your radio dial. It&#39;s not even about radio.</p>\r\n\r\n<p>Public radio is an ethos. It&#39;s a way of viewing the world with curiosity and care. It&#39;s about making your life better through stories big and small.</p>\r\n\r\n<p>You know what that sounds like. You hear it on public radio stations across the country every day. But what does it look like? AudioVision is our attempt to find out.</p>\r\n\r\n<p>The digital world we&#39;ve created is a place exploding with eye candy, visual distractions that make getting anything done a near impossibility.</p>\r\n\r\n<p>In the same way that public radio filters the news of the day and brings you just the best, AudioVision will help you sort through the <a href=\"http://www.youtube.com/watch?feature=player_embedded&amp;v=VACbH_S5ZFo\" target=\"_blank\">cacophony of cat videos</a>.</p>\r\n\r\n<p>We constantly look to the online world for inspiration, and we&#39;d like to share that inspiration with you, alongside our work from Los Angeles and beyond.</p>\r\n\r\n<p>Southern California is the capital of global visual culture. This is the place where billion-dollar blockbusters get made, the place where YouTube studios are popping up to challenge the traditional tastemakers of Hollywood and the place where art, music, fashion and photography make the jump from niche to&nbsp;mainstream.</p>\r\n\r\n<p>Those ideas may start elsewhere, but all roads eventually lead to Los Angeles.</p>\r\n\r\n<p>Southern California itself&nbsp;is one of the most diverse regions&nbsp;on the planet. We live here. We&#39;ll show it to you.</p>\r\n\r\n<p>Here&#39;s what you can expect to find on&nbsp;AudioVision.</p>\r\n\r\n<ul>\r\n\t<li>We&#39;ll bring you <em>photos from Southern California and beyond</em>. We&#39;ll talk with&nbsp;image makers doing captivating&nbsp;work and share their work with you.</li>\r\n\t<li>Web video is evolving rapidly. We&#39;re <a href=\"http://audiovision.scpr.org/77/transactivations\" target=\"_blank\">part of that change</a>, and we keep close tabs on new and inspiring work.&nbsp;We&#39;ll watch <em>videos from across the web</em> so you don&#39;t have to and point you toward those that will inform and inspire you. Los Angeles is ground zero for the YouTube revolution and we&#39;re keeping close eye on the best.&nbsp;</li>\r\n\t<li><em>Photography is undergoing a social revolution</em> that is democratizing both the tools of the trade and the distribution of photography. There&#39;s never been a better time to be a&nbsp;photography addict, but the photos come in torrents. We&#39;ll enrich your life by steering&nbsp;your Instagram feed to new places. And we&#39;ll give you the smarts to take better photos yourself.</li>\r\n</ul>\r\n\r\n<p>We have a big basket full of ideas, and we hope you&#39;ll stick with us as we try some of them out.</p>\r\n\r\n<p>We view photography these days as a conversation. We want to see your photos as much as we want&nbsp;to show you ours.</p>\r\n\r\n<p>We work with <a href=\"http://instagram.com/igla\" target=\"_blank\">Instagram Lovers Anonymous</a> to hold a monthly Instagram Challenge on a theme, and we have more activities in the works.</p>\r\n\r\n<p>You can always tag any photo on Instagram #KPCC, and we&#39;ll find it. For your captures with bigger cameras,&nbsp;you can <a href=\"http://www.flickr.com/groups/audiovision/\" target=\"_blank\">submit photos to our Flickr pool</a>. We&#39;ll pick our favorites&nbsp;and use them on this site.</p>\r\n\r\n<p>Thanks you for taking the time to explore AudioVision, and we look forward to seeing where you&#39;ll take us. Let us know what you think by <a href=\"mailto:plee@scpr.org\">emailing us</a> or <a href=\"https://www.facebook.com/Audiovision\">commenting on our Facebook page.</a></p>\r\n",
+      "permalink": "http://audiovision.scpr.org/53/this-is-audiovision",
+      "thumbnail": "<img src=\"http://a.scpr.org/i/daf85d388cc45743d8ec548d8c1d5073/39576-lsquare.jpg\" width=\"188\" height=\"188\" alt=\"Venus Transit\" />",
+      "category": {
+        "id": 2,
+        "title": "Images",
+        "slug": "images",
+        "description": "The heartbeat of AudioVision. The best from our team of photojournalists — and discover images from the photographers who inspire them.",
+        "permalink": "http://audiovision.scpr.org/images"
+      },
+      "assets": [
+        {
+          "title": "Venus Transit",
+          "caption": "Kimberly Huber and her daughter Clarity, 4, view the transit of Venus on June 5, 2012 at Griffith Obervatory.",
+          "owner": "Grant Slater/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/daf85d388cc45743d8ec548d8c1d5073/39576-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/daf85d388cc45743d8ec548d8c1d5073/39576-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/daf85d388cc45743d8ec548d8c1d5073/39576-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/daf85d388cc45743d8ec548d8c1d5073/39576-full.jpg",
+            "width": 1024,
+            "height": 683
+          }
+        },
+        {
+          "title": "Frank Evans",
+          "caption": "Friends of Frank Evans, who was shot in South Central attend his funeral on April 23rd, 2012.",
+          "owner": "Mae Ryan/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/c08b07524dd70c161810090f1c8354bc/52237-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/c08b07524dd70c161810090f1c8354bc/52237-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/c08b07524dd70c161810090f1c8354bc/52237-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/c08b07524dd70c161810090f1c8354bc/52237-full.jpg",
+            "width": 1024,
+            "height": 683
+          }
+        },
+        {
+          "title": "Almond Farm Bees - 1",
+          "caption": "Dr. Gordon Wardell, beekeeper for Paramount Farms' almond farms in Lost Hills, Calif., pulls out a palate of rented honeybees. Paramount is the largest almond grower in the nation with 46,000 acres of almond trees across the San Joaquin Valley.",
+          "owner": "Maya Sugarman/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/3f7ffae5b30af6b5514d72ccfa380107/56432-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/3f7ffae5b30af6b5514d72ccfa380107/56432-small.jpg",
+            "width": 450,
+            "height": 299
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/3f7ffae5b30af6b5514d72ccfa380107/56432-eight.jpg",
+            "width": 730,
+            "height": 485
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/3f7ffae5b30af6b5514d72ccfa380107/56432-full.jpg",
+            "width": 1024,
+            "height": 681
+          }
+        },
+        {
+          "title": "Nutcracker - 01",
+          "caption": "An instructor gets her student ready for a Nutcracker rehearsal at Westside Ballet in Santa Monica, Calif. ",
+          "owner": "Mae Ryan/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/090a5e13b6299487380f59d8635ba4d1/52238-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/090a5e13b6299487380f59d8635ba4d1/52238-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/090a5e13b6299487380f59d8635ba4d1/52238-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/090a5e13b6299487380f59d8635ba4d1/52238-full.jpg",
+            "width": 1024,
+            "height": 683
+          }
+        },
+        {
+          "title": "",
+          "caption": "Rudy and Mariana Darryanto before an immigration ceremony at the Los Angeles Convention Center in June. They live in Corona and Rudy owns a used car dealership in Riverside. They came to the United States as refugees when riots in 1998 targeted ethnic Chinese in their home country.",
+          "owner": "Grant Slater/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/675f2156aecb063ed321f8d0562385ce/52253-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/675f2156aecb063ed321f8d0562385ce/52253-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/675f2156aecb063ed321f8d0562385ce/52253-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/675f2156aecb063ed321f8d0562385ce/52253-full.jpg",
+            "width": 1024,
+            "height": 682
+          }
+        },
+        {
+          "title": "Ash Wednesday - 1",
+          "caption": "Mary Ann Laccabue, a staffer at Our Lady of Grace School participates in an 8 a.m. mass for Ash Wednesday at the school's parish in Encino on Feb. 13. The parish offered two morning services, a noon prayer service, and two evening services, including a Spanish-language mass.",
+          "owner": "Maya Sugarman/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/b749fdb00579521e8b4503974a088e65/55074-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/b749fdb00579521e8b4503974a088e65/55074-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/b749fdb00579521e8b4503974a088e65/55074-eight.jpg",
+            "width": 730,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/b749fdb00579521e8b4503974a088e65/55074-full.jpg",
+            "width": 1024,
+            "height": 682
+          }
+        },
+        {
+          "title": "Banda El Salvador - 3",
+          "caption": "Las Princesas Mayas accompany Banda El Salvador, performers in the Rose Parade, in Duarte, Calif. on December 30th, 2012 ",
+          "owner": "Mae Ryan/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/b539dd357eb5e3496e6131795c01df3c/52914-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/b539dd357eb5e3496e6131795c01df3c/52914-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/b539dd357eb5e3496e6131795c01df3c/52914-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/b539dd357eb5e3496e6131795c01df3c/52914-full.jpg",
+            "width": 1024,
+            "height": 683
+          }
+        },
+        {
+          "title": "Paralympics Runner",
+          "caption": "Katy Sullivan, a competitor in the 2012 Paralympic Games, was born without her legs and is one of two women with prosthetics above the knee to compete in the international competition.",
+          "owner": "Grant Slater/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/db9c74dca1f50a9a5403a1512fc42bd6/46039-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/db9c74dca1f50a9a5403a1512fc42bd6/46039-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/db9c74dca1f50a9a5403a1512fc42bd6/46039-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/db9c74dca1f50a9a5403a1512fc42bd6/46039-full.jpg",
+            "width": 1024,
+            "height": 682
+          }
+        },
+        {
+          "title": "WeHo Halloween - 1",
+          "caption": "Gerry Regan, left, and Denny Gerber dance during the start of the West Hollywood Halloween Carnaval on Santa Monica Boulevard.",
+          "owner": "Maya Sugarman/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/c75b39963753d6005158a0aed33657b6/49960-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/c75b39963753d6005158a0aed33657b6/49960-small.jpg",
+            "width": 450,
+            "height": 329
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/c75b39963753d6005158a0aed33657b6/49960-eight.jpg",
+            "width": 666,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/c75b39963753d6005158a0aed33657b6/49960-full.jpg",
+            "width": 1024,
+            "height": 748
+          }
+        },
+        {
+          "title": "Lancaster Zombie Walk - 1",
+          "caption": "Milania and Beverly Halabi, center, begin a Zombie Walk along Lancaster Boulevard.",
+          "owner": "Maya Sugarman/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/6212d9faf61a91605ae8bcf566a9dd02/49678-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/6212d9faf61a91605ae8bcf566a9dd02/49678-small.jpg",
+            "width": 450,
+            "height": 312
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/6212d9faf61a91605ae8bcf566a9dd02/49678-eight.jpg",
+            "width": 701,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/6212d9faf61a91605ae8bcf566a9dd02/49678-full.jpg",
+            "width": 1024,
+            "height": 710
+          }
+        },
+        {
+          "title": "Wondercon 2013 Anaheim",
+          "caption": "Kids play with an R2 M5 at WonderCon 2013, an annual comic book, science fiction and film convention in Anaheim, Calif.",
+          "owner": "Mae Ryan/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/45e2bff053a055797811a2610a9b1e98/59501-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/45e2bff053a055797811a2610a9b1e98/59501-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/45e2bff053a055797811a2610a9b1e98/59501-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/45e2bff053a055797811a2610a9b1e98/59501-full.jpg",
+            "width": 1024,
+            "height": 683
+          }
+        },
+        {
+          "title": "Pole Dancing Convention",
+          "caption": "Mary Caryl of Northridge participates in a pole dancing master class the International Pole Dancing Convention.",
+          "owner": "Grant Slater/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/2ebd16dc54822b58fd10247b00df6034/41145-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/2ebd16dc54822b58fd10247b00df6034/41145-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/2ebd16dc54822b58fd10247b00df6034/41145-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/2ebd16dc54822b58fd10247b00df6034/41145-full.jpg",
+            "width": 1024,
+            "height": 682
+          }
+        },
+        {
+          "title": "KCON K-Pop Convention",
+          "caption": "Lexie Collins, 11, writes on a graffiti wall in the center of the Verizon Amphitheater during KCON, a K-pop convention.",
+          "owner": "Grant Slater/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/77baedbaa698b0c82c496312ec28fa8f/48933-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/77baedbaa698b0c82c496312ec28fa8f/48933-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/77baedbaa698b0c82c496312ec28fa8f/48933-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/77baedbaa698b0c82c496312ec28fa8f/48933-full.jpg",
+            "width": 1024,
+            "height": 682
+          }
+        },
+        {
+          "title": "Endeavour First Night",
+          "caption": "The space shuttle Endeavour leaves Los Angeles International Airport on its way to the California Science Center.",
+          "owner": "Grant Slater/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/c81547a3d264b97a08b73260966f4615/48726-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/c81547a3d264b97a08b73260966f4615/48726-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/c81547a3d264b97a08b73260966f4615/48726-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/c81547a3d264b97a08b73260966f4615/48726-full.jpg",
+            "width": 1024,
+            "height": 682
+          }
+        },
+        {
+          "title": "Michael Crain Funeral Dorner Shooting Riverside Funeral",
+          "caption": "Riverside Police Officers watch airplanes fly over Riverside National Cemetery during the memorial service for Michael Crain, an officer who was killed by Christopher Dorner on February 7th, 2013.",
+          "owner": "Mae Ryan/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/05c96d1efb6d507da3dd8f6cad685b98/55107-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/05c96d1efb6d507da3dd8f6cad685b98/55107-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/05c96d1efb6d507da3dd8f6cad685b98/55107-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/05c96d1efb6d507da3dd8f6cad685b98/55107-full.jpg",
+            "width": 1024,
+            "height": 683
+          }
+        },
+        {
+          "title": "Paralympics Fencing",
+          "caption": "Mario Rodriguez rests after a long day of practice. The duo will compete in the Paralympics in early September.",
+          "owner": "Grant Slater/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/10ef5e89858e6bad6e10fc88cc173623/46184-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/10ef5e89858e6bad6e10fc88cc173623/46184-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/10ef5e89858e6bad6e10fc88cc173623/46184-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/10ef5e89858e6bad6e10fc88cc173623/46184-full.jpg",
+            "width": 1024,
+            "height": 682
+          }
+        },
+        {
+          "title": "Norwalk Weddings - 5",
+          "caption": "Victor Sanchez and Karina Jara wait with their family before their wedding ceremony at the LA County Registrar-Recorder’s office in Norwalk. The couple has been together for two years.",
+          "owner": "Maya Sugarman/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/40b6fd38b14671edc9fe2a6469dab055/51998-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/40b6fd38b14671edc9fe2a6469dab055/51998-small.jpg",
+            "width": 450,
+            "height": 327
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/40b6fd38b14671edc9fe2a6469dab055/51998-eight.jpg",
+            "width": 669,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/40b6fd38b14671edc9fe2a6469dab055/51998-full.jpg",
+            "width": 1000,
+            "height": 726
+          }
+        },
+        {
+          "title": "Travelers Hotel",
+          "caption": "Nancy Jimenez lives in the Travelers Hotel, a residence near Skid Row that the city of Los Angeles is trying to shut down.",
+          "owner": "Mae Ryan/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/17541daa480890021d7523d5ceef4f3a/39424-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/17541daa480890021d7523d5ceef4f3a/39424-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/17541daa480890021d7523d5ceef4f3a/39424-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/17541daa480890021d7523d5ceef4f3a/39424-full.jpg",
+            "width": 1024,
+            "height": 683
+          }
+        },
+        {
+          "title": "Undocumented Unafraid",
+          "caption": "Claudia Ramirez was brought to the states from Atizapan de Zaragoza, Mexico when she was four-years old.  She hopes to pursue a degree in nutrition to help educate people in her South Los Angeles community.",
+          "owner": "Mae Ryan/KPCC",
+          "thumbnail": {
+            "url": "http://a.scpr.org/i/227403117c9bdd11766b8427fb9c473d/40193-lsquare.jpg",
+            "width": 188,
+            "height": 188
+          },
+          "small": {
+            "url": "http://a.scpr.org/i/227403117c9bdd11766b8427fb9c473d/40193-small.jpg",
+            "width": 450,
+            "height": 300
+          },
+          "large": {
+            "url": "http://a.scpr.org/i/227403117c9bdd11766b8427fb9c473d/40193-eight.jpg",
+            "width": 729,
+            "height": 486
+          },
+          "full": {
+            "url": "http://a.scpr.org/i/227403117c9bdd11766b8427fb9c473d/40193-full.jpg",
+            "width": 1024,
+            "height": 683
+          }
+        }
+      ],
+      "attributions": [
+        {
+          "name": "Grant Slater",
+          "url": "http://audiovision.scpr.org/about/grant-slater",
+          "role_text": "Author",
+          "role": 1
+        }
+      ]
+    }
+  ]
+}
