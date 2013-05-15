@@ -35,7 +35,7 @@ classes = ["NewsStory", "BlogEntry", "ShowSegment"]
 
 # File name to dump the data into
 # Set :username for interpolation
-file_name = "stories-#{Time.now.to_i}-:username.csv"
+file_name = "stories-by-byline-#{Time.now.to_i}.csv"
 
 
 #----------------------------
@@ -63,10 +63,17 @@ user_ranges.each do |range|
     content = byline.content
     rows << [content.published_at, content.to_title, "http://scpr.org#{content.link_path}", content.byline]
   end
+end
 
-  CSV.open(Rails.root.join("log", file_name.gsub(/\:username/, range[:user].name.parameterize)), "w+") do |csv|
-    rows.each do |row|
-      csv << row
-    end
+CSV.open(Rails.root.join("log", file_name), "w+", headers: true) do |csv|
+  csv << [
+    "Publish Date",
+    "Title",
+    "URL",
+    "Byline"
+  ]
+  
+  rows.each do |row|
+    csv << row
   end
 end
