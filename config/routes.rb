@@ -7,6 +7,11 @@ Scprv4::Application.routes.draw do
   # Listen Live
   get '/listen_live/' => 'listen#index', as: :listen
   
+  # Elections
+
+  # March Elections
+  match '/elections/2013/los-angeles-mayor-2013/' => 'specials#march2013elections'
+
   # Sections
   match '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
   get '/news/'                                       => 'category#news',              as: :latest_news
