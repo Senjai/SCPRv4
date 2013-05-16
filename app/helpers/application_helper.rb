@@ -297,4 +297,15 @@ module ApplicationHelper
   
   alias_method :widget, :content_widget
   
+  #---------------
+  # These two methods are taken from EscapeUtils
+  def html_escape(string)
+    EscapeUtils.escape_html(string.to_s).html_safe
+  end
+  alias_method :h, :html_escape
+
+  def url_encode(s)
+    EscapeUtils.escape_url(s.to_s).html_safe
+  end
+  alias_method :u, :url_encode
 end

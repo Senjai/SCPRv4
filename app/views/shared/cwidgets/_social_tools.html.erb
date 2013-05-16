@@ -2,9 +2,9 @@
   <h5>Share this:</h5>
   <% unless @PREVIEW %>
     <ul>
-      <li class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= URI.escape(content.remote_link_path) %>">Facebook (<span class="count">&nbsp;&nbsp;</span>)</li>
-      <li class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= URI.escape(content.remote_link_path) %>" data-text="<%= CGI.escape(content.short_headline) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</li>
-      <li class="track-event gplus social_gplus" data-ga-category="Article" data-ga-action="Share" data-ga-label="Google Plus" data-url="<%= URI.escape(content.remote_link_path) %>">Google+</li>
+      <li class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= u(content.remote_link_path) %>">Facebook (<span class="count">&nbsp;&nbsp;</span>)</li>
+      <li class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= u(content.remote_link_path) %>" data-text="<%= h(content.short_headline) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</li>
+      <li class="track-event gplus social_gplus" data-ga-category="Article" data-ga-action="Share" data-ga-label="Google Plus" data-url="<%= u(content.remote_link_path) %>">Google+</li>
       <li class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= content.obj_key %>">Email</li>
       <li class="print"><a href="javascript:window.print()"class="track-event" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook">Print</a></li>
     </ul>
