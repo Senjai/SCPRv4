@@ -1,6 +1,5 @@
 class HomeController < ApplicationController  
   layout "homepage"
-  before_filter :get_latest_videos, only: [:index]
 
   # Just for development purposes
   # Pass ?regenerate to the URL to regenerate the homepage category blocks
@@ -34,8 +33,8 @@ class HomeController < ApplicationController
   #----------
   
   def missed_it_content
-    @homepage = Homepage.find(params[:id])
-    @carousel_contents = @homepage.missed_it_bucket.content.includes(&:content).page(params[:page]).per(6)
+    @homepage = Homepage.includes(:missed_it_bucket).find(params[:id])
+    @carousel_contents = @homepage.missed_it_bucket.content.includes(:content).page(params[:page]).per(6)
     render 'missed_it_content', formats: [:js]
   end
   
@@ -43,10 +42,6 @@ class HomeController < ApplicationController
   protected
   
   def generate_homepage
-    CacheTasks::Homepage.new.run
-  end
-
-  def get_latest_videos
-    @latest_videos = VideoShell.published.limit(5)
+    Job::HomepageCache.perform
   end
 end

@@ -52,6 +52,12 @@ class ContentByline < ActiveRecord::Base
 
   #-----------------------
   
+  def role_text
+    ROLE_TEXT[self.role]
+  end
+
+  #-----------------------
+
   def display_name
     @display_name ||= (self.user.try(:name) || self.name)
   end

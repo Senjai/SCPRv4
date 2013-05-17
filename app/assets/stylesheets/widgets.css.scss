@@ -419,7 +419,7 @@
 
 .blog-categories {
     li {
-        @include font-heading;      
+        @include font-heading;
     }
 }
 
@@ -525,7 +525,7 @@ a.with-icon {
         font-size:12px;
         line-height:$baseline / 2;
         padding:($baseline / 8) 0;
-        text-transform:uppercase;   
+        text-transform:uppercase;
     }
     h4 {
         line-height: 18px;

@@ -27,8 +27,14 @@ namespace :scprv4 do
   desc "Sync NPR Stories with NPR API"
   task :npr_fetch => [:environment] do
     puts "*** [#{Time.now}] Enqueueing sync of NPR Stories..."
-    NprStory.async_sync_with_api
-    puts "Finished."
+    
+    if Rails.env == "development"
+      Job::NprFetch.perform
+      puts "Finished.\n"
+    else
+      Resque.enqueue(Job::NprFetch)
+      puts "Job was placed in queue.\n"
+    end
   end
   
   #----------
@@ -60,8 +66,13 @@ namespace :scprv4 do
     puts "Finished."
   end
 
+
+
+
   #----------
   
+
+
   desc "Cache everything"
   task :cache => [:environment] do
     Rake::Task["scprv4:cache:remote_blogs"].invoke
@@ -69,15 +80,31 @@ namespace :scprv4 do
     Rake::Task["scprv4:cache:homepage"].invoke
     Rake::Task["scprv4:cache:most_viewed"].invoke
     Rake::Task["scprv4:cache:most_commented"].invoke
+    Rake::Task["scprv4:cache:audiovision"].invoke
     Rake::Task["scprv4:cache:twitter"].invoke
   end
   
   #----------
   
   namespace :cache do
+    desc "Cache Audiovision Homepage Module"
+    task :audiovision => [:environment] do
+      puts "*** [#{Time.now}] Caching AudioVision for homepage..."
+
+      if Rails.env == "development"
+        Job::AudioVisionCache.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::AudioVisionCache)
+        puts "Job was placed in queue.\n"
+      end
+    end
+
+    #----------
+
     desc "Cache Remote Blog Entries"
     task :remote_blogs => [:environment] do
-      puts "Caching remote blogs..."
+      puts "*** [#{Time.now}] Caching remote blogs..."
 
       NewRelic.with_manual_agent do
         Blog.cache_remote_entries
@@ -91,21 +118,14 @@ namespace :scprv4 do
     desc "Cache Most Viewed"
     task :most_viewed => [:environment] do
       puts "*** [#{Time.now}] Caching most viewed..."
-
-      NewRelic.with_manual_agent do
-        analytics = Rails.application.config.api["google"]["analytics"]
-        task = CacheTasks::MostViewed.new(
-          analytics["client_id"],
-          analytics["client_secret"],
-          analytics["token"],
-          analytics["refresh_token"]
-        )
-
-        task.verbose = true
-        task.run
+      
+      if Rails.env == "development"
+        Job::MostViewed.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::MostViewed)
+        puts "Job was placed in queue.\n"
       end
-
-      puts "Finished.\n"
     end
 
     #----------
@@ -114,13 +134,14 @@ namespace :scprv4 do
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Caching most commented..."
 
-      NewRelic.with_manual_agent do
-        task = CacheTasks::MostCommented.new("kpcc", "3d", Rails.application.config.api['disqus']['api_key'], 5)
-        task.verbose = true
-        task.run
+      if Rails.env == "development"
+        Job::MostCommented.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::MostCommented)
+        puts "Job was placed in queue.\n"
       end
 
-      puts "Finished.\n"
     end
 
     #----------
@@ -153,15 +174,17 @@ namespace :scprv4 do
     
     #----------
     
-    desc "Cache homepage one time"
+    desc "Cache homepage sections"
     task :homepage => [ :environment ] do
       puts "*** [#{Time.now}] Caching homepage..."
 
-      task = CacheTasks::Homepage.new
-      task.verbose = true
-      task.run
-
-      puts "Finished.\n"
+      if Rails.env == "development"
+        Job::HomepageCache.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::HomepageCache)
+        puts "Job was placed in queue.\n"
+      end
     end
   end
 end

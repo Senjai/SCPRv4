@@ -1,11 +1,11 @@
-<div class="asset-block right" style="width:<%=assets[0].asset.lsquare.width%>px;">
+<div class="asset-block right" style="width:<%=assets.first.lsquare.width%>px;">
   <div class="contentasset">
-    <%= assets[0].asset.lsquare.tag %>
+    <%= assets.first.lsquare.tag %>
   </div>
 
-  <h4><%= assets[0].asset.owner %></h4>
+  <h4><%= assets.first.owner %></h4>
 
-  <% if assets[0].caption %>
-    <p><%= assets[0].caption %></p>
+  <% if assets.first.caption %>
+    <p><%= assets.first.caption %></p>
   <% end %>
 </div>

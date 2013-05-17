@@ -80,7 +80,8 @@ module ApplicationHelper
     end
     
     # look for a scheme on the content object
-    scheme = content["#{context}_asset_scheme"] || "default"
+    attribute = "#{context}_asset_scheme"
+    scheme = content.respond_to?(attribute) ? content.send(attribute) : "default"
 
     # set up our template precendence
     tmplt_opts = [
@@ -296,4 +297,15 @@ module ApplicationHelper
   
   alias_method :widget, :content_widget
   
+  #---------------
+  # These two methods are taken from EscapeUtils
+  def html_escape(string)
+    EscapeUtils.escape_html(string.to_s).html_safe
+  end
+  alias_method :h, :html_escape
+
+  def url_encode(s)
+    EscapeUtils.escape_url(s.to_s).html_safe
+  end
+  alias_method :u, :url_encode
 end

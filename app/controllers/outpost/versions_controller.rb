@@ -44,14 +44,8 @@ class Outpost::VersionsController < Outpost::BaseController
   #--------------
   # Compare a version to its previous version
   def show
-    @version_b = @object.versions.find_by_version_number!(params[:version_number])
-    @version_a = @version_b.previous_version
-    
-    breadcrumb "History", outpost_history_path(@object.class.route_key, @object.id), @version_b.to_title
-        
-    if !Rails.cache.read(@version_b.cache_key)
-      @attribute_diffs = Secretary::Diff.new(@version_a, @version_b)
-    end
+    @version = @object.versions.find_by_version_number!(params[:version_number])
+    breadcrumb "History", outpost_history_path(@object.class.route_key, @object.id), @version.to_title
   end
   
   #--------------

@@ -13,8 +13,21 @@ describe Secretary::HasSecretary do
   end
   
   #---------------
+
+  describe '#changes' do
+    it 'is the built-in changes reverse-merged with custom changes' do
+      story = Secretary::Test::Story.create(headline: "Cool Story, Bro", body: "Some cool text.")
+      story.headline = "Updated"
+      story.changes.keys.should eq ["headline"]
+      story.custom_changes['assets'] = { a: 1, b: 2 }
+      story.changes.keys.should eq ["headline", "assets"]
+      story.custom_changes.keys.should eq ['assets']
+    end
+  end
+
+  #---------------
   
-  describe "has_secretary" do
+  describe "::has_secretary" do
     before :each do
       user = User.create(name: "Bryan")
       Secretary::Test::Story.any_instance.stub(:logged_user_id).and_return(user.id)
@@ -43,7 +56,6 @@ describe Secretary::HasSecretary do
       new_story.versions.count.should eq 1
     end
     
-    
     it "generates a version when a record is saved on update" do
       other_story.update_attributes(headline: "Some Cool Headline?!")
       Secretary::Version.count.should eq 2
@@ -55,12 +67,6 @@ describe Secretary::HasSecretary do
       other_story.versions.size.should eq 1
       other_story.save!
       other_story.versions.size.should eq 1
-    end
-    
-    it "saves the version that just got saved" do
-      other_story.headline = "Other cool headline"
-      other_story.save!
-      other_story.versions.last.frozen_object.should eq other_story
     end
     
     it "sends to Version.generate on update" do

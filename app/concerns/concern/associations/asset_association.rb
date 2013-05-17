@@ -19,18 +19,11 @@ module Concern
       end
 
       #-------------------
-      # Return the first asset in the given medium and size.
-      # Returns nil if no assets are present.
-      def primary_asset(size, format=:tag)
-        self.assets.first.asset.send(size).send(format) if self.assets.present?
-      end
       
-
-      # Define these methods manually since Rails uses a cache (not method_missing 
-      # directly) to call them, and we don't want (or need) to reset that.
-      def assets_changed?
-        attribute_changed?('assets')
+      def asset
+        @asset ||= self.assets.first
       end
+
 
       #-------------------
       # #asset_json is a way to pass in a string representation
@@ -68,6 +61,10 @@ module Concern
 
         # If the assets didn't change, there's no need to bother the database.        
         if current_assets_json != loaded_assets_json
+          if self.respond_to?(:custom_changes)
+            self.custom_changes['assets'] = [current_assets_json, loaded_assets_json]
+          end
+          
           self.changed_attributes['assets'] = current_assets_json
           self.assets = loaded_assets
         end

@@ -50,7 +50,7 @@ class BlogEntry < ActiveRecord::Base
 
   #------------------
   # Validation
-  validates_presence_of :blog
+  validates_presence_of :blog, if: :should_validate?
   
   def needs_validation?
     self.pending? || self.published?

@@ -72,7 +72,7 @@ module ContentBase
     })
     
     if options[:with].present?
-      options[:with].reverse_merge! default_attributes
+      options[:with] = options[:with].reverse_merge(default_attributes)
     else
       options[:with] = default_attributes
     end
@@ -139,6 +139,7 @@ module ContentBase
   #--------------------
   # Look to CONTENT_MATCHES to see if the passed-in URL
   # corresponds to any model.
+  # Only find published articles.
   def obj_by_url(url)
     begin
       u = URI.parse(url)
@@ -148,10 +149,19 @@ module ContentBase
     
     if match = CONTENT_MATCHES.find { |k,_| u.path =~ k }
       key = [match[1].constantize.content_key, $~[1]].join(":")
-      self.obj_by_key(key)
+      article = self.obj_by_key(key)
+
+      article && article.published? ? article : nil
     end
   end
   
+  #---------------------
+  # obj_by_url or raise
+  def obj_by_url!(url)
+    obj_by_url(url) or raise ActiveRecord::RecordNotFound
+  end
+
+
   #--------------------
   # For drop-down menus in the CMS
   def status_text_collect

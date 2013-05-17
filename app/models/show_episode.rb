@@ -29,7 +29,7 @@ class ShowEpisode < ActiveRecord::Base
   
   #-------------------
   # Association
-  belongs_to  :show,      :class_name  => "KpccProgram"
+  belongs_to  :show,      :class_name  => "KpccProgram", touch: true
   
   has_many    :rundowns,  :class_name  => "ShowRundown", 
                           :foreign_key => "episode_id",
@@ -120,12 +120,8 @@ class ShowEpisode < ActiveRecord::Base
   
   #----------
   
-  def rundowns_changed?
-    attribute_changed?('rundowns')
-  end
-
   def rundown_json
-    current_rundown_json.to_json
+    current_rundowns_json.to_json
   end
 
   #----------
@@ -150,8 +146,12 @@ class ShowEpisode < ActiveRecord::Base
     
     loaded_rundowns_json = rundowns_to_simple_json(loaded_rundowns)
 
-    if current_rundown_json != loaded_rundowns_json
-      self.changed_attributes['rundowns'] = current_rundown_json
+    if current_rundowns_json != loaded_rundowns_json
+      if self.respond_to?(:custom_changes)
+        self.custom_changes['rundowns'] = [current_rundowns_json, loaded_rundowns_json]
+      end
+
+      self.changed_attributes['rundowns'] = current_rundowns_json
       self.rundowns = loaded_rundowns
     end
 
@@ -161,7 +161,7 @@ class ShowEpisode < ActiveRecord::Base
 
   private
 
-  def current_rundown_json
+  def current_rundowns_json
     rundowns_to_simple_json(self.rundowns)
   end
 

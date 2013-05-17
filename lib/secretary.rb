@@ -1,4 +1,5 @@
 require "secretary/config"
+require 'diffy'
 
 module Secretary
   extend ActiveSupport::Autoload
@@ -13,11 +14,9 @@ module Secretary
       @versioned_models ||= []
     end
   end
-    
-  autoload :Error
+  
   autoload :HasSecretary
   autoload :Version
-  autoload :Diff
 end
 
 ActiveSupport.on_load(:active_record) do

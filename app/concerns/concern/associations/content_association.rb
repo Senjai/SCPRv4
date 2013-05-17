@@ -19,10 +19,6 @@ module Concern
   module Associations
     module ContentAssociation
       extend ActiveSupport::Concern
-      
-      def content_changed?
-        attribute_changed?('content')
-      end
 
       #-------------------
       # #content_json is a way to pass in a string representation
@@ -54,6 +50,10 @@ module Concern
         loaded_content_json = content_to_simple_json(loaded_content)
 
         if current_content_json != loaded_content_json
+          if self.respond_to?(:custom_changes)
+            self.custom_changes['content'] = [current_content_json, loaded_content_json]
+          end
+
           self.changed_attributes['content'] = current_content_json
           self.content = loaded_content
         end

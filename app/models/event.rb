@@ -114,6 +114,7 @@ class Event < ActiveRecord::Base
   # -------------------
   # Event doesn't really have a "Publish" date, so we'll just use the 
   # start date to fake this.
+  # This is not good and should be fixed.
   def published_at
     self.starts_at
   end

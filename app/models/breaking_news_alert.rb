@@ -162,7 +162,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
   def email_name
-    @email_name ||= self.headline[0..50]
+    @email_name ||= "[scpr-alert] #{self.headline[0..30]}"
   end
 
   def email_description

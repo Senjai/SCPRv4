@@ -172,7 +172,7 @@
             width:160px;
             height:46px;
         }
-		    &.patt-morrison a {
+        &.patt-morrison a {
             @include hide-text();
             background-image:url(image_path("blogs/pattmorrison_lg.png"));
             width:210px;
