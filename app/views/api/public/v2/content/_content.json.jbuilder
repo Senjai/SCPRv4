@@ -1,4 +1,4 @@
-json.cache! content do
+json.cache! [Api::Public::V2::VERSION, content] do
   json.id content.obj_key
   json.title content.to_title
   json.short_title content.short_headline

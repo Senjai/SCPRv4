@@ -1,4 +1,4 @@
-json.cache! audio do
+json.cache! [Api::Public::V2::VERSION, audio] do
   json.id audio.id
   json.description audio.description
   json.byline audio.byline
