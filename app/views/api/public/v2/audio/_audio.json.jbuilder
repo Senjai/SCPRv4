@@ -1,4 +1,4 @@
-json.cache! [audio, audio.content] do
+json.cache! audio do
   json.id audio.id
   json.description audio.description
   json.byline audio.byline
