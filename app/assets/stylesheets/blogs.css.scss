@@ -135,11 +135,24 @@
             width:160px;
             height:42px;
         }
-        &.education a {
-            @include hide-text();
-            background-image:url(image_path("blogs/passfail_lg.png"));
-            width:160px;
-            height:46px;
+        &.education {
+          &:after {
+            content:"";
+            background-image:url(image_path("sponsors/education-laup.png"));
+            background-repeat:no-repeat;
+            display:block;
+            position:absolute;
+            right:0;
+            top:0;
+            width:225px;
+            height:33px;
+          }
+          a {
+              @include hide-text();
+              background-image:url(image_path("blogs/passfail_lg.png"));
+              width:160px;
+              height:46px;
+          }
         }
         &.multiamerican a {
             @include hide-text();
@@ -183,6 +196,8 @@
         @include font-shorthand(200, 28px, 30px);
         @include ie-inline-block();
         &.blog-header {
+          position:relative;
+          width:100%;
             .extra {
                 @include ie-inline-block();
             }
