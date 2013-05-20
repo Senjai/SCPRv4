@@ -52,6 +52,10 @@ json.cache! content do
   end
 
 
+  if content.respond_to?(:audio)
+    json.partial! "api/public/v2/audio/collection", audio: content.audio.available
+  end
+
 
   if content.respond_to?(:bylines) && content.bylines.present?
     json.attributions content.bylines do |byline|

@@ -5,6 +5,8 @@ describe Api::Public::V2::ContentController do
     :format => :json
   }
 
+  render_views
+
   describe "GET show" do
     it "finds the object if it exists" do
       entry = create :blog_entry
@@ -59,7 +61,7 @@ describe Api::Public::V2::ContentController do
 
   describe "GET most_commented" do
     it "returns the cached articles" do
-      articles = create_list :blog, 2
+      articles = create_list :blog_entry, 2
       Rails.cache.write("popular/commented", articles)
       
       get :most_commented, request_params

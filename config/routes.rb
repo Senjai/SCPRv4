@@ -107,7 +107,7 @@ Scprv4::Application.routes.draw do
       get '/content'        => 'v1/content#index',  defaults: { format: :json }
       get '/content/by_url' => 'v1/content#by_url', defaults: { format: :json }
       get '/content/*obj_key'    => 'v1/content#show',   defaults: { format: :json }
-
+      
       # V1
       namespace :v1 do
         match '/' => "content#options", constraints: { method: 'OPTIONS' }
@@ -126,6 +126,9 @@ Scprv4::Application.routes.draw do
         get '/content/most_viewed'      => 'content#most_viewed', defaults: { format: :json }
         get '/content/most_commented'   => 'content#most_commented', defaults: { format: :json }
         get '/content/*obj_key'         => 'content#show',   defaults: { format: :json }
+
+        get '/audio'     => 'audio#index', defaults: { format: :json }
+        get '/audio/:id' => 'audio#show', defaults: { format: :json }
       end
     end
     
