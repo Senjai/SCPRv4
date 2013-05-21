@@ -1,3 +1,7 @@
+### 2.2.1 (2013-05-21)
+* Added URL to Audio objects.
+
+
 ### 2.2.0 (2013-05-20)
 * Added Audio API endpoint
 * Added Audio array to Content object
