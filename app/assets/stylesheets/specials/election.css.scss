@@ -218,6 +218,34 @@
   float:left;
   width:46%;
 }
+.hero-election .results .results-block .initiative.condensed.greuel, 
+.hero-election .results .results-block .initiative.condensed.garcetti,
+.hero-election .results .results-block .initiative.condensed.feuer,
+.hero-election .results .results-block .initiative.condensed.trutanich {
+  background: no-repeat 10px 6px;
+  height: 60px;
+  padding-left: 80px;
+  width: 36%;
+}
+.hero-election .results .results-block .initiative.condensed.greuel {
+  background-image: image-url('/assets/specials/election/head-greuel.png');
+}
+.hero-election .results .results-block .initiative.condensed.garcetti {
+  background-image: image-url('/assets/specials/election/head-garcetti.png');
+}
+.hero-election .results .results-block .initiative.condensed.feuer {
+  background-image: image-url('/assets/specials/election/head-feuer.png');
+}
+.hero-election .results .results-block .initiative.condensed.trutanich {
+  background-image: image-url('/assets/specials/election/head-trutanich.png');
+}
+
+
+.hero-election .results .results-block .initiative.condensed {
+  padding: 7px 2%;
+  float:left;
+  width:46%;
+}
 /* line 180, ../../app/assets/stylesheets/specials/election.css.scss */
 .hero-election .results .results-block .initiative.condensed.local .title h3 {
   font-size: 1.2em !important;
