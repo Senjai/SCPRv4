@@ -96,13 +96,14 @@
             <div class="row-fluid">
               <section class="span24">
                 <div class="header-well clearfix">
-                  <h2 class="callout center-contents"><a href="http://localhost:3000/elections/2013/los-angeles-mayor-2013/#coverage">Jump to KPCC's complete election coverage</a></h2>
+                  <h2 class="callout center-contents"><a href="/elections/2013/los-angeles-mayor-2013/#coverage">Go to KPCC's complete election coverage</a></h2>
                 </div>
               </section>
             </div>
             <div class="results">
               <article class="results-block">
-              <% @data_points.each do |key, data_point| %>
+
+              <% DataPoint.to_hash(@data_points).each do |key, data_point| %>
 
                 <% if key =~ /_reporting\z/i %>
                   <% if data_point.data_value.present? %>
@@ -120,16 +121,18 @@
 
                 <% elsif data_point.data_value.present? %>
                   
-                <section class="initiative local condensed">
+                <section class="initiative local condensed <%= data_point.data_key.split("_")[-1].downcase %>">
                   <div class="title">
                     <h3><%= data_point.title %></h3>
                   </div>
                   <div class="result relative">
-                    <div class="yes "><strong><%= data_point.data_value %><b class="percentage">%</b></strong></div>
+                    <div class="yes"><strong><%= data_point.data_value %><b class="percentage">%</b></strong></div>
                   </div>
                 </section>
+
                 <% end %>
-              <% end %>
+              <% end %> <%# DataPoint %>
+
               <div class="clearfix"></div>
               </article>
             </div>
@@ -138,7 +141,7 @@
           <% end %>
           <% end %>
           <%= render "/shared/widgets/my_ballot" %> <%# May Elections %>
-
+          <!-- END May Elections -->
 
           <%= yield %>
           <div class="vert-divider"></div>

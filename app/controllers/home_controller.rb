@@ -12,11 +12,9 @@ class HomeController < ApplicationController
     @featured_comment = FeaturedComment.published.first
 
     # May Elections
-    @data_points    = DataPoint.to_hash(
-      DataPoint.where(group_name: "election-may2013")
-        .where("data_key like ? or data_key like ? or data_key like ? or data_key like ?", "mayor%", "attorney%", "prop_d%", "ord%")
-        .order('id asc')
-    )
+    @data_points    = DataPoint.where(group_name: "election-may2013")
+      .where("data_key like ? or data_key like ? or data_key like ? or data_key like ?", "mayor%", "attorney%", "prop_d%", "ord%")
+      .order('id asc')
     
     @cache_control  = DataPoint.to_hash(DataPoint.where(group_name: "cache-control"))
 
