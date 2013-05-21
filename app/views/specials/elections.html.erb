@@ -1,0 +1,58 @@
+<!-- May Elections -->
+<% if Time.now > Time.new(2013, 5, 21, 20) %>
+
+<%= cache [@cache_control['cache_version'], 'election-may2013'], expires_in: 20.minutes do %>
+<div class="hero-election">
+  <div class="row-fluid">
+    <header class="span24 election-header">
+      <h1>2013 LA Election Results</h1>
+    </header>
+  </div>
+  <div class="row-fluid">
+    <section class="span24">
+      <div class="header-well clearfix">
+        <h2 class="callout center-contents"><a href="http://localhost:3000/elections/2013/los-angeles-mayor-2013/#coverage">Jump to KPCC's complete election coverage</a></h2>
+      </div>
+    </section>
+  </div>
+  <div class="results">
+    <article class="results-block">
+    <% DataPoint.to_hash(@data_points).each do |key, data_point| %>
+
+      <% if key =~ /_reporting\z/i %>
+        <% if data_point.data_value.present? %>
+        
+          <% race = data_point.title.split(":")[0] %>
+          <div class="clearfix"></div>
+          <div class="results-block">
+            <header>
+              <h2><%= race %></h2>
+              <aside>(<%= data_point.data_value %>% Reporting)</aside>
+            </header>
+          </div>
+          <div class="clearfix"></div>
+        <% end %>
+
+      <% elsif data_point.data_value.present? %>
+        
+      <section class="initiative local condensed <%= data_point.data_key.split("_")[-1].downcase %>">
+        <div class="title">
+          <h3><%= data_point.title %></h3>
+        </div>
+        <div class="result relative">
+          <div class="yes "><strong><%= data_point.data_value %><b class="percentage">%</b></strong></div>
+        </div>
+      </section>
+      <% end %>
+    <% end %>
+    <div class="clearfix"></div>
+    </article>
+  </div>
+</div>
+<hr />
+<% end %>
+<% end %>
+
+<div id="coverage">
+  <%= render template: '/flatpages/show' if @flatpage %>
+</div>

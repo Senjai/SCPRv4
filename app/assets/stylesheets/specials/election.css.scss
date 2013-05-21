@@ -1,0 +1,553 @@
+/* line 1, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election {
+  font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  font-size: 13px;
+  margin-bottom: 22px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.67);
+}
+/* line 6, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .election-header {
+  background: #134b94 url("/assets/specials/election/bg-header.jpg") no-repeat 0 0;
+  border-bottom: 1px solid #115695;
+  position: relative;
+  text-align: center;
+}
+/* line 11, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .election-header h1 {
+  color: #f1f1f1;
+  font-size: 1.846153846em;
+  line-height: 24px;
+  margin: 8px 0 4px;
+  text-transform: uppercase;
+}
+/* line 17, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .election-header h1 em {
+  color: #6bc6f2;
+  font-style: normal;
+}
+/* line 22, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .election-header .share-link {
+  background: url("/assets/specials/election/ico-share.png") no-repeat 0 2px;
+  color: white;
+  font-size: 0.923076923em;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding-left: 25px;
+  display:inline;
+}
+/* line 32, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .election-header .share-link span, .hero-election .election-header .share-link a {
+  cursor: pointer;
+}
+/* line 35, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well {
+  background: #032e54;
+  border-top: 1px solid #002035;
+  border-bottom: 1px solid #2e2e2e;
+  font-size: 1em;
+  font-weight: 400;
+  padding: 3px 10px;
+  /* Styles for pre-results voter guide callout */
+}
+/* line 42, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well .live-tweet {
+  background: url("/assets/specials/election/ico-twitter.png") no-repeat 0 2px;
+  color: white;
+  float: left;
+  margin-right: 10px;
+  padding-left: 26px;
+  text-transform: uppercase;
+}
+/* line 50, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well ul {
+  margin: 0;
+}
+/* line 52, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well ul li {
+  display: none;
+  list-style: none;
+  color: #6bc6f2;
+}
+/* line 56, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well ul li.active {
+  display: block;
+}
+/* line 59, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well ul li a.twitter-icon {
+  display: inline-block;
+  width: 18px;
+  margin-left: 5px;
+  background: url("/assets/icons/share-twitter.png") no-repeat;
+}
+/* line 64, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well ul li a.twitter-icon:hover {
+  text-decoration: none;
+}
+/* line 69, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well h2.callout {
+  color: white;
+  font-size: 22px;
+  margin: 8px 0;
+  text-align: center;
+}
+/* line 74, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well h2.callout strong {
+  color: #6bc6f2;
+}
+/* line 77, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well h2.callout a {
+  color: white;
+  font-size: .7em;
+  text-shadow: 0 -2px 0 rgba(0, 0, 0, 0.67059);
+  text-transform: uppercase;
+}
+/* line 87, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .header-well h2.callout a:hover {
+  color:#6bc6f2;
+  text-decoration:none;
+}
+/* line 94, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results {
+  background: #2e2e2e;
+  border-top: 1px solid #414141;
+  color: #fff;
+}
+/* line 99, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results.president-only .results-block {
+  min-height: 64px;
+}
+/* line 101, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results.president-only .results-block header {
+  background-repeat: repeat;
+  min-height: 64px;
+  margin: 0;
+}
+/* line 105, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results.president-only .results-block header h2 {
+  font-size: 1.846153846em;
+  padding-top: 10px;
+  text-align: right;
+}
+/* line 110, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results.president-only .results-block header aside {
+  position: relative;
+  right: auto;
+  top: auto;
+  margin-right: 10px;
+  text-align: right;
+}
+/* line 118, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results.president-only .results-block .candidate {
+  border: none;
+}
+/* line 125, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block header {
+  background: url("/assets/specials/election/bg-subhead.png") repeat-x 0 0;
+  position: relative;
+}
+/* line 130, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block header.first {
+  margin-left: 0;
+}
+/* line 133, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block header.last {
+  margin-right: 0;
+}
+/* line 136, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block header h2 {
+  color: #6bc6f2;
+  display:inline;
+  font-size: 1.230769231em;
+  line-height:27.4px;
+  padding: 0 10px;
+  text-transform: uppercase;
+}
+/* line 142, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block header aside {
+  color: #9c9c9c;
+  font-size: 0.923076923em;
+  font-weight: 400;
+  display:inline;
+}
+/* line 151, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .vert-divider {
+  background-color: #1d1d1d;
+  border-right: 1px solid #484848;
+  right: -5.850225%;
+}
+/* line 156, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate, .hero-election .results .results-block .initiative {
+  box-shadow:0 -1px 1px -1px #000;
+  border-top: 1px solid #484848;
+  padding: 12px 10px 0;
+}
+/* line 161, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.first, .hero-election .results .results-block .initiative.first {
+  border-top: none;
+}
+/* line 164, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.last, .hero-election .results .results-block .initiative.last {
+  border-bottom: none;
+}
+/* line 167, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate .percentage, .hero-election .results .results-block .initiative .percentage {
+  color: white !important;
+  font-size: 0.5625em;
+  margin-left: 4px;
+  vertical-align: super;
+}
+/* line 174, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative {
+  zoom: 1;
+}
+/* line 81, ../../app/assets/stylesheets/base/base.css.scss */
+.hero-election .results .results-block .initiative:before, .hero-election .results .results-block .initiative:after {
+  display: table;
+  content: "";
+}
+/* line 85, ../../app/assets/stylesheets/base/base.css.scss */
+.hero-election .results .results-block .initiative:after {
+  clear: both;
+}
+/* line 176, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.condensed {
+  padding: 7px 2%;
+  float:left;
+  width:46%;
+}
+.hero-election .results .results-block .initiative.condensed.greuel, 
+.hero-election .results .results-block .initiative.condensed.garcetti,
+.hero-election .results .results-block .initiative.condensed.feuer,
+.hero-election .results .results-block .initiative.condensed.trutanich {
+  background: no-repeat 10px 6px;
+  height: 60px;
+  padding-left: 80px;
+  width: 36%;
+}
+.hero-election .results .results-block .initiative.condensed.greuel {
+  background-image: image-url('/assets/specials/election/head-greuel.png');
+}
+.hero-election .results .results-block .initiative.condensed.garcetti {
+  background-image: image-url('/assets/specials/election/head-garcetti.png');
+}
+.hero-election .results .results-block .initiative.condensed.feuer {
+  background-image: image-url('/assets/specials/election/head-feuer.png');
+}
+.hero-election .results .results-block .initiative.condensed.trutanich {
+  background-image: image-url('/assets/specials/election/head-trutanich.png');
+}
+
+
+.hero-election .results .results-block .initiative.condensed {
+  padding: 7px 2%;
+  float:left;
+  width:46%;
+}
+/* line 180, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.condensed.local .title h3 {
+  font-size: 1.2em !important;
+  line-height: 1.2em;
+}
+/* line 181, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.condensed.local .result {
+  width: 110px;
+}
+/* line 183, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.condensed.local .result .yes, .hero-election .results .results-block .initiative.condensed.local .result .no {
+  width: 40px;
+}
+/* line 186, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.condensed.local .result strong {
+  font-size: 2em !important;
+  margin-bottom: 0;
+}
+/* line 187, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.condensed.local .result .percentage {
+  font-size: 0.4em !important;
+}
+/* line 188, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.condensed.local .result span {
+  font-size: 1em !important;
+}
+/* line 194, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.local .title {
+  width: 200px;
+}
+/* line 196, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative.local .title h3 {
+  font-size: 2em;
+}
+/* line 201, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .title {
+  float: left;
+}
+/* line 203, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .title h3 {
+  color: white;
+  font-size: 2.307692308em;
+  font-weight: 100;
+}
+/* line 208, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .title p {
+  color: #858585;
+  font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  font-size: 0.846153846em;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+/* line 216, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .result {
+  zoom: 1;
+  float: left;
+  width: 140px;
+  margin-top: -3px;
+}
+/* line 81, ../../app/assets/stylesheets/base/base.css.scss */
+.hero-election .results .results-block .initiative .result:before, .hero-election .results .results-block .initiative .result:after {
+  display: table;
+  content: "";
+}
+/* line 85, ../../app/assets/stylesheets/base/base.css.scss */
+.hero-election .results .results-block .initiative .result:after {
+  clear: both;
+}
+/* line 221, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .result .yes {
+  float: left;
+  width: 60px;
+}
+/* line 225, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .result .yes.pass span {
+  background: url("/assets/specials/election/ico-checkbox-sm.png") no-repeat right 3px;
+  color: #74bd3a;
+  padding-right: 18px;
+}
+/* line 232, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .result .no {
+  float: right;
+  width: 60px;
+}
+/* line 236, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .result .no.fail span {
+  background: url("/assets/specials/election/ico-strikethrough-sm.png") no-repeat right 3px;
+  color: #da1020;
+  padding-right: 18px;
+}
+/* line 243, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .result strong {
+  display: block;
+  font-size: 2.461538462em;
+  margin-bottom: 4px;
+}
+/* line 248, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .result span {
+  color: #b3b3b3;
+  display: inline-block;
+  font-size: 1.230769231em;
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+/* line 255, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .initiative .result .vert-divider {
+  background-color: #484848;
+  border-right: none;
+  right: 50%;
+}
+/* line 262, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate {
+  position: relative;
+  zoom: 1;
+  background: no-repeat 10px 6px;
+}
+/* line 81, ../../app/assets/stylesheets/base/base.css.scss */
+.hero-election .results .results-block .candidate:before, .hero-election .results .results-block .candidate:after {
+  display: table;
+  content: "";
+}
+/* line 85, ../../app/assets/stylesheets/base/base.css.scss */
+.hero-election .results .results-block .candidate:after {
+  clear: both;
+}
+/* line 266, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.obama {
+  background-image: url("/assets/specials/election/head-obama.png");
+}
+/* line 268, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.obama .result strong {
+  color: #0f93d2;
+}
+/* line 272, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.romney {
+  background-image: url("/assets/specials/election/head-romney.png");
+}
+/* line 274, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.romney .result strong {
+  color: #e53f48;
+}
+/* line 278, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.berman {
+  background-image: url("/assets/specials/election/head-berman.png");
+}
+/* line 281, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.sherman {
+  background-image: url("/assets/specials/election/head-sherman.png");
+  background-position: 15px 6px;
+}
+/* line 285, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.lacey {
+  background-image: url("/assets/specials/election/head-lacey.png");
+}
+/* line 288, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate.jackson {
+  background-image: url("/assets/specials/election/head-jackson.png");
+}
+/* line 291, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate h4 {
+  color: white;
+  float: left;
+  font-size: 1.384615385em;
+  font-weight: 100;
+  padding-left: 60px;
+}
+/* line 297, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate h4 em {
+  background: url("/assets/specials/election/ico-checkbox.png") no-repeat 0 2px;
+  display: block;
+  color: #74bd3a;
+  font-size: 0.666666667em;
+  font-style: normal;
+  font-weight: 600;
+  margin-bottom: 0;
+  padding-left: 24px;
+}
+/* line 308, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate .result {
+  text-align: right;
+  float: right;
+  width: 62px;
+}
+/* line 312, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate .result strong {
+  display: block;
+  font-size: 2.461538462em;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+/* line 318, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .results .results-block .candidate .result span {
+  color: #858585;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+  font-size: 0.769230769em;
+  line-height: 11px;
+  text-transform: uppercase;
+}
+/* line 329, ../../app/assets/stylesheets/specials/election.css.scss */
+.hero-election .visible-mobile {
+  display: none;
+}
+div.results-block + .initiative {
+  border-top:0 !important;
+}
+@media screen and (min-width: 769px) and (max-width: 960px) {
+  /* line 336, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election {
+    font-size: 11px;
+  }
+  /* line 340, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block .candidate, .hero-election .results .results-block .initiative {
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+  /* line 346, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block .initiative.local .title {
+    width: 100px;
+  }
+  /* line 350, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block .initiative .result {
+    width: 110px;
+  }
+  /* line 352, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block .initiative .result .yes, .hero-election .results .results-block .initiative .result .no {
+    width: 52px;
+  }
+  /* line 355, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block .initiative .result .vert-divider {
+    display: none;
+  }
+  /* line 360, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block .candidate {
+    background-image: none !important;
+  }
+  /* line 362, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block .candidate h4 {
+    font-size: 1.6em;
+    padding-left: 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  /* line 373, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election {
+    font-size: 13px;
+  }
+  /* line 375, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .election-header {
+    float: none;
+  }
+  /* line 377, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .election-header h1 {
+    font-size: 1.230769231em;
+    padding-left: 10px;
+    padding-top: 7px;
+    text-align: left;
+  }
+  /* line 383, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .election-header .share-link {
+    width: 20px;
+    height: 20px;
+    padding-left: 0;
+  }
+  /* line 387, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .election-header .share-link span {
+    display: none;
+  }
+  /* line 393, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .header-well .visible-mobile {
+    display: block;
+  }
+  /* line 396, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .header-well .tweets {
+    display: none;
+  }
+  /* line 400, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .span8 {
+    float: none;
+    margin-left: 0;
+    width: 100%;
+  }
+  /* line 409, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results.president-only .results-block header h2 {
+    text-align: left;
+  }
+  /* line 412, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results.president-only .results-block header aside {
+    margin-left: 10px;
+    text-align: left;
+  }
+  /* line 419, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block {
+    min-height: 0;
+  }
+  /* line 421, ../../app/assets/stylesheets/specials/election.css.scss */
+  .hero-election .results .results-block header {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
