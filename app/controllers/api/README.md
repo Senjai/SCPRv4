@@ -10,7 +10,7 @@
     * Object
 * All Date/Time fields are in **ISO 8601** format, unless otherwise noted.
 
-**Current Version**: 2.2.0  
+**Current Version**: 2.2.1  
 **Endpoint**: /api/v2/  
 **Response**: JSON only
 
@@ -290,6 +290,11 @@ Representation of Audio in the JSON response.
   <tr>
     <td><strong>description</strong></td>
     <td>(Text) A brief description of the audio.</td>
+  </tr>
+
+  <tr>
+    <td><strong>url</strong></td>
+    <td>(String) The full, public URL to the audio file.</td>
   </tr>
 
   <tr>
