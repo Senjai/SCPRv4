@@ -133,7 +133,7 @@ This is how every article is represented by the API in its response.
     <td>attributions</td>
     <td>
       (Array) Attributions (i.e., Bylines). See <a href="#attribution-object-description">Attribution Object Description</a> for the object description. <br />
-      <strong>Note:</strong> This attribute will be empty if the object MAY have attributions, but has none. It will be absent if the article MAY NOT have attributions (eg. ShowEpisodes).
+      <strong>Note:</strong> This attribute will be empty (empty array) if the object MAY have attributions, but has none. It will be <em>absent</em> if the article MAY NOT have attributions (eg. ShowEpisodes).
     </td>
   </tr>
 </table>

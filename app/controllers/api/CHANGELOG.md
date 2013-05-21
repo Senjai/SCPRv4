@@ -2,6 +2,7 @@
 * Added Audio API endpoint
 * Added Audio array to Content object
 * Updated documentation in the README
+* Attributions are now *always* present, if they may be. So, an article with no attributions will still have an `attributions` property - it will just be a blank array. Article types that don't have attributions (eg. ShowEpisdes) will not have this property.
 
 
 ### 2.1.1 (2013-05-07)
