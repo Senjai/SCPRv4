@@ -1,4 +1,4 @@
-json.cache! content do
+json.cache! [Api::Public::V2::VERSION, "v1", content] do
   json.id content.obj_key
   json.title content.to_title
   json.short_title content.short_headline
@@ -52,8 +52,14 @@ json.cache! content do
   end
 
 
+  if content.respond_to?(:audio)
+    json.audio do
+      json.partial! "api/public/v2/audio/collection", audio: content.audio.available
+    end
+  end
 
-  if content.respond_to?(:bylines) && content.bylines.present?
+
+  if content.respond_to?(:bylines)
     json.attributions content.bylines do |byline|
       json.name byline.display_name
       json.role_text byline.role_text

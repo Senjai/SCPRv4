@@ -31,7 +31,11 @@
    <!--//configuration 
    OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/'; 
    
-   OAS_sitepage = 'scpr.org';
+   if(window.location.pathname.match(/^\/education/) || window.location.pathname.match(/^\/blogs\/education/)) {
+        OAS_sitepage = 'scpr.org' + window.location.pathname;
+      } else {
+        OAS_sitepage = 'scpr.org';
+      }
       
    OAS_listpos = "<%= content_for?(:oas_listpos) ? yield(:oas_listpos) : 'x01,x02,x03,x13' %>";
    OAS_query = ''; 

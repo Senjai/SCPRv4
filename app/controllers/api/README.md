@@ -1,16 +1,25 @@
-# KPCC Public API Documentation
+# KPCC Public API v2 Documentation
 
-## v2 ##
-**Current Version**: 2.1.1  
+### Notes on this Documentation ###
+* In Object descriptions, **bold** denotes that a node will *always* be present, even if it's empty. Otherwise, the node will only be present if it isn't empty. There are some noted exceptions.
+* Object types are loose mappings to the database field type, or a Javascript type. For example:
+    * Integer (could be a String or a Number).
+    * Text - Long string (potentially >1 lines).
+    * String - One-line string.
+    * Array
+    * Object
+* All Date/Time fields are in **ISO 8601** format, unless otherwise noted.
+
+**Current Version**: 2.2.0  
 **Endpoint**: /api/v2/  
 **Response**: JSON only
 
 
-### Content ###
+## Content ##
 **Endpoint**: /api/v2/content/
 
-#### Supported Classes ###
 
+#### Supported Classes ###
 Note that NewsStory and ContentShell are lumped together.
 
 <table>
@@ -47,48 +56,130 @@ Note that NewsStory and ContentShell are lumped together.
 </table>
 
 
-#### Response ####
+### Objects ###
+
+#### Content Object Description ####
 This is how every article is represented by the API in its response.
 
-**bold** denotes that a node will *always* be present, even if it's empty.
-Otherwise, the node will only be present if it isn't empty.
-
 <table>
-  <tr><td><strong>id</strong></td><td>The object key (i.e. UUID, such as blogs/entry:999)</td></tr>
-  <tr><td><strong>title</strong></td><td>The full title.</td></tr>
-  <tr><td><strong>short_title</strong></td><td>The short title.</td></tr>
-  <tr><td><strong>byline</strong></td><td>The byline.</td></tr>
-  <tr><td><strong>published_at</strong></td><td>The original publish date of the content. (ISO 8601)</td></tr>
-  <tr><td><strong>teaser</strong></td><td>The teaser.</td></tr>
-  <tr><td><strong>body</strong></td><td>The full body copy.</td></tr>
-  <tr><td><strong>permalink</strong></td><td>The full, canonical URL.</td></tr>
-  <tr><td><strong>thumbnail</strong></td><td>An IMG tag for the thumbnail (188x188)</td></tr>
-  <tr><td>category</td><td>The article's category.
-    <ul>
-      <li>id</li>
-      <li>title</li>
-      <li>url</li>
-    </ul>
-  </td></tr>
-  <tr><td><strong>assets</strong></td><td>An array of this article's assets.  
-    <ul>
-      <li>title</li>
-      <li>caption</li>
-      <li>owner</li>
-    </ul>
-    Four sizes (thumbnail, small, large, full) are available. See below for more.</td></tr>
-  <tr><td>attributions</td><td>All of this article's attributions.
-    <ul>
-      <li>name</li>
-      <li>role_text</li>
-      <li>role</li>
-    </ul>
-  </td></tr>
+  <tr>
+    <td><strong>id</strong></td>
+    <td>(String) The object key (i.e. UUID, such as blogs/entry:999).</td>
+  </tr>
+
+  <tr>
+    <td><strong>title</strong></td>
+    <td>(String) The full title.</td>
+  </tr>
+
+  <tr>
+    <td><strong>short_title</strong></td>
+    <td>(String) The short title.</td>
+  </tr>
+
+  <tr>
+    <td><strong>byline</strong></td>
+    <td>(String) The compiled, canonical byline.</td>
+  </tr>
+
+  <tr>
+    <td><strong>published_at</strong></td>
+    <td>(DateTime) The original publish date of the content.</td>
+  </tr>
+
+  <tr>
+    <td><strong>teaser</strong></td>
+    <td>(Text) The teaser.</td>
+  </tr>
+
+  <tr>
+    <td><strong>body</strong></td>
+    <td>(Text) The full body copy.</td>
+  </tr>
+
+  <tr>
+    <td><strong>permalink</strong></td>
+    <td>(String) The full, canonical URL.</td>
+  </tr>
+
+  <tr>
+    <td><strong>thumbnail</strong></td>
+    <td>(String) An IMG tag for the thumbnail (188x188)</td>
+  </tr>
+
+  <tr>
+    <td>category</td>
+    <td>
+      (Object) The article's category. See <a href="#category-object-description">Category Object Description</a> for the object description.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>assets</strong></td>
+    <td>
+      (Array) The article's assets. See <a href="#asset-object-description">Asset Object Description</a> for the object description.
+    </td>
+  </tr>
+
+  <tr>
+    <td>audio</td>
+    <td>
+      (Array) This article's Audio. See <a href="#audio-object-description">Audio Object Description</a> for the object description. <br />
+      <strong>Note:</strong> This attribute will be empty if the object MAY have attributions, but has none. It will be absent if the article MAY NOT have attributions (eg. ContentShells).
+    </td>
+  </tr>
+
+  <tr>
+    <td>attributions</td>
+    <td>
+      (Array) Attributions (i.e., Bylines). See <a href="#attribution-object-description">Attribution Object Description</a> for the object description. <br />
+      <strong>Note:</strong> This attribute will be empty (empty array) if the object MAY have attributions, but has none. It will be <em>absent</em> if the article MAY NOT have attributions (eg. ShowEpisodes).
+    </td>
+  </tr>
 </table>
 
 
-#### Assets ####
+#### Category Object Description ####
 
+<table>
+  <tr>
+    <td><strong>id</strong></td>
+    <td>(Integer) The numerical ID for this category.</td>
+  </tr>
+
+  <tr>
+    <td><strong>title</strong></td>
+    <td>(String) The category title.</td>
+  </tr>
+
+  <tr>
+    <td><strong>url</strong></td>
+    <td>(String) The canonical URL for this category.</td>
+  </tr>
+</table>
+
+
+#### Attribution Object Description ####
+
+<table>
+  <tr>
+    <td><strong>name</strong></td>
+    <td>(String) Name</td>
+  </tr>
+
+  <tr>
+    <td><strong>role_text</strong></td>
+    <td>(String) The text description for this attribution's Role. (ex. Primary or Contributing)</td>
+  </tr>
+
+  <tr>
+    <td><strong>role</strong></td>
+    <td>(Integer) The numeric ID for this attribution's role.</td>
+  </tr>
+</table>
+
+
+#### Asset Object Description ####
 There are four sizes of assets. These are their names and geometry (see [ImageMagick geometry](http://www.imagemagick.org/script/command-line-processing.php#geometry) for explanation). Note that `#` means "cropped".
 
 * lsquare (188x188#)
@@ -97,10 +188,10 @@ There are four sizes of assets. These are their names and geometry (see [ImageMa
 * full (1024x1024>)
 
 <table>
-  <tr><td><strong>title</strong></td><td>Asset title</td></tr>
-  <tr><td><strong>caption</strong></td><td>Asset caption</td></tr>
-  <tr><td><strong>owner</strong></td><td>Asset owner</td></tr>
-  <tr><td><strong>thumbnail, small,<br />large, full</strong></td><td>Asset sizes:
+  <tr><td><strong>title</strong></td><td>(String) Asset title</td></tr>
+  <tr><td><strong>caption</strong></td><td>(Text) Asset caption</td></tr>
+  <tr><td><strong>owner</strong></td><td>(String) Asset owner</td></tr>
+  <tr><td><strong>thumbnail, small,<br />large, full</strong></td><td>(Object) Asset sizes:
     <ul>
       <li>URL</li>
       <li>Width</li>
@@ -110,12 +201,14 @@ There are four sizes of assets. These are their names and geometry (see [ImageMa
 </table>
 
 
+### Endpoints ###
+
 #### Article by URL ####
 Find an article by its URL.
 
 **Endpoint**: /api/v2/content/by_url?url={url} (GET)  
 **Params**:
-* `url` - The full URL of the content.
+* `url` - (String) The full URL of the content.
 
 **Example**
 GET /api/v2/content/by_url?url=http://www.scpr.org/blogs/politics/2013/04/16/13317/dearmayor-live-from-westchester-what-should-la-s-n/  
@@ -128,7 +221,7 @@ Find an article by its obj_key (blogs/entry:999)
 
 **Endpoint**: /api/v2/content/{obj_key} (GET)  
 **Params**: 
-* `obj_key` - The object key (API id) for the article.
+* `obj_key` - (String) The object key (API id) for the article.
 
 **Example**
 GET /api/v2/content/blogs/entry:999  
@@ -141,14 +234,14 @@ Find a collection of articles based on several parameters.
 
 **Endpoint**: /api/v2/content?{optional params} (GET)  
 **Params**: (All parameters are optional)
-* `query` - (string) A search query.  
+* `query` - (String) A search query.  
 Example: ?query=Obama+Healthcare
 * `types` - (comma-separated list) The types of articles to return.  
 Example: ?types=news,blogs,segments  
 See the "Supported Classes" table for the options. (default: all types)
-* `limit` - (integer) The number of articles to return.  
+* `limit` - (Integer) The number of articles to return.  
 Maximum is 40. (default: 10)
-* `page` - The page of results to return. (default: 1)
+* `page` - (Integer) The page of results to return. (default: 1)
 
 **Example**
 GET /api/v2/content?query=Obama&types=news,blogs,segments&limit=25&page=4  
@@ -156,7 +249,7 @@ GET /api/v2/content?query=Obama&types=news,blogs,segments&limit=25&page=4
 A JSON array of article objects, ordered by **descending published_at date**.
 
 
-#### Most Viewed
+#### Most Viewed ####
 Grab the most viewed content.
 
 **Endpoint**: /api/v2/content/most_viewed (GET)  
@@ -167,7 +260,7 @@ GET /api/v2/content/most_viewed
 A JSON array of article objects.
 
 
-#### Most Commented
+#### Most Commented ####
 Grab the most commented content.
 
 **Endpoint**: /api/v2/content/most_commented (GET)  
@@ -178,8 +271,91 @@ GET /api/v2/content/most_commented
 A JSON array of article objects.
 
 
-### Errors ###
 
+## Audio ##
+**Endpoint**: /api/v2/audio/
+
+
+### Objects ###
+
+#### Audio Object Description ####
+Representation of Audio in the JSON response.
+
+<table>
+  <tr>
+    <td><strong>id</strong></td>
+    <td>(Integer) The ID of this audio object.</td>
+  </tr>
+
+  <tr>
+    <td><strong>description</strong></td>
+    <td>(Text) A brief description of the audio.</td>
+  </tr>
+
+  <tr>
+    <td><strong>byline</strong></td>
+    <td>(String) The byline for this audio.</td>
+  </tr>
+
+  <tr>
+    <td><strong>uploaded_at</strong></td>
+    <td>(DateTime) The date/time that this audio was uploaded.</td>
+  </tr>
+
+  <tr>
+    <td><strong>position</strong></td>
+    <td>(Integer) The audio's index in the list of its article's attached audio.</td>
+  </tr>
+
+  <tr>
+    <td><strong>duration</strong></td>
+    <td>(Integer) The duration of this audio in <strong>seconds</strong>.</td>
+  </tr>
+
+  <tr>
+    <td><strong>filesize</strong></td>
+    <td>(Integer) The filesize of the audio file in <strong>bytes</strong>.</td>
+  </tr>
+
+  <tr>
+    <td><strong>content_obj_key</strong></td>
+    <td>(String) The obj_key (UUID) for this audio's content object. You can make a separate request to the <a href="#content">Content API</a> to fetch the object.</td>
+  </tr>
+</table>
+
+
+### Endpoints ###
+
+#### Audio by ID ####
+Find audio by its ID.
+
+**Endpoint**: /api/v2/audio/{id} (GET)  
+**Params**: 
+* `id` - (Integer) The ID for the audio.
+
+**Example**
+GET /api/v2/audio/999  
+**Returns**
+A single JSON object representation of the requested audio.
+
+
+#### Audio Collection ####
+Find a collection of audio based on several parameters.
+
+**Endpoint**: /api/v2/audio?{optional params} (GET)  
+**Params**: (All parameters are optional)
+* `limit` - (Integer) The number of audio objects to return.  
+Maximum is 40. (default: 10)
+* `page` - (Integer) The page of results to return. (default: 1)
+
+**Example**
+GET /api/v2/audio?limit=25&page=4  
+**Returns**
+A JSON array of audio objects, ordered by **descending uploaded_at date**.
+
+
+
+## Errors ##
 These are some errors you might come across when interacting with the API.
 
 <table>
@@ -196,20 +372,21 @@ These are some errors you might come across when interacting with the API.
   <tr>
     <td>Bad Request</td>
     <td>400</td>
-    <td>Some parameter is malformed, such as an invalid URI in #by_url</td>
+    <td>Some parameter is malformed, such as an invalid URI in content#by_url</td>
   </tr>
   <tr>
     <td>Not Found</td>
     <td>404</td>
-    <td>The requested article can't be found.</td>
+    <td>The requested object can't be found.</td>
   </tr>
   <tr>
     <td>Server Error</td>
     <td>500</td>
-    <td>An unexpected error occurred.</td>
+    <td>An unexpected error occurred. Please contact bricker@scpr.org .</td>
   </tr>
 </table>
 
 
-## v1 ##
-Please do not use API v1. It will be removed after 2013-05-01.
+
+## Past Versions of the KPCC API ##
+* **v1** - Deprecated, don't use. 
