@@ -27,7 +27,9 @@
           <div class="results-block">
             <header>
               <h2><%= race %></h2>
-              <aside>(<%= data_point.data_value %>% Reporting)</aside>
+              <% unless data_point.data_value == "null" %>
+                <aside>(<%= data_point.data_value %>% Reporting)</aside>
+              <% end %>
             </header>
           </div>
           <div class="clearfix"></div>
