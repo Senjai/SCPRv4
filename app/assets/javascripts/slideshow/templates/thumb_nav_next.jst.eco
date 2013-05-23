@@ -1,0 +1,1 @@
+<a class="nav next <%=@next_class%>"></a>

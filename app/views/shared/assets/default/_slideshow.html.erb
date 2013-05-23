@@ -1,28 +1,45 @@
 <div id="asset_slideshow_<%= content.id %>" class="slideview"></div>
+
+<div class="static-slides">
+<% content.assets.each do |asset| %>
+  <div class="slide">
+    <div class="asset-block">
+      <div class="contentasset">
+        <%= link_to asset.full.tag, content.link_path %> 
+      </div>
+
+      <h4><%= asset.owner %></h4>
+    </div>
+  </div>
+<% end %>
+</div>
+
 <br/>
+
 <script type="text/javascript">
   var query, keyval;
   var params = {};
   query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
   
-    ahSlides = new AssetHost.Slideshow({
-<% if params[:id].present? %>
-      start: params["slide"],
-      deeplink: true,
-<% end %>
 
+    slideshow = new scpr.Slideshow({
+      <% if params[:id].present? %>
+        start: params["slide"],
+        deeplink: true,
+      <% end %>
         el: "#asset_slideshow_<%= content.id %>",
-        assets: <%= raw assets.to_json %>
+        assets: <%= assets.to_json.html_safe %>
     });
     
-    // add slide change listener for analytics
-    ahSlides.bind("switch",function(idx) {
-    if(typeof(_gaq) != 'undefined') {
-          _gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
-          dcsMultiTrack(
-              'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
-              'WT.ti', 'SlideShow PageView'
-          );
-    }
+    
+    slideshow.bind("switch", function(idx) {
+      // (1.) add slide change listener for analytics
+      if(typeof(_gaq) != 'undefined') {
+        _gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
+        dcsMultiTrack(
+            'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
+            'WT.ti', 'SlideShow PageView'
+        );
+      }
     });
 </script>
