@@ -36,6 +36,7 @@ class BlogEntry < ActiveRecord::Base
     ["Full Width (default)", ""],
     ["Float Right", "right"],
     ["Slideshow", "slideshow"],
+    ["Video", "video"],
     ["No Display", "hidden"]
   ]
   

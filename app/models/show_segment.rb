@@ -36,6 +36,7 @@ class ShowSegment < ActiveRecord::Base
     ["Full Width (default)", ""],
     ["Float Right", "float"],
     ["Slideshow", "slideshow"],
+    ["Video", "video"],
     ["No Display", "hidden"]
   ]
   

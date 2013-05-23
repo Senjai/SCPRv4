@@ -71,7 +71,10 @@
   </div> <!-- #video container fluid -->
 
   <% content_for :footer do %>
-    <script>videoPage = new scpr.VideoPage();</script>
+    <script>
+      videoPage = new scpr.VideoPage();
+      ahClient = new AssetHost.Client();
+    </script>
   <% end %>
 
   <%= render "/shared/footer/layout_footer" %>

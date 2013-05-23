@@ -47,6 +47,7 @@ class NewsStory < ActiveRecord::Base
     ["Float Right (default)", ""],
     ["Wide", "wide"],
     ["Slideshow", "slideshow"],
+    ["Video", "video"],
     ["No Display", "hidden"]
   ]
   
