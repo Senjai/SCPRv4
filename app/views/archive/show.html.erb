@@ -10,7 +10,6 @@
     <li class="heading">View:</li>
     <li class="active"><a href="#news" data-toggle="tab">News</a></li>
     <li><a href="#blogs" data-toggle="tab">Blogs</a></li>
-    <li><a href="#video" data-toggle="tab">Video</a></li>
     <li><a href="#programs" data-toggle="tab">Programs</a></li>
   </ul>
 </nav>
@@ -103,50 +102,6 @@
 <!-- /blog-entries -->
 
 
-<!-- Video Shells -->
-<div id="video" class="tab-pane">
-<%= content_cache "archive:#{@date.to_i}:video_shells" do %>
-  <% register_content("content/video:new") if @date.to_i == Time.now.beginning_of_day %>
-  <h2>Video</h2>
-
-  <%= any_to_list? @video_shells, message: "There were no videos published on this date." do %>
-    <% @video_shells.each do |content| %>
-      <% register_content content %>
-
-      <div class="teaser cbase">
-        <div class="row-fluid">
-          <% if content.assets.present? %>
-            <div class="span4">
-              <%= render_asset content, 'thumbnail' %>
-            </div>
-            <div class="span20">
-          <% else %>
-            <div class="span24">
-          <% end %>
-            <div class="info">
-              <h3><%= link_to content.short_headline, content.link_path %></h3>
-              <span class="byline">
-                <% if content.category.present? %>
-                  <span class="categories"><%= link_to content.category.title, content.category.link_path %></span> 
-                  <span class="pipe">|</span>
-                <% end %>
-                <%= timestamp(content.published_at) %>
-                <span class="pipe">|</span> 
-                <%= render_byline content %>
-              </span>
-            </div>
-            
-            <%= content.teaser.html_safe %>
-          </div> <!-- span18/24 -->
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-<% end %>
-</div>
-<!-- /video shells -->
-
-
 <!-- Programs -->
 <div id="programs" class="tab-pane programs">
 <%= content_cache "archive:#{@date.to_i}:programs" do %>
@@ -213,7 +168,7 @@
   <% end %> <%# each grouped %>
 <% end %> <%# content cache %>
 </div>
-<!-- /video shells -->
+<!-- /programs -->
 
 </div> <!-- tab-content -->
 

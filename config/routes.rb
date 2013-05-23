@@ -75,12 +75,6 @@ Scprv4::Application.routes.draw do
   get '/about'                    => "home#about_us",        as: :about
   
   
-  # Videos
-  get '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
-  get '/video/'           => "video#index",   as: :video_index
-  get '/video/list/'      => "video#list",    as: :video_list
-  
-  
   # Article Email Sharing
   get   '/content/share' => 'content_email#new',    :as => :content_email
   post  '/content/share' => 'content_email#create', :as => :content_email
@@ -208,10 +202,6 @@ Scprv4::Application.routes.draw do
     end
     
     resources :kpcc_programs do
-      get "search", on: :collection, as: :search
-    end
-    
-    resources :video_shells do
       get "search", on: :collection, as: :search
     end
     

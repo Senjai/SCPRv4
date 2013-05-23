@@ -47,8 +47,7 @@
   <%= f.input :event_asset_scheme, 
               :collection    => NewsStory::ASSET_SCHEMES, 
               :include_blank => false,
-              :hint          => "Sets up the top-of-story formatting for assets attached through AssetHost. " \
-                             "NOTE: For videos, choose 'Wide'" %>
+              :hint          => "Sets up the top-of-story formatting for assets attached through AssetHost. " %>
 <% end %>
 
 <%= f.section "audio" %>

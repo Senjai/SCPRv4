@@ -609,24 +609,6 @@ a.with-icon {
     }
 }
 
-// Recent Videos
-.recent-videos {
-    ul {
-        margin: 0;
-        list-style: none;
-        li { margin-bottom: 10px; }
-    }
-    
-    p {
-        margin-bottom:0;
-        a {
-            @include font-headline();
-            @include font-shorthand(600, 15px);
-            color:$nearBlack;
-        }
-    }
-    span { @include font-sans-serif(normal, 11px); }
-}
 
 .missed-it-bucket {
     a {

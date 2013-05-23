@@ -9,7 +9,6 @@ Outpost::Config.configure do |config|
     "NewsStory", 
     "NprStory",
     "ContentShell", 
-    "VideoShell", 
     "PijQuery", 
     "BlogEntry",
     "Blog", 

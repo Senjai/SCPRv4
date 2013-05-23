@@ -48,11 +48,6 @@ Note that NewsStory and ContentShell are lumped together.
     <td>episodes</td>
     <td>shows/episode</td>
   </tr>
-  <tr>
-    <td>VideoShell</td>
-    <td>video</td>
-    <td>contentbase/videoshell</td>
-  </tr>
 </table>
 
 

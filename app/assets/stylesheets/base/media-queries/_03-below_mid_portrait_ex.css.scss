@@ -144,7 +144,7 @@
             .footer-nav {
                 position: absolute;
                 top: 0;
-                left: $compactNavW * -1;        
+                left: $compactNavW * -1;
                 width: $compactNavW;
                 &.active {
                     background-color: $footerBackground; 
@@ -226,10 +226,6 @@
         }
     // end sideNav
     
-    #video { @include vertify; } // Make the video page stretch out
-    #multimedia {
-        .video { margin-top: 0; }
-    }
     
     .program-masthead {
         @include vertify;

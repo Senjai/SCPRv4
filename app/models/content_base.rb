@@ -37,7 +37,6 @@ module ContentBase
     ShowSegment,
     ShowEpisode,
     BlogEntry,
-    VideoShell,
     ContentShell
   ]
   
@@ -46,8 +45,7 @@ module ContentBase
   CONTENT_MATCHES = {
     %r{\A/news/\d+/\d\d/\d\d/(\d+)/.*}                => 'NewsStory',
     %r{\A/blogs/[-_\w]+/\d+/\d\d/\d\d/(\d+)/.*}       => 'BlogEntry',
-    %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment',
-    %r{\A/video/(\d+)/.*}                             => 'VideoShell',
+    %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment'
   }
 
   OBJ_KEY_REGEX = %r{([^:]+):(\d+)}

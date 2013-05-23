@@ -6,7 +6,6 @@
 
 //= require content_carousel
 //= require audio
-//= require video
 //= require modal
 //= require gmapsloader
 //= require hero_fader
