@@ -5,7 +5,7 @@ gem 'rails', "~> 3.2"
 gem 'mysql2'
 gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0"
-gem 'thinking-sphinx', '~> 2.0', require: "thinking_sphinx"
+gem 'thinking-sphinx', '~> 2.0.0', require: "thinking_sphinx"
 gem 'turbo-sprockets-rails3'
 
 gem 'asset_host_client', github: "SCPR/asset_host_client"
