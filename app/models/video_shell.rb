@@ -13,22 +13,7 @@ class VideoShell < ActiveRecord::Base
   include Concern::Validations::PublishedAtValidation
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-
-  #-------------------
-  # Scopes
-
-  #-------------------
-  # Association
-
-  # -------------------
-  # Validation
-
-  #-------------------
-  # Callbacks
-
-  #-------------------
-  # Sphinx  
-
+  
   #--------------------
   # Teaser just returns the body.
   def teaser
