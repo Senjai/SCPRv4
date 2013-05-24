@@ -18,7 +18,7 @@
   %>
   
   <%# Automagically expire this cache when it ends %>
-  <%= cache ["show", "v4", @event], expires_in: expires do %>
+  <%= cache ["show", "v5", @event], expires_in: expires do %>
     <%= render "/events/event", event: @event %>
   <% end %>
 

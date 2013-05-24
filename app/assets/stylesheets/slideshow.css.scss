@@ -127,6 +127,10 @@
             width: 100%;
             display: none;
             
+            p {
+                text-align: left;
+            }
+            
             &.active {
                 display: block;
             }
