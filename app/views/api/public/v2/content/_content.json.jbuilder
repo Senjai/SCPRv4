@@ -27,8 +27,10 @@ json.cache! [Api::Public::V2::VERSION, "v1", content] do
     json.owner    asset.owner
 
     if asset.native.present?
-      json.type asset.native[:class]
-      json.id   asset.native[:id]
+      json.native do
+        json.type asset.native["class"]
+        json.id   asset.native["videoid"]
+      end
     end
 
     json.thumbnail do
