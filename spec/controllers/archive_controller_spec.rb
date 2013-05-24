@@ -39,7 +39,7 @@ describe ArchiveController do
       assigns(:date).should be_nil
     end
     
-    %w{ news_story show_segment blog_entry video_shell content_shell }.each do |content|
+    %w{ news_story show_segment blog_entry content_shell }.each do |content|
       it "only gets #{content.pluralize} published on requested date" do
         # Stub `publishing?` so the published_at date doesn't get updated
         stub_publishing_callbacks(content.classify.constantize)

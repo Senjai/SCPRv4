@@ -17,3 +17,4 @@
 /spec/fixtures/media/audio/upload
 /tmp
 /.sass-cache
+.DS_Store

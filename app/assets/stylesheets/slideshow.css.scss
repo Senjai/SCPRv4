@@ -4,7 +4,7 @@
 //      .slide: 5
 //      .overlay-nav: 10
 
-.slideview {    
+.slideview {
     position: relative;
     
     .slideshow-header {
@@ -126,6 +126,10 @@
             text-align: center;
             width: 100%;
             display: none;
+            
+            p {
+                text-align: left;
+            }
             
             &.active {
                 display: block;

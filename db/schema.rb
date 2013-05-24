@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130424043040) do
+ActiveRecord::Schema.define(:version => 20130523180121) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false

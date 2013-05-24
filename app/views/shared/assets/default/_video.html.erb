@@ -1,0 +1,15 @@
+<div class="asset-block">
+  <div class="contentasset media-scaler">
+    <%= assets.first.eight.tag %>
+  </div>
+  
+  <h4><%= assets.first.owner %></h4>
+
+  <% if assets.first.caption %>
+    <p><%= assets.first.caption %></p>
+  <% end %>
+</div>
+
+<script>
+  ahClient = new AssetHost.Client();
+</script>

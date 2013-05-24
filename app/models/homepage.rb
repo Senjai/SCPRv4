@@ -75,15 +75,6 @@ class Homepage < ActiveRecord::Base
     
     citems = self.content.collect { |c| c.content || nil }.compact
 
-    # -- More Headlines -- #
-    
-    # Anything with a news category is eligible
-    headlines = ContentBase.search({
-      :limit       => 12,
-      :without     => { category: '' },
-      :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } },
-    })
-    
     # -- Section Blocks -- #
     
     sections = []
@@ -145,12 +136,7 @@ class Homepage < ActiveRecord::Base
     # now sort sections by the sorttime
     sections.sort_by! {|s| s[:sorttime] }.reverse!
     
-    now = DateTime.now()
-    
-    return {
-      :headlines  => headlines,
-      :sections   => sections
-    }
+    sections
   end
   
   #---------------------

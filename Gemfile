@@ -38,6 +38,7 @@ gem 'ckeditor_rails', "~> 4.0.0"
 gem 'select2-rails', '~> 3.3'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
+gem 'escape_utils'
 gem 'simple_form', "~> 2.0"
 gem 'jbuilder'
 

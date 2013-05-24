@@ -64,8 +64,7 @@ module Api::Private::V2
         "news"     => [NewsStory, ContentShell],
         "blogs"    => [BlogEntry],
         "segments" => [ShowSegment],
-        "episodes" => [ShowEpisode],
-        "video"    => [VideoShell]
+        "episodes" => [ShowEpisode]
       }
       
       if params[:types]

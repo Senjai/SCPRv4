@@ -256,65 +256,6 @@
   margin-top: ($navbarHeight - $elementHeight) / 2;
 }
 
-// Popover arrows
-// -------------------------
-// For tipsies and popovers
-// @mixin popoverArrowTop($arrowWidth: 5px, $color: $black) {
-//   bottom: 0;
-//   left: 50%;
-//   margin-left: -$arrowWidth;
-//   border-left: $arrowWidth solid transparent;
-//   border-right: $arrowWidth solid transparent;
-//   border-top: $arrowWidth solid $color;
-// }
-// @mixin popoverArrowLeft($arrowWidth: 5px, $color: $black) {
-//   top: 50%;
-//   right: 0;
-//   margin-top: -$arrowWidth;
-//   border-top: $arrowWidth solid transparent;
-//   border-bottom: $arrowWidth solid transparent;
-//   border-left: $arrowWidth solid $color;
-// }
-// @mixin popoverArrowBottom($arrowWidth: 5px, $color: $black) {
-//   top: 0;
-//   left: 50%;
-//   margin-left: -$arrowWidth;
-//   border-left: $arrowWidth solid transparent;
-//   border-right: $arrowWidth solid transparent;
-//   border-bottom: $arrowWidth solid $color;
-// }
-// @mixin popoverArrowRight($arrowWidth: 5px, $color: $black) {
-//   top: 50%;
-//   left: 0;
-//   margin-top: -$arrowWidth;
-//   border-top: $arrowWidth solid transparent;
-//   border-bottom: $arrowWidth solid transparent;
-//   border-right: $arrowWidth solid $color;
-// }
-// 
-// // Grid System
-// // -----------
-// 
-// // Table columns
-// @mixin tableColumns($columnSpan: 1) {
-//   float: none; // undo default grid column styles
-//   width: (($gridColumnWidth) * $columnSpan) + ($gridGutterWidth * ($columnSpan - 1)) - 16; // 16 is total padding on left and right of table cells
-//   margin-left: 0; // undo default grid column styles
-//}
-
-// Make a Grid
-// Use .makeRow and .makeColumn to assign semantic layouts grid system behavior
-// @mixin makeRow() {
-//   margin-left: $gridGutterWidth * -1;
-//   @include clearfix();
-// }
-// @mixin makeColumn($columns: 1) {
-//   float: left;
-//   margin-left: $gridGutterWidth;
-//   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
-// }
-
-
 
 // Fixed Grid
 @mixin gridCore($gridColumnWidth, $gridGutterWidth) {

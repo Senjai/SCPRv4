@@ -5,7 +5,6 @@ module Job
   class Base
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
-
     class << self
       def namespace
         Rails.application.config.scpr.resque_queue
@@ -26,15 +25,28 @@ module Job
         end
       end
 
-      #--------------------
+      #---------------
       
+      def cache(*args)
+        cacher.cache(*args)
+      end
+
+
+      private
+
       def logger
         @logger ||= Logger.new(Rails.root.join("log", "jobs.log"))
       end
+
+      #---------------
+
+      def cacher
+        @cacher ||= CacheController.new
+      end
     end
+    
 
-
-    #--------------------
+    #---------------
 
     def log(*args)
       self.class.log(*args)

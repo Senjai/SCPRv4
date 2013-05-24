@@ -1,0 +1,14 @@
+<% articles.first(4).each do |article| %>
+
+<div class="row-fluid">
+  <div class="span5">
+    <%= render_asset article, 'thumbnail', true %>
+  </div>
+  <div class="span19">
+    <a href="<%= article.link_path %>" class="track-event" data-ga-category="Popular Box" data-ga-action="Most Viewed" data-ga-label="<%= article.obj_key %> :: <%= j article.headline %>">
+      <%= article.short_headline %>
+    </a>
+  </div>
+</div> <!-- row -->
+
+<% end %>

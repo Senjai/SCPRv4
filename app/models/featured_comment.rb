@@ -21,7 +21,6 @@ class FeaturedComment < ActiveRecord::Base
     "BlogEntry",
     "ContentShell",
     "ShowSegment",
-    "VideoShell",
     "Event"
   ]
 

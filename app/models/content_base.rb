@@ -35,7 +35,6 @@ module ContentBase
     ShowSegment,
     ShowEpisode,
     BlogEntry,
-    VideoShell,
     ContentShell
   ]
   
@@ -44,8 +43,7 @@ module ContentBase
   CONTENT_MATCHES = {
     %r{\A/news/\d+/\d\d/\d\d/(\d+)/.*}                => 'NewsStory',
     %r{\A/blogs/[-_\w]+/\d+/\d\d/\d\d/(\d+)/.*}       => 'BlogEntry',
-    %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment',
-    %r{\A/video/(\d+)/.*}                             => 'VideoShell',
+    %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment'
   }
 
   #--------------------
@@ -112,6 +110,7 @@ module ContentBase
   #--------------------
   # Look to CONTENT_MATCHES to see if the passed-in URL
   # corresponds to any model.
+  # Only find published articles.
   def obj_by_url(url)
     begin
       u = URI.parse(url)
@@ -120,8 +119,11 @@ module ContentBase
     end
     
     if match = CONTENT_MATCHES.find { |k,_| u.path =~ k }
-      key = [match[1].constantize.content_key, $~[1]].join(":")
-      Outpost.obj_by_key(key)
+      key       = [match[1].constantize.content_key, $~[1]].join(":")
+      article   = Outpost.obj_by_key(key)
+      article && article.published? ? article : nil
+    else
+      nil
     end
   end
   

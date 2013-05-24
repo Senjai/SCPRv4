@@ -80,6 +80,12 @@
     }
     
     .homepage-top {
+        .audiovision-block {
+            border-bottom: 1px solid $grayLighter;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
         .events-forum {
             border: none !important;
             padding-left: 0 !important;
@@ -111,7 +117,7 @@
         .content-carousel {
             .row-fluid {
                 @include makeFluidRow;
-                > .span6 {                  
+                > .span6 {
                     @include gridFluidSpan(12);
                     &:nth-child(even) { margin-right: 0px; }
                     &:nth-child(odd) { margin-left: 0px; }
@@ -121,26 +127,6 @@
     // end Content Carousel
     
     .event.content-block .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
-    
-    // latest videos: 2 cols
-        #multimedia .latest-videos {
-            .row-fluid { 
-                @include makeFluidRow; 
-                
-                > .span6 {
-                    @include gridFluidSpan(12);
-                    &:nth-of-type(2) { 
-                        margin-right: 0; 
-                        &:after { 
-                            content: "."; 
-                            visibility: none;
-                        } 
-                    }
-                    &:nth-of-type(3) { margin-left: 0; }
-                }
-            }
-        }
-    // end latest videos
     
     #program-external-header { @include makeFluidRow; }
     .sharing-tools.horizontal h5 {
@@ -165,7 +151,20 @@
         }
         
         &.next {
-            background-image: url(image_path('overlay-next-dark-sm.png'));          
+            background-image: url(image_path('overlay-next-dark-sm.png'));
         }
+    }
+    
+    // Make Blog Sponsorship fit smaller screens
+    .blog-logo {
+      &.large {
+        &.education {
+          &:after {
+            background-size:contain;
+            width:180px;
+            height:27px;
+          }
+        }
+      }
     }
 }

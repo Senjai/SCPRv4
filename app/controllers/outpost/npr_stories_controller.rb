@@ -47,7 +47,7 @@ class Outpost::NprStoriesController < Outpost::BaseController
   
   def sync
     breadcrumb "Sync"
-    NprStory.async_sync_with_api
+    Resque.enqueue(Job::NprFetch)
     render "sync"
   end
 

@@ -36,6 +36,7 @@ class ShowSegment < ActiveRecord::Base
     ["Full Width (default)", ""],
     ["Float Right", "float"],
     ["Slideshow", "slideshow"],
+    ["Video", "video"],
     ["No Display", "hidden"]
   ]
   
@@ -44,7 +45,7 @@ class ShowSegment < ActiveRecord::Base
   
   #-------------------
   # Associations
-  belongs_to :show,   class_name: "KpccProgram"
+  belongs_to :show, class_name: "KpccProgram", touch: true
   has_many :rundowns, class_name: "ShowRundown", foreign_key: "segment_id", dependent: :destroy
   has_many :episodes, through: :rundowns, source: :episode, order: "air_date asc", autosave: true
   

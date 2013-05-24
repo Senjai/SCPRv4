@@ -14,4 +14,10 @@ class Outpost::VideoShellsController < Outpost::ResourceController
     l.filter :status, collection: -> { ContentBase.status_text_collect }
     l.filter :bylines, collection: -> { Bio.select_collection }
   end
+
+  private
+
+  def search
+    # hack attack
+  end
 end

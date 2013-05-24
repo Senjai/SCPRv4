@@ -19,11 +19,6 @@ window.openCMS = (newWin) ->
                 re: new RegExp "^/news/(.+)/(.+)/(.+)/(.+)/(.+)/?$", "gi"
                 cmsPath: "/outpost/news_stories"
                 idSlot: 4
-            },
-            { 
-                re: new RegExp "^/video/(.+)/(.+)/?$", "gi"
-                cmsPath: "/outpost/video_shells"
-                idSlot: 1
             }
         ]
 
@@ -38,7 +33,7 @@ window.openCMS = (newWin) ->
         newWin.focus()
     else
         newWin.close()
-        alert "Only News Stories, Blog Entries, Show Segments, and Video Shells are supported."
+        alert "Only News Stories, Blog Entries, and Show Segments are supported."
 
 # Bookmark JS
 # Paste here to turn it into bookmark-safe code: http://ted.mielczarek.org/code/mozilla/bookmarklet.html
