@@ -23,16 +23,16 @@ ActiveRecord::Schema.define(:version => 20130523180121) do
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_id",                                         :null => false
-    t.integer "asset_order",                        :default => 99, :null => false
+    t.integer "position",                           :default => 99, :null => false
     t.integer "asset_id",                                           :null => false
     t.text    "caption",      :limit => 2147483647,                 :null => false
     t.string  "content_type", :limit => 20
   end
 
-  add_index "assethost_contentasset", ["asset_order"], :name => "index_assethost_contentasset_on_asset_order"
   add_index "assethost_contentasset", ["content_id"], :name => "content_type_id"
   add_index "assethost_contentasset", ["content_id"], :name => "index_assethost_contentasset_on_content_id"
   add_index "assethost_contentasset", ["content_type", "content_id"], :name => "index_assethost_contentasset_on_content_type_and_content_id"
+  add_index "assethost_contentasset", ["position"], :name => "index_assethost_contentasset_on_asset_order"
 
   create_table "auth_group", :force => true do |t|
     t.string "name", :limit => 80, :null => false
@@ -780,14 +780,14 @@ ActiveRecord::Schema.define(:version => 20130523180121) do
   add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
 
   create_table "shows_rundown", :force => true do |t|
-    t.integer "episode_id",    :null => false
-    t.integer "segment_id",    :null => false
-    t.integer "segment_order", :null => false
+    t.integer "episode_id", :null => false
+    t.integer "segment_id", :null => false
+    t.integer "position",   :null => false
   end
 
   add_index "shows_rundown", ["episode_id"], :name => "shows_rundown_episode_id"
+  add_index "shows_rundown", ["position"], :name => "index_shows_rundown_on_segment_order"
   add_index "shows_rundown", ["segment_id"], :name => "shows_rundown_segment_id"
-  add_index "shows_rundown", ["segment_order"], :name => "index_shows_rundown_on_segment_order"
 
   create_table "shows_segment", :force => true do |t|
     t.integer  "show_id",                                    :null => false
