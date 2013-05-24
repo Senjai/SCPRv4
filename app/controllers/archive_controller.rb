@@ -27,7 +27,6 @@ class ArchiveController < ApplicationController
       @show_segments  = ShowSegment.published.where(condition)
       @show_episodes  = ShowEpisode.published.where("air_date=?", @date)
       @blog_entries   = BlogEntry.published.where(condition).includes(:blog)
-      @video_shells   = VideoShell.published.where(condition)
       @content_shells = ContentShell.published.where(condition)
     end
     

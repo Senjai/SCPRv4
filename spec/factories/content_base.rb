@@ -30,12 +30,6 @@ FactoryGirl.define do
   trait :draft do
     status 0
   end
-
-# VideoShell ##########################################################
-  factory :video_shell do
-    required_cb_fields
-    slug { headline.parameterize }
-  end
   
 
 # NewsStory #########################################################

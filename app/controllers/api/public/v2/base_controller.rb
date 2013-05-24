@@ -1,5 +1,5 @@
 module Api::Public::V2
-  VERSION   = "2.2.1"
+  VERSION   = "2.3.1"
   TYPE      = "public"
   
   class BaseController < ::ActionController::Base

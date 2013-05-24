@@ -134,18 +134,7 @@ a.modal-toggler {
             height: 350px;
         }
     } // .google-maps
-    
-    &.new-site-video {
-        @include modal-light;
-        padding: 20px 0 0 28px;
-        width: 723px;
-        min-height: 425px;
-        margin-left:-361px;
-        left: 50%;
-        top: 100px;
-        .arrow-up { display: none; }
-    } // .new-site-video
-    
+
     &.episode-guide {
         @include modal-light;
         width:650px;
@@ -156,10 +145,4 @@ a.modal-toggler {
             left: 100px;
         }
     } // .episode-guide
-    
-    &.videos-list {
-        @include modal-dark;
-        min-height: 700px;
-        @include gridFluidSpan(22);
-    } // .video-list
 }
