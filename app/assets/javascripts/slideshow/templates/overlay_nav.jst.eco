@@ -1,0 +1,2 @@
+<div class="bar prev <%=@prev_class%>"></div>
+<div class="bar next <%=@next_class%>"></div>

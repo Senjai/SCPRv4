@@ -4,6 +4,9 @@
 //= require_directory ./t_listen/
 //= require swfobject.min
 
+//= require_tree ./slideshow/templates
+//= require slideshow/slideshow
+
 //= require content_carousel
 //= require audio
 //= require modal
