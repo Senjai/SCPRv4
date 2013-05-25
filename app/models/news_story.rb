@@ -26,7 +26,6 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
-  include Concern::Methods::ContentJsonMethods
 
   self.table_name = 'news_story'
   has_secretary

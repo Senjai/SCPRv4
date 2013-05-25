@@ -18,7 +18,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  include Concern::Methods::ContentJsonMethods
 
   ROUTE_KEY = "episode"
   
@@ -95,16 +94,7 @@ class ShowEpisode < ActiveRecord::Base
   def byline
     self.show.title
   end
-  
-  #----------
-  
-  def json
-    super.merge({
-      :teaser         => self.teaser,
-      :short_headline => self.headline
-    })
-  end
-  
+
   #----------
   
   def route_hash

@@ -28,7 +28,6 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
-  include Concern::Methods::ContentJsonMethods
 
   ROUTE_KEY = "segment"
   
