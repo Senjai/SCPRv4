@@ -4,6 +4,7 @@
 <div class="viewport">
   <!-- MASTHEAD-->
   <%= render "/shared/masthead/layout_header" %>
+  <%= render "/shared/ads/dfp", ad_key: :membership_leaderboard %>
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
@@ -83,7 +84,7 @@
     <section class="homepage-top">
       <div class="row-fluid">
         <section class="span16 relative">
-
+          <%= render "/shared/widgets/my_ballot" %> <%# May Elections %>
           <%= yield %>
           <div class="vert-divider"></div>
         </section>
