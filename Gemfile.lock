@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/SCPR/asset_host_client.git
-  revision: 8004f738e27243338c4d5e595fbf2116f29d0956
+  revision: 9e109e2855f091c547be867bf88966f304b88ab1
   specs:
     asset_host_client (1.0.1)
       faraday (~> 0.8)
