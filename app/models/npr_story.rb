@@ -231,7 +231,7 @@ class NprStory < ActiveRecord::Base
         :note    => "Imported from NPR: #{npr_story.link_for('html')}"
       )
       
-      if asset["id"]
+      if asset && asset["id"]
         content_asset = ContentAsset.new(
           :position   => 0,
           :asset_id   => asset["id"],
