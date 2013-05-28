@@ -230,12 +230,12 @@ class NprStory < ActiveRecord::Base
         :owner   => [image.producer, image.provider].join("/"),
         :note    => "Imported from NPR: #{npr_story.link_for('html')}"
       )
-      
-      if asset && asset["id"]
+
+      if asset && asset.id
         content_asset = ContentAsset.new(
           :position   => 0,
-          :asset_id   => asset["id"],
-          :caption    => asset["caption"].to_s
+          :asset_id   => asset.id,
+          :caption    => asset.caption.to_s
         )
         
         article.assets << content_asset
