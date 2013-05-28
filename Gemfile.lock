@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/SCPR/asset_host_client.git
-  revision: 64ee24c2008a6dcd81e893ede9385673c8b728d6
+  revision: 8004f738e27243338c4d5e595fbf2116f29d0956
   specs:
-    asset_host_client (1.0.0)
+    asset_host_client (1.0.1)
       faraday (~> 0.8)
       faraday_middleware (~> 0.8)
       rails (>= 3.0)
@@ -216,7 +216,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     mono_logger (1.1.0)
-    multi_json (1.7.3)
+    multi_json (1.7.4)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
     mysql2 (0.3.11)
