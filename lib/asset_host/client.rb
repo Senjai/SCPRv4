@@ -22,6 +22,7 @@ module AssetHost
         request.url "/api/as_asset"
         request.params = @params.merge(params)
         request.params['auth_token'] = @auth_token
+        request.headers['Content-Type'] = 'application/json'
       end
       
       response.body
