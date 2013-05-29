@@ -5,9 +5,9 @@
     "extension": "jpg",
     "id": 1,
     "is_rich": false,
-    "prerender": true,
+    "prerender": false,
     "size": "88x88#",
-    "updated_at": "2012-07-01T06:55:31Z"
+    "updated_at": "2013-04-04T23:15:28Z"
   },
   {
     "code": "lsquare",
@@ -35,9 +35,9 @@
     "extension": "jpg",
     "id": 4,
     "is_rich": true,
-    "prerender": true,
+    "prerender": false,
     "size": "620x414>",
-    "updated_at": "2011-06-24T22:42:13Z"
+    "updated_at": "2013-04-04T23:15:53Z"
   },
   {
     "code": "full",
@@ -75,9 +75,9 @@
     "extension": "jpg",
     "id": 9,
     "is_rich": false,
-    "prerender": true,
+    "prerender": false,
     "size": "600x350>",
-    "updated_at": "2012-06-20T17:46:15Z"
+    "updated_at": "2013-04-04T23:16:16Z"
   },
   {
     "code": "three",
@@ -95,9 +95,9 @@
     "extension": "jpg",
     "id": 11,
     "is_rich": false,
-    "prerender": true,
+    "prerender": false,
     "size": "600x334>",
-    "updated_at": "2012-06-20T17:41:26Z"
+    "updated_at": "2013-04-04T23:16:25Z"
   },
   {
     "code": "small",
