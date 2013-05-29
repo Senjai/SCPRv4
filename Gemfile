@@ -106,7 +106,7 @@ end
 group :test do
   gem 'simplecov', require: false
   gem "sqlite3"
-  gem 'factory_girl_rails', "~> 4.1"
+  gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'capybara', "~> 2.0"
   gem 'shoulda-matchers'
