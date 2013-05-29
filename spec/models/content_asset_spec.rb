@@ -4,18 +4,12 @@ describe ContentAsset do
   it { should belong_to :content }
   
   describe "asset" do
-    it "returns @_asset if assigned" do
+    it "finds the asset and returns it" do
       content_asset = build :asset
-      content_asset.instance_variable_set(:@_asset, "some asset")
-      content_asset.asset.should eq "some asset"
+      content_asset.asset.should be_a AssetHost::Asset
     end
     
-    it "finds the asset if @_asset not assigned" do
-      content_asset = build :asset
-      content_asset.asset.should be_a AssetHost::Asset # JSON response
-    end
-    
-    it "Adds in a fallback caption if @_asset is a Fallback" do
+    it "Adds in a fallback caption if asset is a Fallback" do
       content_asset = build :asset
       content_asset.stub(:asset) { AssetHost::Asset::Fallback.new }
       content_asset.asset.caption.should match "We encountered a problem"
