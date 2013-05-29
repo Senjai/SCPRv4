@@ -15,13 +15,13 @@ class ContentAsset < ActiveRecord::Base
   
   def asset
     @asset ||= begin
-      asset = AssetHost::Asset.find(self.asset_id)
+      _asset = AssetHost::Asset.find(self.asset_id)
 
-      if asset.is_a? AssetHost::Asset::Fallback
+      if _asset.is_a? AssetHost::Asset::Fallback
         self.caption = "We encountered a problem, and this photo is currently unavailable."
       end
     
-      asset
+      _asset
     end
   end
 end
