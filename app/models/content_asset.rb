@@ -14,18 +14,14 @@ class ContentAsset < ActiveRecord::Base
   #----------
   
   def asset
-    if @_asset
-      return @_asset
-    end
+    @asset ||= begin
+      asset = AssetHost::Asset.find(self.asset_id)
 
-    # otherwise load it
-    @_asset = AssetHost::Asset.find(self.asset_id)
-
-    # Catch a fallback and push in a caption
-    if @_asset.is_a? AssetHost::Asset::Fallback
-      self.caption = "We encountered a problem, and this photo is currently unavailable."
-    end
+      if asset.is_a? AssetHost::Asset::Fallback
+        self.caption = "We encountered a problem, and this photo is currently unavailable."
+      end
     
-    return @_asset
+      asset
+    end
   end
 end
