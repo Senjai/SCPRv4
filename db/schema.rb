@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530001150) do
+ActiveRecord::Schema.define(:version => 20130530203911) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false
@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(:version => 20130530001150) do
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["mp3"], :name => "index_media_audio_on_mp3"
   add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
+  add_index "media_audio", ["type"], :name => "index_media_audio_on_type"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
@@ -705,8 +706,10 @@ ActiveRecord::Schema.define(:version => 20130530001150) do
     t.string   "url",          :limit => 200
     t.string   "article_id"
     t.boolean  "new",                                :default => true, :null => false
-    t.string   "organization"
+    t.string   "type"
   end
+
+  add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
 
   create_table "schedule_program", :force => true do |t|
     t.integer  "day",                             :null => false
