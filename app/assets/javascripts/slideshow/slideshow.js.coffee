@@ -40,8 +40,9 @@ class scpr.Slideshow
                 total:  @total
 
             @slides = new Slideshow.Slides
-                collection:   @assets
-                start:        @start
+                collection:     @assets
+                start:          @start
+                wrapper:        @el
 
             @slides.overlayNav = @overlayNav
             @overlayNav.slides = @slides
@@ -68,7 +69,7 @@ class scpr.Slideshow
 
             #----------
             # Fill in the main element with all the pieces
-            @el.html @header
+            @el.append @header
             @header.append @nav.el
             @header.append @traytoggler.el
             
@@ -227,7 +228,7 @@ class scpr.Slideshow
         #----------
 
         render: ->
-            $(".static-slides .slide").each (i, el) =>
+            $(".static-slides .slide", @options.wrapper).each (i, el) =>
                 $(@el).append el
 
                 if i == @options.start
