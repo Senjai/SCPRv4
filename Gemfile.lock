@@ -23,9 +23,9 @@ GIT
 
 GIT
   remote: git://github.com/bricker/npr.git
-  revision: 11b08f58f7acd59716cfad4bceac29a35a885cf7
+  revision: 700132be9b6138285ded3881bbb6a589e7a6eaa5
   specs:
-    npr (0.1.2)
+    npr (1.0.1)
       faraday (>= 0.8.0)
       faraday_middleware (>= 0.9.0)
 
@@ -136,7 +136,7 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     fakeweb (1.3.0)
-    faraday (0.8.6)
+    faraday (0.8.7)
       multipart-post (~> 1.1)
     faraday_middleware (0.9.0)
       faraday (>= 0.7.4, < 0.9)
