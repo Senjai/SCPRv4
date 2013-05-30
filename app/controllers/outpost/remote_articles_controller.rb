@@ -15,14 +15,14 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
 
     list_per_page 50
 
-    column :organization
+    column :type, header: "Organization", display: ->(r) { r.class::ORGANIZATION }
     column :headline
     column :published_at, sortable: true, default_sort_mode: "desc"
     column :teaser
     column :url
     column :article_id, header: "Remote ID"
 
-    filter :organization, collection: -> { RemoteArticle.organization_select_collection }
+    filter :type, title: "Organization", collection: -> { RemoteArticle.types_select_collection }
   end
 
   #------------------
@@ -49,7 +49,7 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
   
   def sync
     breadcrumb "Sync"
-    Resque.enqueue(Job::NprFetch)
+    Resque.enqueue(Job::SyncRemoteArticles)
     render "sync"
   end
 
