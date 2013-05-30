@@ -23,31 +23,32 @@
 
 <br/>
 
-<script type="text/javascript">
-  var query, keyval;
-  var params = {};
-  query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
-  
-  var slideshow;
+<script type="text/javascript"> 
+  (function() {
+    var query, keyval;
+    var params = {};
+    query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
 
-  slideshow = new scpr.Slideshow({
-      <% if params[:id].present? %>
-        start: params["slide"],
-        deeplink: true,
-      <% end %>
-        el: "#asset_slideshow_<%= content.id %>",
-        staticSlides: "staticSlides<%=content.id%>",
-        assets: <%= assets.to_json.html_safe %>
-  });
-
-  slideshow.bind("switch", function(idx) {
-      // (1.) add slide change listener for analytics
-      if(typeof(_gaq) != 'undefined') {
-        _gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
-        dcsMultiTrack(
-            'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
-            'WT.ti', 'SlideShow PageView'
-        );
-      }
+    var slideshow;
+    slideshow = new scpr.Slideshow({
+        <% if params[:id].present? %>
+          start: params["slide"],
+          deeplink: true,
+        <% end %>
+          el: "#asset_slideshow_<%= content.id %>",
+          staticSlides: "staticSlides<%=content.id%>",
+          assets: <%= assets.to_json.html_safe %>
     });
+
+    slideshow.bind("switch", function(idx) {
+        // (1.) add slide change listener for analytics
+        if(typeof(_gaq) != 'undefined') {
+            _gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
+            dcsMultiTrack(
+                'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
+                'WT.ti', 'SlideShow PageView'
+            );
+        }
+    });
+  }());
 </script>
