@@ -1,4 +1,4 @@
-class Outpost::NprStoriesController < Outpost::BaseController
+class Outpost::RemoteArticlesController < Outpost::BaseController
   # We don't want to include the Outpost actions here,
   # so we include stuff manually.
   include Outpost::Controller::Helpers
@@ -7,19 +7,22 @@ class Outpost::NprStoriesController < Outpost::BaseController
   
   #------------------
   # Outpost
-  self.model = NprStory
+  self.model = RemoteArticle
 
   define_list do
     list_default_order "published_at"
     list_default_sort_mode "desc"
 
     list_per_page 50
-    
+
+    column :organization
     column :headline
     column :published_at, sortable: true, default_sort_mode: "desc"
     column :teaser
-    column :link
-    column :npr_id, header: "NPR ID"
+    column :url
+    column :article_id, header: "Remote ID"
+
+    filter :organization, collection: -> { RemoteArticle.organization_select_collection }
   end
 
   #------------------

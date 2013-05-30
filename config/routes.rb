@@ -278,7 +278,7 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
     
-    resources :npr_stories, only: [:index] do
+    resources :remote_articles, only: [:index] do
       member do
         post "import", as: :import
         put "skip", as: :skip
