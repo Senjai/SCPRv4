@@ -1,50 +1,54 @@
-<div id="asset_slideshow_<%= content.id %>" class="slideview"></div>
+<div id="asset_slideshow_<%= content.id %>" class="slideview">
 
-<div class="static-slides">
-<% content.assets.each do |asset| %>
-  <div class="slide">
-    <div class="asset-block">
-      <div class="contentasset">
-        <%= link_to asset.eight.tag, content.link_path %> 
+  <div class="static-slides">
+  <% content.assets.each do |asset| %>
+    <div class="slide">
+      <div class="asset-block">
+        <div class="contentasset">
+          <%= link_to asset.eight.tag, content.link_path %> 
+        </div>
+
+        <h4><%= asset.owner %></h4>
+
+      <% if asset.caption.present? %>
+        <p><%= asset.caption %></p>
+      <% end %>
+
       </div>
-
-      <h4><%= asset.owner %></h4>
-
-    <% if asset.caption.present? %>
-      <p><%= asset.caption %></p>
-    <% end %>
-
     </div>
+  <% end %>
   </div>
-<% end %>
+
 </div>
 
 <br/>
 
-<script type="text/javascript">
-  var query, keyval;
-  var params = {};
-  query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
-  
+<script type="text/javascript"> 
+  (function() {
+    var query, keyval;
+    var params = {};
+    query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
 
+    var slideshow;
     slideshow = new scpr.Slideshow({
-      <% if params[:id].present? %>
-        start: params["slide"],
-        deeplink: true,
-      <% end %>
-        el: "#asset_slideshow_<%= content.id %>",
-        assets: <%= assets.to_json.html_safe %>
+        <% if params[:id].present? %>
+          start: params["slide"],
+          deeplink: true,
+        <% end %>
+          el: "#asset_slideshow_<%= content.id %>",
+          staticSlides: "staticSlides<%=content.id%>",
+          assets: <%= assets.to_json.html_safe %>
     });
-    
-    
+
     slideshow.bind("switch", function(idx) {
-      // (1.) add slide change listener for analytics
-      if(typeof(_gaq) != 'undefined') {
-        _gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
-        dcsMultiTrack(
-            'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
-            'WT.ti', 'SlideShow PageView'
-        );
-      }
+        // (1.) add slide change listener for analytics
+        if(typeof(_gaq) != 'undefined') {
+            _gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
+            dcsMultiTrack(
+                'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
+                'WT.ti', 'SlideShow PageView'
+            );
+        }
     });
+  }());
 </script>
