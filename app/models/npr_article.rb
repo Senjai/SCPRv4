@@ -148,7 +148,9 @@ class NprArticle < RemoteArticle
     #-------------------
     # Add in the primary asset if it exists
     if image = npr_story.primary_image
-      assethost = AssetHost::Client.new(auth_token: Rails.application.config.api["assethost"]["token"])
+      assethost = AssetHost::Client.new(
+        :auth_token => Rails.application.config.api["assethost"]["token"]
+      )
       
       asset = assethost.create(
         :url     => image.src,
