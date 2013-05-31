@@ -19,7 +19,7 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
     column :headline
     column :published_at, sortable: true, default_sort_mode: "desc"
     column :teaser
-    column :url
+    column :url, display: :display_link
     column :article_id, header: "Remote ID"
 
     filter :type, title: "Organization", collection: -> { RemoteArticle.types_select_collection }
@@ -65,12 +65,12 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
   
   def skip
     if @record.update_attributes(new: false)
-      flash[:notice] = "Skipped NPR Story: \"#{@record.to_title}\""
+      flash[:notice] = "Skipped Remote Article: \"#{@record.to_title}\""
     else
-      flash[:alert] = "Could not skip NPR Story"
+      flash[:alert] = "Could not skip Remote Article"
     end
     
-    redirect_to outpost_npr_stories_path
+    redirect_to outpost_remote_articles_path
   end
 
   #--------------
