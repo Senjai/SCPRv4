@@ -15,15 +15,31 @@ class ChrArticle < RemoteArticle
       # below that and use NPR::Client directly, and then copy
       # the behavior of NPR::Story.find
       client = NPR::API::Client.new(url: API_ROOT)
+
       
-      response = client.query(
-        :path   => API_LIST_PATH, 
-        :apiKey => "", # Don't send our NPR API key to Publish2
-        :output => "", # Publish2 uses the "format" param instead
-        :format => "json",
-        :user   => Rails.application.config.api['publish2']['user'],
-        :pass   => Rails.application.config.api['publish2']['pass']
-      )
+      ##########
+      # Publish2 API is wrong, so we have to work around it until they fix it.
+      _response = client.send(:connection).get do |request|
+        request.url API_LIST_PATH
+        request.headers['Content-Type'] = "application/json"
+
+        request.params = {
+          :apiKey => "", # Don't send our NPR API key to Publish2
+          :output => "", # Publish2 uses the "format" param instead
+          :format => "json",
+          :user   => Rails.application.config.api['publish2']['user'],
+          :pass   => Rails.application.config.api['publish2']['pass']
+        }
+      end
+      
+      if _response.body["list"]
+        _response.body["list"]["link"]    = [_response.body["list"]["link"]]
+        _response.body["list"]["story"]   = _response.body.delete("story")
+      end
+
+      response = NPR::API::Response.new(_response)
+      ##########
+
 
       if response.list
         npr_stories = Array.wrap(response.list.stories)
