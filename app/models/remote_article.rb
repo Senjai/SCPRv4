@@ -5,8 +5,8 @@ class RemoteArticle < ActiveRecord::Base
   logs_as_task
   
   ADAPTERS = [
-#    CHRArticle,
-    "NprArticle"
+    "NprArticle",
+    "ChrArticle"
   ]
 
   #---------------
