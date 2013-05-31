@@ -31,6 +31,8 @@ class ChrArticle < RemoteArticle
 
       npr_stories = Array.wrap(response.list.stories)
 
+      log "#{npr_stories.size} CHR stories found from the past hour (max 20)"
+
       added = []
       npr_stories.each do |npr_story|
         # Check if this story was already cached - if not, cache it.
