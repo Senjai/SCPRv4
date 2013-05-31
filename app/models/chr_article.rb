@@ -174,7 +174,7 @@ class ChrArticle < RemoteArticle
         :title   => image.title,
         :caption => image.caption,
         :owner   => [image.producer, image.provider].join("/"),
-        :note    => "Imported from NPR: #{npr_story.link_for('html')}"
+        :note    => "Imported from CHR: #{npr_story.link_for('html')}"
       )
       
       if asset["id"]
