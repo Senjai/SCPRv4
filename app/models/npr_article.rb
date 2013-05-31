@@ -43,7 +43,7 @@ class NprArticle < RemoteArticle
           :action           => "or")
         .order("date descending").limit(20).to_a
       
-      log "#{npr_storys.size} stories found from the past hour (max 20)"
+      log "#{npr_stories.size} stories found from the past hour (max 20)"
       
       added = []
       npr_stories.each do |npr_story|
