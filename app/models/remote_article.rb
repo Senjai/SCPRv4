@@ -40,18 +40,15 @@ class RemoteArticle < ActiveRecord::Base
     
     #---------------
     # Strip out unwanted stuff from the text.
-    #
-    # Define UNWANTED_CSS to remove unwanted elements
-    # Define UNWANTED_ATTRIBUTES to remove unwanted HTML properties.
-    def process_text(text)
+    def process_text(text, options={})
       fragment = Nokogiri::XML::DocumentFragment.parse(text)
 
-      self::UNWANTED_CSS.each do |css|
+      Array(options[:css_to_remove]).each do |css|
         fragment.css(css).remove
       end
 
-      self::UNWANTED_ATTRIBUTES.each do |attribute|
-        fragment.xpath(".//@#{attribute}").remove
+      Array(options[:properties_to_remove]).each do |property|
+        fragment.xpath(".//@#{property}").remove
       end
 
       fragment.to_html

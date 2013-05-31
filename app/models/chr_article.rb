@@ -2,8 +2,8 @@
 class ChrArticle < RemoteArticle
   ORGANIZATION      = "Center for Health Reporting"
 
-  UNWANTED_CSS          = []
-  UNWANTED_ATTRIBUTES   = []
+  UNWANTED_PROPERTIES   = []
+  UNWANTED_ELEMENTS     = []
 
   API_ROOT      = "https://www.publish2.com/organizations/2198"
   API_LIST_PATH = "custom_views/1010/content.nprml"
@@ -110,7 +110,11 @@ class ChrArticle < RemoteArticle
     #
     text = begin
       if npr_story.fullText.present?
-        RemoteArticle.parse_text(npr_story.fullText)
+        RemoteArticle.process_text(npr_story.fullText,
+          :properties_to_remove => UNWANTED_PROPERTIES,
+          :css_to_remove        => UNWANTED_ELEMENTS
+        )
+
       elsif npr_story.textWithHtml.present?
         npr_story.textWithHtml.to_html
       elsif npr_story.text.present?

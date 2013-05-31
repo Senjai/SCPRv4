@@ -5,7 +5,7 @@ class NprArticle < RemoteArticle
   # An array of elements in an NPR::Story's 
   # +fullText+ attribute that we want to 
   # strip out before importing.
-  UNWANTED_CSS = [
+  UNWANTED_ELEMENTS = [ # By CSS
     '.storytitle',
     '#story-meta',
     '.bucketwrap',
@@ -13,7 +13,7 @@ class NprArticle < RemoteArticle
     'object'
   ]
   
-  UNWANTED_ATTRIBUTES = [
+  UNWANTED_PROPERTIES = [
     'class',
     'id',
     'data-metrics'
@@ -95,7 +95,11 @@ class NprArticle < RemoteArticle
     #
     text = begin
       if npr_story.fullText.present?
-        RemoteArticle.parse_text(npr_story.fullText)
+        RemoteArticle.process_text(npr_story.fullText,
+          :properties_to_remove => UNWANTED_PROPERTIES,
+          :css_to_remove        => UNWANTED_ELEMENTS
+        )
+
       elsif npr_story.textWithHtml.present?
         npr_story.textWithHtml.to_html
       elsif npr_story.text.present?
