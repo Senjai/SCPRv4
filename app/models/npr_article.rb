@@ -136,14 +136,15 @@ class NprArticle < RemoteArticle
 
     #-------------------
     # Add a related link pointing to this story at NPR
-    related_link = RelatedLink.new(
-      :link_type => "website", 
-      :title     => "View this story at NPR",
-      :url      => npr_story.link_for('html')
-    )
-    
-    article.related_links.push related_link
-    
+    if link = npr_story.link_for('html')
+      related_link = RelatedLink.new(
+        :link_type => "website", 
+        :title     => "View this story at NPR",
+        :url      => link
+      )
+      
+      article.related_links.push related_link
+    end
     
     #-------------------
     # Add in the primary asset if it exists
