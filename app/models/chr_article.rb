@@ -12,40 +12,24 @@ class ChrArticle < RemoteArticle
     def sync
       # We can't use NPR::Story since it wants to use your 
       # configured NPR API URL. Instead, we'll go one level
-      # below that and use NPR::Client directly, and then copy
+      # below that and use NPR::API::Client directly, and then copy
       # the behavior of NPR::Story.find
       client = NPR::API::Client.new(url: API_ROOT)
+      response = client.query(
+        :path         => API_LIST_PATH,
+        :apiKey       => "", # Don't send our NPR API key to Publish2
+        :output       => "", # Publish2 uses the "format" param instead
+        :format       => 'json',
+        :user         => Rails.application.config.api['publish2']['user'],
+        :pass         => Rails.application.config.api['publish2']['pass'],
+        :start_date   => 1.hour.ago.utc.iso8601,
+        :end_date     => Time.now.utc.iso8601,
+        :limit        => 20
+      )
 
-      
-      ##########
-      # Publish2 API is wrong, so we have to work around it until they fix it.
-      _response = client.send(:connection).get do |request|
-        request.url API_LIST_PATH
-        request.headers['Content-Type'] = "application/json"
+      return false if !response.list
 
-        request.params = {
-          :apiKey => "", # Don't send our NPR API key to Publish2
-          :output => "", # Publish2 uses the "format" param instead
-          :format => "json",
-          :user   => Rails.application.config.api['publish2']['user'],
-          :pass   => Rails.application.config.api['publish2']['pass']
-        }
-      end
-      
-      if _response.body["list"]
-        _response.body["list"]["link"]    = [_response.body["list"]["link"]]
-        _response.body["list"]["story"]   = _response.body.delete("story")
-      end
-
-      response = NPR::API::Response.new(_response)
-      ##########
-
-
-      if response.list
-        npr_stories = Array.wrap(response.list.stories)
-      else
-        return false
-      end
+      npr_stories = Array.wrap(response.list.stories)
 
       added = []
       npr_stories.each do |npr_story|
