@@ -1,17 +1,17 @@
 ##
-# NprFetch
+# SyncRemoteArticles
 #
-# Sync with the NPR API
+# Sync with the Remote Article API's
 #
 module Job
-  class NprFetch < Base
+  class SyncRemoteArticles < Base
     @queue = namespace
     
     def self.after_perform
       hook = Outpost::Hook.new(
-        :path => "/task/finished/npr_stories:sync",
+        :path => "/task/finished/remote_articles:sync",
         :data => {
-          :location => NprStory.admin_index_path
+          :location => RemoteArticle.admin_index_path
         })
         
       hook.publish
@@ -20,7 +20,7 @@ module Job
     #---------------------
     
     def self.perform
-      NprStory.sync_with_api
+      RemoteArticle.sync
     end
   end
 end

@@ -33,14 +33,15 @@ class NewsStory < ActiveRecord::Base
   ROUTE_KEY = "news_story"
   
   SOURCES = [
-    ['KPCC',                'kpcc'],
-    ['KPCC & wires',        'kpcc_plus_wire'],
-    ['AP',                  'ap'],
-    ['KPCC wire services',  'kpcc_wire'],
-    ['NPR',                 'npr'],
-    ['NPR & wire services', 'npr_wire'],
-    ['New America Media',   'new_america'],
-    ['NPR & KPCC',          'npr_kpcc']
+    ['KPCC',                        'kpcc'],
+    ['KPCC & wires',                'kpcc_plus_wire'],
+    ['AP',                          'ap'],
+    ['KPCC wire services',          'kpcc_wire'],
+    ['NPR',                         'npr'],
+    ['NPR & wire services',         'npr_wire'],
+    ['New America Media',           'new_america'],
+    ['NPR & KPCC',                  'npr_kpcc'],
+    ['Center for Health Reporting', 'chr']
   ]
   
   ASSET_SCHEMES = [

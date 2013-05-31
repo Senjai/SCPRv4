@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Job::NprFetch do
+describe Job::ImportRemoteArticle do
   pending
 end
