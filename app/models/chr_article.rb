@@ -177,7 +177,7 @@ class ChrArticle < RemoteArticle
         content_asset = ContentAsset.new(
           :asset_order => 0,
           :asset_id    => asset["id"],
-          :caption     => asset["caption"].to_s
+          :caption     => image.caption
         )
         
         article.assets << content_asset
