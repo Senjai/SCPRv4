@@ -264,7 +264,7 @@ GEM
       redis-namespace (~> 1.0)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-    riddle (1.5.5)
+    riddle (1.5.6)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -408,7 +408,7 @@ DEPENDENCIES
   simple_postmark (~> 0.5)
   simplecov
   sqlite3
-  thinking-sphinx (~> 2.0)
+  thinking-sphinx (~> 2.0.14)
   turbo-sprockets-rails3
   twitter (~> 4.1)
   twitter-text (~> 1.5)
