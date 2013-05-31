@@ -10,7 +10,7 @@ describe Asset do
   #---------------------
   
   Asset.outputs.each do |output|
-    subject { Asset.new(JSON.load(load_fixture("assethost_asset.json"))) }
+    subject { Asset.new(JSON.load(load_fixture("api/assethost/asset.json"))) }
     it { should respond_to output['code'].to_sym }
   end
 
@@ -102,12 +102,12 @@ describe Asset do
     
     context "good response" do
       it "writes to cache" do
-        Rails.cache.should_receive(:write).with("asset/asset-1", JSON.load(load_fixture("assethost_asset.json")))
+        Rails.cache.should_receive(:write).with("asset/asset-1", JSON.load(load_fixture("api/assethost/asset.json")))
         Asset.find(1)
       end
       
       it "creates a new asset from the json" do
-        Asset.should_receive(:new).with(JSON.load(load_fixture("assethost_asset.json")))
+        Asset.should_receive(:new).with(JSON.load(load_fixture("api/assethost/asset.json")))
         Asset.find(1)
       end
     end
