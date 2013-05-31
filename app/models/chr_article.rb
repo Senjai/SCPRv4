@@ -133,8 +133,8 @@ class ChrArticle < RemoteArticle
     )
     
     if article.is_a? NewsStory
-      article.news_agency   = "NPR"
-      article.source        = "npr"
+      article.news_agency   = "CHR"
+      article.source        = "chr"
     end
     
     #-------------------
