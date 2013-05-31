@@ -81,19 +81,19 @@ class ChrArticle < RemoteArticle
     import_to_class = options[:import_to_class] || "NewsStory"
 
     client = NPR::API::Client.new(url: API_ROOT)
-    
     response = client.query(
-      :path   => API_LIST_PATH, 
+      :path   => API_LIST_PATH,
       :apiKey => "", # Don't send our NPR API key to Publish2
       :output => "", # Publish2 uses the "format" param instead
       :format => 'json',
       :user   => Rails.application.config.api['publish2']['user'],
-      :pass   => Rails.application.config.api['publish2']['pass']
+      :pass   => Rails.application.config.api['publish2']['pass'],
+      :id     => self.article_id
     )
 
     return false if !response.list
 
-    npr_story = response.list.stories.find { |s| s.id == self.article_id }
+    npr_story = response.list.stories.first
     return false if !npr_story
 
     # Make sure some text gets imported... 
