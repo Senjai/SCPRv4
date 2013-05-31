@@ -76,7 +76,7 @@ class ChrArticle < RemoteArticle
   end
 
   #----------------------------
-  # We're going to use the NPR 
+
   def import(options={})
     import_to_class = options[:import_to_class] || "NewsStory"
 
