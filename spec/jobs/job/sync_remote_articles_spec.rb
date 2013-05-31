@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Job::NprImport do
+describe Job::SyncRemoteArticles do
   pending
 end

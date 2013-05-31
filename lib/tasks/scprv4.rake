@@ -29,10 +29,10 @@ namespace :scprv4 do
     puts "*** [#{Time.now}] Enqueueing sync of NPR Stories..."
     
     if Rails.env == "development"
-      Job::NprFetch.perform
+      Job::SyncRemoteArticles.perform
       puts "Finished.\n"
     else
-      Resque.enqueue(Job::NprFetch)
+      Resque.enqueue(Job::SyncRemoteArticles)
       puts "Job was placed in queue.\n"
     end
   end
