@@ -26,8 +26,8 @@ class RemoteArticle < ActiveRecord::Base
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
     def types_select_collection
-      RemoteArticle.select("distinct type")
-        .order("type").map(&:type)
+      RemoteArticle.select("distinct type").order("type")
+        .map { |a| [a.type.constantize::ORGANIZATION, a.type] }
     end
 
     #---------------
