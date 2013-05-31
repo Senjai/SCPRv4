@@ -24,9 +24,9 @@ namespace :scprv4 do
 
   #----------
   
-  desc "Sync NPR Stories with NPR API"
-  task :npr_fetch => [:environment] do
-    puts "*** [#{Time.now}] Enqueueing sync of NPR Stories..."
+  desc "Sync Remote Articles with the remote sources"
+  task :sync_remote_articles => [:environment] do
+    puts "*** [#{Time.now}] Syncing remote articles..."
     
     if Rails.env == "development"
       Job::SyncRemoteArticles.perform
