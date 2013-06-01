@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe NprStory do
-  describe '::sync_with_api' do
+describe RemoteArticle do
+  describe '::sync' do
     pending
   end
   

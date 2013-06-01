@@ -1,15 +1,11 @@
-class NprStory < ActiveRecord::Base
-  self.table_name = "npr_npr_story"
+# National Public Radio
+class NprArticle < RemoteArticle
+  ORGANIZATION = "NPR"
 
-  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
-  include Outpost::Model::Identifier
-  include Outpost::Model::Naming
-  logs_as_task
-  
   # An array of elements in an NPR::Story's 
   # +fullText+ attribute that we want to 
   # strip out before importing.
-  UNWANTED_CSS = [
+  UNWANTED_ELEMENTS = [ # By CSS
     '.storytitle',
     '#story-meta',
     '.bucketwrap',
@@ -17,7 +13,7 @@ class NprStory < ActiveRecord::Base
     'object'
   ]
   
-  UNWANTED_ATTRIBUTES = [
+  UNWANTED_PROPERTIES = [
     'class',
     'id',
     'data-metrics'
@@ -34,61 +30,12 @@ class NprStory < ActiveRecord::Base
   ]
   
 
-  #---------------
-  # Scopes
-  
-  #---------------
-  # Associations
-
-  #---------------
-  # Callbacks
-  
-  #---------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes teaser
-    indexes link
-
-    has published_at
-  end
-  
-  #---------------
-
   class << self
-    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
-
-    #---------------
-    # Since this class isn't getting (and, for the
-    # most part, doesn't need) the Outpost
-    # Routing, we'll just manually put this one here.
-    def admin_index_path
-      @admin_index_path ||= Rails.application.routes.url_helpers.send("outpost_#{self.route_key}_path")
-    end
-    
-    #---------------
-    # Utility method for parsing an NPR Story's fullText
-    def parse_fullText(fullText)
-      full_text = Nokogiri::XML::DocumentFragment.parse(fullText)
-
-      UNWANTED_CSS.each do |css|
-        full_text.css(css).remove
-      end
-
-      UNWANTED_ATTRIBUTES.each do |attribute|
-        full_text.xpath(".//@#{attribute}").remove
-      end
-
-      full_text.to_html
-    end
-    
-    #---------------
-    # Sync the cached NPR stories with the NPR API
-    def sync_with_api
+    def sync
       # The "id" parameter in this case is actually referencing a list.
       # Stories from the last hour are returned... be sure to run this script
       # more often than that!
-      stories = NPR::Story.where(
+      npr_stories = NPR::Story.where(
           :id     => IMPORT_IDS,
           :date   => (1.hour.ago..Time.now))
         .set(
@@ -96,68 +43,42 @@ class NprStory < ActiveRecord::Base
           :action           => "or")
         .order("date descending").limit(20).to_a
       
-      log "#{stories.size} stories found from the past hour (max 20)"
+      log "#{npr_stories.size} NPR stories found from the past hour (max 20)"
       
       added = []
-      stories.each do |story|
+      npr_stories.each do |npr_story|
         # Check if this story was already cached - if not, cache it.
-        if NprStory.find_by_npr_id(story.id)
-          log "NPR Story ##{story.id} already cached"
+        if self.where(article_id: npr_story.id).first
+          log "NPR Article ##{npr_story.id} already cached"
         else
-          npr_story = NprStory.new(
-            :npr_id       => story.id, 
-            :headline     => story.title, 
-            :teaser       => story.teaser,
-            :published_at => story.pubDate,
-            :link         => story.link_for("html"),
+          cached_article = self.new(
+            :article_id   => npr_story.id,
+            :headline     => npr_story.title, 
+            :teaser       => npr_story.teaser,
+            :published_at => npr_story.pubDate,
+            :url          => npr_story.link_for("html"),
             :new          => true
           )
           
-          if npr_story.save
-            added.push npr_story
-            log "Saved NPR Story ##{story.id} as NprStory ##{npr_story.id}"
+          if cached_article.save
+            added.push cached_article
+            log "Saved NPR Story ##{npr_story.id} as NprArticle ##{cached_article.id}"
           else
-            log "Couldn't save NPR Story ##{story.id}"
+            log "Couldn't save NPR Story ##{npr_story.id}"
           end
         end
       end # each
       
-      # Return which stories were actually cached
       added
     end
-
-    add_transaction_tracer :sync_with_api, category: :task
   end
 
-  #---------------
+  #-----------------------------
 
-  def as_json(*args)
-    super.merge({
-      "id"         => self.obj_key, 
-      "obj_key"    => self.obj_key,
-      "to_title"   => self.to_title,
-    })
-  end
-  
-  #---------------
-  
-  def async_import(options={})
-    import_to_class = options[:import_to_class]
-    Resque.enqueue(Job::NprImport, self.id, import_to_class)
-  end
-  
-  #---------------
-  # Import this NPR Story.
-  #
-  # Builds the news story and adds in associations.
-  #
-  # Returns the created NewsStory, or `false` if the API
-  # didn't return anything.
-  #
   def import(options={})
     import_to_class = options[:import_to_class] || "NewsStory"
 
-    npr_story = NPR::Story.find_by_id(self.npr_id)
+    npr_story = NPR::Story.find_by_id(self.article_id)
     return false if !npr_story
     
     # Make sure some text gets imported... 
@@ -174,7 +95,11 @@ class NprStory < ActiveRecord::Base
     #
     text = begin
       if npr_story.fullText.present?
-        NprStory.parse_fullText(npr_story.fullText)
+        RemoteArticle.process_text(npr_story.fullText,
+          :properties_to_remove => UNWANTED_PROPERTIES,
+          :css_to_remove        => UNWANTED_ELEMENTS
+        )
+
       elsif npr_story.textWithHtml.present?
         npr_story.textWithHtml.to_html
       elsif npr_story.text.present?
@@ -211,14 +136,15 @@ class NprStory < ActiveRecord::Base
 
     #-------------------
     # Add a related link pointing to this story at NPR
-    related_link = RelatedLink.new(
-      :link_type => "website", 
-      :title     => "View this story at NPR",
-      :url      => npr_story.link_for('html')
-    )
-    
-    article.related_links.push related_link
-    
+    if link = npr_story.link_for('html')
+      related_link = RelatedLink.new(
+        :link_type => "website", 
+        :title     => "View this story at NPR",
+        :url      => link
+      )
+      
+      article.related_links.push related_link
+    end
     
     #-------------------
     # Add in the primary asset if it exists
@@ -235,7 +161,7 @@ class NprStory < ActiveRecord::Base
         content_asset = ContentAsset.new(
           :position   => 0,
           :asset_id   => asset.id,
-          :caption    => asset.caption.to_s
+          :caption    => image.caption
         )
         
         article.assets << content_asset
@@ -245,7 +171,7 @@ class NprStory < ActiveRecord::Base
     
     #-------------------
     # Save the news story (including all associations),
-    # set the NprStory to `:new => false`,
+    # set the RemoteArticle to `:new => false`,
     # and return the NewsStory that was generated.
     article.save!
     self.update_attribute(:new, false)

@@ -1,6 +1,6 @@
-class Outpost::NprStoriesController < Outpost::BaseController
+class Outpost::RemoteArticlesController < Outpost::BaseController
   include Concern::Controller::Searchable
-  
+
   # We don't want to include the Outpost actions here,
   # so we include stuff manually.
   include Outpost::Controller::Helpers
@@ -9,19 +9,23 @@ class Outpost::NprStoriesController < Outpost::BaseController
   include Outpost::Controller::Filtering
   include Outpost::Controller::Preferences
 
-  self.model = NprStory
+  #------------------
+  # Outpost
+  self.model = RemoteArticle
 
   define_list do |l|
     l.default_order = "published_at"
     l.default_sort_mode = "desc"
-
     l.per_page = 50
-    
+
+    l.column :type, header: "Organization", display: ->(r) { r.class::ORGANIZATION }
     l.column :headline
     l.column :published_at, sortable: true, default_sort_mode: "desc"
     l.column :teaser
-    l.column :link
-    l.column :npr_id, header: "NPR ID"
+    l.column :url, display: :display_link
+    l.column :article_id, header: "Remote ID"
+
+    l.filter :type, title: "Organization", collection: -> { RemoteArticle.types_select_collection }
   end
 
   #------------------
@@ -47,7 +51,7 @@ class Outpost::NprStoriesController < Outpost::BaseController
   
   def sync
     breadcrumb "Sync"
-    Resque.enqueue(Job::NprFetch)
+    Resque.enqueue(Job::SyncRemoteArticles)
     render "sync"
   end
 
@@ -63,12 +67,12 @@ class Outpost::NprStoriesController < Outpost::BaseController
   
   def skip
     if @record.update_attributes(new: false)
-      flash[:notice] = "Skipped NPR Story: \"#{@record.to_title}\""
+      flash[:notice] = "Skipped Remote Article: \"#{@record.to_title}\""
     else
-      flash[:alert] = "Could not skip NPR Story"
+      flash[:alert] = "Could not skip Remote Article"
     end
     
-    redirect_to outpost_npr_stories_path
+    redirect_to outpost_remote_articles_path
   end
 
   #--------------

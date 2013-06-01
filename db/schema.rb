@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130523180121) do
+ActiveRecord::Schema.define(:version => 20130530203911) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false
@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(:version => 20130523180121) do
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["mp3"], :name => "index_media_audio_on_mp3"
   add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
+  add_index "media_audio", ["type"], :name => "index_media_audio_on_type"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
@@ -551,15 +552,6 @@ ActiveRecord::Schema.define(:version => 20130523180121) do
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
-
-  create_table "npr_npr_story", :force => true do |t|
-    t.string   "headline"
-    t.text     "teaser",       :limit => 2147483647
-    t.datetime "published_at"
-    t.string   "link",         :limit => 200
-    t.integer  "npr_id"
-    t.boolean  "new",                                :default => true, :null => false
-  end
 
   create_table "permissions", :force => true do |t|
     t.string   "resource"
@@ -706,6 +698,18 @@ ActiveRecord::Schema.define(:version => 20130523180121) do
   add_index "related_links", ["content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
   add_index "related_links", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
   add_index "related_links", ["link_type"], :name => "index_related_links_on_link_type"
+
+  create_table "remote_articles", :force => true do |t|
+    t.string   "headline"
+    t.text     "teaser",       :limit => 2147483647
+    t.datetime "published_at"
+    t.string   "url",          :limit => 200
+    t.string   "article_id"
+    t.boolean  "new",                                :default => true, :null => false
+    t.string   "type"
+  end
+
+  add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
 
   create_table "schedule_program", :force => true do |t|
     t.integer  "day",                             :null => false

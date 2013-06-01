@@ -5,11 +5,8 @@ gem 'rails', "~> 3.2"
 gem 'mysql2'
 gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0"
-gem 'thinking-sphinx', '~> 2.0.0', require: "thinking_sphinx"
-gem 'turbo-sprockets-rails3'
+gem 'thinking-sphinx', '~> 2.0.14', require: "thinking_sphinx"
 
-gem 'asset_host_client', github: "SCPR/asset_host_client"
-#gem 'asset_host_client', path: "#{ENV['PROJECT_HOME']}/asset_host_client"
 
 ## Outpost
 gem 'outpost', github: 'SCPR/outpost'
@@ -63,7 +60,11 @@ gem 'simple_postmark', "~> 0.5"
 gem 'newrelic_rpm'
 gem 'npr', github: "bricker/npr"
 #gem 'npr', path: "#{ENV['PROJECT_HOME']}/npr"
+gem 'asset_host_client', github: "SCPR/asset_host_client"
+#gem 'asset_host_client', path: "#{ENV['PROJECT_HOME']}/asset_host_client"
 
+
+gem 'turbo-sprockets-rails3'
 
 ## Assets
 group :assets do

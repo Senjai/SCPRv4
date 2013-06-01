@@ -7,7 +7,7 @@
 Outpost::Config.configure do |config|
   config.registered_models = [
     "NewsStory", 
-    "NprStory",
+    "RemoteArticle",
     "ContentShell", 
     "PijQuery", 
     "BlogEntry",

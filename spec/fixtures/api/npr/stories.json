@@ -1,0 +1,847 @@
+{
+  "version": "0.94",
+  "list": {
+    "title": {
+      "$text": "NPR: Stories from NPR"
+    },
+    "teaser": {
+      "$text": "Assorted stories from NPR"
+    },
+    "miniTeaser": {
+      "$text": "Custom NPR News Feed API.  Visit http://www.npr.org/templates/apidoc/index.php for more information."
+    },
+    "link": [
+      {
+        "type": "api",
+        "$text": "http://api.npr.org/query?&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+      }
+    ],
+    "story": [
+      {
+        "id": "187325945",
+        "link": [
+          {
+            "type": "html",
+            "$text": "http://www.npr.org/blogs/thetwo-way/2013/05/30/187325945/four-men-in-a-small-boat-face-the-northwest-passage?ft=3&f="
+          },
+          {
+            "type": "api",
+            "$text": "http://api.npr.org/query?id=187325945&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          },
+          {
+            "type": "short",
+            "$text": "http://n.pr/11apkBs"
+          }
+        ],
+        "title": {
+          "$text": "Four Men In A Small Boat Face The Northwest Passage "
+        },
+        "partnerId": {
+          "$text": "187325945"
+        },
+        "subtitle": {},
+        "shortTitle": {},
+        "teaser": {
+          "$text": "The crew hopes to be the first to row through the fabled Northwest Passage in one season aboard a custom-built 23-foot boat."
+        },
+        "miniTeaser": {
+          "$text": "Climate change has opened up an opportunity for the crew to row from west to east in one season."
+        },
+        "slug": {
+          "$text": "The Two-Way"
+        },
+        "thumbnail": {
+          "medium": {
+            "$text": "http://media.npr.org/assets/img/2013/05/30/ap070915029493_sq-8b5f88944134580da7f9e065d6e8218a1044bfd8.jpg?s=13"
+          },
+          "large": {
+            "$text": "http://media.npr.org/assets/img/2013/05/30/ap070915029493_sq-8b5f88944134580da7f9e065d6e8218a1044bfd8.jpg?s=11"
+          },
+          "provider": {
+            "$text": "AP"
+          }
+        },
+        "storyDate": {
+          "$text": "Thu, 30 May 2013 15:04:00 -0400"
+        },
+        "pubDate": {
+          "$text": "Thu, 30 May 2013 15:23:00 -0400"
+        },
+        "lastModifiedDate": {
+          "$text": "Thu, 30 May 2013 15:23:17 -0400"
+        },
+        "keywords": {},
+        "priorityKeywords": {},
+        "organization": [
+          {
+            "orgId": "1",
+            "orgAbbr": "NPR",
+            "name": {
+              "$text": "NPR"
+            },
+            "website": {
+              "$text": "http://www.npr.org/"
+            }
+          }
+        ],
+        "parent": [
+          {
+            "id": "127602855",
+            "type": "category",
+            "title": {
+              "$text": "America"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=127602855&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=127602855&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "127602464",
+            "type": "category",
+            "title": {
+              "$text": "International"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=127602464&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=127602464&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "103943429",
+            "type": "blog",
+            "slug": "true",
+            "title": {
+              "$text": "The Two-Way"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/blogs/thetwo-way/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=103943429&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1004",
+            "type": "topic",
+            "title": {
+              "$text": "World"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/world/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1004&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1003",
+            "type": "primaryTopic",
+            "title": {
+              "$text": "U.S."
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/us/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1003&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1003",
+            "type": "topic",
+            "title": {
+              "$text": "U.S."
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/us/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1003&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1002",
+            "type": "topic",
+            "title": {
+              "$text": "Home Page Top Stories"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1002&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1001",
+            "type": "topic",
+            "title": {
+              "$text": "News"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/news/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1001&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "byline": [
+          {
+            "id": "187326083",
+            "name": {
+              "personId": "131724812",
+              "$text": "Scott Neuman"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/people/131724812/scott-neuman?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=131724812&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "image": [
+          {
+            "id": "187326560",
+            "type": "primary",
+            "width": "200",
+            "src": "http://media.npr.org/assets/img/2013/05/30/ap070915029493_wide-e39731259c533cd16ca6f72746009753b04b732a.jpg?s=12",
+            "hasBorder": "false",
+            "title": {
+              "$text": "A European Space Agency photo of the McClure Strait in the Canadian Arctic. The McClure Strait is the most direct route of the Northwest Passage and has been fully open since early August 2007."
+            },
+            "caption": {
+              "$text": "A European Space Agency photo of the McClure Strait in the Canadian Arctic. The McClure Strait is the most direct route of the Northwest Passage and has been fully open since early August 2007."
+            },
+            "link": {
+              "url": ""
+            },
+            "producer": {},
+            "provider": {
+              "url": "",
+              "$text": "AP"
+            },
+            "copyright": {},
+            "enlargement": {
+              "src": "http://media.npr.org/assets/img/2013/05/30/ap070915029493_wide-e39731259c533cd16ca6f72746009753b04b732a.jpg",
+              "caption": {}
+            },
+            "crop": [
+              {
+                "type": "standard",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ap070915029493-9d556b11a25881741515b0e5f0dc9f328c338931.jpg",
+                "height": "888",
+                "width": "1184"
+              },
+              {
+                "type": "square",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ap070915029493_sq-8b5f88944134580da7f9e065d6e8218a1044bfd8.jpg",
+                "height": "1184",
+                "width": "1184"
+              },
+              {
+                "type": "wide",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ap070915029493_wide-e39731259c533cd16ca6f72746009753b04b732a.jpg",
+                "height": "665",
+                "width": "1184"
+              },
+              {
+                "type": "enlargement",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ap070915029493_wide-e39731259c533cd16ca6f72746009753b04b732a.jpg",
+                "height": "665",
+                "width": "1184"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "Only a few years ago, even large commercial vessels wouldn't take on the ice-bound Northwest Passage linking the Atlantic and Pacific via the Canadian north — but climate change has changed all that."
+            },
+            {
+              "num": "2",
+              "$text": "Now, a group of hearty adventurers hopes to be the first to row the 1,900-mile route this summer."
+            },
+            {
+              "num": "3",
+              "$text": "\"Several people have kayaked it [a section at a time] over several years. But no one has ever done this under human power in a single season. Not even close,\" Kevin Vallely, who is heading up the rowing team, told The Globe and Mail on Wednesday."
+            },
+            {
+              "num": "4",
+              "$text": "Vallely has completed his last shakedown cruise and plans to set off at the beginning of July from Inuvik in northern Canada with three crew mates in a custom-built, 23-foot rowboat. They expect to take 75 days to reach their eastern destination, the town of Pond Inlet. Along the way they're bracing for encounters with dangerous ice, storms and polar bears, not to mention the psychological challenge of four men in a small boat in those difficult circumstances."
+            },
+            {
+              "num": "5",
+              "$text": "\"We have guns\" as a precaution against polar bears, Vallely tells The Globe and Mail. \"But we'll have rubber bullets and bear bangers ... we don't want to kill a bear.\""
+            },
+            {
+              "num": "6",
+              "$text": "The newspaper says Vallely, \"who has done numerous wilderness treks over the past 20 years, said if your physical conditioning is just right, body fitness peaks during a long journey and then slowly deteriorates.\""
+            },
+            {
+              "num": "7"
+            },
+            {
+              "num": "8",
+              "$text": "\" 'Obviously you have to train enough that you don't get injured [by the exertion of the expedition]. But you don't want to train too much, because if you go into it Tour de France fit, in a couple of weeks you would be fried,' he said. 'So you go into it fit, but not crazy fit, and you build up and you get really strong about half-way through. And then you slowly start to fall apart. By the end you want to be tired, happy to be done, but not completely baked.' \""
+            },
+            {
+              "num": "9"
+            },
+            {
+              "num": "10",
+              "$text": "As we reported back in March, computer simulations of various climate change models indicate that Arctic ice will be so thin by the middle of the century that commercial shipping from North America to Russia or Asia via the Arctic could become routine."
+            },
+            {
+              "num": "11",
+              "$text": "In recent years, Arctic sea ice has shrunk to its smallest extent on record, opening up the Northwest Passage. A solo sailor in a 27-foot fiberglass sailboat was one of 18 private yachts to sail the route last year. [Copyright 2013 NPR]"
+            }
+          ]
+        },
+        "textWithHtml": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "Only a few years ago, even large commercial vessels wouldn't take on the ice-bound Northwest Passage linking the Atlantic and Pacific via the Canadian north — but climate change has changed all that."
+            },
+            {
+              "num": "2",
+              "$text": "Now, a group of hearty adventurers hopes to be the first to row the 1,900-mile route this summer."
+            },
+            {
+              "num": "3",
+              "$text": "\"Several people have kayaked it [a section at a time] over several years. But no one has ever done this under human power in a single season. Not even close,\" Kevin Vallely, who is heading up the rowing team, told <a href=\"http://www.theglobeandmail.com/news/british-columbia/four-man-crew-plans-to-conquer-the-northwest-passage-in-75-days/article12252309/\"><em>The Globe and Mail</em></a> on Wednesday."
+            },
+            {
+              "num": "4",
+              "$text": "Vallely has completed his last shakedown cruise and plans to set off at the beginning of July from Inuvik in northern Canada with three crew mates in a custom-built, 23-foot rowboat. They expect to take 75 days to reach their eastern destination, the town of Pond Inlet. Along the way they're bracing for encounters with dangerous ice, storms and polar bears, not to mention the psychological challenge of four men in a small boat in those difficult circumstances."
+            },
+            {
+              "num": "5",
+              "$text": "\"We have guns\" as a precaution against polar bears, Vallely tells <em>The Globe and Mail</em>. \"But we'll have rubber bullets and bear bangers ... we don't want to kill a bear.\""
+            },
+            {
+              "num": "6",
+              "$text": "The newspaper says Vallely, \"who has done numerous wilderness treks over the past 20 years, said if your physical conditioning is just right, body fitness peaks during a long journey and then slowly deteriorates.\""
+            },
+            {
+              "num": "7",
+              "$text": "<blockquote>"
+            },
+            {
+              "num": "8",
+              "$text": "\" 'Obviously you have to train enough that you don't get injured [by the exertion of the expedition]. But you don't want to train too much, because if you go into it Tour de France fit, in a couple of weeks you would be fried,' he said. 'So you go into it fit, but not crazy fit, and you build up and you get really strong about half-way through. And then you slowly start to fall apart. By the end you want to be tired, happy to be done, but not completely baked.' \""
+            },
+            {
+              "num": "9",
+              "$text": "</blockquote>"
+            },
+            {
+              "num": "10",
+              "$text": "As we <a href=\"http://www.npr.org/blogs/thetwo-way/2013/03/05/173519090/study-finds-climate-change-to-open-arctic-sea-routes-by-2050\">reported back in March</a>, computer simulations of various climate change models indicate that Arctic ice will be so thin by the middle of the century that commercial shipping from North America to Russia or Asia via the Arctic could become routine."
+            },
+            {
+              "num": "11",
+              "$text": "In recent years, Arctic sea ice has shrunk to its <a href=\"http://www.guardian.co.uk/environment/2012/sep/14/arctic-sea-ice-smallest-extent\">smallest extent on record</a>, opening up the Northwest Passage. A solo sailor in a <a href=\"http://articles.washingtonpost.com/2012-04-21/sports/35454042_1_city-dock-sailboat-lake-ogleton%20\">27-foot fiberglass sailboat</a> was one of 18 private yachts to sail the route last year.  <div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Four+Men+In+A+Small+Boat+Face+The+Northwest+Passage+&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+            }
+          ]
+        },
+        "fullText": {
+          "$text": "<div class=\"storytitle\">      <h1>Four Men In A Small Boat Face The Northwest Passage </h1>   <input type=\"hidden\" id=\"title187325945\" value=\"Four Men In A Small Boat Face The Northwest Passage \"></input>   <input type=\"hidden\" id=\"modelShortUrl187325945\" value=\"http://n.pr/11apkBu\"></input>   <input type=\"hidden\" id=\"modelFullUrl187325945\" value=\"http://www.npr.org/blogs/thetwo-way/2013/05/30/187325945/four-men-in-a-small-boat-face-the-northwest-passage\"></input></div><!-- END CLASS=\"STORYTITLE\" --><div id=\"story-meta\">      <div id=\"storybyline\" class=\"  linkLocation\">            <div class=\"bucketwrap byline\" id=\"res187325950\" previewTitle=\"bylines\">                  <p class=\"byline\">by <a rel=\"author\" href=\"http://www.npr.org/people/131724812/scott-neuman\"><span>Scott Neuman</span></a></p>      </div>      <!-- END CLASS=\"BUCKETWRAP BYLINE\" ID=\"RES187325950\" PREVIEWTITLE=\"BYLINES\" -->   </div>   <!-- END ID=\"STORYBYLINE\" CLASS=\"  LINKLOCATION\" -->   <div class=\"dateblock\">            <time datetime=\"2013-05-30\"><span class=\"date\">May 30, 2013</span><span class=\"time\"> 3:04 PM</span></time>   </div></div><!-- END ID=\"STORY-META\" --><div id=\"storytext\" class=\"storytext storylocation linkLocation\">      <div id=\"res187326560\" class=\"bucketwrap image large\" previewTitle=\"A European Space Agency photo of the McClure Strait in the Canadian Arctic. The McClure Strait is the most direct route of the Northwest Passage and has been fully open since early August 2007.\">            <div class=\"imagewrap\">                  <img src=\"http://media.npr.org/assets/img/2013/05/30/ap070915029493_wide-e39731259c533cd16ca6f72746009753b04b732a-s6.jpg\" title=\"A European Space Agency photo of the McClure Strait in the Canadian Arctic. The McClure Strait is the most direct route of the Northwest Passage and has been fully open since early August 2007.\" alt=\"A European Space Agency photo of the McClure Strait in the Canadian Arctic. The McClure Strait is the most direct route of the Northwest Passage and has been fully open since early August 2007.\" />         <a href=\"#\" class=\"enlargebtn\" title=\"Enlarge\">Enlarge image</a>         <a href=\"#\" class=\"enlargebtn enlarge-smallscreen\" title=\"Enlarge\">i</a>      </div>      <!-- END CLASS=\"IMAGEWRAP\" -->      <div class=\"captionwrap\">                  <div class=\"caption\">                        <p><i>A European Space Agency photo of the McClure Strait in the Canadian Arctic. The McClure Strait is the most direct route of the Northwest Passage and has been fully open since early August 2007.</i></p>         </div>         <!-- END CLASS=\"CAPTION\" -->      </div>      <!-- END CLASS=\"CAPTIONWRAP\" -->      <span class=\"creditwrap\"><span class=\"rightsnotice\">AP</span></span>   </div>   <p>Only a few years ago, even large commercial vessels wouldn't take on the ice-bound Northwest Passage linking the Atlantic and Pacific via the Canadian north — but climate change has changed all that.</p>   <p>Now, a group of hearty adventurers hopes to be the first to row the 1,900-mile route this summer.</p>   <p>\"Several people have kayaked it [a section at a time] over several years. But no one has ever done this under human power in a single season. Not even close,\" Kevin Vallely, who is heading up the rowing team, told <a href=\"http://www.theglobeandmail.com/news/british-columbia/four-man-crew-plans-to-conquer-the-northwest-passage-in-75-days/article12252309/\"><em>The Globe and Mail</em></a> on Wednesday.</p>   <p>Vallely has completed his last shakedown cruise and plans to set off at the beginning of July from Inuvik in northern Canada with three crew mates in a custom-built, 23-foot rowboat. They expect to take 75 days to reach their eastern destination, the town of Pond Inlet. Along the way they're bracing for encounters with dangerous ice, storms and polar bears, not to mention the psychological challenge of four men in a small boat in those difficult circumstances.</p>   <p>\"We have guns\" as a precaution against polar bears, Vallely tells <em>The Globe and Mail</em>. \"But we'll have rubber bullets and bear bangers ... we don't want to kill a bear.\"</p>   <p>The newspaper says Vallely, \"who has done numerous wilderness treks over the past 20 years, said if your physical conditioning is just right, body fitness peaks during a long journey and then slowly deteriorates.\"</p>   <blockquote class=\"edTag\"><div>   <p>\" 'Obviously you have to train enough that you don't get injured [by the exertion of the expedition]. But you don't want to train too much, because if you go into it Tour de France fit, in a couple of weeks you would be fried,' he said. 'So you go into it fit, but not crazy fit, and you build up and you get really strong about half-way through. And then you slowly start to fall apart. By the end you want to be tired, happy to be done, but not completely baked.' \"</p>   </div></blockquote>   <p>As we <a href=\"http://www.npr.org/blogs/thetwo-way/2013/03/05/173519090/study-finds-climate-change-to-open-arctic-sea-routes-by-2050\">reported back in March</a>, computer simulations of various climate change models indicate that Arctic ice will be so thin by the middle of the century that commercial shipping from North America to Russia or Asia via the Arctic could become routine.</p>   <p>In recent years, Arctic sea ice has shrunk to its <a href=\"http://www.guardian.co.uk/environment/2012/sep/14/arctic-sea-ice-smallest-extent\">smallest extent on record</a>, opening up the Northwest Passage. A solo sailor in a <a href=\"http://articles.washingtonpost.com/2012-04-21/sports/35454042_1_city-dock-sailboat-lake-ogleton%20\">27-foot fiberglass sailboat</a> was one of 18 private yachts to sail the route last year.</p></div><div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Four+Men+In+A+Small+Boat+Face+The+Northwest+Passage+&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+        }
+      },
+      {
+        "id": "187318344",
+        "link": [
+          {
+            "type": "html",
+            "$text": "http://www.npr.org/blogs/thetwo-way/2013/05/30/187318344/ubuntu-marks-bug-no-1-as-fixed-after-nearly-nine-years?ft=3&f="
+          },
+          {
+            "type": "api",
+            "$text": "http://api.npr.org/query?id=187318344&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          },
+          {
+            "type": "short",
+            "$text": "http://n.pr/11amlJd"
+          }
+        ],
+        "title": {
+          "$text": "Ubuntu Marks 'Bug No. 1' As Fixed, After Nearly Nine Years"
+        },
+        "partnerId": {
+          "$text": "187318344"
+        },
+        "subtitle": {},
+        "shortTitle": {},
+        "teaser": {
+          "$text": "In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" was seen as a rallying call: \"Microsoft has a majority market share.\" But the entry was officially closed Thursday, as Ubuntu leader Mark Shuttleworth said things had changed since 2004."
+        },
+        "miniTeaser": {
+          "$text": "Ubuntu's Mark Shuttleworth closes \"Bug #1\" from 2004: \"Microsoft has a majority market share.\""
+        },
+        "slug": {
+          "$text": "The Two-Way"
+        },
+        "thumbnail": {
+          "medium": {
+            "$text": "http://media.npr.org/assets/img/2013/05/30/ubuntu_sq-e84a4f8b26ffcd941bbb5662c704b90a5f72b3fe.jpg?s=13"
+          },
+          "large": {
+            "$text": "http://media.npr.org/assets/img/2013/05/30/ubuntu_sq-e84a4f8b26ffcd941bbb5662c704b90a5f72b3fe.jpg?s=11"
+          },
+          "provider": {
+            "$text": "Launchpad"
+          }
+        },
+        "storyDate": {
+          "$text": "Thu, 30 May 2013 15:02:00 -0400"
+        },
+        "pubDate": {
+          "$text": "Thu, 30 May 2013 15:02:00 -0400"
+        },
+        "lastModifiedDate": {
+          "$text": "Thu, 30 May 2013 15:02:43 -0400"
+        },
+        "keywords": {},
+        "priorityKeywords": {},
+        "organization": [
+          {
+            "orgId": "1",
+            "orgAbbr": "NPR",
+            "name": {
+              "$text": "NPR"
+            },
+            "website": {
+              "$text": "http://www.npr.org/"
+            }
+          }
+        ],
+        "parent": [
+          {
+            "id": "172989719",
+            "type": "tag",
+            "title": {
+              "$text": "Ubuntu"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/archives/archive.php?thingId=172989719&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=172989719&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "132832276",
+            "type": "tag",
+            "title": {
+              "$text": "computers"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/archives/archive.php?thingId=132832276&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=132832276&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "128243057",
+            "type": "tag",
+            "title": {
+              "$text": "Microsoft"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/archives/archive.php?thingId=128243057&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=128243057&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "127602855",
+            "type": "category",
+            "title": {
+              "$text": "America"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=127602855&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=127602855&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "103943429",
+            "type": "blog",
+            "slug": "true",
+            "title": {
+              "$text": "The Two-Way"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/blogs/thetwo-way/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=103943429&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1049",
+            "type": "primaryTopic",
+            "title": {
+              "$text": "Digital Life"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/digital-life/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1049&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1049",
+            "type": "topic",
+            "title": {
+              "$text": "Digital Life"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/digital-life/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1049&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1019",
+            "type": "topic",
+            "title": {
+              "$text": "Technology"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/technology/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1019&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1006",
+            "type": "topic",
+            "title": {
+              "$text": "Business"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/business/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1006&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1002",
+            "type": "topic",
+            "title": {
+              "$text": "Home Page Top Stories"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1002&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1001",
+            "type": "topic",
+            "title": {
+              "$text": "News"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/news/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1001&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "byline": [
+          {
+            "id": "187319658",
+            "name": {
+              "personId": "14562108",
+              "$text": "Bill Chappell"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/people/14562108/bill-chappell?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=14562108&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "image": [
+          {
+            "id": "187327880",
+            "type": "primary",
+            "width": "200",
+            "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu_custom-ffbf6e94f5b5ff4629543ab3d781b3ad6c9bb91d.jpg?s=12",
+            "hasBorder": "false",
+            "title": {
+              "$text": "Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today."
+            },
+            "caption": {
+              "$text": "Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today."
+            },
+            "link": {
+              "url": ""
+            },
+            "producer": {},
+            "provider": {
+              "url": "",
+              "$text": "Launchpad"
+            },
+            "copyright": {},
+            "crop": [
+              {
+                "type": "standard",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu-ed48e053d6df5b9956e7be8313e7ee886de0241c.jpg",
+                "height": "193",
+                "width": "258"
+              },
+              {
+                "type": "square",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu_sq-e84a4f8b26ffcd941bbb5662c704b90a5f72b3fe.jpg",
+                "height": "193",
+                "width": "193"
+              },
+              {
+                "type": "wide",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu_wide-c58d6a4569bd8feead3fd24d42c3ad36b5cc7653.jpg",
+                "height": "193",
+                "width": "344"
+              },
+              {
+                "type": "custom",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu_custom-ffbf6e94f5b5ff4629543ab3d781b3ad6c9bb91d.jpg",
+                "height": "193",
+                "width": "648"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" has been seen as a rallying call. After all, the bug's title is \"Microsoft has a majority market share.\""
+            },
+            {
+              "num": "2",
+              "$text": "But the entry was officially closed Thursday, partly because the \"broader market has healthy competition\" as Ubuntu leader Mark Shuttleworth writes in his comments on closing the bug today."
+            },
+            {
+              "num": "3",
+              "$text": "Based on Linux, Ubuntu was created at a time when Microsoft dominated the PC market, to the extent that it was difficult to purchase a PC that didn't come with the Windows operating system already installed."
+            },
+            {
+              "num": "4",
+              "$text": "By contrast, Ubuntu's philosophy was that \"Our work is driven by a belief that software should be free and accessible to all,\" as Shuttleworth wrote in August of 2004."
+            },
+            {
+              "num": "5",
+              "$text": "Much has changed in the nearly nine years since then. Most notably, smartphones and tablets have taken over an increasing share of the things people once did on laptop and desktop computers. That change, along with the strong growth of Google's Android and Apple's iOS systems, has meant that Windows plays a less dominant role in the computing market today than it did in 2004."
+            },
+            {
+              "num": "6",
+              "$text": "\"Android may not be my or your first choice of Linux,\" Shuttleworth writes, \"but it is without doubt an open source platform that offers both practical and economic benefits to users and industry. So we have both competition, and good representation for open source, in personal computing.\""
+            },
+            {
+              "num": "7",
+              "$text": "He noted that Microsoft's approach to Ubuntu and other operating systems, particularly when it comes to integrating them into cloud computing, has improved."
+            },
+            {
+              "num": "8",
+              "$text": "\"Circumstances have changed, institutions have adapted, so should we,\" Shuttleworth says."
+            },
+            {
+              "num": "9",
+              "$text": "He also said that the work of Ubuntu and its partners shouldn't have the main goal of supplanting Microsoft:"
+            },
+            {
+              "num": "10"
+            },
+            {
+              "num": "11",
+              "$text": "\"There is a social element to this bug report as well, of course. It served for many as a sort of declaration of intent. But it's better for us to focus our intent on excellence in our own right, rather than our impact on someone else's product.\""
+            },
+            {
+              "num": "12"
+            },
+            {
+              "num": "13",
+              "$text": "Shuttleworth's comment closing the bug — comment 1834 — sparked a flurry of new comments on the issue. Some said there was never a bug in the first place. But others said that while the computing environment had improved, the bug hadn't really been fixed. They noted the continued prevalence of proprietary software in the marketplace."
+            },
+            {
+              "num": "14",
+              "$text": "\"Declaring a bug to be fixed and actually fixing it are two different things,\" wrote a commenter named PJO. [Copyright 2013 NPR]"
+            }
+          ]
+        },
+        "textWithHtml": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" has been seen as a rallying call. After all, the bug's title is \"Microsoft has a majority market share.\""
+            },
+            {
+              "num": "2",
+              "$text": "But the entry was officially closed Thursday, partly because the \"broader market has healthy competition\" as <a href=\"http://www.ubuntu.com/\">Ubuntu</a> leader Mark Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/comments/1834\">writes in his comments</a> on closing the bug today."
+            },
+            {
+              "num": "3",
+              "$text": "Based on Linux, Ubuntu was created at a time when Microsoft dominated the PC market, to the extent that it was difficult to purchase a PC that didn't come with the Windows operating system already installed."
+            },
+            {
+              "num": "4",
+              "$text": "By contrast, Ubuntu's philosophy was that \"Our work is driven by a belief that software should be free and accessible to all,\" as Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/\">wrote in August of 2004</a>."
+            },
+            {
+              "num": "5",
+              "$text": "Much has changed in the nearly nine years since then. Most notably, smartphones and tablets have taken over an increasing share of the things people once did on laptop and desktop computers. That change, along with the strong growth of Google's Android and Apple's iOS systems, has meant that Windows plays a less dominant role in the computing market today than it did in 2004."
+            },
+            {
+              "num": "6",
+              "$text": "\"Android may not be my or your first choice of Linux,\" Shuttleworth writes, \"but it is without doubt an open source platform that offers both practical and economic benefits to users and industry. So we have both competition, and good representation for open source, in personal computing.\""
+            },
+            {
+              "num": "7",
+              "$text": "He noted that Microsoft's approach to Ubuntu and other operating systems, particularly when it comes to integrating them into cloud computing, has improved."
+            },
+            {
+              "num": "8",
+              "$text": "\"Circumstances have changed, institutions have adapted, so should we,\" Shuttleworth says."
+            },
+            {
+              "num": "9",
+              "$text": "He also said that the work of Ubuntu and its partners shouldn't have the main goal of supplanting Microsoft:"
+            },
+            {
+              "num": "10",
+              "$text": "<blockquote>"
+            },
+            {
+              "num": "11",
+              "$text": "\"There is a social element to this bug report as well, of course. It served for many as a sort of declaration of intent. But it's better for us to focus our intent on excellence in our own right, rather than our impact on someone else's product.\""
+            },
+            {
+              "num": "12",
+              "$text": "</blockquote>"
+            },
+            {
+              "num": "13",
+              "$text": "Shuttleworth's comment closing the bug — comment 1834 — sparked a flurry of new comments on the issue. Some said there was never a bug in the first place. But others said that while the computing environment had improved, the bug hadn't really been fixed. They noted the continued prevalence of proprietary software in the marketplace."
+            },
+            {
+              "num": "14",
+              "$text": "\"Declaring a bug to be fixed and actually fixing it are two different things,\" wrote a commenter named PJO.  <div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Ubuntu+Marks+%27Bug+No.+1%27+As+Fixed%2C+After+Nearly+Nine+Years&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+            }
+          ]
+        },
+        "fullText": {
+          "$text": "<div class=\"storytitle\">      <h1>Ubuntu Marks 'Bug No. 1' As Fixed, After Nearly Nine Years</h1>   <input type=\"hidden\" id=\"title187318344\" value=\"Ubuntu Marks 'Bug No. 1' As Fixed, After Nearly Nine Years\"></input>   <input type=\"hidden\" id=\"modelShortUrl187318344\" value=\"http://n.pr/11amjB4\"></input>   <input type=\"hidden\" id=\"modelFullUrl187318344\" value=\"http://www.npr.org/blogs/thetwo-way/2013/05/30/187318344/ubuntu-marks-bug-no-1-as-fixed-after-nearly-nine-years\"></input></div><!-- END CLASS=\"STORYTITLE\" --><div id=\"story-meta\">      <div id=\"storybyline\" class=\"  linkLocation\">            <div class=\"bucketwrap byline\" id=\"res187318347\" previewTitle=\"bylines\">                  <p class=\"byline\">by <a rel=\"author\" href=\"http://www.npr.org/people/14562108/bill-chappell\"><span>Bill Chappell</span></a></p>      </div>      <!-- END CLASS=\"BUCKETWRAP BYLINE\" ID=\"RES187318347\" PREVIEWTITLE=\"BYLINES\" -->   </div>   <!-- END ID=\"STORYBYLINE\" CLASS=\"  LINKLOCATION\" -->   <div class=\"dateblock\">            <time datetime=\"2013-05-30\"><span class=\"date\">May 30, 2013</span><span class=\"time\"> 3:02 PM</span></time>   </div></div><!-- END ID=\"STORY-META\" --><div id=\"storytext\" class=\"storytext storylocation linkLocation\">      <div id=\"res187327880\" class=\"bucketwrap image large\" previewTitle=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\">            <div class=\"imagewrap\">                  <img src=\"http://media.npr.org/assets/img/2013/05/30/ubuntu_custom-ffbf6e94f5b5ff4629543ab3d781b3ad6c9bb91d-s6.jpg\" title=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\" alt=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\" />      </div>      <!-- END CLASS=\"IMAGEWRAP\" -->      <div class=\"captionwrap\">                  <div class=\"caption\">                        <p><i>Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.</i></p>         </div>         <!-- END CLASS=\"CAPTION\" -->      </div>      <!-- END CLASS=\"CAPTIONWRAP\" -->      <span class=\"creditwrap\"><span class=\"rightsnotice\">Launchpad</span></span>   </div>   <p>In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" has been seen as a rallying call. After all, the bug's title is \"Microsoft has a majority market share.\"</p>   <p>But the entry was officially closed Thursday, partly because the \"broader market has healthy competition\" as <a href=\"http://www.ubuntu.com/\">Ubuntu</a> leader Mark Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/comments/1834\">writes in his comments</a> on closing the bug today.</p>   <p>Based on Linux, Ubuntu was created at a time when Microsoft dominated the PC market, to the extent that it was difficult to purchase a PC that didn't come with the Windows operating system already installed.</p>   <p>By contrast, Ubuntu's philosophy was that \"Our work is driven by a belief that software should be free and accessible to all,\" as Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/\">wrote in August of 2004</a>.</p>   <p>Much has changed in the nearly nine years since then. Most notably, smartphones and tablets have taken over an increasing share of the things people once did on laptop and desktop computers. That change, along with the strong growth of Google's Android and Apple's iOS systems, has meant that Windows plays a less dominant role in the computing market today than it did in 2004.</p>   <p>\"Android may not be my or your first choice of Linux,\" Shuttleworth writes, \"but it is without doubt an open source platform that offers both practical and economic benefits to users and industry. So we have both competition, and good representation for open source, in personal computing.\"</p>   <p>He noted that Microsoft's approach to Ubuntu and other operating systems, particularly when it comes to integrating them into cloud computing, has improved.</p>   <p>\"Circumstances have changed, institutions have adapted, so should we,\" Shuttleworth says.</p>   <p>He also said that the work of Ubuntu and its partners shouldn't have the main goal of supplanting Microsoft:</p>   <blockquote class=\"edTag\"><div>   <p>\"There is a social element to this bug report as well, of course. It served for many as a sort of declaration of intent. But it's better for us to focus our intent on excellence in our own right, rather than our impact on someone else's product.\"</p>   </div></blockquote>   <p>Shuttleworth's comment closing the bug — comment 1834 — sparked a flurry of new comments on the issue. Some said there was never a bug in the first place. But others said that while the computing environment had improved, the bug hadn't really been fixed. They noted the continued prevalence of proprietary software in the marketplace.</p>   <p>\"Declaring a bug to be fixed and actually fixing it are two different things,\" wrote a commenter named PJO.</p></div><div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Ubuntu+Marks+%27Bug+No.+1%27+As+Fixed%2C+After+Nearly+Nine+Years&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+        }
+      }
+    ]
+  }
+}
