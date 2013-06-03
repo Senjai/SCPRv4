@@ -37,7 +37,6 @@ class PijQuery < ActiveRecord::Base
   validates :slug,        uniqueness: true
   validates :headline,    presence: true
   validates :teaser,      presence: true
-  validates :body,        presence: true
   validates :query_type,  presence: true
   validates :query_url,   presence: true
   validates :form_height, presence: true

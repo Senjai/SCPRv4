@@ -4,8 +4,7 @@
 FactoryGirl.define do
   factory :pij_query do
     sequence(:headline) { |n| "PIJ Query ##{n}"}
-    body "Sweet PIJ query, bro"
-    teaser { body }
+    teaser "This a teaser"
     slug { headline.parameterize }  
     query_type "news"
     form_height 1500
