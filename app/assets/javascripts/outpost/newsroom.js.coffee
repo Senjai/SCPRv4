@@ -4,6 +4,10 @@
 # Client for the Newsroom.js Node server
 #
 class scpr.Newsroom
+    @load: ->
+        window.newsroomReady = true
+        Newsroom.queued?.load()
+
     @templates:
         badge: JST["outpost/templates/badge"]
     
@@ -60,6 +64,17 @@ class scpr.Newsroom
             offline: new Newsroom.Alert.Offline($("*[id*='newsroom']"))
             empty:   new Newsroom.Alert.Empty(@el)
 
+
+        if window.newsroomReady then @load() else @enqueue()
+
+    #-----------------
+    # Enqueue the loading until we're told to load (to allow for asynx JS loading)
+    enqueue: ->
+        Newsroom.queued = @
+
+    #-----------------
+    # Load the ticker
+    load: ->
         $ =>
             # If io (sockets) isn't available, render error
             # Otheriwse connect to Socket.io

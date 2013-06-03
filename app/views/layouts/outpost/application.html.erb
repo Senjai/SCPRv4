@@ -137,7 +137,7 @@
 
 <% if current_user %>
   <%= render '/outpost/tickets/modal' %>
-  <%= javascript_include_tag "#{Rails.application.config.node.server}/socket.io/socket.io.js" %>
+  <%= javascript_include_tag "#{Rails.application.config.node.server}/socket.io/socket.io.js", async: true, onload: "scpr.Newsroom.load()" %>
 <% end %>
 
 </body>
