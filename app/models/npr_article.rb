@@ -154,7 +154,7 @@ class NprArticle < RemoteArticle
       )
       
       asset = assethost.create(
-        :url     => image.src,
+        :url     => image.enlargement.src,
         :title   => image.title,
         :caption => image.caption,
         :owner   => [image.producer, image.provider].join("/"),
