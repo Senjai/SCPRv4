@@ -64,6 +64,8 @@ describe Audio do
       end
       
       it "is valid if only mp3 present" do
+        purge_uploaded_audio
+
         audio = build :audio, :uploaded, mp3_path: nil, enco_number: nil, enco_date: nil
         audio.save
         audio.errors.should be_blank
@@ -79,6 +81,10 @@ describe Audio do
     #----------------
     
     context "#mp3_exists" do
+      before :each do
+        purge_uploaded_audio
+      end
+
       it "runs on save for existing records" do
         audio = create :audio, :enco
         audio.should_receive(:mp3_exists).once
@@ -105,13 +111,36 @@ describe Audio do
         -> { File.open audio.mp3.file.path }.should raise_error Errno::ENOENT # make sure it *doesn't* exist
         audio.reload
         audio.mp3_exists
-        audio.errors.keys.should eq [:mp3]        
+        audio.errors.keys.should eq [:mp3]
       end
       
       it "ignores this validation if the environment is development" do
         audio = build :audio, :uploaded
         audio.should_not_receive(:mp3_exists)
         Rails.stub(:env) { "development" }
+        audio.save!
+      end
+    end
+
+    #----------------
+
+    context '#path_is_unique' do
+      before :each do
+        purge_uploaded_audio
+      end
+
+      it 'validates that the filename is unique' do
+        existing_audio = create :audio, :uploaded
+        new_audio      = build :audio, :uploaded
+        
+        new_audio.valid?.should eq false
+        new_audio.errors.keys.should eq [:mp3]
+        new_audio.errors[:mp3].first.should match /already exists/
+      end
+
+      it 'only runs on new records' do
+        Audio.any_instance.should_receive(:path_is_unique).once
+        audio = create :audio, :uploaded
         audio.save!
       end
     end
@@ -123,6 +152,10 @@ describe Audio do
   
   describe "scopes" do
     describe "::available" do
+      before :each do
+        purge_uploaded_audio
+      end
+
       it "selects only audio objects with mp3 present" do
         available   = create :audio, :uploaded
         unavailable = create :audio, :enco # mp3 is blank
@@ -133,6 +166,10 @@ describe Audio do
     #----------------
     
     describe "::awaiting_audio" do
+      before :each do
+        purge_uploaded_audio
+      end
+
       it "selects audio where mp3 is null" do
         null_mp3 = create :audio, :enco
         live     = create :audio, :uploaded
@@ -149,6 +186,10 @@ describe Audio do
   #----------------
   
   describe "callbacks" do
+    before :each do
+      purge_uploaded_audio
+    end
+
     it "receives set_file_info before create" do
       audio = create :audio, :uploaded
       audio.filename.should_not be_blank
@@ -167,21 +208,25 @@ describe Audio do
     it "receives async_compute_file_info if mp3 is present and size and duration are blank" do
       Audio.any_instance.should_receive(:async_compute_file_info).once
       create :audio, :uploaded, duration: nil, size: nil
+
     end
     
     it "receives async_compute_file_fields if duration is present but not size" do
       Audio.any_instance.should_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: nil
+
     end
 
     it "receives async_compute_file_fields if size is present but not duration" do
       Audio.any_instance.should_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: nil
+
     end
     
     it "doesn't receive async_compute_file_fields if duration and size are present" do
       Audio.any_instance.should_not_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: 8000
+
     end
     
     it "doesn't receive async_compute_file_fields if mp3 is not present" do
@@ -192,6 +237,10 @@ describe Audio do
     #----------------
     
     describe "nilify_blanks" do
+      before :each do
+        purge_uploaded_audio
+      end
+
       it "nilifies blanks" do
         audio = create :audio, :uploaded, description: "", byline: "", enco_number: "", mp3_path: ""
         audio.description.should eq ""
@@ -280,19 +329,28 @@ describe Audio do
   #----------------
   
   describe "#full_path" do
+    before :each do
+      purge_uploaded_audio
+    end
+
     it "returns the server path to the mp3 if mp3 is present" do
       Rails.application.config.scpr.stub(:media_root) { Rails.root.join("spec/fixtures/media") }
       audio = create :audio, :uploaded
       audio.full_path.should eq Rails.root.join("spec/fixtures/media/audio/#{audio.path}").to_s
-    end    
+  
+    end
   end
   
   #----------------
   
   describe "#url" do
+    before :each do
+      purge_uploaded_audio
+    end
+
     it "returns the full URL to the mp3 if it's live" do
       audio = create :audio, :uploaded
-      audio.url.should eq "#{Audio::AUDIO_URL_ROOT}/#{audio.path}"      
+      audio.url.should eq "#{Audio::AUDIO_URL_ROOT}/#{audio.path}"
     end
     
     it "returns nil if not live" do
@@ -304,6 +362,10 @@ describe Audio do
   #----------------
   
   describe "#podcast_url" do
+    before :each do
+      purge_uploaded_audio
+    end
+
     it "returns the full podcast URL to the mp3 if it's live" do
       audio = create :audio, :uploaded
       audio.podcast_url.should eq "#{Audio::PODCAST_URL_ROOT}/#{audio.path}"
@@ -320,6 +382,10 @@ describe Audio do
   #----------------
 
   describe "#set_type" do
+    before :each do
+      purge_uploaded_audio
+    end
+
     it "sets to UploadedAudio if audio is live" do
       audio = create :audio, :uploaded
       audio.type.should eq "Audio::UploadedAudio"
@@ -333,7 +399,7 @@ describe Audio do
     it "sets to DirectAudio if mp3_path is present" do
       audio = create :audio, :direct
       audio.type.should eq "Audio::DirectAudio"
-    end    
+    end
   end
 
   #----------------
@@ -367,6 +433,10 @@ describe Audio do
     end
     
     context "for uploaded audio" do
+      before :each do
+        purge_uploaded_audio
+      end
+
       it "sets file info" do
         time = freeze_time_at "October 21 1988"
         audio = build :audio, :uploaded
@@ -403,6 +473,10 @@ describe Audio do
   #----------------
 
   describe "#compute_duration" do
+    before :each do
+      purge_uploaded_audio
+    end
+
     it "returns false if mp3 is blank" do
       audio = create :audio, :enco
       audio.compute_duration.should be_false
@@ -433,6 +507,10 @@ describe Audio do
   #----------------
   
   describe "#compute_size" do
+    before :each do
+      purge_uploaded_audio
+    end
+
     it "returns false if mp3 is blank" do
       audio = create :audio, :enco
       audio.compute_size.should be_false
@@ -451,6 +529,10 @@ describe Audio do
   
   describe "#compute_file_info!" do
     context "with mp3 file" do
+      before :each do
+        purge_uploaded_audio
+      end
+
       it "computes duration and size, and saves" do
         audio = create :audio, :uploaded
         audio.mp3.present?.should eq true
@@ -475,6 +557,10 @@ describe Audio do
   #----------------
   
   describe "#async_compute_file_info" do
+    before :each do
+      purge_uploaded_audio
+    end
+
     it "sends off to Resque" do
       audio = create :audio, :uploaded
       Resque.should_receive(:enqueue).with(Audio::ComputeFileInfoJob, audio.id)

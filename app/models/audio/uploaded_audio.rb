@@ -7,7 +7,7 @@
 class Audio
   class UploadedAudio < Audio
     class << self
-      def store_dir(audio)
+      def store_dir(audio=nil)
         "#{STORE_DIRS[:upload]}/#{Time.now.strftime("%Y/%m/%d")}"
       end
 
