@@ -6,7 +6,7 @@
 class Audio
   class EncoAudio < Audio
     class << self
-      def store_dir(audio)
+      def store_dir(audio=nil)
         STORE_DIRS[:enco]
       end
   

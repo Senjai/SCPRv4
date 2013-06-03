@@ -150,7 +150,7 @@ class NprArticle < RemoteArticle
     # Add in the primary asset if it exists
     if image = npr_story.primary_image
       asset = AssetHost::Asset.create(
-        :url     => image.src,
+        :url     => image.enlargement.src,
         :title   => image.title,
         :caption => image.caption,
         :owner   => [image.producer, image.provider].join("/"),

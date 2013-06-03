@@ -8,7 +8,10 @@
   
     <div class="story-body storyleft">
       <%= render_asset query, "query" %>
-      <%= query.body.html_safe %>
+      
+      <% if query.body.present? %>
+        <%= query.body.html_safe %>
+      <% end %>
     </div>
   
     <footer>

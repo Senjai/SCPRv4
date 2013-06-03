@@ -32,6 +32,7 @@ RSpec.configure do |config|
   config.include DatePathHelper
   config.include StubTime
   config.include StubPublishingCallbacks
+  config.include AudioCleanup
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
   
