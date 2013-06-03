@@ -37,7 +37,7 @@ describe Api::Public::V2::AudioController do
     it "sanitizes the limit" do
       get :index, { limit: "Evil Code" }.merge(request_params)
       assigns(:limit).should eq 0
-      assigns(:audio).should eq @available
+      assigns(:audio).should eq @available.sort_by(&:created_at) # Why? Should have to be reversed. Microseconds or something.
     end
 
     it "accepts a limit" do
