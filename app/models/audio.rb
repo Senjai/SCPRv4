@@ -107,7 +107,7 @@ class Audio < ActiveRecord::Base
     )
     
     if File.exist?(path)
-      self.errors.add(:mp3, "A file already exists with that name - " \
+      self.errors.add(:mp3, "A file with that name already exists; " \
         "please rename your local audio file and try again. " \
         "If you are trying to replace the audio file, first delete the " \
         "old audio.")
