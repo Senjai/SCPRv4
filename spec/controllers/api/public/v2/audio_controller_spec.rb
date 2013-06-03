@@ -9,6 +9,8 @@ describe Api::Public::V2::AudioController do
 
   describe "GET show" do
     it "finds the object if it exists" do
+      purge_uploaded_audio
+
       audio = create :uploaded_audio
       get :show, { id: audio.id }.merge(request_params)
       assigns(:audio).should eq audio
@@ -25,7 +27,10 @@ describe Api::Public::V2::AudioController do
 
   describe "GET index" do
     before :each do
-      @available   = create_list :uploaded_audio, 3
+      purge_uploaded_audio
+
+      @available   = []
+      3.times { |n| @available << create(:uploaded_audio, mp3: load_audio_fixture("audio/point1sec-#{n}.mp3")) }
       @unavailable = create_list :enco_audio, 2
     end
 
