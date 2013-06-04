@@ -4,13 +4,19 @@
 # Client for the Newsroom.js Node server
 #
 class scpr.Newsroom
-    @load: ->
-        window.newsroomReady = true
-        Newsroom.queued?.load()
+    @queue = []
 
     @templates:
         badge: JST["outpost/templates/badge"]
     
+    @fail: ->
+        window.newsroomFailed = true
+        queued.fail() for queued in Newsroom.queue
+
+    @load: ->
+        window.newsroomReady = true
+        queued.load() for queued in Newsroom.queue
+
     #-----------------
     # Alerts/Errors
     class @Alert
@@ -37,20 +43,33 @@ class scpr.Newsroom
             @alerts  = 
                 offline: new Newsroom.Alert.Offline($("#work_status"))
 
+            if window.newsroomReady then @load() else @enqueue()
+
+        #-----------------
+
+        enqueue: ->
+            Newsroom.queue.push @
+
+        #-----------------
+
+        load: ->
             $ =>
                 # If io (sockets) isn't available, render error
                 # Otheriwse connect to Socket.io
                 if !io?
-                    $("#spinner").spin(false)
-                    $("#work_status").html()
-                    @alerts['offline'].render() 
-                else
-                    @socket  = io.connect scpr.NODE, 'connect timeout': 5000
-                    @socket.on 'finished-task', (data) ->
-                        $("#work_status").html("Finished!")
-                        $("#spinner").spin(false)
-                        window.location = data.location
+                    @fail()
+                    return
 
+                @socket  = io.connect scpr.NODE, 'connect timeout': 5000
+                @socket.on 'finished-task', (data) ->
+                    $("#work_status").html("Finished!")
+                    $("#spinner").spin(false)
+                    window.location = data.location
+
+        fail: ->
+            $("#spinner").spin(false)
+            $("#work_status").html()
+            @alerts['offline'].render()
     
     #-----------------
     
@@ -70,7 +89,7 @@ class scpr.Newsroom
     #-----------------
     # Enqueue the loading until we're told to load (to allow for asynx JS loading)
     enqueue: ->
-        Newsroom.queued = @
+        Newsroom.queue.push @
 
     #-----------------
     # Load the ticker
@@ -79,18 +98,22 @@ class scpr.Newsroom
             # If io (sockets) isn't available, render error
             # Otheriwse connect to Socket.io
             if !io?
-                @el.spin(false)
-                @alerts['offline'].render()
-            else
-                @socket  = io.connect scpr.NODE, 'connect timeout': 5000
-                
-                # Outgoing messages
-                @socket.emit 'entered', @roomId, @userJson, recordJson: @record
+                @fail()
+                return
 
-                # Incoming messages
-                @socket.on 'loadList', (users) =>
-                    @el.spin(false)
-                    @loadList(users)
+            @socket  = io.connect scpr.NODE, 'connect timeout': 5000
+            
+            # Outgoing messages
+            @socket.emit 'entered', @roomId, @userJson, recordJson: @record
+
+            # Incoming messages
+            @socket.on 'loadList', (users) =>
+                @el.spin(false)
+                @loadList(users)
+
+    fail: ->
+        @el.spin(false)
+        @alerts['offline'].render()
 
     #-----------------
     # Load the list of users into the bucket
