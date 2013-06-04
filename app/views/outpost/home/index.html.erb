@@ -87,7 +87,7 @@
   <script type="text/javascript">
     newsroom = new scpr.Newsroom(
       "dashboard", // room ID
-      <%= j current_user.to_json.html_safe %>, // user info
+      <%= render_json('api/private/v2/admin_users/admin_user', admin_user: current_user) %>, // user info
       { "el": "#newsroom-dashboard_currently-active" }
     );
   </script>

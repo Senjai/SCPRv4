@@ -48,7 +48,7 @@
 
     newsroom = new scpr.Newsroom(
       "<%= @record.obj_key %>", // room ID
-      <%= j current_user.to_json.html_safe %>, // user info
+      <%= render_json('api/private/v2/admin_users/admin_user', admin_user: current_user) %>, // user info
       { "record": <%= j @record.to_json.html_safe %>,
         "el": "#newsroom-edit_user-list" }
     );
