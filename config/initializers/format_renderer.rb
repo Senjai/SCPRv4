@@ -1,3 +1,6 @@
+# This allows us to render JSON partials from within HTML partials.
+# See: http://railsguides.net/2012/08/29/rails3-does-not-render-partial-for-specific-format/
+
 module ActionView
   class PartialRenderer
 
