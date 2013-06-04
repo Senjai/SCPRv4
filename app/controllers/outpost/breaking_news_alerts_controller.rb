@@ -1,21 +1,19 @@
 class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
-  #-------------
-  # Outpost
-  self.model = BreakingNewsAlert
-
-  define_list do
-    list_default_order "created_at"
-    list_default_sort_mode "desc"
+  outpost_controller
+  
+  define_list do |l|
+    l.default_order = "created_at"
+    l.default_sort_mode = "desc"
     
-    column :headline
-    column :alert_type, header: "Type", display: proc { BreakingNewsAlert::ALERT_TYPES[self.alert_type] }
-    column :visible, header: "Visible?"
-    column :is_published, header: "Published?"
-    column :email_sent, header: "Email Sent?"
-    column :created_at, sortable: true, default_sort_mode: "desc"
+    l.column :headline
+    l.column :alert_type, header: "Type", display: ->(r) { BreakingNewsAlert::ALERT_TYPES[r.alert_type] }
+    l.column :visible, header: "Visible?"
+    l.column :is_published, header: "Published?"
+    l.column :email_sent, header: "Email Sent?"
+    l.column :created_at, sortable: true, default_sort_mode: "desc"
 
-    filter :alert_type, title: "Type", collection: -> { BreakingNewsAlert.types_select_collection }
-    filter :is_published, title: "Published?", collection: :boolean
-    filter :email_sent, title: "Email Sent?", collection: :boolean
+    l.filter :alert_type, title: "Type", collection: -> { BreakingNewsAlert.types_select_collection }
+    l.filter :is_published, title: "Published?", collection: :boolean
+    l.filter :email_sent, title: "Email Sent?", collection: :boolean
   end
 end

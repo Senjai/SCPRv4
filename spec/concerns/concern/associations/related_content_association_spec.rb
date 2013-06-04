@@ -93,8 +93,8 @@ describe Concern::Associations::RelatedContentAssociation do
     
     context "when content has changed" do
       before :each do
-        ContentBase.should_receive(:obj_by_key).with(story1.obj_key).and_return(story1)
-        ContentBase.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
+        Outpost.should_receive(:obj_by_key).with(story1.obj_key).and_return(story1)
+        Outpost.should_receive(:obj_by_key).with(story2.obj_key).and_return(story2)
       end
       
       it 'does not do anything if json is an empty string' do
@@ -117,7 +117,7 @@ describe Concern::Associations::RelatedContentAssociation do
       
       it "doesn't add unpublished content" do
         unpublished = create :test_class_story, status: ContentBase::STATUS_DRAFT
-        ContentBase.should_receive(:obj_by_key).with(unpublished.obj_key).and_return(unpublished)
+        Outpost.should_receive(:obj_by_key).with(unpublished.obj_key).and_return(unpublished)
 
         post.related_content_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 2 }, {\"id\": \"#{story2.obj_key}\", \"position\": 3 }]"
         post.outgoing_references.map(&:related).should eq [story1, story2]

@@ -8,8 +8,9 @@ json.cache! [Api::Public::V2::VERSION, "v1", content] do
   json.body         content.body.html_safe
   json.permalink    content.remote_link_path
 
+
   asset = content.assets.first
-  json.thumbnail asset ? content.asset.lsquare.tag : nil
+  json.thumbnail asset ? asset.lsquare.tag : nil
 
 
   if content.respond_to?(:category) && content.category.present?

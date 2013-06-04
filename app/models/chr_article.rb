@@ -151,23 +151,19 @@ class ChrArticle < RemoteArticle
     #-------------------
     # Add in the primary asset if it exists
     if image = npr_story.primary_image
-      assethost = AssetHost::Client.new(
-        :auth_token => Rails.application.config.api["assethost"]["token"]
-      )
-      
-      asset = assethost.create(
+      asset = AssetHost::Asset.create(
         :url     => image.src,
         :title   => image.title,
         :caption => image.caption,
         :owner   => [image.producer, image.provider].join("/"),
         :note    => "Imported from CHR: #{npr_story.link_for('html')}"
       )
-      
-      if asset["id"]
+
+      if asset && asset.id
         content_asset = ContentAsset.new(
-          :asset_order => 0,
-          :asset_id    => asset["id"],
-          :caption     => image.caption
+          :position   => 0,
+          :asset_id   => asset.id,
+          :caption    => image.caption
         )
         
         article.assets << content_asset

@@ -18,7 +18,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  include Concern::Methods::ContentJsonMethods
 
   ROUTE_KEY = "episode"
   
@@ -38,7 +37,7 @@ class ShowEpisode < ActiveRecord::Base
   has_many    :segments,  :class_name  => "ShowSegment", 
                           :foreign_key => "segment_id", 
                           :through     => :rundowns, 
-                          :order       => "segment_order"
+                          :order       => "position"
 
   #-------------------
   # Validations
@@ -95,16 +94,7 @@ class ShowEpisode < ActiveRecord::Base
   def byline
     self.show.title
   end
-  
-  #----------
-  
-  def json
-    super.merge({
-      :teaser         => self.teaser,
-      :short_headline => self.headline
-    })
-  end
-  
+
   #----------
   
   def route_hash
@@ -133,10 +123,10 @@ class ShowEpisode < ActiveRecord::Base
     loaded_rundowns = []
 
     json.each do |rundown_hash|
-      segment = ContentBase.obj_by_key(rundown_hash["id"])
+      segment = Outpost.obj_by_key(rundown_hash["id"])
       if segment && segment.is_a?(ShowSegment)
         rundown = ShowRundown.new(
-          :segment_order => rundown_hash["position"].to_i, 
+          :position => rundown_hash["position"].to_i, 
           :segment       => segment
         )
       

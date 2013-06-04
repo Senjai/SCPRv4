@@ -1,8 +1,0 @@
-<div class="thumbnail">
-  <%- @asset.tags.lsquare %>
-  
-  <div class="asset-info">
-    <h6><%= @asset.title %></h6>
-    <small class="muted"><%= @asset.caption %></small>
-  </div>
-</div>

@@ -3,7 +3,6 @@ class MissedItBucket < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
 
@@ -19,6 +18,8 @@ class MissedItBucket < ActiveRecord::Base
     :dependent      => :destroy
   }
   
+  accepts_json_input_for_content
+
   #--------------------
   # Validation
   validates :title, presence: true

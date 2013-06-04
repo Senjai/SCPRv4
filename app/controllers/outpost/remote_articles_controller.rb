@@ -1,36 +1,38 @@
 class Outpost::RemoteArticlesController < Outpost::BaseController
+  include Concern::Controller::Searchable
+
   # We don't want to include the Outpost actions here,
   # so we include stuff manually.
   include Outpost::Controller::Helpers
   include Outpost::Controller::Callbacks
-  include Concern::Controller::Searchable
-  
+  include Outpost::Controller::Ordering
+  include Outpost::Controller::Filtering
+  include Outpost::Controller::Preferences
+
   #------------------
   # Outpost
   self.model = RemoteArticle
 
-  define_list do
-    list_default_order "published_at"
-    list_default_sort_mode "desc"
+  define_list do |l|
+    l.default_order = "published_at"
+    l.default_sort_mode = "desc"
+    l.per_page = 50
 
-    list_per_page 50
+    l.column :type, header: "Organization", display: ->(r) { r.class::ORGANIZATION }
+    l.column :headline
+    l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :teaser
+    l.column :url, display: :display_link
+    l.column :article_id, header: "Remote ID"
 
-    column :type, header: "Organization", display: ->(r) { r.class::ORGANIZATION }
-    column :headline
-    column :published_at, sortable: true, default_sort_mode: "desc"
-    column :teaser
-    column :url, display: :display_link
-    column :article_id, header: "Remote ID"
-
-    filter :type, title: "Organization", collection: -> { RemoteArticle.types_select_collection }
+    l.filter :type, title: "Organization", collection: -> { RemoteArticle.types_select_collection }
   end
 
   #------------------
 
+  before_filter :authorize_resource
   before_filter :get_record, only: [:import, :skip]
   before_filter :get_records, only: [:index]
-  before_filter :authorize_resource
-  before_filter :order_records, only: [:index]
   before_filter :filter_records, only: [:index]
   before_filter :extend_breadcrumbs_with_resource_root
 

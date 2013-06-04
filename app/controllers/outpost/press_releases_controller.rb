@@ -1,13 +1,11 @@
 class Outpost::PressReleasesController < Outpost::ResourceController
-  #---------------
-  # Outpost
-  self.model = PressRelease
+  outpost_controller
+  
+  define_list do |l|
+    l.default_order = "created_at"
+    l.default_sort_mode = "desc"
 
-  define_list do
-    list_default_order "created_at"
-    list_default_sort_mode "desc"
-
-    column :short_title
-    column :created_at, sortable: true, default_sort_mode: "desc"
+    l.column :short_title
+    l.column :created_at, sortable: true, default_sort_mode: "desc"
   end
 end

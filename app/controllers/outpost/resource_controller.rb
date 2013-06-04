@@ -3,14 +3,8 @@
 #
 # Adds in some default behavior for resources in the CMS.
 class Outpost::ResourceController < Outpost::BaseController
-  outpost_controller
   include Concern::Controller::Searchable
-  
-  before_filter :get_record, only: [:show, :edit, :update, :destroy, :activity]
-  before_filter :get_records, only: [:index]
-  before_filter :authorize_resource
-  before_filter :order_records, only: [:index]
-  before_filter :filter_records, only: [:index]
+
   before_filter :extend_breadcrumbs_with_resource_root
   before_filter :add_user_id_to_params, only: [:create, :update]
   before_filter :set_preview, only: [:preview]
@@ -35,11 +29,5 @@ class Outpost::ResourceController < Outpost::BaseController
 
   def set_preview
     @PREVIEW = true
-  end
-
-  #-----------------
-
-  def render_preview_validation_errors(record)
-    render "/outpost/shared/_preview_errors", layout: "outpost/minimal", locals: { record: record }
   end
 end

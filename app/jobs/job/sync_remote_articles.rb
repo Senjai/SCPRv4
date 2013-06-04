@@ -21,6 +21,7 @@ module Job
     
     def self.perform
       RemoteArticle.sync
+      self.log "Synced Remote Articles."
     end
   end
 end

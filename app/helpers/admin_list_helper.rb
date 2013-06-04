@@ -3,9 +3,6 @@ module AdminListHelper
     link_to content_tag(:i, nil, class: "icon-share-alt"), link, class: "btn"
   end
 
-  # Alias until SCPRv4 is on the latest outpost
-  alias :display_url :display_link
-
   #-------------
   # Associations
 

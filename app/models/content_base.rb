@@ -9,8 +9,6 @@ module ContentBase
   
   #--------------------
   # Status definitions
-  # Always use these - don't hard-code the
-  # status numbers.
   STATUS_KILLED   = -1
   STATUS_DRAFT    = 0
   STATUS_REWORK   = 1
@@ -47,8 +45,6 @@ module ContentBase
     %r{\A/blogs/[-_\w]+/\d+/\d\d/\d\d/(\d+)/.*}       => 'BlogEntry',
     %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment'
   }
-
-  OBJ_KEY_REGEX = %r{([^:]+):(\d+)}
 
   #--------------------
   # Wrapper around ThinkingSphinx to just query all
@@ -110,29 +106,6 @@ module ContentBase
 
     teaser
   end
-
-  #--------------------
-  # Convert key from "app/model:id" to AppModel
-  def get_model_for_obj_key(key)
-    match = match_key(key)
-    model_classes[match[1]] if match
-  end
-
-  #--------------------
-  # Convert key from "app/model:id" to AppModel.find_by_id(id)
-  def obj_by_key(key)
-    if match = match_key(key)
-      model = model_classes[match[1]]
-      model.find_by_id(match[2]) if model
-    end
-  end
-
-  #--------------------
-  # Same as #obj_by_key, but raises ActiveRecord::RecordNotFound
-  # if no object is found or if key doesn't match.
-  def obj_by_key!(key)
-    obj_by_key(key) or raise ActiveRecord::RecordNotFound
-  end
   
   #--------------------
   # Look to CONTENT_MATCHES to see if the passed-in URL
@@ -146,10 +119,11 @@ module ContentBase
     end
     
     if match = CONTENT_MATCHES.find { |k,_| u.path =~ k }
-      key = [match[1].constantize.content_key, $~[1]].join(":")
-      article = self.obj_by_key(key)
-
+      key       = [match[1].constantize.content_key, $~[1]].join(":")
+      article   = Outpost.obj_by_key(key)
       article && article.published? ? article : nil
+    else
+      nil
     end
   end
   
@@ -166,24 +140,4 @@ module ContentBase
     ContentBase::STATUS_TEXT.map { |p| [p[1], p[0]] }
   end
 
-  #--------------------
-  
-  private
-  
-  def match_key(key)
-    key.to_s.match(OBJ_KEY_REGEX)
-  end
-
-  #--------------------
-  
-  def model_classes
-    klasses = {}
-    
-    Outpost.config.registered_models.each do |name|
-      klass = name.constantize
-      klasses.merge!(klass.content_key => klass)
-    end
-    
-    klasses
-  end
 end # ContentBase

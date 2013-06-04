@@ -22,6 +22,6 @@ class ContentEmailController < ApplicationController
   protected
 
   def get_content
-    @content = ContentBase.obj_by_key!(params[:obj_key])
+    @content = Outpost.obj_by_key!(params[:obj_key])
   end
 end

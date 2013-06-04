@@ -45,7 +45,7 @@ module Scprv4
 
     # For testing purposes
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-    config.assets.precompile += %w( shared.js outpost/outpost.css outpost/outpost.js base/print.css )
+    config.assets.precompile += %w( shared.js outpost/application.css outpost/application.js base/print.css )
 
     config.scpr             = ActiveSupport::OrderedOptions.new
     config.audio_vision     = ActiveSupport::OrderedOptions.new
