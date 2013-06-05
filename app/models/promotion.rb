@@ -19,7 +19,7 @@ class Promotion < ActiveRecord::Base
   
   def asset
     if self.asset_id.present?
-      @asset ||= Asset.find(self.asset_id)
+      @asset ||= AssetHost::Asset.find(self.asset_id)
     else
       false
     end

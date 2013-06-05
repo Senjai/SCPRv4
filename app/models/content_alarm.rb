@@ -3,7 +3,7 @@ class ContentAlarm < ActiveRecord::Base
 
   self.table_name = "contentbase_contentalarm"
   logs_as_task
-  
+
   #----------
   # Scopes
   scope :pending, -> { where("fire_at <= ?", Time.now).order("fire_at") }
@@ -12,12 +12,6 @@ class ContentAlarm < ActiveRecord::Base
   # Association
   belongs_to :content, polymorphic: true
   
-  #----------
-  # Validation
-  
-  #----------
-  # Callbacks
-
   #---------------------
   
   class << self

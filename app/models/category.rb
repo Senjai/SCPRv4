@@ -77,27 +77,6 @@ class Category < ActiveRecord::Base
         :metric   => :comment
       }
     end
-
-
-    # -- then try to feature videos since they are less common --#
-    
-    video = ContentBase.search({
-      :classes     => [VideoShell],
-      :limit       => 1,
-      :with        => { category: self.id },
-      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
-    })
-    
-    if video.present?
-      # Initial score: 15
-      # Decay rate: 0.05
-      video = video.first
-      candidates << {
-        :content  => video,
-        :score    => (15 * Math.exp( -0.05 * ((Time.now - video.published_at) / 3600) ) ),
-        :metric   => :video
-      }
-    end
     
     
     # -- now try slideshows -- #

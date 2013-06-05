@@ -46,10 +46,16 @@ table {
     }
 
     ///////////////////
-    // NprStory
-    &.list-npr_stories {
+    // RemoteArticle
+    &.list-remote_articles {
         .column-manage {
-            width: 100px;
+            width: 165px;
+        }
+        .column-type {
+            width: 150px;
+        }
+        .column-headline {
+            width: 200px;
         }
     }
 
@@ -237,14 +243,6 @@ table {
     &.list-show_episodes {
         .column-show { // show_episode.show
             width: 100px;
-        }
-    }
-
-    ///////////////////
-    // VideoShell
-    &.list-video_shells {
-        .column-headline { // vidoe_shell.headline
-            width: 350px;
         }
     }
 }

@@ -35,7 +35,7 @@ CKEDITOR.editorConfig = (config) ->
     config.height = "400px"
     config.width  = "635px"
     config.bodyClass = 'ckeditor-body'
-    config.contentsCss = "/assets/application.css?bust=true"
+    config.contentsCss = "/assets/application.css"
     config.baseHref = "http://www.scpr.org/"
     
     config.disableNativeSpellChecker = false

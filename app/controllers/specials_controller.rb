@@ -8,5 +8,4 @@
 # Thing of these as "Flatpages Plus"
 #
 class SpecialsController < ApplicationController
-
 end

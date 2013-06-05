@@ -1,20 +1,18 @@
 class Outpost::TicketsController < Outpost::ResourceController
-  #---------------
-  # Outpost
-  self.model = Ticket
-
-  define_list do
-    list_default_order "status"
-    list_default_sort_mode "asc"
+  outpost_controller
+  
+  define_list do |l|
+    l.default_order = "status"
+    l.default_sort_mode = "asc"
     
-    column :user
-    column :id, header: "#", sortable: true, default_sort_mode: "desc"
-    column :summary
-    column :created_at, sortable: true, default_sort_mode: "desc"
-    column :status, display: :display_ticket_status, sortable: true, default_sort_mode: "desc"
+    l.column :user
+    l.column :id, header: "#", sortable: true, default_sort_mode: "desc"
+    l.column :summary
+    l.column :created_at, sortable: true, default_sort_mode: "desc"
+    l.column :status, display: :display_ticket_status, sortable: true, default_sort_mode: "desc"
     
-    filter :status, collection: -> { Ticket.status_text_collection }
-    filter :user_id, collection: -> { AdminUser.select_collection }
+    l.filter :status, collection: -> { Ticket.status_text_collection }
+    l.filter :user_id, collection: -> { AdminUser.select_collection }
   end
 
   #---------------

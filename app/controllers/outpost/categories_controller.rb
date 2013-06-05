@@ -1,18 +1,19 @@
 class Outpost::CategoriesController < Outpost::ResourceController
+  outpost_controller
   #-------------
   # Outpost
   self.model = Category
 
-  define_list do
-    list_default_order "title"
-    list_default_sort_mode "asc"
-    list_per_page :all
+  define_list do |l|
+    l.default_order = "title"
+    l.default_sort_mode = "asc"
+    l.per_page = :all
     
-    column :title, sortable: true
-    column :slug, sortable: true
-    column :is_news
-    column :comment_bucket
+    l.column :title, sortable: true
+    l.column :slug, sortable: true
+    l.column :is_news
+    l.column :comment_bucket
 
-    filter :is_news, title: "News?", collection: :boolean
+    l.filter :is_news, title: "News?", collection: :boolean
   end
 end

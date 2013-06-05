@@ -1,7 +1,7 @@
 <% add_to_page_title @segment.headline %>
 <%= render_content @segment, "opengraph" %>
 
-<%= cache ["show", "v5", @segment] do %>
+<%= cache ["show", "v9", @segment] do %>
   <%= render "/programs/segment", segment: @segment %>
 <% end %>
 

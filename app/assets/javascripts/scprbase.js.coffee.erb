@@ -3,9 +3,9 @@ SCPRv4: Southern California Public Radio
 ###
 
 window.scpr ?= {}
-scpr.API_ROOT        = "http://<%= Rails.application.config.scpr.host %>/dashboard/api"
-scpr.PUBLIC_API_ROOT = "http://<%= Rails.application.config.scpr.host %>/api"
-scpr.NODE            = "<%= Rails.application.config.node.server %>"
+
+scpr.NEWSROOM        = "<%= Rails.application.config.node.server %>"
+API_PUBLIC_ROOT = "http://<%= Rails.application.config.scpr.host %>/api"
 
 # stub console.log() for IE
 if !window.console

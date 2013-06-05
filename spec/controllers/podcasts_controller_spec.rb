@@ -43,7 +43,7 @@ describe PodcastsController do
     context "sphinx search" do
       it "assigns the content" do
         entry = create :blog_entry
-        audio = create :audio, :uploaded
+        audio = create :audio, :direct
         entry.audio.push audio
         entry.save!
         

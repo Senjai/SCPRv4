@@ -26,27 +26,28 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
-  include Concern::Methods::ContentJsonMethods
 
   self.table_name = 'news_story'
   has_secretary
   ROUTE_KEY = "news_story"
   
   SOURCES = [
-    ['KPCC',                'kpcc'],
-    ['KPCC & wires',        'kpcc_plus_wire'],
-    ['AP',                  'ap'],
-    ['KPCC wire services',  'kpcc_wire'],
-    ['NPR',                 'npr'],
-    ['NPR & wire services', 'npr_wire'],
-    ['New America Media',   'new_america'],
-    ['NPR & KPCC',          'npr_kpcc']
+    ['KPCC',                        'kpcc'],
+    ['KPCC & wires',                'kpcc_plus_wire'],
+    ['AP',                          'ap'],
+    ['KPCC wire services',          'kpcc_wire'],
+    ['NPR',                         'npr'],
+    ['NPR & wire services',         'npr_wire'],
+    ['New America Media',           'new_america'],
+    ['NPR & KPCC',                  'npr_kpcc'],
+    ['Center for Health Reporting', 'chr']
   ]
   
   ASSET_SCHEMES = [
     ["Float Right (default)", ""],
     ["Wide", "wide"],
     ["Slideshow", "slideshow"],
+    ["Video", "video"],
     ["No Display", "hidden"]
   ]
   

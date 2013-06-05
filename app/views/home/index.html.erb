@@ -2,7 +2,7 @@
 <%=
   begin
     render @homepage.base, homepage: @homepage
-  rescue => e
+  rescue ActionView::MissingTemplate => e
     if Rails.env == "production"
       render "default", homepage: @homepage
     else
@@ -13,16 +13,18 @@
 <% end %>
 
 <%= yield :conversation_slot %>
+
 <div class="more-content">
   <div class="row-fluid">
-    <div class="span12">
-      <div class="headlines">
-        <h6>More Headlines</h6>
-        <ul class="cbase">
-          <%= raw Rails.cache.read("home/headlines") %>
-        </ul>
-      </div>
-    </div>
+    <div class="span12 audiovision-block">
+
+      <a class="logo" href="http://audiovision.scpr.org">
+        <h6>AudioVision</h6>
+      </a>
+
+      <%= raw Rails.cache.read("views/home/audiovision") %>
+    </div> <!-- .audiovision -->
+
     <div class="span12">
       <%= render "/events/forum_events" %>
     </div>  
@@ -30,7 +32,7 @@
 </div>
 
 <% content_for :missed_it do %>
-  <% if @homepage and @homepage.missed_it_bucket.present? and @homepage.missed_it_bucket.content.present? %>
+  <% if @homepage && @homepage.missed_it_bucket.present? %>
     <div class="more-news missed-it-bucket content-carousel">
       <h6 class="more-news-title">
         In Case You Missed It

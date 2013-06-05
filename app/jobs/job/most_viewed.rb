@@ -18,6 +18,7 @@ module Job
       articles = task.parse(data['rows'])
 
       Rails.cache.write("popular/viewed", articles)
+      self.cache(articles, "/shared/widgets/cached/popular", "views/popular/viewed", local: :articles)
     end
 
     #---------------
@@ -74,7 +75,7 @@ module Job
       rows.each do |row|
         if article = ContentBase.obj_by_url(row[0])
           self.log "(#{row[1]}) #{row[0]}"
-          articles.push article
+          articles.push(article) if article.published?
         end
       end
       

@@ -13,7 +13,7 @@ describe Promotion do
       
       it "returns an asset if asset_id is present" do
         promotion = build :promotion, asset_id: 99
-        promotion.asset.should be_a Asset
+        promotion.asset.should be_a AssetHost::Asset
       end
     end
   end

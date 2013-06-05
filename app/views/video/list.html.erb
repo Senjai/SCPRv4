@@ -1,9 +1,0 @@
-<%# Just a list of videos, mostly for mobile devices that won't see the modal %>
-<% content_for :wide_content do %>
-  <%= any_to_list? @videos, "Videos" do %>
-    <div class="list">
-      <%= render partial: 'video_thumb', collection: @videos %>
-      <%= paginate @videos %>
-    </div>
-  <% end %>
-<% end %>

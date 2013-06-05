@@ -1,0 +1,264 @@
+{
+    "version": "0.94",
+    "list": {
+        "title": {
+            "$text": "Center for Health Reporting - Web"
+        },
+        "teaser": {
+            "$text": "Center for Health Reporting - Web"
+        },
+        "miniTeaser": {
+            "$text": "Center for Health Reporting - Web"
+        },
+        "link": [
+            {
+                "type": "api",
+                "$text": "https://www.publish2.com/organizations/2198/custom_views/1010/content.nprml?format=json&user=kpcc&pass=4d295052d116488&id=6740296"
+            }
+        ],
+        "story": [
+            {
+                "id": 6740296,
+                "link": [
+                    {
+                        "type": "api",
+                        "$text": "https://www.publish2.com/organizations/2198/custom_views/1010/content.nprml?format=json&user=kpcc&pass=4d295052d116488&id=6740296?storyid=6740296"
+                    }
+                ],
+                "title": {
+                    "$text": "Obamacare’s insurance requirement: Where do you fit?"
+                },
+                "partnerId": {
+                    "$text": 6740296
+                },
+                "subtitle": {},
+                "shortTitle": {},
+                "teaser": {
+                    "$text": "Q: I’ve heard that some people won’t be required to have health insurance under Obamacare. Is this true?"
+                },
+                "miniTeaser": {
+                    "$text": "Q: I’ve heard that some people won’t be required to have health insurance under Obamacare. Is this true?"
+                },
+                "slug": {
+                    "$text": "ASKEMILY3"
+                },
+                "storyDate": {
+                    "$text": "Tue, 07 May 2013 00:00:00 +0000"
+                },
+                "lastModifiedDate": {
+                    "$text": "Tue, 07 May 2013 19:15:52 +0000"
+                },
+                "keywords": {},
+                "priorityKeywords": {},
+                "organization": [
+                    {
+                        "orgId": "",
+                        "orgAbbr": "",
+                        "name": {
+                            "$text": "CHCF Center for Health Reporting"
+                        },
+                        "website": {
+                            "$text": "http://www.scpr.org"
+                        }
+                    }
+                ],
+                "parent": [
+                    {
+                        "id": "",
+                        "type": "tag",
+                        "title": "ca"
+                    },
+                    {
+                        "id": "",
+                        "type": "tag",
+                        "title": "California"
+                    },
+                    {
+                        "id": "",
+                        "type": "tag",
+                        "title": "Health"
+                    }
+                ],
+                "byline": [
+                    {
+                        "id": "",
+                        "name": {
+                            "$text": "Emily Bazar"
+                        }
+                    }
+                ],
+                "text": {
+                    "paragraph": [
+                        {
+                            "num": "1",
+                            "$text": "<p>Q: I’ve heard that some people won’t be required to have health insurance under Obamacare. Is this true?</p>"
+                        },
+                        {
+                            "num": "2",
+                            "$text": "<p>A: You’re right. Millions of people won’t have to comply with a signature piece of the new health law.</p>"
+                        },
+                        {
+                            "num": "3",
+                            "$text": "<p>Officially known as the Affordable Care Act, the law contains a provision called “the individual mandate” that requires most people to carry a minimum level of health insurance starting next year. Those who don’t comply must pay a tax penalty. (Click here to see a previous column that decodes the penalties.)</p>"
+                        },
+                        {
+                            "num": "4",
+                            "$text": "<p>But the law contains many exemptions. For instance, you won’t have to pay a tax penalty if:</p>"
+                        },
+                        {
+                            "num": "5",
+                            "$text": "<p>* you’re a member of a federally recognized Native American tribe,</p>"
+                        },
+                        {
+                            "num": "6",
+                            "$text": "<p>* you’re incarcerated,</p>"
+                        },
+                        {
+                            "num": "7",
+                            "$text": "<p>* you’re in the country illegally,</p>"
+                        },
+                        {
+                            "num": "8",
+                            "$text": "<p>* you belong to a religion that opposes accepting benefits from a health insurance policy,</p>"
+                        },
+                        {
+                            "num": "9",
+                            "$text": "<p>* you cannot find “affordable” coverage, meaning the cost of your premium would be more than 8 percent of household income, or</p>"
+                        },
+                        {
+                            "num": "10",
+                            "$text": "<p>* your household income is low enough that you’re not required to file a federal tax return. (Click here to find out if this means you.)</p>"
+                        },
+                        {
+                            "num": "11",
+                            "$text": "<p>An analysis by the Congressional Budget Office in September found that about 30 million nonelderly Americans will remain uninsured in 2016, two years after full implementation of Obamacare. Of those, the CBO estimates that about 6 million people will pay a penalty. </p>"
+                        },
+                        {
+                            "num": "12",
+                            "$text": "<p>Remember, if you have Medicare, Medicaid (which is Medi-Cal in California) or certain types of coverage for veterans; if you receive health coverage through your employer; or if you purchase coverage on the individual market, you already comply with the requirement and won’t have to pay a tax penalty.</p>"
+                        },
+                        {
+                            "num": "13",
+                            "$text": "<p>Q: I am 73 years old. My husband and I live on our Social Security and my part-time job. I have Part A Medicare but I’ve never signed up for Part B because we needed the money for other things. I have no other health insurance. Does having Part A mean I’m covered as far as the government is concerned, or do I need to find some additional coverage?</p>"
+                        },
+                        {
+                            "num": "14",
+                            "$text": "<p>A: This is a great follow-up to the last question.</p>"
+                        },
+                        {
+                            "num": "15",
+                            "$text": "<p>First, a few basics for other readers: Medicare is the subsidized national health system for people 65 and over.</p>"
+                        },
+                        {
+                            "num": "16",
+                            "$text": "<p>Medicare Part A, known as the “hospital insurance” portion, helps pay for inpatient hospital stays, inpatient skilled nursing facility stays (after a hospital stay), some home health care and hospice care.</p>"
+                        },
+                        {
+                            "num": "17",
+                            "$text": "<p>Medicare Part B, known as the “medical insurance” portion, helps pay for outpatient medical care such as doctor visits, lab tests and durable medical equipment.</p>"
+                        },
+                        {
+                            "num": "18",
+                            "$text": "<p>Even though Part A offers limited coverage, it still will meet Obamacare’s insurance requirement, says Jack Cheevers of the U.S. Centers for Medicare & Medicaid Services.</p>"
+                        },
+                        {
+                            "num": "19",
+                            "$text": "<p>So technically, you’ll be fine.</p>"
+                        },
+                        {
+                            "num": "20",
+                            "$text": "<p>But when I explained your situation to some California Medicare experts, they were concerned that you don’t have more comprehensive health insurance. They urged you to look into “Medicare Savings Programs,” which offer financial aid if you meet certain conditions. Click here to learn more.</p>"
+                        },
+                        {
+                            "num": "21",
+                            "$text": "<p>Also, there’s a free, unbiased Medicare counseling service for Californians, funded by state and federal money, called the Health Insurance Counseling & Advocacy Program. I recently arranged a session for my parents, and they loved it. (Find contact info here for your county.) </p>"
+                        },
+                        {
+                            "num": "22",
+                            "$text": "<p>Questions for Emily:  AskEmily@usc.edu</p>"
+                        },
+                        {
+                            "num": "23",
+                            "$text": "<p>Learn more about Emily here.</p>"
+                        }
+                    ]
+                },
+                "textWithHtml": {
+                    "paragraph": [
+                        {
+                            "num": "1",
+                            "$text": "<p><strong>Q: I’ve heard that some people won’t be required to have health insurance under Obamacare. Is this true?</strong></p>"
+                        },
+                        {
+                            "num": "2",
+                            "$text": "<p>A: You’re right. Millions of people won’t have to comply with a signature piece of the new health law.</p>"
+                        },
+                        {
+                            "num": "3",
+                            "$text": "<p>Officially known as the Affordable Care Act, the law contains a provision called “the individual mandate” that requires most people to carry a minimum level of health insurance starting next year. Those who don’t comply must pay a tax penalty. (Click <a href=\"http://centerforhealthreporting.org/article/how-new-exchange-may-help-californians-buy-health-care1091?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a> to see a previous column that decodes the penalties.)</p>"
+                        },
+                        {
+                            "num": "4",
+                            "$text": "<p>But the law contains <a href=\"http://www.irs.gov/uac/Questions-and-Answers-on-the-Individual-Shared-Responsibility-Provision?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">many exemptions</a>. For instance, you won’t have to pay a tax penalty if:</p>"
+                        },
+                        {
+                            "num": "5",
+                            "$text": "<p><a href=\"http://www.cbo.gov/sites/default/files/cbofiles/attachments/09-19-12-Indiv_Mandate_Penalty.pdf?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">An analysis by the Congressional Budget Office</a> in September found that about 30 million nonelderly Americans will remain uninsured in 2016, two years after full implementation of Obamacare. Of those, the CBO estimates that about 6 million people will pay a penalty. </p>"
+                        },
+                        {
+                            "num": "6",
+                            "$text": "<p>Remember, if you have Medicare, Medicaid (which is <a href=\"http://www.dhcs.ca.gov/services/medi-cal/Pages/Medi-CalFAQs.aspx?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">Medi-Cal</a> in California) or certain types of coverage for veterans; if you receive health coverage through your employer; or if you purchase coverage on the individual market, you already comply with the requirement and won’t have to pay a tax penalty.</p>"
+                        },
+                        {
+                            "num": "7",
+                            "$text": "<p><strong>Q: I am 73 years old. My husband and I live on our Social Security and my part-time job. I have Part A Medicare but I’ve never signed up for Part B because we needed the money for other things. I have no other health insurance. Does having Part A mean I’m covered as far as the government is concerned, or do I need to find some additional coverage?</strong></p>"
+                        },
+                        {
+                            "num": "8",
+                            "$text": "<p>A: This is a great follow-up to the last question.</p>"
+                        },
+                        {
+                            "num": "9",
+                            "$text": "<p>First, a few basics for other readers: <a href=\"http://www.medicare.gov/sign-up-change-plans/decide-how-to-get-medicare/whats-medicare/what-is-medicare.html?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">Medicare</a> is the subsidized national health system for people 65 and over.</p>"
+                        },
+                        {
+                            "num": "10",
+                            "$text": "<p><a href=\"http://www.medicare.gov/what-medicare-covers/part-a/what-part-a-covers.html?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">Medicare Part A</a>, known as the “hospital insurance” portion, helps pay for inpatient hospital stays, inpatient skilled nursing facility stays (after a hospital stay), some home health care and hospice care.</p>"
+                        },
+                        {
+                            "num": "11",
+                            "$text": "<p><a href=\"http://www.medicare.gov/what-medicare-covers/part-b/what-medicare-part-b-covers.html?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">Medicare Part B</a>, known as the “medical insurance” portion, helps pay for outpatient medical care such as doctor visits, lab tests and durable medical equipment.</p>"
+                        },
+                        {
+                            "num": "12",
+                            "$text": "<p>Even though Part A offers limited coverage, it still will meet Obamacare’s insurance requirement, says Jack Cheevers of the <a href=\"http://www.cms.gov/?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">U.S. Centers for Medicare & Medicaid Services</a>.</p>"
+                        },
+                        {
+                            "num": "13",
+                            "$text": "<p>So technically, you’ll be fine.</p>"
+                        },
+                        {
+                            "num": "14",
+                            "$text": "<p>But when I explained your situation to some California Medicare experts, they were concerned that you don’t have more comprehensive health insurance. They urged you to look into “Medicare Savings Programs,” which offer financial aid if you meet certain conditions. Click <a href=\"http://www.medicare.gov/your-medicare-costs/help-paying-costs/medicare-savings-program/medicare-savings-programs.html?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a> to learn more.</p>"
+                        },
+                        {
+                            "num": "15",
+                            "$text": "<p>Also, there’s a free, unbiased Medicare counseling service for Californians, funded by state and federal money, called the Health Insurance Counseling & Advocacy Program. I recently arranged a session for my parents, and they loved it. (Find contact info <a href=\"http://www.cahealthadvocates.org/HICAP/?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a> for your county.) </p>"
+                        },
+                        {
+                            "num": "16",
+                            "$text": "<p><em>Questions for Emily:  <a href=\"mailto:AskEmily@usc.edu?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">AskEmily@usc.edu</a></em><br /><em>Learn more about Emily <a href=\"http://centerforhealthreporting.org/author/emily-bazar?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a>.</em></p>"
+                        },
+                        {
+                            "num": "17",
+                            "$text": "<p><img src=\"http://www.publish2.com/static/tracking?distributor_id=4731&account_type=&account_id=&format=json&partner_name=KPCC&story_id=6740296&delivery=webfeed&story_title=Obamacare%25E2%2580%2599s%2Binsurance%2Brequirement%253A%2BWhere%2Bdo%2Byou%2Bfit%253F&content_type=story&usage=web_full&path=%3Fpublish2_story_id%3D6740296%26publish2_byline%3DEmily_Bazar%26publish2_categories%3Dca%2BCalifornia%2BHealth%26publish2_partner_name%3DKPCC%26publish2_partner_id%3D2198&export_id=&partner_id=2198&newswire_id=1227\" width=\"1\" height=\"1\" /></p>"
+                        }
+                    ]
+                },
+                "fullText": {
+                    "$text": "<p><strong>Q: I’ve heard that some people won’t be required to have health insurance under Obamacare. Is this true?</strong></p>\n<p>A: You’re right. Millions of people won’t have to comply with a signature piece of the new health law.</p>\n<p>Officially known as the Affordable Care Act, the law contains a provision called “the individual mandate” that requires most people to carry a minimum level of health insurance starting next year. Those who don’t comply must pay a tax penalty. (Click <a href=\"http://centerforhealthreporting.org/article/how-new-exchange-may-help-californians-buy-health-care1091?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a> to see a previous column that decodes the penalties.)</p>\n<p>But the law contains <a href=\"http://www.irs.gov/uac/Questions-and-Answers-on-the-Individual-Shared-Responsibility-Provision?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">many exemptions</a>. For instance, you won’t have to pay a tax penalty if:</p>\n<ul><li>you’re a member of a federally recognized Native American tribe,</li><li>you’re incarcerated,</li><li>you’re in the country illegally,</li><li>you belong to a religion that opposes accepting benefits from a health insurance policy,</li><li>you cannot find “affordable” coverage, meaning the cost of your premium would be more than 8 percent of household income, or</li><li>your household income is low enough that you’re not required to file a federal tax return. (Click <a href=\"http://www.irs.gov/uac/Do-I-Need-to-File-a-Tax-Return%3F?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a> to find out if this means you.)</li></ul>\n<p><a href=\"http://www.cbo.gov/sites/default/files/cbofiles/attachments/09-19-12-Indiv_Mandate_Penalty.pdf?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">An analysis by the Congressional Budget Office</a> in September found that about 30 million nonelderly Americans will remain uninsured in 2016, two years after full implementation of Obamacare. Of those, the CBO estimates that about 6 million people will pay a penalty. </p>\n<p>Remember, if you have Medicare, Medicaid (which is <a href=\"http://www.dhcs.ca.gov/services/medi-cal/Pages/Medi-CalFAQs.aspx?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">Medi-Cal</a> in California) or certain types of coverage for veterans; if you receive health coverage through your employer; or if you purchase coverage on the individual market, you already comply with the requirement and won’t have to pay a tax penalty.</p>\n<p><strong>Q: I am 73 years old. My husband and I live on our Social Security and my part-time job. I have Part A Medicare but I’ve never signed up for Part B because we needed the money for other things. I have no other health insurance. Does having Part A mean I’m covered as far as the government is concerned, or do I need to find some additional coverage?</strong></p>\n<p>A: This is a great follow-up to the last question.</p>\n<p>First, a few basics for other readers: <a href=\"http://www.medicare.gov/sign-up-change-plans/decide-how-to-get-medicare/whats-medicare/what-is-medicare.html?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">Medicare</a> is the subsidized national health system for people 65 and over.</p>\n<p><a href=\"http://www.medicare.gov/what-medicare-covers/part-a/what-part-a-covers.html?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">Medicare Part A</a>, known as the “hospital insurance” portion, helps pay for inpatient hospital stays, inpatient skilled nursing facility stays (after a hospital stay), some home health care and hospice care.</p>\n<p><a href=\"http://www.medicare.gov/what-medicare-covers/part-b/what-medicare-part-b-covers.html?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">Medicare Part B</a>, known as the “medical insurance” portion, helps pay for outpatient medical care such as doctor visits, lab tests and durable medical equipment.</p>\n<p>Even though Part A offers limited coverage, it still will meet Obamacare’s insurance requirement, says Jack Cheevers of the <a href=\"http://www.cms.gov/?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">U.S. Centers for Medicare & Medicaid Services</a>.</p>\n<p>So technically, you’ll be fine.</p>\n<p>But when I explained your situation to some California Medicare experts, they were concerned that you don’t have more comprehensive health insurance. They urged you to look into “Medicare Savings Programs,” which offer financial aid if you meet certain conditions. Click <a href=\"http://www.medicare.gov/your-medicare-costs/help-paying-costs/medicare-savings-program/medicare-savings-programs.html?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a> to learn more.</p>\n<p>Also, there’s a free, unbiased Medicare counseling service for Californians, funded by state and federal money, called the Health Insurance Counseling & Advocacy Program. I recently arranged a session for my parents, and they loved it. (Find contact info <a href=\"http://www.cahealthadvocates.org/HICAP/?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a> for your county.) </p>\n<p><em>Questions for Emily:  <a href=\"mailto:AskEmily@usc.edu?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">AskEmily@usc.edu</a></em><br /><em>Learn more about Emily <a href=\"http://centerforhealthreporting.org/author/emily-bazar?utm_source=publish2&utm_medium=referral&utm_campaign=www.scpr.org\">here</a>.</em></p><p><img src=\"http://www.publish2.com/static/tracking?distributor_id=4731&account_type=&account_id=&format=json&partner_name=KPCC&story_id=6740296&delivery=webfeed&story_title=Obamacare%25E2%2580%2599s%2Binsurance%2Brequirement%253A%2BWhere%2Bdo%2Byou%2Bfit%253F&content_type=story&usage=web_full&path=%3Fpublish2_story_id%3D6740296%26publish2_byline%3DEmily_Bazar%26publish2_categories%3Dca%2BCalifornia%2BHealth%26publish2_partner_name%3DKPCC%26publish2_partner_id%3D2198&export_id=&partner_id=2198&newswire_id=1227\" width=\"1\" height=\"1\" /></p><link rel=\"canonical\" href=\"\"/>"
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,3 @@
+<a class="prev <%=@prev_class%>"></a>
+<span class="page-count"><%= @count %> of <%= @total %></span>
+<a class="next <%=@next_class%>"></a> 

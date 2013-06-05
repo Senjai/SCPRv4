@@ -1,12 +1,15 @@
 //= require modernizr.custom
 //= require jquery.jplayer.min
+//= require moment-strftime
 
 //= require_directory ./t_listen/
 //= require swfobject.min
 
+//= require_tree ./slideshow/templates
+//= require slideshow/slideshow
+
 //= require content_carousel
 //= require audio
-//= require video
 //= require modal
 //= require gmapsloader
 //= require hero_fader

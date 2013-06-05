@@ -101,18 +101,12 @@ describe Bio do
   describe "headshot" do
     it "returns the asset if asset_id is set" do
       bio = create :bio, asset_id: 999
-      bio.headshot.should be_a Asset
+      bio.headshot.should be_a AssetHost::Asset
     end
     
     it "returns false if asset_id isn't set" do
       bio = create :bio, asset_id: nil
       bio.headshot.should be_false
-    end
-    
-    it "uses the instance's cached asset if it's already been looked up" do
-      bio = create :bio, asset_id: 999
-      bio.instance_variable_set(:@_asset, "cached asset image")
-      bio.headshot.should eq "cached asset image"
     end
   end
 end

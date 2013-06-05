@@ -74,6 +74,9 @@ Scprv4::Application.configure do
   config.scpr.media_url    = "file:///Users/bryan/projects/media"
   config.scpr.resque_queue = :scprv4
 
+  config.audio_vision.host      = "http://audiovision.scpr.org"
+  config.audio_vision.api_path  = "/api/v1"
+  
   config.node.server = "http://localhost:8888"
 
 #  config.assethost.server = "ahhost-scpr.dev"

@@ -1,18 +1,16 @@
 class Outpost::BiosController < Outpost::ResourceController
-  #---------------
-  # Outpost
-  self.model = Bio
+  outpost_controller
+  
+  define_list do |l|
+    l.default_order = "name"
+    l.default_sort_mode = "asc"
 
-  define_list do
-    list_default_order "name"
-    list_default_sort_mode "asc"
+    l.column :name, sortable: true
+    l.column :email
+    l.column :title
+    l.column :is_public, header: "Public?"
 
-    column :name, sortable: true
-    column :email
-    column :title
-    column :is_public, header: "Public?"
-
-    filter :is_public, title: "Public?", collection: :boolean
+    l.filter :is_public, title: "Public?", collection: :boolean
   end
 
   #---------------

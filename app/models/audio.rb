@@ -53,7 +53,9 @@ class Audio < ActiveRecord::Base
   # Validation
   validate :enco_info_is_present_together
   validate :audio_source_is_provided
-  
+
+  validate :path_is_unique, if: -> { self.new_record? && self.type == "Audio::UploadedAudio" }
+
   # Don't run this for development, 
   # so that we can still save objects even though the file won't exist on dev machines. 
   validate :mp3_exists, unless: -> { self.new_record? || Rails.env == "development" }
@@ -90,10 +92,35 @@ class Audio < ActiveRecord::Base
     end
   end
   
-  
+  # Make sure the audio file has a unique name.
+  def path_is_unique
+    return true if self.mp3.file.blank?
+
+    # Guess what the audio path will be before it's actually saved there.
+    # This is predictable for uploaded audio.
+    # This could potentially fail if someone was uploading audio at exactly
+    # midnight and some audio already existed for the next day.
+    path = File.join(
+      AUDIO_PATH_ROOT,
+      UploadedAudio.store_dir,
+      self.mp3.filename
+    )
+    
+    if File.exist?(path)
+      self.errors.add(:mp3, "A file with that name already exists; " \
+        "please rename your local audio file and try again. " \
+        "If you are trying to replace the audio file, first delete the " \
+        "old audio.")
+    end
+  end
+
   #------------
   # Callbacks
-  before_save   :set_type, if: -> { self.type.blank? }
+
+  # It's important to set the type before validation, 
+  # so that we can run type-specific validation.
+  before_validation   :set_type, if: -> { self.type.blank? }
+
   before_save   :set_file_info, if: -> { self.filename.blank? || self.store_dir.blank? }
   before_save   :nilify_blanks
   after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }

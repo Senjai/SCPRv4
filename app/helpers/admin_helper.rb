@@ -1,10 +1,6 @@
 module AdminHelper
-  #----------------
-  # Place a modal anywhere with a button to toggle it
-  #
-  # Takes a hash of options and a block with the content
-  #
-  def modal_toggle(options={}, &block)
-    render "/outpost/shared/modal", options: options, body: capture(&block)
+  # Pass in a path to the JSON file, get back pure JSON
+  def render_json(path, locals={})
+    raw(j(render(partial: path, formats: [:json], locals: locals)))
   end
 end

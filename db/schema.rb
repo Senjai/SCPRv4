@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130424043040) do
+ActiveRecord::Schema.define(:version => 20130605202939) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false
@@ -23,16 +23,16 @@ ActiveRecord::Schema.define(:version => 20130424043040) do
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_id",                                         :null => false
-    t.integer "asset_order",                        :default => 99, :null => false
+    t.integer "position",                           :default => 99, :null => false
     t.integer "asset_id",                                           :null => false
     t.text    "caption",      :limit => 2147483647,                 :null => false
     t.string  "content_type", :limit => 20
   end
 
-  add_index "assethost_contentasset", ["asset_order"], :name => "index_assethost_contentasset_on_asset_order"
   add_index "assethost_contentasset", ["content_id"], :name => "content_type_id"
   add_index "assethost_contentasset", ["content_id"], :name => "index_assethost_contentasset_on_content_id"
   add_index "assethost_contentasset", ["content_type", "content_id"], :name => "index_assethost_contentasset_on_content_type_and_content_id"
+  add_index "assethost_contentasset", ["position"], :name => "index_assethost_contentasset_on_asset_order"
 
   create_table "auth_group", :force => true do |t|
     t.string "name", :limit => 80, :null => false
@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(:version => 20130424043040) do
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["mp3"], :name => "index_media_audio_on_mp3"
   add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
+  add_index "media_audio", ["type"], :name => "index_media_audio_on_type"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
@@ -552,15 +553,6 @@ ActiveRecord::Schema.define(:version => 20130424043040) do
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
 
-  create_table "npr_npr_story", :force => true do |t|
-    t.string   "headline"
-    t.text     "teaser",       :limit => 2147483647
-    t.datetime "published_at"
-    t.string   "link",         :limit => 200
-    t.integer  "npr_id"
-    t.boolean  "new",                                :default => true, :null => false
-  end
-
   create_table "permissions", :force => true do |t|
     t.string   "resource"
     t.datetime "created_at", :null => false
@@ -575,14 +567,13 @@ ActiveRecord::Schema.define(:version => 20130424043040) do
     t.text     "teaser",       :limit => 2147483647
     t.text     "body",         :limit => 2147483647
     t.string   "query_type"
-    t.integer  "form_height"
-    t.string   "query_url",    :limit => 200
     t.boolean  "is_active",                          :default => false, :null => false
     t.datetime "published_at"
     t.datetime "expires_at"
     t.boolean  "is_featured",                        :default => false, :null => false
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
+    t.string   "pin_query_id"
   end
 
   add_index "pij_query", ["is_active", "published_at"], :name => "index_pij_query_on_is_active_and_published_at"
@@ -707,6 +698,18 @@ ActiveRecord::Schema.define(:version => 20130424043040) do
   add_index "related_links", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
   add_index "related_links", ["link_type"], :name => "index_related_links_on_link_type"
 
+  create_table "remote_articles", :force => true do |t|
+    t.string   "headline"
+    t.text     "teaser",       :limit => 2147483647
+    t.datetime "published_at"
+    t.string   "url",          :limit => 200
+    t.string   "article_id"
+    t.boolean  "new",                                :default => true, :null => false
+    t.string   "type"
+  end
+
+  add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
+
   create_table "schedule_program", :force => true do |t|
     t.integer  "day",                             :null => false
     t.integer  "kpcc_program_id"
@@ -780,14 +783,14 @@ ActiveRecord::Schema.define(:version => 20130424043040) do
   add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
 
   create_table "shows_rundown", :force => true do |t|
-    t.integer "episode_id",    :null => false
-    t.integer "segment_id",    :null => false
-    t.integer "segment_order", :null => false
+    t.integer "episode_id", :null => false
+    t.integer "segment_id", :null => false
+    t.integer "position",   :null => false
   end
 
   add_index "shows_rundown", ["episode_id"], :name => "shows_rundown_episode_id"
+  add_index "shows_rundown", ["position"], :name => "index_shows_rundown_on_segment_order"
   add_index "shows_rundown", ["segment_id"], :name => "shows_rundown_segment_id"
-  add_index "shows_rundown", ["segment_order"], :name => "index_shows_rundown_on_segment_order"
 
   create_table "shows_segment", :force => true do |t|
     t.integer  "show_id",                                    :null => false

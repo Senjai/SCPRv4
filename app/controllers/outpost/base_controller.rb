@@ -1,16 +1,8 @@
 class Outpost::BaseController < Outpost::ApplicationController
-  include Concern::Controller::CustomErrors
-  
-  before_filter :set_sections
   before_filter :setup_tickets
   before_filter :set_current_homepage
   before_filter :add_params_for_newrelic
-
-  #------------------------
-  # Just setup the @sections variable so the views can add to it.
-  def set_sections
-    @sections = {}
-  end
+  before_filter :set_flash_from_query_string
 
   #------------------------
   # We need a new Ticket on every page, since we're offering
@@ -47,13 +39,12 @@ class Outpost::BaseController < Outpost::ApplicationController
       report_error(e)
     end
   end
-  
+
   #-------------------------
 
-  def with_rollback(object)
-    object.transaction do
-      yield if block_given?
-      raise ActiveRecord::Rollback
+  def set_flash_from_query_string
+    Array(params[:notifications]).each do |key, message|
+      flash.now[key] = message
     end
   end
 end

@@ -42,7 +42,7 @@ module ThinkingSphinxHelpers
   
   # Creates `num` of each ContentBase subclass for 
   # helping with Sphinx tests
-  def make_content(num = nil, options=nil)
+  def make_content(num=nil, options=nil)
     num     ||= 1
     options ||= {}
     

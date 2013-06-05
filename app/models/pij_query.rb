@@ -8,7 +8,7 @@ class PijQuery < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::SphinxIndexCallback
   
-  ROUTE_KEY       = "pij_query"
+  ROUTE_KEY = "pij_query"
   
   has_secretary
   
@@ -39,9 +39,8 @@ class PijQuery < ActiveRecord::Base
   validates :teaser,      presence: true
   validates :body,        presence: true
   validates :query_type,  presence: true
-  validates :query_url,   presence: true
-  validates :form_height, presence: true
-  
+  validates :pin_query_id, presence: true
+
   #------------
   # Callbacks
 
@@ -50,7 +49,8 @@ class PijQuery < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
-    indexes query_url
+    indexes teaser
+    indexes pin_query_id
 
     has published_at
   end

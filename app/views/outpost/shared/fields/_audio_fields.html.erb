@@ -32,23 +32,23 @@
           <div class="new-audio">
             <!-- new audio -->
             <ul class="nav nav-tabs">
-              <li class="<%= "active" if f.object.errors.blank? || (f.object.errors.keys & [:enco_number, :enco_audio, :base]).present? %>">
+              <li class="<%= "active" if f.object.errors.blank? || (f.object.errors[:enco_number] || f.object.errors[:enco_date] || f.object.errors[:base]).present? %>">
                 <a href="#audio-new-enco-<%=index%>" data-toggle="tab">Enco</a>
               </li>
-              <li class="<%= "active" if f.object.errors.keys == [:mp3] %>"><a href="#audio-new-upload-<%=index%>" data-toggle="tab">Upload</a></li>
-              <li class="<%= "active" if f.object.errors.keys == [:mp3_path] %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">Path</a></li>
+              <li class="<%= "active" if f.object.errors[:mp3].present? %>"><a href="#audio-new-upload-<%=index%>" data-toggle="tab">Upload</a></li>
+              <li class="<%= "active" if f.object.errors[:mp3_path].present? %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">Path</a></li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane <%= "active" if f.object.errors.blank? || (f.object.errors.keys & [:enco_number, :enco_audio, :base]).present? %>" id="audio-new-enco-<%=index%>">
+              <div class="tab-pane <%= "active" if f.object.errors.blank? || (f.object.errors[:enco_number] || f.object.errors[:enco_date] || f.object.errors[:base]).present? %>" id="audio-new-enco-<%=index%>">
                 <%= f.input :enco_number, as: :string, input_html: { id: "enco_number_#{index}", class: "thin" }, wrapper_html: { class: "vertical" } %>
                 <%= f.input :enco_date, as: :date, input_html: { class: "thin" }, wrapper_html: { class: "vertical" } %>
               </div> <!-- enco -->
 
-              <div class="tab-pane <%= "active" if f.object.errors.keys == [:mp3] %>" id="audio-new-upload-<%=index%>">
+              <div class="tab-pane <%= "active" if f.object.errors[:mp3].present? %>" id="audio-new-upload-<%=index%>">
                 <%= f.input :mp3, as: :file, wrapper_html: { class: "vertical" } %>
               </div> <!-- upload -->
 
-              <div class="tab-pane <%= "active" if f.object.errors.keys == [:mp3_path] %>" id="audio-new-direct-<%=index%>">
+              <div class="tab-pane <%= "active" if f.object.errors[:mp3_path].present? %>" id="audio-new-direct-<%=index%>">
                 <%= f.input :mp3_path, hint: "/events/2012/10/01/your_cool_audio.mp3", input_html: { class: "thin" }, wrapper_html: { class: "vertical"} %>
               </div> <!-- path -->
             </div> <!-- tab-content -->

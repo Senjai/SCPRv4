@@ -7,6 +7,8 @@ describe Audio::ComputeFileInfoJob do
       Audio.should_receive(:find).with(audio.id).and_return(audio)
       audio.should_receive(:compute_file_info!)
       Audio::ComputeFileInfoJob.perform(audio.id)
+
+      purge_uploaded_audio
     end
   end
 end

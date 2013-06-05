@@ -21,7 +21,6 @@ class ContentShell < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  include Concern::Methods::ContentJsonMethods
   
   def self.content_key
     "content/shell"
@@ -54,15 +53,6 @@ class ContentShell < ActiveRecord::Base
   #------------------
   # Callbacks
 
-
-  # TODO Fix this hack
-  def json
-    super.merge({
-      :short_headline => self.short_headline,
-      :teaser         => self.teaser
-    })
-  end
-  
 
   #-------------------
   # Sphinx  

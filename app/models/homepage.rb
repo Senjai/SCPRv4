@@ -5,7 +5,6 @@ class Homepage < ActiveRecord::Base
 
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
-  include Concern::Associations::ContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
@@ -44,8 +43,11 @@ class Homepage < ActiveRecord::Base
   #-------------------
   # Associations
   has_many :content, class_name: "HomepageContent", order: "position", dependent: :destroy
+  accepts_json_input_for_content
+
   belongs_to :missed_it_bucket
   
+
   #-------------------
   # Validations
   validates :base, :status, presence: true
@@ -73,15 +75,6 @@ class Homepage < ActiveRecord::Base
     
     citems = self.content.collect { |c| c.content || nil }.compact
 
-    # -- More Headlines -- #
-    
-    # Anything with a news category is eligible
-    headlines = ContentBase.search({
-      :limit       => 12,
-      :without     => { category: '' },
-      :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } },
-    })
-    
     # -- Section Blocks -- #
     
     sections = []
@@ -143,12 +136,7 @@ class Homepage < ActiveRecord::Base
     # now sort sections by the sorttime
     sections.sort_by! {|s| s[:sorttime] }.reverse!
     
-    now = DateTime.now()
-    
-    return {
-      :headlines  => headlines,
-      :sections   => sections
-    }
+    sections
   end
   
   #---------------------

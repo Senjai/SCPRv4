@@ -9,9 +9,9 @@
 
 <% content_for :footer do %>
   <script>
-    aggregator = new scpr.Aggregator(
+    aggregator = new outpost.Aggregator(
       "#aggregator", "#content_json",
-      <%= j record.content.includes(:content).map(&:content).to_json.html_safe %>, 
+      <%= render_json('api/private/v2/content/collection', content: record.content.includes(:content).map(&:content)) %>,
       { 
         view: { active: 'search' },
         apiType: "public"

@@ -1,19 +1,23 @@
 class Outpost::VideoShellsController < Outpost::ResourceController
-  #---------------
-  # Outpost
-  self.model = VideoShell
+  outpost_controller
 
-  define_list do
-    list_default_order "published_at"
-    list_default_sort_mode "desc"
+  define_list do |l|
+    l.default_order = "published_at"
+    l.default_sort_mode = "desc"
 
-    column :headline
-    column :slug
-    column :byline
-    column :published_at, sortable: true, default_sort_mode: "desc"
-    column :status
+    l.column :headline
+    l.column :slug
+    l.column :byline
+    l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :status
 
-    filter :status, collection: -> { ContentBase.status_text_collect }
-    filter :bylines, collection: -> { Bio.select_collection }
+    l.filter :status, collection: -> { ContentBase.status_text_collect }
+    l.filter :bylines, collection: -> { Bio.select_collection }
+  end
+
+  private
+
+  def search
+    # hack attack
   end
 end

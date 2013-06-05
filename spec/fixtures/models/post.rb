@@ -7,11 +7,11 @@ module TestClass
     include Concern::Associations::FeaturedCommentAssociation
     include Concern::Associations::RelatedContentAssociation
     include Concern::Associations::AssetAssociation
-    include Concern::Associations::ContentAssociation
     include Concern::Methods::PublishingMethods
     include Concern::Methods::StatusMethods
     
-    has_many :content, class_name: "TestClass::PostContent", order: "position", dependent: :destroy
+    has_many :content, class_name: "::TestClass::PostContent", order: "position", dependent: :destroy
+    accepts_json_input_for_content
     
     def build_content_association(content_hash, content)
       TestClass::PostContent.new(

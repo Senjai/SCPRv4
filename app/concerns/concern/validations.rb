@@ -29,9 +29,8 @@ module Concern
       # overridden then it will always validate.
       #
       # This should be true by default,
-      # so that it acts strictly if no
-      # custom should_validate? method
-      # is defined.
+      # so that it acts strictly if it isn't
+      # overridden.
       def needs_validation?
         true
       end

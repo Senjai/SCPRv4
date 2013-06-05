@@ -13,7 +13,7 @@ xml.item do
   if enclosure_type == :image
     if content.assets.first.present?
       asset = content.assets.first
-      xml.enclosure url: asset.lsquare.url, type: "image/jpeg", length: asset.image_file_size.to_i / 100
+      xml.enclosure url: asset.full.url, type: "image/jpeg", length: asset.image_file_size.to_i / 100
     end
   else
     if content.try(:audio).present?

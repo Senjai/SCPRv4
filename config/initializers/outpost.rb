@@ -7,9 +7,8 @@
 Outpost::Config.configure do |config|
   config.registered_models = [
     "NewsStory", 
-    "NprStory",
+    "RemoteArticle",
     "ContentShell", 
-    "VideoShell", 
     "PijQuery", 
     "BlogEntry",
     "Blog", 
@@ -32,7 +31,8 @@ Outpost::Config.configure do |config|
     "AdminUser", 
     "Bio",
     "DataPoint",
-    "PressRelease"
+    "PressRelease",
+    "VideoShell"
   ]
   
   config.user_class                   = "AdminUser"

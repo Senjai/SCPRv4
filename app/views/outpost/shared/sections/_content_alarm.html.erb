@@ -10,7 +10,7 @@
   <% content_for :footer do %>
     <script type="text/javascript">
       $(function() {
-        contentAlarmUI = new scpr.ContentAlarmUI({
+        contentAlarm = new outpost.ContentAlarm({
           form: "#<%=f.options[:html][:id]%>",
           container: ".content-alarm-fields",
           notifications: "<%= options[:notifications] || "#scheduled_status" %>",

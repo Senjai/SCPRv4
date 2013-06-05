@@ -6,7 +6,7 @@
 # which will have their published_at attribute
 # automatically updated. It's for models where
 # the published_at attribute needs to be manually
-# inserted, such as ContentShell and VideoShell.
+# inserted, such as ContentShell.
 # See SetPublishedAtCallback for more information.
 #
 # Required attributes: [:published_at]

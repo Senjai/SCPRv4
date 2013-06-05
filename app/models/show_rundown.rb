@@ -9,17 +9,17 @@ class ShowRundown < ActiveRecord::Base
   def simple_json
     {
       "id"       => self.segment.try(:obj_key), # TODO Store this in join table
-      "position" => self.segment_order.to_i
+      "position" => self.position.to_i
     }
   end
 
-  before_create :check_segment_order, if: -> { self.segment_order.blank? }
+  before_create :check_position, if: -> { self.position.blank? }
   
-  def check_segment_order
+  def check_position
     if last_rundown = ShowRundown.where(episode_id: episode.id).last
-      self.segment_order = last_rundown.segment_order + 1
+      self.position = last_rundown.position + 1
     else
-      self.segment_order = 1
+      self.position = 1
     end
   end
 end

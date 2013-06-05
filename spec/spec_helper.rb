@@ -32,6 +32,7 @@ RSpec.configure do |config|
   config.include DatePathHelper
   config.include StubTime
   config.include StubPublishingCallbacks
+  config.include AudioCleanup
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
   
@@ -41,6 +42,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     migration = -> { FixtureMigration.new.up }
     silence_stream STDOUT, &migration
+    FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
     ThinkingSphinx::Test.init
     ThinkingSphinx::Test.start_with_autostop
   end
@@ -69,6 +71,5 @@ RSpec.configure do |config|
   end
   
   config.after :suite do
-    FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
   end
 end

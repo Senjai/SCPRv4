@@ -28,7 +28,6 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
-  include Concern::Methods::ContentJsonMethods
   
   ROUTE_KEY = "blog_entry"
   
@@ -36,6 +35,7 @@ class BlogEntry < ActiveRecord::Base
     ["Full Width (default)", ""],
     ["Float Right", "right"],
     ["Slideshow", "slideshow"],
+    ["Video", "video"],
     ["No Display", "hidden"]
   ]
   

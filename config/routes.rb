@@ -7,6 +7,7 @@ Scprv4::Application.routes.draw do
   # Listen Live
   get '/listen_live/' => 'listen#index', as: :listen
   
+
   # Sections
   match '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
   get '/news/'                                       => 'category#news',              as: :latest_news
@@ -71,12 +72,6 @@ Scprv4::Application.routes.draw do
   get '/about'                    => "home#about_us",        as: :about
   
   
-  # Videos
-  get '/video/:id/:slug'  => "video#show",    as: :video, constraints: { id: /\d+/, slug: /[\w_-]+/ }
-  get '/video/'           => "video#index",   as: :video_index
-  get '/video/list/'      => "video#list",    as: :video_list
-  
-  
   # Article Email Sharing
   get   '/content/share' => 'content_email#new',    :as => :content_email
   post  '/content/share' => 'content_email#create', :as => :content_email
@@ -107,7 +102,7 @@ Scprv4::Application.routes.draw do
       get '/content'        => 'v1/content#index',  defaults: { format: :json }
       get '/content/by_url' => 'v1/content#by_url', defaults: { format: :json }
       get '/content/*obj_key'    => 'v1/content#show',   defaults: { format: :json }
-
+      
       # V1
       namespace :v1 do
         match '/' => "content#options", constraints: { method: 'OPTIONS' }
@@ -126,6 +121,9 @@ Scprv4::Application.routes.draw do
         get '/content/most_viewed'      => 'content#most_viewed', defaults: { format: :json }
         get '/content/most_commented'   => 'content#most_commented', defaults: { format: :json }
         get '/content/*obj_key'         => 'content#show',   defaults: { format: :json }
+
+        get '/audio'     => 'audio#index', defaults: { format: :json }
+        get '/audio/:id' => 'audio#show', defaults: { format: :json }
       end
     end
     
@@ -204,10 +202,6 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
     
-    resources :video_shells do
-      get "search", on: :collection, as: :search
-    end
-    
     resources :blogs do
       get "search", on: :collection, as: :search
     end
@@ -277,12 +271,14 @@ Scprv4::Application.routes.draw do
       put "preview", on: :member
       post "preview", on: :collection
     end
-    
+
+    resources :video_shells
+
     resources :tickets do
       get "search", on: :collection, as: :search
     end
     
-    resources :npr_stories, only: [:index] do
+    resources :remote_articles, only: [:index] do
       member do
         post "import", as: :import
         put "skip", as: :skip
