@@ -144,8 +144,13 @@ class NprArticle < RemoteArticle
     #-------------------
     # Add in the primary asset if it exists
     if image = npr_story.primary_image
+      
+      # Try a few different crops to see which one is available.
+      # We prefer the largest possible image with the least cropped out.
+      crop = image.enlargement || image.crop("enlargment") || image.crop("standard") || image
+      
       asset = AssetHost::Asset.create(
-        :url     => image.enlargement.src,
+        :url     => crop.src,
         :title   => image.title,
         :caption => image.caption,
         :owner   => [image.producer, image.provider].join("/"),
