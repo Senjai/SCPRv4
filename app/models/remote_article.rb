@@ -57,7 +57,9 @@ class RemoteArticle < ActiveRecord::Base
     #---------------
     # Sync with the APIs
     def sync
-      ADAPTERS.each { |a| a.constantize.sync }
+      added = []
+      ADAPTERS.each { |a| added += a.constantize.sync }
+      added
     end
 
     add_transaction_tracer :sync, category: :task

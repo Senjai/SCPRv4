@@ -64,7 +64,9 @@ class scpr.Newsroom
                 @socket.on 'finished-task', (data) ->
                     $("#work_status").html("Finished!")
                     $("#spinner").spin(false)
-                    window.location = data.location
+
+                    notifications = $.param(notifications: data.notifications)
+                    window.location = data.location + "?" + notifications
 
         fail: ->
             $("#spinner").spin(false)

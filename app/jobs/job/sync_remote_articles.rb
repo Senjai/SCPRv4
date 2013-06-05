@@ -7,21 +7,47 @@ module Job
   class SyncRemoteArticles < Base
     @queue = namespace
     
-    def self.after_perform
-      hook = Outpost::Hook.new(
-        :path => "/task/finished/remote_articles:sync",
-        :data => {
-          :location => RemoteArticle.admin_index_path
-        })
-        
-      hook.publish
-    end
+    class << self
+      def perform
+        @synced = RemoteArticle.sync
+        self.log "Synced Remote Articles."
+      end
 
-    #---------------------
-    
-    def self.perform
-      RemoteArticle.sync
-      self.log "Synced Remote Articles."
+      #---------------------
+
+      def after_perform
+        hook = Outpost::Hook.new(
+          :path => "/task/finished/remote_articles:sync",
+          :data => {
+            :location         => RemoteArticle.admin_index_path,
+            :notifications    => {
+              :notice => "Successfully synced #{@synced.size} stories."
+            }
+          }
+        )
+        
+        timeout_retry(3) do
+          hook.publish
+        end
+      end
+
+      #---------------------
+
+      def on_failure(error)
+        hook = Outpost::Hook.new(
+          :path => "/task/finished/remote_articles:sync",
+          :data => {
+            :location         => RemoteArticle.admin_index_path,
+            :notifications    => {
+              :alert => "There was a problem during the sync. (#{error})"
+            }
+          }
+        )
+
+        timeout_retry(3) do
+          hook.publish
+        end
+      end
     end
   end
 end
