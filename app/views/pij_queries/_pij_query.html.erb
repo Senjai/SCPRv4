@@ -10,7 +10,7 @@
       <%= render_asset query, "query" %>
       <%= query.body.html_safe %>
 
-      <div id="pin-query-<%=query.pin_query_id%>"></div>
+      <div id="pin-query-<%=query.pin_query_id%>" class="pin-query-container"></div>
     </div>
   
     <footer>
@@ -47,14 +47,37 @@
   <script type="text/javascript" src="https://www.publicinsightnetwork.org/air2/js/pinform.js"></script>
 
   <script>
-    var PIN_QUERY = {
-        uuid:"<%=query.pin_query_id%>",
-        baseUrl:"https://www.publicinsightnetwork.org/air2",
+  var PIN_QUERY; // The form JS needs to be aware of this variable.
+
+  (function(){
+    var container, pinCheck, queryId;
+
+    container = $('.pin-query-container');
+    container.spin();
+
+    pinCheck = setInterval(function() {
+      // If the form has shown up, then stop the spinner 
+      // and then interval.
+      if($(".pin-form").length) {
+        container.spin(false);
+        clearInterval(pinCheck);
+      }
+    }, 500);
+
+    queryId   = "<%=query.pin_query_id%>";
+    PIN_QUERY = {
+        uuid: queryId,
+        divId: "pin-query-"+queryId,
+        baseUrl: "https://www.publicinsightnetwork.org/air2",
         opts: {
-          showIntro: false
+          showIntro: false,
+          includeLegalFooter: false
         }
     };
+  }());
 
-    $(document).ready(function() { PIN.Form.render(PIN_QUERY) });
+  $(document).ready(function() {
+    PIN.Form.render(PIN_QUERY);
+  });
   </script>
 <% end %>

@@ -54,3 +54,7 @@
     @include font-sans-serif($size: 10px, $lineHeight: 16px);
     font-size: 12px;
 }
+
+.pin-query-container {
+    min-height: 300px;
+}
