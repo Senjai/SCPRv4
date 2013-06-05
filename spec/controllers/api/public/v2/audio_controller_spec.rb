@@ -28,7 +28,14 @@ describe Api::Public::V2::AudioController do
   describe "GET index" do
     before :each do
       @available   = []
-      3.times { |n| @available << create(:uploaded_audio, mp3: load_audio_fixture("audio/point1sec-#{n}.mp3")) }
+      
+      3.times do |n| 
+        @available << create(:uploaded_audio, 
+          created_at: Time.now + n.minutes, 
+          mp3: load_audio_fixture("audio/point1sec-#{n}.mp3")
+        )
+      end
+      
       @unavailable = create_list :enco_audio, 2
     end
 
@@ -39,7 +46,7 @@ describe Api::Public::V2::AudioController do
     it "sanitizes the limit" do
       get :index, { limit: "Evil Code" }.merge(request_params)
       assigns(:limit).should eq 0
-      assigns(:audio).should eq @available.sort_by(&:created_at) # Why? Should have to be reversed. Microseconds or something.
+      assigns(:audio).should eq @available.sort_by(&:created_at).reverse
     end
 
     it "accepts a limit" do
