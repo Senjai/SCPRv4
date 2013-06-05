@@ -263,7 +263,7 @@ class scpr.SocialTools
         $.ajax
             type: "GET"
             url: @options.fburl
-            dataType: 'json'
+            dataType: 'jsonp'
             cache: false
             data: 
                 q: query
