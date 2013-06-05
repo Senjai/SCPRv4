@@ -21,7 +21,7 @@ module Job
           :data => {
             :location         => RemoteArticle.admin_index_path,
             :notifications    => {
-              :notice => "Successfully synced #{@synced.size} stories."
+              :notice => "Successfully synced <strong>#{@synced.size} stories</strong>."
             }
           }
         )
