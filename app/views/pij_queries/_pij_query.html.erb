@@ -1,22 +1,35 @@
 <div class="query content-block">
   <article>
     <header>
-      <%= render "/shared/cwidgets/social_tools", content: query, cssClass: "top horizontal" %>  
+      <%= render "/shared/cwidgets/social_tools", content: query, cssClass: "top horizontal" %>
       <h1 class="story-headline"><%= query.headline %></h1>
       <hr />
     </header>
   
     <div class="story-body storyleft">
       <%= render_asset query, "query" %>
-      
-      <% if query.body.present? %>
-        <%= query.body.html_safe %>
-      <% end %>
+      <%= query.body.html_safe %>
+
+      <div id="pin-query-<%=query.pin_query_id%>"></div>
     </div>
   
     <footer>
     </footer>
   </article>
-  
-  <iframe width="100%" id="pij-query-iframe" height="<%=query.form_height%>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<%=query.query_url%>"></iframe>
 </div> <!-- query -->
+
+<% content_for :footer do %>
+  <script type="text/javascript" src="https://www.publicinsightnetwork.org/air2/js/pinform.js"></script>
+
+  <script>
+    var PIN_QUERY = {
+        uuid:"<%=query.pin_query_id%>",
+        baseUrl:"https://www.publicinsightnetwork.org/air2",
+        opts: {
+          showIntro: false
+        }
+    };
+
+    $(document).ready(function() { PIN.Form.render(PIN_QUERY) });
+  </script>
+<% end %>

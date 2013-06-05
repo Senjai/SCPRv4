@@ -1,20 +1,6 @@
 require "spec_helper"
 
-describe PijQuery do    
-  describe "validations" do
-    it "validates uniqueness" do
-      create :pij_query
-      should validate_uniqueness_of :slug
-    end
-    
-    it { should validate_presence_of :slug }
-    it { should validate_presence_of :query_type }
-    it { should validate_presence_of :query_url }
-    it { should validate_presence_of :query_type }
-  end
-
-  #---------------
-  
+describe PijQuery do
   describe "scopes" do
     describe "evergreen" do
       it "only selects evergreen" do

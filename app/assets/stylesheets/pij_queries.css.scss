@@ -1,5 +1,5 @@
 .queries {
-    .featured {     
+    .featured {
         .pager-nav {
             float: none;
             text-align: center;
@@ -35,4 +35,22 @@
             }
         }
     }
+}
+
+.pin-form {
+    // Reset the KPCC form styles.
+    label {
+        padding-top: 0;
+        font-size: inherit;
+        line-height: inherit;
+        float: none;
+        width: auto;
+        text-align: inherit;
+        color: inherit;
+    }
+}
+
+.pin-query-ending {
+    @include font-sans-serif($size: 10px, $lineHeight: 16px);
+    font-size: 12px;
 }

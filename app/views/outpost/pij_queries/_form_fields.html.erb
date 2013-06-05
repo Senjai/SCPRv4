@@ -1,6 +1,8 @@
 <%= form_block "Details" do %>
-  <%= f.input :query_url, input_html: { class: "wide" } %>
+  <%= f.input :pin_query_id, hint: "The UUID of the PIN Query. Example: 01aa97973688" %>
+
   <%= f.input :query_type, collection: PijQuery::QUERY_TYPES %>
+  <%= f.input :is_featured %>
 <% end %>
 
 <%= f.section "full_details" %>
@@ -8,11 +10,6 @@
 <%= form_block "Short Details" do %>
   <%= f.input :teaser, as: :text, input_html: { class: "tiny" } %>
   <%= f.section "slug" %>
-<% end %>
-
-<%= form_block "Display Options" do %>
-  <%= f.input :is_featured %>
-  <%= f.input :form_height, as: :string, input_html: { class: "thin" } %>
 <% end %>
 
 <%= form_block "Publishing" do %>
