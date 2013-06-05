@@ -1,5 +1,5 @@
 <%= form_block "Details" do %>
-  <%= f.input :pin_query_id, hint: "The UUID of the PIN Query. Example: 01aa97973688" %>
+  <%= f.input :pin_query_id, label: "PIN Query ID", hint: "The UUID of the PIN Query. Example: 01aa97973688" %>
 
   <%= f.input :query_type, collection: PijQuery::QUERY_TYPES %>
   <%= f.input :is_featured %>
