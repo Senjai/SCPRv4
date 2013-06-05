@@ -64,11 +64,11 @@ describe Audio do
       end
       
       it "is valid if only mp3 present" do
-        purge_uploaded_audio
-
         audio = build :audio, :uploaded, mp3_path: nil, enco_number: nil, enco_date: nil
         audio.save
         audio.errors.should be_blank
+
+        purge_uploaded_audio
       end
       
       it "is invalid if everything is blank" do
@@ -81,7 +81,7 @@ describe Audio do
     #----------------
     
     context "#mp3_exists" do
-      before :each do
+      after :each do
         purge_uploaded_audio
       end
 
@@ -125,7 +125,7 @@ describe Audio do
     #----------------
 
     context '#path_is_unique' do
-      before :each do
+      after :each do
         purge_uploaded_audio
       end
 
@@ -157,7 +157,7 @@ describe Audio do
   
   describe "scopes" do
     describe "::available" do
-      before :each do
+      after :each do
         purge_uploaded_audio
       end
 
@@ -171,7 +171,7 @@ describe Audio do
     #----------------
     
     describe "::awaiting_audio" do
-      before :each do
+      after :each do
         purge_uploaded_audio
       end
 
@@ -191,7 +191,7 @@ describe Audio do
   #----------------
   
   describe "callbacks" do
-    before :each do
+    after :each do
       purge_uploaded_audio
     end
 
@@ -242,7 +242,7 @@ describe Audio do
     #----------------
     
     describe "nilify_blanks" do
-      before :each do
+      after :each do
         purge_uploaded_audio
       end
 
@@ -334,7 +334,7 @@ describe Audio do
   #----------------
   
   describe "#full_path" do
-    before :each do
+    after :each do
       purge_uploaded_audio
     end
 
@@ -349,7 +349,7 @@ describe Audio do
   #----------------
   
   describe "#url" do
-    before :each do
+    after :each do
       purge_uploaded_audio
     end
 
@@ -367,7 +367,7 @@ describe Audio do
   #----------------
   
   describe "#podcast_url" do
-    before :each do
+    after :each do
       purge_uploaded_audio
     end
 
@@ -387,7 +387,7 @@ describe Audio do
   #----------------
 
   describe "#set_type" do
-    before :each do
+    after :each do
       purge_uploaded_audio
     end
 
@@ -438,7 +438,7 @@ describe Audio do
     end
     
     context "for uploaded audio" do
-      before :each do
+      after :each do
         purge_uploaded_audio
       end
 
@@ -478,7 +478,7 @@ describe Audio do
   #----------------
 
   describe "#compute_duration" do
-    before :each do
+    after :each do
       purge_uploaded_audio
     end
 
@@ -512,7 +512,7 @@ describe Audio do
   #----------------
   
   describe "#compute_size" do
-    before :each do
+    after :each do
       purge_uploaded_audio
     end
 
@@ -534,7 +534,7 @@ describe Audio do
   
   describe "#compute_file_info!" do
     context "with mp3 file" do
-      before :each do
+      after :each do
         purge_uploaded_audio
       end
 
@@ -562,7 +562,7 @@ describe Audio do
   #----------------
   
   describe "#async_compute_file_info" do
-    before :each do
+    after :each do
       purge_uploaded_audio
     end
 

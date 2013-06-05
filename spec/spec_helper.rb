@@ -42,6 +42,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     migration = -> { FixtureMigration.new.up }
     silence_stream STDOUT, &migration
+    FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
     ThinkingSphinx::Test.init
     ThinkingSphinx::Test.start_with_autostop
   end
@@ -70,6 +71,5 @@ RSpec.configure do |config|
   end
   
   config.after :suite do
-    FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
   end
 end

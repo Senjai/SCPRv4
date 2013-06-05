@@ -9,12 +9,12 @@ describe Api::Public::V2::AudioController do
 
   describe "GET show" do
     it "finds the object if it exists" do
-      purge_uploaded_audio
-
       audio = create :uploaded_audio
       get :show, { id: audio.id }.merge(request_params)
       assigns(:audio).should eq audio
       response.should render_template "show"
+
+      purge_uploaded_audio
     end
 
     it "returns a 404 status if it does not exist" do
@@ -27,13 +27,15 @@ describe Api::Public::V2::AudioController do
 
   describe "GET index" do
     before :each do
-      purge_uploaded_audio
-
       @available   = []
       3.times { |n| @available << create(:uploaded_audio, mp3: load_audio_fixture("audio/point1sec-#{n}.mp3")) }
       @unavailable = create_list :enco_audio, 2
     end
 
+    after :each do
+      purge_uploaded_audio
+    end
+    
     it "sanitizes the limit" do
       get :index, { limit: "Evil Code" }.merge(request_params)
       assigns(:limit).should eq 0
