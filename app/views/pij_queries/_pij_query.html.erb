@@ -44,25 +44,24 @@
 </div> <!-- query -->
 
 <% content_for :footer do %>
+  <script>$('.pin-query-container').spin();</script>
+
   <script type="text/javascript" src="https://www.publicinsightnetwork.org/air2/js/pinform.js"></script>
 
   <script>
   var PIN_QUERY; // The form JS needs to be aware of this variable.
 
   (function(){
-    var container, pinCheck, queryId;
-
-    container = $('.pin-query-container');
-    container.spin();
+    var pinCheck, queryId;
 
     pinCheck = setInterval(function() {
       // If the form has shown up, then stop the spinner 
       // and then interval.
       if($(".pin-form").length) {
-        container.spin(false);
+        $('.pin-query-container').spin(false);
         clearInterval(pinCheck);
       }
-    }, 500);
+    }, 100);
 
     queryId   = "<%=query.pin_query_id%>";
     PIN_QUERY = {
