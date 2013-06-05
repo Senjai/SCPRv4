@@ -57,7 +57,7 @@ class RemoteArticle < ActiveRecord::Base
     end
     
     #---------------
-    # Strip out unwanted stuff from the text.
+    # Strip out unwanted stuff from the fullText attribute.
     def process_text(text, options={})
       fragment = Nokogiri::XML::DocumentFragment.parse(text)
 

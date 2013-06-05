@@ -95,13 +95,7 @@ class NprArticle < RemoteArticle
     # but the body will just be blank.
     #
     text = begin
-      if npr_story.fullText.present?
-        RemoteArticle.process_text(npr_story.fullText,
-          :properties_to_remove => UNWANTED_PROPERTIES,
-          :css_to_remove        => UNWANTED_ELEMENTS
-        )
-
-      elsif npr_story.textWithHtml.present?
+      if npr_story.textWithHtml.present?
         npr_story.textWithHtml.to_html
       elsif npr_story.text.present?
         npr_story.text.to_html
