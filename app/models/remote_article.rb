@@ -1,4 +1,20 @@
 class RemoteArticle < ActiveRecord::Base
+  # This is a pseudo-abstract class (I made that term up) to act
+  # as a parent class for the API adapters with which we want to 
+  # be able to import content from other sources.
+  #
+  # An adapter MUST:
+  # * Inherit from RemoteArticle
+  # * Define a class method `sync`, which returns an array of 
+  #   RemoteArticles. This method is meant to sync the RemoteArticles
+  #   database with that adapter's API.
+  # * Define an instance method `import`. This method is meant to 
+  #   define how a remote article is imported into a native type.
+  #   This method must accept an options hash.
+  #
+  # An adapter SHOULD:
+  # * Define ORGANIZATION, the name of the remote source.
+  
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Outpost::Model::Identifier
   include Outpost::Model::Naming
