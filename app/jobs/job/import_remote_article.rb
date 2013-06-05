@@ -48,7 +48,12 @@ module Job
           :data => {
             :location         => RemoteArticle.admin_index_path,
             :notifications    => {
-              :alert => "The story could not be imported. (#{error.message})"
+              :alert => \
+                if @story
+                  "The story was imported, but another error occurred. (#{error.message})"
+                else
+                  "The story could not be imported. (#{error.message})"
+                end
             }
           }
         )
