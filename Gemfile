@@ -81,6 +81,7 @@ end
 group :development do
   gem 'capistrano'
   gem 'pry'
+  gem 'pry-debugger'
 end
 
 
@@ -95,7 +96,6 @@ group :test, :development do
   gem "rspec-rails", "~> 2.12"
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
-  gem 'jasminerice'
   gem 'guard', '~> 1.5'
   gem 'guard-resque'
   gem 'guard-rspec'
