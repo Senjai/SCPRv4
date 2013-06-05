@@ -87,7 +87,7 @@ class scpr.Newsroom
         if window.newsroomReady then @load() else @enqueue()
 
     #-----------------
-    # Enqueue the loading until we're told to load (to allow for asynx JS loading)
+    # Enqueue the loading until we're told to load (to allow for async JS loading)
     enqueue: ->
         Newsroom.queue.push @
 
