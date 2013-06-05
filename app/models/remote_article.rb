@@ -25,6 +25,8 @@ class RemoteArticle < ActiveRecord::Base
     "ChrArticle"
   ]
 
+  ORGANIZATION = "Remote Source"
+
   #---------------
   # Sphinx
   define_index do
