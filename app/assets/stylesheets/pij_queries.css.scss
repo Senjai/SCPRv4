@@ -50,7 +50,7 @@
     }
 }
 
-.pin-query-ending {
+.pin-query-ending, .pin-legal, .pin-legal p, .pin-query-ending p {
     @include font-sans-serif($size: 10px, $lineHeight: 16px);
     font-size: 12px;
 }
