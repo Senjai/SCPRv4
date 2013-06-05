@@ -50,22 +50,23 @@ class NprArticle < RemoteArticle
         # Check if this story was already cached - if not, cache it.
         if self.where(article_id: npr_story.id).first
           log "NPR Article ##{npr_story.id} already cached"
+          next
+        end
+
+        cached_article = self.new(
+          :article_id   => npr_story.id,
+          :headline     => npr_story.title, 
+          :teaser       => npr_story.teaser,
+          :published_at => npr_story.pubDate,
+          :url          => npr_story.link_for("html"),
+          :new          => true
+        )
+        
+        if cached_article.save
+          added.push cached_article
+          log "Saved NPR Story ##{npr_story.id} as NprArticle ##{cached_article.id}"
         else
-          cached_article = self.new(
-            :article_id   => npr_story.id,
-            :headline     => npr_story.title, 
-            :teaser       => npr_story.teaser,
-            :published_at => npr_story.pubDate,
-            :url          => npr_story.link_for("html"),
-            :new          => true
-          )
-          
-          if cached_article.save
-            added.push cached_article
-            log "Saved NPR Story ##{npr_story.id} as NprArticle ##{cached_article.id}"
-          else
-            log "Couldn't save NPR Story ##{npr_story.id}"
-          end
+          log "Couldn't save NPR Story ##{npr_story.id}"
         end
       end # each
       
