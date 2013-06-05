@@ -143,6 +143,11 @@ describe Audio do
         audio = create :audio, :uploaded
         audio.save!
       end
+
+      it 'only runs on UploadedAudio' do
+        Audio.any_instance.should_not_receive(:path_is_unique)
+        audio = create :direct_audio
+      end
     end
   end
   

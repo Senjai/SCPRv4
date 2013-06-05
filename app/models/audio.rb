@@ -54,7 +54,7 @@ class Audio < ActiveRecord::Base
   validate :enco_info_is_present_together
   validate :audio_source_is_provided
 
-  validate :path_is_unique, if: -> { self.new_record? }
+  validate :path_is_unique, if: -> { self.new_record? && self.type == "Audio::UploadedAudio" }
 
   # Don't run this for development, 
   # so that we can still save objects even though the file won't exist on dev machines. 
@@ -116,7 +116,11 @@ class Audio < ActiveRecord::Base
 
   #------------
   # Callbacks
-  before_save   :set_type, if: -> { self.type.blank? }
+
+  # It's important to set the type before validation, 
+  # so that we can run type-specific validation.
+  before_validation   :set_type, if: -> { self.type.blank? }
+
   before_save   :set_file_info, if: -> { self.filename.blank? || self.store_dir.blank? }
   before_save   :nilify_blanks
   after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
