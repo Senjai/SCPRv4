@@ -13,7 +13,7 @@ module Job
       def perform(id, import_to_class)
         @remote_article = RemoteArticle.find(id)
         @story = @remote_article.import(import_to_class: import_to_class)
-        
+
         # We want a failure to import to be caught by Resque.
         if !@story
           raise "The API didn't return anything."
@@ -28,7 +28,7 @@ module Job
           :data => {
             :location         => @story.admin_edit_path,
             :notifications    => {
-              :notice => "Successfully imported #{@remote_article.headline}"
+              :notice => "Successfully imported <strong>#{@remote_article.headline}</strong>"
             }
           }
         )
