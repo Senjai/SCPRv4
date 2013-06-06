@@ -1,4 +1,20 @@
 class RemoteArticle < ActiveRecord::Base
+  # This is a pseudo-abstract class (I made that term up) to act
+  # as a parent class for the API adapters with which we want to 
+  # be able to import content from other sources.
+  #
+  # An adapter MUST:
+  # * Inherit from RemoteArticle
+  # * Define a class method `sync`, which returns an array of 
+  #   RemoteArticles. This method is meant to sync the RemoteArticles
+  #   database with that adapter's API.
+  # * Define an instance method `import`. This method is meant to 
+  #   define how a remote article is imported into a native type.
+  #   This method must accept an options hash.
+  #
+  # An adapter SHOULD:
+  # * Define ORGANIZATION, the name of the remote source.
+  
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Outpost::Model::Identifier
   include Outpost::Model::Naming
@@ -8,6 +24,8 @@ class RemoteArticle < ActiveRecord::Base
     "NprArticle",
     "ChrArticle"
   ]
+
+  ORGANIZATION = "Remote Source"
 
   #---------------
   # Sphinx
@@ -39,7 +57,7 @@ class RemoteArticle < ActiveRecord::Base
     end
     
     #---------------
-    # Strip out unwanted stuff from the text.
+    # Strip out unwanted stuff from the fullText attribute.
     def process_text(text, options={})
       fragment = Nokogiri::XML::DocumentFragment.parse(text)
 
@@ -57,7 +75,9 @@ class RemoteArticle < ActiveRecord::Base
     #---------------
     # Sync with the APIs
     def sync
-      ADAPTERS.each { |a| a.constantize.sync }
+      added = []
+      ADAPTERS.each { |a| added += a.constantize.sync }
+      added
     end
 
     add_transaction_tracer :sync, category: :task

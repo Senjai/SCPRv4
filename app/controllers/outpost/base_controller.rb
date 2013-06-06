@@ -2,6 +2,7 @@ class Outpost::BaseController < Outpost::ApplicationController
   before_filter :setup_tickets
   before_filter :set_current_homepage
   before_filter :add_params_for_newrelic
+  before_filter :set_flash_from_query_string
 
   #------------------------
   # We need a new Ticket on every page, since we're offering
@@ -36,6 +37,14 @@ class Outpost::BaseController < Outpost::ApplicationController
     else
       render template: "/outpost/errors/error_#{status}", status: status, locals: { error: e }
       report_error(e)
+    end
+  end
+
+  #-------------------------
+
+  def set_flash_from_query_string
+    Array(params[:notifications]).each do |key, message|
+      flash.now[key] = message
     end
   end
 end

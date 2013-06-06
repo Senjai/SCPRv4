@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530203911) do
+ActiveRecord::Schema.define(:version => 20130605202939) do
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false
@@ -567,14 +567,13 @@ ActiveRecord::Schema.define(:version => 20130530203911) do
     t.text     "teaser",       :limit => 2147483647
     t.text     "body",         :limit => 2147483647
     t.string   "query_type"
-    t.integer  "form_height"
-    t.string   "query_url",    :limit => 200
     t.boolean  "is_active",                          :default => false, :null => false
     t.datetime "published_at"
     t.datetime "expires_at"
     t.boolean  "is_featured",                        :default => false, :null => false
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
+    t.string   "pin_query_id"
   end
 
   add_index "pij_query", ["is_active", "published_at"], :name => "index_pij_query_on_is_active_and_published_at"

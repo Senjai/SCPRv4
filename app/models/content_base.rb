@@ -73,7 +73,7 @@ module ContentBase
 
     begin
       ThinkingSphinx.search(query, options)
-    rescue Riddle::ConnectionError, ThinkingSphinx::SphinxError
+    rescue Riddle::ConnectionError, Riddle::ResponseError, ThinkingSphinx::SphinxError
       # In this one scenario, we need to fail gracefully from a Sphinx error,
       # because otherwise the entire website will be down if media isn't available,
       # or if we need to stop the searchd daemon for some reason, like a rebuild.

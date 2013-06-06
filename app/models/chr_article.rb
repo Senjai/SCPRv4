@@ -2,11 +2,11 @@
 class ChrArticle < RemoteArticle
   ORGANIZATION      = "Center for Health Reporting"
 
-  UNWANTED_PROPERTIES   = []
-  UNWANTED_ELEMENTS     = []
-
   API_ROOT      = "https://www.publish2.com/organizations/2198"
   API_LIST_PATH = "custom_views/1010/content.nprml"
+
+  UNWANTED_PROPERTIES   = []
+  UNWANTED_ELEMENTS     = []
 
   class << self
     def sync
@@ -31,29 +31,30 @@ class ChrArticle < RemoteArticle
 
       npr_stories = Array.wrap(response.list.stories)
 
-      log "#{npr_stories.size} CHR stories found from the past hour (max 20)"
+      log "#{npr_stories.size} CHR stories found from the past hour"
 
       added = []
       npr_stories.each do |npr_story|
         # Check if this story was already cached - if not, cache it.
         if self.where(article_id: npr_story.id).first
           log "CHR Article ##{npr_story.id} already cached"
+          next
+        end
+
+        cached_article = self.new(
+          :article_id   => npr_story.id,
+          :headline     => npr_story.title, 
+          :teaser       => npr_story.teaser,
+          :published_at => npr_story.pubDate,
+          :url          => npr_story.link_for("html"),
+          :new          => true
+        )
+        
+        if cached_article.save
+          added.push cached_article
+          log "Saved CHR article ##{npr_story.id} as ChrArticle ##{cached_article.id}"
         else
-          cached_article = self.new(
-            :article_id   => npr_story.id,
-            :headline     => npr_story.title, 
-            :teaser       => npr_story.teaser,
-            :published_at => npr_story.pubDate,
-            :url          => npr_story.link_for("html"),
-            :new          => true
-          )
-          
-          if cached_article.save
-            added.push cached_article
-            log "Saved CHR article ##{npr_story.id} as ChrArticle ##{cached_article.id}"
-          else
-            log "Couldn't save CHR Story ##{npr_story.id}"
-          end
+          log "Couldn't save CHR Story ##{npr_story.id}"
         end
       end # each
       
@@ -95,13 +96,7 @@ class ChrArticle < RemoteArticle
     # but the body will just be blank.
     #
     text = begin
-      if npr_story.fullText.present?
-        RemoteArticle.process_text(npr_story.fullText,
-          :properties_to_remove => UNWANTED_PROPERTIES,
-          :css_to_remove        => UNWANTED_ELEMENTS
-        )
-
-      elsif npr_story.textWithHtml.present?
+      if npr_story.textWithHtml.present?
         npr_story.textWithHtml.to_html
       elsif npr_story.text.present?
         npr_story.text.to_html

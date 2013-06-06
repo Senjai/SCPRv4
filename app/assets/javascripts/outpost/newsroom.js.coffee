@@ -60,11 +60,13 @@ class scpr.Newsroom
                     @fail()
                     return
 
-                @socket  = io.connect scpr.NODE, 'connect timeout': 5000
+                @socket  = io.connect scpr.NEWSROOM, 'connect timeout': 5000
                 @socket.on 'finished-task', (data) ->
                     $("#work_status").html("Finished!")
                     $("#spinner").spin(false)
-                    window.location = data.location
+
+                    notifications = $.param(notifications: data.notifications)
+                    window.location = data.location + "?" + notifications
 
         fail: ->
             $("#spinner").spin(false)
@@ -87,7 +89,7 @@ class scpr.Newsroom
         if window.newsroomReady then @load() else @enqueue()
 
     #-----------------
-    # Enqueue the loading until we're told to load (to allow for asynx JS loading)
+    # Enqueue the loading until we're told to load (to allow for async JS loading)
     enqueue: ->
         Newsroom.queue.push @
 
@@ -101,7 +103,7 @@ class scpr.Newsroom
                 @fail()
                 return
 
-            @socket  = io.connect scpr.NODE, 'connect timeout': 5000
+            @socket  = io.connect scpr.NEWSROOM, 'connect timeout': 5000
             
             # Outgoing messages
             @socket.emit 'entered', @roomId, @userJson, recordJson: @record

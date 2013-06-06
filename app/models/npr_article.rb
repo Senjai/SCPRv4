@@ -50,22 +50,23 @@ class NprArticle < RemoteArticle
         # Check if this story was already cached - if not, cache it.
         if self.where(article_id: npr_story.id).first
           log "NPR Article ##{npr_story.id} already cached"
+          next
+        end
+
+        cached_article = self.new(
+          :article_id   => npr_story.id,
+          :headline     => npr_story.title, 
+          :teaser       => npr_story.teaser,
+          :published_at => npr_story.pubDate,
+          :url          => npr_story.link_for("html"),
+          :new          => true
+        )
+        
+        if cached_article.save
+          added.push cached_article
+          log "Saved NPR Story ##{npr_story.id} as NprArticle ##{cached_article.id}"
         else
-          cached_article = self.new(
-            :article_id   => npr_story.id,
-            :headline     => npr_story.title, 
-            :teaser       => npr_story.teaser,
-            :published_at => npr_story.pubDate,
-            :url          => npr_story.link_for("html"),
-            :new          => true
-          )
-          
-          if cached_article.save
-            added.push cached_article
-            log "Saved NPR Story ##{npr_story.id} as NprArticle ##{cached_article.id}"
-          else
-            log "Couldn't save NPR Story ##{npr_story.id}"
-          end
+          log "Couldn't save NPR Story ##{npr_story.id}"
         end
       end # each
       
@@ -94,13 +95,7 @@ class NprArticle < RemoteArticle
     # but the body will just be blank.
     #
     text = begin
-      if npr_story.fullText.present?
-        RemoteArticle.process_text(npr_story.fullText,
-          :properties_to_remove => UNWANTED_PROPERTIES,
-          :css_to_remove        => UNWANTED_ELEMENTS
-        )
-
-      elsif npr_story.textWithHtml.present?
+      if npr_story.textWithHtml.present?
         npr_story.textWithHtml.to_html
       elsif npr_story.text.present?
         npr_story.text.to_html
@@ -149,8 +144,13 @@ class NprArticle < RemoteArticle
     #-------------------
     # Add in the primary asset if it exists
     if image = npr_story.primary_image
+      
+      # Try a few different crops to see which one is available.
+      # We prefer the largest possible image with the least cropped out.
+      crop = image.enlargement || image.crop("enlargment") || image.crop("standard") || image
+      
       asset = AssetHost::Asset.create(
-        :url     => image.enlargement.src,
+        :url     => crop.src,
         :title   => image.title,
         :caption => image.caption,
         :owner   => [image.producer, image.provider].join("/"),

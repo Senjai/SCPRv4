@@ -11,6 +11,7 @@ class Outpost::PijQueriesController < Outpost::ResourceController
     l.column :is_active, header: "Active?"
     l.column :is_featured, header: "Featured?"
     l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :pin_query_id
     
     l.filter :query_type, title: "Type", collection: -> { PijQuery::QUERY_TYPES }
     l.filter :is_active, title: "Active?", collection: :boolean

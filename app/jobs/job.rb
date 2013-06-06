@@ -12,7 +12,7 @@ module Job
 
       #--------------------
 
-      def log(message)
+      def log(message, verbose=false)
         message = "*** #{message}"
         
         # Rails log and custom log always gets it
@@ -20,7 +20,7 @@ module Job
         logger.info("***[#{Time.now}] #{self.name}: #{message}")
         
         # STDOUT only gets it if requested
-        if @verbose
+        if !!ENV['VERBOSE'] || verbose
           $stdout.puts message
         end
       end
@@ -38,10 +38,22 @@ module Job
         @logger ||= Logger.new(Rails.root.join("log", "jobs.log"))
       end
 
-      #---------------
-
       def cacher
         @cacher ||= CacheController.new
+      end
+
+      def timeout_retry(max_tries, &block)
+        tries = 0
+        begin
+          yield
+        rescue Faraday::Error::TimeoutError => e
+          if tries < max_tries
+            tries += 1
+            retry
+          else
+            raise e
+          end
+        end
       end
     end
     
