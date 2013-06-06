@@ -8,6 +8,17 @@
     aggregator = new outpost.Aggregator(
       "#aggregator", "#related_content_json", 
       <%= render_json('api/private/v2/content/collection', content: record.outgoing_references.includes(:related).map(&:related)) %>,
-      { view: { active: 'search' } });
+      {
+        view: { active: 'search' },
+        apiType: "private",
+        params: {
+          limit: 20,
+          token: "<%= Rails.application.config.api['assethost']['token'] %>",
+          order: "updated_at",
+          sort_mode: "desc",
+          with: { status: <%=ContentBase::STATUS_LIVE%> }
+        }
+      }
+    );
   </script>
 <% end %>
