@@ -1,4 +1,4 @@
-<%= f.section "content" %>
+<%= f.section "content", apiType: "private", params: { token: Rails.application.config.api['assethost']['token'] } %>
 
 <%= form_block "Details" do %>
   <%= f.input :base, label: "Template", collection: Homepage::TEMPLATE_OPTIONS, include_blank: false  %>
