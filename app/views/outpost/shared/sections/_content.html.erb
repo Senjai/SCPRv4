@@ -7,7 +7,17 @@
   <script>
     aggregator = new outpost.Aggregator(
       "#aggregator", "#content_json",
-      <%= render_json("api/#{options['apiType'] || 'public'}/v2/content/collection", content: record.content.includes(:content).map(&:content)) %>,
-      <%= raw options.to_json %>);
+      <%= render_json("api/private/v2/content/collection", content: record.content.includes(:content).map(&:content)) %>,
+      {
+        apiType: "private",
+        params: {
+          limit: 20,
+          token: "<%= Rails.application.config.api['assethost']['token'] %>",
+          order: "updated_at",
+          sort_mode: "desc",
+          with: { status: <%=ContentBase::STATUS_LIVE%> }
+        }
+      }
+    );
   </script>
 <% end %>
