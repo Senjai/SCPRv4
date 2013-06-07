@@ -107,6 +107,7 @@ Scprv4::Application.routes.draw do
         get '/content/*obj_key'         => 'content#show'
 
         resources :audio, only: [:index, :show]
+        resources :editions, only: [:index, :show]
         resources :categories, only: [:index, :show]
       end
     end
