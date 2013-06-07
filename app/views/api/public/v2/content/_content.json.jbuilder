@@ -15,9 +15,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", content] do
 
   if content.respond_to?(:category) && content.category.present?
     json.category do
-      json.id     content.category.id
-      json.title  content.category.title
-      json.url    content.category.remote_link_path
+      json.partial! "api/public/v2/categories/category", category: content.category
     end
   end
 
