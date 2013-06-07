@@ -11,6 +11,6 @@ class Outpost::AbstractsController < Outpost::ResourceController
     l.column :article_published_at, sortable: true, default_sort_mode: "desc"
     l.column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
 
-    l.filter :source, collection: -> { Abstract.source_select_collection }
+    l.filter :source, collection: -> { Abstract.sources_select_collection }
   end
 end
