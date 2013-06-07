@@ -93,21 +93,20 @@ Scprv4::Application.routes.draw do
   
   #------------------
 
-  namespace :api do
+  namespace :api, defaults: { format: "json" } do
     # PUBLIC
     scope module: "public" do
       # V2
       namespace :v2 do
         match '/' => "content#options", constraints: { method: 'OPTIONS' }
         
-        get '/content'                  => 'content#index',  defaults: { format: :json }
-        get '/content/by_url'           => 'content#by_url', defaults: { format: :json }
-        get '/content/most_viewed'      => 'content#most_viewed', defaults: { format: :json }
-        get '/content/most_commented'   => 'content#most_commented', defaults: { format: :json }
-        get '/content/*obj_key'         => 'content#show',   defaults: { format: :json }
+        get '/content'                  => 'content#index'
+        get '/content/by_url'           => 'content#by_url'
+        get '/content/most_viewed'      => 'content#most_viewed'
+        get '/content/most_commented'   => 'content#most_commented'
+        get '/content/*obj_key'         => 'content#show'
 
-        get '/audio'     => 'audio#index', defaults: { format: :json }
-        get '/audio/:id' => 'audio#show', defaults: { format: :json }
+        resources :audio, only: [:index, :show]
         resources :categories, only: [:index, :show]
       end
     end
@@ -121,9 +120,9 @@ Scprv4::Application.routes.draw do
 
         post '/utility/notify'   => 'utility#notify'
         
-        get '/content'        => 'content#index',  defaults: { format: :json }
-        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
+        get '/content'        => 'content#index'
+        get '/content/by_url' => 'content#by_url'
+        get '/content/*obj_key'    => 'content#show'
       end
     end
   end
