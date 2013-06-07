@@ -30,7 +30,7 @@
             limit: 20,
             token: "<%= Rails.application.config.api['assethost']['token'] %>",
             types: "segments",
-            order: "updated_at",
+            order: "updated_at", // Don't use published_at - we're finding unpublished content too.
             sort_mode: "desc",
             with: { status: <%=ContentBase::STATUS_TEXT.keys.drop(1)%> }
           }
