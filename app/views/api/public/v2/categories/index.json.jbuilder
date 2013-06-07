@@ -1,1 +1,1 @@
-json.partial! "api/public/v2/categories/collection", category: @category
+json.partial! "api/public/v2/categories/collection", categories: @category
