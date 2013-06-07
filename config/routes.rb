@@ -117,6 +117,8 @@ Scprv4::Application.routes.draw do
       # V2
       namespace :v2 do
         match '/' => "content#options", constraints: { method: 'OPTIONS' }
+
+        post '/utility/notify'   => 'utility#notify'
         
         get '/content'        => 'content#index',  defaults: { format: :json }
         get '/content/by_url' => 'content#by_url', defaults: { format: :json }
