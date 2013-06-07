@@ -26,4 +26,9 @@ class Article
     @byline           = attributes[:byline]
     @permalink        = attributes[:permalink]
   end
+
+
+  def to_article
+    self
+  end
 end
