@@ -78,7 +78,7 @@ class Abstract < ActiveRecord::Base
   # to have "publish status" on them. If we ever want to 
   # use Abstracts outside of Editions, then we will probably
   # need to add that capability. For now, "published?" is just
-  # always true\, and the objects don't have a status or 
+  # always true, and the objects don't have a status or 
   # published_at fields.
   def published?
     true
