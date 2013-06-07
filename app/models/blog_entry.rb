@@ -80,21 +80,6 @@ class BlogEntry < ActiveRecord::Base
   end
 
 
-  def to_article
-    @to_article ||= Article.new({
-      :original_object    => self,
-      :id                 => self.obj_key,
-      :title              => self.headline,
-      :short_title        => self.short_headline,
-      :public_datetime    => self.published_at,
-      :teaser             => self.teaser,
-      :body               => self.body,
-      :assets             => self.assets,
-      :byline             => self.byline,
-      :permalink          => self.remote_link_path
-    })
-  end
-
 
   #-------------------
   # Need to work around multi-american until we can figure
@@ -172,5 +157,36 @@ class BlogEntry < ActiveRecord::Base
       :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }
+  end
+
+  #-------------------
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.headline,
+      :short_title        => self.short_headline,
+      :public_datetime    => self.published_at,
+      :teaser             => self.teaser,
+      :body               => self.body,
+      :assets             => self.assets,
+      :byline             => self.byline,
+      :permalink          => self.remote_link_path
+    })
+  end
+
+  #-------------------
+
+  def to_abstract
+    @to_abstract ||= Abstract.new({
+      :headline               => self.short_headline,
+      :summary                => self.teaser,
+      :source                 => "KPCC",
+      :url                    => self.remote_link_path,
+      :assets                 => self.assets,
+      :category               => self.category,
+      :article_published_at   => self.published_at
+    })
   end
 end
