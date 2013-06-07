@@ -108,6 +108,7 @@ Scprv4::Application.routes.draw do
 
         get '/audio'     => 'audio#index', defaults: { format: :json }
         get '/audio/:id' => 'audio#show', defaults: { format: :json }
+        resources :categories, only: [:index, :show]
       end
     end
     
