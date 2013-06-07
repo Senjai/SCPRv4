@@ -96,22 +96,6 @@ Scprv4::Application.routes.draw do
   namespace :api do
     # PUBLIC
     scope module: "public" do
-      # Temporary legacy routes
-      match '/' => "v1/content#options", constraints: { method: 'OPTIONS' }
-      
-      get '/content'        => 'v1/content#index',  defaults: { format: :json }
-      get '/content/by_url' => 'v1/content#by_url', defaults: { format: :json }
-      get '/content/*obj_key'    => 'v1/content#show',   defaults: { format: :json }
-      
-      # V1
-      namespace :v1 do
-        match '/' => "content#options", constraints: { method: 'OPTIONS' }
-    
-        get '/content'        => 'content#index',  defaults: { format: :json }
-        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
-      end
-
       # V2
       namespace :v2 do
         match '/' => "content#options", constraints: { method: 'OPTIONS' }
@@ -130,17 +114,6 @@ Scprv4::Application.routes.draw do
     
     # PRIVATE
     namespace :private do
-      # V1
-      namespace :v1 do
-        match '/' => "content#options", constraints: { method: 'OPTIONS' }
-        
-        post '/utility/notify'   => 'utility#notify'
-
-        get '/content'        => 'content#index',  defaults: { format: :json }
-        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
-      end
-
       # V2
       namespace :v2 do
         match '/' => "content#options", constraints: { method: 'OPTIONS' }
