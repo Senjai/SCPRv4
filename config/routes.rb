@@ -226,6 +226,9 @@ Scprv4::Application.routes.draw do
     resources :abstracts do
       get 'search', on: :collection, as: :search
     end
+
+    resources :editions
+
     resources :show_segments do
       get "search", on: :collection, as: :search
       put "preview", on: :member
