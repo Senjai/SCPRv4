@@ -138,7 +138,10 @@ class BlogEntry < ActiveRecord::Base
   end
   
   #-------------------
-  
+  # This was made for the blog list pages - showing the full body
+  # was too long, but just the teaser was too short.
+  #
+  # It should probably be in a presenter.
   def extended_teaser(*args)
     target      = args[0] || 800
     more_text   = args[1] || "Read More..."
