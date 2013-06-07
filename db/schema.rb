@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130605202939) do
+ActiveRecord::Schema.define(:version => 20130606223229) do
+
+  create_table "abstracts", :force => true do |t|
+    t.string   "source"
+    t.string   "url"
+    t.string   "headline"
+    t.text     "summary"
+    t.integer  "category_id"
+    t.datetime "article_published_at"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "abstracts", ["category_id"], :name => "index_abstracts_on_category_id"
+  add_index "abstracts", ["source"], :name => "index_abstracts_on_source"
 
   create_table "ascertainment_ascertainmentrecord", :force => true do |t|
     t.integer "content_id",                  :null => false
@@ -376,6 +390,28 @@ ActiveRecord::Schema.define(:version => 20130605202939) do
     t.text     "session_data", :limit => 2147483647, :null => false
     t.datetime "expire_date",                        :null => false
   end
+
+  create_table "edition_slots", :force => true do |t|
+    t.string   "item_type"
+    t.integer  "item_id"
+    t.integer  "edition_id"
+    t.integer  "position"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "edition_slots", ["edition_id"], :name => "index_edition_slots_on_edition_id"
+  add_index "edition_slots", ["item_type", "item_id"], :name => "index_edition_slots_on_item_type_and_item_id"
+  add_index "edition_slots", ["position"], :name => "index_edition_slots_on_position"
+
+  create_table "editions", :force => true do |t|
+    t.integer  "status"
+    t.datetime "published_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "editions", ["status", "published_at"], :name => "index_editions_on_status_and_published_at"
 
   create_table "events", :force => true do |t|
     t.string   "headline"
