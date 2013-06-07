@@ -64,7 +64,7 @@ namespace :deploy do
       :application => application
     }
     
-    url = "http://www.scpr.org/api/private/v1/utility/notify"
+    url = "http://www.scpr.org/api/private/v2/utility/notify"
     logger.info "Sending notification to #{url}"
     begin
       Net::HTTP.post_form(URI.parse(URI.encode(url)), data)
