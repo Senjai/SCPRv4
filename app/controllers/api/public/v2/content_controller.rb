@@ -1,9 +1,11 @@
 module Api::Public::V2
   class ContentController < BaseController
-    before_filter :set_classes, 
+    before_filter :set_conditions,
+      :set_classes, 
       :sanitize_limit, 
       :sanitize_page, 
       :sanitize_query, 
+      :sanitize_categories,
       only: [:index]
 
     before_filter :sanitize_obj_key, only: [:show]
@@ -15,7 +17,8 @@ module Api::Public::V2
       @content = ContentBase.search(@query, {
         :classes => @classes,
         :limit   => @limit,
-        :page    => @page
+        :page    => @page,
+        :with    => @conditions
       })
       
       respond_with @content
@@ -83,6 +86,10 @@ module Api::Public::V2
 
     private
 
+    def set_conditions
+      @conditions = {}
+    end
+
     def set_classes
       @classes = []
       allowed_types = {
@@ -146,6 +153,19 @@ module Api::Public::V2
         @url = URI.parse(params[:url]).to_s
       rescue URI::Error
         render_bad_request(message: "Invalid URL") and return false
+      end
+    end
+
+    #---------------------------
+
+    def sanitize_categories
+      if params[:categories].present?
+        slugs   = params[:categories].to_s.split(',')
+        ids     = Category.where(slug: slugs).map(&:id)
+        
+        if ids.present?
+          @conditions[:category] = ids
+        end
       end
     end
   end
