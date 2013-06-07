@@ -1,0 +1,13 @@
+<%= form_block "Remote Details" do %>
+  <%= f.input :source, hint: "The human-readable source, such as <strong>NPR</strong> or <strong>AudioVision</strong>." %>
+  <%= f.input :url, input_html: { class: "wide" } %>
+  <%= f.input :article_published_at, hint: "The date that the article was originally published at the source." %>
+<% end %>
+
+<%= form_block "Summary" do %>
+  <%= f.input :headline %>
+  <%= f.association :category %>
+  <%= f.input :summary, input_html: { class: "ckeditor" } %>
+<% end %>
+
+<%= f.section "audio" %>
