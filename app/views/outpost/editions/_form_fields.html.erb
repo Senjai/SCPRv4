@@ -1,0 +1,8 @@
+<%= form_block "Publishing" do %>
+  <%= f.input :status, collection: Edition.status_text_collection, include_blank: false, input_html: { id: "status-select" } %>
+  <%= f.section 'content_alarm' %>
+  <%= f.section 'auto_published_at' %>
+  <div id="scheduled_status" class="notification block"></div>
+<% end %>
+
+<br /><br /><br /><br />
