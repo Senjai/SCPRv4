@@ -1,5 +1,15 @@
 module Api::Public::V2
   class ContentController < BaseController
+    DEFAULTS = {
+      :types        => "news,blogs,segments,episodes",
+      :limit        => 10,
+      :order        => "published_at",
+      :sort_mode    => :desc, # Symbol plz
+      :page         => 1 # o, rly?
+    }
+
+    MAX_RESULTS = 40
+
     before_filter :set_conditions,
       :set_classes, 
       :sanitize_limit, 
@@ -93,34 +103,31 @@ module Api::Public::V2
     def set_classes
       @classes = []
       allowed_types = {
-        "news"     => [NewsStory, ContentShell],
-        "blogs"    => [BlogEntry],
-        "segments" => [ShowSegment],
-        "episodes" => [ShowEpisode]
+        "news"        => [NewsStory, ContentShell],
+        "blogs"       => [BlogEntry],
+        "segments"    => [ShowSegment],
+        "episodes"    => [ShowEpisode]
       }
       
-      if params[:types]
-        params[:types].split(",").each do |type|
-          if klasses = allowed_types[type]
-            @classes += klasses
-          end
+      params[:types] ||= DEFAULTS[:types]
+
+      params[:types].split(",").uniq.each do |type|
+        if klasses = allowed_types[type]
+          @classes += klasses
         end
-      else
-        # All classes
-        @classes = allowed_types.values.inject(:+)
       end
-      
+
       @classes.uniq!
     end
-    
+
     #---------------------------
     # Limit to 40 for public API
     def sanitize_limit
       if params[:limit].present?
         limit = params[:limit].to_i
-        @limit = limit > 40 ? 40 : limit
+        @limit = limit > MAX_RESULTS ? MAX_RESULTS : limit
       else
-        @limit = 10
+        @limit = DEFAULTS[:limit]
       end
     end
 
@@ -128,7 +135,7 @@ module Api::Public::V2
     
     def sanitize_page
       page = params[:page].to_i
-      @page = page > 0 ? page : 1
+      @page = page > 0 ? page : DEFAULTS[:page]
     end
     
     #---------------------------
