@@ -171,6 +171,8 @@ class BlogEntry < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :assets             => self.assets,
+      :audio              => self.audio,
+      :attributions       => self.bylines,
       :byline             => self.byline,
       :permalink          => self.remote_link_path
     })
@@ -180,6 +182,7 @@ class BlogEntry < ActiveRecord::Base
 
   def to_abstract
     @to_abstract ||= Abstract.new({
+      :original_object        => self,
       :headline               => self.short_headline,
       :summary                => self.teaser,
       :source                 => "KPCC",

@@ -65,6 +65,7 @@ class Abstract < ActiveRecord::Base
     has category.id, as: :category
   end
 
+  attr_accessor :original_object
 
   class << self
     def sources_select_collection

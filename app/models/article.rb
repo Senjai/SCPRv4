@@ -8,6 +8,8 @@ class Article
     :teaser,
     :body,
     :assets,
+    :audio,
+    :attributions,
     :byline,
     :permalink
   ]
@@ -23,6 +25,8 @@ class Article
     @teaser           = attributes[:teaser]
     @body             = attributes[:body]
     @assets           = attributes[:assets]
+    @audio            = attributes[:audio]
+    @attributions     = attributes[:attributions]
     @byline           = attributes[:byline]
     @permalink        = attributes[:permalink]
   end

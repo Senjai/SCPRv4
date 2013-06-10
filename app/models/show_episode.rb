@@ -108,6 +108,38 @@ class ShowEpisode < ActiveRecord::Base
     }
   end
   
+    #-------------------
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.short_headline,
+      :short_title        => self.short_headline,
+      :public_datetime    => self.air_date,
+      :teaser             => self.teaser,
+      :body               => self.teaser,
+      :assets             => self.assets,
+      :audio              => self.audio,
+      :byline             => self.byline,
+      :permalink          => self.remote_link_path
+    })
+  end
+
+  #-------------------
+
+  def to_abstract
+    @to_abstract ||= Abstract.new({
+      :original_object        => self,
+      :headline               => self.short_headline,
+      :summary                => self.teaser,
+      :source                 => "KPCC",
+      :url                    => self.remote_link_path,
+      :assets                 => self.assets,
+      :article_published_at   => self.published_at
+    })
+  end
+
   #----------
   
   def rundown_json
