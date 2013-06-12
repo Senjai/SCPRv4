@@ -7,5 +7,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", audio] do
   json.position         audio.position
   json.duration         audio.duration
   json.filesize         audio.size
-  json.content_obj_key  audio.content.obj_key
+  json.article_obj_key  audio.content.obj_key
+
+  json.content_obj_key  audio.content.obj_key # Deprecated
 end
