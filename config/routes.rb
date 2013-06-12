@@ -98,13 +98,26 @@ Scprv4::Application.routes.draw do
     scope module: "public" do
       # V2
       namespace :v2 do
-        match '/' => "content#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
         
-        get '/content'                  => 'content#index'
-        get '/content/by_url'           => 'content#by_url'
-        get '/content/most_viewed'      => 'content#most_viewed'
-        get '/content/most_commented'   => 'content#most_commented'
-        get '/content/*obj_key'         => 'content#show'
+        # Old paths
+        get '/content'                  => 'articles#index'
+        get '/content/by_url'           => 'articles#by_url'
+        get '/content/most_viewed'      => 'articles#most_viewed'
+        get '/content/most_commented'   => 'articles#most_commented'
+        get '/content/*obj_key'         => 'articles#show'
+
+        resources :articles, only: [:index] do
+          member do
+            get '/by_url'           => 'articles#by_url'
+            get '/*obj_key'         => 'articles#show'
+          end
+
+          collection do
+            get '/most_viewed'      => 'articles#most_viewed'
+            get '/most_commented'   => 'articles#most_commented'
+          end
+        end
 
         resources :audio, only: [:index, :show]
         resources :editions, only: [:index, :show]
@@ -117,13 +130,16 @@ Scprv4::Application.routes.draw do
     namespace :private do
       # V2
       namespace :v2 do
-        match '/' => "content#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
 
         post '/utility/notify'   => 'utility#notify'
         
-        get '/content'        => 'content#index'
-        get '/content/by_url' => 'content#by_url'
-        get '/content/*obj_key'    => 'content#show'
+        resources :articles, only: [:index] do
+          member do
+            get '/by_url'           => 'articles#by_url'
+            get '/*obj_key'         => 'articles#show'
+          end
+        end
       end
     end
   end

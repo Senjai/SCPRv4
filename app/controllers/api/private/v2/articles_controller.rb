@@ -1,5 +1,13 @@
 module Api::Private::V2
-  class ContentController < BaseController
+  class ArticlesController < BaseController
+    DEFAULTS = {
+      :types        => "news,blogs,segments,episodes",
+      :limit        => 10,
+      :order        => "published_at",
+      :sort_mode    => :desc, # Symbol plz
+      :page         => 1 # o, rly?
+    }
+
     before_filter :set_classes, 
       :sanitize_limit, 
       :sanitize_page, 
@@ -15,7 +23,7 @@ module Api::Private::V2
     #---------------------------
     
     def index
-      @content = ContentBase.search(@query, {
+      @articles = ContentBase.search(@query, {
         :classes   => @classes,
         :limit     => @limit,
         :page      => @page,
@@ -24,19 +32,22 @@ module Api::Private::V2
         :with      => @conditions
       })
       
-      respond_with @content
+      @articles = @article.map(&:to_article)
+      respond_with @articles
     end
     
     #---------------------------
     
     def by_url
-      @content = ContentBase.obj_by_url(@url)
+      @article = ContentBase.obj_by_url(@url)
 
-      if !@content
+      if !@article
         render_not_found and return false
       end
 
-      respond_with @content do |format|
+      @article = @article.to_article
+
+      respond_with @article do |format|
         format.json { render :show }
       end
     end  
@@ -44,13 +55,14 @@ module Api::Private::V2
     #---------------------------
     
     def show
-      @content = Outpost.obj_by_key(@obj_key)
+      @article = Outpost.obj_by_key(@obj_key)
 
-      if !@content
+      if !@article
         render_not_found and return false
       end
       
-      respond_with @content
+      @article = @article.to_article
+      respond_with @article
     end
 
 
@@ -61,37 +73,35 @@ module Api::Private::V2
     def set_classes
       @classes = []
       allowed_types = {
-        "news"     => [NewsStory, ContentShell],
-        "blogs"    => [BlogEntry],
-        "segments" => [ShowSegment],
-        "episodes" => [ShowEpisode]
+        "news"        => [NewsStory, ContentShell],
+        "blogs"       => [BlogEntry],
+        "segments"    => [ShowSegment],
+        "episodes"    => [ShowEpisode],
+        "abstracts"   => [Abstract]
       }
       
-      if params[:types]
-        params[:types].split(",").each do |type|
-          if klasses = allowed_types[type]
-            @classes += klasses
-          end
+      params[:types] ||= DEFAULTS[:types]
+
+      params[:types].split(",").uniq.each do |type|
+        if klasses = allowed_types[type]
+          @classes += klasses
         end
-      else
-        # All classes
-        @classes = allowed_types.values.inject(:+)
       end
-      
+
       @classes.uniq!
     end
     
     #---------------------------
     # No Limit for Private API
     def sanitize_limit
-      @limit = params[:limit] ? params[:limit].to_i : 10
+      @limit = params[:limit] ? params[:limit].to_i : DEFAULTS[:limit]
     end
 
     #---------------------------
     
     def sanitize_page
       page = params[:page].to_i
-      @page = page > 0 ? page : 1
+      @page = page > 0 ? page : DEFAULTS[:page]
     end
     
     #---------------------------
@@ -103,14 +113,19 @@ module Api::Private::V2
     #---------------------------
     
     def sanitize_order
-      @order = params[:order] ? params[:order].to_s : "published_at"
+      @order = params[:order] ? params[:order].to_s : DEFAULTS[:order]
     end
     
     #---------------------------
     # For now just "desc" and "asc", although this could
     # support any of the Sphinx sort modes in the future.
     def sanitize_sort_mode
-      @sort_mode = %w{desc asc}.include?(params[:sort_mode]) ? params[:sort_mode].to_sym : :desc
+      @sort_mode = 
+        if %w{desc asc}.include?(params[:sort_mode])
+          params[:sort_mode].to_sym
+        else
+          DEFAULTS[:sort_mode]
+        end
     end
 
     #---------------------------

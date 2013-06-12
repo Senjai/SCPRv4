@@ -1,5 +1,5 @@
 module Api::Public::V2
-  class ContentController < BaseController
+  class ArticlesController < BaseController
     DEFAULTS = {
       :types        => "news,blogs,segments,episodes",
       :limit        => 10,
@@ -24,26 +24,29 @@ module Api::Public::V2
     #---------------------------
     
     def index
-      @content = ContentBase.search(@query, {
+      @articles = ContentBase.search(@query, {
         :classes => @classes,
         :limit   => @limit,
         :page    => @page,
         :with    => @conditions
       })
       
-      respond_with @content
+      @articles = @articles.map(&:to_article)
+      respond_with @articles
     end
     
     #---------------------------
     
     def by_url
-      @content = ContentBase.obj_by_url(@url)
+      @article = ContentBase.obj_by_url(@url)
 
-      if !@content
+      if !@article
         render_not_found and return false
       end
 
-      respond_with @content do |format|
+      @article = @article.to_article
+
+      respond_with @article do |format|
         format.json { render :show }
       end
     end  
@@ -51,27 +54,30 @@ module Api::Public::V2
     #---------------------------
     
     def show
-      @content = Outpost.obj_by_key(@obj_key)
+      @article = Outpost.obj_by_key(@obj_key)
 
-      if !@content
+      if !@article
         render_not_found and return false
       end
-      
-      respond_with @content
+
+      @article = @article.to_article
+      respond_with @article
     end
 
     #---------------------------
 
     def most_viewed
-      @content = Rails.cache.read("popular/viewed")
+      @articles = Rails.cache.read("popular/viewed")
       
-      if !@content
+      if !@articles
         render_service_unavailable(
           message: "Cache not warm. Try again in a few minutes."
         ) and return false
       end
 
-      respond_with @content do |format|
+      @articles = @articles.map(&:to_article)
+
+      respond_with @articles do |format|
         format.json { render :index }
       end
     end
@@ -79,15 +85,17 @@ module Api::Public::V2
     #---------------------------
 
     def most_commented
-      @content = Rails.cache.read("popular/commented")
+      @articles = Rails.cache.read("popular/commented")
 
-      if !@content
+      if !@articles
         render_service_unavailable(
           message: "Cache not warm. Try again in a few minutes."
         ) and return false
       end
 
-      respond_with @content do |format|
+      @articles = @articles.map(&:to_article)
+
+      respond_with @articles do |format|
         format.json { render :index }
       end
     end

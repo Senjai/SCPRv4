@@ -1,17 +1,29 @@
 require "spec_helper"
 
-describe Api::Public::V2::ContentController do
+describe Api::Private::V2::ArticlesController do
   request_params = {
+    :token  => Rails.application.config.api['assethost']['token'],
     :format => :json
   }
 
-  render_views
+  describe "authentication" do
+    it "accepts a token" do
+      get :index, request_params
+      response.should be_success
+    end
+
+    it "denies the request if the token is wrong" do
+      get :index, format: :json, token: "wrong"
+      response.response_code.should eq 401
+      response.body.should eq Hash[error: "Unauthorized"].to_json
+    end
+  end
 
   describe "GET show" do
     it "finds the object if it exists" do
       entry = create :blog_entry
       get :show, { obj_key: entry.obj_key }.merge(request_params)
-      assigns(:content).should eq entry
+      assigns(:article).should eq entry
       response.should render_template "show"
     end
 
@@ -25,8 +37,8 @@ describe Api::Public::V2::ContentController do
   describe "GET by_url" do
     it "finds the object if the URI matches" do
       entry = create :blog_entry
-      get :by_url, { url: entry.remote_link_path }.merge(request_params)
-      assigns(:content).should eq entry
+      get :by_url, { url: entry.public_url }.merge(request_params)
+      assigns(:article).should eq entry
       response.should render_template "show"
     end
 
@@ -42,68 +54,15 @@ describe Api::Public::V2::ContentController do
     end
   end
 
-  describe "GET most_viewed" do
-    it "returns the cached articles" do
-      articles = create_list :blog_entry, 2
-      Rails.cache.write("popular/viewed", articles)
-
-      get :most_viewed, request_params
-      assigns(:content).should eq articles
-      response.body.should render_template "index"
-    end
-
-    it "returns an error if the cache is nil" do
-      get :most_viewed, request_params
-      assigns(:content).should eq nil
-      response.response_code.should eq 503
-    end
-  end
-
-  describe "GET most_commented" do
-    it "returns the cached articles" do
-      articles = create_list :blog_entry, 2
-      Rails.cache.write("popular/commented", articles)
-      
-      get :most_commented, request_params
-      assigns(:content).should eq articles
-      response.body.should render_template "index"
-    end
-
-    it "returns an error if the cache is nil" do
-      get :most_commented, request_params
-      assigns(:content).should eq nil
-      response.response_code.should eq 503
-    end
-  end
-
   describe "GET index" do
     sphinx_spec(num: 1)
-
-    it 'can filter by category' do
-      category1  = create :category_not_news, slug: "film"
-      story1     = create :news_story, category: category1, published_at: 1.hour.ago
-
-      category2  = create :category_news, slug: "health"
-      story2     = create :news_story, category: category2, published_at: 2.hours.ago
-
-      # Control - add these in to make sure we're *only* returning
-      # stories with the requested categories
-      other_stories = create_list :news_story, 2
-
-      index_sphinx
-
-      ts_retry(2) do
-        get :index, { categories: "film,health" }.merge(request_params)
-        assigns(:content).should eq [story1, story2]
-      end
-    end
 
     it "returns only the requested classes" do
       entries = @generated_content.select { |c| c.class == BlogEntry }
       
       ts_retry(2) do
         get :index, { types: "blogs" }.merge(request_params)
-        assigns(:content).should eq entries
+        assigns(:articles).should eq entries
       end
     end
 
@@ -111,14 +70,14 @@ describe Api::Public::V2::ContentController do
       ts_retry(2) do
         get :index, { types: "blogs,segments" }.merge(request_params)
         assigns(:classes).should eq [BlogEntry, ShowSegment]
-        assigns(:content).any? { |c| !%w{ShowSegment BlogEntry}.include?(c.class.name) }.should eq false
+        assigns(:articles).any? { |c| !%w{ShowSegment BlogEntry}.include?(c.class.name) }.should eq false
       end
     end
 
     it "is all types by default" do
       ts_retry(2) do
         get :index, request_params
-        assigns(:content).size.should eq @generated_content.size
+        assigns(:articles).size.should eq @generated_content.size
       end
     end
 
@@ -126,21 +85,14 @@ describe Api::Public::V2::ContentController do
       ts_retry(2) do
         get :index, { limit: "Evil Code" }.merge(request_params)
         assigns(:limit).should eq 0
-        assigns(:content).should eq []
+        assigns(:articles).should eq []
       end
     end
 
     it "accepts a limit" do
       ts_retry(2) do
         get :index, { limit: 1 }.merge(request_params)
-        assigns(:content).size.should eq 1
-      end
-    end
-
-    it "sets the max limit to 40" do
-      ts_retry(2) do
-        get :index, { limit: 100 }.merge(request_params)
-        assigns(:limit).should eq 40
+        assigns(:articles).size.should eq 1
       end
     end
 
@@ -148,17 +100,17 @@ describe Api::Public::V2::ContentController do
       ts_retry(2) do
         get :index, { page: "Evil Code" }.merge(request_params)
         assigns(:page).should eq 1
-        assigns(:content).size.should eq @generated_content.size
+        assigns(:articles).size.should eq @generated_content.size
       end
     end
 
     it "accepts a page" do
       ts_retry(2) do
         get :index, request_params
-        fifth_obj = assigns(:content)[4]
+        fifth_obj = assigns(:article)[4]
 
         get :index, { page: 5, limit: 1 }.merge(request_params)
-        assigns(:content).should eq [fifth_obj]
+        assigns(:articles).should eq [fifth_obj]
       end
     end
 
@@ -168,7 +120,48 @@ describe Api::Public::V2::ContentController do
 
       ts_retry(2) do
         get :index, { query: "Spongebob+Squarepants" }.merge(request_params)
-        assigns(:content).should eq [entry]
+        assigns(:articles).should eq [entry]
+      end
+    end
+
+    it "uses the passed-in sort mode if it's kosher" do
+      entry = create :blog_entry, published_at: 2.years.ago
+      index_sphinx
+
+      ts_retry(2) do
+        get :index, { order: "published_at", sort_mode: "asc" }.merge(request_params)
+        assigns(:sort_mode).should eq :asc
+        assigns(:articles).first.should eq entry
+      end
+    end
+
+    it "uses desc if the passed-in sort mode is not kosher" do
+      entry = create :blog_entry, published_at: 2.years.from_now
+      index_sphinx
+
+      ts_retry(2) do
+        get :index, { order: "published_at", sort_mode: "Evil Sort Mode" }.merge(request_params)
+        assigns(:sort_mode).should eq :desc
+        assigns(:articles).first.should eq entry
+      end
+    end
+
+    it "can accept conditions" do
+      entry = create :blog_entry, status: ContentBase::STATUS_DRAFT
+      index_sphinx
+
+      ts_retry(2) do
+        get :index, { with: { status: ContentBase::STATUS_DRAFT } }.merge(request_params)
+        assigns(:conditions).should eq Hash["status" => ContentBase::STATUS_DRAFT]
+        assigns(:articles).should eq [entry] 
+      end
+    end
+
+    it "responds with an array of json objects as defined in the template" do
+      ts_retry(2) do
+        get :index, request_params
+        response.should render_template "index"
+        response.header['Content-Type'].should match /json/
       end
     end
   end
