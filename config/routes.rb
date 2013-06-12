@@ -109,8 +109,13 @@ Scprv4::Application.routes.draw do
 
         resources :articles, only: [:index] do
           member do
-            get '/by_url'           => 'articles#by_url'
-            get '/*obj_key'         => 'articles#show'
+            get '/by_url' => 'articles#by_url'
+
+            # Don't be fooled - this needs to be on "collection"
+            # because we're doing some nonstandard behavior. If 
+            # it was under "member", then Rails would expect an 
+            # :id parameter in the URL.
+            get '/*obj_key' => 'articles#show'
           end
 
           collection do
@@ -137,7 +142,14 @@ Scprv4::Application.routes.draw do
         resources :articles, only: [:index] do
           member do
             get '/by_url'           => 'articles#by_url'
-            get '/*obj_key'         => 'articles#show'
+          end
+
+          collection do
+            # Don't be fooled - this needs to be on "collection"
+            # because we're doing some nonstandard behavior. If 
+            # it was under "member", then Rails would expect an 
+            # :id parameter in the URL.
+            get '/*obj_key' => 'articles#show'
           end
         end
       end
