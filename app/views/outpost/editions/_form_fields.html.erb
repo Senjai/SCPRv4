@@ -5,4 +5,28 @@
   <div id="scheduled_status" class="notification block"></div>
 <% end %>
 
+<%= form_block "Content" do %>
+  <div id="aggregator" class="aggregator"></div>
+  <%= f.input :slots_json, as: :hidden, input_html: { id: "slots_json" } %>
+<% end %>
+
+<% content_for :footer do %>
+  <script>
+    aggregator = new outpost.Aggregator(
+      "#aggregator", "#slots_json",
+      <%= render_json("api/private/v2/articles/collection", articles: record.slots.includes(:items).map(&:to_article)) %>,
+      {
+        apiType: "private",
+        params: {
+          limit: 20,
+          token: "<%= Rails.application.config.api['assethost']['token'] %>",
+          order: "updated_at",
+          sort_mode: "desc",
+          with: { status: <%=ContentBase::STATUS_LIVE%> }
+        }
+      }
+    );
+  </script>
+<% end %>
+
 <br /><br /><br /><br />
