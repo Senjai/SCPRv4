@@ -14,7 +14,7 @@ shows.each do |show|
   program = KpccProgram.find_by_slug(show)
   
   program.segments.where("published_at > :low and published_at <= :high", low: low, high: high).published.reorder("published_at").each do |segment|
-    rows.push [segment.published_at, segment.to_title, "http://scpr.org#{segment.link_path}", segment.byline]
+    rows.push [segment.published_at, segment.to_title, "http://scpr.org#{segment.public_path}", segment.byline]
   end
 end
  

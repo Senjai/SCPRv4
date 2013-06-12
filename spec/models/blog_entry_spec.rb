@@ -24,7 +24,7 @@ describe BlogEntry do
       entry.body = "<p>Something</p><p>Something Else</p>"
       extended_teaser = entry.extended_teaser(2, "Continue...")
       extended_teaser.should match "Continue..."
-      extended_teaser.should match entry.link_path
+      extended_teaser.should match entry.public_path
     end
     
     it "ignores HTML tags when calculating the text length" do

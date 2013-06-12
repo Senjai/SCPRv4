@@ -62,7 +62,7 @@ user_ranges.each do |range|
   
   bylines.select { |b| b.content.published? && b.content.published_at.between?(range[:low], range[:high]) }.each do |byline|
     content = byline.content
-    rows << [content.published_at, content.to_title, "http://scpr.org#{content.link_path}", content.byline]
+    rows << [content.published_at, content.to_title, "http://scpr.org#{content.public_path}", content.byline]
   end
 end
 
@@ -72,7 +72,7 @@ extra_names.each do |range|
 
   bylines.select { |b| b.content.published? && b.content.published_at.between?(range[:low], range[:high]) }.each do |byline|
     content = byline.content
-    rows << [content.published_at, content.to_title, "http://scpr.org#{content.link_path}", content.byline]
+    rows << [content.published_at, content.to_title, "http://scpr.org#{content.public_path}", content.byline]
   end
 end
 

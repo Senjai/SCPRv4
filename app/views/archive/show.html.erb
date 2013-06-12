@@ -37,10 +37,10 @@
             <div class="span24">
           <% end %>
             <div class="info">
-              <h3><%= link_to content.short_headline, content.link_path %></h3>
+              <h3><%= link_to content.short_headline, content.public_path %></h3>
               <span class="byline">
                 <% if content.category.present? %>
-                  <span class="categories"><%= link_to content.category.title, content.category.link_path %></span> 
+                  <span class="categories"><%= link_to content.category.title, content.category.public_path %></span> 
                   <span class="pipe">|</span> 
                 <% end %>
                 <%= timestamp(content.published_at) %> 
@@ -81,7 +81,7 @@
             <div class="span24">
           <% end %>
             <div class="info">
-              <h3><%= link_to content.short_headline, content.link_path %></h3>
+              <h3><%= link_to content.short_headline, content.public_path %></h3>
               <span class="byline">
                 <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span> 
                 <span class="pipe">|</span> 
@@ -128,7 +128,7 @@
       <% if type_group["ShowEpisode"].present? %>
         <% type_group["ShowEpisode"].each do |content| %>
           <% register_content content %>
-          <h5>Episode: <%= link_to content.short_headline, content.link_path %></h5>
+          <h5>Episode: <%= link_to content.short_headline, content.public_path %></h5>
         <% end %>
       <% end %>
     
@@ -146,10 +146,10 @@
                 <div class="span24">
               <% end %>
                 <div class="info">
-                  <h3><%= link_to content.short_headline, content.link_path %></h3>
+                  <h3><%= link_to content.short_headline, content.public_path %></h3>
                   <span class="byline">
                     <% if content.category.present? %>
-                      <span class="categories"><%= link_to content.category.title, content.category.link_path %></span> 
+                      <span class="categories"><%= link_to content.category.title, content.category.public_path %></span> 
                       <span class="pipe">|</span>
                     <% end %>
                     <%= timestamp(content.published_at) %> 

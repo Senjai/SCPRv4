@@ -3,13 +3,13 @@
       <figure class="clearfix">
       <%= bio.headshot.thumb.tag %>
         <figcaption>
-        <h6><%= link_to bio.name, bio.link_path %>, <em><%= bio.title %></em></h6>
+        <h6><%= link_to bio.name, bio.public_path %>, <em><%= bio.title %></em></h6>
         <p class="brief-bio"><%= bio.short_bio %></p>
         <ul class="tease clearfix">
           <% if bio.twitter? %>
             <li class="follow"><%= link_to "Follow #{bio.twitter} on Twitter", bio.twitter_url, target: "_blank" %></li>
           <% end %>
-          <li><%= link_to "More from #{bio.name}", bio.link_path %></li>
+          <li><%= link_to "More from #{bio.name}", bio.public_path %></li>
         </ul>
       </figcaption>
     </figure>

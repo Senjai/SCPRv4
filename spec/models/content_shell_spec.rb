@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe ContentShell do
-  describe "#remote_link_path" do
+  describe "#public_url" do
     it "uses the url attribute" do
       shell = build :content_shell
-      shell.remote_link_path.should eq shell.url
+      shell.public_url.should eq shell.url
     end
   end
   
@@ -27,10 +27,10 @@ describe ContentShell do
   
   #-----------------
   
-  describe "#link_path" do
+  describe "#public_path" do
     it "uses the url attribute" do
       shell = build :content_shell
-      shell.link_path.should eq shell.url
+      shell.public_path.should eq shell.url
     end
   end
   

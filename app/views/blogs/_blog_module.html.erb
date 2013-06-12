@@ -4,7 +4,7 @@
 <div class="blog-widget">
   <h3 class="header">
     <div class="blog-logo small <%=blog.slug%>">
-      <%= link_to blog.name, blog.link_path %>
+      <%= link_to blog.name, blog.public_path %>
     </div>
     <% if tagline.present? %> - <span class="tagline"><%= tagline %></span></a><% end %>
   </h3>
@@ -16,7 +16,7 @@
       <% register_content latest_entry %>
       <div class="content">
         <div class="blog-title">
-          <%= link_to "Read the Latest Post", latest_entry.link_path %>
+          <%= link_to "Read the Latest Post", latest_entry.public_path %>
         </div>
 
         <%= render_content latest_entry, "sec_lead" %>

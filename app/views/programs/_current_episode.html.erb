@@ -2,7 +2,7 @@
   <div class="episode">
     <div class="row-fluid">
       <div class="span<%= current_episode.assets.present? ? "12" : "24" %>">
-        <h2><%= link_to current_episode.headline, current_episode.link_path %></h2>
+        <h2><%= link_to current_episode.headline, current_episode.public_path %></h2>
         <%= current_episode.body.html_safe %> 
       </div>
       <% if current_episode.assets.present? %>

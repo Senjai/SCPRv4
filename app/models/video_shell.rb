@@ -24,11 +24,11 @@ class VideoShell < ActiveRecord::Base
     self.headline
   end
 
-  def link_path
+  def public_path
     "http://audiovision.scpr.org/"
   end
 
-  def remote_link_path
+  def public_url
     "http://audiovision.scpr.org/"
   end
 end

@@ -1,8 +1,8 @@
 ##
 # Route method request specs
 #
-# A way to make sure each model's link_path 
-# and remote_link_path,
+# A way to make sure each model's public_path 
+# and public_url,
 # are generating a real path
 #
 # Requires `valid_record` to be passed in.
@@ -14,9 +14,9 @@ shared_examples_for "front-end routes" do
       Scprv4::Application.reload_routes!
     end
     
-    it "returns success when following link_path" do
-      visit valid_record.link_path
-      current_path.should eq valid_record.link_path
+    it "returns success when following public_path" do
+      visit valid_record.public_path
+      current_path.should eq valid_record.public_path
     end
   end
 end
