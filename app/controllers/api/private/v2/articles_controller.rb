@@ -8,7 +8,8 @@ module Api::Private::V2
       :page         => 1 # o, rly?
     }
 
-    before_filter :set_classes, 
+    before_filter \
+      :set_classes, 
       :sanitize_limit, 
       :sanitize_page, 
       :sanitize_query, 
