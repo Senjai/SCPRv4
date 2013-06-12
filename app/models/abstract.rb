@@ -94,6 +94,25 @@ class Abstract < ActiveRecord::Base
     true
   end
 
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.headline,
+      :short_title        => self.headline,
+      :public_datetime    => self.article_published_at,
+      :category           => self.category,
+      :teaser             => self.summary,
+      :body               => self.summary,
+      :assets             => self.assets,
+      :audio              => self.audio.available,
+      :byline             => self.source,
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
+    })
+  end
+
   def to_abstract
     self
   end
