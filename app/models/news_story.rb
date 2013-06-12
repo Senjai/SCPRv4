@@ -125,7 +125,8 @@ class NewsStory < ActiveRecord::Base
       :audio              => self.audio,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :permalink          => self.remote_link_path
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
     })
   end
 
@@ -137,7 +138,7 @@ class NewsStory < ActiveRecord::Base
       :headline               => self.short_headline,
       :summary                => self.teaser,
       :source                 => "KPCC",
-      :url                    => self.remote_link_path,
+      :url                    => self.public_url,
       :assets                 => self.assets,
       :category               => self.category,
       :article_published_at   => self.published_at

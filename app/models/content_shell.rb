@@ -83,12 +83,12 @@ class ContentShell < ActiveRecord::Base
   end
 
   #----------
-  # Override Outpost's `link_path` for these
-  def link_path(options={})
-    self.url
+  # Override Outpost's routing methods for these
+  def public_path(options={})
+    self.public_url
   end
   
-  def remote_link_path(options={})
+  def public_url(options={})
     self.url
   end
   
@@ -111,8 +111,8 @@ class ContentShell < ActiveRecord::Base
       :body               => self.teaser,
       :assets             => self.assets,
       :attributions       => self.bylines,
-      :byline             => self.byline,
-      :permalink          => self.url
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
     })
   end
 

@@ -122,7 +122,8 @@ class ShowEpisode < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio,
       :byline             => self.byline,
-      :permalink          => self.remote_link_path
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
     })
   end
 
@@ -134,7 +135,7 @@ class ShowEpisode < ActiveRecord::Base
       :headline               => self.short_headline,
       :summary                => self.teaser,
       :source                 => "KPCC",
-      :url                    => self.remote_link_path,
+      :url                    => self.public_url,
       :assets                 => self.assets,
       :article_published_at   => self.published_at
     })

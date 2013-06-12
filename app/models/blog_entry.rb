@@ -140,7 +140,7 @@ class BlogEntry < ActiveRecord::Base
       extended_teaser.add_child child
     end
     
-    extended_teaser.add_child "<p><a href=\"#{self.link_path}\">#{more_text}</a></p>"
+    extended_teaser.add_child "<p><a href=\"#{self.public_path}\">#{more_text}</a></p>"
     return extended_teaser.to_html
   end
   
@@ -174,7 +174,8 @@ class BlogEntry < ActiveRecord::Base
       :audio              => self.audio,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :permalink          => self.remote_link_path
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
     })
   end
 
@@ -186,7 +187,7 @@ class BlogEntry < ActiveRecord::Base
       :headline               => self.short_headline,
       :summary                => self.teaser,
       :source                 => "KPCC",
-      :url                    => self.remote_link_path,
+      :url                    => self.public_url,
       :assets                 => self.assets,
       :category               => self.category,
       :article_published_at   => self.published_at
