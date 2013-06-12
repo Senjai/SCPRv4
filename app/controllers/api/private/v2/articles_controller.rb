@@ -32,7 +32,7 @@ module Api::Private::V2
         :with      => @conditions
       })
       
-      @articles = @article.map(&:to_article)
+      @articles = @articles.map(&:to_article)
       respond_with @articles
     end
     

@@ -23,7 +23,7 @@ describe Api::Private::V2::ArticlesController do
     it "finds the object if it exists" do
       entry = create :blog_entry
       get :show, { obj_key: entry.obj_key }.merge(request_params)
-      assigns(:article).should eq entry
+      assigns(:article).should eq entry.to_article
       response.should render_template "show"
     end
 
@@ -38,7 +38,7 @@ describe Api::Private::V2::ArticlesController do
     it "finds the object if the URI matches" do
       entry = create :blog_entry
       get :by_url, { url: entry.public_url }.merge(request_params)
-      assigns(:article).should eq entry
+      assigns(:article).should eq entry.to_article
       response.should render_template "show"
     end
 
@@ -62,7 +62,7 @@ describe Api::Private::V2::ArticlesController do
       
       ts_retry(2) do
         get :index, { types: "blogs" }.merge(request_params)
-        assigns(:articles).should eq entries
+        assigns(:articles).should eq entries.map(&:to_article)
       end
     end
 
@@ -70,7 +70,7 @@ describe Api::Private::V2::ArticlesController do
       ts_retry(2) do
         get :index, { types: "blogs,segments" }.merge(request_params)
         assigns(:classes).should eq [BlogEntry, ShowSegment]
-        assigns(:articles).any? { |c| !%w{ShowSegment BlogEntry}.include?(c.class.name) }.should eq false
+        assigns(:articles).any? { |c| !%w{ShowSegment BlogEntry}.include?(c.original_object.class.name) }.should eq false
       end
     end
 
@@ -107,10 +107,10 @@ describe Api::Private::V2::ArticlesController do
     it "accepts a page" do
       ts_retry(2) do
         get :index, request_params
-        fifth_obj = assigns(:article)[4]
+        fifth_obj = assigns(:articles)[4]
 
         get :index, { page: 5, limit: 1 }.merge(request_params)
-        assigns(:articles).should eq [fifth_obj]
+        assigns(:articles).should eq [fifth_obj].map(&:to_article)
       end
     end
 
@@ -120,7 +120,7 @@ describe Api::Private::V2::ArticlesController do
 
       ts_retry(2) do
         get :index, { query: "Spongebob+Squarepants" }.merge(request_params)
-        assigns(:articles).should eq [entry]
+        assigns(:articles).should eq [entry].map(&:to_article)
       end
     end
 
@@ -131,7 +131,7 @@ describe Api::Private::V2::ArticlesController do
       ts_retry(2) do
         get :index, { order: "published_at", sort_mode: "asc" }.merge(request_params)
         assigns(:sort_mode).should eq :asc
-        assigns(:articles).first.should eq entry
+        assigns(:articles).first.should eq entry.to_article
       end
     end
 
@@ -142,7 +142,7 @@ describe Api::Private::V2::ArticlesController do
       ts_retry(2) do
         get :index, { order: "published_at", sort_mode: "Evil Sort Mode" }.merge(request_params)
         assigns(:sort_mode).should eq :desc
-        assigns(:articles).first.should eq entry
+        assigns(:articles).first.should eq entry.to_article
       end
     end
 
@@ -153,7 +153,7 @@ describe Api::Private::V2::ArticlesController do
       ts_retry(2) do
         get :index, { with: { status: ContentBase::STATUS_DRAFT } }.merge(request_params)
         assigns(:conditions).should eq Hash["status" => ContentBase::STATUS_DRAFT]
-        assigns(:articles).should eq [entry] 
+        assigns(:articles).should eq [entry].map(&:to_article)
       end
     end
 
