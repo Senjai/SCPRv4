@@ -171,7 +171,7 @@ class BlogEntry < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :assets             => self.assets,
-      :audio              => self.audio,
+      :audio              => self.audio.available,
       :attributions       => self.bylines,
       :byline             => self.byline,
       :public_url         => self.public_url,
@@ -189,6 +189,7 @@ class BlogEntry < ActiveRecord::Base
       :source                 => "KPCC",
       :url                    => self.public_url,
       :assets                 => self.assets,
+      :audio                  => self.audio.available,
       :category               => self.category,
       :article_published_at   => self.published_at
     })
