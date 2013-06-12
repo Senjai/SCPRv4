@@ -108,19 +108,14 @@ Scprv4::Application.routes.draw do
         get '/content/*obj_key'         => 'articles#show'
 
         resources :articles, only: [:index] do
-          member do
-            get '/by_url' => 'articles#by_url'
-
-            # Don't be fooled - this needs to be on "collection"
-            # because we're doing some nonstandard behavior. If 
-            # it was under "member", then Rails would expect an 
-            # :id parameter in the URL.
-            get '/*obj_key' => 'articles#show'
-          end
-
           collection do
-            get '/most_viewed'      => 'articles#most_viewed'
-            get '/most_commented'   => 'articles#most_commented'
+            # These need to be in "collection", otherwise 
+            # Rails would expect an  :id parameter in 
+            # the URL.
+            get 'most_viewed'      => 'articles#most_viewed'
+            get 'most_commented'   => 'articles#most_commented'
+            get 'by_url'           => 'articles#by_url'
+            get '*obj_key'         => 'articles#show'
           end
         end
 
@@ -140,16 +135,12 @@ Scprv4::Application.routes.draw do
         post '/utility/notify'   => 'utility#notify'
         
         resources :articles, only: [:index] do
-          member do
-            get '/by_url'           => 'articles#by_url'
-          end
-
           collection do
-            # Don't be fooled - this needs to be on "collection"
-            # because we're doing some nonstandard behavior. If 
-            # it was under "member", then Rails would expect an 
-            # :id parameter in the URL.
-            get '/*obj_key' => 'articles#show'
+            # These need to be in "collection", otherwise 
+            # Rails would expect an  :id parameter in 
+            # the URL.
+            get 'by_url'   => 'articles#by_url'
+            get '*obj_key' => 'articles#show'
           end
         end
       end
