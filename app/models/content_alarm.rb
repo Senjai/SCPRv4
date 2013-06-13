@@ -29,7 +29,7 @@ class ContentAlarm < ActiveRecord::Base
   def fire
     if self.can_fire?
       ContentAlarm.log "Firing ContentAlarm ##{self.id} for #{self.content.simple_title}"
-      if self.content.update_attributes(status: ContentBase::STATUS_LIVE)
+      if self.content.update_attributes(status: ContentBase::STATUS_LIVE) # This shouldn't always reference ContentBase
         ContentAlarm.log "Published #{self.content.simple_title}. Removing this alarm."
         self.destroy
       else
