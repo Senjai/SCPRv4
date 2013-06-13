@@ -34,5 +34,17 @@ describe ContentShell do
     end
   end
   
-  #-----------------
+  describe '#to_article' do
+    it 'makes a new article' do
+      shell = build :content_shell
+      shell.to_article.should be_a Article
+    end
+  end
+
+  describe '#to_abstract' do
+    it 'makes a new abstract' do
+      shell = build :content_shell
+      shell.to_abstract.should be_a Abstract
+    end
+  end
 end

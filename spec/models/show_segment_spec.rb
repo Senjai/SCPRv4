@@ -48,4 +48,19 @@ describe ShowSegment do
       segment.byline_extras.should eq [segment.show.title]
     end
   end
+
+  describe '#to_article' do
+    it 'makes a new article' do
+      segment = build :show_segment
+      segment.to_article.should be_a Article
+    end
+  end
+
+  describe '#to_abstract' do
+    it 'makes a new abstract' do
+      segment = build :show_segment
+      segment.to_abstract.should be_a Abstract
+    end
+  end
+
 end

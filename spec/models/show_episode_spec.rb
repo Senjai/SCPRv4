@@ -106,4 +106,19 @@ describe ShowEpisode do
       end
     end
   end
+
+  describe '#to_article' do
+    it 'makes a new article' do
+      episode = build :show_episode
+      episode.to_article.should be_a Article
+    end
+  end
+
+  describe '#to_abstract' do
+    it 'makes a new abstract' do
+      episode = build :show_episode
+      episode.to_abstract.should be_a Abstract
+    end
+  end
+
 end
