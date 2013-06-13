@@ -13,7 +13,7 @@
         params: {
           limit: 20,
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
-          order: "updated_at",
+          order: "published_at",
           sort_mode: "desc",
           with: { status: <%=ContentBase::STATUS_LIVE%> }
         }
