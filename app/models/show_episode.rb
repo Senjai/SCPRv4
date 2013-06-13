@@ -39,6 +39,8 @@ class ShowEpisode < ActiveRecord::Base
                           :through     => :rundowns, 
                           :order       => "position"
 
+  accepts_json_input_for :rundowns
+
   #-------------------
   # Validations
   validates :show, presence: true
@@ -143,53 +145,16 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   #----------
-  
-  def rundown_json
-    current_rundowns_json.to_json
-  end
-
-  #----------
-
-  def rundown_json=(json)
-    return if json.empty?
-
-    json = Array(JSON.parse(json)).sort_by { |c| c["position"].to_i }
-    loaded_rundowns = []
-
-    json.each do |rundown_hash|
-      segment = Outpost.obj_by_key(rundown_hash["id"])
-      if segment && segment.is_a?(ShowSegment)
-        rundown = ShowRundown.new(
-          :position => rundown_hash["position"].to_i, 
-          :segment       => segment
-        )
-      
-        loaded_rundowns.push rundown
-      end
-    end
-    
-    loaded_rundowns_json = rundowns_to_simple_json(loaded_rundowns)
-
-    if current_rundowns_json != loaded_rundowns_json
-      if self.respond_to?(:custom_changes)
-        self.custom_changes['rundowns'] = [current_rundowns_json, loaded_rundowns_json]
-      end
-
-      self.changed_attributes['rundowns'] = current_rundowns_json
-      self.rundowns = loaded_rundowns
-    end
-
-    self.rundowns
-  end
 
 
   private
 
-  def current_rundowns_json
-    rundowns_to_simple_json(self.rundowns)
-  end
-
-  def rundowns_to_simple_json(array)
-    Array(array).map(&:simple_json)
+  def build_rundown_association(rundown_hash, segment)
+    if segment.is_a? ShowSegment
+      ShowRundown.new(
+        :position => rundown_hash["position"].to_i, 
+        :segment  => segment
+      )
+    end
   end
 end

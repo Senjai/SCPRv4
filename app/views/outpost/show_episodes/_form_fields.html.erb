@@ -17,12 +17,12 @@
   
   <!-- Aggregator -->
   <div id="aggregator" class="aggregator"></div>
-  <%= f.input :rundown_json, as: :hidden, input_html: { id: "rundown_json" } %>
+  <%= f.input :rundowns_json, as: :hidden, input_html: { id: "rundowns_json" } %>
 
   <% content_for :footer do %>
     <script>
       aggregator = new outpost.Aggregator(
-        "#aggregator", "#rundown_json",
+        "#aggregator", "#rundowns_json",
         <%= render_json('api/private/v2/articles/collection', articles: record.segments.map(&:to_article)) %>,
         {
           apiType: "private",
