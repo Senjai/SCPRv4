@@ -32,7 +32,7 @@ module AudioVision
       :category, 
       :byline, 
       :attributions, 
-      :permalink
+      :public_url
     ]
 
     attr_accessor *ATTRIBUTES
@@ -46,7 +46,7 @@ module AudioVision
       @thumbnail    = attributes["thumbnail"]
       @byline       = attributes["byline"]
       @attributions = attributes["attributions"]
-      @permalink    = attributes["permalink"]
+      @public_url   = attributes["public_url"]
       @published_at = Time.parse(attributes["published_at"].to_s)
 
       @assets = []
