@@ -14,5 +14,4 @@ describe NewsStory do
       story.to_abstract.should be_a Abstract
     end
   end
-
 end
