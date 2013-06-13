@@ -8,6 +8,12 @@ GIT
       rails (>= 3.0)
 
 GIT
+  remote: git://github.com/SCPR/outpost-aggregator.git
+  revision: 6d83b4f7fdf7af2df3e750e1e2710dedf69c6d0f
+  specs:
+    outpost-aggregator (1.0.0)
+
+GIT
   remote: git://github.com/SCPR/outpost-asset_host.git
   revision: 8d914be135f95bf6b81e3ebe3637602d4c247bd9
   specs:
@@ -60,11 +66,6 @@ GIT
       loofah (~> 1.2.1)
       nokogiri (~> 1.5.3)
       sax-machine (~> 0.2.0.rc1)
-
-PATH
-  remote: /Users/bryan/projects/outpost-aggregator
-  specs:
-    outpost-aggregator (1.0.0)
 
 GEM
   remote: https://rubygems.org/
