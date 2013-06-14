@@ -11,13 +11,15 @@ module TestClass
     include Concern::Methods::StatusMethods
     
     has_many :content, class_name: "::TestClass::PostContent", order: "position", dependent: :destroy
-    accepts_json_input_for_content
+    accepts_json_input_for :content
     
     def build_content_association(content_hash, content)
-      TestClass::PostContent.new(
-        :position => content_hash["position"].to_i, 
-        :content  => content
-      )
+      if content.published?
+        TestClass::PostContent.new(
+          :position => content_hash["position"].to_i, 
+          :content  => content
+        )
+      end
     end
   end
 end
