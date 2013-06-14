@@ -17,7 +17,7 @@ describe Edition do
       story     = create :news_story
       slot      = create :edition_slot, edition: edition, item: story
 
-      edition.abstracts.map(&:class).uniq.should eq [Article]
+      edition.articles.map(&:class).uniq.should eq [Article]
     end
   end
 end
