@@ -1,10 +1,17 @@
 module Api::Public::V2
   class EditionsController < BaseController
-    before_filter(
+    DEFAULTS = {
+      :page  => 1,
+      :limit => 2
+    }
+
+    MAX_RESULTS = 4
+
+    before_filter \
       :sanitize_limit, 
       :sanitize_page,
       only: [:index]
-    )
+    
 
     before_filter :sanitize_id, only: [:show]
 
@@ -32,13 +39,13 @@ module Api::Public::V2
     private
 
     #---------------------------
-    # Limit to 10 for public API
+    # Limit to 4 for public API
     def sanitize_limit
       if params[:limit].present?
         limit = params[:limit].to_i
-        @limit = limit > 4 ? 4 : limit
+        @limit = limit > MAX_RESULTS ? MAX_RESULTS : limit
       else
-        @limit = 2
+        @limit = DEFAULTS[:limit]
       end
     end
 
@@ -46,7 +53,7 @@ module Api::Public::V2
     
     def sanitize_page
       page = params[:page].to_i
-      @page = page > 0 ? page : 1
+      @page = page > 0 ? page : DEFAULTS[:page]
     end
     
     #---------------------------

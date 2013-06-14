@@ -10,7 +10,8 @@ module Api::Public::V2
 
     MAX_RESULTS = 40
 
-    before_filter :set_conditions,
+    before_filter \
+      :set_conditions,
       :set_classes, 
       :sanitize_limit, 
       :sanitize_page, 
