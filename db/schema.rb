@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130614000211) do
+ActiveRecord::Schema.define(:version => 20130614220921) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -270,18 +270,19 @@ ActiveRecord::Schema.define(:version => 20130614000211) do
   add_index "contentbase_contentcategory", ["content_type", "content_id"], :name => "index_contentbase_contentcategory_on_content_type_and_content_id"
 
   create_table "contentbase_contentshell", :force => true do |t|
-    t.string   "headline",     :limit => 200,                            :null => false
-    t.string   "site",         :limit => 50,         :default => "KPCC", :null => false
-    t.text     "body",         :limit => 2147483647,                     :null => false
-    t.string   "url",          :limit => 150,                            :null => false
-    t.integer  "status",                             :default => 0,      :null => false
+    t.string   "headline"
+    t.string   "site"
+    t.text     "body",         :limit => 2147483647,                :null => false
+    t.string   "url"
+    t.integer  "status",                             :default => 0, :null => false
     t.datetime "published_at"
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
     t.integer  "category_id"
   end
 
   add_index "contentbase_contentshell", ["category_id"], :name => "contentbase_contentshell_42dc49bc"
+  add_index "contentbase_contentshell", ["site"], :name => "index_contentbase_contentshell_on_site"
   add_index "contentbase_contentshell", ["status", "published_at"], :name => "index_contentbase_contentshell_on_status_and_published_at"
 
   create_table "contentbase_featuredcomment", :force => true do |t|

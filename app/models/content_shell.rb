@@ -34,7 +34,10 @@ class ContentShell < ActiveRecord::Base
   
   #------------------
   # Validation
-  validates :url, presence: true
+  validates :headline, presence: true # always
+  validates :body, presence: true, if: :should_validate?
+  validates :url, presence: true, if: :should_validate?
+  validates :site, presence: true, if: :should_validate?
 
   #------------------
 

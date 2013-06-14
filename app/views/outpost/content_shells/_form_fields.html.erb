@@ -1,5 +1,5 @@
 <%= form_block "Details" do %>
-  <%= f.input :site %>
+  <%= f.input :site, input_html: { autocomplete: "off", data: { provide: "typeahead", source: ContentShell.sites_select_collection } } %>
   <%= f.input :url, input_html: { class: "wide" } %>
   <%= f.section "remote_published_at" %>
   <%= f.input :headline, label: "Short Headline", input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
