@@ -27,7 +27,7 @@ class Edition < ActiveRecord::Base
 
 
   has_many :slots, class_name: "EditionSlot", order: "position"
-  accepts_json_input_for_content name: :slots
+  accepts_json_input_for :slots
 
   # We don't want to use ContentBase::STATUS_LIVE, so just manually define
   # this scope here (as opposed to using the PublishScope module).
@@ -70,11 +70,13 @@ class Edition < ActiveRecord::Base
 
   private
   
-  def build_content_association(content_hash, item)
-    EditionSlot.new(
-      :position   => content_hash["position"].to_i,
-      :item       => item,
-      :edition    => self
-    )
+  def build_slot_association(slot_hash, item)
+    if item.published?
+      EditionSlot.new(
+        :position   => slot_hash["position"].to_i,
+        :item       => item,
+        :edition    => self
+      )
+    end
   end
 end
