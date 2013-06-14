@@ -48,7 +48,7 @@ class Abstract < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::AudioAssociation
-
+  include Concern::Callbacks::SphinxIndexCallback
 
   validates :source, presence: true
   validates :url, presence: true, url: true
@@ -62,6 +62,7 @@ class Abstract < ActiveRecord::Base
     indexes url
     has :source
     has category.id, as: :category
+    has updated_at
 
     # We want to be able to include Abstracts among other content
     # just by the published date and the status.
@@ -72,6 +73,7 @@ class Abstract < ActiveRecord::Base
     # included the "Abstract" class in ContentBase::CONTENT_CLASSES.
     has article_published_at, as: :published_at
     has "5", as: :status, type: :integer
+    has "1", as: :findable, type: :boolean # So it'll show up.
   end
 
   attr_accessor :original_object
