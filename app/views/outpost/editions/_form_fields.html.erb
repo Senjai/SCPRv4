@@ -14,11 +14,12 @@
   <script>
     aggregator = new outpost.Aggregator(
       "#aggregator", "#slots_json",
-      <%= render_json("api/private/v2/articles/collection", articles: record.slots.includes(:items).map(&:to_article)) %>,
+      <%= render_json("api/private/v2/articles/collection", articles: record.articles) %>,
       {
         apiType: "private",
         params: {
           limit: 20,
+          types: 'news,blogs,segments,episodes,abstracts',
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
           order: "updated_at",
           sort_mode: "desc",
