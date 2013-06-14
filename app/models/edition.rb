@@ -45,7 +45,7 @@ class Edition < ActiveRecord::Base
   # Returns an array of Abstract objects
   # by mapping all of the items to Abstract objects.
   def abstracts
-    @abstracts ||= self.slots.map { |slot| slot.item.to_abstract }
+    @abstracts ||= self.slots.includes(:item).map { |slot| slot.item.to_abstract }
   end
 
 
