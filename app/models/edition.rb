@@ -48,6 +48,9 @@ class Edition < ActiveRecord::Base
     @abstracts ||= self.slots.includes(:item).map { |slot| slot.item.to_abstract }
   end
 
+  def articles
+    @articles ||= self.slots.includes(:item).map { |slot| slot.item.to_article }
+  end
 
   # Determine whether this edition is published.
   def published?
