@@ -2,7 +2,7 @@ class Outpost::EditionsController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order = "published_at"
+    l.default_order = "updated_at"
     l.default_sort_mode = "desc"
     
     l.column :published_at, sortable: true, default_sort_mode: "desc"
