@@ -121,6 +121,7 @@ class NewsStory < ActiveRecord::Base
       :public_datetime    => self.published_at,
       :teaser             => self.teaser,
       :body               => self.body,
+      :category           => self.category,
       :assets             => self.assets,
       :audio              => self.audio.available,
       :attributions       => self.bylines,

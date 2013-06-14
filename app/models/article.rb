@@ -33,9 +33,9 @@ class Article
     :title,
     :short_title,
     :public_datetime,
-    :category,
     :teaser,
     :body,
+    :category,
     :assets,
     :audio,
     :attributions,
@@ -50,9 +50,9 @@ class Article
     @title            = attributes[:title]
     @short_title      = attributes[:short_title]
     @public_datetime  = attributes[:public_datetime]
-    @category         = attributes[:category]
     @teaser           = attributes[:teaser]
     @body             = attributes[:body]
+    @category         = attributes[:category]
     @assets           = Array(attributes[:assets])
     @audio            = Array(attributes[:audio])
     @attributions     = Array(attributes[:attributions])
