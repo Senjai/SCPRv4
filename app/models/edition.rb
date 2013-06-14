@@ -59,6 +59,7 @@ class Edition < ActiveRecord::Base
 
 
   # Determine whether this edition is pending.
+  # Necessary for ContentAlarms.
   def pending?
     self.status == STATUS_PENDING
   end
