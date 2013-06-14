@@ -109,6 +109,7 @@ class ContentShell < ActiveRecord::Base
       :public_datetime    => self.published_at,
       :teaser             => self.teaser,
       :body               => self.teaser,
+      :category           => self.category,
       :assets             => self.assets,
       :attributions       => self.bylines,
       :public_url         => self.public_url,
