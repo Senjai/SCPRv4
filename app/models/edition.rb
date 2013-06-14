@@ -11,7 +11,6 @@ class Edition < ActiveRecord::Base
 
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
 
 
