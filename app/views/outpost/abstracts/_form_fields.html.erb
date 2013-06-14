@@ -1,5 +1,5 @@
 <%= form_block "Remote Details" do %>
-  <%= f.input :source, hint: "The human-readable source, such as <strong>NPR</strong> or <strong>AudioVision</strong>." %>
+  <%= f.input :source, hint: "The human-readable source, such as <strong>NPR</strong> or <strong>AudioVision</strong>.", input_html: { autocomplete: "off", data: { provide: "typeahead", source: Abstract.sources_select_collection }} %>
   <%= f.input :url, input_html: { class: "wide" } %>
   <%= f.input :article_published_at, hint: "The date that the article was originally published at the source." %>
 <% end %>
