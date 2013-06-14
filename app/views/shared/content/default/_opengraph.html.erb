@@ -7,10 +7,10 @@
     <meta property="og:description" content="<%= h content.teaser %>">
     <meta property="og:title" content="<%= h content.short_headline %>">
     <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
-    <meta property="og:url" content="<%= content.remote_link_path %>"/>
+    <meta property="og:url" content="<%= content.public_url %>"/>
     <meta name="twitter:card" value="summary">
     <meta name="twitter:site" value="@kpcc">
-    <meta name="twitter:url" value="<%= content.remote_link_path %>">
+    <meta name="twitter:url" value="<%= content.public_url %>">
     <meta name="twitter:title" value="<%= h content.short_headline %>">
     <meta name="twitter:description" value="<%= h content.teaser %>">
   

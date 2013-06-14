@@ -11,7 +11,7 @@
     <div class="span18 mq-solo-span">
       <article>
         <header>
-          <h1 class="story-headline"><%= link_to entry.headline, entry.link_path %></h1>
+          <h1 class="story-headline"><%= link_to entry.headline, entry.public_path %></h1>
           <span class="byline">
             <%= render_byline entry %> <span class="pipe">|</span> <%= timestamp(entry.published_at) %>
           </span>

@@ -17,7 +17,7 @@ module Publisher
       :key       => object.obj_key,
       :action    => action,
       :headline  => object.to_title,
-      :url       => object.remote_link_path,
+      :url       => object.public_url,
       :admin_url => File.join("http://scpr.org", object.admin_edit_path),
       :status    => object.status
     }.merge(options)

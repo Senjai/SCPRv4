@@ -4,10 +4,10 @@
       <div class="span24 mq-solo-span">
         <h2 class="blog-header">
           <div class="blog-logo large <%=@blog.slug%>">
-            <%= link_to @blog.name, @blog.link_path %>
+            <%= link_to @blog.name, @blog.public_path %>
           </div>
           <div class="extra">
-            <%= link_to @BLOGTITLE_EXTRA.to_s, @blog.link_path %>
+            <%= link_to @BLOGTITLE_EXTRA.to_s, @blog.public_path %>
           </div>
         </h2>
         <p class="blog-tagline"><%= @blog.teaser.html_safe %></p>

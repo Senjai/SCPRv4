@@ -1,6 +1,6 @@
 class EventPresenter < ApplicationPresenter
   presents :event
-  delegate :headline, :link_path, to: :event
+  delegate :headline, :public_path, to: :event
   
   #-------------
   

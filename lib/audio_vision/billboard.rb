@@ -33,10 +33,10 @@ module AudioVision
 
 
     def initialize(attributes={})
-      @id           = attributes["id"]
-      @layout        = attributes["layout"]
+      @id             = attributes["id"]
+      @layout         = attributes["layout"]
       @published_at   = Time.parse(attributes["published_at"].to_s)
-      @updated_at   = Time.parse(attributes["updated_at"].to_s)
+      @updated_at     = Time.parse(attributes["updated_at"].to_s)
 
       @posts = []
 

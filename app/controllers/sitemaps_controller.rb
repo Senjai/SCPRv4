@@ -3,7 +3,7 @@ class SitemapsController < ApplicationController
 # Options:
 #   @changefreq ||= "daily"
 #   @priority ||= "0.5"
-# All objects must respond to #remote_link_path
+# All objects must respond to #public_url
 
   respond_to :xml
   layout nil

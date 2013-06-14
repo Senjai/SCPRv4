@@ -2,7 +2,7 @@
   <% if asset = post.assets.first %>
   <div class="asset-block">
     <div class="contentasset">
-      <a href="<%= post.permalink %>">
+      <a href="<%= post.public_url %>">
         <img src="<%= asset.small.url %>" />
       </a>
     </div>
@@ -11,6 +11,6 @@
   </div>
   <% end %>
 
-  <h2 class="story-headline"><%= link_to post.title, post.permalink %></h2>
+  <h2 class="story-headline"><%= link_to post.title, post.public_url %></h2>
   <p><%= post.teaser.html_safe %></p>
 </div>

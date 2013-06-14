@@ -16,7 +16,7 @@
       <div class="span18">
         <ul>
           <% @segment.sister_segments.each do |segment| %>
-            <li><%= link_to segment.short_headline, segment.link_path %></li>
+            <li><%= link_to segment.short_headline, segment.public_path %></li>
           <% end %>
         </ul>
       </div>

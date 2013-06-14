@@ -21,14 +21,14 @@
               <% if @entry.previous.present? %>
                 <% register_content @entry.previous %>
                 <div class="arrow">&larr;</div>
-                <%= link_to @entry.previous.short_headline, @entry.previous.link_path %>
+                <%= link_to @entry.previous.short_headline, @entry.previous.public_path %>
               <% end %>
             </div>
             <div class="span12 right">
               <% if @entry.next.present? %>
                 <% register_content @entry.next %>
                 <div class="arrow">&rarr;</div>
-                <%= link_to @entry.next.short_headline, @entry.next.link_path %>
+                <%= link_to @entry.next.short_headline, @entry.next.public_path %>
               <% end %>
             </div>
           </div> <!-- row fluid -->

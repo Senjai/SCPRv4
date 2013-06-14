@@ -5,10 +5,10 @@
     <meta property="og:description" content="<%= j @flatpage.description %>">
     <meta property="og:title" content="<%= j @flatpage.title %>">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="<%= @flatpage.remote_link_path %>"/>
+    <meta property="og:url" content="<%= @flatpage.public_url %>"/>
     <meta name="twitter:card" value="summary">
     <meta name="twitter:site" value="@kpcc">
-    <meta name="twitter:url" value="<%= @flatpage.remote_link_path %>">
+    <meta name="twitter:url" value="<%= @flatpage.public_url %>">
     <meta name="twitter:title" value="<%= j @flatpage.title %>">
     <meta name="twitter:description" value="<%= j @flatpage.description %>">
   <% end %>
@@ -16,9 +16,9 @@
   <div class="sharing-tools top horizontal clearfix" id="article-sharing-tools">
     <h5>Share this:</h5>
     <ul>
-      <li class="facebook social_fb" data-url="<%= @flatpage.remote_link_path %>">Facebook</li>
-      <li class="twitter social_twit" data-url="<%= @flatpage.remote_link_path %>" data-text="<%= @flatpage.title %>">Twitter</li>
-      <li class="gplus social_gplus" data-url="<%= @flatpage.remote_link_path %>">Google+</li>
+      <li class="facebook social_fb" data-url="<%= @flatpage.public_url %>">Facebook</li>
+      <li class="twitter social_twit" data-url="<%= @flatpage.public_url %>" data-text="<%= @flatpage.title %>">Twitter</li>
+      <li class="gplus social_gplus" data-url="<%= @flatpage.public_url %>">Google+</li>
       <li class="print"><a href="javascript:window.print()">Print</a></li>
     </ul>
   </div>

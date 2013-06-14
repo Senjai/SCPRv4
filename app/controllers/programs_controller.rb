@@ -62,7 +62,7 @@ class ProgramsController < ApplicationController
       flash[:alert] = "There is no #{@program.title} episode for #{@date.strftime('%F')}."
       redirect_to program_path(@program.slug, anchor: "archive") and return
     else
-      redirect_to @episode.link_path
+      redirect_to @episode.public_path
     end
   end
   
@@ -73,8 +73,8 @@ class ProgramsController < ApplicationController
     @program = @segment.show
     
     # check whether this is the correct URL for the segment
-    if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.link_path
-      redirect_to @segment.link_path and return
+    if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.public_path
+      redirect_to @segment.public_path and return
     end
   end
   

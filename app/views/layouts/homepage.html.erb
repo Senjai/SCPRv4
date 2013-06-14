@@ -4,7 +4,7 @@
 <div class="viewport">
   <!-- MASTHEAD-->
   <%= render "/shared/masthead/layout_header" %>
-  <%#= render "/shared/ads/dfp", ad_key: :membership_leaderboard %>
+  <%= render "/shared/ads/dfp", ad_key: :membership_leaderboard %>
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
@@ -20,11 +20,11 @@
             <div class="current program">
 
             <% if KpccProgram::Featured.include? program.slug %>
-              <a href="<%= program.link_path %>" class="headshot <%= program.slug %>">&nbsp;</a>
+              <a href="<%= program.public_path %>" class="headshot <%= program.slug %>">&nbsp;</a>
             <% end %>
         
               <div class="program-info <%= program.slug %>">
-                <a href="<%= program.link_path %>" class="show-title<%= " modal-toggler" if @schedule_current.show_modal? %>" data-modal-id="<%= "episode-guide" if @schedule_current.show_modal? %>"><%= program.title %></a>
+                <a href="<%= program.public_path %>" class="show-title<%= " modal-toggler" if @schedule_current.show_modal? %>" data-modal-id="<%= "episode-guide" if @schedule_current.show_modal? %>"><%= program.title %></a>
                 <span class="show-time"><%= @schedule_current.format_time %> - <%= @schedule_current.format_time(:ends_at) %></span>
               </div> <!-- program-info -->
       
@@ -34,7 +34,7 @@
               <div class="modal-container">
 
               <%= modal("episode-guide", modal_id: "episode-guide") do %>
-                <h6><%= link_to episode.headline, episode.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
+                <h6><%= link_to episode.headline, episode.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
                 <%= render_asset episode, 'thumbnail' %>
 
                 <!-- Segments -->
@@ -42,12 +42,12 @@
 
                 <% episode.segments.published.each_with_index do |segment, i| %>
                   <li>
-                    <h5 class="headline"><%= link_to segment.short_headline, segment.link_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
+                    <h5 class="headline"><%= link_to segment.short_headline, segment.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
                     <%= comment_count_for segment %>
                   </li>
                 <% end %>
 
-                  <li class="more"><a href="<%= program.link_path %>">More <%= program.title %></a></li>
+                  <li class="more"><a href="<%= program.public_path %>">More <%= program.title %></a></li>
                 </ul>
               <% end %><%# modal %>
 
@@ -62,7 +62,7 @@
 
             <% if up_next = @schedule_current.next %>
               <div class="program-info">
-                <a href="<%= up_next.program.link_path %>" class="show-title"><%= up_next.program.title %></a>
+                <a href="<%= up_next.program.public_path %>" class="show-title"><%= up_next.program.title %></a>
                 <span class="show-time"><%= up_next.format_time %> - <%= up_next.format_time(:ends_at) %></span>
               </div> <!-- program-info -->
             <% end %><%# up_next %>

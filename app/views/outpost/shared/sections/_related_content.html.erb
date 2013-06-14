@@ -1,13 +1,13 @@
 <%= form_block "Related Content" do %>
   <div id="aggregator" class="aggregator"></div>
-  <%= f.input :related_content_json, as: :hidden, input_html: { id: "related_content_json" } %>
+  <%= f.input :outgoing_references_json, as: :hidden, input_html: { id: "outgoing_references_json" } %>
 <% end %>
 
 <% content_for :footer do %>
   <script>
     aggregator = new outpost.Aggregator(
-      "#aggregator", "#related_content_json", 
-      <%= render_json('api/private/v2/content/collection', content: record.outgoing_references.includes(:related).map(&:related)) %>,
+      "#aggregator", "#outgoing_references_json", 
+      <%= render_json('api/private/v2/articles/collection', articles: record.outgoing_references.includes(:related).map(&:related).map(&:to_article)) %>,
       {
         view: { active: 'search' },
         apiType: "private",

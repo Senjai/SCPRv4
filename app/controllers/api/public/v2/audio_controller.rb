@@ -1,10 +1,16 @@
 module Api::Public::V2
   class AudioController < BaseController
-    before_filter(
+    DEFAULTS = {
+      :limit => 10,
+      :page  => 1
+    }
+
+    MAX_RESULTS = 40
+    
+    before_filter \
       :sanitize_limit, 
       :sanitize_page,
       only: [:index]
-    )
 
     before_filter :sanitize_id, only: [:show]
 
@@ -36,9 +42,9 @@ module Api::Public::V2
     def sanitize_limit
       if params[:limit].present?
         limit = params[:limit].to_i
-        @limit = limit > 40 ? 40 : limit
+        @limit = limit > MAX_RESULTS ? MAX_RESULTS : limit
       else
-        @limit = 10
+        @limit = DEFAULTS[:limit]
       end
     end
 
@@ -46,7 +52,7 @@ module Api::Public::V2
     
     def sanitize_page
       page = params[:page].to_i
-      @page = page > 0 ? page : 1
+      @page = page > 0 ? page : DEFAULTS[:page]
     end
     
     #---------------------------
