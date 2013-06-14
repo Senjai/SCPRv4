@@ -1,4 +1,4 @@
 <div class="comment-count <%= cssClass %> social_disq" data-objkey="<%= content.obj_key %>">
-  <a href="<%= content.link_path(anchor: 'comments') %>"><h4><span class="count"></span> Comments</h4></a>
-  <a href="<%= content.link_path(anchor: 'comments') %>">Add your comments</a>
+  <a href="<%= content.public_path(anchor: 'comments') %>"><h4><span class="count"></span> Comments</h4></a>
+  <a href="<%= content.public_path(anchor: 'comments') %>">Add your comments</a>
 </div>

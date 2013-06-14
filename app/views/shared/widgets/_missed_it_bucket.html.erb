@@ -13,7 +13,7 @@
             <%= render_asset content, 'thumbnail', true %>
           </div>
           <div class="span18">
-            <%= link_to content.short_headline, content.link_path %><br />
+            <%= link_to content.short_headline, content.public_path %><br />
             <%= smart_date_js content.published_at %>
           </div>
         </div> <!-- row-fluid -->

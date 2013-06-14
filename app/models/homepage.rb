@@ -43,7 +43,7 @@ class Homepage < ActiveRecord::Base
   #-------------------
   # Associations
   has_many :content, class_name: "HomepageContent", order: "position", dependent: :destroy
-  accepts_json_input_for_content
+  accepts_json_input_for :content
 
   belongs_to :missed_it_bucket
   
@@ -145,10 +145,12 @@ class Homepage < ActiveRecord::Base
   private
   
   def build_content_association(content_hash, content)
-    HomepageContent.new(
-      :position => content_hash["position"].to_i,
-      :content  => content,
-      :homepage => self
-    )
+    if content.published?
+      HomepageContent.new(
+        :position => content_hash["position"].to_i,
+        :content  => content,
+        :homepage => self
+      )
+    end
   end
 end

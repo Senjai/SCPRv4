@@ -39,6 +39,8 @@ class ShowEpisode < ActiveRecord::Base
                           :through     => :rundowns, 
                           :order       => "position"
 
+  accepts_json_input_for :rundowns
+
   #-------------------
   # Validations
   validates :show, presence: true
@@ -108,54 +110,51 @@ class ShowEpisode < ActiveRecord::Base
     }
   end
   
-  #----------
-  
-  def rundown_json
-    current_rundowns_json.to_json
+    #-------------------
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.short_headline,
+      :short_title        => self.short_headline,
+      :public_datetime    => self.air_date,
+      :teaser             => self.teaser,
+      :body               => self.teaser,
+      :assets             => self.assets,
+      :audio              => self.audio.available,
+      :byline             => self.byline,
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
+    })
+  end
+
+  #-------------------
+
+  def to_abstract
+    @to_abstract ||= Abstract.new({
+      :original_object        => self,
+      :headline               => self.short_headline,
+      :summary                => self.teaser,
+      :source                 => "KPCC",
+      :url                    => self.public_url,
+      :assets                 => self.assets,
+      :audio                  => self.audio.available,
+      :article_published_at   => self.published_at
+    })
   end
 
   #----------
-
-  def rundown_json=(json)
-    return if json.empty?
-
-    json = Array(JSON.parse(json)).sort_by { |c| c["position"].to_i }
-    loaded_rundowns = []
-
-    json.each do |rundown_hash|
-      segment = Outpost.obj_by_key(rundown_hash["id"])
-      if segment && segment.is_a?(ShowSegment)
-        rundown = ShowRundown.new(
-          :position => rundown_hash["position"].to_i, 
-          :segment       => segment
-        )
-      
-        loaded_rundowns.push rundown
-      end
-    end
-    
-    loaded_rundowns_json = rundowns_to_simple_json(loaded_rundowns)
-
-    if current_rundowns_json != loaded_rundowns_json
-      if self.respond_to?(:custom_changes)
-        self.custom_changes['rundowns'] = [current_rundowns_json, loaded_rundowns_json]
-      end
-
-      self.changed_attributes['rundowns'] = current_rundowns_json
-      self.rundowns = loaded_rundowns
-    end
-
-    self.rundowns
-  end
 
 
   private
 
-  def current_rundowns_json
-    rundowns_to_simple_json(self.rundowns)
-  end
-
-  def rundowns_to_simple_json(array)
-    Array(array).map(&:simple_json)
+  def build_rundown_association(rundown_hash, segment)
+    if segment.is_a? ShowSegment
+      ShowRundown.new(
+        :position => rundown_hash["position"].to_i, 
+        :segment  => segment
+      )
+    end
   end
 end

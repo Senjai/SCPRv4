@@ -18,7 +18,7 @@ class MissedItBucket < ActiveRecord::Base
     :dependent      => :destroy
   }
   
-  accepts_json_input_for_content
+  accepts_json_input_for :content
 
   #--------------------
   # Validation
@@ -44,10 +44,12 @@ class MissedItBucket < ActiveRecord::Base
   private
   
   def build_content_association(content_hash, content)
-    MissedItContent.new(
-      :position         => content_hash["position"].to_i,
-      :content          => content,
-      :missed_it_bucket => self
-    )
+    if content.published?
+      MissedItContent.new(
+        :position         => content_hash["position"].to_i,
+        :content          => content,
+        :missed_it_bucket => self
+      )
+    end
   end
 end

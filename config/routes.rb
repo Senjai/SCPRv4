@@ -93,61 +93,56 @@ Scprv4::Application.routes.draw do
   
   #------------------
 
-  namespace :api do
+  namespace :api, defaults: { format: "json" } do
     # PUBLIC
     scope module: "public" do
-      # Temporary legacy routes
-      match '/' => "v1/content#options", constraints: { method: 'OPTIONS' }
-      
-      get '/content'        => 'v1/content#index',  defaults: { format: :json }
-      get '/content/by_url' => 'v1/content#by_url', defaults: { format: :json }
-      get '/content/*obj_key'    => 'v1/content#show',   defaults: { format: :json }
-      
-      # V1
-      namespace :v1 do
-        match '/' => "content#options", constraints: { method: 'OPTIONS' }
-    
-        get '/content'        => 'content#index',  defaults: { format: :json }
-        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
-      end
-
       # V2
       namespace :v2 do
-        match '/' => "content#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
         
-        get '/content'                  => 'content#index',  defaults: { format: :json }
-        get '/content/by_url'           => 'content#by_url', defaults: { format: :json }
-        get '/content/most_viewed'      => 'content#most_viewed', defaults: { format: :json }
-        get '/content/most_commented'   => 'content#most_commented', defaults: { format: :json }
-        get '/content/*obj_key'         => 'content#show',   defaults: { format: :json }
+        # Old paths
+        get '/content'                  => 'articles#index'
+        get '/content/by_url'           => 'articles#by_url'
+        get '/content/most_viewed'      => 'articles#most_viewed'
+        get '/content/most_commented'   => 'articles#most_commented'
+        get '/content/*obj_key'         => 'articles#show'
 
-        get '/audio'     => 'audio#index', defaults: { format: :json }
-        get '/audio/:id' => 'audio#show', defaults: { format: :json }
+        resources :articles, only: [:index] do
+          collection do
+            # These need to be in "collection", otherwise 
+            # Rails would expect an  :id parameter in 
+            # the URL.
+            get 'most_viewed'      => 'articles#most_viewed'
+            get 'most_commented'   => 'articles#most_commented'
+            get 'by_url'           => 'articles#by_url'
+            get '*obj_key'         => 'articles#show'
+          end
+        end
+
+        resources :audio, only: [:index, :show]
+        resources :editions, only: [:index, :show]
+        resources :categories, only: [:index, :show]
       end
     end
     
     
     # PRIVATE
     namespace :private do
-      # V1
-      namespace :v1 do
-        match '/' => "content#options", constraints: { method: 'OPTIONS' }
-        
-        post '/utility/notify'   => 'utility#notify'
-
-        get '/content'        => 'content#index',  defaults: { format: :json }
-        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
-      end
-
       # V2
       namespace :v2 do
-        match '/' => "content#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
+
+        post '/utility/notify'   => 'utility#notify'
         
-        get '/content'        => 'content#index',  defaults: { format: :json }
-        get '/content/by_url' => 'content#by_url', defaults: { format: :json }
-        get '/content/*obj_key'    => 'content#show',   defaults: { format: :json }
+        resources :articles, only: [:index] do
+          collection do
+            # These need to be in "collection", otherwise 
+            # Rails would expect an  :id parameter in 
+            # the URL.
+            get 'by_url'   => 'articles#by_url'
+            get '*obj_key' => 'articles#show'
+          end
+        end
       end
     end
   end
@@ -247,6 +242,12 @@ Scprv4::Application.routes.draw do
       put "preview", on: :member
       post "preview", on: :collection
     end
+
+    resources :abstracts do
+      get 'search', on: :collection, as: :search
+    end
+
+    resources :editions
 
     resources :show_segments do
       get "search", on: :collection, as: :search

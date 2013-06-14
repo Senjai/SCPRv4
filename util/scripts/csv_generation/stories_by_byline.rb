@@ -32,7 +32,7 @@ users.each do |user|
   
   bylines.select { |b| b.content.published? && b.content.published_at.between?(low, high) }.each do |byline|
     content = byline.content
-    rows.push [content.published_at, content.to_title, "http://scpr.org#{content.link_path}"]
+    rows.push [content.published_at, content.to_title, "http://scpr.org#{content.public_path}"]
   end
 end
 

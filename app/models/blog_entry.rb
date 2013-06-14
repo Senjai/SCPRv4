@@ -79,6 +79,8 @@ class BlogEntry < ActiveRecord::Base
     join audio
   end
 
+
+
   #-------------------
   # Need to work around multi-american until we can figure
   # out how to merge those comments in with kpcc
@@ -121,7 +123,10 @@ class BlogEntry < ActiveRecord::Base
   end
   
   #-------------------
-  
+  # This was made for the blog list pages - showing the full body
+  # was too long, but just the teaser was too short.
+  #
+  # It should probably be in a presenter.
   def extended_teaser(*args)
     target      = args[0] || 800
     more_text   = args[1] || "Read More..."
@@ -135,7 +140,7 @@ class BlogEntry < ActiveRecord::Base
       extended_teaser.add_child child
     end
     
-    extended_teaser.add_child "<p><a href=\"#{self.link_path}\">#{more_text}</a></p>"
+    extended_teaser.add_child "<p><a href=\"#{self.public_path}\">#{more_text}</a></p>"
     return extended_teaser.to_html
   end
   
@@ -152,5 +157,41 @@ class BlogEntry < ActiveRecord::Base
       :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }
+  end
+
+  #-------------------
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.headline,
+      :short_title        => self.short_headline,
+      :public_datetime    => self.published_at,
+      :teaser             => self.teaser,
+      :body               => self.body,
+      :assets             => self.assets,
+      :audio              => self.audio.available,
+      :attributions       => self.bylines,
+      :byline             => self.byline,
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
+    })
+  end
+
+  #-------------------
+
+  def to_abstract
+    @to_abstract ||= Abstract.new({
+      :original_object        => self,
+      :headline               => self.short_headline,
+      :summary                => self.teaser,
+      :source                 => "KPCC",
+      :url                    => self.public_url,
+      :assets                 => self.assets,
+      :audio                  => self.audio.available,
+      :category               => self.category,
+      :article_published_at   => self.published_at
+    })
   end
 end

@@ -12,7 +12,7 @@
               <% relations.each do |content| %>
                 <li>
                   <% register_content content %>
-                  <%= link_to "#{'EVENT: ' if content.is_a?(Event)}" + content.short_headline.to_s, content.link_path %> <span class="pipe">|</span> <%= time_tag content.published_at, format_date(content.published_at, format: :full_date) %>
+                  <%= link_to "#{'EVENT: ' if content.is_a?(Event)}" + content.short_headline.to_s, content.public_path %> <span class="pipe">|</span> <%= time_tag content.published_at, format_date(content.published_at, format: :full_date) %>
                 </li>
               <% end %>
             </ul>

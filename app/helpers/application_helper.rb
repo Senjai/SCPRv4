@@ -161,7 +161,7 @@ module ApplicationHelper
   def link_bylines(bylines, links)
     bylines.map do |byline|
       if !!links && byline.user.try(:is_public)
-        link_to byline.display_name, byline.user.link_path
+        link_to byline.display_name, byline.user.public_path
       else
         byline.display_name
       end
@@ -276,7 +276,7 @@ module ApplicationHelper
     if object.present? and object.respond_to?(:disqus_identifier)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.obj_key
-      link_to( "Add your comments", object.link_path(anchor: "comments"), options )
+      link_to( "Add your comments", object.public_path(anchor: "comments"), options )
     end
   end
   

@@ -23,7 +23,7 @@ class Indexer
   #--------------
 
   def initialize(*models)
-    @models     = models.reject { |e| e.blank? }
+    @models     = models.reject { |e| e.blank? || !e.has_sphinx_indexes? }
     @controller = ThinkingSphinx::Configuration.instance.controller
     @indexes    = @models.map(&:sphinx_index_names).flatten
     @full_index = @indexes.blank?

@@ -10,7 +10,7 @@
       <div class="row-fluid">
         <% if event.assets.present? %>
           <div class="span6">
-            <a href="<%= event.link_path %>">
+            <a href="<%= event.public_path %>">
               <%= render_asset event, 'small' %>
             </a>
           </div>
@@ -23,7 +23,7 @@
             <div class="row-fluid">
               <div class="span8">
                 <% text = event.ongoing? ? "Through " : "" %>
-                <%= link_to text + format_date(event.sorter, format: :event), event.link_path, class: "event-link" %>
+                <%= link_to text + format_date(event.sorter, format: :event), event.public_path, class: "event-link" %>
               </div>
               <div class="span16">
                 <% if event.location_name.present? %>
@@ -31,8 +31,8 @@
                 <% end %>
               </div>
             </div> <!-- row fluid -->
-            <h1 class="story-title"><%= link_to event.headline, event.link_path %></h1>
-            <p><%= event.teaser.html_safe %> <%= link_to "More", event.link_path %></p>
+            <h1 class="story-title"><%= link_to event.headline, event.public_path %></h1>
+            <p><%= event.teaser.html_safe %> <%= link_to "More", event.public_path %></p>
           </div> <!-- event-details -->
         </div> <!-- span -->
       </div> <!-- row fluid -->

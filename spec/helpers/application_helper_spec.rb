@@ -92,14 +92,14 @@ describe ApplicationHelper do
       it "turns the bylines with a user into links if links=true" do
         byline = helper.render_byline(@content)
         byline.should match /a href/
-        byline.should match user.link_path
+        byline.should match user.public_path
         byline.should match /Danny/
       end
     
       it "is does not use links if links=false" do
         byline = helper.render_byline(@content, false)
         byline.should_not match /a href/
-        byline.should_not match user.link_path
+        byline.should_not match user.public_path
         byline.should match /Bryan/
         byline.should match /Danny/
       end
@@ -230,7 +230,7 @@ describe ApplicationHelper do
     describe "#comment_count_for" do
       it "renders a link to the comments" do
         comment_count_for(object).should match "href"
-        comment_count_for(object).should match object.link_path(anchor: "comments")
+        comment_count_for(object).should match object.public_path(anchor: "comments")
       end
       
       it "uses the class passed in and preserves the hard-coded classes" do
@@ -259,7 +259,7 @@ describe ApplicationHelper do
       end
       
       it "has a link to the comments" do
-        comment_widget_for(object).should match object.link_path(anchor: "comments")
+        comment_widget_for(object).should match object.public_path(anchor: "comments")
       end
       
       it "doesn't render anything if object is not present" do

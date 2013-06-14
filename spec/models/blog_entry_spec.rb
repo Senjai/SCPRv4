@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BlogEntry do    
+describe BlogEntry do
   describe "extended_teaser" do
     let(:entry) { create :blog_entry }
     
@@ -24,7 +24,7 @@ describe BlogEntry do
       entry.body = "<p>Something</p><p>Something Else</p>"
       extended_teaser = entry.extended_teaser(2, "Continue...")
       extended_teaser.should match "Continue..."
-      extended_teaser.should match entry.link_path
+      extended_teaser.should match entry.public_path
     end
     
     it "ignores HTML tags when calculating the text length" do
@@ -32,6 +32,20 @@ describe BlogEntry do
       extended_teaser = entry.extended_teaser(20)
       extended_teaser.should match /Blah Blah Blah/
       extended_teaser.should match /Bold Bold Bold/
+    end
+  end
+
+  describe '#to_article' do
+    it 'makes a new article' do
+      entry = build :blog_entry
+      entry.to_article.should be_a Article
+    end
+  end
+
+  describe '#to_abstract' do
+    it 'makes a new abstract' do
+      entry = build :blog_entry
+      entry.to_abstract.should be_a Abstract
     end
   end
 end

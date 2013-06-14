@@ -4,7 +4,7 @@
     <div class="span6">
       <div class="carousel-item">
         <%= render_asset extra_content, 'thumbnail', true %>
-        <span class="title"><%= link_to extra_content.short_headline, extra_content.link_path %></span>
+        <span class="title"><%= link_to extra_content.short_headline, extra_content.public_path %></span>
       </div>
     </div>
   <% end %>

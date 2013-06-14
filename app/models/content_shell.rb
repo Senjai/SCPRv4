@@ -83,12 +83,12 @@ class ContentShell < ActiveRecord::Base
   end
 
   #----------
-  # Override Outpost's `link_path` for these
-  def link_path(options={})
-    self.url
+  # Override Outpost's routing methods for these
+  def public_path(options={})
+    self.public_url
   end
   
-  def remote_link_path(options={})
+  def public_url(options={})
     self.url
   end
   
@@ -97,6 +97,37 @@ class ContentShell < ActiveRecord::Base
   def byline_extras
     [self.site]
   end
-  
-  #----------
+
+  #-------------------
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.short_headline,
+      :short_title        => self.short_headline,
+      :public_datetime    => self.published_at,
+      :teaser             => self.teaser,
+      :body               => self.teaser,
+      :assets             => self.assets,
+      :attributions       => self.bylines,
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
+    })
+  end
+
+  #-------------------
+
+  def to_abstract
+    @to_abstract ||= Abstract.new({
+      :original_object        => self,
+      :headline               => self.short_headline,
+      :summary                => self.teaser,
+      :source                 => self.site,
+      :url                    => self.url,
+      :assets                 => self.assets,
+      :category               => self.category,
+      :article_published_at   => self.published_at
+    })
+  end
 end

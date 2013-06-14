@@ -30,8 +30,8 @@
             <% @upcoming_events_sponsored.each do |event| %>
               <% register_content event %>
               <li>
-                <h4><%= link_to event.headline, event.link_path %></h4>
-                <%= link_to format_date(event.starts_at, format: :event), event.link_path, class: "event-link" %>
+                <h4><%= link_to event.headline, event.public_path %></h4>
+                <%= link_to format_date(event.starts_at, format: :event), event.public_path, class: "event-link" %>
               </li>
             <% end %>
             </ul>

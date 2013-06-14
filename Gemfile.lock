@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost-aggregator.git
-  revision: 578c57a4cd722189e94e76061f853aa9b7f827da
+  revision: 6d83b4f7fdf7af2df3e750e1e2710dedf69c6d0f
   specs:
-    outpost-aggregator (0.1.1)
+    outpost-aggregator (1.0.0)
 
 GIT
   remote: git://github.com/SCPR/outpost-asset_host.git
@@ -27,7 +27,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 4cdf7b73d79774aa2a5e5106ca2b07e7f542f3e6
+  revision: 54a17baead17ad9e15731e29c1b79e678def473b
   specs:
     outpost (0.0.3)
       bcrypt-ruby (~> 3.0)
@@ -197,7 +197,7 @@ GEM
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
     journey (1.0.4)
-    jquery-rails (3.0.0)
+    jquery-rails (3.0.1)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.0)

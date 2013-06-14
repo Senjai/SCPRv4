@@ -7,11 +7,11 @@
       </div>
       
       <div class="span18">
-        <h4><%= link_to c.short_headline, c.link_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'News Story', 'ga-label' => 'Content'} %></h4>
+        <h4><%= link_to c.short_headline, c.public_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'News Story', 'ga-label' => 'Content'} %></h4>
         <div class="cbase">
 
           <% if c.category.present? %>
-            <span class="blog-title"><%= link_to c.category.title, c.category.link_path %></span>
+            <span class="blog-title"><%= link_to c.category.title, c.category.public_path %></span>
           <% end %>
           
           <%= smart_date_js c.published_at, "data-window" => "8h", "data-relative" => "2h" %>

@@ -36,7 +36,7 @@ module Concern
         'extra_asset_scheme', 
         'updated_at', 
         'base', 
-        'related_content'
+        'outgoing_references'
       ]
 
       included do

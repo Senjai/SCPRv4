@@ -242,7 +242,7 @@ class RecurringScheduleSlot < ActiveRecord::Base
       :start => self.starts_at.to_i,
       :end   => self.ends_at.to_i,
       :title => self.program.title,
-      :link  => self.program.link_path
+      :link  => self.program.public_path
     }
   end
 

@@ -2,8 +2,8 @@ enclosure_type ||= content.respond_to?(:audio) ? :audio : :image
 
 xml.item do
   xml.title content.headline
-  xml.guid  content.remote_link_path
-  xml.link  content.remote_link_path
+  xml.guid  content.public_url
+  xml.link  content.public_url
   
   b = render_byline(content,false)
   if b
@@ -29,7 +29,7 @@ xml.item do
   descript << relaxed_sanitize(content.body)
   
   if content.is_a? ContentShell
-    descript << content_tag(:p, link_to("Read the full article at #{content.site}".html_safe, content.link_path))
+    descript << content_tag(:p, link_to("Read the full article at #{content.site}".html_safe, content.public_path))
   end
   
   xml.description descript

@@ -1,0 +1,33 @@
+<%= form_block "Publishing" do %>
+  <%= f.input :status, collection: Edition.status_text_collection, include_blank: false, input_html: { id: "status-select" } %>
+  <%= f.section 'content_alarm' %>
+  <%= f.section 'auto_published_at' %>
+  <div id="scheduled_status" class="notification block"></div>
+<% end %>
+
+<%= form_block "Content" do %>
+  <div id="aggregator" class="aggregator"></div>
+  <%= f.input :slots_json, as: :hidden, input_html: { id: "slots_json" } %>
+<% end %>
+
+<% content_for :footer do %>
+  <script>
+    aggregator = new outpost.Aggregator(
+      "#aggregator", "#slots_json",
+      <%= render_json("api/private/v2/articles/collection", articles: record.articles) %>,
+      {
+        apiType: "private",
+        params: {
+          limit: 20,
+          types: 'news,blogs,segments,episodes,abstracts',
+          token: "<%= Rails.application.config.api['assethost']['token'] %>",
+          order: "updated_at",
+          sort_mode: "desc",
+          with: { status: <%=ContentBase::STATUS_LIVE%> }
+        }
+      }
+    );
+  </script>
+<% end %>
+
+<br /><br /><br /><br />

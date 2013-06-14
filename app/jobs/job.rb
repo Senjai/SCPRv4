@@ -49,6 +49,7 @@ module Job
         rescue Faraday::Error::TimeoutError => e
           if tries < max_tries
             tries += 1
+            logger.info "Trying again... (Try #{tries} of #{max_tries}"
             retry
           else
             raise e

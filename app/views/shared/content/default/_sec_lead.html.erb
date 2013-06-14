@@ -1,7 +1,7 @@
 <% options ||= {} %>
 
 <div class="cbase offlead">
-  <h3><%= link_to content.short_headline, content.link_path %></h3>
+  <h3><%= link_to content.short_headline, content.public_path %></h3>
   
   <div class="row-fluid">
     <% if content.assets.present? %>

@@ -3,7 +3,7 @@
   
   <article>
     <header>
-      <h1 class="story-headline"><%= link_to story.headline, story.link_path %></h1>
+      <h1 class="story-headline"><%= link_to story.headline, story.public_path %></h1>
       <span class="byline">
         <%= render_byline story %> <span class="pipe">|</span> <%= timestamp(story.published_at) %></time>
       </span>

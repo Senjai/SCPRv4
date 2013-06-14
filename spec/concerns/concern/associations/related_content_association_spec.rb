@@ -73,20 +73,20 @@ describe Concern::Associations::RelatedContentAssociation do
 
   #---------------------------
 
-  describe '#related_content_json' do
+  describe '#outgoing_references_json' do
     it "uses simple_json for the join model" do
       story1  = create :test_class_story
       story2  = create :test_class_story
       related = Related.create(content: story1, related: story2, position: 0)
 
-      story1.related_content_json.should eq [related.simple_json].to_json
+      story1.outgoing_references_json.should eq [related.simple_json].to_json
       story1.outgoing_references.map(&:related).should eq [story2]
     end
   end
 
   #---------------------------
 
-  describe '#related_content_json=' do
+  describe '#outgoing_references_json=' do
     let(:post)   { create :test_class_post }
     let(:story1) { create :test_class_story }
     let(:story2) { create :test_class_story }
@@ -99,19 +99,19 @@ describe Concern::Associations::RelatedContentAssociation do
       
       it 'does not do anything if json is an empty string' do
         post.outgoing_references.should be_empty
-        post.related_content_json = "[{\"id\": \"#{story1.obj_key}\", \"position\": 0 }, { \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
+        post.outgoing_references_json = "[{\"id\": \"#{story1.obj_key}\", \"position\": 0 }, { \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
         post.outgoing_references.should be_present
         
-        post.related_content_json = ""
+        post.outgoing_references_json = ""
         post.outgoing_references.should be_present
         
-        post.related_content_json = "[]"
+        post.outgoing_references_json = "[]"
         post.outgoing_references.should be_empty
       end
       
       it "parses the json and sets the content" do
         post.outgoing_references.should be_empty
-        post.related_content_json = "[{\"id\": \"#{story1.obj_key}\", \"position\": 0 }, { \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
+        post.outgoing_references_json = "[{\"id\": \"#{story1.obj_key}\", \"position\": 0 }, { \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
         post.outgoing_references.map(&:related).should eq [story1, story2]
       end
       
@@ -119,12 +119,12 @@ describe Concern::Associations::RelatedContentAssociation do
         unpublished = create :test_class_story, status: ContentBase::STATUS_DRAFT
         Outpost.should_receive(:obj_by_key).with(unpublished.obj_key).and_return(unpublished)
 
-        post.related_content_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 2 }, {\"id\": \"#{story2.obj_key}\", \"position\": 3 }]"
+        post.outgoing_references_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 2 }, {\"id\": \"#{story2.obj_key}\", \"position\": 3 }]"
         post.outgoing_references.map(&:related).should eq [story1, story2]
       end
 
       it "adds them ordered by position" do
-        post.related_content_json = "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 0 }]"
+        post.outgoing_references_json = "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 0 }]"
         post.outgoing_references.map(&:related).should eq [story1, story2]
       end
       
@@ -132,7 +132,7 @@ describe Concern::Associations::RelatedContentAssociation do
         post.outgoing_references.size.should eq 0
         
         post.transaction do
-          post.related_content_json = "[{\"id\": \"#{story1.obj_key}\", \"position\": 0 }, { \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
+          post.outgoing_references_json = "[{\"id\": \"#{story1.obj_key}\", \"position\": 0 }, { \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
           post.outgoing_references.size.should eq 2
           raise ActiveRecord::Rollback
         end
@@ -145,10 +145,10 @@ describe Concern::Associations::RelatedContentAssociation do
     context "when no content has changed" do
       it "doesn't set the content" do
         original_json = "[{ \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
-        record = create :test_class_story, related_content_json: original_json
+        record = create :test_class_story, outgoing_references_json: original_json
 
         record.should_not_receive :outgoing_references=
-        record.related_content_json = original_json
+        record.outgoing_references_json = original_json
       end
     end
   end
