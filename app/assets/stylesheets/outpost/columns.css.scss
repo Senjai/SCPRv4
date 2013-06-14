@@ -38,32 +38,14 @@ table {
     }
 
     ///////////////////
-    // BlogEntry
-    &.list-blog_entries {
-        .column-headline { // blog_entry.headline
-            width: 320px;
-        }
-    }
-
-    ///////////////////
-    // RemoteArticle
-    &.list-remote_articles {
-        .column-manage {
-            width: 165px;
-        }
-        .column-type {
-            width: 150px;
-        }
+    // Abstract
+    &.list-abstracts {
         .column-headline {
-            width: 200px;
+            width: 440px;
         }
-    }
 
-    ///////////////////
-    // Ticket
-    &.list-tickets {
-        .column-manage {
-            width: 100px;
+        .column-url {
+            width: 60px;
         }
     }
 
@@ -95,7 +77,15 @@ table {
     }
 
     ///////////////////
-    // Blog
+    // BlogEntry
+    &.list-blog_entries {
+        .column-headline { // blog_entry.headline
+            width: 320px;
+        }
+    }
+
+    ///////////////////
+    // BreakingNewsAlert
     &.list-breaking_news_alerts {
         .column-email_sent { // breaking_news_alert.email_sent
             width: 100px;
@@ -143,6 +133,14 @@ table {
             input {
                 width: 100px;
             }
+        }
+    }
+
+    ///////////////////
+    // Edition
+    &.list-editions {
+        .column-datetime {
+            width: 440px;
         }
     }
 
@@ -223,6 +221,20 @@ table {
     }
 
     ///////////////////
+    // RemoteArticle
+    &.list-remote_articles {
+        .column-manage {
+            width: 165px;
+        }
+        .column-type {
+            width: 150px;
+        }
+        .column-headline {
+            width: 200px;
+        }
+    }
+
+    ///////////////////
     // Secretary::Version
     &.list-secretary_versions {
         .column-user {
@@ -242,6 +254,14 @@ table {
     // ShowEpisode
     &.list-show_episodes {
         .column-show { // show_episode.show
+            width: 100px;
+        }
+    }
+
+    ///////////////////
+    // Ticket
+    &.list-tickets {
+        .column-manage {
             width: 100px;
         }
     }
