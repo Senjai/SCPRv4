@@ -9,112 +9,129 @@ describe Api::Public::V2::EventsController do
 
   describe "GET show" do
     it "finds the object if it exists" do
-      entry = create :blog_entry
-      get :show, { obj_key: entry.obj_key }.merge(request_params)
-      assigns(:event).should eq entry.to_event
+      event = create :event, :published
+      get :show, { id: event.id }.merge(request_params)
+      assigns(:event).should eq event
       response.should render_template "show"
     end
 
     it "returns a 404 status if it does not exist" do
-      get :show, { obj_key: "nope" }.merge(request_params)
+      get :show, { id: 999 }.merge(request_params)
       response.response_code.should eq 404
       response.body.should eq Hash[error: "Not Found"].to_json
     end
   end
 
   describe "GET index" do
-    sphinx_spec(num: 1)
+    it 'only fetches published events' do
+      published     = create :event, :published
+      unpublished   = create :event # default status is 0 in the factory
 
-    it 'can filter by category' do
-      category1  = create :category_not_news, slug: "film"
-      story1     = create :news_story, category: category1, published_at: 1.hour.ago
-
-      category2  = create :category_news, slug: "health"
-      story2     = create :news_story, category: category2, published_at: 2.hours.ago
-
-      # Control - add these in to make sure we're *only* returning
-      # stories with the requested categories
-      other_stories = create_list :news_story, 2
-
-      index_sphinx
-
-      ts_retry(2) do
-        get :index, { categories: "film,health" }.merge(request_params)
-        assigns(:events).should eq [story1, story2].map(&:to_event)
-      end
-    end
-
-    it "returns only the requested classes" do
-      entries = @generated_content.select { |c| c.class == BlogEntry }
-      
-      ts_retry(2) do
-        get :index, { types: "blogs" }.merge(request_params)
-        assigns(:events).should eq entries.map(&:to_event)
-      end
-    end
-
-    it "can take a comma-separated list of types" do
-      ts_retry(2) do
-        get :index, { types: "blogs,segments" }.merge(request_params)
-        assigns(:classes).should eq [BlogEntry, ShowSegment]
-        assigns(:events).any? { |c| !%w{ShowSegment BlogEntry}.include?(c.original_object.class.name) }.should eq false
-      end
-    end
-
-    it "is all types by default" do
-      ts_retry(2) do
-        get :index, request_params
-        assigns(:events).size.should eq @generated_content.size
-      end
+      get :index, request_params
+      assigns(:events).should eq [published]
     end
 
     it "sanitizes the limit" do
-      ts_retry(2) do
-        get :index, { limit: "Evil Code" }.merge(request_params)
-        assigns(:limit).should eq 0
-        assigns(:events).should eq []
-      end
+      create :event, :published
+      get :index, { limit: "Evil Code" }.merge(request_params)
+      assigns(:limit).should eq 0
+      assigns(:events).should eq Event.all
     end
 
     it "accepts a limit" do
-      ts_retry(2) do
-        get :index, { limit: 1 }.merge(request_params)
-        assigns(:events).size.should eq 1
-      end
+      create_list :event, 2, :published
+      get :index, { limit: 1 }.merge(request_params)
+      assigns(:events).size.should eq 1
     end
 
     it "sets the max limit to 40" do
-      ts_retry(2) do
-        get :index, { limit: 100 }.merge(request_params)
-        assigns(:limit).should eq 40
-      end
+      get :index, { limit: 100 }.merge(request_params)
+      assigns(:limit).should eq 40
     end
 
     it "sanitizes the page" do
-      ts_retry(2) do
-        get :index, { page: "Evil Code" }.merge(request_params)
-        assigns(:page).should eq 1
-        assigns(:events).size.should eq @generated_content.size
-      end
+      event = create :event, :published
+      get :index, { page: "Evil Code" }.merge(request_params)
+      assigns(:page).should eq 1
+      assigns(:events).should eq [event]
     end
 
     it "accepts a page" do
-      ts_retry(2) do
-        get :index, request_params
-        fifth_obj = assigns(:events)[4]
+      create_list :event, 3, :published
+      get :index, request_params
+      second = assigns(:events)[1]
 
-        get :index, { page: 5, limit: 1 }.merge(request_params)
-        assigns(:events).should eq [fifth_obj].map(&:to_event)
-      end
+      get :index, { page: 2, limit: 1 }.merge(request_params)
+      assigns(:events).should eq [second]
     end
 
-    it "accepts a query" do
-      entry = create :blog_entry, headline: "Spongebob Squarepants!"
-      index_sphinx
+    it 'only returns requested types' do
+      spon = create :event, :published, event_type: "spon"
+      comm = create :event, :published, event_type: "comm"
+      hall = create :event, :published, event_type: "hall"
 
-      ts_retry(2) do
-        get :index, { query: "Spongebob+Squarepants" }.merge(request_params)
-        assigns(:events).should eq [entry].map(&:to_event)
+      get :index, { types: "comm,hall" }.merge(request_params)
+      assigns(:events).sort.should eq [comm, hall].sort
+    end
+
+    it 'does not care about type if none are specified' do
+      spon = create :event, :published, event_type: "spon"
+      comm = create :event, :published, event_type: "comm"
+      hall = create :event, :published, event_type: "hall"
+
+      get :index, request_params
+      assigns(:events).sort.should eq [spon, comm, hall].sort
+    end
+
+    it 'only returns kpcc events if requested' do
+      kpcc_event      = create :event, :published, is_kpcc_event: true
+      non_kpcc_event  = create :event, :published, is_kpcc_event: false
+
+      get :index, { only_kpcc_events: "true" }.merge(request_params)
+      assigns(:events).should eq [kpcc_event]
+    end
+
+    it 'does not care about is_kpcc_event if not specified' do
+      kpcc_event      = create :event, :published, is_kpcc_event: true
+      non_kpcc_event  = create :event, :published, is_kpcc_event: false
+
+      get :index, request_params
+      assigns(:events).sort.should eq [kpcc_event, non_kpcc_event].sort
+    end
+
+    describe 'date filtering' do
+      before :each do
+        Time.stub(:now) { Time.new(2013, 6, 14) }
+        
+        @way_past     = create :event, :published, starts_at: Time.new(2012, 6, 8)
+        @past         = create :event, :published, starts_at: Time.new(2013, 6, 8)
+        @future       = create :event, :published, starts_at: Time.new(2013, 6, 20)
+        @way_future   = create :event, :published, starts_at: Time.new(2014, 6, 20)
+      end
+
+      it 'filters by start_date if only it is specified' do
+        get :index, { start_date: "2013-06-12" }.merge(request_params)
+        assigns(:events).should eq [@future, @way_future]
+      end
+
+      it 'filters by specified start and end dates if both specified' do
+        get :index, { start_date: "2013-06-12", end_date: "2013-07-12" }.merge(request_params)
+        assigns(:events).should eq [@future]
+      end
+
+      it 'filters now to end_date if only end_date is specified and is future' do
+        get :index, { end_date: "2013-06-22" }.merge(request_params)
+        assigns(:events).should eq [@future]
+      end
+
+      it 'filters beginning of time to end_date if only end_date is specified and is past' do
+        get :index, { end_date: "2013-06-10" }.merge(request_params)
+        assigns(:events).should eq [@way_past, @past]
+      end
+
+      it 'filters now to end of time if no dates specified' do
+        get :index, request_params
+        assigns(:events).should eq [@future, @way_future]
       end
     end
   end
