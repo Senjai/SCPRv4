@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-  before_filter :load_blog, :except => [:index, :entry]
+  before_filter :load_blog, except: [:index, :entry]
   respond_to :html, :xml, :rss
   
   #----------
