@@ -45,6 +45,7 @@ class Category < ActiveRecord::Base
     end
     
     args = {
+      :classes  => [NewsStory, ContentShell, BlogEntry, ShowSegment]
       :page     => page,
       :per_page => per_page,
       :with     => { category: self.id }
@@ -77,8 +78,8 @@ class Category < ActiveRecord::Base
         :metric   => :comment
       }
     end
-    
-    
+
+
     # -- now try slideshows -- #
 
     slideshow = ContentBase.search({
@@ -99,6 +100,7 @@ class Category < ActiveRecord::Base
         :metric   => :slideshow
       }
     end
+
 
     # -- segment in the last two days? -- #
 
