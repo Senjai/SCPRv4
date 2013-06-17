@@ -62,12 +62,14 @@ class ContentShell < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
+    indexes bylines.user.name, as: :bylines
+
+    has status
     has published_at
     has updated_at
-    has "CRC32(CONCAT('#{ContentShell.content_key}:',#{ContentShell.table_name}.id))", type: :integer, as: :obj_key
-
-    # For Bio pages
-    indexes bylines.user.name, as: :bylines
+    has "CRC32(CONCAT('#{ContentShell.content_key}:'," \
+        "#{ContentShell.table_name}.id))", 
+        type: :integer, as: :obj_key
 
     # For category/homepage building
     has category.id, as: :category
@@ -80,9 +82,9 @@ class ContentShell < ActiveRecord::Base
     has "1", as: :is_source_kpcc, type: :boolean
 
     # Required attributes for ContentBase.search
-    has "1", as: :findable, type: :boolean
     has published_at, as: :public_datetime
-    has status
+    has "status = #{ContentBase::STATUS_LIVE}", 
+        as: :is_live, type: :boolean
   end
   
   #-------------------

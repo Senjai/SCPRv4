@@ -54,7 +54,7 @@ module ContentBase
     options = args.extract_options!
     query   = args[0].to_s
     
-    default_attributes = { status: ContentBase::STATUS_LIVE, findable: true }
+    default_attributes = { is_live: true }
     
     options.reverse_merge!({
       :classes     => CONTENT_CLASSES,

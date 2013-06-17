@@ -87,12 +87,14 @@ class Event < ActiveRecord::Base
     indexes sponsor
     indexes location_name
     indexes city
+
     has starts_at
+    has status
 
     # Required attributes for ContentBase.search
     has starts_at, as: :public_datetime
-    has "1", as: :findable
-    has status
+    has "status = #{Event::STATUS_LIVE}", 
+        as: :is_live, type: :boolean
   end
   
   # -------------------

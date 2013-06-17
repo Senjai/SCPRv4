@@ -64,23 +64,29 @@ class BlogEntry < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
+    indexes bylines.user.name, as: :bylines
+
     has blog.id, as: :blog
+    has status
     has published_at
     has updated_at
-    has "CRC32(CONCAT('#{BlogEntry.content_key}:',#{BlogEntry.table_name}.id))", type: :integer, as: :obj_key
 
-    # For Bio pages
-    indexes bylines.user.name, as: :bylines
+    has "CRC32(CONCAT('#{BlogEntry.content_key}:'," \
+        "#{BlogEntry.table_name}.id))", 
+        type: :integer, as: :obj_key
 
     # For RSS feeds
     has "1", as: :is_source_kpcc, type: :boolean
     
     # For the homepage/category sections
-    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')", type: :boolean, as: :is_slideshow
+    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')", 
+        type: :boolean, as: :is_slideshow
+
     has category.id, as: :category
 
     # For podcasts
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", type: :boolean, as: :has_audio
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
+        type: :boolean, as: :has_audio
     join audio
 
     # For the megamenu
@@ -88,8 +94,8 @@ class BlogEntry < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has blog.is_active, as: :findable, type: :boolean
-    has status
+    has "status = #{ContentBase::STATUS_LIVE}", 
+        as: :is_live, type: :boolean
   end
 
 

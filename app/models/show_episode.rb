@@ -65,23 +65,28 @@ class ShowEpisode < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
+    
     has show.id, as: :program
     has air_date
+    has status
     has published_at
     has updated_at
-    has "CRC32(CONCAT('#{ShowEpisode.content_key}:',#{ShowEpisode.table_name}.id))", type: :integer, as: :obj_key
+    has "CRC32(CONCAT('#{ShowEpisode.content_key}:'," \
+        "#{ShowEpisode.table_name}.id))", 
+        type: :integer, as: :obj_key
 
     # For RSS feeds
     has "1", as: :is_source_kpcc, type: :boolean
 
     # For podcasts
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", as: :has_audio, type: :boolean
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
+        as: :has_audio, type: :boolean
     join audio
 
     # Required attributes for ContentBase.search
     has air_date, as: :public_datetime
-    has "1", as: :findable, type: :boolean
-    has status
+    has "status = #{ContentBase::STATUS_LIVE}", 
+        as: :is_live, type: :boolean
   end
 
   #--------------------
