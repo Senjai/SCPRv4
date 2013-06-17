@@ -79,7 +79,6 @@ module Api::Private::V2
         "segments"    => [ShowSegment],
         "episodes"    => [ShowEpisode],
         "abstracts"   => [Abstract],
-        "queries"     => [PijQuery],
         "events"      => [Event]
       }
       
