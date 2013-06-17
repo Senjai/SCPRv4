@@ -96,7 +96,7 @@ class ProgramsController < ApplicationController
   #----------
   #----------
   
-  protected    
+  protected
 
   # Try various ways to fetch the program the person requested
   # If nothing is found, 404

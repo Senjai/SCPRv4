@@ -60,7 +60,7 @@ class CategoryController < ApplicationController
 
   #------------------
 
-  def generate_sections_for(categories,without)
+  def generate_sections_for(categories, without)
     sections = []
     
     # If without is nil, assume we had some problem with sphinx above
@@ -72,13 +72,13 @@ class CategoryController < ApplicationController
       content = ContentBase.search({
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
-        :with        => { :category => sec.id },
-        :without_any => { :obj_key => without.obj_key.to_crc32 }
+        :with        => { category: sec.id },
+        :without_any => { obj_key: without.obj_key.to_crc32 }
       })
       
-      top = nil
-      more = []
-      sorttime = nil
+      top       = nil
+      more      = []
+      sorttime  = nil
     
       content.each do |c|
         # get the content time as Time
@@ -106,7 +106,7 @@ class CategoryController < ApplicationController
         :sorttime => sorttime
       }
     
-      obj[:candidates] = sec.feature_candidates :exclude => [without,top]
+      obj[:candidates] = sec.feature_candidates(exclude: [without,top])
       obj[:right] = obj[:candidates] ? obj[:candidates][0][:content] : nil
     
       # Add this to our section list
@@ -114,7 +114,7 @@ class CategoryController < ApplicationController
     end
   
     # sort sections
-    sections.sort_by! {|s| s[:sorttime] }.reverse!
+    sections.sort_by! { |s| s[:sorttime] }.reverse!
   
     return sections
   end

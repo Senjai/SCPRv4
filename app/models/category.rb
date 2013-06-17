@@ -39,7 +39,7 @@ class Category < ActiveRecord::Base
 
   #----------
 
-  def content(page=1,per_page=10,without_obj=nil)
+  def content(page=1, per_page=10, without_obj=nil)
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
