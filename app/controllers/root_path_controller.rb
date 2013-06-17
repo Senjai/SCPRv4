@@ -26,7 +26,7 @@ class RootPathController < ApplicationController
       elsif @section = Section.find_by_slug(slug)
         handle_section and return
       else
-        render_error(404, ActionController::RoutingError.new("Not Found")) and return
+        render_error(404, ActionController::RoutingError.new("Not Found")) and return false
       end
     end
   end

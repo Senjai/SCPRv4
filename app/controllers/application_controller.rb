@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Concern::Controller::CustomErrors
+  include Outpost::Controller::CustomErrors
   
   protect_from_forgery
   before_filter :get_content_for_masthead
@@ -13,15 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   #----------
-  
-  protected
 
-  def raise_404
-    raise ActionController::RoutingError.new("Not Found")
-  end
-
-  #----------
-    
   private
 
   def get_content_for_masthead
@@ -34,19 +26,8 @@ class ApplicationController < ActionController::Base
   #----------
   # Override this method from CustomErrors to set the layout
   def render_error(status, e=StandardError)
-    if Rails.application.config.consider_all_requests_local
-      raise e
-    else
-      respond_to do |format|
-        format.html { render template: "/errors/error_#{status}", status: status, layout: "app_nosidebar", locals: { error: e } }
-        format.xml { render xml: { error: status.to_s }, status: status }
-        format.text { render text: status, status: status}
-      end
-      
-      report_error(e)
-    end
-
-    return false
+    super
+    report_error(e)
   end
 
   #----------

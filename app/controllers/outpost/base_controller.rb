@@ -36,10 +36,9 @@ class Outpost::BaseController < Outpost::ApplicationController
       raise e
     else
       render template: "/outpost/errors/error_#{status}", status: status, locals: { error: e }
-      report_error(e)
     end
 
-    return false
+    report_error(e)
   end
 
   #-------------------------
