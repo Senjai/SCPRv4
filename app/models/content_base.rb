@@ -26,10 +26,10 @@ module ContentBase
   }
   
   #--------------------
-  # The classes to be included when querying Sphinx with
-  # ContentBase.search. These classes need to all have 
-  # the same attributes and indexes in their +define_index+
-  # block.
+  # This used the be the array of "classes that are content",
+  # but we've since moved away from that concept.
+  # Don't use it - just be explicit about which classes you
+  # want to search across.
   CONTENT_CLASSES = [
     NewsStory,
     ShowSegment,
