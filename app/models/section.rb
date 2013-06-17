@@ -55,6 +55,7 @@ class Section < ActiveRecord::Base
     end
     
     ContentBase.search({
+      :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment]
       :page        => options[:page],
       :per_page    => options[:per_page],
       :with        => { category: self.categories.map { |c| c.id } }
