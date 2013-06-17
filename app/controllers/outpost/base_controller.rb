@@ -35,9 +35,11 @@ class Outpost::BaseController < Outpost::ApplicationController
     if Rails.application.config.consider_all_requests_local
       raise e
     else
-      render template: "/outpost/errors/error_#{status}", status: status, locals: { error: e } and return
+      render template: "/outpost/errors/error_#{status}", status: status, locals: { error: e }
       report_error(e)
     end
+
+    return false
   end
 
   #-------------------------

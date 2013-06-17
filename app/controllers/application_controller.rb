@@ -45,6 +45,8 @@ class ApplicationController < ActionController::Base
       
       report_error(e)
     end
+
+    return false
   end
 
   #----------

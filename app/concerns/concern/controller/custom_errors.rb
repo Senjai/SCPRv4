@@ -21,6 +21,7 @@ module Concern
         else
           render template: "/errors/error_#{status}", status: status, locals: { errors: e }
           report_error(e)
+          return false
         end
       end
       
