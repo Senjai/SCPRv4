@@ -40,8 +40,6 @@ class ShowEpisode < ActiveRecord::Base
                           :order       => "position"
 
   accepts_json_input_for :rundowns
-  alias_method :rundown_json, :rundowns_json
-  alias_method :rundown_json=, :rundowns_json=
 
   #-------------------
   # Validations
