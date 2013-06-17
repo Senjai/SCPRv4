@@ -42,4 +42,12 @@ json.cache! [Api::Public::V2::VERSION, "v1", event] do
       json.public_url event.kpcc_program.public_url
     end
   end
+
+  json.assets do |asset|
+    json.partial! "api/public/v2/assets/collection", assets: event.assets
+  end
+
+  json.audio do
+    json.partial! "api/public/v2/audio/collection", audio: event.audio
+  end
 end

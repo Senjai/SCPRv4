@@ -104,7 +104,7 @@ class ProgramsController < ApplicationController
     @program = KpccProgram.find_by_slug(params[:show]) || OtherProgram.find_by_slug(params[:show])
     
     if !@program
-      raise_404
+      render_error(404, ActionController::RoutingError.new("Not Found")) and return false
     end
   end
 

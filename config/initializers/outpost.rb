@@ -43,3 +43,14 @@ Outpost::Config.configure do |config|
   config.excluded_form_fields         = ["django_content_type_id"]
   config.excluded_list_columns        = ["body", "django_content_type_id"]
 end
+
+
+module Outpost
+  module Controller
+    module CustomErrors
+      def report_error(e)
+        ::NewRelic.log_error(e)
+      end
+    end
+  end
+end
