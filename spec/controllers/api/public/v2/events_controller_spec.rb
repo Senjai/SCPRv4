@@ -9,7 +9,10 @@ describe Api::Public::V2::EventsController do
 
   describe "GET show" do
     it "finds the object if it exists" do
-      event = create :event, :published
+      event = create :event, :published,
+        kpcc_program: create(:kpcc_program),
+        archive_description: "blahblabhalh"
+
       get :show, { id: event.id }.merge(request_params)
       assigns(:event).should eq event
       response.should render_template "show"
