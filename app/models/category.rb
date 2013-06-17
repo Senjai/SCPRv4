@@ -107,7 +107,7 @@ class Category < ActiveRecord::Base
     segments = ContentBase.search({
       :classes     => [ShowSegment],
       :limit       => 1,
-      :with        => { :category => self.id },
+      :with        => { category: self.id },
       :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
     })
 
