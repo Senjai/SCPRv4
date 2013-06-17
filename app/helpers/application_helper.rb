@@ -187,6 +187,7 @@ module ApplicationHelper
   
   def get_latest_arts
     ContentBase.search({
+      :classes     => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit       => 12,
       :with        => { category_is_news: false },
       :without     => { category: '' }
@@ -197,6 +198,7 @@ module ApplicationHelper
   
   def get_latest_news
     ContentBase.search({
+      :classes     => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit       => 12,
       :with        => { category_is_news: true }
     })

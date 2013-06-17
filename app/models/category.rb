@@ -82,6 +82,7 @@ class Category < ActiveRecord::Base
     # -- now try slideshows -- #
 
     slideshow = ContentBase.search({
+      :classes     => [NewsStory, BlogEntry, ShowSegment]
       :limit       => 1,
       :with        => { category: self.id, is_slideshow: true },
       :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }

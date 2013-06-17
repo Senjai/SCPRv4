@@ -68,7 +68,7 @@ class Podcast < ActiveRecord::Base
         klasses.push BlogEntry
 
       else
-        klasses = CONTENT_CLASSES if item_type == "content"
+        klasses = [NewsStory, BlogEntry, ShowSegment, ShowEpisode] if item_type == "content"
       end
       
       content_query(limit, klasses, conditions)

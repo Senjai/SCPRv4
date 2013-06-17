@@ -59,7 +59,7 @@ module ContentBase
     options.reverse_merge!({
       :classes     => CONTENT_CLASSES,
       :page        => 1,
-      :order       => :published_at,
+      :order       => :public_datetime,
       :sort_mode   => :desc,
       :retry_stale => true,
       :populate    => true

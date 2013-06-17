@@ -62,17 +62,27 @@ class ContentShell < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
-    indexes bylines.user.name, as: :bylines
-    has category.id, as: :category
-    has category.is_news, as: :category_is_news
     has published_at
     has updated_at
-    has status
-    has "1", as: :findable, type: :boolean
-    has "CRC32(CONCAT('content/shell:',#{ContentShell.table_name}.id))", type: :integer, as: :obj_key
+    has "CRC32(CONCAT('#{ContentShell.content_key}:',#{ContentShell.table_name}.id))", type: :integer, as: :obj_key
+
+    # For Bio pages
+    indexes bylines.user.name, as: :bylines
+
+    # For category/homepage building
+    has category.id, as: :category
+
+    # For megamenu
+    has category.is_news, as: :category_is_news
+
+    # For Feeds - we only want to send our original content to RSS
+    # (not stuff copies from AP or NPR, for example)
     has "1", as: :is_source_kpcc, type: :boolean
-    has "0", as: :is_slideshow, type: :boolean
-    has "0", as: :has_audio, type: :boolean
+
+    # Required attributes for ContentBase.search
+    has "1", as: :findable, type: :boolean
+    has published_at, as: :public_datetime
+    has status
   end
   
   #-------------------

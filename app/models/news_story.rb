@@ -76,18 +76,31 @@ class NewsStory < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
-    indexes bylines.user.name, as: :bylines
-    has category.id, :as => :category
-    has category.is_news, :as => :category_is_news
     has published_at
     has updated_at
-    has status
-    has "1", as: :findable, type: :boolean
+    has "CRC32(CONCAT('#{NewsStory.content_key}:',#{NewsStory.table_name}.id))", :type => :integer, :as => :obj_key
+
+    # For Bio pages
+    indexes bylines.user.name, as: :bylines
+
+    # For megamenu
+    has category.is_news, as: :category_is_news
+
+    # For RSS Feed
     has "(#{NewsStory.table_name}.source <=> 'kpcc')", :as => :is_source_kpcc, :type => :boolean
-    has "CRC32(CONCAT('news/story:',#{NewsStory.table_name}.id))", :type => :integer, :as => :obj_key
+    
+    # For category/homepage building
     has "(#{NewsStory.table_name}.story_asset_scheme <=> 'slideshow')", :type => :boolean, :as => :is_slideshow
+    has category.id, as: :category
+
+    # For podcasts
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", :as => :has_audio, :type => :boolean
     join audio
+
+    # Required attributes for ContentBase.search
+    has published_at, as: :public_datetime
+    has "1", as: :findable, type: :boolean
+    has status
   end
     
   #----------

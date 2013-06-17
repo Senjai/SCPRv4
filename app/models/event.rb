@@ -88,6 +88,11 @@ class Event < ActiveRecord::Base
     indexes location_name
     indexes city
     has starts_at
+
+    # Required attributes for ContentBase.search
+    has starts_at, as: :public_datetime
+    has "1", as: :findable
+    has status
   end
   
   # -------------------

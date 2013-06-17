@@ -3,7 +3,7 @@ module Api::Private::V2
     DEFAULTS = {
       :types        => "news,blogs,segments,episodes",
       :limit        => 10,
-      :order        => "published_at",
+      :order        => "public_datetime",
       :sort_mode    => :desc, # Symbol plz
       :page         => 1 # o, rly?
     }
@@ -78,7 +78,9 @@ module Api::Private::V2
         "blogs"       => [BlogEntry],
         "segments"    => [ShowSegment],
         "episodes"    => [ShowEpisode],
-        "abstracts"   => [Abstract]
+        "abstracts"   => [Abstract],
+        "queries"     => [PijQuery],
+        "events"      => [Event]
       }
       
       params[:types] ||= DEFAULTS[:types]

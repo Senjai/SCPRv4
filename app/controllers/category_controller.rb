@@ -51,6 +51,7 @@ class CategoryController < ApplicationController
     enforce_page_limits(options[:limit])
     
     ContentBase.search({
+      :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
       :page        => params[:page],
       :per_page    => options[:limit],
       :with        => { category: categories.map { |c| c.id } }
@@ -69,10 +70,11 @@ class CategoryController < ApplicationController
     categories.each do |sec|
       # get stories in this section
       content = ContentBase.search({
-          :limit       => 5,
-          :with        => { :category => sec.id },
-          :without_any => { :obj_key => without.obj_key.to_crc32 }
-        })
+        :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
+        :limit       => 5,
+        :with        => { :category => sec.id },
+        :without_any => { :obj_key => without.obj_key.to_crc32 }
+      })
       
       top = nil
       more = []
