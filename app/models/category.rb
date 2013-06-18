@@ -45,7 +45,7 @@ class Category < ActiveRecord::Base
     end
     
     args = {
-      :classes  => [NewsStory, ContentShell, BlogEntry, ShowSegment]
+      :classes  => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :page     => page,
       :per_page => per_page,
       :with     => { category: self.id }
@@ -83,7 +83,7 @@ class Category < ActiveRecord::Base
     # -- now try slideshows -- #
 
     slideshow = ContentBase.search({
-      :classes     => [NewsStory, BlogEntry, ShowSegment]
+      :classes     => [NewsStory, BlogEntry, ShowSegment],
       :limit       => 1,
       :with        => { category: self.id, is_slideshow: true },
       :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
