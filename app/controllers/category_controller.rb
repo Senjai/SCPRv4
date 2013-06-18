@@ -54,7 +54,10 @@ class CategoryController < ApplicationController
       :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
       :page        => params[:page],
       :per_page    => options[:limit],
-      :with        => { category: categories.map { |c| c.id } }
+      :with        => { 
+        :category => categories.map { |c| c.id },
+        :is_live  => true
+      }
     })
   end
 
@@ -72,7 +75,10 @@ class CategoryController < ApplicationController
       content = ContentBase.search({
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
-        :with        => { category: sec.id },
+        :with        => { 
+          :category => sec.id,
+          :is_live  => true
+        },
         :without_any => { obj_key: without.obj_key.to_crc32 }
       })
       

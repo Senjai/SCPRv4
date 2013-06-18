@@ -189,7 +189,10 @@ module ApplicationHelper
     ContentBase.search({
       :classes     => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit       => 12,
-      :with        => { category_is_news: false },
+      :with        => { 
+        :category_is_news => false,
+        :is_live          => true
+      },
       :without     => { category: '' }
     })
   end
@@ -200,7 +203,10 @@ module ApplicationHelper
     ContentBase.search({
       :classes     => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit       => 12,
-      :with        => { category_is_news: true }
+      :with        => { 
+        :category_is_news => true,
+        :is_live          => true
+      }
     })
   end
   

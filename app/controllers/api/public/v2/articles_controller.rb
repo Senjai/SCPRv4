@@ -106,7 +106,9 @@ module Api::Public::V2
     private
 
     def set_conditions
-      @conditions = {}
+      @conditions = {
+        :is_live => true
+      }
     end
 
     def set_classes

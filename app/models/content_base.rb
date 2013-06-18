@@ -50,11 +50,9 @@ module ContentBase
   # ContentBase classes and mix in some default search
   # parameters.
   def search(*args)
-    options = args.extract_options!
-    query   = args[0].to_s
-    
-    default_attributes = { is_live: true }
-    
+    options   = args.extract_options!
+    query     = args[0].to_s
+
     options.reverse_merge!({
       :classes     => CONTENT_CLASSES,
       :page        => 1,
@@ -63,12 +61,6 @@ module ContentBase
       :retry_stale => true,
       :populate    => true
     })
-    
-    if options[:with].present?
-      options[:with] = options[:with].reverse_merge(default_attributes)
-    else
-      options[:with] = default_attributes
-    end
 
     begin
       ThinkingSphinx.search(query, options)
