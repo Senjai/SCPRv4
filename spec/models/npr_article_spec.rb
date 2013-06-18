@@ -34,7 +34,7 @@ describe NprArticle do
     it 'sets new to false for imported stories' do
       remote_article = create :npr_article
       remote_article.import
-      remote_article[:new].should eq false
+      remote_article[:is_new].should eq false
     end
 
     it 'adds in related links if an HTML link is available' do
