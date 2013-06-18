@@ -29,7 +29,7 @@
   
 <% elsif @program.display_episodes %>
   <% nav = paginate @episodes, params: { anchor: "archive"} %>
-  <section class="show-episodes">   
+  <section class="show-episodes">
     <%= any_to_list? @episodes, title: "Episodes" do %>
       <h2>Recently on <%= @program.title %></h2>
       <%= nav if @episodes.current_page > 1 %>
