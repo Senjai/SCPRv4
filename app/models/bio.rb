@@ -66,12 +66,15 @@ class Bio < ActiveRecord::Base
              .page(page).per(per_page)
     else
       ContentByline.search('', 
-        :classes => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-        order:      :public_datetime,
-        sort_mode:  :desc,
-        with:       { user_id: self.id, status: ContentBase::STATUS_LIVE },
-        per_page:   per_page,
-        page:       page
+        :classes      => [NewsStory, BlogEntry, ShowSegment, ContentShell],
+        :order        => :public_datetime,
+        :sort_mode    => :desc,
+        :per_page     => per_page,
+        :page         => page,
+        :with         => { 
+          :user_id => self.id, 
+          :status  => ContentBase::STATUS_LIVE
+        }
       )
     end
   end
