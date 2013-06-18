@@ -131,6 +131,14 @@ module Api::Private::V2
 
     #---------------------------
     
+    # Hello. You've stumbled across this because you're 
+    # trying to figure out why unpublished content is 
+    # showing up in the aggregator. I'll tell you why.
+    #
+    # Remember that "true" and "false" parameters don't
+    # get converted to actual Ruby boolean values. 
+    # Use "1" and "0". Thinking Sphinx or ActiveRecord
+    # will convert them accordingly.
     def sanitize_conditions
       @conditions = params[:with]
     end
