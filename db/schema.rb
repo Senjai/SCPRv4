@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130614220921) do
+ActiveRecord::Schema.define(:version => 20130618174651) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -670,7 +670,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
     t.boolean  "display_episodes",                          :default => true, :null => false
     t.boolean  "display_segments",                          :default => true, :null => false
     t.integer  "blog_id"
-    t.string   "video_player",        :limit => 20
     t.string   "audio_dir",           :limit => 50
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                  :null => false
@@ -813,10 +812,8 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
     t.integer  "status",                             :null => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
-    t.integer  "category_id"
   end
 
-  add_index "shows_episode", ["category_id"], :name => "shows_episode_42dc49bc"
   add_index "shows_episode", ["show_id"], :name => "shows_episode_show_id"
   add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
 
