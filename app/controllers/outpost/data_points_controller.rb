@@ -7,7 +7,7 @@ class Outpost::DataPointsController < Outpost::ResourceController
   define_list do |l|
     l.default_order = "group_name"
     l.default_sort_mode = "asc"
-    l.per_page = :all
+    l.per_page = 200
     
     l.column :group_name, header: "Group"
     l.column :title
