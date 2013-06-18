@@ -33,7 +33,6 @@ module ContentBase
   CONTENT_CLASSES = [
     NewsStory,
     ShowSegment,
-    ShowEpisode,
     BlogEntry,
     ContentShell
   ]
