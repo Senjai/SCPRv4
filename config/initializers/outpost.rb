@@ -33,8 +33,7 @@ Outpost::Config.configure do |config|
     "RemoteArticle",
     "Section",
     "ShowEpisode",
-    "ShowSegment",
-    "VideoShell"
+    "ShowSegment"
   ]
   
   config.user_class                   = "AdminUser"
