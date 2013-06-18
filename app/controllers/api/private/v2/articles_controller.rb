@@ -1,7 +1,7 @@
 module Api::Private::V2
   class ArticlesController < BaseController
     DEFAULTS = {
-      :types        => "news,blogs,segments,episodes",
+      :types        => "news,blogs,segments",
       :limit        => 10,
       :order        => "public_datetime",
       :sort_mode    => :desc, # Symbol plz
@@ -77,7 +77,6 @@ module Api::Private::V2
         "news"        => [NewsStory, ContentShell],
         "blogs"       => [BlogEntry],
         "segments"    => [ShowSegment],
-        "episodes"    => [ShowEpisode],
         "abstracts"   => [Abstract],
         "events"      => [Event]
       }
