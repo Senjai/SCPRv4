@@ -38,22 +38,3 @@
     <% end %>
   </section>  
 <% end %>
-
-<% if @program.video_player.present? %>
-  <section class="show-video">
-    <h2>Video</h2>
-    <div class="video-player">
-      <div style="display:none"></div>
-      <script language="JavaScript" type="text/javascript" src="http://admin.brightcove.com/js/BrightcoveExperiences.js"></script>
-      <object id="video-<%=@program.video_player%>" class="BrightcoveExperience">
-        <param name="bgcolor" value="#FFFFFF" />
-        <param name="width" value="600" />
-        <param name="height" value="400" />
-        <param name="playerID" value="<%=@program.video_player%>" />
-        <param name="isVid" value="true" />
-        <param name="isUI" value="true" />
-        <param name="dynamicStreaming" value="true" />
-      </object>
-    </div>
-  </section>
-<% end %>
