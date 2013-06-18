@@ -71,12 +71,6 @@ class ShowEpisode < ActiveRecord::Base
     has status
     has published_at
     has updated_at
-    has "CRC32(CONCAT('#{ShowEpisode.content_key}:'," \
-        "#{ShowEpisode.table_name}.id))", 
-        type: :integer, as: :obj_key
-
-    # For RSS feeds
-    has "1", as: :is_source_kpcc, type: :boolean
 
     # For podcasts
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
@@ -84,25 +78,11 @@ class ShowEpisode < ActiveRecord::Base
     join audio
 
     # Required attributes for ContentBase.search
+    # For ShowEpisode, this is needed just for the
+    # podcast feed.
     has air_date, as: :public_datetime
     has "status = #{ContentBase::STATUS_LIVE}", 
         as: :is_live, type: :boolean
-  end
-
-  #--------------------
-  # Teaser just returns the body.
-  def teaser
-    self.body
-  end
-
-  def short_headline
-    self.headline
-  end
-
-  #----------
-  # Fake the byline
-  def byline
-    self.show.title
   end
 
   #----------
@@ -116,40 +96,6 @@ class ShowEpisode < ActiveRecord::Base
       :day            => "%02d" % self.persisted_record.air_date.day,
       :trailing_slash => true
     }
-  end
-  
-    #-------------------
-
-  def to_article
-    @to_article ||= Article.new({
-      :original_object    => self,
-      :id                 => self.obj_key,
-      :title              => self.short_headline,
-      :short_title        => self.short_headline,
-      :public_datetime    => self.air_date,
-      :teaser             => self.teaser,
-      :body               => self.teaser,
-      :assets             => self.assets,
-      :audio              => self.audio.available,
-      :byline             => self.byline,
-      :public_url         => self.public_url,
-      :edit_url           => self.admin_edit_url
-    })
-  end
-
-  #-------------------
-
-  def to_abstract
-    @to_abstract ||= Abstract.new({
-      :original_object        => self,
-      :headline               => self.short_headline,
-      :summary                => self.teaser,
-      :source                 => "KPCC",
-      :url                    => self.public_url,
-      :assets                 => self.assets,
-      :audio                  => self.audio.available,
-      :article_published_at   => self.published_at
-    })
   end
 
   #----------
