@@ -26,4 +26,17 @@ FactoryGirl.define do
     author
     sequence(:position)
   end
+
+  factory :blog_entry do
+    sequence(:headline) { |n| "Some Content #{n}" }
+    sequence(:short_headline) { |n| "Short #{n}" }
+
+    body    { "Body for #{headline}" }
+    teaser  { "Teaser for #{headline}" }
+
+    blog
+    slug { headline.parameterize }
+
+    published
+  end
 end

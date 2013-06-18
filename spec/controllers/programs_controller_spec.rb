@@ -154,7 +154,7 @@ describe ProgramsController do
       render_views
       
       it "renders the view" do
-        segment = create :segment
+        segment = create :show_segment
         get :segment, segment.route_hash
       end
     end
@@ -190,7 +190,7 @@ describe ProgramsController do
       render_views
       
       it "renders the view" do
-        episode = create :episode
+        episode = create :show_episode
         get :episode, episode.route_hash
       end
     end

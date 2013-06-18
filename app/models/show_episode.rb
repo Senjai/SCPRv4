@@ -10,7 +10,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::RelatedContentAssociation
-  include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
@@ -44,7 +43,9 @@ class ShowEpisode < ActiveRecord::Base
   #-------------------
   # Validations
   validates :show, presence: true
+  validates :status, presence: true
   validates :air_date, presence: true, if: :should_validate?
+  validates :body, presence: { message: "can't be blank when publishing", if: :should_validate? }
   
   def needs_validation?
     self.pending? || self.published?
@@ -52,7 +53,7 @@ class ShowEpisode < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  before_validation :generate_headline, if: -> { self.headline.blank? }
+  before_save :generate_headline, if: -> { self.headline.blank? }
 
   def generate_headline
     if self.air_date.present? && self.show.present?
