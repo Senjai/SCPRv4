@@ -36,7 +36,9 @@ module Concern
         
         # Compact to make sure no nil records get through - those would
         # be unpublished content.
-        content.compact.uniq.sort_by { |c| c.published_at }.reverse
+        content.compact.uniq
+          .map(&:to_article)
+          .sort { |a, b| b.public_datetime <=> a.public_datetime }
       end
 
 

@@ -56,11 +56,11 @@ describe Concern::Associations::RelatedContentAssociation do
     end
     
     it "doesn't return unpublished content" do
-      @object.related_content.should_not include @post
+      @object.related_content.should_not include @post.to_article
     end
 
     it "Returns all the related records and sorted by published_at desc" do
-      @object.related_content.should eq [@segment, @shell, @story]
+      @object.related_content.should eq [@segment, @shell, @story].map(&:to_article)
     end
 
     it "doesn't return duplicate content" do
