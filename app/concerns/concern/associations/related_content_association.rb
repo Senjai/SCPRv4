@@ -14,10 +14,6 @@ module Concern
         
         after_save :_destroy_incoming_references, if: -> { self.unpublishing? }
         accepts_json_input_for :outgoing_references
-
-        alias_method :related_content_json, :outgoing_references_json
-        alias_method :related_content_json=, :outgoing_references_json=
-
       end
       
       #-------------------------
