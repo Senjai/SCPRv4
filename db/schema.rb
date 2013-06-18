@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130614220921) do
+ActiveRecord::Schema.define(:version => 20130618233125) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -27,14 +27,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
   add_index "abstracts", ["category_id"], :name => "index_abstracts_on_category_id"
   add_index "abstracts", ["source"], :name => "index_abstracts_on_source"
 
-  create_table "ascertainment_ascertainmentrecord", :force => true do |t|
-    t.integer "content_id",                  :null => false
-    t.string  "locations",    :limit => 200
-    t.string  "asc_types",    :limit => 200
-    t.string  "verticals",    :limit => 200
-    t.string  "content_type", :limit => 20
-  end
-
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_id",                                         :null => false
     t.integer "position",                           :default => 99, :null => false
@@ -47,36 +39,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
   add_index "assethost_contentasset", ["content_id"], :name => "index_assethost_contentasset_on_content_id"
   add_index "assethost_contentasset", ["content_type", "content_id"], :name => "index_assethost_contentasset_on_content_type_and_content_id"
   add_index "assethost_contentasset", ["position"], :name => "index_assethost_contentasset_on_asset_order"
-
-  create_table "auth_group", :force => true do |t|
-    t.string "name", :limit => 80, :null => false
-  end
-
-  add_index "auth_group", ["name"], :name => "name", :unique => true
-
-  create_table "auth_group_permissions", :force => true do |t|
-    t.integer "group_id",      :null => false
-    t.integer "permission_id", :null => false
-  end
-
-  add_index "auth_group_permissions", ["group_id", "permission_id"], :name => "group_id", :unique => true
-  add_index "auth_group_permissions", ["permission_id"], :name => "permission_id_refs_id_4de83ca7792de1"
-
-  create_table "auth_message", :force => true do |t|
-    t.integer "user_id",                       :null => false
-    t.text    "message", :limit => 2147483647, :null => false
-  end
-
-  add_index "auth_message", ["user_id"], :name => "auth_message_user_id"
-
-  create_table "auth_permission", :force => true do |t|
-    t.string  "name",            :limit => 50,  :null => false
-    t.integer "content_type_id",                :null => false
-    t.string  "codename",        :limit => 100, :null => false
-  end
-
-  add_index "auth_permission", ["content_type_id", "codename"], :name => "content_type_id", :unique => true
-  add_index "auth_permission", ["content_type_id"], :name => "auth_permission_content_type_id"
 
   create_table "auth_user", :force => true do |t|
     t.string   "username"
@@ -92,22 +54,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
   end
 
   add_index "auth_user", ["username", "can_login"], :name => "index_auth_user_on_username_and_can_login"
-
-  create_table "auth_user_groups", :force => true do |t|
-    t.integer "user_id",  :null => false
-    t.integer "group_id", :null => false
-  end
-
-  add_index "auth_user_groups", ["group_id"], :name => "group_id_refs_id_321a8efef0ee9890"
-  add_index "auth_user_groups", ["user_id", "group_id"], :name => "user_id", :unique => true
-
-  create_table "auth_user_user_permissions", :force => true do |t|
-    t.integer "user_id",       :null => false
-    t.integer "permission_id", :null => false
-  end
-
-  add_index "auth_user_user_permissions", ["permission_id"], :name => "permission_id_refs_id_6d7fb3c2067e79cb"
-  add_index "auth_user_user_permissions", ["user_id", "permission_id"], :name => "user_id", :unique => true
 
   create_table "bios_bio", :force => true do |t|
     t.integer  "user_id"
@@ -166,18 +112,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
   add_index "blogs_blogauthor", ["blog_id", "author_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
   add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
 
-  create_table "blogs_blogcategory", :force => true do |t|
-    t.integer  "blog_id",                                                     :null => false
-    t.string   "title"
-    t.string   "slug",       :limit => 50
-    t.datetime "created_at",               :default => '2012-06-08 02:03:41', :null => false
-    t.datetime "updated_at",               :default => '2012-06-08 02:03:41', :null => false
-    t.integer  "wp_id"
-  end
-
-  add_index "blogs_blogcategory", ["blog_id"], :name => "blogs_blogcategory_472bc96c"
-  add_index "blogs_blogcategory", ["slug"], :name => "blogs_blogcategory_a951d5d6"
-
   create_table "blogs_entry", :force => true do |t|
     t.string   "headline"
     t.string   "slug",              :limit => 50
@@ -199,26 +133,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
   add_index "blogs_entry", ["category_id"], :name => "blogs_entry_42dc49bc"
   add_index "blogs_entry", ["status", "published_at"], :name => "index_blogs_entry_on_status_and_published_at"
-
-  create_table "blogs_entryblogcategory", :force => true do |t|
-    t.integer  "entry_id",                                            :null => false
-    t.integer  "blog_category_id",                                    :null => false
-    t.boolean  "is_primary",       :default => false,                 :null => false
-    t.datetime "created_at",       :default => '2012-06-08 02:03:41', :null => false
-    t.datetime "updated_at",       :default => '2012-06-08 02:03:41', :null => false
-  end
-
-  add_index "blogs_entryblogcategory", ["blog_category_id"], :name => "blogs_entryblogcategory_c81f43a6"
-  add_index "blogs_entryblogcategory", ["entry_id"], :name => "blogs_entryblogcategory_38a62041"
-
-  create_table "blogs_entrycategories", :force => true do |t|
-    t.integer "entry_id",    :null => false
-    t.integer "category_id", :null => false
-    t.boolean "is_primary",  :null => false
-  end
-
-  add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
-  add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
 
   create_table "contentbase_category", :force => true do |t|
     t.string   "title"
@@ -257,17 +171,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
   add_index "contentbase_contentbyline", ["content_id"], :name => "index_contentbase_contentbyline_on_content_id"
   add_index "contentbase_contentbyline", ["content_type", "content_id"], :name => "index_contentbase_contentbyline_on_content_type_and_content_id"
   add_index "contentbase_contentbyline", ["user_id"], :name => "contentbase_contentbyline_fbfc09f1"
-
-  create_table "contentbase_contentcategory", :force => true do |t|
-    t.integer  "category_id",                :null => false
-    t.integer  "content_id",                 :null => false
-    t.string   "content_type", :limit => 20
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
-  add_index "contentbase_contentcategory", ["category_id"], :name => "contentbase_contentcategory_42dc49bc"
-  add_index "contentbase_contentcategory", ["content_type", "content_id"], :name => "index_contentbase_contentcategory_on_content_type_and_content_id"
 
   create_table "contentbase_contentshell", :force => true do |t|
     t.string   "headline"
@@ -326,21 +229,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
   add_index "contentbase_misseditcontent", ["content_id"], :name => "index_contentbase_misseditcontent_on_content_id"
   add_index "contentbase_misseditcontent", ["content_type", "content_id"], :name => "index_contentbase_misseditcontent_on_content_type_and_content_id"
 
-  create_table "contentbase_videoshell", :force => true do |t|
-    t.string   "headline",     :limit => 200,                                           :null => false
-    t.text     "body",         :limit => 2147483647,                                    :null => false
-    t.integer  "status",                             :default => 0,                     :null => false
-    t.datetime "published_at",                       :default => '2012-03-02 15:14:07', :null => false
-    t.string   "slug",         :limit => 50,                                            :null => false
-    t.datetime "created_at",                                                            :null => false
-    t.datetime "updated_at",                                                            :null => false
-    t.integer  "category_id"
-  end
-
-  add_index "contentbase_videoshell", ["category_id"], :name => "contentbase_videoshell_42dc49bc"
-  add_index "contentbase_videoshell", ["slug"], :name => "contentbase_videoshell_a951d5d6"
-  add_index "contentbase_videoshell", ["status", "published_at"], :name => "index_contentbase_videoshell_on_status_and_published_at"
-
   create_table "data_points", :force => true do |t|
     t.string   "group_name"
     t.string   "data_key"
@@ -365,32 +253,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
 
   add_index "distinct_schedule_slots", ["ends_at"], :name => "index_distinct_schedule_slots_on_ends_at"
   add_index "distinct_schedule_slots", ["starts_at"], :name => "index_distinct_schedule_slots_on_starts_at"
-
-  create_table "django_admin_log", :force => true do |t|
-    t.datetime "action_time",                           :null => false
-    t.integer  "user_id",                               :null => false
-    t.integer  "content_type_id"
-    t.text     "object_id",       :limit => 2147483647
-    t.string   "object_repr",     :limit => 200,        :null => false
-    t.integer  "action_flag",     :limit => 2,          :null => false
-    t.text     "change_message",  :limit => 2147483647, :null => false
-  end
-
-  add_index "django_admin_log", ["content_type_id"], :name => "django_admin_log_content_type_id"
-  add_index "django_admin_log", ["user_id"], :name => "django_admin_log_user_id"
-
-  create_table "django_content_type", :force => true do |t|
-    t.string "name",      :limit => 100, :null => false
-    t.string "app_label", :limit => 100, :null => false
-    t.string "model",     :limit => 100, :null => false
-  end
-
-  add_index "django_content_type", ["app_label", "model"], :name => "app_label", :unique => true
-
-  create_table "django_session", :primary_key => "session_key", :force => true do |t|
-    t.text     "session_data", :limit => 2147483647, :null => false
-    t.datetime "expire_date",                        :null => false
-  end
 
   create_table "edition_slots", :force => true do |t|
     t.string   "item_type"
@@ -742,7 +604,7 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
     t.datetime "published_at"
     t.string   "url",          :limit => 200
     t.string   "article_id"
-    t.boolean  "new",                                :default => true, :null => false
+    t.boolean  "is_new",                             :default => true, :null => false
     t.string   "type"
   end
 
@@ -850,12 +712,6 @@ ActiveRecord::Schema.define(:version => 20130614220921) do
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
   add_index "shows_segment", ["slug"], :name => "shows_segment_slug"
   add_index "shows_segment", ["status", "published_at"], :name => "index_shows_segment_on_status_and_published_at"
-
-  create_table "south_migrationhistory", :force => true do |t|
-    t.string   "app_name",  :null => false
-    t.string   "migration", :null => false
-    t.datetime "applied",   :null => false
-  end
 
   create_table "taggit_tag", :force => true do |t|
     t.string  "name",  :limit => 100, :null => false
