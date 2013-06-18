@@ -10,7 +10,7 @@
     <div class="span24">
   <% end %>
       <h3><%= link_to episode.headline, episode.public_path %></h3>
-      <p><%= episode.body %></p>
+      <p><%= episode.body.html_safe %></p>
     </div>
   </div>
 </div>
