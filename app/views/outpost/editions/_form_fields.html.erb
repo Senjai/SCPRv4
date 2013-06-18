@@ -23,7 +23,7 @@
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
           order: "updated_at",
           sort_mode: "desc",
-          with: { is_live: true }
+          with: { is_live: "1" }
         }
       }
     );
