@@ -63,17 +63,11 @@ class Abstract < ActiveRecord::Base
     has :source
     has category.id, as: :category
     has updated_at
+    has article_published_at
 
-    # We want to be able to include Abstracts among other content
-    # just by the published date and the status.
-    # Since the `published_at` field is called something different,
-    # and there is no actual "status", we just have to fake it 
-    # for Sphinx.
-    # Abstracts won't show up on the website because we haven't
-    # included the "Abstract" class in ContentBase::CONTENT_CLASSES.
-    has article_published_at, as: :published_at
-    has "5", as: :status, type: :integer
-    has "1", as: :findable, type: :boolean # So it'll show up.
+    # For ContentBase.search
+    has article_published_at, as: :public_datetime
+    has "1", as: :is_live, type: :boolean
   end
 
   attr_accessor :original_object
