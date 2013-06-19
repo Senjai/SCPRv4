@@ -7,7 +7,6 @@ class Outpost::CategoriesController < Outpost::ResourceController
   define_list do |l|
     l.default_order = "title"
     l.default_sort_mode = "asc"
-    l.per_page = :all
     
     l.column :title, sortable: true
     l.column :slug, sortable: true

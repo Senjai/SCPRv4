@@ -1,7 +1,7 @@
 <% add_to_page_title @story.headline %>
 <%= render_content @story, "opengraph" %>
 
-<%= cache ["show", "v10", @story] do %>
+<%= cache ["show", "v11", @story] do %>
   <%= render "/news/story", story: @story %>
 <% end %>
 

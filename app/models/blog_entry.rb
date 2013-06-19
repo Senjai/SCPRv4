@@ -32,11 +32,11 @@ class BlogEntry < ActiveRecord::Base
   ROUTE_KEY = "blog_entry"
   
   ASSET_SCHEMES = [
-    ["Full Width (default)", ""],
-    ["Float Right", "right"],
+    ["Top", "wide"],
+    ["Right", "float"],
     ["Slideshow", "slideshow"],
     ["Video", "video"],
-    ["No Display", "hidden"]
+    ["Hidden", "hidden"]
   ]
   
   #------------------

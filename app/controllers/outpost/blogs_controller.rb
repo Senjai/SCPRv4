@@ -4,7 +4,6 @@ class Outpost::BlogsController < Outpost::ResourceController
   define_list do |l|
     l.default_order = "is_active"
     l.default_sort_mode = "desc"
-    l.per_page = :all
     
     l.column :name
     l.column :slug
