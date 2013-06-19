@@ -37,7 +37,7 @@ RSpec.configure do |config|
   config.include AuthenticationHelper,  type: :feature
   
   config.before :suite do
-    DatabaseCleaner.clean_with :truncation, { except: STATIC_TABLES }
+    DatabaseCleaner.clean_with :truncation
     load "#{Rails.root}/db/seeds.rb"
     DatabaseCleaner.strategy = :transaction
     migration = -> { FixtureMigration.new.up }
@@ -71,5 +71,6 @@ RSpec.configure do |config|
   end
   
   config.after :suite do
+    DatabaseCleaner.clean_with :truncation
   end
 end
