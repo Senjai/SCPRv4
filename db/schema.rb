@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619000357) do
+ActiveRecord::Schema.define(:version => 20130619230931) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -28,11 +28,11 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
   add_index "abstracts", ["source"], :name => "index_abstracts_on_source"
 
   create_table "assethost_contentasset", :force => true do |t|
-    t.integer "content_id",                                         :null => false
-    t.integer "position",                           :default => 99, :null => false
-    t.integer "asset_id",                                           :null => false
+    t.integer "content_id"
+    t.integer "position",                           :default => 99
+    t.integer "asset_id"
     t.text    "caption",      :limit => 2147483647,                 :null => false
-    t.string  "content_type", :limit => 20
+    t.string  "content_type"
   end
 
   add_index "assethost_contentasset", ["content_id"], :name => "content_type_id"
@@ -147,24 +147,24 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
-    t.integer  "content_id",                 :null => false
+    t.integer  "content_id"
     t.datetime "fire_at"
-    t.string   "content_type", :limit => 20
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.string   "content_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "contentbase_contentalarm", ["content_id"], :name => "index_contentbase_contentalarm_on_content_id"
   add_index "contentbase_contentalarm", ["content_type", "content_id"], :name => "index_contentbase_contentalarm_on_content_type_and_content_id"
 
   create_table "contentbase_contentbyline", :force => true do |t|
-    t.integer  "content_id",                                :null => false
+    t.integer  "content_id"
     t.integer  "user_id"
-    t.string   "name",         :limit => 50,                :null => false
-    t.integer  "role",                       :default => 0, :null => false
-    t.string   "content_type", :limit => 20
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.string   "name",                        :null => false
+    t.integer  "role",         :default => 0, :null => false
+    t.string   "content_type"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   add_index "contentbase_contentbyline", ["content_id"], :name => "content_key"
@@ -190,11 +190,11 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
 
   create_table "contentbase_featuredcomment", :force => true do |t|
     t.integer  "bucket_id",                                         :null => false
-    t.integer  "content_id",                                        :null => false
+    t.integer  "content_id"
     t.integer  "status",                             :default => 0, :null => false
-    t.string   "username",     :limit => 50,                        :null => false
+    t.string   "username",                                          :null => false
     t.text     "excerpt",      :limit => 2147483647,                :null => false
-    t.string   "content_type", :limit => 20
+    t.string   "content_type"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
   end
@@ -205,24 +205,24 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
   add_index "contentbase_featuredcomment", ["status"], :name => "index_contentbase_featuredcomment_on_status"
 
   create_table "contentbase_featuredcommentbucket", :force => true do |t|
-    t.string   "title",      :limit => 50, :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "title",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "contentbase_misseditbucket", :force => true do |t|
-    t.string   "title",      :limit => 50, :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "title",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "contentbase_misseditcontent", :force => true do |t|
-    t.integer  "bucket_id",                                  :null => false
-    t.integer  "content_id",                                 :null => false
-    t.integer  "position",                   :default => 99, :null => false
-    t.string   "content_type", :limit => 20
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.integer  "bucket_id",                    :null => false
+    t.integer  "content_id"
+    t.integer  "position",     :default => 99, :null => false
+    t.string   "content_type"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
@@ -331,9 +331,9 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
 
   create_table "layout_breakingnewsalert", :force => true do |t|
-    t.string   "headline",     :limit => 140,                           :null => false
+    t.string   "headline",                                              :null => false
     t.time     "alert_time"
-    t.string   "alert_type",   :limit => 5,                             :null => false
+    t.string   "alert_type",                                            :null => false
     t.boolean  "is_published",                       :default => true,  :null => false
     t.boolean  "email_sent",                         :default => false, :null => false
     t.datetime "created_at",                                            :null => false
@@ -360,10 +360,10 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
   add_index "layout_homepage", ["status", "published_at"], :name => "index_layout_homepage_on_status_and_published_at"
 
   create_table "layout_homepagecontent", :force => true do |t|
-    t.integer "homepage_id",                                :null => false
-    t.integer "content_id",                                 :null => false
-    t.integer "position",                   :default => 99, :null => false
-    t.string  "content_type", :limit => 20
+    t.integer "homepage_id",                  :null => false
+    t.integer "content_id"
+    t.integer "position",     :default => 99, :null => false
+    t.string  "content_type"
   end
 
   add_index "layout_homepagecontent", ["content_id"], :name => "index_layout_homepagecontent_on_content_id"
@@ -375,7 +375,7 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
     t.integer  "duration"
     t.string   "enco_number"
     t.date     "enco_date"
-    t.integer  "content_id",                                        :null => false
+    t.integer  "content_id"
     t.text     "description",  :limit => 2147483647
     t.string   "byline"
     t.integer  "position",                           :default => 0, :null => false
@@ -419,11 +419,11 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
   add_index "media_imageinstance", ["instance_of_id"], :name => "media_imageinstance_29b6bd08"
 
   create_table "media_related", :force => true do |t|
-    t.integer "content_id",                                :null => false
-    t.integer "related_id",                                :null => false
-    t.string  "content_type", :limit => 20
-    t.string  "related_type", :limit => 20
-    t.integer "position",                   :default => 0, :null => false
+    t.integer "content_id",                  :null => false
+    t.integer "related_id",                  :null => false
+    t.string  "content_type"
+    t.string  "related_type"
+    t.integer "position",     :default => 0, :null => false
   end
 
   add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
