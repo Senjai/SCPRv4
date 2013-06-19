@@ -38,9 +38,6 @@ class RemoteArticle < ActiveRecord::Base
     has published_at
   end
 
-  alias_method :new, :is_new
-  alias_method :new=, :is_new=
-
   #---------------
 
   class << self
