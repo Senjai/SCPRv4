@@ -19,8 +19,7 @@ class FeedsController < ApplicationController
       :classes => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :limit   => 15,
       :with    => { 
-        :is_source_kpcc => true,
-        :is_live        => true
+        :is_source_kpcc => true
       },
       :without => { category: '' }
     })

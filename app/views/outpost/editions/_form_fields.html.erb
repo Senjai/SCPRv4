@@ -22,8 +22,7 @@
           types: 'news,blogs,segments,abstracts',
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
           order: "updated_at",
-          sort_mode: "desc",
-          with: { is_live: "1" }
+          sort_mode: "desc"
         }
       }
     );

@@ -49,8 +49,7 @@ class Category < ActiveRecord::Base
       :page     => page,
       :per_page => per_page,
       :with     => { 
-        :category => self.id,
-        :is_live  => true
+        :category => self.id
       }
     }
     
@@ -90,8 +89,7 @@ class Category < ActiveRecord::Base
       :limit       => 1,
       :with        => { 
         :category     => self.id, 
-        :is_slideshow => true,
-        :is_live      => true 
+        :is_slideshow => true
       },
       :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
     })
@@ -115,8 +113,7 @@ class Category < ActiveRecord::Base
       :classes     => [ShowSegment],
       :limit       => 1,
       :with        => { 
-        :category => self.id,
-        :is_live  => true
+        :category => self.id
       },
       :without_any => { obj_key: Array(args[:exclude]).collect { |c| c.obj_key.to_crc32 } }
     })

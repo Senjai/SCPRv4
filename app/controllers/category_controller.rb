@@ -55,8 +55,7 @@ class CategoryController < ApplicationController
       :page        => params[:page],
       :per_page    => options[:limit],
       :with        => { 
-        :category => categories.map { |c| c.id },
-        :is_live  => true
+        :category => categories.map { |c| c.id }
       }
     })
   end
@@ -76,8 +75,7 @@ class CategoryController < ApplicationController
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
         :with        => { 
-          :category => sec.id,
-          :is_live  => true
+          :category => sec.id
         },
         :without_any => { obj_key: without.obj_key.to_crc32 }
       })

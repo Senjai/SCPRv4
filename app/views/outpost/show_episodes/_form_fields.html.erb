@@ -31,7 +31,10 @@
             types: "segments",
             order: "updated_at", // Don't use published_at - we're finding unpublished content too.
             sort_mode: "desc",
-            with: { status: <%=ContentBase::STATUS_TEXT.keys.drop(1)%> }
+            with: { 
+              is_live: ["1", "0"], // True or False.
+              status: <%=ContentBase::STATUS_TEXT.keys.drop(1)%> 
+            }
           }
         });
     </script>

@@ -90,8 +90,7 @@ class Podcast < ActiveRecord::Base
   def content_query(limit, klasses, conditions={})
     ContentBase.search({
       :with    => conditions.reverse_merge({ 
-        :has_audio => true,
-        :is_live   => true 
+        :has_audio => true
       }), 
       :classes => klasses, 
       :limit   => limit

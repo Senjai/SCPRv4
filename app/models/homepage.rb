@@ -86,8 +86,7 @@ class Homepage < ActiveRecord::Base
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
         :with        => { 
-          :category => cat.id,
-          :is_live  => true 
+          :category => cat.id
         },
         :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } }
       })
