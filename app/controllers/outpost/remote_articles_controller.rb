@@ -43,7 +43,7 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
   #------------------
   
   def index
-    @records = @records.where(new: true)
+    @records = @records.where(is_new: true)
     respond_with :outpost, @records
   end
 
@@ -66,7 +66,7 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
   #--------------
   
   def skip
-    if @record.update_attributes(new: false)
+    if @record.update_attributes(is_new: false)
       flash[:notice] = "Skipped Remote Article: \"#{@record.to_title}\""
     else
       flash[:alert] = "Could not skip Remote Article"

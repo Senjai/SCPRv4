@@ -47,7 +47,7 @@ class ChrArticle < RemoteArticle
           :teaser       => npr_story.teaser,
           :published_at => npr_story.pubDate,
           :url          => npr_story.link_for("html"),
-          :new          => true
+          :is_new       => true
         )
         
         if cached_article.save
@@ -168,10 +168,10 @@ class ChrArticle < RemoteArticle
     
     #-------------------
     # Save the news story (including all associations),
-    # set the RemoteArticle to `:new => false`,
+    # set the RemoteArticle to `:is_new => false`,
     # and return the NewsStory that was generated.
     article.save!
-    self.update_attribute(:new, false)
+    self.update_attribute(:is_new, false)
     article
   end
 
