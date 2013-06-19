@@ -50,8 +50,9 @@ module ContentBase
   # ContentBase classes and mix in some default search
   # parameters.
   def search(*args)
-    options   = args.extract_options!
-    query     = args[0].to_s
+    options     = args.extract_options!
+    query       = args[0].to_s
+    conditions  = options[:with] || {}
 
     # We'll want to search only among live content 99% of the
     # time. For the times when we want unpublished stuff,
@@ -64,7 +65,7 @@ module ContentBase
       :sort_mode   => :desc,
       :retry_stale => true,
       :populate    => true,
-      :with        => options[:with].reverse_merge(is_live: true)
+      :with        => conditions.reverse_merge(is_live: true)
     })
 
     begin

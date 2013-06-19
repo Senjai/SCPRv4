@@ -10,6 +10,24 @@ describe ContentBase do
           ContentBase.search.to_a.sort_by { |o| o.class.name }.should eq @generated_content.sort_by { |o| o.class.name }
         end
       end
+
+      it 'only gets is_live stuff by default' do
+        unpublished = create :news_story, :draft
+        index_sphinx
+
+        results = ContentBase.search.to_a
+        results.should_not be_empty
+        results.should_not include unpublished
+      end
+
+      it 'can also get not-live stuff' do
+        unpublished = create :news_story, :draft
+        index_sphinx
+
+        results = ContentBase.search(with: { is_live: [true, false] }).to_a
+        results.should_not be_empty
+        results.should include unpublished
+      end
     end
     
     context "sphinx is not running" do
