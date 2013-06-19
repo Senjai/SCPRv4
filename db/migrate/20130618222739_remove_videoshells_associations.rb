@@ -30,7 +30,7 @@ class RemoveVideoshellsAssociations < ActiveRecord::Migration
     UserPermission.where(permission_id: p.id).delete_all
     p.delete
 
-    puts "deleted #{deleted.size} records"
+    puts "deleted #{deleted} records"
   end
 
   def down
