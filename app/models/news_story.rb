@@ -48,12 +48,12 @@ class NewsStory < ActiveRecord::Base
     ["Right", "float"],
     ["Slideshow", "slideshow"],
     ["Video", "video"],
-    ["No Display", "hidden"]
+    ["Hidden", "hidden"]
   ]
   
   EXTRA_ASSET_SCHEMES = [
-    ["Hide (default)", "hidden"],
-    ["Sidebar Display", "sidebar"]
+    ["Hidden", "hidden"],
+    ["Sidebar", "sidebar"]
   ]
   
   #-------------------

@@ -36,7 +36,7 @@ class ShowSegment < ActiveRecord::Base
     ["Right", "float"],
     ["Slideshow", "slideshow"],
     ["Video", "video"],
-    ["No Display", "hidden"]
+    ["Hidden", "hidden"]
   ]
   
   #-------------------
