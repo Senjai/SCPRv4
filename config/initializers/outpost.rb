@@ -31,8 +31,7 @@ Outpost::Config.configure do |config|
     "RecurringScheduleSlot",
     "RemoteArticle",
     "ShowEpisode",
-    "ShowSegment",
-    "VideoShell"
+    "ShowSegment"
   ]
   
   config.user_class                   = "AdminUser"

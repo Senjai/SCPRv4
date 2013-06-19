@@ -37,7 +37,7 @@ class RemoteArticle < ActiveRecord::Base
 
     has published_at
   end
-  
+
   #---------------
 
   class << self

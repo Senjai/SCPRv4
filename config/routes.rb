@@ -274,8 +274,6 @@ Scprv4::Application.routes.draw do
       post "preview", on: :collection
     end
 
-    resources :video_shells
-
     resources :tickets do
       get "search", on: :collection, as: :search
     end

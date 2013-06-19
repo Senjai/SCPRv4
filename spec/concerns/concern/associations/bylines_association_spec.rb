@@ -65,7 +65,7 @@ describe Concern::Associations::BylinesAssociation do
 
   describe "#grouped_bylines" do
     before :each do
-      @record = TestClass::Story.create!(headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
+      @record = create :test_class_story, :published
     
       @primary      = create :byline, role: ContentByline::ROLE_PRIMARY, content: @record
       @secondary    = create :byline, role: ContentByline::ROLE_SECONDARY, content: @record
@@ -87,7 +87,7 @@ describe Concern::Associations::BylinesAssociation do
   
   describe "#joined_bylines" do
     before :each do
-      @record = TestClass::Story.create!(headline: "Headline", body: "Body", slug: "slug1", published_at: Time.now, status: ContentBase::STATUS_LIVE)
+      @record = create :test_class_story, :published
     
       create :byline, role: ContentByline::ROLE_PRIMARY, name: "Bryan", content: @record
       create :byline, role: ContentByline::ROLE_SECONDARY, name: "Danny", content: @record
