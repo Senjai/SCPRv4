@@ -32,11 +32,11 @@ class ShowSegment < ActiveRecord::Base
   ROUTE_KEY = "segment"
   
   ASSET_SCHEMES = [
-    ["Full Width (default)", ""],
-    ["Float Right", "float"],
+    ["Top", "wide"],
+    ["Right", "float"],
     ["Slideshow", "slideshow"],
     ["Video", "video"],
-    ["No Display", "hidden"]
+    ["Hidden", "hidden"]
   ]
   
   #-------------------
