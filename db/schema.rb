@@ -565,14 +565,6 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
 
-  create_table "promotions", :force => true do |t|
-    t.string   "title"
-    t.string   "url"
-    t.integer  "asset_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "recurring_schedule_slots", :force => true do |t|
     t.integer  "program_id"
     t.string   "program_type"
@@ -624,46 +616,6 @@ ActiveRecord::Schema.define(:version => 20130619000357) do
   add_index "schedule_program", ["day", "start_time", "end_time"], :name => "index_schedule_program_on_day_and_start_time_and_end_time"
   add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"
   add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
-
-  create_table "section_blogs", :force => true do |t|
-    t.integer  "section_id"
-    t.integer  "blog_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "section_blogs", ["blog_id"], :name => "index_section_blogs_on_blog_id"
-  add_index "section_blogs", ["section_id"], :name => "index_section_blogs_on_section_id"
-
-  create_table "section_categories", :force => true do |t|
-    t.integer  "section_id"
-    t.integer  "category_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "section_categories", ["category_id"], :name => "index_section_categories_on_category_id"
-  add_index "section_categories", ["section_id"], :name => "index_section_categories_on_section_id"
-
-  create_table "section_promotions", :force => true do |t|
-    t.integer  "section_id"
-    t.integer  "promotion_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "section_promotions", ["promotion_id"], :name => "index_section_promotions_on_promotion_id"
-  add_index "section_promotions", ["section_id"], :name => "index_section_promotions_on_section_id"
-
-  create_table "sections", :force => true do |t|
-    t.string   "title"
-    t.string   "slug"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-    t.integer  "missed_it_bucket_id"
-  end
-
-  add_index "sections", ["missed_it_bucket_id"], :name => "index_sections_on_missed_it_bucket_id"
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
