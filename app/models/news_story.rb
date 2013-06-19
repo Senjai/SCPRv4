@@ -44,15 +44,15 @@ class NewsStory < ActiveRecord::Base
   ]
   
   ASSET_SCHEMES = [
-    ["Float Right (default)", ""],
-    ["Wide", "wide"],
+    ["Top", "wide"],
+    ["Right", "float"],
     ["Slideshow", "slideshow"],
     ["Video", "video"],
     ["No Display", "hidden"]
   ]
   
   EXTRA_ASSET_SCHEMES = [
-    ["Hide (default)", ""],
+    ["Hide (default)", "hidden"],
     ["Sidebar Display", "sidebar"]
   ]
   
