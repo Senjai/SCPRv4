@@ -48,9 +48,7 @@ class Category < ActiveRecord::Base
       :classes  => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :page     => page,
       :per_page => per_page,
-      :with     => { 
-        :category => self.id
-      }
+      :with     => { category: self.id }
     }
     
     if without_obj && without_obj.respond_to?("obj_key")
@@ -91,7 +89,7 @@ class Category < ActiveRecord::Base
         :category     => self.id, 
         :is_slideshow => true
       },
-      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+      :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
     })
 
     if slideshow.any?
@@ -112,10 +110,8 @@ class Category < ActiveRecord::Base
     segments = ContentBase.search({
       :classes     => [ShowSegment],
       :limit       => 1,
-      :with        => { 
-        :category => self.id
-      },
-      :without_any => { obj_key: Array(args[:exclude]).collect { |c| c.obj_key.to_crc32 } }
+      :with        => { category: self.id },
+      :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
     })
 
     if segments.any?

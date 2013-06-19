@@ -85,10 +85,8 @@ class Homepage < ActiveRecord::Base
       content = ContentBase.search({
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
-        :with        => { 
-          :category => cat.id
-        },
-        :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } }
+        :with        => { category: cat.id },
+        :without_any => { obj_key: citems.map { |c| c.obj_key.to_crc32 } }
       })
       
       more     = []
