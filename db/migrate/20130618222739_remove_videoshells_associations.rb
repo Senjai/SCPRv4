@@ -4,7 +4,7 @@ end
 
 class RemoveVideoshellsAssociations < ActiveRecord::Migration
   def up
-    deleted = []
+    deleted = 0
 
 
     [ 
@@ -18,15 +18,18 @@ class RemoveVideoshellsAssociations < ActiveRecord::Migration
     ].each do |klass|
       records = klass.where(content_type: "VideoShell")
       records.destroy_all
-      deleted << records.size
+      deleted += records.size
     end
 
     related = Related.where(related_type: "VideoShell")
     related.destroy_all
-    deleted << related.size
+    deleted += related.size
 
 
-    Permission.where(resource: "VideoShell").first.delete
+    p = Permission.where(resource: "VideoShell").first
+    UserPermission.where(permission_id: p.id).delete_all
+    p.delete
+
     puts "deleted #{deleted.size} records"
   end
 
