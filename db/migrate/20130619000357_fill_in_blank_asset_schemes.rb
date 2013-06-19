@@ -20,9 +20,7 @@ class FillInBlankAssetSchemes < ActiveRecord::Migration
 
   def update_asset_scheme(klass, column, scheme)
     klass.where("#{column} = ? or #{column} is null", '').find_each do |obj|
-      if asset = obj.asset
-        obj.update_column(column, scheme)
-      end
+      obj.update_column(column, scheme)
     end
   end
 end
