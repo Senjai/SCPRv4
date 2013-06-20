@@ -215,7 +215,7 @@ class RecurringScheduleSlot < ActiveRecord::Base
   # This will only be true for one slot...
   # But we need to check.
   def split_weeks?
-    @split_weeks ||= self.end_time < self.start_time
+    self.end_time < self.start_time
   end
   
   #--------------
