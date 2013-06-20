@@ -66,8 +66,7 @@ class Bio < ActiveRecord::Base
              .page(page).per(per_page)
     else
       ContentByline.search('', 
-        :classes      => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-        :order        => :public_datetime,
+        :order        => :published_at,
         :sort_mode    => :desc,
         :per_page     => per_page,
         :page         => page,
