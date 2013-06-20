@@ -191,11 +191,11 @@ class RecurringScheduleSlot < ActiveRecord::Base
   #--------------
   # Methods to return real Time objects.
   def starts_at
-    at_time(:start_time)
+    @starts_at ||= at_time(:start_time)
   end
 
   def ends_at
-    at_time(:end_time)
+    @ends_at ||= at_time(:end_time)
   end
 
   #-----------------
