@@ -108,7 +108,9 @@ class RecurringScheduleSlot < ActiveRecord::Base
       # where the requested time is between
       # start_time and end_time. This will
       # work 99% of the time.
-      slots = self.where("start_time < end_time and start_time <= :time and end_time > :time", time: second).order("start_time").to_a
+      slots = self.where("start_time < end_time and " \
+        "start_time <= :time and end_time > :time", time: second)
+        .order("start_time").to_a
       return slots if slots.present?
       
       # In the case where the requested time 
@@ -125,7 +127,9 @@ class RecurringScheduleSlot < ActiveRecord::Base
       # we're in that situation. This is okay
       # because there aren't (and probably 
       # never will be) any gaps in the schedule.
-      slots = self.where("start_time > end_time and (start_time <= :time or end_time > :time)", time: second).order("start_time").to_a
+      slots = self.where("start_time > end_time and " \
+        "(start_time <= :time or end_time > :time)", time: second)
+        .order("start_time").to_a
     end
     
     #--------------
@@ -133,8 +137,12 @@ class RecurringScheduleSlot < ActiveRecord::Base
     def block(start_time, length)
       end_time        = start_time + length
       different_weeks = end_time.wday < start_time.wday
-      args            = { start_time: start_time.second_of_week, end_time: end_time.second_of_week }
       order           = "start_time"
+
+      args = { 
+        :start_time   => start_time.second_of_week,
+        :end_time     => end_time.second_of_week
+      }
       
       # If the requested block doesn't bridge
       # the cycle reset, then just do the normal
@@ -148,18 +156,28 @@ class RecurringScheduleSlot < ActiveRecord::Base
       # because it will go right up to the minimum
       # (0) and maximum (604800) limits.
       if !different_weeks
-        slots = self.where("end_time > :start_time and start_time < :end_time", args).order(order).to_a
+        slots = self.where("end_time > :start_time and " \
+          "start_time < :end_time", args)
+          .order(order).to_a
+
       else
-        before = self.where("end_time < start_time or end_time > :start_time", args).order(order).to_a
-        after  = self.where("start_time < :end_time", args).order(order).to_a
+        before = self.where("end_time < start_time or " \
+          "end_time > :start_time", args).order(order).to_a
+
+        after  = self.where("start_time < :end_time", args)
+          .order(order).to_a
+        
         slots  = before + after
       end
       
       slots
     end
 
+
     #--------------
+    
     private
+
     def to_standard?(time1, time2)
       time1.dst? && !time2.dst?
     end
