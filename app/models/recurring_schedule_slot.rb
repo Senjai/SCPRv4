@@ -37,6 +37,12 @@ class RecurringScheduleSlot < ActiveRecord::Base
   #--------------
   
   class << self
+    def program_select_collection
+      kpcc_programs  = KpccProgram.all.map { |p| [p.title, p.obj_key] }
+      other_programs = OtherProgram.all.map { |p| [p.title, p.obj_key] }
+      kpcc_programs + other_programs
+    end
+
     #--------------
     # Convert the seconds into a real Time 
     # object. To be used with seconds relative
