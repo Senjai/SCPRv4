@@ -295,8 +295,11 @@ class RecurringScheduleSlot < ActiveRecord::Base
   # this week's date. If it's past, use
   # next week's date.
   def at_time(attribute)
-    time = RecurringScheduleSlot.as_time(self.send(attribute))
-    time += 1.week if self.past?
-    time
+    if seconds = self.send(attribute)
+      time = RecurringScheduleSlot.as_time(seconds)
+      time += 1.week if self.past?
+      time
+    end
+  end
   end
 end
