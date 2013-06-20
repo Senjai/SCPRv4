@@ -1,20 +1,6 @@
 require 'spec_helper'
 
 describe RecurringScheduleSlot do  
-  describe "associations" do
-    it { should belong_to(:program) }
-  end
-  
-  #------------
-  
-  describe "validations" do
-    it { should validate_presence_of(:start_time) }
-    it { should validate_presence_of(:end_time) }
-    it { should validate_presence_of(:program) }
-  end
-
-  #------------
-  
   describe "::as_time" do
     context "same timezone" do
       it "returns the time from the beginning of the week" do
