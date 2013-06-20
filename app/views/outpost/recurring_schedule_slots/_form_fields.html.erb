@@ -1,0 +1,10 @@
+<%= form_block "Details" do %>
+  <%= f.input :program_obj_key, label: "Program", collection: RecurringScheduleSlot.program_select_collection %>
+
+  <div class="alert alert-info">
+    Format for day/time input: <strong>Wednesday 16:30</strong><br />
+    Note: use 24-hour time
+  </div>
+  <%= f.input :start_time_string, label: "Start Day/Time" %>
+  <%= f.input :end_time_string, label: "End Day/Time" %>
+<% end %>
