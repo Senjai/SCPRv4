@@ -71,7 +71,8 @@ class Podcast < ActiveRecord::Base
         klasses = [NewsStory, BlogEntry, ShowSegment, ShowEpisode] if item_type == "content"
       end
       
-      content_query(limit, klasses, conditions)
+      results = content_query(limit, klasses, conditions)
+      results.map(&:to_article)
     end
   end
   

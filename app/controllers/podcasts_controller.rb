@@ -17,7 +17,7 @@ class PodcastsController < ApplicationController
     if @podcast.source.is_a? OtherProgram
       redirect_to @podcast.podcast_url
     else
-      @content = @podcast.content
+      @articles = @podcast.content
       render_to_string formats: [:xml]
     end
   end

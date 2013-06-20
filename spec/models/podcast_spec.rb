@@ -1,27 +1,6 @@
 require "spec_helper"
 
 describe Podcast do
-  describe "validations" do
-    it { should validate_presence_of(:slug) }
-    it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:url) }
-    it { should validate_presence_of(:podcast_url) }
-    
-    it "validates slug uniqueness" do
-      create :podcast
-      should validate_uniqueness_of(:slug)
-    end
-  end
-  
-  #---------------
-  
-  describe "associations" do
-    it { should belong_to(:source) }
-    it { should belong_to(:category) }
-  end
-  
-  #---------------
-
   describe "#content" do
     before :all do
       setup_sphinx
@@ -41,7 +20,7 @@ describe Podcast do
         podcast = create :podcast, source: episode.show, item_type: "episodes"
         
         ts_retry(2) do
-          podcast.content.to_a.should eq [episode]
+          podcast.content.to_a.should eq [episode.to_article]
         end
       end
       
@@ -53,7 +32,7 @@ describe Podcast do
         podcast = create :podcast, source: segment.show, item_type: "segments"
         
         ts_retry(2) do
-          podcast.content.to_a.should eq [segment]
+          podcast.content.to_a.should eq [segment.to_article]
         end
       end
     end
@@ -75,7 +54,7 @@ describe Podcast do
         podcast = create :podcast, source: entry.blog
         
         ts_retry(2) do
-          podcast.content.to_a.should eq [entry]
+          podcast.content.to_a.should eq [entry.to_article]
         end
       end
     end
@@ -94,9 +73,9 @@ describe Podcast do
         podcast = create :podcast, item_type: "content", source: nil
         
         ts_retry(2) do
-          podcast.content.to_a.should eq [story, entry, segment]
+          podcast.content.to_a.should eq [story, entry, segment].map(&:to_article)
         end
       end
-    end   
+    end
   end
 end
