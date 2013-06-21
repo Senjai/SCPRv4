@@ -14,6 +14,17 @@ class RecurringScheduleSlot < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
 
   INPUT_FORMAT = %r|(?<day>\w+) (?<hour>\d+)\:(?<min>\d{2})|
+  # Because Time::DAYS_INTO_WEEK starts on Monday,
+  # but we've decided to start on Sunday.
+  DAYS_INTO_WEEK = {
+    :sunday       => 0,
+    :monday       => 1,
+    :tuesday      => 2,
+    :wednesday    => 3,
+    :thursday     => 4,
+    :friday       => 5,
+    :saturday     => 6
+  }
 
   #--------------
   # Scopes
