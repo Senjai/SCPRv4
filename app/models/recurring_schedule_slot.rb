@@ -24,8 +24,9 @@ class RecurringScheduleSlot < ActiveRecord::Base
   
   #--------------
   # Validations
-  validates :start_time, :end_time, :program, presence: true
-  
+  validates :program, presence: true 
+  validate :time_strings_can_be_parsed
+
   #--------------
   # Callbacks
 
@@ -312,10 +313,25 @@ class RecurringScheduleSlot < ActiveRecord::Base
     end
   end
 
+
   #--------------
 
   private
   
+  def time_strings_can_be_parsed
+    [:start_time_string, :end_time_string].each do |attribute|
+      if m = self.send(attribute).match(INPUT_FORMAT)
+        if !day_into_week(m[:day])
+          self.errors.add(attribute, 
+            "'#{m[:day]}' isn't recognized as a day name.")
+        end
+      else
+        self.errors.add(:attribute, 
+          "can't be parsed. Format: Wednesday 14:00")
+      end
+    end
+  end
+
   #--------------
   # If the slot is now or upcoming, use
   # this week's date. If it's past, use
