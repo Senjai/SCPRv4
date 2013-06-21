@@ -5,18 +5,19 @@
     Format for day/time input: <strong>Wednesday 16:30</strong><br />
     <strong>24-hour time format is required.</strong><br /><br />
 
-    The regular expression (if you're into that sort of thing): <code>([a-zA-Z]+) +(\d+)\:(\d{2})</code><br />
+    The regular expression (if you're into that sort of thing): <code>([a-zA-Z]+) +(\d\d?)\:(\d\d)</code><br />
 
     <ol>
         <li>One or more case-insensitive letters (the day)</li>
         <li>One or more spaces</li>
-        <li>One or more digits (the hour)</li>
+        <li>One or two digits (the hour)</li>
         <li>A colon</li>
-        <li>Exactly 2 digits (the minute)</li>
+        <li>Exactly two digits (the minute)</li>
     </ol>
 
     You won't be able to save if the input doesn't match this format, or if the specified day can't be recognized (i.e., you've made a typo).
   </div>
+
   <%= f.input :start_time_string, label: "Start Day/Time" %>
   <%= f.input :end_time_string, label: "End Day/Time" %>
 <% end %>
