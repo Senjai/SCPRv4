@@ -21,7 +21,7 @@ describe PodcastsController do
 
   describe "GET /podcast" do
     it "returns RecordNotFound if no podcast is found" do
-      -> { 
+      -> {
         get :podcast, slug: "nonsense"
       }.should raise_error ActiveRecord::RecordNotFound
     end
@@ -51,10 +51,9 @@ describe PodcastsController do
 
       it "assigns the content for entry" do
         entry   = create :blog_entry
-        audio   = create :audio, :direct
+        audio   = create :audio, :uploaded, content: entry
 
-        entry.audio.push audio
-        entry.save!
+        entry.reload
 
         index_sphinx
 
@@ -64,14 +63,13 @@ describe PodcastsController do
           get :podcast, slug: "podcast"
           assigns(:articles).should eq [entry.to_article]
         end
+
+        purge_uploaded_audio
       end
 
       it "assigns the content for episode" do
         episode   = create :show_episode
-        audio     = create :audio, :direct
-        
-        episode.audio.push audio
-        episode.save!
+        audio     = create :audio, :uploaded, content: episode
 
         index_sphinx
 
@@ -81,6 +79,8 @@ describe PodcastsController do
           get :podcast, slug: "podcast"
           assigns(:articles).should eq [episode.to_article]
         end
+
+        purge_uploaded_audio
       end
     end
   end
