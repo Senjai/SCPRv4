@@ -29,6 +29,21 @@ class RecurringScheduleSlot < ActiveRecord::Base
 
   #--------------
   # Callbacks
+  before_validation :set_program_from_obj_key
+  before_save :parse_time_strings
+
+  def set_program_from_obj_key
+    self.program = Outpost.obj_by_key(self.program_obj_key)
+  end
+
+  def parse_time_strings
+    [:start_time_string, :end_time_string].each do |attribute|
+      self.send(attribute).match(INPUT_FORMAT) do |m|
+        self.send("#{attribute}=", 
+          total_seconds(day_into_week(m[:day]), m[:hour], m[:min]))
+      end
+    end
+  end
 
   #--------------
   # Sphinx  
@@ -343,5 +358,14 @@ class RecurringScheduleSlot < ActiveRecord::Base
       time
     end
   end
+
+  def total_seconds(day, hour, minute)
+    (day.to_i * 24 * 60 * 60) +
+    (hour.to_i * 60 * 60) +
+    (minute.to_i * 60)
+  end
+
+  def day_into_week(day_string)
+    Time::DAY_INTO_WEEK[day_string.downcase.to_sym]
   end
 end
