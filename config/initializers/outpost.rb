@@ -15,6 +15,7 @@ Outpost::Config.configure do |config|
     "Category",
     "ContentShell",
     "DataPoint",
+    "DistinctScheduleSlot",
     "Edition",
     "Event",
     "FeaturedComment",

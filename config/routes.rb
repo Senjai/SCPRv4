@@ -157,6 +157,10 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
 
+    resources :distinct_schedule_slots do
+      get "search", on: :collection, as: :search
+    end
+
     resources :admin_users do
       get "search", on: :collection, as: :search
       get "activity", on: :member, as: :activity

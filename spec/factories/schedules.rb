@@ -11,5 +11,8 @@ FactoryGirl.define do
   #--------------------
 
   factory :distinct_schedule_slot do
+    title "Cool Event"
+    sequence(:starts_at) { |n| Time.now + n.hours }
+    ends_at { starts_at + 1.hour }
   end
 end
