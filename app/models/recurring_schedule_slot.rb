@@ -13,6 +13,8 @@ class RecurringScheduleSlot < ActiveRecord::Base
 
   include Concern::Callbacks::SphinxIndexCallback
 
+  INPUT_FORMAT = %r|(?<day>\w+) (?<hour>\d+)\:(?<min>\d{2})|
+
   #--------------
   # Scopes
   
