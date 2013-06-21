@@ -308,7 +308,8 @@ class RecurringScheduleSlot < ActiveRecord::Base
 
   
   #--------------
-  
+  # This is for the listen live JS.
+  # TODO Move it somewhere else.
   def json
     {
       :start => self.starts_at.to_i,
