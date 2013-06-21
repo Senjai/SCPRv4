@@ -42,20 +42,7 @@ class RecurringScheduleSlot < ActiveRecord::Base
   #--------------
   # Callbacks
   before_validation :set_program_from_obj_key
-  before_save :parse_time_strings
-
-  def set_program_from_obj_key
-    self.program = Outpost.obj_by_key(self.program_obj_key)
-  end
-
-  def parse_time_strings
-    [:start_time_string, :end_time_string].each do |attribute|
-      self.send(attribute).match(INPUT_FORMAT) do |m|
-        self.send("#{attribute}=", 
-          total_seconds(day_into_week(m[:day]), m[:hour], m[:min]))
-      end
-    end
-  end
+  before_save :set_times_from_input_strings
 
   #--------------
   # Sphinx  
@@ -65,24 +52,6 @@ class RecurringScheduleSlot < ActiveRecord::Base
   end
   
   #--------------
-  
-  attr_writer \
-    :program_obj_key,
-    :start_time_string,
-    :end_time_string
-
-  def program_obj_key
-    @program_obj_key || self.program.try(:obj_key)
-  end
-
-  def start_time_string
-    @start_time_string || self.starts_at.strftime("%A %H:%M")
-  end
-
-  def end_time_string
-    @end_time_string || self.starts_at.strftime("%A %H:%M")
-  end
-
 
   class << self
     def program_select_collection
@@ -240,8 +209,26 @@ class RecurringScheduleSlot < ActiveRecord::Base
       !time1.dst? && time2.dst?
     end
   end
-  
-  
+
+
+  attr_writer \
+    :program_obj_key,
+    :start_time_string,
+    :end_time_string
+
+  def program_obj_key
+    @program_obj_key || self.program.try(:obj_key)
+  end
+
+  def start_time_string
+    @start_time_string || time_input(:starts_at)
+  end
+
+  def end_time_string
+    @end_time_string || time_input(:ends_at)
+  end
+
+
   #--------------
   # Methods to return real Time objects.
   def starts_at
@@ -345,18 +332,33 @@ class RecurringScheduleSlot < ActiveRecord::Base
   #--------------
 
   private
+
+  def set_program_from_obj_key
+    self.program = Outpost.obj_by_key(self.program_obj_key)
+  end
   
   def time_strings_can_be_parsed
     [:start_time_string, :end_time_string].each do |attribute|
       if m = self.send(attribute).match(INPUT_FORMAT)
-        if !day_into_week(m[:day])
+        if !days_into_week(m[:day])
           self.errors.add(attribute, 
             "'#{m[:day]}' isn't recognized as a day name.")
         end
       else
-        self.errors.add(:attribute, 
+        self.errors.add(attribute, 
           "can't be parsed. Format: Wednesday 14:00")
       end
+    end
+  end
+
+  def set_times_from_input_strings
+    self.start_time   = parse_time_string(self.start_time_string)
+    self.end_time     = parse_time_string(self.end_time_string)
+  end
+
+  def parse_time_string(time_string)
+    time_string.match(INPUT_FORMAT) do |m|
+      total_seconds(days_into_week(m[:day]), m[:hour], m[:min])
     end
   end
 
@@ -378,7 +380,13 @@ class RecurringScheduleSlot < ActiveRecord::Base
     (minute.to_i * 60)
   end
 
-  def day_into_week(day_string)
-    Time::DAY_INTO_WEEK[day_string.downcase.to_sym]
+  def time_input(attribute)
+    if time = self.send(attribute)
+      time.strftime("%A %H:%M")
+    end
+  end
+
+  def days_into_week(day_string)
+    DAYS_INTO_WEEK[day_string.downcase.to_sym]
   end
 end
