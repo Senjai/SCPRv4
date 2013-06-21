@@ -52,21 +52,22 @@ module ContentBase
   def search(*args)
     options     = args.extract_options!
     query       = args[0].to_s
-    conditions  = options[:with] || {}
 
-    # We'll want to search only among live content 99% of the
-    # time. For the times when we want unpublished stuff,
-    # we can pass in `with: { is_live: [true, false] }`, for
-    # example.
     options.reverse_merge!({
       :classes     => CONTENT_CLASSES,
       :page        => 1,
       :order       => :public_datetime,
       :sort_mode   => :desc,
       :retry_stale => true,
-      :populate    => true,
-      :with        => conditions.reverse_merge(is_live: true)
+      :populate    => true
     })
+
+    # We'll want to search only among live content 99% of the
+    # time. For the times when we want unpublished stuff,
+    # we can pass in `with: { is_live: [true, false] }`, for
+    # example.
+    options[:with] ||= {}
+    options[:with].reverse_merge!(is_live: true)
 
     begin
       ThinkingSphinx.search(query, options)

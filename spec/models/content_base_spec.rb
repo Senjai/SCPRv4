@@ -15,18 +15,44 @@ describe ContentBase do
         unpublished = create :news_story, :draft
         index_sphinx
 
-        results = ContentBase.search.to_a
-        results.should_not be_empty
-        results.should_not include unpublished
+        ts_retry(2) do
+          results = ContentBase.search.to_a
+          results.should_not be_empty
+          results.should_not include unpublished
+        end
       end
 
-      it 'can also get not-live stuff' do
+      it 'merges in is_live if I also pass in some other conditions' do
         unpublished = create :news_story, :draft
         index_sphinx
 
-        results = ContentBase.search(with: { is_live: [true, false] }).to_a
-        results.should_not be_empty
-        results.should include unpublished
+        ts_retry(2) do
+          results = ContentBase.search(with: { status: [0, 5] }).to_a
+          results.should_not be_empty
+          results.should_not include unpublished
+        end
+      end
+
+      it 'merges in is_live if I pass in with as nil' do
+        unpublished = create :news_story, :draft
+        index_sphinx
+
+        ts_retry(2) do
+          results = ContentBase.search(with: nil).to_a
+          results.should_not be_empty
+          results.should_not include unpublished
+        end
+      end
+
+      it 'can also get not-live stuff if requested' do
+        unpublished = create :news_story, :draft
+        index_sphinx
+
+        ts_retry(2) do
+          results = ContentBase.search(with: { is_live: [true, false] }).to_a
+          results.should_not be_empty
+          results.should include unpublished
+        end
       end
     end
     
