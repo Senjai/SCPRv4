@@ -21,8 +21,9 @@
           limit: 20,
           types: 'news,blogs,segments,abstracts',
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
-          order: "updated_at",
-          sort_mode: "desc"
+          order: "updated_at", // Since Abstracts use the article's original publish date as its "public_datetime"
+          sort_mode: "desc",
+          with: { is_live: "1" }
         }
       }
     );

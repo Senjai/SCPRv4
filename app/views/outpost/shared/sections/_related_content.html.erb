@@ -15,7 +15,8 @@
           limit: 20,
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
           order: "public_datetime",
-          sort_mode: "desc"
+          sort_mode: "desc",
+          with: { is_live: "1" }
         }
       }
     );
