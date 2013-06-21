@@ -2,6 +2,9 @@ require "spec_helper"
 
 describe Concern::Scopes::SinceScope do
   it "gets only the records from the specified limit" do
+    t = Time.now
+    Time.stub(:now) { t }
+
     recent     = create :test_class_story, published_at: 1.day.ago
     really_old = create :test_class_story, published_at: 1.year.ago
 
