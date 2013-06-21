@@ -16,7 +16,10 @@ module Schedule
   # Get the slot(s) on at the given time
   def on_at(time)
     recurring = RecurringScheduleSlot.on_at(time)
-  end  
+    distinct  = DistinctScheduleSlot.on_at(time)
+
+    (recurring + distinct).sort_by(&:starts_at)
+  end
 
   #----------
   # Return a block of schedule between the two times
@@ -24,9 +27,13 @@ module Schedule
   # The second argument (end) is EXCLUSIVE
   #
   # Example usage:
+  #
   #   Schedule.block(Time.now, 8.hours)
   #
   def block(start_time, length)
     recurring = RecurringScheduleSlot.block(start_time, length)
+    distinct  = DistinctScheduleSlot.block(start_time, length)
+
+    (recurring + distinct).sort_by(&:starts_at)
   end
 end
