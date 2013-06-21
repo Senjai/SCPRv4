@@ -38,6 +38,24 @@ class RecurringScheduleSlot < ActiveRecord::Base
   
   #--------------
   
+  attr_writer \
+    :program_obj_key,
+    :start_time_string,
+    :end_time_string
+
+  def program_obj_key
+    @program_obj_key || self.program.try(:obj_key)
+  end
+
+  def start_time_string
+    @start_time_string || self.starts_at.strftime("%A %H:%M")
+  end
+
+  def end_time_string
+    @end_time_string || self.starts_at.strftime("%A %H:%M")
+  end
+
+
   class << self
     def program_select_collection
       kpcc_programs  = KpccProgram.all.map { |p| [p.title, p.obj_key] }
