@@ -19,11 +19,10 @@
         apiType: "private",
         params: {
           limit: 20,
-          types: 'news,blogs,segments,episodes,abstracts',
+          types: 'news,blogs,segments,abstracts',
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
           order: "updated_at",
-          sort_mode: "desc",
-          with: { status: <%=ContentBase::STATUS_LIVE%> }
+          sort_mode: "desc"
         }
       }
     );

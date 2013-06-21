@@ -83,9 +83,10 @@ class Homepage < ActiveRecord::Base
     Category.all.each do |cat|
       # exclude content that is used in our object
       content = ContentBase.search({
-        :limit    => 5,
+        :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
+        :limit       => 5,
         :with        => { category: cat.id },
-        :without_any => { obj_key: citems.collect {|c| c.obj_key.to_crc32 } }
+        :without_any => { obj_key: citems.map { |c| c.obj_key.to_crc32 } }
       })
       
       more     = []

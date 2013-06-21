@@ -14,10 +14,6 @@ module Concern
         
         after_save :_destroy_incoming_references, if: -> { self.unpublishing? }
         accepts_json_input_for :outgoing_references
-
-        alias_method :related_content_json, :outgoing_references_json
-        alias_method :related_content_json=, :outgoing_references_json=
-
       end
       
       #-------------------------
@@ -40,7 +36,9 @@ module Concern
         
         # Compact to make sure no nil records get through - those would
         # be unpublished content.
-        content.compact.uniq.sort_by { |c| c.published_at }.reverse
+        content.compact.uniq
+          .map(&:to_article)
+          .sort { |a, b| b.public_datetime <=> a.public_datetime }
       end
 
 

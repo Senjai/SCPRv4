@@ -27,6 +27,24 @@ module TestClass
     include Concern::Validations::ContentValidation
 
     validates :short_url, url: { allow_blank: true, allowed: [URI::HTTP, URI::FTP] }
+
+    def to_article
+      @to_article ||= Article.new({
+        :original_object    => self,
+        :id                 => self.obj_key,
+        :title              => self.headline,
+        :short_title        => self.short_headline,
+        :public_datetime    => self.published_at,
+        :teaser             => self.teaser,
+        :body               => self.body,
+        :category           => self.category,
+        :assets             => self.assets,
+        :audio              => self.audio.available,
+        :attributions       => self.bylines,
+        :byline             => self.byline
+      })
+    end
+
     
     def obj_key
       "test_class_story:#{id}"

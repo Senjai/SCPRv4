@@ -2,19 +2,37 @@ require 'spec_helper'
 
 describe ContentBase do
   describe "::search" do
-    context "sphinx is running" do
+    context "when sphinx is running" do
       sphinx_spec(num: 1, options: { status: ContentBase::STATUS_LIVE })
     
       it "searches across ContentBase classes" do
         ts_retry(2) do
-          ContentBase.search.to_a.should eq @generated_content.sort_by(&:published_at).reverse
+          ContentBase.search.to_a.sort_by { |o| o.class.name }.should eq @generated_content.sort_by { |o| o.class.name }
         end
+      end
+
+      it 'only gets is_live stuff by default' do
+        unpublished = create :news_story, :draft
+        index_sphinx
+
+        results = ContentBase.search.to_a
+        results.should_not be_empty
+        results.should_not include unpublished
+      end
+
+      it 'can also get not-live stuff' do
+        unpublished = create :news_story, :draft
+        index_sphinx
+
+        results = ContentBase.search(with: { is_live: [true, false] }).to_a
+        results.should_not be_empty
+        results.should include unpublished
       end
     end
     
     context "sphinx is not running" do
       it "has a graceful fallback if sphinx isn't working" do
-        %w{ ThinkingSphinx::SphinxError Riddle::ConnectionError }.each do |error|
+        %w{ ThinkingSphinx::SphinxError Riddle::ConnectionError Riddle::ResponseError }.each do |error|
           ThinkingSphinx.should_receive(:search).and_raise(error.constantize)
           content = ContentBase.search
           content.should be_empty

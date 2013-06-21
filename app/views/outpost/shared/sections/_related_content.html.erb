@@ -14,9 +14,8 @@
         params: {
           limit: 20,
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
-          order: "published_at",
-          sort_mode: "desc",
-          with: { status: <%=ContentBase::STATUS_LIVE%> }
+          order: "public_datetime",
+          sort_mode: "desc"
         }
       }
     );

@@ -28,10 +28,8 @@ Outpost::Config.configure do |config|
     "PijQuery",
     "Podcast",
     "PressRelease",
-    "Promotion",
     "RecurringScheduleSlot",
     "RemoteArticle",
-    "Section",
     "ShowEpisode",
     "ShowSegment"
   ]

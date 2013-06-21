@@ -4,7 +4,7 @@
 FactoryGirl.define do
   factory :kpcc_program, aliases: [:show] do
     sequence(:title) { |n| "Show #{n}" }
-    slug { title.parameterize }    
+    slug { title.parameterize }
     air_status "onair"
 
     trait :episodic do

@@ -17,26 +17,26 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
       xml.itunes :image, :href => @podcast.image_url
       xml.itunes :explicit, "no"
 
-      @content.select { |c| c.audio.available.present? }.first(15).each do |content|
-        audio = content.audio.available.first
+      @articles.select { |c| c.audio.present? }.first(15).each do |article|
+        audio = article.audio.available.first
       
         xml.item do |item|
-          item.title              raw(content.headline)
+          item.title              raw(article.title)
           item.itunes :author,    raw(@podcast.author)
-          item.itunes :summary,   raw(content.teaser)
-          item.description        raw(content.teaser)
-          item.guid               content.public_url, :isPermaLink => true
-          item.pubDate            content.published_at.in_time_zone("GMT").strftime("%a, %d %b %Y %T %Z")
+          item.itunes :summary,   raw(article.teaser)
+          item.description        raw(article.teaser)
+          item.guid               article.public_url, :isPermaLink => true
+          item.pubDate            article.public_datetime.in_time_zone("GMT").strftime("%a, %d %b %Y %T %Z")
           item.itunes :keywords,  raw(@podcast.keywords)
-          item.link               content.public_url
+          item.link               article.public_url
 
-          item.enclosure          :url    => audio.podcast_url, 
-                                  :length => audio.size, 
+          item.enclosure          :url    => audio.podcast_url,
+                                  :length => audio.size,
                                   :type   => "audio/mpeg"
                               
           item.itunes :duration,  audio.duration
         end # xml
-      end # @content
+      end # @article
     end # xml.channel
   end.html_safe #xml.rss
 end # cache

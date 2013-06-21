@@ -1,7 +1,6 @@
 class RootPathController < ApplicationController
   include FlatpageHandler
   include CategoryHandler
-  include SectionHandler
 
   respond_to :html, :xml, :rss
 
@@ -23,8 +22,6 @@ class RootPathController < ApplicationController
 
       if @category = Category.find_by_slug(slug)
         handle_category and return
-      elsif @section = Section.find_by_slug(slug)
-        handle_section and return
       else
         render_error(404, ActionController::RoutingError.new("Not Found")) and return false
       end

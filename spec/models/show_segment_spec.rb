@@ -19,7 +19,7 @@ describe ShowSegment do
     
     it "uses the other segments from the episode if episodes exist" do
       episode = build :show_episode
-      segments = create_list :segment, 3
+      segments = create_list :show_segment, 3
       episode.segments = segments
       episode.save!
       

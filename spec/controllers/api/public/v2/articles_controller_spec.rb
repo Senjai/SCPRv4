@@ -155,10 +155,10 @@ describe Api::Public::V2::ArticlesController do
     it "accepts a page" do
       ts_retry(2) do
         get :index, request_params
-        fifth_obj = assigns(:articles)[4]
+        fourth_obj = assigns(:articles)[3]
 
-        get :index, { page: 5, limit: 1 }.merge(request_params)
-        assigns(:articles).should eq [fifth_obj].map(&:to_article)
+        get :index, { page: 4, limit: 1 }.merge(request_params)
+        assigns(:articles).should eq [fourth_obj].map(&:to_article)
       end
     end
 

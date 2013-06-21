@@ -13,6 +13,20 @@ module TestClass
     has_many :content, class_name: "::TestClass::PostContent", order: "position", dependent: :destroy
     accepts_json_input_for :content
     
+    def to_article
+      @to_article ||= Article.new({
+        :original_object    => self,
+        :id                 => "posts:#{id}",
+        :title              => self.headline,
+        :short_title        => self.short_headline,
+        :public_datetime    => self.published_at,
+        :teaser             => self.teaser,
+        :body               => self.body,
+        :assets             => self.assets,
+        :byline             => "KPCC"
+      })
+    end
+
     def build_content_association(content_hash, content)
       if content.published?
         TestClass::PostContent.new(

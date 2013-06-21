@@ -43,24 +43,26 @@ describe Concern::Associations::RelatedContentAssociation do
 
   describe "#related_content" do
     before :each do
-      @object  = build :test_class_story
-      @shell   = build :test_class_post, published_at: 2.days.ago
-      @segment = build :test_class_remote_story, published_at: 1.day.ago
-      @story   = build :test_class_story, published_at: 3.days.ago
-      @post    = build :test_class_post, status: ContentBase::STATUS_DRAFT
+      @object  = create :test_class_story
+      @shell   = create :test_class_post, published_at: 2.days.ago
+      @segment = create :test_class_remote_story, published_at: 1.day.ago
+      @story   = create :test_class_story, published_at: 3.days.ago
+      @post    = create :test_class_post, status: ContentBase::STATUS_DRAFT
 
-      @object.outgoing_references.build(related: @shell)
-      @object.outgoing_references.build(related: @story)
-      @object.incoming_references.build(content: @segment)
-      @object.outgoing_references.build(content: @post)
+      @object.outgoing_references.create(related: @shell)
+      @object.outgoing_references.create(related: @story)
+      @object.incoming_references.create(content: @post)
+      @object.incoming_references.create(content: @segment)
+
+      @object.reload
     end
     
     it "doesn't return unpublished content" do
-      @object.related_content.should_not include @post
+      @object.related_content.should_not include @post.to_article
     end
 
     it "Returns all the related records and sorted by published_at desc" do
-      @object.related_content.should eq [@segment, @shell, @story]
+      @object.related_content.should eq [@segment, @shell, @story].map(&:to_article)
     end
 
     it "doesn't return duplicate content" do

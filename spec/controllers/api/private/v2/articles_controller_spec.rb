@@ -107,10 +107,10 @@ describe Api::Private::V2::ArticlesController do
     it "accepts a page" do
       ts_retry(2) do
         get :index, request_params
-        fifth_obj = assigns(:articles)[4]
+        fourth_obj = assigns(:articles)[3]
 
-        get :index, { page: 5, limit: 1 }.merge(request_params)
-        assigns(:articles).should eq [fifth_obj].map(&:to_article)
+        get :index, { page: 4, limit: 1 }.merge(request_params)
+        assigns(:articles).should eq [fourth_obj].map(&:to_article)
       end
     end
 
@@ -147,12 +147,11 @@ describe Api::Private::V2::ArticlesController do
     end
 
     it "can accept conditions" do
-      entry = create :blog_entry, status: ContentBase::STATUS_DRAFT
+      entry = create :blog_entry, :draft
       index_sphinx
 
       ts_retry(2) do
         get :index, { with: { status: ContentBase::STATUS_DRAFT } }.merge(request_params)
-        assigns(:conditions).should eq Hash["status" => ContentBase::STATUS_DRAFT]
         assigns(:articles).should eq [entry].map(&:to_article)
       end
     end

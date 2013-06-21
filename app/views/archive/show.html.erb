@@ -128,7 +128,7 @@
       <% if type_group["ShowEpisode"].present? %>
         <% type_group["ShowEpisode"].each do |content| %>
           <% register_content content %>
-          <h5>Episode: <%= link_to content.short_headline, content.public_path %></h5>
+          <h5>Episode: <%= link_to content.headline, content.public_path %></h5>
         <% end %>
       <% end %>
     

@@ -39,12 +39,13 @@ class Category < ActiveRecord::Base
 
   #----------
 
-  def content(page=1,per_page=10,without_obj=nil)
+  def content(page=1, per_page=10, without_obj=nil)
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
     
     args = {
+      :classes  => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :page     => page,
       :per_page => per_page,
       :with     => { category: self.id }
@@ -77,14 +78,18 @@ class Category < ActiveRecord::Base
         :metric   => :comment
       }
     end
-    
-    
+
+
     # -- now try slideshows -- #
 
     slideshow = ContentBase.search({
+      :classes     => [NewsStory, BlogEntry, ShowSegment],
       :limit       => 1,
-      :with        => { category: self.id, is_slideshow: true },
-      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+      :with        => { 
+        :category     => self.id, 
+        :is_slideshow => true
+      },
+      :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
     })
 
     if slideshow.any?
@@ -99,13 +104,14 @@ class Category < ActiveRecord::Base
       }
     end
 
+
     # -- segment in the last two days? -- #
 
     segments = ContentBase.search({
       :classes     => [ShowSegment],
       :limit       => 1,
-      :with        => { :category => self.id },
-      :without_any => { obj_key: args[:exclude] ? args[:exclude].collect {|c| c.obj_key.to_crc32 } : [] }
+      :with        => { category: self.id },
+      :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
     })
 
     if segments.any?
