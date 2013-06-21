@@ -10,7 +10,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::RelatedContentAssociation
-  include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
@@ -40,13 +39,13 @@ class ShowEpisode < ActiveRecord::Base
                           :order       => "position"
 
   accepts_json_input_for :rundowns
-  alias_method :rundown_json, :rundowns_json
-  alias_method :rundown_json=, :rundowns_json=
 
   #-------------------
   # Validations
   validates :show, presence: true
+  validates :status, presence: true
   validates :air_date, presence: true, if: :should_validate?
+  validates :body, presence: { message: "can't be blank when publishing", if: :should_validate? }
   
   def needs_validation?
     self.pending? || self.published?
@@ -54,7 +53,7 @@ class ShowEpisode < ActiveRecord::Base
   
   #-------------------
   # Callbacks
-  before_validation :generate_headline, if: -> { self.headline.blank? }
+  before_save :generate_headline, if: -> { self.headline.blank? }
 
   def generate_headline
     if self.air_date.present? && self.show.present?
@@ -67,40 +66,47 @@ class ShowEpisode < ActiveRecord::Base
   define_index do
     indexes headline
     indexes body
-    indexes bylines.user.name, as: :bylines
+    
     has show.id, as: :program
-    has "''", as: :category, type: :integer
-    has "0", as: :category_is_news, type: :boolean
     has air_date
+    has status
     has published_at
     has updated_at
-    has status
-    has "1", as: :findable, type: :boolean
-    has "1", as: :is_source_kpcc, type: :boolean
-    has "CRC32(CONCAT('shows/episode:',#{ShowEpisode.table_name}.id))", type: :integer, as: :obj_key
-    has "0", type: :boolean, as: :is_slideshow
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", as: :has_audio, type: :boolean
+
+    # For podcasts
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
+        as: :has_audio, type: :boolean
     join audio
-  end
 
-  #--------------------
-  # Teaser just returns the body.
-  def teaser
-    self.body
-  end
-
-  def short_headline
-    self.headline
+    # Required attributes for ContentBase.search
+    # For ShowEpisode, this is needed just for the
+    # podcast feed.
+    has air_date, as: :public_datetime
+    has "status = #{ContentBase::STATUS_LIVE}", 
+        as: :is_live, type: :boolean
   end
 
   #----------
-  # Fake the byline
-  def byline
-    self.show.title
+
+  # For podcasts
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.headline,
+      :short_title        => self.headline,
+      :public_datetime    => self.published_at,
+      :body               => self.body,
+      :teaser             => self.body,
+      :assets             => self.assets,
+      :audio              => self.audio.available,
+      :byline             => self.show.title,
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
+    })
   end
 
-  #----------
-  
+
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
@@ -110,40 +116,6 @@ class ShowEpisode < ActiveRecord::Base
       :day            => "%02d" % self.persisted_record.air_date.day,
       :trailing_slash => true
     }
-  end
-  
-    #-------------------
-
-  def to_article
-    @to_article ||= Article.new({
-      :original_object    => self,
-      :id                 => self.obj_key,
-      :title              => self.short_headline,
-      :short_title        => self.short_headline,
-      :public_datetime    => self.air_date,
-      :teaser             => self.teaser,
-      :body               => self.teaser,
-      :assets             => self.assets,
-      :audio              => self.audio.available,
-      :byline             => self.byline,
-      :public_url         => self.public_url,
-      :edit_url           => self.admin_edit_url
-    })
-  end
-
-  #-------------------
-
-  def to_abstract
-    @to_abstract ||= Abstract.new({
-      :original_object        => self,
-      :headline               => self.short_headline,
-      :summary                => self.teaser,
-      :source                 => "KPCC",
-      :url                    => self.public_url,
-      :assets                 => self.assets,
-      :audio                  => self.audio.available,
-      :article_published_at   => self.published_at
-    })
   end
 
   #----------

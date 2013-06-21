@@ -19,9 +19,9 @@ describe PodcastsController do
   
   #---------------
 
-  describe "GET /podcast" do    
+  describe "GET /podcast" do
     it "returns RecordNotFound if no podcast is found" do
-      -> { 
+      -> {
         get :podcast, slug: "nonsense"
       }.should raise_error ActiveRecord::RecordNotFound
     end
@@ -41,17 +41,46 @@ describe PodcastsController do
     end
     
     context "sphinx search" do
-      it "assigns the content" do
-        entry = create :blog_entry
-        audio = create :audio, :direct
-        entry.audio.push audio
-        entry.save!
-        
+      before :all do
+        setup_sphinx
+      end
+
+      after :all do
+        teardown_sphinx
+      end
+
+      it "assigns the content for entry" do
+        entry   = create :blog_entry
+        audio   = create :audio, :uploaded, content: entry
+
+        entry.reload
+
+        index_sphinx
+
         podcast = create :podcast, slug: "podcast", source: entry.blog
-        
-        Podcast.any_instance.should_receive(:content).and_return([entry])
-        get :podcast, slug: "podcast"
-        assigns(:content).should eq [entry]
+
+        ts_retry(2) do
+          get :podcast, slug: "podcast"
+          assigns(:articles).should eq [entry.to_article]
+        end
+
+        purge_uploaded_audio
+      end
+
+      it "assigns the content for episode" do
+        episode   = create :show_episode
+        audio     = create :audio, :uploaded, content: episode
+
+        index_sphinx
+
+        podcast = create :podcast, slug: "podcast", source: episode.show, item_type: "episodes"
+
+        ts_retry(2) do
+          get :podcast, slug: "podcast"
+          assigns(:articles).should eq [episode.to_article]
+        end
+
+        purge_uploaded_audio
       end
     end
   end

@@ -24,40 +24,6 @@ describe RootPathController do
 
   #------------------
 
-  describe "section" do
-    render_views
-  
-    describe "GET /show" do
-      context "valid section" do
-        let(:section) { create :section, slug: "politics" }
-        
-        context "html request" do
-          before :each do
-            get :handle_path, path: section.slug
-          end
-        
-          it "sets @section to the correct section" do
-            assigns(:section).should eq section
-          end
-      
-          it "sets content do the section's content" do
-            assigns(:content).should eq section.content
-          end
-        end
-        
-        context "xml request" do
-          it "returns an XML response" do
-            get :handle_path, path: section.slug, format: :xml
-            response.should render_template "sections/show"
-            response.header['Content-Type'].should match /xml/
-          end
-        end
-      end
-    end
-  end
-
-  #------------------
-
   describe "flatpage" do
     context "rendering" do
       render_views  

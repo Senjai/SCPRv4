@@ -1,9 +1,9 @@
 module Api::Private::V2
   class ArticlesController < BaseController
     DEFAULTS = {
-      :types        => "news,blogs,segments,episodes",
+      :types        => "news,blogs,segments",
       :limit        => 10,
-      :order        => "published_at",
+      :order        => "public_datetime",
       :sort_mode    => :desc, # Symbol plz
       :page         => 1 # o, rly?
     }
@@ -77,8 +77,8 @@ module Api::Private::V2
         "news"        => [NewsStory, ContentShell],
         "blogs"       => [BlogEntry],
         "segments"    => [ShowSegment],
-        "episodes"    => [ShowEpisode],
-        "abstracts"   => [Abstract]
+        "abstracts"   => [Abstract],
+        "events"      => [Event]
       }
       
       params[:types] ||= DEFAULTS[:types]
@@ -131,6 +131,14 @@ module Api::Private::V2
 
     #---------------------------
     
+    # Hello. You've stumbled across this because you're 
+    # trying to figure out why unpublished content is 
+    # showing up in the aggregator. I'll tell you why.
+    #
+    # Remember that "true" and "false" parameters don't
+    # get converted to actual Ruby boolean values. 
+    # Use "1" and "0". Thinking Sphinx or ActiveRecord
+    # will convert them accordingly.
     def sanitize_conditions
       @conditions = params[:with]
     end

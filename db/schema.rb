@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130621195509) do
+ActiveRecord::Schema.define(:version => 20130621212718) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -28,11 +28,11 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
   add_index "abstracts", ["source"], :name => "index_abstracts_on_source"
 
   create_table "assethost_contentasset", :force => true do |t|
-    t.integer "content_id",                                         :null => false
-    t.integer "position",                           :default => 99, :null => false
-    t.integer "asset_id",                                           :null => false
+    t.integer "content_id"
+    t.integer "position",                           :default => 99
+    t.integer "asset_id"
     t.text    "caption",      :limit => 2147483647,                 :null => false
-    t.string  "content_type", :limit => 20
+    t.string  "content_type"
   end
 
   add_index "assethost_contentasset", ["content_id"], :name => "content_type_id"
@@ -147,24 +147,24 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
 
   create_table "contentbase_contentalarm", :force => true do |t|
-    t.integer  "content_id",                 :null => false
+    t.integer  "content_id"
     t.datetime "fire_at"
-    t.string   "content_type", :limit => 20
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.string   "content_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "contentbase_contentalarm", ["content_id"], :name => "index_contentbase_contentalarm_on_content_id"
   add_index "contentbase_contentalarm", ["content_type", "content_id"], :name => "index_contentbase_contentalarm_on_content_type_and_content_id"
 
   create_table "contentbase_contentbyline", :force => true do |t|
-    t.integer  "content_id",                                :null => false
+    t.integer  "content_id"
     t.integer  "user_id"
-    t.string   "name",         :limit => 50,                :null => false
-    t.integer  "role",                       :default => 0, :null => false
-    t.string   "content_type", :limit => 20
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.string   "name",                        :null => false
+    t.integer  "role",         :default => 0, :null => false
+    t.string   "content_type"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   add_index "contentbase_contentbyline", ["content_id"], :name => "content_key"
@@ -190,11 +190,11 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
 
   create_table "contentbase_featuredcomment", :force => true do |t|
     t.integer  "bucket_id",                                         :null => false
-    t.integer  "content_id",                                        :null => false
+    t.integer  "content_id"
     t.integer  "status",                             :default => 0, :null => false
-    t.string   "username",     :limit => 50,                        :null => false
+    t.string   "username",                                          :null => false
     t.text     "excerpt",      :limit => 2147483647,                :null => false
-    t.string   "content_type", :limit => 20
+    t.string   "content_type"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
   end
@@ -205,24 +205,24 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
   add_index "contentbase_featuredcomment", ["status"], :name => "index_contentbase_featuredcomment_on_status"
 
   create_table "contentbase_featuredcommentbucket", :force => true do |t|
-    t.string   "title",      :limit => 50, :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "title",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "contentbase_misseditbucket", :force => true do |t|
-    t.string   "title",      :limit => 50, :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "title",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "contentbase_misseditcontent", :force => true do |t|
-    t.integer  "bucket_id",                                  :null => false
-    t.integer  "content_id",                                 :null => false
-    t.integer  "position",                   :default => 99, :null => false
-    t.string   "content_type", :limit => 20
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.integer  "bucket_id",                    :null => false
+    t.integer  "content_id"
+    t.integer  "position",     :default => 99, :null => false
+    t.string   "content_type"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
@@ -331,9 +331,9 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
   add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
 
   create_table "layout_breakingnewsalert", :force => true do |t|
-    t.string   "headline",     :limit => 140,                           :null => false
+    t.string   "headline",                                              :null => false
     t.time     "alert_time"
-    t.string   "alert_type",   :limit => 5,                             :null => false
+    t.string   "alert_type",                                            :null => false
     t.boolean  "is_published",                       :default => true,  :null => false
     t.boolean  "email_sent",                         :default => false, :null => false
     t.datetime "created_at",                                            :null => false
@@ -360,10 +360,10 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
   add_index "layout_homepage", ["status", "published_at"], :name => "index_layout_homepage_on_status_and_published_at"
 
   create_table "layout_homepagecontent", :force => true do |t|
-    t.integer "homepage_id",                                :null => false
-    t.integer "content_id",                                 :null => false
-    t.integer "position",                   :default => 99, :null => false
-    t.string  "content_type", :limit => 20
+    t.integer "homepage_id",                  :null => false
+    t.integer "content_id"
+    t.integer "position",     :default => 99, :null => false
+    t.string  "content_type"
   end
 
   add_index "layout_homepagecontent", ["content_id"], :name => "index_layout_homepagecontent_on_content_id"
@@ -375,7 +375,7 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
     t.integer  "duration"
     t.string   "enco_number"
     t.date     "enco_date"
-    t.integer  "content_id",                                        :null => false
+    t.integer  "content_id"
     t.text     "description",  :limit => 2147483647
     t.string   "byline"
     t.integer  "position",                           :default => 0, :null => false
@@ -419,11 +419,11 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
   add_index "media_imageinstance", ["instance_of_id"], :name => "media_imageinstance_29b6bd08"
 
   create_table "media_related", :force => true do |t|
-    t.integer "content_id",                                :null => false
-    t.integer "related_id",                                :null => false
-    t.string  "content_type", :limit => 20
-    t.string  "related_type", :limit => 20
-    t.integer "position",                   :default => 0, :null => false
+    t.integer "content_id",                  :null => false
+    t.integer "related_id",                  :null => false
+    t.string  "content_type"
+    t.string  "related_type"
+    t.integer "position",     :default => 0, :null => false
   end
 
   add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
@@ -532,7 +532,6 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
     t.boolean  "display_episodes",                          :default => true, :null => false
     t.boolean  "display_segments",                          :default => true, :null => false
     t.integer  "blog_id"
-    t.string   "video_player",        :limit => 20
     t.string   "audio_dir",           :limit => 50
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                  :null => false
@@ -565,14 +564,6 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
   add_index "programs_otherprogram", ["air_status"], :name => "index_programs_otherprogram_on_air_status"
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
-
-  create_table "promotions", :force => true do |t|
-    t.string   "title"
-    t.string   "url"
-    t.integer  "asset_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "recurring_schedule_slots", :force => true do |t|
     t.integer  "program_id"
@@ -626,46 +617,6 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
   add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"
   add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
 
-  create_table "section_blogs", :force => true do |t|
-    t.integer  "section_id"
-    t.integer  "blog_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "section_blogs", ["blog_id"], :name => "index_section_blogs_on_blog_id"
-  add_index "section_blogs", ["section_id"], :name => "index_section_blogs_on_section_id"
-
-  create_table "section_categories", :force => true do |t|
-    t.integer  "section_id"
-    t.integer  "category_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "section_categories", ["category_id"], :name => "index_section_categories_on_category_id"
-  add_index "section_categories", ["section_id"], :name => "index_section_categories_on_section_id"
-
-  create_table "section_promotions", :force => true do |t|
-    t.integer  "section_id"
-    t.integer  "promotion_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "section_promotions", ["promotion_id"], :name => "index_section_promotions_on_promotion_id"
-  add_index "section_promotions", ["section_id"], :name => "index_section_promotions_on_section_id"
-
-  create_table "sections", :force => true do |t|
-    t.string   "title"
-    t.string   "slug"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-    t.integer  "missed_it_bucket_id"
-  end
-
-  add_index "sections", ["missed_it_bucket_id"], :name => "index_sections_on_missed_it_bucket_id"
-
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
     t.date     "air_date"
@@ -675,10 +626,8 @@ ActiveRecord::Schema.define(:version => 20130621195509) do
     t.integer  "status",                             :null => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
-    t.integer  "category_id"
   end
 
-  add_index "shows_episode", ["category_id"], :name => "shows_episode_42dc49bc"
   add_index "shows_episode", ["show_id"], :name => "shows_episode_show_id"
   add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
 

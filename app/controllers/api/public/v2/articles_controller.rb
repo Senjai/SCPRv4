@@ -1,7 +1,7 @@
 module Api::Public::V2
   class ArticlesController < BaseController
     DEFAULTS = {
-      :types        => "news,blogs,segments,episodes",
+      :types        => "news,blogs,segments",
       :limit        => 10,
       :order        => "published_at",
       :sort_mode    => :desc, # Symbol plz
@@ -114,8 +114,7 @@ module Api::Public::V2
       allowed_types = {
         "news"        => [NewsStory, ContentShell],
         "blogs"       => [BlogEntry],
-        "segments"    => [ShowSegment],
-        "episodes"    => [ShowEpisode]
+        "segments"    => [ShowSegment]
       }
       
       params[:types] ||= DEFAULTS[:types]

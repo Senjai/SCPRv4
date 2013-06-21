@@ -16,6 +16,7 @@ class FeedsController < ApplicationController
     
     # Anything with a news category is eligible
     @content = ContentBase.search({
+      :classes => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :limit   => 15,
       :with    => { is_source_kpcc: true },
       :without => { category: '' }

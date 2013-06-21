@@ -66,18 +66,35 @@ class ShowSegment < ActiveRecord::Base
     indexes teaser
     indexes body
     indexes bylines.user.name, as: :bylines
+
     has show.id, as: :program
-    has category.id, as: :category
-    has category.is_news, as: :category_is_news
+    has status
     has published_at
     has updated_at
-    has status
-    has "1", as: :findable, type: :boolean
+    has "CRC32(CONCAT('#{ShowSegment.content_key}:'," \
+        "#{ShowSegment.table_name}.id))", 
+        type: :integer, as: :obj_key
+
+    # For the megamenu
+    has category.is_news, as: :category_is_news
+
+    # For category/homepage sections
+    has category.id, as: :category
+    has "(#{ShowSegment.table_name}.segment_asset_scheme <=> 'slideshow')", 
+        type: :boolean, as: :is_slideshow
+
+    # For RSS Feed
     has "1", as: :is_source_kpcc, type: :boolean
-    has "CRC32(CONCAT('shows/segment:',#{ShowSegment.table_name}.id))", type: :integer, as: :obj_key
-    has "(#{ShowSegment.table_name}.segment_asset_scheme <=> 'slideshow')", type: :boolean, as: :is_slideshow
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", as: :has_audio, type: :boolean
+
+    # For podcast searches
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
+        as: :has_audio, type: :boolean
     join audio
+
+    # Required attributes for ContentBase.search
+    has published_at, as: :public_datetime
+    has "status = #{ContentBase::STATUS_LIVE}", 
+        as: :is_live, type: :boolean
   end
   
   #----------

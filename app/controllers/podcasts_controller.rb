@@ -17,7 +17,7 @@ class PodcastsController < ApplicationController
     if @podcast.source.is_a? OtherProgram
       redirect_to @podcast.podcast_url
     else
-      @content = @podcast.content
+      @articles = @podcast.content
       render_to_string formats: [:xml]
     end
   end
@@ -33,12 +33,14 @@ class PodcastsController < ApplicationController
       # Fake the headers for iTunes.
       response.headers["Status"]         = "206 Partial Content"
       response.headers["Accept-Ranges"]  = "bytes"
-    
+
       request.headers["Range"].match(/bytes ?= ?(\d+)-(\d+)?/) do |match|
-        rangeStart, rangeEnd        = match[1].to_i, match[2].to_i
-        rangeLength                 = (rangeEnd - rangeStart).to_i
+        rangeStart    = match[1].to_i
+        rangeEnd      = match[2].to_i
+        rangeLength   = (rangeEnd - rangeStart).to_i
+
         response.headers["Content-Range"]  = "bytes #{rangeStart}-#{rangeEnd == 0 ? "" : rangeEnd}/*"
       end
     end
-  end    
+  end
 end

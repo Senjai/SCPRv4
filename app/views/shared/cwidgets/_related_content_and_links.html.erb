@@ -9,10 +9,10 @@
           </div>
           <div class="span18">
             <ul>
-              <% relations.each do |content| %>
+              <% relations.each do |article| %>
                 <li>
-                  <% register_content content %>
-                  <%= link_to "#{'EVENT: ' if content.is_a?(Event)}" + content.short_headline.to_s, content.public_path %> <span class="pipe">|</span> <%= time_tag content.published_at, format_date(content.published_at, format: :full_date) %>
+                  <% register_content article.original_object %>
+                  <%= link_to article.short_title.to_s, article.public_url %> <span class="pipe">|</span> <%= time_tag article.public_datetime, format_date(article.public_datetime, format: :full_date) %>
                 </li>
               <% end %>
             </ul>

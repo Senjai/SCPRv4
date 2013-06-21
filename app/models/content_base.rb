@@ -26,14 +26,13 @@ module ContentBase
   }
   
   #--------------------
-  # The classes to be included when querying Sphinx with
-  # ContentBase.search. These classes need to all have 
-  # the same attributes and indexes in their +define_index+
-  # block.
+  # This used the be the array of "classes that are content",
+  # but we've since moved away from that concept.
+  # Don't use it - just be explicit about which classes you
+  # want to search across.
   CONTENT_CLASSES = [
     NewsStory,
     ShowSegment,
-    ShowEpisode,
     BlogEntry,
     ContentShell
   ]
@@ -51,25 +50,24 @@ module ContentBase
   # ContentBase classes and mix in some default search
   # parameters.
   def search(*args)
-    options = args.extract_options!
-    query   = args[0].to_s
-    
-    default_attributes = { status: ContentBase::STATUS_LIVE, findable: true }
-    
+    options     = args.extract_options!
+    query       = args[0].to_s
+
     options.reverse_merge!({
       :classes     => CONTENT_CLASSES,
       :page        => 1,
-      :order       => :published_at,
+      :order       => :public_datetime,
       :sort_mode   => :desc,
       :retry_stale => true,
       :populate    => true
     })
-    
-    if options[:with].present?
-      options[:with] = options[:with].reverse_merge(default_attributes)
-    else
-      options[:with] = default_attributes
-    end
+
+    # We'll want to search only among live content 99% of the
+    # time. For the times when we want unpublished stuff,
+    # we can pass in `with: { is_live: [true, false] }`, for
+    # example.
+    options[:with] ||= {}
+    options[:with].reverse_merge!(is_live: true)
 
     begin
       ThinkingSphinx.search(query, options)

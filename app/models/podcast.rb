@@ -68,10 +68,11 @@ class Podcast < ActiveRecord::Base
         klasses.push BlogEntry
 
       else
-        klasses = CONTENT_CLASSES if item_type == "content"
+        klasses = [NewsStory, BlogEntry, ShowSegment, ShowEpisode] if item_type == "content"
       end
       
-      content_query(limit, klasses, conditions)
+      results = content_query(limit, klasses, conditions)
+      results.map(&:to_article)
     end
   end
   
@@ -89,7 +90,9 @@ class Podcast < ActiveRecord::Base
   
   def content_query(limit, klasses, conditions={})
     ContentBase.search({
-      :with    => { has_audio: true }.merge!(conditions), 
+      :with    => conditions.reverse_merge({ 
+        :has_audio => true
+      }), 
       :classes => klasses, 
       :limit   => limit
     })

@@ -65,18 +65,37 @@ class BlogEntry < ActiveRecord::Base
     indexes headline
     indexes body
     indexes bylines.user.name, as: :bylines
+
     has blog.id, as: :blog
-    has category.id, as: :category
-    has category.is_news, as: :category_is_news
+    has status
     has published_at
     has updated_at
-    has status
-    has blog.is_active, as: :findable, type: :boolean
+
+    has "CRC32(CONCAT('#{BlogEntry.content_key}:'," \
+        "#{BlogEntry.table_name}.id))", 
+        type: :integer, as: :obj_key
+
+    # For RSS feeds
     has "1", as: :is_source_kpcc, type: :boolean
-    has "CRC32(CONCAT('blogs/entry:',#{BlogEntry.table_name}.id))", type: :integer, as: :obj_key
-    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')", type: :boolean, as: :is_slideshow
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", type: :boolean, as: :has_audio
+    
+    # For the homepage/category sections
+    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')", 
+        type: :boolean, as: :is_slideshow
+
+    has category.id, as: :category
+
+    # For podcasts
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
+        type: :boolean, as: :has_audio
     join audio
+
+    # For the megamenu
+    has category.is_news, as: :category_is_news
+
+    # Required attributes for ContentBase.search
+    has published_at, as: :public_datetime
+    has "status = #{ContentBase::STATUS_LIVE}", 
+        as: :is_live, type: :boolean
   end
 
 
