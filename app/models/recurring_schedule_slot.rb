@@ -293,32 +293,14 @@ class RecurringScheduleSlot < ScheduleSlot
     }
   end
 
-  #--------------
-  #--------------
-  # TODO Move these to a Presenter
-  def show_modal?
-    program.display_episodes
+
   def title
     self.program.title
   end
   
   def public_url
     self.program.public_path
-  def format_time(time=:starts_at)
-    attribute = self.send(time)
-    str_time = attribute.strftime("%H:%M")
-    
-    if str_time == "00:00"
-      "midnight"
-    elsif str_time == "12:00"
-      "noon"
-    elsif str_time.match /:00/
-      attribute.strftime("%l%P")
-    else
-      attribute.strftime("%l:%M%P")
-    end
   end
-
 
   #--------------
 
