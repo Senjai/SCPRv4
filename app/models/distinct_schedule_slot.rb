@@ -1,4 +1,4 @@
-class DistinctScheduleSlot < ActiveRecord::Base
+class DistinctScheduleSlot < ScheduleSlot
   outpost_model
   has_secretary
   

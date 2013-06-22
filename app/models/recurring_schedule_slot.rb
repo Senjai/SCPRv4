@@ -7,7 +7,7 @@
 # the number of _seconds_ from the beginning of 
 # the week.
 #
-class RecurringScheduleSlot < ActiveRecord::Base
+class RecurringScheduleSlot < ScheduleSlot
   outpost_model
   has_secretary
 
