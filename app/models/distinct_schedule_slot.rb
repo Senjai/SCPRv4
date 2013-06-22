@@ -15,7 +15,7 @@ class DistinctScheduleSlot < ActiveRecord::Base
 
   class << self
     def on_at(time)
-      block(time, 0)
+      block(time, 0).first
     end
 
     # Keep in mind that we're not talking about starts_at

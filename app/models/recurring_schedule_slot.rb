@@ -97,13 +97,7 @@ class RecurringScheduleSlot < ActiveRecord::Base
     end
     
     #--------------
-    # Get the slots on at the requested time
-    #
-    # As this method returns an ARRAY, be sure to
-    # call #first on it to return just one slot!
-    # The idea is that there might be more than one
-    # thing going on, which may or may not ever 
-    # happen.
+    # Get the slot on at the requested time
     #
     # Usage:
     #
@@ -131,10 +125,10 @@ class RecurringScheduleSlot < ActiveRecord::Base
       # where the requested time is between
       # start_time and end_time. This will
       # work 99% of the time.
-      slots = self.where("start_time < end_time and " \
+      slot = self.where("start_time < end_time and " \
         "start_time <= :time and end_time > :time", time: second)
-        .order("start_time").to_a
-      return slots if slots.present?
+        .order("start_time").first
+      return slot if slot.present?
       
       # In the case where the requested time 
       # is near the week reset (12am Sunday),
@@ -150,9 +144,9 @@ class RecurringScheduleSlot < ActiveRecord::Base
       # we're in that situation. This is okay
       # because there aren't (and probably 
       # never will be) any gaps in the schedule.
-      slots = self.where("start_time > end_time and " \
+      slot = self.where("start_time > end_time and " \
         "(start_time <= :time or end_time > :time)", time: second)
-        .order("start_time").to_a
+        .order("start_time").first
     end
     
     #--------------

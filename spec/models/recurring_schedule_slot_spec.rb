@@ -90,16 +90,16 @@ describe RecurringScheduleSlot do
       end
     
       it "gets the program on at the time passed in" do
-        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 8am")).should eq [@slot]
-        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9am")).should eq [@slot]
-        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9:59am")).should eq [@slot]
-        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9:59:59am")).should eq [@slot]
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 8am")).should eq @slot
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9am")).should eq @slot
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9:59am")).should eq @slot
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 9:59:59am")).should eq @slot
       end
     
       it "is empty if nothing is found" do
-        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 10am")).should eq []
-        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 7:59:59am")).should eq []
-        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 9pm")).should eq []
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 10am")).should eq nil
+        RecurringScheduleSlot.on_at(Chronic.parse("Thursday 7:59:59am")).should eq nil
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 9pm")).should eq nil
       end
     end
     
@@ -111,15 +111,15 @@ describe RecurringScheduleSlot do
       end
       
       it "gets the program on at the time passed in" do
-        RecurringScheduleSlot.on_at(Chronic.parse("Saturday 11pm")).should eq [@slot]
-        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 12am")).should eq [@slot]
-        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 1am")).should eq [@slot]
-        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 1:59:59am")).should eq [@slot]
+        RecurringScheduleSlot.on_at(Chronic.parse("Saturday 11pm")).should eq @slot
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 12am")).should eq @slot
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 1am")).should eq @slot
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 1:59:59am")).should eq @slot
       end
       
       it "is empty if nothing is found" do
-        RecurringScheduleSlot.on_at(Chronic.parse("Saturday 10:59:59pm")).should eq []
-        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 3am")).should eq []
+        RecurringScheduleSlot.on_at(Chronic.parse("Saturday 10:59:59pm")).should eq nil
+        RecurringScheduleSlot.on_at(Chronic.parse("Sunday 3am")).should eq nil
       end
     end
     
@@ -131,11 +131,11 @@ describe RecurringScheduleSlot do
       end
       
       it "selects stuff properly" do
-        RecurringScheduleSlot.on_at(Time.new(2012, 11, 3, 23)).should eq [@slot]
-        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 0)).should eq [@slot]
-        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 1)).should eq [@slot]
-        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 2, 59, 59)).should eq [@slot]
-        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 3)).should eq []
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 3, 23)).should eq @slot
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 0)).should eq @slot
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 1)).should eq @slot
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 2, 59, 59)).should eq @slot
+        RecurringScheduleSlot.on_at(Time.new(2012, 11, 4, 3)).should eq nil
       end
     end
   end
