@@ -46,4 +46,8 @@ class DistinctScheduleSlot < ScheduleSlot
         .order("starts_at")
     end
   end
+
+  def public_url
+    self.info_url
+  end
 end
