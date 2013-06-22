@@ -282,13 +282,6 @@ class RecurringScheduleSlot < ScheduleSlot
 
   
   #--------------
-
-  def next
-    RecurringScheduleSlot.on_at(self.ends_at).first
-  end
-
-  
-  #--------------
   # This is for the listen live JS.
   # TODO Move it somewhere else.
   def json
