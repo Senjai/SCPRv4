@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624191225) do
+ActiveRecord::Schema.define(:version => 20130624204114) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -601,22 +601,6 @@ ActiveRecord::Schema.define(:version => 20130624191225) do
   end
 
   add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
-
-  create_table "schedule_program", :force => true do |t|
-    t.integer  "day",                             :null => false
-    t.integer  "kpcc_program_id"
-    t.integer  "other_program_id"
-    t.string   "program",          :limit => 150, :null => false
-    t.string   "url",              :limit => 200, :null => false
-    t.time     "start_time",                      :null => false
-    t.time     "end_time",                        :null => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-  end
-
-  add_index "schedule_program", ["day", "start_time", "end_time"], :name => "index_schedule_program_on_day_and_start_time_and_end_time"
-  add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"
-  add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
