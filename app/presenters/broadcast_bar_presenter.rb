@@ -3,8 +3,13 @@ class BroadcastBarPresenter < ApplicationPresenter
   delegate :title, :public_url, to: :slot
 
   def show_modal?
-    recurring? && slot.program.display_episodes
+    !!program.try(:display_episodes)
   end
+
+  def is_for_featured_program?
+    !!program.try(:is_featured?)
+  end
+
 
   def start_time
     format_time(slot.starts_at)
@@ -13,6 +18,7 @@ class BroadcastBarPresenter < ApplicationPresenter
   def end_time
     format_time(slot.ends_at)
   end
+
 
   def modal_class
     "modal-toggler" if show_modal?
@@ -23,20 +29,19 @@ class BroadcastBarPresenter < ApplicationPresenter
   end
 
   def headshot_class
-    "with-headshot" if is_for_featured_program?
+    "with-headshot" if program && is_for_featured_program?
   end
 
-  def is_for_featured_program?
-    recurring? && KpccProgram::Featured.include?(program_slug)
-  end
+
 
   def program_slug
-    slot.program.slug if recurring?
+    slot.program.slug if program
   end
 
   def program
     slot.program if recurring?
   end
+
 
   def recurring?
     slot.is_a?(RecurringScheduleSlot)
@@ -45,6 +50,9 @@ class BroadcastBarPresenter < ApplicationPresenter
   def distinct?
     slot.is_a?(DistinctScheduleSlot)
   end
+
+
+  private
 
   def format_time(time)
     str_time = time.strftime("%H:%M")
