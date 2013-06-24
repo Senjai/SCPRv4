@@ -15,6 +15,7 @@
 <%= form_block "Display Options" do %>
   <%= f.input :display_episodes, hint: "Does this program use episodes to group segments?" %>
   <%= f.input :display_segments, hint: "Should individual segments be displayed on the program page?" %>
+  <%= f.input :is_featured, hint: "Whether or not this program is featured around the website" %>
   <%= f.input :audio_dir, label: "Audio directory" %>
   <%= f.association :missed_it_bucket %>
 <% end %>
