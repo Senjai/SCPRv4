@@ -6,9 +6,8 @@ class BlogsController < ApplicationController
   
   def index
     @blogs          = Blog.active.order("name")
-    @news_blogs     = @blogs.where(is_remote: false, is_news: true)
-    @non_news_blogs = @blogs.where(is_remote: false, is_news: false)
-    @remote_blogs   = Blog.where(is_remote: true).order("name")
+    @news_blogs     = @blogs.where(is_news: true)
+    @non_news_blogs = @blogs.where(is_news: false)
     render layout:    "application"
   end
   
@@ -64,6 +63,6 @@ class BlogsController < ApplicationController
   protected
 
   def load_blog
-    @blog = Blog.where(is_remote: false).includes(:authors).find_by_slug!(params[:blog])
+    @blog = Blog.includes(:authors).find_by_slug!(params[:blog])
   end
 end

@@ -32,21 +32,15 @@ describe BlogsController do
       end
     
       it "assigns @news_blogs" do
-        blog = create :blog, is_remote: false, is_news: true
+        blog = create :blog, is_news: true
         get :index
         assigns(:news_blogs).should eq [blog]
       end
     
       it "assigns @non_news_blogs" do
-        blog = create :blog, is_remote: false, is_news: false
+        blog = create :blog, is_news: false
         get :index
         assigns(:non_news_blogs).should eq [blog]
-      end
-    
-      it "assigns @remote_blogs" do
-        blog = create :blog, is_remote: true
-        get :index
-        assigns(:remote_blogs).should eq [blog]
       end
     end
   end
@@ -71,13 +65,6 @@ describe BlogsController do
           blog = create :blog
           -> { 
             get :show, blog: "nonsense"
-          }.should raise_error ActiveRecord::RecordNotFound
-        end
-  
-        it "responds with RecordNotFound for a remote blog" do
-          blog = create :blog, is_remote: true
-          -> { 
-            get :show, blog: blog.slug 
           }.should raise_error ActiveRecord::RecordNotFound
         end
       end

@@ -39,20 +39,6 @@ class Blog < ActiveRecord::Base
   #-------------------
   
   class << self
-    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
-
-    def cache_remote_entries
-      cacher = CacheController.new
-
-      self.where(is_remote: true).where("feed_url != ?", '').each do |blog|
-        Feedzirra::Feed.safe_fetch_and_parse(blog.feed_url) do |feed|
-          cacher.cache(feed.entries.first, "/blogs/cached/remote_blog_entry", "remote_blog:#{blog.slug}", local: :entry)
-        end
-      end
-    end
-    
-    add_transaction_tracer :cache_remote_entries, category: :task
-    
     #-------------------
     # Maps all records to an array of arrays, to be
     # passed into a Rails select helper

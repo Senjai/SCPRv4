@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130621212718) do
+ActiveRecord::Schema.define(:version => 20130624233524) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -85,8 +85,6 @@ ActiveRecord::Schema.define(:version => 20130621212718) do
     t.text     "description",         :limit => 2147483647
     t.boolean  "is_active",                                 :default => false, :null => false
     t.string   "feed_url",            :limit => 200
-    t.boolean  "is_remote",                                                    :null => false
-    t.string   "custom_url",          :limit => 200
     t.boolean  "is_news",                                                      :null => false
     t.string   "teaser"
     t.integer  "missed_it_bucket_id"
