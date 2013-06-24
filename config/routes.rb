@@ -123,6 +123,7 @@ Scprv4::Application.routes.draw do
         resources :editions, only: [:index, :show]
         resources :categories, only: [:index, :show]
         resources :events, only: [:index, :show]
+        resources :schedule, only: [:index, :show]
       end
     end
     
