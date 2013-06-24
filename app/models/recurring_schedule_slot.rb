@@ -299,7 +299,7 @@ class RecurringScheduleSlot < ScheduleSlot
   end
   
   def public_url
-    self.program.public_path
+    self.program.public_url
   end
 
   #--------------
