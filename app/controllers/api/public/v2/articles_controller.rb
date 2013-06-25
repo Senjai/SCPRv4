@@ -117,7 +117,7 @@ module Api::Public::V2
         "segments"    => [ShowSegment]
       }
       
-      params[:types] ||= DEFAULTS[:types]
+      params[:types] ||= defaults[:types]
 
       params[:types].split(",").uniq.each do |type|
         if klasses = allowed_types[type]
