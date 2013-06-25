@@ -11,11 +11,11 @@ module Api::Public::V2
     before_filter :sanitize_id, only: [:show]
 
     DEFAULTS = {
-      :limit => 8,
+      :limit => 4,
       :page  => 1
     }
 
-    MAX_RESULTS = 16
+    MAX_RESULTS = 8
 
     #---------------------------
 

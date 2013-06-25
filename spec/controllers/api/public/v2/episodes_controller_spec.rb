@@ -70,9 +70,9 @@ describe Api::Public::V2::EpisodesController do
       assigns(:episodes).size.should eq 1
     end
 
-    it "sets the max limit to 16" do
+    it "sets the max limit to 8" do
       get :index, { limit: 100 }.merge(request_params)
-      assigns(:limit).should eq 16
+      assigns(:limit).should eq 8
     end
 
     it "sanitizes the page" do
