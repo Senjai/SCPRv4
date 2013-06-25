@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624233524) do
+ActiveRecord::Schema.define(:version => 20130625225709) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -534,6 +534,7 @@ ActiveRecord::Schema.define(:version => 20130624233524) do
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
+    t.string   "image"
   end
 
   add_index "programs_kpccprogram", ["air_status"], :name => "index_programs_kpccprogram_on_air_status"
