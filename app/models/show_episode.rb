@@ -22,8 +22,16 @@ class ShowEpisode < ActiveRecord::Base
   
   #-------------------
   # Scopes
-  scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("air_date desc, published_at desc") }
-  scope :upcoming, -> { where(["status = ? and air_date >= ?",ContentBase::STATUS_PENDING,Date.today()]).order("air_date asc") }
+  scope :published, -> {
+    where(status: ContentBase::STATUS_LIVE)
+    .order("air_date desc, published_at desc")
+  }
+
+  scope :upcoming, -> {
+    where(status: ContentBase::STATUS_PENDING)
+    .where("air_date >= ?", Date.today)
+    .order("air_date asc")
+  }
   
   #-------------------
   # Association
@@ -45,7 +53,11 @@ class ShowEpisode < ActiveRecord::Base
   validates :show, presence: true
   validates :status, presence: true
   validates :air_date, presence: true, if: :should_validate?
-  validates :body, presence: { message: "can't be blank when publishing", if: :should_validate? }
+
+  validates :body, :presence => {
+    :message => "can't be blank when publishing",
+    :if      => :should_validate?
+  }
   
   def needs_validation?
     self.pending? || self.published?
@@ -57,7 +69,8 @@ class ShowEpisode < ActiveRecord::Base
 
   def generate_headline
     if self.air_date.present? && self.show.present?
-      self.headline = "#{self.show.title} for #{self.air_date.strftime("%B %-d, %Y")}"
+      self.headline = "#{self.show.title} for " \
+        "#{self.air_date.strftime("%B %-d, %Y")}"
     end
   end
   
