@@ -1,7 +1,7 @@
 module Api::Public::V2
   class ProgramsController < BaseController
 
-    before_filter :sanitize_id, only: [:show]
+    before_filter :sanitize_slug, only: [:show]
 
     def index
       @programs = KpccProgram.all + OtherProgram.all
@@ -19,13 +19,6 @@ module Api::Public::V2
       end
 
       respond_with @program
-    end
-
-
-    private
-
-    def sanitize_id
-      @slug = params[:id].to_s
     end
   end
 end
