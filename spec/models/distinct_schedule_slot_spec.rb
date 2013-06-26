@@ -9,7 +9,7 @@ describe DistinctScheduleSlot do
       current = create :distinct_schedule_slot, starts_at: t-1.hour, ends_at: t+2.hours
       later   = create :distinct_schedule_slot, starts_at: t.tomorrow
 
-      DistinctScheduleSlot.on_at(t).should eq [current]
+      DistinctScheduleSlot.on_at(t).should eq current
     end
   end
 
