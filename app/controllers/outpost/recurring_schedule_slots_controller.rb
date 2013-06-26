@@ -7,7 +7,7 @@ class Outpost::RecurringScheduleSlotsController < Outpost::ResourceController
     l.per_page = 200
     
     l.column :program, display: ->(r) { r.program.title }
-    l.column :start_time, header: "Start Time", display: ->(r) { "#{r.day_word}, #{r.format_time(:starts_at)}" }, sortable: true, default_sort_mode: "asc"
-    l.column :end_time, header: "End Time", display: ->(r) { "#{r.day_word}, #{r.format_time(:ends_at)}" }
+    l.column :start_time, header: "Start Time", display: ->(r) { r.start_time_string }, sortable: true, default_sort_mode: "asc"
+    l.column :end_time, header: "End Time", display: ->(r) { r.end_time_string }
   end
 end
