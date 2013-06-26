@@ -38,4 +38,24 @@ describe ScheduleSlot do
       ScheduleSlot.block(t, 2.days).should eq [distinct_current, recurring_current, recurring_later, distinct_later]
     end
   end
+
+  #------------
+
+  describe "#next" do
+    it "selects the slot immediately following this one" do
+      t = Time.new(2012, 10, 21, 12)
+      slot1 = create :recurring_schedule_slot, start_time: t.second_of_week, end_time: (t + 2.hours).second_of_week
+      slot2 = create :recurring_schedule_slot, start_time: (t + 2.hours).second_of_week, end_time: (t + 4.hours).second_of_week
+      slot1.next.should eq slot2
+    end
+  end
+
+  #------------
+
+  describe "#json" do
+    it "is a thing, which does stuff" do
+      slot = create :recurring_schedule_slot
+      slot.to_json.should be_present
+    end
+  end
 end
