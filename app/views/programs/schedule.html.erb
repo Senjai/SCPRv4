@@ -34,7 +34,7 @@
         <tbody>
           <% slots.sort_by(&:start_time).each do |slot| %>
             <tr>
-              <% present slot, BroadcastBarPresenter do |p| %>
+              <% present slot, ScheduleSlotPresenter do |p| %>
                 <td class="span6"><span class="byline"><%= p.start_time %></span></td>
                 <td class="span18"><%= link_to p.program.title, p.program.public_path %></td>
               <% end %>
