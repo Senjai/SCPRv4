@@ -279,20 +279,7 @@ class RecurringScheduleSlot < ScheduleSlot
   def upcoming?
     Time.now.second_of_week < self.start_time
   end
-
   
-  #--------------
-  # This is for the listen live JS.
-  # TODO Move it somewhere else.
-  def json
-    {
-      :start => self.starts_at.to_i,
-      :end   => self.ends_at.to_i,
-      :title => self.program.title,
-      :link  => self.program.public_path
-    }
-  end
-
 
   def title
     self.program.title

@@ -41,4 +41,15 @@ class ScheduleSlot < ActiveRecord::Base
   def next
     self.class.on_at(self.ends_at)
   end
+
+  #--------------
+  # This is for the listen live JS.
+  def json
+    {
+      :start => self.starts_at.to_i,
+      :end   => self.ends_at.to_i,
+      :title => self.title,
+      :link  => self.public_url
+    }
+  end
 end
