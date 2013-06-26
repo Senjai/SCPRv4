@@ -70,6 +70,10 @@ class Homepage < ActiveRecord::Base
 
   #----------
   
+  def articles
+    @articles ||= self.content.includes(:content).map(&:content).map(&:to_article)
+  end
+
   def scored_content
     # -- Homepage Items -- #
     
