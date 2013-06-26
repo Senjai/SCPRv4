@@ -75,7 +75,6 @@ namespace :scprv4 do
 
   desc "Cache everything"
   task :cache => [:environment] do
-    Rake::Task["scprv4:cache:remote_blogs"].invoke
     Rake::Task["scprv4:cache:programs"].invoke
     Rake::Task["scprv4:cache:homepage"].invoke
     Rake::Task["scprv4:cache:most_viewed"].invoke
@@ -100,19 +99,6 @@ namespace :scprv4 do
       end
     end
 
-    #----------
-
-    desc "Cache Remote Blog Entries"
-    task :remote_blogs => [:environment] do
-      puts "*** [#{Time.now}] Caching remote blogs..."
-
-      NewRelic.with_manual_agent do
-        Blog.cache_remote_entries
-      end
-
-      puts "Finished.\n"
-    end
-    
     #----------
     
     desc "Cache Most Viewed"

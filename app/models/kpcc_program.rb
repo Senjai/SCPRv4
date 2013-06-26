@@ -7,6 +7,8 @@ class KpccProgram < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Callbacks::SphinxIndexCallback
 
+  mount_uploader :image, ImageUploader
+
   ROUTE_KEY = "program"
   
   PROGRAM_STATUS = {

@@ -56,7 +56,7 @@ class SitemapsController < ApplicationController
   def blogs
     @changefreq = "daily"
     @priority   = "0.3"
-    @content    = Blog.active.where(is_remote: false).order(:name)
+    @content    = Blog.active.order(:name)
     render 'sitemap', formats: :xml
   end
   

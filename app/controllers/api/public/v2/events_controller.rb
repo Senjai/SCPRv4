@@ -58,7 +58,7 @@ module Api::Public::V2
         render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")
         return false
       end
-        
+
       @conditions.push(["starts_at >= ?", start_date]) if start_date
       @conditions.push(["starts_at < ?", end_date])    if end_date
 
@@ -92,30 +92,6 @@ module Api::Public::V2
         types = params[:types].split(",") & Event::EVENT_TYPES.keys
         @conditions.push(event_type: types)
       end
-    end
-
-    #---------------------------
-    # Limit to 40 for public API
-    def sanitize_limit
-      if params[:limit].present?
-        limit = params[:limit].to_i
-        @limit = limit > MAX_RESULTS ? MAX_RESULTS : limit
-      else
-        @limit = 10
-      end
-    end
-
-    #---------------------------
-    
-    def sanitize_page
-      page = params[:page].to_i
-      @page = page > 0 ? page : DEFAULTS[:page]
-    end
-    
-    #---------------------------
-
-    def sanitize_id
-      @id = params[:id].to_i
     end
   end
 end

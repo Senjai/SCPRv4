@@ -15,7 +15,7 @@ FactoryGirl.define do
     sequence(:headline) { |n| "Some Content #{n}" }
     body    { "Body for #{headline}" }
 
-    sequence(:air_date) { |n| (Time.now + 60*60*24*n).strftime("%Y-%m-%d") }
+    sequence(:air_date) { |n| Time.now + 60*60*24*n }
 
     show { |r| r.association(:kpcc_program) }
     published

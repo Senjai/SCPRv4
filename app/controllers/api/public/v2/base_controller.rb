@@ -1,24 +1,62 @@
 module Api::Public::V2
-  VERSION   = Gem::Version.new("2.6.0")
+  VERSION   = Gem::Version.new("2.7.1")
   TYPE      = "public"
-  
+
   class BaseController < ::ActionController::Base
     respond_to :json
-    
+
     before_filter :set_access_control_headers
 
     #---------------------------
-    
+
     def options
       head :ok
     end
 
     #---------------------------
-    
+
     private
-    
+
+    def sanitize_id
+      @id = params[:id].to_i
+    end
+
+    # ID is actually the slug.
+    # Rails' routing "resources" method automatically
+    # names the id parameter to :id, but we're expecting
+    # a string (the slug). It's being renamed to :slug for
+    # the variable because "id" is usually an integer, and
+    # we don't want to get confused.
+    def sanitize_slug
+      @slug = params[:id].to_s
+    end
+
+    def sanitize_limit
+      if params[:limit].present?
+        limit = params[:limit].to_i
+        @limit = limit > max_results ? max_results : limit
+      else
+        @limit = defaults[:limit]
+      end
+    end
+
+    def sanitize_page
+      page = params[:page].to_i
+      @page = page > 0 ? page : defaults[:page]
+    end
+
     #---------------------------
-    
+
+    def max_results
+      self.class::MAX_RESULTS
+    end
+
+    def defaults
+      self.class::DEFAULTS
+    end
+
+    #---------------------------
+
     def set_access_control_headers
       response.headers['Access-Control-Allow-Origin']      = request.env['HTTP_ORIGIN'] || "*"
       response.headers['Access-Control-Allow-Methods']     = 'POST, GET, OPTIONS'

@@ -1,24 +1,26 @@
 module Api::Public::V2
-  class CategoriesController < BaseController
+  class BlogsController < BaseController
+
     before_filter :sanitize_slug, only: [:show]
 
     #---------------------------
 
     def index
-      @categories = Category.all
-      respond_with @categories
+      @blogs = Blog.all
+
+      respond_with @blogs
     end
 
     #---------------------------
 
     def show
-      @category = Category.where(slug: @slug).first
+      @blog = Blog.where(slug: @slug).first
 
-      if !@category
+      if !@blog
         render_not_found and return false
       end
 
-      respond_with @category
+      respond_with @blog
     end
   end
 end

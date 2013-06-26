@@ -17,7 +17,7 @@ FactoryGirl.define do
   end
 
   #--------------------
-  
+
   factory :other_program do
     sequence(:title) { |n| "Other Program #{n}" }
     slug        { title.parameterize }

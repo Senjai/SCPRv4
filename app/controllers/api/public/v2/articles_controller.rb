@@ -117,7 +117,7 @@ module Api::Public::V2
         "segments"    => [ShowSegment]
       }
       
-      params[:types] ||= DEFAULTS[:types]
+      params[:types] ||= defaults[:types]
 
       params[:types].split(",").uniq.each do |type|
         if klasses = allowed_types[type]
@@ -128,24 +128,6 @@ module Api::Public::V2
       @classes.uniq!
     end
 
-    #---------------------------
-    # Limit to 40 for public API
-    def sanitize_limit
-      if params[:limit].present?
-        limit = params[:limit].to_i
-        @limit = limit > MAX_RESULTS ? MAX_RESULTS : limit
-      else
-        @limit = DEFAULTS[:limit]
-      end
-    end
-
-    #---------------------------
-    
-    def sanitize_page
-      page = params[:page].to_i
-      @page = page > 0 ? page : DEFAULTS[:page]
-    end
-    
     #---------------------------
     
     def sanitize_query
