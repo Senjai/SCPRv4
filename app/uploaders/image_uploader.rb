@@ -3,7 +3,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   asset_host Rails.application.config.scpr.media_url
   
   def url
-    File.join(asset_host, public_image_path)
+    File.join(asset_host, public_image_path, file.filename)
   end
 
   def store_dir
