@@ -34,8 +34,10 @@
         <tbody>
           <% slots.sort_by(&:start_time).each do |slot| %>
             <tr>
-              <td class="span6"><span class="byline"><%= slot.format_time %></span></td>
-              <td class="span18"><%= link_to slot.program.title, slot.program.public_path %></td>
+              <% present slot, BroadcastBarPresenter do |p| %>
+                <td class="span6"><span class="byline"><%= p.start_time %></span></td>
+                <td class="span18"><%= link_to p.program.title, p.program.public_path %></td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>
