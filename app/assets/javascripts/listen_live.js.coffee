@@ -143,11 +143,11 @@ class scpr.ListenLive
             $("#llBuffLen").text @audio.getBufferedTime()
             
     #----------
-                            
+    
     _setUpPlayer: ->  
         $(@options.playerEl).append $ "<div/>", id:@options.playerId, text:"Flash player failed to load."
                
-        # we end up with our flash player available at @audio               
+        # we end up with our flash player available at @audio
         swfobject.embedSWF "/assets-flash/streammachine.swf",
             @options.playerId,
             8,
@@ -159,7 +159,7 @@ class scpr.ListenLive
     
     #----------
      
-    _attachExtraUI: ->     
+    _attachExtraUI: ->
         @playBtn = $(@options.playBtn)
                 
         # register a click handler on the play button
@@ -195,7 +195,7 @@ class scpr.ListenLive
             @offsetTo offsecs
    
     #----------
-                            
+    
     offsetTo: (i) ->
         i = Number(i)
         
@@ -210,13 +210,13 @@ class scpr.ListenLive
         @io.emit "offset", i, (i) =>
             if @offset != i
                 @offset = Math.round(i)
-                        
+                
         # we need to seek to the end of the file
         if @playing
             @audio.seekToEnd()
             
         @audio.play()
-                
+        
         # note our status
         @started = Number(new Date) / 1000
         @offset = i
@@ -283,8 +283,13 @@ class scpr.ListenLive
         _buildSchedule: ->
             on_now = @schedule.on_now()
             on_next = @schedule.on_at( on_now.end.toDate() )
-                            
-            $(@options.schedule_finder).html @options.schedule_template? on_now:on_now.toJSON(), on_next:on_next.toJSON()
+            
+            $(@options.schedule_finder).html(
+                @options.schedule_template?(
+                    on_now:  on_now.toJSON()
+                    on_next: on_next.toJSON()
+                )
+            )
                 
             @_on_now = on_now
             
