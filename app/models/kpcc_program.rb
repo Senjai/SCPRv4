@@ -11,12 +11,6 @@ class KpccProgram < ActiveRecord::Base
 
   ROUTE_KEY = "program"
   
-  Featured = [
-    'take-two',
-    'airtalk',
-    'offramp'
-  ]
-  
   PROGRAM_STATUS = {
     "onair"      => "Currently Airing",
     "online"     => "Online Only (Podcast)",

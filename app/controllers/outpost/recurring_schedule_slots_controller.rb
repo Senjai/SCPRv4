@@ -1,8 +1,5 @@
 class Outpost::RecurringScheduleSlotsController < Outpost::ResourceController
   outpost_controller
-  #----------------
-  # Outpost
-  self.model = RecurringScheduleSlot
 
   define_list do |l|
     l.default_order = "start_time"

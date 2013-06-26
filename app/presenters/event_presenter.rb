@@ -40,7 +40,7 @@ class EventPresenter < ApplicationPresenter
       h.content_tag :div, class: "past-date" do
         "This event took place on:<br />#{range_date}".html_safe
       end
-    end    
+    end
   end
 
   #-------------

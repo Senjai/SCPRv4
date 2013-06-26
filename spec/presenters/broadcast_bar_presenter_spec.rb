@@ -1,0 +1,199 @@
+require "spec_helper"
+
+describe BroadcastBarPresenter do
+  describe '#show_modal?' do
+    it 'is false if the slot is not recurring' do
+      slot  = build :distinct_schedule_slot
+      p     = presenter(slot)
+
+      p.show_modal?.should eq false
+    end
+
+    it 'is false if programs display_episodes is false' do
+      program   = build :kpcc_program, display_episodes: false
+      slot      = build :recurring_schedule_slot, program: program
+      p         = presenter(slot)
+
+      p.show_modal?.should eq false
+    end
+
+    it 'is true for recurring episodic kpcc programs' do
+      program   = build :kpcc_program, display_episodes: true
+      slot      = build :recurring_schedule_slot, program: program
+      p         = presenter(slot)
+
+      p.show_modal?.should eq true
+    end
+  end
+
+  describe '#is_for_featured_program?' do
+    it 'is false if not recurring' do
+      slot = build :distinct_schedule_slot
+      p    = presenter(slot)
+
+      p.is_for_featured_program?.should eq false
+    end
+
+    it 'is false if the program is not featured' do
+      program = build :kpcc_program, is_featured: false
+      slot    = build :recurring_schedule_slot, program: program
+      p       = presenter(slot)
+
+      p.is_for_featured_program?.should eq false
+    end
+
+    it 'is true for recurring slots for featured programs' do
+      program = build :kpcc_program, is_featured: true
+      slot    = build :recurring_schedule_slot, program: program
+      p       = presenter(slot)
+
+      p.is_for_featured_program?.should eq true
+    end
+  end
+
+  describe '#start_time' do
+    it "recognizes midnight" do
+      slot = build :distinct_schedule_slot, starts_at: Time.new(2013, 6, 24, 0)
+      p    = presenter(slot)
+
+      p.start_time.should eq 'midnight'
+    end
+
+    it 'recognizes noon' do
+      slot = build :distinct_schedule_slot, starts_at: Time.new(2013, 6, 24, 12)
+      p    = presenter(slot)
+
+      p.start_time.should eq 'noon'
+    end
+
+    it 'hides the minutes if it is on the hour' do
+      slot = build :distinct_schedule_slot, starts_at: Time.new(2013, 6, 24, 1, 0)
+      p    = presenter(slot)
+
+      p.start_time.should_not match /:00/
+    end
+
+    it "shows the minutes if it's off the hour" do
+      slot = build :distinct_schedule_slot, starts_at: Time.new(2013, 6, 24, 1, 30)
+      p    = presenter(slot)
+
+      p.start_time.should match /:30/
+    end
+  end
+
+  describe '#end_time' do
+    it "is the same as start_time" do
+      slot = build :recurring_schedule_slot, end_time: Time.new(2013, 6, 24, 12).second_of_week
+      p    = presenter(slot)
+
+      p.end_time.should eq "noon"
+    end
+  end
+
+  describe '#program_slug' do
+    it "is the program slug if the program is present" do
+      program = build :kpcc_program, slug: "blahblah"
+      slot    = build :recurring_schedule_slot, program: program
+      p       = presenter(slot)
+
+      p.program_slug.should eq 'blahblah'
+    end
+
+    it 'is nil if the program is not present' do
+      slot = build :distinct_schedule_slot
+      p    = presenter(slot)
+
+      p.program_slug.should eq nil
+    end
+  end
+
+  describe '#program' do
+    it "is the program if recurring" do
+      program = build :kpcc_program, slug: "blahblah"
+      slot    = build :recurring_schedule_slot, program: program
+      p       = presenter(slot)
+
+      p.program.should eq program
+    end
+
+    it "is nil if not recurring" do
+      slot = build :distinct_schedule_slot
+      p    = presenter(slot)
+
+      p.program.should eq nil
+    end
+  end
+
+  describe '#modal_class' do
+    it 'is a string if show_modal is true' do
+      slot = build :recurring_schedule_slot
+      p    = presenter(slot)
+      p.stub(:show_modal?) { true }
+
+      p.modal_class.should be_a String
+    end
+
+    it 'is nil if not show_modal' do
+      slot = build :recurring_schedule_slot
+      p    = presenter(slot)
+      p.stub(:show_modal?) { false }
+
+      p.modal_class.should eq nil
+    end
+  end
+
+  describe '#toggler_id' do
+    it 'is a string if show_modal is true' do
+      slot = build :recurring_schedule_slot
+      p    = presenter(slot)
+      p.stub(:show_modal?) { true }
+
+      p.toggler_id.should be_a String
+    end
+
+    it 'is nil if not show_modal' do
+      slot = build :recurring_schedule_slot
+      p    = presenter(slot)
+      p.stub(:show_modal?) { false }
+
+      p.toggler_id.should eq nil
+    end
+  end
+
+  describe '#headshot_class' do
+    it 'is a string if is_for_featured_program is true' do
+      slot = build :recurring_schedule_slot
+      p    = presenter(slot)
+      p.stub(:is_for_featured_program?) { true }
+
+      p.headshot_class.should be_a String
+    end
+
+    it 'is nil if not is_for_featured_program' do
+      slot = build :recurring_schedule_slot
+      p    = presenter(slot)
+      p.stub(:is_for_featured_program?) { false }
+
+      p.headshot_class.should eq nil
+    end
+  end
+
+  describe '#recurring?' do
+    it 'is true for recurring_schedule_slot' do
+      slot = build :recurring_schedule_slot
+      p    = presenter(slot)
+
+      p.recurring?.should eq true
+    end
+  end
+
+  describe '#distinct?' do
+    it 'is true for distinct_schedule_slot' do
+      slot = build :distinct_schedule_slot
+      p    = presenter(slot)
+
+      p.distinct?.should eq true
+    end
+  end
+
+end

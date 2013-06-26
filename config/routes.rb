@@ -123,6 +123,7 @@ Scprv4::Application.routes.draw do
         resources :editions, only: [:index, :show]
         resources :categories, only: [:index, :show]
         resources :events, only: [:index, :show]
+        resources :schedule, only: [:index, :show]
         resources :programs, only: [:index, :show]
         resources :episodes, only: [:index, :show]
         resources :blogs, only: [:index, :show]
@@ -157,6 +158,10 @@ Scprv4::Application.routes.draw do
     root to: 'home#index'
 
     resources :recurring_schedule_slots do
+      get "search", on: :collection, as: :search
+    end
+
+    resources :distinct_schedule_slots do
       get "search", on: :collection, as: :search
     end
 
