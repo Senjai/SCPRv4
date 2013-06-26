@@ -39,7 +39,7 @@ class ScheduleSlot < ActiveRecord::Base
 
 
   def next
-    self.class.on_at(self.ends_at)
+    ScheduleSlot.on_at(self.ends_at)
   end
 
   #--------------
