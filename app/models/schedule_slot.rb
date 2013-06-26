@@ -44,7 +44,7 @@ class ScheduleSlot < ActiveRecord::Base
 
   #--------------
   # This is for the listen live JS.
-  def to_json
+  def listen_live_json
     {
       :start => self.starts_at.to_i,
       :end   => self.ends_at.to_i,
