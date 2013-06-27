@@ -137,6 +137,14 @@ table {
     }
 
     ///////////////////
+    // DistinctScheduleSlots
+    &.list-distinct_schedule_slots {
+        .column-title { // distinct_schedule_slot.title
+            width: 500px;
+        }
+    }
+
+    ///////////////////
     // Edition
     &.list-editions {
         .column-datetime {

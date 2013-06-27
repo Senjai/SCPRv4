@@ -117,7 +117,6 @@ class ProgramsController < ApplicationController
   # ---------------
   
   def get_featured_programs
-    @featured_programs = KpccProgram.where("slug IN (?)", KpccProgram::Featured)
-    @featured_programs.sort_by! { |program| KpccProgram::Featured.index(program.slug) } # Orders the returned records by the order of the KpccProgram::Featured array
+    @featured_programs = KpccProgram.where(is_featured: true)
   end
 end

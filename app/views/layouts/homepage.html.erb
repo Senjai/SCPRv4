@@ -8,29 +8,30 @@
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
-  <% program = @schedule_current.program %>
+<%= cache ["broadcastbar", @schedule_current, @schedule_current.starts_at.to_i, (@schedule_current.program if @schedule_current.respond_to?(:program))] do %>
 
-  <%= cache [Time.now.beginning_of_day.to_i, program] do %>
-
-  <div class="broadcast-bar<%= " with-headshot" if KpccProgram::Featured.include? program.slug %>" id="broadcast-bar">
+<% present @schedule_current, BroadcastBarPresenter do |p| %>
+  <div class="broadcast-bar <%=p.headshot_class%>" id="broadcast-bar">
     <div class="bb-inner-container">
       <div class="container-fluid">
         <div class="row-fluid">
           <div class="span12" id="bb-current-program">
             <div class="current program">
 
-            <% if KpccProgram::Featured.include? program.slug %>
-              <a href="<%= program.public_path %>" class="headshot <%= program.slug %>">&nbsp;</a>
+
+            <% if p.is_for_featured_program? %>
+              <a href="<%= p.public_url %>" class="headshot <%= p.program_slug %>">&nbsp;</a>
             <% end %>
         
-              <div class="program-info <%= program.slug %>">
-                <a href="<%= program.public_path %>" class="show-title<%= " modal-toggler" if @schedule_current.show_modal? %>" data-modal-id="<%= "episode-guide" if @schedule_current.show_modal? %>"><%= program.title %></a>
-                <span class="show-time"><%= @schedule_current.format_time %> - <%= @schedule_current.format_time(:ends_at) %></span>
+
+              <div class="program-info <%= p.program_slug %>">
+                <a href="<%= p.public_url %>" class="show-title <%= p.modal_class %>" data-modal-id="<%= p.toggler_id %>"><%= p.title %></a>
+                <span class="show-time"><%= p.start_time %> - <%= p.end_time %></span>
               </div> <!-- program-info -->
       
-            <% if @schedule_current.show_modal? %>
-              <% episode = program.episodes.published.first %>
 
+            <!-- Modal: For recurring slots with episodes which feature episodes -->
+            <% if p.show_modal? && (episode = p.program.episodes.published.first) %>
               <div class="modal-container">
 
               <%= modal("episode-guide", modal_id: "episode-guide") do %>
@@ -47,26 +48,31 @@
                   </li>
                 <% end %>
 
-                  <li class="more"><a href="<%= program.public_path %>">More <%= program.title %></a></li>
+                  <li class="more"><a href="<%= p.program.public_path %>">More <%= p.program.title %></a></li>
                 </ul>
               <% end %><%# modal %>
 
               </div> <!-- modal-container -->
             <% end %><%# show_modal? %>
+            <!-- end Modal -->
+
 
             </div> <!-- current program -->
           </div> <!-- span -->
-    
+<% end %> <%# presenter %>
+
           <div class="span12" id="bb-next-program">
             <div class="next program">
 
-            <% if up_next = @schedule_current.next %>
-              <div class="program-info">
-                <a href="<%= up_next.program.public_path %>" class="show-title"><%= up_next.program.title %></a>
-                <span class="show-time"><%= up_next.format_time %> - <%= up_next.format_time(:ends_at) %></span>
-              </div> <!-- program-info -->
-            <% end %><%# up_next %>
+        <% if next_slot = @schedule_current.next %>
+          <% present next_slot, BroadcastBarPresenter do |p| %>
 
+            <div class="program-info">
+              <a href="<%= p.public_url %>" class="show-title"><%= p.title %></a>
+              <span class="show-time"><%= p.start_time %> - <%= p.end_time %></span>
+            </div> <!-- program-info -->
+          <% end %><%# presenter %>
+        <% end %> <%# next_slot %>
             </div> <!-- next program -->
           </div> <!-- span -->
         </div> <!-- row-fluid -->
@@ -74,7 +80,7 @@
     </div> <!-- bb-inner-container -->
   </div> <!-- broadcast-bar -->
 
-  <% end %><%# content_cache %>
+<% end %> <%# cache %>
 <% end %><%# present? %>
 
 

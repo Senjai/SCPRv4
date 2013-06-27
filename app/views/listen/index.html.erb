@@ -123,7 +123,7 @@
 <% content_for :footer do %>
   <script>
     llPlayer = new scpr.ListenLive.CurrentGen({
-      schedule:   <%= raw @schedule.to_json %>
+      schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>
     })
     
     $("#llcontent a").attr("target","_blank");

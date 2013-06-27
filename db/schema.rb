@@ -515,33 +515,34 @@ ActiveRecord::Schema.define(:version => 20130625225709) do
   add_index "press_releases", ["slug"], :name => "press_releases_release_slug"
 
   create_table "programs_kpccprogram", :force => true do |t|
-    t.string   "slug",                :limit => 40,                           :null => false
-    t.string   "title",               :limit => 60,                           :null => false
-    t.text     "teaser",              :limit => 2147483647
-    t.text     "description",         :limit => 2147483647
-    t.string   "host",                :limit => 150
-    t.string   "airtime",             :limit => 300
-    t.string   "air_status",          :limit => 10,                           :null => false
-    t.string   "podcast_url",         :limit => 200
-    t.string   "rss_url",             :limit => 200
-    t.string   "twitter_url",         :limit => 300
-    t.string   "facebook_url",        :limit => 200
-    t.text     "sidebar",             :limit => 2147483647
-    t.boolean  "display_episodes",                          :default => true, :null => false
-    t.boolean  "display_segments",                          :default => true, :null => false
+    t.string   "slug",                                   :null => false
+    t.string   "title",                                  :null => false
+    t.text     "teaser"
+    t.text     "description"
+    t.string   "host"
+    t.string   "airtime"
+    t.string   "air_status",                             :null => false
+    t.string   "podcast_url"
+    t.string   "rss_url"
+    t.string   "twitter_url"
+    t.string   "facebook_url"
+    t.text     "sidebar"
+    t.boolean  "display_episodes",    :default => true,  :null => false
+    t.boolean  "display_segments",    :default => true,  :null => false
     t.integer  "blog_id"
-    t.string   "audio_dir",           :limit => 50
+    t.string   "audio_dir"
     t.integer  "missed_it_bucket_id"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "image"
+    t.boolean  "is_featured",         :default => false, :null => false
   end
 
   add_index "programs_kpccprogram", ["air_status"], :name => "index_programs_kpccprogram_on_air_status"
   add_index "programs_kpccprogram", ["blog_id"], :name => "programs_kpccprogram_472bc96c"
+  add_index "programs_kpccprogram", ["is_featured"], :name => "index_programs_kpccprogram_on_is_featured"
   add_index "programs_kpccprogram", ["missed_it_bucket_id"], :name => "programs_kpccprogram_d12628ce"
-  add_index "programs_kpccprogram", ["slug"], :name => "slug", :unique => true
-  add_index "programs_kpccprogram", ["title"], :name => "title", :unique => true
+  add_index "programs_kpccprogram", ["slug"], :name => "index_programs_kpccprogram_on_slug"
 
   create_table "programs_otherprogram", :force => true do |t|
     t.string   "slug",        :limit => 40,         :null => false
@@ -599,22 +600,6 @@ ActiveRecord::Schema.define(:version => 20130625225709) do
   end
 
   add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
-
-  create_table "schedule_program", :force => true do |t|
-    t.integer  "day",                             :null => false
-    t.integer  "kpcc_program_id"
-    t.integer  "other_program_id"
-    t.string   "program",          :limit => 150, :null => false
-    t.string   "url",              :limit => 200, :null => false
-    t.time     "start_time",                      :null => false
-    t.time     "end_time",                        :null => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-  end
-
-  add_index "schedule_program", ["day", "start_time", "end_time"], :name => "index_schedule_program_on_day_and_start_time_and_end_time"
-  add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"
-  add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false

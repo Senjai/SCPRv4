@@ -15,15 +15,19 @@
 <%= form_block "Display Options" do %>
   <%= f.input :display_episodes, hint: "Does this program use episodes to group segments?" %>
   <%= f.input :display_segments, hint: "Should individual segments be displayed on the program page?" %>
+  <%= f.input :is_featured, hint: "Whether or not this program is featured around the website" %>
   <%= f.input :audio_dir, label: "Audio directory" %>
   <%= f.association :missed_it_bucket %>
 
 <% end %>
 
 <%= form_block "Image" do %>
-  <%= image_tag(record.image_url, style: "max-width:300px") if record.image.present? %>
+  <% if record.image.present? %>
+    <%= image_tag(record.image_url, style: "max-width:300px") %>
+    <%= f.input :remove_image, as: :boolean %>
+  <% end %>
 
-  <h5>Upload a new image</h5>
+  <h5><%= record.image.present? ? "Replace the current image" : "Upload an image" %></h5>
   <%= f.input :image %>
 <% end %>
 
