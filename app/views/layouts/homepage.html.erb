@@ -8,7 +8,7 @@
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
-<%= cache [Time.now.beginning_of_day.to_i, @schedule_current] do %>
+<%= cache ["broadcastbar", "v1", @schedule_current.starts_at.to_i] do %>
 
 <% present @schedule_current, BroadcastBarPresenter do |p| %>
   <div class="broadcast-bar <%=p.headshot_class%>" id="broadcast-bar">
