@@ -22,9 +22,12 @@
 <% end %>
 
 <%= form_block "Image" do %>
-  <%= image_tag(record.image_url, style: "max-width:300px") if record.image.present? %>
+  <% if record.image.present? %>
+    <%= image_tag(record.image_url, style: "max-width:300px") %>
+    <%= f.input :remove_image, as: :boolean %>
+  <% end %>
 
-  <h5>Upload a new image</h5>
+  <h5><%= record.image.present? ? "Replace the current image" : "Upload an image" %></h5>
   <%= f.input :image %>
 <% end %>
 
