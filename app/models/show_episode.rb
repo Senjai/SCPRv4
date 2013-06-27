@@ -7,9 +7,6 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
-  include Concern::Associations::HomepageContentAssociation
-  include Concern::Associations::MissedItContentAssociation
-  include Concern::Associations::RelatedContentAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
