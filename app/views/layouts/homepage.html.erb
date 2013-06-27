@@ -8,8 +8,8 @@
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
-<%= cache ["broadcastbar", "v1", @schedule_current.starts_at.to_i] do %>
-
+<%= cache ["broadcastbar", @schedule_current.starts_at.to_i, (@schedule_current.program if @schedule_current.respond_to?(:program))] do %>
+HELLO
 <% present @schedule_current, BroadcastBarPresenter do |p| %>
   <div class="broadcast-bar <%=p.headshot_class%>" id="broadcast-bar">
     <div class="bb-inner-container">
@@ -61,7 +61,6 @@
           </div> <!-- span -->
 <% end %> <%# presenter %>
 
-
           <div class="span12" id="bb-next-program">
             <div class="next program">
 
@@ -81,7 +80,7 @@
     </div> <!-- bb-inner-container -->
   </div> <!-- broadcast-bar -->
 
-  <% end %><%# content_cache %>
+<% end %> <%# cache %>
 <% end %><%# present? %>
 
 
