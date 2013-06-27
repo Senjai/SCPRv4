@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625225709) do
+ActiveRecord::Schema.define(:version => 20130627232436) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -467,7 +467,6 @@ ActiveRecord::Schema.define(:version => 20130625225709) do
     t.string   "query_type"
     t.boolean  "is_active",                          :default => false, :null => false
     t.datetime "published_at"
-    t.datetime "expires_at"
     t.boolean  "is_featured",                        :default => false, :null => false
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false

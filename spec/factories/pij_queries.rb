@@ -29,25 +29,16 @@ FactoryGirl.define do
     trait :visible do
       is_active true
       published_at  { 1.day.ago }
-      expires_at    { 1.day.from_now }
     end
 
     trait :inactive do
       is_active     false
       published_at  { 1.day.ago }
-      expires_at    { 1.day.from_now }
     end
 
     trait :unpublished do
       is_active     true
       published_at  { 1.day.from_now }
-      expires_at    { 2.days.from_now }
-    end
-
-    trait :expired do
-      is_active     { true }
-      published_at  { 2.days.ago }
-      expires_at    { 1.day.ago }
     end
   end
 end
