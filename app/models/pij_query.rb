@@ -23,11 +23,10 @@ class PijQuery < ActiveRecord::Base
   scope :news,          -> { where(query_type: "news") }
   scope :evergreen,     -> { where(query_type: "evergreen") }
 
-  scope :visible, -> { where(
-    'is_active = :is_active and published_at < :time and ' \
-    '(expires_at is null or expires_at > :time)', 
-    is_active: true, time: Time.now
-  ).order("published_at desc") }
+  scope :visible, -> {
+    where('is_active = ? and published_at < ?', true, Time.now)
+    .order("published_at desc")
+  }
   
   #------------
   # Association

@@ -5,8 +5,8 @@ describe PijQueriesController do
   
   describe "GET /index" do
     before :each do
-      create :pij_query, :news, :expired
-      create :pij_query, :evergreen, :expired
+      create :pij_query, :news, :unpublished
+      create :pij_query, :evergreen, :unpublished
       create :pij_query, :utility
     end
     
@@ -57,7 +57,7 @@ describe PijQueriesController do
     end
     
     it "raises RecordNotFound if pij query is not visible" do
-      query = create :pij_query, :expired
+      query = create :pij_query, :unpublished
       -> { 
         get :show, slug: query.slug
       }.should raise_error ActiveRecord::RecordNotFound

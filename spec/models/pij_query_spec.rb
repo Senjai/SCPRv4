@@ -33,12 +33,7 @@ describe PijQuery do
         PijQuery.visible.should be_blank
       end
 
-      it "doesn't select expired" do
-        create :pij_query, :expired
-        PijQuery.visible.should be_blank
-      end
-
-      it "selects anything which meets all 3 criteria" do
+      it "selects anything which meets the criteria" do
         active_query = create :pij_query, :visible
         PijQuery.visible.should eq [active_query]
       end
