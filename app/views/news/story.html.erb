@@ -6,7 +6,7 @@
 <% end %>
 
 <div class="fold inline" id="fold">
-  <%= render "/shared/cwidgets/related_content_and_links", content: @story %>
+  <%= content_widget "related_content_and_links", content: @story %>
   <%= content_widget 'content_carousel', @story %>
   <%= comments_for @story %>
 </div>
