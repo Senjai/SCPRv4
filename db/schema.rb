@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627232436) do
+ActiveRecord::Schema.define(:version => 20130628191555) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -465,18 +465,19 @@ ActiveRecord::Schema.define(:version => 20130627232436) do
     t.text     "teaser",       :limit => 2147483647
     t.text     "body",         :limit => 2147483647
     t.string   "query_type"
-    t.boolean  "is_active",                          :default => false, :null => false
     t.datetime "published_at"
     t.boolean  "is_featured",                        :default => false, :null => false
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
     t.string   "pin_query_id"
+    t.integer  "status"
   end
 
-  add_index "pij_query", ["is_active", "published_at"], :name => "index_pij_query_on_is_active_and_published_at"
   add_index "pij_query", ["is_featured"], :name => "index_pij_query_on_is_featured"
+  add_index "pij_query", ["published_at"], :name => "index_pij_query_on_is_active_and_published_at"
   add_index "pij_query", ["query_type"], :name => "index_pij_query_on_query_type"
   add_index "pij_query", ["slug"], :name => "slug", :unique => true
+  add_index "pij_query", ["status"], :name => "index_pij_query_on_status"
 
   create_table "podcasts", :force => true do |t|
     t.string   "slug"

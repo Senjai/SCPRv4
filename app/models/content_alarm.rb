@@ -26,10 +26,12 @@ class ContentAlarm < ActiveRecord::Base
 
   #---------------------
   # Fire an alarm.
+  # TODO: Instead of updating attribute, just define a `publish` instance method,
+  # so the class can decide how to publish instead of this class.
   def fire
     if self.can_fire?
       ContentAlarm.log "Firing ContentAlarm ##{self.id} for #{self.content.simple_title}"
-      if self.content.update_attributes(status: ContentBase::STATUS_LIVE) # This shouldn't always reference ContentBase
+      if self.content.update_attributes(status: ContentBase::STATUS_LIVE)
         ContentAlarm.log "Published #{self.content.simple_title}. Removing this alarm."
         self.destroy
       else
