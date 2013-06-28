@@ -1,11 +1,13 @@
-<div id="asset_slideshow_<%= content.id %>" class="slideview">
+<% html_safe_id = article.id.parameterize %>
+
+<div id="asset_slideshow_<%=html_safe_id%>" class="slideview">
 
   <div class="static-slides">
-  <% content.assets.each do |asset| %>
+  <% assets.each do |asset| %>
     <div class="slide">
       <div class="asset-block">
         <div class="contentasset">
-          <%= link_to asset.eight.tag, content.public_path %> 
+          <%= link_to asset.eight.tag, article.public_url %>
         </div>
 
         <h4><%= asset.owner %></h4>
@@ -35,8 +37,8 @@
           start: params["slide"],
           deeplink: true,
         <% end %>
-          el: "#asset_slideshow_<%= content.id %>",
-          staticSlides: "staticSlides<%=content.id%>",
+          el: "#asset_slideshow_<%=html_safe_id%>",
+          staticSlides: "staticSlides_<%=html_safe_id%>",
           assets: <%= assets.to_json.html_safe %>
     });
 
