@@ -37,7 +37,7 @@
     </div>
   <% end %>
 
-  <%= content_widget "related_content_and_links", @entry %>
+  <%= render "shared/related_content_and_links", content: @entry %>
   
   <!-- Comments -->
   <div class="comment-wrap">
