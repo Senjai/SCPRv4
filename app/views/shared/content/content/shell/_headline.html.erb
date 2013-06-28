@@ -1,7 +1,0 @@
-<% if content ||= nil %>
-  <li>
-    <%= link_to content.short_headline, content.public_path %> 
-    <span class="shell-link">| From <%= content.site %></span>
-    <%= smart_date_js content.published_at, "data-window" => "8h", "data-relative" => "2h" %>
-  </li>
-<% end %>
