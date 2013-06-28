@@ -19,7 +19,8 @@ module ApplicationHelper
     yield presenter if block_given?
     presenter
   end
-  
+
+
   #---------------------------
   # render_content takes a ContentBase object and a context, and renders 
   # using the most specific version of that context it can find.
@@ -31,43 +32,32 @@ module ApplicationHelper
   # * shared/content/news/lead
   # * shared/content/default/lead
   #
-  def render_content(content,context,options={})
+  def render_content(content, context, options={})
     return '' if content.blank?
-
     html = ''
-    
-    Array(content).compact.each do |c|
-      if c.respond_to?(:content)
-        next if c.content.blank?
-        c = c.content
-      end
 
+    Array(content).compact.map(&:to_article).each do |article|
       # if we're caching, add content to the objects list
       if defined? @COBJECTS
-        @COBJECTS << c
+        @COBJECTS << article.original_object
       end
-      
+
       # break up our content type
-      types = c.class.content_key.split("/")
+      directory = article.original_object.class.name.underscore
 
       # set up our template precendence
-      tmplt_opts = [
-        [types[0],types[1],context].join("/"),
-        [types[0],context].join("/"),
-        ['default',context].join("/")
-      ]
+      tmplt_opts = ["#{directory}/#{context}", "default/#{context}"]
 
-      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }
-      html << render(options.merge({
-        :partial    => "shared/content/#{partial}",
-        :object     => c,
-        :as         => :content
-      }))
+      partial = tmplt_opts.find do |template| 
+        self.lookup_context.exists?(template, ["shared/content"], true) 
+      end
+
+      html << render("shared/content/#{partial}", article: article, options: options)
     end
-    
+
     html.html_safe
   end
-  
+
   #---------------------------  
   # render_asset takes a ContentBase object and a context, and renders using 
   # an optional context_asset_scheme attribute on the object.  
@@ -81,12 +71,10 @@ module ApplicationHelper
   # * shared/assets/story/default
   # * shared/assets/default/default
   def render_asset(content, context, fallback=false)
-    if content.blank? || !content.respond_to?(:assets)
-      return ''
-    end
+    article = content.to_article
 
-    if content.assets.blank?
-      return fallback ? render("shared/assets/#{context}/fallback", content: content) : ''
+    if article.assets.empty?
+      return fallback ? render("shared/assets/#{context}/fallback", article: article) : ''
     end
     
     # look for a scheme on the content object
@@ -101,15 +89,11 @@ module ApplicationHelper
       "default/default"
     ]
     
-    partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/assets"],true) }
+    partial = tmplt_opts.find do |template| 
+      self.lookup_context.exists?(template, ["shared/assets"], true)
+    end
 
-    render "shared/assets/#{partial}", assets: content.assets, content: content
-  end
-  
-  #----------
-  
-  def is_vertical?(asset)
-    asset.height.to_i > asset.width.to_i
+    render "shared/assets/#{partial}", assets: article.assets, article: article
   end
   
   #----------
@@ -272,6 +256,7 @@ module ApplicationHelper
       time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
     end
   end
+
   
   #----------
 
