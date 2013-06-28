@@ -137,7 +137,7 @@ module ApplicationHelper
   # If the content doesn't have bylines, just return
   # "KPCC" for opengraph stuff.
   def render_byline(content, links=true)
-    return "KPCC" if !content.respond_to?(:bylines)
+    return "KPCC" if !content.respond_to?(:joined_bylines)
     
     elements = content.joined_bylines do |bylines|
       link_bylines(bylines, links)
