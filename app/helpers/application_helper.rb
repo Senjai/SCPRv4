@@ -1,7 +1,17 @@
 module ApplicationHelper
   include Twitter::Autolink
 
-  #---------------------------
+  HEADSHOTS = [
+    "stoltze.png",
+    "peterson.png",
+    "moore.png",
+    "guzman-lopez.png",
+    "julian.png",
+    "watt.png",
+    "oneil.png",
+    "trujillo.png"
+  ]
+
   
   def present(object, klass=nil)
     klass ||= "#{object.class}Presenter".constantize
@@ -105,8 +115,7 @@ module ApplicationHelper
   #----------
   
   def random_headshot
-    images = ["stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png", "trujillo.png"]
-    image_tag "personalities/#{images.sample}"
+    image_tag "personalities/#{HEADSHOTS.sample}"
   end
   
   #----------
