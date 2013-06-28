@@ -89,14 +89,6 @@ class ContentShell < ActiveRecord::Base
   
   #-------------------
   
-  def teaser
-    self.body
-  end
-  
-  def short_headline
-    self.headline
-  end
-
   #----------
   # Override Outpost's routing methods for these
   def public_path(options={})
@@ -119,15 +111,15 @@ class ContentShell < ActiveRecord::Base
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
-      :title              => self.short_headline,
-      :short_title        => self.short_headline,
+      :title              => self.headline,
+      :short_title        => self.headline,
       :public_datetime    => self.published_at,
-      :teaser             => self.teaser,
-      :body               => self.teaser,
+      :teaser             => self.body,
+      :body               => self.body,
       :category           => self.category,
       :assets             => self.assets,
       :attributions       => self.bylines,
-      :public_url         => self.public_url,
+      :public_url         => self.url,
       :edit_url           => self.admin_edit_url
     })
   end
@@ -137,8 +129,8 @@ class ContentShell < ActiveRecord::Base
   def to_abstract
     @to_abstract ||= Abstract.new({
       :original_object        => self,
-      :headline               => self.short_headline,
-      :summary                => self.teaser,
+      :headline               => self.headline,
+      :summary                => self.body,
       :source                 => self.site,
       :url                    => self.url,
       :assets                 => self.assets,
