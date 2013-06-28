@@ -50,8 +50,11 @@ class PijQuery < ActiveRecord::Base
     indexes body
     indexes teaser
     indexes pin_query_id
-
     has published_at
+
+    # Required attributes for ContentBase.search
+    has published_at, as: :public_datetime
+    has is_active, as: :is_live, type: :boolean
   end
   
   #------------
@@ -60,9 +63,23 @@ class PijQuery < ActiveRecord::Base
     self.is_active?
   end
 
-  def short_headline
-    self.headline
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.headline,
+      :short_title        => self.headline,
+      :public_datetime    => self.published_at,
+      :teaser             => self.teaser,
+      :body               => self.body,
+      :assets             => self.assets,
+      :byline             => "KPCC",
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
+    })
   end
+
 
   #------------
   

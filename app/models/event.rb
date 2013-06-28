@@ -92,7 +92,7 @@ class Event < ActiveRecord::Base
     has status
 
     # Required attributes for ContentBase.search
-    has starts_at, as: :public_datetime
+    has created_at, as: :public_datetime
     has "status = #{Event::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
@@ -116,18 +116,6 @@ class Event < ActiveRecord::Base
       Rails.cache.expire_obj(self)
       Rails.cache.expire_obj("events/event:new") if self.new_record?
     end
-  end
-
-  # -------------------
-  # Event doesn't really have a "Publish" date, so we'll just use the 
-  # start date to fake this.
-  # This is not good and should be fixed.
-  def published_at
-    self.starts_at
-  end
-  
-  def short_headline
-    self.headline
   end
 
   # -------------------
@@ -190,7 +178,26 @@ class Event < ActiveRecord::Base
   def is_forum_event?
     ForumTypes.include? self.event_type
   end
-  
+
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => "Event: " + self.headline,
+      :short_title        => "Event: " + self.headline,
+      :public_datetime    => self.starts_at,
+      :teaser             => self.teaser,
+      :body               => self.body,
+      :assets             => self.assets,
+      :audio              => self.audio.available,
+      :byline             => "KPCC",
+      :public_url         => self.public_url,
+      :edit_url           => self.admin_edit_url
+    })
+  end
+
+
   #----------
   
   def route_hash
