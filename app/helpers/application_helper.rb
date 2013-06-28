@@ -131,7 +131,7 @@ module ApplicationHelper
   
   #----------
   # Render a byline for the passed-in content
-  # If links is set to false, and the contet has
+  # If links is set to false, and the content has
   # bylines, this will yield the same as +content.byline+
   # 
   # If the content doesn't have bylines, just return
