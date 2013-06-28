@@ -2,12 +2,12 @@
   <% register_content bucket %>
   <div class="carousel-section">
     <div class="row-fluid">
-      <% contents.map(&:content).each do |content| %>
-        <% register_content content %>
+      <% contents.map { |c| c.content.to_article }.each do |article| %>
+        <% register_content article.original_object %>
         <div class="span4">
           <div class="carousel-item">
-            <%= render_asset content, "thumbnail", true %>
-            <span class="title"><%= link_to content.short_headline, content.public_path %></span>
+            <%= render_asset article, "thumbnail", true %>
+            <span class="title"><%= link_to article.short_title, article.public_url %></span>
           </div>
         </div> <!-- span -->
         <hr />
