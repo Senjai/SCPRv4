@@ -1,16 +1,23 @@
 <% if @homepage %>
-<%=
-  begin
-    render @homepage.base, homepage: @homepage
-  rescue ActionView::MissingTemplate => e
-    if Rails.env == "production"
-      render "default", homepage: @homepage
-    else
-      raise e
+
+<%= content_cache('homepage-lead-stories') do %>
+  <% register_content(@homepage) %>
+
+  <%=
+    begin
+      render @homepage.base, homepage: @homepage
+    rescue ActionView::MissingTemplate => e
+      if Rails.env == "production"
+        render "default", homepage: @homepage
+      else
+        raise e
+      end
     end
-  end
-%>
-<% end %>
+  %>
+
+<% end %> <%# cache %>
+<% end %> <%# homepage? %>
+
 
 <%= yield :conversation_slot %>
 
