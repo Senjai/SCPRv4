@@ -42,7 +42,11 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Associations
-  has_many :content, class_name: "HomepageContent", order: "position", dependent: :destroy
+  has_many :content,
+    :class_name   => "HomepageContent",
+    :order        => "position",
+    :dependent    => :destroy
+
   accepts_json_input_for :content
 
   belongs_to :missed_it_bucket
@@ -68,10 +72,11 @@ class Homepage < ActiveRecord::Base
     has updated_at
   end
 
-  #----------
-  
+
   def articles
-    @articles ||= self.content.includes(:content).map(&:content).map(&:to_article)
+    @articles ||= self.content.includes(:content).map do |c|
+      c.content.to_article
+    end
   end
 
   def scored_content

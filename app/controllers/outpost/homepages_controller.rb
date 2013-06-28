@@ -12,7 +12,11 @@ class Outpost::HomepagesController < Outpost::ResourceController
     l.column :published_at, sortable: true, default_sort_mode: "desc"
     l.column :status
     l.column :base, header: "Template"
-    l.column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
+
+    l.column :updated_at,
+      :header               => "Last Updated",
+      :sortable             => true,
+      :default_sort_mode    => "desc"
   end
 
   #--------------------
