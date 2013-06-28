@@ -1,0 +1,15 @@
+<div class="cbase offlead">
+  <div class="row-fluid">
+    <div class="span4">
+      <%= render_asset article, "thumbnail" %>
+    </div>
+
+    <div class="span20">
+      <h3><%= link_to article.short_title, article.public_url %></h3>
+      <span class="byline">
+        <%= timestamp article.public_datetime %>
+      </span>
+      <p class="story-content clearfix"><%= article.teaser.html_safe %></p>
+    </div> <!-- span -->
+  </div> <!-- row -->
+</div>
