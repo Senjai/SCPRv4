@@ -247,7 +247,7 @@ module ApplicationHelper
     message = options[:message] || "This story was informed by KPCC listeners."
 
     if content.is_from_pij?
-      render '/shared/cwidgets/pij_notice', message: message
+      render '/shared/pij_notice', message: message
     end
   end
 
