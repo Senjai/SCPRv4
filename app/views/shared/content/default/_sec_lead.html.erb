@@ -1,12 +1,10 @@
-<% options ||= {} %>
-
 <div class="cbase offlead">
-  <h3><%= link_to content.short_headline, content.public_path %></h3>
+  <h3><%= link_to article.short_title, article.public_url %></h3>
   
   <div class="row-fluid">
-    <% if content.assets.present? %>
+    <% if article.assets.present? %>
       <div class="span6">
-        <%= render_asset content, 'thumbnail' %>
+        <%= render_asset article, 'thumbnail' %>
       </div>
       <div class="span18">
     <% else %>
@@ -14,12 +12,12 @@
     <% end %>
       <% if options[:show_byline] %>
         <span class="byline">
-          <%= render_byline content %> 
-          <%= smart_date_js content.published_at, "data-window" => "8h", "data-relative" => "2h" %>
+          <%= render_byline article.original_object %>
+          <%= smart_date_js article.public_datetime, "data-window" => "8h", "data-relative" => "2h" %>
         </span>
       <% end %>
       
-      <p class="story-content clearfix"><%= content.teaser.html_safe %></p>
+      <p class="story-content clearfix"><%= article.teaser.html_safe %></p>
     </div> <!-- span -->
   </div> <!-- row -->
 </div>

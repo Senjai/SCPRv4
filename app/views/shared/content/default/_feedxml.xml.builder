@@ -1,38 +1,35 @@
-enclosure_type ||= content.respond_to?(:audio) ? :audio : :image
+enclosure_type ||= article.audio.present? ? :audio : :image
 
 xml.item do
-  xml.title content.headline
-  xml.guid  content.public_url
-  xml.link  content.public_url
-  
-  b = render_byline(content,false)
-  if b
-    xml.dc :creator, b
-  end
-  
+  xml.title article.title
+  xml.guid  article.public_url
+  xml.link  article.public_url
+  xml.dc :creator, article.byline
+
+
   if enclosure_type == :image
-    if content.assets.first.present?
-      asset = content.assets.first
+    if asset = article.assets.first
       xml.enclosure url: asset.full.url, type: "image/jpeg", length: asset.image_file_size.to_i / 100
     end
   else
-    if content.try(:audio).present?
-      audio = content.audio.first
-      xml.enclosure url: audio.url, type: "audio/mpeg", 
-                    length: audio.size.present? ? audio.size : "0"
+    if audio = article.audio.first
+      xml.enclosure :url    => audio.url,
+                    :type   => "audio/mpeg",
+                    :length => audio.size.present? ? audio.size : "0"
     end
   end
-  
-  descript = ""
-  
-  descript << render_asset(content,"feedxml")
-  descript << relaxed_sanitize(content.body)
-  
-  if content.is_a? ContentShell
-    descript << content_tag(:p, link_to("Read the full article at #{content.site}".html_safe, content.public_path))
+
+
+  description = ""
+
+  description << render_asset(article, "feedxml")
+  description << relaxed_sanitize(article.body)
+
+  if article.original_object.is_a? ContentShell
+    description << content_tag(:p, link_to("Read the full article at #{article.original_object.site}".html_safe, article.public_url))
   end
-  
-  xml.description descript
-  
-  xml.pubDate content.published_at.rfc822
+
+
+  xml.description description
+  xml.pubDate article.public_datetime.rfc822
 end
