@@ -276,34 +276,35 @@ module ApplicationHelper
   #----------
 
   def comment_widget_for(object, options={})
-    if object.present? and object.respond_to?(:disqus_identifier)
-      render('shared/cwidgets/comment_count', { content: object, cssClass: "" }.merge!(options))
+    if has_comments?(object)
+      content_widget('comment_count', object, options)
     end
   end
-  
-  #----------
-  
+
+  def comments_for(object, options={})
+    if has_comments?(object)
+      content_widget('comments', object, { header: true }.merge(options))
+    end
+  end
+
   def comment_count_for(object, options={})
-    if object.present? and object.respond_to?(:disqus_identifier)
+    if has_comments?(object)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.obj_key
-      link_to( "Add your comments", object.public_path(anchor: "comments"), options )
+      link_to("Add your comments", object.public_path(anchor: "comments"), options)
     end
   end
-  
-  #----------
-  
-  def comments_for(object, options={})
-    if object.present? && object.respond_to?(:disqus_identifier)
-      render('shared/cwidgets/comments', { content: object, cssClass: "", header: true }.merge!(options))
-    end
+
+  def has_comments?(object)
+    object.respond_to?(:disqus_identifier)
   end
+
   
   #----------
   
   def content_widget(partial, object, options={})
     partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
-    render(partial, { content: object, cssClass: "" }.merge!(options))
+    render(partial, { article: object.to_article, cssClass: "" }.merge(options))
   end
   
   alias_method :widget, :content_widget
