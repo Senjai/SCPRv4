@@ -42,17 +42,17 @@ module ApplicationHelper
         @COBJECTS << article.original_object
       end
 
-      # break up our content type
-      directory = article.original_object.class.name.underscore
+      directory   = article.original_object.class.name.underscore
+      tmplt_opts  = ["#{directory}/#{context}", "default/#{context}"]
 
-      # set up our template precendence
-      tmplt_opts = ["#{directory}/#{context}", "default/#{context}"]
-
-      partial = tmplt_opts.find do |template| 
-        self.lookup_context.exists?(template, ["shared/content"], true) 
+      partial = tmplt_opts.find do |template|
+        self.lookup_context.exists?(template, ["shared/content"], true)
       end
 
-      html << render("shared/content/#{partial}", article: article, options: options)
+      html << render \
+        "shared/content/#{partial}",
+        :article => article,
+        :options => options
     end
 
     html.html_safe
