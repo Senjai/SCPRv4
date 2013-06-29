@@ -12,9 +12,15 @@ class Outpost::PijQueriesController < Outpost::ResourceController
     l.column :status
     l.column :published_at, sortable: true, default_sort_mode: "desc"
     l.column :pin_query_id
-    
-    l.filter :query_type, title: "Type", collection: -> { PijQuery::QUERY_TYPES }
-    l.filter :status, title: "Status", collection: -> { PijQuery.status_collection }
+
+    l.filter :status,
+      :title      => "Status",
+      :collection => -> { PijQuery.status_select_collection }
+
+    l.filter :query_type,
+      :title      => "Type",
+      :collection => -> { PijQuery::QUERY_TYPES }
+
     l.filter :is_featured, title: "Featured?", collection: :boolean
   end
 
