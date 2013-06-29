@@ -49,10 +49,11 @@ module ApplicationHelper
         self.lookup_context.exists?(template, ["shared/content"], true)
       end
 
-      html << render \
-        "shared/content/#{partial}",
-        :article => article,
+      html << render(
+        "shared/content/#{partial}", 
+        :article => article, 
         :options => options
+      )
     end
 
     html.html_safe
