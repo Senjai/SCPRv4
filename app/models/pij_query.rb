@@ -82,7 +82,7 @@ class PijQuery < ActiveRecord::Base
 
 
   def pending?
-    self.stauts == STATUS_PENDING
+    self.status == STATUS_PENDING
   end
 
   def published?
