@@ -12,7 +12,6 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::MissedItContentAssociation
-  include Concern::Validations::ContentValidation
   include Concern::Validations::PublishedAtValidation
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
@@ -34,6 +33,7 @@ class ContentShell < ActiveRecord::Base
   
   #------------------
   # Validation
+  validates :status, presence: true
   validates :headline, presence: true # always
   validates :body, presence: true, if: :should_validate?
   validates :url, url: true, presence: true, if: :should_validate?
