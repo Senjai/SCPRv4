@@ -5,15 +5,15 @@ describe PijQueriesController do
   
   describe "GET /index" do
     before :each do
-      create :pij_query, :news, :unpublished
-      create :pij_query, :evergreen, :unpublished
-      create :pij_query, :utility
+      create :pij_query, :draft, query_type: "news"
+      create :pij_query, :draft, query_type: "evergreen"
+      create :pij_query, query_type: "utility"
     end
     
     it "@evergreen only gets non-featured visible evergreen" do
-      queries = create_list :pij_query, 3, :evergreen, :visible
-      create :pij_query, :news, :visible
-      create :pij_query, :evergreen, :featured, :visible
+      queries = create_list :pij_query, 3, :published, query_type: "evergreen"
+      create :pij_query, :published, query_type: "news"
+      create :pij_query, :published, :featured, query_type: "evergreen"
 
       get :index
       evergreen = assigns(:evergreen)
@@ -21,9 +21,9 @@ describe PijQueriesController do
     end
     
     it "@news only gets non-featured visible news" do
-      queries = create_list :pij_query, 3, :news, :visible
-      create :pij_query, :evergreen, :visible
-      create :pij_query, :news, :featured, :visible
+      queries = create_list :pij_query, 3, :published, query_type: "news"
+      create :pij_query, :published, query_type: "evergreen"
+      create :pij_query, :published, :featured, query_type: "news"
 
       get :index
       news = assigns(:news)
@@ -32,8 +32,8 @@ describe PijQueriesController do
     
     it "@featured only gets featured queries" do
       queries = create_list :pij_query, 3, :featured
-      create :pij_query, :evergreen, :unpublished
-      create :pij_query, :news, :visible
+      create :pij_query, :draft, query_type: "evergreen"
+      create :pij_query, :published, query_type: "news"
       
       get :index
       featured = assigns(:featured)
@@ -45,7 +45,7 @@ describe PijQueriesController do
   
   describe "GET /show" do
     it "assigns the query based on slug" do
-      query = create :pij_query, :visible
+      query = create :pij_query, :published
       get :show, slug: query.slug
       assigns(:query).should eq query
     end
@@ -57,7 +57,7 @@ describe PijQueriesController do
     end
     
     it "raises RecordNotFound if pij query is not visible" do
-      query = create :pij_query, :unpublished
+      query = create :pij_query, :draft
       -> { 
         get :show, slug: query.slug
       }.should raise_error ActiveRecord::RecordNotFound
