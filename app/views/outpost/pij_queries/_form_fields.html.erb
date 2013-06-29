@@ -14,7 +14,7 @@
 
 <%= form_block "Publishing" do %>
   <%= render '/outpost/shared/help_blocks/publishing' %>
-  <%= f.input :status, collection: PijQuery.status_collection, selected: record.status || PijQuery::STATUS_HIDDEN, include_blank: false, input_html: { id: "status-select" } %>
+  <%= f.input :status, collection: PijQuery.status_select_collection, selected: record.status || PijQuery::STATUS_HIDDEN, include_blank: false, input_html: { id: "status-select" } %>
 
   <%= f.section 'content_alarm' %>
   <%= f.section 'auto_published_at' %>
