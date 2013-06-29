@@ -217,7 +217,7 @@ describe ApplicationHelper do
     
     describe "content_widget" do
       it "looks in /shared/cwidgets if just the name of the partial is given" do
-        content_widget("social_tools", object).should match /Share this\:/
+        helper.content_widget("social_tools", object).should match /Share this\:/
       end
     end
     
@@ -300,6 +300,29 @@ describe ApplicationHelper do
       it "passes along the cssClass" do
         comments_for(object, cssClass: "special_class").should match "special_class"
       end
+    end
+  end
+
+  describe '#pij_source' do
+    it 'renders the notice if is_from_pij? is true' do
+      Object.any_instance.stub(:is_from_pij?) { true }
+      helper.pij_source(Object.new).should match /Become a source/
+    end
+
+    it 'can have a custom message' do
+      Object.any_instance.stub(:is_from_pij?) { true }
+      helper.pij_source(Object.new, message: "Okedoke").should match /Okedoke/
+    end
+
+    it 'is nil if is_from_pij? is false' do
+      Object.any_instance.stub(:is_from_pij?) { false }
+      helper.pij_source(Object.new).should eq nil
+    end
+  end
+
+  describe '#random_headshot' do
+    it 'returns an img tag' do
+      helper.random_headshot.should match /<img /
     end
   end
 end
