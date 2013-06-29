@@ -37,7 +37,7 @@ describe ApplicationHelper do
           arts.should_not be_blank
           arts.select { |c| c.category.is_news == true }.should eq []
           arts.select { |c| c.category.is_news == false }.should eq arts
-        end        
+        end
       end
     end
   end
@@ -57,11 +57,7 @@ describe ApplicationHelper do
       view.stub(:render) { "asset rendered" }
       helper.render_asset(content, 'thumbnail', true).should match "asset rendered"
     end
-    
-    it "should return a blank string if object does not have assets method" do
-      helper.render_asset("string", 'thumbnail').should eq ''
-    end
-    
+
     it "should return a blank string if object does not have assets and no fallback is requested" do
       content = create :content_shell
       helper.render_asset(content, 'thumbnail', false).should eq ''
@@ -239,10 +235,6 @@ describe ApplicationHelper do
         comment_count.should match /social_disq/
         comment_count.should match /other/
       end
-        
-      it "doesn't render anything if content isn't present" do
-        comment_count_for(nil).should be_nil
-      end
       
       it "doesn't render anything if it doesn't respond to disqus_identifier" do
         comment_count_for(create :blog).should be_nil
@@ -260,10 +252,6 @@ describe ApplicationHelper do
       
       it "has a link to the comments" do
         comment_widget_for(object).should match object.public_path(anchor: "comments")
-      end
-      
-      it "doesn't render anything if object is not present" do
-        comment_widget_for(nil).should be_nil
       end
       
       it "doesn't render anything if it doesn't respond to disqus_identifier" do
