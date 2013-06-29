@@ -2,7 +2,7 @@ class ContentShell < ActiveRecord::Base
   self.table_name =  "contentbase_contentshell"
   outpost_model
   has_secretary
-  
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -20,17 +20,16 @@ class ContentShell < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  
+
   def self.content_key
     "content/shell"
   end
-  
+
   #-------------------
   # Scopes
-  
   #------------------
   # Association
-  
+
   #------------------
   # Validation
   validates :status, presence: true
@@ -86,26 +85,22 @@ class ContentShell < ActiveRecord::Base
     has "status = #{ContentBase::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
-  
-  #-------------------
-  
-  #----------
+
+
   # Override Outpost's routing methods for these
   def public_path(options={})
     self.public_url
   end
-  
+
   def public_url(options={})
     self.url
   end
-  
-  #----------
-  
+
+
   def byline_extras
     [self.site]
   end
 
-  #-------------------
 
   def to_article
     @to_article ||= Article.new({
@@ -123,8 +118,6 @@ class ContentShell < ActiveRecord::Base
       :edit_url           => self.admin_edit_url
     })
   end
-
-  #-------------------
 
   def to_abstract
     @to_abstract ||= Abstract.new({
