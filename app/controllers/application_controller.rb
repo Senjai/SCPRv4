@@ -17,11 +17,20 @@ class ApplicationController < ActionController::Base
   private
 
   def get_content_for_masthead
-    @upcoming_events_forum      = Event.published.includes(:assets).upcoming.forum.limit(2)
-    @upcoming_events_sponsored  = Event.published.includes(:assets).upcoming.sponsored.limit(3)
+    @upcoming_events_forum = Event.published
+      .includes(:assets).upcoming.forum.limit(2)
 
-    @latest_blogs_news  = BlogEntry.published.includes(:blog).where(Blog.table_name => { is_news: true }).limit(3)
-    @latest_blogs_arts  = BlogEntry.published.includes(:blog).where(Blog.table_name => { is_news: false }).limit(3)
+    @upcoming_events_sponsored = Event.published
+      .includes(:assets).upcoming.sponsored.limit(3)
+
+
+    @latest_blogs_news = BlogEntry.published
+      .includes(:blog).limit(3)
+      .where(Blog.table_name => { is_news: true })
+
+    @latest_blogs_arts = BlogEntry.published
+      .includes(:blog).limit(3)
+      .where(Blog.table_name => { is_news: false })
   end
 
   #----------
