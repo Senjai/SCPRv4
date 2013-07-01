@@ -13,12 +13,12 @@ describe ApplicationHelper do
       not_news.each { |c| c.category = category_not_news; c.save! }
     end
     
-    describe "#get_latest_news" do
+    describe "#latest_news" do
       sphinx_spec(num: 0)
       
       it "only gets objects where category is news" do
         ts_retry(2) do
-          news = helper.get_latest_news.to_a # to_a otherwise == comparison fails
+          news = helper.latest_news.to_a # to_a otherwise == comparison fails
           news.should_not be_blank
           news.select { |c| c.category.is_news == false }.should eq []
           news.select { |c| c.category.is_news == true }.should eq news
@@ -28,12 +28,12 @@ describe ApplicationHelper do
   
     #------------------------
   
-    describe "#get_latest_arts" do
+    describe "#latest_arts" do
       sphinx_spec(num: 0)
       
       it "only gets object where category is not news" do
         ts_retry(2) do
-          arts = helper.get_latest_arts.to_a
+          arts = helper.latest_arts.to_a
           arts.should_not be_blank
           arts.select { |c| c.category.is_news == true }.should eq []
           arts.select { |c| c.category.is_news == false }.should eq arts
