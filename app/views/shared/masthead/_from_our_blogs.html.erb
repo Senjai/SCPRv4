@@ -1,10 +1,12 @@
 <ul class="cbase">
-  <% content.each do |entry| %>
+
+<% entries.each do |entry| %>
     <% register_content(entry) %>
     <li>
       <h4><%= link_to entry.short_headline, entry.public_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'Blog Post', 'ga-label' => 'Content'} %></h4>
       <span class="blog-title"><%= link_to entry.blog.name, entry.blog.public_path %></span>
       <%= smart_date_js entry.published_at, "data-window" => "8h", "data-relative" => "2h" %>
     </li>
-  <% end %>
+<% end %>
+
 </ul>
