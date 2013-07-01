@@ -6,7 +6,7 @@ module Job
       task = new("kpcc", "3d", Rails.application.config.api['disqus']['api_key'])
       
       comments = task.fetch
-      articles  = task.parse(comments)
+      articles  = task.parse(comments).map(&:to_article)
       
       Rails.cache.write("popular/commented", articles)
       self.cache(articles, "/shared/widgets/cached/popular", "views/popular/commented", local: :articles)

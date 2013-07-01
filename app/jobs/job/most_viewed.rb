@@ -14,8 +14,9 @@ module Job
         analytics["refresh_token"]
       )
       
-      data     = task.fetch(api_params)
-      articles = task.parse(data['rows'])
+      data = silence_stream(STDOUT) { task.fetch(api_params) }
+
+      articles = task.parse(data['rows']).map(&:to_article)
 
       Rails.cache.write("popular/viewed", articles)
       self.cache(articles, "/shared/widgets/cached/popular", "views/popular/viewed", local: :articles)
