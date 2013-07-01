@@ -76,7 +76,7 @@
 
 
   <%= render "/blogs/recent_posts", blog: @blog %>
-  <%= render "/shared/widgets/missed_it_bucket", object: @blog %>
+  <%= render("/shared/widgets/missed_it_bucket", bucket: @blog.missed_it_bucket) if @blog.missed_it_bucket.present? %>
 <% end %>
 
 <% add_to_page_title @blog.name + @BLOGTITLE_EXTRA.to_s %>

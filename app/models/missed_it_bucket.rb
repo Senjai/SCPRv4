@@ -8,7 +8,7 @@ class MissedItBucket < ActiveRecord::Base
 
   #--------------------
   # Scopes
-  
+
   #--------------------
   # Association
   has_many :content, {
@@ -17,7 +17,7 @@ class MissedItBucket < ActiveRecord::Base
     :order          => "position asc",
     :dependent      => :destroy
   }
-  
+
   accepts_json_input_for :content
 
   #--------------------
@@ -39,10 +39,15 @@ class MissedItBucket < ActiveRecord::Base
   end
 
 
-  #-------------------
-  
+  def articles(limit=nil)
+    @articles ||= self.content.includes(:content).limit(limit).map do |c|
+      c.content.to_article
+    end
+  end
+
+
   private
-  
+
   def build_content_association(content_hash, content)
     if content.published?
       MissedItContent.new(
