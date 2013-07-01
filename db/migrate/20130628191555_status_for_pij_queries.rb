@@ -7,7 +7,7 @@ class StatusForPijQueries < ActiveRecord::Migration
       if query.is_active?
         query.update_column :status, PijQuery::STATUS_LIVE
       else
-        query.update_column :status, PijQuery::STATUS_DRAFT
+        query.update_column :status, PijQuery::STATUS_HIDDEN
       end
     end
 
