@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627232436) do
+ActiveRecord::Schema.define(:version => 20130701205555) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -465,18 +465,19 @@ ActiveRecord::Schema.define(:version => 20130627232436) do
     t.text     "teaser",       :limit => 2147483647
     t.text     "body",         :limit => 2147483647
     t.string   "query_type"
-    t.boolean  "is_active",                          :default => false, :null => false
     t.datetime "published_at"
     t.boolean  "is_featured",                        :default => false, :null => false
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
     t.string   "pin_query_id"
+    t.integer  "status"
   end
 
-  add_index "pij_query", ["is_active", "published_at"], :name => "index_pij_query_on_is_active_and_published_at"
   add_index "pij_query", ["is_featured"], :name => "index_pij_query_on_is_featured"
+  add_index "pij_query", ["published_at"], :name => "index_pij_query_on_is_active_and_published_at"
   add_index "pij_query", ["query_type"], :name => "index_pij_query_on_query_type"
   add_index "pij_query", ["slug"], :name => "slug", :unique => true
+  add_index "pij_query", ["status"], :name => "index_pij_query_on_status"
 
   create_table "podcasts", :force => true do |t|
     t.string   "slug"
@@ -599,6 +600,22 @@ ActiveRecord::Schema.define(:version => 20130627232436) do
   end
 
   add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
+
+  create_table "schedule_occurrences", :force => true do |t|
+    t.string   "title"
+    t.string   "info_url"
+    t.integer  "program_id"
+    t.string   "program_type"
+    t.integer  "recurring_schedule_slot_id"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "schedule_occurrences", ["program_type", "program_id"], :name => "index_schedule_occurrences_on_program_type_and_program_id"
+  add_index "schedule_occurrences", ["recurring_schedule_slot_id"], :name => "index_schedule_occurrences_on_recurring_schedule_slot_id"
+  add_index "schedule_occurrences", ["starts_at", "ends_at"], :name => "index_schedule_occurrences_on_starts_at_and_ends_at"
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
