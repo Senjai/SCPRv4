@@ -30,7 +30,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   # Callbacks
 
   before_create :build_occurrences
-  before_save :rebuild_occurrences, if: -> { self.schedule_changed? }
+  before_update :rebuild_occurrences, if: -> { self.schedule_changed? }
 
   #--------------
   # Sphinx  
