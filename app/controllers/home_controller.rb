@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   
   def index
     @homepage         = Homepage.published.first
-    @schedule_current = ScheduleSlot.on_at(Time.now)
+    @schedule_current = ScheduleOccurrence.on_at(Time.now)
     @featured_comment = FeaturedComment.published.first
   end
   
