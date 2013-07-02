@@ -60,7 +60,7 @@ class scpr.Newsroom
                     @fail()
                     return
 
-                @socket  = io.connect scpr.NEWSROOM, 'connect timeout': 5000
+                @socket = io.connect scpr.NEWSROOM, 'connect timeout': 5000
                 @socket.on 'finished-task', (data) ->
                     $("#work_status").html("Finished!")
                     $("#spinner").spin(false)
