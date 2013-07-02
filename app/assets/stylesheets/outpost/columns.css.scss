@@ -137,14 +137,6 @@ table {
     }
 
     ///////////////////
-    // DistinctScheduleSlots
-    &.list-distinct_schedule_slots {
-        .column-title { // distinct_schedule_slot.title
-            width: 500px;
-        }
-    }
-
-    ///////////////////
     // Edition
     &.list-editions {
         .column-datetime {
@@ -221,9 +213,9 @@ table {
     }
 
     ///////////////////
-    // RecurringScheduleSlot
-    &.list-recurring_schedule_slots {
-        .column-program { // recurring_schedule_slot.program
+    // RecurringScheduleRule
+    &.list-recurring_schedule_rules {
+        .column-program { // recurring_schedule_rule.program
             width: 500px;
         }
     }
@@ -239,6 +231,14 @@ table {
         }
         .column-headline {
             width: 200px;
+        }
+    }
+
+    ///////////////////
+    // ScheduleOccurrences
+    &.list-schedule_occurrences {
+        .column-title { // schedule_occurrences.title
+            width: 500px;
         }
     }
 
