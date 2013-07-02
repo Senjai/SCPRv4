@@ -1,5 +1,5 @@
 module Api::Public::V2
-  class ScheduleSlotsController < BaseController
+  class ScheduleOccurrencesController < BaseController
 
     before_filter \
       :sanitize_start_time, 
@@ -11,7 +11,7 @@ module Api::Public::V2
     #---------------------------
     
     def index
-      @schedule_slots = ScheduleSlot.block(@start_time, @length)
+      @schedule_slots = ScheduleOccurrence.block(@start_time, @length)
       respond_with @schedule_slots
     end
     

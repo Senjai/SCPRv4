@@ -1,0 +1,14 @@
+<%= form_block "Information" do %>
+  <%= f.input :title %>
+  <%= f.input :info_url, input_html: { class: "wide" } %>
+<% end %>
+
+<%= form_block "Time" do %>
+  <%= f.association :recurring_schedule_rule %>
+  <%= f.input :starts_at %>
+  <%= f.input :ends_at %>
+<% end %>
+
+<%= form_block "Program" do %>
+  <%= f.input :program_obj_key, label: "Program", collection: ScheduleOccurrence.program_select_collection %>
+<% end %>
