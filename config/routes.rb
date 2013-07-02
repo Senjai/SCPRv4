@@ -157,11 +157,11 @@ Scprv4::Application.routes.draw do
   namespace :outpost do
     root to: 'home#index'
 
-    resources :recurring_schedule_slots do
+    resources :recurring_schedule_rules do
       get "search", on: :collection, as: :search
     end
 
-    resources :distinct_schedule_slots do
+    resources :schedule_occurrences do
       get "search", on: :collection, as: :search
     end
 
