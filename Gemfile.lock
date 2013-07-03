@@ -280,12 +280,6 @@ GEM
     rb-readline (0.4.2)
     rdoc (3.12.2)
       json (~> 1.4)
-    recurring_select (1.1.0)
-      coffee-rails (>= 3.1)
-      ice_cube (>= 0.8)
-      jquery-rails
-      rails (>= 3.1)
-      sass-rails (>= 3.1)
     redis (3.0.4)
     redis-activesupport (3.2.3)
       activesupport (~> 3.2.3)
@@ -431,7 +425,6 @@ DEPENDENCIES
   rails (~> 3.2)
   rb-fsevent (~> 0.9)
   rb-readline (~> 0.4.2)
-  recurring_select (~> 1.1.0)
   redis-content-store!
   resque (~> 1.20)
   rspec-rails (~> 2.12)

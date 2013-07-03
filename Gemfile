@@ -38,7 +38,6 @@ gem 'sanitize', "~> 2.0"
 gem 'escape_utils'
 gem 'simple_form', "~> 2.0"
 gem 'jbuilder'
-gem 'recurring_select', '~> 1.1.0'
 
 
 ## Utility

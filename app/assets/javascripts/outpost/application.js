@@ -1,6 +1,5 @@
 //= require jquery-ui-1.10.0.custom.min
 //= require date.min
-//= require recurring_select
 //= require select2
 
 //= require bootstrap-scrollspy
