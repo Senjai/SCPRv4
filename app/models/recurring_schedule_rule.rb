@@ -36,12 +36,12 @@ class RecurringScheduleRule < ActiveRecord::Base
   #--------------
   # Validations
   validates :program, presence: true
-  #validates :schedule, presence: true
+  validates :schedule, presence: true
 
   #--------------
   # Callbacks
 
-  before_validation :build_schedule
+  before_save :build_schedule
 #  before_create :build_occurrences
 #  before_update :rebuild_occurrences, if: -> { self.schedule_changed? }
 
@@ -52,60 +52,45 @@ class RecurringScheduleRule < ActiveRecord::Base
     indexes schedule
   end
 
-  # In order to build a rule, we need:
-  # * interval (integer)
-  # * days (array)
-  # * time_of_day (HH:mm)
+
   attr_writer \
     :rule,
-    :interval,
-    :days,
-    :time_of_day
+    :interval,    # integer
+    :day,         # 0-6
+    :time_of_day  # HH:mm
 
+
+  def interval
+    #rule_hash[:interval]
+  end
+
+  def days
+    #rule_hash[:day]
+  end
+
+  def time_of_day
+    #"#{rule_hash[:hour_of_day].first}:#{rule_hash[:minute_of_day].first}"
+  end
 
   def rule
     @rule ||= schedule.recurrence_rules.first
   end
 
   def rule_hash
-    @rule_hash ||= rule.try(:to_hash) || {}
+    @rule_hash ||= rule.to_hash
   end
 
-
-  def interval
-    rule_hash[:interval]
+  def schedule=(new_schedule)
+    @schedule = new_schedule.to_hash
   end
-
-  def days
-    rule_hash[:day].map(&:to_i) if rule_hash[:day]
-  end
-
-  def time_of_day
-    if rule_hash.present?
-      "#{rule_hash[:hour_of_day].first}:#{rule_hash[:minute_of_hour].first}"
-    end
-  end
-
-
-  def time_of_day=(string)
-    parts = string.split(":").map(&:to_i)
-
-    @hour_of_day      = parts[0]
-    @minute_of_hour   = parts[1]
-    @second_of_minute = 0
-
-    @time_of_day      = string
-  end
-
-
 
   def schedule(options={})
-    @schedule ||=
+    @schedule ||= 
       IceCube::Schedule.from_hash(read_attribute(:schedule), options)
   end
 
-  def schedule=(schedule)
-    @schedule = schedule.try(:to_hash)
+
+  def build_schedule
   end
 
 
@@ -205,21 +190,6 @@ class RecurringScheduleRule < ActiveRecord::Base
 
 
   private
-
-  def build_schedule
-    @rule = IceCube::Rule.weekly
-      .day(days)
-      .hour_of_day(@hour_of_day)
-      .minute_of_hour(@minute_of_hour)
-      .second_of_minute(@second_of_minute)
-      .interval(@interval)
-
-    self.schedule = IceCube::Schedule.new { |s| s.rrule @rule }
-  end
-
-  def time_parts
-    @time_parts ||= @time_of_day.split(":").map(&:to_i)
-  end
 
   def existing_occurrences_between(start_date, end_date)
     existing = {}

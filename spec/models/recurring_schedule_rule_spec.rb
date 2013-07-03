@@ -12,20 +12,6 @@ describe RecurringScheduleRule do
     end
   end
 
-
-  describe 'building schedule from form data' do
-    it "accepts the rule parts and builds a schedule out of them", focus: true do
-      rule = build :recurring_schedule_rule, schedule: nil
-
-      rule.interval     = 1
-      rule.days         = [1,2,3,4]
-      rule.time_of_day  = "10:30"
-
-      rule.save
-    end
-  end
-
-
   describe '#build_occurrences' do
     let(:t) { Time.new(2013, 7, 1) } # There are 5 mondays in this month
     
