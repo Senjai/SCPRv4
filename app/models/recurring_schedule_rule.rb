@@ -25,10 +25,12 @@ class RecurringScheduleRule < ActiveRecord::Base
   # Validations
   validates :program, presence: true
   validates :schedule, presence: true
+  validates :time_of_day, presence: true
 
   #--------------
   # Callbacks
 
+  #before_save :merge_time_of_day_into_rule
   before_create :build_occurrences
   before_update :rebuild_occurrences, if: -> { self.schedule_changed? }
 
@@ -39,6 +41,7 @@ class RecurringScheduleRule < ActiveRecord::Base
     indexes schedule
   end
 
+  attr_accessor :time_of_day
 
   def purge_past_occurrences(threshold = nil)
     threshold ||= 1.month.ago
@@ -49,6 +52,12 @@ class RecurringScheduleRule < ActiveRecord::Base
   def rebuild_occurrences(options = {})
     options[:rebuild] = true
     build_occurrences(options)
+  end
+
+
+  def recreate_occurrences(options = {})
+    options[:rebuild] = true
+    create_occurrences(options)
   end
 
 
@@ -119,14 +128,17 @@ class RecurringScheduleRule < ActiveRecord::Base
         :program   => self.program
       )
     end
+  end
 
+
+  def create_occurrences(options = {})
+    build_occurrences(options)
     self.save
   end
 
 
   def schedule=(new_schedule)
-    write_attribute :schedule, 
-      RecurringSelect.dirty_hash_to_rule(new_schedule).to_hash
+    @schedule = rule(new_schedule).to_hash
   end
 
   def schedule(options={})
@@ -136,6 +148,20 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   private
 
+  def rule(rule_or_hash)
+    rule = RecurringSelect.dirty_hash_to_rule(rule_or_hash)
+
+    if @time_of_day
+      hour, minute = @time_of_day.split(":")
+      rule = rule.hour_of_day(hour).minute_of_hour(minute).second_of_minute(0)
+    end
+
+    rule
+  end
+
+  def merge_time_of_day_into_rule
+    rule
+  end
 
   def existing_occurrences_between(start_date, end_date)
     existing = {}
