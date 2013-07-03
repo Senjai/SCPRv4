@@ -1,13 +1,6 @@
 class outpost.RecurringRuleUI
     @TemplatePath = "outpost/templates/recurring_rule_ui/"
 
-    @Types:
-        "daily": "IceCube::DailyRule"
-        "weekly": "IceCube::WeeklyRule"
-
-    defaults:
-        defaultPeriod: "daily"
-
 
     constructor: (inputId, options={}) ->
         @options = _.defaults options, @defaults
@@ -18,37 +11,22 @@ class outpost.RecurringRuleUI
         @wrapper = $(@_template("wrapper"))
 
         @_buildFields()
-        @_registerEvents()
         @_buildView()
-
-        @switchToPeriod(@options.defaultPeriod)
+        @_registerEvents()
 
         @input.after @wrapper
 
 
-    switchToPeriod: (value) ->
-        @periodSelect.trigger("change", value)
-
-
     parseFields: ->
-        timeParts = @_parsedTimeParts()
+        timeParts   = @_parsedTimeParts()
+        interval    = @intervalInput.val()
 
-        switch @period
-            when "daily"
-                @_jsonToInput @_dailyRule(
-                    @_numberArray(timeParts.hour),
-                    @_numberArray(timeParts.minute)
-                )
-
-            when "weekly"
-                interval = @intervalInput.val()
-
-                @_jsonToInput @_weeklyRule(
-                    if !_.isEmpty(interval) then parseInt(interval) else 0,
-                    @_parsedDays(), # Always an array.
-                    @_numberArray(timeParts.hour),
-                    @_numberArray(timeParts.minute)
-                )
+        @_jsonToInput @_weeklyRule(
+            if !_.isEmpty(interval) then parseInt(interval) else 0,
+            @_parsedDays(), # Always an array.
+            @_numberArray(timeParts.hour),
+            @_numberArray(timeParts.minute)
+        )
 
         console.log @input.val()
 
@@ -58,9 +36,6 @@ class outpost.RecurringRuleUI
 
 
     _buildFields: ->
-        @periodSelectWrapper    = $(@_template("period_select"))
-        @periodSelect           = $("select", @periodSelectWrapper)
-
         @intervalInputWrapper   = $(@_template("interval_input"))
         @intervalInput          = $("input", @intervalInputWrapper)
 
@@ -72,45 +47,14 @@ class outpost.RecurringRuleUI
 
 
     _registerEvents: ->
-        @periodSelect.on "change", (event, period) =>
-            period ?= event.val
-            @_periodSelectChangeHandler(period)
-
-        @intervalInput.on "change", (event) => @parseFields()
-        @timeInput.on "change", (event) => @parseFields()
-
-        for input in @dayInputs
-            $(input).on "change", (event) => @parseFields()
-
-
-    _periodSelectChangeHandler: (period) ->
-        selectValue = @periodSelect.val()
-        @periodSelect.val(period) if selectValue isnt period
-
-        switch period
-            when "daily" then @_switchToDaily()
-            when "weekly" then @_switchToWeekly()
-
-        @parseFields()
+        $("select, input", @wrapper).on "change", (event) =>
+            @parseFields()
 
 
     _buildView: ->
-        @wrapper.append @periodSelectWrapper
         @wrapper.append @intervalInputWrapper
         @wrapper.append @dayInputsWrapper
         @wrapper.append @timeInputWrapper
-
-
-    _switchToDaily: ->
-        @period = "daily"
-        @dayInputsWrapper.hide()
-        @intervalInputWrapper.hide()
-
-
-    _switchToWeekly: ->
-        @period = "weekly"
-        @dayInputsWrapper.show()
-        @intervalInputWrapper.show()
 
 
     # Accepts a JSON object and populates the actual
@@ -156,16 +100,6 @@ class outpost.RecurringRuleUI
         days.sort()
 
 
-    # The DailyRule object, as defined by IceCube::DailyRule#to_hash
-    _dailyRule: (hour, minute) ->
-        "validations":
-            "hour_of_day": hour
-            "minute_of_hour": minute
-            "second_of_minute": [0] # We don't need to expose the second.
-        "rule_type": RecurringRuleUI.Types["daily"]
-        "interval": 1 # For now, we don't need this exposed for Daily rule.
-
-
     # The WeeklyRule object, as defined by IceCube::WeeklyRule#to_hash
     _weeklyRule: (interval, days, hour, minute) ->
         "validations":
@@ -173,7 +107,7 @@ class outpost.RecurringRuleUI
             "hour_of_day": hour
             "minute_of_hour": minute
             "second_of_minute": [0]
-        "rule_type": RecurringRuleUI.Types["weekly"]
+        "rule_type": "IceCube::WeeklyRule"
         "interval": interval
         "week_start": 0 # Hard-code Sunday
 

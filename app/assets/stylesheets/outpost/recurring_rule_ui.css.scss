@@ -1,8 +1,12 @@
 .recurring-days-checkboxes {
     label {
         width: 150px;
+        margin: 0;
+        display: inline-block;
     }
     input[type='checkbox'] {
         width: 30px;
+        margin: 0;
+        display: inline-block;
     }
 }

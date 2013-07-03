@@ -1,4 +1,4 @@
-<div class="control-group recurring-day-fields">
+<div class="control-group recurring-days-checkboxes">
     <label class="control-label" for="recurring-day">Days of Week</label>
     <div class="controls">
         <ul class="unstyled">

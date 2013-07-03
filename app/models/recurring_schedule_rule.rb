@@ -53,33 +53,6 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
 
-  attr_writer \
-    :rule,
-    :interval,    # integer
-    :day,         # 0-6
-    :time_of_day  # HH:mm
-
-
-  def interval
-    #rule_hash[:interval]
-  end
-
-  def days
-    #rule_hash[:day]
-  end
-
-  def time_of_day
-    #"#{rule_hash[:hour_of_day].first}:#{rule_hash[:minute_of_day].first}"
-  end
-
-  def rule
-    @rule ||= schedule.recurrence_rules.first
-  end
-
-  def rule_hash
-    @rule_hash ||= rule.to_hash
-  end
-
   def schedule=(new_schedule)
     @schedule = new_schedule.to_hash
   end
