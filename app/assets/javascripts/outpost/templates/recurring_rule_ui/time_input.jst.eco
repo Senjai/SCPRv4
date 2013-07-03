@@ -1,7 +1,0 @@
-<div class="control-group">
-    <label class="control-label" for="recurring-time">Time of Day</label>
-    <div class="controls">
-        <input type="time" id="recurring-time" placeholder="HH:mm" class="thin" />
-        <p class="help-block"><strong>Note:</strong> If you don't see a TIME input, use 24-hour time format.</p>
-    </div>
-</div>

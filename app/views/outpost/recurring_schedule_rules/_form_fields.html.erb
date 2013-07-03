@@ -12,9 +12,3 @@
   <%= f.input :program_obj_key, required: true, label: "Program",
     collection: ScheduleOccurrence.program_select_collection %>
 <% end %>
-
-<% content_for :footer do %>
-  <script>
-//    recurringRuleUI = new outpost.RecurringRuleUI("#recurring_rule", { defaultPeriod: "weekly" });
-  </script>
-<% end %>
