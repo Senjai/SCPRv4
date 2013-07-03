@@ -1,14 +1,21 @@
 <%= form_block "Information" do %>
-  <%= f.input :title %>
-  <%= f.input :info_url, input_html: { class: "wide" } %>
+  <div class="alert alert-info">
+    Either a Program, <em>or</em> a Title/URL must be provided. The custom title/URL will take precedence over the Program's information. You may leave one or the other blank, but not both.
+  </div>
+
+  <%= f.input :program_obj_key, label: "Program", collection: ScheduleOccurrence.program_select_collection %>
+  <%= f.input :event_title, hint: "Takes precedence over the Program title if set." %>
+  <%= f.input :info_url, hint: "Takes precedence over the Program URL.", input_html: { class: "wide" } %>
 <% end %>
 
 <%= form_block "Time" do %>
+  <% if record.is_recurring? %>
+    <div class="alert alert-warning">
+      If you want to change all instances of this recurring event, <strong><%= link_to "DO IT HERE", record.recurring_schedule_rule.admin_edit_url %></strong>.
+    </div>
+  <% end %>
+
   <%= f.association :recurring_schedule_rule %>
   <%= f.input :starts_at %>
   <%= f.input :ends_at %>
-<% end %>
-
-<%= form_block "Program" do %>
-  <%= f.input :program_obj_key, label: "Program", collection: ScheduleOccurrence.program_select_collection %>
 <% end %>
