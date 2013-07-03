@@ -55,15 +55,10 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   attr_writer \
     :rule,
-    :period,      # "daily", "weekly"
     :interval,    # integer
     :day,         # 0-6
     :time_of_day  # HH:mm
 
-
-  def period
-    #rule.class.name
-  end
 
   def interval
     #rule_hash[:interval]
