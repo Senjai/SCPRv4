@@ -1,0 +1,9 @@
+<div class="control-group">
+    <label class="control-label" for="recurring-period">Period</label>
+    <div class="controls">
+        <select id="recurring-period">
+            <option id="recurring-period-daily" value="daily">Daily</option>
+            <option id="recurring-period-weekly" value="weekly">Weekly</option>
+        </select>
+    </div>
+</div>
