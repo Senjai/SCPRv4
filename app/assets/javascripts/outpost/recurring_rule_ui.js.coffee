@@ -36,14 +36,15 @@ class outpost.RecurringRuleUI
 
 
     _buildFields: ->
-        @intervalInputWrapper   = $(@_template("interval_input"))
-        @intervalInput          = $("input", @intervalInputWrapper)
+        @intervalInputWrapper = $(@_template("interval_input"))
+        @intervalInput = $("input#recurring-interval", @intervalInputWrapper)
 
-        @dayInputsWrapper   = $(@_template("day_select"))
-        @dayInputs          = $("input", @dayInputsWrapper)
+        @dayInputsWrapper = $(@_template("day_select"))
+        @dayInputs = $("input[type='checkbox']", @dayInputsWrapper)
 
-        @timeInputWrapper   = $(@_template("time_input"))
-        @timeInput          = $("input", @timeInputWrapper)
+        @timeInputWrapper = $(@_template("time_input"))
+        @timeStartInput = $("input#recurring-time-start", @timeInputWrapper)
+        @timeEndInput   = $("input#recurring-time-end", @timeInputWrapper)
 
 
     _registerEvents: ->
