@@ -6,7 +6,6 @@ class ScheduleOccurrence < ActiveRecord::Base
   include Concern::Associations::PolymorphicProgramAssociation
 
   belongs_to :recurring_schedule_rule
-  belongs_to :program, polymorphic: true
 
 
   scope :after,  ->(time) { where("starts_at > ?", time).order("starts_at") }
@@ -26,10 +25,6 @@ class ScheduleOccurrence < ActiveRecord::Base
 
 
   validate :program_or_info_is_present
-
-
-  before_save :set_title, if: -> { self.title.blank? }
-  before_save :set_info_url, if: -> { self.info_url.blank? }
 
 
   class << self
@@ -60,6 +55,17 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
 
+  # Validations will ensure that either the program or the event_title 
+  # is present.
+  def title
+    self.event_title.present? ? self.event_title : self.program.title
+  end
+
+  def public_url
+    self.info_url.present? ? self.info_url : self.program.public_url
+  end
+
+
   # This is for the listen live JS.
   def listen_live_json
     {
@@ -74,20 +80,8 @@ class ScheduleOccurrence < ActiveRecord::Base
   private
 
   def program_or_info_is_present
-    if self.program.blank? && (self.info_url.blank? || self.title.blank?)
+    if self.program.blank? && (self.info_url.blank? || self.event_title.blank?)
       self.errors.add(:base, "Program or Info URL/Title must be present.")
-    end
-  end
-
-  def set_title
-    if self.title.blank? && self.program.present?
-      self.title = self.program.title
-    end
-  end
-
-  def set_info_url
-    if self.info_url.blank? && self.program.present?
-      self.info_url = self.program.public_url
     end
   end
 end
