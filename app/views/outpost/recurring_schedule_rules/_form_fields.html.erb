@@ -1,12 +1,14 @@
 <%= form_block "Rule" do %>
-  <%= f.select_recurring :schedule, [
-    IceCube::Rule.weekly.day(:monday, :tuesday, :wednesday, :thursday, :friday)
-    ], {}, { data: { "disable-select2" => true } } %>
-
-<%#  %>
+  <%= f.input :schedule, label: "Rule", input_html: { id: "recurring_rule" } %>
 <% end %>
 
 <%= form_block "Program" do %>
   <%= f.input :program_obj_key, label: "Program",
     collection: ScheduleOccurrence.program_select_collection %>
+<% end %>
+
+<% content_for :footer do %>
+  <script>
+    recurringRuleUI = new outpost.RecurringRuleUI("#recurring_rule");
+  </script>
 <% end %>
