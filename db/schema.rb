@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702082358) do
+ActiveRecord::Schema.define(:version => 20130702182226) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -587,7 +587,7 @@ ActiveRecord::Schema.define(:version => 20130702082358) do
   add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
 
   create_table "schedule_occurrences", :force => true do |t|
-    t.string   "title"
+    t.string   "event_title"
     t.string   "info_url"
     t.datetime "starts_at"
     t.datetime "ends_at"

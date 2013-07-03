@@ -1,10 +1,17 @@
 class AddNewPermissions < ActiveRecord::Migration
   def up
-    Permission.create(resource: "ScheduleOccurrence")
-    Permission.create(resource: "RecurringScheduleRule")
+    p = Permission.find_by_resource("RecurringScheduleSlot")
+    p.update_column(:resource, "RecurringScheduleRule")
+
+    p = Permission.find_by_resource("DistinctScheduleSlot")
+    p.update_column(:resource, "ScheduleOccurrence")
   end
 
   def down
-    Permission.where(resource: ["ScheduleOccurrence", "RecurringScheduleRule"]).delete_all
+    p = Permission.find_by_resource("RecurringScheduleRule")
+    p.update_column(:resource, "RecurringScheduleSlot")
+
+    p = Permission.find_by_resource("ScheduleOccurrence")
+    p.update_column(:resource, "DistinctScheduleSlot")
   end
 end

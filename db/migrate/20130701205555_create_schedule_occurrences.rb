@@ -1,7 +1,7 @@
 class CreateScheduleOccurrences < ActiveRecord::Migration
   def change
     create_table :schedule_occurrences do |t|
-      t.string :title
+      t.string :event_title
       t.string :info_url
       
       t.datetime :starts_at
