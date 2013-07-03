@@ -3,6 +3,7 @@ class CreateRecurringScheduleRules < ActiveRecord::Migration
     create_table :recurring_schedule_rules do |t|
       t.text :schedule
 
+      t.integer :duration
       t.integer :program_id
       t.string :program_type
 
