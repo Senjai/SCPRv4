@@ -1,5 +1,0 @@
-<select id="recurring-interval">
-    <option id="recurring-interval-daily" value="daily">Daily</option>
-    <option id="recurring-interval-weekly" value="weekly">Weekly</option>
-    <option id="recurring-interval-monthly" value="monthly">Monthly</option>
-</select>

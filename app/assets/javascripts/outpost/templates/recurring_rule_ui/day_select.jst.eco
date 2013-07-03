@@ -1,0 +1,14 @@
+<div class="control-group recurring-day-fields">
+    <label class="control-label" for="recurring-day">Days of Week</label>
+    <div class="controls">
+        <ul class="unstyled">
+            <li><input type="checkbox" id="recurring-day-monday" value="1" name="recurring-days" /><label for="recurring-day-monday">Monday</label></li>
+            <li><input type="checkbox" id="recurring-day-tuesday" value="2" name="recurring-days" /><label for="recurring-day-tuesday">Tuesday</label></li>
+            <li><input type="checkbox" id="recurring-day-wednesday" value="3" name="recurring-days" /><label for="recurring-day-wednesday">Wednesday</label></li>
+            <li><input type="checkbox" id="recurring-day-thursday" value="4" name="recurring-days" /><label for="recurring-day-thursday">Thursday</label></li>
+            <li><input type="checkbox" id="recurring-day-friday" value="5" name="recurring-days" /><label for="recurring-day-friday">Friday</label></li>
+            <li><input type="checkbox" id="recurring-day-saturday" value="6" name="recurring-days" /><label for="recurring-day-saturday">Saturday</label></li>
+            <li><input type="checkbox" id="recurring-day-sunday" value="0" name="recurring-days" /><label for="recurring-day-sunday">Sunday</label></li>
+        </ul>
+    </div>
+</div>

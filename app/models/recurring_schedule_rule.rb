@@ -14,6 +14,18 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   DEFAULT_DURATION = 1.month
 
+  # Define a custom DAYS array so we can control the order.
+  DAYS = [
+    ["Monday", 1],
+    ["Tuesday", 2],
+    ["Wednesday", 3],
+    ["Thursday", 4],
+    ["Friday", 5],
+    ["Saturday", 6],
+    ["Sunday", 7]
+  ]
+
+
   #--------------
   # Scopes
 
@@ -25,14 +37,13 @@ class RecurringScheduleRule < ActiveRecord::Base
   # Validations
   validates :program, presence: true
   validates :schedule, presence: true
-  validates :time_of_day, presence: true
 
   #--------------
   # Callbacks
 
-  #before_save :merge_time_of_day_into_rule
-  before_create :build_occurrences
-  before_update :rebuild_occurrences, if: -> { self.schedule_changed? }
+  before_save :build_schedule
+#  before_create :build_occurrences
+#  before_update :rebuild_occurrences, if: -> { self.schedule_changed? }
 
   #--------------
   # Sphinx  
@@ -41,7 +52,52 @@ class RecurringScheduleRule < ActiveRecord::Base
     indexes schedule
   end
 
-  attr_accessor :time_of_day
+
+  attr_writer \
+    :rule,
+    :period,      # "daily", "weekly"
+    :interval,    # integer
+    :day,         # 0-6
+    :time_of_day  # HH:mm
+
+
+  def period
+    #rule.class.name
+  end
+
+  def interval
+    #rule_hash[:interval]
+  end
+
+  def days
+    #rule_hash[:day]
+  end
+
+  def time_of_day
+    #"#{rule_hash[:hour_of_day].first}:#{rule_hash[:minute_of_day].first}"
+  end
+
+  def rule
+    @rule ||= schedule.recurrence_rules.first
+  end
+
+  def rule_hash
+    @rule_hash ||= rule.to_hash
+  end
+
+  def schedule=(new_schedule)
+    @schedule = new_schedule.to_hash
+  end
+
+  def schedule(options={})
+    @schedule ||= 
+      IceCube::Schedule.from_hash(read_attribute(:schedule), options)
+  end
+
+
+  def build_schedule
+  end
+
 
   def purge_past_occurrences(threshold = nil)
     threshold ||= 1.month.ago
@@ -137,31 +193,8 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
 
-  def schedule=(new_schedule)
-    @schedule = rule(new_schedule).to_hash
-  end
-
-  def schedule(options={})
-    Schedule.from_hash(read_attribute(:schedule), options)
-  end
-
 
   private
-
-  def rule(rule_or_hash)
-    rule = RecurringSelect.dirty_hash_to_rule(rule_or_hash)
-
-    if @time_of_day
-      hour, minute = @time_of_day.split(":")
-      rule = rule.hour_of_day(hour).minute_of_hour(minute).second_of_minute(0)
-    end
-
-    rule
-  end
-
-  def merge_time_of_day_into_rule
-    rule
-  end
 
   def existing_occurrences_between(start_date, end_date)
     existing = {}
