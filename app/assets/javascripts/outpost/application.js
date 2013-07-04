@@ -34,4 +34,3 @@
 //= require outpost/index_manager
 //= require outpost/global_plugins
 //= require outpost/aggregator
-//= require outpost/recurring_rule_ui
