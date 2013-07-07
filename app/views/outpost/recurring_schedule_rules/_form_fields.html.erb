@@ -1,14 +1,19 @@
 <%= form_block "Rule" do %>
-  <%= f.input :schedule, input_html: { id: "recurring_rule" } %>
+  <%= f.input :interval, required: true do %>
+    Every <%= f.input_field :interval, value: record.interval || RecurringScheduleRule::DEFAULT_INTERVAL, type: 'number', class: "tiny" %> Week(s)
+  <% end %>
+
+  <%= f.input :days, collection: RecurringScheduleRule::DAYS, as: :check_boxes, 
+    wrapper_html: { class: "recurring-days-checkboxes" } %>
+
+  <%= f.input :time, required: true, hint: "The End Time is <strong>Inclusive</strong>. Example: 9:00 AM - 10:00 AM<br /><strong>Note:</strong> If you don't see a TIME input, use 24-hour time format." do %>
+    <%= f.input_field :start_time, type: "time", class: "thin" %>
+    <span style="font-weight:bold;margin: 0 10px;display:inline-block;">- to -</span>
+    <%= f.input_field :end_time, type: "time", class: "thin" %>
+  <% end %>
 <% end %>
 
 <%= form_block "Program" do %>
   <%= f.input :program_obj_key, required: true, label: "Program",
     collection: ScheduleOccurrence.program_select_collection %>
-<% end %>
-
-<% content_for :footer do %>
-  <script>
-    recurringRuleUI = new outpost.RecurringRuleUI("#recurring_rule");
-  </script>
 <% end %>
