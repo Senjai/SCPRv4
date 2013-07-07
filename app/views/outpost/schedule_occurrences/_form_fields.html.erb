@@ -11,11 +11,13 @@
 <%= form_block "Time" do %>
   <% if record.is_recurring? %>
     <div class="alert alert-warning">
-      If you want to change all instances of this recurring event, <strong><%= link_to "DO IT HERE", record.recurring_schedule_rule.admin_edit_url %></strong>.
+      <strong>This occurrence is part of a series of recurring events.</strong><br />
+      If you want to change all instances of this recurring event, <strong><%= link_to "DO IT HERE", record.recurring_schedule_rule.admin_edit_url %></strong>.<br />
+      If you change this occurrence's start or end time, it will be separated from
+      its recurrence rule and become a distinct occurrence.
     </div>
   <% end %>
 
-  <%= f.association :recurring_schedule_rule %>
   <%= f.input :starts_at %>
   <%= f.input :ends_at %>
 <% end %>
