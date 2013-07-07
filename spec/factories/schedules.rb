@@ -3,15 +3,10 @@
 #
 FactoryGirl.define do
   factory :recurring_schedule_rule do
-    schedule {
-      t = Time.new(2013, 7, 1) # 5 mondays in this month
-
-      IceCube::Schedule.new { |s| 
-        s.rrule(IceCube::Rule.weekly
-          .day(t.day).hour_of_day(t.hour)
-        )
-      }
-    }
+    interval 1
+    days [1, 2, 3, 4]
+    start_time "11:00"
+    end_time "13:00"
 
     program { |f| f.association :kpcc_program }
   end
@@ -19,7 +14,7 @@ FactoryGirl.define do
   #--------------------
 
   factory :schedule_occurrence do
-    title "Cool Event"
+    event_title "Cool Event"
     info_url "http://scpr.org"
 
     sequence(:starts_at) { |n| Time.now + n.hours }
