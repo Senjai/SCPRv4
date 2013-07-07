@@ -10,11 +10,9 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   scope :after,  ->(time) { where("starts_at > ?", time).order("starts_at") }
   scope :before, ->(time) { where("ends_at < ?", time).order("starts_at") }
-  scope :future, -> { after(Time.now) }
-  scope :past,   -> { before(Time.now) }
 
   scope :between, ->(start_date, end_date) { 
-    where("starts_at >= ? and ends_at < ?", start_date, end_date)
+    where("starts_at >= ? and starts_at < ?", start_date, end_date)
     .order("starts_at")
   }
 
@@ -23,6 +21,12 @@ class ScheduleOccurrence < ActiveRecord::Base
     .order("starts_at")
   }
 
+  scope :future,  -> { after(Time.now) }
+  scope :past,    -> { before(Time.now) }
+  scope :current, -> { at(Time.now) }
+
+  scope :recurring, -> { where("recurring_schedule_rule_id is not null") }
+  scope :distinct,  -> { where("recurring_schedule_rule_id is null") }
 
   validate :program_or_info_is_present
 
