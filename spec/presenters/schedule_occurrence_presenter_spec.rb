@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ScheduleSlotPresenter do
+describe ScheduleOccurrencePresenter do
   describe '#recurring?' do
     it 'is true for recurring_schedule_slot' do
       slot = build :recurring_schedule_slot

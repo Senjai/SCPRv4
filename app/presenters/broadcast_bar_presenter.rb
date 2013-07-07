@@ -1,5 +1,4 @@
-class BroadcastBarPresenter < ScheduleSlotPresenter
-
+class BroadcastBarPresenter < ScheduleOccurrencePresenter
   def show_modal?
     !!program.try(:display_episodes)
   end
