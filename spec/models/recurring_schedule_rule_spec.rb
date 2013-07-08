@@ -23,7 +23,7 @@ describe RecurringScheduleRule do
 
   describe '::create_occurrences' do
     it "creates occurrences for all rules" do
-      rules = create_list :r ecurring_schedule_rule, 3
+      rules = create_list :recurring_schedule_rule, 3
       ScheduleOccurrence.destroy_all
       ScheduleOccurrence.count.should eq 0
 
