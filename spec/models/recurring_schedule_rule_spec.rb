@@ -21,6 +21,18 @@ describe RecurringScheduleRule do
     end
   end
 
+  describe '::create_occurrences' do
+    it "creates occurrences for all rules" do
+      rules = create_list :r ecurring_schedule_rule, 3
+      ScheduleOccurrence.destroy_all
+      ScheduleOccurrence.count.should eq 0
+
+      t = Time.new(2013, 1, 1)
+      RecurringScheduleRule.create_occurrences(start_date: t, end_date: t + 1.week)
+      ScheduleOccurrence.count.should be > 0
+    end
+  end
+
   describe 'changing the program' do
     it "changes all the occurrence's program as well" do
       rule = create :recurring_schedule_rule

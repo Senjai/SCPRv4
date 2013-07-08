@@ -65,6 +65,15 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
 
+  class << self
+    def create_occurrences(options={})
+      self.all.each do |rule|
+        rule.create_occurrences(options)
+      end
+    end
+  end
+
+
   def schedule=(new_schedule)
     self.schedule_hash = new_schedule.try(:to_hash)
   end
