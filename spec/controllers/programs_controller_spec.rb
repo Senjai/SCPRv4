@@ -42,7 +42,7 @@ describe ProgramsController do
       render_views
       
       it "renders the view" do
-        create :recurring_schedule_slot
+        create :recurring_schedule_rule
         get :schedule
       end
     end
@@ -50,10 +50,13 @@ describe ProgramsController do
     #---------------------------
     
     describe "controller" do
-      it "assigns @schedule_slots to all RecurringScheduleSlot objects" do
-        create_list :recurring_schedule_slot, 3
+      it "assigns @schedule_occurrences to this week's schedule" do
+        create :schedule_occurrence, starts_at: Time.now.beginning_of_week
+        create :schedule_occurrence, starts_at: Time.now.beginning_of_week + 1.day
+        create :schedule_occurrence, starts_at: Time.now.beginning_of_week + 2.days
+
         get :schedule
-        assigns(:schedule_slots).should eq RecurringScheduleSlot.all
+        assigns(:schedule_occurrences).should eq ScheduleOccurrence.all
       end
     end
   end
