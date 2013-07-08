@@ -18,9 +18,8 @@ class ScheduleBuilder
   end
 
 
-  attr_accessor :interval, :days
-  attr_reader :start_time, :end_time
-
+  attr_accessor :interval, :days, :end_time
+  attr_reader :start_time
 
   def initialize(attributes={})
     self.interval     = attributes[:interval]
@@ -35,32 +34,11 @@ class ScheduleBuilder
     @start_time = string
   end
 
-  def end_time=(string)
-    @end_time_parts = parse_time_string(string)
-    @end_time = string
-  end
-
-
-  def duration
-    start_time_seconds = calculate_seconds(@start_time_parts)
-    end_time_seconds   = calculate_seconds(@end_time_parts)
-
-    return 0 unless start_time_seconds && end_time_seconds
-
-    if start_time_seconds <= end_time_seconds
-      end_time_seconds - start_time_seconds
-    else
-      1.day - start_time_seconds + end_time_seconds
-    end
-  end
-
 
   def build_schedule
     return nil unless @days && @interval && @start_time_parts.present?
 
     IceCube::Schedule.new do |s|
-      s.duration = duration
-
       s.rrule(IceCube::Rule.weekly
         .day(@days)
         .hour_of_day(@start_time_parts[0])
@@ -76,10 +54,5 @@ class ScheduleBuilder
 
   def parse_time_string(string)
     string.to_s.split(":").map(&:to_i)
-  end
-
-  def calculate_seconds(time_parts)
-    return nil if time_parts.empty?
-    time_parts[0].to_i * 60 * 60 + time_parts[1].to_i * 60
   end
 end
