@@ -35,8 +35,8 @@ class FixtureMigration < ActiveRecord::Migration
       t.datetime :published_at
       t.integer :status
       t.integer :category_id
-      t.integer :post_id
-      t.string :post_type
+      t.integer :program_id
+      t.string :program_type
       t.timestamps
     end
 
