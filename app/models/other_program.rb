@@ -16,9 +16,9 @@ class OtherProgram < ActiveRecord::Base
   
   #-------------------
   # Associations
-  has_many :recurring_schedule_slots, as: :program
-  has_many :schedules
-  
+  has_many :recurring_schedule_rules, as: :program, dependent: :destroy
+
+
   #-------------------
   # Validations
   validates :title, :air_status, presence: true
