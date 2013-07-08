@@ -30,7 +30,6 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   validate :program_or_info_is_present
 
-
   class << self
     def program_select_collection
       kpcc_programs  = KpccProgram.all.map { |p| [p.title, p.obj_key] }
@@ -45,10 +44,30 @@ class ScheduleOccurrence < ActiveRecord::Base
     # Otherwise, it will return the first (recurring) slot.
     def on_at(date)
       occurrences = self.at(date)
-      occurrences.find { |o| o.is_distinct? } || occurrences.first
+      occurrences.find(&:is_distinct?) || occurrences.first
+    end
+
+
+    def block(date, length)
+      occurrences = self.between(date, date + length)
+
+      occurrences.reject do |occurrence|
+        occurrences.any? do |o|
+          o != occurrence && o.is_distinct? &&
+          o.starts_at <= occurrence.starts_at &&
+          o.ends_at >= occurrence.ends_at
+        end
+      end
     end
   end
 
+  def wday
+    self.starts_at.wday
+  end
+
+  def duration
+    self.ends_at.to_i - self.starts_at.to_i
+  end
 
   def is_recurring?
     self.recurring_schedule_rule_id.present?
@@ -70,13 +89,18 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
 
+  def next
+    ScheduleOccurrence.on_at(self.ends_at)
+  end
+
+
   # This is for the listen live JS.
   def listen_live_json
     {
       :start => self.starts_at.to_i,
       :end   => self.ends_at.to_i,
       :title => self.title,
-      :link  => self.info_url
+      :link  => self.public_url
     }
   end
 

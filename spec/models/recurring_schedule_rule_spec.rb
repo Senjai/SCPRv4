@@ -1,47 +1,129 @@
 require 'spec_helper'
 
 describe RecurringScheduleRule do
-  describe 'setting the program' do
-    it 'sets the program based on the object key' do
-      program = create :kpcc_program
-      slot = build :recurring_schedule_rule, program: nil
-      slot.program_obj_key = program.obj_key
-      slot.save!
+  describe 'validations' do
+    it "validates program_obj_key is present if program not present" do
+      rule = build :recurring_schedule_rule, program: nil, program_obj_key: nil
+      rule.valid?.should eq false
+      rule.errors.keys.should include :program_obj_key
+    end
 
-      slot.program.should eq program
+    it "is valid if program is present but not program_obj_key" do
+      rule = build :recurring_schedule_rule, program_obj_key: nil
+      rule.valid?.should eq true
+    end
+
+    it "adds time to errors if start_time or end_time blank" do
+      rule = build :recurring_schedule_rule, start_time: nil
+      rule.valid?.should eq false
+      rule.errors.keys.should include :time
+      rule.errors.keys.should include :start_time
+    end
+  end
+
+  describe 'changing the program' do
+    it "changes all the occurrence's program as well" do
+      rule = create :recurring_schedule_rule
+      rule.schedule_occurrences.first.program.should eq rule.program
+
+      another_program = create :kpcc_program
+      rule.program = another_program
+      rule.save!
+      rule.schedule_occurrences(true).first.program.should eq another_program
+    end
+  end
+
+  describe '#duration' do
+    it "calculates the duration from start_time and end_time" do
+      rule = build :recurring_schedule_rule, start_time: "09:00", end_time: "11:00"
+      rule.duration.should eq 2.hours
+    end
+
+    it "is 0 if start time and end time not available" do
+      rule = build :recurring_schedule_rule, start_time: "09:00", end_time: nil
+      rule.duration.should eq 0
+    end
+
+    it 'can bridge over-night' do
+      rule = build :recurring_schedule_rule, start_time: "23:00", end_time: "1:00"
+      rule.duration.should eq 2.hours
+    end
+  end
+
+  describe 'schedule' do
+    let(:t) { Time.new(2013, 7, 1) } # There are 5 mondays in this month
+    let(:rule) { build :recurring_schedule_rule }
+    let(:schedule) { 
+      ScheduleBuilder.build_schedule(
+        :interval     => rule.interval,
+        :days         => rule.days,
+        :start_time   => rule.start_time,
+        :end_time     => rule.end_time
+      )
+    }
+    
+    it "sets the schedule to the passed-in Schedule object to_hash" do
+      rule.schedule = schedule
+
+      # We have to check to_s since Schedule doesn't have a custom
+      # comparison method defined and will fail if they're not the 
+      # same object (they won't be sincle #schedule uses Schedule#from_hash)
+      rule.schedule.to_s.should eq schedule.to_s
+    end
+  end
+
+  describe '#build_schedule' do
+    it "builds a new schedule on create" do
+      rule = build :recurring_schedule_rule
+      rule.schedule.should eq nil
+
+      rule.save!
+      rule.schedule.should_not eq nil
+    end
+
+    it "builds a new schedule on save if rule changed" do
+      rule = build :recurring_schedule_rule
+      rule.save!
+      original_schedule = rule.schedule
+
+      rule.days = [1, 3, 4]
+      rule.save!
+      rule.schedule.should_not eq original_schedule
     end
   end
 
   describe '#build_occurrences' do
     let(:t) { Time.new(2013, 7, 1) } # There are 5 mondays in this month
-    
-    let(:rule) do
-      create(:recurring_schedule_rule, 
-        schedule: IceCube::Schedule.new { |s|
-          s.rrule(IceCube::Rule.weekly.day(t.day).hour_of_day(t.hour))
-        }
-      )
+    let(:rule) { 
+      build :recurring_schedule_rule, 
+      :days         => [1],
+      :start_time   => "0:00",
+      :end_time     => "1:00"
+    }
+
+    before :each do
+      Time.stub(:now) { t }
+      rule.build_schedule
+    end
+
+    it "runs on create if schedule_occurrences is blank" do
+      rule.schedule_occurrences.should be_blank
+      rule.save!
+      rule.schedule_occurrences.should be_present
+    end
+
+    it "doesn't run if schedule_occurrences is present" do
+      rule.build_occurrences
+      rule.should_not_receive(:build_occurrences)
+      rule.save!
     end
 
     it "uses the passed-in start_date if present" do
-      rule.schedule_occurrences.size.should eq 0
-
-      rule.build_occurrences(start_date: t)
-      rule.schedule_occurrences.size.should eq 5
+      rule.build_occurrences(start_date: t + 1.month)
+      rule.schedule_occurrences.first.starts_at.should be >= t + 1.month
     end
 
-    it "uses the last occurrence as the start_date if no start_date passed in" do
-      rule.build_occurrences(start_date: t)
-      rule.build_occurrences # Creates 5 occurrences
-
-      # We want to make sure that the 6th start (the first occurrence of the second
-      # group built above) is 1 week after the start of the 5th one (the last
-      # occurrence of the first group). It's 1 week because we are using a weekly
-      # rule.
-      rule.schedule_occurrences[5].starts_at.should eq rule.schedule_occurrences[4].starts_at + 1.week
-    end
-
-    it "uses Time.now if there are no other occurrences" do
+    it "uses Time.now by default" do
       # Stub Time.now since build_occurrences uses it directly.
       # Actually, IceCube::Schedule#next_occurrence uses it by default.
       # Actually, IceCube::TimeUtil.now uses it directly.
@@ -51,10 +133,9 @@ describe RecurringScheduleRule do
       # because we're not specifying the minute or second in the rule.
       # If we don't do this, it will use the current minute/second,
       # which is annoying but whatever.
-      Time.stub(:now) { Time.new(2013, 7, 1) }
       rule.build_occurrences
 
-      rule.schedule_occurrences.first.starts_at.should eq t + 1.week
+      rule.schedule_occurrences.first.starts_at.should eq t
     end
 
     it "only builds up to the end_date" do
@@ -62,29 +143,45 @@ describe RecurringScheduleRule do
       rule.schedule_occurrences.after(t + 1.week).should eq []
     end
 
+    it "sets the ends_at of the occurrence to starts_at + duration" do
+      rule.build_occurrences
+      rule.schedule_occurrences.first.duration.should eq 1.hour
+    end
+
     it "doesn't duplicate already-existing occurrences" do
-      rule.build_occurrences(start_date: t)
+      rule.save!
       rule.schedule_occurrences.count.should eq 5
 
-      rule.build_occurrences(start_date: t)
+      rule.create_occurrences(start_date: t)
       rule.schedule_occurrences.count.should eq 5
 
-      rule.build_occurrences(start_date: t, end_date: t+5.weeks)
+      rule.create_occurrences(start_date: t, end_date: t+5.weeks)
       rule.schedule_occurrences.count.should eq 6
     end
 
     it "rebuilds if requested" do
-      rule.build_occurrences(start_date: t)
-      timestamp1 = rule.schedule_occurrences.first.created_at
+      rule.save!
+      rule.schedule_occurrences.count.should eq 5
 
-      Time.stub(:now) { Time.new(1999, 6, 13) }
-      rule.build_occurrences(start_date: t, rebuild: true)
-      timestamp2 = rule.schedule_occurrences.first.created_at
-
-      # What a dumb way to test this
-      timestamp1.should_not eq timestamp2
+      rule.create_occurrences(rebuild: true)
+      rule.schedule_occurrences.count.should eq 5
     end
   end
 
-  describe 
+  describe '#create_occurrences' do
+    it 'builds occurrences and then saves' do
+      Time.stub(:now) { Time.new(2013, 7, 1) }
+
+      rule = create :recurring_schedule_rule, 
+      :days         => [1],
+      :start_time   => "0:00",
+      :end_time     => "1:00"
+
+      rule.schedule_occurrences.destroy_all
+
+      rule.schedule_occurrences.count.should eq 0
+      rule.create_occurrences
+      rule.reload.schedule_occurrences.count.should eq 5
+    end
+  end
 end

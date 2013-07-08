@@ -83,6 +83,28 @@ describe ScheduleOccurrence do
     end
   end
 
+  describe '::block' do
+    it "returns a single stream of events between the requested dates", focus: true do
+      t = Time.new(2013, 6, 1)
+
+      occurrence1 = create :schedule_occurrence, starts_at: t
+      occurrence2 = create :schedule_occurrence, starts_at: t + 1.hour
+      occurrence3 = create :schedule_occurrence, starts_at: t + 1.day
+      occurrence4 = create :schedule_occurrence, starts_at: t - 1.day
+
+      ScheduleOccurrence.block(t-1.hour, 3.hours).should eq [occurrence1, occurrence2]
+    end
+
+    it "gets rid of occurences which happen inside of another", focus: true do
+      t = Time.new(2013, 6, 1)
+
+      occurrence1 = create :schedule_occurrence, starts_at: t
+      occurrence2 = create :schedule_occurrence, starts_at: t - 1.hour, ends_at: t + 1.hour
+
+      ScheduleOccurrence.block(t-1.hour, 3.hours).should eq [occurrence2]
+    end
+  end
+
   #------------
 
   describe "#next" do
