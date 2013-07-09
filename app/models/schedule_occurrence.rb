@@ -5,9 +5,7 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   include Concern::Associations::PolymorphicProgramAssociation
 
-  belongs_to :recurring_schedule_rule
-
-
+############################
   scope :after,  ->(time) { where("starts_at > ?", time).order("starts_at") }
   scope :before, ->(time) { where("ends_at < ?", time).order("starts_at") }
 
@@ -29,7 +27,10 @@ class ScheduleOccurrence < ActiveRecord::Base
   scope :distinct,  -> { where("recurring_schedule_rule_id is null") }
 
   scope :filtered_by_date, ->(date) { where("DATE(starts_at) = ?", date) }
+############################
 
+
+  belongs_to :recurring_schedule_rule
   validate :program_or_info_is_present
 
 
@@ -77,6 +78,7 @@ class ScheduleOccurrence < ActiveRecord::Base
       end
     end
   end
+
 
   def wday
     self.starts_at.wday
