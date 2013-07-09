@@ -43,7 +43,7 @@ describe ScheduleBuilder do
         :days       => []
       )
 
-      schedule.duration.should eq 2.hours
+      schedule.should be_a IceCube::Schedule
     end
   end
 end
