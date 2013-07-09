@@ -18,20 +18,15 @@ module Api::Public::V2
     #---------------------------
 
     def index
-      @schedule_slots = ScheduleOccurrence.block(@start_time, @length)
-      respond_with @schedule_slots
+      @schedule_occurrences = ScheduleOccurrence.block(@start_time, @length)
+      respond_with @schedule_occurrences
     end
 
     #---------------------------
 
     def show
-      @schedule_slot = Schedule.on_at(@time)
-
-      if !@schedule_slot
-        render_not_found and return false
-      end
-
-      respond_with @schedule_slot
+      @schedule_occurrence = ScheduleOccurrence.on_at(@time)
+      respond_with @schedule_occurrence
     end
 
     #---------------------------
@@ -55,7 +50,7 @@ module Api::Public::V2
     def sanitize_length
       if params[:length].present?
         length = params[:length].to_i
-        @length = length > MAXIMUM_LENGTH ? length : MAXIMUM_LENGTH
+        @length = length > MAXIMUM_LENGTH ? MAXIMUM_LENGTH : length
       else
         @length = defaults[:length]
       end
