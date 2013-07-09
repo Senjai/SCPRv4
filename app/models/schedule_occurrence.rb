@@ -12,7 +12,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   scope :before, ->(time) { where("ends_at < ?", time).order("starts_at") }
 
   scope :between, ->(start_date, end_date) { 
-    where("starts_at >= ? and starts_at < ?", start_date, end_date)
+    where("starts_at < ? and ends_at > ?", end_date, start_date)
     .order("starts_at")
   }
 

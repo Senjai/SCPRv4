@@ -38,7 +38,7 @@ describe ScheduleOccurrence do
   end
 
   describe '::between' do
-    it 'gets any occurrence which starts between the start and end dates' do
+    it 'gets any occurrence which airs between the start and end dates' do
       t = Time.new(2013, 6, 1)
 
       occurrence1 = create :schedule_occurrence, starts_at: t
@@ -47,6 +47,15 @@ describe ScheduleOccurrence do
       occurrence4 = create :schedule_occurrence, starts_at: t - 1.day
 
       ScheduleOccurrence.between(t - 1.hour, t + 2.hours).should eq [occurrence1, occurrence2]
+    end
+
+    it "can grab stuff that started before the start time or ends after the end time" do
+      t = Time.new(2013, 6, 1)
+
+      occurrence1 = create :schedule_occurrence, starts_at: t - 2.hours, ends_at: t + 1.hour
+      occurrence2 = create :schedule_occurrence, starts_at: t + 6.hours, ends_at: t + 9.hours
+
+      ScheduleOccurrence.between(t, t + 8.hours).should eq [occurrence1, occurrence2]
     end
   end
 
