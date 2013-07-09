@@ -28,7 +28,7 @@ namespace :scprv4 do
   task :sync_remote_articles => [:environment] do
     puts "*** [#{Time.now}] Syncing remote articles..."
 
-    if Rails.env == "development"
+    if Rails.env.development?
       Job::SyncRemoteArticles.perform
       puts "Finished.\n"
     else
@@ -89,7 +89,7 @@ namespace :scprv4 do
     task :audiovision => [:environment] do
       puts "*** [#{Time.now}] Caching AudioVision for homepage..."
 
-      if Rails.env == "development"
+      if Rails.env.development?
         Job::AudioVisionCache.perform
         puts "Finished.\n"
       else
@@ -104,7 +104,7 @@ namespace :scprv4 do
     task :most_viewed => [:environment] do
       puts "*** [#{Time.now}] Caching most viewed..."
 
-      if Rails.env == "development"
+      if Rails.env.development?
         Job::MostViewed.perform
         puts "Finished.\n"
       else
@@ -119,7 +119,7 @@ namespace :scprv4 do
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Caching most commented..."
 
-      if Rails.env == "development"
+      if Rails.env.development?
         Job::MostCommented.perform
         puts "Finished.\n"
       else
@@ -163,7 +163,7 @@ namespace :scprv4 do
     task :homepage => [ :environment ] do
       puts "*** [#{Time.now}] Caching homepage..."
 
-      if Rails.env == "development"
+      if Rails.env.development?
         Job::HomepageCache.perform
         puts "Finished.\n"
       else
