@@ -11,7 +11,12 @@ class HomeController < ApplicationController
     @featured_comment = FeaturedComment.published.first
 
     @schedule_current = ScheduleOccurrence.on_at(Time.now)
-    @schedule_next    = @schedule_current.try(:following_occurrence)
+
+    if @schedule_current
+      @schedule_next = @schedule_current.following_occurrence
+    else
+      @schedule_next = ScheduleOccurrence.after(Time.now).first
+    end
   end
   
   #----------
