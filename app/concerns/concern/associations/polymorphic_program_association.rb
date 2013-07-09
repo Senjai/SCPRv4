@@ -15,6 +15,6 @@ module Concern
       def program_obj_key=(obj_key)
         self.program = Outpost.obj_by_key(obj_key)
       end
-    end
-  end
-end
+    end # PolymorphicProgramAssociation
+  end # Associations
+end # Concern
