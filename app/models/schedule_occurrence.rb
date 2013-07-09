@@ -6,8 +6,13 @@ class ScheduleOccurrence < ActiveRecord::Base
   include Concern::Associations::PolymorphicProgramAssociation
 
 ############################
-  scope :after,  ->(time) { where("starts_at > ?", time).order("starts_at") }
-  scope :before, ->(time) { where("ends_at < ?", time).order("starts_at") }
+
+  scope :after,   ->(time) { where("starts_at > ?", time).order("starts_at") }
+  scope :before,  ->(time) { where("ends_at < ?", time).order("starts_at") }
+  scope :future,  -> { after(Time.now) }
+  scope :past,    -> { before(Time.now) }
+  scope :current, -> { at(Time.now) }
+
 
   scope :between, ->(start_date, end_date) { 
     where("starts_at < ? and ends_at > ?", end_date, start_date)
@@ -19,14 +24,12 @@ class ScheduleOccurrence < ActiveRecord::Base
     .order("starts_at")
   }
 
-  scope :future,  -> { after(Time.now) }
-  scope :past,    -> { before(Time.now) }
-  scope :current, -> { at(Time.now) }
 
   scope :recurring, -> { where("recurring_schedule_rule_id is not null") }
   scope :distinct,  -> { where("recurring_schedule_rule_id is null") }
 
   scope :filtered_by_date, ->(date) { where("DATE(starts_at) = ?", date) }
+
 ############################
 
 
