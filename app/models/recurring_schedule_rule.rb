@@ -36,19 +36,23 @@ class RecurringScheduleRule < ActiveRecord::Base
   #--------------
   # Scopes
 
+
   #--------------
   # Associations
   has_many :schedule_occurrences, dependent: :destroy
 
+
   #--------------
   # Validations
-  validates :program, presence: true
-  validate :program_obj_key_or_program_is_present
+  validate :program_is_present
+
   validates :interval, presence: true
   validates :days, presence: true
+
   validates :start_time, presence: true
   validates :end_time, presence: true
   validate :time_fields_are_present
+
 
   #--------------
   # Callbacks
@@ -204,8 +208,9 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   private
 
-  def program_obj_key_or_program_is_present
-    if !self.program && self.program_obj_key.blank?
+  # For the form...
+  def program_is_present
+    if self.program.blank?
       self.errors.add(:program_obj_key, "can't be blank.")
     end
   end

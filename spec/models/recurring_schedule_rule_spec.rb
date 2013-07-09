@@ -2,15 +2,10 @@ require 'spec_helper'
 
 describe RecurringScheduleRule do
   describe 'validations' do
-    it "validates program_obj_key is present if program not present" do
+    it "validates program presence, but also adds the program_obj_key to the errors" do
       rule = build :recurring_schedule_rule, program: nil, program_obj_key: nil
       rule.valid?.should eq false
       rule.errors.keys.should include :program_obj_key
-    end
-
-    it "is valid if program is present but not program_obj_key" do
-      rule = build :recurring_schedule_rule, program_obj_key: nil
-      rule.valid?.should eq true
     end
 
     it "adds time to errors if start_time or end_time blank" do
