@@ -3,7 +3,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", schedule_occurrence] do
   json.public_url     schedule_occurrence.public_url
   json.starts_at      schedule_occurrence.starts_at
   json.ends_at        schedule_occurrence.ends_at
-  json.is_recurring   schedule.is_recurring?
+  json.is_recurring   schedule_occurrence.is_recurring?
 
   if schedule_occurrence.program.present?
     json.program do
