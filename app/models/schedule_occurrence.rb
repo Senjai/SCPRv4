@@ -78,6 +78,13 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
 
+
+  def following_occurrence
+    between = ScheduleOccurrence.between(Time.now, self.ends_at + 1)
+    between.find { |o| o != self }
+  end
+
+
   # Validations will ensure that either the program or the event_title 
   # is present.
   def title
@@ -86,11 +93,6 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   def public_url
     self.info_url.present? ? self.info_url : self.program.public_url
-  end
-
-
-  def next
-    ScheduleOccurrence.on_at(self.ends_at)
   end
 
 

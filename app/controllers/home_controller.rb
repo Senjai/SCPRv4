@@ -8,8 +8,10 @@ class HomeController < ApplicationController
   
   def index
     @homepage         = Homepage.published.first
-    @schedule_current = ScheduleOccurrence.on_at(Time.now)
     @featured_comment = FeaturedComment.published.first
+
+    @schedule_current = ScheduleOccurrence.on_at(Time.now)
+    @schedule_next    = @schedule_current.try(:following_occurrence)
   end
   
   #----------
