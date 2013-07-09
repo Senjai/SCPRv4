@@ -123,10 +123,16 @@ Scprv4::Application.routes.draw do
         resources :editions, only: [:index, :show]
         resources :categories, only: [:index, :show]
         resources :events, only: [:index, :show]
-        resources :schedule, only: [:index, :show]
         resources :programs, only: [:index, :show]
         resources :episodes, only: [:index, :show]
         resources :blogs, only: [:index, :show]
+
+        resources :schedule, controller: 'schedule_occurrences',only: [:index] do
+          collection do
+            get :at,      to: "schedule_occurrences#show"
+            get :current, to: "schedule_occurrences#show"
+          end
+        end
       end
     end
     
