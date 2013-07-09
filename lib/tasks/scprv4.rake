@@ -67,21 +67,20 @@ namespace :scprv4 do
   end
 
 
+  namespace :schedule do
+    desc "Build the recurring schedule occurrences"
+    task :build => [:environment] do
+      puts "*** [#{Time.now} Building recurring schedule..."
 
-  desc "Build the recurring schedule occurrences"
-  task :build_recurring_schedule => [:environment] do
-    puts "*** [#{Time.now} Building recurring schedule..."
-
-    if Rails.env.development?
-      Job::BuildRecurringSchedule.perform
-      puts "Finished.\n"
-    else
-      Resque.enqueue(Job::BuildRecurringSchedule)
-      puts "Job was placed in queue.\n"
+      if Rails.env.development?
+        Job::BuildRecurringSchedule.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::BuildRecurringSchedule)
+        puts "Job was placed in queue.\n"
+      end
     end
   end
-
-  #----------
 
 
 
