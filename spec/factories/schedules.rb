@@ -23,5 +23,9 @@ FactoryGirl.define do
     trait :recurring do
       recurring_schedule_rule
     end
+
+    trait :with_program do
+      program { |f| f.association :kpcc_program }
+    end
   end
 end
