@@ -16,7 +16,7 @@ describe Concern::Associations::PolymorphicProgramAssociation do
   describe '#program_obj_key' do
     it "is nil if there is no program" do
       post = build :test_class_post
-      post.program_obj_key.should ewq nil
+      post.program_obj_key.should eq nil
     end
   end
 end
