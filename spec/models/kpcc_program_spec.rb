@@ -1,13 +1,6 @@
 require "spec_helper"
 
 describe KpccProgram do
-  describe "associations" do
-    it { should have_many :segments }
-    it { should have_many :episodes }
-    it { should have_many :recurring_schedule_slots }
-    it { should belong_to :missed_it_bucket }
-    it { should belong_to :blog }
-  end
   
   #--------------------
 
