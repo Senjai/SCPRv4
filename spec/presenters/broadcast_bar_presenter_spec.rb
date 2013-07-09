@@ -89,7 +89,7 @@ describe BroadcastBarPresenter do
 
   describe '#headshot_class' do
     it 'is a string if is_for_featured_program is true' do
-      slot = build :schedule_occurrence, :recurring
+      slot = build :schedule_occurrence, :recurring, :with_program
       p    = presenter(slot)
       p.stub(:is_for_featured_program?) { true }
 
@@ -97,7 +97,7 @@ describe BroadcastBarPresenter do
     end
 
     it 'is nil if not is_for_featured_program' do
-      slot = build :schedule_occurrence, :recurring
+      slot = build :schedule_occurrence, :recurring, :with_program
       p    = presenter(slot)
       p.stub(:is_for_featured_program?) { false }
 
