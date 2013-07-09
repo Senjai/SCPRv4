@@ -114,10 +114,17 @@ describe ScheduleOccurrence do
     end
   end
 
-  #------------
 
-  describe "#next" do
+  describe '#following_occurrence' do
     it "selects the slot immediately following this one" do
+      t = Time.new(2013, 6, 1)
+      Time.stub(:now) { t + 20.minutes }
+
+      occurrence1 = create :schedule_occurrence, starts_at: t, ends_at: t + 2.hour
+      occurrence2 = create :schedule_occurrence, starts_at: t + 30.minutes, ends_at: t + 1.hour
+
+      occurrence1.following_occurrence.should eq occurrence2
+      occurrence2.following_occurrence.should eq occurrence1
     end
   end
 
