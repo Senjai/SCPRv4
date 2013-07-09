@@ -1,12 +1,6 @@
 require "spec_helper"
 
 describe OtherProgram do
-  describe "associations" do
-    it { should have_many(:recurring_schedule_slots) }
-  end
-  
-  #-----------------
-  
   describe "validations" do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:slug) }
