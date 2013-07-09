@@ -11,5 +11,7 @@ class Outpost::ScheduleOccurrencesController < Outpost::ResourceController
     l.column :ends_at
     l.column :info_url, display: :display_link
     l.column :is_recurring?, header: "Recurring?", display: :display_boolean
+
+    l.filter :date, collection: -> { ScheduleOccurrence.date_select_collection }
   end
 end

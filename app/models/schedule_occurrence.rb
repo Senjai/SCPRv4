@@ -28,7 +28,19 @@ class ScheduleOccurrence < ActiveRecord::Base
   scope :recurring, -> { where("recurring_schedule_rule_id is not null") }
   scope :distinct,  -> { where("recurring_schedule_rule_id is null") }
 
+  scope :filtered_by_date, ->(date) { where("DATE(starts_at) = ?", date) }
+
   validate :program_or_info_is_present
+
+
+  define_index do
+    indexes event_title
+    indexes program.title
+    indexes info_url
+
+    has start_time
+  end
+
 
   class << self
     def program_select_collection
@@ -37,6 +49,11 @@ class ScheduleOccurrence < ActiveRecord::Base
       kpcc_programs + other_programs
     end
 
+
+    def date_select_collection
+      self.select("distinct DATE(starts_at) as date")
+      .order('date desc').map(&:date)
+    end
 
     # Find the occurrence on at the requested date.
     # Distinct slots have higher priority. If there are any
