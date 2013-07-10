@@ -57,21 +57,7 @@ class RemoteArticle < ActiveRecord::Base
     end
     
     #---------------
-    # Strip out unwanted stuff from the fullText attribute.
-    def process_text(text, options={})
-      fragment = Nokogiri::XML::DocumentFragment.parse(text)
 
-      Array(options[:css_to_remove]).each do |css|
-        fragment.css(css).remove
-      end
-
-      Array(options[:properties_to_remove]).each do |property|
-        fragment.xpath(".//@#{property}").remove
-      end
-
-      fragment.to_html
-    end
-    
     #---------------
     # Sync with the APIs
     def sync
