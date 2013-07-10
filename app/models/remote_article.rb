@@ -1,25 +1,25 @@
 class RemoteArticle < ActiveRecord::Base
   # This is a pseudo-abstract class (I made that term up) to act
-  # as a parent class for the API adapters with which we want to 
+  # as a parent class for the API adapters with which we want to
   # be able to import content from other sources.
   #
   # An adapter MUST:
   # * Inherit from RemoteArticle
-  # * Define a class method `sync`, which returns an array of 
+  # * Define a class method `sync`, which returns an array of
   #   RemoteArticles. This method is meant to sync the RemoteArticles
   #   database with that adapter's API.
-  # * Define an instance method `import`. This method is meant to 
+  # * Define an instance method `import`. This method is meant to
   #   define how a remote article is imported into a native type.
   #   This method must accept an options hash.
   #
   # An adapter SHOULD:
   # * Define ORGANIZATION, the name of the remote source.
-  
+
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Outpost::Model::Identifier
   include Outpost::Model::Naming
   logs_as_task
-  
+
   ADAPTERS = [
     "NprArticleImporter",
     "ChrArticleImporter"
@@ -55,8 +55,6 @@ class RemoteArticle < ActiveRecord::Base
     def admin_index_path
       @admin_index_path ||= Rails.application.routes.url_helpers.send("outpost_#{self.route_key}_path")
     end
-    
-    #---------------
 
     #---------------
     # Sync with the APIs
@@ -73,14 +71,14 @@ class RemoteArticle < ActiveRecord::Base
 
   def as_json(*args)
     super.merge({
-      "id"         => self.obj_key, 
+      "id"         => self.obj_key,
       "obj_key"    => self.obj_key,
       "to_title"   => self.to_title,
     })
   end
-  
+
   #---------------
-  
+
   def async_import(options={})
     import_to_class = options[:import_to_class]
     Resque.enqueue(Job::ImportRemoteArticle, self.id, import_to_class)
