@@ -21,8 +21,8 @@ class RemoteArticle < ActiveRecord::Base
   logs_as_task
   
   ADAPTERS = [
-    "NprArticle",
-    "ChrArticle"
+    "NprArticleImporter",
+    "ChrArticleImporter"
   ]
 
   ORGANIZATION = "Remote Source"

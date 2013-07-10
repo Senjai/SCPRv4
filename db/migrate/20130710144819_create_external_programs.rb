@@ -12,7 +12,7 @@ class CreateExternalPrograms < ActiveRecord::Migration
       t.string :web_url
       t.string :podcast_url
       t.string :rss_url
-      t.string :sync_type
+      t.string :importer_type
       t.text :sidebar
 
       t.timestamps

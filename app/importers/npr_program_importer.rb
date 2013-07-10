@@ -1,0 +1,2 @@
+class NprProgramImporter < Importer
+end
