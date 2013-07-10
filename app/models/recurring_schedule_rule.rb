@@ -62,7 +62,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   before_save :update_occurrence_program, if: :program_changed?
 
   #--------------
-  # Sphinx  
+  # Sphinx
   define_index do
     has :id # just so the Search in outpost can be ordered.
     indexes program.title
@@ -123,7 +123,7 @@ class RecurringScheduleRule < ActiveRecord::Base
 
 
   # Build a block of occurrences of this rule.
-  # This denormalization allows us to easily query for blocks of 
+  # This denormalization allows us to easily query for blocks of
   # schedule.
   #
   # Options:
@@ -132,9 +132,9 @@ class RecurringScheduleRule < ActiveRecord::Base
   # * end_date   - the date to end building.
   #                default: start_date + 1 month
   #
-  # Building events should be staggered. 
-  # You should build a month's worth of schedule, 
-  # starting at the beginning of the previous month, so you're 
+  # Building events should be staggered.
+  # You should build a month's worth of schedule,
+  # starting at the beginning of the previous month, so you're
   # always a month ahead. This is just an example.
   #
   # Here's a diagram, for the visual learners out there:
@@ -149,7 +149,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   # The periodic schedule building can be done by a cron job,
   # or lazily if you're feeling ambitious.
   #
-  # By default (with no options passed in), this will build 
+  # By default (with no options passed in), this will build
   # a month worth of schedule starting at the occurrence following
   # the last one built (or now if none exist).
   #
@@ -264,11 +264,11 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   def existing_occurrences_between(start_date, end_date)
     existing = {}
-    
+
     self.schedule_occurrences.between(start_date, end_date).each do |occurrence|
       existing[occurrence.starts_at] = occurrence
     end
-    
+
     existing
   end
 end
