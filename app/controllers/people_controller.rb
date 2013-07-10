@@ -1,12 +1,12 @@
 class PeopleController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_staff_index
-  
+
   def index
     @bios = Bio.where(is_public: true).order("last_name")
   end
 
   #-----------------------
-  
+
   def bio
     @bio     = Bio.visible.where(slug: params[:slug]).first!
     @bylines = @bio.indexed_bylines(params[:page])

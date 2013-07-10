@@ -1,15 +1,15 @@
 class PodcastsController < ApplicationController
   before_filter :set_headers, only: [:podcast]
-  
+
   def index
     @podcasts = Podcast.where(is_listed: true).order("title")
   end
-  
+
   #----------
-  
+
   def podcast
     @podcast = Podcast.where(slug: params[:slug]).first!
-    
+
     # If this is an "OtherProgram", just redirect to the Podcast URL
     # Otherwise, grab the content, build the XML, and return it.
     # This allows us to "host" other podcasts without actually having to
@@ -28,7 +28,7 @@ class PodcastsController < ApplicationController
 
   def set_headers
     response.headers["Content-Type"] = 'text/xml'
-    
+
     if request.headers["Range"].present?
       # Fake the headers for iTunes.
       response.headers["Status"]         = "206 Partial Content"
