@@ -64,6 +64,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   #--------------
   # Sphinx  
   define_index do
+    has :id # just so the Search in outpost can be ordered.
     indexes program.title
     indexes schedule_hash
   end
