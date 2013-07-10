@@ -7,6 +7,7 @@ module TestClass
     include Concern::Associations::FeaturedCommentAssociation
     include Concern::Associations::RelatedContentAssociation
     include Concern::Associations::AssetAssociation
+    include Concern::Associations::PolymorphicProgramAssociation
     include Concern::Methods::PublishingMethods
     include Concern::Methods::StatusMethods
     

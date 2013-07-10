@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627232436) do
+ActiveRecord::Schema.define(:version => 20130708001126) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -564,6 +564,20 @@ ActiveRecord::Schema.define(:version => 20130627232436) do
   add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
   add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
 
+  create_table "recurring_schedule_rules", :force => true do |t|
+    t.text     "schedule_hash"
+    t.integer  "interval"
+    t.string   "days"
+    t.string   "start_time"
+    t.string   "end_time"
+    t.integer  "program_id"
+    t.string   "program_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "recurring_schedule_rules", ["program_type", "program_id"], :name => "index_recurring_schedule_rules_on_program_type_and_program_id"
+
   create_table "recurring_schedule_slots", :force => true do |t|
     t.integer  "program_id"
     t.string   "program_type"
@@ -599,6 +613,22 @@ ActiveRecord::Schema.define(:version => 20130627232436) do
   end
 
   add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
+
+  create_table "schedule_occurrences", :force => true do |t|
+    t.string   "event_title"
+    t.string   "info_url"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.integer  "program_id"
+    t.string   "program_type"
+    t.integer  "recurring_schedule_rule_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "schedule_occurrences", ["program_type", "program_id"], :name => "index_schedule_occurrences_on_program_type_and_program_id"
+  add_index "schedule_occurrences", ["recurring_schedule_rule_id"], :name => "index_schedule_occurrences_on_recurring_schedule_rule_id"
+  add_index "schedule_occurrences", ["starts_at", "ends_at"], :name => "index_schedule_occurrences_on_starts_at_and_ends_at"
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false

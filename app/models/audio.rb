@@ -11,65 +11,69 @@
 class Audio < ActiveRecord::Base
   self.table_name = "media_audio"
   logs_as_task
-  
+
   # Server path root - /home/media/kpcc/audio
   AUDIO_PATH_ROOT = File.join(Rails.application.config.scpr.media_root, "audio")
-  
+
   # Public URL root - http://media.scpr.org/audio
   AUDIO_URL_ROOT   = File.join(Rails.application.config.scpr.media_url, "audio")
   PODCAST_URL_ROOT = File.join(Rails.application.config.scpr.media_url, "podcasts")
-  
+
   STORE_DIRS = {
     :enco    => "features",  # The ENCO id and date were given
     :upload  => "upload",    # The audio was uploaded via the CMS
     :direct  => "",          # A path to an audio file was given
     :program => ""           # Automatic via cron, no user interaction
   }
-  
+
   # Filename regular expressions
   FILENAMES = {
     :program => %r{(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})_(?<slug>\w+)\.mp3},             # 20121001_mbrand.mp3
     :enco    => %r{(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})_features(?<enco_id>\d{4})\.mp3} # 20121001_features1809.mp3
   }
-  
+
   STATUS_NONE = nil
   STATUS_WAIT = 1
   STATUS_LIVE = 2
-  
+
   STATUS_TEXT = {
     STATUS_NONE => "None",
     STATUS_WAIT => "Awaiting Audio",
     STATUS_LIVE => "Live"
   }
-  
-  
+
   #------------
   # Association
   belongs_to :content, polymorphic: true, touch: true
   mount_uploader :mp3, AudioUploader
-  
+
 
   #------------
   # Validation
   validate :enco_info_is_present_together
   validate :audio_source_is_provided
 
-  validate :path_is_unique, if: -> { self.new_record? && self.type == "Audio::UploadedAudio" }
+  validate :path_is_unique, if: -> {
+    self.new_record? && self.type == "Audio::UploadedAudio"
+  }
 
-  # Don't run this for development, 
-  # so that we can still save objects even though the file won't exist on dev machines. 
-  validate :mp3_exists, unless: -> { self.new_record? || Rails.env == "development" }
-  
+  # Don't run this for development, so that we can still save objects 
+  # even though the file won't exist on dev machines. 
+  validate :mp3_exists, unless: -> {
+    self.new_record? || Rails.env == "development"
+  }
+
   def enco_info_is_present_together
     if self.enco_number.blank? ^ self.enco_date.blank?
-      errors.add(:base, "Enco number and Enco date must both be present for ENCO audio")
+      errors.add(:base,
+        "Enco number and Enco date must both be present for ENCO audio")
       # Just so the form is aware that enco_number and enco_date are involved
       errors.add(:enco_number, "")
       errors.add(:enco_date, "")
     end
   end
-  
-  #------------  
+
+  #------------
   # Check if an audio source was given.
   # For the mp3 column, Carrierwave checks that
   # the file actually exists on the filesystem
@@ -79,19 +83,26 @@ class Audio < ActiveRecord::Base
   # #mp3_exists will catch that with a more helpful
   # error message.
   def audio_source_is_provided
-    if self.mp3_path.blank? && self.mp3.file.nil? && self.enco_number.blank? && self.enco_date.blank?
-      self.errors.add(:base, "Audio must have a source (upload, enco, or path)")
+    if self.mp3_path.blank? &&
+    self.mp3.file.nil? &&
+    self.enco_number.blank? &&
+    self.enco_date.blank?
+      self.errors.add(:base,
+        "Audio must have a source (upload, enco, or path)")
     end
   end
-  
+
   # If the column is filled in, but the file doesn't exist, invalid
   def mp3_exists
-    # Can't use `present?` on mp3.file, because CarrierWave defines an `empty?` method on SanitizedFile    
+    # Can't use `present?` on mp3.file, because CarrierWave 
+    # defines an `empty?` method on SanitizedFile
     if !self.mp3.file.nil? && self.mp3.blank?
-      self.errors.add(:mp3, "doesn't exist on the filesystem (#{self.full_path}). Perhaps it was deleted?")
+      self.errors.add(:mp3,
+        "doesn't exist on the filesystem (#{self.full_path}). " \
+        "Perhaps it was deleted?")
     end
   end
-  
+
   # Make sure the audio file has a unique name.
   def path_is_unique
     return true if self.mp3.file.blank?
@@ -105,7 +116,7 @@ class Audio < ActiveRecord::Base
       UploadedAudio.store_dir,
       self.mp3.filename
     )
-    
+
     if File.exist?(path)
       self.errors.add(:mp3, "A file with that name already exists; " \
         "please rename your local audio file and try again. " \
@@ -119,12 +130,18 @@ class Audio < ActiveRecord::Base
 
   # It's important to set the type before validation, 
   # so that we can run type-specific validation.
-  before_validation   :set_type, if: -> { self.type.blank? }
+  before_validation :set_type, if: -> { self.type.blank? }
 
-  before_save   :set_file_info, if: -> { self.filename.blank? || self.store_dir.blank? }
-  before_save   :nilify_blanks
-  after_save    :async_compute_file_info, if: -> { self.mp3.present? && (self.size.blank? || self.duration.blank?) }
-  
+  before_save   :set_file_info, if: -> {
+    self.filename.blank? || self.store_dir.blank?
+  }
+
+  before_save :nilify_blanks
+
+  after_save :async_compute_file_info, if: -> {
+    self.mp3.present? && (self.size.blank? || self.duration.blank?)
+  }
+
   #------------
   # Nilify these attributes just to keep everything consistent in the DB
   # This is only applicable to text values that are coming from the form
@@ -142,7 +159,7 @@ class Audio < ActiveRecord::Base
   scope :available,      -> { where("mp3 is not null") }
   scope :awaiting_audio, -> { where("mp3 is null") }
 
-  
+
   #------------
   #------------
 
@@ -151,7 +168,7 @@ class Audio < ActiveRecord::Base
   end
 
   #------------
-  
+
   def status
     @status ||= begin
       if mp3.present?
@@ -165,18 +182,17 @@ class Audio < ActiveRecord::Base
   end
 
   #------------
-  
+
   def live?
     self.status == STATUS_LIVE
   end
 
   #------------
-  
+
   def awaiting?
     self.status == STATUS_WAIT
   end
-  
-  
+
   #------------
   # The URL path, i.e. the path without "audio/"
   # eg. /upload/2012/10/01/your_sweet_audio.mp3
@@ -219,8 +235,7 @@ class Audio < ActiveRecord::Base
       self.store_dir = self.type.constantize.store_dir(self)
     end
   end
-  
-  
+
   #------------ 
   #------------
   # Compute duration via Mp3Info
@@ -228,14 +243,14 @@ class Audio < ActiveRecord::Base
   # so it's not considered "blank"
   def compute_duration
     return false if self.mp3.blank?
-    
+
     Mp3Info.open(self.mp3.path) do |file|
       self.duration = file.length
     end
 
     self.duration ||= 0
   end
-  
+
   #------------
   # Compute the size via Carrierwave
   # Set a value to 0 if something goes wrong
@@ -244,7 +259,7 @@ class Audio < ActiveRecord::Base
     return false if self.mp3.blank?
     self.size = self.mp3.file.size # Carrierwave sets this to 0 if it can't compute it
   end
-  
+
   #------------
   # Compute duration and size, and save the object
   def compute_file_info!
@@ -255,7 +270,7 @@ class Audio < ActiveRecord::Base
       self
     end
   end
-  
+
   #------------
   #------------
   # Queue the computation jobs
@@ -268,12 +283,12 @@ class Audio < ActiveRecord::Base
   def self.enqueue_sync
     Resque.enqueue(Audio::SyncAudioJob, self.name)
   end
-    
+
   # Proxy to AudioSync::enqueue_all
   def self.enqueue_all
     Audio::Sync.enqueue_all
   end
-  
+
   private
 
   #------------
@@ -286,13 +301,13 @@ class Audio < ActiveRecord::Base
   def set_type
     if self.live?
       self.type = "Audio::UploadedAudio"
-    
+
     elsif self.enco_number.present? && self.enco_date.present?
       self.type = "Audio::EncoAudio"
-    
+
     elsif self.mp3_path.present?
       self.type = "Audio::DirectAudio"
-    
+
     end
   end
 end

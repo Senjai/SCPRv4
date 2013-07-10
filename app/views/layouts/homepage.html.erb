@@ -7,7 +7,7 @@
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
-<%= cache ["broadcastbar", @schedule_current, @schedule_current.starts_at.to_i, (@schedule_current.program if @schedule_current.respond_to?(:program))] do %>
+<%= cache ["broadcastbar", @schedule_current] do %>
 
 <% present @schedule_current, BroadcastBarPresenter do |p| %>
   <div class="broadcast-bar <%=p.headshot_class%>" id="broadcast-bar">
@@ -60,20 +60,21 @@
           </div> <!-- span -->
 <% end %> <%# presenter %>
 
+      <% if @schedule_next %>
+        <% present @schedule_next, BroadcastBarPresenter do |p| %>
+
           <div class="span12" id="bb-next-program">
             <div class="next program">
-
-        <% if next_slot = @schedule_current.next %>
-          <% present next_slot, BroadcastBarPresenter do |p| %>
-
-            <div class="program-info">
-              <a href="<%= p.public_url %>" class="show-title"><%= p.title %></a>
-              <span class="show-time"><%= p.start_time %> - <%= p.end_time %></span>
-            </div> <!-- program-info -->
-          <% end %><%# presenter %>
-        <% end %> <%# next_slot %>
+              <div class="program-info">
+                <a href="<%= p.public_url %>" class="show-title"><%= p.title %></a>
+                <span class="show-time"><%= p.start_time %> - <%= p.end_time %></span>
+              </div> <!-- program-info -->
             </div> <!-- next program -->
           </div> <!-- span -->
+
+        <% end %><%# presenter %>
+      <% end %> <%# next_slot %>
+
         </div> <!-- row-fluid -->
       </div> <!-- container-fluid -->
     </div> <!-- bb-inner-container -->

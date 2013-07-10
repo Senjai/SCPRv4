@@ -3,7 +3,7 @@ require "spec_helper"
 describe BroadcastBarPresenter do
   describe '#show_modal?' do
     it 'is false if the slot is not recurring' do
-      slot  = build :distinct_schedule_slot
+      slot  = build :schedule_occurrence
       p     = presenter(slot)
 
       p.show_modal?.should eq false
@@ -11,7 +11,7 @@ describe BroadcastBarPresenter do
 
     it 'is false if programs display_episodes is false' do
       program   = build :kpcc_program, display_episodes: false
-      slot      = build :recurring_schedule_slot, program: program
+      slot      = build :schedule_occurrence, :recurring, program: program
       p         = presenter(slot)
 
       p.show_modal?.should eq false
@@ -19,7 +19,7 @@ describe BroadcastBarPresenter do
 
     it 'is true for recurring episodic kpcc programs' do
       program   = build :kpcc_program, display_episodes: true
-      slot      = build :recurring_schedule_slot, program: program
+      slot      = build :schedule_occurrence, :recurring, program: program
       p         = presenter(slot)
 
       p.show_modal?.should eq true
@@ -28,7 +28,7 @@ describe BroadcastBarPresenter do
 
   describe '#is_for_featured_program?' do
     it 'is false if not recurring' do
-      slot = build :distinct_schedule_slot
+      slot = build :schedule_occurrence
       p    = presenter(slot)
 
       p.is_for_featured_program?.should eq false
@@ -36,7 +36,7 @@ describe BroadcastBarPresenter do
 
     it 'is false if the program is not featured' do
       program = build :kpcc_program, is_featured: false
-      slot    = build :recurring_schedule_slot, program: program
+      slot    = build :schedule_occurrence, :recurring, program: program
       p       = presenter(slot)
 
       p.is_for_featured_program?.should eq false
@@ -44,7 +44,7 @@ describe BroadcastBarPresenter do
 
     it 'is true for recurring slots for featured programs' do
       program = build :kpcc_program, is_featured: true
-      slot    = build :recurring_schedule_slot, program: program
+      slot    = build :schedule_occurrence, :recurring, program: program
       p       = presenter(slot)
 
       p.is_for_featured_program?.should eq true
@@ -53,7 +53,7 @@ describe BroadcastBarPresenter do
 
   describe '#modal_class' do
     it 'is a string if show_modal is true' do
-      slot = build :recurring_schedule_slot
+      slot = build :schedule_occurrence, :recurring
       p    = presenter(slot)
       p.stub(:show_modal?) { true }
 
@@ -61,7 +61,7 @@ describe BroadcastBarPresenter do
     end
 
     it 'is nil if not show_modal' do
-      slot = build :recurring_schedule_slot
+      slot = build :schedule_occurrence, :recurring
       p    = presenter(slot)
       p.stub(:show_modal?) { false }
 
@@ -71,7 +71,7 @@ describe BroadcastBarPresenter do
 
   describe '#toggler_id' do
     it 'is a string if show_modal is true' do
-      slot = build :recurring_schedule_slot
+      slot = build :schedule_occurrence, :recurring
       p    = presenter(slot)
       p.stub(:show_modal?) { true }
 
@@ -79,7 +79,7 @@ describe BroadcastBarPresenter do
     end
 
     it 'is nil if not show_modal' do
-      slot = build :recurring_schedule_slot
+      slot = build :schedule_occurrence, :recurring
       p    = presenter(slot)
       p.stub(:show_modal?) { false }
 
@@ -89,7 +89,7 @@ describe BroadcastBarPresenter do
 
   describe '#headshot_class' do
     it 'is a string if is_for_featured_program is true' do
-      slot = build :recurring_schedule_slot
+      slot = build :schedule_occurrence, :recurring, :with_program
       p    = presenter(slot)
       p.stub(:is_for_featured_program?) { true }
 
@@ -97,7 +97,7 @@ describe BroadcastBarPresenter do
     end
 
     it 'is nil if not is_for_featured_program' do
-      slot = build :recurring_schedule_slot
+      slot = build :schedule_occurrence, :recurring, :with_program
       p    = presenter(slot)
       p.stub(:is_for_featured_program?) { false }
 
