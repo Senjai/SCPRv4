@@ -32,7 +32,7 @@ gem "resque", "~> 1.20"
 ## Views
 gem 'kaminari', github: "amatsuda/kaminari"
 gem 'ckeditor_rails', "~> 4.0.0"
-gem 'select2-rails', '~> 3.3'
+gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
 gem 'escape_utils'
@@ -44,6 +44,7 @@ gem 'jbuilder'
 gem "diffy", "~> 2.0"
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", require: 'mp3info'
+gem "ice_cube", "~> 0.11.0"
 
 
 ## HTTP

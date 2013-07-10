@@ -74,6 +74,6 @@ Scprv4::Application.configure do
   config.node.server = "http://node.scprdev.org"
   
   config.assethost.server = "a.scpr.org"
-  config.assethost.token  = "droQQ2LcESKeGPzldQr7" 
+  config.assethost.token  = "droQQ2LcESKeGPzldQr7"
   config.assethost.prefix = "/api"
 end

@@ -23,12 +23,12 @@ namespace :scprv4 do
   end
 
   #----------
-  
+
   desc "Sync Remote Articles with the remote sources"
   task :sync_remote_articles => [:environment] do
     puts "*** [#{Time.now}] Syncing remote articles..."
-    
-    if Rails.env == "development"
+
+    if Rails.env.development?
       Job::SyncRemoteArticles.perform
       puts "Finished.\n"
     else
@@ -36,16 +36,16 @@ namespace :scprv4 do
       puts "Job was placed in queue.\n"
     end
   end
-  
+
   #----------
-  
+
   desc "Clear events cache"
   task :clear_events => [ :environment ] do 
     Rails.cache.expire_obj("events/event:new")
   end
 
   #----------
-  
+
   desc "Fire pending content alarms"
   task :fire_content_alarms => [:environment] do
     puts "*** [#{Time.now}] Firing pending content alarms..."
@@ -58,7 +58,7 @@ namespace :scprv4 do
   end
 
   #----------
-  
+
   desc "Sync all Audio types"
   task :syncaudio => [:environment] do
     puts "*** [#{Time.now}] Enqueueing audio sync tasks into Resque..."
@@ -67,10 +67,21 @@ namespace :scprv4 do
   end
 
 
+  namespace :schedule do
+    desc "Build the recurring schedule occurrences"
+    task :build => [:environment] do
+      puts "*** [#{Time.now} Building recurring schedule..."
 
+      if Rails.env.development?
+        Job::BuildRecurringSchedule.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::BuildRecurringSchedule)
+        puts "Job was placed in queue.\n"
+      end
+    end
+  end
 
-  #----------
-  
 
 
   desc "Cache everything"
@@ -82,15 +93,15 @@ namespace :scprv4 do
     Rake::Task["scprv4:cache:audiovision"].invoke
     Rake::Task["scprv4:cache:twitter"].invoke
   end
-  
+
   #----------
-  
+
   namespace :cache do
     desc "Cache Audiovision Homepage Module"
     task :audiovision => [:environment] do
       puts "*** [#{Time.now}] Caching AudioVision for homepage..."
 
-      if Rails.env == "development"
+      if Rails.env.development?
         Job::AudioVisionCache.perform
         puts "Finished.\n"
       else
@@ -100,12 +111,12 @@ namespace :scprv4 do
     end
 
     #----------
-    
+
     desc "Cache Most Viewed"
     task :most_viewed => [:environment] do
       puts "*** [#{Time.now}] Caching most viewed..."
-      
-      if Rails.env == "development"
+
+      if Rails.env.development?
         Job::MostViewed.perform
         puts "Finished.\n"
       else
@@ -115,12 +126,12 @@ namespace :scprv4 do
     end
 
     #----------
-    
+
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
       puts "*** [#{Time.now}] Caching most commented..."
 
-      if Rails.env == "development"
+      if Rails.env.development?
         Job::MostCommented.perform
         puts "Finished.\n"
       else
@@ -131,7 +142,7 @@ namespace :scprv4 do
     end
 
     #----------
-    
+
     desc "Cache KPCCForum tweets"
     task :twitter => [:environment] do
       puts "*** [#{Time.now}] Caching KPCCForum tweets...."
@@ -144,9 +155,9 @@ namespace :scprv4 do
 
       puts "Finished.\n"
     end
-    
+
     #----------
-    
+
     desc "Cache external programs"
     task :programs => [ :environment ] do
       puts "Caching remote programs..."
@@ -157,14 +168,14 @@ namespace :scprv4 do
 
       puts "Finished.\n"
     end
-    
+
     #----------
-    
+
     desc "Cache homepage sections"
     task :homepage => [ :environment ] do
       puts "*** [#{Time.now}] Caching homepage..."
 
-      if Rails.env == "development"
+      if Rails.env.development?
         Job::HomepageCache.perform
         puts "Finished.\n"
       else

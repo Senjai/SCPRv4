@@ -15,7 +15,6 @@ Outpost::Config.configure do |config|
     "Category",
     "ContentShell",
     "DataPoint",
-    "DistinctScheduleSlot",
     "Edition",
     "Event",
     "FeaturedComment",
@@ -29,8 +28,9 @@ Outpost::Config.configure do |config|
     "PijQuery",
     "Podcast",
     "PressRelease",
-    "RecurringScheduleSlot",
+    "RecurringScheduleRule",
     "RemoteArticle",
+    "ScheduleOccurrence",
     "ShowEpisode",
     "ShowSegment"
   ]

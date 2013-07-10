@@ -13,21 +13,22 @@ class OtherProgram < ActiveRecord::Base
   #-------------------
   # Scopes
   scope :active, -> { where(:air_status => ['onair','online']) }
-  
+
+
   #-------------------
   # Associations
-  has_many :recurring_schedule_slots, as: :program
-  has_many :schedules
-  
+  has_many :recurring_schedule_rules, as: :program, dependent: :destroy
+
+
   #-------------------
   # Validations
   validates :title, :air_status, presence: true
   validates :slug, uniqueness: true
-  
+
   # Temporary
   validates :podcast_url, presence: true, if: -> { self.rss_url.blank? }
   validates :rss_url, presence: true, if: -> { self.podcast_url.blank? }
-  
+
   validate :rss_or_podcast_present
   def rss_or_podcast_present
     if self.podcast_url.blank? && self.rss_url.blank?
@@ -36,12 +37,12 @@ class OtherProgram < ActiveRecord::Base
       errors.add(:rss_url, "")
     end
   end
-  
+
   #-------------------
   # Callbacks
 
   #-------------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes title, sortable: true
     indexes teaser
@@ -51,19 +52,19 @@ class OtherProgram < ActiveRecord::Base
   end
 
   #-------------------
-  
+
   class << self
     def select_collection
       OtherProgram.order("title").map { |p| [p.to_title, p.id] }
     end
   end
 
-  #-------------------  
+  #-------------------
   # lame
   def display_segments
     false
   end
-  
+
   def display_episodes
     false
   end
@@ -73,13 +74,13 @@ class OtherProgram < ActiveRecord::Base
   end
 
   #----------
-  
+
   def published?
     self.air_status != "hidden"
   end
-  
+
   #----------
-  
+
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
@@ -87,26 +88,26 @@ class OtherProgram < ActiveRecord::Base
       :trailing_slash => true
     }
   end
-  
+
   #----------
-  
+
   def cache
     if self.podcast_url.present?
       fetch_and_cache_feed(self.podcast_url, "podcast")
     end
-    
+
     if self.rss_url.present?
       fetch_and_cache_feed(self.rss_url, "rss")
     end
   end
 
   #----------
-  
+
   private
-  
+
   def fetch_and_cache_feed(url, cache_suffix)
     cacher = CacheController.new
-    
+
     Feedzirra::Feed.safe_fetch_and_parse(url) do |feed|
       cacher.cache(feed.entries.first(5), "/programs/cached/podcast_entry", "ext_program:#{self.slug}:#{cache_suffix}", local: :entries)
     end
