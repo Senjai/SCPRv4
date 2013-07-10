@@ -37,7 +37,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   validate :program_or_info_is_present
 
   before_update :detach_from_recurring_rule, if: -> {
-    self.is_recurring? && self.starts_at_changed? || self.ends_at_changed?
+    self.is_recurring? && (self.starts_at_changed? || self.ends_at_changed?)
   }
 
   define_index do
