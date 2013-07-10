@@ -24,11 +24,11 @@ describe Api::Public::V2::ProgramsController do
 
   describe "GET index" do
     it "returns all KPCC programs and Other Programs combined" do
-      kpcc_program    = create :kpcc_program
-      other_program   = create :other_program
+      kpcc_program       = create :kpcc_program
+      external_program   = create :external_program
 
       get :index, request_params
-      assigns(:programs).should eq [kpcc_program, other_program]
+      assigns(:programs).should eq [kpcc_program, external_program]
     end
   end
 end

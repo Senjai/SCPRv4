@@ -37,21 +37,21 @@ describe ProgramPresenter do
   
   describe "feed" do
     it "returns podcast cache if it's present" do
-      program = build :other_program, slug: "coolshow"
+      program = build :external_program, slug: "coolshow"
       Rails.cache.write("ext_program:coolshow:podcast", "Cool Show Podcast!")
       p = presenter(program)
       p.feed.should match "Cool Show Podcast!"
     end
     
     it "returns rss cache if it's present" do
-      program = build :other_program, slug: "coolshow"
+      program = build :external_program, slug: "coolshow"
       Rails.cache.write("ext_program:coolshow:rss", "Cool Show RSS!")
       p = presenter(program)
       p.feed.should match "Cool Show RSS!"
     end
     
     it "returns a message if no cache is availabe" do
-      program = build :other_program
+      program = build :external_program
       p = presenter(program)
       p.feed.should match "none-to-list"
     end
@@ -61,13 +61,13 @@ describe ProgramPresenter do
   
   describe "#web_url" do
     it "returns program.web_url if specified" do
-      program = build :other_program, web_url: "show.com/coolshow"
+      program = build :external_program, web_url: "show.com/coolshow"
       p = presenter(program)
       p.web_url.should eq "show.com/coolshow"
     end
     
     it "returns the KPCC fallback if not specified" do
-      program = build :other_program, web_url: ""
+      program = build :external_program, web_url: ""
       p = presenter(program)
       p.web_url.should eq CONNECT_DEFAULTS[:web]
     end

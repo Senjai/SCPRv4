@@ -1,4 +1,4 @@
-class OtherProgram < ActiveRecord::Base
+class ExternalProgram < ActiveRecord::Base
   self.table_name =  'programs_otherprogram'
   outpost_model
   has_secretary
@@ -55,7 +55,7 @@ class OtherProgram < ActiveRecord::Base
 
   class << self
     def select_collection
-      OtherProgram.order("title").map { |p| [p.to_title, p.id] }
+      ExternalProgram.order("title").map { |p| [p.to_title, p.id] }
     end
   end
 

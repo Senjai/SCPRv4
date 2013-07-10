@@ -204,7 +204,7 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
 
-    resources :other_programs do
+    resources :external_programs do
       get "search", on: :collection, as: :search
     end
 

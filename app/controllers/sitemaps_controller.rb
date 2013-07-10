@@ -63,7 +63,7 @@ class SitemapsController < ApplicationController
   def programs
     @changefreq = "daily"
     @priority   = "0.3"
-    @content    = KpccProgram.active.order(:title) + OtherProgram.active.order(:title)
+    @content    = KpccProgram.active.order(:title) + ExternalProgram.active.order(:title)
     render 'sitemap', formats: :xml
   end
   

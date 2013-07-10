@@ -83,13 +83,13 @@ describe ProgramsController do
         assigns(:kpcc_programs).should eq [active]
       end
     
-      it "assigns @other_programs to active ordered by title" do
-        active = create :other_program, air_status: "onair"
-        inactive = create :other_program, air_status: "hidden"
+      it "assigns @external_programs to active ordered by title" do
+        active = create :external_program, air_status: "onair"
+        inactive = create :external_program, air_status: "hidden"
 
         get :index
-        assigns(:other_programs).to_sql.should match /order by title/i
-        assigns(:other_programs).should eq [active]
+        assigns(:external_programs).to_sql.should match /order by title/i
+        assigns(:external_programs).should eq [active]
       end
     end
   end
@@ -124,19 +124,19 @@ describe ProgramsController do
         end
       
         it "finds an other program if requested" do
-          program = create :other_program
+          program = create :external_program
           get :show, show: program.slug
           assigns(:program).should eq program
         end
       
         it "redirects to podcast_url if other program is present and request format is xml" do
-          program = create :other_program
+          program = create :external_program
           get :show, show: program.slug, format: :xml
           response.should redirect_to program.podcast_url
         end
       
         it "redirects to rss_url if no podcast_url present" do
-          program = create :other_program, podcast_url: ""
+          program = create :external_program, podcast_url: ""
           get :show, show: program.slug, format: :xml
           response.should redirect_to program.rss_url
         end

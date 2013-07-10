@@ -8,7 +8,7 @@ class ProgramsController < ApplicationController
 
   def index
     @kpcc_programs = KpccProgram.active.order("title")
-    @other_programs = OtherProgram.active.order("title")
+    @external_programs = ExternalProgram.active.order("title")
     render layout: "application"
   end
 
@@ -100,7 +100,7 @@ class ProgramsController < ApplicationController
   # Try various ways to fetch the program the person requested
   # If nothing is found, 404
   def get_any_program
-    @program = KpccProgram.find_by_slug(params[:show]) || OtherProgram.find_by_slug(params[:show])
+    @program = KpccProgram.find_by_slug(params[:show]) || ExternalProgram.find_by_slug(params[:show])
 
     if !@program
       render_error(404, ActionController::RoutingError.new("Not Found")) and return false

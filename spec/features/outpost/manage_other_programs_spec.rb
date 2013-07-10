@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe OtherProgram do
-  let(:valid_record)   { build :other_program }
-  let(:updated_record) { build :other_program }
-  let(:invalid_record) { build :other_program, title: "" }
+describe ExternalProgram do
+  let(:valid_record)   { build :external_program }
+  let(:updated_record) { build :external_program }
+  let(:invalid_record) { build :external_program, title: "" }
   
   it_behaves_like "managed resource"
   it_behaves_like "save options"

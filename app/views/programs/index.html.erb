@@ -15,5 +15,5 @@
 
 <div class="row-fluid">
   <%= render("programs_list", programs: @kpcc_programs, title: "KPCC Programs") if @kpcc_programs.present? %>
-  <%= render("programs_list", programs: @other_programs, title: "Other Programs") if @other_programs.present? %>
+  <%= render("programs_list", programs: @external_programs, title: "Other Programs") if @external_programs.present? %>
 </div>

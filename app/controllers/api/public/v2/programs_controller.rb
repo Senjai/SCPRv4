@@ -4,7 +4,7 @@ module Api::Public::V2
     before_filter :sanitize_slug, only: [:show]
 
     def index
-      @programs = KpccProgram.all + OtherProgram.all
+      @programs = KpccProgram.all + ExternalProgram.all
 
       respond_with @programs
     end
@@ -12,7 +12,7 @@ module Api::Public::V2
 
     def show
       @program = KpccProgram.where(slug: @slug).first ||
-        OtherProgram.where(slug: @slug).first
+        ExternalProgram.where(slug: @slug).first
 
       if !@program
         render_not_found and return false

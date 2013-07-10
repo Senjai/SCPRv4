@@ -48,9 +48,9 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   class << self
     def program_select_collection
-      kpcc_programs  = KpccProgram.all.map { |p| [p.title, p.obj_key] }
-      other_programs = OtherProgram.all.map { |p| [p.title, p.obj_key] }
-      kpcc_programs + other_programs
+      kpcc_programs     = KpccProgram.all.map { |p| [p.title, p.obj_key] }
+      external_programs = ExternalProgram.all.map { |p| [p.title, p.obj_key] }
+      kpcc_programs + external_programs
     end
 
 

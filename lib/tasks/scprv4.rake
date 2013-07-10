@@ -163,7 +163,7 @@ namespace :scprv4 do
       puts "Caching remote programs..."
 
       NewRelic.with_manual_agent do
-        OtherProgram.active.each { |p| p.cache }
+        ExternalProgram.active.each { |p| p.cache }
       end
 
       puts "Finished.\n"

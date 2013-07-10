@@ -181,13 +181,13 @@ table {
     }
 
     ///////////////////
-    // OtherProgram
-    &.list-other_programs {
-        .column-title { // other_program.title
+    // ExternalProgram
+    &.list-external_programs {
+        .column-title { // external_program.title
             width: 250px;
         }
 
-        .column-air_status { // other_program.air_status
+        .column-air_status { // external_program.air_status
             width: 150px;
         }
     }
