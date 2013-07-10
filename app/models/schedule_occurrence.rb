@@ -36,6 +36,9 @@ class ScheduleOccurrence < ActiveRecord::Base
   belongs_to :recurring_schedule_rule
   validate :program_or_info_is_present
 
+  before_update :detach_from_recurring_rule, if: -> {
+    self.is_recurring? && self.starts_at_changed? || self.ends_at_changed?
+  }
 
   define_index do
     indexes event_title
@@ -130,6 +133,10 @@ class ScheduleOccurrence < ActiveRecord::Base
 
 
   private
+
+  def detach_from_recurring_rule
+    self.recurring_schedule_rule = nil
+  end
 
   def program_or_info_is_present
     if self.program.blank? && (self.info_url.blank? || self.event_title.blank?)
