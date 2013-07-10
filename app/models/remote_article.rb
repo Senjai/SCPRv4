@@ -69,6 +69,11 @@ class RemoteArticle < ActiveRecord::Base
 
   #---------------
 
+  def import(options={})
+    self.importer_type.constantize.import(self, options)
+  end
+
+
   def as_json(*args)
     super.merge({
       "id"         => self.obj_key,
