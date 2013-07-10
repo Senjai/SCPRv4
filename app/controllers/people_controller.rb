@@ -13,8 +13,8 @@ class PeopleController < ApplicationController
   end
 
   #-----------------------
-  
-  protected
+
+  private
 
   def redirect_to_staff_index
     redirect_to staff_index_path, alert: "That staff bio no longer exists." and return false

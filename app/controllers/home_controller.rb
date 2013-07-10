@@ -46,7 +46,7 @@ class HomeController < ApplicationController
   end
 
 
-  protected
+  private
 
   def generate_homepage
     Job::HomepageCache.perform

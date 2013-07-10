@@ -59,8 +59,8 @@ class BlogsController < ApplicationController
   end
   
   #----------
-  
-  protected
+
+  private
 
   def load_blog
     @blog = Blog.includes(:authors).find_by_slug!(params[:blog])

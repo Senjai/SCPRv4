@@ -19,7 +19,7 @@ class ContentEmailController < ApplicationController
 
   #---------------------
 
-  protected
+  private
 
   def get_content
     @content = Outpost.obj_by_key!(params[:obj_key])

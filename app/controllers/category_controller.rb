@@ -23,9 +23,9 @@ class CategoryController < ApplicationController
 
 
   #------------------
-  
-  protected
-  
+
+  private
+
   #------------------
   # Respond according to format requested
   def respond_by_format

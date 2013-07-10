@@ -50,7 +50,7 @@ class Outpost::VersionsController < Outpost::BaseController
   
   #--------------
 
-  protected
+  private
 
   def set_order_and_sort_mode
     @order     = "created_at"

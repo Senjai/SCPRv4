@@ -23,8 +23,8 @@ class PodcastsController < ApplicationController
   end
 
   #----------
-  
-  protected
+
+  private
 
   def set_headers
     response.headers["Content-Type"] = 'text/xml'
