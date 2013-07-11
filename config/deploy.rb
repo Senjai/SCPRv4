@@ -35,7 +35,6 @@ set :ts_index,      false # Staging only - Whether or not to run the sphinx inde
 set :syncdb,        false # Staging only - Whether or not to run a dbsync to mercer_staging
 set :restart_delay, 40
 
-set :deploy_lock, false
 
 # --------------
 # Universal Callbacks
@@ -76,17 +75,21 @@ end
 
 # --------------
 # Sphinx
-namespace :remote_ts do
-  task :start, roles: :sphinx do
-    thinking_sphinx.configure
+namespace :ts do
+  task :restart, roles: :sphinx do
+    thinking_sphinx.stop
     thinking_sphinx.start
   end
-  
-  task :stop, roles: :sphinx do
-    thinking_sphinx.stop
+
+  task :config, roles: :sphinx do
+    thinking_sphinx.config
   end
-  
-  task :index, roles: :sphinx do 
+
+  task :index, roles: :sphinx do
     thinking_sphinx.index
+  end
+
+  task :rebuild, roles: :sphinx do
+    thinking_sphinx.rebuild
   end
 end
