@@ -45,6 +45,7 @@ class ScheduleOccurrence < ActiveRecord::Base
     indexes program.title
     indexes info_url
 
+    has updated_at
     has starts_at
   end
 

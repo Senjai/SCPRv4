@@ -238,7 +238,10 @@ table {
     // ScheduleOccurrences
     &.list-schedule_occurrences {
         .column-title { // schedule_occurrences.title
-            width: 500px;
+            width: 350px;
+        }
+        .column-is_recurring {
+            width: 100px;
         }
     }
 
