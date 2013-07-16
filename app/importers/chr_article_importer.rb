@@ -11,7 +11,7 @@ module ChrArticleImporter
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
     def sync
-      # We can't use NPR::Story since it wants to use your 
+      # We can't use NPR::Story since it wants to use your
       # configured NPR API URL. Instead, we'll go one level
       # below that and use NPR::API::Client directly, and then copy
       # the behavior of NPR::Story.find
@@ -44,13 +44,13 @@ module ChrArticleImporter
 
         cached_article = self.new(
           :article_id   => npr_story.id,
-          :headline     => npr_story.title, 
+          :headline     => npr_story.title,
           :teaser       => npr_story.teaser,
           :published_at => npr_story.pubDate,
           :url          => npr_story.link_for("html"),
           :is_new       => true
         )
-        
+
         if cached_article.save
           added.push cached_article
           log "Saved CHR article ##{npr_story.id} as ChrArticle ##{cached_article.id}"
@@ -58,7 +58,7 @@ module ChrArticleImporter
           log "Couldn't save CHR Story ##{npr_story.id}"
         end
       end # each
-      
+
       added
     end
 
@@ -84,16 +84,16 @@ module ChrArticleImporter
       npr_story = response.list.stories.first
       return false if !npr_story
 
-      # Make sure some text gets imported... 
+      # Make sure some text gets imported...
       # if not then this whole process is useless.
       #
-      # 1. If the +fullText+ exists, use it 
+      # 1. If the +fullText+ exists, use it
       #
       # 2. If the +fullText+ is blank, then try +textWithHtml+.
-      # 
+      #
       # 3. If still nothing, then try just +text+.
-      # 
-      # 4. Failing all of that, we'll still import the story, 
+      #
+      # 4. Failing all of that, we'll still import the story,
       # but the body will just be blank.
       #
       text = begin
@@ -103,7 +103,7 @@ module ChrArticleImporter
           npr_story.text.to_html
         end
       end
-      
+
       #-------------------
       # Build the NewsStory from the API response
       article = import_to_class.constantize.new(
@@ -113,37 +113,37 @@ module ChrArticleImporter
         :short_headline => npr_story.shortTitle.present? ? npr_story.shortTitle : npr_story.title,
         :body           => text
       )
-      
+
       if article.is_a? NewsStory
         article.news_agency   = "CHR"
         article.source        = "chr"
       end
-      
+
       #-------------------
       # Add in Bylines
       npr_story.bylines.each do |npr_byline|
         name = npr_byline.name.to_s
-        
+
         if name.present?
           byline = ContentByline.new(name: name)
           article.bylines.push byline
         end
       end
-      
+
 
       #-------------------
       # Add a related link pointing to this story at NPR
       if link = npr_story.link_for('html')
         related_link = RelatedLink.new(
-          :link_type => "website", 
+          :link_type => "website",
           :title     => "View this story at Center for Health Reporting",
           :url      => link
         )
-        
+
         article.related_links.push related_link
       end
-      
-      
+
+
       #-------------------
       # Add in the primary asset if it exists
       if image = npr_story.primary_image
@@ -161,12 +161,12 @@ module ChrArticleImporter
             :asset_id   => asset.id,
             :caption    => image.caption
           )
-          
+
           article.assets << content_asset
         end
       end
-      
-      
+
+
       #-------------------
       # Save the news story (including all associations),
       # set the RemoteArticle to `:is_new => false`,
