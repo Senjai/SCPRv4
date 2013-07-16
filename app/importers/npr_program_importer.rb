@@ -34,14 +34,12 @@ module NprProgramImporter
         # program with `date=current` will only return COMPLETED episodes.
         return false if ExternalEpisode.exists?(
           :air_date               => show.showDate,
-          :source                 => SOURCE,
           :external_program_id    => external_program.id
         )
 
         episode = ExternalEpisode.new(
           :title              => show.showDate.strftime("%A, %B %e, %Y"),
           :air_date           => show.showDate,
-          :source             => SOURCE,
           :external_program   => external_program
         )
       end
