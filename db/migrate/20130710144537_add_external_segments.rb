@@ -4,12 +4,14 @@ class AddExternalSegments < ActiveRecord::Migration
       t.string :title
       t.text :teaser
       t.integer :external_program_id
-      t.integer :external_episode_id
+      t.string :source
+      t.integer :external_id
+      t.string :external_url
       t.datetime :published_at
       t.timestamps
 
+      t.index [:source, :external_id]
       t.index :external_program_id
-      t.index :external_episode_id
       t.index :published_at
     end
   end

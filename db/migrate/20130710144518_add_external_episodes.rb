@@ -2,13 +2,14 @@ class AddExternalEpisodes < ActiveRecord::Migration
   def change
     create_table :external_episodes do |t|
       t.string :title
-      t.text :teaser
       t.integer :external_program_id
-      t.datetime :published_at
+      t.string :source
+      t.datetime :air_date
       t.timestamps
 
+      t.index :source
       t.index :external_program_id
-      t.index :published_at
+      t.index :air_date
     end
   end
 end
