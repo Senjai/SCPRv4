@@ -9,10 +9,10 @@ class AddExternalSegments < ActiveRecord::Migration
       t.string :external_url
       t.datetime :published_at
       t.timestamps
-
-      t.index [:source, :external_id]
-      t.index :external_program_id
-      t.index :published_at
     end
+
+    add_index :external_segments, [:source, :external_id]
+    add_index :external_segments, :external_program_id
+    add_index :external_segments, :published_at
   end
 end

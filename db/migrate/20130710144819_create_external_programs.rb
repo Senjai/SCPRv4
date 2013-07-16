@@ -21,11 +21,12 @@ class CreateExternalPrograms < ActiveRecord::Migration
       t.text :sidebar
 
       t.timestamps
-
-      t.index :slug
-      t.index :air_status
-      t.index [:source, :external_id]
-      t.index :is_episodic
     end
+
+    add_index :external_programs, :title # for sorting
+    add_index :external_programs, :slug
+    add_index :external_programs, :air_status
+    add_index :external_programs, [:source, :external_id]
+    add_index :external_programs, :is_episodic
   end
 end
