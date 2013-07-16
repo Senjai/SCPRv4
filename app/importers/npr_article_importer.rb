@@ -74,24 +74,12 @@ class NprArticleImporter < Importer
 
     #-----------------------------
 
-    def import(remote_article options={})
+    def import(remote_article, options={})
       import_to_class = options[:import_to_class] || "NewsStory"
 
       npr_story = NPR::Story.find_by_id(remote_article.article_id)
       return false if !npr_story
 
-      # Make sure some text gets imported...
-      # if not then this whole process is useless.
-      #
-      # 1. If the +fullText+ exists, use it
-      #
-      # 2. If the +fullText+ is blank, then try +textWithHtml+.
-      #
-      # 3. If still nothing, then try just +text+.
-      #
-      # 4. Failing all of that, we'll still import the story,
-      # but the body will just be blank.
-      #
       text = begin
         if npr_story.textWithHtml.present?
           npr_story.textWithHtml.to_html
@@ -177,5 +165,8 @@ class NprArticleImporter < Importer
     end
 
     add_transaction_tracer :import, category: :task
+
+    def build_npr_story(npr_story)
+    end
   end
 end
