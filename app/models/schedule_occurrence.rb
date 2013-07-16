@@ -4,6 +4,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   has_secretary
 
   include Concern::Associations::PolymorphicProgramAssociation
+  include Concern::Callbacks::TouchCallback
 
 ############################
 
