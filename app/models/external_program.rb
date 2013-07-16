@@ -9,6 +9,13 @@ class ExternalProgram < ActiveRecord::Base
 
   ROUTE_KEY = "program"
 
+  # "source" => "Importer module name"
+  IMPORTERS = [
+    "npr-api" => "NprProgramImporter",
+    "rss"     => "RssImporter"
+  ]
+
+
   #-------------------
   # Scopes
   scope :active, -> { where(air_status: ['onair', 'online']) }
