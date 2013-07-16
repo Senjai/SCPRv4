@@ -13,7 +13,7 @@ module RssProgramImporter
       end
     end
 
-    add_transaction_tracer :cache, category: :task
+    add_transaction_tracer :sync, category: :task
 
 
     private

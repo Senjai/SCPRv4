@@ -58,12 +58,14 @@ module NprProgramImporter
             :title          => segment.title,
             :teaser         => segment.teaser,
             :published_at   => segment.pubDate,
-            :external_url   => segment.link_for("html")
+            :external_url   => segment.link_for("html"),
             :external_id    => segment.id,
             :source         => SOURCE
           )
         end
       end
     end
+
+    add_transaction_tracer :sync, category: :task
   end
 end
