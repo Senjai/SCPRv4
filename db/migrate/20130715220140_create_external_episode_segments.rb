@@ -8,6 +8,6 @@ class CreateExternalEpisodeSegments < ActiveRecord::Migration
     end
 
     add_index :external_episode_segments, :external_segment_id
-    add_index :external_episode_segments, [:external_episode_id, :position]
+    add_index :external_episode_segments, [:external_episode_id, :position], name: "external_episode_segments_episode_id_position"
   end
 end

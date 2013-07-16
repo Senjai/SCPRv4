@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130708001126) do
+ActiveRecord::Schema.define(:version => 20130716222229) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -299,6 +299,70 @@ ActiveRecord::Schema.define(:version => 20130708001126) do
   add_index "events", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
   add_index "events", ["status"], :name => "index_events_on_status"
 
+  create_table "external_episode_segments", :force => true do |t|
+    t.integer  "external_episode_id"
+    t.integer  "external_segment_id"
+    t.integer  "position"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "external_episode_segments", ["external_episode_id", "position"], :name => "external_episode_segments_episode_id_position"
+  add_index "external_episode_segments", ["external_segment_id"], :name => "index_external_episode_segments_on_external_segment_id"
+
+  create_table "external_episodes", :force => true do |t|
+    t.string   "title"
+    t.integer  "external_program_id"
+    t.datetime "air_date"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "external_episodes", ["air_date"], :name => "index_external_episodes_on_air_date"
+  add_index "external_episodes", ["external_program_id"], :name => "index_external_episodes_on_external_program_id"
+
+  create_table "external_programs", :force => true do |t|
+    t.string   "slug"
+    t.string   "title"
+    t.text     "description"
+    t.string   "host"
+    t.string   "organization"
+    t.string   "airtime"
+    t.string   "air_status"
+    t.string   "web_url"
+    t.string   "podcast_url"
+    t.string   "rss_url"
+    t.string   "twitter_handle"
+    t.string   "source"
+    t.integer  "external_id"
+    t.boolean  "is_episodic"
+    t.text     "sidebar"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "external_programs", ["air_status"], :name => "index_external_programs_on_air_status"
+  add_index "external_programs", ["is_episodic"], :name => "index_external_programs_on_is_episodic"
+  add_index "external_programs", ["slug"], :name => "index_external_programs_on_slug"
+  add_index "external_programs", ["source", "external_id"], :name => "index_external_programs_on_source_and_external_id"
+  add_index "external_programs", ["title"], :name => "index_external_programs_on_title"
+
+  create_table "external_segments", :force => true do |t|
+    t.string   "title"
+    t.text     "teaser"
+    t.integer  "external_program_id"
+    t.string   "source"
+    t.string   "external_id"
+    t.string   "public_url"
+    t.datetime "published_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "external_segments", ["external_program_id"], :name => "index_external_segments_on_external_program_id"
+  add_index "external_segments", ["published_at"], :name => "index_external_segments_on_published_at"
+  add_index "external_segments", ["source", "external_id"], :name => "index_external_segments_on_source_and_external_id"
+
   create_table "flatpages_flatpage", :force => true do |t|
     t.string   "url",          :limit => 100,                           :null => false
     t.string   "title",        :limit => 200,                           :null => false
@@ -580,15 +644,17 @@ ActiveRecord::Schema.define(:version => 20130708001126) do
 
   create_table "remote_articles", :force => true do |t|
     t.string   "headline"
-    t.text     "teaser",       :limit => 2147483647
+    t.text     "teaser",        :limit => 2147483647
     t.datetime "published_at"
-    t.string   "url",          :limit => 200
+    t.string   "url",           :limit => 200
     t.string   "article_id"
-    t.boolean  "is_new",                             :default => true, :null => false
-    t.string   "type"
+    t.boolean  "is_new",                              :default => true, :null => false
+    t.string   "importer_type"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
   end
 
-  add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
+  add_index "remote_articles", ["importer_type"], :name => "index_remote_articles_on_type"
 
   create_table "schedule_occurrences", :force => true do |t|
     t.string   "event_title"

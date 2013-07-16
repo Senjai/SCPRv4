@@ -5,8 +5,8 @@ class AddExternalSegments < ActiveRecord::Migration
       t.text :teaser
       t.integer :external_program_id
       t.string :source
-      t.integer :external_id
-      t.string :external_url
+      t.string :external_id
+      t.string :public_url
       t.datetime :published_at
       t.timestamps
     end

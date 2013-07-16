@@ -11,7 +11,7 @@ class CreateExternalPrograms < ActiveRecord::Migration
 
       t.string :web_url
       t.string :podcast_url
-      t.string :feed_url
+      t.string :rss_url
 
       t.string :twitter_handle
       t.string :source
