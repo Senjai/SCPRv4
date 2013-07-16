@@ -54,20 +54,6 @@ class ExternalProgram < ActiveRecord::Base
     end
   end
 
-  #-------------------
-  # lame
-  def display_segments
-    false
-  end
-
-  def display_episodes
-    false
-  end
-
-  def is_featured?
-    false
-  end
-
   #----------
 
   def published?
