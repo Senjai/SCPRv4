@@ -11,6 +11,7 @@ module NprProgramImporter
       # episode.
       # TODO: If there are more than 20 segments to an episode, need
       # to recognize that and do another query to fetch the other ones.
+      # We can do this with pagination, using the startNum parameter.
       segments = Npr::Story.where(
         :id   => external_program.remote_id,
         :date => "current" 
@@ -31,12 +32,14 @@ module NprProgramImporter
         # program with `date=current` will only return COMPLETED episodes.
         return false if ExternalEpisode.exists?(
           :air_date               => show.showDate,
+          :source                 => SOURCE,
           :external_program_id    => external_program.id
         )
 
         episode = ExternalEpisode.new(
           :title              => show.showDate.strftime("%A, %B %e, %Y"),
           :air_date           => show.showDate,
+          :source             => SOURCE,
           :external_program   => external_program
         )
       end
@@ -50,12 +53,12 @@ module NprProgramImporter
         )
 
           ExternalSegment.create(
-            :title => segment.title,
-            :teaser => segment.teaser,
-            :published_at => segment.pubDate,
-            :external_url => segment.link_for("html")
-            :external_id => segment.id,
-            :source      => SOURCE
+            :title          => segment.title,
+            :teaser         => segment.teaser,
+            :published_at   => segment.pubDate,
+            :external_url   => segment.link_for("html")
+            :external_id    => segment.id,
+            :source         => SOURCE
           )
         end
       end
