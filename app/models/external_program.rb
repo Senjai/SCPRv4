@@ -34,10 +34,9 @@ class ExternalProgram < ActiveRecord::Base
   # Sphinx
   define_index do
     indexes title, sortable: true
-    indexes teaser
     indexes description
     indexes host
-    indexes produced_by
+    indexes organization
   end
 
   #-------------------
