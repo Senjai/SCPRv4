@@ -26,18 +26,6 @@ class ExternalProgram < ActiveRecord::Base
   validates :title, :air_status, presence: true
   validates :slug, uniqueness: true
 
-  # Temporary
-  validates :podcast_url, presence: true, if: -> { self.rss_url.blank? }
-  validates :rss_url, presence: true, if: -> { self.podcast_url.blank? }
-
-  validate :rss_or_podcast_present
-  def rss_or_podcast_present
-    if self.podcast_url.blank? && self.rss_url.blank?
-      errors.add(:base, "Must specify either a Podcast url or an RSS url")
-      errors.add(:podcast_url, "")
-      errors.add(:rss_url, "")
-    end
-  end
 
   #-------------------
   # Callbacks
