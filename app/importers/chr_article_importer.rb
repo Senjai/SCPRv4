@@ -1,4 +1,4 @@
-class ChrArticleImporter < Importer
+module ChrArticleImporter
   ORGANIZATION      = "Center for Health Reporting"
 
   API_ROOT      = "https://www.publish2.com/organizations/2198"
@@ -8,6 +8,8 @@ class ChrArticleImporter < Importer
   UNWANTED_ELEMENTS     = []
 
   class << self
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
     def sync
       # We can't use NPR::Story since it wants to use your 
       # configured NPR API URL. Instead, we'll go one level

@@ -1,5 +1,8 @@
-class RssProgramImporter < Importer
+module RssProgramImporter
+
   class << self
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
     def sync(external_program)
       if external_program.podcast_url.present?
         import_entries(external_program.podcast_url)

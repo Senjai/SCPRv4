@@ -1,4 +1,4 @@
-class NprArticleImporter < Importer
+module NprArticleImporter
   ORGANIZATION = "NPR"
 
   # An array of elements in an NPR::Story's
@@ -30,6 +30,8 @@ class NprArticleImporter < Importer
 
 
   class << self
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
     def sync
       # The "id" parameter in this case is actually referencing a list.
       # Stories from the last hour are returned... be sure to run this script

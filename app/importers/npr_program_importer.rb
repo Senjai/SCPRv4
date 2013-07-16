@@ -5,6 +5,8 @@ module NprProgramImporter
 
 
   class << self
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
     def sync(external_program)
       # `date=current` returns the program's latest episode's segments.
       # Set limit to 20 to return as many segments as possible for the
