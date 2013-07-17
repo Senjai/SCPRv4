@@ -58,8 +58,7 @@ module NprProgramImporter
             :published_at   => segment.pubDate,
             :public_url     => segment.link_for("html"),
             :external_id    => segment.id,
-            :source         => SOURCE,
-
+            :source         => SOURCE
           )
 
           if external_episode
@@ -67,7 +66,11 @@ module NprProgramImporter
               :external_segment => external_segment,
               :position         => show.segNum
             )
+          else
+            external_segment.external_program = external_program
           end
+
+          external_segment.save!
         end
 
         if external_episode

@@ -21,8 +21,17 @@ describe NprProgramImporter do
       external_program.external_episodes.first.air_date.should eq Time.new(2013, 7, 15, 12)
     end
 
-    it "does not create an episode if the program is not episodic" do
+    it "sets the segment's program for non-episodic programs" do
       
     end
+
+    it "doesn't set the program when "
+    it "does not create an episode if the program is not episodic" do
+      external_program = create :external_program, :from_npr, is_episodic: false
+      NprProgramImporter.sync(external_program)
+      external_program.external_episodes(true).should be_empty
+    end
+
+
   end
 end
