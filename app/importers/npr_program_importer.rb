@@ -25,6 +25,7 @@ module NprProgramImporter
       show = segments.first.shows.first
       external_episode = nil
 
+
       # If there is no show, or the program isn't episodic, then we can't
       # or shouldn't build an episode.
       if show && external_program.is_episodic?
@@ -32,10 +33,7 @@ module NprProgramImporter
         # imported, then it's safe to assume that we already imported its
         # segments as well. The NPR API specifies that requesting a 
         # program with `date=current` will only return COMPLETED episodes.
-        return false if ExternalEpisode.exists?(
-          :air_date               => show.showDate,
-          :external_program_id    => external_program.id
-        )
+        return false if episode_exists?(show.showDate, external_program.id)
 
         external_episode = ExternalEpisode.new(
           :title              => show.showDate.strftime("%A, %B %e, %Y"),
@@ -44,14 +42,11 @@ module NprProgramImporter
         )
       end
 
+
       segments.each do |segment|
         # If the external ID and the external program ID are the same,
         # then this is the same segment, and we can ignore it.
-        if !ExternalSegment.exists?(
-          :external_id    => segment.id,
-          :source         => SOURCE
-        )
-
+        if !segment_exists?(segment.id)
           external_segment = ExternalSegment.new(
             :title          => segment.title,
             :teaser         => segment.teaser,
@@ -80,5 +75,22 @@ module NprProgramImporter
     end
 
     add_transaction_tracer :sync, category: :task
+
+
+    private
+
+    def episode_exists?(date, program_id)
+      ExternalEpisode.exists?(
+        :air_date               => show.showDate,
+        :external_program_id    => external_program.id
+      )
+    end
+
+    def segment_exists?(segment_id)
+      ExternalSegment.exists?(
+        :external_id => id,
+        :source      => SOURCE
+      )
+    end
   end
 end
