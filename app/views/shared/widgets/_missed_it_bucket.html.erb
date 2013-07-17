@@ -1,24 +1,24 @@
-<% bucket = object.missed_it_bucket %>
-
 <% if bucket.present? %>
+<%= content_cache(bucket) do %>
+  <% register_content bucket %>
+
   <nav class="recent-posts widget">
     <h6>In Case You Missed It</h6>
-    <%= content_cache(bucket.obj_key) do %>
-      <% register_content bucket %>
-      <% bucket.content.includes(:content).limit(5).map(&:content).each do |content| %>
-        <% register_content content %>
-    
-        <div class="row-fluid">
-          <div class="span6">
-            <%= render_asset content, 'thumbnail', true %>
-          </div>
-          <div class="span18">
-            <%= link_to content.short_headline, content.public_path %><br />
-            <%= smart_date_js content.published_at %>
-          </div>
-        </div> <!-- row-fluid -->
-      
-      <% end %>
-    <% end %>
+
+  <% bucket.articles(5).each do |article| %>
+    <% register_content article.original_object %>
+    <div class="row-fluid">
+      <div class="span6">
+        <%= render_asset article, 'thumbnail', true %>
+      </div>
+      <div class="span18">
+        <%= link_to article.short_title, article.public_url %><br />
+        <%= smart_date_js article.public_datetime %>
+      </div>
+    </div> <!-- row-fluid -->
+  <% end %> <%# articles %>
+
   </nav>
-<% end %>
+
+<% end %> <%# content cache %>
+<% end %> <%# bucket? %>

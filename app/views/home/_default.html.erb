@@ -1,18 +1,16 @@
 <div class="homepage-lead default">
   <div class="row-fluid">
-    <%= content_cache("homepage-lead-stories") do %>
-      <% register_content(@homepage) %>
-      <div class="span15">
-        <%= render_content @homepage.content[0], "lead5" if @homepage %>
+    <div class="span15">
+      <%= render_content homepage.articles[0], "lead5" %>
+    </div>
+    <div class="span9">
+      <div class="offleads">
+        <%= render_content homepage.articles[1..-1], "offlead" %>
       </div>
-      <div class="span9">
-        <div class="offleads">
-          <%= render_content @homepage.content[1..-1], "offlead" if @homepage %>
-        </div>
-      </div>
-    <% end %> 
+    </div>
   </div>
 </div> <!-- homepage default -->
+
 
 <% content_for :conversation_slot do %>
   <% if @featured_comment %>

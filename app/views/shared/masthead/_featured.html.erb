@@ -1,26 +1,29 @@
 <div class="featured">
-  <% content.each do |c| %>
-    <% register_content c %>
-    <div class="row-fluid">
-      <div class="span6">
-        <%= render_asset c, 'thumbnail', true %>
-      </div>
-      
-      <div class="span18">
-        <h4><%= link_to c.short_headline, c.public_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'News Story', 'ga-label' => 'Content'} %></h4>
-        <div class="cbase">
 
-          <% if c.category.present? %>
-            <span class="blog-title"><%= link_to c.category.title, c.category.public_path %></span>
-          <% end %>
-          
-          <%= smart_date_js c.published_at, "data-window" => "8h", "data-relative" => "2h" %>
-          
-          <% if c.is_a? ContentShell %>
-            <span class="shell-link">| <%= c.site %></span>
-          <% end %>
-        </div>
-      </div> <!-- span -->
-    </div> <!-- row fluid -->
-  <% end %>
+<% articles.each do |article| %>
+  <% register_content article.original_object %>
+  <div class="row-fluid">
+    <div class="span6">
+      <%= render_asset article, 'thumbnail', true %>
+    </div>
+    
+    <div class="span18">
+      <h4><%= link_to article.short_title, article.public_url, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'News Story', 'ga-label' => 'Content'} %></h4>
+      <div class="cbase">
+
+      <% if article.category.present? %>
+        <span class="blog-title"><%= link_to article.category.title, article.category.public_path %></span>
+      <% end %>
+        
+        <%= smart_date_js article.public_datetime, "data-window" => "8h", "data-relative" => "2h" %>
+        
+      <% if article.original_object.is_a?(ContentShell) %>
+        <span class="shell-link">| <%= article.original_object.site %></span>
+      <% end %>
+
+      </div>
+    </div> <!-- span -->
+  </div> <!-- row fluid -->
+<% end %>
+
 </div> <!-- featured -->

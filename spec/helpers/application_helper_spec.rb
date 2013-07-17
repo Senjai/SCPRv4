@@ -13,12 +13,12 @@ describe ApplicationHelper do
       not_news.each { |c| c.category = category_not_news; c.save! }
     end
     
-    describe "#get_latest_news" do
+    describe "#latest_news" do
       sphinx_spec(num: 0)
       
       it "only gets objects where category is news" do
         ts_retry(2) do
-          news = helper.get_latest_news.to_a # to_a otherwise == comparison fails
+          news = helper.latest_news.to_a # to_a otherwise == comparison fails
           news.should_not be_blank
           news.select { |c| c.category.is_news == false }.should eq []
           news.select { |c| c.category.is_news == true }.should eq news
@@ -28,16 +28,16 @@ describe ApplicationHelper do
   
     #------------------------
   
-    describe "#get_latest_arts" do
+    describe "#latest_arts" do
       sphinx_spec(num: 0)
       
       it "only gets object where category is not news" do
         ts_retry(2) do
-          arts = helper.get_latest_arts.to_a
+          arts = helper.latest_arts.to_a
           arts.should_not be_blank
           arts.select { |c| c.category.is_news == true }.should eq []
           arts.select { |c| c.category.is_news == false }.should eq arts
-        end        
+        end
       end
     end
   end
@@ -57,11 +57,7 @@ describe ApplicationHelper do
       view.stub(:render) { "asset rendered" }
       helper.render_asset(content, 'thumbnail', true).should match "asset rendered"
     end
-    
-    it "should return a blank string if object does not have assets method" do
-      helper.render_asset("string", 'thumbnail').should eq ''
-    end
-    
+
     it "should return a blank string if object does not have assets and no fallback is requested" do
       content = create :content_shell
       helper.render_asset(content, 'thumbnail', false).should eq ''
@@ -221,7 +217,7 @@ describe ApplicationHelper do
     
     describe "content_widget" do
       it "looks in /shared/cwidgets if just the name of the partial is given" do
-        content_widget("social_tools", object).should match /Share this\:/
+        helper.content_widget("social_tools", object).should match /Share this\:/
       end
     end
     
@@ -238,10 +234,6 @@ describe ApplicationHelper do
         comment_count.should match /comment_link/
         comment_count.should match /social_disq/
         comment_count.should match /other/
-      end
-        
-      it "doesn't render anything if content isn't present" do
-        comment_count_for(nil).should be_nil
       end
       
       it "doesn't render anything if it doesn't respond to disqus_identifier" do
@@ -260,10 +252,6 @@ describe ApplicationHelper do
       
       it "has a link to the comments" do
         comment_widget_for(object).should match object.public_path(anchor: "comments")
-      end
-      
-      it "doesn't render anything if object is not present" do
-        comment_widget_for(nil).should be_nil
       end
       
       it "doesn't render anything if it doesn't respond to disqus_identifier" do
@@ -312,6 +300,29 @@ describe ApplicationHelper do
       it "passes along the cssClass" do
         comments_for(object, cssClass: "special_class").should match "special_class"
       end
+    end
+  end
+
+  describe '#pij_source' do
+    it 'renders the notice if is_from_pij? is true' do
+      Object.any_instance.stub(:is_from_pij?) { true }
+      helper.pij_source(Object.new).should match /Become a source/
+    end
+
+    it 'can have a custom message' do
+      Object.any_instance.stub(:is_from_pij?) { true }
+      helper.pij_source(Object.new, message: "Okedoke").should match /Okedoke/
+    end
+
+    it 'is nil if is_from_pij? is false' do
+      Object.any_instance.stub(:is_from_pij?) { false }
+      helper.pij_source(Object.new).should eq nil
+    end
+  end
+
+  describe '#random_headshot' do
+    it 'returns an img tag' do
+      helper.random_headshot.should match /<img /
     end
   end
 end

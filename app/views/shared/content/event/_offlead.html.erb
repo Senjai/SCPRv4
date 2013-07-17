@@ -1,0 +1,10 @@
+<div class="span8">
+  <div class="cbase offlead clearfix">
+    <h3 class="story-headline"><%= link_to article.short_title, article.public_url %></h3>
+    <span class="byline">
+        <%= timestamp article.public_datetime %>
+    </span>
+
+    <p><%= article.teaser.html_safe %></p>
+  </div>
+</div> <!-- mq span8 -->

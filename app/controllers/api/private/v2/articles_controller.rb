@@ -78,7 +78,8 @@ module Api::Private::V2
         "blogs"       => [BlogEntry],
         "segments"    => [ShowSegment],
         "abstracts"   => [Abstract],
-        "events"      => [Event]
+        "events"      => [Event],
+        "queries"     => [PijQuery]
       }
       
       params[:types] ||= DEFAULTS[:types]

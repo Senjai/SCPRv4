@@ -1,4 +1,4 @@
 <div class="cbase thumbnail">
-  <h3 class="story-headline"><%= link_to content.short_headline, content.public_path %></h3>
-  <%= comment_count_for content %>
+  <h3 class="story-headline"><%= link_to article.short_title, article.public_url %></h3>
+  <%= comment_count_for article.original_object %>
 </div>

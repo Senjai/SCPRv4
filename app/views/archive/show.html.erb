@@ -23,33 +23,33 @@
   <h2>News</h2>
   
   <%= any_to_list? @news_stories + @content_shells, message: "There was no News published on this date." do %>
-    <% (@news_stories + @content_shells).each do |content| %>
-      <% register_content content %>
+    <% (@news_stories + @content_shells).map(&:to_article).each do |article| %>
+      <% register_content article.original_object %>
   
       <div class="teaser cbase">
         <div class="row-fluid">
-          <% if content.assets.present? %>
+          <% if article.assets.present? %>
             <div class="span4">
-              <%= render_asset content, 'thumbnail' %>
+              <%= render_asset article, 'thumbnail' %>
             </div>
             <div class="span20">
           <% else %>
             <div class="span24">
           <% end %>
             <div class="info">
-              <h3><%= link_to content.short_headline, content.public_path %></h3>
+              <h3><%= link_to article.short_title, article.public_url %></h3>
               <span class="byline">
-                <% if content.category.present? %>
-                  <span class="categories"><%= link_to content.category.title, content.category.public_path %></span> 
+                <% if article.category %>
+                  <span class="categories"><%= link_to article.category.title, article.category.public_path %></span> 
                   <span class="pipe">|</span> 
                 <% end %>
-                <%= timestamp(content.published_at) %> 
+                <%= timestamp(article.public_datetime) %> 
                 <span class="pipe">|</span> 
-                <%= render_byline content %>
+                <%= render_byline article.original_object %>
               </span>
             </div>
 
-            <%= content.teaser.html_safe %>
+            <%= article.teaser.html_safe %>
           </div> <!-- span18/24 -->
         </div>
       </div>

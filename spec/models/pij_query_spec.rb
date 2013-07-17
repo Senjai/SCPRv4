@@ -1,42 +1,24 @@
 require "spec_helper"
 
 describe PijQuery do
-  describe "scopes" do
-    describe "evergreen" do
-      it "only selects evergreen" do
-        evergreen = create :pij_query, :evergreen, :visible
-        news      = create :pij_query, :news, :visible
-        PijQuery.evergreen.all.should eq [evergreen]
-      end
+  describe '#pending?' do
+    it 'checks if the status is pending' do
+      query = build :pij_query, status: PijQuery::STATUS_PENDING
+      query.pending?.should eq true
     end
+  end
 
-    #---------------
-    
-    describe "news" do
-      it "only selects news" do
-        evergreen = create :pij_query, :evergreen, :visible
-        news      = create :pij_query, :news, :visible
-        PijQuery.news.all.should eq [news]
-      end
+  describe '#published?' do
+    it 'checks if the status is live' do
+      query = build :pij_query, status: PijQuery::STATUS_LIVE
+      query.published?.should eq true
     end
-    
-    #---------------
-    
-    describe "visible" do
-      it "doesn't select inactive" do
-        create :pij_query, :inactive
-        PijQuery.visible.should be_blank
-      end
+  end
 
-      it "doesn't select unpublished" do
-        create :pij_query, :unpublished
-        PijQuery.visible.should be_blank
-      end
-
-      it "selects anything which meets the criteria" do
-        active_query = create :pij_query, :visible
-        PijQuery.visible.should eq [active_query]
-      end
+  describe '#to_article' do
+    it 'builds an article out of a pij query' do
+      query = build :pij_query
+      query.to_article.should be_a Article
     end
-  end  
+  end
 end
