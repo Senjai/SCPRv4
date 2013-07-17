@@ -14,8 +14,8 @@ module NprProgramImporter
       # TODO: If there are more than 20 segments to an episode, need
       # to recognize that and do another query to fetch the other ones.
       # We can do this with pagination, using the startNum parameter.
-      segments = Npr::Story.where(
-        :id   => external_program.remote_id,
+      segments = NPR::Story.where(
+        :id   => external_program.external_id,
         :date => "current" 
       ).limit(20).to_a
 
@@ -23,7 +23,7 @@ module NprProgramImporter
       return false if segments.empty?
 
       show = segments.first.shows.first
-      episode = nil
+      external_episode = nil
 
       # If there is no show, or the program isn't episodic, then we can't
       # or shouldn't build an episode.
@@ -37,7 +37,7 @@ module NprProgramImporter
           :external_program_id    => external_program.id
         )
 
-        episode = ExternalEpisode.new(
+        external_episode = ExternalEpisode.new(
           :title              => show.showDate.strftime("%A, %B %e, %Y"),
           :air_date           => show.showDate,
           :external_program   => external_program
@@ -52,14 +52,26 @@ module NprProgramImporter
           :source         => SOURCE
         )
 
-          ExternalSegment.create(
+          external_segment = ExternalSegment.new(
             :title          => segment.title,
             :teaser         => segment.teaser,
             :published_at   => segment.pubDate,
-            :external_url   => segment.link_for("html"),
+            :public_url     => segment.link_for("html"),
             :external_id    => segment.id,
-            :source         => SOURCE
+            :source         => SOURCE,
+
           )
+
+          if external_episode
+            external_episode.external_episode_segments.build(
+              :external_segment => external_segment,
+              :position         => show.segNum
+            )
+          end
+        end
+
+        if external_episode
+          external_episode.save!
         end
       end
     end
