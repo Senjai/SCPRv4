@@ -1,6 +1,7 @@
 json.cache! [Api::Public::V2::VERSION, "v1", program] do
   json.title          program.title
   json.slug           program.slug
+  json.air_status     program.air_status
 
   json.host         program.host
   json.airtime      program.airtime

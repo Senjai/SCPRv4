@@ -128,6 +128,18 @@ describe ScheduleOccurrence do
     end
   end
 
+  describe 'detachment from recurring rule' do
+    it "takes place when a recurring occurrence's dates change" do
+      occurrence = create :schedule_occurrence, :recurring
+      occurrence.recurring_schedule_rule.should be_present
+
+      occurrence.starts_at = Time.now.tomorrow
+      occurrence.save!
+
+      occurrence.recurring_schedule_rule.should eq nil
+    end
+  end
+
   #------------
 
   describe "#listen_live_json" do

@@ -8,7 +8,6 @@ class ArchiveController < ApplicationController
     redirect_to archive_path(year, month, day) and return
   end
 
-
   def show
     if params[:year] and params[:month] and params[:day]
       date = Time.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)

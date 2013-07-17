@@ -22,8 +22,6 @@ class ChrArticle < RemoteArticle
         :format       => 'json',
         :user         => Rails.application.config.api['publish2']['user'],
         :pass         => Rails.application.config.api['publish2']['pass'],
-        :start_date   => 1.hour.ago.utc.iso8601,
-        :end_date     => Time.now.utc.iso8601,
         :limit        => 20
       )
 
