@@ -2,7 +2,7 @@
   <% @META_DESCRIPT = h(article.teaser) %>
   <% @META_AUTHOR = article.byline %>
   
-  <%= cache ["opengraph", "v1", article] do %>
+  <%= cache ["opengraph", "v1", article.updated_at] do %>
     <meta property="og:description" content="<%= h(article.teaser) %>">
     <meta property="og:title" content="<%= h(article.short_title) %>">
     <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
