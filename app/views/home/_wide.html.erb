@@ -10,13 +10,3 @@
     </div>
   </div>
 </div>
-
-
-<% content_for :conversation_slot do %>
-  <% if @featured_comment %>
-    <div class="join-conversation-container home">
-      <hr />
-      <%= render '/shared/featured_comment/home', comment: @featured_comment %>
-    </div>
-  <% end %>
-<% end %>
