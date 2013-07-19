@@ -30,7 +30,7 @@
     <div class="row-fluid">
       <div class="span24">
         <h2>Stories by <%= @bio.name %></h2>
-        <%= render_content @bylines, "thumbnail" %>
+        <%= render_content @bylines.map(&:content), "thumbnail" %>
         <%= paginate @bylines, window: 2 %>
       </div>
     </div>

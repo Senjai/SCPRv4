@@ -76,8 +76,6 @@ module Api::Public::V2
         ) and return false
       end
 
-      @articles = @articles.map(&:to_article)
-
       respond_with @articles do |format|
         format.json { render :index }
       end
@@ -93,8 +91,6 @@ module Api::Public::V2
           message: "Cache not warm. Try again in a few minutes."
         ) and return false
       end
-
-      @articles = @articles.map(&:to_article)
 
       respond_with @articles do |format|
         format.json { render :index }

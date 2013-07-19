@@ -43,7 +43,6 @@ class Article
     :public_url,
     :edit_url # Should this really be an attribute, or should we delegate?
 
-
   def initialize(attributes={})
     @original_object  = attributes[:original_object]
     @id               = attributes[:id]
@@ -94,5 +93,13 @@ class Article
 
   def asset
     @asset ||= self.assets.first
+  end
+
+  def cache_key
+    original_object.cache_key if original_object.respond_to?(:cache_key)
+  end
+
+  def updated_at
+    original_object.updated_at if original_object.respond_to?(:updated_at)
   end
 end

@@ -1,0 +1,10 @@
+<div class="cbase lead">
+  <%= render_asset article, "large" %>
+
+  <h1 class="story-headline"><%= link_to article.short_title, article.public_url %></h1>
+  <span class="byline">
+    <%= timestamp article.public_datetime %>
+  </span>
+
+  <p><%= article.teaser.html_safe %></p>
+</div>

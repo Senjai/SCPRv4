@@ -13,8 +13,16 @@
 <% end %>
 
 <%= form_block "Publishing" do %>
-  <%= f.input :is_active %>
-  <%= f.input :published_at %>
+  <%= render '/outpost/shared/help_blocks/publishing' %>
+  <%= f.input :status, collection: PijQuery.status_select_collection, selected: record.status || PijQuery::STATUS_HIDDEN, include_blank: false, input_html: { id: "status-select" } %>
+
+  <%= f.section 'content_alarm' %>
+  <%= f.section 'auto_published_at' %>
+
+  <div id="scheduled_status" class="notification block"></div>
 <% end %>
 
 <%= f.section "assets" %>
+
+<%= f.section "related_links" %>
+<%= f.section "related_content" %>

@@ -49,7 +49,7 @@ class SitemapsController < ApplicationController
   def queries
     @changefreq = "weekly"
     @priority   = "0.3"
-    @content    = PijQuery.visible.since(30.days.ago)
+    @content    = PijQuery.published.since(30.days.ago)
     render 'sitemap', formats: :xml
   end
 

@@ -1,4 +1,4 @@
 <% add_to_page_title @query.headline %>
 
-<%= render '/shared/content/default/opengraph', content: @query %>
+<%= render_content @query, "opengraph" %>
 <%= render "/pij_queries/pij_query", query: @query %>

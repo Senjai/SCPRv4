@@ -52,7 +52,7 @@
       </section>
     <% end %>
 
-    <%= render "/shared/widgets/missed_it_bucket", object: @program %>
+    <%= render("/shared/widgets/missed_it_bucket", bucket: @program.missed_it_bucket) if @program.missed_it_bucket.present? %>
     
     <% if @program.blog.present? %>
       <%= render '/blogs/recent_posts', blog: @program.blog, title: "From the Blog: #{@program.blog.name}" %>
