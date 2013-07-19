@@ -13,7 +13,7 @@ module Job
         analytics["token"],
         analytics["refresh_token"]
       )
-      
+
       data = silence_stream(STDOUT) { task.fetch(api_params) }
 
       articles = task.parse(data['rows']).map(&:to_article)
@@ -23,12 +23,12 @@ module Job
     end
 
     #---------------
-      
+
     TOKEN_URL = "https://accounts.google.com/o/oauth2/token"
     AUTH_URL  = "https://accounts.google.com/o/oauth2/auth"
     API_URL   = "https://www.googleapis.com"
     API_PATH  = "/analytics/v3/data/ga"
-    
+
     #---------------
 
     def self.api_params
@@ -46,13 +46,13 @@ module Job
     end
 
     #---------------
-        
+
     def initialize(client_id, client_secret, token, refresh_token)
       @client_id     = client_id
       @client_secret = client_secret
       @token         = token
       @refresh_token = refresh_token
-      
+
       @oauth_token   = oauth_token
     end
 
@@ -62,14 +62,14 @@ module Job
       resp = connection.get do |req|
         req.url API_PATH, api_params
       end
-      
+
       resp.body
     end
 
     add_transaction_tracer :fetch, category: :task
-    
+
     #---------------
-    
+
     def parse(rows)
       articles = []
 
@@ -79,28 +79,28 @@ module Job
           articles.push(article) if article.published?
         end
       end
-      
+
       articles.uniq
     end
 
     add_transaction_tracer :parse, category: :task
-    
-    
+
+
     #---------------
-    
+
     private
 
     def client
       @client ||= begin
         OAuth2::Client.new(
-          @client_id, 
+          @client_id,
           @client_secret,
           :authorization_url => AUTH_URL,
           :token_url         => TOKEN_URL
         )
       end
     end
-  
+
     #---------------
 
     def oauth_token
