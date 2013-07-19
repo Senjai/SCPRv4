@@ -95,6 +95,10 @@ class Article
     @asset ||= self.assets.first
   end
 
+  def cache_key
+    original_object.try(:cache_key)
+  end
+
   def updated_at
     original_object.try(:updated_at)
   end
