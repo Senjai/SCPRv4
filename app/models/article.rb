@@ -96,10 +96,10 @@ class Article
   end
 
   def cache_key
-    original_object.try(:cache_key)
+    original_object.cache_key if original_object.respond_to?(:cache_key)
   end
 
   def updated_at
-    original_object.try(:updated_at)
+    original_object.updated_at if original_object.respond_to?(:updated_at)
   end
 end
