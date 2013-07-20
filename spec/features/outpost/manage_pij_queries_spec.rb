@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe PijQuery do
-  let(:valid_record) { build :pij_query, :visible }
-  let(:updated_record) { build :pij_query, :visible }
+  let(:valid_record) { build :pij_query, :published }
+  let(:updated_record) { build :pij_query, :published }
   let(:invalid_record) { build :pij_query, headline: "" }
   
   it_behaves_like "managed resource"

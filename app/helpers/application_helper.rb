@@ -1,7 +1,17 @@
 module ApplicationHelper
   include Twitter::Autolink
 
-  #---------------------------
+  HEADSHOTS = [
+    "stoltze.png",
+    "peterson.png",
+    "moore.png",
+    "guzman-lopez.png",
+    "julian.png",
+    "watt.png",
+    "oneil.png",
+    "trujillo.png"
+  ]
+
   
   def present(object, klass=nil)
     klass ||= "#{object.class}Presenter".constantize
@@ -9,7 +19,8 @@ module ApplicationHelper
     yield presenter if block_given?
     presenter
   end
-  
+
+
   #---------------------------
   # render_content takes a ContentBase object and a context, and renders 
   # using the most specific version of that context it can find.
@@ -21,43 +32,33 @@ module ApplicationHelper
   # * shared/content/news/lead
   # * shared/content/default/lead
   #
-  def render_content(content,context,options={})
+  def render_content(content, context, options={})
     return '' if content.blank?
-
     html = ''
-    
-    Array(content).compact.each do |c|
-      if c.respond_to?(:content)
-        next if c.content.blank?
-        c = c.content
-      end
 
+    Array(content).compact.map(&:to_article).each do |article|
       # if we're caching, add content to the objects list
       if defined? @COBJECTS
-        @COBJECTS << c
+        @COBJECTS << article.original_object
       end
-      
-      # break up our content type
-      types = c.class.content_key.split("/")
 
-      # set up our template precendence
-      tmplt_opts = [
-        [types[0],types[1],context].join("/"),
-        [types[0],context].join("/"),
-        ['default',context].join("/")
-      ]
+      directory   = article.original_object.class.name.underscore
+      tmplt_opts  = ["#{directory}/#{context}", "default/#{context}"]
 
-      partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/content"],true) }
-      html << render(options.merge({
-        :partial    => "shared/content/#{partial}",
-        :object     => c,
-        :as         => :content
-      }))
+      partial = tmplt_opts.find do |template|
+        self.lookup_context.exists?(template, ["shared/content"], true)
+      end
+
+      html << render(
+        "shared/content/#{partial}", 
+        :article => article, 
+        :options => options
+      )
     end
-    
+
     html.html_safe
   end
-  
+
   #---------------------------  
   # render_asset takes a ContentBase object and a context, and renders using 
   # an optional context_asset_scheme attribute on the object.  
@@ -71,12 +72,10 @@ module ApplicationHelper
   # * shared/assets/story/default
   # * shared/assets/default/default
   def render_asset(content, context, fallback=false)
-    if content.blank? || !content.respond_to?(:assets)
-      return ''
-    end
+    article = content.to_article
 
-    if content.assets.blank?
-      return fallback ? render("shared/assets/#{context}/fallback", content: content) : ''
+    if article.assets.empty?
+      return fallback ? render("shared/assets/#{context}/fallback", article: article) : ''
     end
     
     # look for a scheme on the content object
@@ -91,22 +90,17 @@ module ApplicationHelper
       "default/default"
     ]
     
-    partial = tmplt_opts.detect { |t| self.lookup_context.exists?(t,["shared/assets"],true) }
+    partial = tmplt_opts.find do |template| 
+      self.lookup_context.exists?(template, ["shared/assets"], true)
+    end
 
-    render "shared/assets/#{partial}", assets: content.assets, content: content
-  end
-  
-  #----------
-  
-  def is_vertical?(asset)
-    asset.height.to_i > asset.width.to_i
+    render "shared/assets/#{partial}", assets: article.assets, article: article
   end
   
   #----------
   
   def random_headshot
-    images = ["stoltze.png", "peterson.png", "moore.png", "guzman-lopez.png", "julian.png", "watt.png", "oneil.png", "trujillo.png"]
-    image_tag "personalities/#{images.sample}"
+    image_tag "personalities/#{HEADSHOTS.sample}"
   end
   
   #----------
@@ -122,13 +116,13 @@ module ApplicationHelper
   
   #----------
   # Render a byline for the passed-in content
-  # If links is set to false, and the contet has
+  # If links is set to false, and the content has
   # bylines, this will yield the same as +content.byline+
   # 
   # If the content doesn't have bylines, just return
   # "KPCC" for opengraph stuff.
   def render_byline(content, links=true)
-    return "KPCC" if !content.respond_to?(:bylines)
+    return "KPCC" if !content.respond_to?(:joined_bylines)
     
     elements = content.joined_bylines do |bylines|
       link_bylines(bylines, links)
@@ -185,23 +179,23 @@ module ApplicationHelper
   
   #----------
   
-  def get_latest_arts
+  def latest_arts(limit=12)
     ContentBase.search({
       :classes     => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-      :limit       => 12,
+      :limit       => limit,
       :with        => { category_is_news: false },
       :without     => { category: '' }
-    })
+    }).map(&:to_article)
   end
   
   #----------
   
-  def get_latest_news
+  def latest_news(limit=12)
     ContentBase.search({
       :classes     => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-      :limit       => 12,
+      :limit       => limit,
       :with        => { category_is_news: true }
-    })
+    }).map(&:to_article)
   end
   
   #----------
@@ -247,7 +241,7 @@ module ApplicationHelper
     message = options[:message] || "This story was informed by KPCC listeners."
 
     if content.is_from_pij?
-      render '/shared/cwidgets/pij_notice', message: message
+      render '/shared/pij_notice', message: message
     end
   end
 
@@ -263,38 +257,40 @@ module ApplicationHelper
       time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
     end
   end
+
   
   #----------
 
   def comment_widget_for(object, options={})
-    if object.present? and object.respond_to?(:disqus_identifier)
-      render('shared/cwidgets/comment_count', { content: object, cssClass: "" }.merge!(options))
+    if has_comments?(object)
+      content_widget('comment_count', object, options)
     end
   end
-  
-  #----------
-  
+
+  def comments_for(object, options={})
+    if has_comments?(object)
+      content_widget('comments', object, { header: true }.merge(options))
+    end
+  end
+
   def comment_count_for(object, options={})
-    if object.present? and object.respond_to?(:disqus_identifier)
+    if has_comments?(object)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.obj_key
-      link_to( "Add your comments", object.public_path(anchor: "comments"), options )
+      link_to("Add your comments", object.public_path(anchor: "comments"), options)
     end
   end
-  
-  #----------
-  
-  def comments_for(object, options={})
-    if object.present? && object.respond_to?(:disqus_identifier)
-      render('shared/cwidgets/comments', { content: object, cssClass: "", header: true }.merge!(options))
-    end
+
+  def has_comments?(object)
+    object.respond_to?(:disqus_identifier)
   end
+
   
   #----------
   
   def content_widget(partial, object, options={})
     partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
-    render(partial, { content: object, cssClass: "" }.merge!(options))
+    render(partial, { article: object.to_article, cssClass: "" }.merge(options))
   end
   
   alias_method :widget, :content_widget

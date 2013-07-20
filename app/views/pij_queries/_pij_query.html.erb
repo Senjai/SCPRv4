@@ -1,7 +1,7 @@
 <div class="query content-block">
   <article>
     <header>
-      <%= render "/shared/cwidgets/social_tools", content: query, cssClass: "top horizontal" %>
+      <%= content_widget "social_tools", query, cssClass: "top horizontal" %>
       <h1 class="story-headline"><%= query.headline %></h1>
       <hr />
     </header>
@@ -9,6 +9,10 @@
     <div class="story-body storyleft">
       <%= render_asset query, "query" %>
       <%= query.body.html_safe %>
+      
+      <div class="fold">
+        <%= render "shared/related_content_and_links", content: @query %>
+      </div>
 
       <div id="pin-query-<%=query.pin_query_id%>" class="pin-query-container"></div>
     </div>

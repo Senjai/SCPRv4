@@ -1,5 +1,5 @@
 class Related < ActiveRecord::Base
-  self.table_name =  'media_related'
+  self.table_name = 'media_related'
 
   belongs_to :content, polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }
   belongs_to :related, polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }

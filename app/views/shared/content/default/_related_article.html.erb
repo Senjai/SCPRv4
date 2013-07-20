@@ -1,0 +1,3 @@
+<li>
+  <%= link_to article.short_title.to_s, article.public_url %> <span class="pipe">|</span> <%= time_tag article.public_datetime, format_date(article.public_datetime, format: :full_date) %>
+</li>

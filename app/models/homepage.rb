@@ -15,7 +15,8 @@ class Homepage < ActiveRecord::Base
   
   TEMPLATES = {
     "default"    => "Visual Left",
-    "lead_right" => "Visual Right"
+    "lead_right" => "Visual Right",
+    "wide"       => "Large Visual Top"
   }
   
   TEMPLATE_OPTIONS = TEMPLATES.map { |k, v| [v, k] }
@@ -42,16 +43,19 @@ class Homepage < ActiveRecord::Base
   
   #-------------------
   # Associations
-  has_many :content, class_name: "HomepageContent", order: "position", dependent: :destroy
+  has_many :content,
+    :class_name   => "HomepageContent",
+    :order        => "position",
+    :dependent    => :destroy
+
   accepts_json_input_for :content
 
   belongs_to :missed_it_bucket
-  
 
   #-------------------
   # Validations
   validates :base, :status, presence: true
-  
+
   #-------------------
   # Callbacks
   after_save :expire_cache
@@ -68,11 +72,17 @@ class Homepage < ActiveRecord::Base
     has updated_at
   end
 
-  #----------
-  
+
+  def articles
+    @articles ||= self.content.includes(:content).map do |c|
+      c.content.to_article
+    end
+  end
+
+
   def scored_content
     # -- Homepage Items -- #
-    
+
     citems = self.content.collect { |c| c.content || nil }.compact
 
     # -- Section Blocks -- #

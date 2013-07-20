@@ -1,11 +1,11 @@
-<div class="sharing-tools <%= cssClass ||= nil %> clearfix" id="article-sharing-tools">
+<div class="sharing-tools <%= cssClass %> clearfix" id="article-sharing-tools">
   <h5>Share this:</h5>
   <% unless @PREVIEW %>
     <ul>
-      <li class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= content.public_url %>">Facebook (<span class="count">&nbsp;&nbsp;</span>)</li>
-      <li class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= content.public_url %>" data-text="<%= u(content.short_headline) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</li>
-      <li class="track-event gplus social_gplus" data-ga-category="Article" data-ga-action="Share" data-ga-label="Google Plus" data-url="<%= content.public_url %>">Google+</li>
-      <li class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= content.obj_key %>">Email</li>
+      <li class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= article.public_url %>">Facebook (<span class="count">&nbsp;&nbsp;</span>)</li>
+      <li class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= article.public_url %>" data-text="<%= u(article.short_title) %>">Twitter (<span class="count">&nbsp;&nbsp;</span>)</li>
+      <li class="track-event gplus social_gplus" data-ga-category="Article" data-ga-action="Share" data-ga-label="Google Plus" data-url="<%= article.public_url %>">Google+</li>
+      <li class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= article.id %>">Email</li>
       <li class="print"><a href="javascript:window.print()"class="track-event" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook">Print</a></li>
     </ul>
   <% end %>

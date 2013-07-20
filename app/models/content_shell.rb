@@ -2,7 +2,7 @@ class ContentShell < ActiveRecord::Base
   self.table_name =  "contentbase_contentshell"
   outpost_model
   has_secretary
-  
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -12,7 +12,6 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::MissedItContentAssociation
-  include Concern::Validations::ContentValidation
   include Concern::Validations::PublishedAtValidation
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback
@@ -21,19 +20,19 @@ class ContentShell < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  
+
   def self.content_key
     "content/shell"
   end
-  
+
   #-------------------
   # Scopes
-  
   #------------------
   # Association
-  
+
   #------------------
   # Validation
+  validates :status, presence: true
   validates :headline, presence: true # always
   validates :body, presence: true, if: :should_validate?
   validates :url, url: true, presence: true, if: :should_validate?
@@ -86,59 +85,45 @@ class ContentShell < ActiveRecord::Base
     has "status = #{ContentBase::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
-  
-  #-------------------
-  
-  def teaser
-    self.body
-  end
-  
-  def short_headline
-    self.headline
-  end
 
-  #----------
+
   # Override Outpost's routing methods for these
   def public_path(options={})
     self.public_url
   end
-  
+
   def public_url(options={})
     self.url
   end
-  
-  #----------
-  
+
+
   def byline_extras
     [self.site]
   end
 
-  #-------------------
 
   def to_article
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
-      :title              => self.short_headline,
-      :short_title        => self.short_headline,
+      :title              => self.headline,
+      :short_title        => self.headline,
       :public_datetime    => self.published_at,
-      :teaser             => self.teaser,
-      :body               => self.teaser,
+      :teaser             => self.body,
+      :body               => self.body,
       :category           => self.category,
       :assets             => self.assets,
       :attributions       => self.bylines,
-      :public_url         => self.public_url,
+      :public_url         => self.url,
       :edit_url           => self.admin_edit_url
     })
   end
 
-  #-------------------
-
   def to_abstract
     @to_abstract ||= Abstract.new({
       :original_object        => self,
-      :headline               => self.short_headline,
-      :summary                => self.teaser,
+      :headline               => self.headline,
+      :summary                => self.body,
       :source                 => self.site,
       :url                    => self.url,
       :assets                 => self.assets,

@@ -9,36 +9,10 @@ FactoryGirl.define do
     slug { headline.parameterize }  
     query_type "news"
     pin_query_id '01aa97973688'
-
-    trait :utility do
-      query_type "utility"
-    end
-
-    trait :evergreen do
-      query_type "evergreen"
-    end
-
-    trait :news do
-      query_type "news"
-    end
+    status 5
 
     trait :featured do
       is_featured true
-    end
-
-    trait :visible do
-      is_active true
-      published_at  { 1.day.ago }
-    end
-
-    trait :inactive do
-      is_active     false
-      published_at  { 1.day.ago }
-    end
-
-    trait :unpublished do
-      is_active     true
-      published_at  { 1.day.from_now }
     end
   end
 end

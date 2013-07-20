@@ -1,17 +1,17 @@
-<% if content.category %>
+<% if article.category %>
   <div class="content-carousel" id="article-content-carousel">
     <h6 class="more-news-title">
-      More in <%= content.category.title %>
+      More in <%= article.category.title %>
       <div class="pager-nav">
         <a class="prev"></a>
         <a class="next"></a>
       </div>
     </h6>
-    
+
     <div class="carousel" data-current-page="1"></div>
   </div>
 
   <% content_for :footer do %>
-    <script>var carousel = new scpr.ContentCarousel({dataUrl: "<%= category_carousel_path(content.class.to_s, content.id) %>"});</script>
+    <script>var carousel = new scpr.ContentCarousel({dataUrl: "<%= category_carousel_path(article.original_object.class.to_s, article.original_object.id) %>"});</script>
   <% end %>
 <% end %>

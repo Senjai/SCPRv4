@@ -44,11 +44,11 @@ describe Api::Public::V2::ArticlesController do
 
   describe "GET most_viewed" do
     it "returns the cached articles" do
-      articles = create_list :blog_entry, 2
+      articles = create_list(:blog_entry, 2).map(&:to_article)
       Rails.cache.write("popular/viewed", articles)
 
       get :most_viewed, request_params
-      assigns(:articles).should eq articles.map(&:to_article)
+      assigns(:articles).should eq articles
       response.body.should render_template "index"
     end
 
@@ -61,11 +61,11 @@ describe Api::Public::V2::ArticlesController do
 
   describe "GET most_commented" do
     it "returns the cached articles" do
-      articles = create_list :blog_entry, 2
+      articles = create_list(:blog_entry, 2).map(&:to_article)
       Rails.cache.write("popular/commented", articles)
       
       get :most_commented, request_params
-      assigns(:articles).should eq articles.map(&:to_article)
+      assigns(:articles).should eq articles
       response.body.should render_template "index"
     end
 

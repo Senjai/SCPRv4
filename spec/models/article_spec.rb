@@ -52,4 +52,34 @@ describe Article do
       article.asset.should eq asset
     end
   end
+
+  describe '#updated_at' do
+    it "is the original object's updated at" do
+      entry = create :blog_entry
+      article = entry.to_article
+
+      article.updated_at.should_not eq nil
+      article.updated_at.should eq entry.updated_at
+    end
+
+    it "is nil if original object is blank" do
+      article = Article.new
+      article.updated_at.should eq nil
+    end
+  end
+
+  describe '#cache_key' do
+    it "uses the original object" do
+      entry = create :blog_entry
+      article = entry.to_article
+
+      article.cache_key.should_not eq nil
+      article.cache_key.should eq entry.cache_key
+    end
+
+    it "is nil if original object is blank" do
+      article = Article.new
+      article.cache_key.should eq nil
+    end
+  end
 end

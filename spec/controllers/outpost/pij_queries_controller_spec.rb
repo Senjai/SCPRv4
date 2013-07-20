@@ -29,7 +29,7 @@ describe Outpost::PijQueriesController do
       end
 
       it "renders for unpublished queries" do
-        pij_query = create :pij_query, :unpublished, headline: "This is a story"
+        pij_query = create :pij_query, :draft, headline: "This is a story"
         put :preview, id: pij_query.id, obj_key: pij_query.obj_key, pij_query: pij_query.attributes
         response.should render_template "/pij_queries/_pij_query"
       end
