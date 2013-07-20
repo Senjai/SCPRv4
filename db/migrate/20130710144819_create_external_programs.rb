@@ -3,6 +3,7 @@ class CreateExternalPrograms < ActiveRecord::Migration
     create_table :external_programs do |t|
       t.string :slug
       t.string :title
+      t.text :teaser
       t.text :description
       t.string :host
       t.string :organization

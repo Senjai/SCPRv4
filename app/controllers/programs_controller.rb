@@ -7,7 +7,7 @@ class ProgramsController < ApplicationController
 
 
   def index
-    @kpcc_programs = KpccProgram.active.order("title")
+    @kpcc_programs     = KpccProgram.active.order("title")
     @external_programs = ExternalProgram.active.order("title")
     render layout: "application"
   end
@@ -97,8 +97,6 @@ class ProgramsController < ApplicationController
 
   private
 
-  # Try various ways to fetch the program the person requested
-  # If nothing is found, 404
   def get_any_program
     @program = KpccProgram.find_by_slug(params[:show]) || ExternalProgram.find_by_slug(params[:show])
 

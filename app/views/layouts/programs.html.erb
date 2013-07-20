@@ -2,7 +2,7 @@
 <div class="page-header program-masthead">
   <div class="row-fluid">
     <div class="span16" id="program-masthead-title">
-      <div class="program-info<%= " headshot #{@program.slug}" if @program.is_featured?  %>">
+      <div class="program-info<%= " headshot #{@program.slug}" if @program.respond_to?(:is_featured?) && @program.is_featured?  %>">
         <h1 class="page-title"><%= link_to @program.title, @program.public_path %></h1>
         <div class="show-meta">
           <%= @program.airtime %>

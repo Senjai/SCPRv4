@@ -7,7 +7,7 @@
     </div>
     <div class="span6">
       <nav class="connect">
-        <%= link_to "Website", p.web_url, target: "_blank", class: "archive with-icon" %>   
+        <%= link_to "Website", p.web_url, target: "_blank", class: "archive with-icon" %>
         <%= link_to "RSS Feed", p.rss_url, target: "_blank", class: "rss with-icon" %>
         <%= link_to "Podcast", p.podcast_url, target: "_blank", class: "podcast with-icon" %>
       </nav>
@@ -16,7 +16,17 @@
 </div> <!-- .program-ext-header -->
 
 <div class="show-segments">
-  <%= p.feed %>
+  <% if @program.is_episodic? %>
+
+    <ul>
+    <% @program.external_episodes.each do |episode| %>
+      <li><%= episode.title %></li>
+    <% end %>
+    </ul>
+
+  <% else %>
+    <%= render partial: "external_segment", collection: @program.external_segments %>
+  <% end %>
 </div>
 
 <% end %>
