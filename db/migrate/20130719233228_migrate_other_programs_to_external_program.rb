@@ -46,6 +46,8 @@ class MigrateOtherProgramsToExternalProgram < ActiveRecord::Migration
         ext_program.is_episodic = false
         ext_program.source = "rss"
       end
+
+      ext_program.save!
     end
   end
 
