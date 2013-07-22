@@ -45,7 +45,7 @@ class ExternalProgram < ActiveRecord::Base
 
   #-------------------
   # Validations
-  validates :title, :air_status, presence: true
+  validates :title, :air_status, :slug, :source, presence: true
   validates :slug, uniqueness: true
 
 
