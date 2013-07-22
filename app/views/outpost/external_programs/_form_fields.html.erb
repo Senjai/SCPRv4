@@ -1,0 +1,29 @@
+<%= form_block "Basic Information" do %>
+  <%= f.input :title, input_html: { class: "sluggable" } %>
+  <%= f.section "slug" %>
+  <%= f.input :teaser, as: :string, hint: "Shown on summary/list pages that reference the program. Keep it to a sentence or so.", input_html: { class: "wide" } %>
+  <%= f.input :description, hint: "Shown on the program's page. Be as descriptive as you like (hosts, topics, staff, etc.)", input_html: { class: "tiny" } %>
+<% end %>
+
+<%= form_block "Source" do %>
+  <%= f.input :source, collection: ExternalProgram::IMPORTERS.keys %>
+  <%= f.input :external_id, label: "External ID", hint: "For <a href='http://www.npr.org/api/mappingCodes.php'>NPR API</a>, for example. Leave BLANK for RSS sources.", input_html: { class: "tiny" } %>
+  <%= f.input :is_episodic, hint: "Is this an episodic program, or just segments? This will only affect some import sources (such as NPR API)." %>
+<% end %>
+
+<%= form_block "Who/When" do %>
+  <%= f.input :host %>
+  <%= f.input :organization %>
+  <%= f.input :air_status, collection: KpccProgram::AIR_STATUS, include_blank: false %>
+  <%= f.input :airtime, hint: "Times this program can be heard." %>
+<% end %>
+
+<%= form_block "Links" do %>
+  <%= f.input :rss_url, hint: "XML URL", input_html: { class: "wide" } %>
+  <%= f.input :web_url, label: "Website URL", input_html: { class: "wide" } %>
+  <%= f.input :podcast_url, hint: "XML URL", input_html: { class: "wide" } %>
+  <%= f.input :twitter_handle, wrapper: :prepend, hint: "No @ symbol" do %>
+    <span class="add-on">@</span><%= f.input_field :twitter_handle, class: 'span2' %>
+  <% end %>
+<% end %>
+
