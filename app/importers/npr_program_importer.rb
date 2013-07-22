@@ -1,3 +1,7 @@
+# The NPR Importer is here because NPR, through their API, gives us more
+# information about a given segment than an RSS feed does. With it, we're
+# able to group segments together into episodes.
+#
 # http://www.npr.org/api/mappingCodes.php
 class NprProgramImporter
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation

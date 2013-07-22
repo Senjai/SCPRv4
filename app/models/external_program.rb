@@ -1,3 +1,18 @@
+# ExternalProgram is a Program that comes from an outside source,
+# such as an API or an RSS feed.
+#
+# To add an importer:
+#
+# 1. Write your importer. Place it in the `app/importers` directory.
+#    It only needs to respond to the `sync` class method.
+#    This method should fetch the segments (in an RSS feed these would be the
+#    entries) and save them to our database. But it can do whatever you want.
+#    I'm not here to tell you what to do.
+# 2. Add it to the IMPORTERS hash. The key is the arbitrary text ID for the 
+#    importer, and the value is the class name.
+# 3. Set the program to use that importer in the CMS.
+# 4. There's not a 4th step, get to work already.
+#
 class ExternalProgram < ActiveRecord::Base
   outpost_model
   has_secretary
