@@ -1,7 +1,3 @@
-class OtherProgram < ActiveRecord::Base
-  self.table_name = "programs_otherprogram"
-end
-
 class MigrateOtherProgramsToExternalProgram < ActiveRecord::Migration
   NPR_PROGRAMS = [
     { local_id: 23, external_id: 2 }, # ATC
@@ -20,25 +16,8 @@ class MigrateOtherProgramsToExternalProgram < ActiveRecord::Migration
   ]
 
   def up
-    OtherProgram.all.each do |p|
-      ext_program = ExternalProgram.new(
-        :id             => p.id,
-        :slug           => p.slug,
-        :title          => p.title,
-        :teaser         => p.teaser,
-        :description    => p.description,
-        :host           => p.host,
-        :organization   => p.produced_by,
-        :airtime        => p.airtime,
-        :air_status     => p.air_status,
-        :web_url        => p.web_url,
-        :podcast_url    => p.podcast_url,
-        :rss_url        => p.rss_url,
-        :sidebar        => p.sidebar,
-        :created_at     => p.created_at
-      )
-
-      if npr_program = NPR_PROGRAMS.find { |npr| npr[:local_id] == p.id }
+    ExternalProgram.all.each do |ext_program|
+      if npr_program = NPR_PROGRAMS.find { |npr| npr[:local_id] == ext_program.id }
         ext_program.external_id = npr_program[:external_id]
         ext_program.is_episodic = true
         ext_program.source = "npr-api"

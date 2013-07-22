@@ -1,28 +1,31 @@
 class CreateExternalPrograms < ActiveRecord::Migration
   def change
-    create_table :external_programs do |t|
-      t.string :slug
-      t.string :title
-      t.text :teaser
-      t.text :description
-      t.string :host
-      t.string :organization
-      t.string :airtime
-      t.string :air_status
+    rename_table :programs_otherprogram, :external_programs
 
-      t.string :web_url
-      t.string :podcast_url
-      t.string :rss_url
+    change_table :external_programs do |t|
+      t.change :slug, :string
+      t.change :title, :string
+      t.change :teaser, :text
+      t.change :description, :text
+      t.change :host, :string
+      t.change :airtime, :string
+      t.change :air_status, :string
+      t.change :web_url, :string
+      t.change :podcast_url, :string
+      t.change :rss_url, :string
+      t.change :sidebar, :text
+
+      t.rename :produced_by, :organization
 
       t.string :twitter_handle
       t.string :source
       t.integer :external_id
       t.boolean :is_episodic
-
-      t.text :sidebar
-
-      t.timestamps
     end
+
+    remove_index :external_programs, name: "slug"
+    remove_index :external_programs, name: "title"
+    remove_index :external_programs, name: "index_programs_otherprogram_on_air_status"
 
     add_index :external_programs, :title # for sorting
     add_index :external_programs, :slug

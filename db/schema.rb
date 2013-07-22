@@ -322,24 +322,24 @@ ActiveRecord::Schema.define(:version => 20130719233228) do
   add_index "external_episodes", ["external_program_id"], :name => "index_external_episodes_on_external_program_id"
 
   create_table "external_programs", :force => true do |t|
-    t.string   "slug"
-    t.string   "title"
+    t.string   "slug",                         :null => false
+    t.string   "title",                        :null => false
     t.text     "teaser"
     t.text     "description"
     t.string   "host"
-    t.string   "organization"
+    t.string   "organization",   :limit => 50
     t.string   "airtime"
-    t.string   "air_status"
+    t.string   "air_status",                   :null => false
     t.string   "web_url"
     t.string   "podcast_url"
     t.string   "rss_url"
+    t.text     "sidebar"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.string   "twitter_handle"
     t.string   "source"
     t.integer  "external_id"
     t.boolean  "is_episodic"
-    t.text     "sidebar"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
   end
 
   add_index "external_programs", ["air_status"], :name => "index_external_programs_on_air_status"
@@ -596,27 +596,6 @@ ActiveRecord::Schema.define(:version => 20130719233228) do
   add_index "programs_kpccprogram", ["is_featured"], :name => "index_programs_kpccprogram_on_is_featured"
   add_index "programs_kpccprogram", ["missed_it_bucket_id"], :name => "programs_kpccprogram_d12628ce"
   add_index "programs_kpccprogram", ["slug"], :name => "index_programs_kpccprogram_on_slug"
-
-  create_table "programs_otherprogram", :force => true do |t|
-    t.string   "slug",        :limit => 40,         :null => false
-    t.string   "title",       :limit => 60,         :null => false
-    t.text     "teaser",      :limit => 2147483647
-    t.text     "description", :limit => 2147483647
-    t.string   "host",        :limit => 150
-    t.string   "produced_by", :limit => 50
-    t.string   "airtime",     :limit => 300
-    t.string   "air_status",  :limit => 10,         :null => false
-    t.string   "web_url",     :limit => 200
-    t.string   "podcast_url", :limit => 200
-    t.string   "rss_url",     :limit => 200
-    t.text     "sidebar",     :limit => 2147483647
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-  end
-
-  add_index "programs_otherprogram", ["air_status"], :name => "index_programs_otherprogram_on_air_status"
-  add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
-  add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
 
   create_table "recurring_schedule_rules", :force => true do |t|
     t.text     "schedule_hash"
