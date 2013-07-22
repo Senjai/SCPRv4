@@ -7,6 +7,7 @@ class NprProgramImporter
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   SOURCE = "npr-api"
 
+
   class << self
     def sync(external_program)
       self.new(external_program).sync
