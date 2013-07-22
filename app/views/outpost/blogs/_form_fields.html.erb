@@ -12,7 +12,9 @@
 <%= form_block "Media" do %>
   <%= f.input :feed_url %>
   <%= f.input :facebook_url %>
-  <%= f.input :twitter_handle, hint: "No '@'. Example: kpcc" %>
+  <%= f.input :twitter_handle, wrapper: :prepend, hint: "No @ symbol" do %>
+    <span class="add-on">@</span><%= f.input_field :twitter_handle, class: 'span2' %>
+  <% end %>
 <% end %>
 
 <%= form_block "Hosts" do %>
