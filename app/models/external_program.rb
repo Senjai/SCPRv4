@@ -85,6 +85,9 @@ class ExternalProgram < ActiveRecord::Base
     }
   end
 
+  def importer_type
+    IMPORTERS[self.source]
+  end
 
   def sync
     self.importer_type.constantize.sync(self)
