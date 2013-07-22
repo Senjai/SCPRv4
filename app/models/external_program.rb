@@ -25,10 +25,10 @@ class ExternalProgram < ActiveRecord::Base
   ROUTE_KEY = "program"
 
   # "source" => "Importer module name"
-  IMPORTERS = [
+  IMPORTERS = {
     "npr-api" => "NprProgramImporter",
     "rss"     => "RssImporter"
-  ]
+  }
 
 
   #-------------------
@@ -85,11 +85,11 @@ class ExternalProgram < ActiveRecord::Base
     }
   end
 
-  def importer_type
-    IMPORTERS[self.source]
+  def importer
+    @importer ||= IMPORTERS[self.source].constantize
   end
 
   def sync
-    self.importer_type.constantize.sync(self)
+    self.importer.sync(self)
   end
 end
