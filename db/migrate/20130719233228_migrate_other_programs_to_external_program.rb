@@ -1,3 +1,7 @@
+class OtherProgram < ActiveRecord::Base
+  self.table_name = "programs_otherprogram"
+end
+
 class MigrateOtherProgramsToExternalProgram < ActiveRecord::Migration
   NPR_PROGRAMS = [
     { local_id: 23, external_id: 2 }, # ATC

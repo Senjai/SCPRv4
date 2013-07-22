@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716222229) do
+ActiveRecord::Schema.define(:version => 20130719233228) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(:version => 20130716222229) do
   create_table "external_programs", :force => true do |t|
     t.string   "slug"
     t.string   "title"
+    t.text     "teaser"
     t.text     "description"
     t.string   "host"
     t.string   "organization"
