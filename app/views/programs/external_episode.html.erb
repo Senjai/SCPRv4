@@ -1,27 +1,19 @@
-<% add_to_page_title external_episode.title %>
+<% add_to_page_title @episode.title %>
 
 <header class="episode">
   <div class="row-fluid">
     <div class="span14">
-      <h4><%= external_episode.title %></h4>
+      <h4><%= @episode.title %></h4>
     </div>
     <div class="span10">
-      <% if external_episode.audio.available.present? %>
-        <div class="right">
-          <aside class="story-audio inline">
-              <a href="<%= external_episode.audio.available.first.url %>" class="play-btn audio-toggler" title="<%= h external_episode.headline %>" data-duration="<%= external_episode.audio.available.first.duration %>"></a>
-              <%= link_to "Listen to this episode", external_episode.audio.available.first.url, :class => "audio-toggler play-text",  "data-duration" => external_episode.audio.available.first.duration %>
-              <a href="<%= external_episode.audio.available.first.url %>" class="download">Download</a>
-          </aside>
-        </div>
-      <% end %>
+      audio
     </div>
   </div>
 </header>
 
 <section class="show-segments episode">
-  <%= any_to_list? external_episode.external_segments, title: "Segments" do %>
-      <%= render partial: 'external_segment', collection: external_episode.external_segments %>
+  <%= any_to_list? @episode.external_segments, title: "Segments" do %>
+      <%= render partial: 'external_segment', collection: @episode.external_segments %>
   <% end %>
 </section>
 

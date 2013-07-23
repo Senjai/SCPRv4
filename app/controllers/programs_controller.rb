@@ -1,12 +1,12 @@
 class ProgramsController < ApplicationController
-  before_filter :get_any_program, only: [:show]
-  before_filter :get_kpcc_program!, only: [:archive, :episode]
-  before_filter :get_featured_programs, only: [:index]
+  before_filter :get_any_program, only: [:show, :episode]
+  before_filter :get_kpcc_program!, only: [:archive]
 
   respond_to :html, :xml, :rss
 
 
   def index
+    @featured_programs = KpccProgram.where(is_featured: true)
     @kpcc_programs     = KpccProgram.active.order("title")
     @external_programs = ExternalProgram.active.order("title")
     render layout: "application"
@@ -80,8 +80,16 @@ class ProgramsController < ApplicationController
 
 
   def episode
-    @episode = @program.episodes.published.where(air_date: Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)).first!
-    @segments = @episode.segments.published
+    date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+
+    if @program.is_a? KpccProgram
+      @episode = @program.episodes.published.where(air_date: date).first!
+      @segments = @episode.segments.published
+      render :episode
+    else
+      @episode = @program.external_episodes.where("DATE(air_date) = ?", date).first!
+      render :external_episode
+    end
   end
 
 
@@ -107,9 +115,5 @@ class ProgramsController < ApplicationController
 
   def get_kpcc_program!
     @program = KpccProgram.find_by_slug!(params[:show])
-  end
-
-  def get_featured_programs
-    @featured_programs = KpccProgram.where(is_featured: true)
   end
 end
