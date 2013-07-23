@@ -1,0 +1,19 @@
+<div class="teaser cbase">
+  <div class="row-fluid">
+    <div class="span18">
+      <div class="info">
+        <h3><%= link_to external_segment.title, external_segment.public_url %></h3>
+        <span class="byline">
+          <%= timestamp(external_segment.published_at) %>
+        </span>
+      </div>
+
+      <%= external_segment.teaser.html_safe %>
+    </div> <!-- span12/9 -->
+    <div class="span6">
+      <div class="interact">
+        audio
+      </div>
+    </div>
+  </div>
+</div>

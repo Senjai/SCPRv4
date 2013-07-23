@@ -17,13 +17,7 @@
 
 <div class="show-segments">
   <% if @program.is_episodic? %>
-
-    <ul>
-    <% @program.external_episodes.each do |episode| %>
-      <li><%= episode.title %></li>
-    <% end %>
-    </ul>
-
+    <%= render partial: "external_episode", collection: @program.external_episodes %>
   <% else %>
     <%= render partial: "external_segment", collection: @program.external_segments %>
   <% end %>
