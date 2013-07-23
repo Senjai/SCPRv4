@@ -84,8 +84,8 @@ describe ProgramsController do
       end
     
       it "assigns @external_programs to active ordered by title" do
-        active = create :external_program, air_status: "onair"
-        inactive = create :external_program, air_status: "hidden"
+        active = create :external_program, :from_rss, air_status: "onair"
+        inactive = create :external_program, :from_rss, air_status: "hidden"
 
         get :index
         assigns(:external_programs).to_sql.should match /order by title/i
@@ -124,19 +124,19 @@ describe ProgramsController do
         end
       
         it "finds an other program if requested" do
-          program = create :external_program
+          program = create :external_program, :from_rss
           get :show, show: program.slug
           assigns(:program).should eq program
         end
       
         it "redirects to podcast_url if other program is present and request format is xml" do
-          program = create :external_program, podcast_url: "http://podcast.com/podcast.xml"
+          program = create :external_program, :from_rss, podcast_url: "http://podcast.com/podcast.xml"
           get :show, show: program.slug, format: :xml
           response.should redirect_to program.podcast_url
         end
       
         it "redirects to rss_url if no podcast_url present" do
-          program = create :external_program, podcast_url: "", rss_url: "http://rss.com/rss.xml"
+          program = create :external_program, :from_rss, podcast_url: "", rss_url: "http://rss.com/rss.xml"
           get :show, show: program.slug, format: :xml
           response.should redirect_to program.rss_url
         end
@@ -195,27 +195,6 @@ describe ProgramsController do
       it "renders the view" do
         episode = create :show_episode
         get :episode, episode.route_hash
-      end
-    end
-
-    #-----------------------
-    
-    describe "controller" do
-      describe "get_kpcc_program!" do
-        before :each do
-          @episode = create :show_episode
-        end
-      
-        it "returns the program if slug exists" do
-          get :episode, @episode.route_hash
-          assigns(:program).should eq @episode.show
-        end
-      
-        it "raises an error if slug doesn't exist" do
-          -> {
-            get :episode, @episode.route_hash.merge!(show: "nonsense")
-          }.should raise_error ActiveRecord::RecordNotFound
-        end
       end
     end
   end
