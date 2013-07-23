@@ -16,7 +16,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
 
   ROUTE_KEY = "episode"
-  
+
   #-------------------
   # Scopes
   scope :published, -> {
@@ -29,18 +29,18 @@ class ShowEpisode < ActiveRecord::Base
     .where("air_date >= ?", Date.today)
     .order("air_date asc")
   }
-  
+
   #-------------------
   # Association
   belongs_to  :show,      :class_name  => "KpccProgram", touch: true
-  
-  has_many    :rundowns,  :class_name  => "ShowRundown", 
+
+  has_many    :rundowns,  :class_name  => "ShowRundown",
                           :foreign_key => "episode_id",
                           :dependent   => :destroy
-  
-  has_many    :segments,  :class_name  => "ShowSegment", 
-                          :foreign_key => "segment_id", 
-                          :through     => :rundowns, 
+
+  has_many    :segments,  :class_name  => "ShowSegment",
+                          :foreign_key => "segment_id",
+                          :through     => :rundowns,
                           :order       => "position"
 
   accepts_json_input_for :rundowns
@@ -55,11 +55,11 @@ class ShowEpisode < ActiveRecord::Base
     :message => "can't be blank when publishing",
     :if      => :should_validate?
   }
-  
+
   def needs_validation?
     self.pending? || self.published?
   end
-  
+
   #-------------------
   # Callbacks
   before_save :generate_headline, if: -> { self.headline.blank? }
@@ -70,13 +70,13 @@ class ShowEpisode < ActiveRecord::Base
         "#{self.air_date.strftime("%B %-d, %Y")}"
     end
   end
-  
+
   #-------------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes headline
     indexes body
-    
+
     has show.id, as: :program
     has air_date
     has status
@@ -84,7 +84,7 @@ class ShowEpisode < ActiveRecord::Base
     has updated_at
 
     # For podcasts
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
         as: :has_audio, type: :boolean
     join audio
 
@@ -92,7 +92,7 @@ class ShowEpisode < ActiveRecord::Base
     # For ShowEpisode, this is needed just for the
     # podcast feed.
     has air_date, as: :public_datetime
-    has "status = #{ContentBase::STATUS_LIVE}", 
+    has "status = #{ContentBase::STATUS_LIVE}",
         as: :is_live, type: :boolean
   end
 
@@ -121,7 +121,7 @@ class ShowEpisode < ActiveRecord::Base
     return {} if !self.persisted? || !self.persisted_record.published?
     {
       :show           => self.persisted_record.show.slug,
-      :year           => self.persisted_record.air_date.year, 
+      :year           => self.persisted_record.air_date.year,
       :month          => "%02d" % self.persisted_record.air_date.month,
       :day            => "%02d" % self.persisted_record.air_date.day,
       :trailing_slash => true
@@ -136,7 +136,7 @@ class ShowEpisode < ActiveRecord::Base
   def build_rundown_association(rundown_hash, segment)
     if segment.is_a? ShowSegment
       ShowRundown.new(
-        :position => rundown_hash["position"].to_i, 
+        :position => rundown_hash["position"].to_i,
         :segment  => segment
       )
     end
