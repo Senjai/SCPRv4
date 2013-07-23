@@ -312,14 +312,16 @@ ActiveRecord::Schema.define(:version => 20130722233837) do
 
   create_table "external_episodes", :force => true do |t|
     t.string   "title"
+    t.text     "summary"
     t.integer  "external_program_id"
+    t.string   "external_id"
     t.datetime "air_date"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
 
   add_index "external_episodes", ["air_date"], :name => "index_external_episodes_on_air_date"
-  add_index "external_episodes", ["external_program_id"], :name => "index_external_episodes_on_external_program_id"
+  add_index "external_episodes", ["external_program_id", "external_id"], :name => "index_external_episodes_on_external_program_id_and_external_id"
 
   create_table "external_programs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -350,17 +352,15 @@ ActiveRecord::Schema.define(:version => 20130722233837) do
     t.string   "title"
     t.text     "teaser"
     t.integer  "external_program_id"
-    t.string   "source"
     t.string   "external_id"
-    t.string   "public_url"
+    t.string   "external_url"
     t.datetime "published_at"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
 
-  add_index "external_segments", ["external_program_id"], :name => "index_external_segments_on_external_program_id"
+  add_index "external_segments", ["external_program_id", "external_id"], :name => "index_external_segments_on_external_program_id_and_external_id"
   add_index "external_segments", ["published_at"], :name => "index_external_segments_on_published_at"
-  add_index "external_segments", ["source", "external_id"], :name => "index_external_segments_on_source_and_external_id"
 
   create_table "flatpages_flatpage", :force => true do |t|
     t.string   "url",          :limit => 100,                           :null => false
