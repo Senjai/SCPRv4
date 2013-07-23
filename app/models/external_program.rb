@@ -31,8 +31,10 @@ class ExternalProgram < ActiveRecord::Base
     "rss"     => "RssImporter"
   }
 
-  # So we know how to display this program.
-  SEGMENTED_SOURCES = ["npr-api"]
+  FEED_TYPES = {
+    "rss-episodes" => "RSS entries are full episodes",
+    "rss-segments" => "RSS entries are segments"
+  }
 
 
   #-------------------
@@ -91,10 +93,6 @@ class ExternalProgram < ActiveRecord::Base
 
   def importer
     @importer ||= IMPORTERS[self.source].constantize
-  end
-
-  def has_segments?
-    SEGMENTED_SOURCES.include? self.source
   end
 
   def sync
