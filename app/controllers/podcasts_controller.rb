@@ -10,11 +10,11 @@ class PodcastsController < ApplicationController
   def podcast
     @podcast = Podcast.where(slug: params[:slug]).first!
 
-    # If this is an "OtherProgram", just redirect to the Podcast URL
+    # If this is an "ExternalProgram", just redirect to the Podcast URL
     # Otherwise, grab the content, build the XML, and return it.
     # This allows us to "host" other podcasts without actually having to
     # render any content.
-    if @podcast.source.is_a? OtherProgram
+    if @podcast.source.is_a? ExternalProgram
       redirect_to @podcast.podcast_url
     else
       @articles = @podcast.content

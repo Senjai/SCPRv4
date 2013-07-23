@@ -34,7 +34,7 @@ describe PodcastsController do
     end
     
     it "redirects to podcast_url if source is ExternalProgram" do
-      program = create :external_program
+      program = create :external_program, :from_rss
       podcast = create :podcast, source: program
       get :podcast, slug: podcast.slug
       response.should redirect_to podcast.podcast_url
