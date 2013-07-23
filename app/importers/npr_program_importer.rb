@@ -30,7 +30,7 @@ class NprProgramImporter
     # We can do this with pagination, using the startNum parameter.
     @segments = NPR::Story.where(
       :id   => @external_program.external_id,
-      :date => "current" 
+      :date => "current"
     ).limit(20).to_a
 
     # If there are no segments then forget about it.
