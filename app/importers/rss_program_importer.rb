@@ -1,27 +1,28 @@
 module RssProgramImporter
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
 
   class << self
-    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
-
     def sync(external_program)
-      if external_program.podcast_url.present?
-        import_entries(external_program.podcast_url)
-      end
-
-      if external_program.rss_url.present?
-        import_entries(external_program.rss_url)
-      end
+      self.new(external_program).sync
     end
+  end
 
-    add_transaction_tracer :sync, category: :task
 
+  def initialize(external_program)
+    @external_program = external_program
+  end
 
-    private
-
-    def fetch_and_save_feed(url)
-      Feedzirra::Feed.safe_fetch_and_parse(url) do |feed|
-
+  def sync
+    Feedzirra::Feed.safe_fetch_and_parse(url) do |feed|
+      feed.entries.each do |entry|
+        @external_program.external_episodes.build(
+          :title      => entry.title,
+          :air_date   => entry.published
+        )
       end
     end
   end
+
+  add_transaction_tracer :sync, category: :task
 end
