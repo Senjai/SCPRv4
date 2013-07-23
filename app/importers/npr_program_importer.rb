@@ -1,6 +1,10 @@
 # The NPR Importer is here because NPR, through their API, gives us more
-# information about a given segment than an RSS feed does. With it, we're
-# able to group segments together into episodes.
+# information about a given segment than an RSS feed does.
+#
+# A program with its source set to "npr-api" is assumed to have segmented
+# episodes. This might not always be the case with the NPR API, I really 
+# don't know, but we'll leave it like this until something breaks. For now
+# we assume that every program has episodes, and every segment has an episode.
 #
 # http://www.npr.org/api/mappingCodes.php
 class NprProgramImporter
@@ -28,28 +32,27 @@ class NprProgramImporter
     # TODO: If there are more than 20 segments to an episode, need
     # to recognize that and do another query to fetch the other ones.
     # We can do this with pagination, using the startNum parameter.
-    @segments = NPR::Story.where(
+    segments = NPR::Story.where(
       :id   => @external_program.external_id,
       :date => "current"
     ).limit(20).to_a
 
     # If there are no segments then forget about it.
-    return false if @segments.empty?
+    return false if segments.empty?
 
-    # If there is no show, or the program isn't episodic, then we can't
-    # or shouldn't build an episode.
-    show = @segments.first.shows.last
-    return false if !show
-
+    # If there's not a show, then we should abort because the
+    # imported segment will never get seen anyways, which would
+    # be a hidden and potentially confusing bug.
     # If an episode with this air date for this program was already
     # imported, then it's safe to assume that we already imported its
     # segments as well. The NPR API specifies that requesting a 
     # program with `date=current` will only return COMPLETED episodes.
-    return false if episode_exists?(show.showDate)
+    show = segments.first.shows.last
+    return false if !show || episode_exists?(show)
 
     external_episode = build_external_episode(show)
 
-    @segments.each do |segment|
+    segments.each do |segment|
       external_segment = build_external_segment(segment)
 
       external_episode.external_episode_segments.build(
@@ -67,9 +70,13 @@ class NprProgramImporter
 
   private
 
+  # For NPR, we kind of have to make-up these episodes, since NPR
+  # doesn't really keep track of the shows, except for the air-date
+  # and as a means to group together segments.
   def build_external_episode(show)
     @external_program.external_episodes.build(
-      :title      => show.showDate.strftime("%A, %B %e, %Y"),
+      :title      => "#{@external_program.title} for " +
+                     show.showDate.strftime("%A, %B %e, %Y"),
       :air_date   => show.showDate
     )
   end
@@ -79,17 +86,24 @@ class NprProgramImporter
       :title              => segment.title,
       :teaser             => segment.teaser,
       :published_at       => segment.pubDate,
-      :public_url         => segment.link_for("html"),
+      :external_url       => segment.link_for("html"),
       :external_id        => segment.id,
-      :external_program   => @external_program,
-      :source             => SOURCE
+      :external_program   => @external_program
     )
   end
 
-  def episode_exists?(date)
+
+  def episode_exists?(show)
     ExternalEpisode.exists?(
-      :air_date               => date,
-      :external_program_id    => @external_program.id
+      :external_program_id    => @external_program.id,
+      :air_date               => show.showDate
+    )
+  end
+
+  def segment_exists?(segment)
+    ExternalSegment.exists?(
+      :external_program_id => @external_program.id,
+      :external_id         => segment.id
     )
   end
 end
