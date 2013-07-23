@@ -36,11 +36,29 @@ class NprProgramImporter
     # If there are no segments then forget about it.
     return false if @segments.empty?
 
-    if @external_program.is_episodic?
-      sync_with_episode
-    else
-      sync_without_episode
+    # If there is no show, or the program isn't episodic, then we can't
+    # or shouldn't build an episode.
+    show = @segments.first.shows.last
+    return false if !show
+
+    # If an episode with this air date for this program was already
+    # imported, then it's safe to assume that we already imported its
+    # segments as well. The NPR API specifies that requesting a 
+    # program with `date=current` will only return COMPLETED episodes.
+    return false if episode_exists?(show.showDate)
+
+    external_episode = build_external_episode(show)
+
+    @segments.each do |segment|
+      external_segment = build_external_segment(segment)
+
+      external_episode.external_episode_segments.build(
+        :external_segment => external_segment,
+        :position         => show.segNum
+      )
     end
+
+    @external_program.save!
   end
 
   add_transaction_tracer :sync, category: :task
@@ -48,45 +66,6 @@ class NprProgramImporter
 
 
   private
-
-  def sync_with_episode
-    # If there is no show, or the program isn't episodic, then we can't
-    # or shouldn't build an episode.
-    if show = @segments.first.shows.last
-      # If an episode with this air date for this program was already
-      # imported, then it's safe to assume that we already imported its
-      # segments as well. The NPR API specifies that requesting a 
-      # program with `date=current` will only return COMPLETED episodes.
-      return false if episode_exists?(show.showDate)
-
-      external_episode = build_external_episode(show)
-
-      @segments.each do |segment|
-        external_segment = build_external_segment(segment)
-
-        external_episode.external_episode_segments.build(
-          :external_segment => external_segment,
-          :position         => show.segNum
-        )
-      end
-
-      @external_program.save!
-    end
-  end
-
-  def sync_without_episode
-    @segments.each do |segment|
-      # If the external ID and the external program ID are the same,
-      # then this is the same segment, and we don't have to create
-      # it again.
-      if !segment_exists?(segment.id)
-        external_segment = build_external_segment(segment)
-      end
-    end
-
-    @external_program.save!
-  end
-
 
   def build_external_episode(show)
     @external_program.external_episodes.build(
@@ -107,19 +86,10 @@ class NprProgramImporter
     )
   end
 
-
   def episode_exists?(date)
     ExternalEpisode.exists?(
       :air_date               => date,
       :external_program_id    => @external_program.id
-    )
-  end
-
-  def segment_exists?(segment_id)
-    ExternalSegment.exists?(
-      :external_id            => segment_id,
-      :external_program_id    => @external_program.id,
-      :source                 => SOURCE
     )
   end
 end

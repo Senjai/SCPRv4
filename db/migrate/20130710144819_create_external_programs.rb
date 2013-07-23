@@ -20,7 +20,6 @@ class CreateExternalPrograms < ActiveRecord::Migration
       t.string :twitter_handle
       t.string :source
       t.integer :external_id
-      t.boolean :is_episodic
     end
 
     remove_index :external_programs, name: "slug"
@@ -31,6 +30,5 @@ class CreateExternalPrograms < ActiveRecord::Migration
     add_index :external_programs, :slug
     add_index :external_programs, :air_status
     add_index :external_programs, [:source, :external_id]
-    add_index :external_programs, :is_episodic
   end
 end

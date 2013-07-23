@@ -339,11 +339,9 @@ ActiveRecord::Schema.define(:version => 20130722233837) do
     t.string   "twitter_handle"
     t.string   "source"
     t.integer  "external_id"
-    t.boolean  "is_episodic"
   end
 
   add_index "external_programs", ["air_status"], :name => "index_external_programs_on_air_status"
-  add_index "external_programs", ["is_episodic"], :name => "index_external_programs_on_is_episodic"
   add_index "external_programs", ["slug"], :name => "index_external_programs_on_slug"
   add_index "external_programs", ["source", "external_id"], :name => "index_external_programs_on_source_and_external_id"
   add_index "external_programs", ["title"], :name => "index_external_programs_on_title"

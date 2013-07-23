@@ -8,7 +8,6 @@
 <%= form_block "Source" do %>
   <%= f.input :source, collection: ExternalProgram::IMPORTERS.keys %>
   <%= f.input :external_id, label: "External ID", hint: "For <a href='http://www.npr.org/api/mappingCodes.php'>NPR API</a>, for example. Leave BLANK for RSS sources.", input_html: { class: "tiny" } %>
-  <%= f.input :is_episodic, hint: "Is this an episodic program, or just segments? This will only affect some import sources (such as NPR API)." %>
 <% end %>
 
 <%= form_block "Who/When" do %>

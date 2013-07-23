@@ -7,13 +7,11 @@ FactoryGirl.define do
     trait :from_rss do
       rss_url "http://www.kqed.org/rss/private/californiareport.xml"
       source  "rss"
-      is_episodic false
     end
 
     trait :from_npr do
       source "npr-api"
       external_id 999
-      is_episodic true
     end
   end
 

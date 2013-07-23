@@ -48,7 +48,7 @@ describe ExternalProgram do
     end
 
     it "syncs using the importer" do
-      program = create :external_program, :from_npr, is_episodic: true
+      program = create :external_program, :from_npr
       program.sync
       program.external_episodes.should_not be_empty
       program.external_segments.should_not be_empty

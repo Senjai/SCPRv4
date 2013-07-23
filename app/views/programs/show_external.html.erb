@@ -16,11 +16,7 @@
 </div> <!-- .program-ext-header -->
 
 <div class="show-segments">
-  <% if @program.is_episodic? %>
-    <%= render partial: "external_episode", collection: @program.external_episodes %>
-  <% else %>
-    <%= render partial: "external_segment", collection: @program.external_segments %>
-  <% end %>
+  <%= render partial: "external_episode", collection: @program.external_episodes %>
 </div>
 
 <% end %>

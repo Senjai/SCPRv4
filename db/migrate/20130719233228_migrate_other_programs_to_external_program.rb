@@ -19,10 +19,8 @@ class MigrateOtherProgramsToExternalProgram < ActiveRecord::Migration
     ExternalProgram.all.each do |ext_program|
       if npr_program = NPR_PROGRAMS.find { |npr| npr[:local_id] == ext_program.id }
         ext_program.external_id = npr_program[:external_id]
-        ext_program.is_episodic = true
         ext_program.source = "npr-api"
       else
-        ext_program.is_episodic = false
         ext_program.source = "rss"
       end
 
