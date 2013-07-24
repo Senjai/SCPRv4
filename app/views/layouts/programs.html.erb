@@ -30,7 +30,6 @@
 
 <% content_for :sidebar_middle do %>
   <% if @program.is_a? KpccProgram %>
-
     <% present @program, ProgramPresenter do |p| %>
       <section class="program-about widget">
         <h6>About <%= p.title %></h6>
@@ -38,17 +37,17 @@
           <div class="span10">
             <nav class="connect">
               <span class="title">Stay Connected</span>
-              <%= link_to "Facebook", p.facebook_url, target: "_blank", class: "facebook with-icon" %>
-              <%= link_to "Twitter", p.twitter_url, target: "_blank", class: "twitter with-icon" %>
-              <%= link_to "Podcasts", p.podcast_url, target: "_blank", class: "podcast with-icon" %>
-              <%= link_to "RSS", p.rss_url, target: "_blank", class: "rss with-icon"  %>
+              <%= p.facebook_link %>
+              <%= p.twitter_link %>
+              <%= p.podcast_link %>
+              <%= p.rss_link %>
             </nav>
           </div>
           <div class="span14">
             <p class="about"><%= p.teaser %></p>
           </div>
         </div>
-        <%= link_to "View Archived Episodes", program_path(p.slug, :anchor => "archive"), class: "archive with-icon" %>
+        <%= link_to "View Archived Episodes", @program.public_path(anchor: "archive"), class: "archive with-icon" %>
       </section>
     <% end %>
 
