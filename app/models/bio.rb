@@ -80,14 +80,6 @@ class Bio < ActiveRecord::Base
   
   #---------------------
   
-  def twitter_url
-    if twitter.present?
-      "http://twitter.com/#{twitter.gsub(/@/, '')}"
-    end
-  end
-  
-  #---------------------
-  
   def headshot
     if self.asset_id?
       @headshot ||= AssetHost::Asset.find(self.asset_id)
