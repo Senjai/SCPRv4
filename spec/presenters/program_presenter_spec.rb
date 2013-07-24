@@ -82,7 +82,7 @@ describe ProgramPresenter do
 
 
   describe "#facebook_link" do
-    it "returns the program.facebook_url if specified" do
+    it "returns the facebook link if specified" do
       program = build :kpcc_program
       program.related_links.build(title: "Facebook", url: "facebook.com/airtalk", link_type: "facebook")
       p = presenter(program)

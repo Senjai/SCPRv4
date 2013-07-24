@@ -18,7 +18,7 @@ describe BlogPresenter do
 
 
   describe "#facebook_link" do
-    it "returns the blog.facebook_url if specified" do
+    it "returns the facebook link if specified" do
       blog = build :blog
       blog.related_links.build(title: "Facebook", url: "facebook.com/airtalk", link_type: "facebook")
       p = presenter(blog)
