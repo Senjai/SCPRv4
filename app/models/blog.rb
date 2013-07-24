@@ -5,39 +5,40 @@ class Blog < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Associations::RelatedLinksAssociation
 
   ROUTE_KEY = "blog"
-  
+
   #-------------------
   # Scopes
   scope :active, -> { where(is_active: true) }
-  
+
   #-------------------
   # Associations
   has_many :entries, order: 'published_at desc', class_name: "BlogEntry"
   belongs_to :missed_it_bucket
   has_many :authors, through: :blog_authors
   has_many :blog_authors
-  
+
   #-------------------
   # Validations
   validates :name, presence: true
   validates :slug, uniqueness: true
   validates :description, presence: true
-  
+
   #-------------------
   # Callbacks
-  
+
   #----------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes name
     indexes teaser
     has is_active
   end
-  
+
   #-------------------
-  
+
   class << self
     #-------------------
     # Maps all records to an array of arrays, to be
@@ -46,9 +47,9 @@ class Blog < ActiveRecord::Base
       Blog.order("name").map { |blog| [blog.to_title, blog.id] }
     end
   end
-  
+
   #-------------------
-  
+
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.is_active?
     { :blog => self.persisted_record.slug }
