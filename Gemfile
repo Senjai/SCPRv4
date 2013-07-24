@@ -51,7 +51,6 @@ gem "ice_cube", "~> 0.11.0"
 gem "faraday", "~> 0.8"
 gem "faraday_middleware", "~> 0.8"
 gem "hashie", "~> 1.2.0"
-gem "feedzirra", github: "pauldix/feedzirra"
 
 
 ## APIs
