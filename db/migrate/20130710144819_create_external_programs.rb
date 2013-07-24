@@ -31,6 +31,6 @@ class CreateExternalPrograms < ActiveRecord::Migration
     add_index :external_programs, :slug
     add_index :external_programs, :air_status
     add_index :external_programs, [:source, :external_id]
-    add_index :feed_type
+    add_index :external_programs, :feed_type
   end
 end
