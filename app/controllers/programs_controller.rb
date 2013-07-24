@@ -48,8 +48,8 @@ class ProgramsController < ApplicationController
       respond_with @segments_scoped
     else
       respond_to do |format|
-        format.html { render :action => "show_external" }
-        format.xml  { redirect_to @program.podcast_url.present? ? @program.podcast_url : @program.rss_url }
+        format.html { render action: "show_external" }
+        format.xml  { redirect_to @program.feed_url }
       end
     end
   end
