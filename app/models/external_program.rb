@@ -95,6 +95,10 @@ class ExternalProgram < ActiveRecord::Base
     @importer ||= IMPORTERS[self.source].constantize
   end
 
+  def feed_url
+    self.podcast_url.present? ? self.podcast_url : self.rss_url
+  end
+
   def sync
     self.importer.sync(self)
   end

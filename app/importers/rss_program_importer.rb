@@ -24,7 +24,7 @@ class RssProgramImporter
   # We're only going to bother with the first 20 segments,
   # because some feeds could have thousands of entries.
   def sync
-    feed = RSS::Parser.parse(@external_program.rss_url)
+    feed = RSS::Parser.parse(@external_program.feed_url)
     return false if !feed || feed.items.empty?
 
     if @external_program.feed_type == "rss-episodes"

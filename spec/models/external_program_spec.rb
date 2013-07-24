@@ -54,4 +54,16 @@ describe ExternalProgram do
       program.external_segments.should_not be_empty
     end
   end
+
+  describe '#feed_url' do
+    it "uses podcast_url if present" do
+      program = create :external_program, :from_rss, podcast_url: "http://podcast.com", rss_url: "http://rss.com"
+      program.feed_url.should eq "http://podcast.com"
+    end
+
+    it "uses rss_url if podcast_url is not present" do
+      program = create :external_program, :from_rss, podcast_url: "", rss_url: "http://rss.com"
+      program.feed_url.should eq "http://rss.com"
+    end
+  end
 end
