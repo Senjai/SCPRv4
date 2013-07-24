@@ -21,9 +21,7 @@
   <%= f.input :rss_url, hint: "XML URL", input_html: { class: "wide" } %>
   <%= f.input :web_url, label: "Website URL", input_html: { class: "wide" } %>
   <%= f.input :podcast_url, hint: "XML URL", input_html: { class: "wide" } %>
-  <%= f.input :twitter_handle, wrapper: :prepend, hint: "No @ symbol" do %>
-    <span class="add-on">@</span><%= f.input_field :twitter_handle, class: 'span2' %>
-  <% end %>
+  <%= f.section "twitter_handle" %>
 <% end %>
 
 <%= f.section "related_links" %>

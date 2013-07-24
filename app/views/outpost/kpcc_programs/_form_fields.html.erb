@@ -19,6 +19,7 @@
   <%= f.input :audio_dir, label: "Audio directory" %>
   <%= f.association :missed_it_bucket %>
 
+  <%= f.section "twitter_handle" %>
 <% end %>
 
 <%= form_block "Image" do %>
@@ -34,7 +35,6 @@
 <%= form_block "Links" do %>
   <%= f.input :podcast_url %>
   <%= f.input :rss_url %>
-  <%= f.input :twitter_url, label: "Twitter account", hint: "Without the '@' sign: @kpcc -> kpcc" %>
   <%= f.input :facebook_url %>
 <% end %>
 
