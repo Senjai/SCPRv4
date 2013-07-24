@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130722233837) do
+ActiveRecord::Schema.define(:version => 20130724215924) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -84,13 +84,11 @@ ActiveRecord::Schema.define(:version => 20130722233837) do
     t.string   "slug",                :limit => 50
     t.text     "description",         :limit => 2147483647
     t.boolean  "is_active",                                 :default => false, :null => false
-    t.string   "feed_url",            :limit => 200
     t.boolean  "is_news",                                                      :null => false
     t.string   "teaser"
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
-    t.string   "facebook_url"
     t.string   "twitter_handle"
   end
 
@@ -332,7 +330,6 @@ ActiveRecord::Schema.define(:version => 20130722233837) do
     t.string   "organization",   :limit => 50
     t.string   "airtime"
     t.string   "air_status",                   :null => false
-    t.string   "web_url"
     t.string   "podcast_url"
     t.string   "rss_url"
     t.text     "sidebar"
@@ -575,10 +572,7 @@ ActiveRecord::Schema.define(:version => 20130722233837) do
     t.string   "host"
     t.string   "airtime"
     t.string   "air_status",                             :null => false
-    t.string   "podcast_url"
-    t.string   "rss_url"
-    t.string   "twitter_url"
-    t.string   "facebook_url"
+    t.string   "twitter_handle"
     t.text     "sidebar"
     t.boolean  "display_episodes",    :default => true,  :null => false
     t.boolean  "display_segments",    :default => true,  :null => false
@@ -612,14 +606,15 @@ ActiveRecord::Schema.define(:version => 20130722233837) do
   add_index "recurring_schedule_rules", ["program_type", "program_id"], :name => "index_recurring_schedule_rules_on_program_type_and_program_id"
 
   create_table "related_links", :force => true do |t|
-    t.string  "title",        :default => ""
-    t.string  "url"
-    t.string  "link_type"
-    t.integer "content_id"
-    t.string  "content_type"
+    t.string   "title",        :default => ""
+    t.string   "url"
+    t.string   "link_type"
+    t.integer  "content_id"
+    t.string   "content_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "related_links", ["content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
   add_index "related_links", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
   add_index "related_links", ["link_type"], :name => "index_related_links_on_link_type"
 
