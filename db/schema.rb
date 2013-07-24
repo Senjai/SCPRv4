@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724215924) do
+ActiveRecord::Schema.define(:version => 20130724232332) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -57,19 +57,18 @@ ActiveRecord::Schema.define(:version => 20130724215924) do
 
   create_table "bios_bio", :force => true do |t|
     t.integer  "user_id"
-    t.string   "slug",         :limit => 50
-    t.text     "bio",          :limit => 2147483647
+    t.string   "slug"
+    t.text     "bio"
     t.string   "title"
-    t.boolean  "is_public",                          :default => false, :null => false
-    t.string   "feed_url",     :limit => 200
-    t.string   "twitter"
+    t.boolean  "is_public",      :default => false, :null => false
+    t.string   "twitter_handle"
     t.integer  "asset_id"
     t.string   "short_bio"
     t.string   "phone_number"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "last_name"
   end
 
@@ -77,7 +76,6 @@ ActiveRecord::Schema.define(:version => 20130724215924) do
   add_index "bios_bio", ["is_public"], :name => "index_bios_bio_on_is_public"
   add_index "bios_bio", ["last_name"], :name => "index_bios_bio_on_last_name"
   add_index "bios_bio", ["slug"], :name => "index_bios_bio_on_slug"
-  add_index "bios_bio", ["user_id"], :name => "user_id_refs_id_1277bd7cd84326f2"
 
   create_table "blogs_blog", :force => true do |t|
     t.string   "name"
