@@ -28,7 +28,7 @@ class ExternalProgram < ActiveRecord::Base
   # "source" => "Importer module name"
   IMPORTERS = {
     "npr-api" => "NprProgramImporter",
-    "rss"     => "RssImporter"
+    "rss"     => "RssProgramImporter"
   }
 
   FEED_TYPES = {
