@@ -16,7 +16,7 @@ class ProgramPresenter < ApplicationPresenter
   end
 
   def web_link
-    if link = program.get_url("website")
+    if link = program.get_link("website")
       h.link_to "Website", link,
         :target => "_blank",
         :class  => "archive with-icon"
