@@ -48,7 +48,7 @@ class ProgramsController < ApplicationController
       respond_with @segments_scoped
     else
       respond_to do |format|
-        format.html { render action: "show_external" }
+        format.html { render :show_external }
         format.xml  { redirect_to @program.feed_url }
       end
     end
