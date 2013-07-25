@@ -40,18 +40,36 @@ describe ExternalProgram do
   end
 
   describe '#sync' do
-    before :each do
-      FakeWeb.register_uri(:get, %r{api\.npr\.org},
-        :content_type   => 'application/json',
-        :body           => load_fixture('api/npr/program.json')
-      )
+    context 'for npr' do
+      before :each do
+        FakeWeb.register_uri(:get, %r{api\.npr\.org},
+          :content_type   => 'application/json',
+          :body           => load_fixture('api/npr/program.json')
+        )
+      end
+
+      it "syncs using the importer" do
+        program = create :external_program, :from_npr
+        program.sync
+        program.external_episodes.should_not be_empty
+        program.external_segments.should_not be_empty
+      end
     end
 
-    it "syncs using the importer" do
-      program = create :external_program, :from_npr
-      program.sync
-      program.external_episodes.should_not be_empty
-      program.external_segments.should_not be_empty
+    context 'for rss' do
+      before :each do
+        FakeWeb.register_uri(:get, %r{rss\.com},
+          :content_type   => 'text/xml',
+          :body           => load_fixture('rss/rss_feed.xml')
+        )
+      end
+
+      it "syncs using the importer" do
+        program = create :external_program, :from_rss, rss_url: "http://rss.com", feed_type: "rss-episodes"
+        program.sync
+        program.external_episodes.should_not be_empty
+        program.external_segments.should be_empty
+      end
     end
   end
 
