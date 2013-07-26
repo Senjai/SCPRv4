@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724232332) do
+ActiveRecord::Schema.define(:version => 20130726122419) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -329,7 +329,6 @@ ActiveRecord::Schema.define(:version => 20130724232332) do
     t.string   "airtime"
     t.string   "air_status",                   :null => false
     t.string   "podcast_url"
-    t.string   "rss_url"
     t.text     "sidebar"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
