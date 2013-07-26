@@ -11,16 +11,6 @@ class Audio
       end
     end
 
-
-    # Override some methods to handle this special case.
-    def path
-      nil
-    end
-
-    def full_path
-      nil
-    end
-
     def url
       self.mp3_url
     end
