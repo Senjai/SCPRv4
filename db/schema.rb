@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130726122419) do
+ActiveRecord::Schema.define(:version => 20130726160450) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -335,11 +335,9 @@ ActiveRecord::Schema.define(:version => 20130726122419) do
     t.string   "twitter_handle"
     t.string   "source"
     t.integer  "external_id"
-    t.string   "feed_type"
   end
 
   add_index "external_programs", ["air_status"], :name => "index_external_programs_on_air_status"
-  add_index "external_programs", ["feed_type"], :name => "index_external_programs_on_feed_type"
   add_index "external_programs", ["slug"], :name => "index_external_programs_on_slug"
   add_index "external_programs", ["source", "external_id"], :name => "index_external_programs_on_source_and_external_id"
   add_index "external_programs", ["title"], :name => "index_external_programs_on_title"
@@ -427,11 +425,10 @@ ActiveRecord::Schema.define(:version => 20130726122419) do
     t.string   "content_type"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
-    t.string   "filename"
-    t.string   "store_dir"
-    t.string   "mp3_path"
+    t.string   "mp3_url"
     t.string   "type"
     t.string   "mp3"
+    t.integer  "status"
   end
 
   add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
