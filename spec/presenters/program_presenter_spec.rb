@@ -51,17 +51,33 @@ describe ProgramPresenter do
   end
 
   describe "#podcast_link" do
-    it "returns program.podcast_url if specified" do
-      program = build :external_program
-      program.related_links.build(title: "Podcast", url: "podcast.com/airtalk", link_type: "podcast")
-      p = presenter(program)
-      p.podcast_link.should match %r{podcast\.com/airtalk}
+    context "for external programs"
+      it "returns program.podcast_url if specified" do
+        program = build :external_program, podcast_url: "podcast.com/airtalk"
+        p = presenter(program)
+        p.podcast_link.should match %r{podcast\.com/airtalk}
+      end
+
+      it "returns nil if no podcast_url present" do
+        program = build :external_program, podcast_url: nil
+        p = presenter(program)
+        p.podcast_link.should eq nil
+      end
     end
 
-    it "returns nil if not specified" do
-      program = build :external_program
-      p = presenter(program)
-      p.podcast_link.should eq nil
+    context "for kpcc programs" do
+      it "gets podcast related link for kpcc programs" do
+        program = build :kpcc_program
+        program.related_links.build(title: "Podcast", url: "", link_type: "podcast")
+        p = presenter(program)
+        p.podcast_link.should match %r{podcast\.com/airtalk}
+      end
+
+      it "returns nil if no podcast link present" do
+        program = build :kpcc_program
+        p = presenter(program)
+        p.podcast_link.should eq nil
+      end
     end
   end
 
