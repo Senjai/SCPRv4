@@ -73,6 +73,10 @@ class ExternalProgram < ActiveRecord::Base
     def select_collection
       ExternalProgram.order("title").map { |p| [p.to_title, p.id] }
     end
+
+    def sync
+      self.active.each(&:sync)
+    end
   end
 
   #----------
