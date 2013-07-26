@@ -16,7 +16,7 @@ FactoryGirl.define do
 
     trait :direct do
       content { |a| a.association :news_story }
-      mp3_path "events/2012/10/02/SomeCoolEvent.mp3"
+      mp3_url "http://media.scpr.org/audio/events/2012/10/02/SomeCoolEvent.mp3"
     end
 
     trait :program do

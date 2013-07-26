@@ -5,7 +5,7 @@
 # every record, even if it's not live.
 #
 # :mp3 should be present for live audio, but can be null otherwise
-# :enco_number, :enco_date, and :mp3_path are STI
+# :enco_number, :enco_date, and :mp3_url are STI
 # columns that can be null depending on audio source
 #
 class Audio < ActiveRecord::Base
@@ -83,12 +83,12 @@ class Audio < ActiveRecord::Base
   # #mp3_exists will catch that with a more helpful
   # error message.
   def audio_source_is_provided
-    if self.mp3_path.blank? &&
+    if self.mp3_url.blank? &&
     self.mp3.file.nil? &&
     self.enco_number.blank? &&
     self.enco_date.blank?
       self.errors.add(:base,
-        "Audio must have a source (upload, enco, or path)")
+        "Audio must have a source (upload, enco, or URL)")
     end
   end
 

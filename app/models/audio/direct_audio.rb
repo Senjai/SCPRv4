@@ -1,7 +1,7 @@
 ##
 # DirectAudio 
 #
-# Given an arbitrary path to an mp3
+# Given an arbitrary URL to an mp3
 #
 class Audio
   class DirectAudio < Audio
