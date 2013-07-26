@@ -49,7 +49,7 @@ class ProgramsController < ApplicationController
     else
       respond_to do |format|
         format.html { render :show_external }
-        format.xml  { redirect_to @program.feed_url }
+        format.xml  { redirect_to @program.podcast_url }
       end
     end
   end

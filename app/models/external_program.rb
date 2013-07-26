@@ -14,6 +14,10 @@
 # 3. Set the program to use that importer in the CMS.
 # 4. There's not a 4th step, get to work already.
 #
+# We keep the podcast_url attribute on this table (instead of as a related link)
+# do that we can more easily validate it, and so we're not tying the behavior
+# of this model to an associated model.
+#
 class ExternalProgram < ActiveRecord::Base
   outpost_model
   has_secretary
@@ -54,6 +58,11 @@ class ExternalProgram < ActiveRecord::Base
   validates :title, :air_status, :slug, :source, presence: true
   validates :slug, uniqueness: true
 
+  validates :podcast_url,
+    :presence => {
+      :message => "can't be blank if source is RSS",
+      :if      => -> { self.source == "rss" }
+    }
 
   #-------------------
   # Callbacks
@@ -97,10 +106,6 @@ class ExternalProgram < ActiveRecord::Base
 
   def importer
     @importer ||= IMPORTERS[self.source].constantize
-  end
-
-  def feed_url
-    self.podcast_url.present? ? self.podcast_url : self.rss_url
   end
 
   def sync

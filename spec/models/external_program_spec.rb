@@ -13,6 +13,14 @@ describe ExternalProgram do
     end
   end
 
+  describe "validations" do
+    it "validates podcast_url is present is source is RSS" do
+      program = build :external_program, :from_rss, podcast_url: nil
+      program.valid?.should eq false
+      program.errors.keys.should include :podcast_url
+    end
+  end
+
   describe '::sync' do
     before :each do
       FakeWeb.register_uri(:get, %r{podcast\.com},
@@ -80,23 +88,11 @@ describe ExternalProgram do
       end
 
       it "syncs using the importer" do
-        program = create :external_program, :from_rss, rss_url: "http://rss.com", feed_type: "rss-episodes"
+        program = create :external_program, :from_rss, podcast_url: "http://rss.com"
         program.sync
         program.external_episodes.should_not be_empty
         program.external_segments.should be_empty
       end
-    end
-  end
-
-  describe '#feed_url' do
-    it "uses podcast_url if present" do
-      program = create :external_program, :from_rss, podcast_url: "http://podcast.com", rss_url: "http://rss.com"
-      program.feed_url.should eq "http://podcast.com"
-    end
-
-    it "uses rss_url if podcast_url is not present" do
-      program = create :external_program, :from_rss, podcast_url: "", rss_url: "http://rss.com"
-      program.feed_url.should eq "http://rss.com"
     end
   end
 end

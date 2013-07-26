@@ -5,7 +5,7 @@ FactoryGirl.define do
     air_status  "onair"
 
     trait :from_rss do
-      rss_url "http://www.kqed.org/rss/private/californiareport.xml"
+      podcast_url "http://www.kqed.org/rss/private/californiareport.xml"
       source  "rss"
     end
 

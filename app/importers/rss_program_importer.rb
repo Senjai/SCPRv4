@@ -1,11 +1,7 @@
 require 'rss'
 
-# We look to the program's `feed_type` attribute to find out what we're
-# importing. Without this, we can't really know for sure whether each
-# RSS/podcast entry is a full episode (like BBC or Prarie Home Companion)
-# or a segment of an episode (Science Friday, Morning Edition).
-#
-#   
+# We assume that the RSS feeds (podcast) contain an entire episode in each
+# item. I don't know if this is always necessarily true.
 class RssProgramImporter
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
@@ -24,29 +20,16 @@ class RssProgramImporter
   # We're only going to bother with the first 20 segments,
   # because some feeds could have thousands of entries.
   def sync
-    feed = RSS::Parser.parse(@external_program.feed_url)
+    feed = RSS::Parser.parse(@external_program.podcast_url)
     return false if !feed || feed.items.empty?
 
-    if @external_program.feed_type == "rss-episodes"
-      feed.items.first(5).reject { |e| episode_exists?(e) }.each do |item|
-        @external_program.external_episodes.build(
-          :title       => item.title,
-          :summary     => item.description,
-          :air_date    => item.pubDate,
-          :external_id => item.guid.content
-        )
-      end
-
-    elsif @external_program.feed_type == "rss-segments"
-      feed.items.first(20).reject { |e| segment_exists?(e) }.each do |item|
-        @external_program.external_segments.build(
-          :title          => item.title,
-          :teaser         => item.description,
-          :published_at   => item.pubDate,
-          :external_id    => item.guid.content,
-          :external_url   => item.link
-        )
-      end
+    feed.items.first(5).reject { |e| episode_exists?(e) }.each do |item|
+      @external_program.external_episodes.build(
+        :title       => item.title,
+        :summary     => item.description,
+        :air_date    => item.pubDate,
+        :external_id => item.guid.content
+      )
     end
 
     @external_program.save!
