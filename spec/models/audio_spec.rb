@@ -2,40 +2,6 @@ require "spec_helper"
 
 describe Audio do
   describe "validations" do
-    context "#enco_info_is_present_together" do
-      it "runs on save" do
-        audio = build :audio, :enco
-        audio.should_receive(:enco_info_is_present_together).once
-        audio.save!
-      end
-
-      it "fails if enco_number present but not enco_date" do
-        audio = build :audio, enco_date: nil, enco_number: 999
-        audio.enco_info_is_present_together
-        audio.errors.keys.should eq [:base, :enco_number, :enco_date]
-      end
-
-      it "fails if enco_date present but not enco_number" do
-        audio = build :audio, enco_date: Date.today, enco_number: nil
-        audio.enco_info_is_present_together
-        audio.errors.keys.should eq [:base, :enco_number, :enco_date]
-      end
-
-      it "passes if enco_date and enco_number are present" do
-        audio = build :audio, enco_date: Date.today, enco_number: 999
-        audio.enco_info_is_present_together
-        audio.errors.should be_blank
-      end
-
-      it "passes if neither enco_date nor enco_number were provided" do
-        audio = build :audio, :direct, enco_date: nil, enco_number: nil
-        audio.enco_info_is_present_together
-        audio.errors.should be_blank
-      end
-    end
-
-    #----------------
-
     context "#audio_source_is_provided" do
       it "runs on save" do
         audio = build :audio, :enco
@@ -231,19 +197,26 @@ describe Audio do
       create :audio, :enco
     end
 
-    #----------------
-
-    describe "nilify_blanks" do
-      after :each do
+    describe 'setting the status' do
+      it "status STATUS_LIVE for uploaded audio" do
+        audio = create :audio, :uploaded
+        audio.status.should eq Audio::STATUS_LIVE
         purge_uploaded_audio
       end
 
-      it "nilifies blanks" do
-        audio = create :audio, :uploaded, description: "", byline: "", enco_number: "", mp3_path: ""
-        audio.description.should eq ""
-        audio.byline.should eq ""
-        audio.enco_number.should eq nil
-        audio.mp3_path.should eq nil
+      it "status STATUS_LIVE for program audio" do
+        audio = create :audio, :program
+        audio.status.should eq Audio::STATUS_LIVE
+      end
+
+      it "status STATUS_LIVE for direct audio" do
+        audio = create :audio, :direct
+        audio.status.should eq Audio::STATUS_LIVE
+      end
+
+      it "sets STATUS_WAIT for enco audio" do
+        audio = build :audio, :enco
+        audio.status.should eq Audio::STATUS_WAIT
       end
     end
   end
@@ -261,25 +234,6 @@ describe Audio do
 
   #----------------
 
-  describe "#status" do
-    it "returns STATUS_LIVE if mp3 is present" do
-      audio = build :audio, :uploaded
-      audio.status.should eq Audio::STATUS_LIVE
-    end
-
-    it "returns STATUS_WAIT if mp3 blank but enco information present" do
-      audio = build :audio, :enco
-      audio.status.should eq Audio::STATUS_WAIT
-    end
-
-    it "returns STATUS_NONE if mp3 and enco information blank" do
-      audio = build :audio
-      audio.status.should eq Audio::STATUS_NONE
-    end
-  end
-
-  #----------------
-
   describe "#live?" do
     it "is true if status is live" do
       audio = build :audio
@@ -291,22 +245,6 @@ describe Audio do
       audio = build :audio
       audio.stub(:status) { Audio::STATUS_WAIT }
       audio.live?.should be_false
-    end
-  end
-
-  #----------------
-
-  describe "#awaiting?" do
-    it "is true if status is waiting" do
-      audio = build :audio
-      audio.stub(:status) { Audio::STATUS_WAIT }
-      audio.awaiting?.should be_true
-    end
-
-    it "is false is status is live" do
-      audio = build :audio
-      audio.stub(:status) { Audio::STATUS_LIVE }
-      audio.awaiting?.should be_false
     end
   end
 

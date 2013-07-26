@@ -6,26 +6,34 @@
 class Audio
   class DirectAudio < Audio
     class << self
-      def store_dir(audio)
-        path = Pathname.new(audio.mp3_path)
-        path.split.first.to_s
+      def default_status
+        STATUS_LIVE
       end
-  
-      # Generate the filename for an object
-      def filename(audio)
-        path = Pathname.new(audio.mp3_path)
-        path.split.last.to_s
-      end
-    
-      #------------
-      # Proxy to Audio::Sync::bulk_sync_awaiting_audio
-      def bulk_sync
-        Audio::Sync.bulk_sync_awaiting_audio(self)
-      end
-    end # singleton
-    
-    def sync
-      Audio::Sync.sync_if_file_exists(self)
+    end
+
+
+    # Override some methods to handle this special case.
+    def path
+      nil
+    end
+
+    def full_path
+      nil
+    end
+
+    def url
+      self.mp3_url
+    end
+
+    def podcast_url
+      self.mp3_url
+    end
+
+
+    private
+
+    def set_default_status
+      self.status = STATUS_LIVE
     end
   end # DirectAudio
 end # Audio

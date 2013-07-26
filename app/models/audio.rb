@@ -19,13 +19,6 @@ class Audio < ActiveRecord::Base
   AUDIO_URL_ROOT   = File.join(Rails.application.config.scpr.media_url, "audio")
   PODCAST_URL_ROOT = File.join(Rails.application.config.scpr.media_url, "podcasts")
 
-  STORE_DIRS = {
-    :enco    => "features",  # The ENCO id and date were given
-    :upload  => "upload",    # The audio was uploaded via the CMS
-    :direct  => "",          # A path to an audio file was given
-    :program => ""           # Automatic via cron, no user interaction
-  }
-
   # Filename regular expressions
   FILENAMES = {
     :program => %r{(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})_(?<slug>\w+)\.mp3},             # 20121001_mbrand.mp3
@@ -50,7 +43,6 @@ class Audio < ActiveRecord::Base
 
   #------------
   # Validation
-  validate :enco_info_is_present_together
   validate :audio_source_is_provided
 
   validate :path_is_unique, if: -> {
@@ -62,16 +54,6 @@ class Audio < ActiveRecord::Base
   validate :mp3_exists, unless: -> {
     self.new_record? || Rails.env == "development"
   }
-
-  def enco_info_is_present_together
-    if self.enco_number.blank? ^ self.enco_date.blank?
-      errors.add(:base,
-        "Enco number and Enco date must both be present for ENCO audio")
-      # Just so the form is aware that enco_number and enco_date are involved
-      errors.add(:enco_number, "")
-      errors.add(:enco_date, "")
-    end
-  end
 
   #------------
   # Check if an audio source was given.
@@ -132,32 +114,17 @@ class Audio < ActiveRecord::Base
   # so that we can run type-specific validation.
   before_validation :set_type, if: -> { self.type.blank? }
 
-  before_save   :set_file_info, if: -> {
-    self.filename.blank? || self.store_dir.blank?
-  }
-
-  before_save :nilify_blanks
+  before_save :set_default_status
 
   after_save :async_compute_file_info, if: -> {
     self.mp3.present? && (self.size.blank? || self.duration.blank?)
   }
 
-  #------------
-  # Nilify these attributes just to keep everything consistent in the DB
-  # This is only applicable to text values that are coming from the form
-  def nilify_blanks
-    [:enco_number, :mp3_path].each do |attribute|
-      if self[attribute] == ""
-        self[attribute] = nil
-      end
-    end
-  end
-
 
   #------------
   # Scopes
-  scope :available,      -> { where("mp3 is not null") }
-  scope :awaiting_audio, -> { where("mp3 is null") }
+  scope :available,      -> { where(status: STATUS_LIVE) }
+  scope :awaiting_audio, -> { where(status: STATUS_WAIT) }
 
 
   #------------
@@ -167,74 +134,34 @@ class Audio < ActiveRecord::Base
     STATUS_TEXT[self.status]
   end
 
-  #------------
-
-  def status
-    @status ||= begin
-      if mp3.present?
-        STATUS_LIVE
-      elsif self.enco_number.present? || self.mp3_path.present?
-        STATUS_WAIT
-      else
-        STATUS_NONE
-      end
-    end
-  end
-
-  #------------
-
   def live?
     self.status == STATUS_LIVE
   end
 
-  #------------
 
-  def awaiting?
-    self.status == STATUS_WAIT
-  end
-
-  #------------
-  # The URL path, i.e. the path without "audio/"
-  # eg. /upload/2012/10/01/your_sweet_audio.mp3
+  # The following group of methods are necessary in case we need
+  # some of this information before the object has been typecast
+  # by rails (when pulling it out of the database).
   def path
-    @path ||= File.join self.store_dir, self.filename
+    @path ||= typecast_instance.path
   end
 
-  #------------
-  # The server path, 
-  # eg. /home/kpcc/media/audio/features/20121001_features999.mp3
   def full_path
-    @full_path ||= File.join Rails.application.config.scpr.media_root, "audio", self.path
+    @full_path ||= typecast_instance.full_path
   end
 
-  #------------
-  # The full URL to the live audio,
-  # eg. http://media.scpr.org/audio/upload/2012/10/01/your_sweet_audio.mp3
   def url
-    @url ||= begin
-      File.join(AUDIO_URL_ROOT, self.path) if self.live?
-    end
+    @url ||= typecast_instance.url
   end
 
-  #------------
-  # The full URL to the live podcast audio,
-  # eg. http://media.scpr.org/podcasts/airtalk/20120928_airtalk.mp3
   def podcast_url
-    @podcast_url ||= begin
-      File.join(PODCAST_URL_ROOT, self.path) if self.live?
-    end
+    @podcast_url ||= typecast_instance.podcast_url
   end
 
-  #------------
-  #------------
-  # Set file info, using each subclass's methods
-  # for generating store_dir and filename
-  def set_file_info
-    if self.type.present?
-      self.filename  = self.type.constantize.filename(self)
-      self.store_dir = self.type.constantize.store_dir(self)
-    end
+  def store_dir
+    @store_dir ||= typecast_instance.store_dir
   end
+
 
   #------------ 
   #------------
@@ -289,6 +216,10 @@ class Audio < ActiveRecord::Base
     Audio::Sync.enqueue_all
   end
 
+  def type_class
+    self.type.constantize
+  end
+
   private
 
   #------------
@@ -299,15 +230,27 @@ class Audio < ActiveRecord::Base
   # so if we're here and the mp3 is present,
   # we can safely assume it's uploaded audio
   def set_type
-    if self.live?
+    if self.mp3.present?
       self.type = "Audio::UploadedAudio"
 
     elsif self.enco_number.present? && self.enco_date.present?
       self.type = "Audio::EncoAudio"
 
-    elsif self.mp3_path.present?
+    elsif self.mp3_url.present?
       self.type = "Audio::DirectAudio"
 
     end
+  end
+
+  # For uploaded, direct, and program audio, when it gets created
+  # we can immediately assume that it's live.
+  # For ENCO audio, when it gets created we set it to "awaiting",
+  # and its status will get bumped to Live when it gets synced.
+  def set_default_status
+    self.status = self.type_class.default_status
+  end
+
+  def typecast_instance
+    self.class.name == self.type ? self : self.becomes(self.type_class)
   end
 end

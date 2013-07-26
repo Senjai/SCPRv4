@@ -34,28 +34,6 @@ class Audio
       end
 
       add_transaction_tracer :bulk_sync_awaiting_audio, category: :task
-
-      #------------
-      # Enco and Direct audio sync this way
-      # Don't use this method directly, use object.sync
-      def sync_if_file_exists(audio)
-        begin
-          if File.exists? audio.full_path
-            audio.send :write_attribute, :mp3, audio.filename
-            audio.save!
-            self.log "Saved Audio ##{audio.id}: #{audio.full_path}"
-            audio
-          else
-            self.log "Still awaiting audio file for Audio ##{audio.id}: #{audio.full_path}"
-            false
-          end
-        rescue => e
-          self.log "Could not save Audio ##{audio.id}: #{e}"
-          false
-        end
-      end
-
-      add_transaction_tracer :sync_if_file_exists, category: :task
     end # singleton
   end # Sync
 end # Audio
