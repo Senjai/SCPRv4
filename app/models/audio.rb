@@ -44,6 +44,7 @@ class Audio < ActiveRecord::Base
   #------------
   # Validation
   validate :audio_source_is_provided
+  validate :enco_info_is_present_together
 
   validate :path_is_unique, if: -> {
     self.new_record? && self.type == "Audio::UploadedAudio"
@@ -239,6 +240,16 @@ class Audio < ActiveRecord::Base
     elsif self.mp3_url.present?
       self.type = "Audio::DirectAudio"
 
+    end
+  end
+
+  def enco_info_is_present_together
+    if self.enco_number.blank? ^ self.enco_date.blank?
+      errors.add(:base,
+        "Enco number and Enco date must both be present for ENCO audio")
+      # Just so the form is aware that enco_number and enco_date are involved
+      errors.add(:enco_number, "")
+      errors.add(:enco_date, "")
     end
   end
 

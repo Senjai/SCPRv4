@@ -19,27 +19,26 @@ class Audio
       def default_status
         STATUS_WAIT
       end
+
+      def bulk_sync_awaiting_audio(limit=nil)
+        limit ||= 2.weeks.ago
+        awaiting = self.awaiting_audio.where("created_at > ?", limit)
+        synced = 0
+
+        if awaiting.empty?
+          self.log "No Audio to sync."
+        else
+
+          awaiting.each do |audio|
+            synced += 1 if audio.sync
+          end
+
+          self.log "Finished. Total synced: #{synced}"
+        end
+      end
     end # singleton
 
-
-    validate :enco_info_is_present_together
-
     def sync
-      Audio::Sync.sync_if_file_exists(self)
-    end
-
-
-    def store_dir
-      STORE_DIR
-    end
-
-    def filename
-      date = self.enco_date.strftime("%Y%m%d")
-      "#{date}_features#{self.enco_number}.mp3"
-    end
-
-
-    def sync_if_file_exists
       begin
         if File.exists? self.full_path
           self.mp3 = self.full_path
@@ -56,19 +55,16 @@ class Audio
       end
     end
 
-    add_transaction_tracer :sync_if_file_exists, category: :task
+    add_transaction_tracer :sync, category: :task
 
 
-    private
+    def store_dir
+      STORE_DIR
+    end
 
-    def enco_info_is_present_together
-      if self.enco_number.blank? ^ self.enco_date.blank?
-        errors.add(:base,
-          "Enco number and Enco date must both be present for ENCO audio")
-        # Just so the form is aware that enco_number and enco_date are involved
-        errors.add(:enco_number, "")
-        errors.add(:enco_date, "")
-      end
+    def filename
+      date = self.enco_date.strftime("%Y%m%d")
+      "#{date}_features#{self.enco_number}.mp3"
     end
   end # EncoAudio
 end # Audio
