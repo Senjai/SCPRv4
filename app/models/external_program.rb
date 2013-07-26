@@ -55,14 +55,15 @@ class ExternalProgram < ActiveRecord::Base
 
   #-------------------
   # Validations
-  validates :title, :air_status, :slug, :source, presence: true
-  validates :slug, uniqueness: true
+  validates \
+    :title,
+    :air_status,
+    :slug,
+    :source,
+    :podcast_url,
+    presence: true
 
-  validates :podcast_url,
-    :presence => {
-      :message => "can't be blank if source is RSS",
-      :if      => -> { self.source == "rss" }
-    }
+  validates :slug, uniqueness: true
 
   #-------------------
   # Callbacks

@@ -13,14 +13,6 @@ describe ExternalProgram do
     end
   end
 
-  describe "validations" do
-    it "validates podcast_url is present is source is RSS" do
-      program = build :external_program, :from_rss, podcast_url: nil
-      program.valid?.should eq false
-      program.errors.keys.should include :podcast_url
-    end
-  end
-
   describe '::sync' do
     before :each do
       FakeWeb.register_uri(:get, %r{podcast\.com},
