@@ -12,18 +12,11 @@ class Audio
     end
 
     def url
-      self.mp3_url
+      self.external_url
     end
 
     def podcast_url
-      self.mp3_url
-    end
-
-
-    private
-
-    def set_default_status
-      self.status = STATUS_LIVE
+      self.external_url
     end
   end # DirectAudio
 end # Audio

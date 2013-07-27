@@ -36,7 +36,7 @@
                 <a href="#audio-new-enco-<%=index%>" data-toggle="tab">Enco</a>
               </li>
               <li class="<%= "active" if f.object.errors[:mp3].present? %>"><a href="#audio-new-upload-<%=index%>" data-toggle="tab">Upload</a></li>
-              <li class="<%= "active" if f.object.errors[:mp3_url].present? %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">Path</a></li>
+              <li class="<%= "active" if f.object.errors[:external_url].present? %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">Path</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane <%= "active" if f.object.errors.blank? || (f.object.errors[:enco_number] || f.object.errors[:enco_date] || f.object.errors[:base]).present? %>" id="audio-new-enco-<%=index%>">
@@ -48,8 +48,8 @@
                 <%= f.input :mp3, as: :file, wrapper_html: { class: "vertical" } %>
               </div> <!-- upload -->
 
-              <div class="tab-pane <%= "active" if f.object.errors[:mp3_url].present? %>" id="audio-new-direct-<%=index%>">
-                <%= f.input :mp3_url, hint: "http://media.scpr.org/audio/events/2012/10/01/your_cool_audio.mp3", input_html: { class: "thin" }, wrapper_html: { class: "vertical"} %>
+              <div class="tab-pane <%= "active" if f.object.errors[:external_url].present? %>" id="audio-new-direct-<%=index%>">
+                <%= f.input :external_url, hint: "http://media.scpr.org/audio/events/2012/10/01/your_cool_audio.mp3", input_html: { class: "thin" }, wrapper_html: { class: "vertical"} %>
               </div> <!-- path -->
             </div> <!-- tab-content -->
           </div> <!-- new-audio -->

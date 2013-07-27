@@ -5,7 +5,7 @@
 # every record, even if it's not live.
 #
 # :mp3 should be present for live audio, but can be null otherwise
-# :enco_number, :enco_date, and :mp3_url are STI
+# :enco_number, :enco_date, and :external_url are STI
 # columns that can be null depending on audio source
 #
 class Audio < ActiveRecord::Base
