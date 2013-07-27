@@ -73,6 +73,7 @@ describe Audio do
         -> { File.open audio.mp3.file.path }.should_not raise_error Errno::ENOENT
 
         purge_uploaded_audio
+
         -> { File.open audio.mp3.file.path }.should raise_error Errno::ENOENT # make sure it *doesn't* exist
 
         audio.should_not be_valid
