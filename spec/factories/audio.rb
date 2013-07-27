@@ -12,6 +12,11 @@ FactoryGirl.define do
       content { |a| a.association :news_story }
       enco_number 1488
       enco_date { Date.today }
+
+      trait :live do
+        enco_number 1234
+        enco_date { Time.new(2012, 10, 2) }
+      end
     end
 
     trait :direct do

@@ -27,7 +27,7 @@ describe Audio::ProgramAudio do
   describe "::filename" do
     it "is the mp3's actual filename" do
       audio = build :audio, :program, :for_episode
-      Audio::ProgramAudio.filename(audio).should eq "20121002_mbrand.mp3"
+      audio.filename.should eq "20121002_mbrand.mp3"
     end
   end
   
@@ -37,7 +37,7 @@ describe Audio::ProgramAudio do
     it "is the show's audio_dir" do
       audio = build :audio, :program, :for_segment
       audio.content.show.update_attribute(:audio_dir, "coolshowbro")
-      Audio::ProgramAudio.store_dir(audio).should eq "coolshowbro"
+      audio.store_dir.should eq "coolshowbro"
     end
   end
   

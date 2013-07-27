@@ -7,6 +7,8 @@ FactoryGirl.define do
     slug { title.parameterize }
     air_status "onair"
 
+    audio_dir "airtalk" # lazy
+
     trait :episodic do
       display_episodes 1
     end

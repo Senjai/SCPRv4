@@ -7,20 +7,19 @@ class Audio
   class EncoAudio < Audio
     include Audio::Paths
 
-    STORE_DIR = "features"
+    STORE_DIR       = "features"
+    FILENAME_REGEX  = %r{(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})_features(?<enco_id>\d{4})\.mp3} # 20121001_features1809.mp3
 
     class << self
-      #------------
-      # Proxy to Audio::Sync::bulk_sync_awaiting_audio
-      def bulk_sync
-        Audio::Sync.bulk_sync_awaiting_audio(self)
-      end
+      include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
       def default_status
         STATUS_WAIT
       end
 
-      def bulk_sync_awaiting_audio(limit=nil)
+
+      # This method is used by Job::SyncAudioJob
+      def bulk_sync(limit=nil)
         limit ||= 2.weeks.ago
         awaiting = self.awaiting_audio.where("created_at > ?", limit)
         synced = 0
@@ -36,6 +35,8 @@ class Audio
           self.log "Finished. Total synced: #{synced}"
         end
       end
+
+      add_transaction_tracer :bulk_sync, category: :task
     end # singleton
 
     def sync
@@ -54,8 +55,6 @@ class Audio
         false
       end
     end
-
-    add_transaction_tracer :sync, category: :task
 
 
     def store_dir

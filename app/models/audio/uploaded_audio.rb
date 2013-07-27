@@ -16,8 +16,9 @@ class Audio
       end
     end # singleton
 
-    def store_dir(audio)
-      time = audio.new_record? ? Time.now : audio.created_at
+
+    def store_dir
+      time = self.created_at.present? ? self.created_at : Time.now
 
       File.join \
         STORE_DIR,
@@ -26,8 +27,9 @@ class Audio
         time.strftime("%d")
     end
 
+
     def filename
-      self.mp3.filename
+      self.mp3.file.filename
     end
   end # UploadedAudio
 end # Audio

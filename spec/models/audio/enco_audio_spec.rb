@@ -1,41 +1,6 @@
 require "spec_helper"
 
 describe Audio::EncoAudio do
-  describe 'enco information validation' do
-    context "#enco_info_is_present_together" do
-      it "runs on save" do
-        audio = build :audio, :enco
-        audio.should_receive(:enco_info_is_present_together).once
-        audio.save!
-      end
-
-      it "fails if enco_number present but not enco_date" do
-        audio = build :audio, enco_date: nil, enco_number: 999
-        audio.enco_info_is_present_together
-        audio.errors.keys.should eq [:base, :enco_number, :enco_date]
-      end
-
-      it "fails if enco_date present but not enco_number" do
-        audio = build :audio, enco_date: Date.today, enco_number: nil
-        audio.enco_info_is_present_together
-        audio.errors.keys.should eq [:base, :enco_number, :enco_date]
-      end
-
-      it "passes if enco_date and enco_number are present" do
-        audio = build :audio, enco_date: Date.today, enco_number: 999
-        audio.enco_info_is_present_together
-        audio.errors.should be_blank
-      end
-
-      it "passes if neither enco_date nor enco_number were provided" do
-        audio = build :audio, :direct, enco_date: nil, enco_number: nil
-        audio.enco_info_is_present_together
-        audio.errors.should be_blank
-      end
-    end
-  end
-
-
   describe "::filename" do
     it "is makes the filename based on enco number and date" do
       audio = build :enco_audio, enco_number: "1234", enco_date: freeze_time_at("October 21, 1988")
@@ -71,4 +36,49 @@ describe Audio::EncoAudio do
       enco.sync
     end
   end
+
+  describe "#path" do
+    it "returns the store_dir and the filename" do
+      audio = create :audio, :enco
+      audio.path.should eq "features/#{audio.filename}"
+    end
+  end
+
+  #----------------
+
+  describe "#full_path" do
+    it "returns the server path to the mp3 if mp3 is present" do
+      Rails.application.config.scpr.stub(:media_root) { Rails.root.join("spec/fixtures/media") }
+      audio = create :audio, :enco
+      audio.full_path.should eq Rails.root.join("spec/fixtures/media/audio/#{audio.path}").to_s
+
+    end
+  end
+
+  #----------------
+
+  describe "#url" do
+    it "returns the full URL to the mp3 if it's live" do
+      audio = create :audio, :enco, :live
+      audio.url.should eq "#{Audio::AUDIO_URL_ROOT}/#{audio.path}"
+    end
+
+    it "returns nil if not live" do
+      audio = create :audio, :enco
+      audio.url.should be_nil
+    end
+  end
+
+  describe "#podcast_url" do
+    it "returns the full podcast URL to the mp3 if it's live" do
+      audio = create :audio, :enco, :live
+      audio.podcast_url.should eq "#{Audio::PODCAST_URL_ROOT}/#{audio.path}"
+    end
+
+    it "returns nil if mp3 not live" do
+      audio = create :audio, :enco
+      audio.podcast_url.should be_nil
+    end
+  end
+
 end

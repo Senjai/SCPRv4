@@ -16,7 +16,11 @@ class Audio
     extend LogsAsTask
     logs_as_task
 
-    before_create :set_description_to_episode_headline, if: -> { self.description.blank? }
+    FILENAME_REGEX = %r{(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})_(?<slug>\w+)\.mp3} # 20121001_mbrand.mp3
+
+    before_create :set_description_to_episode_headline, if: -> {
+      self.description.blank?
+    }
 
     def set_description_to_episode_headline
       self.description = self.content.headline
@@ -54,7 +58,7 @@ class Audio
               next if existing[File.join(program.audio_dir, file)]
 
               # 2. The filename doesn't match our regex (won't be able to get date)
-              match = file.match(FILENAMES[:program])
+              match = file.match(FILENAME_REGEX)
               next if !match
 
               # Get the date for this episode/segment based on the filename,
@@ -117,13 +121,6 @@ class Audio
 
     def filename
       self.mp3.filename
-    end
-
-
-    private
-
-    def set_default_status
-      self.status = STATUS_LIVE
     end
   end # ProgramAudio
 end # Audio
