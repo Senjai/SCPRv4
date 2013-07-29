@@ -197,5 +197,8 @@ describe ProgramsController do
         get :episode, episode.route_hash
       end
     end
+
+    describe "controller" do
+    end
   end
 end
