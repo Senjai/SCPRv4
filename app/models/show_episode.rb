@@ -124,11 +124,10 @@ class ShowEpisode < ActiveRecord::Base
       :year           => self.persisted_record.air_date.year,
       :month          => "%02d" % self.persisted_record.air_date.month,
       :day            => "%02d" % self.persisted_record.air_date.day,
+      :id             => self.id,
       :trailing_slash => true
     }
   end
-
-  #----------
 
 
   private
