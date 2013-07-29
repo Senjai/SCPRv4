@@ -9,7 +9,7 @@ gem 'thinking-sphinx', '~> 2.0.14', require: "thinking_sphinx"
 
 
 ## Outpost
-gem 'outpost', github: 'SCPR/outpost'
+gem 'outpost-cms', github: 'SCPR/outpost'
 #gem 'outpost', path: "#{ENV['PROJECT_HOME']}/outpost"
 
 gem 'outpost-publishing', github: "SCPR/outpost-publishing"

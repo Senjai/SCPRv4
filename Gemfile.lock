@@ -27,9 +27,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 25b761e7918be2dbead48993ff63c946ee55ad1d
+  revision: 64d08e12bd33e896e85c2891412cd6fb2687f970
   specs:
-    outpost (0.0.3)
+    outpost-cms (0.0.3)
       bcrypt-ruby (~> 3.0.0)
       jquery-rails
       rails (>= 3.2)
@@ -51,9 +51,9 @@ GIT
 
 GIT
   remote: git://github.com/bricker/npr.git
-  revision: 6a43e0fb773e2c901ac2ac57bd362198fda37ea6
+  revision: c820936f19c8a7ef0123909c78a25ab6d064bedb
   specs:
-    npr (1.1.0)
+    npr (1.2.0)
       faraday (>= 0.8.0)
       faraday_middleware (>= 0.9.0)
 
@@ -155,8 +155,8 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     fakeweb (1.3.0)
-    faraday (0.8.7)
-      multipart-post (~> 1.1)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     faraday_middleware (0.9.0)
       faraday (>= 0.7.4, < 0.9)
     ffi (1.8.1)
@@ -400,9 +400,9 @@ DEPENDENCIES
   newrelic_rpm
   npr!
   oauth2 (~> 0.8)
-  outpost!
   outpost-aggregator!
   outpost-asset_host!
+  outpost-cms!
   outpost-publishing!
   pry
   pry-debugger
