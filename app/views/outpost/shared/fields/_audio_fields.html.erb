@@ -11,7 +11,7 @@
     </div> <!-- span -->
     <div class="span4">
       <div class="audio-info">
-        
+
         <% if f.object.persisted? %>
           <div class="existing-audio" id="audio-existing-<%=index%>">
             <!-- existing audio -->
@@ -23,7 +23,7 @@
               <%= f.object.path %>
             <% end %>
           </div>
-      
+
           <div class="audio-delete pull-right">
             <%= f.input :_destroy, as: :boolean, label: false, inline_label: "Delete?", wrapper_html: { class: "inline destroy-bool" } %>
           </div> <!-- audio-delete -->
