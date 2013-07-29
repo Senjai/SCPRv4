@@ -44,11 +44,6 @@ class Audio < ActiveRecord::Base
     self.new_record? && self.type == "Audio::UploadedAudio"
   }
 
-  # Don't run this for development, so that we can still save objects 
-  # even though the file won't exist on dev machines. 
-  validate :mp3_file_exists, unless: -> {
-    self.new_record? || Rails.env == "development"
-  }
 
   #------------
   # Callbacks
@@ -224,17 +219,6 @@ class Audio < ActiveRecord::Base
     self.enco_date.blank?
       self.errors.add(:base,
         "Audio must have a source (upload, enco, or URL)")
-    end
-  end
-
-  # If the column is filled in, but the file doesn't exist, invalid
-  def mp3_file_exists
-    # Can't use `present?` on mp3.file, because CarrierWave 
-    # defines an `empty?` method on SanitizedFile
-    if !self.mp3.file.nil? && self.mp3.blank?
-      self.errors.add(:mp3,
-        "doesn't exist on the filesystem (#{self.full_path}). " \
-        "Perhaps it was deleted?")
     end
   end
 

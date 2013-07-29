@@ -56,40 +56,6 @@ describe Audio do
 
     #----------------
 
-    context "#mp3_exists" do
-      after :each do
-        purge_uploaded_audio
-      end
-
-      it "is valid if the audio actually exists on the filesystem" do
-        audio = build :audio, :uploaded
-        File.open audio.mp3.file.path # make sure it exists
-        audio.should be_valid
-        audio.errors.should be_blank
-      end
-
-      it "is invalid if the audio doesn't exist on the filesystem", focus: true do
-        audio = create :audio, :uploaded
-        -> { File.open audio.mp3.file.path }.should_not raise_error Errno::ENOENT
-
-        purge_uploaded_audio
-
-        -> { File.open audio.mp3.file.path }.should raise_error Errno::ENOENT # make sure it *doesn't* exist
-
-        audio.should_not be_valid
-        audio.errors.keys.should eq [:mp3]
-      end
-
-      it "ignores this validation if the environment is development" do
-        audio = build :audio, :uploaded
-        audio.should_not_receive(:mp3_exists)
-        Rails.stub(:env) { "development" }
-        audio.save!
-      end
-    end
-
-    #----------------
-
     context '#path_is_unique' do
       after :each do
         purge_uploaded_audio
@@ -207,6 +173,7 @@ describe Audio do
       it "sets STATUS_LIVE for program audio" do
         audio = create :audio, :program, :for_episode
         audio.status.should eq Audio::STATUS_LIVE
+        audio.mp3.remove!
       end
 
       it "sets STATUS_LIVE for direct audio" do
