@@ -31,6 +31,8 @@ class Audio < ActiveRecord::Base
   AUDIO_URL_ROOT   = File.join(Rails.application.config.scpr.media_url, "audio")
   PODCAST_URL_ROOT = File.join(Rails.application.config.scpr.media_url, "podcasts")
 
+  # The NONE Status is just so we can use Audio::STATUS_TEXT for
+  # render the Audio columns in the CMS.
   STATUS_NONE = nil
   STATUS_WAIT = 1
   STATUS_LIVE = 2
