@@ -80,14 +80,26 @@ class ProgramsController < ApplicationController
 
 
   def episode
-    date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+    # Legacy route handling
+    if !params[:id]
+      date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+
+      if @program.is_a? KpccProgram
+        episode = @program.episodes.published.where(air_date: date).first!
+      else
+        episode = @program.external_episodes.where("DATE(air_date) = ?", date).first!
+      end
+
+      redirect_to episode.public_path and return
+    end
+
 
     if @program.is_a? KpccProgram
-      @episode = @program.episodes.published.where(air_date: date).first!
+      @episode = @program.episodes.published.find(params[:id])
       @segments = @episode.segments.published
       render :episode
     else
-      @episode = @program.external_episodes.where("DATE(air_date) = ?", date).first!
+      @episode = @program.external_episodes.find(params[:id])
       render :external_episode
     end
   end
