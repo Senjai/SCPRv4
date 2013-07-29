@@ -12,11 +12,13 @@ FactoryGirl.define do
       content { |a| a.association :news_story }
       enco_number 1488
       enco_date { Date.today }
+    end
 
-      trait :live do
-        enco_number 1234
-        enco_date { Time.new(2012, 10, 2) }
-      end
+    # ENCO information that matches one of our fixtures.
+    trait :live_enco do
+      enco_number 1234
+      enco_date { Date.new(2012, 10, 2) }
+      mp3 File.open(File.join(Audio::AUDIO_PATH_ROOT, "features", "20121002_features1234.mp3"))
     end
 
     trait :direct do
