@@ -74,7 +74,7 @@ module NprArticleImporter
       added
     end
 
-    #-----------------------------
+
 
     def import(remote_article, options={})
       import_to_class = options[:import_to_class] || "NewsStory"
@@ -128,6 +128,24 @@ module NprArticleImporter
 
         article.related_links.push related_link
       end
+
+      # Bring in Audio
+      if npr_story.audio.select { |a| a.permissions.stream? }
+      .each_with_index do |audio, i|
+        if mp3 = audio.formats.mp3s.find { |m| m.type == "mp3" }
+
+          Audio::DirectAudio.new(
+            :external_url   => mp3.content,
+            :duration       => audio.duration,
+            :description    => audio.description,
+            :byline         => audio.rightsHolder,
+            :position       => i
+          )
+
+          article.audio << audio
+        end
+      end
+
 
       #-------------------
       # Add in the primary asset if it exists
