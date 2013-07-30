@@ -12,12 +12,10 @@ class RemoteArticle < ActiveRecord::Base
   include Outpost::Model::Naming
   logs_as_task
 
-  IMPORTERS = [
+  IMPORTERS = {
     "npr" => "NprArticleImporter",
     "chr" => "ChrArticleImporter"
-  ]
-
-  ORGANIZATION = "Remote Source"
+  }
 
   #---------------
   # Sphinx
@@ -25,7 +23,7 @@ class RemoteArticle < ActiveRecord::Base
     indexes headline
     indexes teaser
     indexes article_id
-    indexes source
+    indexes :source
 
     has published_at
   end
@@ -68,17 +66,6 @@ class RemoteArticle < ActiveRecord::Base
   def import(options={})
     self.importer.import(self, options)
   end
-
-
-  def as_json(*args)
-    super.merge({
-      "id"         => self.obj_key,
-      "obj_key"    => self.obj_key,
-      "to_title"   => self.to_title,
-    })
-  end
-
-  #---------------
 
   def async_import(options={})
     import_to_class = options[:import_to_class]
