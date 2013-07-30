@@ -625,7 +625,7 @@ ActiveRecord::Schema.define(:version => 20130729211158) do
     t.datetime "updated_at",                                           :null => false
   end
 
-  add_index "remote_articles", ["source"], :name => "index_remote_articles_on_type"
+  add_index "remote_articles", ["source", "article_id"], :name => "index_remote_articles_on_source_and_article_id"
 
   create_table "schedule_occurrences", :force => true do |t|
     t.string   "event_title"
