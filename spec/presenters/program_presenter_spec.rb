@@ -51,7 +51,7 @@ describe ProgramPresenter do
   end
 
   describe "#podcast_link" do
-    context "for external programs"
+    context "for external programs" do
       it "returns program.podcast_url if specified" do
         program = build :external_program, podcast_url: "podcast.com/airtalk"
         p = presenter(program)
@@ -68,7 +68,7 @@ describe ProgramPresenter do
     context "for kpcc programs" do
       it "gets podcast related link for kpcc programs" do
         program = build :kpcc_program
-        program.related_links.build(title: "Podcast", url: "", link_type: "podcast")
+        program.related_links.build(title: "Podcast", url: "http://podcast.com/airtalk", link_type: "podcast")
         p = presenter(program)
         p.podcast_link.should match %r{podcast\.com/airtalk}
       end
@@ -125,5 +125,4 @@ describe ProgramPresenter do
       p.twitter_link.should eq nil
     end
   end
-
 end
