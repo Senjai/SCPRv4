@@ -1,23 +1,4 @@
 module NprArticleImporter
-  ORGANIZATION = "NPR"
-
-  # An array of elements in an NPR::Story's
-  # +fullText+ attribute that we want to
-  # strip out before importing.
-  UNWANTED_ELEMENTS = [ # By CSS
-    '.storytitle',
-    '#story-meta',
-    '.bucketwrap',
-    '#primaryaudio',
-    'object'
-  ]
-
-  UNWANTED_PROPERTIES = [
-    'class',
-    'id',
-    'data-metrics'
-  ]
-
   # NPR IDs we're importing:
   # Reference: http://www.npr.org/api/inputReference.php
   IMPORT_IDS = [
@@ -150,7 +131,6 @@ module NprArticleImporter
       #-------------------
       # Add in the primary asset if it exists
       if image = npr_story.primary_image
-
         # Try a few different crops to see which one is available.
         # We prefer the largest possible image with the least cropped out.
         crop = image.enlargement || image.crop("enlargment") || image.crop("standard") || image
@@ -185,8 +165,5 @@ module NprArticleImporter
     end
 
     add_transaction_tracer :import, category: :task
-
-    def build_npr_story(npr_story)
-    end
   end
 end

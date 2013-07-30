@@ -1,11 +1,7 @@
 module ChrArticleImporter
-  ORGANIZATION      = "Center for Health Reporting"
-
   API_ROOT      = "https://www.publish2.com/organizations/2198"
   API_LIST_PATH = "custom_views/1010/content.nprml"
 
-  UNWANTED_PROPERTIES   = []
-  UNWANTED_ELEMENTS     = []
 
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
