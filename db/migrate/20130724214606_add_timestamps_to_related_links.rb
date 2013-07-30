@@ -4,11 +4,6 @@ class AddTimestampsToRelatedLinks < ActiveRecord::Migration
       t.timestamps
     end
 
-    RelatedLink.find_in_batches do |group|
-      group.each do |link|
-        link.update_column(:created_at, Time.now)
-        link.update_column(:updated_at, Time.now)
-      end
-    end
+    RelatedLink.update_all(created_at: Time.now, updated_at: Time.now)
   end
 end
