@@ -10,9 +10,9 @@ describe ChrArticleImporter do
     end
 
     it 'builds cached articles from the API response' do
-      ChrArticle.count.should eq 0
-      added = ChrArticle.sync
-      ChrArticle.count.should eq 2 # Two stories in the JSON fixture
+      RemoteArticle.count.should eq 0
+      added = ChrArticleImporter.sync
+      RemoteArticle.count.should eq 2 # Two stories in the JSON fixture
       added.first.headline.should match /Obamacare/
     end
   end
@@ -27,13 +27,13 @@ describe ChrArticleImporter do
 
     it 'imports the bylines' do
       remote_article = create :chr_article
-      news_story = remote_article.import
+      news_story = ChrArticleImporter.import(remote_article)
       news_story.bylines.first.name.should match /Emily/
     end
 
     it 'sets new to false for imported stories' do
       remote_article = create :chr_article
-      remote_article.import
+      ChrArticleImporter.import(remote_article)
       remote_article[:is_new].should eq false
     end
 
@@ -42,7 +42,7 @@ describe ChrArticleImporter do
       NPR::Story.any_instance.should_receive(:link_for).with('html').and_return('http://chr.com/story')
       
       remote_article = create :chr_article
-      news_story = remote_article.import
+      news_story = ChrArticleImporter.import(remote_article)
       news_story.related_links.should be_present
     end
   end
