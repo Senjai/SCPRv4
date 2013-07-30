@@ -4,6 +4,9 @@ FactoryGirl.define do
     slug        { title.parameterize }
     air_status  "onair"
 
+    # Provide default for the dumb shared specs
+    from_rss
+
     trait :from_rss do
       podcast_url "http://www.kqed.org/rss/private/californiareport.xml"
       source  "rss"
