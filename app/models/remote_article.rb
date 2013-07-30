@@ -3,9 +3,9 @@ class RemoteArticle < ActiveRecord::Base
   # * Define a class method `sync`, which returns an array of
   #   RemoteArticles. This method is meant to sync the RemoteArticles
   #   database with that importer's API.
-  # * Define an instance method `import`. This method is meant to
+  # * Define an instance method `import`, which accepts the article
+  #   to import and an options hash. This method is meant to
   #   define how a remote article is imported into a native type.
-  #   This method must accept an options hash.
 
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Outpost::Model::Identifier
