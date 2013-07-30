@@ -10,9 +10,9 @@ describe NprArticleImporter do
     end
 
     it 'builds cached articles from the API response' do
-      NprArticleImporter.count.should eq 0
+      RemoteArticle.count.should eq 0
       added = NprArticleImporter.sync
-      NprArticleImporter.count.should eq 2 # Two stories in the JSON fixture
+      RemoteArticle.count.should eq 2 # Two stories in the JSON fixture
       added.first.headline.should match /Small Boat/
     end
   end

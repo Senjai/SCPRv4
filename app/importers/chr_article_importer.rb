@@ -1,4 +1,8 @@
 module ChrArticleImporter
+  extend LogsAsTask::ClassMethods
+
+  SOURCE = "chr"
+
   API_ROOT      = "https://www.publish2.com/organizations/2198"
   API_LIST_PATH = "custom_views/1010/content.nprml"
 
@@ -29,14 +33,13 @@ module ChrArticleImporter
       log "#{npr_stories.size} CHR stories found from the past hour"
 
       added = []
-      npr_stories.each do |npr_story|
-        # Check if this story was already cached - if not, cache it.
-        if self.where(article_id: npr_story.id).first
-          log "CHR Article ##{npr_story.id} already cached"
-          next
-        end
 
-        cached_article = self.new(
+      npr_stories.reject { |s|
+        RemoteArticle.exists?(source: SOURCE, article_id: s.id)
+      }.each do |npr_story|
+
+        cached_article = RemoteArticle.new(
+          :source       => SOURCE,
           :article_id   => npr_story.id,
           :headline     => npr_story.title,
           :teaser       => npr_story.teaser,

@@ -1,4 +1,7 @@
 module NprArticleImporter
+  extend LogsAsTask::ClassMethods
+
+  SOURCE = "npr"
   # NPR IDs we're importing:
   # Reference: http://www.npr.org/api/inputReference.php
   IMPORT_IDS = [
@@ -28,14 +31,13 @@ module NprArticleImporter
       log "#{npr_stories.size} NPR stories found from the past hour (max 20)"
 
       added = []
-      npr_stories.each do |npr_story|
-        # Check if this story was already cached - if not, cache it.
-        if self.where(article_id: npr_story.id).first
-          log "NPR Article ##{npr_story.id} already cached"
-          next
-        end
 
-        cached_article = self.new(
+      npr_stories.reject { |s|
+        RemoteArticle.exists?(source: SOURCE, article_id: s.id)
+      }.each do |npr_story|
+
+        cached_article = RemoteArticle.new(
+          :source       => SOURCE,
           :article_id   => npr_story.id,
           :headline     => npr_story.title,
           :teaser       => npr_story.teaser,
@@ -111,19 +113,18 @@ module NprArticleImporter
       end
 
       # Bring in Audio
-      if npr_story.audio.select { |a| a.permissions.stream? }
-      .each_with_index do |audio, i|
-        if mp3 = audio.formats.mp3s.find { |m| m.type == "mp3" }
-
-          Audio::DirectAudio.new(
+      npr_story.audio.select { |a| a.permissions.stream? }
+      .each_with_index do |remote_audio, i|
+        if mp3 = remote_audio.formats.mp3s.find { |m| m.type == "mp3" }
+          local_audio = Audio::DirectAudio.new(
             :external_url   => mp3.content,
-            :duration       => audio.duration,
-            :description    => audio.description,
-            :byline         => audio.rightsHolder,
+            :duration       => remote_audio.duration,
+            :description    => remote_audio.description,
+            :byline         => remote_audio.rightsHolder,
             :position       => i
           )
 
-          article.audio << audio
+          article.audio << local_audio
         end
       end
 
