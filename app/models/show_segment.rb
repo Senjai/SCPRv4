@@ -87,9 +87,7 @@ class ShowSegment < ActiveRecord::Base
     has "1", as: :is_source_kpcc, type: :boolean
 
     # For podcast searches
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
-        as: :has_audio, type: :boolean
-    join audio
+    has audio(:id), as: :has_audio, type: :boolean
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime

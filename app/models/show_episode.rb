@@ -84,9 +84,7 @@ class ShowEpisode < ActiveRecord::Base
     has updated_at
 
     # For podcasts
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
-        as: :has_audio, type: :boolean
-    join audio
+    has audio(:id), as: :has_audio, type: :boolean
 
     # Required attributes for ContentBase.search
     # For ShowEpisode, this is needed just for the

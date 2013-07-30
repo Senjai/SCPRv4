@@ -85,9 +85,7 @@ class BlogEntry < ActiveRecord::Base
     has category.id, as: :category
 
     # For podcasts
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
-        type: :boolean, as: :has_audio
-    join audio
+    has audio(:id), as: :has_audio, type: :boolean
 
     # For the megamenu
     has category.is_news, as: :category_is_news

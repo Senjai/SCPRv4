@@ -98,9 +98,7 @@ class NewsStory < ActiveRecord::Base
     has category.id, as: :category
 
     # For podcasts
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
-        as: :has_audio, type: :boolean
-    join audio
+    has audio(:id), as: :has_audio, type: :boolean
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
