@@ -85,4 +85,13 @@ class KpccProgram < ActiveRecord::Base
       :trailing_slash => true
     }
   end
+
+
+  def podcast_url
+    self.get_link("podcast")
+  end
+
+  def rss_url
+    self.get_link("rss")
+  end
 end

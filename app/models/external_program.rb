@@ -89,13 +89,6 @@ class ExternalProgram < ActiveRecord::Base
     end
   end
 
-  #----------
-
-  def published?
-    self.air_status != "hidden"
-  end
-
-  #----------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
@@ -105,11 +98,22 @@ class ExternalProgram < ActiveRecord::Base
     }
   end
 
+
+  def published?
+    self.air_status != "hidden"
+  end
+
+
   def importer
     @importer ||= IMPORTERS[self.source].constantize
   end
 
   def sync
     self.importer.sync(self)
+  end
+
+
+  def rss_url
+    self.get_link("rss")
   end
 end

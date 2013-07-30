@@ -32,13 +32,7 @@ class ProgramPresenter < ApplicationPresenter
   end
 
   def podcast_link
-    if program.respond_to?(:podcast_url)
-      link = program.podcast_url
-    else
-      link = program.get_link("podcast")
-    end
-    
-    if link
+    if link = program.podcast_url
       h.link_to "Podcast", link,
         :target => "_blank",
         :class  => "podcast with-icon"
