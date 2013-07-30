@@ -615,17 +615,17 @@ ActiveRecord::Schema.define(:version => 20130729211158) do
 
   create_table "remote_articles", :force => true do |t|
     t.string   "headline"
-    t.text     "teaser",        :limit => 2147483647
+    t.text     "teaser",       :limit => 2147483647
     t.datetime "published_at"
-    t.string   "url",           :limit => 200
+    t.string   "url",          :limit => 200
     t.string   "article_id"
-    t.boolean  "is_new",                              :default => true, :null => false
-    t.string   "importer_type"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.boolean  "is_new",                             :default => true, :null => false
+    t.string   "source"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
   end
 
-  add_index "remote_articles", ["importer_type"], :name => "index_remote_articles_on_type"
+  add_index "remote_articles", ["source"], :name => "index_remote_articles_on_type"
 
   create_table "schedule_occurrences", :force => true do |t|
     t.string   "event_title"
