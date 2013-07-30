@@ -104,7 +104,7 @@ class NewsStory < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "status = #{ContentBase::STATUS_LIVE}", 
+    has "#{NewsStory.table_name}.status = #{ContentBase::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
     

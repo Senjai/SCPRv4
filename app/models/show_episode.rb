@@ -92,7 +92,7 @@ class ShowEpisode < ActiveRecord::Base
     # For ShowEpisode, this is needed just for the
     # podcast feed.
     has air_date, as: :public_datetime
-    has "status = #{ContentBase::STATUS_LIVE}",
+    has "#{ShowEpisode.table_name}.status = #{ContentBase::STATUS_LIVE}",
         as: :is_live, type: :boolean
   end
 
