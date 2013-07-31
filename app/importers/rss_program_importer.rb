@@ -23,12 +23,26 @@ class RssProgramImporter
     return false if !feed || feed.items.empty?
 
     feed.items.first(5).reject { |e| episode_exists?(e) }.each do |item|
-      @external_program.external_episodes.build(
+      episode = @external_program.external_episodes.build(
         :title       => item.title,
         :summary     => item.description,
         :air_date    => item.pubDate,
         :external_id => item.guid.content
       )
+
+      # Import Audio
+      enclosure = item.enclosure
+      if enclosure.present? && enclosure.type =~ "audio"
+        audio = Audio::DirectAudio.new(
+          :external_url   => enclosure.url,
+          :duration       => remote_audio.duration,
+          :description    => episode.title,
+          :byline         => @external_program.title,
+          :position       => 0
+        )
+
+        episode.audio << audio
+      end
     end
 
     @external_program.save!
