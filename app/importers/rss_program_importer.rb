@@ -17,8 +17,7 @@ class RssProgramImporter
     @external_program = external_program
   end
 
-  # We're only going to bother with the first 20 segments,
-  # because some feeds could have thousands of entries.
+  # We're only going to bother with the first 5 episodes
   def sync
     feed = RSS::Parser.parse(@external_program.podcast_url, false)
     return false if !feed || feed.items.empty?
@@ -42,13 +41,6 @@ class RssProgramImporter
 
   def episode_exists?(item)
     ExternalEpisode.exists?(
-      :external_program_id    => @external_program.id,
-      :external_id            => item.guid.content
-    )
-  end
-
-  def segment_exists?(item)
-    ExternalSegment.exists?(
       :external_program_id    => @external_program.id,
       :external_id            => item.guid.content
     )
