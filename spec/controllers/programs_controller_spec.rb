@@ -135,12 +135,6 @@ describe ProgramsController do
           response.should redirect_to program.podcast_url
         end
       
-        it "redirects to rss_url if no podcast_url present" do
-          program = create :external_program, :from_rss, podcast_url: "", rss_url: "http://rss.com/rss.xml"
-          get :show, show: program.slug, format: :xml
-          response.should redirect_to program.rss_url
-        end
-      
         it "raises error if nothing found" do
           -> {
             get :show, show: "nonsense"
