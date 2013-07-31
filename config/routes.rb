@@ -37,16 +37,16 @@ Scprv4::Application.routes.draw do
 
 
   # Programs / Segments
+  # Legacy route for old Episode URLs
+  get '/programs/:show/:year/:month/:day/'            => "programs#episode",                            constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
+
   get '/programs/:show/archive/'                      => redirect("/programs/%{show}/#archive")
   post '/programs/:show/archive/'                     => "programs#archive",    as: :program_archive
-  get '/programs/:show/:year/:month/:day/:id'         => "programs#episode",    as: :episode,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/ }
+  get '/programs/:show/:year/:month/:day/:id/'        => "programs#episode",    as: :episode,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/ }
   get '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",    as: :segment,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
   get '/programs/:show'                               => 'programs#show',       as: :program
   get '/programs/'                                    => 'programs#index',      as: :programs
   get '/schedule/'                                    => 'programs#schedule',   as: :schedule
-
-  # Legacy route for old Episode URLs
-  get '/programs/:show/:year/:month/:day/'            => "programs#episode",    as: :episode,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
 
 
   # Events
