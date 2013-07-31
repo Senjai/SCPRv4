@@ -67,7 +67,7 @@
     </div> <!-- player -->
   </div> <!-- content -->
 
-  <% if @homepage.present? %>
+  <% if @homepage && @homepage.content.present? %>
     <div class="wrapper headlines" id="llcontent">
       <h6>Top Story</h6>
       <%= render_content @homepage.content[0].content.to_article, "offlead_asset" %>
