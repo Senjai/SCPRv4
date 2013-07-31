@@ -121,10 +121,10 @@ class ShowEpisode < ActiveRecord::Base
     return {} if !self.persisted? || !self.persisted_record.published?
     {
       :show           => self.persisted_record.show.slug,
-      :year           => self.persisted_record.air_date.year,
+      :year           => self.persisted_record.air_date.year.to_s,
       :month          => "%02d" % self.persisted_record.air_date.month,
       :day            => "%02d" % self.persisted_record.air_date.day,
-      :id             => self.id,
+      :id             => self.id.to_s,
       :trailing_slash => true
     }
   end
