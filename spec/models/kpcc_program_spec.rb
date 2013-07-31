@@ -37,4 +37,31 @@ describe KpccProgram do
       program.absolute_audio_path.should eq nil
     end
   end
+
+  describe '#rss_url' do
+    it 'is the RSS link if present' do
+      program = build :kpcc_program
+      program.related_links.build(link_type: "rss", url: "http://rss.com", title: "wat")
+      program.rss_url.should eq "http://rss.com"
+    end
+
+    it "is nil if no RSS link is present" do
+      program = build :kpcc_program
+      program.rss_url.should eq nil
+    end
+  end
+
+  describe '#podcast_url' do
+    it 'is the podcast link if present' do
+      program = build :kpcc_program
+      program.related_links.build(link_type: "podcast", url: "http://podcast.com", title: "wat")
+      program.podcast_url.should eq "http://podcast.com"
+    end
+
+    it "is nil if no podcast link is present" do
+      program = build :kpcc_program
+      program.podcast_url.should eq nil
+    end
+  end
+
 end
