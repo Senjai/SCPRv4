@@ -12,7 +12,7 @@
     </div> <!-- span12/9 -->
     <div class="span6">
       <div class="interact">
-        audio
+        <%= link_to_audio("Listen now", external_segment, class: "inline") if segment.audio.available.present? %>
       </div>
     </div>
   </div>
