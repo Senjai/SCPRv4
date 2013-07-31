@@ -7,6 +7,7 @@
 class Audio
   class UploadedAudio < Audio
     include Audio::Paths
+    include Audio::FileInfo
 
     STORE_DIR = "upload"
 

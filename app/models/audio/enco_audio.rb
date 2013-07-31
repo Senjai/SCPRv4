@@ -6,6 +6,8 @@
 class Audio
   class EncoAudio < Audio
     include Audio::Paths
+    include Audio::FileInfo
+
     logs_as_task
 
     STORE_DIR       = "features"

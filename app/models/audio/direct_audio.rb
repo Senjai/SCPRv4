@@ -5,6 +5,8 @@
 #
 class Audio
   class DirectAudio < Audio
+    include Audio::FileInfo
+
     class << self
       def default_status
         STATUS_LIVE

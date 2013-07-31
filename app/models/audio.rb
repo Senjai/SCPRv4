@@ -135,41 +135,6 @@ class Audio < ActiveRecord::Base
   end
 
 
-
-  # Compute duration via Mp3Info
-  # Set to 0 if something goes wrong
-  # so it's not considered "blank"
-  def compute_duration
-    return false if self.mp3.blank?
-
-    Mp3Info.open(self.mp3.path) do |file|
-      self.duration = file.length
-    end
-
-    self.duration ||= 0
-  end
-
-
-  # Compute the size via Carrierwave
-  # Set a value to 0 if something goes wrong
-  # So that size won't be "blank"
-  def compute_size
-    return false if self.mp3.blank?
-    self.size = self.mp3.file.size # Carrierwave sets this to 0 if it can't compute it
-  end
-
-
-  # Compute duration and size, and save the object
-  def compute_file_info!
-    if self.mp3.present?
-      self.compute_duration
-      self.compute_size
-      self.save!
-      self
-    end
-  end
-
-
   # Queue the computation jobs
   def async_compute_file_info
     Resque.enqueue(Audio::ComputeFileInfoJob, self.id)

@@ -13,6 +13,8 @@
 class Audio
   class ProgramAudio < Audio
     include Audio::Paths
+    include Audio::FileInfo
+
     extend LogsAsTask
     logs_as_task
 
