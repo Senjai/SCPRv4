@@ -35,11 +35,6 @@ class ExternalProgram < ActiveRecord::Base
     "rss"     => "RssProgramImporter"
   }
 
-  FEED_TYPES = {
-    "rss-episodes" => "RSS entries are full episodes",
-    "rss-segments" => "RSS entries are segments"
-  }
-
 
   #-------------------
   # Scopes
