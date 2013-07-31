@@ -20,7 +20,7 @@ class RssProgramImporter
   # We're only going to bother with the first 20 segments,
   # because some feeds could have thousands of entries.
   def sync
-    feed = RSS::Parser.parse(@external_program.podcast_url)
+    feed = RSS::Parser.parse(@external_program.podcast_url, false)
     return false if !feed || feed.items.empty?
 
     feed.items.first(5).reject { |e| episode_exists?(e) }.each do |item|
