@@ -15,7 +15,7 @@
 # 4. There's not a 4th step, get to work already.
 #
 # We keep the podcast_url attribute on this table (instead of as a related link)
-# do that we can more easily validate it, and so we're not tying the behavior
+# so that we can more easily validate it, and so we're not tying the behavior
 # of this model to an associated model.
 #
 class ExternalProgram < ActiveRecord::Base
