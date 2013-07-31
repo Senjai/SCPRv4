@@ -25,7 +25,7 @@ class MigrateOtherProgramsToExternalProgram < ActiveRecord::Migration
       end
 
       if ext_program.podcast_url.blank?
-        ext_program.podcast_url = ext_program.rss_url
+        ext_program.podcast_url = ext_program.read_attribute(:rss_url)
       end
 
       ext_program.save!
