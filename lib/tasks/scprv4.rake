@@ -39,7 +39,7 @@ namespace :scprv4 do
 
 
   desc "Sync external programs"
-  task :programs => [:environment] do
+  task :sync_programs => [:environment] do
     puts "*** [#{Time.now}] Syncing remote programs..."
 
     if Rails.env.development?
