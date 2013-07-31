@@ -8,7 +8,7 @@
 <%= form_block "Source" do %>
   <%= f.input :source, collection: ExternalProgram::IMPORTERS.keys %>
   <%= f.input :external_id, label: "External ID", hint: "For <a href='http://www.npr.org/api/mappingCodes.php'>NPR API</a>, for example. Leave BLANK for RSS sources.", input_html: { class: "tiny" } %>
-  <%= f.input :podcast_url, hint: "XML URL", input_html: { class: "wide" } %>
+  <%= f.input :podcast_url, hint: "The XML feed for the podcast. iTunes URLs will not work.", input_html: { class: "wide" } %>
 <% end %>
 
 <%= form_block "Who/When" do %>
