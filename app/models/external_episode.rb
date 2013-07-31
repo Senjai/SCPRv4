@@ -15,9 +15,10 @@ class ExternalEpisode < ActiveRecord::Base
   def route_hash
     {
       :show           => self.external_program.slug,
-      :year           => self.air_date.year,
+      :year           => self.air_date.year.to_s,
       :month          => "%02d" % self.air_date.month,
       :day            => "%02d" % self.air_date.day,
+      :id             => self.id.to_s,
       :trailing_slash => true
     }
   end
