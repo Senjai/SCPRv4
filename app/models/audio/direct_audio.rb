@@ -1,3 +1,5 @@
+require 'open-uri'
+
 ##
 # DirectAudio 
 #
@@ -27,6 +29,23 @@ class Audio
       nil
     end
 
+
+    def compute_duration
+      return false if self.mp3_file.blank?
+
+      Mp3Info.open(mp3) do |file|
+        self.duration = file.length
+      end
+
+      self.duration ||= 0
+    end
+
+    def compute_size
+      return false if self.mp3_file.blank?
+      self.size = self.mp3_file.size
+    end
+
+
     def filename
       @filename ||= Pathname.new(self.external_url).basename
     end
@@ -38,6 +57,15 @@ class Audio
 
     def podcast_url
       self.external_url
+    end
+
+
+    def mp3_file
+      @mp3_file ||= begin
+        open(self.external_url)
+      rescue
+        nil
+      end
     end
   end # DirectAudio
 end # Audio
