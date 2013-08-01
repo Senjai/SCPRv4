@@ -32,13 +32,13 @@ class NprProgramImporter
     # TODO: If there are more than 20 segments to an episode, need
     # to recognize that and do another query to fetch the other ones.
     # We can do this with pagination, using the startNum parameter.
-    segments = NPR::Story.where(
+    stories = NPR::Story.where(
       :id   => @external_program.external_id,
       :date => "current"
     ).limit(20).to_a
 
     # If there are no segments then forget about it.
-    return false if segments.empty?
+    return false if stories.empty?
 
     # If there's not a show, then we should abort because the
     # imported segment will never get seen anyways, which would
@@ -47,18 +47,36 @@ class NprProgramImporter
     # imported, then it's safe to assume that we already imported its
     # segments as well. The NPR API specifies that requesting a 
     # program with `date=current` will only return COMPLETED episodes.
-    show = segments.first.shows.last
+    show = stories.first.shows.last
     return false if !show || episode_exists?(show)
 
     external_episode = build_external_episode(show)
 
-    segments.each do |segment|
-      external_segment = build_external_segment(segment)
+    stories.each do |story|
+      external_segment = build_external_segment(story)
 
       external_episode.external_episode_segments.build(
         :external_segment => external_segment,
         :position         => show.segNum
       )
+
+      # Bring in Audio
+      # Note that NPR doesn't provide Audio for its full episodes,
+      # only segmented audio.
+      story.audio.select { |a| a.permissions.stream? }
+      .each_with_index do |remote_audio, i|
+        if mp3 = remote_audio.formats.mp3s.find { |m| m.type == "mp3" }
+          local_audio = Audio::DirectAudio.new(
+            :external_url   => mp3.content,
+            :duration       => remote_audio.duration,
+            :description    => remote_audio.description,
+            :byline         => remote_audio.rightsHolder,
+            :position       => i
+          )
+
+          external_segment.audio << local_audio
+        end
+      end
     end
 
     @external_program.save!
@@ -81,13 +99,13 @@ class NprProgramImporter
     )
   end
 
-  def build_external_segment(segment)
+  def build_external_segment(story)
     @external_program.external_segments.build(
-      :title              => segment.title,
-      :teaser             => segment.teaser,
-      :published_at       => segment.pubDate,
-      :external_url       => segment.link_for("html"),
-      :external_id        => segment.id,
+      :title              => story.title,
+      :teaser             => story.teaser,
+      :published_at       => story.pubDate,
+      :external_url       => story.link_for("html"),
+      :external_id        => story.id,
       :external_program   => @external_program
     )
   end
@@ -97,13 +115,6 @@ class NprProgramImporter
     ExternalEpisode.exists?(
       :external_program_id    => @external_program.id,
       :air_date               => show.showDate
-    )
-  end
-
-  def segment_exists?(segment)
-    ExternalSegment.exists?(
-      :external_program_id => @external_program.id,
-      :external_id         => segment.id
     )
   end
 end

@@ -21,6 +21,15 @@ describe NprProgramImporter do
       external_program.external_episodes.first.air_date.should eq Time.new(2013, 7, 15, 12)
     end
 
+    it "adds in audio if it's available" do
+      external_program = create :external_program, :from_npr
+      NprProgramImporter.sync(external_program)
+
+      external_program.external_episodes.first.
+      external_segments.first.
+      audio.first.url.should eq "http://pd.npr.org/anon.npr-mp3/npr/atc/2013/07/20130715_atc_02.mp3?orgId=1&topicId=1015&ft=3&f=2"
+    end
+
     it "sets the program on segments of episodes" do
       external_program = create :external_program, :from_npr
       NprProgramImporter.sync(external_program)
