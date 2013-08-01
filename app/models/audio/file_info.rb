@@ -22,7 +22,11 @@ class Audio
     # So that size won't be "blank"
     def compute_size
       return false if self.mp3.blank?
-      self.size = self.mp3.file.size # Carrierwave sets this to 0 if it can't compute it
+      # Carrierwave sets this to 0 if it can't compute it
+      self.size = self.mp3.file.size
+    end
+
+
     # Compute duration and size, and save the object
     def compute_file_info!
       return false if self.mp3.blank?
