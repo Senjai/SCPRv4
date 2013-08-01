@@ -69,7 +69,7 @@ class Audio < ActiveRecord::Base
   before_save :set_default_status, if: -> { self.status.blank? }
 
   after_save :async_compute_file_info, if: -> {
-    self.mp3.present? && (self.size.blank? || self.duration.blank?)
+    self.size.blank? || self.duration.blank?
   }
 
 
@@ -139,6 +139,14 @@ class Audio < ActiveRecord::Base
   def async_compute_file_info
     Resque.enqueue(Audio::ComputeFileInfoJob, self.id)
   end
+
+  # Compute duration and size, and save the object
+  def compute_file_info!
+    self.compute_duration
+    self.compute_size
+    self.save!
+  end
+
 
 
   def type_class
