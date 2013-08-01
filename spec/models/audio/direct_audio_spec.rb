@@ -49,4 +49,45 @@ describe Audio::DirectAudio do
       audio.filename.to_s.should eq "wat.mp3"
     end
   end
+
+  describe '#mp3_file' do
+    before :each do
+      FakeWeb.register_uri(:get, %r{audio\.com},
+        content_type: 'audio/mpeg',
+        body: load_fixture('media/audio/2sec.mp3'))
+    end
+
+    it 'opens the file' do
+      audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
+      audio.mp3_file.should be_a Tempfile
+    end
+  end
+
+  describe '#compute_duration' do
+    before :each do
+      FakeWeb.register_uri(:get, %r{audio\.com},
+        content_type: 'audio/mpeg',
+        body: load_fixture('media/audio/2sec.mp3'))
+    end
+
+    it 'sets the duration' do
+      audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
+      audio.compute_duration
+      audio.duration.should eq 2
+    end
+  end
+
+  describe '#compute_size' do
+    before :each do
+      FakeWeb.register_uri(:get, %r{audio\.com},
+        content_type: 'audio/mpeg',
+        body: load_fixture('media/audio/2sec.mp3'))
+    end
+
+    it 'sets the duration' do
+      audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
+      audio.compute_size
+      audio.size.should be > 0
+    end
+  end
 end

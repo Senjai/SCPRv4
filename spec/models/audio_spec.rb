@@ -134,16 +134,9 @@ describe Audio do
       audio.save!
     end
 
-    it "receives async_compute_file_info if mp3 is present and size and duration are blank" do
-      Audio.any_instance.should_receive(:async_compute_file_info).once
-      create :audio, :uploaded, duration: nil, size: nil
-
-    end
-
     it "receives async_compute_file_fields if duration is present but not size" do
       Audio.any_instance.should_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: nil
-
     end
 
     it "receives async_compute_file_fields if size is present but not duration" do
@@ -155,11 +148,6 @@ describe Audio do
       Audio.any_instance.should_not_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: 8000
 
-    end
-
-    it "doesn't receive async_compute_file_fields if mp3 is not present" do
-      Audio.any_instance.should_not_receive(:async_compute_file_info)
-      create :audio, :enco
     end
 
 
@@ -236,33 +224,29 @@ describe Audio do
 
 
   describe "#compute_duration" do
+    # These are the same for Enco, Uploaded, and Program
+    # Direct Audio has its own implementation
     after :each do
       purge_uploaded_audio
     end
 
     it "returns false if mp3 is blank" do
-      audio = create :audio, :enco
+      audio = create :enco_audio
       audio.compute_duration.should be_false
-    end
-
-    it "asks Mp3Info to open the file" do
-      audio = create :audio, :uploaded
-      Mp3Info.should_receive(:open).with(audio.mp3.path)
-      audio.compute_duration
     end
 
     it "sets and returns the duration" do
       # Use the bigger file here because the `point1sec` file duration gets rounded down
-      audio = create :audio, :uploaded, mp3: File.open(Rails.application.config.scpr.media_root.join("audio/2sec.mp3"))
-      audio.compute_duration.should eq 2
+      audio = create :uploaded_audio, mp3: File.open(Rails.application.config.scpr.media_root.join("audio/2sec.mp3"))
+      audio.compute_duration
       audio.duration.should eq 2
     end
 
-    it "sets and returns 0 if Mp3Info can't set the duration" do
-      audio = create :audio, :uploaded
+    it "sets to 0 if Mp3Info can't set the duration" do
+      audio = create :uploaded_audio
       audio.duration.should be_nil
       Mp3Info.should_receive(:open)
-      audio.compute_duration.should eq 0
+      audio.compute_duration
       audio.duration.should eq 0
     end
   end
@@ -270,20 +254,22 @@ describe Audio do
   #----------------
 
   describe "#compute_size" do
+    # These are the same for Enco, Uploaded, and Program
+    # Direct Audio has its own implementation
     after :each do
       purge_uploaded_audio
     end
 
     it "returns false if mp3 is blank" do
-      audio = create :audio, :enco
+      audio = create :enco_audio
       audio.compute_size.should be_false
     end
 
-    it "sets and returns the size" do
-      audio = create :audio, :uploaded, mp3: File.open(Rails.application.config.scpr.media_root.join("audio/2sec.mp3"))
+    it "sets the size" do
+      audio = create :uploaded_audio, mp3: File.open(Rails.application.config.scpr.media_root.join("audio/2sec.mp3"))
       audio.size.should be_nil
       audio.mp3.file.size.should > 0
-      audio.compute_size.should eq audio.mp3.file.size
+      audio.compute_size
       audio.size.should eq audio.mp3.file.size
     end
   end
@@ -297,22 +283,22 @@ describe Audio do
       end
 
       it "computes duration and size, and saves" do
-        audio = create :audio, :uploaded
+        audio = create :uploaded_audio, mp3: File.open(Rails.application.config.scpr.media_root.join("audio/2sec.mp3"))
         audio.mp3.present?.should eq true
-        Audio.any_instance.should_receive(:compute_duration)
-        Audio.any_instance.should_receive(:compute_size)
-        Audio.any_instance.should_receive(:save!)
-        audio.compute_file_info!.should eq audio
+        audio.compute_file_info!
+        audio.reload
+        audio.size.should be > 0
+        audio.duration.should be > 0
       end
     end
 
     context "without mp3 file" do
-      it "doesn't do anything, and returns nil" do
-        audio = create :audio, :enco
-        Audio.any_instance.should_not_receive(:compute_duration)
-        Audio.any_instance.should_not_receive(:compute_size)
-        Audio.any_instance.should_not_receive(:save!)
-        audio.compute_file_info!.should eq nil
+      it "sets the info to 0" do
+        audio = create :enco_audio
+        audio.compute_file_info!
+        audio.reload
+        audio.size.should eq 0
+        audio.duration.should eq 0
       end
     end
   end
