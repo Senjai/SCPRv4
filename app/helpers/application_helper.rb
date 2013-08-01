@@ -223,7 +223,7 @@ module ApplicationHelper
   #---------------------------
   
   def relaxed_sanitize(html)
-    Sanitize.clean(html.html_safe, Sanitize::Config::RELAXED)
+    Sanitize.clean(html.to_s.html_safe, Sanitize::Config::RELAXED)
   end
   
   #---------------------------
