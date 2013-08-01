@@ -29,6 +29,19 @@ class Audio
       nil
     end
 
+    def filename
+      @filename ||= Pathname.new(self.external_url).basename
+    end
+
+
+    def url
+      self.external_url
+    end
+
+    def podcast_url
+      self.external_url
+    end
+
 
     def compute_duration
       return false if self.mp3_file.blank?
@@ -45,18 +58,6 @@ class Audio
       self.size = self.mp3_file.size
     end
 
-
-    def filename
-      @filename ||= Pathname.new(self.external_url).basename
-    end
-
-
-    def url
-      self.external_url
-    end
-
-    def podcast_url
-      self.external_url
     # Compute duration and size, and save the object
     def compute_file_info!
       self.compute_duration
