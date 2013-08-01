@@ -57,7 +57,7 @@ class NprProgramImporter
 
       external_episode.external_episode_segments.build(
         :external_segment => external_segment,
-        :position         => show.segNum
+        :position         => story.show.segNum
       )
 
       # Bring in Audio
