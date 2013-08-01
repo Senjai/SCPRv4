@@ -312,7 +312,7 @@ describe Audio do
 
     it "sends off to Resque" do
       audio = create :audio, :uploaded
-      Resque.should_receive(:enqueue).with(Audio::ComputeFileInfoJob, audio.id)
+      Resque.should_receive(:enqueue).with(Job::ComputeAudioFileInfo, audio.id)
       audio.async_compute_file_info
     end
   end

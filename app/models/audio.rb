@@ -137,7 +137,7 @@ class Audio < ActiveRecord::Base
 
   # Queue the computation jobs
   def async_compute_file_info
-    Resque.enqueue(Audio::ComputeFileInfoJob, self.id)
+    Resque.enqueue(Job::ComputeAudioFileInfo, self.id)
   end
 
 
