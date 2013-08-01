@@ -13,7 +13,7 @@ describe RssProgramImporter do
       external_program = create :external_program, :from_rss
       RssProgramImporter.sync(external_program)
       external_program.external_episodes.should_not be_empty
-      external_program.external_episodes.order("air_date").last.audio.first.url.should eq "http://downloads.bbc.co.uk/podcasts/worldservice/globalnews/globalnews_20130723-0200a.mp3"
+      external_program.external_episodes(true).order("air_date").last.audio.first.url.should eq "http://downloads.bbc.co.uk/podcasts/worldservice/globalnews/globalnews_20130723-0200a.mp3"
     end
 
     it "doesn't import episodes that have already been imported" do
