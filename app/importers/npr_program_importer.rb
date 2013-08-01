@@ -6,6 +6,8 @@
 # don't know, but we'll leave it like this until something breaks. For now
 # we assume that every program has episodes, and every segment has an episode.
 #
+# We are also assuming that all segments in an episode will have audio.
+# 
 # http://www.npr.org/api/mappingCodes.php
 class NprProgramImporter
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
@@ -38,7 +40,7 @@ class NprProgramImporter
     ).limit(20).to_a
 
     # If there are no segments then forget about it.
-    return false if stories.empty?
+    return false if stories.empty? || !stream_active?(stories)
 
     # If there's not a show, then we should abort because the
     # imported segment will never get seen anyways, which would
@@ -54,7 +56,6 @@ class NprProgramImporter
 
     stories.select { |s| s.audio.present? }.each do |story|
       external_segment = build_external_segment(story)
-
       external_episode.external_episode_segments.build(
         :external_segment => external_segment,
         :position         => story.shows.last.segNum
@@ -63,7 +64,7 @@ class NprProgramImporter
       # Bring in Audio
       # Note that NPR doesn't provide Audio for its full episodes,
       # only segmented audio.
-      story.audio.select { |a| a.permissions.stream? }
+      story.audio.select { |a| can_stream?(a) }
       .each_with_index do |remote_audio, i|
         if mp3 = remote_audio.formats.mp3s.find { |m| m.type == "mp3" }
           local_audio = Audio::DirectAudio.new(
@@ -116,5 +117,15 @@ class NprProgramImporter
       :external_program_id    => @external_program.id,
       :air_date               => show.showDate
     )
+  end
+
+  def stream_active?(stories)
+    stories.all? do |s|
+      s.audio.present? && s.audio.all? { |a| can_stream?(a) }
+    end
+  end
+
+  def can_stream?(audio)
+    audio.permissions.stream?
   end
 end

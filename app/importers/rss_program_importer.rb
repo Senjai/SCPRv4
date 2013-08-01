@@ -22,7 +22,7 @@ class RssProgramImporter
     feed = RSS::Parser.parse(@external_program.podcast_url, false)
     return false if !feed || feed.items.empty?
 
-    feed.items.first(5).reject { |e| episode_exists?(e) }.each do |item|
+    feed.items.first(5).select { |i| can_import?(i) }.each do |item|
       episode = @external_program.external_episodes.build(
         :title       => item.title,
         :summary     => item.description,
@@ -32,17 +32,15 @@ class RssProgramImporter
 
       # Import Audio
       enclosure = item.enclosure
-      if enclosure.present? && enclosure.type =~ /audio/
-        audio = Audio::DirectAudio.new(
-          :external_url   => enclosure.url,
-          :size           => enclosure.length,
-          :description    => episode.title,
-          :byline         => @external_program.title,
-          :position       => 0
-        )
+      audio = Audio::DirectAudio.new(
+        :external_url   => enclosure.url,
+        :size           => enclosure.length,
+        :description    => episode.title,
+        :byline         => @external_program.title,
+        :position       => 0
+      )
 
-        episode.audio << audio
-      end
+      episode.audio << audio
     end
 
     @external_program.save!
@@ -58,5 +56,11 @@ class RssProgramImporter
       :external_program_id    => @external_program.id,
       :external_id            => item.guid.content
     )
+  end
+
+  def can_import?(item)
+    item.enclosure.present? &&
+    item.enclosure.type =~ /audio/ &&
+    !episode_exists?(item)
   end
 end
