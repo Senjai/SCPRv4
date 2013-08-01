@@ -276,35 +276,6 @@ describe Audio do
 
   #----------------
 
-  describe "#compute_file_info!" do
-    context "with mp3 file" do
-      after :each do
-        purge_uploaded_audio
-      end
-
-      it "computes duration and size, and saves" do
-        audio = create :uploaded_audio, mp3: File.open(Rails.application.config.scpr.media_root.join("audio/2sec.mp3"))
-        audio.mp3.present?.should eq true
-        audio.compute_file_info!
-        audio.reload
-        audio.size.should be > 0
-        audio.duration.should be > 0
-      end
-    end
-
-    context "without mp3 file" do
-      it "sets the info to 0" do
-        audio = create :enco_audio
-        audio.compute_file_info!
-        audio.reload
-        audio.size.should eq 0
-        audio.duration.should eq 0
-      end
-    end
-  end
-
-  #----------------
-
   describe "#async_compute_file_info" do
     after :each do
       purge_uploaded_audio
