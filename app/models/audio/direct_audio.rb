@@ -33,7 +33,7 @@ class Audio
     def compute_duration
       return false if self.mp3_file.blank?
 
-      Mp3Info.open(mp3) do |file|
+      Mp3Info.open(self.mp3_file) do |file|
         self.duration = file.length
       end
 
