@@ -52,12 +52,12 @@ class NprProgramImporter
 
     external_episode = build_external_episode(show)
 
-    stories.each do |story|
+    stories.select { |s| s.audio.present? }.each do |story|
       external_segment = build_external_segment(story)
 
       external_episode.external_episode_segments.build(
         :external_segment => external_segment,
-        :position         => story.show.segNum
+        :position         => story.shows.last.segNum
       )
 
       # Bring in Audio
