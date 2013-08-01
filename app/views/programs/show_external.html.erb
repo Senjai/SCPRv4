@@ -16,7 +16,7 @@
 </div> <!-- .program-ext-header -->
 
 <div class="show-segments">
-  <%= render partial: "external_episode", collection: @program.external_episodes %>
+  <%= render partial: "external_episode", collection: @program.external_episodes.order('air_date desc') %>
 </div>
 
 <% end %>
