@@ -2,7 +2,7 @@
   <div class="row-fluid">
     <div class="span18">
       <div class="info">
-        <h3><%= link_to external_segment.title, external_segment.public_url %></h3>
+        <h3><%= link_to external_segment.title, external_segment.external_url %></h3>
         <span class="byline">
           <%= timestamp(external_segment.published_at) %>
         </span>
@@ -12,7 +12,7 @@
     </div> <!-- span12/9 -->
     <div class="span6">
       <div class="interact">
-        <%= link_to_audio("Listen now", external_segment, class: "inline") if segment.audio.available.present? %>
+        <%= link_to_audio("Listen now", external_segment, class: "inline") if external_segment.audio.available.present? %>
       </div>
     </div>
   </div>
