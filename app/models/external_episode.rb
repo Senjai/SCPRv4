@@ -9,7 +9,10 @@ class ExternalEpisode < ActiveRecord::Base
 
   belongs_to :external_program
   has_many :external_episode_segments, order: "position"
-  has_many :external_segments, through: :external_episode_segments
+
+  has_many :external_segments,
+    :through => :external_episode_segments,
+    :order   => "position"
 
   # This needs to match ShowEpisode
   def route_hash
