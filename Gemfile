@@ -58,7 +58,7 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.5"
 gem 'newrelic_rpm'
-gem 'npr', github: "bricker/npr"
+gem 'npr', github: "bricker/npr", branch: "v2.0.0"
 #gem 'npr', path: "#{ENV['PROJECT_HOME']}/npr"
 gem 'asset_host_client', github: "SCPR/asset_host_client"
 #gem 'asset_host_client', path: "#{ENV['PROJECT_HOME']}/asset_host_client"
