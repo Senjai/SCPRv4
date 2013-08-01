@@ -57,6 +57,11 @@ class Audio
 
     def podcast_url
       self.external_url
+    # Compute duration and size, and save the object
+    def compute_file_info!
+      self.compute_duration
+      self.compute_size
+      self.save!
     end
 
 

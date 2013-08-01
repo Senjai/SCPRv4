@@ -140,14 +140,6 @@ class Audio < ActiveRecord::Base
     Resque.enqueue(Audio::ComputeFileInfoJob, self.id)
   end
 
-  # Compute duration and size, and save the object
-  def compute_file_info!
-    self.compute_duration
-    self.compute_size
-    self.save!
-  end
-
-
 
   def type_class
     self.type.constantize
