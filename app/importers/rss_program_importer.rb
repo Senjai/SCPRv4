@@ -32,10 +32,10 @@ class RssProgramImporter
 
       # Import Audio
       enclosure = item.enclosure
-      if enclosure.present? && enclosure.type =~ "audio"
+      if enclosure.present? && enclosure.type =~ /audio/
         audio = Audio::DirectAudio.new(
           :external_url   => enclosure.url,
-          :duration       => remote_audio.duration,
+          :size           => enclosure.length,
           :description    => episode.title,
           :byline         => @external_program.title,
           :position       => 0
