@@ -43,7 +43,7 @@ class ExternalEpisode < ActiveRecord::Base
       :assets             => [],
       :audio              => self.audio.available,
       :program            => self.external_program.to_program,
-      :segments           => self.external_segments.map(&:to_segment)
+      :segments           => self.external_segments
     })
   end
 end

@@ -143,7 +143,7 @@ class ShowEpisode < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :program            => self.show.to_program,
-      :segments           => self.segments.map(&:to_segment)
+      :segments           => self.segments.published
     })
   end
 
