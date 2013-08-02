@@ -14,6 +14,12 @@ class ExternalEpisode < ActiveRecord::Base
     :through => :external_episode_segments,
     :order   => "position"
 
+
+  scope :for_air_date, ->(date_or_time) {
+    where("DATE(air_date) = DATE(?)", date_or_time)
+  }
+
+
   # This needs to match ShowEpisode
   def route_hash
     {

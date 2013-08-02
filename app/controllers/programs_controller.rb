@@ -57,7 +57,7 @@ class ProgramsController < ApplicationController
 
   def archive
     @date = Time.new(params[:archive]["date(1i)"].to_i, params[:archive]["date(2i)"].to_i, params[:archive]["date(3i)"].to_i)
-    @episode = @program.episodes.published.where(air_date: @date).first
+    @episode = @program.episodes.published.for_air_date(@date).first
 
     if !@episode
       flash[:alert] = "There is no #{@program.title} episode for #{@date.strftime('%F')}."
@@ -83,13 +83,7 @@ class ProgramsController < ApplicationController
     # Legacy route handling
     if !params[:id]
       date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-
-      if @program.is_a? KpccProgram
-        episode = @program.episodes.published.where(air_date: date).first!
-      else
-        episode = @program.external_episodes.where("DATE(air_date) = ?", date).first!
-      end
-
+      episode = @program.to_program.episodes.for_air_date(date).first!
       redirect_to episode.public_path and return
     end
 

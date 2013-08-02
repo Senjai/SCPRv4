@@ -30,6 +30,10 @@ class ShowEpisode < ActiveRecord::Base
     .order("air_date asc")
   }
 
+  scope :for_air_date, ->(date_or_time) {
+    where("DATE(air_date) = DATE(?)", date_or_time)
+  }
+
   #-------------------
   # Association
   belongs_to  :show,      :class_name  => "KpccProgram", touch: true

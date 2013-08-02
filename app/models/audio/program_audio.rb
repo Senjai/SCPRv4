@@ -69,7 +69,7 @@ class Audio
               date = Time.new(match[:year], match[:month], match[:day])
 
               if program.display_episodes?
-                content = program.episodes.where(air_date: date).first
+                content = program.episodes.for_air_date(date).first
               else
                 content = program.segments.where(published_at: date..date.end_of_day).first
               end
