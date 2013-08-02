@@ -26,6 +26,7 @@
 # This should pretty much match up with what our client API
 # response is, but it doesn't necessarily have to.
 class Article
+  include Concern::Methods::AbstractModelMethods
 
   attr_accessor \
     :original_object,
@@ -64,18 +65,6 @@ class Article
     self
   end
 
-
-  # Steal the ActiveRecord behavior for object comparison.
-  # Compare Article ID with the comparison object's ID
-  def ==(comparison_object)
-    super ||
-      comparison_object.instance_of?(self.class) &&
-      self.id.present? &&
-      self.id == comparison_object.id
-  end
-  alias :eql? :==
-
-
   def to_abstract
     @to_abstract ||= Abstract.new({
       :original_object        => self,
@@ -90,16 +79,7 @@ class Article
     })
   end
 
-
   def asset
     @asset ||= self.assets.first
-  end
-
-  def cache_key
-    original_object.cache_key if original_object.respond_to?(:cache_key)
-  end
-
-  def updated_at
-    original_object.updated_at if original_object.respond_to?(:updated_at)
   end
 end

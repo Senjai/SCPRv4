@@ -129,6 +129,20 @@ class ShowEpisode < ActiveRecord::Base
     }
   end
 
+  def to_episode
+    @to_episode ||= Episode.new({
+      :original_object    => self,
+      :title              => self.title,
+      :summary            => self.body,
+      :air_date           => self.air_date,
+      :public_url         => self.public_url,
+      :assets             => self.assets,
+      :audio              => self.audio.available,
+      :program            => self.show.to_program,
+      :segments           => self.segments.map(&:to_segment)
+    })
+  end
+
 
   private
 

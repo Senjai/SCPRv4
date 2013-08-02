@@ -8,4 +8,9 @@ class ExternalSegment < ActiveRecord::Base
     :through   => :external_episode_segments,
     :dependent => :destroy
 
+
+  def to_segment
+    @to_segment ||= Segment.new({
+    })
+  end
 end

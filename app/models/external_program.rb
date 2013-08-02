@@ -94,6 +94,25 @@ class ExternalProgram < ActiveRecord::Base
   end
 
 
+  def to_program
+    @to_program ||= Program.new({
+      :original_object    => self,
+      :source             => self.source,
+      :title              => self.title,
+      :slug               => self.slug,
+      :description        => self.description,
+      :host               => self.host,
+      :twitter_handle     => self.twitter_handle,
+      :air_status         => self.air_status,
+      :airtime            => self.airtime,
+      :podcast_url        => self.podcast_url,
+      :rss_url            => self.get_link('rss'),
+      :public_url         => self.public_url,
+      :episodes           => self.external_episodes
+    })
+  end
+
+
   def published?
     self.air_status != "hidden"
   end

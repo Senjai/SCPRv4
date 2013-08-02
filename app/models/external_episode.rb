@@ -25,4 +25,19 @@ class ExternalEpisode < ActiveRecord::Base
       :trailing_slash => true
     }
   end
+
+
+  def to_episode
+    @to_episode ||= Episode.new({
+      :original_object    => self,
+      :title              => self.title,
+      :summary            => self.summary,
+      :air_date           => self.air_date,
+      :public_url         => self.public_url,
+      :assets             => [],
+      :audio              => self.audio.available,
+      :program            => self.external_program.to_program,
+      :segments           => self.external_segments.map(&:to_segment)
+    })
+  end
 end

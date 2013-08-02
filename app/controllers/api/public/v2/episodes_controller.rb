@@ -20,15 +20,16 @@ module Api::Public::V2
     #---------------------------
 
     def index
-      @episodes = ShowEpisode.published.page(@page).per(@limit)
+      @program = Program.find_by_slug(@program_slug)
 
-      if @program_slug
-        @episodes = @episodes.joins(:show)
-          .where(KpccProgram.table_name => { slug: @program_slug })
+      if !@program
+        render_not_found and return false
       end
 
+      @episodes = @program.episodes.page(@page).per(@limit)
+
       if @air_date
-        @episodes = @episodes.where(air_date: @air_date)
+        @episodes = @episodes.where('DATE(air_date) = DATE(?)', @air_date)
       end
 
       respond_with @episodes
@@ -64,6 +65,8 @@ module Api::Public::V2
     def sanitize_program_slug
       if params[:program]
         @program_slug = params[:program].to_s
+      else
+        render_bad_request(message: "program is a required parameter.")
       end
     end
   end

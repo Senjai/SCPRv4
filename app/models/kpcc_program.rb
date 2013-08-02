@@ -87,6 +87,25 @@ class KpccProgram < ActiveRecord::Base
   end
 
 
+  def to_program
+    @to_program ||= Program.new({
+      :original_object    => self,
+      :source             => 'kpcc',
+      :title              => self.title,
+      :slug               => self.slug,
+      :description        => self.description,
+      :host               => self.host,
+      :twitter_handle     => self.twitter_handle,
+      :air_status         => self.air_status,
+      :airtime            => self.airtime,
+      :podcast_url        => self.get_link('podcast'),
+      :rss_url            => self.get_link('rss'),
+      :public_url         => self.public_url,
+      :episodes           => self.episodes
+    })
+  end
+
+
   def podcast_url
     self.get_link("podcast")
   end

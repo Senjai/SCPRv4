@@ -172,4 +172,9 @@ class ShowSegment < ActiveRecord::Base
       :article_published_at   => self.published_at
     })
   end
+
+  def to_segment
+    @to_segment ||= Segment.new({
+    })
+  end
 end

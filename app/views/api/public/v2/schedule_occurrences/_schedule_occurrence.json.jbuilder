@@ -7,7 +7,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", schedule_occurrence] do
 
   if schedule_occurrence.program.present?
     json.program do
-      json.partial! "api/public/v2/programs/program", 
+      json.partial! "api/public/v2/programs/program",
         :program => schedule_occurrence.program
     end
   end
