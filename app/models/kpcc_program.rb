@@ -101,7 +101,7 @@ class KpccProgram < ActiveRecord::Base
       :podcast_url        => self.get_link('podcast'),
       :rss_url            => self.get_link('rss'),
       :public_url         => self.public_url,
-      :episodes           => self.episodes
+      :episodes           => self.episodes.published
     })
   end
 
