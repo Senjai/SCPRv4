@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731222153) do
+ActiveRecord::Schema.define(:version => 20130802212529) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -645,7 +645,7 @@ ActiveRecord::Schema.define(:version => 20130731222153) do
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
-    t.date     "air_date"
+    t.datetime "air_date"
     t.string   "headline"
     t.text     "body",         :limit => 2147483647
     t.datetime "published_at"

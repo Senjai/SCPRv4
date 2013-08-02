@@ -48,8 +48,8 @@ describe Audio::ProgramAudio do
 
     before do
       # October 02, 2012 is the date on the fixture mp3 file
-      episode = create :show_episode, air_date: Chronic.parse("October 02, 2012"), show: program
-      segment = create :show_segment, :published, published_at: Chronic.parse("October 02, 2012"), show: program
+      episode = create :show_episode, air_date: Time.new(2012, 10, 2), show: program
+      segment = create :show_segment, :published, published_at: Time.new(2012, 10, 2), show: program
       KpccProgram.can_sync_audio.count.should eq 1
     end
 
