@@ -16,6 +16,7 @@ class Program
     end
   end
 
+
   def initialize(attributes={})
     @original_object  = attributes[:original_object]
     @source           = attributes[:source]
