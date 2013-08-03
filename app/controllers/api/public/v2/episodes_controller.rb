@@ -27,6 +27,7 @@ module Api::Public::V2
         @episodes = @episodes.for_air_date(@air_date)
       end
 
+      @episodes = @episodes.map(&:to_episode)
       respond_with @episodes
     end
 

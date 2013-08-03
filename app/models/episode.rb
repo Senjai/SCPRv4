@@ -25,4 +25,8 @@ class Episode
     @audio            = Array(attributes[:audio])
     @segments         = Array(attributes[:segments])
   end
+
+  def to_episode
+    self
+  end
 end

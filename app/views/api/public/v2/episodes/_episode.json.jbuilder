@@ -1,6 +1,6 @@
 json.cache! [Api::Public::V2::VERSION, "v1", episode] do
-  json.title          episode.headline
-  json.teaser         episode.body.html_safe
+  json.title    episode.title
+  json.summary  episode.summary.html_safe
 
   json.air_date     episode.air_date
   json.public_url   episode.public_url
@@ -14,10 +14,12 @@ json.cache! [Api::Public::V2::VERSION, "v1", episode] do
   end
 
   json.program do
-    json.partial! "api/public/v2/programs/program", program: episode.show
+    json.partial! "api/public/v2/programs/program", program: episode.program
   end
 
   json.segments do
     json.partial! 'api/public/v2/articles/collection', articles: episode.segments.published.map(&:to_article)
   end
+
+  json.teaser episode.summary.html_safe # Deprecated
 end
