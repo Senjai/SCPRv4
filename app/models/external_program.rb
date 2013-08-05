@@ -109,7 +109,8 @@ class ExternalProgram < ActiveRecord::Base
       :podcast_url        => self.podcast_url,
       :rss_url            => self.get_link('rss'),
       :public_url         => self.public_url,
-      :episodes           => self.external_episodes
+      :episodes           => self.external_episodes,
+      :segments           => self.external_segments
     })
   end
 
@@ -125,10 +126,5 @@ class ExternalProgram < ActiveRecord::Base
 
   def sync
     self.importer.sync(self)
-  end
-
-
-  def rss_url
-    self.get_link("rss")
   end
 end

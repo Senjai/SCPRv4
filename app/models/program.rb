@@ -31,12 +31,14 @@ class Program
     :slug,
     :description,
     :host,
+    :twitter_handle,
     :air_status,
     :airtime,
     :podcast_url,
     :rss_url,
     :public_url,
-    :episodes
+    :episodes,
+    :segments
 
 
   def initialize(attributes={})
@@ -47,12 +49,17 @@ class Program
     @slug             = attributes[:slug]
     @description      = attributes[:description]
     @host             = attributes[:host]
+    @twitter_handle   = attributes[:twitter_handle]
     @air_status       = attributes[:air_status]
     @airtime          = attributes[:airtime]
     @podcast_url      = attributes[:podcast_url]
     @rss_url          = attributes[:rss_url]
     @public_url       = attributes[:public_url]
+
+    # Don't force these into an array, so it doesn't load ALL
+    # of the episodes/segments (which could be thousands).
     @episodes         = attributes[:episodes]
+    @segments         = attributes[:segments]
   end
 
   def to_program
