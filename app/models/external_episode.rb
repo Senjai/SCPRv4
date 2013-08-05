@@ -45,7 +45,7 @@ class ExternalEpisode < ActiveRecord::Base
       :public_url         => self.public_url,
       :audio              => self.audio.available,
       :program            => self.external_program.to_program,
-      :segments           => self.external_segments
+      :segments           => self.external_segments.map(&:to_article)
     })
   end
 end
