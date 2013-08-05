@@ -1,18 +1,14 @@
 class ProgramPresenter < ApplicationPresenter
   presents :program
-  delegate :title, :slug, to: :program
+  delegate :title, :slug, :public_url, :public_path, to: :program
 
 
   def teaser
-    if program.teaser.present?
-      program.teaser.html_safe
-    end
+    program.teaser.try(:html_safe)
   end
 
   def description
-    if program.description.present?
-      program.description.html_safe
-    end
+    program.description.try(:html_safe)
   end
 
   def web_link
@@ -40,7 +36,7 @@ class ProgramPresenter < ApplicationPresenter
   end
 
   def rss_link
-    if link = program.get_link("rss")
+    if link = program.rss_url
       h.link_to "RSS", link,
         :target => "_blank",
         :class  => "rss with-icon"
