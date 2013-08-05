@@ -1,0 +1,289 @@
+{
+  "version": "0.94",
+  "list": {
+    "title": {
+      "$text": "NPR Programs: Science Friday"
+    },
+    "teaser": {
+      "$text": "Science Friday"
+    },
+    "miniTeaser": {
+      "$text": "Science Friday"
+    },
+    "link": [
+      {
+        "type": "api",
+        "$text": "http://api.npr.org/query?id=61&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+      },
+      {
+        "type": "html",
+        "$text": "http://www.npr.org/programs/sciencefriday/?ft=3&f=61"
+      }
+    ],
+    "story": [
+      {
+        "id": "208270038",
+        "link": [
+          {
+            "type": "html",
+            "$text": "http://www.npr.org/2013/08/02/208270038/reexamining-the-definition-of-cancer?ft=3&f=61"
+          },
+          {
+            "type": "api",
+            "$text": "http://api.npr.org/query?id=208270038&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          },
+          {
+            "type": "short",
+            "$text": "http://n.pr/15AA14E"
+          }
+        ],
+        "title": {
+          "$text": "Reexamining the Definition of Cancer"
+        },
+        "partnerId": {
+          "$text": "208270038"
+        },
+        "subtitle": {},
+        "shortTitle": {},
+        "teaser": {
+          "$text": "A viewpoint published in <em>The Journal of the American Medical Association</em> recommended refining the definition of cancer and reexamining how the disease is detected and treated. Laura Esserman, one of the authors, and Larry Norton, from Memorial Sloan-Kettering, discuss what a new definition would mean."
+        },
+        "miniTeaser": {
+          "$text": "Will redefining cancer help prevent overdiagnosis and overtreatment?"
+        },
+        "slug": {
+          "$text": "Health"
+        },
+        "storyDate": {
+          "$text": "Fri, 02 Aug 2013 12:00:00 -0400"
+        },
+        "pubDate": {
+          "$text": "Fri, 02 Aug 2013 13:04:00 -0400"
+        },
+        "lastModifiedDate": {
+          "$text": "Mon, 05 Aug 2013 15:25:43 -0400"
+        },
+        "show": [
+          {
+            "program": {
+              "id": "61",
+              "code": "SF",
+              "$text": "Science Friday"
+            },
+            "showDate": {
+              "$text": "Fri, 02 Aug 2013 12:00:00 -0400"
+            },
+            "segNum": {
+              "$text": "8"
+            }
+          }
+        ],
+        "keywords": {},
+        "priorityKeywords": {},
+        "organization": [
+          {
+            "orgId": "1",
+            "orgAbbr": "NPR",
+            "name": {
+              "$text": "NPR"
+            },
+            "website": {
+              "$text": "http://www.npr.org/"
+            }
+          }
+        ],
+        "transcript": {
+          "link": {
+            "type": "api",
+            "$text": "http://api.npr.org/transcript?id=208270038&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          }
+        },
+        "parent": [
+          {
+            "id": "1135",
+            "type": "topic",
+            "title": {
+              "$text": "Medical Treatments"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/medical/?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1135&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1128",
+            "type": "primaryTopic",
+            "slug": "true",
+            "title": {
+              "$text": "Health"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/health/?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1128&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1128",
+            "type": "topic",
+            "title": {
+              "$text": "Health"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/health/?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1128&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1066",
+            "type": "topic",
+            "title": {
+              "$text": "Your Health"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/your-health/?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1066&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1027",
+            "type": "topic",
+            "title": {
+              "$text": "Health Care"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/health-care/?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1027&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1007",
+            "type": "topic",
+            "title": {
+              "$text": "Science"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/science/?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1007&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "208270023",
+            "type": "primary",
+            "title": {},
+            "duration": {
+              "$text": "0"
+            },
+            "description": {},
+            "format": {},
+            "rightsHolder": {},
+            "permissions": {
+              "download": {
+                "allow": "true"
+              },
+              "stream": {
+                "allow": "true"
+              },
+              "embed": {
+                "allow": "true"
+              }
+            },
+            "stream": {
+              "active": "false"
+            }
+          }
+        ],
+        "relatedLink": [
+          {
+            "id": "208286032",
+            "type": "internal",
+            "caption": {
+              "$text": "Using Genetics to Target Cancer's Achilles' Heel"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/2013/01/11/169144847/using-genetics-to-target-cancers-achilles-heel?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=169144847&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "208285915",
+            "type": "internal",
+            "caption": {
+              "$text": "Arming Fat Cells to Fight Brain Cancer"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/2013/03/15/174409386/arming-fat-cells-to-fight-brain-cancer?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=174409386&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "208285862",
+            "type": "internal",
+            "caption": {
+              "$text": "Can White Blood Cells Spread Cancer? "
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/2013/07/05/199025499/?ft=3&f=61"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=199025499&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -37,10 +37,15 @@ class NprProgramImporter
     stories = NPR::Story.where(
       :id   => @external_program.external_id,
       :date => "current"
-    ).limit(20).to_a
+    ).set(requiredAssets: "audio")
+    .limit(20).to_a.select { |s| can_stream?(s) }
 
     # If there are no segments then forget about it.
-    return false if stories.empty? || !stream_active?(stories)
+    # Even if an episode is available in the NPR API, its audio may 
+    # not be available yet. If there is a single story in the response
+    # which *doesn't* yet have audio, then we will abort importing and
+    # get it next time.
+    return false if stories.empty? || !audio_available?(stories)
 
     # If there's not a show, then we should abort because the
     # imported segment will never get seen anyways, which would
@@ -49,12 +54,15 @@ class NprProgramImporter
     # imported, then it's safe to assume that we already imported its
     # segments as well. The NPR API specifies that requesting a 
     # program with `date=current` will only return COMPLETED episodes.
+    #
+    # If there are segments with their "stream" permission set to "false",
+    # then we'll go ahead with the sync, but just won't import those ones.
     show = stories.first.shows.last
     return false if !show || episode_exists?(show)
 
     external_episode = build_external_episode(show)
 
-    stories.select { |s| s.audio.present? }.each do |story|
+    stories.each do |story|
       external_segment = build_external_segment(story)
       external_episode.external_episode_segments.build(
         :external_segment => external_segment,
@@ -64,7 +72,7 @@ class NprProgramImporter
       # Bring in Audio
       # Note that NPR doesn't provide Audio for its full episodes,
       # only segmented audio.
-      story.audio.select { |a| can_stream?(a) }
+      story.audio.select { |a| stream_allowed?(a) }
       .each_with_index do |remote_audio, i|
         if mp3 = remote_audio.formats.mp3s.find { |m| m.type == "mp3" }
           local_audio = Audio::DirectAudio.new(
@@ -119,13 +127,18 @@ class NprProgramImporter
     )
   end
 
-  def stream_active?(stories)
-    stories.all? do |s|
-      s.audio.present? && s.audio.all? { |a| can_stream?(a) }
-    end
+  def can_stream?(story)
+    story.audio.any? { |a| stream_allowed?(a) }
   end
 
-  def can_stream?(audio)
+  def stream_allowed?(audio)
     audio.permissions.stream?
+  end
+
+  def audio_available?(stories)
+    stories.all? { |story|
+      story.audio.present? &&
+      story.audio.all? { |a| !a.formats.empty? }
+    }
   end
 end
