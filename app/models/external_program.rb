@@ -97,6 +97,7 @@ class ExternalProgram < ActiveRecord::Base
   def to_program
     @to_program ||= Program.new({
       :original_object    => self,
+      :id                 => self.obj_key,
       :source             => self.source,
       :title              => self.title,
       :slug               => self.slug,

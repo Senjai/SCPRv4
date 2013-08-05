@@ -20,7 +20,6 @@ class ExternalSegment < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.teaser,
       :audio              => self.audio.available,
-      :attributions       => [],
       :byline             => self.external_program.organization,
       :public_url         => self.external_url
     })

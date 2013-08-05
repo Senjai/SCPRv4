@@ -6,7 +6,7 @@ describe Program do
       kpcc      = create :kpcc_program
       external  = create :external_program
 
-      Program.all.should eq [kpcc, external]
+      Program.all.should eq [kpcc, external].map(&:to_program)
     end
   end
 
@@ -15,13 +15,13 @@ describe Program do
       kpcc      = create :kpcc_program
       external  = create :external_program
 
-      Program.find_by_slug(kpcc.slug).should eq kpcc
+      Program.find_by_slug(kpcc.slug).should eq kpcc.to_program
     end
 
     it "looks at ExternalProgram if no KPCC program is available" do
       external  = create :external_program
 
-      Program.find_by_slug(external.slug).should eq external
+      Program.find_by_slug(external.slug).should eq external.to_program
     end
   end
 end

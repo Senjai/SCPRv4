@@ -3,6 +3,7 @@ class Episode
 
   attr_accessor \
     :original_object,
+    :id,
     :title,
     :summary,
     :air_date,

@@ -100,4 +100,11 @@ describe ExternalProgram do
       program.rss_url.should eq nil
     end
   end
+
+  describe '#to_program' do
+    it 'turns it into a program' do
+      program = build :external_program
+      program.to_program.should be_a Program
+    end
+  end
 end

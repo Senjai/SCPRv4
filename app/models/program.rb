@@ -1,5 +1,7 @@
-# A module to make fetching Programs easier
+# Public API for Programs
+#
 # When you pass in episodes, it has to be either an Array or a Relation
+# This is to prevent accidental loading of hundreds of episodes.
 class Program
   include Concern::Methods::AbstractModelMethods
 
@@ -17,8 +19,25 @@ class Program
   end
 
 
+  attr_accessor \
+    :original_object,
+    :id,
+    :source,
+    :title,
+    :slug,
+    :description,
+    :host,
+    :air_status,
+    :airtime,
+    :podcast_url,
+    :rss_url,
+    :public_url,
+    :episodes
+
+
   def initialize(attributes={})
     @original_object  = attributes[:original_object]
+    @id               = attributes[:id]
     @source           = attributes[:source]
     @title            = attributes[:title]
     @slug             = attributes[:slug]

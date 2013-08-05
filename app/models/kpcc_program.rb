@@ -90,6 +90,7 @@ class KpccProgram < ActiveRecord::Base
   def to_program
     @to_program ||= Program.new({
       :original_object    => self,
+      :id                 => self.obj_key,
       :source             => 'kpcc',
       :title              => self.title,
       :slug               => self.slug,

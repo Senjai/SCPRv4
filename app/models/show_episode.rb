@@ -136,7 +136,8 @@ class ShowEpisode < ActiveRecord::Base
   def to_episode
     @to_episode ||= Episode.new({
       :original_object    => self,
-      :title              => self.title,
+      :id                 => self.obj_key,
+      :title              => self.headline,
       :summary            => self.body,
       :air_date           => self.air_date,
       :public_url         => self.public_url,

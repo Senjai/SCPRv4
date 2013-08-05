@@ -64,4 +64,10 @@ describe KpccProgram do
     end
   end
 
+  describe '#to_program' do
+    it 'turns it into a program' do
+      program = build :kpcc_program
+      program.to_program.should be_a Program
+    end
+  end
 end

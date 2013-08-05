@@ -3,6 +3,7 @@ class ExternalEpisode < ActiveRecord::Base
   # Really that should be split into two modules, PublicRouting and
   # InternalRouting, or something.
   include Outpost::Model::Routing
+  include Outpost::Model::Identifier
 
   include Concern::Associations::AudioAssociation
   ROUTE_KEY = "episode"
@@ -22,6 +23,7 @@ class ExternalEpisode < ActiveRecord::Base
 
   # This needs to match ShowEpisode
   def route_hash
+    return {} if !self.persisted?
     {
       :show           => self.external_program.slug,
       :year           => self.air_date.year.to_s,
@@ -36,11 +38,11 @@ class ExternalEpisode < ActiveRecord::Base
   def to_episode
     @to_episode ||= Episode.new({
       :original_object    => self,
+      :id                 => self.obj_key,
       :title              => self.title,
       :summary            => self.summary,
       :air_date           => self.air_date,
       :public_url         => self.public_url,
-      :assets             => [],
       :audio              => self.audio.available,
       :program            => self.external_program.to_program,
       :segments           => self.external_segments
