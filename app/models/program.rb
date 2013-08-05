@@ -65,4 +65,12 @@ class Program
   def to_program
     self
   end
+
+  # Delegate get_link to original object, 
+  # just so we don't have to redefine it.
+  def get_link(type)
+    if self.original_object
+      self.original_object.get_link(type)
+    end
+  end
 end
