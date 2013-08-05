@@ -1,6 +1,6 @@
 json.cache! [Api::Public::V2::VERSION, "v1", episode] do
   json.title    episode.title
-  json.summary  episode.summary.html_safe
+  json.summary  episode.summary.to_s.html_safe
 
   json.air_date     episode.air_date
   json.public_url   episode.public_url
@@ -25,5 +25,5 @@ json.cache! [Api::Public::V2::VERSION, "v1", episode] do
       articles: episode.segments.published.map(&:to_article)
   end
 
-  json.teaser episode.summary.html_safe # Deprecated
+  json.teaser episode.summary.to_s.html_safe # Deprecated
 end
