@@ -11,7 +11,7 @@ describe Api::Public::V2::ProgramsController do
     it "finds the object if it exists" do
       program = create :kpcc_program, slug: 'hello'
       get :show, { id: program.slug }.merge(request_params)
-      assigns(:program).should eq program
+      assigns(:program).should eq program.to_program
       response.should render_template "show"
     end
 
@@ -28,7 +28,7 @@ describe Api::Public::V2::ProgramsController do
       external_program   = create :external_program
 
       get :index, request_params
-      assigns(:programs).should eq [kpcc_program, external_program]
+      assigns(:programs).should eq [kpcc_program, external_program].map(&:to_program)
     end
   end
 end
