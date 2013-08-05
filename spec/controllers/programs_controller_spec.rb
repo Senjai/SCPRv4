@@ -2,29 +2,24 @@ require "spec_helper"
 
 describe ProgramsController do
   render_views
-  
-  # ----------------------
-  
+
   describe "GET /archive" do
-    
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         episode = create :show_episode, air_date: Time.new(2012, 3, 22)
         post :archive, show: episode.show.slug, archive: { "date(1i)" => episode.air_date.year, "date(2i)" => episode.air_date.month, "date(3i)" => episode.air_date.day }
       end
     end
-    
-    #-------------------------
-    
+
     describe "controller" do
       it "finds the episode for the program on the given date" do
         episode = create :show_episode, air_date: Time.new(2012, 3, 22)
         post :archive, show: episode.show.slug, archive: { "date(1i)" => episode.air_date.year, "date(2i)" => episode.air_date.month, "date(3i)" => episode.air_date.day }
         assigns(:episode).should eq episode
       end
-    
+
       it "assigns @date if date is given" do
         episode = create :show_episode, air_date: Time.new(2012, 3, 22)
         post :archive, show: episode.show.slug, archive: { "date(1i)" => episode.air_date.year, "date(2i)" => episode.air_date.month, "date(3i)" => episode.air_date.day }
@@ -34,21 +29,17 @@ describe ProgramsController do
       end
     end
   end
-  
-  # ----------------------
 
   describe "GET /schedule" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         create :recurring_schedule_rule
         get :schedule
       end
     end
 
-    #---------------------------
-    
     describe "controller" do
       it "assigns @schedule_occurrences to this week's schedule" do
         create :schedule_occurrence, starts_at: Time.now.beginning_of_week
@@ -61,18 +52,16 @@ describe ProgramsController do
     end
   end
 
-  # ----------------------
-   
   describe "GET /index" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         active = create :kpcc_program, air_status: "onair"
         get :index
       end
     end
-    
+
     describe "controller" do
       it "assigns @kpcc_programs to active ordered by title" do
         active = create :kpcc_program, air_status: "onair"
@@ -82,7 +71,7 @@ describe ProgramsController do
         assigns(:kpcc_programs).to_sql.should match /order by title/i
         assigns(:kpcc_programs).should eq [active]
       end
-    
+
       it "assigns @external_programs to active ordered by title" do
         active = create :external_program, :from_rss, air_status: "onair"
         inactive = create :external_program, :from_rss, air_status: "hidden"
@@ -93,19 +82,17 @@ describe ProgramsController do
       end
     end
   end
-  
-  # ----------------------
 
   describe "GET /show" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         program = create :kpcc_program
         get :show, show: program.slug
       end
     end
-    
+
     describe "controller" do
       describe "with XML" do
         it "renders xml template when requested" do
@@ -115,26 +102,26 @@ describe ProgramsController do
           response.header['Content-Type'].should match /xml/
         end
       end
-    
+
       describe "get_any_program" do
         it "assigns a KPCC program if slug matches" do
           program = create :kpcc_program
           get :show, show: program.slug
           assigns(:program).should eq program
         end
-      
+
         it "finds an other program if requested" do
           program = create :external_program, :from_rss
           get :show, show: program.slug
           assigns(:program).should eq program
         end
-      
+
         it "redirects to podcast_url if other program is present and request format is xml" do
           program = create :external_program, :from_rss, podcast_url: "http://podcast.com/podcast.xml"
           get :show, show: program.slug, format: :xml
           response.should redirect_to program.podcast_url
         end
-      
+
         it "raises error if nothing found" do
           -> {
             get :show, show: "nonsense"
@@ -143,34 +130,28 @@ describe ProgramsController do
       end
     end
   end
-  
-  # ----------------------
-  
+
   describe "GET /segment" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         segment = create :show_segment
         get :segment, segment.route_hash
       end
     end
 
-    # ----------------------
-    
     describe "controller" do
       describe "for invalid segment" do
         it "raises error for invalid id" do
           segment = create :show_segment
-          -> { 
+          -> {
             get :segment, { show: segment.show.slug, id: "9999999", slug: segment.slug }.merge!(date_path(segment.published_at))
           }.should raise_error ActiveRecord::RecordNotFound
         end
       end
     end
 
-    # ----------------------
-    
     describe "for valid segment" do
       it "assigns @segment" do
         segment = create :show_segment
@@ -179,13 +160,11 @@ describe ProgramsController do
       end
     end
   end
-  
-  # ----------------------
-  
+
   describe "GET /episode" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         episode = create :show_episode
         get :episode, episode.route_hash
@@ -193,6 +172,7 @@ describe ProgramsController do
     end
 
     describe "controller" do
+
     end
   end
 end
