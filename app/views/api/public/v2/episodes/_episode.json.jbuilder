@@ -12,7 +12,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", episode] do
 
   json.audio do
     json.partial! "api/public/v2/audio/collection",
-      audio: episode.audio.available
+      audio: episode.audio
   end
 
   json.program do
@@ -22,7 +22,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", episode] do
 
   json.segments do
     json.partial! 'api/public/v2/articles/collection',
-      articles: episode.segments.published.map(&:to_article)
+      articles: episode.segments.map(&:to_article)
   end
 
   json.teaser episode.summary.to_s.html_safe # Deprecated
