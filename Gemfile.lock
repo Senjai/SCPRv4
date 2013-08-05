@@ -51,10 +51,9 @@ GIT
 
 GIT
   remote: git://github.com/bricker/npr.git
-  revision: 75e90f361e4c12983a7ed890950272038b0e5560
-  branch: v2.0.0
+  revision: 8c6b267fdc3be93668932597e00426fcc4ebe971
   specs:
-    npr (1.2.0)
+    npr (2.0.0.beta)
       faraday (>= 0.8.0)
       faraday_middleware (>= 0.9.0)
 
