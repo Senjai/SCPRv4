@@ -40,6 +40,7 @@ module Api::Public::V2
         render_not_found and return false
       end
 
+      @episode = @episode.to_episode
       respond_with @episode
     end
 
