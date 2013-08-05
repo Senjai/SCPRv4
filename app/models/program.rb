@@ -16,6 +16,10 @@ class Program
 
       program.try(:to_program)
     end
+
+    def find_by_slug!(slug)
+      find_by_slug(slug) or raise ActiveRecord::RecordNotFound
+    end
   end
 
 
