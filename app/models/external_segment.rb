@@ -1,4 +1,5 @@
 class ExternalSegment < ActiveRecord::Base
+  include Outpost::Model::Identifier
   include Concern::Associations::AudioAssociation
 
   belongs_to :external_program
@@ -9,8 +10,19 @@ class ExternalSegment < ActiveRecord::Base
     :dependent => :destroy
 
 
-  def to_segment
-    @to_segment ||= Segment.new({
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.title,
+      :short_title        => self.title,
+      :public_datetime    => self.published_at,
+      :teaser             => self.teaser,
+      :body               => self.teaser,
+      :audio              => self.audio.available,
+      :attributions       => [],
+      :byline             => self.external_program.organization,
+      :public_url         => self.external_url
     })
   end
 end
