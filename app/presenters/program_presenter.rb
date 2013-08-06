@@ -4,7 +4,7 @@ class ProgramPresenter < ApplicationPresenter
 
 
   def teaser
-    program.teaser.try(:html_safe)
+    program.original_object.teaser.try(:html_safe)
   end
 
   def description

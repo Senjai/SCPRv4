@@ -80,7 +80,7 @@ class ProgramsController < ApplicationController
 
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
-    @program = @segment.show
+    @program = @segment.show.to_program
 
     # check whether this is the correct URL for the segment
     if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.public_path
@@ -102,7 +102,7 @@ class ProgramsController < ApplicationController
       redirect_to episode.public_path and return
     end
 
-    @episode    = @program.episodes.find(params[:id])
+    @episode    = @program.episodes.find(params[:id]).to_episode
     @segments   = @episode.segments
   end
 

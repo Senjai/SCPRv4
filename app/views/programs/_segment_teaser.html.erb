@@ -11,7 +11,7 @@
       <div class="info">
         <h3><%= link_to article.short_title, article.public_url  %></h3>
         <span class="byline">
-          <%= timestamp(article.published_at) %> <span class="pipe">|</span> <%= render_byline article %>
+          <%= timestamp(article.public_datetime) %> <span class="pipe">|</span> <%= render_byline article %>
         </span>
       </div>
 
