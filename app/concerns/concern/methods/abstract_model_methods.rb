@@ -4,16 +4,27 @@
 # This does *not* have anything to do with class Abstract.
 # It provides methods for the abstract models, like Article, Episode
 #
-# Requires that the class has an `original_object` object.
+# Requires that the class has an `original_object` object
+# and responds to `id`.
+#
+# Yes - the delegation kind of defeats the purpose of the abstract model.
+# However, we should only delegate methods that are standard across all
+# models, or most of them anyways, such as `updated_at` or `id`. We can
+# be reasonably confident that most objects will respond to these common
+# methods - however, Rails' `delegate` method also checks to make sure
+# the object will respond to the method.
 module Concern
   module Methods
     module AbstractModelMethods
-      def cache_key
-        original_object.cache_key if original_object.respond_to?(:cache_key)
-      end
+      extend ActiveSupport::Concern
 
-      def updated_at
-        original_object.updated_at if original_object.respond_to?(:updated_at)
+      included do
+        delegate \
+          :public_path,
+          :updated_at,
+          :created_at,
+          :cache_key,
+          to: :original_object
       end
 
       # Steal the ActiveRecord behavior for object comparison.
