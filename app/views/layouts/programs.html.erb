@@ -4,7 +4,7 @@
 <div class="page-header program-masthead">
   <div class="row-fluid">
     <div class="span16" id="program-masthead-title">
-      <div class="program-info<%= " headshot #{@program.slug}" if @program.original_object.is_featured?  %>">
+      <div class="program-info<%= " headshot #{@program.slug}" if @program.is_featured?  %>">
         <h1 class="page-title"><%= link_to @program.title, @program.public_url %></h1>
         <div class="show-meta">
           <%= @program.airtime %>
@@ -48,15 +48,15 @@
           <p class="about"><%= p.description %></p>
         </div>
       </div>
-      <%= link_to "View Archived Episodes", @program.original_object.public_path(anchor: "archive"), class: "archive with-icon" %>
+      <%= link_to "View Archived Episodes", @program.public_path(anchor: "archive"), class: "archive with-icon" %>
     </section>
   <% end %>
 
-  <% if bucket = @program.original_object.missed_it_bucket %>
+  <% if bucket = @program.missed_it_bucket %>
     <%= render("/shared/widgets/missed_it_bucket", bucket: bucket) %>
   <% end %>
 
-  <% if blog = @program.original_object.blog %>
+  <% if blog = @program.blog %>
     <%= render('/blogs/recent_posts', blog: blog, title: "From the Blog: #{blog.name}") %>
   <% end %>
 <% end %>

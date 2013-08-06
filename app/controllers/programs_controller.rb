@@ -9,47 +9,38 @@ class ProgramsController < ApplicationController
     @featured_programs = KpccProgram.where(is_featured: true)
     @kpcc_programs     = KpccProgram.active.order("title")
     @external_programs = ExternalProgram.active.order("title")
+
     render layout: "application"
   end
 
 
   def show
-    if @program.original_object.is_a? KpccProgram
-      @kpcc_program = @program.original_object
+    @segments = @program.segments
+    @episodes = @program.episodes
 
-      @segments = @kpcc_program.segments.published
-      @episodes = @kpcc_program.episodes.published
+    if @kpcc_program
+      @segments = @segments.published
+      @episodes = @episodes.published
 
-      # depending on what type of show this is, we need to filter some 
-      # elements out of the @segments and @episodes selectors
-      # Only for HTML response
-      if request.format.html?
-        if @kpcc_program.display_episodes?
-          @current_episode = @episodes.first
+      if request.format.html? && @program.display_episodes?
+        if @current_episode = @episodes.first
+          @episodes = @episodes.where("id != ?", @current_episode.id)
 
-          if @current_episode
-            # don't return the current episode in the episodes list
-            @episodes = @episodes.where("id != ?", @current_episode.id)
-
-            if @current_episode.segments.published.any?
-              # don't include the current episodes segments in the 
-              # segments list
-              @segments = @segments.where("id not in (?)", 
-                @current_episode.segments.published.map(&:id))
-            end
+          if segments = @current_episode.segments.published.to_a
+            @segments = @segments.where("id not in (?)", segments.map(&:id))
           end
         end
       end
+    end
 
-      # Don't want to paginate for XML response
-      @segments_scoped = @segments
-      @segments = @segments.page(params[:page]).per(10)
-      @episodes = @episodes.page(params[:page]).per(6)
+    # Don't want to paginate for XML response
+    @segments_scoped = @segments
+    @segments = @segments.page(params[:page]).per(10)
+    @episodes = @episodes.page(params[:page]).per(6)
 
+    if @kpcc_program
       respond_with @segments_scoped
-
-    else
-      @external_program = @program.original_object
+    elsif @external_program
       respond_to do |format|
         format.html { render :show_external, layout: "application" }
         format.xml  { redirect_to @program.podcast_url }
@@ -80,7 +71,7 @@ class ProgramsController < ApplicationController
 
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
-    @program = @segment.show.to_program
+    @program = @kpcc_program = @segment.show.to_program
 
     # check whether this is the correct URL for the segment
     if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.public_path
@@ -123,6 +114,12 @@ class ProgramsController < ApplicationController
 
   def get_program
     @program = Program.find_by_slug!(params[:show])
+
+    if @program.original_object.is_a? KpccProgram
+      @kpcc_program = @program.original_object
+    elsif @program.original_object.is_a? ExternalProgram
+      @external_program = @program.original_object
+    end
   end
 
   def get_kpcc_program
