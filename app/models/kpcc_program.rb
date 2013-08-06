@@ -103,7 +103,12 @@ class KpccProgram < ActiveRecord::Base
       :rss_url            => self.get_link('rss'),
       :public_url         => self.public_url,
       :episodes           => self.episodes.published,
-      :segments           => self.segments.published
+      :segments           => self.segments.published,
+      :missed_it_bucket   => self.missed_it_bucket,
+      :blog               => self.blog,
+      :is_featured        => self.is_featured?,
+      :display_episodes   => self.display_episodes?,
+      :display_segments   => self.display_segments?
     })
   end
 end

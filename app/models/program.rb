@@ -38,7 +38,16 @@ class Program
     :rss_url,
     :public_url,
     :episodes,
-    :segments
+    :segments,
+    :blog,
+    :missed_it_bucket,
+    :is_featured,
+    :display_episodes,
+    :display_segments
+
+  alias_method :is_featured?, :is_featured
+  alias_method :display_episodes?, :display_episodes
+  alias_method :display_segments?, :display_segments
 
 
   def initialize(attributes={})
@@ -55,6 +64,13 @@ class Program
     @podcast_url      = attributes[:podcast_url]
     @rss_url          = attributes[:rss_url]
     @public_url       = attributes[:public_url]
+    @blog             = attributes[:blog]
+    @missed_it_bucket = attributes[:missed_it_bucket]
+
+    # Force to boolean
+    @is_featured      = !!attributes[:is_featured]
+    @display_segments = !!attributes[:display_segments]
+    @display_episodes = !!attributes[:display_episodes]
 
     # Don't force these into an array, so it doesn't load ALL
     # of the episodes/segments (which could be thousands).
