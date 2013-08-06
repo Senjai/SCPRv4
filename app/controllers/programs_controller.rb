@@ -14,7 +14,7 @@ class ProgramsController < ApplicationController
 
 
   def show
-    if @program.is_a? KpccProgram
+    if @program.original_object.is_a? KpccProgram
       @kpcc_program = @program.original_object
 
       @segments = @kpcc_program.segments.published
