@@ -206,8 +206,8 @@ module ApplicationHelper
 
     options[:class] = "audio-toggler #{options[:class]}"
     options[:title] ||= article.short_title
-    options["data-duration"] = object.audio.first.duration
-    content_tag :div, link_to(title, object.audio.first.url, options), class: "story-audio inline"
+    options["data-duration"] = article.audio.first.duration
+    content_tag :div, link_to(title, article.audio.first.url, options), class: "story-audio inline"
   end
 
   #---------------------------
