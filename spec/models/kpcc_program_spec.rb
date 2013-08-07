@@ -1,17 +1,6 @@
 require "spec_helper"
 
 describe KpccProgram do
-  describe "validations" do
-    it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:slug) }
-    it { should validate_presence_of(:air_status) }
-
-    it "validates slug uniqueness" do
-      create :kpcc_program
-      should validate_uniqueness_of(:slug)
-    end
-  end
-
   describe "::scopes" do
     describe "can sync audio" do
       it "returns records with onair and audio_dir" do
@@ -35,32 +24,6 @@ describe KpccProgram do
     it "is nil if audio_dir is present" do
       program = create :kpcc_program, audio_dir: nil
       program.absolute_audio_path.should eq nil
-    end
-  end
-
-  describe '#rss_url' do
-    it 'is the RSS link if present' do
-      program = build :kpcc_program
-      program.related_links.build(link_type: "rss", url: "http://rss.com", title: "wat")
-      program.rss_url.should eq "http://rss.com"
-    end
-
-    it "is nil if no RSS link is present" do
-      program = build :kpcc_program
-      program.rss_url.should eq nil
-    end
-  end
-
-  describe '#podcast_url' do
-    it 'is the podcast link if present' do
-      program = build :kpcc_program
-      program.related_links.build(link_type: "podcast", url: "http://podcast.com", title: "wat")
-      program.podcast_url.should eq "http://podcast.com"
-    end
-
-    it "is nil if no podcast link is present" do
-      program = build :kpcc_program
-      program.podcast_url.should eq nil
     end
   end
 

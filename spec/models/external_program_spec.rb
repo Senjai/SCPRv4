@@ -88,19 +88,6 @@ describe ExternalProgram do
     end
   end
 
-  describe '#rss_url' do
-    it 'is the RSS link if present' do
-      program = build :external_program
-      program.related_links.build(link_type: "rss", url: "http://rss.com", title: "wat")
-      program.rss_url.should eq "http://rss.com"
-    end
-
-    it "is nil if no RSS link is present" do
-      program = build :external_program
-      program.rss_url.should eq nil
-    end
-  end
-
   describe '#to_program' do
     it 'turns it into a program' do
       program = build :external_program

@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe ProgramsController do
-  render_views
-
   describe "GET /archive" do
     describe "view" do
       render_views
@@ -101,31 +99,11 @@ describe ProgramsController do
           response.should render_template 'programs/show'
           response.header['Content-Type'].should match /xml/
         end
-      end
 
-      describe "get_any_program" do
-        it "assigns a KPCC program if slug matches" do
-          program = create :kpcc_program
-          get :show, show: program.slug
-          assigns(:program).should eq program
-        end
-
-        it "finds an other program if requested" do
+        it "redirects to the podcast URL for external programs" do
           program = create :external_program, :from_rss
-          get :show, show: program.slug
-          assigns(:program).should eq program
-        end
-
-        it "redirects to podcast_url if other program is present and request format is xml" do
-          program = create :external_program, :from_rss, podcast_url: "http://podcast.com/podcast.xml"
           get :show, show: program.slug, format: :xml
           response.should redirect_to program.podcast_url
-        end
-
-        it "raises error if nothing found" do
-          -> {
-            get :show, show: "nonsense"
-          }.should raise_error ActionController::RoutingError
         end
       end
     end
