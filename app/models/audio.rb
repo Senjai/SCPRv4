@@ -68,7 +68,7 @@ class Audio < ActiveRecord::Base
 
   before_save :set_default_status, if: -> { self.status.blank? }
 
-  after_save :async_compute_file_info, if: -> {
+  after_commit :async_compute_file_info, if: -> {
     self.size.blank? || self.duration.blank?
   }
 
