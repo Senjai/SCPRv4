@@ -68,8 +68,9 @@ class Audio < ActiveRecord::Base
 
   before_save :set_default_status, if: -> { self.status.blank? }
 
+  # Check if persisted so this doesn't get queued on destroy
   after_commit :async_compute_file_info, if: -> {
-    self.size.blank? || self.duration.blank?
+    self.persisted? && (self.size.blank? || self.duration.blank?)
   }
 
 
