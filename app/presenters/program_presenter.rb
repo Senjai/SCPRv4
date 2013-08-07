@@ -4,7 +4,7 @@ class ProgramPresenter < ApplicationPresenter
 
 
   def teaser
-    program.original_object.teaser.try(:html_safe)
+    program.teaser.try(:html_safe)
   end
 
   def description
@@ -28,7 +28,7 @@ class ProgramPresenter < ApplicationPresenter
   end
 
   def podcast_link
-    if link = program.podcast_url
+    if link = abstract_program.podcast_url
       h.link_to "Podcast", link,
         :target => "_blank",
         :class  => "podcast with-icon"
@@ -36,7 +36,7 @@ class ProgramPresenter < ApplicationPresenter
   end
 
   def rss_link
-    if link = program.rss_url
+    if link = abstract_program.rss_url
       h.link_to "RSS", link,
         :target => "_blank",
         :class  => "rss with-icon"
@@ -50,5 +50,12 @@ class ProgramPresenter < ApplicationPresenter
         :target => "_blank",
         :class  => "twitter with-icon"
     end
+  end
+
+
+  private
+
+  def abstract_program
+    @abstract_program ||= program.to_program
   end
 end
