@@ -8,7 +8,7 @@ xml.rss(RSS_SPEC) do
         :rel  => "self",
         :type => "application/rss+xml"
 
-    xml.description strip_tags(@program.teaser)
+    xml.description strip_tags(@program.description)
     xml << render_content(@segments_scoped.first(15),"feedxml")
   end
 end
