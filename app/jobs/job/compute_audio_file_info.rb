@@ -11,17 +11,19 @@ module Job
 
     class << self
       def perform(id)
-        begin
-          audio = Audio.find(id)
-          audio.compute_duration if audio.duration.blank?
-          audio.compute_size     if audio.size.blank?
-          audio.save!
+        audio = Audio.find(id)
+        audio.compute_duration if audio.duration.blank?
+        audio.compute_size     if audio.size.blank?
+        audio.save!
 
-          log "Saved Audio ##{audio.id}. " \
-              "Duration: #{audio.duration}; Size: #{audio.size}"
-        rescue => e
-          log "Couldn't save audio file info for Audio ##{id}: #{e}"
-        end
+        log "Saved Audio ##{audio.id}. " \
+            "Duration: #{audio.duration}; Size: #{audio.size}"
+      end
+
+      def on_failure(exception, id)
+        log "Couldn't save audio file info for Audio ##{id}: " \
+            "(#{e.class}) #{e}\n" \
+            "#{e.backtrace}"
       end
     end # singleton
   end # ComputeAudioFileInfo
