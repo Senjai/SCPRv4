@@ -113,4 +113,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'fakeweb'
   gem 'chronic', "~> 0.8"
+  gem 'test_after_commit'
 end
