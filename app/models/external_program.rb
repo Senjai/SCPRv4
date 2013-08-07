@@ -108,7 +108,6 @@ class ExternalProgram < ActiveRecord::Base
       :airtime            => self.airtime,
       :podcast_url        => self.podcast_url,
       :rss_url            => self.get_link('rss'),
-      :public_url         => self.public_url,
       :episodes           => self.external_episodes,
       :segments           => self.external_segments
     })

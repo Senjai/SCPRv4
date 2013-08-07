@@ -115,7 +115,6 @@ class ShowEpisode < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => self.show.title,
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end
@@ -140,7 +139,6 @@ class ShowEpisode < ActiveRecord::Base
       :title              => self.headline,
       :summary            => self.body,
       :air_date           => self.air_date,
-      :public_url         => self.public_url,
       :assets             => self.assets,
       :audio              => self.audio.available,
       :program            => self.show.to_program,

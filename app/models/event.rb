@@ -195,7 +195,6 @@ class Event < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => "KPCC",
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end

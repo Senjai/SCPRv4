@@ -22,6 +22,12 @@ module Concern
         end
       end
 
+      def public_url(*args)
+        if original_object && original_object.respond_to?(:public_url)
+          original_object.public_url(*args)
+        end
+      end
+
       def updated_at
         if original_object && original_object.respond_to?(:updated_at)
           original_object.updated_at

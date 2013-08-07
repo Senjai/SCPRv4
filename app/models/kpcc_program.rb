@@ -101,7 +101,6 @@ class KpccProgram < ActiveRecord::Base
       :airtime            => self.airtime,
       :podcast_url        => self.get_link('podcast'),
       :rss_url            => self.get_link('rss'),
-      :public_url         => self.public_url,
       :episodes           => self.episodes.published,
       :segments           => self.segments.published,
       :missed_it_bucket   => self.missed_it_bucket,

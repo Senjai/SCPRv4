@@ -41,7 +41,6 @@ class Article
     :audio,
     :attributions,
     :byline,
-    :public_url,
     :edit_url # Should this really be an attribute, or should we delegate?
 
   def initialize(attributes={})
@@ -57,7 +56,6 @@ class Article
     @audio            = Array(attributes[:audio])
     @attributions     = Array(attributes[:attributions])
     @byline           = attributes[:byline]
-    @public_url       = attributes[:public_url]
     @edit_url         = attributes[:edit_url]
   end
 

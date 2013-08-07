@@ -104,7 +104,6 @@ class Abstract < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => self.source,
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end

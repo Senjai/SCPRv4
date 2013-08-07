@@ -36,7 +36,6 @@ class Program
     :airtime,
     :podcast_url,
     :rss_url,
-    :public_url,
     :episodes,
     :segments,
     :blog,
@@ -63,7 +62,6 @@ class Program
     @airtime          = attributes[:airtime]
     @podcast_url      = attributes[:podcast_url]
     @rss_url          = attributes[:rss_url]
-    @public_url       = attributes[:public_url]
     @blog             = attributes[:blog]
     @missed_it_bucket = attributes[:missed_it_bucket]
 

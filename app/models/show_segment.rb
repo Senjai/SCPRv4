@@ -152,7 +152,6 @@ class ShowSegment < ActiveRecord::Base
       :audio              => self.audio.available,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end

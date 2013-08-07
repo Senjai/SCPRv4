@@ -42,7 +42,6 @@ class ExternalEpisode < ActiveRecord::Base
       :title              => self.title,
       :summary            => self.summary,
       :air_date           => self.air_date,
-      :public_url         => self.public_url,
       :audio              => self.audio.available,
       :program            => self.external_program.to_program,
       :segments           => self.external_segments.map(&:to_article)

@@ -7,7 +7,6 @@ class Episode
     :title,
     :summary,
     :air_date,
-    :public_url,
     :assets,
     :audio,
     :program,
@@ -21,7 +20,6 @@ class Episode
     @title            = attributes[:title]
     @summary          = attributes[:summary]
     @air_date         = attributes[:air_date]
-    @public_url       = attributes[:public_url]
     @assets           = Array(attributes[:assets])
     @audio            = Array(attributes[:audio])
     @segments         = Array(attributes[:segments])
