@@ -11,21 +11,35 @@
 # However, we should only delegate methods that are standard across all
 # models, or most of them anyways, such as `updated_at` or `id`. We can
 # be reasonably confident that most objects will respond to these common
-# methods - however, Rails' `delegate` method also checks to make sure
-# the object will respond to the method.
+# methods.
 module Concern
   module Methods
     module AbstractModelMethods
-      extend ActiveSupport::Concern
 
-      included do
-        delegate \
-          :public_path,
-          :updated_at,
-          :created_at,
-          :cache_key,
-          to: :original_object
+      def public_path(*args)
+        if original_object && original_object.respond_to?(:public_path)
+          original_object.public_path(*args)
+        end
       end
+
+      def updated_at
+        if original_object && original_object.respond_to?(:updated_at)
+          original_object.updated_at
+        end
+      end
+
+      def created_at
+        if original_object && original_object.respond_to?(:created_at)
+          original_object.created_at
+        end
+      end
+
+      def cache_key
+        if original_object && original_object.respond_to?(:cache_key)
+          original_object.cache_key
+        end
+      end
+
 
       # Steal the ActiveRecord behavior for object comparison.
       # Compare Article ID with the comparison object's ID
