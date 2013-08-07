@@ -55,7 +55,7 @@ class Audio
 
     def compute_size
       return false if self.mp3_file.blank?
-      self.size = self.mp3_file.size
+      self.size = self.mp3_file.size || 0
     end
 
 
