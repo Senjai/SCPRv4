@@ -26,7 +26,7 @@ class Audio
       end
 
 
-      # This method is used by Job::SyncAudioJob
+      # This method is used by Job::SyncAudio
       def bulk_sync
         limit     = SYNC_THRESHOLD.ago
         synced    = 0

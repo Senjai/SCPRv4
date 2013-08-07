@@ -147,7 +147,6 @@ describe Audio do
     it "doesn't receive async_compute_file_fields if duration and size are present" do
       Audio.any_instance.should_not_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: 8000
-
     end
 
 
@@ -292,12 +291,12 @@ describe Audio do
 
   describe "::enqueue_sync" do
     it "sends off to Resque" do
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, "Audio")
+      Resque.should_receive(:enqueue).with(Job::SyncAudio, "Audio")
       Audio.enqueue_sync
     end
 
     it "does it for subclasses" do
-      Resque.should_receive(:enqueue).with(Audio::SyncAudioJob, "Audio::EncoAudio")
+      Resque.should_receive(:enqueue).with(Job::SyncAudio, "Audio::EncoAudio")
       Audio::EncoAudio.enqueue_sync
     end
   end

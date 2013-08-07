@@ -87,7 +87,7 @@ class Audio < ActiveRecord::Base
 
     # Enqueue the audio sync
     def enqueue_sync
-      Resque.enqueue(Audio::SyncAudioJob, self.name)
+      Resque.enqueue(Job::SyncAudio, self.name)
     end
   end
 
