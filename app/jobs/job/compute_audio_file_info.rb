@@ -22,8 +22,7 @@ module Job
 
       def on_failure(exception, id)
         log "Couldn't save audio file info for Audio ##{id}: " \
-            "(#{e.class}) #{e}\n" \
-            "#{e.backtrace}"
+            "(#{exception.class}) #{exception}\n"
       end
     end # singleton
   end # ComputeAudioFileInfo
