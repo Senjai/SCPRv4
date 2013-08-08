@@ -38,15 +38,18 @@ json.cache! [Api::Public::V3::VERSION, "v1", event] do
 
   if event.kpcc_program.present?
     json.program do
-      json.partial! api_view_path("programs", "program"), program: event.kpcc_program
+      json.partial! api_view_path("programs", "program"),
+        program: event.kpcc_program.to_program
     end
   end
 
   json.assets do |asset|
-    json.partial! api_view_path("assets", "collection"), assets: event.assets
+    json.partial! api_view_path("assets", "collection"),
+      assets: event.assets
   end
 
   json.audio do
-    json.partial! api_view_path("audio", "collection"), audio: event.audio
+    json.partial! api_view_path("audio", "collection"),
+      audio: event.audio
   end
 end
