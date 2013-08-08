@@ -9,13 +9,6 @@
 # * filename (for building `path`)
 class Audio
   module Paths
-    extend ActiveSupport::Concern
-
-    included do
-      before_save :set_path, if: -> { self.path.blank? }
-    end
-
-
     # The server path, 
     # eg. /home/kpcc/media/audio/features/20121001_features999.mp3
     def full_path
