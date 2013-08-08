@@ -25,6 +25,19 @@ describe ProgramsController do
         date.should be_a Time
         date.beginning_of_day.should eq episode.air_date.beginning_of_day
       end
+
+      it "works for external programs" do
+        episode = create :external_episode, air_date: Time.new(2012, 3, 22)
+
+        post :archive, show: episode.external_program.slug,
+          :archive => {
+            "date(1i)" => episode.air_date.year,
+            "date(2i)" => episode.air_date.month,
+            "date(3i)" => episode.air_date.day
+          }
+
+        assigns(:episode).should eq episode
+      end
     end
   end
 
@@ -150,7 +163,7 @@ describe ProgramsController do
     end
 
     describe "controller" do
-
+      pending
     end
   end
 end

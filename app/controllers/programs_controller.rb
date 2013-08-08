@@ -1,6 +1,5 @@
 class ProgramsController < ApplicationController
-  before_filter :get_program, only: [:show, :episode]
-  before_filter :get_kpcc_program, only: [:archive]
+  before_filter :get_program, only: [:show, :episode, :archive]
 
   respond_to :html, :xml, :rss
 
@@ -56,13 +55,13 @@ class ProgramsController < ApplicationController
       params[:archive]["date(3i)"].to_i
     )
 
-    @episode = @program.episodes.published.for_air_date(@date).first
+    @episode = @program.episodes.for_air_date(@date).first
 
     if !@episode
       flash[:alert] = "There is no #{@program.title} " \
                       "episode for #{@date.strftime('%F')}."
 
-      redirect_to program_path(@program.slug, anchor: "archive") and return
+      redirect_to @program.public_path(anchor: "archive") and return
     else
       redirect_to @episode.public_path
     end
@@ -120,9 +119,5 @@ class ProgramsController < ApplicationController
     elsif @program.original_object.is_a? ExternalProgram
       @external_program = @program.original_object
     end
-  end
-
-  def get_kpcc_program
-    @program = KpccProgram.find_by_slug!(params[:show])
   end
 end
