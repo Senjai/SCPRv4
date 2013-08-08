@@ -11,7 +11,7 @@ describe Api::Public::V3::EpisodesController do
     it "finds the object if it exists" do
       episode = create :show_episode
       get :show, { id: episode.id }.merge(request_params)
-      assigns(:episode).should eq episode
+      assigns(:episode).should eq episode.to_episode
       response.should render_template "show"
     end
 
@@ -23,10 +23,20 @@ describe Api::Public::V3::EpisodesController do
   end
 
   describe "GET index" do
-    it "returns the latest episodes by default" do
-      episodes = create_list :show_episode, 4
+    it 'gets the episodes from a program if it is given' do
+      episode1 = create :external_episode
+      episode2 = create :external_episode
+
+      get :index, { program: episode1.external_program.slug }.merge(request_params)
+      assigns(:episodes).should eq [episode1].map(&:to_episode)
+    end
+
+    it "returns the latest KPCC episodes by default" do
+      kpcc_episodes       = create_list :show_episode, 2
+      external_episodes   = create_list :external_episode, 2
+
       get :index, request_params
-      assigns(:episodes).should eq episodes.sort_by(&:air_date).reverse
+      assigns(:episodes).should eq kpcc_episodes.sort_by(&:air_date).reverse.map(&:to_episode)
     end
 
     it "only gets published episodes" do
@@ -34,7 +44,7 @@ describe Api::Public::V3::EpisodesController do
       unpublished = create :show_episode, :draft
 
       get :index, request_params
-      assigns(:episodes).should eq [published]
+      assigns(:episodes).should eq [published].map(&:to_episode)
     end
 
     it 'can filter by program slug' do
@@ -44,8 +54,13 @@ describe Api::Public::V3::EpisodesController do
       episode1 = create :show_episode, show: program1
       episode2 = create :show_episode, show: program2
 
-      get :index, { program: "hello" }.merge(request_params)
-      assigns(:episodes).should eq [episode1]
+      get :index, { program: program1.slug }.merge(request_params)
+      assigns(:episodes).should eq [episode1].map(&:to_episode)
+    end
+
+    it 'returns a 404 if the program is not found' do
+      get :index, { program: "lolnope" }.merge(request_params)
+      response.response_code.should eq 404
     end
 
     it 'can filter by air date' do
@@ -53,7 +68,16 @@ describe Api::Public::V3::EpisodesController do
       episode2 = create :show_episode, air_date: Time.new(2013, 6, 24)
 
       get :index, { air_date: "2013-06-24" }.merge(request_params)
-      assigns(:episodes).should eq [episode2]
+      assigns(:episodes).should eq [episode2].map(&:to_episode)
+    end
+
+    it 'can filter by air date for external programs' do
+      program = create :external_program
+      episode1 = create :external_episode, air_date: Time.new(2013, 6, 25), external_program: program
+      episode2 = create :external_episode, air_date: Time.new(2013, 6, 25), external_program: program
+
+      get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)
+      assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
     end
 
     it "sanitizes the limit" do
@@ -61,7 +85,7 @@ describe Api::Public::V3::EpisodesController do
       get :index, { limit: "Evil Code" }.merge(request_params)
 
       assigns(:limit).should eq 0
-      assigns(:episodes).should eq episodes
+      assigns(:episodes).should eq episodes.map(&:to_episode)
     end
 
     it "accepts a limit" do
@@ -87,7 +111,7 @@ describe Api::Public::V3::EpisodesController do
       second_obj = assigns(:episodes)[1]
 
       get :index, { page: 2, limit: 1 }.merge(request_params)
-      assigns(:episodes).should eq [second_obj]
+      assigns(:episodes).should eq [second_obj].map(&:to_episode)
     end
   end
 end

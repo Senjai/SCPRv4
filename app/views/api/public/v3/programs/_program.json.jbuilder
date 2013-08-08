@@ -2,6 +2,7 @@ json.cache! [Api::Public::V3::VERSION, "v1", program] do
   json.title          program.title
   json.slug           program.slug
   json.air_status     program.air_status
+  json.twitter_handle(program.twitter_handle) if program.twitter_handle.present?
 
   json.host         program.host
   json.airtime      program.airtime
