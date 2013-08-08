@@ -89,9 +89,9 @@ describe ScheduleOccurrence do
       # We have to do it this round-about way because the
       # rule will be saved before its ID was set on the occurrence,
       # and the rule's "build_occurrences" callback was getting triggered.
-      occurrence = create :schedule_occurrence
-      rule = build :recurring_schedule_rule
-      rule.occurrences << occurrence
+      occurrence  = create :schedule_occurrence
+      rule        = build :recurring_schedule_rule
+      rule.schedule_occurrences << occurrence
       rule.save!
 
       ScheduleOccurrence.on_at(occurrence.starts_at).should eq occurrence 
