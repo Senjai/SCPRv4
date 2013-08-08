@@ -41,7 +41,7 @@ FactoryGirl.define do
     slug { name.parameterize }
   end
 
-  factory :test_class_audio, class: TestClass::Audio do
+  factory :test_class_fake_audio, class: TestClass::FakeAudio do
     trait :live do
       status 2
     end

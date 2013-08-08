@@ -55,7 +55,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :test_class_audio, force: true do |t|
+    create_table :test_class_fake_audio, force: true do |t|
       t.string :path
       t.integer :status
     end

@@ -1,6 +1,6 @@
 module TestClass
-  class Audio < ActiveRecord::Base
-    self.table_name = "test_class_audio"
+  class FakeAudio < ActiveRecord::Base
+    self.table_name = "test_class_fake_audio"
     include ::Audio::Paths
 
     def store_dir
