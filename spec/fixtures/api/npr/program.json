@@ -1,0 +1,1093 @@
+{
+  "version": "0.94",
+  "list": {
+    "title": {
+      "$text": "NPR Programs: All Things Considered"
+    },
+    "teaser": {
+      "$text": "Every weekday, All Things Considered hosts Robert Siegel, Michele Norris and Melissa Block present the program's trademark mix of news, interviews, commentaries, reviews, and offbeat features."
+    },
+    "miniTeaser": {
+      "$text": "A trademark mix of news, interviews, commentaries, reviews, and offbeat features."
+    },
+    "link": [
+      {
+        "type": "api",
+        "$text": "http://api.npr.org/query?id=2&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+      },
+      {
+        "type": "html",
+        "$text": "http://www.npr.org/programs/all-things-considered/?ft=3&f=2"
+      }
+    ],
+    "story": [
+      {
+        "id": "202437360",
+        "link": [
+          {
+            "type": "html",
+            "$text": "http://www.npr.org/blogs/codeswitch/2013/07/15/202437360/Zimmerman-Verdict-Feels-Personal-For-Some-In-Service-Sorority?ft=3&f=2"
+          },
+          {
+            "type": "api",
+            "$text": "http://api.npr.org/query?id=202437360&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          },
+          {
+            "type": "short",
+            "$text": "http://n.pr/12ENROR"
+          }
+        ],
+        "title": {
+          "$text": "Zimmerman Verdict Feels Personal For Some In Service Sorority"
+        },
+        "partnerId": {
+          "$text": "202437360"
+        },
+        "subtitle": {},
+        "shortTitle": {},
+        "teaser": {
+          "$text": "The verdict in the Travyon Martin case is reverberating at the annual gathering of Delta Sigma Theta, a prominent service sorority that has long focused on African-American civil rights."
+        },
+        "miniTeaser": {
+          "$text": "The verdict in the Travyon Martin case is reverberating at the annual Delta Sigma Theta convention."
+        },
+        "slug": {
+          "$text": "Code Switch"
+        },
+        "thumbnail": {
+          "medium": {
+            "$text": "http://media.npr.org/assets/img/2013/07/15/ap574932063556_sq-5b6d73855ea633dfad66efd8af5e6313b3a0dac5.jpg?s=13"
+          },
+          "large": {
+            "$text": "http://media.npr.org/assets/img/2013/07/15/ap574932063556_sq-5b6d73855ea633dfad66efd8af5e6313b3a0dac5.jpg?s=11"
+          },
+          "provider": {
+            "$text": "AP"
+          }
+        },
+        "storyDate": {
+          "$text": "Mon, 15 Jul 2013 15:00:00 -0400"
+        },
+        "pubDate": {
+          "$text": "Mon, 15 Jul 2013 19:54:00 -0400"
+        },
+        "lastModifiedDate": {
+          "$text": "Mon, 15 Jul 2013 19:54:54 -0400"
+        },
+        "show": [
+          {
+            "program": {
+              "id": "2",
+              "code": "ATC",
+              "$text": "All Things Considered"
+            },
+            "showDate": {
+              "$text": "Mon, 15 Jul 2013 15:00:00 -0400"
+            },
+            "segNum": {
+              "$text": "2"
+            }
+          }
+        ],
+        "keywords": {},
+        "priorityKeywords": {},
+        "organization": [
+          {
+            "orgId": "1",
+            "orgAbbr": "NPR",
+            "name": {
+              "$text": "NPR"
+            },
+            "website": {
+              "$text": "http://www.npr.org/"
+            }
+          }
+        ],
+        "transcript": {
+          "link": {
+            "type": "api",
+            "$text": "http://api.npr.org/transcript?id=202437360&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          }
+        },
+        "parent": [
+          {
+            "id": "173754155",
+            "type": "blog",
+            "slug": "true",
+            "title": {
+              "$text": "Code Switch"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/blogs/codeswitch/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=173754155&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1091",
+            "type": "topic",
+            "title": {
+              "$text": "Around the Nation"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/around-the-nation/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1091&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1090",
+            "type": "topic",
+            "title": {
+              "$text": "Story of the Day"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/story-of-the-day/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1090&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1003",
+            "type": "topic",
+            "title": {
+              "$text": "U.S."
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/us/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1003&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "202401659",
+            "type": "primary",
+            "title": {},
+            "duration": {
+              "$text": "247"
+            },
+            "description": {},
+            "format": {
+              "mp3": [
+                {
+                  "type": "mp3",
+                  "$text": "http://pd.npr.org/anon.npr-mp3/npr/atc/2013/07/20130715_atc_02.mp3?orgId=1&topicId=1015&ft=3&f=2"
+                },
+                {
+                  "type": "m3u",
+                  "$text": "http://api.npr.org/m3u/1202401659-351b7e.m3u?orgId=1&topicId=1015&ft=3&f=2"
+                }
+              ],
+              "wm": {
+                "$text": "http://www.npr.org/templates/dmg/dmg_wmref_em.php?id=202401659&type=1&mtype=WM&orgId=1&topicId=1015&ft=3&f=2"
+              },
+              "mp4": {
+                "$text": "http://pd.npr.org/npr-mp4/npr/atc/2013/07/20130715_atc_02.mp4?orgId=1&topicId=1015&ft=3&f=2"
+              },
+              "mediastream": {
+                "$text": "rtmp://flash.npr.org/ondemand/mp3:anon.npr-mp3/npr/atc/2013/07/20130715_atc_02.mp3"
+              }
+            },
+            "rightsHolder": {},
+            "permissions": {
+              "download": {
+                "allow": "true"
+              },
+              "stream": {
+                "allow": "true"
+              },
+              "embed": {
+                "allow": "true"
+              }
+            },
+            "stream": {
+              "active": "false"
+            }
+          }
+        ],
+        "byline": [
+          {
+            "id": "202455854",
+            "name": {
+              "$text": "NPR Staff"
+            }
+          },
+          {
+            "id": "202437594",
+            "name": {
+              "personId": "2100815",
+              "$text": "Jennifer Ludden"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/people/2100815/jennifer-ludden?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=2100815&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "image": [
+          {
+            "id": "202443031",
+            "type": "primary",
+            "width": "200",
+            "src": "http://media.npr.org/assets/img/2013/07/15/ap574932063556-4f6adf5d4dcb407d12691d7b83256705f13c46f1.jpg?s=12",
+            "hasBorder": "false",
+            "title": {
+              "$text": "Attorney General Eric Holder greets Alexis Margaret Herman, member of the Delta Sigma Theta sorority, before speaking at the organization's convention."
+            },
+            "caption": {
+              "$text": "Attorney General Eric Holder greets Alexis Margaret Herman, member of the Delta Sigma Theta sorority, before speaking at the organization's convention."
+            },
+            "link": {
+              "url": ""
+            },
+            "producer": {
+              "$text": "Pablo Martinez Monsivais"
+            },
+            "provider": {
+              "url": "",
+              "$text": "AP"
+            },
+            "copyright": {},
+            "enlargement": {
+              "src": "http://media.npr.org/assets/img/2013/07/15/ap574932063556-4f6adf5d4dcb407d12691d7b83256705f13c46f1.jpg",
+              "caption": {}
+            },
+            "crop": [
+              {
+                "type": "standard",
+                "src": "http://media.npr.org/assets/img/2013/07/15/ap574932063556-4f6adf5d4dcb407d12691d7b83256705f13c46f1.jpg",
+                "height": "3368",
+                "width": "4495",
+                "primary": "true"
+              },
+              {
+                "type": "square",
+                "src": "http://media.npr.org/assets/img/2013/07/15/ap574932063556_sq-5b6d73855ea633dfad66efd8af5e6313b3a0dac5.jpg",
+                "height": "4364",
+                "width": "4364"
+              },
+              {
+                "type": "wide",
+                "src": "http://media.npr.org/assets/img/2013/07/15/ap574932063556_wide-0dd19a2899455302453c3072330fc60a23ba470a.jpg",
+                "height": "2493",
+                "width": "4429"
+              },
+              {
+                "type": "enlargement",
+                "src": "http://media.npr.org/assets/img/2013/07/15/ap574932063556-4f6adf5d4dcb407d12691d7b83256705f13c46f1.jpg",
+                "height": "3368",
+                "width": "4495"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "Attorney General Eric Holder looked out over a sea of women in red on Monday and invoked his wife, a member of the influential African-American sorority Delta Sigma Theta. Holder was addressing the sorority's national convention in its centennial year."
+            },
+            {
+              "num": "2",
+              "$text": "Founded at Howard University, Delta Sigma Theta is the largest single organization of African-American women in the United States. The members of Delta Sigma Theta represent a who's who of African-American politicians, educators and activists, and they continue the sorority's traditional focus on civil rights."
+            },
+            {
+              "num": "3",
+              "$text": "Holder is the first administration official to speak publicly since the verdict in the shooting death of Trayvon Martin was announced late Saturday night. As the nation's chief law enforcement official, he refrained from specifying any legal actions his department is considering. But he did speak to a widely felt emotion in the room of prominent black women: pain."
+            },
+            {
+              "num": "4",
+              "$text": "\"As parents, as engaged citizens, and as leaders who stand vigilant against violence in communities across the country, the Deltas are deeply, and rightly, concerned about this case. The Justice Department shares your concern — I share your concern — and, as we first acknowledged last spring, we have opened an investigation into the matter.\""
+            },
+            {
+              "num": "5",
+              "$text": "On Saturday night, as the sorority held a gala dinner, news of the verdict spread rapidly."
+            },
+            {
+              "num": "6",
+              "$text": "The DJ at one event turned down the music to announce it. After performer India.Arie heard the news, she changed her set list to honor Martin and his family."
+            },
+            {
+              "num": "7",
+              "$text": "Many of the sorority members interviewed described an almost physical feeling of loss and frustration over the verdict. Stephanie Nobles explained her reaction:"
+            },
+            {
+              "num": "8",
+              "$text": "\"What it said to me was that, someone was killed, and it didn't matter. You can pursue someone, confront them and then when things don't go the way you think they should, you can just kill them, and feel justified by that.\""
+            },
+            {
+              "num": "9",
+              "$text": "Delta Sigma Theta President Cynthia Butler-McIntyre said the sorority is \"disheartened\" by the verdict. While the group respects the legal system, she said, the system \"failed to provide justice for Trayvon Martin and other African-American males.\" She called on the group's mothers, sisters, and wives to mobilize peacefully, to repeal laws she said victimize America's black communities."
+            },
+            {
+              "num": "10",
+              "$text": "Renee James, who was also at the Delta conference, is biracial. She said she raised both her sons as black:"
+            },
+            {
+              "num": "11",
+              "$text": "\"I have 22- and 19-year-olds. ... And one of them is a football player, so he looks ... intimidating. So I tell him to be careful at all times. Always be aware of your surroundings; you never know who's watching you. And don't try to confront anybody.\""
+            },
+            {
+              "num": "12",
+              "$text": "James said the verdict took her by surprise. She expected the six-person jury — five of them mothers — to identify with the horror of an attack on an unarmed teenager, even if they were white. If it was not murder, she thought the jury would at least consider manslaughter. She'd like to see the federal government bring charges against Zimmerman."
+            },
+            {
+              "num": "13",
+              "$text": "\"I would love to see America just really change its view. Not all black boys are going to kill you. They're not out to get you. Sometimes they're just going to get a soda and some Skittles,\" said James."
+            },
+            {
+              "num": "14",
+              "$text": "Through Delta Sigma Theta, James already helps out with voter registration in her home state of Texas. Now, she plans to step up her political activism and work against the stand your ground law that some say made it easier for Zimmerman to pursue Martin with impunity. [Copyright 2013 NPR]"
+            }
+          ]
+        },
+        "textWithHtml": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "Attorney General Eric Holder looked out over a sea of women in red on Monday and invoked his wife, a member of the influential African-American sorority Delta Sigma Theta. Holder was <a href=\"http://www.npr.org/blogs/thetwo-way/2013/07/15/202364815/holder-trayvon-martin-case-is-a-chance-for-difficult-dialogue\" target=\"_blank\">addressing the sorority's national convention</a> in its centennial year."
+            },
+            {
+              "num": "2",
+              "$text": "Founded at Howard University, Delta Sigma Theta is the largest single organization of African-American women in the United States. The members of <a href=\"http://www.deltasigmatheta.org/\" target=\"_blank\">Delta Sigma Theta</a> represent a who's who of African-American politicians, educators and activists, and they continue the sorority's traditional focus on civil rights."
+            },
+            {
+              "num": "3",
+              "$text": "Holder is the first administration official to speak publicly since the verdict in the shooting death of Trayvon Martin was announced late Saturday night. As the nation's chief law enforcement official, he refrained from specifying any legal actions his department is considering. But he did speak to a widely felt emotion in the room of prominent black women: pain."
+            },
+            {
+              "num": "4",
+              "$text": "\"As parents, as engaged citizens, and as leaders who stand vigilant against violence in communities across the country, the Deltas are deeply, and rightly, concerned about this case. The Justice Department shares your concern — I share your concern — and, as we first acknowledged last spring, we have opened an investigation into the matter.\""
+            },
+            {
+              "num": "5",
+              "$text": "On Saturday night, as the sorority held a gala dinner, news of the verdict spread rapidly."
+            },
+            {
+              "num": "6",
+              "$text": "The DJ at one event turned down the music to announce it. After performer India.Arie heard the news, she changed her set list to honor Martin and his family."
+            },
+            {
+              "num": "7",
+              "$text": "Many of the sorority members interviewed described an almost physical feeling of loss and frustration over the verdict. Stephanie Nobles explained her reaction:"
+            },
+            {
+              "num": "8",
+              "$text": "\"What it said to me was that, someone was killed, and it didn't matter. You can pursue someone, confront them and then when things don't go the way you think they should, you can just kill them, and feel justified by that.\""
+            },
+            {
+              "num": "9",
+              "$text": "Delta Sigma Theta President Cynthia Butler-McIntyre said the sorority is \"disheartened\" by the verdict. While the group respects the legal system, she said, the system \"failed to provide justice for Trayvon Martin and other African-American males.\" She called on the group's mothers, sisters, and wives to mobilize peacefully, to repeal laws she said victimize America's black communities."
+            },
+            {
+              "num": "10",
+              "$text": "Renee James, who was also at the Delta conference, is biracial. She said she raised both her sons as black:"
+            },
+            {
+              "num": "11",
+              "$text": "\"I have 22- and 19-year-olds. ... And one of them is a football player, so he looks ... intimidating. So I tell him to be careful at all times. Always be aware of your surroundings; you never know who's watching you. And don't try to confront anybody.\""
+            },
+            {
+              "num": "12",
+              "$text": "James said the verdict took her by surprise. She expected the six-person jury — five of them mothers — to identify with the horror of an attack on an unarmed teenager, even if they were white. If it was not murder, she thought the jury would at least consider manslaughter. She'd like to see the federal government bring charges against Zimmerman."
+            },
+            {
+              "num": "13",
+              "$text": "\"I would love to see America just really change its view. Not all black boys are going to kill you. They're not out to get you. Sometimes they're just going to get a soda and some Skittles,\" said James."
+            },
+            {
+              "num": "14",
+              "$text": "Through Delta Sigma Theta, James already helps out with voter registration in her home state of Texas. Now, she plans to step up her political activism and work against the stand your ground law that some say made it easier for Zimmerman to pursue Martin with impunity.  <div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Zimmerman+Verdict+Feels+Personal+For+Some+In+Service+Sorority&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+            }
+          ]
+        },
+        "fullText": {
+          "$text": "<div class=\"storytitle\">      <h1>Zimmerman Verdict Feels Personal For Some In Service Sorority</h1>   <input type=\"hidden\" id=\"title202437360\" value=\"Zimmerman Verdict Feels Personal For Some In Service Sorority\"></input>   <input type=\"hidden\" id=\"modelShortUrl202437360\" value=\"http://n.pr/12ENQul\"></input>   <input type=\"hidden\" id=\"modelFullUrl202437360\" value=\"http://www.npr.org/blogs/codeswitch/2013/07/15/202437360/Zimmerman-Verdict-Feels-Personal-For-Some-In-Service-Sorority\"></input></div><!-- END CLASS=\"STORYTITLE\" --><div id=\"story-meta\">      <div id=\"storybyline\" class=\"  linkLocation\">            <div class=\"bucketwrap byline\" id=\"res202437593\" previewTitle=\"bylines\">                  <p class=\"byline\"><span>NPR Staff</span> and <a rel=\"author\" href=\"http://www.npr.org/people/2100815/jennifer-ludden\"><span>Jennifer Ludden</span></a></p>      </div>      <!-- END CLASS=\"BUCKETWRAP BYLINE\" ID=\"RES202437593\" PREVIEWTITLE=\"BYLINES\" -->   </div>   <!-- END ID=\"STORYBYLINE\" CLASS=\"  LINKLOCATION\" -->   <div class=\"dateblock\">            <time datetime=\"2013-07-15\"><span class=\"date\">July 15, 2013</span><span class=\"time\"> 6:05 PM</span></time>   </div></div><!-- END ID=\"STORY-META\" --><div id=\"primaryaudio\" class=\"storylocation linkLocation\">      <div id=\"res202401659\" class=\"bucketwrap primary resaudio medium\">            <div class=\"listenicon\">                  <a class=\"listen\" href=\"http://www.npr.org/templates/player/mediaPlayer.html?action=1&t=1&islist=false&id=202437360&m=202401659&d=null\" data-metrics='{\"category\":\"Segment Audio\",\"action\":\"Play audio\",\"label\":\"20130715_atc_02.mp3\"}' ></a>      </div>      <!-- END CLASS=\"LISTENICON\" -->      <div id=\"avcontent202401659\" class=\"avcontent listen shorttitle\">                  <span id=\"mediaTimeTotal202401659\" class=\"media-time-total\"><span id=\"mediaTimeCurrent202401659\" class=\"media-time-current\"></span></span>         <h3><a href=\"http://www.npr.org/templates/player/mediaPlayer.html?action=1&t=1&islist=false&id=202437360&m=202401659&d=null\" data-metrics='{\"category\":\"Segment Audio\",\"action\":\"Play audio\",\"label\":\"20130715_atc_02.mp3\"}' >Listen to the Story</a></h3>         <div class=\"inner\">                        <p class=\"byline\"><a class=\"program\" href=\"http://www.npr.org/programs/all-things-considered/\">All Things Considered</a></p>            <div class=\"duration\">                              <span id=\"durationCurrent202401659\" class=\"current\"></span>               <span class=\"total\">4 min 7 sec</span>            </div>         </div>         <!-- END CLASS=\"INNER\" -->      </div>      <!-- END ID=\"AVCONTENT202401659\" CLASS=\"AVCONTENT LISTEN SHORTTITLE\" -->      <ul class=\"audiotools\">                  <li><a class=\"add\" href=\"http://www.npr.org/templates/player/mediaPlayer.html?action=2&t=1&islist=false&id=202437360&m=202401659&d=null\" data-metrics='{\"category\":\"Segment Audio\",\"action\":\"Playlist\",\"label\":\"20130715_atc_02.mp3\"}' ><span>Playlist</span></a></li>         <li><a class=\"download\" href=\"http://pd.npr.org/anon.npr-mp3/npr/atc/2013/07/20130715_atc_02.mp3\" data-metrics='{\"category\":\"Segment Audio\",\"action\":\"Download\",\"label\":\"20130715_atc_02.mp3\"}' ><span>Download</span></a></li>         <li><a class=\"trans\" href=\"/templates/transcript/transcript.php?storyId=202437360\" data-metrics='{\"category\":\"Segment audio\",\"action\":\"Click transcript\",\"label\":\"202437360\"}' ><span>Transcript</span></a></li>      </ul>      <div class=\"spacer\">         &nbsp;      </div>   </div>   <!-- END ID=\"RES202401659\" CLASS=\"BUCKETWRAP PRIMARY RESAUDIO MEDIUM\" --></div><!-- END ID=\"PRIMARYAUDIO\" CLASS=\"STORYLOCATION LINKLOCATION\" --><div id=\"storytext\" class=\"storytext storylocation linkLocation\">      <p>Attorney General Eric Holder looked out over a sea of women in red on Monday and invoked his wife, a member of the influential African-American sorority Delta Sigma Theta. Holder was <a href=\"http://www.npr.org/blogs/thetwo-way/2013/07/15/202364815/holder-trayvon-martin-case-is-a-chance-for-difficult-dialogue\" target=\"_blank\">addressing the sorority's national convention</a> in its centennial year.</p>   <p>Founded at Howard University, Delta Sigma Theta is the largest single organization of African-American women in the United States. The members of <a href=\"http://www.deltasigmatheta.org/\" target=\"_blank\">Delta Sigma Theta</a> represent a who's who of African-American politicians, educators and activists, and they continue the sorority's traditional focus on civil rights.</p>   <p>Holder is the first administration official to speak publicly since the verdict in the shooting death of Trayvon Martin was announced late Saturday night. As the nation's chief law enforcement official, he refrained from specifying any legal actions his department is considering. But he did speak to a widely felt emotion in the room of prominent black women: pain.</p>   <div id=\"res202443031\" class=\"bucketwrap image medium\" previewTitle=\"Attorney General Eric Holder greets Alexis Margaret Herman, member of the Delta Sigma Theta sorority, before speaking at the organization's convention.\">            <div class=\"imagewrap\">                  <img src=\"http://media.npr.org/assets/img/2013/07/15/ap574932063556-4f6adf5d4dcb407d12691d7b83256705f13c46f1-s2.jpg\" title=\"Attorney General Eric Holder greets Alexis Margaret Herman, member of the Delta Sigma Theta sorority, before speaking at the organization's convention.\" alt=\"Attorney General Eric Holder greets Alexis Margaret Herman, member of the Delta Sigma Theta sorority, before speaking at the organization's convention.\" />         <a href=\"#\" class=\"enlargebtn\" title=\"Enlarge\">Enlarge image</a>         <a href=\"#\" class=\"enlargebtn enlarge-smallscreen\" title=\"Enlarge\">i</a>      </div>      <!-- END CLASS=\"IMAGEWRAP\" -->      <div class=\"captionwrap\">                  <div class=\"caption\">                        <p><i>Attorney General Eric Holder greets Alexis Margaret Herman, member of the Delta Sigma Theta sorority, before speaking at the organization's convention.</i></p>         </div>         <!-- END CLASS=\"CAPTION\" -->      </div>      <!-- END CLASS=\"CAPTIONWRAP\" -->      <span class=\"creditwrap\"><span class=\"credit\">Pablo Martinez Monsivais</span>/<span class=\"rightsnotice\">AP</span></span>   </div>   <p>\"As parents, as engaged citizens, and as leaders who stand vigilant against violence in communities across the country, the Deltas are deeply, and rightly, concerned about this case. The Justice Department shares your concern — I share your concern — and, as we first acknowledged last spring, we have opened an investigation into the matter.\"</p>   <p>On Saturday night, as the sorority held a gala dinner, news of the verdict spread rapidly.</p>   <p>The DJ at one event turned down the music to announce it. After performer India.Arie heard the news, she changed her set list to honor Martin and his family.</p>   <p>Many of the sorority members interviewed described an almost physical feeling of loss and frustration over the verdict. Stephanie Nobles explained her reaction:</p>   <p>\"What it said to me was that, someone was killed, and it didn't matter. You can pursue someone, confront them and then when things don't go the way you think they should, you can just kill them, and feel justified by that.\"</p>   <p>Delta Sigma Theta President Cynthia Butler-McIntyre said the sorority is \"disheartened\" by the verdict. While the group respects the legal system, she said, the system \"failed to provide justice for Trayvon Martin and other African-American males.\" She called on the group's mothers, sisters, and wives to mobilize peacefully, to repeal laws she said victimize America's black communities.</p>   <p>Renee James, who was also at the Delta conference, is biracial. She said she raised both her sons as black:</p>   <p>\"I have 22- and 19-year-olds. ... And one of them is a football player, so he looks ... intimidating. So I tell him to be careful at all times. Always be aware of your surroundings; you never know who's watching you. And don't try to confront anybody.\"</p>   <p>James said the verdict took her by surprise. She expected the six-person jury — five of them mothers — to identify with the horror of an attack on an unarmed teenager, even if they were white. If it was not murder, she thought the jury would at least consider manslaughter. She'd like to see the federal government bring charges against Zimmerman.</p>   <p>\"I would love to see America just really change its view. Not all black boys are going to kill you. They're not out to get you. Sometimes they're just going to get a soda and some Skittles,\" said James.</p>   <p>Through Delta Sigma Theta, James already helps out with voter registration in her home state of Texas. Now, she plans to step up her political activism and work against the stand your ground law that some say made it easier for Zimmerman to pursue Martin with impunity.</p></div><div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Zimmerman+Verdict+Feels+Personal+For+Some+In+Service+Sorority&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+        }
+      },
+      {
+        "id": "202332624",
+        "link": [
+          {
+            "type": "html",
+            "$text": "http://www.npr.org/2013/07/15/202332624/aparecium-j-k-rowling-revealed-as-cuckoo-mystery-author?ft=3&f=2"
+          },
+          {
+            "type": "api",
+            "$text": "http://api.npr.org/query?id=202332624&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          },
+          {
+            "type": "short",
+            "$text": "http://n.pr/12DOqs6"
+          }
+        ],
+        "title": {
+          "$text": "Aparecium! J.K. Rowling Revealed As 'Cuckoo' Mystery Author"
+        },
+        "partnerId": {
+          "$text": "202332624"
+        },
+        "subtitle": {},
+        "shortTitle": {},
+        "teaser": {
+          "$text": "<em>The Cuckoo's Calling</em>, a debut mystery supposedly by a former British military man, was in fact written by Harry Potter creator J.K. Rowling, working under the pseudonym Robert Galbraith. The novel received positive reviews when it came out earlier this year."
+        },
+        "miniTeaser": {
+          "$text": "<em>The Cuckoo's Calling</em>, released earlier this year, was supposedly by a former British soldier."
+        },
+        "slug": {
+          "$text": "Books News & Features"
+        },
+        "thumbnail": {
+          "medium": {
+            "$text": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling_sq-d2bfbebf25648571ab1a28451308e3da54925d0e.jpg?s=13"
+          },
+          "large": {
+            "$text": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling_sq-d2bfbebf25648571ab1a28451308e3da54925d0e.jpg?s=11"
+          },
+          "provider": {
+            "$text": "Debra Hurford Brown"
+          }
+        },
+        "storyDate": {
+          "$text": "Mon, 15 Jul 2013 15:00:00 -0400"
+        },
+        "pubDate": {
+          "$text": "Mon, 15 Jul 2013 18:54:00 -0400"
+        },
+        "lastModifiedDate": {
+          "$text": "Mon, 15 Jul 2013 18:54:27 -0400"
+        },
+        "show": [
+          {
+            "program": {
+              "id": "2",
+              "code": "ATC",
+              "$text": "All Things Considered"
+            },
+            "showDate": {
+              "$text": "Mon, 15 Jul 2013 15:00:00 -0400"
+            },
+            "segNum": {
+              "$text": "13"
+            }
+          }
+        ],
+        "keywords": {},
+        "priorityKeywords": {},
+        "organization": [
+          {
+            "orgId": "1",
+            "orgAbbr": "NPR",
+            "name": {
+              "$text": "NPR"
+            },
+            "website": {
+              "$text": "http://www.npr.org/"
+            }
+          }
+        ],
+        "transcript": {
+          "link": {
+            "type": "api",
+            "$text": "http://api.npr.org/transcript?id=202332624&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          }
+        },
+        "parent": [
+          {
+            "id": "202329855",
+            "type": "author",
+            "title": {
+              "$text": "Robert Galbraith"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/books/authors/202329855/robert-galbraith?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=202329855&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "202329352",
+            "type": "book",
+            "title": {
+              "$text": "The Cuckoo's Calling"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/books/titles/202329352/the-cuckoos-calling?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=202329352&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "191676894",
+            "type": "collection",
+            "title": {
+              "$text": "Most Popular"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/series/191676894/most-popular?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=191676894&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "137884672",
+            "type": "bookSubject",
+            "title": {
+              "$text": "London (England)"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=137884672&ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=137884672&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "137866638",
+            "type": "bookSubject",
+            "title": {
+              "$text": "21st century"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=137866638&ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=137866638&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "137865062",
+            "type": "bookSubject",
+            "title": {
+              "$text": "History"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=137865062&ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=137865062&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "137847642",
+            "type": "bookSubject",
+            "title": {
+              "$text": "Mystery fiction"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=137847642&ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=137847642&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "137843432",
+            "type": "bookSubject",
+            "title": {
+              "$text": "Fiction"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=137843432&ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=137843432&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "10114",
+            "type": "bookGenre",
+            "title": {
+              "$text": "Mysteries, Thrillers & Crime"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/books/genres/10114/mystery-thrillers-crime/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=10114&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "10111",
+            "type": "bookGenre",
+            "title": {
+              "$text": "Fiction"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/books/genres/10111/fiction/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=10111&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1161",
+            "type": "primaryTopic",
+            "slug": "true",
+            "title": {
+              "$text": "Books News & Features"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/books-news-features?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1161&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1161",
+            "type": "topic",
+            "title": {
+              "$text": "Books News & Features"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/books-news-features?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1161&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1032",
+            "type": "topic",
+            "title": {
+              "$text": "Books"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/books/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1032&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1008",
+            "type": "topic",
+            "title": {
+              "$text": "Arts & Life"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/arts/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1008&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "202409667",
+            "type": "primary",
+            "title": {},
+            "duration": {
+              "$text": "278"
+            },
+            "description": {},
+            "format": {
+              "mp3": [
+                {
+                  "type": "mp3",
+                  "$text": "http://pd.npr.org/anon.npr-mp3/npr/atc/2013/07/20130715_atc_13.mp3?orgId=1&topicId=1161&ft=3&f=2"
+                },
+                {
+                  "type": "m3u",
+                  "$text": "http://api.npr.org/m3u/1202409667-9cdc6a.m3u?orgId=1&topicId=1161&ft=3&f=2"
+                }
+              ],
+              "wm": {
+                "$text": "http://www.npr.org/templates/dmg/dmg_wmref_em.php?id=202409667&type=1&mtype=WM&orgId=1&topicId=1161&ft=3&f=2"
+              },
+              "mp4": {
+                "$text": "http://pd.npr.org/npr-mp4/npr/atc/2013/07/20130715_atc_13.mp4?orgId=1&topicId=1161&ft=3&f=2"
+              },
+              "mediastream": {
+                "$text": "rtmp://flash.npr.org/ondemand/mp3:anon.npr-mp3/npr/atc/2013/07/20130715_atc_13.mp3"
+              }
+            },
+            "rightsHolder": {},
+            "permissions": {
+              "download": {
+                "allow": "true"
+              },
+              "stream": {
+                "allow": "true"
+              },
+              "embed": {
+                "allow": "true"
+              }
+            },
+            "stream": {
+              "active": "false"
+            }
+          }
+        ],
+        "byline": [
+          {
+            "id": "202338631",
+            "name": {
+              "$text": "NPR Staff"
+            }
+          }
+        ],
+        "container": [
+          {
+            "id": "202342572",
+            "title": {},
+            "introText": {},
+            "colSpan": {
+              "$text": "99"
+            },
+            "displayOptions": {
+              "typeId": "0",
+              "$text": "Hide Both"
+            },
+            "promoArt": {
+              "refId": "202342586",
+              "num": "1"
+            },
+            "bookEdition": {
+              "refId": "202329865",
+              "num": "2"
+            }
+          }
+        ],
+        "image": [
+          {
+            "id": "202343725",
+            "type": "primary",
+            "width": "200",
+            "src": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling-d9b154a577bf8b64ecd717c1a5e131cb7829ba69.jpg?s=12",
+            "hasBorder": "false",
+            "title": {
+              "$text": "Rowling says writing under a pseudonym was a \"liberating experience.\""
+            },
+            "caption": {
+              "$text": "Rowling says writing under a pseudonym was a \"liberating experience.\""
+            },
+            "link": {
+              "url": ""
+            },
+            "producer": {},
+            "provider": {
+              "url": "",
+              "$text": "Debra Hurford Brown"
+            },
+            "copyright": {},
+            "enlargement": {
+              "src": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling-d9b154a577bf8b64ecd717c1a5e131cb7829ba69.jpg",
+              "caption": {}
+            },
+            "crop": [
+              {
+                "type": "standard",
+                "src": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling-d9b154a577bf8b64ecd717c1a5e131cb7829ba69.jpg",
+                "height": "1620",
+                "width": "2157",
+                "primary": "true"
+              },
+              {
+                "type": "square",
+                "src": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling_sq-d2bfbebf25648571ab1a28451308e3da54925d0e.jpg",
+                "height": "2157",
+                "width": "2157"
+              },
+              {
+                "type": "wide",
+                "src": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling_wide-53928f4047940ffe63e8ebf6535d9afbc5f1f106.jpg",
+                "height": "1127",
+                "width": "2008"
+              },
+              {
+                "type": "enlargement",
+                "src": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling-d9b154a577bf8b64ecd717c1a5e131cb7829ba69.jpg",
+                "height": "1620",
+                "width": "2157"
+              },
+              {
+                "type": "custom",
+                "src": "http://media.npr.org/assets/img/2013/07/15/jkr-photo_new_debra-hurford-brown-j.k.-rowling_custom-72ab26c4f14499e58a2dd2795bc181aabfe8ca1f.jpg",
+                "height": "3149",
+                "width": "2157"
+              }
+            ]
+          }
+        ],
+        "promoArt": [
+          {
+            "id": "202329904",
+            "type": "standard",
+            "width": "200",
+            "src": "http://media.npr.org/assets/bakertaylor/covers/t/the-cuckoos-calling/9780316206846_custom-011797377029ae073fad95dcd2116402cac33bf0.jpg?s=12",
+            "bookEditionId": "202329865",
+            "hasBorder": "false",
+            "title": {
+              "$text": "The Cuckoo's Calling"
+            },
+            "caption": {},
+            "link": {
+              "url": ""
+            },
+            "producer": {},
+            "provider": {
+              "url": ""
+            },
+            "copyright": {
+              "$text": "2013"
+            },
+            "crop": [
+              {
+                "type": "custom",
+                "src": "http://media.npr.org/assets/bakertaylor/covers/t/the-cuckoos-calling/9780316206846_custom-011797377029ae073fad95dcd2116402cac33bf0.jpg",
+                "height": "600",
+                "width": "385",
+                "primary": "true"
+              }
+            ]
+          },
+          {
+            "id": "202342586",
+            "type": "standard",
+            "width": "200",
+            "src": "http://media.npr.org/assets/bakertaylor/covers/t/the-cuckoos-calling/9780316206846_custom-011797377029ae073fad95dcd2116402cac33bf0.jpg?s=12",
+            "hasBorder": "false",
+            "title": {
+              "$text": "The Cuckoo's Calling"
+            },
+            "caption": {},
+            "link": {
+              "url": ""
+            },
+            "producer": {},
+            "provider": {
+              "url": ""
+            },
+            "copyright": {
+              "$text": "2013"
+            },
+            "crop": [
+              {
+                "type": "custom",
+                "src": "http://media.npr.org/assets/bakertaylor/covers/t/the-cuckoos-calling/9780316206846_custom-011797377029ae073fad95dcd2116402cac33bf0.jpg",
+                "height": "600",
+                "width": "385",
+                "primary": "true"
+              }
+            ]
+          }
+        ],
+        "relatedLink": [
+          {
+            "id": "202342589",
+            "type": "internal",
+            "caption": {
+              "$text": "Read an excerpt"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/books/titles/202329352/the-cuckoos-calling?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=202329352&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "It's a detective story — about a detective story. The book in question is The Cuckoo's Calling, a debut novel released earlier this year by a former British military man named Robert Galbraith."
+            },
+            {
+              "num": "2",
+              "$text": "The reviews were excellent — especially for a first novel. There was just one hitch: The Cuckoo's Calling wasn't a debut at all. Nor was it by Robert Galbraith. As The Sunday Times revealed this weekend, Galbraith is a pseudonym for one of the best-known writers working today: Harry Potter creator J.K. Rowling."
+            },
+            {
+              "num": "3",
+              "$text": "Times arts editor Richard Brooks helped unravel the mystery. He tells NPR's Audie Cornish that it all started with his colleague, India Knight, who was reading the book and tweeted about how good it was, especially for a debut. \"A very interesting reply came back, which said, it's not a debut novel, it's by an existing author. So India Knight tweeted back and said, 'Who?' And a very straightforward, simple reply came back: 'J.K. Rowling,' \" Brooks says. And then the mysterious tweeter disappeared, \"rather like a Harry Potter spell. Gone. No trace!\""
+            },
+            {
+              "num": "4",
+              "$text": "Brooks says he was skeptical at first. \"But then I started doing a little investigation of my own.\" It turned out that Galbraith shared the same literary agency as Rowling. And, mysteriously, there was no picture of Galbraith on the agency website. \"Just a silhouette. Black silhouette. I was suspicious.\" Brooks' suspicions only grew when he discovered that the two authors shared a publisher as well."
+            },
+            {
+              "num": "5",
+              "$text": "Then, he sent the book to two linguistic analysts who compared it to Rowling's other work. \"Both said that this book, The Cuckoo's Calling, had similarities in the style of writing, the words that were used, punctuation, to J.K. Rowling's book.\""
+            },
+            {
+              "num": "6",
+              "$text": "Initially, Brooks says, he played a \"cat and mouse game\" with the publisher. \"I ... went to them and said I'd been reading this Cuckoo's Calling, and I didn't think it was actually written by this guy Robert Galbraith. I said, 'Who is he? Can I interview him?' And they came back and said, 'Sorry, no.' So I put a very, very direct question: Is it Rowling?\""
+            },
+            {
+              "num": "7",
+              "$text": "So, is it all a public relations stunt? \"Of course I'm aware of it,\" Brooks says. \"That original tweet, perhaps, might have been from Rowling herself — who knows — who wanted to be outed. Who knows?\""
+            },
+            {
+              "num": "8",
+              "$text": "Rowling's last book, The Casual Vacancy, was not particularly well-received, Brooks notes. \"And that's why, partly, I think, she did it under a pseudonym, because she was wary about more disappointing reviews. Having got the good ones, did she out herself deliberately? Who knows?\" [Copyright 2013 NPR]"
+            }
+          ]
+        },
+        "textWithHtml": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "It's a detective story — about a detective story. The book in question is <em>The Cuckoo's Calling</em>, a debut novel released earlier this year by a former British military man named Robert Galbraith."
+            },
+            {
+              "num": "2",
+              "$text": "The reviews were excellent — especially for a first novel. There was just one hitch: <em>The Cuckoo's Calling</em> wasn't a debut at all. Nor was it by Robert Galbraith. As <em>The Sunday Times</em> revealed this weekend, Galbraith is a pseudonym for one of the best-known writers working today: Harry Potter creator J.K. Rowling."
+            },
+            {
+              "num": "3",
+              "$text": "<em>Times</em> arts editor Richard Brooks helped unravel the mystery. He tells NPR's Audie Cornish that it all started with his colleague, India Knight, who was reading the book and tweeted about how good it was, especially for a debut. \"A very interesting reply came back, which said, it's not a debut novel, it's by an existing author. So India Knight tweeted back and said, 'Who?' And a very straightforward, simple reply came back: 'J.K. Rowling,' \" Brooks says. And then the mysterious tweeter disappeared, \"rather like a Harry Potter spell. Gone. No trace!\""
+            },
+            {
+              "num": "4",
+              "$text": "Brooks says he was skeptical at first. \"But then I started doing a little investigation of my own.\" It turned out that Galbraith shared the same literary agency as Rowling. And, mysteriously, there was no picture of Galbraith on the agency website. \"Just a silhouette. Black silhouette. I was suspicious.\" Brooks' suspicions only grew when he discovered that the two authors shared a publisher as well."
+            },
+            {
+              "num": "5",
+              "$text": "Then, he sent the book to two linguistic analysts who compared it to Rowling's other work. \"Both said that this book, <em>The Cuckoo's Calling</em>, had similarities in the style of writing, the words that were used, punctuation, to J.K. Rowling's book.\""
+            },
+            {
+              "num": "6",
+              "$text": "Initially, Brooks says, he played a \"cat and mouse game\" with the publisher. \"I ... went to them and said I'd been reading this <em>Cuckoo's Calling</em>, and I didn't think it was actually written by this guy Robert Galbraith. I said, 'Who is he? Can I interview him?' And they came back and said, 'Sorry, no.' So I put a very, very direct question: Is it Rowling?\""
+            },
+            {
+              "num": "7",
+              "$text": "So, is it all a public relations stunt? \"Of course I'm aware of it,\" Brooks says. \"That original tweet, perhaps, might have been from Rowling herself — who knows — who wanted to be outed. Who knows?\""
+            },
+            {
+              "num": "8",
+              "$text": "Rowling's last book, <em>The Casual Vacancy</em>, was not particularly well-received, Brooks notes. \"And that's why, partly, I think, she did it under a pseudonym, because she was wary about more disappointing reviews. Having got the good ones, did she out herself deliberately? Who knows?\"  <div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Aparecium%21+J.K.+Rowling+Revealed+As+%27Cuckoo%27+Mystery+Author&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+            }
+          ]
+        },
+        "bookEdition": [
+          {
+            "id": "202329865",
+            "isbn": {
+              "$text": "9780316206846"
+            },
+            "book": {
+              "id": "202329352",
+              "title": {
+                "$text": "The Cuckoo's Calling"
+              },
+              "link": {
+                "type": "short",
+                "$text": "http://n.pr/12DMvnm"
+              }
+            },
+            "publisher": {
+              "$text": "Little Brown & Co"
+            },
+            "format": {
+              "$text": "1"
+            },
+            "pubDate": {
+              "$text": "2013-04-30 00:00:00"
+            },
+            "pagination": {
+              "$text": "455 pages"
+            },
+            "listPrice": {
+              "$text": "$26"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -24,9 +24,11 @@
     <div class="row-fluid">
       <div class="span10">
         <nav class="connect">
-          <%= link_to("RSS", @blog.feed_url, class: "rss with-icon") if @blog.feed_url.present? %>
-          <%= link_to("Facebook", @blog.facebook_url, class: "facebook with-icon") if @blog.facebook_url.present? %>
-          <%= link_to("@#{@blog.twitter_handle}", twitter_profile_url(@blog.twitter_handle), class: "twitter with-icon") if @blog.twitter_handle.present? %>
+          <%= present @blog do |p| %>
+            <%= p.rss_link %>
+            <%= p.facebook_link %>
+            <%= p.twitter_link %>
+          <% end %>
         </nav>
       </div>
       <div class="span14">
@@ -62,10 +64,10 @@
               </div>
             <% end %>
               <figcaption>
-              <h6 class="host-name"><%= link_to author.name, bio_path(author.slug) %></h6>
+              <h6 class="host-name"><%= link_to author.name, author.public_path %></h6>
               <p class="brief-bio">
                 <%= author.short_bio %>
-                <div><%= link_to("Follow #{author.twitter} on Twitter", author.twitter_url) if author.twitter.present? %></div>
+                <div><%= link_to("Follow @#{author.twitter_handle} on Twitter", twitter_profile_url(author.twitter_handle)) if author.twitter_handle.present? %></div>
               </p>
             </figcaption>
           </figure>

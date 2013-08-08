@@ -87,13 +87,13 @@ class ShowSegment < ActiveRecord::Base
     has "1", as: :is_source_kpcc, type: :boolean
 
     # For podcast searches
+    join audio
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
         as: :has_audio, type: :boolean
-    join audio
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "status = #{ContentBase::STATUS_LIVE}", 
+    has "#{ShowSegment.table_name}.status = #{ContentBase::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
   
@@ -152,7 +152,6 @@ class ShowSegment < ActiveRecord::Base
       :audio              => self.audio.available,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end

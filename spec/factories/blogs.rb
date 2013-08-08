@@ -9,7 +9,6 @@ FactoryGirl.define do
     description "This is a description for this blog."
     is_active true
     is_news true
-    feed_url "http://oncentral.org/rss/latest"
   end
 
   #-------------------------

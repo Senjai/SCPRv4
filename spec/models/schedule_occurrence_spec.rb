@@ -82,13 +82,19 @@ describe ScheduleOccurrence do
   describe "::on_at" do
     it "selects the first distinct slot if it's present" do
       occurrence = create :schedule_occurrence
-
       ScheduleOccurrence.on_at(occurrence.starts_at).should eq occurrence
     end
 
     it "gets the first recurring slot if no distinct slots are present" do
-      occurrence = create :schedule_occurrence, :recurring
-      ScheduleOccurrence.on_at(occurrence.starts_at).should eq occurrence
+      # We have to do it this round-about way because the
+      # rule will be saved before its ID was set on the occurrence,
+      # and the rule's "build_occurrences" callback was getting triggered.
+      occurrence  = create :schedule_occurrence
+      rule        = build :recurring_schedule_rule
+      rule.schedule_occurrences << occurrence
+      rule.save!
+
+      ScheduleOccurrence.on_at(occurrence.starts_at).should eq occurrence 
     end
   end
 

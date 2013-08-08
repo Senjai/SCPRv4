@@ -15,7 +15,7 @@
       <div class="contact">
         <strong>Contact <%= @bio.name %></strong>
         <ul>
-          <% if @bio.twitter.present? %><li><%= link_to "Twitter", @bio.twitter_url, target: "_blank" %></li><% end %>
+          <% if @bio.twitter_handle.present? %><li><%= link_to "@#{@bio.twitter_handle}", twitter_profile_url(@bio.twitter_handle), target: "_blank" %></li><% end %>
           <% if @bio.email.present? %><li><%= mail_to @bio.email, "Email", :encode => "javascript" %></li><% end %>
           <% if @bio.phone_number.present? %><li>Phone: <%= @bio.phone_number %></li><% end %>
         </ul>

@@ -1,66 +1,67 @@
 class ProgramsController < ApplicationController
-  before_filter :get_any_program, only: [:show]
-  before_filter :get_kpcc_program!, only: [:archive, :episode]
-  before_filter :get_featured_programs, only: [:index]
+  before_filter :get_program, only: [:show, :episode]
+  before_filter :get_kpcc_program, only: [:archive]
 
   respond_to :html, :xml, :rss
 
 
   def index
-    @kpcc_programs = KpccProgram.active.order("title")
-    @other_programs = OtherProgram.active.order("title")
+    @featured_programs = KpccProgram.where(is_featured: true)
+    @kpcc_programs     = KpccProgram.active.order("title")
+    @external_programs = ExternalProgram.active.order("title")
+
     render layout: "application"
   end
 
 
   def show
-    # @program gets set via the before_filter
-    if @program.is_a? KpccProgram
-      @segments = @program.segments.published
-      @episodes = @program.episodes.published
+    @segments = @program.segments
+    @episodes = @program.episodes
 
-      # depending on what type of show this is, we need to filter some 
-      # elements out of the @segments and @episodes selectors
-      # Only for HTML response
-      if request.format.html?
-        if @program.display_episodes?
-          @current_episode = @episodes.first
+    if @kpcc_program
+      @segments = @segments.published
+      @episodes = @episodes.published
 
-          if @current_episode
-            # don't return the current episode in the episodes list
-            @episodes = @episodes.where("id != ?",@current_episode.id)
+      if request.format.html? && @program.display_episodes?
+        if @current_episode = @episodes.first
+          @episodes = @episodes.where("id != ?", @current_episode.id)
 
-            if @current_episode.segments.published.any?
-              # don't include the current episodes segments in the 
-              # segments list
-              @segments = @segments.where("id not in (?)", 
-                @current_episode.segments.published.collect(&:id))
-            end
+          if segments = @current_episode.segments.published.to_a
+            @segments = @segments.where("id not in (?)", segments.map(&:id))
           end
         end
       end
+    end
 
-      # Don't want to paginate for XML response
-      @segments_scoped = @segments
-      @segments = @segments.page(params[:page]).per(10)
-      @episodes = @episodes.page(params[:page]).per(6)
+    # Don't want to paginate for XML response
+    @segments_scoped = @segments
+    @segments = @segments.page(params[:page]).per(10)
+    @episodes = @episodes.page(params[:page]).per(6)
 
+    if @kpcc_program
       respond_with @segments_scoped
-    else
+    elsif @external_program
       respond_to do |format|
-        format.html { render :action => "show_external" }
-        format.xml  { redirect_to @program.podcast_url.present? ? @program.podcast_url : @program.rss_url }
+        format.html { render :show_external, layout: "application" }
+        format.xml  { redirect_to @program.podcast_url }
       end
     end
   end
 
 
   def archive
-    @date = Time.new(params[:archive]["date(1i)"].to_i, params[:archive]["date(2i)"].to_i, params[:archive]["date(3i)"].to_i)
-    @episode = @program.episodes.published.where(air_date: @date).first
+    @date = Time.new(
+      params[:archive]["date(1i)"].to_i,
+      params[:archive]["date(2i)"].to_i,
+      params[:archive]["date(3i)"].to_i
+    )
+
+    @episode = @program.episodes.published.for_air_date(@date).first
 
     if !@episode
-      flash[:alert] = "There is no #{@program.title} episode for #{@date.strftime('%F')}."
+      flash[:alert] = "There is no #{@program.title} " \
+                      "episode for #{@date.strftime('%F')}."
+
       redirect_to program_path(@program.slug, anchor: "archive") and return
     else
       redirect_to @episode.public_path
@@ -70,7 +71,7 @@ class ProgramsController < ApplicationController
 
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
-    @program = @segment.show
+    @program = @kpcc_program = @segment.show.to_program
 
     # check whether this is the correct URL for the segment
     if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.public_path
@@ -80,13 +81,27 @@ class ProgramsController < ApplicationController
 
 
   def episode
-    @episode = @program.episodes.published.where(air_date: Date.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)).first!
-    @segments = @episode.segments.published
+    # Legacy route handling
+    if !params[:id]
+      date = Date.new(
+        params[:year].to_i,
+        params[:month].to_i,
+        params[:day].to_i
+      )
+
+      episode = @program.to_program.episodes.for_air_date(date).first!
+      redirect_to episode.public_path and return
+    end
+
+    @episode    = @program.episodes.find(params[:id]).to_episode
+    @segments   = @episode.segments
   end
 
 
   def schedule
-    @schedule_occurrences = ScheduleOccurrence.block(Time.now.beginning_of_week, 1.week)
+    @schedule_occurrences = ScheduleOccurrence.block(
+      Time.now.beginning_of_week, 1.week
+    )
 
     # We can't cache all of them together, since there are too many.
     # So we'll just use the most recently updated one to cache.
@@ -97,21 +112,17 @@ class ProgramsController < ApplicationController
 
   private
 
-  # Try various ways to fetch the program the person requested
-  # If nothing is found, 404
-  def get_any_program
-    @program = KpccProgram.find_by_slug(params[:show]) || OtherProgram.find_by_slug(params[:show])
+  def get_program
+    @program = Program.find_by_slug!(params[:show])
 
-    if !@program
-      render_error(404, ActionController::RoutingError.new("Not Found")) and return false
+    if @program.original_object.is_a? KpccProgram
+      @kpcc_program = @program.original_object
+    elsif @program.original_object.is_a? ExternalProgram
+      @external_program = @program.original_object
     end
   end
 
-  def get_kpcc_program!
+  def get_kpcc_program
     @program = KpccProgram.find_by_slug!(params[:show])
-  end
-
-  def get_featured_programs
-    @featured_programs = KpccProgram.where(is_featured: true)
   end
 end

@@ -24,6 +24,14 @@ describe BroadcastBarPresenter do
 
       p.show_modal?.should eq true
     end
+
+    it 'is false for external programs' do
+      program   = build :external_program
+      slot      = build :schedule_occurrence, program: program
+      p         = presenter(slot)
+
+      p.show_modal?.should eq false
+    end
   end
 
   describe '#is_for_featured_program?' do
@@ -48,6 +56,14 @@ describe BroadcastBarPresenter do
       p       = presenter(slot)
 
       p.is_for_featured_program?.should eq true
+    end
+
+    it 'is false for external programs' do
+      program   = build :external_program
+      slot      = build :schedule_occurrence, program: program
+      p         = presenter(slot)
+
+      p.is_for_featured_program?.should eq false
     end
   end
 

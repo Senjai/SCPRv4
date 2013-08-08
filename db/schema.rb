@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130802224146) do
+ActiveRecord::Schema.define(:version => 20130807223552) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -57,19 +57,18 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
 
   create_table "bios_bio", :force => true do |t|
     t.integer  "user_id"
-    t.string   "slug",         :limit => 50
-    t.text     "bio",          :limit => 2147483647
+    t.string   "slug"
+    t.text     "bio"
     t.string   "title"
-    t.boolean  "is_public",                          :default => false, :null => false
-    t.string   "feed_url",     :limit => 200
-    t.string   "twitter"
+    t.boolean  "is_public",      :default => false, :null => false
+    t.string   "twitter_handle"
     t.integer  "asset_id"
     t.string   "short_bio"
     t.string   "phone_number"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "last_name"
   end
 
@@ -77,20 +76,17 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
   add_index "bios_bio", ["is_public"], :name => "index_bios_bio_on_is_public"
   add_index "bios_bio", ["last_name"], :name => "index_bios_bio_on_last_name"
   add_index "bios_bio", ["slug"], :name => "index_bios_bio_on_slug"
-  add_index "bios_bio", ["user_id"], :name => "user_id_refs_id_1277bd7cd84326f2"
 
   create_table "blogs_blog", :force => true do |t|
     t.string   "name"
     t.string   "slug",                :limit => 50
     t.text     "description",         :limit => 2147483647
     t.boolean  "is_active",                                 :default => false, :null => false
-    t.string   "feed_url",            :limit => 200
     t.boolean  "is_news",                                                      :null => false
     t.string   "teaser"
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
-    t.string   "facebook_url"
     t.string   "twitter_handle"
   end
 
@@ -299,6 +295,67 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
   add_index "events", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
   add_index "events", ["status"], :name => "index_events_on_status"
 
+  create_table "external_episode_segments", :force => true do |t|
+    t.integer  "external_episode_id"
+    t.integer  "external_segment_id"
+    t.integer  "position"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "external_episode_segments", ["external_episode_id", "position"], :name => "external_episode_segments_episode_id_position"
+  add_index "external_episode_segments", ["external_segment_id"], :name => "index_external_episode_segments_on_external_segment_id"
+
+  create_table "external_episodes", :force => true do |t|
+    t.string   "title"
+    t.text     "summary"
+    t.integer  "external_program_id"
+    t.string   "external_id"
+    t.datetime "air_date"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "external_episodes", ["air_date"], :name => "index_external_episodes_on_air_date"
+  add_index "external_episodes", ["external_program_id", "external_id"], :name => "index_external_episodes_on_external_program_id_and_external_id"
+
+  create_table "external_programs", :force => true do |t|
+    t.string   "slug",                         :null => false
+    t.string   "title",                        :null => false
+    t.text     "teaser"
+    t.text     "description"
+    t.string   "host"
+    t.string   "organization",   :limit => 50
+    t.string   "airtime"
+    t.string   "air_status",                   :null => false
+    t.string   "podcast_url"
+    t.text     "sidebar"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "twitter_handle"
+    t.string   "source"
+    t.integer  "external_id"
+  end
+
+  add_index "external_programs", ["air_status"], :name => "index_external_programs_on_air_status"
+  add_index "external_programs", ["slug"], :name => "index_external_programs_on_slug"
+  add_index "external_programs", ["source", "external_id"], :name => "index_external_programs_on_source_and_external_id"
+  add_index "external_programs", ["title"], :name => "index_external_programs_on_title"
+
+  create_table "external_segments", :force => true do |t|
+    t.string   "title"
+    t.text     "teaser"
+    t.integer  "external_program_id"
+    t.string   "external_id"
+    t.string   "external_url"
+    t.datetime "published_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "external_segments", ["external_program_id", "external_id"], :name => "index_external_segments_on_external_program_id_and_external_id"
+  add_index "external_segments", ["published_at"], :name => "index_external_segments_on_published_at"
+
   create_table "flatpages_flatpage", :force => true do |t|
     t.string   "url",          :limit => 100,                           :null => false
     t.string   "title",        :limit => 200,                           :null => false
@@ -368,11 +425,11 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
     t.string   "content_type"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
-    t.string   "filename"
-    t.string   "store_dir"
-    t.string   "mp3_path"
+    t.string   "external_url"
     t.string   "type"
     t.string   "mp3"
+    t.integer  "status"
+    t.string   "path"
   end
 
   add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
@@ -380,6 +437,7 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["mp3"], :name => "index_media_audio_on_mp3"
   add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
+  add_index "media_audio", ["status"], :name => "index_media_audio_on_status"
   add_index "media_audio", ["type"], :name => "index_media_audio_on_type"
 
   create_table "media_document", :force => true do |t|
@@ -510,10 +568,7 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
     t.string   "host"
     t.string   "airtime"
     t.string   "air_status",                             :null => false
-    t.string   "podcast_url"
-    t.string   "rss_url"
-    t.string   "twitter_url"
-    t.string   "facebook_url"
+    t.string   "twitter_handle"
     t.text     "sidebar"
     t.boolean  "display_episodes",    :default => true,  :null => false
     t.boolean  "display_segments",    :default => true,  :null => false
@@ -532,27 +587,6 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
   add_index "programs_kpccprogram", ["missed_it_bucket_id"], :name => "programs_kpccprogram_d12628ce"
   add_index "programs_kpccprogram", ["slug"], :name => "index_programs_kpccprogram_on_slug"
 
-  create_table "programs_otherprogram", :force => true do |t|
-    t.string   "slug",        :limit => 40,         :null => false
-    t.string   "title",       :limit => 60,         :null => false
-    t.text     "teaser",      :limit => 2147483647
-    t.text     "description", :limit => 2147483647
-    t.string   "host",        :limit => 150
-    t.string   "produced_by", :limit => 50
-    t.string   "airtime",     :limit => 300
-    t.string   "air_status",  :limit => 10,         :null => false
-    t.string   "web_url",     :limit => 200
-    t.string   "podcast_url", :limit => 200
-    t.string   "rss_url",     :limit => 200
-    t.text     "sidebar",     :limit => 2147483647
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-  end
-
-  add_index "programs_otherprogram", ["air_status"], :name => "index_programs_otherprogram_on_air_status"
-  add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
-  add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
-
   create_table "recurring_schedule_rules", :force => true do |t|
     t.text     "schedule_hash"
     t.integer  "interval"
@@ -568,14 +602,15 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
   add_index "recurring_schedule_rules", ["program_type", "program_id"], :name => "index_recurring_schedule_rules_on_program_type_and_program_id"
 
   create_table "related_links", :force => true do |t|
-    t.string  "title",        :default => ""
-    t.string  "url"
-    t.string  "link_type"
-    t.integer "content_id"
-    t.string  "content_type"
+    t.string   "title",        :default => ""
+    t.string   "url"
+    t.string   "link_type"
+    t.integer  "content_id"
+    t.string   "content_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "related_links", ["content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
   add_index "related_links", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
   add_index "related_links", ["link_type"], :name => "index_related_links_on_link_type"
 
@@ -586,10 +621,12 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
     t.string   "url",          :limit => 200
     t.string   "article_id"
     t.boolean  "is_new",                             :default => true, :null => false
-    t.string   "type"
+    t.string   "source"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
   end
 
-  add_index "remote_articles", ["type"], :name => "index_remote_articles_on_type"
+  add_index "remote_articles", ["source", "article_id"], :name => "index_remote_articles_on_source_and_article_id"
 
   create_table "schedule_occurrences", :force => true do |t|
     t.string   "event_title"
@@ -609,7 +646,7 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
-    t.date     "air_date"
+    t.datetime "air_date"
     t.string   "headline"
     t.text     "body",         :limit => 2147483647
     t.datetime "published_at"
