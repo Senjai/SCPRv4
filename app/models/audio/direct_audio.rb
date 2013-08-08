@@ -63,5 +63,17 @@ class Audio
         nil
       end
     end
+
+
+    # ugh, what have I gotten myself into...
+    # What we need is a single Audio model with just the necessary
+    # attrbutes - url, description, byline, timestamps, size, duration
+    # - and some separate adapters which will take an input and turn
+    # it into an Audio object. Right now we're just cramming all this
+    # stuff into the Audio table and then not using 90% of it anywhere
+    # else in the app.
+    def set_path
+      self.path = nil
+    end
   end # DirectAudio
 end # Audio

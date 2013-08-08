@@ -122,7 +122,7 @@ class Audio
     end
 
     def filename
-      self.mp3.filename
+      self.mp3.file.filename
     end
   end # ProgramAudio
 end # Audio

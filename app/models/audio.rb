@@ -75,6 +75,7 @@ class Audio < ActiveRecord::Base
   before_validation :set_type, if: -> { self.type.blank? }
 
   before_save :set_default_status, if: -> { self.status.blank? }
+  before_save :set_path, if: -> { self.path.blank? }
 
   # Check if persisted so this doesn't get queued on destroy
   after_commit :async_compute_file_info, if: -> {
@@ -174,6 +175,18 @@ class Audio < ActiveRecord::Base
     end
   end
 
+  # For uploaded, direct, and program audio, when it gets created
+  # we can immediately assume that it's live.
+  # For ENCO audio, when it gets created we set it to "awaiting",
+  # and its status will get bumped to Live when it gets synced.
+  def set_default_status
+    self.status = self.type_class.default_status
+  end
+
+  def set_path
+    typecast_clone.set_path
+  end
+
 
 
   def enco_info_is_present_together
@@ -228,14 +241,6 @@ class Audio < ActiveRecord::Base
     end
   end
 
-
-  # For uploaded, direct, and program audio, when it gets created
-  # we can immediately assume that it's live.
-  # For ENCO audio, when it gets created we set it to "awaiting",
-  # and its status will get bumped to Live when it gets synced.
-  def set_default_status
-    self.status = self.type_class.default_status
-  end
 
   def typecast_clone
     if self.class.name != self.type

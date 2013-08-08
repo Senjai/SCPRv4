@@ -35,8 +35,8 @@ class Audio
     end
 
 
-    private
-
+    # This gets called by a callback in Audio on its typecasted class,
+    # so we can't make it private or protected.
     def set_path
       self.path = File.join(self.store_dir, self.filename)
     end

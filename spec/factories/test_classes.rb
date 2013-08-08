@@ -42,6 +42,8 @@ FactoryGirl.define do
   end
 
   factory :test_class_fake_audio, class: TestClass::FakeAudio do
+    path { File.join(self.store_dir, self.filename) }
+
     trait :live do
       status 2
     end

@@ -175,6 +175,24 @@ describe Audio do
     end
   end
 
+  describe '#path' do
+    it 'gets generated before save' do
+      audio = build :audio, :enco
+      audio.path.should eq nil
+      audio.save!
+
+      audio.path.should eq File.join(audio.store_dir, audio.filename)
+    end
+
+    it 'does it for typecasted things too... great description bro' do
+      audio = build :enco_audio
+      audio.path.should eq nil
+      audio.save!
+
+      audio.path.should eq File.join(audio.store_dir, audio.filename)
+    end
+  end
+
   describe "#status_text" do
     it "uses the STATUS_TEXT hash to return some descriptive text" do
       audio = build :audio, :enco

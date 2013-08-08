@@ -1,16 +1,6 @@
 require 'spec_helper'
 
 describe Audio::Paths do
-  describe '#path' do
-    it 'gets generated before save' do
-      audio = build :test_class_fake_audio
-      audio.path.should eq nil
-      audio.save!
-
-      audio.path.should eq "test_audio/123.mp3"
-    end
-  end
-
   describe "#full_path" do
     it "returns the server path to the mp3 if mp3 is present" do
       audio = create :test_class_fake_audio
