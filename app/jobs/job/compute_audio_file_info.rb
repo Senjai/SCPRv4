@@ -7,7 +7,7 @@
 # make sure they're defined in each subclass.
 module Job
   class ComputeAudioFileInfo < Base
-    @queue = "#{namespace}:audio"
+    @queue = "#{namespace}:compute_audio_file_info"
 
     class << self
       def perform(id)

@@ -5,8 +5,8 @@
 #
 module Job
   class SyncExternalPrograms < Base
-    @queue = namespace
-    
+    @queue = "#{namespace}:rake_tasks"
+
     class << self
       def perform
         ExternalProgram.sync
