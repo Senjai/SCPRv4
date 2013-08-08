@@ -49,56 +49,10 @@ describe Audio::EncoAudio do
     end
   end
 
-  #----------------
-
   describe '#store_dir' do
     it "is the predetermined enco folder" do
       audio = build :enco_audio
       audio.store_dir.should eq "features"
-    end
-  end
-
-
-  describe "#path" do
-    it "returns the store_dir and the filename" do
-      audio = create :audio, :enco
-      audio.path.should eq "features/#{audio.filename}"
-    end
-  end
-
-  #----------------
-
-  describe "#full_path" do
-    it "returns the server path to the mp3 if mp3 is present" do
-      audio = create :audio, :enco
-      audio.full_path.should eq Rails.root.join("spec/fixtures/media/audio/#{audio.path}").to_s
-
-    end
-  end
-
-  #----------------
-
-  describe "#url" do
-    it "returns the full URL to the mp3 if it's live" do
-      audio = create :enco_audio, :live_enco
-      audio.url.should eq "#{Audio::AUDIO_URL_ROOT}/#{audio.path}"
-    end
-
-    it "returns nil if not live" do
-      audio = create :enco_audio
-      audio.url.should be_nil
-    end
-  end
-
-  describe "#podcast_url" do
-    it "returns the full podcast URL to the mp3 if it's live" do
-      audio = create :enco_audio, :live_enco
-      audio.podcast_url.should eq "#{Audio::PODCAST_URL_ROOT}/#{audio.path}"
-    end
-
-    it "returns nil if mp3 not live" do
-      audio = create :enco_audio, :enco
-      audio.podcast_url.should be_nil
     end
   end
 end

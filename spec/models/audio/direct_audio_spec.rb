@@ -22,13 +22,6 @@ describe Audio::DirectAudio do
     end
   end
 
-  describe '#path' do
-    it 'is nil' do
-      audio = build :direct_audio
-      audio.path.should eq nil
-    end
-  end
-
   describe '#full_path' do
     it 'is nil' do
       audio = build :direct_audio

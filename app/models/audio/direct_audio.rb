@@ -17,10 +17,7 @@ class Audio
 
     # Override these so it doesn't super up to Audio 
     # and cause a stack overflow.
-    def path
-      nil
-    end
-
+    # Yes, this is terrible.
     def full_path
       nil
     end

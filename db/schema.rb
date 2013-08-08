@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130802224146) do
+ActiveRecord::Schema.define(:version => 20130807223552) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -429,6 +429,7 @@ ActiveRecord::Schema.define(:version => 20130802224146) do
     t.string   "type"
     t.string   "mp3"
     t.integer  "status"
+    t.string   "path"
   end
 
   add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"

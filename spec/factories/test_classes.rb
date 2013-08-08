@@ -1,4 +1,4 @@
-require Rails.root.join("spec/fixtures/test_class")
+Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 
 FactoryGirl.define do
   factory :test_class_story, class: TestClass::Story do
@@ -39,5 +39,15 @@ FactoryGirl.define do
   factory :test_class_person, class: TestClass::Person do
     name "Bryan"
     slug { name.parameterize }
+  end
+
+  factory :test_class_audio, class: TestClass::Audio do
+    trait :live do
+      status 2
+    end
+
+    trait :pending do
+      status 1
+    end
   end
 end
