@@ -25,7 +25,7 @@
     <%= any_to_list? @segments, title: "Segments" do %>
       <h2>Recently on <%= @kpcc_program.title %></h2>
       <%= nav if @segments.current_page > 1 %>
-      <%= render partial: "/programs/segment_teaser", collection: @segments, as: :article %>
+      <%= render partial: "/programs/segment_teaser", collection: @segments.map(&:to_article), as: :article %>
       <%= nav %>
     <% end %>
   </section>
