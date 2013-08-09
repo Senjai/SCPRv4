@@ -102,6 +102,18 @@ describe ProgramsController do
         program = create :kpcc_program
         get :show, show: program.slug
       end
+
+      it 'renders okay for segmented programs' do
+        program = create :kpcc_program, :segmented
+        create :show_segment, show: program
+        get :show, show: program.slug
+      end
+
+      it 'renders okay for episodic programs' do
+        program = create :kpcc_program, :episodic
+        create :show_episode, show: program
+        get :show, show: program.slug
+      end
     end
 
     describe "controller" do

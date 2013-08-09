@@ -25,12 +25,12 @@
     <%= any_to_list? @segments, title: "Segments" do %>
       <h2>Recently on <%= @kpcc_program.title %></h2>
       <%= nav if @segments.current_page > 1 %>
-      <%= render partial: "/programs/segment_teaser", collection: @segments, as: :segment %>
+      <%= render partial: "/programs/segment_teaser", collection: @segments, as: :article %>
       <%= nav %>
     <% end %>
   </section>
   
-<% elsif @kpcc_program.display_episodes %>
+<% elsif @kpcc_program.display_episodes? %>
   <% nav = paginate @episodes, params: { anchor: "archive"} %>
   <section class="show-episodes">
     <%= any_to_list? @episodes, title: "Episodes" do %>
