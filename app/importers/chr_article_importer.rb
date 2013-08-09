@@ -50,7 +50,7 @@ module ChrArticleImporter
 
         if cached_article.save
           added.push cached_article
-          log "Saved CHR article ##{npr_story.id} as ChrArticle ##{cached_article.id}"
+          log "Saved CHR article ##{npr_story.id} as RemoteArticle ##{cached_article.id}"
         else
           log "Couldn't save CHR Story ##{npr_story.id}"
         end

@@ -35,7 +35,7 @@ class RemoteArticle < ActiveRecord::Base
 
     def types_select_collection
       RemoteArticle.select("distinct source").order("source")
-        .map { |a| [a.source.titleize, a.source] }
+        .map(&:source)
     end
 
     #---------------

@@ -1,6 +1,6 @@
 module Job
   class AudioVisionCache < Base
-    @queue = namespace
+    @queue = "#{namespace}:rake_tasks"
 
     def self.perform
       current_billboard_key = "audiovision:current_billboard"

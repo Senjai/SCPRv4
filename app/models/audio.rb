@@ -92,7 +92,7 @@ class Audio < ActiveRecord::Base
 
   class << self
     def enqueue_all
-      [ProgramAudio, EncoAudio].each(&:enqueue_sync)
+      [Audio::ProgramAudio, Audio::EncoAudio].each(&:enqueue_sync)
     end
 
     # Enqueue the audio sync

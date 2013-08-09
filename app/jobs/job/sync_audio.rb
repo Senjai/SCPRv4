@@ -2,7 +2,7 @@
 # Job::SyncAudio
 module Job
   class SyncAudio < Base
-    @queue = "#{namespace}:audio"
+    @queue = "#{namespace}:rake_tasks"
 
     class << self
       def perform(klass)

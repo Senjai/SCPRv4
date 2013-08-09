@@ -7,7 +7,7 @@
 # make sure they're defined in each subclass.
 module Job
   class ComputeAudioFileInfo < Base
-    @queue = "#{namespace}:audio"
+    @queue = "#{namespace}:compute_audio_file_info"
 
     class << self
       def perform(id)
@@ -22,8 +22,7 @@ module Job
 
       def on_failure(exception, id)
         log "Couldn't save audio file info for Audio ##{id}: " \
-            "(#{e.class}) #{e}\n" \
-            "#{e.backtrace}"
+            "(#{exception.class}) #{exception}\n"
       end
     end # singleton
   end # ComputeAudioFileInfo

@@ -26,7 +26,7 @@ gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
-gem "resque", "~> 1.20"
+gem "resque", "~> 1.25.0.pre"
 
 
 ## Views

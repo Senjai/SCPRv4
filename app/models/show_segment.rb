@@ -30,7 +30,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::CommentMethods
 
   ROUTE_KEY = "segment"
-  
+
   ASSET_SCHEMES = [
     ["Top", "wide"],
     ["Right", "float"],
@@ -38,29 +38,40 @@ class ShowSegment < ActiveRecord::Base
     ["Video", "video"],
     ["Hidden", "hidden"]
   ]
-  
+
   #-------------------
   # Scopes
-  
+
   #-------------------
   # Associations
-  belongs_to :show, class_name: "KpccProgram", touch: true
-  has_many :rundowns, class_name: "ShowRundown", foreign_key: "segment_id", dependent: :destroy
-  has_many :episodes, through: :rundowns, source: :episode, order: "air_date asc", autosave: true
-  
+  belongs_to :show,
+    :class_name   => "KpccProgram",
+    :touch        => true
+
+  has_many :rundowns,
+    :class_name     => "ShowRundown",
+    :foreign_key    => "segment_id",
+    :dependent      => :destroy
+
+  has_many :episodes,
+    :through    => :rundowns,
+    :source     => :episode,
+    :order      => "air_date asc",
+    :autosave   => true
+
   #-------------------
   # Validations
   validates :show, presence: true
-  
+
   def needs_validation?
     self.pending? || self.published?
   end
-  
+
   #-------------------
   # Callbacks
-  
+
   #-------------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes headline
     indexes teaser
@@ -72,7 +83,7 @@ class ShowSegment < ActiveRecord::Base
     has published_at
     has updated_at
     has "CRC32(CONCAT('#{ShowSegment.content_key}:'," \
-        "#{ShowSegment.table_name}.id))", 
+        "#{ShowSegment.table_name}.id))",
         type: :integer, as: :obj_key
 
     # For the megamenu
@@ -80,7 +91,7 @@ class ShowSegment < ActiveRecord::Base
 
     # For category/homepage sections
     has category.id, as: :category
-    has "(#{ShowSegment.table_name}.segment_asset_scheme <=> 'slideshow')", 
+    has "(#{ShowSegment.table_name}.segment_asset_scheme <=> 'slideshow')",
         type: :boolean, as: :is_slideshow
 
     # For RSS Feed
@@ -88,23 +99,23 @@ class ShowSegment < ActiveRecord::Base
 
     # For podcast searches
     join audio
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
         as: :has_audio, type: :boolean
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "#{ShowSegment.table_name}.status = #{ContentBase::STATUS_LIVE}", 
+    has "#{ShowSegment.table_name}.status = #{ContentBase::STATUS_LIVE}",
         as: :is_live, type: :boolean
   end
-  
+
   #----------
-  
+
   def episode
     @episode ||= episodes.first
   end
 
   #----------
-  
+
   def sister_segments
     @sister_segments ||= begin
       if episodes.present?
@@ -116,18 +127,18 @@ class ShowSegment < ActiveRecord::Base
   end
 
   #----------
-  
+
   def byline_extras
     [self.show.title]
   end
-  
+
   #----------
-  
+
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
       :show           => self.persisted_record.show.slug,
-      :year           => self.persisted_record.published_at.year, 
+      :year           => self.persisted_record.published_at.year,
       :month          => "%02d" % self.persisted_record.published_at.month,
       :day            => "%02d" % self.persisted_record.published_at.day,
       :id             => self.persisted_record.id,

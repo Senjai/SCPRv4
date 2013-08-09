@@ -48,7 +48,7 @@ module NprArticleImporter
 
         if cached_article.save
           added.push cached_article
-          log "Saved NPR Story ##{npr_story.id} as NprArticle ##{cached_article.id}"
+          log "Saved NPR Story ##{npr_story.id} as RemoteArticle ##{cached_article.id}"
         else
           log "Couldn't save NPR Story ##{npr_story.id}"
         end

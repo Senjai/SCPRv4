@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'timeout'
 
 ##
 # DirectAudio 
@@ -8,6 +9,8 @@ require 'open-uri'
 class Audio
   class DirectAudio < Audio
     include Audio::FileInfo
+
+    TIMEOUT = 60
 
     class << self
       def default_status
@@ -41,24 +44,27 @@ class Audio
 
 
     def compute_duration
-      return false if self.mp3_file.blank?
-
-      Mp3Info.open(self.mp3_file) do |file|
-        self.duration = file.length
+      if self.mp3_file.present?
+        Mp3Info.open(self.mp3_file) do |file|
+          self.duration = file.length || 0
+        end
+      else
+        self.duration = 0
       end
-
-      self.duration ||= 0
     end
 
     def compute_size
-      return false if self.mp3_file.blank?
-      self.size = self.mp3_file.size || 0
+      if self.mp3_file.present?
+        self.size = self.mp3_file.size || 0
+      else
+        self.size = 0
+      end
     end
 
 
     def mp3_file
       @mp3_file ||= begin
-        open(self.external_url)
+        Timeout.timeout(TIMEOUT) { open(self.external_url) }
       rescue
         nil
       end

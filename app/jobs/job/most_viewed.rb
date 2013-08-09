@@ -2,7 +2,7 @@ require 'oauth2'
 
 module Job
   class MostViewed < Base
-    @queue = namespace
+    @queue = "#{namespace}:rake_tasks"
 
     def self.perform
       analytics = Rails.application.config.api["google"]["analytics"]

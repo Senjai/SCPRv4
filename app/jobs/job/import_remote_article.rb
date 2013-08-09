@@ -5,7 +5,7 @@
 #
 module Job
   class ImportRemoteArticle < Base
-    @queue = namespace
+    @queue = "#{namespace}:remote_articles"
 
     #---------------------
 

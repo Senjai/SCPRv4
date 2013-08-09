@@ -5,6 +5,12 @@ class PopulateAudioPath < ActiveRecord::Migration
         a.update_column(:path, File.join(a.store_dir, a.send(:read_attribute, :mp3)))
       end
     end
+
+    Audio::EncoAudio.where('path is null').find_in_batches do |group|
+      group.each do |a|
+        a.update_column(:path, File.join(a.store_dir, a.filename))
+      end
+    end
   end
 
   def down

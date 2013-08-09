@@ -18,15 +18,12 @@ class Audio
     extend LogsAsTask
     logs_as_task
 
-    FILENAME_REGEX = %r{(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})_(?<slug>\w+)\.mp3} # 20121001_mbrand.mp3
+    # 20121001_mbrand.mp3
+    FILENAME_REGEX = %r{(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})_(?<slug>\w+)\.mp3}
 
     before_create :set_description_to_episode_headline, if: -> {
       self.description.blank?
     }
-
-    def set_description_to_episode_headline
-      self.description = self.content.headline
-    end
 
     #------------
 
@@ -123,6 +120,13 @@ class Audio
 
     def filename
       self.mp3.file.filename
+    end
+
+
+    private
+
+    def set_description_to_episode_headline
+      self.description = self.content.headline
     end
   end # ProgramAudio
 end # Audio

@@ -24,7 +24,7 @@
     <div class="row-fluid">
       <div class="span10">
         <nav class="connect">
-          <%= present @blog do |p| %>
+          <% present @blog do |p| %>
             <%= p.rss_link %>
             <%= p.facebook_link %>
             <%= p.twitter_link %>
