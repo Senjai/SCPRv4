@@ -40,7 +40,8 @@ describe Api::Public::V3::ScheduleOccurrencesController do
 
   describe 'GET /show' do
     it "returns the schedule occurrence on at the requested time" do
-      occurrence1 = create :schedule_occurrence, starts_at: 10.minutes.ago
+      program = create :kpcc_program
+      occurrence1 = create :schedule_occurrence, starts_at: 10.minutes.ago, program: program
 
       get :show, { at: Time.now.to_i }.merge(request_params)
       assigns(:schedule_occurrence).should eq occurrence1
