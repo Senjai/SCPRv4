@@ -7,7 +7,7 @@
         <p class="brief-bio"><%= bio.short_bio %></p>
         <ul class="tease clearfix">
           <% if bio.twitter_handle.present? %>
-            <li class="follow"><%= link_to "Follow @#{bio.twitter_handle} on Twitter", <%= twitter_profile_url(bio.twitter_handle) %>, target: "_blank" %></li>
+            <li class="follow"><%= link_to "Follow @#{bio.twitter_handle} on Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank" %></li>
           <% end %>
           <li><%= link_to "More from #{bio.name}", bio.public_path %></li>
         </ul>
