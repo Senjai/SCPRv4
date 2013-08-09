@@ -7,7 +7,8 @@ class ExternalSegment < ActiveRecord::Base
   
   has_many :external_episodes,
     :through   => :external_episode_segments,
-    :dependent => :destroy
+    :dependent => :destroy,
+    :touch     => true
 
 
   def to_article
