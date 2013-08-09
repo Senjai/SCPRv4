@@ -60,7 +60,7 @@ namespace :scprv4 do
   #----------
 
   desc "Sync all Audio types"
-  task :syncaudio => [:environment] do
+  task :sync_audio => [:environment] do
     puts "*** [#{Time.now}] Enqueueing audio sync tasks into Resque..."
     Audio.enqueue_all
     puts "Finished."
