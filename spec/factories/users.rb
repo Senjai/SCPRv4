@@ -14,6 +14,8 @@ FactoryGirl.define do
     short_bio    "Short!"
     title        "Rails Developer"
     phone_number "123-456-7890"
+
+    asset_id 999
   end
 
   #---------------------------
