@@ -33,8 +33,8 @@ describe PodcastsController do
       assigns(:podcast).should eq podcast
     end
     
-    it "redirects to podcast_url if source is OtherProgram" do
-      program = create :other_program
+    it "redirects to podcast_url if source is ExternalProgram" do
+      program = create :external_program, :from_rss
       podcast = create :podcast, source: program
       get :podcast, slug: podcast.slug
       response.should redirect_to podcast.podcast_url

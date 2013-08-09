@@ -37,14 +37,28 @@ namespace :scprv4 do
     end
   end
 
-  #----------
+
+  desc "Sync external programs"
+  task :sync_external_programs => [:environment] do
+    puts "*** [#{Time.now}] Syncing remote programs..."
+
+    if Rails.env.development?
+      Job::SyncExternalPrograms.perform
+      puts "Finished.\n"
+    else
+      Resque.enqueue(Job::SyncExternalPrograms)
+      puts "Job was placed in queue.\n"
+    end
+  end
+
+
 
   desc "Clear events cache"
   task :clear_events => [ :environment ] do 
     Rails.cache.expire_obj("events/event:new")
   end
 
-  #----------
+
 
   desc "Fire pending content alarms"
   task :fire_content_alarms => [:environment] do
@@ -86,7 +100,6 @@ namespace :scprv4 do
 
   desc "Cache everything"
   task :cache => [:environment] do
-    Rake::Task["scprv4:cache:programs"].invoke
     Rake::Task["scprv4:cache:homepage"].invoke
     Rake::Task["scprv4:cache:most_viewed"].invoke
     Rake::Task["scprv4:cache:most_commented"].invoke
@@ -156,20 +169,6 @@ namespace :scprv4 do
       puts "Finished.\n"
     end
 
-    #----------
-
-    desc "Cache external programs"
-    task :programs => [ :environment ] do
-      puts "Caching remote programs..."
-
-      NewRelic.with_manual_agent do
-        OtherProgram.active.each { |p| p.cache }
-      end
-
-      puts "Finished.\n"
-    end
-
-    #----------
 
     desc "Cache homepage sections"
     task :homepage => [ :environment ] do

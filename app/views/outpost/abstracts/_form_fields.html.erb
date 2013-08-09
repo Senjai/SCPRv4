@@ -7,7 +7,7 @@
 <%= form_block "Summary" do %>
   <%= f.input :headline, input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
   <%= f.association :category %>
-  <%= f.input :summary, input_html: { class: "ckeditor" } %>
+  <%= f.input :summary, input_html: { class: "tall" } %>
 <% end %>
 
 <%= f.section "assets" %>

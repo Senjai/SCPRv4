@@ -38,7 +38,8 @@ json.cache! [Api::Public::V2::VERSION, "v1", event] do
 
   if event.kpcc_program.present?
     json.program do
-      json.partial! "api/public/v2/programs/program", program: event.kpcc_program
+      json.partial! "api/public/v2/programs/program",
+        program: event.kpcc_program.to_program
     end
   end
 

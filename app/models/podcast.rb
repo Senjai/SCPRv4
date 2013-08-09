@@ -12,7 +12,7 @@ class Podcast < ActiveRecord::Base
     ["Content", 'content']
   ]
 
-  SOURCES = ["KpccProgram", "OtherProgram", "Blog"]
+  SOURCES = ["KpccProgram", "ExternalProgram", "Blog"]
   
   CONTENT_CLASSES = [
     NewsStory,
@@ -57,8 +57,8 @@ class Podcast < ActiveRecord::Base
         klasses.push ShowEpisode if self.item_type == "episodes"
         klasses.push ShowSegment if self.item_type == "segments"
       
-      when "OtherProgram"
-        # OtherProgram won't actually have any content
+      when "ExternalProgram"
+        # ExternalProgram won't actually have any content
         # So, just incase this method gets called,
         # just return an empty array.
         return []

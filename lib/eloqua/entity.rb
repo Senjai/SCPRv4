@@ -3,21 +3,21 @@
 #
 module Eloqua
   class Entity
-    
+
     class << self
       #--------------------
       # Path for the class
       def path
         self::PATH
       end
-      
+
       #--------------------
       # Find by ID
       def find_by_id(id)
         resp = client.get "#{self.path}/#{id}"
         process_response(resp)
       end
-      
+
       #--------------------
       # Create by attributes
       def create(attributes={})
@@ -26,13 +26,13 @@ module Eloqua
       end
 
       #--------------------
-      
+
       def client
         @client ||= Eloqua::Client.new(Rails.application.config.api['eloqua']['auth'])
       end
 
       #--------------------
-      
+
       def process_response(resp)
         if resp.body.present?
           new(resp.body)
@@ -50,13 +50,13 @@ module Eloqua
         instance_variable_set "@#{k}", v
       end
     end
-    
+
     #--------------------
     # Path for this object
     def path
       "#{self.class.path}/#{self.id}"
     end
-    
+
     #--------------------
     # Update by attributes
     def update(attributes={})

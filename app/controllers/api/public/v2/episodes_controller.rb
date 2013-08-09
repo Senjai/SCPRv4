@@ -20,17 +20,14 @@ module Api::Public::V2
     #---------------------------
 
     def index
-      @episodes = ShowEpisode.published.page(@page).per(@limit)
-
-      if @program_slug
-        @episodes = @episodes.joins(:show)
-          .where(KpccProgram.table_name => { slug: @program_slug })
-      end
+      @episodes = @program ? @program.episodes : ShowEpisode.published
+      @episodes = @episodes.page(@page).per(@limit)
 
       if @air_date
-        @episodes = @episodes.where(air_date: @air_date)
+        @episodes = @episodes.for_air_date(@air_date)
       end
 
+      @episodes = @episodes.map(&:to_episode)
       respond_with @episodes
     end
 
@@ -43,6 +40,7 @@ module Api::Public::V2
         render_not_found and return false
       end
 
+      @episode = @episode.to_episode
       respond_with @episode
     end
 
@@ -63,7 +61,11 @@ module Api::Public::V2
 
     def sanitize_program_slug
       if params[:program]
-        @program_slug = params[:program].to_s
+        @program = Program.find_by_slug(params[:program].to_s)
+
+        if !@program
+          render_not_found(message: "Program not found. (#{params[:program]}")
+        end
       end
     end
   end

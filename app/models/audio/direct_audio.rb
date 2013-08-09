@@ -1,31 +1,85 @@
+require 'open-uri'
+require 'timeout'
+
 ##
 # DirectAudio 
 #
-# Given an arbitrary path to an mp3
+# Given an arbitrary URL to an mp3
 #
 class Audio
   class DirectAudio < Audio
+    include Audio::FileInfo
+
+    TIMEOUT = 60
+
     class << self
-      def store_dir(audio)
-        path = Pathname.new(audio.mp3_path)
-        path.split.first.to_s
+      def default_status
+        STATUS_LIVE
       end
-  
-      # Generate the filename for an object
-      def filename(audio)
-        path = Pathname.new(audio.mp3_path)
-        path.split.last.to_s
+    end
+
+    # Override these so it doesn't super up to Audio 
+    # and cause a stack overflow.
+    # Yes, this is terrible.
+    def full_path
+      nil
+    end
+
+    def store_dir
+      nil
+    end
+
+    def filename
+      @filename ||= Pathname.new(self.external_url).basename
+    end
+
+
+    def url
+      self.external_url
+    end
+
+    def podcast_url
+      self.external_url
+    end
+
+
+    def compute_duration
+      if self.mp3_file.present?
+        Mp3Info.open(self.mp3_file) do |file|
+          self.duration = file.length || 0
+        end
+      else
+        self.duration = 0
       end
-    
-      #------------
-      # Proxy to Audio::Sync::bulk_sync_awaiting_audio
-      def bulk_sync
-        Audio::Sync.bulk_sync_awaiting_audio(self)
+    end
+
+    def compute_size
+      if self.mp3_file.present?
+        self.size = self.mp3_file.size || 0
+      else
+        self.size = 0
       end
-    end # singleton
-    
-    def sync
-      Audio::Sync.sync_if_file_exists(self)
+    end
+
+
+    def mp3_file
+      @mp3_file ||= begin
+        Timeout.timeout(TIMEOUT) { open(self.external_url) }
+      rescue
+        nil
+      end
+    end
+
+
+    # ugh, what have I gotten myself into...
+    # What we need is a single Audio model with just the necessary
+    # attrbutes - url, description, byline, timestamps, size, duration
+    # - and some separate adapters which will take an input and turn
+    # it into an Audio object. Right now we're just cramming all this
+    # stuff into the Audio table and then not using 90% of it anywhere
+    # else in the app.
+    def set_path
+      self.path = nil
     end
   end # DirectAudio
 end # Audio

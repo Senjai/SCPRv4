@@ -11,34 +11,34 @@ class BreakingNewsAlert < ActiveRecord::Base
     "audio"   => "Listen Live",
     "now"     => "Happening Now"
   }
-  
+
   #-------------------
   # Scopes
   scope :published, -> { order("created_at desc").where(is_published: true) }
   scope :visible,   -> { where(visible: true) }
-  
+
   #-------------------
   # Associations
-  
+
   #-------------------
   # Validations
-  
+
   #-------------------
   # Callbacks
   after_save :async_publish_email, if: :should_send_email?
   after_save :expire_cache
 
   #-------------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes headline
     indexes alert_type
     indexes teaser
     has created_at
   end
-  
+
   #-------------------
-  
+
   class << self
     def latest_alert
       alert = self.order("created_at desc").first
@@ -63,7 +63,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   def expire_cache
     Rails.cache.expire_obj("layout/breaking_news_alert")
   end
-  
+
   #-------------------
   # Queue the e-mail sending task so that it doesn't have to
   # occur during an HTTP request.
@@ -93,7 +93,7 @@ class BreakingNewsAlert < ActiveRecord::Base
           :html => email_html_body
         }
       )
-      
+
       campaign = Eloqua::Campaign.create(
         {
           :folderId         => self.class.eloqua_config['campaign_folder_id'],
@@ -114,15 +114,15 @@ class BreakingNewsAlert < ActiveRecord::Base
               },
               :outputTerminals => [
                 {
-                  :type          => "CampaignOutputTerminal", 
+                  :type          => "CampaignOutputTerminal",
                   :id            => "-981",
-                  :connectedId   => "-990", 
-                  :connectedType => "CampaignEmail", 
+                  :connectedId   => "-990",
+                  :connectedType => "CampaignEmail",
                   :terminalType  => "out"
                 }
               ]
             },
-            { 
+            {
               :type             => "CampaignEmail",
               :id               => "-990",
               :emailId          => email.id,
@@ -136,21 +136,21 @@ class BreakingNewsAlert < ActiveRecord::Base
           ]
         }
       )
-      
+
       if campaign.activate
         self.update_column(:email_sent, true)
       end
     end
   end
-  
+
   add_transaction_tracer :publish_email, category: :task
-  
+
   #-------------------
-  
+
   def break_type
     ALERT_TYPES[alert_type]
   end
-  
+
   #-------------------
 
   def email_html_body
@@ -174,7 +174,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
   #-------------------
-    
+
   def should_send_email?
     self.is_published && self.send_email && !self.email_sent
   end

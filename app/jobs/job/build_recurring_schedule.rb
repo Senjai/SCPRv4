@@ -1,6 +1,6 @@
 module Job
   class BuildRecurringSchedule < Base
-    @queue = namespace
+    @queue = "#{namespace}:rake_tasks"
 
     def self.perform
       next_month = Time.now.next_month

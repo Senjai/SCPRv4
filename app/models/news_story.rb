@@ -98,13 +98,13 @@ class NewsStory < ActiveRecord::Base
     has category.id, as: :category
 
     # For podcasts
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
-        as: :has_audio, type: :boolean
     join audio
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
+        as: :has_audio, type: :boolean
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "status = #{ContentBase::STATUS_LIVE}", 
+    has "#{NewsStory.table_name}.status = #{ContentBase::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
     
@@ -144,7 +144,6 @@ class NewsStory < ActiveRecord::Base
       :audio              => self.audio.available,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end

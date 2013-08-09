@@ -10,11 +10,11 @@
 <% end %>
 
 <%= form_block "Media" do %>
-  <%= f.input :feed_url %>
-  <%= f.input :facebook_url %>
-  <%= f.input :twitter_handle, hint: "No '@'. Example: kpcc" %>
+  <%= f.section "twitter_handle" %>
 <% end %>
 
 <%= form_block "Hosts" do %>
   <%= f.association :authors %>
 <% end %>
+
+<%= f.section "related_links" %>

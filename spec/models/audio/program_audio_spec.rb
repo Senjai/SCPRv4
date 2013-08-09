@@ -27,7 +27,7 @@ describe Audio::ProgramAudio do
   describe "::filename" do
     it "is the mp3's actual filename" do
       audio = build :audio, :program, :for_episode
-      Audio::ProgramAudio.filename(audio).should eq "20121002_mbrand.mp3"
+      audio.filename.should eq "20121002_mbrand.mp3"
     end
   end
   
@@ -37,7 +37,7 @@ describe Audio::ProgramAudio do
     it "is the show's audio_dir" do
       audio = build :audio, :program, :for_segment
       audio.content.show.update_attribute(:audio_dir, "coolshowbro")
-      Audio::ProgramAudio.store_dir(audio).should eq "coolshowbro"
+      audio.store_dir.should eq "coolshowbro"
     end
   end
   
@@ -48,8 +48,8 @@ describe Audio::ProgramAudio do
 
     before do
       # October 02, 2012 is the date on the fixture mp3 file
-      episode = create :show_episode, air_date: Chronic.parse("October 02, 2012"), show: program
-      segment = create :show_segment, :published, published_at: Chronic.parse("October 02, 2012"), show: program
+      episode = create :show_episode, air_date: Time.new(2012, 10, 2), show: program
+      segment = create :show_segment, :published, published_at: Time.new(2012, 10, 2), show: program
       KpccProgram.can_sync_audio.count.should eq 1
     end
 

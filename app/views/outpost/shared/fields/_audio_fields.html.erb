@@ -11,19 +11,22 @@
     </div> <!-- span -->
     <div class="span4">
       <div class="audio-info">
-        
+
         <% if f.object.persisted? %>
           <div class="existing-audio" id="audio-existing-<%=index%>">
             <!-- existing audio -->
             <% if f.object.mp3.present? %>
               <h5 class="alert alert-success">Audio is Live</h5>
               <%= link_to f.object.mp3.filename, f.object.url, target: "_blank" %>
+            <% elsif f.object.external_url.present? %>
+              <h5 class="alert alert-success">Audio is Live</h5>
+              <%= link_to f.object.external_url, f.object.url, target: "_blank" %>
             <% else %>
               <h5 class="alert alert-info">Awaiting Audio</h5>
               <%= f.object.path %>
             <% end %>
           </div>
-      
+
           <div class="audio-delete pull-right">
             <%= f.input :_destroy, as: :boolean, label: false, inline_label: "Delete?", wrapper_html: { class: "inline destroy-bool" } %>
           </div> <!-- audio-delete -->
@@ -36,7 +39,7 @@
                 <a href="#audio-new-enco-<%=index%>" data-toggle="tab">Enco</a>
               </li>
               <li class="<%= "active" if f.object.errors[:mp3].present? %>"><a href="#audio-new-upload-<%=index%>" data-toggle="tab">Upload</a></li>
-              <li class="<%= "active" if f.object.errors[:mp3_path].present? %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">Path</a></li>
+              <li class="<%= "active" if f.object.errors[:external_url].present? %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">URL</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane <%= "active" if f.object.errors.blank? || (f.object.errors[:enco_number] || f.object.errors[:enco_date] || f.object.errors[:base]).present? %>" id="audio-new-enco-<%=index%>">
@@ -48,8 +51,8 @@
                 <%= f.input :mp3, as: :file, wrapper_html: { class: "vertical" } %>
               </div> <!-- upload -->
 
-              <div class="tab-pane <%= "active" if f.object.errors[:mp3_path].present? %>" id="audio-new-direct-<%=index%>">
-                <%= f.input :mp3_path, hint: "/events/2012/10/01/your_cool_audio.mp3", input_html: { class: "thin" }, wrapper_html: { class: "vertical"} %>
+              <div class="tab-pane <%= "active" if f.object.errors[:external_url].present? %>" id="audio-new-direct-<%=index%>">
+                <%= f.input :external_url, hint: "e.g. http://npr.org/audio/your_cool_audio.mp3", input_html: { class: "span3" }, wrapper_html: { class: "vertical"} %>
               </div> <!-- path -->
             </div> <!-- tab-content -->
           </div> <!-- new-audio -->

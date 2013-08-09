@@ -1,0 +1,15 @@
+machine:
+  timezone:
+    America/Los_Angeles
+
+  ruby:
+    version:
+      '1.9.3-p0'
+
+
+database:
+  override:
+    - cp config/templates/database.yml.ci config/database.yml
+    - cp config/templates/api_config.yml.ci config/api_config.yml
+    - cp config/templates/app_config.yml.ci config/app_config.yml
+    - bundle exec rake db:create db:schema:load

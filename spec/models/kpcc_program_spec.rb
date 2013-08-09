@@ -1,17 +1,6 @@
 require "spec_helper"
 
 describe KpccProgram do
-  describe "validations" do
-    it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:slug) }
-    it { should validate_presence_of(:air_status) }
-
-    it "validates slug uniqueness" do
-      create :kpcc_program
-      should validate_uniqueness_of(:slug)
-    end
-  end
-
   describe "::scopes" do
     describe "can sync audio" do
       it "returns records with onair and audio_dir" do
@@ -35,6 +24,13 @@ describe KpccProgram do
     it "is nil if audio_dir is present" do
       program = create :kpcc_program, audio_dir: nil
       program.absolute_audio_path.should eq nil
+    end
+  end
+
+  describe '#to_program' do
+    it 'turns it into a program' do
+      program = build :kpcc_program
+      program.to_program.should be_a Program
     end
   end
 end
