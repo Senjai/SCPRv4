@@ -27,7 +27,7 @@
       <div class="visible-reader"><%= content_widget "extra_audio", story %></div>
       
       <%= pij_source(story) %>
-      <%= render :partial => "/shared/author_info", :collection => story.grouped_bylines[:primary], :as => :byline %>
+      <%= render partial: "/shared/author_info", collection: story.grouped_bylines[:primary], as: :byline %>
     </footer>
   </article>
 
