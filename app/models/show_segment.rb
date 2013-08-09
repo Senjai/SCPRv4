@@ -57,8 +57,7 @@ class ShowSegment < ActiveRecord::Base
     :through    => :rundowns,
     :source     => :episode,
     :order      => "air_date asc",
-    :autosave   => true,
-    :touch      => true
+    :autosave   => true
 
   #-------------------
   # Validations
