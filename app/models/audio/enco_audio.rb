@@ -5,30 +5,92 @@
 #
 class Audio
   class EncoAudio < Audio
-    class << self
-      def store_dir(audio=nil)
-        STORE_DIRS[:enco]
-      end
-  
-      # Generate the filename for an object
-      def filename(audio)
-        date = audio.enco_date.strftime("%Y%m%d")
-        "#{date}_features#{audio.enco_number}.mp3"
-      end
-  
-      #------------
+    include Audio::Paths
+    include Audio::FileInfo
 
-      #------------
-      # Proxy to Audio::Sync::bulk_sync_awaiting_audio
-      def bulk_sync
-        Audio::Sync.bulk_sync_awaiting_audio(self)
+    logs_as_task
+
+    STORE_DIR       = "features"
+    FILENAME_REGEX  = %r{(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})_features(?<enco_id>\d{4})\.mp3} # 20121001_features1809.mp3
+
+    SYNC_THRESHOLD = 2.weeks
+
+    before_save :set_status
+
+
+    class << self
+      include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
+      def default_status
+        STATUS_WAIT
       end
+
+
+      # This method is used by Job::SyncAudio
+      def bulk_sync
+        limit     = SYNC_THRESHOLD.ago
+        synced    = 0
+
+        awaiting  = self.awaiting_audio.where("created_at > ?", limit)
+
+        if awaiting.empty?
+          log "No Audio to sync."
+          return false
+        end
+
+        awaiting.each do |audio|
+          synced += 1 if audio.sync
+        end
+
+        log "Finished. Total synced: #{synced}"
+      end
+
+      add_transaction_tracer :bulk_sync, category: :task
     end # singleton
 
-    #------------
-    
+
+
     def sync
-      Audio::Sync.sync_if_file_exists(self)
+      begin
+        if File.exists? self.full_path
+          self.mp3 = File.open(self.full_path)
+          self.save!
+
+          log "Saved Audio ##{self.id}: #{self.full_path}"
+          self
+        else
+          log "Still awaiting audio file for Audio ##{self.id}: #{self.full_path}"
+          false
+        end
+      rescue => e
+        if Rails.env.test?
+          raise e
+        else
+          log "Could not save Audio ##{self.id}: #{e}"
+          return false
+        end
+      end
+    end
+
+
+    def store_dir
+      STORE_DIR
+    end
+
+    def filename
+      date = self.enco_date.strftime("%Y%m%d")
+      "#{date}_features#{self.enco_number}.mp3"
+    end
+
+
+    private
+
+    def set_status
+      if self.mp3.present?
+        self.status = STATUS_LIVE
+      else
+        self.status = STATUS_WAIT
+      end
     end
   end # EncoAudio
 end # Audio

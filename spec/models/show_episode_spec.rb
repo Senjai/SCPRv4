@@ -6,7 +6,7 @@ describe ShowEpisode do
       let(:program) { build :kpcc_program, title: "Cool Show" }
 
       it "generates headline if headline is blank" do
-        episode = build :show_episode, show: program, air_date: Chronic.parse("January 1, 2012"), headline: ""
+        episode = build :show_episode, show: program, air_date: Time.new(2012, 1, 1), headline: ""
         episode.save!
         episode.reload.headline.should eq "Cool Show for January 1, 2012"
       end
@@ -22,8 +22,6 @@ describe ShowEpisode do
   #------------------
   
   describe "validations" do
-    it { should validate_presence_of(:show) }
-    
     it "validates air date on publish" do
       ShowEpisode.any_instance.stub(:published?) { true }
       should validate_presence_of(:air_date)
@@ -97,4 +95,19 @@ describe ShowEpisode do
       end
     end
   end
+
+  describe '#to_episode' do
+    it 'turns it into an episode' do
+      episode = build :show_episode
+      episode.to_episode.should be_a Episode
+    end
+  end
+
+  describe '#to_article' do
+    it 'turns it into an article' do
+      episode = build :show_episode
+      episode.to_article.should be_a Article
+    end
+  end
+
 end

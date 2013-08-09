@@ -27,9 +27,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 25b761e7918be2dbead48993ff63c946ee55ad1d
+  revision: 39c13bdd4726947d74fd1bd704300917d5b3593a
   specs:
-    outpost (0.0.3)
+    outpost-cms (0.0.3)
       bcrypt-ruby (~> 3.0.0)
       jquery-rails
       rails (>= 3.2)
@@ -51,31 +51,21 @@ GIT
 
 GIT
   remote: git://github.com/bricker/npr.git
-  revision: 6a43e0fb773e2c901ac2ac57bd362198fda37ea6
+  revision: 8c6b267fdc3be93668932597e00426fcc4ebe971
   specs:
-    npr (1.1.0)
+    npr (2.0.0.beta)
       faraday (>= 0.8.0)
       faraday_middleware (>= 0.9.0)
-
-GIT
-  remote: git://github.com/pauldix/feedzirra.git
-  revision: 80cd35766e40ee3058db1c5c0c25448baeea4212
-  specs:
-    feedzirra (0.2.0.rc2)
-      curb (~> 0.8.1)
-      loofah (~> 1.2.1)
-      nokogiri (~> 1.5.3)
-      sax-machine (~> 0.2.0.rc1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (3.2.13)
-      actionpack (= 3.2.13)
-      mail (~> 2.5.3)
-    actionpack (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
+    actionmailer (3.2.14)
+      actionpack (= 3.2.14)
+      mail (~> 2.5.4)
+    actionpack (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
@@ -83,19 +73,19 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    activemodel (3.2.13)
-      activesupport (= 3.2.13)
+    activemodel (3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
-    activerecord (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
+    activerecord (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
-    activesupport (3.2.13)
-      i18n (= 0.6.1)
+    activeresource (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     addressable (2.3.4)
     arel (3.0.2)
@@ -137,7 +127,6 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
-    curb (0.8.4)
     database_cleaner (1.0.1)
     dbsync (0.1.2)
       activerecord (>= 3.2.8)
@@ -166,8 +155,8 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     fakeweb (1.3.0)
-    faraday (0.8.7)
-      multipart-post (~> 1.1)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     faraday_middleware (0.9.0)
       faraday (>= 0.7.4, < 0.9)
     ffi (1.8.1)
@@ -192,7 +181,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
     httpauth (0.2.0)
-    i18n (0.6.1)
+    i18n (0.6.4)
     ice_cube (0.11.0)
     jbuilder (1.4.1)
       activesupport (>= 3.0.0)
@@ -210,8 +199,6 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
-    loofah (1.2.1)
-      nokogiri (>= 1.4.4)
     lumberjack (1.0.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -219,7 +206,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     mono_logger (1.1.0)
-    multi_json (1.7.7)
+    multi_json (1.7.8)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
     mysql2 (0.3.11)
@@ -256,17 +243,17 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (3.2.13)
-      actionmailer (= 3.2.13)
-      actionpack (= 3.2.13)
-      activerecord (= 3.2.13)
-      activeresource (= 3.2.13)
-      activesupport (= 3.2.13)
+    rails (3.2.14)
+      actionmailer (= 3.2.14)
+      actionpack (= 3.2.14)
+      activerecord (= 3.2.14)
+      activeresource (= 3.2.14)
+      activesupport (= 3.2.14)
       bundler (~> 1.0)
-      railties (= 3.2.13)
-    railties (3.2.13)
-      actionpack (= 3.2.13)
-      activesupport (= 3.2.13)
+      railties (= 3.2.14)
+    railties (3.2.14)
+      actionpack (= 3.2.14)
+      activesupport (= 3.2.14)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
@@ -284,11 +271,11 @@ GEM
     redis-activesupport (3.2.3)
       activesupport (~> 3.2.3)
       redis-store (~> 1.1.0)
-    redis-namespace (1.3.0)
+    redis-namespace (1.3.1)
       redis (~> 3.0.0)
     redis-store (1.1.3)
       redis (>= 2.2.0)
-    resque (1.24.1)
+    resque (1.25.0.pre)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.2)
@@ -318,8 +305,6 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    sax-machine (0.2.0.rc1)
-      nokogiri (~> 1.5.2)
     select2-rails (3.4.1)
       sass-rails
       thor (~> 0.14)
@@ -338,10 +323,10 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
-    sinatra (1.3.6)
+    sinatra (1.4.3)
       rack (~> 1.4)
-      rack-protection (~> 1.3)
-      tilt (~> 1.3, >= 1.3.3)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     slop (3.4.5)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -349,6 +334,7 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.7)
+    test_after_commit (0.2.0)
     thinking-sphinx (2.0.14)
       activerecord (>= 3.0.3)
       builder (>= 2.1.2)
@@ -402,7 +388,6 @@ DEPENDENCIES
   fakeweb
   faraday (~> 0.8)
   faraday_middleware (~> 0.8)
-  feedzirra!
   guard (~> 1.5)
   guard-resque
   guard-rspec
@@ -416,9 +401,9 @@ DEPENDENCIES
   newrelic_rpm
   npr!
   oauth2 (~> 0.8)
-  outpost!
   outpost-aggregator!
   outpost-asset_host!
+  outpost-cms!
   outpost-publishing!
   pry
   pry-debugger
@@ -426,7 +411,7 @@ DEPENDENCIES
   rb-fsevent (~> 0.9)
   rb-readline (~> 0.4.2)
   redis-content-store!
-  resque (~> 1.20)
+  resque (~> 1.25.0.pre)
   rspec-rails (~> 2.12)
   ruby-mp3info
   sanitize (~> 2.0)
@@ -437,6 +422,7 @@ DEPENDENCIES
   simple_postmark (~> 0.5)
   simplecov
   sqlite3
+  test_after_commit
   thinking-sphinx (~> 2.0.14)
   turbo-sprockets-rails3
   twitter (~> 4.1)

@@ -6,9 +6,9 @@ FactoryGirl.define do
     user { |bio| bio.association :admin_user }
     sequence(:name) { |n| "Bryan Ricker #{n}" }
 
-    is_public    true
-    slug         { name.parameterize }
-    twitter      { "@#{slug}" }
+    is_public true
+    slug { name.parameterize }
+    twitter_handle { slug }
 
     bio          "This is a bio"
     short_bio    "Short!"

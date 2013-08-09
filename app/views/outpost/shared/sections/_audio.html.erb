@@ -2,7 +2,8 @@
   <% if record.audio.empty? %>
     <% record.audio.build %>
   <% end %>
-  
+
   <%= f.has_many_fields :audio %>
+
   <%= f.link_to_add_fields(:audio, title: "Add More Audio") %>
 <% end %>

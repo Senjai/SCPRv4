@@ -96,7 +96,7 @@ class Event < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has created_at, as: :public_datetime
-    has "status = #{Event::STATUS_LIVE}", 
+    has "#{Event.table_name}.status = #{Event::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
   
@@ -195,7 +195,6 @@ class Event < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => "KPCC",
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end

@@ -12,6 +12,7 @@
 #
 module LogsAsTask
   def logs_as_task
+    include InstanceMethods
     extend ClassMethods
   end
   
@@ -20,6 +21,12 @@ module LogsAsTask
       msg = "*** [#{Time.now}] #{msg}"
       Rails.logger.info msg
       Logger.new(STDOUT).info(msg) unless Rails.env == "test"
+    end
+  end
+
+  module InstanceMethods
+    def log(msg)
+      self.class.log(msg)
     end
   end
 end

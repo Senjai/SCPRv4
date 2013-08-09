@@ -2,11 +2,12 @@
 # SyncRemoteArticles
 #
 # Sync with the Remote Article API's
-#
+# This isn't on the "rake_tasks" queue because it
+# can be triggered from the CMS.
 module Job
   class SyncRemoteArticles < Base
-    @queue = namespace
-    
+    @queue = "#{namespace}:remote_articles"
+
     class << self
       def perform
         @synced = RemoteArticle.sync
@@ -25,7 +26,7 @@ module Job
             }
           }
         )
-        
+
         timeout_retry(3) do
           hook.publish
         end

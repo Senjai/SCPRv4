@@ -8,12 +8,14 @@ module Concern
   module Callbacks
     module CacheExpirationCallback
       extend ActiveSupport::Concern
-      
+
       included do
         include Concern::Methods::PublishingMethods
         after_save :expire_cache
       end
-      
+
+      private
+
       def expire_cache
         # If we are going from "published" -> "published" (still),
         # or we are going from "published" -> "unpublished",

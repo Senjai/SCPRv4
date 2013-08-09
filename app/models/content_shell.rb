@@ -82,7 +82,7 @@ class ContentShell < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "status = #{ContentBase::STATUS_LIVE}", 
+    has "#{ContentShell.table_name}.status = #{ContentBase::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
 
@@ -114,7 +114,6 @@ class ContentShell < ActiveRecord::Base
       :category           => self.category,
       :assets             => self.assets,
       :attributions       => self.bylines,
-      :public_url         => self.url,
       :edit_url           => self.admin_edit_url
     })
   end

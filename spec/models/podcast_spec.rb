@@ -37,9 +37,9 @@ describe Podcast do
       end
     end
     
-    context "for OtherProgram" do
+    context "for ExternalProgram" do
       it "returns an empty array" do
-        program = create :other_program
+        program = create :external_program
         podcast = create :podcast, source: program
         podcast.content.should eq []
       end

@@ -1,9 +1,11 @@
+<!-- This layout should only be used for KPCC Programs. -->
+
 <% content_for :title_bar do %>
 <div class="page-header program-masthead">
   <div class="row-fluid">
     <div class="span16" id="program-masthead-title">
       <div class="program-info<%= " headshot #{@program.slug}" if @program.is_featured?  %>">
-        <h1 class="page-title"><%= link_to @program.title, @program.public_path %></h1>
+        <h1 class="page-title"><%= link_to @program.title, @program.public_url %></h1>
         <div class="show-meta">
           <%= @program.airtime %>
           <% if @program.host.present? %>
@@ -29,34 +31,33 @@
 <% end %>
 
 <% content_for :sidebar_middle do %>
-  <% if @program.is_a? KpccProgram %>
-
-    <% present @program, ProgramPresenter do |p| %>
-      <section class="program-about widget">
-        <h6>About <%= p.title %></h6>
-        <div class="row-fluid">
-          <div class="span10">
-            <nav class="connect">
-              <span class="title">Stay Connected</span>
-              <%= link_to "Facebook", p.facebook_url, target: "_blank", class: "facebook with-icon" %>
-              <%= link_to "Twitter", p.twitter_url, target: "_blank", class: "twitter with-icon" %>
-              <%= link_to "Podcasts", p.podcast_url, target: "_blank", class: "podcast with-icon" %>
-              <%= link_to "RSS", p.rss_url, target: "_blank", class: "rss with-icon"  %>
-            </nav>
-          </div>
-          <div class="span14">
-            <p class="about"><%= p.teaser %></p>
-          </div>
+  <% present @program, ProgramPresenter do |p| %>
+    <section class="program-about widget">
+      <h6>About <%= p.title %></h6>
+      <div class="row-fluid">
+        <div class="span10">
+          <nav class="connect">
+            <span class="title">Stay Connected</span>
+            <%= p.facebook_link %>
+            <%= p.twitter_link %>
+            <%= p.podcast_link %>
+            <%= p.rss_link %>
+          </nav>
         </div>
-        <%= link_to "View Archived Episodes", program_path(p.slug, :anchor => "archive"), class: "archive with-icon" %>
-      </section>
-    <% end %>
+        <div class="span14">
+          <p class="about"><%= p.description %></p>
+        </div>
+      </div>
+      <%= link_to "View Archived Episodes", @program.public_path(anchor: "archive"), class: "archive with-icon" %>
+    </section>
+  <% end %>
 
-    <%= render("/shared/widgets/missed_it_bucket", bucket: @program.missed_it_bucket) if @program.missed_it_bucket.present? %>
-    
-    <% if @program.blog.present? %>
-      <%= render '/blogs/recent_posts', blog: @program.blog, title: "From the Blog: #{@program.blog.name}" %>
-    <% end %>
+  <% if bucket = @program.missed_it_bucket %>
+    <%= render("/shared/widgets/missed_it_bucket", bucket: bucket) %>
+  <% end %>
+
+  <% if blog = @program.blog %>
+    <%= render('/blogs/recent_posts', blog: blog, title: "From the Blog: #{blog.name}") %>
   <% end %>
 <% end %>
 

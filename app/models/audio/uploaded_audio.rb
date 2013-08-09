@@ -6,14 +6,31 @@
 #
 class Audio
   class UploadedAudio < Audio
-    class << self
-      def store_dir(audio=nil)
-        "#{STORE_DIRS[:upload]}/#{Time.now.strftime("%Y/%m/%d")}"
-      end
+    include Audio::Paths
+    include Audio::FileInfo
 
-      def filename(audio)
-        audio.mp3.file.filename
+    STORE_DIR = "upload"
+
+    class << self
+      def default_status
+        STATUS_LIVE
       end
     end # singleton
+
+
+    def store_dir
+      time = self.created_at.present? ? self.created_at : Time.now
+
+      File.join \
+        STORE_DIR,
+        time.strftime("%Y"),
+        time.strftime("%m"),
+        time.strftime("%d")
+    end
+
+
+    def filename
+      self.mp3.file.filename
+    end
   end # UploadedAudio
 end # Audio
