@@ -1,9 +1,9 @@
 class Outpost::PijQueriesController < Outpost::ResourceController
   outpost_controller
-  
+
   define_list do |l|
-    l.default_order = "published_at"
-    l.default_sort_mode = "desc"
+    l.default_order       = "published_at"
+    l.default_sort_mode   = "desc"
 
     l.column :headline
     l.column :slug
@@ -28,7 +28,7 @@ class Outpost::PijQueriesController < Outpost::ResourceController
 
   def preview
     @query = Outpost.obj_by_key(params[:obj_key]) || PijQuery.new
-    
+
     with_rollback @query do
       @query.assign_attributes(params[:pij_query])
 

@@ -34,6 +34,7 @@ module Concern
         ContentBase::STATUS_TEXT[self.status]
       end
 
+
       # Publish this article
       def publish
         self.update_attribute(:status, ContentBase::STATUS_LIVE)

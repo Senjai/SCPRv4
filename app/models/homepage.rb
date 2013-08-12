@@ -34,7 +34,7 @@ class Homepage < ActiveRecord::Base
 
   class << self
     def status_text_collect
-      Homepage::STATUS_TEXT.map { |p| [p[1], p[0]] }
+      Homepage::STATUS_TEXT.map { |k, v| [v, k] }
     end
   end
 

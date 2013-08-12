@@ -45,6 +45,7 @@ class Edition < ActiveRecord::Base
     end
   end
 
+
   # Returns an array of Abstract objects
   # by mapping all of the items to Abstract objects.
   def abstracts
