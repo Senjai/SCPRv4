@@ -6,19 +6,33 @@
 <% end %>
 
 <%= form_block "Actions" do %>
-  You can only send an e-mail once per alert. To send an email:
-  <ol>
-    <li>Select "Is Published"</li>
-    <li>Select "Send Email"</li>
-    <li>Save the alert</li>
-  </ol>
-  
-  <%= f.input :is_published, hint: "Make this alert public" %>
   <%= f.input :visible, hint: "Show this alert on the website" %>
-  
-  <% if record.email_sent? %>
-    <div class="alert alert-info">An e-mail has already been sent for this alert.</div>
+
+  <% if record.send_email? %>
+    <% if record.email_sent? %>
+      <div class="alert alert-info">
+        An e-mail has been sent for this alert.
+      </div>
+    <% else %>
+      <div class="alert alert-info">
+        An e-mail will be sent for this alert, but hasn't fired yet.
+      </div>
+    <% end %>
   <% else %>
     <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed" %>
+  <% end %>
+
+  <% if record.send_mobile_notification? %>
+    <% if record.mobile_notification_sent? %>
+      <div class="alert alert-info">
+        A mobile notification has been sent for this alert.
+      </div>
+    <% else %>
+      <div class="alert alert-info">
+        A mobile notification will be sent for this alert, but hasn't fired yet.
+      </div>
+    <% end %>
+  <% else %>
+    <%= f.input :send_mobile_notification, hint: "Send a push notification to mobile applications." %>
   <% end %>
 <% end %>

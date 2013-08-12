@@ -7,10 +7,21 @@ FactoryGirl.define do
     teaser        "This is breaking news"
     alert_time    { Time.now }
     alert_type    "break"
-    alert_link    "http://scpr.org/"
-    is_published  1
-    visible       1
-    email_sent    0
-    send_email    0
+    alert_url    "http://scpr.org/"
+    visible       true
+
+    send_email    false
+    email_sent    false
+
+    send_mobile_notification false
+    mobile_notification_sent false
+
+    trait :email do
+      send_email true
+    end
+
+    trait :mobile do
+      send_mobile_notification true
+    end
   end
 end
