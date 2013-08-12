@@ -31,6 +31,8 @@ module Concern
       end
 
 
+      private
+
       # Reject if the alarm doesn't already exist and the fire_at
       # wasn't filled in.
       #
