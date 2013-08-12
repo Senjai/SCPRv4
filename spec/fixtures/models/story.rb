@@ -24,7 +24,7 @@ module TestClass
 
     include Concern::Methods::CommentMethods
     include Concern::Methods::PublishingMethods
-    include Concern::Methods::StatusMethods
+    include Concern::Methods::ContentStatusMethods
 
     include Concern::Validations::ContentValidation
 

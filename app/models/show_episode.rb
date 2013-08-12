@@ -12,7 +12,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
+  include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
 
   ROUTE_KEY = "episode"

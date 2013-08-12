@@ -1,6 +1,10 @@
+# Content Status Methods
+#
+# This should only be included into classes which
+# use the ContentBase statuses.
 module Concern
   module Methods
-    module StatusMethods
+    module ContentStatusMethods
       def killed?
         self.status == ContentBase::STATUS_KILLED
       end
@@ -24,11 +28,15 @@ module Concern
       def published?
         self.status == ContentBase::STATUS_LIVE
       end
-      
-      #-----------------
-      
+
+
       def status_text
         ContentBase::STATUS_TEXT[self.status]
+      end
+
+      # Publish this article
+      def publish
+        self.update_attribute(:status, ContentBase::STATUS_LIVE)
       end
     end
   end

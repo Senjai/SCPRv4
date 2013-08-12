@@ -2,7 +2,7 @@ require "spec_helper"
 
 # These specs also passively test the +status_text+ method.
 
-describe Concern::Methods::StatusMethods do
+describe Concern::Methods::ContentStatusMethods do
   subject { TestClass::Story.new }
   
   describe "#killed?" do

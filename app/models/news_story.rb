@@ -23,7 +23,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
+  include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
 
