@@ -9,7 +9,7 @@ class Outpost::EditionsController < Outpost::ResourceController
     l.column :status
     l.column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
 
-    l.filter :status, collection: -> { Edition.status_text_collection }
+    l.filter :status, collection: -> { Edition.status_select_collection }
   end
 
   private

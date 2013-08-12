@@ -33,8 +33,8 @@ class Homepage < ActiveRecord::Base
   }
 
   class << self
-    def status_text_collect
-      Homepage::STATUS_TEXT.map { |k, v| [v, k] }
+    def status_select_collection
+      STATUS_TEXT.map { |k, v| [v, k] }
     end
   end
 

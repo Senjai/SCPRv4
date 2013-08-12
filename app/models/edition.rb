@@ -40,8 +40,8 @@ class Edition < ActiveRecord::Base
 
 
   class << self
-    def status_text_collection
-      STATUS_TEXT.map { |k,v| [v, k] }
+    def status_select_collection
+      STATUS_TEXT.map { |k, v| [v, k] }
     end
   end
 
