@@ -87,12 +87,8 @@ table {
     ///////////////////
     // BreakingNewsAlert
     &.list-breaking_news_alerts {
-        .column-email_sent { // breaking_news_alert.email_sent
-            width: 100px;
-        }
-
         .column-headline { // breaking_news_alert.headline
-            width: 450px;
+            width: 400px;
         }
     }
 
