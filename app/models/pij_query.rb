@@ -29,9 +29,9 @@ class PijQuery < ActiveRecord::Base
     ["Internal (not listed)", "utility"]
   ]
   
-  STATUS_HIDDEN   = ContentBase::STATUS_DRAFT
-  STATUS_PENDING  = ContentBase::STATUS_PENDING
-  STATUS_LIVE     = ContentBase::STATUS_LIVE
+  STATUS_HIDDEN   = 0
+  STATUS_PENDING  = 3
+  STATUS_LIVE     = 5
   
   STATUS_TEXT = {
       STATUS_HIDDEN   => "Hidden",
@@ -87,6 +87,14 @@ class PijQuery < ActiveRecord::Base
 
   def published?
     self.status == STATUS_LIVE
+  end
+
+  def publish
+    self.update_attrubute(:status, STATUS_LIVE)
+  end
+
+  def status_text
+    STATUS_TEXT[self.status]
   end
 
 

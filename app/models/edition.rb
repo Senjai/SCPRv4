@@ -14,9 +14,9 @@ class Edition < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
 
 
-  STATUS_DRAFT    = ContentBase::STATUS_DRAFT
-  STATUS_PENDING  = ContentBase::STATUS_PENDING
-  STATUS_LIVE     = ContentBase::STATUS_LIVE
+  STATUS_DRAFT    = 0
+  STATUS_PENDING  = 3
+  STATUS_LIVE     = 5
 
   STATUS_TEXT = {
     STATUS_DRAFT      => "Draft",
@@ -30,7 +30,10 @@ class Edition < ActiveRecord::Base
 
   # We don't want to use ContentBase::STATUS_LIVE, so just manually define
   # this scope here (as opposed to using the PublishScope module).
-  scope :published, -> { where(status: STATUS_LIVE).order("published_at desc") }
+  scope :published, -> {
+    where(status: STATUS_LIVE)
+    .order("published_at desc")
+  }
 
 
   validates :status, presence: true
@@ -45,18 +48,22 @@ class Edition < ActiveRecord::Base
   # Returns an array of Abstract objects
   # by mapping all of the items to Abstract objects.
   def abstracts
-    @abstracts ||= self.slots.includes(:item).map { |slot| slot.item.to_abstract }
+    @abstracts ||= self.slots.includes(:item).map { |slot|
+      slot.item.to_abstract
+    }
   end
 
   def articles
-    @articles ||= self.slots.includes(:item).map { |slot| slot.item.to_article }
+    @articles ||= self.slots.includes(:item).map { |slot|
+      slot.item.to_article
+    }
   end
+
 
   # Determine whether this edition is published.
   def published?
     self.status == STATUS_LIVE
   end
-
 
   # Determine whether this edition is pending.
   # Necessary for ContentAlarms.
@@ -64,6 +71,9 @@ class Edition < ActiveRecord::Base
     self.status == STATUS_PENDING
   end
 
+  def publish
+    self.update_attribute(:status, STATUS_LIVE)
+  end
 
   # Return the descriptive status text for this edition.
   def status_text
