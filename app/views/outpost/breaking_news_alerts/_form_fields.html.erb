@@ -6,33 +6,49 @@
 <% end %>
 
 <%= form_block "Actions" do %>
+  <% if !record.published? %>
+    <div class="alert alert-info">
+      <strong>Note</strong><br />No action will be taken until this alert has been "published" using the Publishing fields (below).
+    </div>
+  <% end %>
+
   <%= f.input :visible, hint: "Show this alert on the website" %>
 
-  <% if record.send_email? %>
-    <% if record.email_sent? %>
-      <div class="alert alert-info">
-        An e-mail has been sent for this alert.
-      </div>
-    <% else %>
-      <div class="alert alert-info">
+  <!-- EMAIL -->
+  <% if record.email_sent? %>
+    <div class="alert alert-info">
+      An e-mail has been sent for this alert.
+    </div>
+  <% else %>
+    <% if record.published? && record.send_email? %>
+      <div class="alert alert-warning">
         An e-mail will be sent for this alert, but hasn't fired yet.
       </div>
+    <% else %>
+      <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed" %>
     <% end %>
-  <% else %>
-    <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed" %>
   <% end %>
 
-  <% if record.send_mobile_notification? %>
-    <% if record.mobile_notification_sent? %>
-      <div class="alert alert-info">
-        A mobile notification has been sent for this alert.
-      </div>
-    <% else %>
-      <div class="alert alert-info">
+  <!-- MOBILE NOTIFICATION -->
+  <% if record.mobile_notification_sent? %>
+    <div class="alert alert-info">
+      A mobile notification has been sent for this alert.
+    </div>
+  <% else %>
+    <% if record.published? && record.send_mobile_notification? %>
+      <div class="alert alert-warning">
         A mobile notification will be sent for this alert, but hasn't fired yet.
       </div>
+    <% else %>
+      <%= f.input :send_mobile_notification, hint: "Send a push notification to mobile applications." %>
     <% end %>
-  <% else %>
-    <%= f.input :send_mobile_notification, hint: "Send a push notification to mobile applications." %>
   <% end %>
 <% end %>
+
+<%= form_block "Publishing" do %>
+  <%= f.input :status, collection: BreakingNewsAlert.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
+  <%= f.section 'content_alarm' %>
+  <div id="scheduled_status" class="notification block"></div>
+<% end %>
+
+<br /><br /><br /><br /><br /><br /><br /><br />

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130812160155) do
+ActiveRecord::Schema.define(:version => 20130812223418) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -375,9 +375,7 @@ ActiveRecord::Schema.define(:version => 20130812160155) do
 
   create_table "layout_breakingnewsalert", :force => true do |t|
     t.string   "headline",                                                          :null => false
-    t.time     "alert_time"
     t.string   "alert_type",                                                        :null => false
-    t.boolean  "is_published",                                   :default => true,  :null => false
     t.boolean  "email_sent",                                     :default => false, :null => false
     t.datetime "created_at",                                                        :null => false
     t.datetime "updated_at",                                                        :null => false
@@ -385,13 +383,12 @@ ActiveRecord::Schema.define(:version => 20130812160155) do
     t.string   "alert_url",                :limit => 200,                           :null => false
     t.boolean  "send_email",                                                        :null => false
     t.boolean  "visible",                                                           :null => false
-    t.boolean  "send_mobile_notification"
-    t.boolean  "mobile_notification_sent"
+    t.boolean  "send_mobile_notification",                       :default => false
+    t.boolean  "mobile_notification_sent",                       :default => false
     t.integer  "status"
   end
 
-  add_index "layout_breakingnewsalert", ["is_published"], :name => "index_layout_breakingnewsalert_on_is_published"
-  add_index "layout_breakingnewsalert", ["status"], :name => "index_layout_breakingnewsalert_on_status"
+  add_index "layout_breakingnewsalert", ["status", "created_at"], :name => "index_layout_breakingnewsalert_on_status_and_created_at"
   add_index "layout_breakingnewsalert", ["visible"], :name => "index_layout_breakingnewsalert_on_visible"
 
   create_table "layout_homepage", :force => true do |t|

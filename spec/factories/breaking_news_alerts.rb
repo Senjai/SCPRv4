@@ -5,7 +5,6 @@ FactoryGirl.define do
   factory :breaking_news_alert do
     headline      "Breaking news!"
     teaser        "This is breaking news"
-    alert_time    { Time.now }
     alert_type    "break"
     alert_url    "http://scpr.org/"
     visible       true
