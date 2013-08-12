@@ -26,7 +26,11 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   #-------------------
   # Scopes
-  scope :published, -> { order("created_at desc").where(is_published: true) }
+  scope :published, -> {
+    where(status: STATUS_PUBLISHED)
+    .order("created_at desc")
+  }
+
   scope :visible,   -> { where(visible: true) }
 
   #-------------------
