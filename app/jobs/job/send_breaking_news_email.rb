@@ -2,7 +2,7 @@
 # Send a breaking news alert
 #
 module Job
-  class SendBreakingNewsAlert < Base
+  class SendBreakingNewsEmail < Base
     @queue = "#{namespace}:breaking_news_email"
 
     class << self
