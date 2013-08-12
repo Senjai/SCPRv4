@@ -1,0 +1,86 @@
+{
+  "type": "Campaign",
+  "currentStatus": "Draft",
+  "id": "2961",
+  "createdAt": "1376344131",
+  "createdBy": "94",
+  "depth": "complete",
+  "description": "SCPR Breaking News Alert\nSent: 2013-08-12 14:44:59 -0700\nSubject: Breaking News: Sharp Fire: Small fire burns in rough terrain near Wrightwood; homes being evacuated",
+  "folderId": "1279",
+  "name": "[scpr-alert] Sharp Fire: Small fire burns in",
+  "updatedAt": "1376344131",
+  "updatedBy": "94",
+  "actualCost": "0",
+  "budgetedCost": "0",
+  "campaignType": "",
+  "elements": [
+    {
+      "type": "CampaignSegment",
+      "id": "6653",
+      "name": "Segment Members",
+      "outputTerminals": [
+        {
+          "type": "CampaignOutputTerminal",
+          "id": "3735",
+          "connectedId": "6654",
+          "connectedType": "CampaignEmail",
+          "terminalType": "out"
+        }
+      ],
+      "position": {
+        "type": "Position",
+        "x": "17",
+        "y": "14"
+      },
+      "isRecurring": "false",
+      "segmentId": "224"
+    },
+    {
+      "type": "CampaignEmail",
+      "id": "6654",
+      "position": {
+        "type": "Position",
+        "x": "17",
+        "y": "120"
+      },
+      "contactCount": "0",
+      "emailId": "3914",
+      "isAllowingResend": "false",
+      "isAllowingSentToUnsubscribe": "false",
+      "sendTimePeriod": "sendAllEmailAtOnce"
+    }
+  ],
+  "endAt": "1376441940",
+  "fieldValues": [
+    {
+      "type": "FieldValue",
+      "id": "4",
+      "value": ""
+    },
+    {
+      "type": "FieldValue",
+      "id": "5",
+      "value": ""
+    },
+    {
+      "type": "FieldValue",
+      "id": "6",
+      "value": ""
+    },
+    {
+      "type": "FieldValue",
+      "id": "7",
+      "value": ""
+    },
+    {
+      "type": "FieldValue",
+      "id": "8",
+      "value": ""
+    }
+  ],
+  "isMemberAllowedReEntry": "false",
+  "isReadOnly": "false",
+  "product": "",
+  "region": "",
+  "startAt": "1376182860"
+}
