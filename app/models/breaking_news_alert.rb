@@ -40,6 +40,8 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   #-------------------
   # Validations
+  validates :headline, presence: true
+  validates :alert_type, presence: true
 
   #-------------------
   # Callbacks
@@ -128,9 +130,10 @@ class BreakingNewsAlert < ActiveRecord::Base
     return false if !should_send_mobile_notification?
 
     push = Parse::Push.new({
-      :title => "KPCC - #{self.break_type}",
-      :alert => self.email_subject,
-      :badge => "Increment"
+      :title      => "KPCC - #{self.break_type}",
+      :alert      => self.email_subject,
+      :badge      => "Increment",
+      :alertId    => self.id
     }, PARSE_CHANNEL)
 
     result = push.save
@@ -149,7 +152,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Send the e-mail
   def publish_email
     return false if !should_send_email?
-    
+
     email = Eloqua::Email.create(
       :folderId         => self.class.eloqua_config['email_folder_id'],
       :emailGroupId     => self.class.eloqua_config['email_group_id'],
