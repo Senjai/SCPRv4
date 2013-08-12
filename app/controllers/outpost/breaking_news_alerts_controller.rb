@@ -21,10 +21,6 @@ class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
       :title        => "Type",
       :collection   => -> { BreakingNewsAlert.types_select_collection }
 
-    l.filter :status, collection: -> {
-      BreakingNewsAlert.status_select_collection
-    }
-
     l.filter :email_sent, title: "Email Sent?", collection: :boolean
     
     l.filter :mobile_notification_sent,
