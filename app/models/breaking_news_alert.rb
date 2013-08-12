@@ -68,7 +68,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Queue the e-mail sending task so that it doesn't have to
   # occur during an HTTP request.
   def async_publish_email
-    Resque.enqueue(Job::BreakingNewsEmail, self.id)
+    Resque.enqueue(Job::SendBreakingNewsAlert, self.id)
   end
 
   #-------------------
