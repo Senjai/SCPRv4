@@ -23,6 +23,8 @@ class BreakingNewsAlert < ActiveRecord::Base
     STATUS_PUBLISHED    => "Published"
   }
 
+  PARSE_CHANNEL = "breakingNews"
+
 
   #-------------------
   # Scopes
@@ -41,7 +43,12 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   #-------------------
   # Callbacks
-  after_save :async_publish_email, if: :should_send_email?
+  after_save :async_send_email,
+    :if => :should_send_email?
+
+  after_save :async_send_mobile_notification,
+    :if => :should_send_mobile_notification?
+
   after_save :expire_cache
 
   #-------------------
@@ -58,7 +65,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   class << self
     def latest_alert
       alert = self.order("created_at desc").first
-      if alert.present? and alert.is_published and alert.visible
+      if alert.present? && alert.published? && alert.visible?
         alert
       else
         nil
@@ -67,6 +74,10 @@ class BreakingNewsAlert < ActiveRecord::Base
 
     def types_select_collection
       ALERT_TYPES.map { |k, v| [v, k] }
+    end
+
+    def status_select_collection
+      STATUS_TEXT.map { |k, v| [v, k] }
     end
 
     def eloqua_config
@@ -103,15 +114,42 @@ class BreakingNewsAlert < ActiveRecord::Base
   #-------------------
   # Queue the e-mail sending task so that it doesn't have to
   # occur during an HTTP request.
-  def async_publish_email
-    Resque.enqueue(Job::SendBreakingNewsAlert, self.id)
+  def async_send_email
+    Resque.enqueue(Job::SendBreakingNewsEmail, self.id)
   end
+
+  def async_send_mobile_notification
+    Resque.enqueue(Job::SendBreakingNewsMobileNotification, self.id)
+  end
+
+
+  # Publish a mobile notification
+  def publish_mobile_notification
+    return false if !should_send_mobile_notification?
+
+    push = Parse::Push.new({
+      :title => "KPCC - #{self.break_type}",
+      :alert => self.email_subject,
+      :badge => "Increment"
+    }, PARSE_CHANNEL)
+
+    result = push.save
+
+    if result["result"] == true
+      self.update_column(:mobile_notification_sent, true)
+    else
+      # TODO: Handle errors from Parse
+    end
+  end
+
+  add_transaction_tracer :publish_mobile_notification, category: :task
+
 
   #-------------------
   # Send the e-mail
   def publish_email
     return false if !should_send_email?
-
+    
     email = Eloqua::Email.create(
       :folderId         => self.class.eloqua_config['email_folder_id'],
       :emailGroupId     => self.class.eloqua_config['email_group_id'],
@@ -218,16 +256,23 @@ class BreakingNewsAlert < ActiveRecord::Base
     @email_subject ||= "#{break_type}: #{headline}"
   end
 
-  #-------------------
-
-  def should_send_email?
-    self.is_published && self.send_email && !self.email_sent
-  end
 
 
   private
 
   def view
     @view ||= CacheController.new
+  end
+
+  def should_send_email?
+    self.published? &&
+    self.send_email? &&
+    !self.email_sent?
+  end
+
+  def should_send_mobile_notification?
+    self.published? &&
+    self.send_mobile_notification? &&
+    !self.mobile_notification_sent?
   end
 end
