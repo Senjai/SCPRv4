@@ -7,8 +7,16 @@ FactoryGirl.define do
     body "Cool Body"
     teaser "Cool Teaser"
     slug { headline.parameterize }
-    status 5
+    status ContentBase::STATUS_LIVE
     short_url "http://bit.ly/kpcc"
+
+    trait :published do
+      status ContentBase::STATUS_LIVE
+    end
+
+    trait :pending do
+      status ContentBase::STATUS_PENDING
+    end
   end
   
   factory :test_class_remote_story, class: TestClass::RemoteStory do
