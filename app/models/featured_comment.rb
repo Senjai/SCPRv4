@@ -26,16 +26,30 @@ class FeaturedComment < ActiveRecord::Base
 
   #----------------
   # Scopes
-  scope :published, -> { where(status: FeaturedComment::STATUS_LIVE).order("created_at desc") }
+  scope :published, -> {
+    where(status: FeaturedComment::STATUS_LIVE)
+    .order("created_at desc")
+  }
 
   #----------------
   # Associations
-  belongs_to :content, polymorphic: true, conditions: { status: ContentBase::STATUS_LIVE }
+  belongs_to :content,
+    :polymorphic    => true,
+    :conditions     => { status: ContentBase::STATUS_LIVE }
+
   belongs_to :bucket, class_name: "FeaturedCommentBucket"
-  
+
   #----------------
   # Validation
-  validates :username, :status, :excerpt, :bucket_id, :content_type, :content_id, presence: true
+  validates \
+    :username,
+    :status,
+    :excerpt,
+    :bucket_id,
+    :content_type,
+    :content_id,
+    presence: true
+
   validate :content_exists?, :content_is_published?
 
   #-----------------
@@ -58,14 +72,14 @@ class FeaturedComment < ActiveRecord::Base
   # Callbacks
 
   #----------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes username
     indexes excerpt
   end
-  
+
   #----------------
-  
+
   class << self
     def status_select_collection
       FeaturedComment::STATUS_TEXT.map { |p| [p[1], p[0]] }

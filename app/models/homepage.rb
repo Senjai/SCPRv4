@@ -12,15 +12,15 @@ class Homepage < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
-  
+
+
   TEMPLATES = {
     "default"    => "Visual Left",
     "lead_right" => "Visual Right",
     "wide"       => "Large Visual Top"
   }
-  
+
   TEMPLATE_OPTIONS = TEMPLATES.map { |k, v| [v, k] }
-  
 
   STATUS_DRAFT    = ContentBase::STATUS_DRAFT
   STATUS_PENDING  = ContentBase::STATUS_PENDING
@@ -40,7 +40,7 @@ class Homepage < ActiveRecord::Base
 
   #-------------------
   # Scopes
-  
+
   #-------------------
   # Associations
   has_many :content,
@@ -86,10 +86,10 @@ class Homepage < ActiveRecord::Base
     citems = self.content.collect { |c| c.content || nil }.compact
 
     # -- Section Blocks -- #
-    
+
     sections = []
-    
-    # run a query for each section 
+
+    # run a query for each section
     Category.all.each do |cat|
       # exclude content that is used in our object
       content = ContentBase.search({
@@ -98,63 +98,63 @@ class Homepage < ActiveRecord::Base
         :with        => { category: cat.id },
         :without_any => { obj_key: citems.map { |c| c.obj_key.to_crc32 } }
       })
-      
+
       more     = []
       top      = nil
       sorttime = nil
-      
+
       content.each do |c|
         # get the content time as Time
         ctime = c.published_at.is_a?(Date) ? c.published_at.to_time : c.published_at
-        
+
         # if we're still here, weigh this content for sorting
         if !sorttime || ctime > sorttime
           sorttime = ctime
         end
-        
+
         # does this content have an asset?
         if !top && c.assets.any?
           top = c
           next
         end
-        
+
         # finally, just drop it in the more bucket
         more << c
-      end  
-      
+      end
+
       # stick top at the front of content
-      
-      
+
+
       # assemble section object
       sec = {
         :section  => cat,
         :content  => [top,more].flatten.compact,
         :sorttime => sorttime
       }
-      
-      
+
+
       #----------
       # -- Right Feature Candidates -- #
       #----------
-      
+
       sec[:candidates] = cat.feature_candidates :exclude => [ citems,top ].flatten.compact
       sec[:right] = sec[:candidates] ? sec[:candidates][0][:content] : nil
-      
+
       # Add this to our section list
       sections << sec
     end
-    
+
     # now sort sections by the sorttime
     sections.sort_by! {|s| s[:sorttime] }.reverse!
-    
+
     sections
   end
-  
+
   #---------------------
-  
-  
+
+
   private
-  
+
   def build_content_association(content_hash, content)
     if content.published?
       HomepageContent.new(

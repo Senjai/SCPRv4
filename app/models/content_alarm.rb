@@ -7,15 +7,14 @@ class ContentAlarm < ActiveRecord::Base
   #----------
   # Scopes
   scope :pending, -> { where("fire_at <= ?", Time.now).order("fire_at") }
-  
+
   #----------
   # Association
   belongs_to :content, polymorphic: true
-  
-  #---------------------
-  
+
+
+
   class << self
-    #---------------------
     # Fire any pending alarms
     def fire_pending
       self.pending.each do |alarm|
@@ -24,7 +23,7 @@ class ContentAlarm < ActiveRecord::Base
     end
   end
 
-  #---------------------
+
   # Fire an alarm.
   # TODO: Instead of updating attribute, just define a `publish` instance method,
   # so the class can decide how to publish instead of this class.
@@ -43,11 +42,10 @@ class ContentAlarm < ActiveRecord::Base
       false
     end
   end
-  
+
   add_transaction_tracer :fire, category: :task
-  
-  #---------------------
-  
+
+
   def pending?
     self.fire_at <= Time.now
   end
