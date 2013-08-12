@@ -2,7 +2,7 @@
   <%= f.input :alert_type, collection: BreakingNewsAlert::ALERT_TYPES.map { |k, v| [v, k] }, include_blank: false %>
   <%= f.input :headline, input_html: { class: "wide" } %>
   <%= f.input :teaser, input_html: { class: :tiny } %>
-  <%= f.input :alert_link, hint: "A full URL to more information", input_html: { class: "wide" } %>
+  <%= f.input :alert_url, hint: "A full URL to more information", input_html: { class: "wide" } %>
 <% end %>
 
 <%= form_block "Actions" do %>
