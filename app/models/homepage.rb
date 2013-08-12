@@ -10,7 +10,6 @@ class Homepage < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
   include Concern::Methods::PublishingMethods
 
 
@@ -22,9 +21,10 @@ class Homepage < ActiveRecord::Base
 
   TEMPLATE_OPTIONS = TEMPLATES.map { |k, v| [v, k] }
 
-  STATUS_DRAFT    = ContentBase::STATUS_DRAFT
-  STATUS_PENDING  = ContentBase::STATUS_PENDING
-  STATUS_LIVE     = ContentBase::STATUS_LIVE
+
+  STATUS_DRAFT    = 0
+  STATUS_PENDING  = 3
+  STATUS_LIVE     = 5
 
   STATUS_TEXT = {
     STATUS_DRAFT      => "Draft",
@@ -70,6 +70,23 @@ class Homepage < ActiveRecord::Base
     indexes base
     has published_at
     has updated_at
+  end
+
+
+  def published?
+    self.status == STATUS_LIVE
+  end
+
+  def pending?
+    self.status == STATUS_PENDING
+  end
+
+  def status_text
+    STATUS_TEXT[self.status]
+  end
+
+  def publish
+    self.update_attribute(:status, STATUS_LIVE)
   end
 
 

@@ -6,10 +6,9 @@ class FeaturedComment < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Methods::PublishingMethods
-  include Concern::Methods::StatusMethods
-  
-  STATUS_LIVE  = ContentBase::STATUS_LIVE
-  STATUS_DRAFT = ContentBase::STATUS_DRAFT
+
+  STATUS_DRAFT = 0
+  STATUS_LIVE  = 5
 
   STATUS_TEXT = {
     STATUS_DRAFT => "Draft",
@@ -94,5 +93,14 @@ class FeaturedComment < ActiveRecord::Base
 
   def title
     "Featured Comment (for #{content.obj_key})"
+  end
+
+
+  def published?
+    self.status == STATUS_LIVE
+  end
+
+  def status_text
+    STATUS_TEXT[self.status]
   end
 end
