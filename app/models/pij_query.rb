@@ -76,7 +76,7 @@ class PijQuery < ActiveRecord::Base
 
   class << self
     def status_select_collection
-      PijQuery::STATUS_TEXT.map { |k, v| [v, k] }
+      STATUS_TEXT.map { |k, v| [v, k] }
     end
   end
 
