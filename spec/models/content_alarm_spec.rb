@@ -19,106 +19,73 @@ describe ContentAlarm do
   #---------------------
 
   describe "::fire_pending" do
-    before :each do
-      # Stub this so we can create content alarms with date in the past
-      ContentAlarm.any_instance.stub(:fire_at_is_in_future) { true }
-    end
-
     it "fires any pending alarms" do
-      pending       = create :content_alarm, :pending
-      other_pending = create :content_alarm, :pending
+      story1 = create :test_class_story, :pending
+      story2 = create :test_class_story, :pending
 
-      pending_alarms = ContentAlarm.pending
-      pending_alarms.sort.should eq [pending, other_pending].sort
+      pending       = create :content_alarm, :pending, content: story1
+      other_pending = create :content_alarm, :pending, content: story2
 
-      ContentAlarm.stub(:pending) { pending_alarms }
-      pending_alarms.first.should_receive(:fire)
-      pending_alarms.last.should_receive(:fire)
+      story1.published?.should eq false
+      story2.published?.should eq false
 
       ContentAlarm.fire_pending
+
+      story1.reload.published?.should eq true
+      story2.reload.published?.should eq true
     end
 
     it "does not fire future alarms" do
-      not_pending = create :content_alarm, :future
-      not_pending.should_not_receive(:fire)
+      story = create :test_class_story, :pending
+      not_pending = create :content_alarm, :future, content: story
+
       ContentAlarm.fire_pending
+
+      story.reload.published?.should eq false
     end
   end
 
   #---------------------
 
   describe "#fire" do
-    before :each do
-      ContentAlarm.any_instance.stub(:fire_at_is_in_future) { true }
-    end
+    it 'publishes the content if it is pending' do
+      story = create :test_class_story, :pending
+      alarm = create :content_alarm, :pending, content: story
+      story.reload.published?.should eq false
 
-    let(:alarm)   { create :content_alarm, :pending }
-
-    it "returns false if can_fire? is false" do
-      alarm.stub(:can_fire?) { false }
-      alarm.fire.should be_false
-    end
-
-    it "returns self if can_fire? is true" do
-      alarm.stub(:can_fire?) { true }
-      alarm.fire.should eq alarm
-    end
-
-    it "destroys itself after successful fire" do
       alarm.fire
-      alarm.destroyed?.should be_true
+      story.reload.published?.should eq true
+    end
+
+    it 'does not publish the content if it is not pending' do
+      story = create :test_class_story, :draft
+      alarm = create :content_alarm, :pending, content: story
+      story.reload.published?.should eq false
+
+      alarm.fire
+      story.reload.published?.should eq false
+    end
+
+    it "destroys itself after firing" do
+      story = create :test_class_story, :published
+      alarm = create :content_alarm, :pending, content: story
+
+      alarm.fire
+      alarm.destroyed?.should eq true
     end
   end
 
   #---------------------
 
   describe "#pending?" do
-    let(:content) { create :news_story }
-
     it "is true if fire_at is now or past" do
       alarm = build :content_alarm, :pending
-      alarm.pending?.should be_true
+      alarm.pending?.should eq true
     end
 
     it "is false if fired_at is future" do
       alarm = build :content_alarm, :future
-      alarm.pending?.should be_false
-    end
-  end
-
-  #---------------------
-
-  describe "#can_fire?" do
-    let(:content) { create :news_story }
-
-    it "is true if pending? and content status is pending" do
-      content.status = ContentBase::STATUS_PENDING
-      alarm          = build :content_alarm, :pending, content: content
-      alarm.can_fire?.should be_true
-    end
-
-    it "is true if content is published" do
-      content.status = ContentBase::STATUS_LIVE
-      alarm          = build :content_alarm, :pending, content: content
-      alarm.can_fire?.should be_true
-    end
-
-    it "is false if pending? is false" do
-      content.status = ContentBase::STATUS_PENDING
-      alarm          = build :content_alarm, :future, content: content
-      alarm.can_fire?.should be_false
-    end
-
-    it "is false if content status is not pending" do
-      content.status = ContentBase::STATUS_DRAFT
-      alarm          = build :content_alarm, :pending, content: content
-      alarm.can_fire?.should be_false
-    end
-
-    it "is false if content status is not pending and alarm is not pending" do
-      content.status = ContentBase::STATUS_DRAFT
-      alarm          = build :content_alarm, :future, content: content
-      alarm.can_fire?.should be_false
+      alarm.pending?.should eq false
     end
   end
 end

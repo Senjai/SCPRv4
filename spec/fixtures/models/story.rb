@@ -58,5 +58,9 @@ module TestClass
     def obj_key
       "test_class_story:#{id}"
     end
+
+    def simple_title
+      "TestClass::Story ##{id}"
+    end
   end
 end

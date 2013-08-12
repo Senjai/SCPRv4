@@ -17,33 +17,35 @@ class ContentAlarm < ActiveRecord::Base
   class << self
     # Fire any pending alarms
     def fire_pending
-      self.pending.each do |alarm|
-        alarm.fire
-      end
+      self.pending.each(&:fire)
     end
   end
 
 
-  # Fire an alarm.
+  # Fire an alarm. This is *always* destroy the alarm, whether or not
+  # the content was published or not. The idea is that you should be
+  # able to call `fire` on any alarm at any time and have it perform its
+  # action. If you want to batch-fire only pending alarms, use ::fire_pending.
   def fire
-    if can_fire?
-      log "Firing ContentAlarm ##{self.id} for " \
-          "#{self.content.simple_title}"
+    log "(##{self.id}) Firing Alarm (#{self.content.simple_title})"
 
-      if self.content.publish
-        log "Published #{self.content.simple_title}. " \
-            "Removing this alarm."
-        self.destroy
-      else
-        log "Couldn't save #{self.content.simple_title}. " \
-            "Will be tried again next time."
-        false
-      end
+    # No matter what, if the content is pending, then we want to
+    # destroy this alarm, otherwise it could get stuck forever
+    # or maybe publish unexpectedly in the future, which could be
+    # dangerous for something like BreakingNewsAlert.
+    if self.content.pending?
+      log "(##{self.id}) Content is pending... publishing it now. " \
+          "(#{self.content.simple_title})"
+      self.content.publish
     else
-      log "Can't fire ContentAlarm ##{self.id} " \
-          "for #{self.content.simple_title}."
-      false
+      log "(##{self.id} Content isn't pending. " \
+          "(#{self.content.simple_title})\n" \
+          "Not publishing, but will still destroy this alarm."
     end
+
+    # This method shouldn't be called unless you're reading to actually
+    # fire the alarm, so we should always destroy it at this point.
+    self.destroy
   end
 
   add_transaction_tracer :fire, category: :task
@@ -51,15 +53,5 @@ class ContentAlarm < ActiveRecord::Base
 
   def pending?
     self.fire_at <= Time.now
-  end
-
-
-  private
-
-  # Can fire if this alarm is pending, and if the content is
-  # Pending -OR- Published... in the case that it's published,
-  # it will just serve to "touch" the content.
-  def can_fire?
-    self.pending? && self.content.pending?
   end
 end
