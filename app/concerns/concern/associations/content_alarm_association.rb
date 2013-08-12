@@ -4,11 +4,14 @@
 # Association definition for content_alarm
 # Also includes related callbacks
 #
-# Required attributes: [:status, :pending?, :published?]
+# A content alarm expects that the user will set the `status`
+# attribute to 'pending' when an alarm is desired.
+# Required attributes: [:status, :pending?]
 #
-# There is also currently the limitation that the base
-# class's STATUS_PENDING and STATUS_LIVE must match
-# those of ContentBase. This should be fixed.
+# The base class should define an instance method `:publish`,
+# which defines the action to be taken when its content alarm
+# is fired. The `publish` method should return true or false.
+#
 module Concern
   module Associations
     module ContentAlarmAssociation
@@ -35,11 +38,8 @@ module Concern
       # If we're changing status from Pending to something else,
       # and there was an alarm, get rid of it.
       # Also get rid of it if we saved it with blank fire_at fields.
-      # FIXME: Don't always reference ContentBase here.
       def should_destroy_alarm?
-        (self.alarm.present? && 
-          self.status_changed? && 
-          self.status_was == ContentBase::STATUS_PENDING) ||
+        (self.alarm.present? && self.status_changed? && !self.pending?) ||
         (self.alarm.present? && self.alarm.fire_at.blank?)
       end
       
