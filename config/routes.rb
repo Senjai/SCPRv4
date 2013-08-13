@@ -155,6 +155,7 @@ Scprv4::Application.routes.draw do
           end
         end
 
+        resources :alerts, only: [:index, :show]
         resources :audio, only: [:index, :show]
         resources :editions, only: [:index, :show]
         resources :categories, only: [:index, :show]
