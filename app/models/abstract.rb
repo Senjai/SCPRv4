@@ -66,7 +66,7 @@ class Abstract < ActiveRecord::Base
     has article_published_at
 
     # For ContentBase.search
-    has article_published_at, as: :public_datetime
+    has created_at, as: :public_datetime
     has "1", as: :is_live, type: :boolean
   end
 
@@ -97,7 +97,7 @@ class Abstract < ActiveRecord::Base
       :id                 => self.obj_key,
       :title              => self.headline,
       :short_title        => self.headline,
-      :public_datetime    => self.article_published_at,
+      :public_datetime    => self.created_at,
       :category           => self.category,
       :teaser             => self.summary,
       :body               => self.summary,
