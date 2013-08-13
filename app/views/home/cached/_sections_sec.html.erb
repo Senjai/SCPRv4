@@ -6,16 +6,16 @@
   
   <div class="row-fluid">
     <div class="span14">
-      <div class="more-news-content">
+      <div class="more-news-content" data-vr-zone="Homepage Section - Lead Story">
         <%= render_content(section[:content][0], "sec_lead", show_byline: true) %>
     
-        <ul class="additional-stories cbase">
+        <ul class="additional-stories cbase" data-vr-zone="Homepage Section - Additional Stories">
           <%= render_content section[:content][1..3], "headline" %>
         </ul>
       </div> <!-- more news content -->
     </div> <!-- span14 -->
     <div class="span10">
-      <div class="related-content">
+      <div class="related-content" data-vr-zone="Homepage Section - Featured Content">
         <% if section[:right] && section[:right].is_a?(FeaturedComment) %>
           <%= render '/shared/featured_comment/sec_right', comment: section[:right] %>
         <% else %>

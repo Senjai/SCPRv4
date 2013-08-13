@@ -3,7 +3,7 @@
 <% if comment && content %>
 <section class="join_conversation home">
   <h6>Join the Conversation</h6>
-  <blockquote>
+  <blockquote data-vr-zone="Homepage - Featured Comment">
     <%= link_to "&ldquo;#{comment.excerpt}&rdquo;".html_safe, content.public_url, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Lead Section'} %>
   </blockquote>
   <p class="quotee">from <%= link_to content.short_title, content.public_url %></p>
