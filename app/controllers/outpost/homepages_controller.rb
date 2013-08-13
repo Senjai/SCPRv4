@@ -5,9 +5,9 @@ class Outpost::HomepagesController < Outpost::ResourceController
   self.model = Homepage
 
   define_list do |l|
-    l.default_order = "updated_at"
-    l.default_sort_mode = "desc"
-    l.per_page = 3
+    l.default_order       = "updated_at"
+    l.default_sort_mode   = "desc"
+    l.per_page            = 3
 
     l.column :published_at, sortable: true, default_sort_mode: "desc"
     l.column :status

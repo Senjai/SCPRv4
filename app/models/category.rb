@@ -5,31 +5,31 @@ class Category < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
-  
+
   ROUTE_KEY = 'root_slug'
-  
+
   #-------------------
   # Scopes
-  
+
   #-------------------
   # Associations
   belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
-  
+
   #-------------------
   # Validations
   validates :title, presence: true
-  
+
   #-------------------
   # Callbacks
 
   #-------------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes title, sortable: true
     indexes slug, sortable: true
     has is_news
   end
-  
+
   #----------
 
   def route_hash
@@ -43,26 +43,26 @@ class Category < ActiveRecord::Base
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
-    
+
     args = {
       :classes  => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :page     => page,
       :per_page => per_page,
       :with     => { category: self.id }
     }
-    
+
     if without_obj && without_obj.respond_to?("obj_key")
       args[:without] = { obj_key: without_obj.obj_key.to_crc32 }
     end
-    
+
     ContentBase.search(args)
   end
-  
+
   #----------
-  
+
   def feature_candidates(args={})
     # lower decay decays more slowly. eg. rate of -0.01 will have a lower score after 3 days than -0.05
-    
+
     candidates = []
 
     # -- first look for featured comments -- #
@@ -85,8 +85,8 @@ class Category < ActiveRecord::Base
     slideshow = ContentBase.search({
       :classes     => [NewsStory, BlogEntry, ShowSegment],
       :limit       => 1,
-      :with        => { 
-        :category     => self.id, 
+      :with        => {
+        :category     => self.id,
         :is_slideshow => true
       },
       :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }

@@ -6,7 +6,7 @@
 #
 module ContentBase
   extend self
-  
+
   #--------------------
   # Status definitions
   STATUS_KILLED   = -1
@@ -15,7 +15,7 @@ module ContentBase
   STATUS_EDIT     = 2
   STATUS_PENDING  = 3
   STATUS_LIVE     = 5
-  
+
   STATUS_TEXT = {
       STATUS_KILLED   => "Killed",
       STATUS_DRAFT    => "Draft",
@@ -24,7 +24,7 @@ module ContentBase
       STATUS_PENDING  => "Pending",
       STATUS_LIVE     => "Published"
   }
-  
+
   #--------------------
   # This used the be the array of "classes that are content",
   # but we've since moved away from that concept.
@@ -36,7 +36,7 @@ module ContentBase
     BlogEntry,
     ContentShell
   ]
-  
+
   #--------------------
   # URLS to match in ::obj_by_url
   CONTENT_MATCHES = {
@@ -104,7 +104,7 @@ module ContentBase
 
     teaser
   end
-  
+
   #--------------------
   # Look to CONTENT_MATCHES to see if the passed-in URL
   # corresponds to any model.
@@ -115,7 +115,7 @@ module ContentBase
     rescue URI::InvalidURIError
       return nil
     end
-    
+
     if match = CONTENT_MATCHES.find { |k,_| u.path =~ k }
       key       = [match[1].constantize.content_key, $~[1]].join(":")
       article   = Outpost.obj_by_key(key)
@@ -124,7 +124,7 @@ module ContentBase
       nil
     end
   end
-  
+
   #---------------------
   # obj_by_url or raise
   def obj_by_url!(url)
@@ -135,7 +135,6 @@ module ContentBase
   #--------------------
   # For drop-down menus in the CMS
   def status_text_collect
-    ContentBase::STATUS_TEXT.map { |p| [p[1], p[0]] }
+    STATUS_TEXT.map { |k, v| [v, k] }
   end
-
 end # ContentBase

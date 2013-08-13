@@ -58,6 +58,7 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.5"
 gem 'newrelic_rpm'
+gem 'parse-ruby-client', '~> 0.1.15'
 gem 'npr', github: "bricker/npr"
 #gem 'npr', path: "#{ENV['PROJECT_HOME']}/npr"
 gem 'asset_host_client', github: "SCPR/asset_host_client"
@@ -111,7 +112,6 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara', "~> 2.0"
   gem 'shoulda-matchers'
-  gem 'fakeweb'
-  gem 'chronic', "~> 0.8"
+  gem 'webmock'
   gem 'test_after_commit'
 end

@@ -3,10 +3,10 @@ require 'spec_helper'
 describe NprArticleImporter do
   describe '::sync' do
     before :each do
-      FakeWeb.register_uri(:get, %r|api\.npr|, 
+      stub_request(:get, %r|api\.npr|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/npr/stories.json')
-      )
+      })
     end
 
     it 'builds cached articles from the API response' do
@@ -19,10 +19,10 @@ describe NprArticleImporter do
 
   describe '#import' do
     before :each do
-      FakeWeb.register_uri(:get, %r|api\.npr|, 
+      stub_request(:get, %r|api\.npr|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/npr/story.json')
-      )
+      })
     end
 
     it 'imports the bylines' do

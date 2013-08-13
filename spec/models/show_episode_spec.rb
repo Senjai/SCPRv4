@@ -10,7 +10,7 @@ describe ShowEpisode do
         episode.save!
         episode.reload.headline.should eq "Cool Show for January 1, 2012"
       end
-    
+
       it "doesn't generate headline if headline was given" do
         episode = build :show_episode, headline: "Cool Episode, Bro!"
         episode.save!
@@ -18,9 +18,9 @@ describe ShowEpisode do
       end
     end
   end
-  
+
   #------------------
-  
+
   describe "validations" do
     it "validates air date on publish" do
       ShowEpisode.any_instance.stub(:published?) { true }
@@ -29,11 +29,11 @@ describe ShowEpisode do
   end
 
   #------------------
-  
+
   describe "scopes" do
     describe "#published" do
       it "orders published content by air_date descending" do
-        episodes = create_list :show_episode, 3, status: ContentBase::STATUS_LIVE
+        episodes = create_list :show_episode, 3, :published
         ShowEpisode.published.first.should eq episodes.last
         ShowEpisode.published.last.should eq episodes.first
       end
@@ -66,21 +66,21 @@ describe ShowEpisode do
       episode.rundowns_json = "[{ \"id\": \"#{segment2.obj_key}\", \"position\": 1 }, {\"id\": \"#{segment1.obj_key}\", \"position\": 0 }]"
       episode.segments.should eq [segment1, segment2]
     end
-    
+
     it "parses the json and sets the content" do
       episode.segments.should be_empty
       episode.rundowns_json = "[{\"id\": \"#{segment1.obj_key}\", \"position\": 0 }, { \"id\": \"#{segment2.obj_key}\", \"position\": 1 }]"
       episode.segments.should eq [segment1, segment2]
     end
-    
+
     it 'does not do anything if json is an empty string' do
       episode.segments.should be_empty
       episode.rundowns_json = "[{\"id\": \"#{segment1.obj_key}\", \"position\": 0 }, { \"id\": \"#{segment2.obj_key}\", \"position\": 1 }]"
       episode.segments.should_not be_empty
-      
+
       episode.rundowns_json = ""
       episode.segments.should_not be_empty
-      
+
       episode.rundowns_json = "[]"
       episode.segments.should be_empty
     end

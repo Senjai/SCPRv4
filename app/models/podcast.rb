@@ -13,56 +13,56 @@ class Podcast < ActiveRecord::Base
   ]
 
   SOURCES = ["KpccProgram", "ExternalProgram", "Blog"]
-  
+
   CONTENT_CLASSES = [
     NewsStory,
     ShowSegment,
     BlogEntry
   ]
-  
+
   #-------------
   # Scopes
-  
+
   #-------------
   # Association
   belongs_to :source, polymorphic: true
   belongs_to :category
-  
+
   #-------------
   # Validation
   validates :slug, uniqueness: true, presence: true
   validates :title, :url, :podcast_url, presence: true
-  
+
   #-------------
   # Callbacks
 
   #-------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes title, sortable: true
     indexes slug
     indexes description
   end
-  
+
   #-------------
-  
+
   def content(limit=25)
     @content ||= begin
       klasses    = []
       conditions = {}
-      
+
       case self.source_type
       when "KpccProgram"
         conditions.merge!(program: self.source.id)
         klasses.push ShowEpisode if self.item_type == "episodes"
         klasses.push ShowSegment if self.item_type == "segments"
-      
+
       when "ExternalProgram"
         # ExternalProgram won't actually have any content
         # So, just incase this method gets called,
         # just return an empty array.
         return []
-        
+
       when "Blog"
         conditions.merge!(blog: self.source.id)
         klasses.push BlogEntry
@@ -70,30 +70,29 @@ class Podcast < ActiveRecord::Base
       else
         klasses = [NewsStory, BlogEntry, ShowSegment, ShowEpisode] if item_type == "content"
       end
-      
+
       results = content_query(limit, klasses, conditions)
       results.map(&:to_article)
     end
   end
-  
+
   #-------------
-  
+
   def route_hash
-    {
-      :slug => self.slug
-    }
+    return {} if !self.persisted?
+    { slug: self.slug }
   end
 
   #-------------
-  
+
   private
-  
+
   def content_query(limit, klasses, conditions={})
     ContentBase.search({
-      :with    => conditions.reverse_merge({ 
+      :with    => conditions.reverse_merge({
         :has_audio => true
-      }), 
-      :classes => klasses, 
+      }),
+      :classes => klasses,
       :limit   => limit
     })
   end

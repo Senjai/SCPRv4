@@ -13,12 +13,10 @@ module Concern
       def publishing?
         self.status_changed? && self.published?
       end
-      
-      # This assumes that any other status except STATUS_LIVE
-      # is considered "not published". Maybe that won't always 
-      # be true, for now it's fine.
+
+      # Status was changed and status is not published
       def unpublishing?
-        self.status_changed? && (self.status_was == ContentBase::STATUS_LIVE)
+        self.status_changed? && !self.published?
       end
     end
   end

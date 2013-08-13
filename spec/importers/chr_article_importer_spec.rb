@@ -3,10 +3,10 @@ require 'spec_helper'
 describe ChrArticleImporter do
   describe '::sync' do
     before :each do
-      FakeWeb.register_uri(:get, %r|publish2|, 
+      stub_request(:get, %r|publish2|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/chr/stories.json')
-      )
+      })
     end
 
     it 'builds cached articles from the API response' do
@@ -19,10 +19,10 @@ describe ChrArticleImporter do
 
   describe '#import' do
     before :each do
-      FakeWeb.register_uri(:get, %r|publish2|, 
+      stub_request(:get, %r|publish2|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/chr/story.json')
-      )
+      })
     end
 
     it 'imports the bylines' do

@@ -76,7 +76,7 @@
                       <td class="bodyContentInner" valign="top" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 18px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;">
                         <h2 style="font-family: Georgia, serif; line-height: 42px; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 32px;"><%= alert.headline %></h2>
                         <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;"><%= alert.teaser %></p>
-                        <% if alert.alert_link.present? %>
+                        <% if alert.alert_url.present? %>
                         <!-- SHOW LINK TO STORY IF THERE IS ONE -->
                         <hr style="font-family: Georgia, serif; border-bottom-color: #cccccc; border-bottom-style: solid; border-top-color: #cccccc; border-top-style: solid; height: 3px; margin-bottom: 18px; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; background-color: white;" />
                         <h4 style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 18px;">For more information:</h4>
@@ -84,7 +84,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" class="btn orange alt" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; color: white; font-size: 18px; font-weight: bold; text-align: center; display: inline-block; white-space: nowrap; text-shadow: 0 1px 0 #402000; padding-top: 8px; padding-right: 22px; padding-bottom: 8px; padding-left: 22px; border-top-color: #a65400; border-right-color: #a65400; border-bottom-color: #a65400; border-left-color: #a65400; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: #f37a00;" bgcolor="#f37a00">
                           <tr style="font-family: Georgia, serif;">
                             <td style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;">
-                              <a href="<%= alert.alert_link %>" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none; font-size: 18px; font-weight: bold; text-align: center; cursor: pointer; white-space: nowrap;">Read the story online</a>
+                              <a href="<%= alert.alert_url %>" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none; font-size: 18px; font-weight: bold; text-align: center; cursor: pointer; white-space: nowrap;">Read the story online</a>
                             </td>
                           </tr>
                         </table>

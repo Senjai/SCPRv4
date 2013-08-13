@@ -1,0 +1,206 @@
+{
+  "type": "Email",
+  "x_e10_previewUrl": "https://secure.eloquapreview.com/e/Preview.aspx?siteId=1715082578&userGuid=7ede3f66-bbe7-461b-969c-3bebc3fc8416",
+  "x_e10_previewExpiryDate": "1376344203",
+  "currentStatus": "Draft",
+  "id": "3914",
+  "createdAt": "1376343902",
+  "createdBy": "94",
+  "depth": "complete",
+  "folderId": "1280",
+  "name": "[scpr-alert] Sharp Fire: Small fire burns in",
+  "permissions": "fullControl",
+  "updatedAt": "1376343902",
+  "updatedBy": "94",
+  "bounceBackEmail": "noreply@info.americanpublicmediagroup.org",
+  "contentSections": [],
+  "dynamicContents": [],
+  "emailFooterId": "61",
+  "emailGroupId": "69",
+  "emailHeaderId": "8",
+  "encodingId": "3",
+  "fieldMerges": [],
+  "files": [
+    {
+      "type": "ImportedFile",
+      "currentStatus": "unknown",
+      "id": "25",
+      "name": "all.css",
+      "link": "/stylesheets/all.css"
+    }
+  ],
+  "forms": [],
+  "htmlContent": {
+    "type": "RawHtmlContent",
+    "html": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font-family: Georgia, serif;\">\r\n  <head>\r\n    <meta content=\"text/html; charset=UTF-8\" http-equiv=\"Content-Type\">\r\n    <title>89.3 KPCC | Breaking News</title>\r\n    <link href=\"/stylesheets/all.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\">\r\n    <style data-premailer=\"ignore\" type=\"text/css\">\r\n<![CDATA[@media only screen and (max-width: 600px){body,table,td,p,a,li,blockquote{ -webkit-text-size-adjust:none !important;}}@media only screen and (max-width: 600px){body{width:100% !important;min-width:100% !important;}}@media only screen and (max-width: 600px){table[id=bodyTable]{padding:10px !important;}}@media only screen and (max-width: 600px){table[id=templateContainer]{max-width:600px !important;width:100% !important;}}@media only screen and (max-width: 600px){h1{font-size:28px !important;line-height:100% !important;}}@media only screen and (max-width: 600px){h2{font-size:24px !important;line-height:100% !important;}}@media only screen and (max-width: 600px){h3{font-size:20px !important;line-height:100% !important;}}@media only screen and (max-width: 600px){h4{font-size:16px !important;line-height:100% !important;}}@media only screen and (max-width: \r\n600px){img[id=headerImage]{height:auto !important;max-width:268px !important;width:100% !important;}}@media only screen and (max-width: 600px){td[class=headerContent]{font-size:21px !important;line-height:150% !important;padding-top:30px !important;padding-right:10px !important;padding-bottom:20px !important;padding-left:10px !important;}}@media only screen and (max-width: 600px){td[class=bodyContainer]{padding-right:10px !important;padding-left:10px !important;}}@media only screen and (max-width: 600px){table[id=bodyContentBlock]{border:0 !important;}}@media only screen and (max-width: 600px){td[class=bodyContentInner]{padding-right:10px !important;padding-left:10px !important;padding-top:10px !important;padding-bottom:10px !important;}}@media only screen and (max-width: 600px){td h4[class=events-heading] img{width:19px !important;}}@media only screen and (max-width: 600px){td \r\nh3.facebook img{width:24px !important;}}@media only screen and (max-width: 600px){td h3.twitter-heading img{width:23px !important;}}@media only screen and (max-width: 600px){td[class=callout-container] table img{width:auto !important;}}@media only screen and (max-width: 600px){table.pledge img.ico-pledge{width:33px !important;}}@media only screen and (max-width: 600px){td[class=bodyContentInner] img{height:auto !important;max-width:600px !important;width:100% !important;}}@media only screen and (max-width: 600px){td[class=bodyContent]{font-size:19px !important;line-height:125% !important;}}@media only screen and (max-width: 600px){td[class=footerContent]{font-size:13px !important;line-height:150% !important;padding-left:10px !important;padding-right:10px !important;}}]]>\r\n    </style>\r\n  </head>\r\n  <body leftmargin=\"0\" marginheight=\"0\" marginwidth=\"0\" offset=\"0\" topmargin=\"0\" style=\"font-family: Georgia, serif; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-image: url('http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/_bg-texture.jpg'); background-repeat: repeat; background-color: #f2f2f2; background-position: left top;\" bgcolor=\"#f2f2f2\">\r\n    <center style=\"font-family: Georgia, serif;\">\r\n      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" height=\"100%\" id=\"bodyTable\" width=\"100%\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; height: 100% !important; width: 100% !important; font-family: Georgia, serif; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-image: url('http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/_bg-texture.jpg'); background-repeat: repeat; background-color: #f2f2f2; background-position: left top;\" bgcolor=\"#f2f2f2\" background=\"url(&quot;http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/_bg-texture.jpg&quot;)\">\r\n        <tr style=\"font-family: Georgia, serif;\">\r\n          <td align=\"center\" valign=\"top\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n<!--// BEGIN GLOBAL HEADER-->\r\n            <table border=\"0\" cellpadding=\"10\" cellspacing=\"0\" class=\"globalhead\" width=\"100%\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; border-bottom-width: 0; background-color: #3d3d3d;\" bgcolor=\"#3d3d3d\">\r\n              <tr style=\"font-family: Georgia, serif;\">\r\n                <td align=\"center\" class=\"globalheadContent\" valign=\"top\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 9px; padding-right: 9px; padding-bottom: 9px; padding-left: 9px;\">\r\n                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" id=\"templateContainer\" width=\"600\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n                    <tr style=\"font-family: Georgia, serif;\">\r\n                      <td class=\"preheaderContent\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Helvetica; color: #FFFFFF; font-size: 11px; line-height: 125%;\">\r\n                        <img height=\"16\" id=\"logo\" src=\"http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/{631245a8-337d-4df3-9a20-2d0cb5760de8}_logo-kpcc-sm.png\" width=\"79\" style=\"height: auto; line-height: 100%; max-width: 100%; outline: none; text-decoration: none; font-family: Georgia, serif; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;\">\r\n                      </td>\r\n                      <td align=\"right\" class=\"preheaderContent\" width=\"220\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Helvetica; color: #FFFFFF; font-size: 11px; line-height: 125%;\">\r\n                        <a class=\"view-browser\" href=\"http://app.info.americanpublicmediagroup.org/e/es?s=<eloqua type='emailfield' syntax='siteid'/>&e=<eloqua type='emailfield' syntax='elqemailsaveguid'/>&elq=<eloqua type='emailfield' syntax='recipientid'/>\" style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #747474; font-size: 12px; font-weight: normal; text-decoration: none;\"> <img src=\"http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/{7b8c63c5-95cd-4db9-b9d2-0a0f9e4943c1}_ico-view-browser.png\" width=\"14\" height=\"19\" style=\"height: auto; line-height: 100%; max-width: 100%; outline: none; text-decoration: none; font-family: Georgia, serif; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;\"> View in Browser</a>\r\n                      </td>\r\n                    </tr>\r\n                  </table>\r\n                </td>\r\n              </tr>\r\n            </table>\r\n<!--END GLOBAL HEADER \\\\-->\r\n<!--// BEGIN CONTAINER-->\r\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" id=\"templateContainer\" width=\"600\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n              <tr style=\"font-family: Georgia, serif;\">\r\n                <td align=\"center\" valign=\"top\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n<!--// BEGIN HEADER-->\r\n                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" id=\"templateHeader\" width=\"100%\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n                    <tr style=\"font-family: Georgia, serif;\">\r\n                      <td align=\"center\" valign=\"top\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n                          <tr style=\"font-family: Georgia, serif;\">\r\n                            <td class=\"headerContent\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Helvetica; color: #505050; font-size: 18px; font-weight: bold; line-height: 100%; text-align: left; vertical-align: middle; padding-top: 18px; padding-right: 0; padding-bottom: 14px; padding-left: 0;\" align=\"left\" valign=\"middle\">\r\n                              <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"content-nopad\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n                                <tr style=\"font-family: Georgia, serif;\">\r\n                                  <td style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n                                      <!-- BREAKING NEWS HEADER IMG -->\r\n                                      <img class=\"header-cc\" height=\"25\" src=\"http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/{3d85c9a2-65c2-406d-930e-f8640a6fbb88}_header-breakingnews.png\" width=\"269\" style=\"height: auto; line-height: 100%; max-width: 100%; outline: none; text-decoration: none; font-family: Georgia, serif; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;\">\r\n                                    <h6 style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.1; color: #888888 !important; font-weight: bold; font-size: 14px; text-shadow: 0 1px 0 white; margin-top: 6px; margin-right: 0; margin-bottom: 2px; margin-left: 0;\"><time datetime=\"2013-08-12T00:00:00+00:00\">August 12, 2013</time></h6>\r\n                                  </td>\r\n                                </tr>\r\n                              </table>\r\n                            </td>\r\n                          </tr>\r\n                        </table>\r\n                      </td>\r\n                    </tr>\r\n                  </table>\r\n<!--END HEADER \\\\-->\r\n                </td>\r\n              </tr>\r\n              <tr style=\"font-family: Georgia, serif;\">\r\n                <td align=\"center\" class=\"bodyContainer\" valign=\"top\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n<!--// BEGIN BODY-->\r\n                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" id=\"bodyContentBlock\" width=\"100%\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; border-top-color: #cccccc; border-right-color: #cccccc; border-bottom-color: #cccccc; border-left-color: #cccccc; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: white;\" bgcolor=\"white\">\r\n                    <tr style=\"font-family: Georgia, serif;\">\r\n                      <td class=\"bodyContentInner\" valign=\"top\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 18px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;\">\r\n                        <h2 style=\"font-family: Georgia, serif; line-height: 42px; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 32px;\">Sharp Fire: Small fire burns in rough terrain near Wrightwood; homes being evacuated</h2>\r\n                        <p style=\"font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;\">As the Silver Fire burns 11,000 acres in Riverside County, U.S. Forest Service officials say a wildfire near Wrightwood in the San Gabriel Mountains is burning 45 acres and several mountain communities are being evacuated ahead of flames.</p>\r\n                        <!-- SHOW LINK TO STORY IF THERE IS ONE -->\r\n                        <hr style=\"font-family: Georgia, serif; border-bottom-color: #cccccc; border-bottom-style: solid; border-top-color: #cccccc; border-top-style: solid; height: 3px; margin-bottom: 18px; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; background-color: white;\">\r\n                        <h4 style=\"font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 18px;\">For more information:</h4>\r\n                        <p style=\"font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;\">\r\n                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"btn orange alt\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; color: white; font-size: 18px; font-weight: bold; text-align: center; display: inline-block; white-space: nowrap; text-shadow: 0 1px 0 #402000; padding-top: 8px; padding-right: 22px; padding-bottom: 8px; padding-left: 22px; border-top-color: #a65400; border-right-color: #a65400; border-bottom-color: #a65400; border-left-color: #a65400; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: #f37a00;\" bgcolor=\"#f37a00\">\r\n                          <tr style=\"font-family: Georgia, serif;\">\r\n                            <td style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n                              <a href=\"http://www.scpr.org/news/2013/08/08/38607/sharp-fire-small-fire-burns-in-rough-terrain-near/?elq=~~eloqua..type--emailfield..syntax--recipientid~~&elqCampaignId=~~eloqua..type--campaign..campaignid--0..fieldname--id~~\" style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none; font-size: 18px; font-weight: bold; text-align: center; cursor: pointer; white-space: nowrap;\">Read the story online</a>\r\n                            </td>\r\n                          </tr>\r\n                        </table>\r\n                        \r\n                        <br style=\"font-family: Georgia, serif;\">\r\n                        <br style=\"font-family: Georgia, serif;\">\r\n<!--Pledge & Social-->\r\n                        <div class=\"social-wrapper\" style=\"font-family: Georgia, serif; border-bottom-style: solid; border-bottom-color: #cccccc; border-bottom-width: 1px; border-top-width: 1px; border-top-color: #cccccc; border-top-style: solid; padding-top: 3px; padding-right: 0; padding-bottom: 3px; padding-left: 0;\">\r\n                          <table bgcolor=\"#EBEBEB\" class=\"social\" width=\"100%\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; border-bottom-color: #cccccc; border-bottom-width: 1px; border-bottom-style: solid; border-top-color: #cccccc; border-top-width: 1px; border-top-style: solid; background-color: #ebebeb;\">\r\n                            <tr style=\"font-family: Georgia, serif;\">\r\n                              <td style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;\">\r\n<!--column 1-->\r\n                                <table align=\"left\" class=\"column\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; width: 275px; float: left; min-width: 275px;\">\r\n                                  <tr style=\"font-family: Georgia, serif;\">\r\n                                    <td style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px;\">\r\n                                      <h5 style=\"font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 16px;\">Become a KPCC Sustainer</h5>\r\n                                      <h3 style=\"font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 24px;\">\r\n                                        <em style=\"font-family: Georgia, serif;\">More of the station you love. </em>\r\n                                      </h3>\r\n                                      <h3 style=\"font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 24px;\">\r\n                                        <em style=\"font-family: Georgia, serif;\">Fewer pledge drives. </em>\r\n                                      </h3>\r\n                                      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"btn blue alt pledge\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; color: white; font-size: 18px; font-weight: bold; text-align: center; display: inline-block; white-space: nowrap; text-shadow: 0 1px 0 #003140; width: 160px !important; padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px; border-top-color: #007fa6; border-right-color: #007fa6; border-bottom-color: #007fa6; border-left-color: #007fa6; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: #00b9f3;\" bgcolor=\"#00b9f3\">\r\n                                        <tr style=\"font-family: Georgia, serif;\">\r\n                                          <td style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;\">\r\n                                            <a href=\"https://scprcontribute.publicradio.org/?elq=~~eloqua..type--emailfield..syntax--recipientid~~&elqCampaignId=~~eloqua..type--campaign..campaignid--0..fieldname--id~~\" style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none; font-size: 18px; font-weight: bold; text-align: center; cursor: pointer; white-space: nowrap;\"><img align=\"left\" class=\"ico-pledge\" height=\"22\" src=\"http://images.info.americanpublicmediagroup.org/EloquaImages/clients/AmericanPublicMediaGroup/{0a8f0d6d-b26b-44e9-99b9-4cfb5b799751}_ico-pledge.png\" width=\"32\" style=\"height: 22px; line-height: 100%; max-width: 100%; outline: none; text-decoration: none; font-family: Georgia, serif; width: 32px; margin-right: 10px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;\">Pledge Now</a>\r\n                                          </td>\r\n                                        </tr>\r\n                                      </table>\r\n                                    </td>\r\n                                  </tr>\r\n                                </table>\r\n<!--/column 1-->\r\n<!--column 2-->\r\n                                <table align=\"left\" class=\"column\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; width: 275px; float: left; min-width: 275px;\">\r\n                                  <tr style=\"font-family: Georgia, serif;\">\r\n                                    <td style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px;\">\r\n                                      <h5 style=\"font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 16px;\">Connect with KPCC</h5>\r\n                                      <p style=\"font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;\">\r\n                                      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"soc-btn fb\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; margin-bottom: 10px; display: block; width: 100%; border-top-color: white; border-right-color: white; border-bottom-color: white; border-left-color: white; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: #3B5998;\" bgcolor=\"#3B5998\">\r\n                                        <tr style=\"font-family: Georgia, serif;\">\r\n                                          <td align=\"center\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; text-align: center; padding-top: 5px; padding-right: 7px; padding-bottom: 5px; padding-left: 7px;\">\r\n                                            <a href=\"http://facebook.com/kpcc?elq=~~eloqua..type--emailfield..syntax--recipientid~~&elqCampaignId=~~eloqua..type--campaign..campaignid--0..fieldname--id~~\" style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none; font-size: 16px; font-weight: bold;\">Facebook</a>\r\n                                          </td>\r\n                                        </tr>\r\n                                      </table>\r\n                                      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"soc-btn tw\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; margin-bottom: 10px; display: block; width: 100%; border-top-color: white; border-right-color: white; border-bottom-color: white; border-left-color: white; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: #1daced;\" bgcolor=\"#1daced\">\r\n                                        <tr style=\"font-family: Georgia, serif;\">\r\n                                          <td align=\"center\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; text-align: center; padding-top: 5px; padding-right: 7px; padding-bottom: 5px; padding-left: 7px;\">\r\n                                            <a href=\"http://twitter.com/kpcc?elq=~~eloqua..type--emailfield..syntax--recipientid~~&elqCampaignId=~~eloqua..type--campaign..campaignid--0..fieldname--id~~\" style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none; font-size: 16px; font-weight: bold;\">Twitter</a>\r\n                                          </td>\r\n                                        </tr>\r\n                                      </table>\r\n                                    </td>\r\n                                  </tr>\r\n                                </table>\r\n<!--/column 2-->\r\n                                <span class=\"clear\" style=\"font-family: Georgia, serif; display: block; clear: both;\"></span>\r\n                              </td>\r\n                            </tr>\r\n                          </table>\r\n                        </div>\r\n                      </td>\r\n                    </tr>\r\n                  </table>\r\n<!--END BODY \\\\ -->\r\n                </td>\r\n              </tr>\r\n            </table>\r\n<!--END CONTAINER \\\\-->\r\n          </td>\r\n        </tr>\r\n      </table>\r\n    </center>\r\n  </body>\r\n</html>"
+  },
+  "hyperlinks": [
+    {
+      "type": "Hyperlink",
+      "id": "-1",
+      "name": "  View in Browser",
+      "href": "http://app.info.americanpublicmediagroup.org/e/es?s=<eloqua type='emailfield' syntax='siteid'/>&e=<eloqua type='emailfield' syntax='elqemailsaveguid'/>&elq=<eloqua type='emailfield' syntax='recipientid'/>"
+    },
+    {
+      "type": "Hyperlink",
+      "id": "-2",
+      "name": "Read the story online",
+      "href": "http://www.scpr.org/news/2013/08/08/38607/sharp-fire-small-fire-burns-in-rough-terrain-near/"
+    },
+    {
+      "type": "Hyperlink",
+      "id": "-3",
+      "name": "Pledge Now",
+      "href": "https://scprcontribute.publicradio.org/"
+    },
+    {
+      "type": "Hyperlink",
+      "id": "-4",
+      "name": "Facebook",
+      "href": "http://facebook.com/kpcc"
+    },
+    {
+      "type": "Hyperlink",
+      "id": "-5",
+      "name": "Twitter",
+      "href": "http://twitter.com/kpcc"
+    }
+  ],
+  "images": [
+    {
+      "type": "ImageFile",
+      "currentStatus": "matched",
+      "id": "182",
+      "createdAt": "1359049134",
+      "createdBy": "21",
+      "depth": "complete",
+      "folderId": "1063",
+      "name": "logo-kpcc-sm.png",
+      "updatedAt": "1359065500",
+      "updatedBy": "21",
+      "fullImageUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/{631245a8-337d-4df3-9a20-2d0cb5760de8}_logo-kpcc-sm.png",
+      "size": {
+        "type": "Size",
+        "width": "158",
+        "height": "32"
+      },
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/imagethumbnails/{631245a8-337d-4df3-9a20-2d0cb5760de8}_logo-kpcc-sm.png"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "matched",
+      "id": "183",
+      "createdAt": "1359049158",
+      "createdBy": "21",
+      "depth": "complete",
+      "folderId": "1063",
+      "name": "ico-view-browser.png",
+      "updatedAt": "1359065504",
+      "updatedBy": "21",
+      "fullImageUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/{7b8c63c5-95cd-4db9-b9d2-0a0f9e4943c1}_ico-view-browser.png",
+      "size": {
+        "type": "Size",
+        "width": "28",
+        "height": "38"
+      },
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/{7b8c63c5-95cd-4db9-b9d2-0a0f9e4943c1}_ico-view-browser.png"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "matched",
+      "id": "194",
+      "createdAt": "1359522066",
+      "createdBy": "21",
+      "depth": "complete",
+      "folderId": "1063",
+      "name": "header-breakingnews.png",
+      "updatedAt": "1359522067",
+      "updatedBy": "21",
+      "fullImageUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/{3d85c9a2-65c2-406d-930e-f8640a6fbb88}_header-breakingnews.png",
+      "size": {
+        "type": "Size",
+        "width": "538",
+        "height": "50"
+      },
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/imagethumbnails/{3d85c9a2-65c2-406d-930e-f8640a6fbb88}_header-breakingnews.png"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "matched",
+      "id": "188",
+      "createdAt": "1359065640",
+      "createdBy": "21",
+      "depth": "complete",
+      "folderId": "1063",
+      "name": "ico-pledge.png",
+      "updatedAt": "1359065640",
+      "updatedBy": "21",
+      "fullImageUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/{0a8f0d6d-b26b-44e9-99b9-4cfb5b799751}_ico-pledge.png",
+      "size": {
+        "type": "Size",
+        "width": "63",
+        "height": "44"
+      },
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/{0a8f0d6d-b26b-44e9-99b9-4cfb5b799751}_ico-pledge.png"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "unknown",
+      "id": "182",
+      "name": "{631245a8-337d-4df3-9a20-2d0cb5760de8}_logo-kpcc-sm.png",
+      "fullImageUrl": "http://images.info.americanpublicmediagroup.org/eloquaimages/clients/americanpublicmediagroup/{631245a8-337d-4df3-9a20-2d0cb5760de8}_logo-kpcc-sm.png",
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/imagethumbnails/{631245a8-337d-4df3-9a20-2d0cb5760de8}_logo-kpcc-sm.png"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "unknown",
+      "id": "183",
+      "name": "{7b8c63c5-95cd-4db9-b9d2-0a0f9e4943c1}_ico-view-browser.png",
+      "fullImageUrl": "http://images.info.americanpublicmediagroup.org/eloquaimages/clients/americanpublicmediagroup/{7b8c63c5-95cd-4db9-b9d2-0a0f9e4943c1}_ico-view-browser.png",
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/{7b8c63c5-95cd-4db9-b9d2-0a0f9e4943c1}_ico-view-browser.png"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "unknown",
+      "id": "194",
+      "name": "{3d85c9a2-65c2-406d-930e-f8640a6fbb88}_header-breakingnews.png",
+      "fullImageUrl": "http://images.info.americanpublicmediagroup.org/eloquaimages/clients/americanpublicmediagroup/{3d85c9a2-65c2-406d-930e-f8640a6fbb88}_header-breakingnews.png",
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/imagethumbnails/{3d85c9a2-65c2-406d-930e-f8640a6fbb88}_header-breakingnews.png"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "unknown",
+      "id": "188",
+      "name": "{0a8f0d6d-b26b-44e9-99b9-4cfb5b799751}_ico-pledge.png",
+      "fullImageUrl": "http://images.info.americanpublicmediagroup.org/eloquaimages/clients/americanpublicmediagroup/{0a8f0d6d-b26b-44e9-99b9-4cfb5b799751}_ico-pledge.png",
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/{0a8f0d6d-b26b-44e9-99b9-4cfb5b799751}_ico-pledge.png"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "unmatched",
+      "id": "-1",
+      "name": "_bg-texture.jpg&quot;)",
+      "fullImageUrl": "url(&quot;http://images.info.americanpublicmediagroup.org/eloquaimages/clients/americanpublicmediagroup/_bg-texture.jpg&quot;)"
+    },
+    {
+      "type": "ImageFile",
+      "currentStatus": "unknown",
+      "id": "185",
+      "name": "_bg-texture.jpg",
+      "fullImageUrl": "http://images.info.americanpublicmediagroup.org/eloquaimages/clients/americanpublicmediagroup/_bg-texture.jpg",
+      "thumbnailUrl": "/EloquaImages/clients/AmericanPublicMediaGroup/imagethumbnails/{1c497704-8c95-49c6-a5fd-e60d32c91a60}_bg-texture.jpg"
+    }
+  ],
+  "isPlainTextEditable": "true",
+  "isTracked": "true",
+  "landingPages": [],
+  "layout": "",
+  "plainText": "Breaking News: Sharp Fire: Small fire burns in rough terrain near Wrightwood; homes being evacuated\n-----------------------------------\nAs the Silver Fire burns 11,000 acres in Riverside County, U.S. Forest Service officials say a wildfire near Wrightwood in the San Gabriel Mountains is burning 45 acres and several mountain communities are being evacuated ahead of flames.\n-----------------------------------\n  For More Information, visit http://www.scpr.org/news/2013/08/08/38607/sharp-fire-small-fire-burns-in-rough-terrain-near/\n-----------------------------------\nUnsubscribe from Breaking News Alerts: http://www.scpr.org/newsletters/breaking_news_unsubscribe/?e=%%EMAIL_ADDRESS%%\n",
+  "replyToEmail": "no-reply@kpcc.org",
+  "replyToName": "89.3 KPCC",
+  "sendPlainTextOnly": "false",
+  "senderEmail": "no-reply@kpcc.org",
+  "senderName": "89.3 KPCC",
+  "style": "",
+  "subject": "Breaking News: Sharp Fire: Small fire burns in rough terrain near Wrightwood; homes being evacuated"
+}

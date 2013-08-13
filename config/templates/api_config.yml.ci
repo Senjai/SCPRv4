@@ -1,77 +1,55 @@
-# assethost authentication
-assethost_defaults: &assethost_defaults
-  prefix: /api
-  token: xxxx
-
-# Disqus API credentials
-disqus_defaults: &disqus_defaults
-  shortname: xxxx
-  api_key: xxxx
-  api_secret: xxxx
-
-# Google APIs credentials
-google_defaults: &google_defaults
-  maps: xxxx
-  analytics:
-    client_id: xxxx
-    client_secret: xxxx
-    token: xxxx
-    refresh_token: xxxx
-
-# Twitter creentials
-twitter_defaults: &twitter_defaults
-  kpccweb:
-    consumer_key: xxxx
-    consumer_secret: xxxx
-    access_token: xxxx
-    access_token_secret: xxxx
-  kpcc:
-    consumer_key: xxxx
-    consumer_secret: xxxx
-    access_token: xxxx
-    access_token_secret: xxxx
-
-# NPR
-npr_defaults: &npr_defaults
-  api_key: xxxx
-
-# Eloqua
-eloqua_defaults: &eloqua_defaults
-  auth:
-    company: xxxx
-    user: xxxx
-    password: xxxx
-
-postmark_defaults: &postmark_defaults
-  api_key: xxxx
-
-publish2_defaults: &publish2_defaults
-  user: xxxx
-  pass: xxxx
-
-## 
-# Environments
 test:
   twitter:
-    <<: *twitter_defaults
+    kpccweb:
+      consumer_key: xxx
+      consumer_secret: xxx
+      access_token: xxx
+      access_token_secret: xxx
+    kpcc:
+      consumer_key: xxx
+      consumer_secret: xxx
+      access_token: xxx
+      access_token_secret: xxx
 
   assethost:
-    <<: *assethost_defaults
+    prefix: /api
+    token: xxx
+
 
   disqus:
-    <<: *disqus_defaults
+    shortname: xxx
+    api_key: xxx
+    api_secret: xxx
 
   google:
-    <<: *google_defaults
+    maps: xxx
+    analytics:
+      client_id: xxx
+      client_secret: xxx
+      token: xxx
+      refresh_token: xxx
 
   npr:
-    <<: *npr_defaults
+    api_key: xxxxxx
 
   eloqua:
-    <<: *eloqua_defaults
+    auth:
+      company: xxx
+      user: xxx
+      password: xxx
+    attributes:
+      email_group_id: xx
+      segment_id: xxx
+      campaign_folder_id: xxxx
+      email_folder_id: xxxx
 
   postmark:
-    <<: *postmark_defaults
+    api_key: xxx
 
   publish2:
-    <<: *publish2_defaults
+    user: xxx
+    pass: xxx
+
+  parse:
+    application_id: xxx
+    api_key: xxx

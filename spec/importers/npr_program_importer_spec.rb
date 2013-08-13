@@ -4,10 +4,10 @@ describe NprProgramImporter do
   describe '::sync' do
     context 'with available audio' do
       before :each do
-        FakeWeb.register_uri(:get, %r{api\.npr\.org},
+        stub_request(:get, %r{api\.npr\.org}).to_return({
           :content_type   => 'application/json',
           :body           => load_fixture('api/npr/program.json')
-        )
+        })
       end
 
       it "creates an episode" do
@@ -46,7 +46,7 @@ describe NprProgramImporter do
       end
 
       it "is false if the episode already exists" do
-        # Just load up the FakeWeb stub
+        # Just load up the stub
         stories = NPR::Story.where(id: "current").to_a
         date = stories.first.shows.first.showDate
 
@@ -60,10 +60,10 @@ describe NprProgramImporter do
 
     context 'without available audio' do
       it "doesn't import the episode if the audio isn't available" do
-        FakeWeb.register_uri(:get, %r{api\.npr\.org},
-          :content_type   => 'application/json',
-          :body           => load_fixture('api/npr/program_audio_unavailable.json')
-        )
+        stub_request(:get, %r{api\.npr\.org}).to_return({
+          :content_type => 'application/json',
+          :body => load_fixture('api/npr/program_audio_unavailable.json')
+        })
 
         external_program = create :external_program, :from_npr
         NprProgramImporter.sync(external_program)
@@ -71,10 +71,10 @@ describe NprProgramImporter do
       end
 
       it "doesn't import the episode if the audio doesn't grant stream permissions" do
-        FakeWeb.register_uri(:get, %r{api\.npr\.org},
-          :content_type   => 'application/json',
-          :body           => load_fixture('api/npr/program_audio_nostream.json')
-        )
+        stub_request(:get, %r{api\.npr\.org}).to_return({
+          :content_type => 'application/json',
+          :body => load_fixture('api/npr/program_audio_nostream.json')
+        })
 
         external_program = create :external_program, :from_npr
         NprProgramImporter.sync(external_program)

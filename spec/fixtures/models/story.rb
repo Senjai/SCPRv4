@@ -1,5 +1,11 @@
 module TestClass
   class Story < ActiveRecord::Base
+    include Outpost::Model::Naming
+    include Outpost::Model::Routing
+    include Outpost::Model::Identifier
+
+    ROUTE_KEY = "news_story"
+
     self.table_name = "test_class_stories"
 
     include Concern::Scopes::SinceScope
@@ -24,18 +30,11 @@ module TestClass
 
     include Concern::Methods::CommentMethods
     include Concern::Methods::PublishingMethods
-    include Concern::Methods::StatusMethods
+    include Concern::Methods::ContentStatusMethods
 
     include Concern::Validations::ContentValidation
 
     validates :short_url, url: { allow_blank: true, allowed: [URI::HTTP, URI::FTP] }
-
-    class << self
-      def content_key
-        "test_class_story"
-      end
-    end
-
 
     def to_article
       @to_article ||= Article.new({
@@ -54,9 +53,17 @@ module TestClass
       })
     end
 
+    # Don't want to define these routes anywhere
+    # Because I'm lazy.
+    # I'm so sorry.
+    class << self
+      def singular_route_key
+        route_key.singularize
+      end
 
-    def obj_key
-      "test_class_story:#{id}"
+      def route_key
+        "news_stories"
+      end
     end
   end
 end

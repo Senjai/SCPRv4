@@ -10,7 +10,7 @@ describe Concern::Associations::BylinesAssociation do
   #--------------------
   
   describe "sphinx index callback" do
-    let(:story) { build :test_class_story, status: ContentBase::STATUS_LIVE }
+    let(:story) { build :test_class_story, :published }
     let(:bio) { create :bio }
     let(:byline) { create :byline, user: bio }
 

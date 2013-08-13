@@ -15,10 +15,10 @@ describe ExternalProgram do
 
   describe '::sync' do
     before :each do
-      FakeWeb.register_uri(:get, %r{podcast\.com},
+      stub_request(:get, %r{podcast\.com}).to_return({
         :content_type   => 'text/xml',
         :body           => load_fixture('rss/rss_feed.xml')
-      )
+      })
     end
 
     it "syncs the programs" do
@@ -57,10 +57,10 @@ describe ExternalProgram do
   describe '#sync' do
     context 'for npr' do
       before :each do
-        FakeWeb.register_uri(:get, %r{api\.npr\.org},
+        stub_request(:get, %r{api\.npr\.org}).to_return({
           :content_type   => 'application/json',
           :body           => load_fixture('api/npr/program.json')
-        )
+        })
       end
 
       it "syncs using the importer" do
@@ -73,10 +73,10 @@ describe ExternalProgram do
 
     context 'for rss' do
       before :each do
-        FakeWeb.register_uri(:get, %r{rss\.com},
+        stub_request(:get, %r{rss\.com}).to_return({
           :content_type   => 'text/xml',
           :body           => load_fixture('rss/rss_feed.xml')
-        )
+        })
       end
 
       it "syncs using the importer" do

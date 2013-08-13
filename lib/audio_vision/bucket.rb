@@ -21,22 +21,22 @@ module AudioVision
 
 
 
-    ATTRIBUTES = [
+    attr_accessor \
       :id,
       :title,
       :description,
       :updated_at,
       :posts
-    ]
-
-    attr_accessor *ATTRIBUTES
 
 
     def initialize(attributes={})
       @id           = attributes["id"]
       @title        = attributes["title"]
       @description  = attributes["description"]
-      @updated_at   = Time.parse(attributes["updated_at"].to_s)
+
+      if attributes["updated_at"]
+        @updated_at = Time.parse(attributes["updated_at"].to_s)
+      end
 
       @posts = []
 

@@ -21,22 +21,25 @@ module AudioVision
 
 
 
-    ATTRIBUTES = [
+    attr_accessor \
       :id,
       :layout,
       :published_at,
       :updated_at,
       :posts
-    ]
-
-    attr_accessor *ATTRIBUTES
 
 
     def initialize(attributes={})
-      @id             = attributes["id"]
-      @layout         = attributes["layout"]
-      @published_at   = Time.parse(attributes["published_at"].to_s)
-      @updated_at     = Time.parse(attributes["updated_at"].to_s)
+      @id       = attributes["id"]
+      @layout   = attributes["layout"]
+
+      if attributes["published_at"]
+        @published_at = Time.parse(attributes["published_at"].to_s)
+      end
+
+      if attributes["updated_at"]
+        @updated_at = Time.parse(attributes["updated_at"].to_s)
+      end
 
       @posts = []
 
@@ -44,6 +47,5 @@ module AudioVision
         @posts << AudioVision::Post.new(json)
       end
     end
-    
   end
 end

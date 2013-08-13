@@ -2,10 +2,14 @@ require 'spec_helper'
 
 describe Job::AudioVisionCache do
   describe '::perform' do
-    it 'caches the first post if the billboard has not been cached yet' do
-      FakeWeb.register_uri(:get, %r{audiovision\.scpr\.org/api/v1/billboards/current},
-        content_type: 'application/json', body: load_fixture('api/audiovision/billboard1_v1.json'))
+    before :each do
+      stub_request(:get, %r{billboards/current}).to_return({
+        :content_type => 'application/json',
+        :body => load_fixture('api/audiovision/billboard1_v1.json')
+      })
+    end
 
+    it 'caches the first post if the billboard has not been cached yet' do
       Job::AudioVisionCache.perform
       Rails.cache.read("scprv4:homepage:av-featured-post").should eq AudioVision::Billboard.current.posts.first
     end
@@ -13,15 +17,14 @@ describe Job::AudioVisionCache do
 
     it "caches the first post if the billboard's updated_timestamp has changed" do
       # Sanity Check
-      FakeWeb.register_uri(:get, %r{audiovision\.scpr\.org/api/v1/billboards/current},
-        content_type: 'application/json', body: load_fixture('api/audiovision/billboard1_v1.json'))
-
       Job::AudioVisionCache.perform
       Rails.cache.read("scprv4:homepage:av-featured-post").title.should match /Big Cats/
 
       # Now test that it will change
-      FakeWeb.register_uri(:get, %r{audiovision\.scpr\.org/api/v1/billboards/current},
-        content_type: 'application/json', body: load_fixture('api/audiovision/billboard1_updated_v1.json'))
+      stub_request(:get, %r{billboards/current}).to_return({
+        :content_type => 'application/json',
+        :body => load_fixture('api/audiovision/billboard1_updated_v1.json')
+      })
 
       Job::AudioVisionCache.perform
       Rails.cache.read("scprv4:homepage:av-featured-post").title.should match /Color of Space/
@@ -29,9 +32,6 @@ describe Job::AudioVisionCache do
 
 
     it "caches a different post if the updated timestamp has not changed" do
-      FakeWeb.register_uri(:get, %r{audiovision\.scpr\.org/api/v1/billboards/current},
-        content_type: 'application/json', body: load_fixture('api/audiovision/billboard1_v1.json'))
-
       Job::AudioVisionCache.perform
       # Sanity Check
       featured = Rails.cache.read("scprv4:homepage:av-featured-post")
@@ -52,9 +52,6 @@ describe Job::AudioVisionCache do
     end
 
     it "writes the view cache" do
-      FakeWeb.register_uri(:get, %r{audiovision\.scpr\.org/api/v1/billboards/current},
-        content_type: 'application/json', body: load_fixture('api/audiovision/billboard1_v1.json'))
-
       Rails.cache.read("views/home/audiovision").should eq nil
 
       Job::AudioVisionCache.perform

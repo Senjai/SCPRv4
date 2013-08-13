@@ -21,7 +21,7 @@ module AudioVision
 
 
 
-    ATTRIBUTES = [
+    attr_accessor \
       :id, 
       :title, 
       :teaser, 
@@ -33,9 +33,6 @@ module AudioVision
       :byline, 
       :attributions, 
       :public_url
-    ]
-
-    attr_accessor *ATTRIBUTES
 
 
     def initialize(attributes={})
@@ -47,7 +44,10 @@ module AudioVision
       @byline       = attributes["byline"]
       @attributions = attributes["attributions"]
       @public_url   = attributes["public_url"]
-      @published_at = Time.parse(attributes["published_at"].to_s)
+
+      if attributes["published_at"]
+        @published_at = Time.parse(attributes["published_at"].to_s)
+      end
 
       @assets = []
 

@@ -15,13 +15,4 @@ describe ContentAsset do
       content_asset.asset.caption.should match "We encountered a problem"
     end
   end
-  
-  describe "as_json" do
-    it "merges in extra attributes" do
-      pending
-      content_asset = build :asset
-      extras = %w{caption ORDER credit}
-      # (content_asset.as_json.keys & extras).should eq extras
-    end
-  end
 end

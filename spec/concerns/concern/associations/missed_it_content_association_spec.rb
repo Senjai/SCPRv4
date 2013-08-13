@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Concern::Associations::MissedItContentAssociation do
   before :each do
-    @post = create :test_class_post, status: ContentBase::STATUS_LIVE
+    @post = create :test_class_post, :published
     @bucket = create :missed_it_bucket
     @missed_it_content = create :missed_it_content, content: @post, missed_it_bucket: @bucket
     @bucket.content(true).should eq [@missed_it_content]

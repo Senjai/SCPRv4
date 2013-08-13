@@ -7,62 +7,51 @@ class ContentAlarm < ActiveRecord::Base
   #----------
   # Scopes
   scope :pending, -> { where("fire_at <= ?", Time.now).order("fire_at") }
-  
+
   #----------
   # Association
   belongs_to :content, polymorphic: true
-  
-  #---------------------
-  
+
+
+
   class << self
-    #---------------------
     # Fire any pending alarms
     def fire_pending
-      self.pending.each do |alarm|
-        alarm.fire
-      end
+      self.pending.each(&:fire)
     end
   end
 
-  #---------------------
-  # Fire an alarm.
-  # TODO: Instead of updating attribute, just define a `publish` instance method,
-  # so the class can decide how to publish instead of this class.
+
+  # Fire an alarm. This is *always* destroy the alarm, whether or not
+  # the content was published or not. The idea is that you should be
+  # able to call `fire` on any alarm at any time and have it perform its
+  # action. If you want to batch-fire only pending alarms, use ::fire_pending.
   def fire
-    if self.can_fire?
-      ContentAlarm.log "Firing ContentAlarm ##{self.id} for #{self.content.simple_title}"
-      if self.content.update_attributes(status: ContentBase::STATUS_LIVE)
-        ContentAlarm.log "Published #{self.content.simple_title}. Removing this alarm."
-        self.destroy
-      else
-        ContentAlarm.log "Couldn't save #{self.content.simple_title}. Will be tried again."
-        false
-      end
+    log "(##{self.id}) Firing Alarm (#{self.content.simple_title})"
+
+    # No matter what, if the content is pending, then we want to
+    # destroy this alarm, otherwise it could get stuck forever
+    # or maybe publish unexpectedly in the future, which could be
+    # dangerous for something like BreakingNewsAlert.
+    if self.content.pending?
+      log "(##{self.id}) Content is pending... publishing it now. " \
+          "(#{self.content.simple_title})"
+      self.content.publish
     else
-      ContentAlarm.log "Can't fire ContentAlarm ##{self.id} for #{self.content.simple_title}"
-      false
+      log "(##{self.id} Content isn't pending. " \
+          "(#{self.content.simple_title})\n" \
+          "Not publishing, but will still destroy this alarm."
     end
+
+    # This method shouldn't be called unless you're reading to actually
+    # fire the alarm, so we should always destroy it at this point.
+    self.destroy
   end
-  
+
   add_transaction_tracer :fire, category: :task
-  
-  #---------------------
-  
+
+
   def pending?
     self.fire_at <= Time.now
-  end
-
-  #---------------------
-  # Can fire if this alarm is pending, and if the content is 
-  # Pending -OR- Published... in the case that it's published, 
-  # it will just serve to "touch" the content.
-  #
-  # Note that SCPRv4 destroys content alarms when content moves 
-  # from Pending -> Not Pending, so once mercer is gone, there 
-  # shouldn't be any alarms with content that ISN'T Pending,
-  # so the extra `content.published?` condition can probably
-  # go away at that point.
-  def can_fire?
-    self.pending? && (self.content.pending? || self.content.published?)
   end
 end

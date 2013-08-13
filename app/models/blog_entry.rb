@@ -25,12 +25,12 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
+  include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
-  
+
   ROUTE_KEY = "blog_entry"
-  
+
   ASSET_SCHEMES = [
     ["Top", "wide"],
     ["Right", "float"],
@@ -38,10 +38,10 @@ class BlogEntry < ActiveRecord::Base
     ["Video", "video"],
     ["Hidden", "hidden"]
   ]
-  
+
   #------------------
   # Scopes
-  
+
   #------------------
   # Association
   belongs_to :blog
@@ -51,16 +51,16 @@ class BlogEntry < ActiveRecord::Base
   #------------------
   # Validation
   validates_presence_of :blog, if: :should_validate?
-  
+
   def needs_validation?
     self.pending? || self.published?
   end
-  
+
   #------------------
   # Callbacks
 
   #------------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes headline
     indexes body
@@ -72,21 +72,21 @@ class BlogEntry < ActiveRecord::Base
     has updated_at
 
     has "CRC32(CONCAT('#{BlogEntry.content_key}:'," \
-        "#{BlogEntry.table_name}.id))", 
+        "#{BlogEntry.table_name}.id))",
         type: :integer, as: :obj_key
 
     # For RSS feeds
     has "1", as: :is_source_kpcc, type: :boolean
-    
+
     # For the homepage/category sections
-    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')", 
+    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')",
         type: :boolean, as: :is_slideshow
 
     has category.id, as: :category
 
     # For podcasts
     join audio
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
+    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
         type: :boolean, as: :has_audio
 
     # For the megamenu
@@ -94,7 +94,7 @@ class BlogEntry < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "#{BlogEntry.table_name}.status = #{ContentBase::STATUS_LIVE}", 
+    has "#{BlogEntry.table_name}.status = #{ContentBase::STATUS_LIVE}",
         as: :is_live, type: :boolean
   end
 
@@ -112,7 +112,7 @@ class BlogEntry < ActiveRecord::Base
   end
 
   #-------------------
-  
+
   def disqus_shortname
     if dsq_thread_id.present? && wp_id.present?
       'scprmultiamerican'
@@ -128,9 +128,9 @@ class BlogEntry < ActiveRecord::Base
   def byline_extras
     []
   end
-  
+
   #-------------------
-  
+
   def previous
     self.class.published.where("published_at < ? and blog_id = ?", self.published_at, self.blog_id).first
   end
@@ -140,7 +140,7 @@ class BlogEntry < ActiveRecord::Base
   def next
     self.class.published.where("published_at > ? and blog_id = ?", self.published_at, self.blog_id).first
   end
-  
+
   #-------------------
   # This was made for the blog list pages - showing the full body
   # was too long, but just the teaser was too short.
@@ -150,29 +150,29 @@ class BlogEntry < ActiveRecord::Base
     target      = args[0] || 800
     more_text   = args[1] || "Read More..."
     break_class = "story-break"
-    
+
     content         = Nokogiri::HTML::DocumentFragment.parse(self.body)
     extended_teaser = Nokogiri::HTML::DocumentFragment.parse(nil)
-    
+
     content.children.each do |child|
       break if (child.attributes["class"].to_s == break_class) || (extended_teaser.content.length >= target)
       extended_teaser.add_child child
     end
-    
+
     extended_teaser.add_child "<p><a href=\"#{self.public_path}\">#{more_text}</a></p>"
     return extended_teaser.to_html
   end
-  
+
   #-------------------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
       :blog           => self.persisted_record.blog.slug,
-      :year           => self.persisted_record.published_at.year, 
+      :year           => self.persisted_record.published_at.year.to_s,
       :month          => "%02d" % self.persisted_record.published_at.month,
       :day            => "%02d" % self.persisted_record.published_at.day,
-      :id             => self.persisted_record.id,
+      :id             => self.persisted_record.id.to_s,
       :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }

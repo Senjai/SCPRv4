@@ -25,7 +25,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
+  include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
 
@@ -138,10 +138,10 @@ class ShowSegment < ActiveRecord::Base
     return {} if !self.persisted? || !self.persisted_record.published?
     {
       :show           => self.persisted_record.show.slug,
-      :year           => self.persisted_record.published_at.year,
+      :year           => self.persisted_record.published_at.year.to_s,
       :month          => "%02d" % self.persisted_record.published_at.month,
       :day            => "%02d" % self.persisted_record.published_at.day,
-      :id             => self.persisted_record.id,
+      :id             => self.persisted_record.id.to_s,
       :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }

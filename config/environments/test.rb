@@ -40,9 +40,9 @@ Scprv4::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
-  
+
   default_url_options[:host] = "scpr.org"
-  
+
   config.scpr.host         = "www.scpr.org"
   config.scpr.resque_queue = :scprv4
   config.scpr.media_root   = Rails.root.join("spec/fixtures/media")
@@ -52,7 +52,7 @@ Scprv4::Application.configure do
   config.audio_vision.api_path  = "/api/v1"
 
   config.node.server       = "http://localhost:13002"
-  
+
   config.assethost.server = "a.scpr.org"
   config.assethost.prefix = "/api"
 end

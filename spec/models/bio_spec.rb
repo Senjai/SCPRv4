@@ -68,8 +68,8 @@ describe Bio do
       end
 
       it "sorts by published_at desc" do
-        news_older   = create :news_story, published_at: Chronic.parse("3 days ago")
-        news_newer   = create :news_story, published_at: Chronic.parse("2 days ago")
+        news_older   = create :news_story, published_at: 3.days.ago
+        news_newer   = create :news_story, published_at: 2.days.ago
         byline_older = create :content_byline, user: bio, content: news_older
         byline_newer = create :content_byline, user: bio, content: news_newer
         bio.indexed_bylines(1, 9999).first.should eq byline_newer

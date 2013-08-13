@@ -7,35 +7,51 @@ FactoryGirl.define do
     body "Cool Body"
     teaser "Cool Teaser"
     slug { headline.parameterize }
-    status 5
+    status ContentBase::STATUS_LIVE
     short_url "http://bit.ly/kpcc"
+
+    trait :published do
+      status ContentBase::STATUS_LIVE
+    end
+
+    trait :pending do
+      status ContentBase::STATUS_PENDING
+    end
   end
-  
+
   factory :test_class_remote_story, class: TestClass::RemoteStory do
     headline "Cool Remote Headline"
     short_headline "Cool Remote Short Headline"
     body "Cool Remote Body"
     teaser "Cool Remote Teaser"
     slug { headline.parameterize }
-    status 5
+    status ContentBase::STATUS_LIVE
     published_at { Time.now }
     remote_url "http://kpcc.org"
   end
-  
+
   factory :test_class_post, class: TestClass::Post do
     headline "Cool AssetHeadline"
     short_headline "Cool Asset Short Headline"
     body "Cool Asset Body"
     teaser "Cool Asset Teaser"
     slug { headline.parameterize }
-    status 5
+    status ContentBase::STATUS_LIVE
     published_at { Time.now }
+
+    trait :published do
+      status ContentBase::STATUS_LIVE
+    end
+
+    trait :pending do
+      status ContentBase::STATUS_PENDING
+    end
   end
-  
+
   factory :test_class_post_content, class: TestClass::PostContent do
     test_class_thing_with_asset
   end
-  
+
   factory :test_class_person, class: TestClass::Person do
     name "Bryan"
     slug { name.parameterize }
@@ -45,11 +61,11 @@ FactoryGirl.define do
     path { File.join(self.store_dir, self.filename) }
 
     trait :live do
-      status 2
+      status Audio::STATUS_LIVE
     end
 
     trait :pending do
-      status 1
+      status Audio::STATUS_WAIT
     end
   end
 end

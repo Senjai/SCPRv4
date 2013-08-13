@@ -2,23 +2,53 @@
   <%= f.input :alert_type, collection: BreakingNewsAlert::ALERT_TYPES.map { |k, v| [v, k] }, include_blank: false %>
   <%= f.input :headline, input_html: { class: "wide" } %>
   <%= f.input :teaser, input_html: { class: :tiny } %>
-  <%= f.input :alert_link, hint: "A full URL to more information", input_html: { class: "wide" } %>
+  <%= f.input :alert_url, hint: "A full URL to more information", input_html: { class: "wide" } %>
 <% end %>
 
 <%= form_block "Actions" do %>
-  You can only send an e-mail once per alert. To send an email:
-  <ol>
-    <li>Select "Is Published"</li>
-    <li>Select "Send Email"</li>
-    <li>Save the alert</li>
-  </ol>
-  
-  <%= f.input :is_published, hint: "Make this alert public" %>
+  <% if !record.published? %>
+    <div class="alert alert-info">
+      <strong>Note</strong><br />No action will be taken until this alert has been "published" using the Publishing fields (below).
+    </div>
+  <% end %>
+
   <%= f.input :visible, hint: "Show this alert on the website" %>
-  
+
+  <!-- EMAIL -->
   <% if record.email_sent? %>
-    <div class="alert alert-info">An e-mail has already been sent for this alert.</div>
+    <div class="alert alert-info">
+      An e-mail has been sent for this alert.
+    </div>
   <% else %>
-    <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed" %>
+    <% if record.published? && record.send_email? %>
+      <div class="alert alert-warning">
+        An e-mail will be sent for this alert, but hasn't fired yet.
+      </div>
+    <% else %>
+      <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed" %>
+    <% end %>
+  <% end %>
+
+  <!-- MOBILE NOTIFICATION -->
+  <% if record.mobile_notification_sent? %>
+    <div class="alert alert-info">
+      A mobile notification has been sent for this alert.
+    </div>
+  <% else %>
+    <% if record.published? && record.send_mobile_notification? %>
+      <div class="alert alert-warning">
+        A mobile notification will be sent for this alert, but hasn't fired yet.
+      </div>
+    <% else %>
+      <%= f.input :send_mobile_notification, hint: "Send a push notification to mobile applications." %>
+    <% end %>
   <% end %>
 <% end %>
+
+<%= form_block "Publishing" do %>
+  <%= f.input :status, collection: BreakingNewsAlert.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
+  <%= f.section 'content_alarm' %>
+  <div id="scheduled_status" class="notification block"></div>
+<% end %>
+
+<br /><br /><br /><br /><br /><br /><br /><br />

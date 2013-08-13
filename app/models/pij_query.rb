@@ -20,19 +20,22 @@ class PijQuery < ActiveRecord::Base
 
 
   ROUTE_KEY = "pij_query"
-  
+
   has_secretary
-  
+
   QUERY_TYPES = [
     ["Evergreen",             "evergreen"],
     ["News",                  "news"],
     ["Internal (not listed)", "utility"]
   ]
-  
+
+  # We need to keep the statuses mapped to the
+  # ContentBase ones, since these are referenced
+  # directly in HomepageContent, etc.
   STATUS_HIDDEN   = ContentBase::STATUS_DRAFT
   STATUS_PENDING  = ContentBase::STATUS_PENDING
   STATUS_LIVE     = ContentBase::STATUS_LIVE
-  
+
   STATUS_TEXT = {
       STATUS_HIDDEN   => "Hidden",
       STATUS_PENDING  => "Pending",
@@ -40,11 +43,11 @@ class PijQuery < ActiveRecord::Base
   }
 
   #------------
-  # Scopes  
-  
+  # Scopes
+
   #------------
   # Association
-  
+
   #------------
   # Validation
   validates :slug,        uniqueness: true
@@ -58,7 +61,7 @@ class PijQuery < ActiveRecord::Base
   # Callbacks
 
   #------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes headline
     indexes body
@@ -69,14 +72,14 @@ class PijQuery < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "#{PijQuery.table_name}.status = #{PijQuery::STATUS_LIVE}", 
+    has "#{PijQuery.table_name}.status = #{STATUS_LIVE}",
         as: :is_live, type: :boolean
   end
 
 
   class << self
     def status_select_collection
-      PijQuery::STATUS_TEXT.map { |p| [p[1], p[0]] }
+      STATUS_TEXT.map { |k, v| [v, k] }
     end
   end
 
@@ -87,6 +90,14 @@ class PijQuery < ActiveRecord::Base
 
   def published?
     self.status == STATUS_LIVE
+  end
+
+  def publish
+    self.update_attribute(:status, STATUS_LIVE)
+  end
+
+  def status_text
+    STATUS_TEXT[self.status]
   end
 
 
@@ -107,7 +118,7 @@ class PijQuery < ActiveRecord::Base
 
 
   #------------
-  
+
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {

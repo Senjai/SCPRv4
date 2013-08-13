@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Concern::Associations::HomepageContentAssociation do
   before :each do
-    @post = create :test_class_post, status: ContentBase::STATUS_LIVE
+    @post = create :test_class_post, :published
     @homepage = create :homepage
     @homepage_content = create :homepage_content, content: @post, homepage: @homepage
     @homepage.content(true).should eq [@homepage_content]

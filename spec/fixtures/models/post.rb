@@ -9,7 +9,7 @@ module TestClass
     include Concern::Associations::AssetAssociation
     include Concern::Associations::PolymorphicProgramAssociation
     include Concern::Methods::PublishingMethods
-    include Concern::Methods::StatusMethods
+    include Concern::Methods::ContentStatusMethods
     
     has_many :content, class_name: "::TestClass::PostContent", order: "position", dependent: :destroy
     accepts_json_input_for :content
