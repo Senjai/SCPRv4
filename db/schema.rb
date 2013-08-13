@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130813215737) do
+ActiveRecord::Schema.define(:version => 20130813232129) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -386,9 +386,10 @@ ActiveRecord::Schema.define(:version => 20130813215737) do
     t.boolean  "send_mobile_notification",                       :default => false
     t.boolean  "mobile_notification_sent",                       :default => false
     t.integer  "status"
+    t.datetime "published_at"
   end
 
-  add_index "layout_breakingnewsalert", ["status", "created_at"], :name => "index_layout_breakingnewsalert_on_status_and_created_at"
+  add_index "layout_breakingnewsalert", ["status", "published_at"], :name => "index_layout_breakingnewsalert_on_status_and_published_at"
   add_index "layout_breakingnewsalert", ["visible"], :name => "index_layout_breakingnewsalert_on_visible"
 
   create_table "layout_homepage", :force => true do |t|

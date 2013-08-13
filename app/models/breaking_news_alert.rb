@@ -4,6 +4,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   has_secretary
 
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
@@ -30,7 +31,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Scopes
   scope :published, -> {
     where(status: STATUS_PUBLISHED)
-    .order("created_at desc")
+    .order("published_at desc")
   }
 
   scope :visible,   -> { where(visible: true) }
@@ -59,19 +60,17 @@ class BreakingNewsAlert < ActiveRecord::Base
     indexes headline
     indexes alert_type
     indexes teaser
-    has created_at
+    has published_at
   end
 
   #-------------------
 
   class << self
+    # Get the latest published alert, whether visible or not,
+    # and check if it's visible.
     def latest_alert
-      alert = self.order("created_at desc").first
-      if alert.present? && alert.published? && alert.visible?
-        alert
-      else
-        nil
-      end
+      alert = self.published.first
+      alert.try(:visible?) ? alert : nil
     end
 
     def types_select_collection

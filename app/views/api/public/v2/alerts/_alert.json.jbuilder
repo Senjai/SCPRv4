@@ -2,7 +2,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", alert] do
   json.id             alert.id
   json.headline       alert.headline
   json.type           alert.alert_type
-  json.published_at   alert.created_at
+  json.published_at   alert.published_at
 
   if alert.alert_url.present?
     json.public_url alert.alert_url

@@ -155,8 +155,8 @@ describe BreakingNewsAlert do
       BreakingNewsAlert.published.should eq [pub]
     end
 
-    it "orders by created_at desc" do
-      BreakingNewsAlert.published.to_sql.should match /order by created_at desc/i
+    it "orders by published_at desc" do
+      BreakingNewsAlert.published.to_sql.should match /order by published_at desc/i
     end
   end
 
@@ -176,16 +176,6 @@ describe BreakingNewsAlert do
       BreakingNewsAlert.latest_alert.should eq alert
     end
 
-    it "returns nil if the first alert is not published" do
-      # Older alert, published
-      older   = create :breaking_news_alert, :published, created_at: Time.now.yesterday
-      # Latest alert, not published
-      latest  = create :breaking_news_alert, :draft, created_at: Time.now
-
-      # Only looking at the latest alert
-      BreakingNewsAlert.latest_alert.should be_nil
-    end
-
     it "returns nil if there are no alerts" do
       BreakingNewsAlert.count.should eq 0
       BreakingNewsAlert.latest_alert.should be_nil
@@ -199,11 +189,6 @@ describe BreakingNewsAlert do
 
       # Only looking at the latest alert
       BreakingNewsAlert.latest_alert.should be_nil
-    end
-
-    it "orders by the created_at date" do
-      create_list :breaking_news_alert, 3
-      BreakingNewsAlert.latest_alert.should eq BreakingNewsAlert.order("created_at desc").first
     end
   end
 end

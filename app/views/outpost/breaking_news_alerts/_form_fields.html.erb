@@ -8,7 +8,7 @@
 <%= form_block "Actions" do %>
   <% if !record.published? %>
     <div class="alert alert-info">
-      <strong>Note</strong><br />No action will be taken until this alert has been "published" using the Publishing fields (below).
+      <strong>Note</strong>: No action will be taken until this alert has been "published" using the Publishing fields (below).
     </div>
   <% end %>
 
@@ -48,6 +48,7 @@
 <%= form_block "Publishing" do %>
   <%= f.input :status, collection: BreakingNewsAlert.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
   <%= f.section 'content_alarm' %>
+  <%= f.section 'auto_published_at' %>
   <div id="scheduled_status" class="notification block"></div>
 <% end %>
 

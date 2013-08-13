@@ -5,7 +5,7 @@
 # There is no need to validate the presence of published_at because
 # the two callbacks cover all possible scenarios, and the published_at
 # timestamp will be automatically set if the record needs it.
-# In other words, we are making it impossible for someone to 
+# In other words, we are making it impossible for someone to
 # set a broken published_at timestamp.
 #
 # We need to run this before_validation because the `published?` method
@@ -32,10 +32,13 @@ module Concern
   module Callbacks
     module SetPublishedAtCallback
       extend ActiveSupport::Concern
-      
+
       included do
-        before_validation :set_published_at_to_now, if: :should_set_published_at_to_now?
-        before_validation :set_published_at_to_nil, if: :should_set_published_at_to_nil?
+        before_validation :set_published_at_to_now,
+          :if => :should_set_published_at_to_now?
+
+        before_validation :set_published_at_to_nil,
+          :if => :should_set_published_at_to_nil?
       end
 
       #--------------
@@ -49,7 +52,7 @@ module Concern
       def should_set_published_at_to_nil?
         !self.published? && self.published_at.present?
       end
-      
+
       #--------------
       # Set published_at to Time.now
       def set_published_at_to_now

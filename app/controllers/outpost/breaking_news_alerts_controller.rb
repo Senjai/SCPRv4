@@ -2,7 +2,7 @@ class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order       = "created_at"
+    l.default_order       = "published_at"
     l.default_sort_mode   = "desc"
 
     l.column :headline
@@ -14,7 +14,7 @@ class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
     l.column :visible, header: "Visible?"
     l.column :email_sent, header: "Emailed?"
     l.column :mobile_notification_sent, header: "Pushed?"
-    l.column :created_at, sortable: true, default_sort_mode: "desc"
+    l.column :published_at, sortable: true, default_sort_mode: "desc"
 
 
     l.filter :alert_type,
