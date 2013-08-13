@@ -9,10 +9,11 @@ describe Job::SendBreakingNewsMobileNotification do
   end
 
   describe '::perform' do
-    it 'sends the mobile notification', focus: true do
+    it 'sends the mobile notification' do
       alert = create :breaking_news_alert, :mobile, :published
-      Job::SendBreakingNewsMobileNotification.perform(alert.id)
+      alert.mobile_notification_sent?.should eq false
 
+      Job::SendBreakingNewsMobileNotification.perform(alert.id)
       alert.reload.mobile_notification_sent?.should eq true
     end
   end
