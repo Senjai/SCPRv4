@@ -34,8 +34,8 @@ class Event < ActiveRecord::Base
     'pick' => 'Staff Picks'
   }
 
-  STATUS_HIDDEN = ContentBase::STATUS_DRAFT
-  STATUS_LIVE   = ContentBase::STATUS_LIVE
+  STATUS_HIDDEN = 0
+  STATUS_LIVE   = 5
 
   STATUS_TEXT = {
     STATUS_HIDDEN => "Hidden",
@@ -104,11 +104,11 @@ class Event < ActiveRecord::Base
   
   class << self
     def event_types_select_collection
-      Event::EVENT_TYPES.map { |k,v| [v, k] }
+      EVENT_TYPES.map { |k,v| [v, k] }
     end
 
     def status_select_collection
-      STATUS_TEXT.map { |status, text| [text, status] }
+      STATUS_TEXT.map { |k, v| [v, k] }
     end
   end
   

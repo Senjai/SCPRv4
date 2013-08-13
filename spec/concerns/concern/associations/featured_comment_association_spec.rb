@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Concern::Associations::FeaturedCommentAssociation do
   before :each do
-    @post = create :test_class_post, status: ContentBase::STATUS_LIVE
+    @post = create :test_class_post, :published
     @comment = create :featured_comment, content: @post
     @comment.content(true).should eq @post
   end

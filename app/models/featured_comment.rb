@@ -32,6 +32,8 @@ class FeaturedComment < ActiveRecord::Base
 
   #----------------
   # Associations
+  # FIXME: Remove reference to ContentBase.
+  # See HomepageContent for explanation.
   belongs_to :content,
     :polymorphic    => true,
     :conditions     => { status: ContentBase::STATUS_LIVE }

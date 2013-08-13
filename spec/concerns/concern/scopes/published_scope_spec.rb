@@ -21,8 +21,8 @@ describe Concern::Scopes::PublishedScope do
     # these objects in the database, but I can't find it, so...
     TestClass::Story.destroy_all
 
-    story_published   = create :test_class_story, status: ContentBase::STATUS_LIVE
-    story_unpublished = create :test_class_story, status: ContentBase::STATUS_DRAFT
+    story_published   = create :test_class_story, :published
+    story_unpublished = create :test_class_story, :pending
     TestClass::Story.published.should eq [story_published]
   end
 end

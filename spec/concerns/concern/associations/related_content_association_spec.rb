@@ -3,8 +3,8 @@ require "spec_helper"
 describe Concern::Associations::RelatedContentAssociation do
   describe "destroying or unpublishing" do
     before :each do
-      @post     = create :test_class_post, status: ContentBase::STATUS_LIVE
-      @story    = create :test_class_story, status: ContentBase::STATUS_LIVE
+      @post     = create :test_class_post, :published
+      @story    = create :test_class_story, :published
       @related  = create :related_content, content: @post, related: @story
 
       @related.content.should eq @post
@@ -47,7 +47,7 @@ describe Concern::Associations::RelatedContentAssociation do
       @shell   = create :test_class_post, published_at: 2.days.ago
       @segment = create :test_class_remote_story, published_at: 1.day.ago
       @story   = create :test_class_story, published_at: 3.days.ago
-      @post    = create :test_class_post, status: ContentBase::STATUS_DRAFT
+      @post    = create :test_class_post, status: :pending
 
       @object.outgoing_references.create(related: @shell)
       @object.outgoing_references.create(related: @story)
@@ -118,7 +118,7 @@ describe Concern::Associations::RelatedContentAssociation do
       end
       
       it "doesn't add unpublished content" do
-        unpublished = create :test_class_story, status: ContentBase::STATUS_DRAFT
+        unpublished = create :test_class_story, :pending
         Outpost.should_receive(:obj_by_key).with(unpublished.obj_key).and_return(unpublished)
 
         post.outgoing_references_json = "[{ \"id\": \"#{unpublished.obj_key}\", \"position\": 1 }, {\"id\": \"#{story1.obj_key}\", \"position\": 2 }, {\"id\": \"#{story2.obj_key}\", \"position\": 3 }]"
