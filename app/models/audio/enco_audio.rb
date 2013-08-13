@@ -52,8 +52,8 @@ class Audio
 
     def sync
       begin
-        if File.exists? self.full_path
-          self.mp3 = File.open(self.full_path)
+        if File.exists?(self.full_path)
+          write_attribute(:mp3, self.filename)
           self.save!
 
           log "Saved Audio ##{self.id}: #{self.full_path}"
@@ -67,6 +67,7 @@ class Audio
           raise e
         else
           log "Could not save Audio ##{self.id}: #{e}"
+          NewRelic.log_error(e)
           return false
         end
       end

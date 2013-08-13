@@ -81,6 +81,7 @@ class Audio
 
           rescue => e
             self.log "Could not save ProgramAudio: #{e}"
+            NewRelic.log_error(e)
             next
           end
         end # KpccProgram
