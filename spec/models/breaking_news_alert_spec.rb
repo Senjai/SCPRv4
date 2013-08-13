@@ -42,10 +42,7 @@ describe BreakingNewsAlert do
 
   describe '#publish_mobile_notification' do
     before :each do
-      FakeWeb.register_uri(:post, %r|api\.parse\.com|, 
-        :content_type   => "application/json",
-        :body           => { result: true }.to_json
-      )
+      stub_request(:post, %r|api\.parse\.com|).to_return(body: { result: true }.to_json)
     end
 
     it 'publishes the notification if it should' do

@@ -11,11 +11,23 @@ require 'thinking_sphinx/test'
 require 'database_cleaner'
 require 'chronic'
 require 'fakeweb'
+require 'webmock/rspec'
 require 'capybara/rspec'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
+
+WebMock.disable_net_connect!
+FakeWeb.allow_net_connect = false
+
+if !defined?(AH_JSON)
+  AH_JSON = {
+    :asset   => File.read("#{Rails.root}/spec/fixtures/api/assethost/asset.json"),
+    :outputs => File.read("#{Rails.root}/spec/fixtures/api/assethost/outputs.json")
+  }
+end
+
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
@@ -23,7 +35,7 @@ RSpec.configure do |config|
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
   config.order = 'random'
-  
+
   config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }
   config.include FactoryGirl::Syntax::Methods
   config.include ThinkingSphinxHelpers
@@ -35,7 +47,7 @@ RSpec.configure do |config|
   config.include AudioCleanup
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
-  
+
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
     load "#{Rails.root}/db/seeds.rb"
@@ -46,21 +58,26 @@ RSpec.configure do |config|
     ThinkingSphinx::Test.init
     ThinkingSphinx::Test.start_with_autostop
   end
-  
+
   config.before type: :feature do
     DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   end
-  
+
   config.before :all do
     DeferredGarbageCollection.start
   end
 
   config.before :each do
     FakeWeb.clean_registry
-    FakeWeb.load_callback
+    WebMock.reset!
+
+    FakeWeb.register_uri(:any, %r|a\.scpr\.org\/api\/outputs|, body: AH_JSON[:outputs], content_type: "application/json")
+    FakeWeb.register_uri(:any, %r|a\.scpr\.org\/api\/assets|, body: AH_JSON[:asset], content_type: "application/json")
+    FakeWeb.register_uri(:any, %r|a\.scpr\.org\/api\/as_asset|, body: AH_JSON[:asset], content_type: "application/json")
+
     DatabaseCleaner.start
   end
-    
+
   config.after :each do
     DatabaseCleaner.clean
     Rails.cache.clear
@@ -69,7 +86,7 @@ RSpec.configure do |config|
   config.after :all do
     DeferredGarbageCollection.reconsider
   end
-  
+
   config.after :suite do
     DatabaseCleaner.clean_with :truncation
   end
