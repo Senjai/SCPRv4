@@ -61,7 +61,12 @@ describe Api::Public::V2::AlertsController do
     end
 
     it "accepts a page" do
-      create_list :breaking_news_alert, 3, :published
+      first   = create :breaking_news_alert, :published
+      second  = create :breaking_news_alert, :published
+      third   = create :breaking_news_alert, :published
+
+      second.update_column(:created_at, 1.day.from_now)
+      third.update_column(:created_at, 2.days.from_now)
 
       get :index, request_params
       second_obj = assigns(:alerts)[1]
