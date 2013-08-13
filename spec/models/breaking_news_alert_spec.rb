@@ -3,20 +3,20 @@ require "spec_helper"
 describe BreakingNewsAlert do
   describe "#publish_email" do
     before :each do
-      FakeWeb.register_uri(:post, %r|assets/email|,
+      stub_request(:post, %r|assets/email|).to_return({
         :content_type   => "application/json",
         :body           => load_fixture("api/eloqua/email.json")
-      )
+      })
 
-      FakeWeb.register_uri(:post, %r|assets/campaign/active|,
+      stub_request(:post, %r|assets/campaign/active|).to_return({
         :content_type   => "application/json",
         :body           => load_fixture("api/eloqua/campaign_activated.json")
-      )
+      })
 
-      FakeWeb.register_uri(:post, %r|assets/campaign\z|,
+      stub_request(:post, %r|assets/campaign\z|).to_return({
         :content_type   => "application/json",
         :body           => load_fixture("api/eloqua/email.json")
-      )
+      })
     end
 
     it 'sends the e-mail and sets email_sent? to true' do

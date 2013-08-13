@@ -112,7 +112,6 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara', "~> 2.0"
   gem 'shoulda-matchers'
-  gem 'fakeweb'
   gem 'webmock'
   gem 'chronic', "~> 0.8"
   gem 'test_after_commit'

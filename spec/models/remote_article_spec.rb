@@ -3,15 +3,15 @@ require "spec_helper"
 describe RemoteArticle do
   describe '::sync' do
     before :each do
-      FakeWeb.register_uri(:get, %r|api\.npr|, 
+      stub_request(:get, %r|api\.npr|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/npr/stories.json')
-      )
+      })
 
-      FakeWeb.register_uri(:get, %r|publish2|, 
+      stub_request(:get, %r|publish2|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/chr/stories.json')
-      )
+      })
     end
 
     it "syncs using each of the importers" do
@@ -23,10 +23,10 @@ describe RemoteArticle do
 
   describe '#import' do
     before :each do
-      FakeWeb.register_uri(:get, %r|api\.npr|, 
+      stub_request(:get, %r|api\.npr|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/npr/story.json')
-      )
+      })
     end
 
     it 'imports the article' do

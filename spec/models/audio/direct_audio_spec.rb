@@ -43,44 +43,35 @@ describe Audio::DirectAudio do
     end
   end
 
-  describe '#mp3_file' do
+  describe "getting the file and its information" do
     before :each do
-      FakeWeb.register_uri(:get, %r{audio\.com},
-        content_type: 'audio/mpeg',
-        body: load_fixture('media/audio/2sec.mp3'))
+      stub_request(:get, %r{audio\.com}).to_return({
+        :content_type => 'audio/mpeg',
+        :body => load_fixture('media/audio/2sec.mp3')
+      })
     end
 
-    it 'opens the file' do
-      audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
-      audio.mp3_file.should be_a Tempfile
-    end
-  end
-
-  describe '#compute_duration' do
-    before :each do
-      FakeWeb.register_uri(:get, %r{audio\.com},
-        content_type: 'audio/mpeg',
-        body: load_fixture('media/audio/2sec.mp3'))
+    describe '#mp3_file' do
+      it 'opens the file' do
+        audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
+        audio.mp3_file.should be_a Tempfile
+      end
     end
 
-    it 'sets the duration' do
-      audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
-      audio.compute_duration
-      audio.duration.should eq 2
-    end
-  end
-
-  describe '#compute_size' do
-    before :each do
-      FakeWeb.register_uri(:get, %r{audio\.com},
-        content_type: 'audio/mpeg',
-        body: load_fixture('media/audio/2sec.mp3'))
+    describe '#compute_duration' do
+      it 'sets the duration' do
+        audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
+        audio.compute_duration
+        audio.duration.should eq 2
+      end
     end
 
-    it 'sets the duration' do
-      audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
-      audio.compute_size
-      audio.size.should be > 0
+    describe '#compute_size' do
+      it 'sets the duration' do
+        audio = build :direct_audio, external_url: 'http://audio.com/wat.mp3'
+        audio.compute_size
+        audio.size.should be > 0
+      end
     end
   end
 end

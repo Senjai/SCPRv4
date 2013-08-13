@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Job::ImportRemoteArticle do
     before :each do
-      FakeWeb.register_uri(:get, %r|api\.npr|, 
+      stub_request(:get, %r|api\.npr|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/npr/story.json')
-      )
+      })
     end
 
   it "finds the article and imports it" do

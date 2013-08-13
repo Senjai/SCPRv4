@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Job::SyncExternalPrograms do
   before :each do
-    FakeWeb.register_uri(:get, %r{podcast\.com},
+    stub_request(:get, %r{podcast\.com}).to_return({
       :content_type   => 'text/xml',
       :body           => load_fixture('rss/rss_feed.xml')
-    )
+    })
   end
 
   it "syncs the programs" do
