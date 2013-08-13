@@ -25,7 +25,11 @@ class Edition < ActiveRecord::Base
   }
 
 
-  has_many :slots, class_name: "EditionSlot", order: "position"
+  has_many :slots,
+    :class_name   => "EditionSlot",
+    :order        => "position",
+    :dependent    => :destroy
+
   accepts_json_input_for :slots
 
   # We don't want to use ContentBase::STATUS_LIVE, so just manually define
