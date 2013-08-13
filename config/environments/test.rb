@@ -43,9 +43,6 @@ Scprv4::Application.configure do
 
   default_url_options[:host] = "scpr.org"
 
-  config.api      = YAML.load_file("#{Rails.root}/config/templates/api_config.yml.ci")
-  config.secrets  = YAML.load_file("#{Rails.root}/config/templates/app_config.yml.ci")
-
   config.scpr.host         = "www.scpr.org"
   config.scpr.resque_queue = :scprv4
   config.scpr.media_root   = Rails.root.join("spec/fixtures/media")
