@@ -26,7 +26,7 @@ class FeaturedComment < ActiveRecord::Base
   #----------------
   # Scopes
   scope :published, -> {
-    where(status: FeaturedComment::STATUS_LIVE)
+    where(status: STATUS_LIVE)
     .order("created_at desc")
   }
 
@@ -65,7 +65,8 @@ class FeaturedComment < ActiveRecord::Base
 
   def content_is_published?
     if self.content && !self.content.published?
-      errors.add(:content_id, "Content must be published in order to be featured.")
+      errors.add(:content_id,
+        "Content must be published in order to be featured.")
     end
   end
 
@@ -83,11 +84,11 @@ class FeaturedComment < ActiveRecord::Base
 
   class << self
     def status_select_collection
-      FeaturedComment::STATUS_TEXT.map { |p| [p[1], p[0]] }
+      STATUS_TEXT.map { |k, v| [v, k] }
     end
 
     def featurable_classes_select_collection
-      FeaturedComment::FEATUREABLE_CLASSES.map { |c| [c.titleize, c] }
+      FEATUREABLE_CLASSES.map { |c| [c.titleize, c] }
     end
   end
 

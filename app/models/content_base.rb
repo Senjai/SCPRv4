@@ -137,5 +137,4 @@ module ContentBase
   def status_text_collect
     STATUS_TEXT.map { |k, v| [v, k] }
   end
-
 end # ContentBase

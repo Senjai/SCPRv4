@@ -29,9 +29,12 @@ class PijQuery < ActiveRecord::Base
     ["Internal (not listed)", "utility"]
   ]
 
-  STATUS_HIDDEN   = 0
-  STATUS_PENDING  = 3
-  STATUS_LIVE     = 5
+  # We need to keep the statuses mapped to the
+  # ContentBase ones, since these are referenced
+  # directly in HomepageContent, etc.
+  STATUS_HIDDEN   = ContentBase::STATUS_DRAFT
+  STATUS_PENDING  = ContentBase::STATUS_PENDING
+  STATUS_LIVE     = ContentBase::STATUS_LIVE
 
   STATUS_TEXT = {
       STATUS_HIDDEN   => "Hidden",
@@ -69,7 +72,7 @@ class PijQuery < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "#{PijQuery.table_name}.status = #{PijQuery::STATUS_LIVE}",
+    has "#{PijQuery.table_name}.status = #{STATUS_LIVE}",
         as: :is_live, type: :boolean
   end
 

@@ -34,8 +34,8 @@ class Event < ActiveRecord::Base
     'pick' => 'Staff Picks'
   }
 
-  STATUS_HIDDEN = 0
-  STATUS_LIVE   = 5
+  STATUS_HIDDEN = ContentBase::STATUS_DRAFT
+  STATUS_LIVE   = ContentBase::STATUS_LIVE
 
   STATUS_TEXT = {
     STATUS_HIDDEN => "Hidden",
