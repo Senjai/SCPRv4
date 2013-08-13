@@ -1,8 +1,6 @@
-# Rails.root.join("log", "#{filename}-#{Time.now.strftime("%F")}.csv")
-
 require "csv"
  
-filename = "represent-export"
+filename = "hyper"
 
 blogs = [
   "southla"
@@ -21,11 +19,11 @@ blogs.each do |blog|
   blog = Blog.find_by_slug(blog)
   
   blog.entries.where("published_at > :low and published_at <= :high", low: low, high: high).published.reorder("published_at").each do |entry|
-    rows.push [entry.published_at, entry.to_title, entry.teaser, entry.byline]
+    rows.push [entry.published_at, entry.to_title, entry.teaser, entry.byline, entry.public_url]
   end
 end
 
-CSV.open("/Users/bryan/projects/Data Backups/hyper-2013-08-13.csv", "a+") do |csv|
+CSV.open(Rails.root.join("log", "#{filename}-#{Time.now.strftime("%F")}.csv"), "a+") do |csv|
   rows.each do |row|
     csv << row
   end
