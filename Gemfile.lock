@@ -108,7 +108,6 @@ GEM
     carrierwave (0.8.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
-    chronic (0.9.1)
     chunky_png (1.2.8)
     ckeditor_rails (4.0.2)
       railties (>= 3.0)
@@ -394,7 +393,6 @@ DEPENDENCIES
   capistrano
   capybara (~> 2.0)
   carrierwave (~> 0.6)
-  chronic (~> 0.8)
   ckeditor_rails (~> 4.0.0)
   coffee-rails (~> 3.2)
   compass-rails

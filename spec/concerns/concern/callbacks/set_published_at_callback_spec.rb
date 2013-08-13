@@ -25,36 +25,40 @@ describe Concern::Callbacks::SetPublishedAtCallback do
   end
 
   #-----------------
-  
+
   describe "#set_published_at_to_now" do
     context "should_set_published_at_to_now is true" do
       before :each do
         subject.stub(:should_set_published_at_to_now?) { true }
       end
-      
+
       it "sets published at to now" do
-        time = freeze_time_at(Time.now)
+        t = Time.now
+        Time.stub(:now) { t }
+
         subject.save!
-        subject.published_at.should eq time
+        subject.published_at.should eq t
       end
     end
-    
+
     context "should_set_published_at_to_now is false" do
       before :each do
         subject.stub(:should_set_published_at_to_now?) { false }
         subject.status = ContentBase::STATUS_DRAFT
       end
-      
+
       it "does not set published at to now" do
-        time = freeze_time_at(Time.now)
+        t = Time.now
+        Time.stub(:now) { t }
+
         subject.save!
         subject.published_at.should be_nil
       end
     end
   end
-  
+
   #-----------------
-  
+
   describe "#should_set_published_at_to_nil?" do
     it "is true if the object is not published and the published_at date is set" do
       subject.status = ContentBase::STATUS_DRAFT
@@ -67,9 +71,9 @@ describe Concern::Callbacks::SetPublishedAtCallback do
       subject.should_set_published_at_to_nil?.should eq false
     end
   end
-  
+
   #-----------------
-  
+
   describe "#set_published_at_to_nil" do
     context "should_set_published_at_to_nil? is true" do
       before :each do
@@ -79,7 +83,7 @@ describe Concern::Callbacks::SetPublishedAtCallback do
         subject.published_at.should_not be_nil
         subject.save!
       end
-      
+
       it "sets published_at to nil" do
         subject.published_at.should eq nil
       end
@@ -92,7 +96,7 @@ describe Concern::Callbacks::SetPublishedAtCallback do
         subject.published_at.should_not be_nil
         subject.save!
       end
-      
+
       it "does not set published_at to nil" do
         subject.published_at.should_not be_nil
       end

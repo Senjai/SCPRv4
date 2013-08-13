@@ -9,7 +9,6 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'thinking_sphinx/test'
 require 'database_cleaner'
-require 'chronic'
 require 'webmock/rspec'
 require 'capybara/rspec'
 
@@ -32,7 +31,6 @@ RSpec.configure do |config|
   config.include RemoteStubs
   config.include PresenterHelper
   config.include DatePathHelper
-  config.include StubTime
   config.include StubPublishingCallbacks
   config.include AudioCleanup
   config.include FormFillers,           type: :feature
