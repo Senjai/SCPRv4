@@ -15,7 +15,7 @@ describe Concern::Callbacks::CacheExpirationCallback do
 
   it "expires new keys if it's publishing" do
     story = create :test_class_story, :pending
-    Rails.cache.should_receive(:expire_obj).with("test_class_story:new")
+    Rails.cache.should_receive(:expire_obj).with(story.class.content_key + ":new")
     Rails.cache.should_receive(:expire_obj).with("contentbase:new")
     story.update_attributes(status: ContentBase::STATUS_LIVE)
   end
