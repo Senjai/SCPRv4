@@ -1,6 +1,6 @@
 class NewsStory < ActiveRecord::Base
   outpost_model
-  
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -30,7 +30,7 @@ class NewsStory < ActiveRecord::Base
   self.table_name = 'news_story'
   has_secretary
   ROUTE_KEY = "news_story"
-  
+
   SOURCES = [
     ['KPCC',                        'kpcc'],
     ['KPCC & wires',                'kpcc_plus_wire'],
@@ -42,7 +42,7 @@ class NewsStory < ActiveRecord::Base
     ['NPR & KPCC',                  'npr_kpcc'],
     ['Center for Health Reporting', 'chr']
   ]
-  
+
   ASSET_SCHEMES = [
     ["Top", "wide"],
     ["Right", "float"],
@@ -50,29 +50,29 @@ class NewsStory < ActiveRecord::Base
     ["Video", "video"],
     ["Hidden", "hidden"]
   ]
-  
+
   EXTRA_ASSET_SCHEMES = [
     ["Hidden", "hidden"],
     ["Sidebar", "sidebar"]
   ]
-  
+
   #-------------------
   # Scopes
 
   #-------------------
   # Association
-  
+
   #------------------
   # Validation
   def needs_validation?
     self.pending? || self.published?
   end
-  
+
   #------------------
   # Callbacks
 
   #-------------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes headline
     indexes body
@@ -82,18 +82,18 @@ class NewsStory < ActiveRecord::Base
     has published_at
     has updated_at
     has "CRC32(CONCAT('#{NewsStory.content_key}:'," \
-        "#{NewsStory.table_name}.id))", 
+        "#{NewsStory.table_name}.id))",
         type: :integer, as: :obj_key
 
     # For megamenu
     has category.is_news, as: :category_is_news
 
     # For RSS Feed
-    has "(#{NewsStory.table_name}.source <=> 'kpcc')", 
+    has "(#{NewsStory.table_name}.source <=> 'kpcc')",
         as: :is_source_kpcc, type: :boolean
-    
+
     # For category/homepage building
-    has "(#{NewsStory.table_name}.story_asset_scheme <=> 'slideshow')", 
+    has "(#{NewsStory.table_name}.story_asset_scheme <=> 'slideshow')",
         type: :boolean, as: :is_slideshow
     has category.id, as: :category
 
@@ -104,26 +104,26 @@ class NewsStory < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "#{NewsStory.table_name}.status = #{ContentBase::STATUS_LIVE}", 
+    has "#{NewsStory.table_name}.status = #{ContentBase::STATUS_LIVE}",
         as: :is_live, type: :boolean
   end
-    
+
   #----------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
-      :year           => self.persisted_record.published_at.year, 
-      :month          => "%02d" % self.persisted_record.published_at.month, 
-      :day            => "%02d" % self.persisted_record.published_at.day, 
-      :id             => self.persisted_record.id,
+      :year           => self.persisted_record.published_at.year.to_s,
+      :month          => "%02d" % self.persisted_record.published_at.month,
+      :day            => "%02d" % self.persisted_record.published_at.day,
+      :id             => self.persisted_record.id.to_s,
       :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }
   end
-      
+
   #----------
-  
+
   def byline_extras
     Array(self.news_agency)
   end

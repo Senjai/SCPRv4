@@ -2,7 +2,7 @@ class Flatpage < ActiveRecord::Base
   self.table_name = "flatpages_flatpage"
   outpost_model
   has_secretary
-  
+
   include Concern::Callbacks::SphinxIndexCallback
 
   ROUTE_KEY = 'root_slug'
@@ -13,18 +13,18 @@ class Flatpage < ActiveRecord::Base
     ["Crawford Family Forum",   "forum"],
     ["No Template",             "none"]
   ]
-  
+
   # -------------------
   # Scopes
   scope :visible, -> { where(is_public: true) }
 
   # -------------------
   # Associations
-  
+
   # -------------------
   # Validations
   validates :url, presence: true, uniqueness: true
-  
+
   # -------------------
   # Callbacks
   before_validation :slashify
@@ -33,17 +33,17 @@ class Flatpage < ActiveRecord::Base
       self.url = "/#{path}/"
     end
   end
-  
+
   # Downcase URL so uniqueness validation works.
   before_validation :downcase_url
   def downcase_url
-    if url.present? 
+    if url.present?
       self.url = url.downcase
     end
   end
 
   # -------------------
-  # Sphinx  
+  # Sphinx
   define_index do
     indexes url, sortable: true
     indexes title
@@ -51,15 +51,15 @@ class Flatpage < ActiveRecord::Base
     indexes redirect_url
     has updated_at
   end
-  
+
   # -------------------
 
   def path
     url.gsub(/\A\//, "").gsub(/\/\z/, "")
   end
-  
+
   # -------------------
-  
+
   # Just to be safe while the URLs are still being created in mercer
   def url
     if self[:url].present?
