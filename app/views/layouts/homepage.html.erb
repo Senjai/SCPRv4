@@ -1,6 +1,26 @@
 <%= render '/shared/header/document_header' %>
 
 <body>
+
+<!--
+Doubleclick tracking for Take Two marketing campaign
+Activity name of this tag: SCPR Homepage~IP133548
+URL of the webpage where the tag is expected to be placed: http://www.scpr.org/
+Creation Date: 07/31/2013
+-->
+
+<script type="text/javascript">
+  var axel = Math.random() + "";
+  var a = axel * 10000000000000;
+
+  document.write('<iframe src="http://4226176.fls.doubleclick.net/activityi;src=4226176;type=ip133096;cat=scprh355;ord=' + a + '?" width="1" height="1" frameborder="0" style="display:none"></iframe>');
+</script>
+
+<noscript>
+  <iframe src="http://4226176.fls.doubleclick.net/activityi;src=4226176;type=ip133096;cat=scprh355;ord=1?" width="1" height="1" frameborder="0" style="display:none"></iframe>
+</noscript>
+<!-- End of DoubleClick Floodlight Tag: OK to remove after 11/30/2013 -->
+
 <div class="viewport">
   <!-- MASTHEAD-->
   <%= render "/shared/masthead/layout_header" %>

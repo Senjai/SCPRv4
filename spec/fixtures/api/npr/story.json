@@ -38,7 +38,7 @@
           }
         ],
         "title": {
-          "$text": "Four Men In A Small Boat Face The Northwest Passage "
+          "$text": "Four Men In A Small Boat Face The Northwest Passage"
         },
         "partnerId": {
           "$text": "187325945"
@@ -225,6 +225,98 @@
                 "$text": "http://api.npr.org/query?id=1001&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
               }
             ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "204580847",
+            "type": "primary",
+            "title": {},
+            "duration": {
+              "$text": "258"
+            },
+            "description": {},
+            "format": {
+              "mp3": [
+                {
+                  "type": "mp3",
+                  "$text": "http://pd.npr.org/anon.npr-mp3/npr/atc/2013/07/20130722_atc_07.mp3?orgId=1&topicId=1122&ft=3&f=204570329"
+                },
+                {
+                  "type": "m3u",
+                  "$text": "http://api.npr.org/m3u/1204580847-ebeeb4.m3u?orgId=1&topicId=1122&ft=3&f=204570329"
+                }
+              ],
+              "wm": {
+                "$text": "http://www.npr.org/templates/dmg/dmg_wmref_em.php?id=204580847&type=1&mtype=WM&orgId=1&topicId=1122&ft=3&f=204570329"
+              },
+              "mp4": {
+                "$text": "http://pd.npr.org/npr-mp4/npr/atc/2013/07/20130722_atc_07.mp4?orgId=1&topicId=1122&ft=3&f=204570329"
+              },
+              "mediastream": {
+                "$text": "rtmp://flash.npr.org/ondemand/mp3:anon.npr-mp3/npr/atc/2013/07/20130722_atc_07.mp3"
+              }
+            },
+            "rightsHolder": {},
+            "permissions": {
+              "download": {
+                "allow": "true"
+              },
+              "stream": {
+                "allow": "true"
+              },
+              "embed": {
+                "allow": "true"
+              }
+            },
+            "stream": {
+              "active": "false"
+            }
+          },
+          {
+            "id": "204580847",
+            "type": "primary",
+            "title": {},
+            "duration": {
+              "$text": "258"
+            },
+            "description": {},
+            "format": {
+              "mp3": [
+                {
+                  "type": "mp3",
+                  "$text": "http://pd.npr.org/nopenopenope.npr-mp3/npr/atc/2013/07/20130722_atc_07.mp3?orgId=1&topicId=1122&ft=3&f=204570329"
+                },
+                {
+                  "type": "m3u",
+                  "$text": "http://api.npr.org/m3u/1204580847-ebeeb4.m3u?orgId=1&topicId=1122&ft=3&f=204570329"
+                }
+              ],
+              "wm": {
+                "$text": "http://www.npr.org/templates/dmg/dmg_wmref_em.php?id=204580847&type=1&mtype=WM&orgId=1&topicId=1122&ft=3&f=204570329"
+              },
+              "mp4": {
+                "$text": "http://pd.npr.org/npr-mp4/npr/atc/2013/07/20130722_atc_07.mp4?orgId=1&topicId=1122&ft=3&f=204570329"
+              },
+              "mediastream": {
+                "$text": "rtmp://flash.npr.org/ondemand/mp3:anon.npr-mp3/npr/atc/2013/07/20130722_atc_07.mp3"
+              }
+            },
+            "rightsHolder": {},
+            "permissions": {
+              "download": {
+                "allow": "true"
+              },
+              "stream": {
+                "allow": "false"
+              },
+              "embed": {
+                "allow": "true"
+              }
+            },
+            "stream": {
+              "active": "false"
+            }
           }
         ],
         "byline": [

@@ -8,15 +8,22 @@ module Concern
       extend ActiveSupport::Concern
       
       included do
-        has_many :bylines, as: :content, class_name: "ContentByline",  dependent: :destroy
-        accepts_nested_attributes_for :bylines, allow_destroy: true, reject_if: :should_reject_bylines?
+        has_many :bylines,
+          :as           => :content,
+          :class_name   => "ContentByline",
+          :dependent    => :destroy
+
+        accepts_nested_attributes_for :bylines,
+          :allow_destroy    => true,
+          :reject_if        => :should_reject_bylines?
 
         #-------------------
         # Byline Filter
         # Pass it a bio ID
         # It returns records with that bio
-        scope :filtered_by_bylines, ->(bio_id) { 
-          self.includes(:bylines).where(ContentByline.table_name => { user_id: bio_id }) 
+        scope :filtered_by_bylines, ->(bio_id) {
+          self.includes(:bylines)
+          .where(ContentByline.table_name => { user_id: bio_id })
         }
 
         # TODO Only enqueue this if bylines changed

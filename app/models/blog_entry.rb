@@ -85,16 +85,16 @@ class BlogEntry < ActiveRecord::Base
     has category.id, as: :category
 
     # For podcasts
+    join audio
     has "COUNT(DISTINCT #{Audio.table_name}.id) > 0", 
         type: :boolean, as: :has_audio
-    join audio
 
     # For the megamenu
     has category.is_news, as: :category_is_news
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "status = #{ContentBase::STATUS_LIVE}", 
+    has "#{BlogEntry.table_name}.status = #{ContentBase::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
 
@@ -194,7 +194,6 @@ class BlogEntry < ActiveRecord::Base
       :audio              => self.audio.available,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end

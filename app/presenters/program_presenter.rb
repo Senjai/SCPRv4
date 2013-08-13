@@ -1,84 +1,61 @@
 class ProgramPresenter < ApplicationPresenter
   presents :program
-  delegate :title, :slug, to: :program
-  
+  delegate :title, :slug, :public_url, :public_path, to: :program
+
+
   def teaser
-    if program.teaser.present?
-      program.teaser.html_safe
-    end
+    program.teaser.try(:html_safe)
   end
-  
+
   def description
-    if program.description.present?
-      program.description.html_safe
-    end
+    program.description.try(:html_safe)
   end
-  
-  #---------------
 
-  def feed
-    if cache = Rails.cache.fetch("ext_program:#{program.slug}:podcast")
-      render "/programs/feed/feed", title: "Recently", cache: cache
-
-    elsif cache = Rails.cache.fetch("ext_program:#{program.slug}:rss")
-      render "/programs/feed/feed", title: "Latest News", cache: cache
-
-    else
-      content_tag :span, "There is currently no feed available for this program.", class: "none-to-list"
-    end
-  end
-  
-  #---------------
-  
-  def web_url
-    if program.web_url.blank?
-      CONNECT_DEFAULTS[:web]
-    else
-      program.web_url
+  def web_link
+    if link = program.get_link("website")
+      h.link_to "Website", link,
+        :target => "_blank",
+        :class  => "archive with-icon"
     end
   end
 
-  #---------------
-  
-  def twitter_url
-    if program.twitter_url.blank?
-      CONNECT_DEFAULTS[:twitter]
-    else
-      if program.twitter_url =~ /twitter\.com/
-        program.twitter_url
-      else
-        "http://twitter.com/#{program.twitter_url}"
-      end
-    end
-  end
-  
-  #---------------
-  
-  def facebook_url
-    if program.facebook_url.blank?
-      CONNECT_DEFAULTS[:facebook]
-    else
-      program.facebook_url
+  def facebook_link
+    if link = program.get_link("facebook")
+      h.link_to "Facebook", link,
+        :target => "_blank",
+        :class  => "facebook with-icon"
     end
   end
 
-  #---------------
-  
-  def rss_url
-    if program.rss_url.blank?
-      CONNECT_DEFAULTS[:rss]
-    else
-      program.rss_url
+  def podcast_link
+    if link = abstract_program.podcast_url
+      h.link_to "Podcast", link,
+        :target => "_blank",
+        :class  => "podcast with-icon"
     end
   end
 
-  #---------------
-
-  def podcast_url
-    if program.podcast_url.blank?
-      CONNECT_DEFAULTS[:podcast]
-    else
-      program.podcast_url
+  def rss_link
+    if link = abstract_program.rss_url
+      h.link_to "RSS", link,
+        :target => "_blank",
+        :class  => "rss with-icon"
     end
+  end
+
+  def twitter_link
+    if program.twitter_handle.present?
+      h.link_to "@#{program.twitter_handle}", 
+        h.twitter_profile_url(program.twitter_handle),
+        :target => "_blank",
+        :class  => "twitter with-icon"
+    end
+  end
+
+
+  private
+
+  def abstract_program
+    @abstract_program ||= program.to_program
   end
 end

@@ -37,11 +37,13 @@ Scprv4::Application.routes.draw do
 
 
   # Programs / Segments
+  # Legacy route for old Episode URLs
+  get '/programs/:show/:year/:month/:day/'            => "programs#episode",                            constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
+
   get '/programs/:show/archive/'                      => redirect("/programs/%{show}/#archive")
   post '/programs/:show/archive/'                     => "programs#archive",    as: :program_archive
-
+  get '/programs/:show/:year/:month/:day/:id/'        => "programs#episode",    as: :episode,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/ }
   get '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",    as: :segment,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
-  get '/programs/:show/:year/:month/:day/'            => "programs#episode",    as: :episode,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
   get '/programs/:show'                               => 'programs#show',       as: :program
   get '/programs/'                                    => 'programs#index',      as: :programs
   get '/schedule/'                                    => 'programs#schedule',   as: :schedule
@@ -133,7 +135,40 @@ Scprv4::Application.routes.draw do
             get :current, to: "schedule_occurrences#show"
           end
         end
-      end
+      end # V2
+
+
+      # V3
+      namespace :v3 do
+        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
+
+        resources :articles, only: [:index] do
+          collection do
+            # These need to be in "collection", otherwise
+            # Rails would expect an  :id parameter in
+            # the URL.
+            get 'most_viewed'      => 'articles#most_viewed'
+            get 'most_commented'   => 'articles#most_commented'
+            get 'by_url'           => 'articles#by_url'
+            get '*obj_key'         => 'articles#show'
+          end
+        end
+
+        resources :audio, only: [:index, :show]
+        resources :editions, only: [:index, :show]
+        resources :categories, only: [:index, :show]
+        resources :events, only: [:index, :show]
+        resources :programs, only: [:index, :show]
+        resources :episodes, only: [:index, :show]
+        resources :blogs, only: [:index, :show]
+
+        resources :schedule, controller: 'schedule_occurrences',only: [:index] do
+          collection do
+            get :at,      to: "schedule_occurrences#show"
+            get :current, to: "schedule_occurrences#show"
+          end
+        end
+      end # V3
     end
 
 
@@ -204,7 +239,7 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
 
-    resources :other_programs do
+    resources :external_programs do
       get "search", on: :collection, as: :search
     end
 

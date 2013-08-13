@@ -5,7 +5,7 @@
 #
 module Job
   class ImportRemoteArticle < Base
-    @queue = namespace
+    @queue = "#{namespace}:remote_articles"
 
     #---------------------
 
@@ -32,8 +32,8 @@ module Job
             }
           }
         )
-        
-        # The current Newsroom server is very slow - retry the hook 
+
+        # The current Newsroom server is very slow - retry the hook
         # a few times so the user will be redirected properly.
         timeout_retry(3) do
           hook.publish

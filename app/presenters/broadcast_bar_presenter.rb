@@ -1,9 +1,11 @@
 class BroadcastBarPresenter < ScheduleOccurrencePresenter
   def show_modal?
+    return false if !program.respond_to?(:display_episodes)
     !!program.try(:display_episodes)
   end
 
   def is_for_featured_program?
+    return false if !program.respond_to?(:is_featured?)
     !!program.try(:is_featured?)
   end
 

@@ -69,7 +69,7 @@ class PijQuery < ActiveRecord::Base
 
     # Required attributes for ContentBase.search
     has published_at, as: :public_datetime
-    has "status = #{PijQuery::STATUS_LIVE}", 
+    has "#{PijQuery.table_name}.status = #{PijQuery::STATUS_LIVE}", 
         as: :is_live, type: :boolean
   end
 
@@ -101,7 +101,6 @@ class PijQuery < ActiveRecord::Base
       :body               => self.body,
       :assets             => self.assets,
       :byline             => "KPCC",
-      :public_url         => self.public_url,
       :edit_url           => self.admin_edit_url
     })
   end

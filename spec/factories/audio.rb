@@ -14,9 +14,16 @@ FactoryGirl.define do
       enco_date { Date.today }
     end
 
+    # ENCO information that matches one of our fixtures.
+    trait :live_enco do
+      enco_number 1234
+      enco_date { Date.new(2012, 10, 2) }
+      mp3 File.open(File.join(Audio::AUDIO_PATH_ROOT, "features", "20121002_features1234.mp3"))
+    end
+
     trait :direct do
       content { |a| a.association :news_story }
-      mp3_path "events/2012/10/02/SomeCoolEvent.mp3"
+      external_url "http://media.scpr.org/audio/events/2012/10/02/SomeCoolEvent.mp3"
     end
 
     trait :program do

@@ -55,9 +55,9 @@ describe ArchiveController do
     end
     
     it "only gets show episodes published on requested date" do
-      yesterday = create :show_episode, air_date: Time.now.yesterday.strftime("%Y/%m/%d")
-      today     = create :show_episode, air_date: Time.now.strftime("%Y/%m/%d")
-      tomorrow  = create :show_episode, air_date: Time.now.tomorrow.strftime("%Y/%m/%d")
+      yesterday = create :show_episode, air_date: Time.now.yesterday
+      today     = create :show_episode, air_date: Time.now
+      tomorrow  = create :show_episode, air_date: Time.now.tomorrow
       get :show, date_path(Time.now.yesterday.beginning_of_day)
       assigns(:show_episodes).should eq [yesterday]
     end

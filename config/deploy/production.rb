@@ -13,8 +13,8 @@ web2  = "66.226.4.227"
 web4  = "66.226.4.240"
 media = "66.226.4.228"
 
-role :app,      web1, web2, web4
-role :web,      web1, web2, web4
+role :app,      web2, web4
+role :web,      web2, web4
 role :workers,  media
 role :db,       web2, :primary => true
 role :sphinx,   media
@@ -28,7 +28,7 @@ namespace :deploy do
     if delay <= 0
       logger.info "Restarting application processes immediately on all servers..."
       run "touch #{restart_file}"
-    else      
+    else
       logger.info "Restarting application processes on each app server in #{restart_delay} second intervals..."
       parallel(roles: [:app, :workers], pty: true, shell: false) do |session|
         # Worker processes can be restarted immediately
@@ -46,23 +46,28 @@ namespace :deploy do
       end
     end
   end
-  
+
   # --------------
-  
+
   task :notify do
-    data = {
-      :token  => "droQQ2LcESKeGPzldQr7",
-      :user        => `whoami`.gsub("\n", ""),
-      :datetime    => Time.now.strftime("%F %T"),
-      :application => application
-    }
-    
-    url = "http://www.scpr.org/api/private/v2/utility/notify"
-    logger.info "Sending notification to #{url}"
-    begin
-      Net::HTTP.post_form(URI.parse(URI.encode(url)), data)
-    rescue Errno::ETIMEDOUT => e
-      logger.info "Timed out while trying to notify. Moving forward."
+    if token = YAML.load_file(File.expand_path("../../app_config.yml", __FILE__))["deploy_token"]
+      data = {
+        :token       => token,
+        :user        => `whoami`.gsub("\n", ""),
+        :datetime    => Time.now.strftime("%F %T"),
+        :application => application
+      }
+
+      url = "http://www.scpr.org/api/private/v2/utility/notify"
+      logger.info "Sending notification to #{url}"
+      begin
+        Net::HTTP.post_form(URI.parse(URI.encode(url)), data)
+      rescue Errno::ETIMEDOUT => e
+        logger.info "Timed out while trying to notify. Moving forward."
+      end
+
+    else
+      logger.info "No Deploy Token specified. Moving on."
     end
   end
 end

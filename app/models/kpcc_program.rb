@@ -85,4 +85,29 @@ class KpccProgram < ActiveRecord::Base
       :trailing_slash => true
     }
   end
+
+
+  def to_program
+    @to_program ||= Program.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :source             => 'kpcc',
+      :title              => self.title,
+      :slug               => self.slug,
+      :description        => self.description,
+      :host               => self.host,
+      :twitter_handle     => self.twitter_handle,
+      :air_status         => self.air_status,
+      :airtime            => self.airtime,
+      :podcast_url        => self.get_link('podcast'),
+      :rss_url            => self.get_link('rss'),
+      :episodes           => self.episodes.published,
+      :segments           => self.segments.published,
+      :missed_it_bucket   => self.missed_it_bucket,
+      :blog               => self.blog,
+      :is_featured        => self.is_featured?,
+      :display_episodes   => self.display_episodes?,
+      :display_segments   => self.display_segments?
+    })
+  end
 end
