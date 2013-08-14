@@ -58,6 +58,24 @@ describe Api::Public::V2::EpisodesController do
       assigns(:episodes).should eq [episode1].map(&:to_episode)
     end
 
+    it 'sorts the episodes by descending air_date for kpcc programs' do
+      program   = create :kpcc_program
+      episode2  = create :show_episode, show: program, air_date: Time.now.yesterday
+      episode1  = create :show_episode, show: program, air_date: Time.now.tomorrow
+
+      get :index, { program: program.slug }.merge(request_params)
+      assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
+    end
+
+    it 'sorts the episodes by descending air_date for external programs' do
+      program   = create :external_program
+      episode2  = create :external_episode, external_program: program, air_date: Time.now.yesterday
+      episode1  = create :external_episode, external_program: program, air_date: Time.now.tomorrow
+
+      get :index, { program: program.slug }.merge(request_params)
+      assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
+    end
+
     it 'returns a 404 if the program is not found' do
       get :index, { program: "lolnope" }.merge(request_params)
       response.response_code.should eq 404
