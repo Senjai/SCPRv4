@@ -40,7 +40,7 @@ describe Audio::UploadedAudio do
     end
   end
 
-  describe 'computing file in' do
+  describe 'computing file info' do
     after :each do
       purge_uploaded_audio
     end

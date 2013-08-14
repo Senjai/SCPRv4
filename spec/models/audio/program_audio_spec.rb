@@ -49,7 +49,7 @@ describe Audio::ProgramAudio do
   end
 
 
-  describe 'computing size' do
+  describe 'computing file info' do
     it 'computes the duration' do
       audio = build :program_audio, mp3: File.open(File.join(Audio::AUDIO_PATH_ROOT, "2sec.mp3"))
       audio.duration.should eq nil

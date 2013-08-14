@@ -80,4 +80,23 @@ describe Audio::EncoAudio do
       enco.mp3_file.should eq nil
     end
   end
+
+  describe 'computing file info' do
+    it 'computes the duration' do
+      # Need to create it so the path gets set
+      audio = create :enco_audio, :live_enco, :live
+      audio.duration.should eq nil
+
+      audio.compute_duration
+      audio.duration.should eq 0 # it is the point1sec file
+    end
+
+    it 'computes the file size' do
+      audio = create :enco_audio, :live_enco, :live
+      audio.size.should eq nil
+
+      audio.compute_size
+      audio.size.should be > 0
+    end
+  end
 end
