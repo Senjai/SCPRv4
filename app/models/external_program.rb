@@ -108,8 +108,8 @@ class ExternalProgram < ActiveRecord::Base
       :airtime            => self.airtime,
       :podcast_url        => self.podcast_url,
       :rss_url            => self.get_link('rss'),
-      :episodes           => self.external_episodes,
-      :segments           => self.external_segments
+      :episodes           => self.external_episodes.order("air_date desc"),
+      :segments           => self.external_segments.order("published_at desc")
     })
   end
 
