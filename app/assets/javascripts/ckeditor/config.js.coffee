@@ -1,6 +1,6 @@
 CKEDITOR.editorConfig = (config) ->
     config.extraPlugins = 'mediaembed,codemirror'
-    
+
     config.codemirror =
         # Note: All other theme CSS files have been removed from this repo.
         # "default" may be used as it is built-in.
@@ -29,16 +29,16 @@ CKEDITOR.editorConfig = (config) ->
         ['Find', 'Paste']
         ['Source', 'Maximize']
     ]
-    
 
-    config.language = 'en'
-    config.height = "400px"
-    config.width  = "635px"
-    config.bodyClass = 'ckeditor-body'
-    config.contentsCss = "/assets/application.css"
-    config.baseHref = "http://www.scpr.org/"
-    
-    config.disableNativeSpellChecker = false
-    config.forcePasteAsPlainText = true
-    
+
+    config.language     = 'en'
+    config.height       = "400px"
+    config.width        = "635px"
+    config.bodyClass    = 'ckeditor-body'
+    config.contentsCss  = "/assets/application.css"
+    config.baseHref     = "http://www.scpr.org/"
+
+    config.disableNativeSpellChecker    = false
+    config.forcePasteAsPlainText        = true
+
     true
