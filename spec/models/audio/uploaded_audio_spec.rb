@@ -28,4 +28,15 @@ describe Audio::UploadedAudio do
       audio.store_dir.should eq "upload/#{1.week.from_now.strftime('%Y/%m/%d')}"
     end
   end
+
+  describe '#mp3_file' do
+    after :each do
+      purge_uploaded_audio
+    end
+
+    it 'is the mp3 file' do
+      audio = build :uploaded_audio
+      audio.mp3_file.should eq audio.mp3.file
+    end
+  end
 end

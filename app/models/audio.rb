@@ -4,12 +4,19 @@
 # :filename and :store_dir should be present for
 # every record, even if it's not live.
 #
-# :mp3 should be present for live audio, but can be null otherwise
+# :mp3 is only for uploaded and program audio.
+# Program audio because we don't want to store all that information
+# in the table if we don't have to. The program audio gets
+# automatically detected, so we don't have any information about
+# it starting out, so we can just use the `mp3` column. For ENCO
+# audio, we already have the date and number, so we can just use
+# that to get the file.
+#
 # :enco_number, :enco_date, and :external_url are STI
 # columns that can be null depending on audio source
 #
 # The public API for an audio object should basically be:
-#
+# * mp3_file
 # * url
 # * podcast_url
 # * duration
@@ -138,6 +145,10 @@ class Audio < ActiveRecord::Base
 
   def store_dir
     typecast_clone.store_dir
+  end
+
+  def mp3_file
+    typecast_clone.mp3_file
   end
 
 
