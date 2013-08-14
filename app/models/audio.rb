@@ -82,6 +82,13 @@ class Audio < ActiveRecord::Base
   before_validation :set_type, if: -> { self.type.blank? }
 
   before_save :set_default_status, if: -> { self.status.blank? }
+
+  # For ENCO, it would be beneficial to set this every save.
+  # This would let us update the enco number/date without
+  # having to also update the path. Currently, if we updated
+  # the ENCO info and saved, the path would be wrong.
+  # Would it hurt to remove the condition? I am way too lazy
+  # to find out.
   before_save :set_path, if: -> { self.path.blank? }
 
   # Check if persisted so this doesn't get queued on destroy
