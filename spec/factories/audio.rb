@@ -13,7 +13,7 @@ FactoryGirl.define do
 
     trait :uploaded do
       content { |a| a.association :news_story }
-      mp3 File.open(Rails.application.config.scpr.media_root.join("audio/point1sec.mp3"))
+      mp3 File.open(File.join(Audio::AUDIO_PATH_ROOT, "point1sec.mp3"))
     end
 
     trait :enco do
@@ -35,7 +35,7 @@ FactoryGirl.define do
 
     trait :program do
       type "Audio::ProgramAudio" # Typecast this object since Audio#set_type doesn't do it for ProgramAudio
-      mp3 File.open(Rails.application.config.scpr.media_root.join("audio/mbrand/20121002_mbrand.mp3"))
+      mp3 File.open(File.join(Audio::AUDIO_PATH_ROOT, "mbrand/20121002_mbrand.mp3"))
     end
 
     trait :for_episode do

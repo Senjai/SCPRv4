@@ -127,7 +127,7 @@ class Audio
     end
 
     def mp3_file
-      self.mp3.file
+      self.mp3.file.file
     end
 
 

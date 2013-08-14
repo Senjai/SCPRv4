@@ -34,9 +34,31 @@ describe Audio::UploadedAudio do
       purge_uploaded_audio
     end
 
-    it 'is the mp3 file' do
+    it 'is the real, actual, no-fooling mp3 file' do
       audio = build :uploaded_audio
-      audio.mp3_file.should eq audio.mp3.file
+      audio.mp3_file.should eq audio.mp3.file.file
+    end
+  end
+
+  describe 'computing file in' do
+    after :each do
+      purge_uploaded_audio
+    end
+
+    it 'computes the duration' do
+      audio = build :uploaded_audio, mp3: File.open(File.join(Audio::AUDIO_PATH_ROOT, "2sec.mp3"))
+      audio.duration.should eq nil
+
+      audio.compute_duration
+      audio.duration.should eq 2
+    end
+
+    it 'computes the file size' do
+      audio = build :uploaded_audio, mp3: File.open(File.join(Audio::AUDIO_PATH_ROOT, "2sec.mp3"))
+      audio.size.should eq nil
+
+      audio.compute_size
+      audio.size.should be > 0
     end
   end
 end
