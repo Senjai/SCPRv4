@@ -107,7 +107,7 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   # Callbacks will handle the email/push notification
   def publish
-    self.update_attribute(:status, STATUS_PUBLISHED)
+    self.update_attributes(status: STATUS_PUBLISHED)
   end
 
 

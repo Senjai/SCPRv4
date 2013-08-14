@@ -77,7 +77,7 @@ class Edition < ActiveRecord::Base
   end
 
   def publish
-    self.update_attribute(:status, STATUS_LIVE)
+    self.update_attributes(status: STATUS_LIVE)
   end
 
   # Return the descriptive status text for this edition.

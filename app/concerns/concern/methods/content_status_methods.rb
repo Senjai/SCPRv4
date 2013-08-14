@@ -37,7 +37,7 @@ module Concern
 
       # Publish this article
       def publish
-        self.update_attribute(:status, ContentBase::STATUS_LIVE)
+        self.update_attributes(status: ContentBase::STATUS_LIVE)
       end
     end
   end
