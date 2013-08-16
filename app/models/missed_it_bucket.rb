@@ -32,6 +32,7 @@ class MissedItBucket < ActiveRecord::Base
     Rails.cache.expire_obj(self)
   end
 
+
   #--------------------
   # Sphinx  
   define_index do
