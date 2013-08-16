@@ -31,6 +31,19 @@ CKEDITOR.editorConfig = (config) ->
     ]
 
     config.extraAllowedContent = [
+        "a[*]"
+        "img[*]"
+        "strong"
+        "em"
+        "u"
+        "s"
+        "blockquote"
+        "ul"
+        "ol"
+        "li"
+        "br"
+        "i"
+        "b"
         "script[src]"
         "div"
         "iframe[*]"
