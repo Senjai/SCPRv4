@@ -26,15 +26,6 @@ GIT
     outpost-publishing (1.0.0)
 
 GIT
-  remote: git://github.com/SCPR/outpost.git
-  revision: 39c13bdd4726947d74fd1bd704300917d5b3593a
-  specs:
-    outpost-cms (0.0.3)
-      bcrypt-ruby (~> 3.0.0)
-      jquery-rails
-      rails (>= 3.2)
-
-GIT
   remote: git://github.com/SCPR/redis-content-store.git
   revision: 7838b07daee3c8ed9c1f0205e7f4fa9b4ff867c7
   specs:
@@ -56,6 +47,14 @@ GIT
     npr (2.0.0.beta)
       faraday (>= 0.8.0)
       faraday_middleware (>= 0.9.0)
+
+PATH
+  remote: /Users/bryan/projects/outpost
+  specs:
+    outpost-cms (0.0.3)
+      bcrypt-ruby (>= 3.0.0)
+      jquery-rails
+      rails (>= 3.2)
 
 GEM
   remote: https://rubygems.org/
@@ -109,7 +108,7 @@ GEM
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
     chunky_png (1.2.8)
-    ckeditor_rails (4.0.2)
+    ckeditor_rails (4.2)
       railties (>= 3.0)
     coderay (1.0.9)
     coffee-rails (3.2.2)
@@ -181,7 +180,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
     httpauth (0.2.0)
-    i18n (0.6.4)
+    i18n (0.6.5)
     ice_cube (0.11.0)
     iron_core (1.0.1)
       rest (>= 2.2.0)
@@ -210,7 +209,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     mono_logger (1.1.0)
-    multi_json (1.7.8)
+    multi_json (1.7.9)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
     mysql2 (0.3.11)
@@ -393,7 +392,7 @@ DEPENDENCIES
   capistrano
   capybara (~> 2.0)
   carrierwave (~> 0.6)
-  ckeditor_rails (~> 4.0.0)
+  ckeditor_rails (~> 4.2.0)
   coffee-rails (~> 3.2)
   compass-rails
   database_cleaner

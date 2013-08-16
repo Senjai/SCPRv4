@@ -33,4 +33,5 @@
 //= require outpost/asset_host
 //= require outpost/index_manager
 //= require outpost/global_plugins
+//= require outpost/utilities
 //= require outpost/aggregator
