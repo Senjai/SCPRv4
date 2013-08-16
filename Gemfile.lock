@@ -27,12 +27,13 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 123ec90e745fb0e7c50558b8ae5f757f4c676314
+  revision: 0927136169ec5ab973dd2fedf79d43a8ae75b827
   specs:
     outpost-cms (0.0.3)
       bcrypt-ruby (>= 3.0.0)
       jquery-rails
       rails (>= 3.2)
+      select2-rails (= 3.4.1)
 
 GIT
   remote: git://github.com/SCPR/redis-content-store.git
