@@ -19,26 +19,43 @@ module Concern
 
       included do
         include Concern::Methods::PublishingMethods
-        after_save :check_if_should_expire_cache
+        after_save :check_if_should_expire_dependencies
+        after_destroy :promise_to_expire_depencies_on_self
         after_commit :expire_cache
       end
 
+
       private
 
-      def check_if_should_expire_cache
-        reset_cache_promises
+      def promise_to_expire_depencies_on_self
+        @_will_expire_dependencies_on_self = true
+      end
 
+      def promise_to_expire_dependencies_on_new_objects
+        @_will_expire_dependencies_on_new_objects = true
+      end
+
+      def reset_expiration_promises
+        @_will_expire_dependencies_on_self = nil
+        @_will_expire_dependencies_on_new_objects = nil
+      end
+
+
+      def check_if_should_expire_dependencies
+        reset_expiration_promises
         # If we are going from "published" -> "published" (still),
         # or we are going from "published" -> "unpublished",
         # just expire this object
-        if (self.published? && !self.publishing?) || self.unpublishing?
-          @_will_expire_dependencies_on_self = true
+        if (self.published? && !self.publishing?) ||
+        self.destroyed? ||
+        self.unpublishing?
+          promise_to_expire_depencies_on_self
         end
 
         # If we are going from "not published" -> "published".
         # Expire :new keys for the object's class and contentbase
         if self.publishing?
-          @_will_expire_dependencies_on_new_objects = true
+          promise_to_expire_depencies_on_new_objects
         end
       end
 
@@ -53,14 +70,7 @@ module Concern
           Rails.cache.expire_obj("contentbase:new")
         end
 
-        reset_cache_promises
-      end
-
-
-      def reset_cache_promises
-        @_will_expire_dependencies_on_self = nil
-        @_will_expire_dependencies_on_new_objects = nil
-      end
+        reset_expiration_promises
     end # CacheExpiration
   end # Callbacks
 end # Concern
