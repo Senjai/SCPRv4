@@ -30,6 +30,26 @@ CKEDITOR.editorConfig = (config) ->
         ['Source', 'Maximize']
     ]
 
+    config.extraAllowedContent = [
+        "script[src]"
+        "div"
+        "iframe[*]"
+        "embed[*]"
+        "object[*]"
+        "cite"
+        "mark"
+        "time"
+        "dd"
+        "dl"
+        "dt"
+        "table"
+        "th"
+        "tr"
+        "td"
+        "tbody"
+        "thead"
+        "tfoot"
+    ].join(";")
 
     config.language     = 'en'
     config.height       = "400px"
