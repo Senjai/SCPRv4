@@ -45,7 +45,7 @@
 <% content_for :footer do %>
   <script type="text/javascript">
     preview = new outpost.Preview({baseUrl: '<%= @record.admin_show_path %>'});
-    outpost.Utilities.preventEnterFromSubmittingForm();
+    outpost.Utilities.preventEnterFromSubmittingForm("#<%=f.options[:html][:id]%>");
 
     newsroom = new scpr.Newsroom(
       "<%= @record.obj_key %>", // room ID

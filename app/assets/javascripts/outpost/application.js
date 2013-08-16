@@ -5,7 +5,6 @@
 //= require bootstrap-scrollspy
 //= require bootstrap-alert
 //= require bootstrap-affix
-//= require bootstrap-tooltip
 //= require bootstrap-typeahead
 //= require bootstrap-datepicker
 
