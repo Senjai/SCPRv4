@@ -12,7 +12,7 @@
     </div>
   <% end %>
 
-  <%= f.input :visible, hint: "Show this alert on the website" %>
+  <%= f.input :visible, hint: "Show this alert on the website." %>
 
   <!-- EMAIL -->
   <% if record.email_sent? %>
@@ -25,7 +25,7 @@
         An e-mail will be sent for this alert, but hasn't fired yet.
       </div>
     <% else %>
-      <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed" %>
+      <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed." %>
     <% end %>
   <% end %>
 
