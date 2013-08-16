@@ -103,7 +103,6 @@ class Event < ActiveRecord::Base
 
   #-------------------
   # Callbacks
-  after_commit :expire_cache
 
   #-------------------
   # Sphinx
