@@ -11,7 +11,7 @@ module Concern
 
       included do
         include Concern::Methods::PublishingMethods
-        after_save :expire_cache
+        after_commit :expire_cache
       end
 
       private

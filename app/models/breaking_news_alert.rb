@@ -52,7 +52,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   after_save :async_send_mobile_notification,
     :if => :should_send_mobile_notification?
 
-  after_save :expire_cache
+  after_commit :expire_cache
 
   #-------------------
   # Sphinx
