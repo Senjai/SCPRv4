@@ -71,6 +71,7 @@ module Concern
         end
 
         reset_expiration_promises
+      end
     end # CacheExpiration
   end # Callbacks
 end # Concern
