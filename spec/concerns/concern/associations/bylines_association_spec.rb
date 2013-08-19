@@ -4,7 +4,7 @@ describe Concern::Associations::BylinesAssociation do
   subject { TestClass::Story.new }
 
   describe 'adding bylines' do
-    it 'adds in custom changes', focus: true do
+    it 'makes the object dirty' do
       # create instead of build so changed? returns false
       # initially
       story  = create :test_class_story, :published
