@@ -1,6 +1,6 @@
 <div class="story content-block">
   <%= content_widget "social_tools", story, cssClass: "top horizontal" %>
-  
+
   <article>
     <header>
       <h1 class="story-headline"><%= link_to story.headline, story.public_path %></h1>
@@ -25,7 +25,7 @@
     <footer>
       <p><i><%= render_contributing_byline story %></i></p>
       <div class="visible-reader"><%= content_widget "extra_audio", story %></div>
-      
+
       <%= pij_source(story) %>
       <%= render partial: "/shared/author_info", collection: story.grouped_bylines[:primary], as: :byline %>
     </footer>
