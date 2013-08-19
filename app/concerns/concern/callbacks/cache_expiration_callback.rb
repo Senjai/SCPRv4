@@ -55,7 +55,7 @@ module Concern
         # If we are going from "not published" -> "published".
         # Expire :new keys for the object's class and contentbase
         if self.publishing?
-          promise_to_expire_depencies_on_new_objects
+          promise_to_expire_dependencies_on_new_objects
         end
       end
 
