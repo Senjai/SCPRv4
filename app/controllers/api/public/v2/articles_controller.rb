@@ -12,10 +12,10 @@ module Api::Public::V2
 
     before_filter \
       :set_conditions,
-      :set_classes, 
-      :sanitize_limit, 
-      :sanitize_page, 
-      :sanitize_query, 
+      :set_classes,
+      :sanitize_limit,
+      :sanitize_page,
+      :sanitize_query,
       :sanitize_categories,
       only: [:index]
 
@@ -23,7 +23,7 @@ module Api::Public::V2
     before_filter :sanitize_url, only: [:by_url]
 
     #---------------------------
-    
+
     def index
       @articles = ContentBase.search(@query, {
         :classes => @classes,
@@ -31,13 +31,13 @@ module Api::Public::V2
         :page    => @page,
         :with    => @conditions
       })
-      
+
       @articles = @articles.map(&:to_article)
       respond_with @articles
     end
-    
+
     #---------------------------
-    
+
     def by_url
       @article = ContentBase.obj_by_url(@url)
 
@@ -50,10 +50,10 @@ module Api::Public::V2
       respond_with @article do |format|
         format.json { render :show }
       end
-    end  
-    
+    end
+
     #---------------------------
-    
+
     def show
       @article = Outpost.obj_by_key(@obj_key)
 
@@ -69,7 +69,7 @@ module Api::Public::V2
 
     def most_viewed
       @articles = Rails.cache.read("popular/viewed")
-      
+
       if !@articles
         render_service_unavailable(
           message: "Cache not warm. Try again in a few minutes."
@@ -112,7 +112,7 @@ module Api::Public::V2
         "blogs"       => [BlogEntry],
         "segments"    => [ShowSegment]
       }
-      
+
       params[:types] ||= defaults[:types]
 
       params[:types].split(",").uniq.each do |type|
@@ -125,7 +125,7 @@ module Api::Public::V2
     end
 
     #---------------------------
-    
+
     def sanitize_query
       @query = params[:query].to_s
     end
@@ -155,7 +155,7 @@ module Api::Public::V2
       if params[:categories].present?
         slugs   = params[:categories].to_s.split(',')
         ids     = Category.where(slug: slugs).map(&:id)
-        
+
         if ids.present?
           @conditions[:category] = ids
         end
