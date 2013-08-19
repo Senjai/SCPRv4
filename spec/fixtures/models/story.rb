@@ -8,6 +8,8 @@ module TestClass
 
     self.table_name = "test_class_stories"
 
+    has_secretary
+
     include Concern::Scopes::SinceScope
     include Concern::Scopes::PublishedScope
 

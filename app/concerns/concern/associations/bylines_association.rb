@@ -12,7 +12,9 @@ module Concern
           :as           => :content,
           :class_name   => "ContentByline",
           :dependent    => :destroy,
-          :before_add   => :
+          # This has to be before_add so that the first time
+          # it's called, we can get the current (old) bylines.
+          :before_add    => :set_custom_changes
 
         accepts_nested_attributes_for :bylines,
           :allow_destroy    => true,
@@ -111,6 +113,14 @@ module Concern
         end
 
         reset_byline_index_promises
+      end
+
+
+      def set_custom_changes(byline)
+        @bylines_was ||= self.bylines
+        self.custom_changes["bylines"] ||= [[], @bylines_was.as_json]
+
+        self.custom_changes["bylines"][0].push(byline.as_json)
       end
 
       #-------------------
