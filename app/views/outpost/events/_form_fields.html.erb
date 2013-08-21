@@ -3,7 +3,7 @@
   <%= f.input :event_type, label: "Type", collection: Event.event_types_select_collection, include_blank: false %>
   <%= f.input :status, collection: Event.status_select_collection, include_blank: false %>
 
-  <%= f.input :body, input_html: { class: 'ckeditor' } %>
+  <%= f.input :body, input_html: { class: 'cke-editor-restrictive' } %>
 <% end %>
 
 <%= form_block "Date/Time" do %>
@@ -45,7 +45,7 @@
 <% end %>
 
 <%= form_block "Extra" do %>
-  <%= f.input :archive_description, input_html: { class: "ckeditor" }, hint: "Description to display after the event has happened" %>
+  <%= f.input :archive_description, input_html: { class: "cke-editor-restrictive" }, hint: "Description to display after the event has happened" %>
 <% end %>
 
 <%= f.section "assets" do %>

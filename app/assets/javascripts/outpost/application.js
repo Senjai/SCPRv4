@@ -9,6 +9,7 @@
 //= require bootstrap-datepicker
 
 //= require ckeditor-jquery
+//= require ckeditor/custom-configs
 //= require ckeditor/plugins/mediaembed/plugin
 //= require ckeditor/plugins/codemirror/plugin
 

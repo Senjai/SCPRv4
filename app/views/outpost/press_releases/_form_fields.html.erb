@@ -2,5 +2,5 @@
   <%= f.input :title, input_html: { class: "wide sluggable" } %>
   <%= f.input :short_title, hint: "Displayed on homepage and elsewhere on site" %>
   <%= f.section "slug" %>
-  <%= f.input :body, input_html: { class: "ckeditor" } %>
+  <%= f.input :body, input_html: { class: "cke-editor-restrictive" } %>
 <% end %>

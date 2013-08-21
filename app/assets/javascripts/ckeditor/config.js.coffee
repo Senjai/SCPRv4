@@ -1,3 +1,4 @@
+# Global Configuration
 CKEDITOR.editorConfig = (config) ->
     config.extraPlugins = 'mediaembed,codemirror'
 
@@ -29,24 +30,6 @@ CKEDITOR.editorConfig = (config) ->
         ['Find', 'Paste']
         ['Source', 'Maximize']
     ]
-
-    config.extraAllowedContent = [
-        "a[*]",
-        "img[*]",
-        "strong", "em",
-        "u", "s", "i", "b",
-        "blockquote",
-        "ul", "ol", "li",
-        "br",
-        "h1", "h2", "h3", "h4", "h5", "h6",
-        "script[src]",
-        "div",
-        "iframe[*]", "embed[*]", "object[*]",
-        "cite", "mark", "time",
-        "dd", "dl", "dt",
-        "table", "th", "tr", "td", "tbody", "thead", "tfoot",
-        "form[*]", "input[*]", "label[for]", "fieldset"
-    ].join(";")
 
     config.language     = 'en'
     config.height       = "400px"
