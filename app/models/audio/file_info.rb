@@ -27,8 +27,6 @@ class Audio
     # So that size won't be "blank"
     def compute_size
       return false if self.mp3_file.blank?
-
-      # Carrierwave sets this to 0 if it can't compute it
       self.size = self.mp3_file.size || 0
     end
   end
