@@ -1,24 +1,24 @@
 module Secretary
   class Version < ActiveRecord::Base
     serialize :object_changes
-    
+
     IGNORE = ["id", "created_at", "updated_at", "password_digest"]
-    
+
     belongs_to  :versioned, polymorphic: true
     belongs_to  :user, class_name: Secretary.config.user_class
-    
+
     #---------------
-    
+
     validates_presence_of :versioned
-    
+
     #---------------
 
     before_create :increment_version_number
-    
-    #---------------
-    
 
-    
+    #---------------
+
+
+
     class << self
       def should_ignore?(key)
         IGNORE.include? key
@@ -35,9 +35,10 @@ module Secretary
           :object_changes   => object.changes
         )
       end
-      
-      #---------------
-      
+
+
+      private
+
       def generate_description(object)
         case object.action
         when :create
@@ -66,7 +67,7 @@ module Secretary
         changes.each do |attribute, values|
           # values is [previous_value, new_value]
           diff = Diffy::Diff.new(values[0].to_s, values[1].to_s)
-          
+
           if diff.string1 != diff.string2
             attribute_diffs[attribute] = diff
           end
@@ -74,13 +75,6 @@ module Secretary
 
         attribute_diffs
       end
-    end
-
-    #---------------
-
-    def increment_version_number
-      latest_version = versioned.versions.order("version_number").last
-      self.version_number = latest_version.try(:version_number).to_i + 1
     end
 
     #---------------
@@ -95,11 +89,19 @@ module Secretary
     def siblings
       @siblings ||= versioned.versions.order("version_number desc").where("version_number != ?", self.version_number)
     end
-    
+
     #---------------
     # Look for the closest version below the current one
     def previous_version
       @previous_version ||= self.siblings.where("version_number < ?", self.version_number).first
+    end
+
+
+    private
+
+    def increment_version_number
+      latest_version = versioned.versions.order("version_number").last
+      self.version_number = latest_version.try(:version_number).to_i + 1
     end
   end
 end

@@ -3,16 +3,86 @@ require "spec_helper"
 describe Concern::Associations::BylinesAssociation do
   subject { TestClass::Story.new }
 
-  describe 'adding bylines' do
-    it 'makes the object dirty' do
+  describe 'versioning' do
+    pending
+
+    it 'makes the object dirty and adds a version when adding' do
       # create instead of build so changed? returns false
       # initially
       story  = create :test_class_story, :published
-      byline = create :byline
+      # The factory creates content automatically, so set it to nil
+      byline = build :byline, content: nil
       story.changed?.should eq false
 
       story.bylines << byline
       story.changed?.should eq true
+      story.save!
+
+      versions = story.versions.order("version_number").to_a
+      versions.size.should eq 2
+      versions.last.object_changes["bylines"][0].should_not be_present
+      versions.last.object_changes["bylines"][1].should be_present
+    end
+
+    it 'makes the object dirty and adds a version when removing' do
+      story  = build :test_class_story, :published
+      byline = create :byline, content: nil
+      story.bylines << byline
+      story.save!
+
+      story.changed?.should eq false
+      story.bylines.destroy_all
+      story.changed?.should eq true
+      story.save!
+
+      versions = story.versions.order("version_number").to_a
+      versions.size.should eq 2
+      versions.last.object_changes["bylines"][0].should be_present
+      versions.last.object_changes["bylines"][1].should_not be_present
+    end
+  end
+
+  describe 'form input' do
+    pending
+
+    it 'destroys the object if the _destroy flag is set', focus: true do
+      story     = create :test_class_story # 1
+      byline1   = create :byline, content: nil
+      byline2   = create :byline, content: nil
+      story.bylines << [byline1, byline2]
+      story.save! # 2
+      story.bylines.count.should eq 2
+
+      bio = create :bio
+
+      # Fake the params.
+      story.update_attributes("bylines_attributes" => {
+        "0" => {
+          "user_id"     => bio.id.to_s,
+          "name"        => "",
+          "role"        => "0",
+          "_destroy"    => "0",
+          "id"          => byline1.id
+        },
+        "1" => {
+          "user_id"     => bio.id.to_s,
+          "name"        => "",
+          "role"        => "0",
+          "_destroy"    => "1",
+          "id"          => byline2.id.to_s
+        },
+        "2" => {
+          "user_id"     => "",
+          "name"        => "",
+          "role"        => "0",
+          "_destroy"    => "0"
+        }
+      }) # 3
+
+      story.bylines.count.should eq 1
+      story.versions.count.should eq 3
+
+      story.versions.last.object_changes["bylines"][0]
     end
   end
 

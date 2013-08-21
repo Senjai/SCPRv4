@@ -22,8 +22,9 @@ module Secretary
 
       before_create :set_create
       before_update :set_update
-      after_save    :generate_version, if: -> { self.changes.present? }
+      after_save    :generate_version, if: -> { self.changed? }
       after_save    :clean_action
+      after_commit  :clear_custom_changes
 
       send :include, InstanceMethods
     end
@@ -65,7 +66,24 @@ module Secretary
         @custom_changes ||= HashWithIndifferentAccess.new
       end
 
-      #-----------
+
+      private
+
+      # Collection is the original collection
+      def build_custom_changes_for_association(association, collection)
+        collection ||= []
+        original = collection.as_json
+        current  = self.send(association).as_json
+
+        if original != current
+          self.custom_changes[association] = [original, current]
+        end
+      end
+
+
+      def clear_custom_changes
+        self.custom_changes.clear
+      end
 
       def set_create
         self.action = :create
@@ -74,8 +92,6 @@ module Secretary
       def set_update
         self.action = :update
       end
-
-      #-----------
 
       def clean_action
         @action = nil
