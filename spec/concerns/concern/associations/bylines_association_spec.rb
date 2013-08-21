@@ -4,9 +4,9 @@ describe Concern::Associations::BylinesAssociation do
   subject { TestClass::Story.new }
 
   describe 'versioning' do
-    pending
-
     it 'makes the object dirty and adds a version when adding' do
+      pending
+
       # create instead of build so changed? returns false
       # initially
       story  = create :test_class_story, :published
@@ -25,6 +25,8 @@ describe Concern::Associations::BylinesAssociation do
     end
 
     it 'makes the object dirty and adds a version when removing' do
+      pending
+
       story  = build :test_class_story, :published
       byline = create :byline, content: nil
       story.bylines << byline
@@ -43,9 +45,9 @@ describe Concern::Associations::BylinesAssociation do
   end
 
   describe 'form input' do
-    pending
-
     it 'destroys the object if the _destroy flag is set', focus: true do
+      pending
+
       story     = create :test_class_story # 1
       byline1   = create :byline, content: nil
       byline2   = create :byline, content: nil
