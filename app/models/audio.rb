@@ -93,7 +93,9 @@ class Audio < ActiveRecord::Base
 
   # Check if persisted so this doesn't get queued on destroy
   after_commit :async_compute_file_info, if: -> {
-    self.persisted? && (self.size.blank? || self.duration.blank?)
+    self.persisted? &&
+    self.mp3_file.present? &&
+    (self.size.blank? || self.duration.blank?)
   }
 
 
