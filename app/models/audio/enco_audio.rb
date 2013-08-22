@@ -40,9 +40,10 @@ class Audio
       self.save!
 
       if self.live?
-        log "Set Audio ##{self.id} to Live: #{self.full_path}"
+        log "Set #{self.class.name} ##{self.id} to Live: #{self.full_path}"
       else
-        log "Still awaiting audio file for Audio ##{self.id}: #{self.full_path}"
+        log "Still awaiting audio file for #{self.class.name} ##{self.id}: " \
+            "#{self.full_path}"
       end
     end
 
