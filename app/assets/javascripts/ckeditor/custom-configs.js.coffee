@@ -10,9 +10,9 @@ $ ->
         extraAllowedContent: [
             "a[*]",
             "img[*]",
-            "strong", "em",
+            "strong", "em", "small",
             "u", "s", "i", "b",
-            "blockquote", "small",
+            "blockquote",
             "ul", "ol", "li",
             "br",
             "h1", "h2", "h3", "h4", "h5", "h6",
