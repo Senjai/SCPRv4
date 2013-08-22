@@ -91,8 +91,7 @@ class Program
   # This is lame but necessary
   # Some programs (filmweek, business update) don't use
   # episodes, but instead use Segments as their "episodes".
-  def has_episodes?
-    !self.episodes.empty? &&
+  def uses_segments_as_episodes?
     !self.display_episodes? &&
     self.display_segments?
   end

@@ -31,7 +31,7 @@ describe Api::Public::V2::EpisodesController do
       assigns(:episodes).should eq [episode1].map(&:to_episode)
     end
 
-    it 'uses the segments if the program has_episodes? is false' do
+    it 'uses the segments if the program uses_segments_as_episodes? is true' do
       program = create :kpcc_program, :segmented
       segment = create :show_segment, show: program
 
@@ -67,7 +67,7 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'sorts the episodes by descending air_date for kpcc programs' do
-      program   = create :kpcc_program, :episodic
+      program   = create :kpcc_program, display_segments: false, display_episodes: true
       episode2  = create :show_episode, show: program, air_date: Time.now.yesterday
       episode1  = create :show_episode, show: program, air_date: Time.now.tomorrow
 
@@ -104,6 +104,14 @@ describe Api::Public::V2::EpisodesController do
 
       get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
+    end
+
+    it 'can filter by air date for segmented programs' do
+      program = create :kpcc_program, display_segments: true, display_episodes: false
+      segment = create :show_segment, show: program, published_at: Time.new(2013, 6, 25)
+
+      get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)
+      assigns(:episodes).should eq [segment].map(&:to_episode)
     end
 
     it "sanitizes the limit" do

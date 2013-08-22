@@ -36,25 +36,23 @@ describe Program do
     end
   end
 
-  describe '#has_episodes?' do
-    it 'is false if it does not use episodes' do
+  describe '#uses_segments_as_episodes?' do
+    it 'is false if it shows episodes' do
       program = Program.new({
-        :display_segments => true,
-        :display_episodes => false,
-        :episodes => []
+        :display_episodes => true,
+        :display_segments => true
       })
 
-      program.uses_episodes?.should eq false
+      program.uses_segments_as_episodes?.should eq false
     end
 
-    it 'is true if it uses episodes' do
+    it 'is true if it does not show episodes, and shows segments' do
       program = Program.new({
-        :display_segments => true,
-        :display_episodes => true,
-        :episodes => [1, 2, 3]
+        :display_episodes => false,
+        :display_segments => true
       })
 
-      program.has_episodes?.should eq true
+      program.uses_segments_as_episodes?.should eq true
     end
   end
 end
