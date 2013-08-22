@@ -10,9 +10,12 @@ module Concern
   module Scopes
     module PublishedScope
       extend ActiveSupport::Concern
-      
+
       included do
-        scope :published, -> { where(status: ContentBase::STATUS_LIVE).order("published_at desc") }
+        scope :published, -> {
+          where(status: ContentBase::STATUS_LIVE)
+          .order("published_at desc")
+        }
       end
     end # PublishedScope
   end # Scopes
