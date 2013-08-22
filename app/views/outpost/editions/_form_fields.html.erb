@@ -19,7 +19,7 @@
         apiType: "private",
         params: {
           limit: 20,
-          types: 'news,blogs,segments,abstracts',
+          types: 'news,blogs,segments,shells,abstracts',
           token: "<%= Rails.application.config.api['assethost']['token'] %>",
           order: "updated_at", // Since Abstracts use the article's original publish date as its "public_datetime"
           sort_mode: "desc",

@@ -1,5 +1,5 @@
 module Api::Private::V2
-  VERSION   = Gem::Version.new("2.2.0")
+  VERSION   = Gem::Version.new("2.3.0")
   TYPE      = "private"
 
   class BaseController < ::ActionController::Base
