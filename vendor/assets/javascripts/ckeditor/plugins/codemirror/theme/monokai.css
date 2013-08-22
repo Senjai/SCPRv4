@@ -26,3 +26,5 @@
   text-decoration: underline;
   color: white !important;
 }
+
+.CodeMirror .activeline { background: #4B4949 !important; }

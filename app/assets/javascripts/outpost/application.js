@@ -10,8 +10,6 @@
 
 //= require ckeditor-jquery
 //= require ckeditor/custom-configs
-//= require ckeditor/plugins/mediaembed/plugin
-//= require ckeditor/plugins/codemirror/plugin
 
 //= require outpost/base
 //= require outpost/asset_host/assethostbase
