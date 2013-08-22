@@ -1,5 +1,5 @@
-<% 
-  if !defined?(full) 
+<%
+  if !defined?(full)
     full = params[:id].present?
   end
 %>
@@ -16,14 +16,14 @@
             <%= render_byline entry %> <span class="pipe">|</span> <%= timestamp(entry.published_at) %>
           </span>
         </header>
-    
+
         <div class="story-body">
           <div class="visible-reader"><%= content_widget "primary_audio", entry %></div>
-          
+
           <%= render_asset entry, "blog" %>
           <%= entry.send(full ? :body : :extended_teaser).html_safe %>
         </div>
-    
+
         <footer>
           <p><i><%= render_contributing_byline entry %></i></p>
           <div class="visible-reader"><%= content_widget "extra_audio", entry %></div>

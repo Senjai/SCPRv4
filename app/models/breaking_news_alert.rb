@@ -24,8 +24,8 @@ class BreakingNewsAlert < ActiveRecord::Base
     STATUS_PUBLISHED    => "Published"
   }
 
-  PARSE_CHANNEL = "breakingNews"
-
+  PARSE_CHANNEL         = "breakingNews"
+  FRAGMENT_EXPIRE_KEY   = "layout/breaking_news_alert"
 
   #-------------------
   # Scopes
@@ -52,7 +52,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   after_save :async_send_mobile_notification,
     :if => :should_send_mobile_notification?
 
-  after_save :expire_cache
+  after_commit :expire_alert_fragment
 
   #-------------------
   # Sphinx
@@ -84,14 +84,13 @@ class BreakingNewsAlert < ActiveRecord::Base
     def eloqua_config
       @eloqua_config ||= Rails.application.config.api['eloqua']['attributes']
     end
+
+    def expire_alert_fragment
+      Rails.cache.expire_obj(FRAGMENT_EXPIRE_KEY)
+    end
   end
 
   #-------------------
-
-  def expire_cache
-    Rails.cache.expire_obj("layout/breaking_news_alert")
-  end
-
 
   def published?
     self.status == STATUS_PUBLISHED
@@ -276,5 +275,9 @@ class BreakingNewsAlert < ActiveRecord::Base
     self.published? &&
     self.send_mobile_notification? &&
     !self.mobile_notification_sent?
+  end
+
+  def expire_alert_fragment
+    BreakingNewsAlert.expire_alert_fragment
   end
 end

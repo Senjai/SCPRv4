@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130813232129) do
+ActiveRecord::Schema.define(:version => 20130816052703) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -381,10 +381,10 @@ ActiveRecord::Schema.define(:version => 20130813232129) do
     t.datetime "updated_at",                                                        :null => false
     t.text     "teaser",                   :limit => 2147483647,                    :null => false
     t.string   "alert_url",                :limit => 200,                           :null => false
-    t.boolean  "send_email",                                                        :null => false
+    t.boolean  "send_email",                                     :default => false, :null => false
     t.boolean  "visible",                                                           :null => false
-    t.boolean  "send_mobile_notification",                       :default => false
-    t.boolean  "mobile_notification_sent",                       :default => false
+    t.boolean  "send_mobile_notification",                       :default => false, :null => false
+    t.boolean  "mobile_notification_sent",                       :default => false, :null => false
     t.integer  "status"
     t.datetime "published_at"
   end

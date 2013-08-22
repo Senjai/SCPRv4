@@ -5,13 +5,11 @@
 //= require bootstrap-scrollspy
 //= require bootstrap-alert
 //= require bootstrap-affix
-//= require bootstrap-tooltip
 //= require bootstrap-typeahead
 //= require bootstrap-datepicker
 
 //= require ckeditor-jquery
-//= require ckeditor/plugins/mediaembed/plugin
-//= require ckeditor/plugins/codemirror/plugin
+//= require ckeditor/custom-configs
 
 //= require outpost/base
 //= require outpost/asset_host/assethostbase
@@ -33,4 +31,5 @@
 //= require outpost/asset_host
 //= require outpost/index_manager
 //= require outpost/global_plugins
+//= require outpost/utilities
 //= require outpost/aggregator

@@ -27,12 +27,13 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 39c13bdd4726947d74fd1bd704300917d5b3593a
+  revision: 0927136169ec5ab973dd2fedf79d43a8ae75b827
   specs:
     outpost-cms (0.0.3)
-      bcrypt-ruby (~> 3.0.0)
+      bcrypt-ruby (>= 3.0.0)
       jquery-rails
       rails (>= 3.2)
+      select2-rails (= 3.4.1)
 
 GIT
   remote: git://github.com/SCPR/redis-content-store.git
@@ -109,7 +110,7 @@ GEM
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
     chunky_png (1.2.8)
-    ckeditor_rails (4.0.2)
+    ckeditor_rails (4.2)
       railties (>= 3.0)
     coderay (1.0.9)
     coffee-rails (3.2.2)
@@ -181,7 +182,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
     httpauth (0.2.0)
-    i18n (0.6.4)
+    i18n (0.6.5)
     ice_cube (0.11.0)
     iron_core (1.0.1)
       rest (>= 2.2.0)
@@ -208,9 +209,9 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.1)
-    mime-types (1.23)
+    mime-types (1.24)
     mono_logger (1.1.0)
-    multi_json (1.7.8)
+    multi_json (1.7.9)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
     mysql2 (0.3.11)
@@ -388,12 +389,12 @@ PLATFORMS
 
 DEPENDENCIES
   asset_host_client!
-  bcrypt-ruby (~> 3.0)
+  bcrypt-ruby (~> 3.0.0)
   bootstrap-sass (~> 2.2)
   capistrano
   capybara (~> 2.0)
   carrierwave (~> 0.6)
-  ckeditor_rails (~> 4.0.0)
+  ckeditor_rails (~> 4.2.0)
   coffee-rails (~> 3.2)
   compass-rails
   database_cleaner

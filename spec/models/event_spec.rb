@@ -160,7 +160,7 @@ describe Event do
 
   #-------------------
 
-  describe "#closest" do # TODO All the scopes are ugly and inefficient
+  describe "::closest" do # TODO All the scopes are ugly and inefficient
     it "returns the closest published future event" do
       events  = create_list :event, 5, :published
       closest = Event.closest

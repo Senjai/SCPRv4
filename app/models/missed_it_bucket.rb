@@ -26,11 +26,12 @@ class MissedItBucket < ActiveRecord::Base
 
   #--------------------
   # Callbacks
-  after_save :expire_cache
+  after_commit :expire_cache
 
   def expire_cache
     Rails.cache.expire_obj(self)
   end
+
 
   #--------------------
   # Sphinx  

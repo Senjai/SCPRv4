@@ -4,12 +4,19 @@
 # :filename and :store_dir should be present for
 # every record, even if it's not live.
 #
-# :mp3 should be present for live audio, but can be null otherwise
+# :mp3 is only for uploaded and program audio.
+# Program audio because we don't want to store all that information
+# in the table if we don't have to. The program audio gets
+# automatically detected, so we don't have any information about
+# it starting out, so we can just use the `mp3` column. For ENCO
+# audio, we already have the date and number, so we can just use
+# that to get the file.
+#
 # :enco_number, :enco_date, and :external_url are STI
 # columns that can be null depending on audio source
 #
 # The public API for an audio object should basically be:
-#
+# * mp3_file
 # * url
 # * podcast_url
 # * duration
@@ -75,11 +82,19 @@ class Audio < ActiveRecord::Base
   before_validation :set_type, if: -> { self.type.blank? }
 
   before_save :set_default_status, if: -> { self.status.blank? }
+
+  # For ENCO, it would be beneficial to set this every save.
+  # This would let us update the enco number/date without
+  # having to also update the path. Currently, if we updated
+  # the ENCO info and saved, the path would be wrong.
+  # Would it hurt to remove the condition? I am way too lazy
+  # to find out.
   before_save :set_path, if: -> { self.path.blank? }
 
   # Check if persisted so this doesn't get queued on destroy
   after_commit :async_compute_file_info, if: -> {
-    self.persisted? && (self.size.blank? || self.duration.blank?)
+    self.persisted? &&
+    (self.size.blank? || self.duration.blank?)
   }
 
 
@@ -138,6 +153,10 @@ class Audio < ActiveRecord::Base
 
   def store_dir
     typecast_clone.store_dir
+  end
+
+  def mp3_file
+    typecast_clone.mp3_file
   end
 
 
@@ -240,7 +259,6 @@ class Audio < ActiveRecord::Base
         "old audio.")
     end
   end
-
 
   def typecast_clone
     if self.class.name != self.type

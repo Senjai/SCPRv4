@@ -4,7 +4,7 @@
 #
 # Yes, I know this a terribly-named class.
 class EditionSlot < ActiveRecord::Base
-  belongs_to :edition
+  belongs_to :edition, touch: true
   belongs_to :item, polymorphic: true
 
   # We can't use the one from outpost-aggregator right now,

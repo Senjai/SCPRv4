@@ -48,7 +48,9 @@ class Abstract < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::AudioAssociation
+  include Concern::Associations::EditionsAssociation
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Callbacks::TouchCallback
 
   validates :source, presence: true
   validates :url, presence: true, url: true

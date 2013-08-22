@@ -32,5 +32,9 @@ class Audio
     def filename
       self.mp3.file.filename
     end
+
+    def mp3_file
+      self.mp3.file.file
+    end
   end # UploadedAudio
 end # Audio

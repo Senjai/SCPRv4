@@ -1,5 +1,5 @@
 <%= form_block "Full Details" do %>
   <%= f.input :headline, input_html: { class: "wide sluggable" } %>
-  <%= f.input :body, input_html: { class: "ckeditor" } %>
+  <%= f.input :body, input_html: { class: "cke-editor-restrictive" } %>
   <%= extra %>
 <% end %>

@@ -5,6 +5,7 @@
 #
 class Audio
   class EncoAudio < Audio
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
     include Audio::Paths
     include Audio::FileInfo
 
@@ -15,63 +16,38 @@ class Audio
 
     SYNC_THRESHOLD = 2.weeks
 
+    # We want to set this on save so that it will associate immediately
+    # when it's created if it exists.
     before_save :set_status
 
 
     class << self
-      include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
-
       def default_status
         STATUS_WAIT
       end
 
-
       # This method is used by Job::SyncAudio
       def bulk_sync
         limit     = SYNC_THRESHOLD.ago
-        synced    = 0
-
         awaiting  = self.awaiting_audio.where("created_at > ?", limit)
-
-        if awaiting.empty?
-          log "No Audio to sync."
-          return false
-        end
-
-        awaiting.each do |audio|
-          synced += 1 if audio.sync
-        end
-
-        log "Finished. Total synced: #{synced}"
+        awaiting.each(&:sync)
       end
-
-      add_transaction_tracer :bulk_sync, category: :task
     end # singleton
 
 
-
     def sync
-      begin
-        if File.exists?(self.full_path)
-          write_attribute(:mp3, self.filename)
-          self.save!
+      # The callback will set the status
+      self.save!
 
-          log "Saved Audio ##{self.id}: #{self.full_path}"
-          self
-        else
-          log "Still awaiting audio file for Audio ##{self.id}: #{self.full_path}"
-          false
-        end
-      rescue => e
-        if Rails.env.test?
-          raise e
-        else
-          log "Could not save Audio ##{self.id}: #{e}"
-          NewRelic.log_error(e)
-          return false
-        end
+      if self.live?
+        log "Set #{self.class.name} ##{self.id} to Live: #{self.full_path}"
+      else
+        log "Still awaiting audio file for #{self.class.name} ##{self.id}: " \
+            "#{self.full_path}"
       end
     end
+
+    add_transaction_tracer :sync, category: :task
 
 
     def store_dir
@@ -83,15 +59,19 @@ class Audio
       "#{date}_features#{self.enco_number}.mp3"
     end
 
+    def mp3_file
+      File.open(self.full_path) if mp3_exists?
+    end
+
 
     private
 
     def set_status
-      if self.mp3.present?
-        self.status = STATUS_LIVE
-      else
-        self.status = STATUS_WAIT
-      end
+      self.status = mp3_exists? ? STATUS_LIVE : STATUS_WAIT
+    end
+
+    def mp3_exists?
+      File.exists?(self.full_path)
     end
   end # EncoAudio
 end # Audio

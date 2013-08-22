@@ -1,10 +1,14 @@
 module AuthenticationHelper
   # For features
   def login(options={})
-    @user = create :admin_user, options.reverse_merge!(username: "bricker", password: "secret55")
+    username = options[:username] || "bricker"
+    password = options[:password] || "secret55"
+    @user = create :admin_user, username: username, password: password
+
     visit outpost_login_path
-    fill_in "username", with: @user.username
-    fill_in "password", with: "secret55"
+
+    fill_in "username", with: username
+    fill_in "password", with: password
     click_button "Submit"
   end
 end

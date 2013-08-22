@@ -43,25 +43,6 @@ class Audio
     end
 
 
-    def compute_duration
-      if self.mp3_file.present?
-        Mp3Info.open(self.mp3_file) do |file|
-          self.duration = file.length || 0
-        end
-      else
-        self.duration = 0
-      end
-    end
-
-    def compute_size
-      if self.mp3_file.present?
-        self.size = self.mp3_file.size || 0
-      else
-        self.size = 0
-      end
-    end
-
-
     def mp3_file
       @mp3_file ||= begin
         Timeout.timeout(TIMEOUT) { open(self.external_url) }

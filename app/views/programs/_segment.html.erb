@@ -17,21 +17,21 @@
             <%= render_byline segment %> <span class="pipe">|</span> <%= timestamp(segment.published_at) %></time>
           </span>
         </header>
-    
+
         <div class="story-body">
           <div class="visible-reader"><%= content_widget "primary_audio", segment %></div>
           <%= render_asset segment, "segment" %>
           <%= segment.body.html_safe %>
           <br style="clear: both"/>
         </div>
-        
+
         <footer>
           <div class="visible-reader"><%= content_widget "extra_audio", segment %></div>
 
           <%= pij_source(segment) %>
         </footer>
       </article><!-- article.segment -->
-    
+
       <%= content_widget "social_tools", segment, cssClass: "bottom horizontal" %>
     </div> <!-- span -->
   </div> <!-- row fluid -->

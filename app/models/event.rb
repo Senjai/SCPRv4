@@ -103,7 +103,6 @@ class Event < ActiveRecord::Base
 
   #-------------------
   # Callbacks
-  after_save :expire_cache
 
   #-------------------
   # Sphinx
@@ -133,27 +132,22 @@ class Event < ActiveRecord::Base
     def status_select_collection
       STATUS_TEXT.map { |k, v| [v, k] }
     end
-  end
 
-  # -------------------
+    def sorted(events, direction=:asc)
+      case direction
+      when :asc
+        events.sort { |a,b| a.sorter <=> b.sorter }
+      when :desc
+        events.sort { |a,b| b.sorter <=> a.sorter }
+      end
+    end
 
-  def expire_cache
-    if self.published?
-      Rails.cache.expire_obj(self)
-      Rails.cache.expire_obj("events/event:new") if self.new_record?
+    def closest
+      upcoming.first
     end
   end
 
   # -------------------
-
-  def self.sorted(events, direction=:asc)
-    case direction
-    when :asc
-      events.sort { |a,b| a.sorter <=> b.sorter }
-    when :desc
-      events.sort { |a,b| b.sorter <=> a.sorter }
-    end
-  end
 
   def sorter
     ongoing? ? ends_at : starts_at
@@ -177,12 +171,6 @@ class Event < ActiveRecord::Base
     end
 
     ((endt - starts_at) / 60).floor
-  end
-
-  # -------------------
-
-  def self.closest
-    upcoming.first
   end
 
   # -------------------

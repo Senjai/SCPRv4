@@ -119,8 +119,15 @@ class Audio
       self.content.show.audio_dir
     end
 
+    # We store this in the "mp3" column because we want to
+    # be able to, and can, detect the audio automatically without
+    # having to store the info in the audio table.
     def filename
       self.mp3.file.filename
+    end
+
+    def mp3_file
+      self.mp3.file.file
     end
 
 

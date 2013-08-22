@@ -6,7 +6,7 @@ module Concern
   module Associations
     module BylinesAssociation
       extend ActiveSupport::Concern
-      
+
       included do
         has_many :bylines,
           :as           => :content,
@@ -26,9 +26,9 @@ module Concern
           .where(ContentByline.table_name => { user_id: bio_id })
         }
 
-        # TODO Only enqueue this if bylines changed
-        after_save :enqueue_sphinx_index_for_bylines
-        after_destroy :enqueue_sphinx_index_for_bylines
+        after_save :promise_to_index_bylines, if: -> { self.changed? }
+        after_destroy :promise_to_index_bylines
+        after_commit :enqueue_sphinx_index_for_bylines
       end
 
       #-------------------
@@ -36,7 +36,7 @@ module Concern
       def byline
         ContentByline.digest self.joined_bylines
       end
-      
+
       #-------------------
       # Default byline extras
       # This can be overridden
@@ -56,7 +56,7 @@ module Concern
           }
         end
       end
-      
+
       #-------------------
       # Join the bylines in each role passed in,
       # turning it into a string
@@ -66,13 +66,13 @@ module Concern
       # Otherwise, it will just use the display_name
       #
       # Note that because the :extra role is assumed
-      # to just be an array of strings, it will always 
+      # to just be an array of strings, it will always
       # just be joined and isn't passed into the block.
       #
       # Returns a hash
       def joined_bylines(&block)
         elements = {}
-        
+
         # Go through each role and either pass that role's bylines
         # to the block, or just map to the display_name
         # Then convert to_sentence and push into elements
@@ -85,19 +85,55 @@ module Concern
             strings = (block_given? ? yield(bylines) : bylines.map(&:display_name))
             strings.reject { |e| e.blank? }.to_sentence
           end
-          
+
           elements[role] = string
         end
 
         elements
       end
-      
-      #-------------------
+
 
       private
 
+      def promise_to_index_bylines
+        @_will_index_bylines = true
+      end
+
+      def reset_byline_index_promises
+        @_will_index_bylines = nil
+      end
+
       def enqueue_sphinx_index_for_bylines
-        Indexer.enqueue("ContentByline")
+        if @_will_index_bylines
+          Indexer.enqueue("ContentByline")
+        end
+
+        reset_byline_index_promises
+      end
+
+
+      # We can't really assume that anything with a byline will
+      # be versioned, so we should check first.
+      def build_custom_changes_for_bylines
+        binding.pry
+        if self.class.has_secretary?
+          build_custom_changes_for_association("bylines", @bylines_were)
+        end
+
+        @bylines_were = nil
+      end
+
+      # This will get called before any changes are made
+      # to the bylines
+      def get_original_bylines(_)
+        @bylines_were ||= self.bylines.to_a
+      end
+
+      # We want to make the model aware that it is dirty.
+      def force_bylines_into_changes(_)
+        if self.class.has_secretary?
+          self.changed_attributes["bylines"] = self.bylines
+        end
       end
 
       #-------------------
@@ -106,7 +142,7 @@ module Concern
         attributes['user_id'].blank? &&
         attributes['name'].blank?
       end
-      
+
       #-------------------
       # Get the record's bylines, filtered by role.
       # This is to prevent multiple database queries.
