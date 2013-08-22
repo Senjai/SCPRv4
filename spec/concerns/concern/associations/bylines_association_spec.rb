@@ -45,7 +45,7 @@ describe Concern::Associations::BylinesAssociation do
   end
 
   describe 'form input' do
-    it 'destroys the object if the _destroy flag is set', focus: true do
+    it 'destroys the object if the _destroy flag is set' do
       pending
 
       story     = create :test_class_story # 1
