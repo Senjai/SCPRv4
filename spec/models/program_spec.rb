@@ -35,4 +35,26 @@ describe Program do
       expect { Program.find_by_slug!("lolnope") }.to raise_error ActiveRecord::RecordNotFound
     end
   end
+
+  describe '#has_episodes?' do
+    it 'is false if it does not use episodes' do
+      program = Program.new({
+        :display_segments => true,
+        :display_episodes => false,
+        :episodes => []
+      })
+
+      program.uses_episodes?.should eq false
+    end
+
+    it 'is true if it uses episodes' do
+      program = Program.new({
+        :display_segments => true,
+        :display_episodes => true,
+        :episodes => [1, 2, 3]
+      })
+
+      program.has_episodes?.should eq true
+    end
+  end
 end

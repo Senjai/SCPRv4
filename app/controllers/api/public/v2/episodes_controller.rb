@@ -18,16 +18,29 @@ module Api::Public::V2
     MAX_RESULTS = 8
 
     #---------------------------
-
+    # This is a disaster.
     def index
-      @episodes = @program ? @program.episodes : ShowEpisode.published
-      @episodes = @episodes.page(@page).per(@limit)
-
-      if @air_date
-        @episodes = @episodes.for_air_date(@air_date)
+      if @program
+        if @program.has_episodes?
+          @episodes = @program.episodes
+          if @air_date
+            @episodes = @episodes.for_air_date(@air_date)
+          end
+        else
+          @episodes = @program.segments
+          if @air_date
+            @episodes = @episodes.where(
+              'date(published_at) = date(?)', @air_date
+            )
+          end
+        end
+      else
+        @episodes = ShowEpisode.published
       end
 
-      @episodes = @episodes.map(&:to_episode)
+      # If these two things are true, then we can assume that the program
+      # uses segments as its episodes (filmweek, business update, etc.)
+      @episodes = @episodes.page(@page).per(@limit).map(&:to_episode)
       respond_with @episodes
     end
 
