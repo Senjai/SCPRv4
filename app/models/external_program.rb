@@ -109,7 +109,10 @@ class ExternalProgram < ActiveRecord::Base
       :podcast_url        => self.podcast_url,
       :rss_url            => self.get_link('rss'),
       :episodes           => self.external_episodes.order("air_date desc"),
-      :segments           => self.external_segments.order("published_at desc")
+      :segments           => self.external_segments.order("published_at desc"),
+      # External Programs are always assumed to have episodes.
+      # Maybe this isn't always the case, but this is okay for now.
+      :display_episodes   => true
     })
   end
 

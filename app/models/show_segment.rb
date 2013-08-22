@@ -168,6 +168,27 @@ class ShowSegment < ActiveRecord::Base
     })
   end
 
+  # This is a total hack, but unfortunately a necessary one
+  # until we can fix the workflow of programs like filmweek:
+  # those which use segments as episodes, and don't have any
+  # literal "Episodes". What they should do (and basically
+  # what we're mimicking here) is create an episode with a
+  # single segment.
+  # This just wraps itself in an Episode.
+  def to_episode
+    @to_episode ||= Episode.new({
+      :original_object    => self,
+      :id                 => "#{self.obj_key}:as_episode",
+      :program            => self.show.to_program,
+      :title              => self.short_headline,
+      :summary            => self.teaser,
+      :air_date           => self.published_at,
+      :assets             => self.assets,
+      :audio              => self.audio,
+      :segments           => Array(self)
+    })
+  end
+
   #-------------------
 
   def to_abstract
