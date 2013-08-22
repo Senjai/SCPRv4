@@ -115,6 +115,7 @@ class ContentShell < ActiveRecord::Base
       :category           => self.category,
       :assets             => self.assets,
       :attributions       => self.bylines,
+      :byline             => self.byline,
       :edit_url           => self.admin_edit_url
     })
   end

@@ -31,6 +31,14 @@ describe Api::Public::V2::EpisodesController do
       assigns(:episodes).should eq [episode1].map(&:to_episode)
     end
 
+    it 'uses the segments if the program has_episodes? is false' do
+      program = create :kpcc_program, :segmented
+      segment = create :show_segment, show: program
+
+      get :index, { program: program.slug }.merge(request_params)
+      assigns(:episodes).should eq [segment].map(&:to_episode)
+    end
+
     it "returns the latest KPCC episodes by default" do
       kpcc_episodes       = create_list :show_episode, 2
       external_episodes   = create_list :external_episode, 2
@@ -40,7 +48,7 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it "only gets published episodes" do
-      published = create :show_episode, :published
+      published   = create :show_episode, :published
       unpublished = create :show_episode, :draft
 
       get :index, request_params
@@ -48,8 +56,8 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'can filter by program slug' do
-      program1 = create :kpcc_program, slug: 'hello'
-      program2 = create :kpcc_program, slug: 'goodbye'
+      program1 = create :kpcc_program, :episodic, slug: 'hello'
+      program2 = create :kpcc_program, :episodic,  slug: 'goodbye'
 
       episode1 = create :show_episode, show: program1
       episode2 = create :show_episode, show: program2
@@ -59,7 +67,7 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'sorts the episodes by descending air_date for kpcc programs' do
-      program   = create :kpcc_program
+      program   = create :kpcc_program, :episodic
       episode2  = create :show_episode, show: program, air_date: Time.now.yesterday
       episode1  = create :show_episode, show: program, air_date: Time.now.tomorrow
 
