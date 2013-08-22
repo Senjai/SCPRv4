@@ -11,7 +11,7 @@
       </div>
     <% end %>
   </section>
-  
+
   <%= render "/programs/archive_select", program: @kpcc_program %>
   <% if flash[:alert] %>
     <h4 style="color:#f00;"><%= flash[:alert] %></h4>
@@ -29,7 +29,7 @@
       <%= nav %>
     <% end %>
   </section>
-  
+
 <% elsif @kpcc_program.display_episodes? %>
   <% nav = paginate @episodes, params: { anchor: "archive"} %>
   <section class="show-episodes">
@@ -39,5 +39,5 @@
       <%= render partial: "/programs/episode", collection: @episodes %>
       <%= nav %>
     <% end %>
-  </section>  
+  </section>
 <% end %>
