@@ -19,5 +19,12 @@ describe Job::ComputeAudioFileInfo do
       audio.size.should be > 0
       audio.duration.should eq 0 # it's actually the point1sec file
     end
+
+    it "doesn't save if the mp3_file is blank" do
+      audio = create :enco_audio
+      Audio::EncoAudio.any_instance.should_not_receive(:save!)
+
+      Job::ComputeAudioFileInfo.perform(audio.id)
+    end
   end
 end
