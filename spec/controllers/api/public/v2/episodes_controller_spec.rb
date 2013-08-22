@@ -32,7 +32,7 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'uses the segments if the program uses_segments_as_episodes? is true' do
-      program = create :kpcc_program, :segmented
+      program = create :kpcc_program, display_segments: true, display_episodes: false
       segment = create :show_segment, show: program
 
       get :index, { program: program.slug }.merge(request_params)

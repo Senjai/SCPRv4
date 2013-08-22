@@ -20,7 +20,6 @@ module Api::Public::V2
     #---------------------------
     # This is a disaster.
     def index
-      binding.pry
       if @program
         if @program.uses_segments_as_episodes?
           @episodes = @program.segments
