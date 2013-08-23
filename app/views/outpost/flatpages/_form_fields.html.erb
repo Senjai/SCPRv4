@@ -1,7 +1,7 @@
 <%= form_block "Details" do %>
   <%= f.input :title %>
-  <%= f.input :url %>
-  <%= f.input :redirect_url %>
+  <%= f.input :path, hint: "The path that people will type in to get to the page." %>
+  <%= f.input :redirect_to, hint: "OPTIONAL; The url or path to which this flatpage should redirect. If using a path, be sure to add a slash at the beginning." %>
   <%= f.input :description, hint: "What is this flatpage for? For internal use only.", input_html: { class: "tiny" } %>
 <% end %>
 

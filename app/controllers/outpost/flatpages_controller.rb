@@ -1,16 +1,16 @@
 class Outpost::FlatpagesController < Outpost::ResourceController
   outpost_controller
-  
+
   define_list do |l|
-    l.default_order = "url"
-    l.default_sort_mode = "asc"
-    
+    l.default_order       = "path"
+    l.default_sort_mode   = "asc"
+
     l.column :title
-    l.column :url, sortable: true, default_sort_mode: "asc"
-    l.column :redirect_url
+    l.column :path, sortable: true, default_sort_mode: "asc"
+    l.column :redirect_to
     l.column :updated_at, sortable: true, default_sort_mode: "desc"
     l.column :is_public, header: "Public?"
-    
+
     l.filter :is_public, title: "Public?", collection: :boolean
   end
 
@@ -26,10 +26,16 @@ class Outpost::FlatpagesController < Outpost::ResourceController
         @title = @flatpage.to_title
 
         if @flatpage.is_redirect?
-          render '/outpost/shared/_notice', layout: "outpost/minimal", 
-            locals: { message: "This flatpage will redirect to <strong>#{@flatpage.redirect_url}</strong>".html_safe }
+          render '/outpost/shared/_notice',
+            :layout => "outpost/minimal",
+            :locals => {
+              :message => "This flatpage will redirect to " \
+                          "<strong>#{@flatpage.redirect_to}</strong>".html_safe
+              }
         else
-          render "/flatpages/_flatpage", layout: flatpage_layout_template, locals: { flatpage: @flatpage }
+          render "/flatpages/_flatpage",
+            :layout => flatpage_layout_template,
+            :locals => { flatpage: @flatpage }
         end
       else
         render_preview_validation_errors(@flatpage)
