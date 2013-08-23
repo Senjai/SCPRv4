@@ -23,52 +23,35 @@ class Flatpage < ActiveRecord::Base
 
   # -------------------
   # Validations
-  validates :url, presence: true, uniqueness: true
+  validates :path,
+    :presence => true,
+    :uniqueness => true,
+    :format => {
+      :with    => %r{\A/.+/\z},
+      :message => "is an invalid format. " \
+                  "The path should start and end with a slash."
+    }
+
 
   # -------------------
   # Callbacks
-  before_validation :slashify
-  def slashify
-    if url.present? and path.present?
-      self.url = "/#{path}/"
-    end
-  end
 
-  # Downcase URL so uniqueness validation works.
-  before_validation :downcase_url
-  def downcase_url
-    if url.present?
-      self.url = url.downcase
+  # Downcase path so uniqueness validation works.
+  before_validation :downcase_path
+  def downcase_path
+    if path.present?
+      self.path = path.downcase
     end
   end
 
   # -------------------
   # Sphinx
   define_index do
-    indexes url, sortable: true
+    indexes path, sortable: true
     indexes title
     indexes description
-    indexes redirect_url
+    indexes redirect_to
     has updated_at
-  end
-
-  # -------------------
-
-  def path
-    url.gsub(/\A\//, "").gsub(/\/\z/, "")
-  end
-
-  # -------------------
-
-  # Just to be safe while the URLs are still being created in mercer
-  def url
-    if self[:url].present?
-      if self[:url] !~ /\A\//
-        "/#{self[:url]}"
-      else
-        self[:url]
-      end
-    end
   end
 
   # -------------------
@@ -81,6 +64,6 @@ class Flatpage < ActiveRecord::Base
   # -------------------
 
   def is_redirect?
-    self.redirect_url.present?
+    self.redirect_to.present?
   end
 end

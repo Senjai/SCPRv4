@@ -167,11 +167,11 @@ table {
             width: 250px;
         }
 
-        .column-url { // flatpage.url (actually a path)
+        .column-path { // flatpage.path
             width: 200px;
         }
 
-        .column-redirect_url { // flatpage.redirect_url
+        .column-redirect_to { // flatpage.redirect_to
             @include url-cell;
         }
     }

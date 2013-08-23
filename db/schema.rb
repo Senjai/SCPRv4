@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130816052703) do
+ActiveRecord::Schema.define(:version => 20130823193736) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -357,21 +357,21 @@ ActiveRecord::Schema.define(:version => 20130816052703) do
   add_index "external_segments", ["published_at"], :name => "index_external_segments_on_published_at"
 
   create_table "flatpages_flatpage", :force => true do |t|
-    t.string   "url",          :limit => 100,                           :null => false
-    t.string   "title",        :limit => 200,                           :null => false
-    t.text     "content",      :limit => 2147483647,                    :null => false
-    t.text     "extra_head",   :limit => 2147483647,                    :null => false
-    t.text     "extra_tail",   :limit => 2147483647,                    :null => false
+    t.string   "path",                                                 :null => false
+    t.string   "title",                                                :null => false
+    t.text     "content",     :limit => 2147483647,                    :null => false
+    t.text     "extra_head",  :limit => 2147483647,                    :null => false
+    t.text     "extra_tail",  :limit => 2147483647,                    :null => false
     t.datetime "updated_at"
-    t.text     "description",  :limit => 2147483647,                    :null => false
-    t.string   "redirect_url", :limit => 250
-    t.boolean  "is_public",                          :default => false, :null => false
-    t.datetime "created_at",                                            :null => false
-    t.string   "template",     :limit => 10,                            :null => false
+    t.text     "description", :limit => 2147483647,                    :null => false
+    t.string   "redirect_to"
+    t.boolean  "is_public",                         :default => false, :null => false
+    t.datetime "created_at",                                           :null => false
+    t.string   "template",                                             :null => false
   end
 
   add_index "flatpages_flatpage", ["is_public"], :name => "index_flatpages_flatpage_on_is_public"
-  add_index "flatpages_flatpage", ["url"], :name => "django_flatpage_url"
+  add_index "flatpages_flatpage", ["path"], :name => "django_flatpage_url"
 
   create_table "layout_breakingnewsalert", :force => true do |t|
     t.string   "headline",                                                          :null => false
