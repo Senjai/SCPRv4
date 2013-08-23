@@ -117,7 +117,7 @@ module Api::Public::V3
       params[:types] ||= defaults[:types]
 
       params[:types].split(",").uniq.each do |type|
-        if klasses = allowed_types[type]
+        if klasses = TYPES[type]
           @classes += klasses
         end
       end
