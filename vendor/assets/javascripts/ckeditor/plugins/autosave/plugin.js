@@ -13,7 +13,8 @@
         init: function (editor) {
             var customAutoSaveKey = editor.config.autosave_SaveKey
             var autoSaveKey = customAutoSaveKey != null ? customAutoSaveKey : 'autosave' + editor.id;
-            
+            autoSaveKey += "-" + editor.name
+
             // Checks If there is data available and load it
             if (localStorage.getItem(autoSaveKey)) {
 
@@ -28,7 +29,7 @@
                     return;
                 }
 
-                if (confirm(editor.lang.autosave.loadSavedContent)) {
+                if (confirm(editor.lang.autosave.loadSavedContent + "\n(Field: " + editor.name + ")")) {
                     if (editor.plugins.bbcode) {
                         editor._.data = autoSavedContent;
                     } else {
@@ -59,8 +60,9 @@
         } else if (event.editor.checkDirty() || event.editor.plugins.bbcode) {
             savingActive = true;
             var editor = event.editor,
-                customAutoSaveKey = event.editor.config.autosave_SaveKey,
-                autoSaveKey = customAutoSaveKey != null ? customAutoSaveKey : 'autosave' + event.editor.id;
+                customAutoSaveKey = editor.config.autosave_SaveKey,
+                autoSaveKey = customAutoSaveKey != null ? customAutoSaveKey : 'autosave' + editor.id;
+                autoSaveKey += "-" + editor.name
 
             // save content
             localStorage.setItem(autoSaveKey, editor.getData());
