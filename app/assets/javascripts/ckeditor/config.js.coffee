@@ -23,6 +23,8 @@ CKEDITOR.editorConfig = (config) ->
         showCommentButton       : false
         showUncommentButton     : false
 
+    config.autosave_SaveKey = "autosave-#{window.location.pathname}"
+
     config.toolbar = [
         ['Bold', 'Italic', 'Underline', "RemoveFormat"]
         ['NumberedList', 'BulletedList', 'Blockquote']
