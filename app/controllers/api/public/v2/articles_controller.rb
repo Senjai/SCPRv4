@@ -1,5 +1,12 @@
 module Api::Public::V2
   class ArticlesController < BaseController
+    TYPES = {
+      "news"        => [NewsStory],
+      "external"    => [ContentShell],
+      "blogs"       => [BlogEntry],
+      "segments"    => [ShowSegment]
+    }
+
     DEFAULTS = {
       :types        => "news,blogs,segments",
       :limit        => 10,
@@ -107,12 +114,6 @@ module Api::Public::V2
 
     def set_classes
       @classes = []
-      allowed_types = {
-        "news"        => [NewsStory, ContentShell],
-        "blogs"       => [BlogEntry],
-        "segments"    => [ShowSegment]
-      }
-
       params[:types] ||= defaults[:types]
 
       params[:types].split(",").uniq.each do |type|

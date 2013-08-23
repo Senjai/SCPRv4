@@ -1,5 +1,15 @@
 module Api::Private::V2
   class ArticlesController < BaseController
+    TYPES = {
+      "news"        => [NewsStory],
+      "shells"      => [ContentShell],
+      "blogs"       => [BlogEntry],
+      "segments"    => [ShowSegment],
+      "abstracts"   => [Abstract],
+      "events"      => [Event],
+      "queries"     => [PijQuery]
+    }
+
     DEFAULTS = {
       :types        => "news,blogs,segments",
       :limit        => 10,
@@ -9,20 +19,20 @@ module Api::Private::V2
     }
 
     before_filter \
-      :set_classes, 
-      :sanitize_limit, 
-      :sanitize_page, 
-      :sanitize_query, 
-      :sanitize_order, 
-      :sanitize_sort_mode, 
+      :set_classes,
+      :sanitize_limit,
+      :sanitize_page,
+      :sanitize_query,
+      :sanitize_order,
+      :sanitize_sort_mode,
       :sanitize_conditions,
       only: [:index]
 
     before_filter :sanitize_obj_key, only: [:show]
     before_filter :sanitize_url, only: [:by_url]
-    
+
     #---------------------------
-    
+
     def index
       @articles = ContentBase.search(@query, {
         :classes   => @classes,
@@ -32,13 +42,13 @@ module Api::Private::V2
         :sort_mode => @sort_mode,
         :with      => @conditions
       })
-      
+
       @articles = @articles.map(&:to_article)
       respond_with @articles
     end
-    
+
     #---------------------------
-    
+
     def by_url
       @article = ContentBase.obj_by_url(@url)
 
@@ -51,17 +61,17 @@ module Api::Private::V2
       respond_with @article do |format|
         format.json { render :show }
       end
-    end  
-    
+    end
+
     #---------------------------
-    
+
     def show
       @article = Outpost.obj_by_key(@obj_key)
 
       if !@article
         render_not_found and return false
       end
-      
+
       @article = @article.to_article
       respond_with @article
     end
@@ -73,26 +83,17 @@ module Api::Private::V2
 
     def set_classes
       @classes = []
-      allowed_types = {
-        "news"        => [NewsStory, ContentShell],
-        "blogs"       => [BlogEntry],
-        "segments"    => [ShowSegment],
-        "abstracts"   => [Abstract],
-        "events"      => [Event],
-        "queries"     => [PijQuery]
-      }
-      
       params[:types] ||= DEFAULTS[:types]
 
       params[:types].split(",").uniq.each do |type|
-        if klasses = allowed_types[type]
+        if klasses = TYPES[type]
           @classes += klasses
         end
       end
 
       @classes.uniq!
     end
-    
+
     #---------------------------
     # No Limit for Private API
     def sanitize_limit
@@ -100,29 +101,29 @@ module Api::Private::V2
     end
 
     #---------------------------
-    
+
     def sanitize_page
       page = params[:page].to_i
       @page = page > 0 ? page : DEFAULTS[:page]
     end
-    
+
     #---------------------------
-    
+
     def sanitize_query
       @query = params[:query].to_s
     end
-    
+
     #---------------------------
-    
+
     def sanitize_order
       @order = params[:order] ? params[:order].to_s : DEFAULTS[:order]
     end
-    
+
     #---------------------------
     # For now just "desc" and "asc", although this could
     # support any of the Sphinx sort modes in the future.
     def sanitize_sort_mode
-      @sort_mode = 
+      @sort_mode =
         if %w{desc asc}.include?(params[:sort_mode])
           params[:sort_mode].to_sym
         else
@@ -131,13 +132,13 @@ module Api::Private::V2
     end
 
     #---------------------------
-    
-    # Hello. You've stumbled across this because you're 
-    # trying to figure out why unpublished content is 
+
+    # Hello. You've stumbled across this because you're
+    # trying to figure out why unpublished content is
     # showing up in the aggregator. I'll tell you why.
     #
     # Remember that "true" and "false" parameters don't
-    # get converted to actual Ruby boolean values. 
+    # get converted to actual Ruby boolean values.
     # Use "1" and "0". Thinking Sphinx or ActiveRecord
     # will convert them accordingly.
     def sanitize_conditions
