@@ -25,7 +25,7 @@ describe Outpost::FlatpagesController do
       it "notifies that there will be a redirect if the flatpage is a redirect" do
         flatpage = create :flatpage, redirect_to: "http://google.com/sweet_redirect_bro"
         put :preview, id: flatpage.id, obj_key: flatpage.obj_key, flatpage: flatpage.attributes
-        response.body.should match /#{flatpage.redirect_url}/
+        response.body.should match /#{flatpage.redirect_to}/
       end
 
       it "renders the correct layout" do
