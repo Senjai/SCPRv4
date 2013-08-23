@@ -1,6 +1,6 @@
 # Global Configuration
 CKEDITOR.editorConfig = (config) ->
-    config.extraPlugins = 'mediaembed,codemirror'
+    config.extraPlugins = 'mediaembed,codemirror,autosave'
 
     config.codemirror =
         # https://github.com/w8tcha/CKEditor-CodeMirror-Plugin 
