@@ -115,10 +115,12 @@ describe Api::Public::V3::ArticlesController do
       end
     end
 
-    it "is all types by default" do
+    it "is blogs,news,segments by default" do
       ts_retry(2) do
         get :index, request_params
-        assigns(:articles).size.should eq @generated_content.size
+        assigns(:articles).size.should eq @generated_content.select { |c|
+          [BlogEntry, NewsStory, ShowSegment].include? c.class
+        }.size
       end
     end
 
@@ -148,17 +150,16 @@ describe Api::Public::V3::ArticlesController do
       ts_retry(2) do
         get :index, { page: "Evil Code" }.merge(request_params)
         assigns(:page).should eq 1
-        assigns(:articles).size.should eq @generated_content.size
       end
     end
 
     it "accepts a page" do
       ts_retry(2) do
         get :index, request_params
-        fourth_obj = assigns(:articles)[3]
+        third_obj = assigns(:articles)[2]
 
-        get :index, { page: 4, limit: 1 }.merge(request_params)
-        assigns(:articles).should eq [fourth_obj].map(&:to_article)
+        get :index, { page: 3, limit: 1, types: "news,blogs,segments,shells" }.merge(request_params)
+        assigns(:articles).should eq [third_obj].map(&:to_article)
       end
     end
 
