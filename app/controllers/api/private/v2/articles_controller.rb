@@ -74,7 +74,8 @@ module Api::Private::V2
     def set_classes
       @classes = []
       allowed_types = {
-        "news"        => [NewsStory, ContentShell],
+        "news"        => [NewsStory],
+        "shells"      => [ContentShell],
         "blogs"       => [BlogEntry],
         "segments"    => [ShowSegment],
         "abstracts"   => [Abstract],

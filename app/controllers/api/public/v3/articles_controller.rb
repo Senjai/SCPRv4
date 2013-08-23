@@ -108,7 +108,8 @@ module Api::Public::V3
     def set_classes
       @classes = []
       allowed_types = {
-        "news"        => [NewsStory, ContentShell],
+        "news"        => [NewsStory],
+        "shells"      => [ContentShell],
         "blogs"       => [BlogEntry],
         "segments"    => [ShowSegment]
       }
