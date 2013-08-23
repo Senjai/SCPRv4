@@ -109,7 +109,7 @@ module Api::Public::V2
       @classes = []
       allowed_types = {
         "news"        => [NewsStory],
-        "external"    => [ContentShell]
+        "external"    => [ContentShell],
         "blogs"       => [BlogEntry],
         "segments"    => [ShowSegment]
       }
