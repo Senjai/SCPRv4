@@ -3,29 +3,34 @@ window.openCMS = (newWin) ->
     domain = window.location.protocol + '//' + window.location.host
     path   = window.location.pathname
     redirectUrl = null
-    
+
     res = [
-            { 
-                re: new RegExp "^/blogs/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/?$", "gi"
-                cmsPath: "/outpost/blog_entries" 
-                idSlot: 5
+            {
+                re: new RegExp "^/blogs/.+/.+/.+/.+/(.+)/.+/?$", "gi"
+                cmsPath: "blog_entries"
             },
-            { 
-                re: new RegExp "^/programs/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/?$", "gi"
-                cmsPath: "/outpost/show_segments" 
-                idSlot: 5
+            {
+                re: new RegExp "^/news/.+/.+/.+/(.+)/.+/?$", "gi"
+                cmsPath: "news_stories"
             },
-            { 
-                re: new RegExp "^/news/(.+)/(.+)/(.+)/(.+)/(.+)/?$", "gi"
-                cmsPath: "/outpost/news_stories"
-                idSlot: 4
+            {
+                re: new RegExp "^/programs/.+/.+/.+/.+/(.+)/.+/?$", "gi"
+                cmsPath: "show_segments"
+            },
+            {
+                re: new RegExp "^/programs/.+/.+/.+/.+/(.+?)/?$", "gi"
+                cmsPath: "show_episodes"
+            },
+            {
+                re: new RegExp "^/events/.+/.+/.+/(.+)/.+/?$", "gi"
+                cmsPath: "events"
             }
         ]
 
     for matcher in res
         if match = matcher.re.exec(path)
-            id = match[matcher.idSlot]
-            redirectUrl = "#{domain}#{matcher.cmsPath}/#{id}/edit"
+            id = match[1]
+            redirectUrl = "#{domain}/outpost/#{matcher.cmsPath}/#{id}/edit"
             break
 
     if redirectUrl
@@ -33,7 +38,8 @@ window.openCMS = (newWin) ->
         newWin.focus()
     else
         newWin.close()
-        alert "Only News Stories, Blog Entries, and Show Segments are supported."
+        alert "Only News Stories, Blog Entries, Show Segments, 
+              Show Episodes, and Events are supported."
 
 # Bookmark JS
 # Paste here to turn it into bookmark-safe code: http://ted.mielczarek.org/code/mozilla/bookmarklet.html

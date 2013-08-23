@@ -1,15 +1,15 @@
 require "spec_helper"
 
-describe EventsController do  
+describe EventsController do
   describe "GET /index" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         get :index
       end
     end
-    
+
     describe "controller" do
       it "assigns @events using upcoming_and_current scope" do
         past    = create :event, :published, :past
@@ -18,13 +18,13 @@ describe EventsController do
         get :index
         assigns(:events).should eq [current, future]
       end
-  
+
       describe "scoping" do
         before :each do
           @forum = create :event, :published, :future, event_type: "comm"
           @spon  = create :event, :published, :future, event_type: "spon"
         end
-    
+
         it "scopes by forum if requested" do
           get :index, list: "forum"
           assigns(:scoped_events).should eq [@forum]
@@ -46,16 +46,16 @@ describe EventsController do
   end
 
   #-----------------
-  
+
   describe "GET /forum" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         get :forum
       end
     end
-    
+
     describe "controller" do
       it "assigns @upcoming_events using upcoming_and_current scope" do
         past_event    = create :event, :published, starts_at: 2.hours.ago, ends_at: 1.hour.ago, event_type: 'comm'
@@ -66,51 +66,51 @@ describe EventsController do
       end
     end
   end
-  
+
   #-----------------
-  
+
   describe "GET /show" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         event = create :event, :published
         get :show, event.route_hash
       end
     end
-    
+
     describe "controller" do
       it "gets the event from the URL params" do
         event = create :event, :published
         get :show, event.route_hash
         assigns(:event).should eq event
       end
-    
+
       it "assigns more events to other future forum events" do
         event    = create :event, :published
         upcoming = create_list :event, 2, :future, :published
         get :show, event.route_hash
         assigns(:more_events).sort.should eq upcoming.sort
       end
-    
-      it "raises RecordNotFound if Event not found" do
-        event = create :event, :published # not published
-        -> { get :show, event.route_hash.merge!(slug: "nonsense") }.should raise_error ActiveRecord::RecordNotFound
+
+      it "only finds published events" do
+        event = create :event, status: 0
+        -> { get :show, event.route_hash }.should raise_error ActionController::RoutingError
       end
     end
   end
-  
+
   #-----------------------
-  
+
   describe "GET /archive" do
     describe "view" do
       render_views
-      
+
       it "renders the view" do
         get :archive
       end
     end
-    
+
     describe "controller" do
       it "gets the past forum events" do
         past_events   = create_list :event, 2, :past, :published
@@ -118,7 +118,7 @@ describe EventsController do
         get :archive
         assigns(:events).sort.should eq past_events.sort
       end
-    
+
       it "paginates" do
         past_events = create_list :event, 12, :past, :published
         get :archive, page: 2
