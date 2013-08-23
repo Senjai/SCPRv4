@@ -14,10 +14,20 @@ class EventsController < ApplicationController
   def archive
     @events = Event.forum.past.page(params[:page]).per(10)
   end
-  
+
   def show
-    date         = Time.new(params[:year], params[:month], params[:day])
-    @event       = Event.published.where(slug: params[:slug], starts_at: date..date.end_of_day).first!
+    if params[:id]
+      @event = Event.published.find(params[:id])
+    else
+      date    = Time.new(params[:year], params[:month], params[:day])
+      @event  = Event.published.where(
+        :slug         => params[:slug],
+        :starts_at    => date..date.end_of_day
+      ).first!
+
+      redirect_to @event.public_path and return
+    end
+
     @more_events = Event.forum.upcoming.where("id != ?", @event.id).limit(2)
   end
   

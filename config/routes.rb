@@ -53,8 +53,11 @@ Scprv4::Application.routes.draw do
   get '/events/forum/archive/'            => 'events#archive',    as: :forum_events_archive
   get '/events/forum/'                    => 'events#forum',      as: :forum_events
   get '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }
-  get '/events/:year/:month/:day/:slug/'  => 'events#show',       as: :event,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/}
+  get '/events/:year/:month/:day/:id/:slug/'  => 'events#show',   as: :event,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/ }
   get '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }
+
+  # Legacy route
+  get '/events/:year/:month/:day/:slug/'  => 'events#show', constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/}
 
 
   # Search

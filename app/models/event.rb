@@ -220,6 +220,7 @@ class Event < ActiveRecord::Base
       :year           => self.persisted_record.starts_at.year.to_s,
       :month          => "%02d" % self.persisted_record.starts_at.month,
       :day            => "%02d" % self.persisted_record.starts_at.day,
+      :id             => self.id.to_s,
       :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }
