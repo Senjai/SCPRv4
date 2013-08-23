@@ -10,12 +10,16 @@ window.openCMS = (newWin) ->
                 cmsPath: "blog_entries"
             },
             {
+                re: new RegExp "^/news/.+/.+/.+/(.+)/.+/?$", "gi"
+                cmsPath: "news_stories"
+            },
+            {
                 re: new RegExp "^/programs/.+/.+/.+/.+/(.+)/.+/?$", "gi"
                 cmsPath: "show_segments"
             },
             {
-                re: new RegExp "^/news/.+/.+/.+/(.+)/.+/?$", "gi"
-                cmsPath: "news_stories"
+                re: new RegExp "^/programs/.+/.+/.+/.+/(.+?)/?$", "gi"
+                cmsPath: "show_episodes"
             },
             {
                 re: new RegExp "^/events/.+/.+/.+/(.+)/.+/?$", "gi"
@@ -34,7 +38,8 @@ window.openCMS = (newWin) ->
         newWin.focus()
     else
         newWin.close()
-        alert "Only News Stories, Blog Entries, Show Segments, and Events are supported."
+        alert "Only News Stories, Blog Entries, Show Segments, 
+              Show Episodes, and Events are supported."
 
 # Bookmark JS
 # Paste here to turn it into bookmark-safe code: http://ted.mielczarek.org/code/mozilla/bookmarklet.html
