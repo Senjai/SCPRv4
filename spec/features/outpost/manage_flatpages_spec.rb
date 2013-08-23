@@ -3,7 +3,7 @@ require "spec_helper"
 describe Flatpage do
   let(:valid_record) { build :flatpage }
   let(:updated_record) { build :flatpage }
-  let(:invalid_record) { build :flatpage, url: "" }
+  let(:invalid_record) { build :flatpage, path: "" }
   
   it_behaves_like "managed resource"
   it_behaves_like "save options"
@@ -12,7 +12,6 @@ describe Flatpage do
   it_behaves_like "front-end routes" do
     before :each do
       valid_record.save!
-      Scprv4::Application.reload_routes!
     end
   end
 end

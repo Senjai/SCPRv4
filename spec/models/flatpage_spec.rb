@@ -12,18 +12,15 @@ describe Flatpage do
   end
 
   describe 'path format validation' do
-    it 'validates that there is a slash at the beginning and end' do
+    it 'validates that there is no beginning or trailing slash' do
       flatpage = build :flatpage
-      flatpage.path = "support/whatever/stuff"
-      flatpage.should_not be_valid
-
       flatpage.path = "/support/whatever/stuff"
       flatpage.should_not be_valid
 
       flatpage.path = "support/whatever/stuff/"
       flatpage.should_not be_valid
 
-      flatpage.path = "/support/whatever/stuff/"
+      flatpage.path = "support/whatever/stuff"
       flatpage.should be_valid
     end
   end
@@ -32,7 +29,7 @@ describe Flatpage do
  
   describe "downcase_path" do
     it "runs before validation" do
-      flatpage = build :flatpage, path: "/HELLO/"
+      flatpage = build :flatpage, path: "HELLO/"
       flatpage.save
       flatpage.path.should_not match /HELLO/
       flatpage.path.should match /hello/

@@ -23,7 +23,7 @@ describe Outpost::FlatpagesController do
       end
 
       it "notifies that there will be a redirect if the flatpage is a redirect" do
-        flatpage = create :flatpage, redirect_url: "http://google.com/sweet_redirect_bro"
+        flatpage = create :flatpage, redirect_to: "http://google.com/sweet_redirect_bro"
         put :preview, id: flatpage.id, obj_key: flatpage.obj_key, flatpage: flatpage.attributes
         response.body.should match /#{flatpage.redirect_url}/
       end
@@ -39,7 +39,7 @@ describe Outpost::FlatpagesController do
 
       it "renders validation errors if the object is not unconditionally valid" do
         flatpage = create :flatpage
-        put :preview, id: flatpage.id, obj_key: flatpage.obj_key, flatpage: flatpage.attributes.merge(url: "")
+        put :preview, id: flatpage.id, obj_key: flatpage.obj_key, flatpage: flatpage.attributes.merge(path: "")
         response.should render_template "/outpost/shared/_preview_errors"
       end
     end
@@ -53,14 +53,14 @@ describe Outpost::FlatpagesController do
       end
 
       it "notifies that there will be a redirect if the flatpage is a redirect" do
-        flatpage = build :flatpage, redirect_url: "http://google.com/sweet_redirect_bro"
+        flatpage = build :flatpage, redirect_to: "http://google.com/sweet_redirect_bro"
         post :preview, obj_key: flatpage.obj_key, flatpage: flatpage.attributes
-        response.body.should match /#{flatpage.redirect_url}/
+        response.body.should match /#{flatpage.redirect_to}/
       end
 
       it "renders validation errors if the object is not unconditionally valid" do
         flatpage = build :flatpage
-        post :preview, obj_key: flatpage.obj_key, flatpage: flatpage.attributes.merge(url: "")
+        post :preview, obj_key: flatpage.obj_key, flatpage: flatpage.attributes.merge(path: "")
         response.should render_template "/outpost/shared/_preview_errors"
       end
     end

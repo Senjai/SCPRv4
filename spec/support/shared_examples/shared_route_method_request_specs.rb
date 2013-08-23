@@ -1,7 +1,7 @@
 ##
 # Route method request specs
 #
-# A way to make sure each model's public_path 
+# A way to make sure each model's public_path
 # and public_url,
 # are generating a real path
 #
@@ -12,9 +12,9 @@ shared_examples_for "front-end routes" do
     before :each do
       valid_record.save!
     end
-    
+
     it "returns success when following public_path" do
-      visit valid_record.public_path
+        visit valid_record.public_path
       current_path.should eq valid_record.public_path
     end
   end
@@ -28,7 +28,7 @@ shared_examples_for "admin routes" do
       login
       valid_record.save!
     end
-  
+
     it "returns success when following admin_edit_path" do
       visit valid_record.admin_edit_path
       current_path.should eq valid_record.admin_edit_path

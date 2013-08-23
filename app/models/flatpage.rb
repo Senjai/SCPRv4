@@ -27,9 +27,9 @@ class Flatpage < ActiveRecord::Base
     :presence => true,
     :uniqueness => true,
     :format => {
-      :with    => %r{\A/.+/\z},
+      :with    => %r{\A[^/].+[^/]\z},
       :message => "is an invalid format. " \
-                  "The path should start and end with a slash."
+                  "The path should NOT start or end with a slash."
     }
 
 

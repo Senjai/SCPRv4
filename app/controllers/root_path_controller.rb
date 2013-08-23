@@ -16,7 +16,7 @@ class RootPathController < ApplicationController
       render status: :bad_request and return
     end
 
-    if @flatpage = Flatpage.visible.find_by_path("/#{path.downcase}/")
+    if @flatpage = Flatpage.visible.find_by_path(path.downcase)
       handle_flatpage and return
     else
       # Only do the gsubbing if necessary

@@ -29,14 +29,14 @@ describe RootPathController do
       render_views
 
       it "assigns @flatpage" do
-        flatpage = create :flatpage, path: "/about/"
-        get :handle_path, path: "about"
+        flatpage = create :flatpage
+        get :handle_path, path: flatpage.path
         assigns(:flatpage).should eq flatpage
       end
 
       it "redirects if redirect_url is present" do
-        flatpage = create :flatpage, path: "/about/", redirect_to: "http://google.com"
-        get :handle_path, path: "about"
+        flatpage = create :flatpage, redirect_to: "http://google.com"
+        get :handle_path, path: flatpage.path
         response.should be_redirect
       end
     end
@@ -45,21 +45,21 @@ describe RootPathController do
 
     context "not rendering" do
       it "does not render a template if template is none" do
-        flatpage = create :flatpage, path: "/about/", template: "none"
-        get :handle_path, path: "about"
+        flatpage = create :flatpage, template: "none"
+        get :handle_path, path: flatpage.path
         response.should render_template(layout: false)
       end
 
 
       it "renders application layout by default" do
-        flatpage = create :flatpage, path: "/about/"
-        get :handle_path, path: "about"
+        flatpage = create :flatpage
+        get :handle_path, path: flatpage.path
         response.should render_template(layout: "layouts/application")
       end
 
       it "render no_sidebar if template is full" do
-        flatpage = create :flatpage, path: "/about/", template: "full"
-        get :handle_path, path: "about"
+        flatpage = create :flatpage, template: "full"
+        get :handle_path, path: flatpage.path
         response.should render_template(layout: "layouts/app_nosidebar")
       end
     end
