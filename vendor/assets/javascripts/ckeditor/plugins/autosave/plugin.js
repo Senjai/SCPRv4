@@ -23,7 +23,7 @@
                 
                 // check if the loaded editor content is the same as the autosaved content
                 if (editorLoadedContent == autoSavedContent) {
-
+                    console.log('[ckeditor-autosave] content matches, removing key');
                     localStorage.removeItem(autoSaveKey);
 
                     return;
@@ -55,6 +55,7 @@
         timeOutId = setTimeout(onTimer, delay * 1000, event);
     };
     var onTimer = function (event) {
+        console.log("[ckeditor-autosave] autosaving...");
         if (savingActive) {
             startTimer(event);
         } else if (event.editor.checkDirty() || event.editor.plugins.bbcode) {
