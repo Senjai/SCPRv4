@@ -40,6 +40,11 @@
                 localStorage.removeItem(autoSaveKey);
             }
 
+            var form = $("#"+editor.name).parents("form");
+            form.on('submit', function() {
+                localStorage.removeItem(autoSaveKey);
+            });
+
             editor.on('key', startTimer);
         }
     });
