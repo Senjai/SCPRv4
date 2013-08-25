@@ -360,9 +360,6 @@ GEM
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
-    turbo-sprockets-rails3 (0.3.9)
-      railties (> 3.2.8, < 4.0.0)
-      sprockets (>= 2.0.0)
     twitter (4.7.0)
       faraday (~> 0.8, < 0.10)
       multi_json (~> 1.0)
@@ -442,7 +439,6 @@ DEPENDENCIES
   sqlite3
   test_after_commit
   thinking-sphinx (~> 2.0.14)
-  turbo-sprockets-rails3 (~> 0.3.9)
   twitter (~> 4.1)
   twitter-text (~> 1.5)
   uglifier (>= 1.3)

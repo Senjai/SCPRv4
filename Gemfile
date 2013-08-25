@@ -67,8 +67,6 @@ gem 'asset_host_client', github: "SCPR/asset_host_client"
 #gem 'asset_host_client', path: "#{ENV['PROJECT_HOME']}/asset_host_client"
 
 
-gem 'turbo-sprockets-rails3', '~> 0.3.9'
-
 ## Assets
 group :assets do
   gem "eco", "~> 1.0"
