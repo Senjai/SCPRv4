@@ -78,8 +78,10 @@ class NprProgramImporter
           local_audio = Audio::DirectAudio.new(
             :external_url   => mp3.content,
             :duration       => remote_audio.duration,
-            :description    => remote_audio.description,
-            :byline         => remote_audio.rightsHolder,
+            :description    => remote_audio.description ||
+                               remote_audio.title ||
+                               story.title,
+            :byline         => remote_audio.rightsHolder || "NPR",
             :position       => i
           )
 
