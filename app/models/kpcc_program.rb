@@ -40,7 +40,9 @@ class KpccProgram < ActiveRecord::Base
   #-------------------
   # Validations
   validates :title, :air_status, presence: true
-  validates :slug, uniqueness: true
+  validates :slug, presence: true, uniqueness: true
+  validate :slug_is_unique_in_programs_namespace
+
 
   #-------------------
   # Callbacks
@@ -109,5 +111,15 @@ class KpccProgram < ActiveRecord::Base
       :display_episodes   => self.display_episodes?,
       :display_segments   => self.display_segments?
     })
+  end
+
+
+  private
+
+  def slug_is_unique_in_programs_namespace
+    if self.slug.present? && ExternalProgram.exists?(slug: self.slug)
+      self.errors.add(:slug, "must be unique between both " \
+                             "KpccProgram and ExternalProgram")
+    end
   end
 end

@@ -33,4 +33,13 @@ describe KpccProgram do
       program.to_program.should be_a Program
     end
   end
+
+  describe 'slug uniqueness validation' do
+    it 'validates that the slug is unique across the program models' do
+      external_program = create :external_program, slug: "same"
+      kpcc_program = build :kpcc_program, slug: "same"
+      kpcc_program.should_not be_valid
+      kpcc_program.errors[:slug].first.should match /be unique between/
+    end
+  end
 end
