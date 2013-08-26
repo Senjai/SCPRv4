@@ -20,7 +20,9 @@
 
 <%= form_block "Content" do %>
   <%= f.input :source_type, collection: Podcast::SOURCES %>
-  <%= f.input :source_id, label: "Source ID" %>
+  <%= f.input :source_id, label: "Source ID", input_html: { class: 'span1' } %>
   <%= f.section "category" %>
   <%= f.input :item_type, hint: "What type of items should be used in the podcast?", collection: Podcast::ITEM_TYPES %>
 <% end %>
+
+<br /><br /><br /><br />
