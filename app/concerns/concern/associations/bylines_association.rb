@@ -11,7 +11,15 @@ module Concern
         has_many :bylines,
           :as           => :content,
           :class_name   => "ContentByline",
-          :dependent    => :destroy
+          :dependent    => :destroy,
+          :before_add   => [
+            :get_original_bylines,
+            :force_bylines_into_changes
+          ],
+          :before_remove => [
+            :get_original_bylines,
+            :force_bylines_into_changes
+          ]
 
         accepts_nested_attributes_for :bylines,
           :allow_destroy    => true,
@@ -26,6 +34,7 @@ module Concern
           .where(ContentByline.table_name => { user_id: bio_id })
         }
 
+        before_save :build_custom_changes_for_bylines
         after_save :promise_to_index_bylines, if: -> { self.changed? }
         after_destroy :promise_to_index_bylines
         after_commit :enqueue_sphinx_index_for_bylines
@@ -115,7 +124,6 @@ module Concern
       # We can't really assume that anything with a byline will
       # be versioned, so we should check first.
       def build_custom_changes_for_bylines
-        binding.pry
         if self.class.has_secretary?
           build_custom_changes_for_association("bylines", @bylines_were)
         end

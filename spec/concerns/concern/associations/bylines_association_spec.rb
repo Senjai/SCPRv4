@@ -4,9 +4,7 @@ describe Concern::Associations::BylinesAssociation do
   subject { TestClass::Story.new }
 
   describe 'versioning' do
-    it 'makes the object dirty and adds a version when adding' do
-      pending
-
+    it 'makes the object dirty when adding' do
       # create instead of build so changed? returns false
       # initially
       story  = create :test_class_story, :published
@@ -16,29 +14,42 @@ describe Concern::Associations::BylinesAssociation do
 
       story.bylines << byline
       story.changed?.should eq true
+    end
+
+    it 'adds a version when adding' do
+      story  = build :test_class_story, :published
+      byline = build :byline, content: nil
+      story.bylines << byline
       story.save!
 
-      versions = story.versions.order("version_number").to_a
-      versions.size.should eq 2
+      versions = story.versions.to_a
+      versions.size.should eq 1
       versions.last.object_changes["bylines"][0].should_not be_present
       versions.last.object_changes["bylines"][1].should be_present
     end
 
-    it 'makes the object dirty and adds a version when removing' do
-      pending
-
+    it 'makes the object dirty when removing' do
       story  = build :test_class_story, :published
-      byline = create :byline, content: nil
+      byline = build :byline, content: nil
       story.bylines << byline
       story.save!
 
       story.changed?.should eq false
       story.bylines.destroy_all
       story.changed?.should eq true
+    end
+
+    it 'makes a version when removing' do
+      story   = build :test_class_story, :published
+      byline  = build :byline, content: nil
+      story.bylines << byline
       story.save!
 
-      versions = story.versions.order("version_number").to_a
-      versions.size.should eq 2
+      story.bylines.destroy_all
+      story.save!
+
+      versions = story.versions.order('version_number').to_a
+
       versions.last.object_changes["bylines"][0].should be_present
       versions.last.object_changes["bylines"][1].should_not be_present
     end
@@ -46,8 +57,6 @@ describe Concern::Associations::BylinesAssociation do
 
   describe 'form input' do
     it 'destroys the object if the _destroy flag is set' do
-      pending
-
       story     = create :test_class_story # 1
       byline1   = create :byline, content: nil
       byline2   = create :byline, content: nil
