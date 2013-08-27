@@ -15,4 +15,11 @@ describe ExternalEpisode do
       episode.to_episode.should be_a Episode
     end
   end
+
+  describe '#to_article' do
+    it "turns the episode into an article" do
+      episode = build :external_episode
+      episode.to_article.should be_a Article
+    end
+  end
 end

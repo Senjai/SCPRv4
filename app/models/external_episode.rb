@@ -47,4 +47,18 @@ class ExternalEpisode < ActiveRecord::Base
       :segments           => self.external_segments.map(&:to_article)
     })
   end
+
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.title,
+      :short_title        => self.title,
+      :public_datetime    => self.air_date,
+      :teaser             => self.summary,
+      :body               => self.summary,
+      :audio              => self.audio,
+      :byline             => self.external_program.title
+    })
+  end
 end

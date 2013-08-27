@@ -13,23 +13,8 @@
       </div> <!-- info -->
     </div> <!-- span -->
 
-  <% if audio = external_episode.audio.first %>
     <div class="span6">
-      <aside class="story-audio">
-        <div class="inner-container clearfix">
-          <div class="audio-content">
-            <h4>Listen Now</h4>
-          </div>
-          <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(external_episode.title) %>" data-duration="<%= audio.duration %>"></a>
-          <% if audio.duration %><span class="duration">[<%= format_duration audio.duration %>]</span><% end %>
-          <ul class="audio-tools">
-            <li>
-              <a href="<%= audio.url %>">Download</a>
-            </li>
-          </ul>
-        </div>
-      </aside>
+      <%= render "/shared/cwidgets/primary_audio", article: external_episode.to_article, cssClass: "" %>
     </div> <!-- span -->
-  <% end %>
   </div> <!-- row-fluid -->
 </article>

@@ -19,7 +19,8 @@
     </div> <!-- span12/9 -->
     <div class="span6">
       <div class="interact">
-        <%= link_to_audio("Listen now", article, class: "inline") %>
+        <%= render "/shared/cwidgets/primary_audio", article: article, cssClass: "" %>
+
         <%= comment_count_for article.original_object, class: "inline" %>
       </div>
     </div>

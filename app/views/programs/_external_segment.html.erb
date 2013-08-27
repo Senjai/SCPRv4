@@ -10,10 +10,9 @@
 
       <%= external_segment.teaser.html_safe %>
     </div> <!-- span12/9 -->
+
     <div class="span6">
-      <div class="interact">
-        <%= link_to_audio("Listen now", external_segment, class: "inline") if external_segment.audio.available.present? %>
-      </div>
+      <%= render "/shared/cwidgets/primary_audio", article: external_segment.to_article, cssClass: "" %>
     </div>
   </div>
 </div>
