@@ -10,6 +10,25 @@ describe NprProgramImporter do
         })
       end
 
+      it "requests more if there are 20 stories in the initial response" do
+        stub_request(:get, %r{api\.npr\.org/.+startNum=1}).to_return({
+          :content_type   => 'application/json',
+          :body           => load_fixture('api/npr/program_pg1.json')
+        })
+
+        stub_request(:get, %r{api\.npr\.org/.+startNum=21}).to_return({
+          :content_type   => 'application/json',
+          :body           => load_fixture('api/npr/program_pg2.json')
+        })
+
+        external_program = create :external_program, :from_npr
+        external_program.external_segments.should be_empty
+
+        NprProgramImporter.sync(external_program)
+
+        external_program.external_segments.count.should eq 21
+      end
+
       it "creates an episode" do
         external_program = create :external_program, :from_npr
         external_program.external_episodes.should be_empty

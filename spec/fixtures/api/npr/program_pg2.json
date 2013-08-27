@@ -1,0 +1,235 @@
+{
+  "version": "0.94",
+  "list": {
+    "title": {
+      "$text": "NPR Programs: All Things Considered"
+    },
+    "teaser": {
+      "$text": "Every weekday, All Things Considered hosts Robert Siegel, Melissa Block and Audie Cornish present the program's trademark mix of news, interviews, commentaries, reviews, and offbeat features."
+    },
+    "miniTeaser": {
+      "$text": "A trademark mix of news, interviews, commentaries, reviews, and offbeat features."
+    },
+    "link": [
+      {
+        "type": "api",
+        "$text": "http://api.npr.org/query?id=2&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+      },
+      {
+        "type": "html",
+        "$text": "http://www.npr.org/programs/all-things-considered/?ft=3&f=2"
+      }
+    ],
+    "story": [
+      {
+        "id": "214953557",
+        "link": [
+          {
+            "type": "html",
+            "$text": "http://www.npr.org/2013/08/23/214953557/san-diego-mayor-resigns-amid-sexual-harassment-allegations?ft=3&f=2"
+          },
+          {
+            "type": "api",
+            "$text": "http://api.npr.org/query?id=214953557&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          },
+          {
+            "type": "short",
+            "$text": "http://n.pr/14MLA64"
+          }
+        ],
+        "title": {
+          "$text": "Another Something WAT"
+        },
+        "partnerId": {
+          "$text": "214953557"
+        },
+        "subtitle": {},
+        "shortTitle": {},
+        "teaser": {
+          "$text": "San Diego Mayor Bob Filner resigned on Friday. The city council  struck a deal under which Filner — a Democrat — will step down on Aug. 30. It's the end result of a sexual harassment scandal that has seen more than a dozen women accuse Filner of inappropriate behavior."
+        },
+        "miniTeaser": {
+          "$text": "Filner will step down on Aug. 30."
+        },
+        "slug": {
+          "$text": "Around the Nation"
+        },
+        "storyDate": {
+          "$text": "Fri, 23 Aug 2013 15:00:00 -0400"
+        },
+        "pubDate": {
+          "$text": "Fri, 23 Aug 2013 21:12:00 -0400"
+        },
+        "lastModifiedDate": {
+          "$text": "Fri, 23 Aug 2013 21:12:44 -0400"
+        },
+        "show": [
+          {
+            "program": {
+              "id": "2",
+              "code": "ATC",
+              "$text": "All Things Considered"
+            },
+            "showDate": {
+              "$text": "Fri, 23 Aug 2013 15:00:00 -0400"
+            },
+            "segNum": {
+              "$text": "20"
+            }
+          }
+        ],
+        "keywords": {},
+        "priorityKeywords": {},
+        "organization": [
+          {
+            "orgId": "1",
+            "orgAbbr": "NPR",
+            "name": {
+              "$text": "NPR"
+            },
+            "website": {
+              "$text": "http://www.npr.org/"
+            }
+          }
+        ],
+        "parent": [
+          {
+            "id": "1091",
+            "type": "primaryTopic",
+            "slug": "true",
+            "title": {
+              "$text": "Around the Nation"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/around-the-nation/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1091&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1091",
+            "type": "topic",
+            "title": {
+              "$text": "Around the Nation"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/around-the-nation/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1091&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1003",
+            "type": "topic",
+            "title": {
+              "$text": "U.S."
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/us/?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1003&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "214954447",
+            "type": "primary",
+            "title": {},
+            "duration": {
+              "$text": "170"
+            },
+            "description": {},
+            "format": {
+              "mp3": [
+                {
+                  "type": "mp3",
+                  "$text": "http://pd.npr.org/anon.npr-mp3/npr/atc/2013/08/20130823_atc_20.mp3?orgId=1&topicId=1091&ft=3&f=2"
+                },
+                {
+                  "type": "m3u",
+                  "$text": "http://api.npr.org/m3u/1214954447-d592bf.m3u?orgId=1&topicId=1091&ft=3&f=2"
+                }
+              ],
+              "wm": {
+                "$text": "http://www.npr.org/templates/dmg/dmg_wmref_em.php?id=214954447&type=1&mtype=WM&orgId=1&topicId=1091&ft=3&f=2"
+              },
+              "mp4": {
+                "$text": "http://pd.npr.org/npr-mp4/npr/atc/2013/08/20130823_atc_20.mp4?orgId=1&topicId=1091&ft=3&f=2"
+              },
+              "mediastream": {
+                "$text": "rtmp://flash.npr.org/ondemand/mp3:anon.npr-mp3/npr/atc/2013/08/20130823_atc_20.mp3"
+              }
+            },
+            "rightsHolder": {},
+            "permissions": {
+              "download": {
+                "allow": "true"
+              },
+              "stream": {
+                "allow": "true"
+              },
+              "embed": {
+                "allow": "false"
+              }
+            },
+            "stream": {
+              "active": "false"
+            }
+          }
+        ],
+        "byline": [
+          {
+            "id": "214954429",
+            "name": {
+              "personId": "149475615",
+              "$text": "Sandhya Dirks"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://iowapublicradio.org/people/sandhya-dirks"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=149475615&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "214954425",
+            "name": {
+              "personId": "134002977",
+              "$text": "Melissa Block"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/people/134002977/melissa-block?ft=3&f=2"
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=134002977&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

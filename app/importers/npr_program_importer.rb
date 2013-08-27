@@ -31,14 +31,14 @@ class NprProgramImporter
     # `date=current` returns the program's latest episode's segments.
     # Set limit to 20 to return as many segments as possible for the
     # episode.
-    # TODO: If there are more than 20 segments to an episode, need
-    # to recognize that and do another query to fetch the other ones.
-    # We can do this with pagination, using the startNum parameter.
-    stories = NPR::Story.where(
-      :id   => @external_program.external_id,
-      :date => "current"
-    ).set(requiredAssets: "audio")
-    .limit(20).to_a.select { |s| can_stream?(s) }
+    stories   = []
+    offset    = 0
+
+    begin
+      response = fetch_stories(offset)
+      stories += response
+      offset += 20
+    end until response.size < 20
 
     # If there are no segments then forget about it.
     # Even if an episode is available in the NPR API, its audio may 
@@ -98,6 +98,15 @@ class NprProgramImporter
 
 
   private
+
+  def fetch_stories(offset)
+    NPR::Story.where(
+      :id   => @external_program.external_id,
+      :date => "current"
+    ).set(requiredAssets: "audio")
+    .limit(20).offset(offset)
+    .to_a.select { |s| can_stream?(s) }
+  end
 
   # For NPR, we kind of have to make-up these episodes, since NPR
   # doesn't really keep track of the shows, except for the air-date
