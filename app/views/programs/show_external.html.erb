@@ -5,6 +5,7 @@
 <div class="program-external-header">
   <div class="row-fluid" id="program-external-header">
     <div class="span18">
+      <h1><%= p.title %></h1>
       <p><%= p.description %></p>
     </div>
     <div class="span6">
@@ -17,11 +18,14 @@
   </div> <!-- row fluid -->
 </div> <!-- .program-ext-header -->
 
-<%= cache @episodes do %>
+<h6>Recent Episodes</h6>
+
+<%= cache ["episode-teasers", @episodes] do %>
 <div class="show-segments">
   <%= render partial: "external_episode", collection: @episodes %>
-  <%= paginate @episodes %>
 </div>
 <% end %>
+
+<%= paginate @episodes %>
 
 <% end %>

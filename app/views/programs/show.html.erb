@@ -1,4 +1,3 @@
-
 <!-- KPCC Program -->
 
 <% if @kpcc_program.display_episodes? %>
@@ -28,18 +27,27 @@
     <%= any_to_list? @segments, title: "Segments" do %>
       <h2>Recently on <%= @kpcc_program.title %></h2>
       <%= nav if @segments.current_page > 1 %>
-      <%= render partial: "/programs/segment_teaser", collection: @segments.map(&:to_article), as: :article %>
+
+      <%= cache ["segment-teasers", @segments] do %>
+        <%= render partial: "/programs/segment_teaser", collection: @segments.map(&:to_article), as: :article %>
+      <% end %>
+
       <%= nav %>
     <% end %>
   </section>
 
 <% elsif @kpcc_program.display_episodes? %>
   <% nav = paginate @episodes, params: { anchor: "archive"} %>
+
   <section class="show-episodes">
     <%= any_to_list? @episodes, title: "Episodes" do %>
       <h2>Recently on <%= @kpcc_program.title %></h2>
       <%= nav if @episodes.current_page > 1 %>
-      <%= render partial: "/programs/episode", collection: @episodes %>
+
+      <%= cache ["episode-teasers", @episodes] %> 
+        <%= render partial: "/programs/episode", collection: @episodes %>
+      <% end %>
+
       <%= nav %>
     <% end %>
   </section>

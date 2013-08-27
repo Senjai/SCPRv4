@@ -22,9 +22,11 @@
 </header>
 
 <section class="show-segments episode">
-  <%= any_to_list? @segments, title: "Segments" do %>
+<%= any_to_list? @segments, title: "Segments" do %>
+  <%= cache ["segment-teasers", @segments] do %>
     <%= render partial: '/programs/segment_teaser', collection: @segments, as: :article %>
   <% end %>
+<% end %>
 </section>
 
 <%= render "/programs/archive_select", program: @program %>
