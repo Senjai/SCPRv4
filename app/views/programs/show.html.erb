@@ -44,7 +44,7 @@
       <h2>Recently on <%= @kpcc_program.title %></h2>
       <%= nav if @episodes.current_page > 1 %>
 
-      <%= cache ["episode-teasers", @episodes] %> 
+      <%= cache ["episode-teasers", @episodes] do %>
         <%= render partial: "/programs/episode", collection: @episodes %>
       <% end %>
 
