@@ -15,9 +15,11 @@
   </div> <!-- row fluid -->
 </div> <!-- .program-ext-header -->
 
+<%= cache @episodes do %>
 <div class="show-segments">
   <%= render partial: "external_episode", collection: @episodes %>
   <%= paginate @episodes %>
 </div>
+<% end %>
 
 <% end %>
