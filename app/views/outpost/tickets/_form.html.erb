@@ -1,8 +1,0 @@
-<%= simple_form_for [:outpost, @ticket], remote: true do |f| %>
-  <%= f.error_notification %>
-  <%= f.input :summary, hint: "A one-sentence summary of the issue" %>
-  <%= f.input :description, hint: "Describe the problem in detail. Include steps to reproduce, if applicable.", input_html: { class: "tiny span4" } %>
-  <%= f.input :browser_info, hint: "Include NAME and VERSION (eg. Chrome 23.0), if not already filled in.", input_html: { value: request.env['HTTP_USER_AGENT'] } %>
-  <%= f.input :link, as: :url, hint: "The page where you are seeing the issue. Uses the current URL by default.", input_html: { value: request.url } %>
-  <%= f.button :submit, class: "btn" %>
-<% end %>

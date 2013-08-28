@@ -328,10 +328,6 @@ Scprv4::Application.routes.draw do
       post "preview", on: :collection
     end
 
-    resources :tickets do
-      get "search", on: :collection, as: :search
-    end
-
     resources :remote_articles, only: [:index] do
       member do
         post "import", as: :import
