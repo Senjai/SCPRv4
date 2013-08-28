@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130823210512) do
+ActiveRecord::Schema.define(:version => 20130828190655) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -711,20 +711,6 @@ ActiveRecord::Schema.define(:version => 20130823210512) do
   add_index "taggit_taggeditem", ["content_type", "content_id"], :name => "index_taggit_taggeditem_on_content_type_and_content_id"
   add_index "taggit_taggeditem", ["django_content_type_id"], :name => "taggit_taggeditem_e4470c6e"
   add_index "taggit_taggeditem", ["tag_id"], :name => "taggit_taggeditem_3747b463"
-
-  create_table "tickets", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "browser_info"
-    t.string   "link"
-    t.string   "summary"
-    t.text     "description"
-    t.integer  "status",       :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "tickets", ["status"], :name => "index_tickets_on_status"
-  add_index "tickets", ["user_id"], :name => "index_tickets_on_user_id"
 
   create_table "user_permissions", :force => true do |t|
     t.integer  "admin_user_id"
