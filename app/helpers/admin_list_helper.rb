@@ -17,34 +17,25 @@ module AdminListHelper
 
   #-------------
   # Attribute Helpers
-  
+
   def display_status(status)
     content_tag :div, ContentBase::STATUS_TEXT[status], class: status_bootstrap_map[status]
   end
-  
-  def display_ticket_status(status)
-    content_tag :div, Ticket::STATUS_TEXT[status], class: ticket_status_bootstrap_map[status]
-  end
-    
+
+
   def display_air_status(air_status)
     KpccProgram::PROGRAM_STATUS[air_status]
   end
-  
+
   def display_audio(audio)
     return audio if !audio.is_a? Array
     status = audio.first.try(:status)
     content_tag :div, Audio::STATUS_TEXT[status], class: audio_bootstrap_map[status]
   end
-  
+
   #-------------
   # Maps
-  def ticket_status_bootstrap_map
-    {
-      Ticket::STATUS_CLOSED => "list-status label label-important",
-      Ticket::STATUS_OPEN   => "list-status label label-success",
-    }
-  end
-  
+
   def status_bootstrap_map
     {
       ContentBase::STATUS_KILLED  => "list-status label label-important",
@@ -55,7 +46,7 @@ module AdminListHelper
       ContentBase::STATUS_LIVE    => "list-status label label-success"
     }
   end
-  
+
   def audio_bootstrap_map
     {
       nil                => "list-status label",
