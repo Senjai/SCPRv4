@@ -14,7 +14,7 @@ $ ->
             "u", "s", "i", "b",
             "blockquote",
             "ul", "ol", "li",
-            "br",
+            "br", "hr",
             "h1", "h2", "h3", "h4", "h5", "h6",
             "script[src]",
             "div",
