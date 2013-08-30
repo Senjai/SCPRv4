@@ -68,21 +68,21 @@ describe Concern::Associations::BylinesAssociation do
 
       # Fake the params.
       story.update_attributes("bylines_attributes" => {
-        "0" => {
+        "0" => { # This one should stay
           "user_id"     => bio.id.to_s,
           "name"        => "",
           "role"        => "0",
           "_destroy"    => "0",
           "id"          => byline1.id
         },
-        "1" => {
+        "1" => { # This should get deleted
           "user_id"     => bio.id.to_s,
           "name"        => "",
           "role"        => "0",
           "_destroy"    => "1",
           "id"          => byline2.id.to_s
         },
-        "2" => {
+        "2" => { # Just making sure that empty attributes will be rejected
           "user_id"     => "",
           "name"        => "",
           "role"        => "0",

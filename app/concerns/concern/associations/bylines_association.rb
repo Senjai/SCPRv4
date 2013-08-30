@@ -9,17 +9,13 @@ module Concern
 
       included do
         has_many :bylines,
-          :as           => :content,
-          :class_name   => "ContentByline",
-          :dependent    => :destroy,
-          :before_add   => [
-            :get_original_bylines,
-            :force_bylines_into_changes
-          ],
-          :before_remove => [
-            :get_original_bylines,
-            :force_bylines_into_changes
-          ]
+          :as               => :content,
+          :class_name       => "ContentByline",
+          :dependent        => :destroy,
+          :before_add       => :get_original_bylines,
+          :before_remove    => :get_original_bylines
+
+        tracks_association :bylines
 
         accepts_nested_attributes_for :bylines,
           :allow_destroy    => true,
@@ -34,7 +30,7 @@ module Concern
           .where(ContentByline.table_name => { user_id: bio_id })
         }
 
-        before_save :build_custom_changes_for_bylines
+
         after_save :promise_to_index_bylines, if: -> { self.changed? }
         after_destroy :promise_to_index_bylines
         after_commit :enqueue_sphinx_index_for_bylines
@@ -118,30 +114,6 @@ module Concern
         end
 
         reset_byline_index_promises
-      end
-
-
-      # We can't really assume that anything with a byline will
-      # be versioned, so we should check first.
-      def build_custom_changes_for_bylines
-        if self.class.has_secretary?
-          build_custom_changes_for_association("bylines", @bylines_were)
-        end
-
-        @bylines_were = nil
-      end
-
-      # This will get called before any changes are made
-      # to the bylines
-      def get_original_bylines(_)
-        @bylines_were ||= self.bylines.to_a
-      end
-
-      # We want to make the model aware that it is dirty.
-      def force_bylines_into_changes(_)
-        if self.class.has_secretary?
-          self.changed_attributes["bylines"] = self.bylines
-        end
       end
 
       #-------------------

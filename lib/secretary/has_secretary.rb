@@ -10,7 +10,7 @@ module Secretary
     #---------------------
     # has_secretary
     # Apply to any class that should be versioned
-    def has_secretary(options={})
+    def has_secretary
       @_has_secretary = true
 
       has_many :versions,
@@ -70,13 +70,12 @@ module Secretary
       private
 
       # Collection is the original collection
-      def build_custom_changes_for_association(association, collection)
-        collection ||= []
-        original = collection.as_json
-        current  = self.send(association).as_json
+      def build_custom_changes_for_association(name, original)
+        original = Array(original).as_json
+        current  = self.send(name).reject(&:marked_for_destruction?).as_json
 
         if original != current
-          self.custom_changes[association] = [original, current]
+          self.custom_changes[name] = [original, current]
         end
       end
 
