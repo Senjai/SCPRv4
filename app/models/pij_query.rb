@@ -1,6 +1,7 @@
 class PijQuery < ActiveRecord::Base
   self.table_name = 'pij_query'
   outpost_model
+  has_secretary
 
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
@@ -20,8 +21,6 @@ class PijQuery < ActiveRecord::Base
 
 
   ROUTE_KEY = "pij_query"
-
-  has_secretary
 
   QUERY_TYPES = [
     ["Evergreen",             "evergreen"],

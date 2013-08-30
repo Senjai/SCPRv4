@@ -9,8 +9,18 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        has_many :audio, as: :content, order: "position", dependent: :destroy
-        accepts_nested_attributes_for :audio, allow_destroy: true, reject_if: :should_reject_audio?
+        has_many :audio,
+          :as               => :content,
+          :order            => "position",
+          :dependent        => :destroy,
+          :before_add       => :get_original_audio,
+          :before_remove    => :get_original_audio
+
+        tracks_association :audio
+
+        accepts_nested_attributes_for :audio,
+          :allow_destroy    => true,
+          :reject_if        => :should_reject_audio?
       end
 
 

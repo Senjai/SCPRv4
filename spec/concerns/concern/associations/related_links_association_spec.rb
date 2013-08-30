@@ -10,17 +10,40 @@ describe Concern::Associations::RelatedLinksAssociation do
   end
 
   describe 'versioning' do
-    it 'creates a version when saving the parent object', focus: true do
+    it 'creates a version on the parent object when adding' do
       story = create :test_class_story
       link1 = build :related_link, content: nil
       link2 = build :related_link, content: nil
-      story.related_links = [link1, link2] # calls save on story... :(
+
+      story.related_links = [link1, link2]
+      story.save!
 
       versions = story.versions
       versions.size.should eq 2
 
       versions.last.object_changes["related_links"][0].should be_empty
-      versions.last.object_changes["related_links"][1].should be_present
+      versions.last.object_changes["related_links"][1].size.should eq 2
+    end
+
+    it "creates a version on the parent object when removing" do
+      story = create :test_class_story
+      link1 = build :related_link, content: nil
+      link2 = build :related_link, content: nil
+
+      story.versions.count.should eq 1
+
+      story.related_links = [link1, link2]
+      story.save!
+      story.versions.count.should eq 2
+
+      story.related_links = []
+      story.save!
+      story.versions.count.should eq 3
+
+      versions = story.versions
+
+      versions.last.object_changes["related_links"][0].size.should eq 2
+      versions.last.object_changes["related_links"][1].should be_empty
     end
   end
 end

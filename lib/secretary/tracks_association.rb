@@ -29,10 +29,11 @@ module Secretary
 
           def build_custom_changes_for_#{name}
             build_custom_changes_for_association("#{name}", @#{name}_were)
+            @#{name}_were = nil
           end
 
           def get_original_#{name}(_)
-            @#{name}_were ||= persisted? ? self.class.find(self.id).#{name} : []
+            @#{name}_were ||= persisted? ? self.class.find(self.id).#{name}.to_a : []
           end
         EOE
 
