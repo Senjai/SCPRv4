@@ -81,18 +81,6 @@ module ChrArticleImporter
       npr_story = response.list.stories.first
       return false if !npr_story
 
-      # Make sure some text gets imported...
-      # if not then this whole process is useless.
-      #
-      # 1. If the +fullText+ exists, use it
-      #
-      # 2. If the +fullText+ is blank, then try +textWithHtml+.
-      #
-      # 3. If still nothing, then try just +text+.
-      #
-      # 4. Failing all of that, we'll still import the story,
-      # but the body will just be blank.
-      #
       text = begin
         if npr_story.textWithHtml.present?
           npr_story.textWithHtml.to_html
