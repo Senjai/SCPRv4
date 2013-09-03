@@ -21,18 +21,20 @@ module Secretary
     #
     # tracks_association :bylines
     def tracks_association(*associations)
-      return false if !self.has_secretary?
-
       associations.each do |name|
         module_eval <<-EOE, __FILE__, __LINE__ + 1
           private 
 
           def build_custom_changes_for_#{name}
+            return if !self.class.has_secretary?
+
             build_custom_changes_for_association("#{name}", @#{name}_were)
             @#{name}_were = nil
           end
 
           def get_original_#{name}(_)
+            return if !self.class.has_secretary?
+
             @#{name}_were ||= persisted? ? self.class.find(self.id).#{name}.to_a : []
           end
         EOE

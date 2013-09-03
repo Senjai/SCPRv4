@@ -27,7 +27,7 @@ module Concern
       private
 
       # If all of these attributes are blank, reject it,
-      # because obviously they weren't trying to attach
+      # because it means they weren't trying to attach
       # any audio.
       #
       # Otherwise, the person was trying to do something
