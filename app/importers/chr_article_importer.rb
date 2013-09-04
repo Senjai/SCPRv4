@@ -30,7 +30,7 @@ module ChrArticleImporter
 
       npr_stories = Array.wrap(response.list.stories)
 
-      log "#{npr_stories.size} CHR stories found from the past hour"
+      log "#{npr_stories.size} CHR stories found"
 
       added = []
 
@@ -43,7 +43,7 @@ module ChrArticleImporter
           :article_id   => npr_story.id,
           :headline     => npr_story.title,
           :teaser       => npr_story.teaser,
-          :published_at => npr_story.pubDate,
+          :published_at => npr_story.pubDate || npr_story.storyDate,
           :url          => npr_story.link_for("html"),
           :is_new       => true
         )
