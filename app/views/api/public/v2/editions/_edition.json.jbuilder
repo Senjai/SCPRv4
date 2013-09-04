@@ -8,7 +8,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", edition] do
     json.headline               abstract.headline
     json.summary                abstract.summary
     json.article_published_at   abstract.article_published_at
-    
+
     json.assets do |asset|
       json.partial! "api/public/v2/assets/collection", assets: abstract.assets
     end
