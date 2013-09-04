@@ -10,6 +10,15 @@ describe Concern::Associations::RelatedLinksAssociation do
   end
 
   describe 'versioning' do
+    it 'makes the object dirty' do
+      story = create :test_class_story
+      link1 = build :related_link, content: nil
+
+      story.changed?.should eq false
+      story.related_links << link1
+      story.changed?.should eq true
+    end
+
     it 'creates a version on the parent object when adding' do
       story = create :test_class_story
       link1 = build :related_link, content: nil

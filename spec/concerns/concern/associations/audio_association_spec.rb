@@ -37,6 +37,15 @@ describe Concern::Associations::AudioAssociation do
   end
 
   describe 'versioning' do
+    it 'makes the object doity' do
+      story = create :test_class_story
+      audio1 = build :direct_audio, content: nil
+
+      story.changed?.should eq false
+      story.audio << audio1
+      story.changed?.should eq true
+    end
+
     it 'adds a version when adding to the collection' do
       story = create :test_class_story
       audio1 = build :direct_audio, content: nil
