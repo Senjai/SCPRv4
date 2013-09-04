@@ -13,8 +13,14 @@ module Concern
           :as               => :content,
           :order            => "position",
           :dependent        => :destroy,
-          :before_add       => :get_original_audio,
-          :before_remove    => :get_original_audio
+          :before_add       => [
+            :get_original_audio,
+            :force_audio_into_changes
+          ],
+          :before_remove    => [
+            :get_original_audio,
+            :force_audio_into_changes
+          ]
 
         tracks_association :audio
 

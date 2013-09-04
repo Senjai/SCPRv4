@@ -12,8 +12,14 @@ module Concern
           :as               => :content,
           :class_name       => "ContentByline",
           :dependent        => :destroy,
-          :before_add       => :get_original_bylines,
-          :before_remove    => :get_original_bylines
+          :before_add       => [
+            :get_original_bylines,
+            :force_bylines_into_changes
+          ],
+          :before_remove    => [
+            :get_original_bylines,
+            :force_bylines_into_changes
+          ]
 
         tracks_association :bylines
 

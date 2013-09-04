@@ -37,6 +37,12 @@ module Secretary
 
             @#{name}_were ||= persisted? ? self.class.find(self.id).#{name}.to_a : []
           end
+
+          def force_#{name}_into_changes(_)
+            return if !self.class.has_secretary?
+
+            self.custom_changes["#{name}"] = [Array(@#{name}_were), self.#{name}]
+          end
         EOE
 
         before_save :"build_custom_changes_for_#{name}"
