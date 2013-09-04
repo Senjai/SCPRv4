@@ -27,20 +27,19 @@ module Secretary
 
           def build_custom_changes_for_#{name}
             return if !self.class.has_secretary?
-
             build_custom_changes_for_association("#{name}", @#{name}_were)
             @#{name}_were = nil
           end
 
+
           def get_original_#{name}(_)
             return if !self.class.has_secretary?
-
             @#{name}_were ||= persisted? ? self.class.find(self.id).#{name}.to_a : []
           end
 
+
           def force_#{name}_into_changes(_)
             return if !self.class.has_secretary?
-
             self.custom_changes["#{name}"] = [Array(@#{name}_were), self.#{name}]
           end
         EOE
