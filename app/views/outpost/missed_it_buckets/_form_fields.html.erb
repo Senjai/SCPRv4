@@ -1,5 +1,6 @@
 <%= form_block "Details" do %>
-  <%= f.input :title %>
+  <%= f.input :title, input_html: { class: "sluggable" } %>
+  <%= f.input :slug, input_html: { class: 'span3' } %>
 <% end %>
 
 <%= form_block "Content" do %>
