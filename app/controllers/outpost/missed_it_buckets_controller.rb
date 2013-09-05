@@ -10,5 +10,6 @@ class Outpost::MissedItBucketsController < Outpost::ResourceController
 
     l.column :id
     l.column :title, sortable: true, default_sort_mode: "asc"
+    l.column :slug
   end
 end

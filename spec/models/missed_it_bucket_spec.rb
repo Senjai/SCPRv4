@@ -1,11 +1,9 @@
 require "spec_helper"
 
 describe MissedItBucket do
-  describe "associations" do
-    it { should have_many(:content).class_name("MissedItContent") }
-  end
-  
-  describe "validations" do
-    it { should validate_presence_of(:title) }
+  describe 'slug generation' do
+    subject { create :missed_it_bucket, title: "What What", slug: nil }
+
+    its(:slug) { should eq "what-what" }
   end
 end

@@ -43,6 +43,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Validations
   validates :headline, presence: true
   validates :alert_type, presence: true
+  validates :alert_url, url: { allow_blank: true }
 
   #-------------------
   # Callbacks

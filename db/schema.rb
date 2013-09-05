@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903213136) do
+ActiveRecord::Schema.define(:version => 20130904222240) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(:version => 20130903213136) do
     t.string   "title",      :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "slug"
   end
 
   create_table "contentbase_misseditcontent", :force => true do |t|

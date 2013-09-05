@@ -31,7 +31,12 @@ class Podcast < ActiveRecord::Base
   #-------------
   # Validation
   validates :slug, uniqueness: true, presence: true
-  validates :title, :url, :podcast_url, presence: true
+  validates :title, presence: true
+
+  validates :url, presence: true, url: true
+  validates :podcast_url, presence: true, url: true
+  validates :itunes_url, url: { allow_blank: true }
+  validates :image_url, url: { allow_blank: true }
 
   #-------------
   # Callbacks

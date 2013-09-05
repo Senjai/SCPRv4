@@ -22,10 +22,11 @@ class MissedItBucket < ActiveRecord::Base
 
   #--------------------
   # Validation
-  validates :title, presence: true
+  validates :title, :slug, presence: true
 
   #--------------------
   # Callbacks
+  before_validation :generate_slug, if: -> { self.slug.blank? }
   after_commit :expire_cache
 
   def expire_cache
@@ -48,6 +49,12 @@ class MissedItBucket < ActiveRecord::Base
 
 
   private
+
+  def generate_slug
+    if self.title.present?
+      self.slug = self.title.parameterize[0...50].sub(/-+\z/, "")
+    end
+  end
 
   def build_content_association(content_hash, content)
     if content.published?
