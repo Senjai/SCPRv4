@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v1", alert] do
+json.cache! [Api::Public::V3::VERSION, "v2", alert] do
   json.id             alert.id
   json.headline       alert.headline
   json.type           alert.alert_type

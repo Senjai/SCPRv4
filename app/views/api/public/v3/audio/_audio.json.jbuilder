@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v1", audio] do
+json.cache! [Api::Public::V3::VERSION, "v2", audio] do
   json.id               audio.id
   json.description      audio.description
   json.url              audio.url

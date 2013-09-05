@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v1", schedule_occurrence] do
+json.cache! [Api::Public::V3::VERSION, "v2", schedule_occurrence] do
   json.title          schedule_occurrence.title
   json.public_url     schedule_occurrence.public_url
   json.starts_at      schedule_occurrence.starts_at

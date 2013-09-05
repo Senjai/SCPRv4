@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v1", blog] do
+json.cache! [Api::Public::V3::VERSION, "v2", blog] do
   json.title        blog.name
   json.slug         blog.slug
 

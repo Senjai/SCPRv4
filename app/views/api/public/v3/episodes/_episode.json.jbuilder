@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v1", episode] do
+json.cache! [Api::Public::V3::VERSION, "v2", episode] do
   json.title    episode.title
   json.summary  episode.summary.to_s.html_safe
 

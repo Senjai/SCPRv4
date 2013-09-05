@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v1", program] do
+json.cache! [Api::Public::V3::VERSION, "v2", program] do
   json.title          program.title
   json.slug           program.slug
   json.air_status     program.air_status

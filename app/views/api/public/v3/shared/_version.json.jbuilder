@@ -1,1 +1,1 @@
-#json.version Api::Public::V3::VERSION.to_s
+json.version Api::Public::V3::VERSION.to_s
