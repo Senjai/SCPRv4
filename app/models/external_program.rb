@@ -54,9 +54,9 @@ class ExternalProgram < ActiveRecord::Base
     :title,
     :air_status,
     :source,
-    :podcast_url,
     presence: true
 
+  validates :podcast_url, presence: true, url: true
   validates :slug, presence: true, uniqueness: true
   validate :slug_is_unique_in_programs_namespace
 

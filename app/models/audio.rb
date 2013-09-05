@@ -73,6 +73,7 @@ class Audio < ActiveRecord::Base
     self.new_record? && self.type == "Audio::UploadedAudio"
   }
 
+  validates :external_url, url: { allow_blank: true }
 
   #------------
   # Callbacks
