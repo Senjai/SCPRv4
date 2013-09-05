@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string   "source"
     t.string   "url"
     t.string   "headline"
-    t.text     "summary"
+    t.text     "summary",              :limit => 16777215
     t.integer  "category_id"
     t.datetime "article_published_at"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
   add_index "abstracts", ["category_id"], :name => "index_abstracts_on_category_id"
@@ -58,17 +58,17 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   create_table "bios_bio", :force => true do |t|
     t.integer  "user_id"
     t.string   "slug"
-    t.text     "bio"
+    t.text     "bio",            :limit => 16777215
     t.string   "title"
-    t.boolean  "is_public",      :default => false, :null => false
+    t.boolean  "is_public",                          :default => false, :null => false
     t.string   "twitter_handle"
     t.integer  "asset_id"
     t.string   "short_bio"
     t.string   "phone_number"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.string   "last_name"
   end
 
@@ -228,9 +228,9 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string   "group_name"
     t.string   "data_key"
     t.string   "notes"
-    t.text     "data_value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.text     "data_value", :limit => 16777215
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "title"
   end
 
@@ -309,30 +309,30 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
 
   create_table "external_episodes", :force => true do |t|
     t.string   "title"
-    t.text     "summary"
+    t.text     "summary",             :limit => 16777215
     t.integer  "external_program_id"
     t.string   "external_id"
     t.datetime "air_date"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   add_index "external_episodes", ["air_date"], :name => "index_external_episodes_on_air_date"
   add_index "external_episodes", ["external_program_id", "external_id"], :name => "index_external_episodes_on_external_program_id_and_external_id"
 
   create_table "external_programs", :force => true do |t|
-    t.string   "slug",                         :null => false
-    t.string   "title",                        :null => false
-    t.text     "teaser"
-    t.text     "description"
+    t.string   "slug",                               :null => false
+    t.string   "title",                              :null => false
+    t.text     "teaser",         :limit => 16777215
+    t.text     "description",    :limit => 16777215
     t.string   "host"
     t.string   "organization",   :limit => 50
     t.string   "airtime"
-    t.string   "air_status",                   :null => false
+    t.string   "air_status",                         :null => false
     t.string   "podcast_url"
-    t.text     "sidebar"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.text     "sidebar",        :limit => 16777215
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "twitter_handle"
     t.string   "source"
     t.integer  "external_id"
@@ -345,13 +345,13 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
 
   create_table "external_segments", :force => true do |t|
     t.string   "title"
-    t.text     "teaser"
+    t.text     "teaser",              :limit => 16777215
     t.integer  "external_program_id"
     t.string   "external_id"
     t.string   "external_url"
     t.datetime "published_at"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   add_index "external_segments", ["external_program_id", "external_id"], :name => "index_external_segments_on_external_program_id_and_external_id"
@@ -534,17 +534,17 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string   "url"
     t.string   "podcast_url"
     t.string   "itunes_url"
-    t.text     "description"
+    t.text     "description", :limit => 16777215
     t.string   "image_url"
     t.string   "author"
     t.string   "keywords"
     t.string   "duration"
-    t.boolean  "is_listed",   :default => false, :null => false
+    t.boolean  "is_listed",                       :default => false, :null => false
     t.integer  "source_id"
     t.integer  "category_id"
     t.string   "item_type"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.string   "source_type"
   end
 
@@ -556,7 +556,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string   "short_title"
     t.string   "slug"
     t.string   "title"
-    t.text     "body",        :null => false
+    t.text     "body",        :limit => 16777215, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -564,24 +564,24 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   add_index "press_releases", ["slug"], :name => "press_releases_release_slug"
 
   create_table "programs_kpccprogram", :force => true do |t|
-    t.string   "slug",                                   :null => false
-    t.string   "title",                                  :null => false
-    t.text     "teaser"
-    t.text     "description"
+    t.string   "slug",                                                       :null => false
+    t.string   "title",                                                      :null => false
+    t.text     "teaser",              :limit => 16777215
+    t.text     "description",         :limit => 16777215
     t.string   "host"
     t.string   "airtime"
-    t.string   "air_status",                             :null => false
+    t.string   "air_status",                                                 :null => false
     t.string   "twitter_handle"
-    t.text     "sidebar"
-    t.boolean  "display_episodes",    :default => true,  :null => false
-    t.boolean  "display_segments",    :default => true,  :null => false
+    t.text     "sidebar",             :limit => 16777215
+    t.boolean  "display_episodes",                        :default => true,  :null => false
+    t.boolean  "display_segments",                        :default => true,  :null => false
     t.integer  "blog_id"
     t.string   "audio_dir"
     t.integer  "missed_it_bucket_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
     t.string   "image"
-    t.boolean  "is_featured",         :default => false, :null => false
+    t.boolean  "is_featured",                             :default => false, :null => false
   end
 
   add_index "programs_kpccprogram", ["air_status"], :name => "index_programs_kpccprogram_on_air_status"
@@ -591,15 +591,15 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   add_index "programs_kpccprogram", ["slug"], :name => "index_programs_kpccprogram_on_slug"
 
   create_table "recurring_schedule_rules", :force => true do |t|
-    t.text     "schedule_hash"
+    t.text     "schedule_hash", :limit => 16777215
     t.integer  "interval"
     t.string   "days"
     t.string   "start_time"
     t.string   "end_time"
     t.integer  "program_id"
     t.string   "program_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "recurring_schedule_rules", ["program_type", "program_id"], :name => "index_recurring_schedule_rules_on_program_type_and_program_id"
@@ -742,9 +742,9 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string   "versioned_type"
     t.integer  "versioned_id"
     t.string   "user_id"
-    t.text     "description"
+    t.text     "description",    :limit => 16777215
     t.datetime "created_at"
-    t.text     "object_changes"
+    t.text     "object_changes", :limit => 16777215
   end
 
   add_index "versions", ["user_id"], :name => "index_versions_on_user_id"
