@@ -130,6 +130,7 @@ Scprv4::Application.routes.draw do
         resources :categories, only: [:index, :show]
         resources :events, only: [:index, :show]
         resources :programs, only: [:index, :show]
+        resources :buckets, only: [:index, :show]
         resources :episodes, only: [:index, :show]
         resources :blogs, only: [:index, :show]
 
@@ -164,6 +165,7 @@ Scprv4::Application.routes.draw do
         resources :categories, only: [:index, :show]
         resources :events, only: [:index, :show]
         resources :programs, only: [:index, :show]
+        resources :buckets, only: [:index, :show]
         resources :episodes, only: [:index, :show]
         resources :blogs, only: [:index, :show]
 
