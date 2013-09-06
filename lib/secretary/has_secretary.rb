@@ -70,9 +70,16 @@ module Secretary
       private
 
       # Collection is the original collection
-      def build_custom_changes_for_association(name, original)
-        original = Array(original).as_json
+      def build_custom_changes_for_association(name)
+        return if !self.changed?
+
+        original = self.send("#{name}_were").as_json
         current  = self.send(name).reject(&:marked_for_destruction?).as_json
+
+        # Since we set the custom changes just to dirtify the object,
+        # we clear it out here so it doesn't force a version to be
+        # created.
+        self.custom_changes.delete(name)
 
         if original != current
           self.custom_changes[name] = [original, current]

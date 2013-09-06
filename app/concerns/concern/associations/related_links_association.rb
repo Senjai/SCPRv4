@@ -11,15 +11,7 @@ module Concern
       included do
         has_many :related_links,
           :as               => :content,
-          :dependent        => :destroy,
-          :before_add       => [
-            :get_original_related_links,
-            :force_related_links_into_changes
-          ],
-          :before_remove    => [
-            :get_original_related_links,
-            :force_related_links_into_changes
-          ]
+          :dependent        => :destroy
 
         tracks_association :related_links
 

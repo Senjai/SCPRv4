@@ -12,15 +12,7 @@ module Concern
         has_many :audio,
           :as               => :content,
           :order            => "position",
-          :dependent        => :destroy,
-          :before_add       => [
-            :get_original_audio,
-            :force_audio_into_changes
-          ],
-          :before_remove    => [
-            :get_original_audio,
-            :force_audio_into_changes
-          ]
+          :dependent        => :destroy
 
         tracks_association :audio
 
