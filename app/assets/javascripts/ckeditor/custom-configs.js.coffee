@@ -7,16 +7,16 @@ $ ->
     # Restrictive configuration
     # For articles
     $('.cke-editor-restrictive').ckeditor({
-        allowedContent: [
-            "*[class,id]",
+        # P and BR are added by CKEditor
+        extraAllowedContent: [
             "a[*]",
             "img[*]",
             "strong", "em", "small",
             "u", "s", "i", "b",
-            "p", "blockquote[class,id]",
-            "div[class,id,data-href]", # data-href is for facebook embeds
+            "blockquote",
+            "div[data-href]", # data-href is for facebook embeds
             "ul", "ol", "li",
-            "br", "hr",
+            "hr",
             "h1", "h2", "h3", "h4", "h5", "h6",
             "script[src,charset,async]",
             "iframe[*]", "embed[*]", "object[*]",

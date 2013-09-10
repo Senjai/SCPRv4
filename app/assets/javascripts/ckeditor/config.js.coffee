@@ -33,6 +33,9 @@ CKEDITOR.editorConfig = (config) ->
         ['Source', 'Maximize']
     ]
 
+    # Anything can have an ID or any class
+    config.allowedContent = "*[id](*)"
+
     config.language     = 'en'
     config.height       = "400px"
     config.width        = "635px"
