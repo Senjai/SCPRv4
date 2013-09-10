@@ -16,7 +16,7 @@ CKEDITOR.editorConfig = (config) ->
         enableCodeFormatting    : true
         autoFormatOnStart       : false
         autoFormatOnUncomment   : false
-        highlightActiveLine     : true
+        highlightActiveLine     : false
         highlightMatches        : false
         showTabs                : false
         showFormatButton        : false
