@@ -35,7 +35,7 @@ class Outpost::AdminUsersController < Outpost::ResourceController
     get_record
     breadcrumb @record.to_title, @record.admin_edit_path, "Activity"
     list = Outpost::VersionsController.list
-    @versions = @record.activities.order(list.default_order).page(params[:page]).per(list.per_page)
+    @versions = @record.activities.order("#{list.default_order} #{list.default_sort_mode}").page(params[:page]).per(list.per_page)
     render '/outpost/versions/index', locals: { list: list }
   end
 end
