@@ -42,6 +42,7 @@
 
             var form = $("#"+editor.name).parents("form");
             form.on('submit', function() {
+                console.log("[ckeditor-autosave] form submit. removing key: " + autoSaveKey)
                 localStorage.removeItem(autoSaveKey);
             });
 
@@ -60,7 +61,6 @@
         timeOutId = setTimeout(onTimer, delay * 1000, event);
     };
     var onTimer = function (event) {
-        console.log("[ckeditor-autosave] autosaving...");
         if (savingActive) {
             startTimer(event);
         } else if (event.editor.checkDirty() || event.editor.plugins.bbcode) {
@@ -70,6 +70,8 @@
                 autoSaveKey = customAutoSaveKey != null ? customAutoSaveKey : 'autosave' + editor.id;
                 autoSaveKey += "-" + editor.name
 
+
+            console.log("[ckeditor-autosave] autosaving. Key: " + autoSaveKey);
             // save content
             localStorage.setItem(autoSaveKey, editor.getData());
 
