@@ -1,6 +1,7 @@
 //= require modernizr.custom
 //= require jquery.jplayer.min
 //= require moment-strftime
+//= require jquery.oembed
 
 //= require_directory ./t_listen/
 //= require swfobject.min
@@ -12,6 +13,7 @@
 //= require audio
 //= require modal
 //= require gmapsloader
+//= require embedder
 //= require hero_fader
 //= require presentation
 //= require listen_live
