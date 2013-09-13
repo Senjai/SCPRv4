@@ -1,6 +1,6 @@
 # Global Configuration
 CKEDITOR.editorConfig = (config) ->
-    config.extraPlugins = 'mediaembed,codemirror,autosave'
+    config.extraPlugins = 'mediaembed,codemirror,autosave,outpost-embeds'
 
     config.codemirror =
         # https://github.com/w8tcha/CKEditor-CodeMirror-Plugin 
@@ -28,7 +28,7 @@ CKEDITOR.editorConfig = (config) ->
     config.toolbar = [
         ['Bold', 'Italic', 'Underline', "RemoveFormat"]
         ['NumberedList', 'BulletedList', 'Blockquote']
-        ['Link', 'Unlink', 'Image', 'MediaEmbed']
+        ['Link', 'Unlink', 'Image', 'MediaEmbed', 'OutpostEmbeds']
         ['Find', 'Paste']
         ['Source', 'Maximize']
     ]
