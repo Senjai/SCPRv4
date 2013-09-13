@@ -50,4 +50,8 @@ json.cache! [Api::Public::V2::VERSION, "v1", event] do
   json.audio do
     json.partial! "api/public/v2/audio/collection", audio: event.audio
   end
+
+  json.embeds do
+    json.partial! "api/public/v2/embeds/collection", embeds: event.embeds
+  end
 end

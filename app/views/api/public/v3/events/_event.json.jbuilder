@@ -52,4 +52,9 @@ json.cache! [Api::Public::V3::VERSION, "v1", event] do
     json.partial! api_view_path("audio", "collection"),
       audio: event.audio
   end
+
+  json.embeds do
+    json.partial! api_view_path("embeds", "collection"),
+      embeds: event.embeds
+  end
 end
