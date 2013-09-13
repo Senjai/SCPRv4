@@ -6,7 +6,9 @@
  * 
  * Author: Richard Chamorro 
  */
- 
+
+/* NOTE This script has been updated by KPCC. Don't replace it without first
+    reviewing the changes. */ 
 (function ($) {
     $.fn.oembed = function (url, options, embedAction) {
 
