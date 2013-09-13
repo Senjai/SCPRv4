@@ -14,3 +14,5 @@
 <% content_for :analytics do %>
   _gaq.push(['_setCustomVar',1,'Source','<%=@story.source%>',3]);
 <% end %>
+
+<%= render 'shared/scripts/embedder' %>
