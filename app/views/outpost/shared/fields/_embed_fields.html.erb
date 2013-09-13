@@ -1,0 +1,6 @@
+<tr>
+  <%= render '/outpost/resource/errors', f: f %>
+  <td><%= f.input :title, label: false, input_html: { class: 'span3' } %></td>
+  <td><%= f.input :url, label: false, input_html: { class: 'span4' } %></td>
+  <td><%= f.input :_destroy, as: :boolean, label: false, input_html: { class: "span1" } %></td>
+</tr>
