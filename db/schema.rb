@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904222240) do
+ActiveRecord::Schema.define(:version => 20130913081230) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -258,6 +258,17 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "editions", ["status", "published_at"], :name => "index_editions_on_status_and_published_at"
+
+  create_table "embeds", :force => true do |t|
+    t.string   "title"
+    t.string   "content_type"
+    t.integer  "content_id"
+    t.string   "url"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "embeds", ["content_type", "content_id"], :name => "index_embeds_on_content_type_and_content_id"
 
   create_table "events", :force => true do |t|
     t.string   "headline"

@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
   include Concern::Associations::RelatedLinksAssociation
+  include Concern::Associations::EmbedsAssociation
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::HomepageContentAssociation

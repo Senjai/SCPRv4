@@ -8,6 +8,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::RelatedLinksAssociation
+  include Concern::Associations::EmbedsAssociation
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::HomepageContentAssociation
