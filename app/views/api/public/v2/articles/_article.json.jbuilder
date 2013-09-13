@@ -27,6 +27,10 @@ json.cache! [Api::Public::V2::VERSION, "v2", article.original_object] do
     json.partial! "api/public/v2/audio/collection", audio: article.audio
   end
 
+  json.embeds do
+    json.partial! "api/public/v2/embeds/collection", embeds: article.embeds
+  end
+
   json.attributions article.attributions do |byline|
     json.name       byline.display_name
     json.role_text  byline.role_text
