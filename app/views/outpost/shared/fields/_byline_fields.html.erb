@@ -1,6 +1,6 @@
 <tr>
   <%= render '/outpost/resource/errors', f: f %>
-  <td><%= f.association :user, collection: Bio.select_collection, label: false, input_html: { class: "span3" } %></td>
+  <td><%= f.association :user, collection: Bio.select_collection, label: false, input_html: { class: "span2" } %></td>
   <td><%= f.input :name, label: false, input_html: { class: "span3" } %></td>
   <td><%= f.input :role, label: false, input_html: { class: "span2" }, collection: ContentByline::ROLES, include_blank: false %></td>
   <td><%= f.input :_destroy, as: :boolean, label: false, input_html: { class: "span1" } %></td>
