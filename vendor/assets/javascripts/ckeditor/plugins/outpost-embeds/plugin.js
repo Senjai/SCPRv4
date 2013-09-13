@@ -69,7 +69,6 @@
 
             onOk: function() {
               var p = instance.document.createElement('p');
-              console.log(this.getValueOf('main', 'embed-selection'));
               p.setHtml(this.getValueOf('main', 'embed-selection'));
               instance.insertElement(p);
             }
