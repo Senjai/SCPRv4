@@ -5,8 +5,8 @@
 # and sets some sensible defaults.
 #
 # COPY this file to `config/environments/development.rb`
-# and modify as needed. 
-# The repository's `.gitignore` is already set to ignore 
+# and modify as needed.
+# The repository's `.gitignore` is already set to ignore
 # `config/environments/development.rb`.
 #
 # The following paths will need to be modified for your machine:
@@ -30,7 +30,7 @@ Scprv4::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local = true
-  
+
   config.action_controller.perform_caching = false
   config.cache_store = :redis_content_store, "redis://localhost:6379/5"
 
@@ -45,10 +45,10 @@ Scprv4::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  
+
   # Serve files from public/
   config.serve_static_assets = true
-    
+
   # Gmail
   config.action_mailer.delivery_method       = :smtp
   config.action_mailer.raise_delivery_errors = true
@@ -59,14 +59,14 @@ Scprv4::Application.configure do
     :user_name            => 'kpccdev@gmail.com',
     :password             => '',
     :authentication       => 'plain',
-    :enable_starttls_auto => true  
+    :enable_starttls_auto => true
   }
 
   config.dbsync.filename    = "mercer.dump"
   config.dbsync.local_dir   = "#{Rails.root}/../dbsync" # No trailing slash
   config.dbsync.remote_host = "66.226.4.229"
   config.dbsync.remote_dir  = "~scprdb"
-  
+
   default_url_options[:host] = "localhost:3000"
 
   config.scpr.host         = "localhost:3000"
@@ -76,11 +76,6 @@ Scprv4::Application.configure do
 
   config.audio_vision.host      = "http://audiovision.scpr.org"
   config.audio_vision.api_path  = "/api/v1"
-  
-  config.node.server = "http://localhost:8888"
 
-#  config.assethost.server = "ahhost-scpr.dev"
-  config.assethost.server  = ENV["AH_SERVER"] || "a.scpr.org"
-  config.assethost.token  = "droQQ2LcESKeGPzldQr7" 
-  config.assethost.prefix  = "/api"
+  config.node.server = "http://localhost:8888"
 end

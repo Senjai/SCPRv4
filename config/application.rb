@@ -58,6 +58,9 @@ module Scprv4
 
     config.action_mailer.simple_postmark_settings = { api_key: config.api['postmark']['api_key'] }
 
+    config.assethost.server = config.api['assethost']['server']
+    config.assethost.prefix = config.api['assethost']['prefix']
+    config.assethost.token  = config.api['assethost']['token']
 
 
     config.to_prepare do

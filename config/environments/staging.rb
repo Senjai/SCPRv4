@@ -6,18 +6,18 @@ Scprv4::Application.configure do
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local = true
-  
-  
+
+
   # There's nothing expiring the cache on staging so don't use it
   # If you change this to true, manually expire the cache
   # by SSHing to the server and running `Rails.cache.clear`
   # from the Rails console.
-  
+
   # You can also switch this to true, change the Redis path to point to cache1,
   # and change staging in database.yml to use mercer_new (production).
   # That would be good for figuring out a problem that was only occurring
   # in production.
-  
+
   config.action_controller.perform_caching = false
   config.cache_store = :redis_content_store, "redis://localhost:6379/6"
 
@@ -59,7 +59,7 @@ Scprv4::Application.configure do
   # Enable Postmark for transactional mail sending
   config.action_mailer.delivery_method          = :simple_postmark
   config.action_mailer.raise_delivery_errors    = true
-  
+
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
@@ -72,22 +72,18 @@ Scprv4::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-    
+
   config.dbsync.filename    = "mercer.dump"
   config.dbsync.local_dir   = "/web/scprv4/dbsync" # No trailing slash
   config.dbsync.remote_host = "scprdb@66.226.4.229"
   config.dbsync.remote_dir  = "~scprdb"
 
   default_url_options[:host] = "scpr.org"
-  
+
   config.scpr.host         = "staging.scprdev.org"
   config.scpr.media_root   = "/home/kpcc/media"
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4
-  
+
   config.node.server = "http://node.scprdev.org"
-  
-  config.assethost.server = "a.scpr.org"
-  config.assethost.token  = "droQQ2LcESKeGPzldQr7" 
-  config.assethost.prefix = "/api"
 end
