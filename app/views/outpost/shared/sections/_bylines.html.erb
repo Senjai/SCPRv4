@@ -1,6 +1,6 @@
 <%= form_block "Bylines" do %>
   <% record.bylines.build %>
-  
+
   <table class="field-rows">
     <thead>
       <tr>
@@ -10,7 +10,7 @@
         <th>Delete</th>
       </tr>
     </thead>
-    
+
     <tfoot>
       <tr>
         <td colspan="10">
@@ -18,7 +18,7 @@
         </td>
       </tr>
     </tfoot>
-    
+
     <tbody id="bylines-fields">
       <%= f.has_many_fields :bylines %>
     </tbody>
