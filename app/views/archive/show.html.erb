@@ -19,7 +19,7 @@
 <!-- News Stories -->
 <div id="news" class="tab-pane active">
 <%= content_cache "archive:#{@date.to_i}:news_stories" do %>
-  <% register_content("news/story:new") if @date.to_i == Time.now.beginning_of_day %>
+  <% register_content(NewsStory.new_obj_key) if @date.to_i == Time.now.beginning_of_day %>
   <h2>News</h2>
   
   <%= any_to_list? @news_stories + @content_shells, message: "There was no News published on this date." do %>
@@ -63,7 +63,7 @@
 <!-- Blog Entries -->
 <div id="blogs" class="tab-pane">
 <%= content_cache "archive:#{@date.to_i}:blog_entries" do %>
-  <% register_content("blogs/entry:new") if @date.to_i == Time.now.beginning_of_day %>
+  <% register_content(BlogEntry.new_obj_key) if @date.to_i == Time.now.beginning_of_day %>
   <h2>Blogs</h2>
   
   <%= any_to_list? @blog_entries, message: "There were no blog entries published on this date." do %>
@@ -105,8 +105,8 @@
 <!-- Programs -->
 <div id="programs" class="tab-pane programs">
 <%= content_cache "archive:#{@date.to_i}:programs" do %>
-  <% register_content("shows/segment:new") if @date.to_i == Time.now.beginning_of_day %>
-  <% register_content("shows/episode:new") if @date.to_i == Time.now.beginning_of_day %>
+  <% register_content(ShowSegment.new_obj_key) if @date.to_i == Time.now.beginning_of_day %>
+  <% register_content(ShowEpisode.new_obj_key) if @date.to_i == Time.now.beginning_of_day %>
   <% grouped = (@show_episodes + @show_segments).group_by { |c| c.show.title } %>
   
   <h2>Programs</h2>

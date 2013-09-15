@@ -72,7 +72,8 @@ class BlogEntry < ActiveRecord::Base
     has published_at
     has updated_at
 
-    has "CRC32(CONCAT('#{BlogEntry.content_key}:'," \
+    has "CRC32(CONCAT('#{BlogEntry.content_key}" \
+        "#{Outpost::Model::Identifier::OBJ_KEY_SEPARATOR}'," \
         "#{BlogEntry.table_name}.id))",
         type: :integer, as: :obj_key
 

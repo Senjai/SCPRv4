@@ -36,7 +36,7 @@
       <div class="section">
         <h6>Latest News</h6>
         <% content_cache("mega_news_latest") do %>
-          <% register_content("contentbase:new") %>
+          <% register_content(ContentBase.new_obj_key) %>
           <%= render "/shared/masthead/featured", articles: latest_news(2) %>
         <% end %>
       </div> <!-- section -->
@@ -46,7 +46,7 @@
       <div class="section">
         <h6>From Our Blogs</h6>
         <% content_cache("mega_news_blogs") do %>
-          <% register_content("blogs/entry:new") %>
+          <% register_content(BlogEntry.new_obj_key) %>
           <%= render "/shared/masthead/from_our_blogs", entries: @latest_blogs_news %>
         <% end %>
       </div> <!-- section -->

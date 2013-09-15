@@ -1,12 +1,12 @@
 require "spec_helper"
 
 describe Concern::Methods::CommentMethods do
-  subject { TestClass::Story.new }
-  
+  subject { build :test_class_story }
+
   describe "#disqus_identifier" do
-    it "returns the obj_key" do
-      subject.stub(:obj_key) { "story:999" }
-      subject.disqus_identifier.should eq "story:999"
+    it "returns the identifier" do
+      subject.save!
+      subject.disqus_identifier.should eq "test/class/stories:#{subject.id}"
     end
   end
 

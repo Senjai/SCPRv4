@@ -32,8 +32,8 @@ describe Concern::Callbacks::CacheExpirationCallback do
   it "expires new keys if it's publishing" do
     story = create :test_class_story, :pending
 
-    set1            = "obj:test/class/stories:new"
-    set2            = "obj:contentbase:new"
+    set1            = "obj:#{TestClass::Story.new_obj_key}"
+    set2            = "obj:#{ContentBase.new_obj_key}"
     fragment_key1   = "bagel"
     fragment_key2   = "burrito"
 

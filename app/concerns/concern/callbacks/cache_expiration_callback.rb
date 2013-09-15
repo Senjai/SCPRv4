@@ -66,8 +66,8 @@ module Concern
         end
 
         if @_will_expire_dependencies_on_new_objects
-          Rails.cache.expire_obj([self.class.content_key, "new"].join(":"))
-          Rails.cache.expire_obj("contentbase:new")
+          Rails.cache.expire_obj(self.class.new_obj_key)
+          Rails.cache.expire_obj(ContentBase.new_obj_key)
         end
 
         reset_expiration_promises

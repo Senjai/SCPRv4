@@ -83,7 +83,8 @@ class ShowSegment < ActiveRecord::Base
     has status
     has published_at
     has updated_at
-    has "CRC32(CONCAT('#{ShowSegment.content_key}:'," \
+    has "CRC32(CONCAT('#{ShowSegment.content_key}" \
+        "#{Outpost::Model::Identifier::OBJ_KEY_SEPARATOR}'," \
         "#{ShowSegment.table_name}.id))",
         type: :integer, as: :obj_key
 
@@ -178,7 +179,7 @@ class ShowSegment < ActiveRecord::Base
   def to_episode
     @to_episode ||= Episode.new({
       :original_object    => self,
-      :id                 => "#{self.obj_key}:as_episode",
+      :id                 => "#{self.obj_key}-as_episode",
       :program            => self.show.to_program,
       :title              => self.short_headline,
       :summary            => self.teaser,

@@ -110,7 +110,7 @@ Scprv4::Application.routes.draw do
         get '/content/by_url'           => 'articles#by_url'
         get '/content/most_viewed'      => 'articles#most_viewed'
         get '/content/most_commented'   => 'articles#most_commented'
-        get '/content/*obj_key'         => 'articles#show'
+        get '/content/:obj_key'         => 'articles#show'
 
         resources :articles, only: [:index] do
           collection do
@@ -120,7 +120,7 @@ Scprv4::Application.routes.draw do
             get 'most_viewed'      => 'articles#most_viewed'
             get 'most_commented'   => 'articles#most_commented'
             get 'by_url'           => 'articles#by_url'
-            get '*obj_key'         => 'articles#show'
+            get ':obj_key'         => 'articles#show'
           end
         end
 
@@ -155,7 +155,7 @@ Scprv4::Application.routes.draw do
             get 'most_viewed'      => 'articles#most_viewed'
             get 'most_commented'   => 'articles#most_commented'
             get 'by_url'           => 'articles#by_url'
-            get '*obj_key'         => 'articles#show'
+            get ':obj_key'         => 'articles#show'
           end
         end
 
@@ -193,7 +193,7 @@ Scprv4::Application.routes.draw do
             # Rails would expect an  :id parameter in
             # the URL.
             get 'by_url'   => 'articles#by_url'
-            get '*obj_key' => 'articles#show'
+            get ':obj_key' => 'articles#show'
           end
         end
       end

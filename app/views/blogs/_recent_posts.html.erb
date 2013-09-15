@@ -1,7 +1,7 @@
 <nav class="recent-posts widget">
   <h6><%= title ||= "Recent Posts" %></h6>
   <%= content_cache("blogs:#{blog.slug}:recent") do %>
-    <% register_content "blogs/entry:new" %>
+    <% register_content BlogEntry.new_obj_key %>
     <% blog.entries.published.first(5).each do |entry| %>
       <% register_content entry %>
     
