@@ -50,7 +50,9 @@ namespace :deploy do
   # --------------
 
   task :notify do
-    if token = YAML.load_file(File.expand_path("../../app_config.yml", __FILE__))["deploy_token"]
+    if token = YAML.load_file(
+      File.expand_path("../../api_config.yml", __FILE__)
+    )["production"]["kpcc"]["private"]["api_token"]
       data = {
         :token       => token,
         :user        => `whoami`.gsub("\n", ""),
@@ -67,7 +69,7 @@ namespace :deploy do
       end
 
     else
-      logger.info "No Deploy Token specified. Moving on."
+      logger.info "No API token specified. Moving on."
     end
   end
 end

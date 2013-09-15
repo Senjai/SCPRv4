@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Api::Private::V2::ArticlesController do
   request_params = {
-    :token  => Rails.application.config.api['assethost']['token'],
+    :token  => Rails.application.config.api['kpcc']['private']['api_token'],
     :format => :json
   }
 

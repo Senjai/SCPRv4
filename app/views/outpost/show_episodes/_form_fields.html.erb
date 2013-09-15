@@ -27,7 +27,7 @@
           apiType: "private",
           params: {
             limit: 20,
-            token: "<%= Rails.application.config.api['assethost']['token'] %>",
+            token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
             types: "segments",
             order: "updated_at", // Don't use published_at - we're finding unpublished content too.
             sort_mode: "desc",
