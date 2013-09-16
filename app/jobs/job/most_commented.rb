@@ -3,13 +3,19 @@ module Job
     @queue = "#{namespace}:rake_tasks"
 
     def self.perform
-      task = new("kpcc", "3d", Rails.application.config.api['disqus']['api_key'])
+      task = new("kpcc", "3d",
+        Rails.application.config.api['disqus']['api_key'])
 
       comments = task.fetch
       articles  = task.parse(comments).map(&:to_article)
 
       Rails.cache.write("popular/commented", articles)
-      self.cache(articles, "/shared/widgets/cached/popular", "views/popular/commented", local: :articles)
+
+      self.cache(articles,
+        "/shared/widgets/cached/popular",
+        "views/popular/commented",
+        local: :articles
+      )
     end
 
     #--------------
@@ -61,7 +67,10 @@ module Job
     def connection
       @connection ||= begin
         options = {
-          :headers => {'Accept' => "application/json", 'User-Agent' => "SCPR.org"},
+          :headers => {
+            'Accept'        => "application/json",
+            'User-Agent'    => "SCPR.org"
+          },
           :ssl     => { verify: false },
           :url     => "https://disqus.com"
         }
