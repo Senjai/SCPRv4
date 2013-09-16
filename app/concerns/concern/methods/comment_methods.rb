@@ -8,6 +8,27 @@ module Concern
     module CommentMethods
       extend ActiveSupport::Concern
 
+      # We have to explicitly tell it which classes have comments because
+      # sometimes the behaviour of Rails' lazy-loading will prevent the
+      # classes from being included in the obj_by_disqus_identifier lookup.
+      COMMENT_CLASSES = [
+        "BlogEntry",
+        "NewsStory",
+        "ShowSegment",
+        "Event"
+      ]
+
+      def self.obj_by_disqus_identifier(identifier)
+        key, id = identifier.split(":")
+
+        if klass = COMMENT_CLASSES.map(&:constantize).find { |c|
+          c.disqus_identifier_base == key
+        }
+          klass.find_by_id(id)
+        end
+      end
+
+
       module ClassMethods
         # This needs to be separate from `content_key`, because we changed
         # how that is getting generated (to be URL-friendly), but Disqus

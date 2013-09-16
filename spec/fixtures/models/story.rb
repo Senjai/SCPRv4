@@ -31,6 +31,7 @@ module TestClass
     include Concern::Callbacks::TouchCallback
 
     include Concern::Methods::CommentMethods
+    Concern::Methods::CommentMethods::COMMENT_CLASSES.push(self.name)
     self.disqus_identifier_base = "test/class/story"
 
     include Concern::Methods::PublishingMethods
