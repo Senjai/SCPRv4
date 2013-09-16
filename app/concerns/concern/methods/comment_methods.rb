@@ -53,6 +53,8 @@ module Concern
         [self.class.disqus_identifier_base, self.id].join(":")
       end
 
+      # This is an instance method because we need to be able to override
+      # it at the instance level for "The Multi-American Situation" (tm).
       def disqus_shortname
         Rails.application.config.api["disqus"]["shortname"]
       end
