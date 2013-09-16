@@ -4,4 +4,4 @@
 # from the Rails config
 window.assethost =
     SERVER:      "http://<%= Rails.application.config.assethost.server %>"
-    TOKEN:       "droQQ2LcESKeGPzldQr7" # This should not be stored here, it's insecure.
+    TOKEN:       "<%= Rails.application.config.api['assethost']['read_only_token']"

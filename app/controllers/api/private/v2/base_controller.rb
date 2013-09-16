@@ -18,7 +18,7 @@ module Api::Private::V2
     private
 
     def authorize
-      if params[:token] != Rails.application.config.api['assethost']['token']
+      if params[:token] != Rails.application.config.api['kpcc']['private']['api_token']
         render_unauthorized and return false
       end
     end
