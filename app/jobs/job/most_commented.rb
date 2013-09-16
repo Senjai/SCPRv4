@@ -48,7 +48,9 @@ module Job
       articles = []
 
       response.body['response'].each do |thread|
-        if article = Outpost.obj_by_key(thread['identifiers'].first)
+        if article = Concern::Methods::CommentMethods.obj_by_disqus_identifier(
+          thread['identifiers'].first
+        )
           self.log "Content: #{article.obj_key}, Count: #{thread['posts']}"
           articles.push(article) if article.published?
         end
