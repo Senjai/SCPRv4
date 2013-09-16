@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::PublishingMethods
 
+  self.disqus_identifier_base = "events"
   ROUTE_KEY = "event"
 
   ForumTypes = [

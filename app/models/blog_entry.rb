@@ -30,6 +30,7 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
 
+  self.disqus_identifier_base = "blogs/entry"
   ROUTE_KEY = "blog_entry"
 
   ASSET_SCHEMES = [
