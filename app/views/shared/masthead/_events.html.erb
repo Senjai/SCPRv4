@@ -25,7 +25,7 @@
       <div class="section sponsored-events">
         <h6>Sponsored Events</h6>
         <% content_cache("events:upcoming_sponsored") do %>
-          <% register_content "events/event:new" %>
+          <% register_content Event.new_obj_key %>
           <ul class="cbase">
             <% @upcoming_events_sponsored.each do |event| %>
               <% register_content event %>

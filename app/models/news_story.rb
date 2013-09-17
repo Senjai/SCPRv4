@@ -1,5 +1,7 @@
 class NewsStory < ActiveRecord::Base
+  self.table_name = 'news_story'
   outpost_model
+  has_secretary
 
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
@@ -29,8 +31,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
 
-  self.table_name = 'news_story'
-  has_secretary
+  self.disqus_identifier_base = "news/story"
   ROUTE_KEY = "news_story"
 
   SOURCES = [
@@ -83,7 +84,8 @@ class NewsStory < ActiveRecord::Base
     has status
     has published_at
     has updated_at
-    has "CRC32(CONCAT('#{NewsStory.content_key}:'," \
+    has "CRC32(CONCAT('#{NewsStory.content_key}" \
+        "#{Outpost::Model::Identifier::OBJ_KEY_SEPARATOR}'," \
         "#{NewsStory.table_name}.id))",
         type: :integer, as: :obj_key
 

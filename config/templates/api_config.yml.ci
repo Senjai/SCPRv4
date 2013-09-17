@@ -12,9 +12,14 @@ test:
       access_token_secret: xxx
 
   assethost:
+    server: 'a.scpr.org'
     prefix: /api
     token: xxx
+    read_only_token: xxx
 
+  kpcc:
+    private:
+      api_token: xxx
 
   disqus:
     shortname: xxx

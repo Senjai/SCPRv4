@@ -1,5 +1,5 @@
 <% content_cache("events:upcoming_forum") do %>
-  <% register_content "events/event:new" %>
+  <% register_content Event.new_obj_key %>
   <div class="events-forum">
     <h6>Events at the Crawford Family Forum</h6>
     <% @upcoming_events_forum.each do |event| %>

@@ -10,7 +10,7 @@
   </h3>
 
   <%= content_cache "blogs:#{blog.slug}:thumb:latest" do %>
-    <% register_content "blogs/entry:new" %>
+    <% register_content BlogEntry.new_obj_key %>
       
     <% if latest_entry.present? %>
       <% register_content latest_entry %>

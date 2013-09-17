@@ -45,6 +45,11 @@ module ContentBase
     %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment'
   }
 
+
+  def new_obj_key
+    "contentbase:new"
+  end
+
   #--------------------
   # Wrapper around ThinkingSphinx to just query all
   # ContentBase classes and mix in some default search
@@ -117,7 +122,8 @@ module ContentBase
     end
 
     if match = CONTENT_MATCHES.find { |k,_| u.path =~ k }
-      key       = [match[1].constantize.content_key, $~[1]].join(":")
+      # build the obj_key
+      key       = match[1].constantize.obj_key($~[1])
       article   = Outpost.obj_by_key(key)
       article && article.published? ? article : nil
     else

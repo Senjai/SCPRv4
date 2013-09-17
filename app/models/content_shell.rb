@@ -22,9 +22,6 @@ class ContentShell < ActiveRecord::Base
   include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
 
-  def self.content_key
-    "content/shell"
-  end
 
   #-------------------
   # Scopes
@@ -67,7 +64,8 @@ class ContentShell < ActiveRecord::Base
     has status
     has published_at
     has updated_at
-    has "CRC32(CONCAT('#{ContentShell.content_key}:'," \
+    has "CRC32(CONCAT('#{ContentShell.content_key}" \
+        "#{Outpost::Model::Identifier::OBJ_KEY_SEPARATOR}'," \
         "#{ContentShell.table_name}.id))", 
         type: :integer, as: :obj_key
 
