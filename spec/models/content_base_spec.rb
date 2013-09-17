@@ -109,7 +109,7 @@ describe ContentBase do
       end
       
       it "sends to obj_by_key if the URI matches" do
-        Outpost.should_receive(:obj_by_key).with("news/story:123").and_return(article)
+        Outpost.should_receive(:obj_by_key).with("news_story-123").and_return(article)
         ContentBase.obj_by_url(@url).should eq article
       end
   
@@ -119,7 +119,7 @@ describe ContentBase do
 
       it 'returns nil if the article is not published' do
         article.update_attribute(:status, ContentBase::STATUS_DRAFT)
-        Outpost.should_receive(:obj_by_key).with("news/story:123").and_return(article)
+        Outpost.should_receive(:obj_by_key).with("news_story-123").and_return(article)
         ContentBase.obj_by_url(@url).should eq nil
       end
     end
