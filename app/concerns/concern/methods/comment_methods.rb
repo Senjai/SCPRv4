@@ -34,7 +34,7 @@ module Concern
         # how that is getting generated (to be URL-friendly), but Disqus
         # uses the old-style obj_key to store/fetch content.
         def disqus_identifier_base
-          @disqus_identifier_base
+          @disqus_identifier_base ||= self.table_name.gsub(/_/, "/")
         end
 
         def disqus_identifier_base=(value)
