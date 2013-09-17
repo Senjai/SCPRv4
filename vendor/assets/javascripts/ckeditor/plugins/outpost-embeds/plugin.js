@@ -8,18 +8,21 @@
 * @version 0.1
 */
 (function() {
-    CKEDITOR.plugins.add( 'outpost-embeds', {
-      icons: 'mediaembed',
+    CKEDITOR.plugins.add('outpost-embeds', {
+      hidpi: true,
+      icons: "outpostembeds",
       init: function(editor) {
         var self = this;
 
         CKEDITOR.on('dialogDefinition', function(ev) {
-          var dialogName = ev.data.name;
-          var dialogDefinition = ev.data.definition;
+          var dialogName       = ev.data.name,
+              dialogDefinition = ev.data.definition;
 
           if (dialogName == 'OutpostEmbedsDialog') {
-            var main = dialogDefinition.getContents('main');
-            var embeds = [];
+            var main   = dialogDefinition.getContents('main'),
+                embeds = [],
+                items  = [];
+
 
             $('#embeds-fields tr').each(function() {
               var title = $(this).find('input[type=text]').val(),
@@ -33,8 +36,18 @@
               }
             });
 
-            var items = [];
-            for(i=0; i < embeds.length; i++) {
+            // If there are no beds, tell them and abort.
+            if(!embeds.length) {
+              main.add({
+                id    : 'embed-notification',
+                type  : 'div',
+                label : "There are no embeds yet! Add them below.",
+              });
+
+              return false;
+            }
+
+            for(var i=0; i < embeds.length; i++) {
               var embed = embeds[i],
                   title = embed.title,
                   url   = embed.url
