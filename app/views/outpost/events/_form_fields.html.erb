@@ -6,6 +6,8 @@
   <%= f.input :body, input_html: { class: 'cke-editor-restrictive' } %>
 <% end %>
 
+<%= f.section "embeds" %>
+
 <%= form_block "Date/Time" do %>
   <%= f.input :starts_at %>
   <%= f.input :ends_at %>
@@ -56,6 +58,5 @@
 <% end %>
 
 <%= f.section "audio" %>
-<%= f.section "embeds" %>
 <%= f.section "related_links" %>
 <%= f.section "related_content" %>
