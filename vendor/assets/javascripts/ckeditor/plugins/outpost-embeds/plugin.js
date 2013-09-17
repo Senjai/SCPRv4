@@ -36,15 +36,14 @@
               }
             });
 
-            // If there are no beds, tell them and abort.
+            // If there are no embeds, tell them and abort.
             if(!embeds.length) {
               main.add({
-                id    : 'embed-notification',
-                type  : 'div',
-                label : "There are no embeds yet! Add them below.",
+                type  : 'html',
+                html : "<strong>There are no embeds yet! Add them below.</strong>"
               });
 
-              return false;
+              return;
             }
 
             for(var i=0; i < embeds.length; i++) {
@@ -67,9 +66,8 @@
           }
         });
 
-        CKEDITOR.dialog.add('OutpostEmbedsDialog', function (instance) {
-          this.embeds = [];
 
+        CKEDITOR.dialog.add('OutpostEmbedsDialog', function (instance) {
           return {
             title : 'Embeds',
             minWidth : 550,
@@ -81,9 +79,11 @@
             }],
 
             onOk: function() {
-              var p = instance.document.createElement('p');
-              p.setHtml(this.getValueOf('main', 'embed-selection'));
-              instance.insertElement(p);
+              if($("#embed-selection")[0]) {
+                var p = instance.document.createElement('p');
+                p.setHtml(this.getValueOf('main', 'embed-selection'));
+                instance.insertElement(p);
+              }
             }
           }; // return
         });
