@@ -14,58 +14,6 @@
       init: function(editor) {
         var self = this;
 
-        editor.on('dialogShow', function(event) {
-          var dialog           = event.data,
-              dialogDefinition = dialog.definition;
-
-          if(dialog.getName() != "OutpostEmbedsDialog") return;
-
-          var main   = dialogDefinition.getContents('main'),
-              embeds = [],
-              items  = [];
-
-          $('#embeds-fields tr').each(function() {
-            var title = $(this).find('input[type=text]').val(),
-                url   = $(this).find('input[type=url]').val();
-
-            if(url != "") {
-              embeds.push({
-                title : title,
-                url   : url
-              })
-            }
-          });
-
-          // If there are no embeds, tell them and abort.
-          if(!embeds.length) {
-            main.add({
-              type  : 'html',
-              html : "<strong>There are no embeds yet! Add them below.</strong>"
-            });
-
-            return;
-          }
-
-          for(var i=0; i < embeds.length; i++) {
-            var embed = embeds[i],
-                title = embed.title,
-                url   = embed.url
-
-            items.push([
-              title + " (" + url + ")",
-              "<a href='"+url+"' class='embed-placeholder'>"+title+"</a>"
-            ])
-          }
-
-          main.add({
-            id    : 'embed-selection',
-            type  : 'radio',
-            label : "Select Embed",
-            items : items
-          });
-        });
-
-
         CKEDITOR.dialog.add('OutpostEmbedsDialog', function (instance) {
           return {
             title : 'Embeds',
@@ -78,7 +26,7 @@
             }],
 
             onOk: function() {
-              if($("#embed-selection")[0]) {
+              if($("#embed-selection").length) {
                 var p = instance.document.createElement('p');
                 p.setHtml(this.getValueOf('main', 'embed-selection'));
                 instance.insertElement(p);
@@ -89,7 +37,54 @@
 
         editor.addCommand('OutpostEmbeds',
           new CKEDITOR.dialogCommand('OutpostEmbedsDialog', {
-            allowedContent: 'a[*](*)'
+            allowedContent: 'a[*](*)',
+            exec: function(editor) {
+              editor.openDialog(this.dialogName, function() {
+                var main      = this.definition.getContents('main'),
+                    embeds    = [],
+                    items     = [];
+
+                $('#embeds-fields tr').each(function() {
+                  var title = $(this).find('input[type=text]').val(),
+                      url   = $(this).find('input[type=url]').val();
+
+                  if(url != "") {
+                    embeds.push({
+                      title : title,
+                      url   : url
+                    })
+                  }
+                });
+
+                // If there are no embeds, tell them and abort.
+                if(!embeds.length) {
+                  main.add({
+                    type  : 'html',
+                    html : "<strong>There are no embeds yet! Add them below.</strong>"
+                  });
+
+                  return;
+                }
+
+                for(var i=0; i < embeds.length; i++) {
+                  var embed = embeds[i],
+                      title = embed.title,
+                      url   = embed.url
+
+                  items.push([
+                    title + " (" + url + ")",
+                    "<a href='"+url+"' class='embed-placeholder'>"+title+"</a>"
+                  ])
+                }
+
+                main.add({
+                  id    : 'embed-selection',
+                  type  : 'radio',
+                  label : "Select Embed",
+                  items : items
+                });
+              });
+            }
           })
         );
 
