@@ -25,6 +25,8 @@ Creation Date: 07/31/2013
   <!-- MASTHEAD-->
   <%= render "/shared/masthead/layout_header" %>
 
+  <%= render "/shared/ads/dfp", ad_key: :membership_leaderboard %>
+
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
 <%= cache ["broadcastbar", "v2", @schedule_current, @schedule_current.starts_at.to_i, @schedule_current.program] do %>
